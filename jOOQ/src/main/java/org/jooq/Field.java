@@ -46,7 +46,7 @@ import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.FIREBIRD_3_0;
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
@@ -3015,7 +3015,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#count(Field)} instead.
      */
     @Deprecated
-    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, POSTGRES })
     WindowPartitionByStep<Integer> countOver();
 
     /**
@@ -3024,7 +3024,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#max(Field)} instead.
      */
     @Deprecated
-    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, POSTGRES })
     WindowPartitionByStep<T> maxOver();
 
     /**
@@ -3033,7 +3033,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#min(Field)} instead.
      */
     @Deprecated
-    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, POSTGRES })
     WindowPartitionByStep<T> minOver();
 
     /**
@@ -3042,7 +3042,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#sum(Field)} instead.
      */
     @Deprecated
-    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, POSTGRES })
     WindowPartitionByStep<BigDecimal> sumOver();
 
     /**
@@ -3051,7 +3051,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#avg(Field)} instead.
      */
     @Deprecated
-    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, POSTGRES })
     WindowPartitionByStep<BigDecimal> avgOver();
 
     /**
@@ -3060,7 +3060,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#firstValue(Field)} instead.
      */
     @Deprecated
-    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, POSTGRES })
     WindowIgnoreNullsStep<T> firstValue();
 
     /**
@@ -3069,7 +3069,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#lastValue(Field)} instead.
      */
     @Deprecated
-    @Support({ CUBRID, FIREBIRD_3_0, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, POSTGRES })
     WindowIgnoreNullsStep<T> lastValue();
 
     /**
@@ -3078,7 +3078,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#lead(Field)} instead.
      */
     @Deprecated
-    @Support({ FIREBIRD_3_0, POSTGRES })
+    @Support({ FIREBIRD, POSTGRES })
     WindowIgnoreNullsStep<T> lead();
 
     /**
@@ -3087,7 +3087,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#lead(Field, int)} instead.
      */
     @Deprecated
-    @Support({ FIREBIRD_3_0, POSTGRES })
+    @Support({ FIREBIRD, POSTGRES })
     WindowIgnoreNullsStep<T> lead(int offset);
 
     /**
@@ -3096,7 +3096,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#lead(Field, int, Object)} instead.
      */
     @Deprecated
-    @Support({ FIREBIRD_3_0, POSTGRES })
+    @Support({ FIREBIRD, POSTGRES })
     WindowIgnoreNullsStep<T> lead(int offset, T defaultValue);
 
     /**
@@ -3105,7 +3105,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#lead(Field, int, Field)} instead.
      */
     @Deprecated
-    @Support({ FIREBIRD_3_0, POSTGRES })
+    @Support({ FIREBIRD, POSTGRES })
     WindowIgnoreNullsStep<T> lead(int offset, Field<T> defaultValue);
 
     /**
@@ -3114,7 +3114,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#lag(Field)} instead.
      */
     @Deprecated
-    @Support({ FIREBIRD_3_0, POSTGRES })
+    @Support({ FIREBIRD, POSTGRES })
     WindowIgnoreNullsStep<T> lag();
 
     /**
@@ -3123,7 +3123,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#lag(Field, int)} instead.
      */
     @Deprecated
-    @Support({ FIREBIRD_3_0, POSTGRES })
+    @Support({ FIREBIRD, POSTGRES })
     WindowIgnoreNullsStep<T> lag(int offset);
 
     /**
@@ -3132,7 +3132,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#lag(Field, int, Object)} instead.
      */
     @Deprecated
-    @Support({ FIREBIRD_3_0, POSTGRES })
+    @Support({ FIREBIRD, POSTGRES })
     WindowIgnoreNullsStep<T> lag(int offset, T defaultValue);
 
     /**
@@ -3141,7 +3141,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#lag(Field, int, Field)} instead.
      */
     @Deprecated
-    @Support({ FIREBIRD_3_0, POSTGRES })
+    @Support({ FIREBIRD, POSTGRES })
     WindowIgnoreNullsStep<T> lag(int offset, Field<T> defaultValue);
 
     /**

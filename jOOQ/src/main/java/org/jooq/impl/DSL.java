@@ -49,7 +49,7 @@ import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.FIREBIRD_3_0;
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
@@ -57,15 +57,15 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
-import static org.jooq.SQLDialect.MYSQL_8_0;
+import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.SQLDialect.POSTGRES_11;
-import static org.jooq.SQLDialect.POSTGRES_9_3;
-import static org.jooq.SQLDialect.POSTGRES_9_4;
-import static org.jooq.SQLDialect.POSTGRES_9_5;
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 import static org.jooq.SQLDialect.SQLITE;
@@ -823,7 +823,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep1 with(String alias, String fieldAlias1) {
         return new WithImpl(null, false).with(alias, fieldAlias1);
     }
@@ -841,7 +841,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep2 with(String alias, String fieldAlias1, String fieldAlias2) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2);
     }
@@ -859,7 +859,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep3 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3);
     }
@@ -877,7 +877,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep4 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4);
     }
@@ -895,7 +895,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep5 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5);
     }
@@ -913,7 +913,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep6 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6);
     }
@@ -931,7 +931,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep7 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7);
     }
@@ -949,7 +949,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep8 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8);
     }
@@ -967,7 +967,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep9 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9);
     }
@@ -985,7 +985,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep10 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10);
     }
@@ -1003,7 +1003,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep11 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11);
     }
@@ -1021,7 +1021,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep12 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12);
     }
@@ -1039,7 +1039,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep13 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13);
     }
@@ -1057,7 +1057,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep14 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14);
     }
@@ -1075,7 +1075,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep15 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15);
     }
@@ -1093,7 +1093,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep16 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16);
     }
@@ -1111,7 +1111,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep17 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17);
     }
@@ -1129,7 +1129,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep18 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18);
     }
@@ -1147,7 +1147,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep19 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19);
     }
@@ -1165,7 +1165,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep20 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20);
     }
@@ -1183,7 +1183,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep21 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20, String fieldAlias21) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20, fieldAlias21);
     }
@@ -1201,7 +1201,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep22 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20, String fieldAlias21, String fieldAlias22) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20, fieldAlias21, fieldAlias22);
     }
@@ -1219,7 +1219,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep1 with(Name alias, Name fieldAlias1) {
         return new WithImpl(null, false).with(alias, fieldAlias1);
     }
@@ -1237,7 +1237,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep2 with(Name alias, Name fieldAlias1, Name fieldAlias2) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2);
     }
@@ -1255,7 +1255,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep3 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3);
     }
@@ -1273,7 +1273,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep4 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4);
     }
@@ -1291,7 +1291,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep5 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5);
     }
@@ -1309,7 +1309,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep6 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6);
     }
@@ -1327,7 +1327,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep7 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7);
     }
@@ -1345,7 +1345,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep8 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8);
     }
@@ -1363,7 +1363,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep9 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9);
     }
@@ -1381,7 +1381,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep10 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10);
     }
@@ -1399,7 +1399,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep11 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11);
     }
@@ -1417,7 +1417,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep12 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12);
     }
@@ -1435,7 +1435,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep13 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13);
     }
@@ -1453,7 +1453,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep14 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14);
     }
@@ -1471,7 +1471,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep15 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15);
     }
@@ -1489,7 +1489,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep16 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16);
     }
@@ -1507,7 +1507,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep17 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17);
     }
@@ -1525,7 +1525,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep18 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18);
     }
@@ -1543,7 +1543,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep19 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19);
     }
@@ -1561,7 +1561,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep20 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19, Name fieldAlias20) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20);
     }
@@ -1579,7 +1579,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep21 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19, Name fieldAlias20, Name fieldAlias21) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20, fieldAlias21);
     }
@@ -1597,7 +1597,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep22 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19, Name fieldAlias20, Name fieldAlias21, Name fieldAlias22) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20, fieldAlias21, fieldAlias22);
     }
@@ -1753,7 +1753,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep1 withRecursive(String alias, String fieldAlias1) {
         return new WithImpl(null, true).with(alias, fieldAlias1);
     }
@@ -1771,7 +1771,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep2 withRecursive(String alias, String fieldAlias1, String fieldAlias2) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2);
     }
@@ -1789,7 +1789,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep3 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3);
     }
@@ -1807,7 +1807,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep4 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4);
     }
@@ -1825,7 +1825,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep5 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5);
     }
@@ -1843,7 +1843,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep6 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6);
     }
@@ -1861,7 +1861,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep7 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7);
     }
@@ -1879,7 +1879,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep8 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8);
     }
@@ -1897,7 +1897,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep9 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9);
     }
@@ -1915,7 +1915,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep10 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10);
     }
@@ -1933,7 +1933,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep11 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11);
     }
@@ -1951,7 +1951,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep12 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12);
     }
@@ -1969,7 +1969,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep13 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13);
     }
@@ -1987,7 +1987,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep14 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14);
     }
@@ -2005,7 +2005,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep15 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15);
     }
@@ -2023,7 +2023,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep16 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16);
     }
@@ -2041,7 +2041,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep17 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17);
     }
@@ -2059,7 +2059,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep18 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18);
     }
@@ -2077,7 +2077,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep19 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19);
     }
@@ -2095,7 +2095,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep20 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20);
     }
@@ -2113,7 +2113,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep21 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20, String fieldAlias21) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20, fieldAlias21);
     }
@@ -2131,7 +2131,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep22 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20, String fieldAlias21, String fieldAlias22) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20, fieldAlias21, fieldAlias22);
     }
@@ -2149,7 +2149,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep1 withRecursive(Name alias, Name fieldAlias1) {
         return new WithImpl(null, true).with(alias, fieldAlias1);
     }
@@ -2167,7 +2167,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep2 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2);
     }
@@ -2185,7 +2185,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep3 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3);
     }
@@ -2203,7 +2203,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep4 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4);
     }
@@ -2221,7 +2221,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep5 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5);
     }
@@ -2239,7 +2239,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep6 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6);
     }
@@ -2257,7 +2257,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep7 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7);
     }
@@ -2275,7 +2275,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep8 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8);
     }
@@ -2293,7 +2293,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep9 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9);
     }
@@ -2311,7 +2311,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep10 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10);
     }
@@ -2329,7 +2329,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep11 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11);
     }
@@ -2347,7 +2347,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep12 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12);
     }
@@ -2365,7 +2365,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep13 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13);
     }
@@ -2383,7 +2383,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep14 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14);
     }
@@ -2401,7 +2401,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep15 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15);
     }
@@ -2419,7 +2419,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep16 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16);
     }
@@ -2437,7 +2437,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep17 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17);
     }
@@ -2455,7 +2455,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep18 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18);
     }
@@ -2473,7 +2473,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep19 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19);
     }
@@ -2491,7 +2491,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep20 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19, Name fieldAlias20) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20);
     }
@@ -2509,7 +2509,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep21 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19, Name fieldAlias20, Name fieldAlias21) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20, fieldAlias21);
     }
@@ -2527,7 +2527,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep22 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19, Name fieldAlias20, Name fieldAlias21, Name fieldAlias22) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20, fieldAlias21, fieldAlias22);
     }
@@ -5418,7 +5418,7 @@ public class DSL {
      *
      * @see DSLContext#mergeInto(Table)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD_3_0, HSQLDB })
+    @Support({ CUBRID, DERBY, FIREBIRD, HSQLDB })
     public static <R extends Record> MergeUsingStep<R> mergeInto(Table<R> table) {
         return dsl().mergeInto(table);
     }
@@ -5431,7 +5431,7 @@ public class DSL {
      *
      * @see DSLContext#mergeInto(Table, Field...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1> MergeKeyStep1<R, T1> mergeInto(Table<R> table, Field<T1> field1) {
         return using(new DefaultConfiguration()).mergeInto(table, field1);
     }
@@ -5442,7 +5442,7 @@ public class DSL {
      *
      * @see DSLContext#mergeInto(Table, Field...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2> MergeKeyStep2<R, T1, T2> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2);
     }
@@ -5453,7 +5453,7 @@ public class DSL {
      *
      * @see DSLContext#mergeInto(Table, Field...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3> MergeKeyStep3<R, T1, T2, T3> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3);
     }
@@ -5464,7 +5464,7 @@ public class DSL {
      *
      * @see DSLContext#mergeInto(Table, Field...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4> MergeKeyStep4<R, T1, T2, T3, T4> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4);
     }
@@ -5475,7 +5475,7 @@ public class DSL {
      *
      * @see DSLContext#mergeInto(Table, Field...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5> MergeKeyStep5<R, T1, T2, T3, T4, T5> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5);
     }
@@ -5486,7 +5486,7 @@ public class DSL {
      *
      * @see DSLContext#mergeInto(Table, Field...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6> MergeKeyStep6<R, T1, T2, T3, T4, T5, T6> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6);
     }
@@ -5497,7 +5497,7 @@ public class DSL {
      *
      * @see DSLContext#mergeInto(Table, Field...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7> MergeKeyStep7<R, T1, T2, T3, T4, T5, T6, T7> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7);
     }
@@ -5508,7 +5508,7 @@ public class DSL {
      *
      * @see DSLContext#mergeInto(Table, Field...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8> MergeKeyStep8<R, T1, T2, T3, T4, T5, T6, T7, T8> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8);
     }
@@ -5519,7 +5519,7 @@ public class DSL {
      *
      * @see DSLContext#mergeInto(Table, Field...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9> MergeKeyStep9<R, T1, T2, T3, T4, T5, T6, T7, T8, T9> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9);
     }
@@ -5530,7 +5530,7 @@ public class DSL {
      *
      * @see DSLContext#mergeInto(Table, Field...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> MergeKeyStep10<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10);
     }
@@ -5541,7 +5541,7 @@ public class DSL {
      *
      * @see DSLContext#mergeInto(Table, Field...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> MergeKeyStep11<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11);
     }
@@ -5552,7 +5552,7 @@ public class DSL {
      *
      * @see DSLContext#mergeInto(Table, Field...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> MergeKeyStep12<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12);
     }
@@ -5563,7 +5563,7 @@ public class DSL {
      *
      * @see DSLContext#mergeInto(Table, Field...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> MergeKeyStep13<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13);
     }
@@ -5574,7 +5574,7 @@ public class DSL {
      *
      * @see DSLContext#mergeInto(Table, Field...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> MergeKeyStep14<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14);
     }
@@ -5585,7 +5585,7 @@ public class DSL {
      *
      * @see DSLContext#mergeInto(Table, Field...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> MergeKeyStep15<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15);
     }
@@ -5596,7 +5596,7 @@ public class DSL {
      *
      * @see DSLContext#mergeInto(Table, Field...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> MergeKeyStep16<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16);
     }
@@ -5607,7 +5607,7 @@ public class DSL {
      *
      * @see DSLContext#mergeInto(Table, Field...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> MergeKeyStep17<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17);
     }
@@ -5618,7 +5618,7 @@ public class DSL {
      *
      * @see DSLContext#mergeInto(Table, Field...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> MergeKeyStep18<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18);
     }
@@ -5629,7 +5629,7 @@ public class DSL {
      *
      * @see DSLContext#mergeInto(Table, Field...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> MergeKeyStep19<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19);
     }
@@ -5640,7 +5640,7 @@ public class DSL {
      *
      * @see DSLContext#mergeInto(Table, Field...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> MergeKeyStep20<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20);
     }
@@ -5651,7 +5651,7 @@ public class DSL {
      *
      * @see DSLContext#mergeInto(Table, Field...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> MergeKeyStep21<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21);
     }
@@ -5662,7 +5662,7 @@ public class DSL {
      *
      * @see DSLContext#mergeInto(Table, Field...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> MergeKeyStep22<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22);
     }
@@ -5695,7 +5695,7 @@ public class DSL {
      *
      * @see DSLContext#mergeInto(Table, Field...)
      */
-    @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record> MergeKeyStepN<R> mergeInto(Table<R> table, Field<?>... fields) {
         return dsl().mergeInto(table, fields);
     }
@@ -5709,7 +5709,7 @@ public class DSL {
      *
      * @see DSLContext#mergeInto(Table, Collection)
      */
-    @Support({ CUBRID, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5 })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record> MergeKeyStepN<R> mergeInto(Table<R> table, Collection<? extends Field<?>> fields) {
         return dsl().mergeInto(table, fields);
     }
@@ -8947,7 +8947,7 @@ public class DSL {
      *              WHERE e.department_id = d.department_id);
      * </pre></code>
      */
-    @Support({ POSTGRES_9_3 })
+    @Support({ POSTGRES })
     public static <R extends Record> Table<R> lateral(TableLike<R> table) {
         return new Lateral<R>(table.asTable());
     }
@@ -16015,7 +16015,7 @@ public class DSL {
      *
      * @see #rollup(FieldOrRow...)
      */
-    @Support({ CUBRID, MARIADB, MYSQL, POSTGRES_9_5 })
+    @Support({ CUBRID, MARIADB, MYSQL, POSTGRES })
     public static GroupField rollup(Field<?>... fields) {
         return rollup((FieldOrRow[]) nullSafe(fields));
     }
@@ -16044,7 +16044,7 @@ public class DSL {
      *            function
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
-    @Support({ CUBRID, MARIADB, MYSQL, POSTGRES_9_5 })
+    @Support({ CUBRID, MARIADB, MYSQL, POSTGRES })
     public static GroupField rollup(FieldOrRow... fields) {
         return new Rollup(fields);
     }
@@ -16054,7 +16054,7 @@ public class DSL {
      *
      * @see #cube(Field...)
      */
-    @Support({ POSTGRES_9_5 })
+    @Support({ POSTGRES })
     public static GroupField cube(Field<?>... fields) {
         return cube((FieldOrRow[]) nullSafe(fields));
     }
@@ -16081,7 +16081,7 @@ public class DSL {
      *            function
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
-    @Support({ POSTGRES_9_5 })
+    @Support({ POSTGRES })
     public static GroupField cube(FieldOrRow... fields) {
         return field("{cube}({0})", Object.class, new QueryPartList<FieldOrRow>(fields));
     }
@@ -16109,7 +16109,7 @@ public class DSL {
      *            function
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
-    @Support({ POSTGRES_9_5 })
+    @Support({ POSTGRES })
     public static GroupField groupingSets(Field<?>... fields) {
         List<Field<?>>[] array = new List[fields.length];
 
@@ -16143,7 +16143,7 @@ public class DSL {
      *            function
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
-    @Support({ POSTGRES_9_5 })
+    @Support({ POSTGRES })
     public static GroupField groupingSets(Field<?>[]... fieldSets) {
         List<Field<?>>[] array = new List[fieldSets.length];
 
@@ -16177,7 +16177,7 @@ public class DSL {
      *            function
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
-    @Support({ POSTGRES_9_5 })
+    @Support({ POSTGRES })
     public static GroupField groupingSets(Collection<? extends Field<?>>... fieldSets) {
         WrappedList[] array = new WrappedList[fieldSets.length];
 
@@ -16224,7 +16224,7 @@ public class DSL {
      * @see #cube(Field...)
      * @see #rollup(Field...)
      */
-    @Support({ POSTGRES_9_5 })
+    @Support({ POSTGRES })
     public static Field<Integer> grouping(Field<?> field) {
         return function("grouping", Integer.class, nullSafe(field));
     }
@@ -17926,7 +17926,7 @@ public class DSL {
     /**
      * The <code>mode(field)</code> aggregate function.
      */
-    @Support({ H2, POSTGRES_9_4 })
+    @Support({ H2, POSTGRES })
     public static <T> AggregateFunction<T> mode(Field<T> field) {
         return new org.jooq.impl.Function<T>(Term.MODE, nullSafeDataType(field), field);
     }
@@ -17934,7 +17934,7 @@ public class DSL {
     /**
      * Get the median over a numeric field: median(field).
      */
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, POSTGRES_9_4 })
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, POSTGRES })
     public static AggregateFunction<BigDecimal> median(Field<? extends Number> field) {
         return new org.jooq.impl.Function<BigDecimal>(Term.MEDIAN, SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -18244,7 +18244,7 @@ public class DSL {
      * The <code>mode() within group (oder by [order clause])</code> ordered
      * aggregate function.
      */
-    @Support({ H2, POSTGRES_9_4 })
+    @Support({ H2, POSTGRES })
     public static OrderedAggregateFunctionOfDeferredType mode() {
         return new Mode();
     }
@@ -18253,7 +18253,7 @@ public class DSL {
      * The <code>rank(expr) within group (order by [order clause])</code>
      * ordered-set aggregate function.
      */
-    @Support({ H2, POSTGRES_9_4 })
+    @Support({ H2, POSTGRES })
     public static OrderedAggregateFunction<Integer> rank(Field<?>... fields) {
         return new org.jooq.impl.Function<Integer>("rank", SQLDataType.INTEGER, fields);
     }
@@ -18262,7 +18262,7 @@ public class DSL {
      * The <code>rank(expr) within group (order by [order clause])</code>
      * ordered-set aggregate function.
      */
-    @Support({ H2, POSTGRES_9_4 })
+    @Support({ H2, POSTGRES })
     public static OrderedAggregateFunction<Integer> rank(Collection<? extends Field<?>> fields) {
         return new org.jooq.impl.Function<Integer>("rank", SQLDataType.INTEGER, fields.toArray(EMPTY_QUERYPART));
     }
@@ -18271,7 +18271,7 @@ public class DSL {
      * The <code>dense_rank(expr) within group (order by [order clause])</code>
      * ordered-set aggregate function.
      */
-    @Support({ H2, POSTGRES_9_4 })
+    @Support({ H2, POSTGRES })
     public static OrderedAggregateFunction<Integer> denseRank(Field<?>... fields) {
         return new org.jooq.impl.Function<Integer>("dense_rank", SQLDataType.INTEGER, fields);
     }
@@ -18280,7 +18280,7 @@ public class DSL {
      * The <code>dense_rank(expr) within group (order by [order clause])</code>
      * ordered-set aggregate function.
      */
-    @Support({ H2, POSTGRES_9_4 })
+    @Support({ H2, POSTGRES })
     public static OrderedAggregateFunction<Integer> denseRank(Collection<? extends Field<?>> fields) {
         return new org.jooq.impl.Function<Integer>("dense_rank", SQLDataType.INTEGER, fields.toArray(EMPTY_QUERYPART));
     }
@@ -18289,7 +18289,7 @@ public class DSL {
      * The <code>percent_rank(expr) within group (order by [order clause])</code>
      * ordered-set aggregate function.
      */
-    @Support({ H2, POSTGRES_9_4 })
+    @Support({ H2, POSTGRES })
     public static OrderedAggregateFunction<Integer> percentRank(Field<?>... fields) {
         return new org.jooq.impl.Function<Integer>("percent_rank", SQLDataType.INTEGER, fields);
     }
@@ -18298,7 +18298,7 @@ public class DSL {
      * The <code>percent_rank(expr) within group (order by [order clause])</code>
      * ordered-set aggregate function.
      */
-    @Support({ H2, POSTGRES_9_4 })
+    @Support({ H2, POSTGRES })
     public static OrderedAggregateFunction<Integer> percentRank(Collection<? extends Field<?>> fields) {
         return new org.jooq.impl.Function<Integer>("percent_rank", SQLDataType.INTEGER, fields.toArray(EMPTY_QUERYPART));
     }
@@ -18307,7 +18307,7 @@ public class DSL {
      * The <code>cume_dist(expr) within group (order by [order clause])</code>
      * ordered-set aggregate function.
      */
-    @Support({ H2, POSTGRES_9_4 })
+    @Support({ H2, POSTGRES })
     public static OrderedAggregateFunction<BigDecimal> cumeDist(Field<?>... fields) {
         return new org.jooq.impl.Function<BigDecimal>("cume_dist", SQLDataType.NUMERIC, fields);
     }
@@ -18316,7 +18316,7 @@ public class DSL {
      * The <code>cume_dist(expr) within group (order by [order clause])</code>
      * ordered-set aggregate function.
      */
-    @Support({ H2, POSTGRES_9_4 })
+    @Support({ H2, POSTGRES })
     public static OrderedAggregateFunction<BigDecimal> cumeDist(Collection<? extends Field<?>> fields) {
         return new org.jooq.impl.Function<BigDecimal>("cume_dist", SQLDataType.NUMERIC, fields.toArray(EMPTY_QUERYPART));
     }
@@ -18330,7 +18330,7 @@ public class DSL {
      * this as an aggregate function, {@link SQLDialect#SQLSERVER} and
      * {@link SQLDialect#REDSHIFT} support only its window function variant.
      */
-    @Support({ H2, POSTGRES_9_4 })
+    @Support({ H2, POSTGRES })
     public static OrderedAggregateFunction<BigDecimal> percentileCont(Number number) {
         return percentileCont(val(number));
     }
@@ -18344,7 +18344,7 @@ public class DSL {
      * this as an aggregate function, {@link SQLDialect#SQLSERVER} and
      * {@link SQLDialect#REDSHIFT} support only its window function variant.
      */
-    @Support({ H2, POSTGRES_9_4 })
+    @Support({ H2, POSTGRES })
     public static OrderedAggregateFunction<BigDecimal> percentileCont(Field<? extends Number> field) {
         return new org.jooq.impl.Function<BigDecimal>("percentile_cont", SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -18358,7 +18358,7 @@ public class DSL {
      * this as an aggregate function, {@link SQLDialect#SQLSERVER} and
      * {@link SQLDialect#REDSHIFT} support only its window function variant.
      */
-    @Support({ H2, POSTGRES_9_4 })
+    @Support({ H2, POSTGRES })
     public static OrderedAggregateFunction<BigDecimal> percentileDisc(Number number) {
         return percentileDisc(val(number));
     }
@@ -18372,7 +18372,7 @@ public class DSL {
      * this as an aggregate function, {@link SQLDialect#SQLSERVER} and
      * {@link SQLDialect#REDSHIFT} support only its window function variant.
      */
-    @Support({ H2, POSTGRES_9_4 })
+    @Support({ H2, POSTGRES })
     public static OrderedAggregateFunction<BigDecimal> percentileDisc(Field<? extends Number> field) {
         return new org.jooq.impl.Function<BigDecimal>("percentile_disc", SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -18384,7 +18384,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>PARTITION BY</code> clause.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationOrderByStep partitionBy(Field<?>... fields) {
         return new WindowSpecificationImpl().partitionBy(fields);
     }
@@ -18392,7 +18392,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>PARTITION BY</code> clause.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationOrderByStep partitionBy(Collection<? extends Field<?>> fields) {
         return new WindowSpecificationImpl().partitionBy(fields);
     }
@@ -18400,7 +18400,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with an <code>ORDER BY</code> clause.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationRowsStep orderBy(Field<?>... fields) {
         return new WindowSpecificationImpl().orderBy(fields);
     }
@@ -18408,7 +18408,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with an <code>ORDER BY</code> clause.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationRowsStep orderBy(OrderField<?>... fields) {
         return new WindowSpecificationImpl().orderBy(fields);
     }
@@ -18416,7 +18416,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with an <code>ORDER BY</code> clause.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationRowsStep orderBy(Collection<? extends OrderField<?>> fields) {
         return new WindowSpecificationImpl().orderBy(fields);
     }
@@ -18424,7 +18424,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
-    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationExcludeStep rowsUnboundedPreceding() {
         return new WindowSpecificationImpl().rowsUnboundedPreceding();
     }
@@ -18432,7 +18432,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
-    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationExcludeStep rowsPreceding(int number) {
         return new WindowSpecificationImpl().rowsPreceding(number);
     }
@@ -18440,7 +18440,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
-    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationExcludeStep rowsCurrentRow() {
         return new WindowSpecificationImpl().rowsCurrentRow();
     }
@@ -18448,7 +18448,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
-    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationExcludeStep rowsUnboundedFollowing() {
         return new WindowSpecificationImpl().rowsUnboundedFollowing();
     }
@@ -18456,7 +18456,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
-    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationExcludeStep rowsFollowing(int number) {
         return new WindowSpecificationImpl().rowsFollowing(number);
     }
@@ -18464,7 +18464,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
-    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationRowsAndStep rowsBetweenUnboundedPreceding() {
         return new WindowSpecificationImpl().rowsBetweenUnboundedPreceding();
     }
@@ -18472,7 +18472,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
-    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationRowsAndStep rowsBetweenPreceding(int number) {
         return new WindowSpecificationImpl().rowsBetweenPreceding(number);
     }
@@ -18480,7 +18480,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
-    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationRowsAndStep rowsBetweenCurrentRow() {
         return new WindowSpecificationImpl().rowsBetweenCurrentRow();
     }
@@ -18488,7 +18488,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
-    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationRowsAndStep rowsBetweenUnboundedFollowing() {
         return new WindowSpecificationImpl().rowsBetweenUnboundedFollowing();
     }
@@ -18496,7 +18496,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
-    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationRowsAndStep rowsBetweenFollowing(int number) {
         return new WindowSpecificationImpl().rowsBetweenFollowing(number);
     }
@@ -18504,7 +18504,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
-    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationExcludeStep rangeUnboundedPreceding() {
         return new WindowSpecificationImpl().rangeUnboundedPreceding();
     }
@@ -18512,7 +18512,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
-    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationExcludeStep rangePreceding(int number) {
         return new WindowSpecificationImpl().rangePreceding(number);
     }
@@ -18520,7 +18520,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
-    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationExcludeStep rangeCurrentRow() {
         return new WindowSpecificationImpl().rangeCurrentRow();
     }
@@ -18528,7 +18528,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
-    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationExcludeStep rangeUnboundedFollowing() {
         return new WindowSpecificationImpl().rangeUnboundedFollowing();
     }
@@ -18536,7 +18536,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
-    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationExcludeStep rangeFollowing(int number) {
         return new WindowSpecificationImpl().rangeFollowing(number);
     }
@@ -18544,7 +18544,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
-    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationRowsAndStep rangeBetweenUnboundedPreceding() {
         return new WindowSpecificationImpl().rangeBetweenUnboundedPreceding();
     }
@@ -18552,7 +18552,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
-    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationRowsAndStep rangeBetweenPreceding(int number) {
         return new WindowSpecificationImpl().rangeBetweenPreceding(number);
     }
@@ -18560,7 +18560,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
-    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationRowsAndStep rangeBetweenCurrentRow() {
         return new WindowSpecificationImpl().rangeBetweenCurrentRow();
     }
@@ -18568,7 +18568,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
-    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationRowsAndStep rangeBetweenUnboundedFollowing() {
         return new WindowSpecificationImpl().rangeBetweenUnboundedFollowing();
     }
@@ -18576,7 +18576,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
-    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationRowsAndStep rangeBetweenFollowing(int number) {
         return new WindowSpecificationImpl().rangeBetweenFollowing(number);
     }
@@ -18584,7 +18584,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
-    @Support({ H2, POSTGRES_11 })
+    @Support({ H2, POSTGRES })
     public static WindowSpecificationExcludeStep groupsUnboundedPreceding() {
         return new WindowSpecificationImpl().groupsUnboundedPreceding();
     }
@@ -18592,7 +18592,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
-    @Support({ H2, POSTGRES_11 })
+    @Support({ H2, POSTGRES })
     public static WindowSpecificationExcludeStep groupsPreceding(int number) {
         return new WindowSpecificationImpl().groupsPreceding(number);
     }
@@ -18600,7 +18600,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
-    @Support({ H2, POSTGRES_11 })
+    @Support({ H2, POSTGRES })
     public static WindowSpecificationExcludeStep groupsCurrentRow() {
         return new WindowSpecificationImpl().groupsCurrentRow();
     }
@@ -18608,7 +18608,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
-    @Support({ H2, POSTGRES_11 })
+    @Support({ H2, POSTGRES })
     public static WindowSpecificationExcludeStep groupsUnboundedFollowing() {
         return new WindowSpecificationImpl().groupsUnboundedFollowing();
     }
@@ -18616,7 +18616,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
-    @Support({ H2, POSTGRES_11 })
+    @Support({ H2, POSTGRES })
     public static WindowSpecificationExcludeStep groupsFollowing(int number) {
         return new WindowSpecificationImpl().groupsFollowing(number);
     }
@@ -18624,7 +18624,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
-    @Support({ H2, POSTGRES_11 })
+    @Support({ H2, POSTGRES })
     public static WindowSpecificationRowsAndStep groupsBetweenUnboundedPreceding() {
         return new WindowSpecificationImpl().groupsBetweenUnboundedPreceding();
     }
@@ -18632,7 +18632,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
-    @Support({ H2, POSTGRES_11 })
+    @Support({ H2, POSTGRES })
     public static WindowSpecificationRowsAndStep groupsBetweenPreceding(int number) {
         return new WindowSpecificationImpl().groupsBetweenPreceding(number);
     }
@@ -18640,7 +18640,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
-    @Support({ H2, POSTGRES_11 })
+    @Support({ H2, POSTGRES })
     public static WindowSpecificationRowsAndStep groupsBetweenCurrentRow() {
         return new WindowSpecificationImpl().groupsBetweenCurrentRow();
     }
@@ -18648,7 +18648,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
-    @Support({ H2, POSTGRES_11 })
+    @Support({ H2, POSTGRES })
     public static WindowSpecificationRowsAndStep groupsBetweenUnboundedFollowing() {
         return new WindowSpecificationImpl().groupsBetweenUnboundedFollowing();
     }
@@ -18656,7 +18656,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
-    @Support({ H2, POSTGRES_11 })
+    @Support({ H2, POSTGRES })
     public static WindowSpecificationRowsAndStep groupsBetweenFollowing(int number) {
         return new WindowSpecificationImpl().groupsBetweenFollowing(number);
     }
@@ -18674,7 +18674,7 @@ public class DSL {
      * {@link SQLDialect#HSQLDB} can emulate this function using
      * <code>ROWNUM()</code>
      */
-    @Support({ CUBRID, DERBY, FIREBIRD_3_0, H2, HSQLDB, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowOverStep<Integer> rowNumber() {
         return new org.jooq.impl.Function<Integer>(ROW_NUMBER, SQLDataType.INTEGER);
     }
@@ -18682,7 +18682,7 @@ public class DSL {
     /**
      * The <code>rank() over ([analytic clause])</code> function.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowOverStep<Integer> rank() {
         return new org.jooq.impl.Function<Integer>(RANK, SQLDataType.INTEGER);
     }
@@ -18690,7 +18690,7 @@ public class DSL {
     /**
      * The <code>dense_rank() over ([analytic clause])</code> function.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowOverStep<Integer> denseRank() {
         return new org.jooq.impl.Function<Integer>(DENSE_RANK, SQLDataType.INTEGER);
     }
@@ -18698,7 +18698,7 @@ public class DSL {
     /**
      * The <code>precent_rank() over ([analytic clause])</code> function.
      */
-    @Support({ CUBRID, H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ CUBRID, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowOverStep<BigDecimal> percentRank() {
         return new org.jooq.impl.Function<BigDecimal>(PERCENT_RANK, SQLDataType.NUMERIC);
     }
@@ -18706,7 +18706,7 @@ public class DSL {
     /**
      * The <code>cume_dist() over ([analytic clause])</code> function.
      */
-    @Support({ CUBRID, H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ CUBRID, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowOverStep<BigDecimal> cumeDist() {
         return new org.jooq.impl.Function<BigDecimal>(CUME_DIST, SQLDataType.NUMERIC);
     }
@@ -18714,7 +18714,7 @@ public class DSL {
     /**
      * The <code>ntile([number]) over ([analytic clause])</code> function.
      */
-    @Support({ CUBRID, H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ CUBRID, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowOverStep<Integer> ntile(int number) {
         return new org.jooq.impl.Function<Integer>(NTILE, SQLDataType.INTEGER, inline(number));
     }
@@ -18722,7 +18722,7 @@ public class DSL {
     /**
      * The <code>ratio_to_report([expression]) over ([analytic clause])</code> function.
      */
-    @Support({ CUBRID, H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ CUBRID, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowOverStep<BigDecimal> ratioToReport(Number number) {
         return ratioToReport(Tools.field(number));
     }
@@ -18730,7 +18730,7 @@ public class DSL {
     /**
      * The <code>ratio_to_report([expression]) over ([analytic clause])</code> function.
      */
-    @Support({ CUBRID, H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ CUBRID, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowOverStep<BigDecimal> ratioToReport(Field<? extends Number> field) {
         return new RatioToReport(nullSafe(field));
     }
@@ -18738,7 +18738,7 @@ public class DSL {
     /**
      * The <code>first_value(field) over ([analytic clause])</code> function.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T> WindowIgnoreNullsStep<T> firstValue(Field<T> field) {
         return new org.jooq.impl.Function<T>(FIRST_VALUE, nullSafeDataType(field), nullSafe(field));
     }
@@ -18746,7 +18746,7 @@ public class DSL {
     /**
      * The <code>last_value(field) over ([analytic clause])</code> function.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T> WindowIgnoreNullsStep<T> lastValue(Field<T> field) {
         return new org.jooq.impl.Function<T>(LAST_VALUE, nullSafeDataType(field), nullSafe(field));
     }
@@ -18754,7 +18754,7 @@ public class DSL {
     /**
      * The <code>nth_value(field) over ([analytic clause])</code> function.
      */
-    @Support({ FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T> WindowFromFirstLastStep<T> nthValue(Field<T> field, int nth) {
         return nthValue(field, val(nth));
     }
@@ -18762,7 +18762,7 @@ public class DSL {
     /**
      * The <code>nth_value(field) over ([analytic clause])</code> function.
      */
-    @Support({ FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T> WindowFromFirstLastStep<T> nthValue(Field<T> field, Field<Integer> nth) {
         return new org.jooq.impl.Function<T>(NTH_VALUE, nullSafeDataType(field), nullSafe(field), nullSafe(nth));
     }
@@ -18770,7 +18770,7 @@ public class DSL {
     /**
      * The <code>lead(field) over ([analytic clause])</code> function.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field) {
         return new LeadLag<T>(LEAD, nullSafe(field));
     }
@@ -18778,7 +18778,7 @@ public class DSL {
     /**
      * The <code>lead(field, offset) over ([analytic clause])</code> function.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset) {
         return new LeadLag<T>(LEAD, nullSafe(field), offset);
     }
@@ -18788,7 +18788,7 @@ public class DSL {
      * <code>lead(field, offset, defaultValue) over ([analytic clause])</code>
      * function.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, H2, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset, T defaultValue) {
         return lead(nullSafe(field), offset, Tools.field(defaultValue, field));
     }
@@ -18798,7 +18798,7 @@ public class DSL {
      * <code>lead(field, offset, defaultValue) over ([analytic clause])</code>
      * function.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, H2, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset, Field<T> defaultValue) {
         return new LeadLag<T>(LEAD, nullSafe(field), offset, nullSafe(defaultValue));
     }
@@ -18806,7 +18806,7 @@ public class DSL {
     /**
      * The <code>lag(field) over ([analytic clause])</code> function.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field) {
         return new LeadLag<T>(LAG, nullSafe(field));
     }
@@ -18814,7 +18814,7 @@ public class DSL {
     /**
      * The <code>lag(field, offset) over ([analytic clause])</code> function.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset) {
         return new LeadLag<T>(LAG, nullSafe(field), offset);
     }
@@ -18824,7 +18824,7 @@ public class DSL {
      * <code>lag(field, offset, defaultValue) over ([analytic clause])</code>
      * function.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, H2, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset, T defaultValue) {
         return lag(nullSafe(field), offset, Tools.field(defaultValue, field));
     }
@@ -18834,7 +18834,7 @@ public class DSL {
      * <code>lag(field, offset, defaultValue) over ([analytic clause])</code>
      * function.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, H2, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset, Field<T> defaultValue) {
         return new LeadLag<T>(LAG, nullSafe(field), offset, nullSafe(defaultValue));
     }

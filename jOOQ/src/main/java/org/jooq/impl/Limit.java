@@ -143,9 +143,11 @@ final class Limit extends AbstractQueryPart {
 
             // ROWS .. TO ..
             // -------------
-            case FIREBIRD:
-            case FIREBIRD_2_5:
-            case FIREBIRD_3_0: {
+
+
+
+
+            case FIREBIRD: {
                 ctx.castMode(NEVER)
                    .formatSeparator()
                    .visit(K_ROWS)
@@ -274,10 +276,10 @@ final class Limit extends AbstractQueryPart {
 
 
 
+
+
             // [#4785] OFFSET cannot be without LIMIT
             case MARIADB:
-            case MYSQL_5_7:
-            case MYSQL_8_0:
             case MYSQL:
             case SQLITE: {
                 ctx.castMode(NEVER)
@@ -299,13 +301,13 @@ final class Limit extends AbstractQueryPart {
 
 
 
+
+
+
+
+
             case HSQLDB:
             case POSTGRES:
-            case POSTGRES_9_3:
-            case POSTGRES_9_4:
-            case POSTGRES_9_5:
-            case POSTGRES_10:
-            case POSTGRES_11:
                 // No break
 
             // A default implementation is necessary for hashCode() and toString()

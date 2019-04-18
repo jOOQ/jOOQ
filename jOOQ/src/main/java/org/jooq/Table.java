@@ -57,7 +57,7 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.SQLDialect.POSTGRES_9_3;
+import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
@@ -2023,7 +2023,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
     /**
      * <code>CROSS APPLY</code> a table to this table.
      */
-    @Support({ POSTGRES_9_3 })
+    @Support({ POSTGRES })
     Table<Record> crossApply(TableLike<?> table);
 
     /**
@@ -2037,7 +2037,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#table(SQL)
      * @see SQL
      */
-    @Support({ POSTGRES_9_3 })
+    @Support({ POSTGRES })
     @PlainSQL
     Table<Record> crossApply(SQL sql);
 
@@ -2052,7 +2052,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#table(String)
      * @see SQL
      */
-    @Support({ POSTGRES_9_3 })
+    @Support({ POSTGRES })
     @PlainSQL
     Table<Record> crossApply(String sql);
 
@@ -2068,7 +2068,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
-    @Support({ POSTGRES_9_3 })
+    @Support({ POSTGRES })
     @PlainSQL
     Table<Record> crossApply(String sql, Object... bindings);
 
@@ -2084,7 +2084,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
-    @Support({ POSTGRES_9_3 })
+    @Support({ POSTGRES })
     @PlainSQL
     Table<Record> crossApply(String sql, QueryPart... parts);
 
@@ -2093,13 +2093,13 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      *
      * @see DSL#table(Name)
      */
-    @Support({ POSTGRES_9_3 })
+    @Support({ POSTGRES })
     Table<Record> crossApply(Name name);
 
     /**
      * <code>OUTER APPLY</code> a table to this table.
      */
-    @Support({ POSTGRES_9_3 })
+    @Support({ POSTGRES })
     Table<Record> outerApply(TableLike<?> table);
 
     /**
@@ -2113,7 +2113,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#table(SQL)
      * @see SQL
      */
-    @Support({ POSTGRES_9_3 })
+    @Support({ POSTGRES })
     @PlainSQL
     Table<Record> outerApply(SQL sql);
 
@@ -2128,7 +2128,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#table(String)
      * @see SQL
      */
-    @Support({ POSTGRES_9_3 })
+    @Support({ POSTGRES })
     @PlainSQL
     Table<Record> outerApply(String sql);
 
@@ -2144,7 +2144,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
-    @Support({ POSTGRES_9_3 })
+    @Support({ POSTGRES })
     @PlainSQL
     Table<Record> outerApply(String sql, Object... bindings);
 
@@ -2160,7 +2160,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
-    @Support({ POSTGRES_9_3 })
+    @Support({ POSTGRES })
     @PlainSQL
     Table<Record> outerApply(String sql, QueryPart... parts);
 
@@ -2169,7 +2169,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      *
      * @see DSL#table(Name)
      */
-    @Support({ POSTGRES_9_3 })
+    @Support({ POSTGRES })
     Table<Record> outerApply(Name name);
 
     /**

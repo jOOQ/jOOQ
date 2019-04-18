@@ -47,7 +47,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
-import static org.jooq.SQLDialect.POSTGRES_9_5;
+import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
@@ -109,7 +109,7 @@ public interface LoaderOptionsStep<R extends Record> extends LoaderSourceStep<R>
      * the default. This cannot be combined with {@link #onDuplicateKeyError()}
      * or {@link #onDuplicateKeyIgnore()}
      */
-    @Support({ CUBRID, DERBY, HSQLDB, MARIADB, MYSQL, POSTGRES_9_5, SQLITE })
+    @Support({ CUBRID, DERBY, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     LoaderOptionsStep<R> onDuplicateKeyUpdate();
 
     /**

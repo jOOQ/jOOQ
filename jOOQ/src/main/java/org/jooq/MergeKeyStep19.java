@@ -41,12 +41,12 @@ package org.jooq;
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.FIREBIRD_3_0;
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
-import static org.jooq.SQLDialect.POSTGRES_9_5;
+import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
@@ -75,7 +75,7 @@ public interface MergeKeyStep19<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8
      * Use this optional clause in order to override using the underlying
      * <code>PRIMARY KEY</code>.
      */
-    @Support({ CUBRID, DERBY, FIREBIRD_3_0, H2, HSQLDB, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeValuesStep19<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> key(Field<?>... keys);
 
     /**
@@ -84,6 +84,6 @@ public interface MergeKeyStep19<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8
      * Use this optional clause in order to override using the underlying
      * <code>PRIMARY KEY</code>.
      */
-    @Support({ CUBRID, DERBY, FIREBIRD_3_0, H2, HSQLDB, POSTGRES_9_5 })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeValuesStep19<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> key(Collection<? extends Field<?>> keys);
 }

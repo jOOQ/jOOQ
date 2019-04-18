@@ -683,17 +683,17 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
+
+
+
+
+
+
                 case CUBRID:
-                case FIREBIRD_3_0:
                 case MARIADB:
                 case MYSQL:
-                case MYSQL_8_0:
-                case POSTGRES:
-                case POSTGRES_9_3:
-                case POSTGRES_9_4:
-                case POSTGRES_9_5:
-                case POSTGRES_10:
-                case POSTGRES_11: {
+                case POSTGRES: {
                     if (getLimit().isApplicable() && getLimit().withTies())
                         toSQLReferenceLimitWithWindowFunctions(context);
                     else

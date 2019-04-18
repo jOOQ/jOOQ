@@ -40,12 +40,12 @@ package org.jooq;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
-import static org.jooq.SQLDialect.FIREBIRD_3_0;
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
 // ...
 import static org.jooq.SQLDialect.MARIADB;
-import static org.jooq.SQLDialect.MYSQL_8_0;
+import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
@@ -120,6 +120,6 @@ public interface SelectWithTiesStep<R extends Record> extends SelectOffsetStep<R
     /**
      * Add the <code>WITH TIES</code> clause to a <code>LIMIT</code> clause.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     SelectOffsetStep<R> withTies();
 }

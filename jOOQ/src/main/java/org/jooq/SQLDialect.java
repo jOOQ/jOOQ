@@ -44,12 +44,12 @@ import java.util.Set;
 /**
  * Dialects and dialect families as supported by jOOQ.
  * <p>
- * jOOQ supports a variety of dialects, which are grouped into dialect families.
- * For instance, the SQL Server dialect family {@link #POSTGRES} is specialised
- * by its dialects
+ * The commercial jOOQ distributions support a variety of dialects, which are
+ * grouped into dialect families. For instance, the SQL Server dialect family
+ * {@link #POSTGRES} is specialised by its dialects
  * <ul>
- * <li> {@link #POSTGRES_9_3}</li>
- * <li> {@link #POSTGRES_9_4}</li>
+ * <li>{@link #POSTGRES_9_3}</li>
+ * <li>{@link #POSTGRES_9_4}</li>
  * </ul>
  *
  * @author Lukas Eder
@@ -93,15 +93,19 @@ public enum SQLDialect {
      */
     FIREBIRD("Firebird", false),
 
-    /**
-     * The Firebird 2.5 dialect.
-     */
-    FIREBIRD_2_5("Firebird", false, FIREBIRD, null),
 
-    /**
-     * The Firebird 3.0 dialect.
-     */
-    FIREBIRD_3_0("Firebird", false, FIREBIRD, FIREBIRD_2_5),
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * The H2 dialect family.
@@ -123,15 +127,19 @@ public enum SQLDialect {
      */
     MYSQL("MySQL", false),
 
-    /**
-     * The MySQL 5.7 dialect.
-     */
-    MYSQL_5_7("MySQL", false, MYSQL, null),
 
-    /**
-     * The MySQL 8.0 dialect.
-     */
-    MYSQL_8_0("MySQL", false, MYSQL, MYSQL_5_7),
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * The PostgreSQL dialect family.
@@ -142,50 +150,57 @@ public enum SQLDialect {
      */
     POSTGRES("Postgres", false),
 
-    /**
-     * The PostgreSQL 9.3 dialect.
-     * <p>
-     * While this family (and its dialects) have been observed to work to some
-     * extent on Amazon RedShift as well, we strongly suggest you use the
-     * official {@link #REDSHIFT} support, instead.
-     */
-    POSTGRES_9_3("Postgres", false, POSTGRES, null),
 
-    /**
-     * The PostgreSQL 9.4 dialect.
-     * <p>
-     * While this family (and its dialects) have been observed to work to some
-     * extent on Amazon RedShift as well, we strongly suggest you use the
-     * official {@link #REDSHIFT} support, instead.
-     */
-    POSTGRES_9_4("Postgres", false, POSTGRES, POSTGRES_9_3),
 
-    /**
-     * The PostgreSQL 9.5 dialect.
-     * <p>
-     * While this family (and its dialects) have been observed to work to some
-     * extent on Amazon RedShift as well, we strongly suggest you use the
-     * official {@link #REDSHIFT} support, instead.
-     */
-    POSTGRES_9_5("Postgres", false, POSTGRES, POSTGRES_9_4),
 
-    /**
-     * The PostgreSQL 10 dialect.
-     * <p>
-     * While this family (and its dialects) have been observed to work to some
-     * extent on Amazon RedShift as well, we strongly suggest you use the
-     * official {@link #REDSHIFT} support, instead.
-     */
-    POSTGRES_10("Postgres", false, POSTGRES, POSTGRES_9_5),
 
-    /**
-     * The PostgreSQL 11 dialect.
-     * <p>
-     * While this family (and its dialects) have been observed to work to some
-     * extent on Amazon RedShift as well, we strongly suggest you use the
-     * official {@link #REDSHIFT} support, instead.
-     */
-    POSTGRES_11("Postgres", false, POSTGRES, POSTGRES_10),
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * The SQLite dialect family.
@@ -718,10 +733,12 @@ public enum SQLDialect {
                 case HSQLDB:        return "org.hibernate.dialect.HSQLDialect";
                 case MARIADB:
                 case MYSQL:         return "org.hibernate.dialect.MySQL5Dialect";
-                case POSTGRES_9_3:  return "org.hibernate.dialect.PostgreSQL92Dialect";
-                case POSTGRES_9_4:
-                case POSTGRES_9_5:
-                case POSTGRES_10:
+
+
+
+
+
+
                 case POSTGRES:      return "org.hibernate.dialect.PostgreSQL94Dialect";
                 case SQLITE:        return null;
 

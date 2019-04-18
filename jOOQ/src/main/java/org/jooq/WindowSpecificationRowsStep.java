@@ -42,10 +42,10 @@ package org.jooq;
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
-import static org.jooq.SQLDialect.MYSQL_8_0;
+import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.SQLDialect.POSTGRES_11;
+import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 import static org.jooq.SQLDialect.SQLITE;
@@ -91,209 +91,209 @@ public interface WindowSpecificationRowsStep extends WindowSpecificationFinalSte
      * Add a <code>ROWS UNBOUNDED PRECEDING</code> frame clause to the window
      * specification.
      */
-    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, SQLITE })
     WindowSpecificationExcludeStep rowsUnboundedPreceding();
 
     /**
      * Add a <code>ROWS [number] PRECEDING</code> frame clause to the window
      * specification.
      */
-    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowSpecificationExcludeStep rowsPreceding(int number);
 
     /**
      * Add a <code>ROWS CURRENT ROW</code> frame clause to the window
      * specification.
      */
-    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowSpecificationExcludeStep rowsCurrentRow();
 
     /**
      * Add a <code>ROWS UNBOUNDED FOLLOWING</code> frame clause to the window
      * specification.
      */
-    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowSpecificationExcludeStep rowsUnboundedFollowing();
 
     /**
      * Add a <code>ROWS [number] FOLLOWING</code> frame clause to the window
      * specification.
      */
-    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowSpecificationExcludeStep rowsFollowing(int number);
 
     /**
      * Add a <code>ROWS BETWEEN UNBOUNDED PRECEDING ...</code> frame clause to
      * the window specification.
      */
-    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowSpecificationRowsAndStep rowsBetweenUnboundedPreceding();
 
     /**
      * Add a <code>ROWS BETWEEN [number] PRECEDING ...</code> frame clause to
      * the window specification.
      */
-    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowSpecificationRowsAndStep rowsBetweenPreceding(int number);
 
     /**
      * Add a <code>ROWS BETWEEN CURRENT ROW ...</code> frame clause to the
      * window specification.
      */
-    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowSpecificationRowsAndStep rowsBetweenCurrentRow();
 
     /**
      * Add a <code>ROWS BETWEEN UNBOUNDED FOLLOWING ...</code> frame clause to
      * the window specification.
      */
-    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowSpecificationRowsAndStep rowsBetweenUnboundedFollowing();
 
     /**
      * Add a <code>ROWS BETWEEN [number] FOLLOWING ...</code> frame clause to
      * the window specification.
      */
-    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowSpecificationRowsAndStep rowsBetweenFollowing(int number);
 
     /**
      * Add a <code>RANGE UNBOUNDED PRECEDING</code> frame clause to the window
      * specification.
      */
-    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowSpecificationExcludeStep rangeUnboundedPreceding();
 
     /**
      * Add a <code>RANGE [number] PRECEDING</code> frame clause to the window
      * specification.
      */
-    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowSpecificationExcludeStep rangePreceding(int number);
 
     /**
      * Add a <code>RANGE CURRENT ROW</code> frame clause to the window
      * specification.
      */
-    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowSpecificationExcludeStep rangeCurrentRow();
 
     /**
      * Add a <code>RANGE UNBOUNDED FOLLOWING</code> frame clause to the window
      * specification.
      */
-    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowSpecificationExcludeStep rangeUnboundedFollowing();
 
     /**
      * Add a <code>RANGE [number] FOLLOWING</code> frame clause to the window
      * specification.
      */
-    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowSpecificationExcludeStep rangeFollowing(int number);
 
     /**
      * Add a <code>RANGE BETWEEN UNBOUNDED PRECEDING ...</code> frame clause to
      * the window specification.
      */
-    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowSpecificationRowsAndStep rangeBetweenUnboundedPreceding();
 
     /**
      * Add a <code>RANGE BETWEEN [number] PRECEDING ...</code> frame clause to
      * the window specification.
      */
-    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowSpecificationRowsAndStep rangeBetweenPreceding(int number);
 
     /**
      * Add a <code>RANGE BETWEEN CURRENT ROW ...</code> frame clause to the
      * window specification.
      */
-    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowSpecificationRowsAndStep rangeBetweenCurrentRow();
 
     /**
      * Add a <code>RANGE BETWEEN UNBOUNDED FOLLOWING ...</code> frame clause to
      * the window specification.
      */
-    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowSpecificationRowsAndStep rangeBetweenUnboundedFollowing();
 
     /**
      * Add a <code>RANGE BETWEEN [number] FOLLOWING ...</code> frame clause to
      * the window specification.
      */
-    @Support({ H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowSpecificationRowsAndStep rangeBetweenFollowing(int number);
 
     /**
      * Add a <code>GROUPS UNBOUNDED PRECEDING</code> frame clause to the window
      * specification.
      */
-    @Support({ H2, POSTGRES_11 })
+    @Support({ H2, POSTGRES })
     WindowSpecificationExcludeStep groupsUnboundedPreceding();
 
     /**
      * Add a <code>GROUPS [number] PRECEDING</code> frame clause to the window
      * specification.
      */
-    @Support({ H2, POSTGRES_11 })
+    @Support({ H2, POSTGRES })
     WindowSpecificationExcludeStep groupsPreceding(int number);
 
     /**
      * Add a <code>GROUPS CURRENT ROW</code> frame clause to the window
      * specification.
      */
-    @Support({ H2, POSTGRES_11 })
+    @Support({ H2, POSTGRES })
     WindowSpecificationExcludeStep groupsCurrentRow();
 
     /**
      * Add a <code>GROUPS UNBOUNDED FOLLOWING</code> frame clause to the window
      * specification.
      */
-    @Support({ H2, POSTGRES_11 })
+    @Support({ H2, POSTGRES })
     WindowSpecificationExcludeStep groupsUnboundedFollowing();
 
     /**
      * Add a <code>GROUPS [number] FOLLOWING</code> frame clause to the window
      * specification.
      */
-    @Support({ H2, POSTGRES_11 })
+    @Support({ H2, POSTGRES })
     WindowSpecificationExcludeStep groupsFollowing(int number);
 
     /**
      * Add a <code>GROUPS BETWEEN UNBOUNDED PRECEDING ...</code> frame clause to
      * the window specification.
      */
-    @Support({ H2, POSTGRES_11 })
+    @Support({ H2, POSTGRES })
     WindowSpecificationRowsAndStep groupsBetweenUnboundedPreceding();
 
     /**
      * Add a <code>GROUPS BETWEEN [number] PRECEDING ...</code> frame clause to
      * the window specification.
      */
-    @Support({ H2, POSTGRES_11 })
+    @Support({ H2, POSTGRES })
     WindowSpecificationRowsAndStep groupsBetweenPreceding(int number);
 
     /**
      * Add a <code>GROUPS BETWEEN CURRENT ROW ...</code> frame clause to the
      * window specification.
      */
-    @Support({ H2, POSTGRES_11 })
+    @Support({ H2, POSTGRES })
     WindowSpecificationRowsAndStep groupsBetweenCurrentRow();
 
     /**
      * Add a <code>GROUPS BETWEEN UNBOUNDED FOLLOWING ...</code> frame clause to
      * the window specification.
      */
-    @Support({ H2, POSTGRES_11 })
+    @Support({ H2, POSTGRES })
     WindowSpecificationRowsAndStep groupsBetweenUnboundedFollowing();
 
     /**
      * Add a <code>GROUPS BETWEEN [number] FOLLOWING ...</code> frame clause to
      * the window specification.
      */
-    @Support({ H2, POSTGRES_11 })
+    @Support({ H2, POSTGRES })
     WindowSpecificationRowsAndStep groupsBetweenFollowing(int number);
 }

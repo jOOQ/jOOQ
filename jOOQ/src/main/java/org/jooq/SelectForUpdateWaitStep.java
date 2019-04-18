@@ -38,10 +38,10 @@
 package org.jooq;
 
 // ...
-import static org.jooq.SQLDialect.MYSQL_8_0;
+import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.SQLDialect.POSTGRES_9_5;
+import static org.jooq.SQLDialect.POSTGRES;
 
 /**
  * This type is used for the {@link Select}'s DSL API when selecting generic
@@ -125,7 +125,7 @@ public interface SelectForUpdateWaitStep<R extends Record> extends SelectOptionS
      *
      * @see SelectQuery#setForUpdateNoWait() see LockProvider for more details
      */
-    @Support({ MYSQL_8_0, POSTGRES })
+    @Support({ MYSQL, POSTGRES })
     SelectOptionStep<R> noWait();
 
     /**
@@ -135,6 +135,6 @@ public interface SelectForUpdateWaitStep<R extends Record> extends SelectOptionS
      * @see SelectQuery#setForUpdateSkipLocked() see LockProvider for more
      *      details
      */
-    @Support({ MYSQL_8_0, POSTGRES_9_5 })
+    @Support({ MYSQL, POSTGRES })
     SelectOptionStep<R> skipLocked();
 }

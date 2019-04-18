@@ -46,8 +46,8 @@ import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DEFAULT;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.FIREBIRD_2_5;
-import static org.jooq.SQLDialect.FIREBIRD_3_0;
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
@@ -55,19 +55,19 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
-import static org.jooq.SQLDialect.MYSQL_5_7;
-import static org.jooq.SQLDialect.MYSQL_8_0;
+import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
 // ...
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.SQLDialect.POSTGRES_10;
-import static org.jooq.SQLDialect.POSTGRES_11;
-import static org.jooq.SQLDialect.POSTGRES_9_3;
-import static org.jooq.SQLDialect.POSTGRES_9_4;
-import static org.jooq.SQLDialect.POSTGRES_9_5;
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
@@ -236,42 +236,48 @@ public class JDBCUtils {
 
 
     private static final SQLDialect postgresDialect(int majorVersion, int minorVersion) {
-        if (majorVersion < 9)
-            return POSTGRES_9_3;
 
-        if (majorVersion == 9)
-            if (minorVersion <= 3)
-                return POSTGRES_9_3;
-            else if (minorVersion == 4)
-                return POSTGRES_9_4;
-            else if (minorVersion >= 5)
-                return POSTGRES_9_5;
 
-        if (majorVersion >= 10)
-            return POSTGRES_10;
 
-        if (majorVersion >= 11)
-            return POSTGRES_11;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         return POSTGRES;
     }
 
     private static final SQLDialect mysqlDialect(int majorVersion) {
-        if (majorVersion <= 5)
-            return MYSQL_5_7;
 
-        if (majorVersion >= 8)
-            return MYSQL_8_0;
+
+
+
+
+
+
 
         return MYSQL;
     }
 
     private static final SQLDialect firebirdDialect(int majorVersion) {
-        if (majorVersion <= 2)
-            return FIREBIRD_2_5;
 
-        if (majorVersion >= 3)
-            return FIREBIRD_3_0;
+
+
+
+
+
+
 
         return FIREBIRD;
     }

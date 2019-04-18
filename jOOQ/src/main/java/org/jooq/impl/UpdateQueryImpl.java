@@ -59,7 +59,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.SQLDialect.POSTGRES_10;
+import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 import static org.jooq.SQLDialect.SQLITE;
@@ -584,7 +584,7 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
                     // [#6763] Incompatible change in PostgreSQL 10 requires ROW() constructor for
                     //         single-degree rows. Let's just always render it, here.
-                    if (POSTGRES_10.precedes(ctx.dialect()))
+                    if (ctx.family() == POSTGRES                                                                )
                         ctx.visit(K_ROW).sql(" ");
 
                     ctx.visit(multiValue);

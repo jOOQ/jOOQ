@@ -45,7 +45,7 @@ import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.FIREBIRD_3_0;
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
@@ -53,11 +53,11 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
-import static org.jooq.SQLDialect.MYSQL_8_0;
+import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.SQLDialect.POSTGRES_9_5;
+import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 import static org.jooq.SQLDialect.SQLITE;
@@ -383,7 +383,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param definitions The definitions
      */
-    @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     void addWindow(WindowDefinition... definitions);
 
     /**
@@ -391,7 +391,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param definitions The definitions
      */
-    @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES, SQLITE })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     void addWindow(Collection<? extends WindowDefinition> definitions);
 
     /**
@@ -868,7 +868,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     /**
      * Add the <code>WITH TIES</code> clause to a <code>LIMIT</code> clause.
      */
-    @Support({ CUBRID, FIREBIRD_3_0, H2, MARIADB, MYSQL_8_0, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     void setWithTies(boolean withTies);
 
     /**
@@ -1004,7 +1004,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param tables The tables that should be locked
      */
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MYSQL, POSTGRES })
     void setForUpdateOf(Table<?>... tables);
 
 
@@ -1042,7 +1042,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * <li>Oracle</li>
      * </ul>
      */
-    @Support({ MYSQL_8_0, POSTGRES })
+    @Support({ MYSQL, POSTGRES })
     void setForUpdateNoWait();
 
     /**
@@ -1058,7 +1058,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * <li>Oracle</li>
      * </ul>
      */
-    @Support({ MYSQL_8_0, POSTGRES_9_5 })
+    @Support({ MYSQL, POSTGRES })
     void setForUpdateSkipLocked();
 
     /**

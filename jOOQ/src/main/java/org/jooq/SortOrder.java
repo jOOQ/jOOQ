@@ -59,7 +59,7 @@ public enum SortOrder {
     @Support
     DESC("desc"),
 
-    /**;
+    /**
      * Default sort order.
      */
     @Support

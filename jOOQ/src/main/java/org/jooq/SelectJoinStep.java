@@ -55,7 +55,7 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.SQLDialect.POSTGRES_9_3;
+import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
@@ -1621,7 +1621,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      *
      * @see Table#crossApply(TableLike)
      */
-    @Support({ POSTGRES_9_3 })
+    @Support({ POSTGRES })
     SelectJoinStep<R> crossApply(TableLike<?> table);
 
     /**
@@ -1636,7 +1636,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#crossApply(SQL)
      * @see SQL
      */
-    @Support({ POSTGRES_9_3 })
+    @Support({ POSTGRES })
     @PlainSQL
     SelectJoinStep<R> crossApply(SQL sql);
 
@@ -1652,7 +1652,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#crossApply(String)
      * @see SQL
      */
-    @Support({ POSTGRES_9_3 })
+    @Support({ POSTGRES })
     @PlainSQL
     SelectJoinStep<R> crossApply(String sql);
 
@@ -1669,7 +1669,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#crossApply(String, Object...)
      * @see SQL
      */
-    @Support({ POSTGRES_9_3 })
+    @Support({ POSTGRES })
     @PlainSQL
     SelectJoinStep<R> crossApply(String sql, Object... bindings);
 
@@ -1686,7 +1686,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#crossApply(String, QueryPart...)
      * @see SQL
      */
-    @Support({ POSTGRES_9_3 })
+    @Support({ POSTGRES })
     @PlainSQL
     SelectJoinStep<R> crossApply(String sql, QueryPart... parts);
 
@@ -1696,7 +1696,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see DSL#table(Name)
      * @see Table#crossApply(Name)
      */
-    @Support({ POSTGRES_9_3 })
+    @Support({ POSTGRES })
     SelectJoinStep<R> crossApply(Name name);
 
     /**
@@ -1704,7 +1704,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      *
      * @see Table#outerApply(TableLike)
      */
-    @Support({ POSTGRES_9_3 })
+    @Support({ POSTGRES })
     SelectJoinStep<R> outerApply(TableLike<?> table);
 
     /**
@@ -1719,7 +1719,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#outerApply(SQL)
      * @see SQL
      */
-    @Support({ POSTGRES_9_3 })
+    @Support({ POSTGRES })
     @PlainSQL
     SelectJoinStep<R> outerApply(SQL sql);
 
@@ -1735,7 +1735,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#outerApply(String)
      * @see SQL
      */
-    @Support({ POSTGRES_9_3 })
+    @Support({ POSTGRES })
     @PlainSQL
     SelectJoinStep<R> outerApply(String sql);
 
@@ -1752,7 +1752,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#outerApply(String, Object...)
      * @see SQL
      */
-    @Support({ POSTGRES_9_3 })
+    @Support({ POSTGRES })
     @PlainSQL
     SelectJoinStep<R> outerApply(String sql, Object... bindings);
 
@@ -1769,7 +1769,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#outerApply(String, QueryPart...)
      * @see SQL
      */
-    @Support({ POSTGRES_9_3 })
+    @Support({ POSTGRES })
     @PlainSQL
     SelectJoinStep<R> outerApply(String sql, QueryPart... parts);
 
@@ -1779,7 +1779,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see DSL#table(Name)
      * @see Table#outerApply(Name)
      */
-    @Support({ POSTGRES_9_3 })
+    @Support({ POSTGRES })
     SelectJoinStep<R> outerApply(Name name);
 
     /**

@@ -41,11 +41,11 @@ package org.jooq;
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.FIREBIRD_3_0;
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
-import static org.jooq.SQLDialect.POSTGRES_9_5;
+import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
@@ -73,7 +73,7 @@ public interface InsertOnConflictDoUpdateStep<R extends Record> {
     /**
      * Add the <code>DO UPDATE</code> clause.
      */
-    @Support({ CUBRID, DERBY, FIREBIRD_3_0, HSQLDB, POSTGRES_9_5, SQLITE })
+    @Support({ CUBRID, DERBY, FIREBIRD, HSQLDB, POSTGRES, SQLITE })
     InsertOnDuplicateSetStep<R> doUpdate();
 
     /**

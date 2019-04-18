@@ -415,10 +415,10 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
 
 
-                case MARIADB:
-                case MYSQL_5_7:
-                case MYSQL_8_0:
-                case MYSQL: {
+
+
+                case MYSQL:
+                case MARIADB: {
                     toSQLInsert(ctx);
                     ctx.start(INSERT_ON_DUPLICATE_KEY_UPDATE)
                        .end(INSERT_ON_DUPLICATE_KEY_UPDATE);
@@ -428,9 +428,9 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
 
 
-                case POSTGRES_9_5:
-                case POSTGRES_10:
-                case POSTGRES_11:
+
+
+
                 case POSTGRES:
                 case SQLITE: {
                     toSQLInsert(ctx);

@@ -46,7 +46,7 @@ import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
-import static org.jooq.SQLDialect.MYSQL_8_0;
+import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
@@ -142,7 +142,7 @@ public interface SelectForUpdateOfStep<R extends Record> extends SelectForUpdate
      * @see SelectQuery#setForUpdateOf(Table...) see LockProvider for more
      *      details
      */
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MYSQL_8_0, POSTGRES })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MYSQL, POSTGRES })
     SelectForUpdateWaitStep<R> of(Table<?>... tables);
 
 }

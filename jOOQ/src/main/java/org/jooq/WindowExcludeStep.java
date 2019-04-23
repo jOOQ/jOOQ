@@ -94,6 +94,6 @@ public interface WindowExcludeStep<T> extends WindowFinalStep<T> {
     /**
      * Add an <code>EXCLUDE NO OTHERS</code> clause.
      */
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowFinalStep<T> excludeNoOthers();
 }

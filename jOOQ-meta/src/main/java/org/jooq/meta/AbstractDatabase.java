@@ -1508,7 +1508,7 @@ public abstract class AbstractDatabase implements Database {
                  ||  (objectType == ForcedTypeObjectType.SEQUENCE && !(definition instanceof SequenceDefinition))))
                 continue forcedTypeLoop;
 
-            if (     (nullability != null && nullability != Nullability.ALL)
+            if (     (nullability != null && nullability != Nullability.ALL && definedType != null)
                  && ((nullability == Nullability.NOT_NULL && definedType.isNullable())
                  ||  (nullability == Nullability.NULL && !definedType.isNullable())))
                 continue forcedTypeLoop;

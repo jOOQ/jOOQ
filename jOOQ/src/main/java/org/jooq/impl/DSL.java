@@ -11604,6 +11604,26 @@ public class DSL {
     }
 
     /**
+     * Create a unique condition.
+     * <p>
+     * <code>UNIQUE ([query])</code>
+     */
+    @Support
+    public static Condition unique(Select<?> query) {
+        return new UniqueCondition(query, true);
+    }
+
+    /**
+     * Create a not unique condition.
+     * <p>
+     * <code>NOT UNIQUE ([query])</code>
+     */
+    @Support
+    public static Condition notUnique(Select<?> query) {
+        return new UniqueCondition(query, false);
+    }
+
+    /**
      * Invert a condition.
      * <p>
      * This is the same as calling {@link Condition#not()}

@@ -25,6 +25,7 @@ Authors and contributors of jOOQ or parts of jOOQ in alphabetical order:
 - Johannes Bühler
 - Joseph B Phillips
 - Joseph Pachod
+- Knut Wannheden
 - Laurent Pireyn
 - Luc Marchaud
 - Lukas Eder

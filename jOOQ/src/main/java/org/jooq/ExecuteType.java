@@ -62,8 +62,6 @@ public enum ExecuteType {
 
     /**
      * A DDL statement is being executed.
-     * <p>
-     * Currently, this only applies to <code>TRUNCATE</code> statements
      */
     DDL,
 

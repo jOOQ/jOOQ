@@ -200,6 +200,7 @@ import static org.jooq.impl.DSL.rangePreceding;
 import static org.jooq.impl.DSL.rangeUnboundedFollowing;
 import static org.jooq.impl.DSL.rangeUnboundedPreceding;
 import static org.jooq.impl.DSL.rank;
+import static org.jooq.impl.DSL.ratioToReport;
 import static org.jooq.impl.DSL.regrAvgX;
 import static org.jooq.impl.DSL.regrAvgY;
 import static org.jooq.impl.DSL.regrCount;
@@ -5589,6 +5590,8 @@ final class ParserImpl implements Parser {
                           || parseFunctionNameIf(ctx, "RADIAN")
                           || parseFunctionNameIf(ctx, "RAD"))
                         return rad((Field) parseFieldNumericOpParenthesised(ctx));
+                    else if ((field = parseFieldRatioToReportIf(ctx)) != null)
+                        return field;
 
                 if (parseFunctionNameIf(ctx, "ROW"))
                     return parseTuple(ctx);
@@ -7799,6 +7802,17 @@ final class ParserImpl implements Parser {
             List<Field<?>> args = parseFields(ctx);
             parse(ctx, ')');
             return cumeDist(args).withinGroupOrderBy(parseWithinGroupN(ctx));
+        }
+
+        return null;
+    }
+
+    private static final Field<?> parseFieldRatioToReportIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "RATIO_TO_REPORT")) {
+            parse(ctx, '(');
+            Field<Number> field = (Field<Number>) parseField(ctx);
+            parse(ctx, ')');
+            return parseWindowFunction(ctx, null, null, ratioToReport(field));
         }
 
         return null;

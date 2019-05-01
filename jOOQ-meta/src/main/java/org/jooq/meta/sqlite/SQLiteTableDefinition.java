@@ -37,7 +37,9 @@
  */
 package org.jooq.meta.sqlite;
 
+import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.meta.sqlite.sqlite_master.SQLiteMaster.SQLITE_MASTER;
 
@@ -45,6 +47,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.impl.DSL;
 import org.jooq.meta.AbstractTableDefinition;
@@ -71,19 +74,26 @@ public class SQLiteTableDefinition extends AbstractTableDefinition {
     public List<ColumnDefinition> getElements0() throws SQLException {
         List<ColumnDefinition> result = new ArrayList<ColumnDefinition>();
 
+        Field<String> fName = field(name("name"), String.class);
+        Field<String> fType = field(name("type"), String.class);
+        Field<Boolean> fNotnull = field(name("notnull"), boolean.class);
+        Field<String> fDefaultValue = field(name("dflt_value"), String.class);
+        Field<Integer> fPk = field(name("pk"), int.class);
+
         int position = 0;
-        for (Record record : create().fetch("pragma table_info({0})", inline(getName()))) {
+        for (Record record : create().select(fName, fType, fNotnull, fDefaultValue, fPk)
+                .from("pragma_table_info({0})", inline(getName())).fetch()) {
             position++;
 
-            String name = record.get("name", String.class);
-            String dataType = record.get("type", String.class)
+            String name = record.get(fName);
+            String dataType = record.get(fType)
                                     .replaceAll("\\(\\d+(\\s*,\\s*\\d+)?\\)", "");
-            Number precision = parsePrecision(record.get("type", String.class));
-            Number scale = parseScale(record.get("type", String.class));
+            Number precision = parsePrecision(record.get(fType));
+            Number scale = parseScale(record.get(fType));
 
             // SQLite identities are primary keys whose tables are mentioned in
             // sqlite_sequence
-            int pk = record.get("pk", int.class);
+            int pk = record.get(fPk);
             boolean identity = false;
 
             if (pk > 0) {
@@ -109,8 +119,8 @@ public class SQLiteTableDefinition extends AbstractTableDefinition {
                 precision,
                 precision,
                 scale,
-                !record.get("notnull", boolean.class),
-                record.get("dflt_value", String.class)
+                !record.get(fNotnull),
+                record.get(fDefaultValue)
             );
 
             ColumnDefinition column = new DefaultColumnDefinition(

@@ -189,7 +189,7 @@ public class SQLiteDatabase extends AbstractDatabase {
                 .orderBy(SQLiteMaster.NAME)
                 .fetch(SQLiteMaster.NAME)) {
 
-            for (Record record : create().fetch("pragma table_info('" + tableName + "')")) {
+            for (Record record : create().fetch("pragma table_info({0})", inline(tableName))) {
                 if (record.get("pk", int.class) > 0) {
                     String columnName = record.get("name", String.class);
 
@@ -266,7 +266,7 @@ public class SQLiteDatabase extends AbstractDatabase {
                 TableDefinition foreignKeyTable = getTable(getSchemata().get(0), foreignKeyTableName);
                 TableDefinition uniqueKeyTable = getTable(getSchemata().get(0), record.get("table", String.class), true);
 
-                if (uniqueKeyTable != null && uniqueKeyTable != null) {
+                if (uniqueKeyTable != null) {
                     String uniqueKey =
                         "pk_" + uniqueKeyTable.getName();
 

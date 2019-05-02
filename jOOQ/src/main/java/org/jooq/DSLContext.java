@@ -357,7 +357,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * Run an <code>EXPLAIN</code> statement in the database to estimate the
      * cardinality of the query.
      */
-    @Support({ H2, HSQLDB, MYSQL, POSTGRES })
+    @Support({ H2, HSQLDB, MYSQL, POSTGRES, SQLITE })
     Explain explain(Query query);
 
     // -------------------------------------------------------------------------

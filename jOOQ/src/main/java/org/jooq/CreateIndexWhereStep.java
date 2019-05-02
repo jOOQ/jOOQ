@@ -39,6 +39,7 @@ package org.jooq;
 
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLITE;
 // ...
 
 import java.util.Collection;
@@ -74,27 +75,27 @@ public interface CreateIndexWhereStep extends CreateIndexFinalStep {
      * Add a <code>WHERE</code> clause to create a partial index, connecting
      * them with each other with {@link Operator#AND}.
      */
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, SQLITE })
     CreateIndexFinalStep where(Condition condition);
 
     /**
      * Add a <code>WHERE</code> clause to create a partial index, connecting
      * them with each other with {@link Operator#AND}.
      */
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, SQLITE })
     CreateIndexFinalStep where(Condition... conditions);
 
     /**
      * Add a <code>WHERE</code> clause to create a partial index, connecting
      * them with each other with {@link Operator#AND}.
      */
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, SQLITE })
     CreateIndexFinalStep where(Collection<? extends Condition> conditions);
 
     /**
      * Add a <code>WHERE</code> clause to create a partial index.
      */
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, SQLITE })
     CreateIndexFinalStep where(Field<Boolean> field);
 
     /**
@@ -108,7 +109,7 @@ public interface CreateIndexWhereStep extends CreateIndexFinalStep {
      * @see DSL#condition(SQL)
      * @see SQL
      */
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, SQLITE })
     @PlainSQL
     CreateIndexFinalStep where(SQL sql);
 
@@ -123,7 +124,7 @@ public interface CreateIndexWhereStep extends CreateIndexFinalStep {
      * @see DSL#condition(String)
      * @see SQL
      */
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, SQLITE })
     @PlainSQL
     CreateIndexFinalStep where(String sql);
 
@@ -139,7 +140,7 @@ public interface CreateIndexWhereStep extends CreateIndexFinalStep {
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, SQLITE })
     @PlainSQL
     CreateIndexFinalStep where(String sql, Object... bindings);
 
@@ -155,7 +156,7 @@ public interface CreateIndexWhereStep extends CreateIndexFinalStep {
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, SQLITE })
     @PlainSQL
     CreateIndexFinalStep where(String sql, QueryPart... parts);
 }

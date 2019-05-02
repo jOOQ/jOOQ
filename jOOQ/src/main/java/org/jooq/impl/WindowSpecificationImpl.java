@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static java.lang.Boolean.TRUE;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
+// ...
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
@@ -79,6 +80,7 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Keyword;
 import org.jooq.OrderField;
+// ...
 import org.jooq.SQLDialect;
 import org.jooq.WindowSpecificationExcludeStep;
 import org.jooq.WindowSpecificationFinalStep;
@@ -101,9 +103,14 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
     /**
      * Generated UID
      */
-    private static final long                serialVersionUID             = 2996016924769376361L;
-    private static final EnumSet<SQLDialect> OMIT_PARTITION_BY_ONE        = EnumSet.of(CUBRID, MYSQL, SQLITE);
-    private static final EnumSet<SQLDialect> REQUIRES_ORDER_BY_IN_RANKING = EnumSet.of(H2);
+    private static final long                serialVersionUID                = 2996016924769376361L;
+    private static final EnumSet<SQLDialect> OMIT_PARTITION_BY_ONE           = EnumSet.of(CUBRID, MYSQL, SQLITE);
+    private static final EnumSet<SQLDialect> REQUIRES_ORDER_BY_IN_RANKING    = EnumSet.of(H2);
+
+
+
+
+
 
     private final WindowDefinitionImpl       windowDefinition;
     private final QueryPartList<Field<?>>    partitionBy;
@@ -163,17 +170,17 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
 
             glue = " ";
         }
-        else if (TRUE.equals(ctx.data(DATA_ROWNUMBER_FUNCTION)) && REQUIRES_ORDER_BY_IN_RANKING.contains(ctx.family())) {
 
-            // [#8414] H2 requires ORDER BY in all other ranking functions than ROW_NUMBER()
-            if (ctx.family() != H2) {
-                ctx.sql(glue)
-                   .visit(K_ORDER_BY).sql(' ')
-                   .visit(field(select(one())));
 
-                glue = " ";
-            }
-        }
+
+
+
+
+
+
+
+
+
         else if (TRUE.equals(ctx.data(DATA_RANKING_FUNCTION)) && REQUIRES_ORDER_BY_IN_RANKING.contains(ctx.family())) {
             ctx.sql(glue)
                .visit(K_ORDER_BY).sql(' ')

@@ -8561,7 +8561,7 @@ public class DSL {
      */
     @Support
     public static Table<?> table(Object[] array) {
-        return table(val(array));
+        return unnest0(val(array));
     }
 
 
@@ -8584,7 +8584,7 @@ public class DSL {
      */
     @Support({ H2, HSQLDB, POSTGRES })
     public static Table<?> table(Field<?> cursor) {
-        return unnest(cursor);
+        return unnest0(cursor);
     }
 
     /**
@@ -8618,7 +8618,7 @@ public class DSL {
      */
     @Support
     public static Table<?> unnest(Object[] array) {
-        return unnest(val(array));
+        return unnest0(val(array));
     }
 
 
@@ -8658,6 +8658,10 @@ public class DSL {
      */
     @Support({ H2, HSQLDB, POSTGRES })
     public static Table<?> unnest(Field<?> cursor) {
+        return unnest0(cursor);
+    }
+
+    private static Table<?> unnest0(Field<?> cursor) {
         if (cursor == null)
             throw new IllegalArgumentException();
 

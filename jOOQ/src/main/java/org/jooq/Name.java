@@ -256,7 +256,7 @@ public interface Name extends QueryPart {
      * that all column names are produced by a function that receives the CTE's
      * {@link Select} columns and their column indexes as input.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList fields(Function<? super Field<?>, ? extends String> fieldNameFunction);
 
     /**
@@ -271,7 +271,7 @@ public interface Name extends QueryPart {
      * that all column names are produced by a function that receives the CTE's
      * {@link Select} columns as input.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList fields(BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction);
 
 

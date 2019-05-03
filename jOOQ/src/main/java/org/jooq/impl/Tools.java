@@ -461,6 +461,7 @@ final class Tools {
 
 
 
+
         /**
          * [#1535] We're currently generating the window specification of a ranking function.
          */

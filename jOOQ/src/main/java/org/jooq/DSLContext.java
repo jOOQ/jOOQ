@@ -8518,7 +8518,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createSchema(String)
      */
-    @Support({ DERBY, H2, HSQLDB, MARIADB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     CreateSchemaFinalStep createSchema(String schema);
 
     /**
@@ -8526,7 +8526,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createSchema(Name)
      */
-    @Support({ DERBY, H2, HSQLDB, MARIADB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     CreateSchemaFinalStep createSchema(Name schema);
 
     /**
@@ -8534,7 +8534,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createSchema(Schema)
      */
-    @Support({ DERBY, H2, HSQLDB, MARIADB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     CreateSchemaFinalStep createSchema(Schema schema);
 
     /**
@@ -8542,7 +8542,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createSchemaIfNotExists(String)
      */
-    @Support({ H2, MARIADB, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     CreateSchemaFinalStep createSchemaIfNotExists(String schema);
 
     /**
@@ -8550,7 +8550,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createSchemaIfNotExists(Name)
      */
-    @Support({ H2, MARIADB, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     CreateSchemaFinalStep createSchemaIfNotExists(Name schema);
 
     /**
@@ -8558,7 +8558,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createSchemaIfNotExists(Schema)
      */
-    @Support({ H2, MARIADB, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     CreateSchemaFinalStep createSchemaIfNotExists(Schema schema);
 
     /**
@@ -8760,7 +8760,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createOrReplaceView(String, String...)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MYSQL, POSTGRES })
     CreateViewAsStep<Record> createOrReplaceView(String view, String... fields);
 
     /**
@@ -8768,7 +8768,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createOrReplaceView(Name, Name...)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MYSQL, POSTGRES })
     CreateViewAsStep<Record> createOrReplaceView(Name view, Name... fields);
 
     /**
@@ -8776,7 +8776,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createOrReplaceView(Table, Field...)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MYSQL, POSTGRES })
     CreateViewAsStep<Record> createOrReplaceView(Table<?> view, Field<?>... fields);
 
 
@@ -8789,7 +8789,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createOrReplaceView(String, String...)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MYSQL, POSTGRES })
     CreateViewAsStep<Record> createOrReplaceView(String view, Function<? super Field<?>, ? extends String> fieldNameFunction);
 
     /**
@@ -8801,7 +8801,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createOrReplaceView(String, String...)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MYSQL, POSTGRES })
     CreateViewAsStep<Record> createOrReplaceView(String view, BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction);
 
     /**
@@ -8813,7 +8813,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createOrReplaceView(String, String...)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MYSQL, POSTGRES })
     CreateViewAsStep<Record> createOrReplaceView(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction);
 
     /**
@@ -8825,7 +8825,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createOrReplaceView(String, String...)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MYSQL, POSTGRES })
     CreateViewAsStep<Record> createOrReplaceView(Name view, BiFunction<? super Field<?>, ? super Integer, ? extends Name> fieldNameFunction);
 
     /**
@@ -8837,7 +8837,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createOrReplaceView(String, String...)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MYSQL, POSTGRES })
     CreateViewAsStep<Record> createOrReplaceView(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction);
 
     /**
@@ -8849,7 +8849,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createOrReplaceView(String, String...)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MYSQL, POSTGRES })
     CreateViewAsStep<Record> createOrReplaceView(Table<?> view, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction);
 
 
@@ -9452,7 +9452,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropSchema(String)
      */
-    @Support({ DERBY, H2, HSQLDB, MARIADB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     DropSchemaStep dropSchema(String schema);
 
     /**
@@ -9460,7 +9460,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropSchema(Name)
      */
-    @Support({ DERBY, H2, HSQLDB, MARIADB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     DropSchemaStep dropSchema(Name schema);
 
     /**
@@ -9468,7 +9468,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropSchema(Schema)
      */
-    @Support({ DERBY, H2, HSQLDB, MARIADB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     DropSchemaStep dropSchema(Schema schema);
 
     /**
@@ -9476,7 +9476,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropSchemaIfExists(String)
      */
-    @Support({ H2, HSQLDB, MARIADB, POSTGRES })
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     DropSchemaStep dropSchemaIfExists(String schema);
 
     /**
@@ -9484,7 +9484,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropSchemaIfExists(Name)
      */
-    @Support({ H2, HSQLDB, MARIADB, POSTGRES })
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     DropSchemaStep dropSchemaIfExists(Name schema);
 
     /**
@@ -9492,7 +9492,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropSchemaIfExists(Schema)
      */
-    @Support({ H2, HSQLDB, MARIADB, POSTGRES })
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     DropSchemaStep dropSchemaIfExists(Schema schema);
 
     /**

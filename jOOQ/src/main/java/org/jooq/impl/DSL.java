@@ -6557,7 +6557,7 @@ public class DSL {
      *
      * @see DSLContext#createSchema(String)
      */
-    @Support({ DERBY, H2, HSQLDB, MARIADB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static CreateSchemaFinalStep createSchema(String schema) {
         return dsl().createSchema(schema);
     }
@@ -6567,7 +6567,7 @@ public class DSL {
      *
      * @see DSLContext#createSchema(Name)
      */
-    @Support({ DERBY, H2, HSQLDB, MARIADB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static CreateSchemaFinalStep createSchema(Name table) {
         return dsl().createSchema(table);
     }
@@ -6577,7 +6577,7 @@ public class DSL {
      *
      * @see DSLContext#createSchema(Schema)
      */
-    @Support({ DERBY, H2, HSQLDB, MARIADB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static CreateSchemaFinalStep createSchema(Schema schema) {
         return dsl().createSchema(schema);
     }
@@ -6587,7 +6587,7 @@ public class DSL {
      *
      * @see DSLContext#createSchemaIfNotExists(String)
      */
-    @Support({ H2, MARIADB, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static CreateSchemaFinalStep createSchemaIfNotExists(String schema) {
         return dsl().createSchemaIfNotExists(schema);
     }
@@ -6597,7 +6597,7 @@ public class DSL {
      *
      * @see DSLContext#createSchemaIfNotExists(Name)
      */
-    @Support({ H2, MARIADB, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static CreateSchemaFinalStep createSchemaIfNotExists(Name table) {
         return dsl().createSchemaIfNotExists(table);
     }
@@ -6607,7 +6607,7 @@ public class DSL {
      *
      * @see DSLContext#createSchemaIfNotExists(Schema)
      */
-    @Support({ H2, MARIADB, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static CreateSchemaFinalStep createSchemaIfNotExists(Schema schema) {
         return dsl().createSchemaIfNotExists(schema);
     }
@@ -6812,7 +6812,7 @@ public class DSL {
      *
      * @see DSLContext#createOrReplaceView(String, String...)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MYSQL, POSTGRES })
     public static CreateViewAsStep createOrReplaceView(String view, String... fields) {
         return dsl().createOrReplaceView(view, fields);
     }
@@ -6822,7 +6822,7 @@ public class DSL {
      *
      * @see DSLContext#createOrReplaceView(Name, Name...)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MYSQL, POSTGRES })
     public static CreateViewAsStep createOrReplaceView(Name view, Name... fields) {
         return dsl().createOrReplaceView(view, fields);
     }
@@ -6832,7 +6832,7 @@ public class DSL {
      *
      * @see DSLContext#createOrReplaceView(Table, Field...)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MYSQL, POSTGRES })
     public static CreateViewAsStep createOrReplaceView(Table<?> view, Field<?>... fields) {
         return dsl().createOrReplaceView(view, fields);
     }
@@ -6847,7 +6847,7 @@ public class DSL {
      *
      * @see DSLContext#createOrReplaceView(String, String...)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MYSQL, POSTGRES })
     public static CreateViewAsStep createOrReplaceView(String view, Function<? super Field<?>, ? extends String> fieldNameFunction) {
         return dsl().createOrReplaceView(view, fieldNameFunction);
     }
@@ -6861,7 +6861,7 @@ public class DSL {
      *
      * @see DSLContext#createOrReplaceView(Name, Name...)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MYSQL, POSTGRES })
     public static CreateViewAsStep createOrReplaceView(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction) {
         return dsl().createOrReplaceView(view, fieldNameFunction);
     }
@@ -6875,7 +6875,7 @@ public class DSL {
      *
      * @see DSLContext#createOrReplaceView(Table, Field...)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MYSQL, POSTGRES })
     public static CreateViewAsStep createOrReplaceView(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction) {
         return dsl().createOrReplaceView(view, fieldNameFunction);
     }
@@ -7580,7 +7580,7 @@ public class DSL {
      *
      * @see DSLContext#dropSchema(String)
      */
-    @Support({ DERBY, H2, HSQLDB, MARIADB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static DropSchemaStep dropSchema(String schema){
         return dsl().dropSchema(schema);
     }
@@ -7590,7 +7590,7 @@ public class DSL {
      *
      * @see DSLContext#dropSchema(Name)
      */
-    @Support({ DERBY, H2, HSQLDB, MARIADB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static DropSchemaStep dropSchema(Name schema){
         return dsl().dropSchema(schema);
     }
@@ -7600,7 +7600,7 @@ public class DSL {
      *
      * @see DSLContext#dropSchema(Schema)
      */
-    @Support({ DERBY, H2, HSQLDB, MARIADB, POSTGRES })
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static DropSchemaStep dropSchema(Schema schema){
         return dsl().dropSchema(schema);
     }
@@ -7610,7 +7610,7 @@ public class DSL {
      *
      * @see DSLContext#dropSchemaIfExists(String)
      */
-    @Support({ H2, MARIADB, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static DropSchemaStep dropSchemaIfExists(String schema){
         return dsl().dropSchemaIfExists(schema);
     }
@@ -7620,7 +7620,7 @@ public class DSL {
      *
      * @see DSLContext#dropSchemaIfExists(Name)
      */
-    @Support({ H2, MARIADB, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static DropSchemaStep dropSchemaIfExists(Name schema){
         return dsl().dropSchemaIfExists(schema);
     }
@@ -7630,7 +7630,7 @@ public class DSL {
      *
      * @see DSLContext#dropSchemaIfExists(Schema)
      */
-    @Support({ H2, MARIADB, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static DropSchemaStep dropSchemaIfExists(Schema schema){
         return dsl().dropSchemaIfExists(schema);
     }
@@ -8148,7 +8148,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <T> QuantifiedSelect<Record1<T>> all(T... array) {
-        return all(val(array));
+        return new QuantifiedSelectImpl<Record1<T>>(Quantifier.ALL, val(array));
     }
 
     /**
@@ -8202,7 +8202,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <T> QuantifiedSelect<Record1<T>> any(T... array) {
-        return any(val(array));
+        return new QuantifiedSelectImpl<Record1<T>>(Quantifier.ANY, val(array));
     }
 
     /**

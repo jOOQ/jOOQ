@@ -89,8 +89,6 @@ import static org.jooq.impl.Term.MODE;
 import static org.jooq.impl.Term.PRODUCT;
 import static org.jooq.impl.Term.ROW_NUMBER;
 import static org.jooq.impl.Tools.castIfNeeded;
-import static org.jooq.impl.Tools.BooleanDataKey.DATA_RANKING_FUNCTION;
-import static org.jooq.impl.Tools.BooleanDataKey.DATA_ROWNUMBER_FUNCTION;
 import static org.jooq.impl.Tools.DataKey.DATA_WINDOW_DEFINITIONS;
 
 import java.math.BigDecimal;
@@ -124,6 +122,7 @@ import org.jooq.WindowPartitionByStep;
 import org.jooq.WindowRowsAndStep;
 import org.jooq.WindowRowsStep;
 import org.jooq.WindowSpecification;
+import org.jooq.impl.Tools.BooleanDataKey;
 // ...
 
 /**
@@ -460,7 +459,7 @@ class Function<T> extends AbstractField<T> implements
            .visit(K_OVER)
            .sql(' ');
 
-        previousRanking = (Boolean) ctx.data(DATA_RANKING_FUNCTION, ranking);
+        previousRanking = (Boolean) ctx.data(BooleanDataKey.DATA_RANKING_FUNCTION, ranking);
 
 
 
@@ -468,9 +467,9 @@ class Function<T> extends AbstractField<T> implements
         ctx.visit(window);
 
         if (TRUE.equals(previousRanking))
-            ctx.data(DATA_RANKING_FUNCTION, previousRanking);
+            ctx.data(BooleanDataKey.DATA_RANKING_FUNCTION, previousRanking);
         else
-            ctx.data().remove(DATA_RANKING_FUNCTION);
+            ctx.data().remove(BooleanDataKey.DATA_RANKING_FUNCTION);
 
 
 

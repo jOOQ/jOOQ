@@ -62,8 +62,6 @@ import static org.jooq.impl.Keywords.K_PARTITION_BY;
 import static org.jooq.impl.Keywords.K_PRECEDING;
 import static org.jooq.impl.Keywords.K_UNBOUNDED_FOLLOWING;
 import static org.jooq.impl.Keywords.K_UNBOUNDED_PRECEDING;
-import static org.jooq.impl.Tools.BooleanDataKey.DATA_RANKING_FUNCTION;
-import static org.jooq.impl.Tools.BooleanDataKey.DATA_ROWNUMBER_FUNCTION;
 import static org.jooq.impl.WindowSpecificationImpl.Exclude.CURRENT_ROW;
 import static org.jooq.impl.WindowSpecificationImpl.Exclude.GROUP;
 import static org.jooq.impl.WindowSpecificationImpl.Exclude.NO_OTHERS;
@@ -87,6 +85,7 @@ import org.jooq.WindowSpecificationFinalStep;
 import org.jooq.WindowSpecificationOrderByStep;
 import org.jooq.WindowSpecificationPartitionByStep;
 import org.jooq.WindowSpecificationRowsAndStep;
+import org.jooq.impl.Tools.BooleanDataKey;
 
 /**
  * @author Lukas Eder
@@ -181,7 +180,7 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
 
 
 
-        else if (TRUE.equals(ctx.data(DATA_RANKING_FUNCTION)) && REQUIRES_ORDER_BY_IN_RANKING.contains(ctx.family())) {
+        else if (TRUE.equals(ctx.data(BooleanDataKey.DATA_RANKING_FUNCTION)) && REQUIRES_ORDER_BY_IN_RANKING.contains(ctx.family())) {
             ctx.sql(glue)
                .visit(K_ORDER_BY).sql(' ')
                .visit(field(select(one())));

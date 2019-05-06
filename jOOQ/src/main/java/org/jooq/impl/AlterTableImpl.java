@@ -940,6 +940,7 @@ final class AlterTableImpl extends AbstractQuery implements
         else if (add != null) {
             boolean multiAdd = REQUIRE_REPEAT_ADD_ON_MULTI_ALTER.contains(ctx.family());
             boolean parens = !multiAdd                                                                                     ;
+            boolean comma = true                                                               ;
 
             ctx.start(ALTER_TABLE_ADD)
                .visit(K_ADD)
@@ -957,9 +958,9 @@ final class AlterTableImpl extends AbstractQuery implements
             for (int i = 0; i < add.size(); i++) {
                 if (i > 0)
                     if (multiAdd)
-                        ctx.sql(',').formatSeparator().visit(K_ADD).sql(' ');
+                        ctx.sql(comma ? "," : "").formatSeparator().visit(K_ADD).sql(' ');
                     else
-                        ctx.sql(',').formatSeparator();
+                        ctx.sql(comma ? "," : "").formatSeparator();
 
                 FieldOrConstraint part = add.get(i);
                 ctx.visit(part);
@@ -1183,6 +1184,12 @@ final class AlterTableImpl extends AbstractQuery implements
                     ctx.sql(' ')
                        .visit(dropColumn)
                        .qualify(true);
+
+
+
+
+
+
 
                     separator = ", ";
                 }

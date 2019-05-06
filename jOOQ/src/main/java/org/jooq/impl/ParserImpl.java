@@ -44,6 +44,7 @@ import static java.util.Collections.singletonList;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.conf.ParseWithMetaLookups.IGNORE_ON_FAILURE;
 import static org.jooq.conf.ParseWithMetaLookups.THROW_ON_FAILURE;
 import static org.jooq.impl.DSL.abs;
@@ -6906,6 +6907,12 @@ final class ParserImpl implements Parser {
             parse(ctx, ',');
             Field<String> f3 = (Field) parseField(ctx, S);
             parse(ctx, ')');
+
+
+
+
+
+
             return translate(f1, f2, f3);
         }
 

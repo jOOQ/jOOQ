@@ -64,6 +64,10 @@ final class Translate extends AbstractFunction<String> {
 
 
 
+
+
+
+
             default:
                 return function("translate", getDataType(), getArguments());
         }

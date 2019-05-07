@@ -62,14 +62,6 @@ import org.jooq.InsertResultStep;
 import org.jooq.InsertSetMoreStep;
 import org.jooq.InsertSetStep;
 import org.jooq.InsertValuesStep1;
-import org.jooq.InsertValuesStep2;
-import org.jooq.InsertValuesStep3;
-import org.jooq.InsertValuesStep4;
-import org.jooq.InsertValuesStep5;
-import org.jooq.InsertValuesStep6;
-import org.jooq.InsertValuesStep7;
-import org.jooq.InsertValuesStep8;
-import org.jooq.InsertValuesStep9;
 import org.jooq.InsertValuesStep10;
 import org.jooq.InsertValuesStep11;
 import org.jooq.InsertValuesStep12;
@@ -80,23 +72,23 @@ import org.jooq.InsertValuesStep16;
 import org.jooq.InsertValuesStep17;
 import org.jooq.InsertValuesStep18;
 import org.jooq.InsertValuesStep19;
+import org.jooq.InsertValuesStep2;
 import org.jooq.InsertValuesStep20;
 import org.jooq.InsertValuesStep21;
 import org.jooq.InsertValuesStep22;
+import org.jooq.InsertValuesStep3;
+import org.jooq.InsertValuesStep4;
+import org.jooq.InsertValuesStep5;
+import org.jooq.InsertValuesStep6;
+import org.jooq.InsertValuesStep7;
+import org.jooq.InsertValuesStep8;
+import org.jooq.InsertValuesStep9;
 import org.jooq.InsertValuesStepN;
 import org.jooq.Name;
 import org.jooq.Operator;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Record1;
-import org.jooq.Record2;
-import org.jooq.Record3;
-import org.jooq.Record4;
-import org.jooq.Record5;
-import org.jooq.Record6;
-import org.jooq.Record7;
-import org.jooq.Record8;
-import org.jooq.Record9;
 import org.jooq.Record10;
 import org.jooq.Record11;
 import org.jooq.Record12;
@@ -107,9 +99,17 @@ import org.jooq.Record16;
 import org.jooq.Record17;
 import org.jooq.Record18;
 import org.jooq.Record19;
+import org.jooq.Record2;
 import org.jooq.Record20;
 import org.jooq.Record21;
 import org.jooq.Record22;
+import org.jooq.Record3;
+import org.jooq.Record4;
+import org.jooq.Record5;
+import org.jooq.Record6;
+import org.jooq.Record7;
+import org.jooq.Record8;
+import org.jooq.Record9;
 import org.jooq.Result;
 import org.jooq.SQL;
 import org.jooq.Select;
@@ -324,20 +324,18 @@ class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     private final <T> void addValue(InsertQuery<R> delegate, Field<T> field, int index, Object object) {
 
         // [#1343] Only convert non-jOOQ objects
-        if (object instanceof Field)
-            delegate.addValue(field, (Field<T>) object);
-        else if (object instanceof FieldLike)
-            delegate.addValue(field, ((FieldLike) object).<T>asField());
-        else if (field != null)
-            delegate.addValue(field, field.getDataType().convert(object));
-
-        // [#4629] Plain SQL INSERT INTO t VALUES (a, b, c) statements don't know the insert columns
         // [#8606] The column index is relevant when adding a value to a plain SQL multi row INSERT
         //         statement that does not have any field list.
-        else if (delegate instanceof AbstractStoreQuery)
-            ((AbstractStoreQuery<R>) delegate).addValue(field, index, (T) object);
+        if (object instanceof Field)
+            ((AbstractStoreQuery<R>) delegate).addValue(field, index, (Field<T>) object);
+        else if (object instanceof FieldLike)
+            ((AbstractStoreQuery<R>) delegate).addValue(field, index, ((FieldLike) object).<T>asField());
+        else if (field != null)
+            ((AbstractStoreQuery<R>) delegate).addValue(field, index, field.getDataType().convert(object));
+
+        // [#4629] Plain SQL INSERT INTO t VALUES (a, b, c) statements don't know the insert columns
         else
-            delegate.addValue(field, (T) object);
+            ((AbstractStoreQuery<R>) delegate).addValue(field, index, (T) object);
     }
 
     @Override

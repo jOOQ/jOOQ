@@ -79,8 +79,15 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractDMLQuery<R> 
 
     @Override
     public final <T> void addValue(Field<T> field, T value) {
+        addValue(field, -1, value);
+    }
+
+    final <T> void addValue(Field<T> field, int index, T value) {
         if (field == null)
-            addValue(new UnknownField<T>(getValues().size()), value);
+            if (index >= 0)
+                addValue(new UnknownField<T>(index), value);
+            else
+                addValue(new UnknownField<T>(getValues().size()), value);
         else
             getValues().put(field, Tools.field(value, field));
     }

@@ -307,11 +307,11 @@ class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
 
         getDelegate().newRecord();
         if (fields.length == 0)
-            for (Object value : values)
-                addValue(getDelegate(), null, value);
+            for (int i = 0; i < values.length; i++)
+                addValue(getDelegate(), null, i, values[i]);
         else
             for (int i = 0; i < fields.length; i++)
-                addValue(getDelegate(), fields.length > 0 ? fields[i] : null, values[i]);
+                addValue(getDelegate(), fields.length > 0 ? fields[i] : null, i, values[i]);
 
         return this;
     }
@@ -321,7 +321,7 @@ class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
         return values(values.toArray());
     }
 
-    private <T> void addValue(InsertQuery<R> delegate, Field<T> field, Object object) {
+    private final <T> void addValue(InsertQuery<R> delegate, Field<T> field, int index, Object object) {
 
         // [#1343] Only convert non-jOOQ objects
         if (object instanceof Field)
@@ -332,6 +332,10 @@ class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
             delegate.addValue(field, field.getDataType().convert(object));
 
         // [#4629] Plain SQL INSERT INTO t VALUES (a, b, c) statements don't know the insert columns
+        // [#8606] The column index is relevant when adding a value to a plain SQL multi row INSERT
+        //         statement that does not have any field list.
+        else if (delegate instanceof AbstractStoreQuery)
+            ((AbstractStoreQuery<R>) delegate).addValue(field, index, (T) object);
         else
             delegate.addValue(field, (T) object);
     }

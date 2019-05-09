@@ -73,12 +73,13 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractDMLQuery<R> 
                 addValue((Field) record.field(i), record.get(i));
     }
 
-    final <T> void addValue(R record, Field<T> field) {
-        addValue(field, record.get(field));
+    @Override
+    public final <T> void addValue(Field<T> field, T value) {
+        addValue(field, -1, value);
     }
 
     @Override
-    public final <T> void addValue(Field<T> field, T value) {
+    public final <T> void addValue(Field<T> field, Field<T> value) {
         addValue(field, -1, value);
     }
 
@@ -92,10 +93,12 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractDMLQuery<R> 
             getValues().put(field, Tools.field(value, field));
     }
 
-    @Override
-    public final <T> void addValue(Field<T> field, Field<T> value) {
+    final <T> void addValue(Field<T> field, int index, Field<T> value) {
         if (field == null)
-            addValue(new UnknownField<T>(getValues().size()), value);
+            if (index >= 0)
+                addValue(new UnknownField<T>(index), value);
+            else
+                addValue(new UnknownField<T>(getValues().size()), value);
         else
             getValues().put(field, Tools.field(value, field));
     }

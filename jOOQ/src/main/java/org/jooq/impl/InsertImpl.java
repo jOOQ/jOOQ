@@ -324,20 +324,18 @@ class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     private final <T> void addValue(InsertQuery<R> delegate, Field<T> field, int index, Object object) {
 
         // [#1343] Only convert non-jOOQ objects
-        if (object instanceof Field)
-            delegate.addValue(field, (Field<T>) object);
-        else if (object instanceof FieldLike)
-            delegate.addValue(field, ((FieldLike) object).<T>asField());
-        else if (field != null)
-            delegate.addValue(field, field.getDataType().convert(object));
-
-        // [#4629] Plain SQL INSERT INTO t VALUES (a, b, c) statements don't know the insert columns
         // [#8606] The column index is relevant when adding a value to a plain SQL multi row INSERT
         //         statement that does not have any field list.
-        else if (delegate instanceof AbstractStoreQuery)
-            ((AbstractStoreQuery<R>) delegate).addValue(field, index, (T) object);
+        if (object instanceof Field)
+            ((AbstractStoreQuery<R>) delegate).addValue(field, index, (Field<T>) object);
+        else if (object instanceof FieldLike)
+            ((AbstractStoreQuery<R>) delegate).addValue(field, index, ((FieldLike) object).<T>asField());
+        else if (field != null)
+            ((AbstractStoreQuery<R>) delegate).addValue(field, index, field.getDataType().convert(object));
+
+        // [#4629] Plain SQL INSERT INTO t VALUES (a, b, c) statements don't know the insert columns
         else
-            delegate.addValue(field, (T) object);
+            ((AbstractStoreQuery<R>) delegate).addValue(field, index, (T) object);
     }
 
     @Override

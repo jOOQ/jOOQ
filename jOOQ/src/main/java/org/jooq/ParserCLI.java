@@ -69,7 +69,7 @@ public final class ParserCLI {
             settings(a, settings);
             ctx = ctx(a, settings);
 
-            if (a.interactive) {
+            if (a.interactive || args == null || args.length == 0) {
                 interactiveMode(ctx, a);
             }
             else if (a.toDialect == null || a.sql == null) {

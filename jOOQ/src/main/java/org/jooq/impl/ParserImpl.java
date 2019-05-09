@@ -4209,6 +4209,13 @@ final class ParserImpl implements Parser {
 
             return f1.likeRegex((Field) f2);
         }
+        else if (parseKeywordIf(ctx, "UNIQUE")) {
+            parse(ctx, '(');
+            Select<?> select = parseSelect(ctx);
+            parse(ctx, ')');
+
+            return unique(select);
+        }
         else {
             FieldOrRow left;
             Comparator comp;

@@ -298,7 +298,7 @@ jOOQ queries, for which no specific fetchSize value was specified.]]></jxb:javad
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#7337] The input dialect that should be chosen to disambiguate ambiguous SQL syntax.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
-      <element name="parseWithMetaLookups" type="jooq-runtime:ParseWithMetaLookups" minOccurs="0" maxOccurs="1" default="IGNORE_ON_FAILURE">
+      <element name="parseWithMetaLookups" type="jooq-runtime:ParseWithMetaLookups" minOccurs="0" maxOccurs="1" default="OFF">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#7163] Whether the parser should perform meta lookups in the Configuration's MetaProvider.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 

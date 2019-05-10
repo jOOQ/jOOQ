@@ -140,9 +140,9 @@ public class Settings
     @XmlElement(type = String.class, defaultValue = "DEFAULT")
     @XmlJavaTypeAdapter(SQLDialectAdapter.class)
     protected SQLDialect parseDialect;
-    @XmlElement(defaultValue = "IGNORE_ON_FAILURE")
+    @XmlElement(defaultValue = "OFF")
     @XmlSchemaType(name = "string")
-    protected ParseWithMetaLookups parseWithMetaLookups = ParseWithMetaLookups.IGNORE_ON_FAILURE;
+    protected ParseWithMetaLookups parseWithMetaLookups = ParseWithMetaLookups.OFF;
     @XmlElement(defaultValue = "IGNORE")
     @XmlSchemaType(name = "string")
     protected ParseUnsupportedSyntax parseUnsupportedSyntax = ParseUnsupportedSyntax.IGNORE;

@@ -8269,7 +8269,7 @@ final class ParserImpl implements Parser {
     }
 
     private static final Table<?> parseTableName(ParserContext ctx) {
-        return table(parseName(ctx));
+        return ctx.tableLookup(parseName(ctx));
     }
 
     private static final Table<?> parseTableNameIf(ParserContext ctx) {
@@ -8317,7 +8317,7 @@ final class ParserImpl implements Parser {
 
 
 
-            return field(name);
+            return ctx.lookupField(name);
         }
     }
 
@@ -8412,7 +8412,7 @@ final class ParserImpl implements Parser {
                 }
                 else {
                     parse(ctx, '*');
-                    return table(result == null ? i1 : DSL.name(result.toArray(EMPTY_NAME))).asterisk();
+                    return ctx.tableLookup(result == null ? i1 : DSL.name(result.toArray(EMPTY_NAME))).asterisk();
                 }
             }
             while (parseIf(ctx, '.'));
@@ -10261,6 +10261,38 @@ final class ParserContext {
               + "[*]"
               + sqlString.substring(position, Math.min(sqlString.length(), position + 80))
               + (sqlString.length() > position + 80 ? "..." : "");
+    }
+
+    Table<?> tableLookup(Name name) {
+        if (meta != null) {
+            List<Table<?>> tables = meta.getTables(name);
+
+            if (tables.size() == 1)
+                return tables.get(0);
+        }
+
+        if (metaLookups == THROW_ON_FAILURE)
+            throw exception("Unknown table identifier");
+
+        return table(name);
+    }
+
+    Field<?> lookupField(Name name) {
+        if (meta != null) {
+            List<Table<?>> tables = meta.getTables(name.qualifier());
+
+            if (tables.size() == 1) {
+                Field<?> field = tables.get(0).field(name);
+
+                if (field != null)
+                    return field;
+            }
+        }
+
+        if (metaLookups == THROW_ON_FAILURE)
+            throw exception("Unknown field identifier");
+
+        return field(name);
     }
 
     @Override

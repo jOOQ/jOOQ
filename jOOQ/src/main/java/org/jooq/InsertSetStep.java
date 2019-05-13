@@ -112,7 +112,6 @@ public interface InsertSetStep<R extends Record> {
     InsertValuesStepN<R> columns(Collection<? extends Field<?>> fields);
 
     // [jooq-tools] START [columns]
-
     /**
      * Set the columns for insert.
      */

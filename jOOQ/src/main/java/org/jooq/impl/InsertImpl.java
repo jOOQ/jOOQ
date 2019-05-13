@@ -459,11 +459,11 @@ class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
 
         // javac has trouble when inferring Object for T. Use Void instead
         if (fields.length == 0)
-            for (Field<?> value : values)
-                getDelegate().addValue((Field<Void>) null, (Field<Void>) value);
+            for (int i = 0; i < values.length; i++)
+                addValue(getDelegate(), (Field<Void>) null, i, (Field<Void>) values[i]);
         else
             for (int i = 0; i < fields.length; i++)
-                getDelegate().addValue((Field<Void>) fields[i], (Field<Void>) values[i]);
+                addValue(getDelegate(), (Field<Void>) fields[i], i, (Field<Void>) values[i]);
 
         return this;
     }

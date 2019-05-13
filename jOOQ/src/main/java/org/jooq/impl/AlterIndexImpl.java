@@ -79,7 +79,7 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-final class AlterIndexImpl extends AbstractQuery implements
+final class AlterIndexImpl extends AbstractRowCountQuery implements
 
     // Cascading interface implementations for ALTER INDEX behaviour
     AlterIndexOnStep,

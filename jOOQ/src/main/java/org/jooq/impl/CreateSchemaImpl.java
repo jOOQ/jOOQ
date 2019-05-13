@@ -69,7 +69,7 @@ import org.jooq.Schema;
 /**
  * @author Lukas Eder
  */
-final class CreateSchemaImpl<R extends Record> extends AbstractQuery implements
+final class CreateSchemaImpl<R extends Record> extends AbstractRowCountQuery implements
 
     // Cascading interface implementations for CREATE SCHEMA behaviour
     CreateSchemaFinalStep {

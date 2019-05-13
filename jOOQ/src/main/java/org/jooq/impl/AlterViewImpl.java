@@ -79,7 +79,7 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-final class AlterViewImpl extends AbstractQuery implements
+final class AlterViewImpl extends AbstractRowCountQuery implements
 
     // Cascading interface implementations for ALTER VIEW behaviour
     AlterViewStep,

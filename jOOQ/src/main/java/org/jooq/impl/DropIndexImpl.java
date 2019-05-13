@@ -74,7 +74,7 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-final class DropIndexImpl extends AbstractQuery implements
+final class DropIndexImpl extends AbstractRowCountQuery implements
 
     // Cascading interface implementations for DROP INDEX behaviour
     DropIndexOnStep {

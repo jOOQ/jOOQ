@@ -123,7 +123,7 @@ import org.jooq.UpdateWhereStep;
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
 final class UpdateImpl<R extends Record>
-    extends AbstractDelegatingQuery<UpdateQuery<R>>
+    extends AbstractDelegatingRowCountQuery<UpdateQuery<R>>
     implements
 
     // Cascading interface implementations for Update behaviour

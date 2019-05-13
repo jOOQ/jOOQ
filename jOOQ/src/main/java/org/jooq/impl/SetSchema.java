@@ -52,7 +52,7 @@ import org.jooq.Schema;
 /**
  * @author Lukas Eder
  */
-final class SetSchema extends AbstractQuery {
+final class SetSchema extends AbstractRowCountQuery {
 
     private static final long serialVersionUID = -3996953205762741746L;
     private final Schema      schema;

@@ -48,7 +48,7 @@ import org.jooq.Context;
 /**
  * @author Lukas Eder
  */
-final class SetCatalog extends AbstractQuery {
+final class SetCatalog extends AbstractRowCountQuery {
 
     private static final long serialVersionUID = -3996953205762741746L;
     private final Catalog     catalog;

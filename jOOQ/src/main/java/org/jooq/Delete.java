@@ -59,6 +59,6 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
-public interface Delete<R extends Record> extends Query {
+public interface Delete<R extends Record> extends RowCountQuery {
 
 }

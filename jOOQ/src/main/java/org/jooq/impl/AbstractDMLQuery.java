@@ -121,7 +121,7 @@ import org.jooq.tools.jdbc.JDBCUtils;
 /**
  * @author Lukas Eder
  */
-abstract class AbstractDMLQuery<R extends Record> extends AbstractQuery {
+abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery {
 
     /**
      * Generated UID

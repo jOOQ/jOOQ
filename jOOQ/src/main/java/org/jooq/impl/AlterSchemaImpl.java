@@ -56,7 +56,7 @@ import org.jooq.Schema;
 /**
  * @author Lukas Eder
  */
-final class AlterSchemaImpl extends AbstractQuery implements
+final class AlterSchemaImpl extends AbstractRowCountQuery implements
 
     // Cascading interface implementations for ALTER SCHEMA behaviour
     AlterSchemaStep,

@@ -54,7 +54,7 @@ import org.jooq.Name;
 /**
  * @author Lukas Eder
  */
-final class DropTypeImpl extends AbstractQuery implements
+final class DropTypeImpl extends AbstractRowCountQuery implements
 
     // Cascading interface implementations for CREATE TYPE behaviour
     DropTypeStep {

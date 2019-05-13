@@ -42,6 +42,6 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface DDLQuery extends Query {
+public interface DDLQuery extends RowCountQuery {
 
 }

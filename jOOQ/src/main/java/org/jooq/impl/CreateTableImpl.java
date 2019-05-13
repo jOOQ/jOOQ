@@ -126,7 +126,7 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-final class CreateTableImpl extends AbstractQuery implements
+final class CreateTableImpl extends AbstractRowCountQuery implements
 
     // Cascading interface implementations for CREATE TABLE behaviour
     CreateTableWithDataStep,

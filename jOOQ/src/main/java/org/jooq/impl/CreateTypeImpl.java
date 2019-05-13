@@ -58,7 +58,7 @@ import org.jooq.conf.ParamType;
 /**
  * @author Lukas Eder
  */
-final class CreateTypeImpl extends AbstractQuery implements
+final class CreateTypeImpl extends AbstractRowCountQuery implements
 
     // Cascading interface implementations for CREATE TYPE behaviour
     CreateTypeStep,

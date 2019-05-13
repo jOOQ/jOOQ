@@ -64,9 +64,10 @@ import org.jooq.User;
 
 /**
  * Grant privilege or privileges on a table to user or role.
+ *
  * @author Timur Shaidullin
  */
-final class GrantImpl extends AbstractQuery implements
+final class GrantImpl extends AbstractRowCountQuery implements
 
     // Cascading interface implementations for Select behaviour
     GrantOnStep,

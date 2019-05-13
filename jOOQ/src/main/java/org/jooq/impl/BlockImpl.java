@@ -88,7 +88,7 @@ import org.jooq.Statement;
 /**
  * @author Lukas Eder
  */
-final class BlockImpl extends AbstractQuery implements Block {
+final class BlockImpl extends AbstractRowCountQuery implements Block {
 
     /**
      * Generated UID

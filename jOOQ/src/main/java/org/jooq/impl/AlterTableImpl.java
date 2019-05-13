@@ -166,7 +166,7 @@ import org.jooq.Table;
  * @author Lukas Eder
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
-final class AlterTableImpl extends AbstractQuery implements
+final class AlterTableImpl extends AbstractRowCountQuery implements
 
     // Cascading interface implementations for ALTER TABLE behaviour
     AlterTableStep,

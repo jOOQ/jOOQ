@@ -73,7 +73,7 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-class CommentOnImpl extends AbstractQuery
+class CommentOnImpl extends AbstractRowCountQuery
 implements
     CommentOnIsStep,
     CommentOnFinalStep {

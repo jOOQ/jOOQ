@@ -64,7 +64,7 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-final class DropTableImpl extends AbstractQuery implements
+final class DropTableImpl extends AbstractRowCountQuery implements
 
     // Cascading interface implementations for DROP TABLE behaviour
     DropTableStep {

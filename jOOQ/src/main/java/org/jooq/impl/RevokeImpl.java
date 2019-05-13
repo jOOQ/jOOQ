@@ -69,7 +69,7 @@ import org.jooq.User;
  *
  * @author Timur Shaidullin
  */
-final class RevokeImpl extends AbstractQuery implements
+final class RevokeImpl extends AbstractRowCountQuery implements
 
     // Cascading interface implementations for Select behaviour
     RevokeOnStep,

@@ -64,7 +64,7 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-final class DropViewImpl extends AbstractQuery implements
+final class DropViewImpl extends AbstractRowCountQuery implements
 
     // Cascading interface implementations for DROP VIEW behaviour
     DropViewFinalStep {

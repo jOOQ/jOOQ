@@ -78,6 +78,6 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
-public interface Block extends Query {
+public interface Block extends RowCountQuery {
 
 }

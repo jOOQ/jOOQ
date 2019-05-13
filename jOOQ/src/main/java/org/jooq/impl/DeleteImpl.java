@@ -90,7 +90,7 @@ import org.jooq.Table;
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
 final class DeleteImpl<R extends Record>
-    extends AbstractDelegatingQuery<DeleteQueryImpl<R>>
+    extends AbstractDelegatingRowCountQuery<DeleteQueryImpl<R>>
     implements
 
     // Cascading interface implementations for Delete behaviour

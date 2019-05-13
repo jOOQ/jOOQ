@@ -80,7 +80,7 @@ import org.jooq.Sequence;
 /**
  * @author Lukas Eder
  */
-final class AlterSequenceImpl<T extends Number> extends AbstractQuery implements
+final class AlterSequenceImpl<T extends Number> extends AbstractRowCountQuery implements
 
     // Cascading interface implementations for AlterSequence behaviour
     AlterSequenceStep<T>,

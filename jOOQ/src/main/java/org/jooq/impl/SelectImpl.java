@@ -54,6 +54,7 @@ import java.util.Set;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Flow;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collector;
@@ -2700,6 +2701,21 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
         return getDelegate().iterator();
     }
 
+
+
+    @Override
+    public final void subscribe(Flow.Subscriber<? super R> subscriber) {
+        getDelegate().subscribe(subscriber);
+    }
+
+
+
+
+
+    @Override
+    public final void subscribe(org.reactivestreams.Subscriber<? super R> subscriber) {
+        getDelegate().subscribe(subscriber);
+    }
 
     @Override
     public final Stream<R> fetchStream() {

@@ -57,6 +57,7 @@ import java.lang.reflect.Array;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.EnumSet;
@@ -70,6 +71,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Flow;
 import java.util.concurrent.Future;
 import java.util.stream.Collector;
 import java.util.stream.Stream;
@@ -370,6 +372,66 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
 
+
+    @Override
+    public final void subscribe(Flow.Subscriber<? super R> subscriber) {
+        subscribe(new FlowToReactiveStreamsSubscriberBridge<R>(subscriber));
+    }
+
+
+
+
+
+    @Override
+    public final void subscribe(org.reactivestreams.Subscriber<? super R> subscriber) {
+        subscriber.onSubscribe(new org.reactivestreams.Subscription() {
+            Cursor<R> c;
+            ArrayDeque<R> buffer;
+
+            @Override
+            public void request(long n) {
+                int i = (int) Math.min(n, Integer.MAX_VALUE);
+
+                try {
+                    if (c == null)
+                        c = fetchLazy();
+
+                    if (buffer == null)
+                        buffer = new ArrayDeque<R>();
+
+                    if (buffer.size() < i)
+                        buffer.addAll(c.fetchNext(i - buffer.size()));
+
+                    boolean complete = buffer.size() < i;
+                    while (!buffer.isEmpty()) {
+                        subscriber.onNext(buffer.pollFirst());
+                    }
+
+                    if (complete)
+                        doComplete();
+                }
+                catch (Throwable t) {
+                    subscriber.onError(t);
+                    doComplete();
+                }
+            }
+
+            private void doComplete() {
+                close();
+                subscriber.onComplete();
+            }
+
+            private void close() {
+                if (c != null)
+                    c.close();
+            }
+
+            @Override
+            public void cancel() {
+                close();
+            }
+        });
+    }
 
     @Override
     public final CompletionStage<Result<R>> fetchAsync() {

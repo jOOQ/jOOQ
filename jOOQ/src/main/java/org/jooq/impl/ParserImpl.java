@@ -1171,13 +1171,7 @@ final class ParserImpl implements Parser {
 
         // T-SQL style TOP .. START AT
         if (parseKeywordIf(ctx, "TOP")) {
-            int parens;
-            for (parens = 0; parseIf(ctx, '('); parens++);
-
-            limit = parseUnsignedInteger(ctx);
-
-            for (; parens > 0 && parse(ctx, ')'); parens--);
-
+            limit = parseParenthesisedUnsignedInteger(ctx);
             percent = parseKeywordIf(ctx, "PERCENT") && ctx.requireProEdition();
 
             if (parseKeywordIf(ctx, "START AT"))
@@ -1595,6 +1589,16 @@ final class ParserImpl implements Parser {
         if (!parseKeywordIf(ctx, "DEL"))
             parseKeyword(ctx, "DELETE");
 
+        Long limit = null;
+
+        // T-SQL style TOP .. START AT
+        if (parseKeywordIf(ctx, "TOP")) {
+            limit = parseParenthesisedUnsignedInteger(ctx);
+
+            // [#8623] TODO Support this
+            // percent = parseKeywordIf(ctx, "PERCENT") && ctx.requireProEdition();
+        }
+
         parseKeywordIf(ctx, "FROM");
         Table<?> table = parseTableNameIf(ctx);
         if (table == null) {
@@ -1609,7 +1613,9 @@ final class ParserImpl implements Parser {
         DeleteWhereStep<?> s1 = with == null ? ctx.dsl.delete(table) : with.delete(table);
         DeleteOrderByStep<?> s2 = parseKeywordIf(ctx, "WHERE") ? s1.where(parseCondition(ctx)) : s1;
         DeleteLimitStep<?> s3 = parseKeywordIf(ctx, "ORDER BY") ? s2.orderBy(parseSortSpecification(ctx)) : s2;
-        DeleteReturningStep<?> s4 = parseKeywordIf(ctx, "LIMIT") ? s3.limit(parseUnsignedInteger(ctx)) : s3;
+        DeleteReturningStep<?> s4 = (limit != null || parseKeywordIf(ctx, "LIMIT"))
+            ? s3.limit(limit != null ? limit : parseUnsignedInteger(ctx))
+            : s3;
         Delete<?> s5 = parseKeywordIf(ctx, "RETURNING") ? s4.returning(parseSelectList(ctx)) : s4;
 
         return s5;
@@ -1756,6 +1762,16 @@ final class ParserImpl implements Parser {
         if (!parseKeywordIf(ctx, "UPD"))
             parseKeyword(ctx, "UPDATE");
 
+        Long limit = null;
+
+        // T-SQL style TOP .. START AT
+        if (parseKeywordIf(ctx, "TOP")) {
+            limit = parseParenthesisedUnsignedInteger(ctx);
+
+            // [#8623] TODO Support this
+            // percent = parseKeywordIf(ctx, "PERCENT") && ctx.requireProEdition();
+        }
+
         Table<?> table = parseTableNameIf(ctx);
         if (table == null)
             table = table(parseSelect(ctx));
@@ -1775,7 +1791,9 @@ final class ParserImpl implements Parser {
         UpdateWhereStep<?> s3 = parseKeywordIf(ctx, "FROM") ? s2.from(parseTables(ctx)) : s2;
         UpdateOrderByStep<?> s4 = parseKeywordIf(ctx, "WHERE") ? s3.where(parseCondition(ctx)) : s3;
         UpdateLimitStep<?> s5 = parseKeywordIf(ctx, "ORDER BY") ? s4.orderBy(parseSortSpecification(ctx)) : s4;
-        UpdateReturningStep<?> s6 = parseKeywordIf(ctx, "LIMIT") ? s5.limit(parseUnsignedInteger(ctx)) : s5;
+        UpdateReturningStep<?> s6 = (limit != null || parseKeywordIf(ctx, "LIMIT"))
+            ? s5.limit(limit != null ? limit : parseUnsignedInteger(ctx))
+            : s5;
         Update<?> s7 = parseKeywordIf(ctx, "RETURNING") ? s6.returning(parseSelectList(ctx)) : s6;
 
         return s7;
@@ -9336,6 +9354,18 @@ final class ParserImpl implements Parser {
              : sign == Sign.MINUS
              ? -unsigned
              : unsigned;
+    }
+
+    private static final Long parseParenthesisedUnsignedInteger(ParserContext ctx) {
+        Long result;
+
+        int parens;
+        for (parens = 0; parseIf(ctx, '('); parens++);
+
+        result = parseUnsignedInteger(ctx);
+
+        for (; parens > 0 && parse(ctx, ')'); parens--);
+        return result;
     }
 
     private static final Long parseUnsignedInteger(ParserContext ctx) {

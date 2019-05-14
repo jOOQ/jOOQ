@@ -8268,7 +8268,7 @@ final class ParserImpl implements Parser {
     }
 
     private static final Table<?> parseTableName(ParserContext ctx) {
-        return ctx.tableLookup(parseName(ctx));
+        return ctx.lookupTable(parseName(ctx));
     }
 
     private static final Table<?> parseTableNameIf(ParserContext ctx) {
@@ -8411,7 +8411,7 @@ final class ParserImpl implements Parser {
                 }
                 else {
                     parse(ctx, '*');
-                    return ctx.tableLookup(result == null ? i1 : DSL.name(result.toArray(EMPTY_NAME))).asterisk();
+                    return ctx.lookupTable(result == null ? i1 : DSL.name(result.toArray(EMPTY_NAME))).asterisk();
                 }
             }
             while (parseIf(ctx, '.'));
@@ -10256,7 +10256,7 @@ final class ParserContext {
               + (sqlString.length() > position + 80 ? "..." : "");
     }
 
-    Table<?> tableLookup(Name name) {
+    Table<?> lookupTable(Name name) {
         if (meta != null) {
             List<Table<?>> tables = meta.getTables(name);
 

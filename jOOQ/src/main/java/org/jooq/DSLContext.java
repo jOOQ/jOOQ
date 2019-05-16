@@ -5525,6 +5525,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see SQL
      */
     @Support
+    @PlainSQL
     <R extends Record> SelectWhereStep<R> selectFrom(SQL sql);
 
     /**
@@ -5544,6 +5545,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see SQL
      */
     @Support
+    @PlainSQL
     <R extends Record> SelectWhereStep<R> selectFrom(String sql);
 
     /**
@@ -5563,6 +5565,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see SQL
      */
     @Support
+    @PlainSQL
     <R extends Record> SelectWhereStep<R> selectFrom(String sql, Object... bindings);
 
     /**
@@ -5582,6 +5585,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see SQL
      */
     @Support
+    @PlainSQL
     <R extends Record> SelectWhereStep<R> selectFrom(String sql, QueryPart... parts);
 
     /**

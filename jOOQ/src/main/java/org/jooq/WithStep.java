@@ -471,6 +471,7 @@ public interface WithStep extends QueryPart {
      * @see SQL
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @PlainSQL
     <R extends Record> SelectWhereStep<R> selectFrom(SQL sql);
 
     /**
@@ -490,6 +491,7 @@ public interface WithStep extends QueryPart {
      * @see SQL
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @PlainSQL
     <R extends Record> SelectWhereStep<R> selectFrom(String sql);
 
     /**
@@ -509,6 +511,7 @@ public interface WithStep extends QueryPart {
      * @see SQL
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @PlainSQL
     <R extends Record> SelectWhereStep<R> selectFrom(String sql, Object... bindings);
 
     /**
@@ -528,6 +531,7 @@ public interface WithStep extends QueryPart {
      * @see SQL
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @PlainSQL
     <R extends Record> SelectWhereStep<R> selectFrom(String sql, QueryPart... parts);
 
     /**

@@ -684,8 +684,9 @@ BEGIN
       AND rental.rental_date <= p_effective_date
       AND rental.customer_id = p_customer_id;
 
-    SELECT COALESCE(SUM(IF((rental.return_date - rental.rental_date) > (film.rental_duration * '1 day'::interval),
-        ((rental.return_date - rental.rental_date) - (film.rental_duration * '1 day'::interval)),0)),0) INTO v_overfees
+    SELECT COALESCE(SUM(CASE WHEN (rental.return_date - rental.rental_date) > (film.rental_duration * '1 day'::interval)
+        THEN EXTRACT(DAY FROM (rental.return_date - rental.rental_date) - (film.rental_duration * '1 day'::interval))::integer
+        ELSE 0 END),0) INTO v_overfees
     FROM rental, inventory, film
     WHERE film.film_id = inventory.film_id
       AND inventory.inventory_id = rental.inventory_id

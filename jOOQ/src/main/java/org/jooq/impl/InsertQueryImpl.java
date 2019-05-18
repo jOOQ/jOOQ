@@ -176,6 +176,24 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
     @Override
     public final void onConflictOnConstraint(Constraint constraint) {
+        onConflictOnConstraint0(constraint);
+    }
+
+    @Override
+    public void onConflictOnConstraint(UniqueKey<R> constraint) {
+        if (StringUtils.isEmpty(constraint.getName()))
+            throw new IllegalArgumentException("UniqueKey's name is not specified");
+
+        this.onConstraintUniqueKey = constraint;
+        onConflictOnConstraint0(constraint(name(constraint.getName())));
+    }
+
+    @Override
+    public final void onConflictOnConstraint(Name constraint) {
+        onConflictOnConstraint0(constraint(constraint));
+    }
+
+    private void onConflictOnConstraint0(Constraint constraint) {
         this.onConstraint = constraint;
 
         if (onConstraintUniqueKey == null) {
@@ -186,20 +204,6 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                 }
             }
         }
-    }
-
-    @Override
-    public void onConflictOnConstraint(UniqueKey<R> constraint) {
-        if (StringUtils.isEmpty(constraint.getName()))
-            throw new IllegalArgumentException("UniqueKey's name is not specified");
-
-        this.onConstraintUniqueKey = constraint;
-        onConflictOnConstraint(name(constraint.getName()));
-    }
-
-    @Override
-    public final void onConflictOnConstraint(Name constraint) {
-        onConflictOnConstraint(constraint(constraint));
     }
 
     @Override

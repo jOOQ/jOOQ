@@ -555,7 +555,7 @@ public interface AlterTableStep {
      * Add a <code>DROP CONSTRAINT</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     AlterTableFinalStep drop(Constraint constraint);
 
     /**
@@ -564,8 +564,27 @@ public interface AlterTableStep {
      *
      * @see DSL#constraint(String)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    AlterTableFinalStep dropConstraint(Constraint constraint);
+
+    /**
+     * Add a <code>DROP CONSTRAINT</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     *
+     * @see DSL#constraint(String)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     AlterTableFinalStep dropConstraint(Name constraint);
+
+    /**
+     * Add a <code>DROP CONSTRAINT</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     *
+     * @see DSL#constraint(String)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    AlterTableFinalStep dropConstraint(String constraint);
+
     /**
      * Add a <code>DROP CONSTRAINT</code> clause to the <code>ALTER TABLE</code>
      * statement.
@@ -573,5 +592,23 @@ public interface AlterTableStep {
      * @see DSL#constraint(String)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    AlterTableFinalStep dropConstraint(String constraint);
+    AlterTableFinalStep dropForeignKey(Constraint constraint);
+
+    /**
+     * Add a <code>DROP CONSTRAINT</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     *
+     * @see DSL#constraint(String)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    AlterTableFinalStep dropForeignKey(Name constraint);
+
+    /**
+     * Add a <code>DROP CONSTRAINT</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     *
+     * @see DSL#constraint(String)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    AlterTableFinalStep dropForeignKey(String constraint);
 }

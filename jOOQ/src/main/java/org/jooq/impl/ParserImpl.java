@@ -3609,9 +3609,10 @@ final class ParserImpl implements Parser {
             case 'D':
                 if (parseKeywordIf(ctx, "DROP")) {
                     if (parseKeywordIf(ctx, "CONSTRAINT")) {
-                        Name constraint = parseIdentifier(ctx);
-
-                        return s1.dropConstraint(constraint);
+                        return s1.dropConstraint(parseIdentifier(ctx));
+                    }
+                    else if (parseKeywordIf(ctx, "FOREIGN KEY")) {
+                        return s1.dropForeignKey(parseIdentifier(ctx));
                     }
                     else if (parseKeywordIf(ctx, "INDEX")
                           || parseKeywordIf(ctx, "KEY")) {

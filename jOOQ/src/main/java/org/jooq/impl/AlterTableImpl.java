@@ -70,6 +70,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
+import static org.jooq.impl.ConstraintType.FOREIGN_KEY;
 import static org.jooq.impl.DSL.commentOnTable;
 import static org.jooq.impl.DSL.constraint;
 import static org.jooq.impl.DSL.field;
@@ -95,6 +96,7 @@ import static org.jooq.impl.Keywords.K_ELSE;
 import static org.jooq.impl.Keywords.K_END_IF;
 import static org.jooq.impl.Keywords.K_EXCEPTION;
 import static org.jooq.impl.Keywords.K_EXEC;
+import static org.jooq.impl.Keywords.K_FOREIGN_KEY;
 import static org.jooq.impl.Keywords.K_IF;
 import static org.jooq.impl.Keywords.K_IF_EXISTS;
 import static org.jooq.impl.Keywords.K_IF_NOT_EXISTS;
@@ -188,6 +190,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
     private static final EnumSet<SQLDialect> SUPPORT_RENAME_TABLE                  = EnumSet.of(DERBY);
     private static final EnumSet<SQLDialect> NO_SUPPORT_RENAME_QUALIFIED_TABLE     = EnumSet.of(POSTGRES);
     private static final EnumSet<SQLDialect> NO_SUPPORT_ALTER_TYPE_AND_NULL        = EnumSet.of(POSTGRES);
+    private static final EnumSet<SQLDialect> NO_SUPPORT_DROP_CONSTRAINT            = EnumSet.of(MYSQL);
     private static final EnumSet<SQLDialect> REQUIRE_REPEAT_ADD_ON_MULTI_ALTER     = EnumSet.of(FIREBIRD, MARIADB, MYSQL, POSTGRES);
     private static final EnumSet<SQLDialect> REQUIRE_REPEAT_DROP_ON_MULTI_ALTER    = EnumSet.of(FIREBIRD, MARIADB, MYSQL, POSTGRES);
 
@@ -228,6 +231,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
     private QueryPartList<Field<?>>          dropColumns;
     private boolean                          dropColumnCascade;
     private Constraint                       dropConstraint;
+    private ConstraintType                   dropConstraintType;
 
     AlterTableImpl(Configuration configuration, Table<?> table) {
         this(configuration, table, false);
@@ -663,17 +667,40 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
     @Override
     public final AlterTableImpl drop(Constraint constraint) {
         dropConstraint = constraint;
+        dropConstraintType = null;
         return this;
     }
 
     @Override
+    public final AlterTableImpl dropConstraint(Constraint constraint) {
+        return drop(constraint);
+    }
+
+    @Override
     public final AlterTableImpl dropConstraint(Name constraint) {
-        return drop(DSL.constraint(constraint));
+        return dropConstraint(DSL.constraint(constraint));
     }
 
     @Override
     public final AlterTableImpl dropConstraint(String constraint) {
-        return drop(DSL.constraint(constraint));
+        return dropConstraint(DSL.constraint(constraint));
+    }
+
+    @Override
+    public final AlterTableImpl dropForeignKey(Constraint constraint) {
+        dropConstraint = constraint;
+        dropConstraintType = FOREIGN_KEY;
+        return this;
+    }
+
+    @Override
+    public final AlterTableImpl dropForeignKey(Name constraint) {
+        return dropForeignKey(DSL.constraint(constraint));
+    }
+
+    @Override
+    public final AlterTableImpl dropForeignKey(String constraint) {
+        return dropForeignKey(DSL.constraint(constraint));
     }
 
     @Override
@@ -1232,9 +1259,14 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
             ctx.start(ALTER_TABLE_DROP);
             ctx.data(DATA_CONSTRAINT_REFERENCE, true);
 
-            ctx.visit(K_DROP_CONSTRAINT)
-               .sql(' ')
-               .visit(dropConstraint);
+            if (dropConstraintType == FOREIGN_KEY && NO_SUPPORT_DROP_CONSTRAINT.contains(family))
+                ctx.visit(K_DROP).sql(' ').visit(K_FOREIGN_KEY)
+                   .sql(' ')
+                   .visit(dropConstraint);
+            else
+                ctx.visit(K_DROP_CONSTRAINT)
+                   .sql(' ')
+                   .visit(dropConstraint);
 
             ctx.data().remove(DATA_CONSTRAINT_REFERENCE);
             ctx.end(ALTER_TABLE_DROP);

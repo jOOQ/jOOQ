@@ -132,6 +132,7 @@ final class Keywords {
     static final Keyword K_EXCEPTION                        = keyword("exception");
     static final Keyword K_EXCLUDE                          = keyword("exclude");
     static final Keyword K_EXEC                             = keyword("exec");
+    static final Keyword K_EXECUTE                          = keyword("execute");
     static final Keyword K_EXECUTE_BLOCK                    = keyword("execute block");
     static final Keyword K_EXECUTE_IMMEDIATE                = keyword("execute immediate");
     static final Keyword K_EXECUTE_STATEMENT                = keyword("execute statement");

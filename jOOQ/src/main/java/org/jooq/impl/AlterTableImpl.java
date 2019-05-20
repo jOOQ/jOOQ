@@ -71,6 +71,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 import static org.jooq.impl.ConstraintType.FOREIGN_KEY;
+import static org.jooq.impl.ConstraintType.PRIMARY_KEY;
 import static org.jooq.impl.DSL.commentOnTable;
 import static org.jooq.impl.DSL.constraint;
 import static org.jooq.impl.DSL.field;
@@ -104,6 +105,7 @@ import static org.jooq.impl.Keywords.K_LIKE;
 import static org.jooq.impl.Keywords.K_MODIFY;
 import static org.jooq.impl.Keywords.K_NOT_NULL;
 import static org.jooq.impl.Keywords.K_NULL;
+import static org.jooq.impl.Keywords.K_PRIMARY_KEY;
 import static org.jooq.impl.Keywords.K_RAISE;
 import static org.jooq.impl.Keywords.K_RENAME;
 import static org.jooq.impl.Keywords.K_RENAME_COLUMN;
@@ -684,6 +686,12 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
     @Override
     public final AlterTableImpl dropConstraint(String constraint) {
         return dropConstraint(DSL.constraint(constraint));
+    }
+
+    @Override
+    public final AlterTableImpl dropPrimaryKey() {
+        dropConstraintType = PRIMARY_KEY;
+        return this;
     }
 
     @Override
@@ -1269,6 +1277,11 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
                    .visit(dropConstraint);
 
             ctx.data().remove(DATA_CONSTRAINT_REFERENCE);
+            ctx.end(ALTER_TABLE_DROP);
+        }
+        else if (dropConstraintType == PRIMARY_KEY) {
+            ctx.start(ALTER_TABLE_DROP);
+            ctx.visit(K_DROP).sql(' ').visit(K_PRIMARY_KEY);
             ctx.end(ALTER_TABLE_DROP);
         }
 

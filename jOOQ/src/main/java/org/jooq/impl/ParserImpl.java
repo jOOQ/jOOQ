@@ -3611,6 +3611,9 @@ final class ParserImpl implements Parser {
                     if (parseKeywordIf(ctx, "CONSTRAINT")) {
                         return s1.dropConstraint(parseIdentifier(ctx));
                     }
+                    else if (parseKeywordIf(ctx, "PRIMARY KEY")) {
+                        return s1.dropPrimaryKey();
+                    }
                     else if (parseKeywordIf(ctx, "FOREIGN KEY")) {
                         return s1.dropForeignKey(parseIdentifier(ctx));
                     }

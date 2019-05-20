@@ -586,7 +586,14 @@ public interface AlterTableStep {
     AlterTableFinalStep dropConstraint(String constraint);
 
     /**
-     * Add a <code>DROP CONSTRAINT</code> clause to the <code>ALTER TABLE</code>
+     * Add a <code>DROP PRIMARY KEY</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     */
+    @Support({ MARIADB, MYSQL })
+    AlterTableFinalStep dropPrimaryKey();
+
+    /**
+     * Add a <code>DROP FOREIGN KEY</code> clause to the <code>ALTER TABLE</code>
      * statement.
      *
      * @see DSL#constraint(String)
@@ -595,7 +602,7 @@ public interface AlterTableStep {
     AlterTableFinalStep dropForeignKey(Constraint constraint);
 
     /**
-     * Add a <code>DROP CONSTRAINT</code> clause to the <code>ALTER TABLE</code>
+     * Add a <code>DROP FOREIGN KEY</code> clause to the <code>ALTER TABLE</code>
      * statement.
      *
      * @see DSL#constraint(String)
@@ -604,7 +611,7 @@ public interface AlterTableStep {
     AlterTableFinalStep dropForeignKey(Name constraint);
 
     /**
-     * Add a <code>DROP CONSTRAINT</code> clause to the <code>ALTER TABLE</code>
+     * Add a <code>DROP FOREIGN KEY</code> clause to the <code>ALTER TABLE</code>
      * statement.
      *
      * @see DSL#constraint(String)

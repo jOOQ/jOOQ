@@ -47,7 +47,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EnumSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.UUID;
@@ -126,16 +128,26 @@ public class JPADatabase extends H2Database {
                 info.put("password", "");
                 connection = new org.h2.Driver().connect("jdbc:h2:mem:jooq-meta-extensions-" + UUID.randomUUID(), info);
 
-                MetadataSources metadata = new MetadataSources(
-                    new StandardServiceRegistryBuilder()
-                        .applySetting("hibernate.dialect", HIBERNATE_DIALECT)
-                        .applySetting("javax.persistence.schema-generation-connection", connection)
-                        .applySetting("javax.persistence.create-database-schemas", true)
+                // [#6709] Apply default settings first, then allow custom overrides
+                Map<String, Object> settings = new LinkedHashMap<String, Object>();
+                settings.put("hibernate.dialect", HIBERNATE_DIALECT);
+                settings.put("javax.persistence.schema-generation-connection", connection);
+                settings.put("javax.persistence.create-database-schemas", true);
 
-                        // [#5607] JPADatabase causes warnings - This prevents them
-                        .applySetting(AvailableSettings.CONNECTION_PROVIDER, connectionProvider())
-                        .build()
-                );
+                // [#5607] JPADatabase causes warnings - This prevents them
+                settings.put(AvailableSettings.CONNECTION_PROVIDER, connectionProvider());
+
+                for (Entry<Object, Object> entry : getProperties().entrySet()) {
+                    String key = "" + entry.getKey();
+
+                    if (key.startsWith("hibernate.") || key.startsWith("javax.persistence."))
+                        settings.put(key, entry.getValue());
+                }
+
+                StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder();
+                builder.applySettings(settings);
+
+                MetadataSources metadata = new MetadataSources(builder.applySettings(settings).build());
 
                 ClassPathScanningCandidateComponentProvider scanner =
                     new ClassPathScanningCandidateComponentProvider(true);

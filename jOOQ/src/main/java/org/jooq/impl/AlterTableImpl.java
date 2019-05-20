@@ -72,13 +72,19 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.impl.ConstraintType.FOREIGN_KEY;
 import static org.jooq.impl.ConstraintType.PRIMARY_KEY;
+import static org.jooq.impl.DSL.begin;
 import static org.jooq.impl.DSL.commentOnTable;
+import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.constraint;
+// ...
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.index;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.noCondition;
+import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.sql;
+// ...
 import static org.jooq.impl.Keywords.K_ADD;
 import static org.jooq.impl.Keywords.K_ALTER;
 import static org.jooq.impl.Keywords.K_ALTER_COLUMN;
@@ -124,6 +130,7 @@ import static org.jooq.impl.Keywords.K_TYPE;
 import static org.jooq.impl.Keywords.K_USING_INDEX;
 import static org.jooq.impl.Keywords.K_WHEN;
 import static org.jooq.impl.Keywords.K_WITH_NO_DATACOPY;
+import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.begin;
 import static org.jooq.impl.Tools.beginExecuteImmediate;
 import static org.jooq.impl.Tools.beginTryCatch;
@@ -163,8 +170,11 @@ import org.jooq.Name;
 import org.jooq.Nullability;
 // ...
 import org.jooq.Query;
+import org.jooq.Record1;
 import org.jooq.SQLDialect;
+import org.jooq.Select;
 import org.jooq.Table;
+// ...
 
 /**
  * @author Lukas Eder
@@ -820,6 +830,36 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
                     return;
             }
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         accept1(ctx);
     }

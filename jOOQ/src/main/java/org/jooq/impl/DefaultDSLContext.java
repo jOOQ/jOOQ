@@ -120,6 +120,7 @@ import org.jooq.CreateTableColumnStep;
 import org.jooq.CreateTypeStep;
 import org.jooq.CreateViewAsStep;
 import org.jooq.Cursor;
+import org.jooq.DDLExportConfiguration;
 import org.jooq.DDLFlag;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
@@ -2754,22 +2755,32 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public Queries ddl(Catalog catalog) {
-        return ddl(catalog, DDLFlag.values());
+        return ddl(catalog, new DDLExportConfiguration());
     }
 
     @Override
-    public Queries ddl(Catalog schema, DDLFlag... flags) {
-        return new DDL(this, flags).queries(schema);
+    public Queries ddl(Catalog catalog, DDLFlag... flags) {
+        return ddl(catalog, new DDLExportConfiguration().flags(flags));
+    }
+
+    @Override
+    public Queries ddl(Catalog catalog, DDLExportConfiguration exportConfiguration) {
+        return new DDL(this, exportConfiguration).queries(catalog);
     }
 
     @Override
     public Queries ddl(Schema schema) {
-        return ddl(schema, DDLFlag.values());
+        return ddl(schema, new DDLExportConfiguration());
     }
 
     @Override
     public Queries ddl(Schema schema, DDLFlag... flags) {
-        return new DDL(this, flags).queries(schema);
+        return ddl(schema, new DDLExportConfiguration().flags(flags));
+    }
+
+    @Override
+    public Queries ddl(Schema schema, DDLExportConfiguration exportConfiguration) {
+        return new DDL(this, exportConfiguration).queries(schema);
     }
 
     @Override
@@ -2783,23 +2794,38 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
+    public Queries ddl(Table<?> table, DDLExportConfiguration exportConfiguration) {
+        return ddl(new Table[] { table }, exportConfiguration);
+    }
+
+    @Override
     public Queries ddl(Table... tables) {
-        return ddl(tables, DDLFlag.values());
+        return ddl(tables, new DDLExportConfiguration());
     }
 
     @Override
     public Queries ddl(Table[] tables, DDLFlag... flags) {
-        return new DDL(this, flags).queries(tables);
+        return ddl(tables, new DDLExportConfiguration().flags(flags));
+    }
+
+    @Override
+    public Queries ddl(Table[] tables, DDLExportConfiguration exportConfiguration) {
+        return new DDL(this, exportConfiguration).queries(tables);
     }
 
     @Override
     public Queries ddl(Collection<? extends Table<?>> tables) {
-        return ddl(tables.toArray(EMPTY_TABLE), DDLFlag.values());
+        return ddl(tables.toArray(EMPTY_TABLE));
     }
 
     @Override
     public Queries ddl(Collection<? extends Table<?>> tables, DDLFlag... flags) {
         return ddl(tables.toArray(EMPTY_TABLE), flags);
+    }
+
+    @Override
+    public Queries ddl(Collection<? extends Table<?>> tables, DDLExportConfiguration exportConfiguration) {
+        return ddl(tables.toArray(EMPTY_TABLE), exportConfiguration);
     }
 
     // -------------------------------------------------------------------------

@@ -8264,7 +8264,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
     /**
      * Generate the complete creation script for the entire catalog.
      *
-     * @see #ddl(Catalog, DDLFlag...)
+     * @see #ddl(Catalog, DDLExportConfiguration)
      */
     Queries ddl(Catalog catalog);
 
@@ -8287,12 +8287,19 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * a separate <code>ALTER TABLE .. ADD CONSTRAINT</code> statement.</li>
      * </ul>
      */
+    Queries ddl(Catalog schema, DDLExportConfiguration configuration);
+
+    /**
+     * Generate a partial creation script for the entire catalog.
+     *
+     * @see #ddl(Catalog, DDLExportConfiguration)
+     */
     Queries ddl(Catalog schema, DDLFlag... flags);
 
     /**
      * Generate the complete creation script for the entire schema.
      *
-     * @see #ddl(Schema, DDLFlag...)
+     * @see #ddl(Schema, DDLExportConfiguration)
      */
     Queries ddl(Schema schema);
 
@@ -8313,12 +8320,19 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * a separate <code>ALTER TABLE .. ADD CONSTRAINT</code> statement.</li>
      * </ul>
      */
+    Queries ddl(Schema schema, DDLExportConfiguration configuration);
+
+    /**
+     * Generate a partial creation script for the entire schema.
+     *
+     * @see #ddl(Schema, DDLExportConfiguration)
+     */
     Queries ddl(Schema schema, DDLFlag... flags);
 
     /**
      * Generate the complete creation script for a table.
      *
-     * @see #ddl(Table, DDLFlag...)
+     * @see #ddl(Table, DDLExportConfiguration)
      */
     Queries ddl(Table<?> table);
 
@@ -8339,12 +8353,19 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * </li>
      * </ul>
      */
+    Queries ddl(Table<?> table, DDLExportConfiguration configuration);
+
+    /**
+     * Generate a partial creation script for a table.
+     *
+     * @see #ddl(Table, DDLExportConfiguration)
+     */
     Queries ddl(Table<?> table, DDLFlag... flags);
 
     /**
      * Generate the complete creation script for tables.
      *
-     * @see #ddl(Table[], DDLFlag...)
+     * @see #ddl(Table[], DDLExportConfiguration)
      */
     Queries ddl(Table<?>... tables);
 
@@ -8366,12 +8387,19 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * </ul>
      * </p>
      */
+    Queries ddl(Table<?>[] tables, DDLExportConfiguration configuration);
+
+    /**
+     * Generate the complete creation script for tables.
+     *
+     * @see #ddl(Table[], DDLExportConfiguration)
+     */
     Queries ddl(Table<?>[] tables, DDLFlag... flags);
 
     /**
      * Generate the complete creation script for tables.
      *
-     * @see #ddl(Collection, DDLFlag...)
+     * @see #ddl(Collection, DDLExportConfiguration)
      */
     Queries ddl(Collection<? extends Table<?>> tables);
 
@@ -8394,6 +8422,13 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * </p>
      */
     Queries ddl(Collection<? extends Table<?>> tables, DDLFlag... flags);
+
+    /**
+     * Generate the complete creation script for tables.
+     *
+     * @see #ddl(Collection, DDLExportConfiguration)
+     */
+    Queries ddl(Collection<? extends Table<?>> tables, DDLExportConfiguration configuration);
 
     // -------------------------------------------------------------------------
     // XXX Session Statements

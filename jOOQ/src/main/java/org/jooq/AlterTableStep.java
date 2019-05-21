@@ -593,10 +593,51 @@ public interface AlterTableStep {
     AlterTableFinalStep dropPrimaryKey();
 
     /**
-     * Add a <code>DROP FOREIGN KEY</code> clause to the <code>ALTER TABLE</code>
+     * Add a <code>DROP PRIMARY KEY</code> clause to the
+     * <code>ALTER TABLE</code> statement.
+     * <p>
+     * Dialect families derived from MySQL do not know named constraints, in
+     * case of which this clause simply generates <code>DROP PRIMARY KEY</code>
+     * as in {@link #dropPrimaryKey()}. In other dialect families, this produces
+     * a <code>DROP CONSTRAINT [name]</code> clause, as in
+     * {@link #dropConstraint(Constraint)}.
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    AlterTableFinalStep dropPrimaryKey(Constraint constraint);
+
+    /**
+     * Add a <code>DROP PRIMARY KEY</code> clause to the <code>ALTER TABLE</code>
      * statement.
+     * <p>
+     * Dialect families derived from MySQL do not know named constraints, in
+     * case of which this clause simply generates <code>DROP PRIMARY KEY</code>
+     * as in {@link #dropPrimaryKey()}. In other dialect families, this produces
+     * a <code>DROP CONSTRAINT [name]</code> clause, as in
+     * {@link #dropConstraint(Name)}.
+     *
+     * @see DSL#constraint(Name)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    AlterTableFinalStep dropPrimaryKey(Name constraint);
+
+    /**
+     * Add a <code>DROP PRIMARY KEY</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     * <p>
+     * Dialect families derived from MySQL do not know named constraints, in
+     * case of which this clause simply generates <code>DROP PRIMARY KEY</code>
+     * as in {@link #dropPrimaryKey()}. In other dialect families, this produces
+     * a <code>DROP CONSTRAINT [name]</code> clause, as in
+     * {@link #dropConstraint(String)}.
      *
      * @see DSL#constraint(String)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    AlterTableFinalStep dropPrimaryKey(String constraint);
+
+    /**
+     * Add a <code>DROP FOREIGN KEY</code> clause to the <code>ALTER TABLE</code>
+     * statement.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableFinalStep dropForeignKey(Constraint constraint);
@@ -605,7 +646,7 @@ public interface AlterTableStep {
      * Add a <code>DROP FOREIGN KEY</code> clause to the <code>ALTER TABLE</code>
      * statement.
      *
-     * @see DSL#constraint(String)
+     * @see DSL#constraint(Name)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableFinalStep dropForeignKey(Name constraint);

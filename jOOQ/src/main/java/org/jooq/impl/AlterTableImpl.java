@@ -705,6 +705,23 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
     }
 
     @Override
+    public final AlterTableImpl dropPrimaryKey(Constraint constraint) {
+        dropConstraint = constraint;
+        dropConstraintType = PRIMARY_KEY;
+        return this;
+    }
+
+    @Override
+    public final AlterTableImpl dropPrimaryKey(Name constraint) {
+        return dropPrimaryKey(constraint(constraint));
+    }
+
+    @Override
+    public final AlterTableImpl dropPrimaryKey(String constraint) {
+        return dropPrimaryKey(constraint(constraint));
+    }
+
+    @Override
     public final AlterTableImpl dropForeignKey(Constraint constraint) {
         dropConstraint = constraint;
         dropConstraintType = FOREIGN_KEY;
@@ -1311,6 +1328,8 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
                 ctx.visit(K_DROP).sql(' ').visit(K_FOREIGN_KEY)
                    .sql(' ')
                    .visit(dropConstraint);
+            else if (dropConstraintType == PRIMARY_KEY && NO_SUPPORT_DROP_CONSTRAINT.contains(family))
+                ctx.visit(K_DROP).sql(' ').visit(K_PRIMARY_KEY);
             else
                 ctx.visit(K_DROP_CONSTRAINT)
                    .sql(' ')

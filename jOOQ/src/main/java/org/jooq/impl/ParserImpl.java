@@ -10299,7 +10299,7 @@ final class ParserContext {
 
             // [#8616] If name is not qualified, names reported by meta must be
             //         unqualified as well
-            if ((tables = meta.getTables(name)).size() > 1)
+            if (!(tables = meta.getTables(name)).isEmpty())
                 for (Table<?> table : tables)
                     if (table.getQualifiedName().qualified() == name.qualified())
                         return tables.get(0);

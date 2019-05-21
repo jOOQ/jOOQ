@@ -302,6 +302,10 @@ jOOQ queries, for which no specific fetchSize value was specified.]]></jxb:javad
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#7163] Whether the parser should perform meta lookups in the Configuration's MetaProvider.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="parseSearchPath" type="jooq-runtime:ParseSearchSchemata" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#8616] The search path to be used for unqualified table lookups by the parser.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="parseUnsupportedSyntax" type="jooq-runtime:ParseUnsupportedSyntax" minOccurs="0" maxOccurs="1" default="IGNORE">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#5917] Whether the parser should accept unsupported (but known) syntax.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -320,6 +324,24 @@ jOOQ queries, for which no specific fetchSize value was specified.]]></jxb:javad
 
       <element name="parseIgnoreCommentStop" type="string" minOccurs="0" maxOccurs="1" default="[jooq ignore stop]">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#8325] The ignore comment stop token]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+    </all>
+  </complexType>
+
+  <complexType name="ParseSearchSchemata">
+    <sequence>
+      <element name="schema" type="jooq-runtime:ParseSearchSchema" minOccurs="0" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+
+  <complexType name="ParseSearchSchema">
+    <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[A schema that is on the search path.]]></jxb:javadoc></jxb:class></appinfo></annotation>
+    <all>
+      <element name="catalog" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The catalog qualifier of the schema, if applicable.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      <element name="schema" type="string" minOccurs="1" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The schema qualifier whose elements can be found from the search path.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
     </all>
   </complexType>

@@ -2,10 +2,14 @@
 package org.jooq.conf;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Locale;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -155,6 +159,9 @@ public class Settings
     protected String parseIgnoreCommentStart = "[jooq ignore start]";
     @XmlElement(defaultValue = "[jooq ignore stop]")
     protected String parseIgnoreCommentStop = "[jooq ignore stop]";
+    @XmlElementWrapper(name = "parseSearchPath")
+    @XmlElement(name = "schema")
+    protected List<ParseSearchSchema> parseSearchPath;
 
     /**
      * Whether any catalog name should be rendered at all.
@@ -1546,6 +1553,17 @@ public class Settings
         this.parseIgnoreCommentStop = value;
     }
 
+    public List<ParseSearchSchema> getParseSearchPath() {
+        if (parseSearchPath == null) {
+            parseSearchPath = new ArrayList<ParseSearchSchema>();
+        }
+        return parseSearchPath;
+    }
+
+    public void setParseSearchPath(List<ParseSearchSchema> parseSearchPath) {
+        this.parseSearchPath = parseSearchPath;
+    }
+
     public Settings withRenderCatalog(Boolean value) {
         setRenderCatalog(value);
         return this;
@@ -1813,6 +1831,27 @@ public class Settings
 
     public Settings withParseIgnoreCommentStop(String value) {
         setParseIgnoreCommentStop(value);
+        return this;
+    }
+
+    public Settings withParseSearchPath(ParseSearchSchema... values) {
+        if (values!= null) {
+            for (ParseSearchSchema value: values) {
+                getParseSearchPath().add(value);
+            }
+        }
+        return this;
+    }
+
+    public Settings withParseSearchPath(Collection<ParseSearchSchema> values) {
+        if (values!= null) {
+            getParseSearchPath().addAll(values);
+        }
+        return this;
+    }
+
+    public Settings withParseSearchPath(List<ParseSearchSchema> parseSearchPath) {
+        setParseSearchPath(parseSearchPath);
         return this;
     }
 
@@ -2088,6 +2127,15 @@ public class Settings
             sb.append("<parseIgnoreCommentStop>");
             sb.append(parseIgnoreCommentStop);
             sb.append("</parseIgnoreCommentStop>");
+        }
+        if (parseSearchPath!= null) {
+            sb.append("<parseSearchPath>");
+            for (int i = 0; (i<parseSearchPath.size()); i ++) {
+                sb.append("<schema>");
+                sb.append(parseSearchPath.get(i));
+                sb.append("</schema>");
+            }
+            sb.append("</parseSearchPath>");
         }
         return sb.toString();
     }
@@ -2590,6 +2638,15 @@ public class Settings
                 return false;
             }
         }
+        if (parseSearchPath == null) {
+            if (other.parseSearchPath!= null) {
+                return false;
+            }
+        } else {
+            if (!parseSearchPath.equals(other.parseSearchPath)) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -2651,6 +2708,7 @@ public class Settings
         result = ((prime*result)+((parseIgnoreComments == null)? 0 :parseIgnoreComments.hashCode()));
         result = ((prime*result)+((parseIgnoreCommentStart == null)? 0 :parseIgnoreCommentStart.hashCode()));
         result = ((prime*result)+((parseIgnoreCommentStop == null)? 0 :parseIgnoreCommentStop.hashCode()));
+        result = ((prime*result)+((parseSearchPath == null)? 0 :parseSearchPath.hashCode()));
         return result;
     }
 

@@ -42,6 +42,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ParseSearchSchema }
+     *
+     */
+    public ParseSearchSchema createParseSearchSchema() {
+        return new ParseSearchSchema();
+    }
+
+    /**
      * Create an instance of {@link RenderMapping }
      *
      */

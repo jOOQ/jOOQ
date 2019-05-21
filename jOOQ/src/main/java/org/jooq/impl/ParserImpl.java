@@ -168,6 +168,7 @@ import static org.jooq.impl.DSL.minDistinct;
 import static org.jooq.impl.DSL.minute;
 import static org.jooq.impl.DSL.mode;
 import static org.jooq.impl.DSL.month;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.now;
 import static org.jooq.impl.DSL.nthValue;
 import static org.jooq.impl.DSL.ntile;
@@ -453,6 +454,7 @@ import org.jooq.WindowSpecificationExcludeStep;
 import org.jooq.WindowSpecificationOrderByStep;
 import org.jooq.WindowSpecificationRowsAndStep;
 import org.jooq.WindowSpecificationRowsStep;
+import org.jooq.conf.ParseSearchSchema;
 import org.jooq.conf.ParseUnknownFunctions;
 import org.jooq.conf.ParseUnsupportedSyntax;
 import org.jooq.conf.ParseWithMetaLookups;
@@ -10293,10 +10295,20 @@ final class ParserContext {
 
     Table<?> lookupTable(Name name) {
         if (meta != null) {
-            List<Table<?>> tables = meta.getTables(name);
+            List<Table<?>> tables;
 
-            if (tables.size() == 1)
-                return tables.get(0);
+            // [#8616] If name is not qualified, names reported by meta must be
+            //         unqualified as well
+            if ((tables = meta.getTables(name)).size() > 1)
+                for (Table<?> table : tables)
+                    if (table.getQualifiedName().qualified() == name.qualified())
+                        return tables.get(0);
+
+            // [#8616] If name is not qualified, try the search path as well
+            if (!name.qualified())
+                for (ParseSearchSchema schema : settings().getParseSearchPath())
+                    if ((tables = meta.getTables(name(schema.getCatalog(), schema.getSchema()).append(name))).size() == 1)
+                        return tables.get(0);
         }
 
         if (metaLookups == THROW_ON_FAILURE)

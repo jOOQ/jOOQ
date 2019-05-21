@@ -72,6 +72,7 @@ final class Repeat extends AbstractFunction<String> {
 
 
 
+
             case FIREBIRD:
                 return DSL.rpad(string, DSL.length(string).mul(count), string);
 

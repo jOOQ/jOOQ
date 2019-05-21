@@ -80,6 +80,7 @@ final class Euler extends AbstractFunction<BigDecimal> {
 
 
 
+
             case CUBRID:
             case DERBY:
             case FIREBIRD:

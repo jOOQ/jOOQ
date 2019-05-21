@@ -75,6 +75,7 @@ final class MD5 extends AbstractFunction<String> {
 
 
 
+
             case MARIADB:
             case MYSQL:
             default:

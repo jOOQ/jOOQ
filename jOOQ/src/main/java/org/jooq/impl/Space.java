@@ -69,6 +69,7 @@ final class Space extends AbstractFunction<String> {
 
 
 
+
             case DERBY:
             case FIREBIRD:
             case HSQLDB:

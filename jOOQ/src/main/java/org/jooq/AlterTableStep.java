@@ -51,6 +51,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
 import static org.jooq.SQLDialect.MARIADB;
+// ...
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
@@ -177,21 +178,21 @@ public interface AlterTableStep {
      * Add a <code>RENAME CONSTRAINT</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableRenameConstraintToStep renameConstraint(Constraint oldName);
 
     /**
      * Add a <code>RENAME CONSTRAINT</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableRenameConstraintToStep renameConstraint(Name oldName);
 
     /**
      * Add a <code>RENAME CONSTRAINT</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableRenameConstraintToStep renameConstraint(String oldName);
 
     /**

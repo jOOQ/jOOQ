@@ -99,6 +99,7 @@ final class ConditionAsField extends AbstractFunction<Boolean> {
 
 
 
+
             // The default, for new dialects
             default:
                 return DSL.sql("({0})", condition);

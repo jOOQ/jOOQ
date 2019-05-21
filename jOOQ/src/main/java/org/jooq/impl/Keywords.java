@@ -78,6 +78,7 @@ final class Keywords {
     static final Keyword K_CASE                             = keyword("case");
     static final Keyword K_CAST                             = keyword("cast");
     static final Keyword K_CATALOG                          = keyword("catalog");
+    static final Keyword K_CHANGE                           = keyword("change");
     static final Keyword K_CHANGE_COLUMN                    = keyword("change column");
     static final Keyword K_CHECK                            = keyword("check");
     static final Keyword K_COALESCE                         = keyword("coalesce");

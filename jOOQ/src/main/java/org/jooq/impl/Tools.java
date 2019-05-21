@@ -51,6 +51,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
+// ...
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
@@ -4518,6 +4519,7 @@ final class Tools {
 
 
 
+
                 case H2:
                 case MARIADB:
                 case MYSQL:  ctx.sql(' ').visit(K_AUTO_INCREMENT); break;
@@ -4555,6 +4557,7 @@ final class Tools {
             DataType<EnumType> enumType = (DataType<EnumType>) type;
 
             switch (ctx.family()) {
+
 
 
 

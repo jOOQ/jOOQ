@@ -299,6 +299,7 @@ final class Expression<T> extends AbstractFunction<T> {
 
 
 
+
                 case CUBRID:
                 case MARIADB:
                 case MYSQL: {
@@ -604,6 +605,7 @@ final class Expression<T> extends AbstractFunction<T> {
                     // is a DATE column, cast it to DATE
                     return castNonTimestamps(configuration, result);
                 }
+
 
 
 

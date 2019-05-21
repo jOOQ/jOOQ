@@ -73,6 +73,7 @@ final class Reverse extends AbstractFunction<String> {
 
 
 
+
             case CUBRID:
             case HSQLDB:
             case POSTGRES:

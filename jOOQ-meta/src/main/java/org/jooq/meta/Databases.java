@@ -51,6 +51,7 @@ import org.jooq.meta.hsqldb.HSQLDBDatabase;
 // ...
 import org.jooq.meta.jdbc.JDBCDatabase;
 import org.jooq.meta.mariadb.MariaDBDatabase;
+// ...
 import org.jooq.meta.mysql.MySQLDatabase;
 // ...
 import org.jooq.meta.postgres.PostgresDatabase;
@@ -78,6 +79,7 @@ public class Databases {
         Class<? extends Database> result = JDBCDatabase.class;
 
         switch (dialect) {
+
 
 
 

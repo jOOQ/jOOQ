@@ -98,6 +98,7 @@ final class FieldCondition extends AbstractCondition {
 
 
 
+
             // Native support
             case DERBY:
             case H2:

@@ -69,6 +69,7 @@ final class DateDiff<T> extends AbstractFunction<Integer> {
 
 
 
+
             case MARIADB:
             case MYSQL:
                 return function("datediff", getDataType(), date1, date2);

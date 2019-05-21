@@ -74,6 +74,7 @@ final class SetSchema extends AbstractRowCountQuery {
 
 
 
+
             case MARIADB:
             case MYSQL:
                 ctx.visit(K_USE).sql(' ').visit(schema);

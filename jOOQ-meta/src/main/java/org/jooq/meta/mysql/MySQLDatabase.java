@@ -94,7 +94,6 @@ import org.jooq.meta.mysql.information_schema.tables.Statistics;
 import org.jooq.meta.mysql.information_schema.tables.Tables;
 import org.jooq.meta.mysql.mysql.enums.ProcType;
 import org.jooq.meta.mysql.mysql.tables.Proc;
-import org.jooq.tools.JooqLogger;
 import org.jooq.tools.csv.CSVReader;
 
 /**
@@ -102,7 +101,6 @@ import org.jooq.tools.csv.CSVReader;
  */
 public class MySQLDatabase extends AbstractDatabase {
 
-    private static final JooqLogger log = JooqLogger.getLogger(MySQLDatabase.class);
     private static Boolean          is8;
 
     @Override
@@ -111,7 +109,9 @@ public class MySQLDatabase extends AbstractDatabase {
 
         // Same implementation as in H2Database and HSQLDBDatabase
         Map<Record, Result<Record>> indexes = create()
-            .select(
+            // [#2059] In MemSQL primary key indexes are typically duplicated
+            // (once with INDEX_TYPE = 'SHARD' and once with INDEX_TYPE = 'BTREE)
+            .selectDistinct(
                 Statistics.TABLE_SCHEMA,
                 Statistics.TABLE_NAME,
                 Statistics.INDEX_NAME,
@@ -223,7 +223,7 @@ public class MySQLDatabase extends AbstractDatabase {
         return "KEY_" + tableName + "_" + keyName;
     }
 
-    private boolean is8() {
+    protected boolean is8() {
         if (is8 == null) {
 
             // [#6602] The mysql.proc table got removed in MySQL 8.0
@@ -243,7 +243,9 @@ public class MySQLDatabase extends AbstractDatabase {
 
         // [#3560] It has been shown that querying the STATISTICS table is much faster on
         // very large databases than going through TABLE_CONSTRAINTS and KEY_COLUMN_USAGE
-        return create().select(
+        // [#2059] In MemSQL primary key indexes are typically duplicated
+        // (once with INDEX_TYPE = 'SHARD' and once with INDEX_TYPE = 'BTREE)
+        return create().selectDistinct(
                            Statistics.TABLE_SCHEMA,
                            Statistics.TABLE_NAME,
                            Statistics.COLUMN_NAME,

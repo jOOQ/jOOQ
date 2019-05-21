@@ -56,6 +56,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
 import static org.jooq.SQLDialect.MARIADB;
+// ...
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
@@ -199,7 +200,8 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
 
 
 
-        if (limit != null && NO_SUPPORT_LIMIT.contains(ctx.family())) {
+        // [#2059] MemSQL does not support DELETE ... ORDER BY
+        if (limit != null && NO_SUPPORT_LIMIT.contains(ctx.family())                                                                         ) {
             Field<?>[] keyFields =
                   table().getKeys().isEmpty()
                 ? new Field[] { table().rowid() }

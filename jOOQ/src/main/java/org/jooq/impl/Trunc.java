@@ -101,6 +101,7 @@ final class Trunc<T> extends AbstractFunction<T> {
 
 
 
+
             case H2:
             case MARIADB:
             case MYSQL:

@@ -123,6 +123,13 @@ public enum SQLDialect {
      */
     MARIADB("MariaDB", false),
 
+
+
+
+
+
+
+
     /**
      * The MySQL dialect family.
      */
@@ -715,6 +722,9 @@ public enum SQLDialect {
                 case H2:        return "H2";
                 case HSQLDB:    return "HSQL";
                 case MARIADB:
+
+
+
                 case MYSQL:     return "MySQL";
                 case POSTGRES:  return "PostgreSQL";
 
@@ -768,6 +778,9 @@ public enum SQLDialect {
                 case H2:            return "org.hibernate.dialect.H2Dialect";
                 case HSQLDB:        return "org.hibernate.dialect.HSQLDialect";
                 case MARIADB:
+
+
+
                 case MYSQL:         return "org.hibernate.dialect.MySQL5Dialect";
 
 

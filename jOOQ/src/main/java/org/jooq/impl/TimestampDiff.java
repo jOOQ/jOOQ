@@ -131,6 +131,7 @@ final class TimestampDiff extends AbstractFunction<DayToSecond> {
 
 
 
+
             case MARIADB:
             case MYSQL:
                 return DSL.field("{timestampdiff}(microsecond, {0}, {1}) / 1000", getDataType(), timestamp2, timestamp1);

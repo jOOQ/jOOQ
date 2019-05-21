@@ -79,6 +79,7 @@ package org.jooq.impl;
 // ...
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.MARIADB;
+// ...
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
@@ -142,8 +143,8 @@ final class MetaImpl extends AbstractMeta {
 
     private static final long                serialVersionUID                 = 3582980783173033809L;
     private static final JooqLogger          log                              = JooqLogger.getLogger(MetaImpl.class);
-    private static final EnumSet<SQLDialect> INVERSE_SCHEMA_CATALOG           = EnumSet.of(MYSQL, MARIADB);
-    private static final EnumSet<SQLDialect> CURRENT_TIMESTAMP_COLUMN_DEFAULT = EnumSet.of(MYSQL, MARIADB);
+    private static final EnumSet<SQLDialect> INVERSE_SCHEMA_CATALOG           = EnumSet.of(MARIADB, MYSQL);
+    private static final EnumSet<SQLDialect> CURRENT_TIMESTAMP_COLUMN_DEFAULT = EnumSet.of(MARIADB, MYSQL);
     private static final EnumSet<SQLDialect> EXPRESSION_COLUMN_DEFAULT        = EnumSet.of(H2);
 
 

@@ -48,6 +48,7 @@ import static org.jooq.Clause.INSERT_SELECT;
 // ...
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.MARIADB;
+// ...
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
@@ -288,6 +289,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
             switch (ctx.family()) {
 
                 // MySQL has a nice syntax for this
+
 
 
 
@@ -595,6 +597,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         }
         else if (defaultValues) {
             switch (ctx.family()) {
+
 
 
 

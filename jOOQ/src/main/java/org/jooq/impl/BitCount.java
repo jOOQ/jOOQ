@@ -66,6 +66,7 @@ final class BitCount extends AbstractFunction<Integer> {
 
 
 
+
             case MARIADB:
             case MYSQL:
                 return function("bit_count", getDataType(), getArguments());

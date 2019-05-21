@@ -38,6 +38,7 @@
 package org.jooq.util.mysql;
 
 // ...
+// ...
 import static org.jooq.SQLDialect.MYSQL;
 
 import org.jooq.EnumType;

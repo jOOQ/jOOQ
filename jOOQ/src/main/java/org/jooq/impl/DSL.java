@@ -56,6 +56,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
 import static org.jooq.SQLDialect.MARIADB;
+// ...
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
@@ -7585,7 +7586,7 @@ public class DSL {
      * @see DSLContext#dropSchema(String)
      */
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static DropSchemaStep dropSchema(String schema){
+    public static DropSchemaStep dropSchema(String schema) {
         return dsl().dropSchema(schema);
     }
 
@@ -7595,7 +7596,7 @@ public class DSL {
      * @see DSLContext#dropSchema(Name)
      */
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static DropSchemaStep dropSchema(Name schema){
+    public static DropSchemaStep dropSchema(Name schema) {
         return dsl().dropSchema(schema);
     }
 
@@ -7605,7 +7606,7 @@ public class DSL {
      * @see DSLContext#dropSchema(Schema)
      */
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static DropSchemaStep dropSchema(Schema schema){
+    public static DropSchemaStep dropSchema(Schema schema) {
         return dsl().dropSchema(schema);
     }
 
@@ -7615,7 +7616,7 @@ public class DSL {
      * @see DSLContext#dropSchemaIfExists(String)
      */
     @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static DropSchemaStep dropSchemaIfExists(String schema){
+    public static DropSchemaStep dropSchemaIfExists(String schema) {
         return dsl().dropSchemaIfExists(schema);
     }
 
@@ -7625,7 +7626,7 @@ public class DSL {
      * @see DSLContext#dropSchemaIfExists(Name)
      */
     @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static DropSchemaStep dropSchemaIfExists(Name schema){
+    public static DropSchemaStep dropSchemaIfExists(Name schema) {
         return dsl().dropSchemaIfExists(schema);
     }
 
@@ -7635,7 +7636,7 @@ public class DSL {
      * @see DSLContext#dropSchemaIfExists(Schema)
      */
     @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static DropSchemaStep dropSchemaIfExists(Schema schema){
+    public static DropSchemaStep dropSchemaIfExists(Schema schema) {
         return dsl().dropSchemaIfExists(schema);
     }
 
@@ -18202,6 +18203,7 @@ public class DSL {
      * <li> {@link SQLDialect#CUBRID}</li>
      * <li> {@link SQLDialect#H2}</li>
      * <li> {@link SQLDialect#HSQLDB}</li>
+     * <li> {@link SQLDialect#MEMSQL} (but without <code>ORDER BY</code>)</li>
      * <li> {@link SQLDialect#MYSQL}</li>
      * <li> {@link SQLDialect#SQLITE} (but without <code>ORDER BY</code>)</li>
      * </ul>
@@ -18230,6 +18232,7 @@ public class DSL {
      * <li>{@link SQLDialect#CUBRID}</li>
      * <li>{@link SQLDialect#H2}</li>
      * <li>{@link SQLDialect#HSQLDB}</li>
+     * <li>{@link SQLDialect#MEMSQL}</li>
      * <li>{@link SQLDialect#MYSQL}</li>
      * <li>{@link SQLDialect#SQLITE}</li>
      * </ul>

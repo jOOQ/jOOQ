@@ -86,6 +86,7 @@ final class Nvl<T> extends AbstractFunction<T> {
 
 
 
+
             case MARIADB:
             case MYSQL:
             case SQLITE:

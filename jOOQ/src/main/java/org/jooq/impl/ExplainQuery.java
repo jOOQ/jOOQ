@@ -103,6 +103,7 @@ final class ExplainQuery {
 
 
 
+
             case MARIADB:
             case MYSQL:
             case POSTGRES:

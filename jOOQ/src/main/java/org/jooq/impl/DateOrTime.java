@@ -78,6 +78,7 @@ final class DateOrTime<T> extends AbstractFunction<T> {
 
 
 
+
             case MYSQL:
             case MARIADB:
                 return DSL.field("{" + name(getDataType()) + "}({0})", getDataType(), field);

@@ -49,11 +49,15 @@ import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
 import static org.jooq.conf.ParamType.INLINED;
+import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.selectFrom;
+import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.Keywords.K_ALTER;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_CREATE;
@@ -209,7 +213,9 @@ final class CreateViewImpl<R extends Record> extends AbstractRowCountQuery imple
     private final void accept0(Context<?> ctx) {
         Field<?>[] f = fields;
 
+        // [#2059] MemSQL doesn't support column aliases at the view level
         boolean rename = f != null && f.length > 0;
+        boolean renameSupported = true                                                   ;
         boolean replaceSupported = false                                                     ;
 
 
@@ -252,7 +258,7 @@ final class CreateViewImpl<R extends Record> extends AbstractRowCountQuery imple
 
         ctx.visit(view);
 
-        if (rename) {
+        if (rename && renameSupported) {
             boolean qualify = ctx.qualify();
 
             ctx.sql('(')
@@ -268,7 +274,10 @@ final class CreateViewImpl<R extends Record> extends AbstractRowCountQuery imple
            .formatSeparator()
            .start(CREATE_VIEW_AS)
            .paramType(INLINED)
-           .visit(select)
+           .visit(
+               rename && !renameSupported
+             ? selectFrom(table(parsed()).as(name("t"), Tools.fieldNames(f)))
+             : select)
            .paramType(paramType)
            .end(CREATE_VIEW_AS);
     }

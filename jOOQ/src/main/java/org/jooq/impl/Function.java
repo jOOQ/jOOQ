@@ -47,6 +47,7 @@ import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MARIADB;
+// ...
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.POSTGRES;
@@ -150,7 +151,7 @@ class Function<T> extends AbstractField<T> implements
     private static final EnumSet<SQLDialect> SUPPORT_ARRAY_AGG                  = EnumSet.of(HSQLDB, POSTGRES);
     private static final EnumSet<SQLDialect> SUPPORT_GROUP_CONCAT               = EnumSet.of(CUBRID, H2, HSQLDB, MARIADB, MYSQL, SQLITE);
     private static final EnumSet<SQLDialect> SUPPORT_STRING_AGG                 = EnumSet.of(POSTGRES);
-    private static final EnumSet<SQLDialect> SUPPORT_NO_PARENS_WINDOW_REFERENCE = EnumSet.of(MYSQL, POSTGRES);
+    private static final EnumSet<SQLDialect> SUPPORT_NO_PARENS_WINDOW_REFERENCE = EnumSet.of(/* -- See [#8279] */, MYSQL, POSTGRES);
     private static final EnumSet<SQLDialect> SUPPORT_FILTER                     = EnumSet.of(H2, HSQLDB, POSTGRES);
 
     static final Field<Integer>              ASTERISK                           = DSL.field("*", Integer.class);

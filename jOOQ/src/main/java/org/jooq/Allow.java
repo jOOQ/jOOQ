@@ -57,6 +57,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
 import static org.jooq.SQLDialect.MARIADB;
+// ...
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
@@ -150,6 +151,7 @@ public @interface Allow {
      */
     @SuppressWarnings("deprecation")
     SQLDialect[] value() default {
+
 
 
 

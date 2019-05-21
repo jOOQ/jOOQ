@@ -173,6 +173,7 @@ final class AlterIndexImpl extends AbstractRowCountQuery implements
 
 
 
+
             case MARIADB:
             case MYSQL: {
                 ctx.visit(K_ALTER_TABLE).sql(' ')

@@ -93,6 +93,7 @@ final class CurrentSchema extends AbstractFunction<String> {
 
 
 
+
             case MARIADB:
             case MYSQL:
                 return DSL.field("{database}()", VARCHAR);

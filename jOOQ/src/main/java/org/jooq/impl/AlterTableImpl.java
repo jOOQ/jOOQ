@@ -64,6 +64,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
+// ...
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
@@ -91,6 +92,7 @@ import static org.jooq.impl.Keywords.K_ALTER_COLUMN;
 import static org.jooq.impl.Keywords.K_ALTER_CONSTRAINT;
 import static org.jooq.impl.Keywords.K_ALTER_TABLE;
 import static org.jooq.impl.Keywords.K_CASCADE;
+import static org.jooq.impl.Keywords.K_CHANGE;
 import static org.jooq.impl.Keywords.K_CHANGE_COLUMN;
 import static org.jooq.impl.Keywords.K_COMMENT;
 import static org.jooq.impl.Keywords.K_CONSTRAINT;
@@ -782,6 +784,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
 
 
+
                 case MARIADB:
                 case MYSQL:
                     break;
@@ -818,6 +821,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
             switch (family) {
 
                 // [#5724] These databases use table-scoped index names
+
 
 
 
@@ -964,6 +968,16 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
                        .visit(renameColumnTo)
                        .qualify(qualify);
                     break;
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1169,6 +1183,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
 
 
+
                 case CUBRID:
                 case MARIADB:
                 case MYSQL: {
@@ -1237,6 +1252,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
                 ctx.start(ALTER_TABLE_ALTER_DEFAULT);
 
                 switch (family) {
+
 
 
 

@@ -79,6 +79,7 @@ final class Sinh extends AbstractFunction<BigDecimal> {
 
 
 
+
             case CUBRID:
             case HSQLDB:
             case MARIADB:

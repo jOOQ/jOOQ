@@ -80,6 +80,7 @@ final class Concat extends AbstractFunction<String> {
 
 
 
+
             case MARIADB:
             case MYSQL:
                 return function("concat", SQLDataType.VARCHAR, cast);

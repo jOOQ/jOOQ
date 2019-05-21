@@ -41,7 +41,6 @@ import static java.lang.Boolean.TRUE;
 import static org.jooq.Clause.FIELD_ROW;
 import static org.jooq.Clause.INSERT_SELECT;
 import static org.jooq.Clause.INSERT_VALUES;
-// ...
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.Keywords.K_DEFAULT_VALUES;
@@ -163,6 +162,7 @@ final class FieldMapsForInsert extends AbstractQueryPart {
 
 
 
+
                 case FIREBIRD: {
                     ctx.formatSeparator()
                        .start(INSERT_SELECT)
@@ -185,6 +185,16 @@ final class FieldMapsForInsert extends AbstractQueryPart {
             }
         }
     }
+
+
+
+
+
+
+
+
+
+
 
 
 

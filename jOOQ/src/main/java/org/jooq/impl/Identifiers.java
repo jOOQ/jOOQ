@@ -75,6 +75,7 @@ final class Identifiers {
 
 
 
+
                 case MARIADB:
                 case MYSQL:
                     QUOTES.put(family, new char[][][] {

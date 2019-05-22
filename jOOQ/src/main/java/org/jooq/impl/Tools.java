@@ -245,6 +245,7 @@ import org.jooq.UDTRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.conf.BackslashEscaping;
 import org.jooq.conf.Settings;
+import org.jooq.conf.SettingsTools;
 import org.jooq.conf.ThrowExceptions;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataTypeException;
@@ -1905,6 +1906,26 @@ final class Tools {
             else {
                 return null;
             }
+        }
+    }
+
+    /**
+     * Sets the statement's fetch size to the given value or
+     * {@link org.jooq.conf.Settings#getFetchSize()} if {@code 0}.
+     * <p>
+     * This method should not be called before {@link ExecuteContext#statement(PreparedStatement)}.
+     */
+    static final void setFetchSize(ExecuteContext ctx, int fetchSize) throws SQLException {
+        // [#1263] [#4753] Allow for negative fetch sizes to support some non-standard
+        // MySQL feature, where Integer.MIN_VALUE is used
+        int f = SettingsTools.getFetchSize(fetchSize, ctx.settings());
+        if (f != 0) {
+            if (log.isDebugEnabled())
+                log.debug("Setting fetch size", f);
+
+            PreparedStatement statement = ctx.statement();
+            if (statement != null)
+                statement.setFetchSize(f);
         }
     }
 

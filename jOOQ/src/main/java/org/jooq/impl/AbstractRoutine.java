@@ -487,6 +487,7 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
 
             listener.prepareStart(ctx);
             ctx.statement(connection.prepareCall(ctx.sql()));
+            Tools.setFetchSize(ctx, 0);
             // [#1856] TODO: Add Statement flags like timeout here
             listener.prepareEnd(ctx);
 

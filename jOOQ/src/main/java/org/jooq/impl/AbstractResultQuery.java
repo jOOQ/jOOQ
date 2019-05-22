@@ -272,15 +272,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
             ctx.statement(ctx.connection().prepareStatement(ctx.sql()));
         }
 
-        // [#1263] [#4753] Allow for negative fetch sizes to support some non-standard
-        // MySQL feature, where Integer.MIN_VALUE is used
-        int f = SettingsTools.getFetchSize(fetchSize, ctx.settings());
-        if (f != 0) {
-            if (log.isDebugEnabled())
-                log.debug("Setting fetch size", f);
-
-            ctx.statement().setFetchSize(f);
-        }
+        Tools.setFetchSize(ctx, fetchSize);
 
         // [#1854] [#4753] Set the max number of rows for this result query
         int m = SettingsTools.getMaxRows(maxRows, ctx.settings());

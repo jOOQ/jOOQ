@@ -699,7 +699,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                 case CUBRID:
 
                     super.prepare(ctx);
-                    return;
+                    break;
 
                 // Some dialects can only return AUTO_INCREMENT values
                 // Other values have to be fetched in a second step
@@ -719,7 +719,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                 case MARIADB:
                 case MYSQL:
                     ctx.statement(connection.prepareStatement(ctx.sql(), Statement.RETURN_GENERATED_KEYS));
-                    return;
+                    break;
 
                 // The default is to return all requested fields directly
 
@@ -755,10 +755,12 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                             names[i] = returningResolvedAsterisks.get(i).getName();
 
                     ctx.statement(connection.prepareStatement(ctx.sql(), names));
-                    return;
+                    break;
                 }
             }
         }
+
+        Tools.setFetchSize(ctx, 0);
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })

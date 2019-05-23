@@ -78,6 +78,9 @@ import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.DSL.collation;
 import static org.jooq.impl.DSL.concat;
 import static org.jooq.impl.DSL.condition;
+import static org.jooq.impl.DSL.connectByIsCycle;
+import static org.jooq.impl.DSL.connectByIsLeaf;
+import static org.jooq.impl.DSL.connectByRoot;
 import static org.jooq.impl.DSL.constraint;
 // ...
 // ...
@@ -5359,6 +5362,13 @@ final class ParserImpl implements Parser {
                     return field;
                 else if ((field = parseFieldChooseIf(ctx)) != null)
                     return field;
+                else if (parseKeywordIf(ctx, "CONNECT_BY_ISCYCLE"))
+                    return connectByIsCycle();
+                else if (parseKeywordIf(ctx, "CONNECT_BY_ISLEAF"))
+                    return connectByIsLeaf();
+                else if (parseKeywordIf(ctx, "CONNECT_BY_ROOT")) {
+                    return connectByRoot(parseField(ctx));
+                }
 
                 break;
 

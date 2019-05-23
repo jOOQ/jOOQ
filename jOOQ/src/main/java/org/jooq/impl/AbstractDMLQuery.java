@@ -654,6 +654,11 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
     @Override
     protected final void prepare(ExecuteContext ctx) throws SQLException {
+        prepare0(ctx);
+        Tools.setFetchSize(ctx, 0);
+    }
+
+    private void prepare0(ExecuteContext ctx) throws SQLException {
         Connection connection = ctx.connection();
 
 
@@ -759,8 +764,6 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                 }
             }
         }
-
-        Tools.setFetchSize(ctx, 0);
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })

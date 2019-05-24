@@ -194,6 +194,7 @@ import static org.jooq.impl.DSL.product;
 import static org.jooq.impl.DSL.productDistinct;
 import static org.jooq.impl.DSL.quarter;
 import static org.jooq.impl.DSL.rad;
+import static org.jooq.impl.DSL.rand;
 import static org.jooq.impl.DSL.rangeBetweenCurrentRow;
 import static org.jooq.impl.DSL.rangeBetweenFollowing;
 import static org.jooq.impl.DSL.rangeBetweenPreceding;
@@ -5633,6 +5634,8 @@ final class ParserImpl implements Parser {
                           || parseFunctionNameIf(ctx, "RADIAN")
                           || parseFunctionNameIf(ctx, "RAD"))
                         return rad((Field) parseFieldNumericOpParenthesised(ctx));
+                    else if ((field = parseFieldRandIf(ctx)) != null)
+                        return field;
                     else if ((field = parseFieldRatioToReportIf(ctx)) != null)
                         return field;
 
@@ -7860,6 +7863,16 @@ final class ParserImpl implements Parser {
             List<Field<?>> args = parseFields(ctx);
             parse(ctx, ')');
             return cumeDist(args).withinGroupOrderBy(parseWithinGroupN(ctx));
+        }
+
+        return null;
+    }
+
+    private static final Field<?> parseFieldRandIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "RAND") || parseFunctionNameIf(ctx, "RANDOM")) {
+            parse(ctx, '(');
+            parse(ctx, ')');
+            return rand();
         }
 
         return null;

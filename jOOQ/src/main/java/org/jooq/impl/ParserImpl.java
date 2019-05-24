@@ -252,6 +252,7 @@ import static org.jooq.impl.DSL.stddevSamp;
 import static org.jooq.impl.DSL.substring;
 import static org.jooq.impl.DSL.sum;
 import static org.jooq.impl.DSL.sumDistinct;
+import static org.jooq.impl.DSL.sysConnectByPath;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.tan;
 import static org.jooq.impl.DSL.tanh;
@@ -5665,6 +5666,15 @@ final class ParserImpl implements Parser {
                         return field;
                     else if ((field = parseFieldShrIf(ctx)) != null)
                         return field;
+
+                if (parseFunctionNameIf(ctx, "SYS_CONNECT_BY_PATH")) {
+                    parse(ctx, '(');
+                    Field<?> x = parseField(ctx);
+                    parse(ctx, ',');
+                    String y = parseStringLiteral(ctx);
+                    parse(ctx, ')');
+                    return sysConnectByPath(x, y);
+                }
 
                 break;
 

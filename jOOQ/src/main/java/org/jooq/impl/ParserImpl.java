@@ -5202,6 +5202,9 @@ final class ParserImpl implements Parser {
     }
 
     private static final FieldOrRow parseUnaryOps(ParserContext ctx, Type type) {
+        if (parseKeywordIf(ctx, "CONNECT_BY_ROOT"))
+            return connectByRoot(toField(ctx, parseTerm(ctx, type)));
+
         FieldOrRow r;
         Sign sign = parseSign(ctx);
 
@@ -5366,9 +5369,6 @@ final class ParserImpl implements Parser {
                     return connectByIsCycle();
                 else if (parseKeywordIf(ctx, "CONNECT_BY_ISLEAF"))
                     return connectByIsLeaf();
-                else if (parseKeywordIf(ctx, "CONNECT_BY_ROOT")) {
-                    return connectByRoot(parseField(ctx));
-                }
 
                 break;
 

@@ -136,32 +136,25 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
     }
 
     public JavaWriter overrideIf(boolean override) {
-        if (override) {
+        if (override)
             println("@Override");
-        }
 
         return this;
     }
 
     public JavaWriter overrideInherit() {
         final int t = tab();
-
-        tab(t).javadoc("{@inheritDoc}");
+        tab(t).println();
         tab(t).override();
-
         return this;
     }
 
     public JavaWriter overrideInheritIf(boolean override) {
         final int t = tab();
 
-        if (override) {
-            tab(t).javadoc("{@inheritDoc}");
+        tab(t).println();
+        if (override)
             tab(t).override();
-        }
-        else {
-            tab(t).println();
-        }
 
         return this;
     }

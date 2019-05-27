@@ -103,6 +103,7 @@ import static org.jooq.tools.reflect.Reflect.on;
 import static org.jooq.util.postgres.PostgresUtils.toPGArrayString;
 import static org.jooq.util.postgres.PostgresUtils.toPGInterval;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Array;
@@ -2903,11 +2904,13 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          * Generated UID
          */
         private static final long                               serialVersionUID = -1850495302106551527L;
+
+        @SuppressWarnings("unchecked")
         private static final Converter<OffsetDateTime, Instant> CONVERTER        = Converter.ofNullable(
             OffsetDateTime.class,
             Instant.class,
-            o -> o.toInstant(),
-            i -> OffsetDateTime.ofInstant(i, ZoneOffset.UTC)
+            (java.util.function.Function<OffsetDateTime, Instant> & Serializable) o -> o.toInstant(),
+            (java.util.function.Function<Instant, OffsetDateTime> & Serializable) i -> OffsetDateTime.ofInstant(i, ZoneOffset.UTC)
         );
 
         private final DefaultOffsetDateTimeBinding<U>           delegate;

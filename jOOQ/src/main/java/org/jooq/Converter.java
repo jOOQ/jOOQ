@@ -211,18 +211,27 @@ public interface Converter<T, U> extends Serializable {
      * @return The converter.
      * @see Converter
      */
+    @SuppressWarnings("unchecked")
     static <T, U> Converter<T, U> ofNullable(
         Class<T> fromType,
         Class<U> toType,
         Function<? super T, ? extends U> from,
         Function<? super U, ? extends T> to
     ) {
-        return of(
-            fromType,
-            toType,
-            t -> t == null ? null : from.apply(t),
-            u -> u == null ? null : to.apply(u)
-        );
+        Function<T, U> fromS;
+        Function<U, T> toS;
+
+        if (from instanceof Serializable)
+            fromS = (Function<T, U> & Serializable) t -> t == null ? null : from.apply(t);
+        else
+            fromS = t -> t == null ? null : from.apply(t);
+
+        if (to instanceof Serializable)
+            toS = (Function<U, T> & Serializable) u -> u == null ? null : to.apply(u);
+        else
+            toS = u -> u == null ? null : to.apply(u);
+
+        return of(fromType, toType, fromS, toS);
     }
 
 

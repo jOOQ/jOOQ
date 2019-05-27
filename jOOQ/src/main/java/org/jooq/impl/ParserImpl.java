@@ -4850,10 +4850,22 @@ final class ParserImpl implements Parser {
 
             QualifiedAsterisk qa;
             if (parseIf(ctx, '*')) {
-                result.add(DSL.asterisk());
+                if (parseKeywordIf(ctx, "EXCEPT")) {
+                    parse(ctx, '(');
+                    result.add(DSL.asterisk().except(parseFieldNames(ctx).toArray(EMPTY_FIELD)));
+                    parse(ctx, ')');
+                }
+                else
+                    result.add(DSL.asterisk());
             }
             else if ((qa = parseQualifiedAsteriskIf(ctx)) != null) {
-                result.add(qa);
+                if (parseKeywordIf(ctx, "EXCEPT")) {
+                    parse(ctx, '(');
+                    result.add(qa.except(parseFieldNames(ctx).toArray(EMPTY_FIELD)));
+                    parse(ctx, ')');
+                }
+                else
+                    result.add(qa);
             }
             else {
                 Name alias = null;

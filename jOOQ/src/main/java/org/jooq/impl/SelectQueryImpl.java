@@ -2030,15 +2030,35 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     public final List<Field<?>> getSelect() {
         List<Field<?>> result = new ArrayList<Field<?>>();
 
+        // [#7921] TODO Find a better, more efficient way to resolve asterisks
         for (SelectFieldOrAsterisk f : getSelect1())
             if (f instanceof Field<?>)
                 result.add((Field<?>) f);
             else if (f instanceof QualifiedAsterisk)
-                result.addAll(Arrays.asList(((QualifiedAsterisk) f).qualifier().fields()));
+                if (((QualifiedAsteriskImpl) f).fields.isEmpty())
+                    result.addAll(Arrays.asList(((QualifiedAsterisk) f).qualifier().fields()));
+                else
+                    result.addAll(subtract(Arrays.asList(((QualifiedAsterisk) f).qualifier().fields()), (((QualifiedAsteriskImpl) f).fields)));
             else if (f instanceof Asterisk)
-                result.addAll(resolveAsterisk(new QueryPartList<Field<?>>()));
+                if (((AsteriskImpl) f).fields.isEmpty())
+                    result.addAll(resolveAsterisk(new QueryPartList<Field<?>>()));
+                else
+                    result.addAll(resolveAsterisk(new QueryPartList<Field<?>>(), ((AsteriskImpl) f).fields));
             else
                 throw new AssertionError("Type not supported: " + f);
+
+        return result;
+    }
+
+    private final Collection<? extends Field<?>> subtract(List<Field<?>> left, List<Field<?>> right) {
+
+        // [#7921] TODO Make this functionality more generally reusable
+        Fields<?> e = new Fields<Record>(right);
+        List<Field<?>> result = new ArrayList<Field<?>>();
+
+        for (Field<?> f : left)
+            if (e.field(f) == null)
+                result.add(f);
 
         return result;
     }
@@ -2055,14 +2075,25 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     private final <Q extends QueryPartList<? super Field<?>>> Q resolveAsterisk(Q result) {
+        return resolveAsterisk(result, null);
+    }
+
+    private final <Q extends QueryPartList<? super Field<?>>> Q resolveAsterisk(Q result, QueryPartList<Field<?>> except) {
+        Fields<?> e = except == null ? null : new Fields<Record>(except);
 
         // [#109] [#489] [#7231]: SELECT * is only applied when at least one
         // table from the table source is "unknown", i.e. not generated from a
         // physical table. Otherwise, the fields are selected explicitly
         if (knownTableSource())
-            for (TableLike<?> table : getFrom())
-                for (Field<?> field : table.asTable().fields())
-                    result.add(field);
+            if (e == null)
+                for (TableLike<?> table : getFrom())
+                    for (Field<?> field : table.asTable().fields())
+                        result.add(field);
+            else
+                for (TableLike<?> table : getFrom())
+                    for (Field<?> field : table.asTable().fields())
+                        if (e.field(field) == null)
+                            result.add(field);
 
         // The default is SELECT 1, when projections and table sources are
         // both empty

@@ -37,6 +37,7 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.H2;
 
 /**
  * A qualified asterisk.
@@ -69,4 +70,38 @@ public interface QualifiedAsterisk extends SelectFieldOrAsterisk {
      * The qualifier.
      */
     Table<?> qualifier();
+
+    /**
+     * The qualified asterisk (<code>t.* EXCEPT (fields)</code>) expression to
+     * be used in <code>SELECT</code> clauses.
+     * <p>
+     * This expression is a convenient way to select "all but some fields". Some
+     * dialects (e.g. {@link SQLDialect#H2}) implement this feature natively. In
+     * other dialects, jOOQ expands the asterisk if possible.
+     */
+    @Support({ H2 })
+    QualifiedAsterisk except(String... fieldNames);
+
+    /**
+     * The qualified asterisk (<code>t.* EXCEPT (fields)</code>) expression to
+     * be used in <code>SELECT</code> clauses.
+     * <p>
+     * This expression is a convenient way to select "all but some fields". Some
+     * dialects (e.g. {@link SQLDialect#H2}) implement this feature natively. In
+     * other dialects, jOOQ expands the asterisk if possible.
+     */
+    @Support({ H2 })
+    QualifiedAsterisk except(Name... fieldNames);
+
+    /**
+     * The qualified asterisk (<code>t.* EXCEPT (fields)</code>) expression to
+     * be used in <code>SELECT</code> clauses.
+     * <p>
+     * This expression is a convenient way to select "all but some fields". Some
+     * dialects (e.g. {@link SQLDialect#H2}) implement this feature natively. In
+     * other dialects, jOOQ expands the asterisk if possible.
+     */
+    @Support({ H2 })
+    QualifiedAsterisk except(Field<?>... fields);
+
 }

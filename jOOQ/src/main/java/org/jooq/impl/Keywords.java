@@ -130,6 +130,7 @@ final class Keywords {
     static final Keyword K_END_TRY                          = keyword("end try");
     static final Keyword K_ENUM                             = keyword("enum");
     static final Keyword K_ESCAPE                           = keyword("escape");
+    static final Keyword K_EXCEPT                           = keyword("except");
     static final Keyword K_EXCEPTION                        = keyword("exception");
     static final Keyword K_EXCLUDE                          = keyword("exclude");
     static final Keyword K_EXEC                             = keyword("exec");

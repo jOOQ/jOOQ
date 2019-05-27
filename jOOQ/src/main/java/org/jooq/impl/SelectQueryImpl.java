@@ -1265,7 +1265,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         // The default behaviour
         else {
-            context.visit(getSelect1());
+            context.visit(getSelectResolveUnsupportedAsterisks(family));
         }
 
 
@@ -1833,7 +1833,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @Override
     public final void addSelect(Collection<? extends SelectFieldOrAsterisk> fields) {
-        getSelect0().addAll(fields);
+        getSelectAsSpecified().addAll(fields);
     }
 
     @Override
@@ -2028,26 +2028,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @Override
     public final List<Field<?>> getSelect() {
-        List<Field<?>> result = new ArrayList<Field<?>>();
-
-        // [#7921] TODO Find a better, more efficient way to resolve asterisks
-        for (SelectFieldOrAsterisk f : getSelect1())
-            if (f instanceof Field<?>)
-                result.add((Field<?>) f);
-            else if (f instanceof QualifiedAsterisk)
-                if (((QualifiedAsteriskImpl) f).fields.isEmpty())
-                    result.addAll(Arrays.asList(((QualifiedAsterisk) f).qualifier().fields()));
-                else
-                    result.addAll(subtract(Arrays.asList(((QualifiedAsterisk) f).qualifier().fields()), (((QualifiedAsteriskImpl) f).fields)));
-            else if (f instanceof Asterisk)
-                if (((AsteriskImpl) f).fields.isEmpty())
-                    result.addAll(resolveAsterisk(new QueryPartList<Field<?>>()));
-                else
-                    result.addAll(resolveAsterisk(new QueryPartList<Field<?>>(), ((AsteriskImpl) f).fields));
-            else
-                throw new AssertionError("Type not supported: " + f);
-
-        return result;
+        return getSelectResolveAllAsterisks(configuration().family());
     }
 
     private final Collection<? extends Field<?>> subtract(List<Field<?>> left, List<Field<?>> right) {
@@ -2063,15 +2044,74 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         return result;
     }
 
-    final SelectFieldList<SelectFieldOrAsterisk> getSelect0() {
+    /**
+     * The select list as specified by the API user.
+     */
+    final SelectFieldList<SelectFieldOrAsterisk> getSelectAsSpecified() {
         return select;
     }
 
-    final SelectFieldList<SelectFieldOrAsterisk> getSelect1() {
-        if (getSelect0().isEmpty())
+    /**
+     * The select list with resolved implicit asterisks.
+     */
+    final SelectFieldList<SelectFieldOrAsterisk> getSelectResolveImplicitAsterisks() {
+        if (getSelectAsSpecified().isEmpty())
             return resolveAsterisk(new SelectFieldList<SelectFieldOrAsterisk>());
 
-        return getSelect0();
+        return getSelectAsSpecified();
+    }
+
+    /**
+     * The select list with resolved explicit asterisks (if they contain the
+     * except clause and that is not supported).
+     */
+    final SelectFieldList<SelectFieldOrAsterisk> getSelectResolveUnsupportedAsterisks(SQLDialect family) {
+        return getSelectResolveSomeAsterisks0(family, false);
+    }
+
+    /**
+     * The select list with resolved explicit asterisks (if they contain the
+     * except clause and that is not supported).
+     */
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    final SelectFieldList<Field<?>> getSelectResolveAllAsterisks(SQLDialect family) {
+        return (SelectFieldList) getSelectResolveSomeAsterisks0(family, true);
+    }
+
+    private final SelectFieldList<SelectFieldOrAsterisk> getSelectResolveSomeAsterisks0(SQLDialect family, boolean resolveSupported) {
+        SelectFieldList<SelectFieldOrAsterisk> result = new SelectFieldList<SelectFieldOrAsterisk>();
+
+        // [#7921] Only H2 supports the * EXCEPT (..) syntax
+        boolean resolveExcept = resolveSupported || family != H2;
+
+        // [#7921] TODO Find a better, more efficient way to resolve asterisks
+        for (SelectFieldOrAsterisk f : getSelectResolveImplicitAsterisks())
+            if (f instanceof Field<?>)
+                result.add(f);
+            else if (f instanceof QualifiedAsterisk)
+                if (((QualifiedAsteriskImpl) f).fields.isEmpty())
+                    if (resolveSupported)
+                        result.addAll(Arrays.asList(((QualifiedAsterisk) f).qualifier().fields()));
+                    else
+                        result.add(f);
+                else if (resolveExcept)
+                    result.addAll(subtract(Arrays.asList(((QualifiedAsterisk) f).qualifier().fields()), (((QualifiedAsteriskImpl) f).fields)));
+                else
+                    result.add(f);
+            else if (f instanceof Asterisk)
+                if (((AsteriskImpl) f).fields.isEmpty())
+                    if (resolveSupported)
+                        result.addAll(resolveAsterisk(new QueryPartList<Field<?>>()));
+                    else
+                        result.add(f);
+                else if (resolveExcept)
+                    result.addAll(resolveAsterisk(new QueryPartList<Field<?>>(), ((AsteriskImpl) f).fields));
+                else
+                    result.add(f);
+            else
+                throw new AssertionError("Type not supported: " + f);
+
+        return result;
     }
 
     private final <Q extends QueryPartList<? super Field<?>>> Q resolveAsterisk(Q result) {
@@ -2147,12 +2187,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // - on a single table
         // - a select *
 
-        if (getFrom().size() == 1 && getSelect0().isEmpty()) {
+        if (getFrom().size() == 1 && getSelectAsSpecified().isEmpty())
             return (Class<? extends R>) getFrom().get(0).asTable().getRecordType();
-        }
-        else {
+        else
             return (Class<? extends R>) RecordImpl.class;
-        }
     }
 
     final TableList getFrom() {

@@ -37,8 +37,6 @@
  */
 package org.jooq;
 
-import static org.jooq.SQLDialect.H2;
-
 /**
  * A qualified asterisk.
  * <p>
@@ -79,7 +77,7 @@ public interface QualifiedAsterisk extends SelectFieldOrAsterisk {
      * dialects (e.g. {@link SQLDialect#H2}) implement this feature natively. In
      * other dialects, jOOQ expands the asterisk if possible.
      */
-    @Support({ H2 })
+    @Support
     QualifiedAsterisk except(String... fieldNames);
 
     /**
@@ -90,7 +88,7 @@ public interface QualifiedAsterisk extends SelectFieldOrAsterisk {
      * dialects (e.g. {@link SQLDialect#H2}) implement this feature natively. In
      * other dialects, jOOQ expands the asterisk if possible.
      */
-    @Support({ H2 })
+    @Support
     QualifiedAsterisk except(Name... fieldNames);
 
     /**
@@ -101,7 +99,7 @@ public interface QualifiedAsterisk extends SelectFieldOrAsterisk {
      * dialects (e.g. {@link SQLDialect#H2}) implement this feature natively. In
      * other dialects, jOOQ expands the asterisk if possible.
      */
-    @Support({ H2 })
+    @Support
     QualifiedAsterisk except(Field<?>... fields);
 
 }

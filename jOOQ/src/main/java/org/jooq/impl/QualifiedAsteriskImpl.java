@@ -69,16 +69,10 @@ final class QualifiedAsteriskImpl extends AbstractQueryPart implements Qualified
     public final void accept(Context<?> ctx) {
         ctx.visit(table).sql('.').visit(AsteriskImpl.INSTANCE);
 
-        if (!fields.isEmpty()) {
-            switch (ctx.family()) {
-
-                // [#7921] H2 has native support for EXCEPT
-                case H2:
-                default:
-                    ctx.sql(' ').visit(K_EXCEPT).sql(" (").visit(fields).sql(')');
-                    break;
-            }
-        }
+        // [#7921] H2 has native support for EXCEPT. Emulations are implemented
+        //         in SelectQueryImpl
+        if (!fields.isEmpty())
+            ctx.sql(' ').visit(K_EXCEPT).sql(" (").visit(fields).sql(')');
     }
 
     @Override

@@ -44,6 +44,7 @@ import static org.jooq.impl.DSL.nvl2;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.meta.hsqldb.information_schema.Tables.COLUMNS;
 import static org.jooq.meta.hsqldb.information_schema.Tables.ELEMENT_TYPES;
+import static org.jooq.meta.hsqldb.information_schema.Tables.SYSTEM_COLUMNS;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -83,16 +84,21 @@ public class HSQLDBTableDefinition extends AbstractTableDefinition {
                 nvl(ELEMENT_TYPES.CHARACTER_MAXIMUM_LENGTH, COLUMNS.CHARACTER_MAXIMUM_LENGTH).as(COLUMNS.CHARACTER_MAXIMUM_LENGTH),
                 nvl(ELEMENT_TYPES.NUMERIC_PRECISION, COLUMNS.NUMERIC_PRECISION).as(COLUMNS.NUMERIC_PRECISION),
                 nvl(ELEMENT_TYPES.NUMERIC_SCALE, COLUMNS.NUMERIC_SCALE).as(COLUMNS.NUMERIC_SCALE),
-                COLUMNS.UDT_NAME)
+                COLUMNS.UDT_NAME,
+                SYSTEM_COLUMNS.REMARKS)
             .from(COLUMNS)
-            .leftOuterJoin(ELEMENT_TYPES)
-            .on(COLUMNS.TABLE_SCHEMA.equal(ELEMENT_TYPES.OBJECT_SCHEMA))
-            .and(COLUMNS.TABLE_NAME.equal(ELEMENT_TYPES.OBJECT_NAME))
-            .and(COLUMNS.DTD_IDENTIFIER.equal(ELEMENT_TYPES.COLLECTION_TYPE_IDENTIFIER))
+                .leftOuterJoin(SYSTEM_COLUMNS)
+                    .on(COLUMNS.TABLE_CATALOG.eq(SYSTEM_COLUMNS.TABLE_CAT))
+                    .and(COLUMNS.TABLE_SCHEMA.eq(SYSTEM_COLUMNS.TABLE_SCHEM))
+                    .and(COLUMNS.TABLE_NAME.eq(SYSTEM_COLUMNS.TABLE_NAME))
+                    .and(COLUMNS.COLUMN_NAME.eq(SYSTEM_COLUMNS.COLUMN_NAME))
+                .leftOuterJoin(ELEMENT_TYPES)
+                    .on(COLUMNS.TABLE_SCHEMA.equal(ELEMENT_TYPES.OBJECT_SCHEMA))
+                    .and(COLUMNS.TABLE_NAME.equal(ELEMENT_TYPES.OBJECT_NAME))
+                    .and(COLUMNS.DTD_IDENTIFIER.equal(ELEMENT_TYPES.COLLECTION_TYPE_IDENTIFIER))
             .where(COLUMNS.TABLE_SCHEMA.equal(getSchema().getName()))
-            .and(COLUMNS.TABLE_NAME.equal(getName()))
-            .orderBy(COLUMNS.ORDINAL_POSITION)
-            .fetch()) {
+                .and(COLUMNS.TABLE_NAME.equal(getName()))
+            .orderBy(COLUMNS.ORDINAL_POSITION)) {
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
@@ -112,7 +118,7 @@ public class HSQLDBTableDefinition extends AbstractTableDefinition {
 			    record.get(COLUMNS.ORDINAL_POSITION, int.class),
 			    type,
 			    null != record.get(COLUMNS.IDENTITY_GENERATION),
-			    null
+			    record.get(SYSTEM_COLUMNS.REMARKS)
 		    );
 
 			result.add(column);

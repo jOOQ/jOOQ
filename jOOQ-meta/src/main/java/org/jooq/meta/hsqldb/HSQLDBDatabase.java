@@ -49,7 +49,7 @@ import static org.jooq.meta.hsqldb.information_schema.Tables.ROUTINES;
 import static org.jooq.meta.hsqldb.information_schema.Tables.SCHEMATA;
 import static org.jooq.meta.hsqldb.information_schema.Tables.SEQUENCES;
 import static org.jooq.meta.hsqldb.information_schema.Tables.SYSTEM_INDEXINFO;
-import static org.jooq.meta.hsqldb.information_schema.Tables.TABLES;
+import static org.jooq.meta.hsqldb.information_schema.Tables.SYSTEM_TABLES;
 import static org.jooq.meta.hsqldb.information_schema.Tables.TABLE_CONSTRAINTS;
 
 import java.sql.SQLException;
@@ -375,18 +375,18 @@ public class HSQLDBDatabase extends AbstractDatabase {
 
         for (Record record : create()
                 .select(
-                    TABLES.TABLE_SCHEMA,
-                    TABLES.TABLE_NAME)
-                .from(TABLES)
-                .where(TABLES.TABLE_SCHEMA.in(getInputSchemata()))
+                    SYSTEM_TABLES.TABLE_SCHEM,
+                    SYSTEM_TABLES.TABLE_NAME,
+                    SYSTEM_TABLES.REMARKS)
+                .from(SYSTEM_TABLES)
+                .where(SYSTEM_TABLES.TABLE_SCHEM.in(getInputSchemata()))
                 .orderBy(
-                    TABLES.TABLE_SCHEMA,
-                    TABLES.TABLE_NAME)
-                .fetch()) {
+                    SYSTEM_TABLES.TABLE_SCHEM,
+                    SYSTEM_TABLES.TABLE_NAME)) {
 
-            SchemaDefinition schema = getSchema(record.get(TABLES.TABLE_SCHEMA));
-            String name = record.get(TABLES.TABLE_NAME);
-            String comment = "";
+            SchemaDefinition schema = getSchema(record.get(SYSTEM_TABLES.TABLE_SCHEM));
+            String name = record.get(SYSTEM_TABLES.TABLE_NAME);
+            String comment = record.get(SYSTEM_TABLES.REMARKS);
 
             result.add(new HSQLDBTableDefinition(schema, name, comment));
         }

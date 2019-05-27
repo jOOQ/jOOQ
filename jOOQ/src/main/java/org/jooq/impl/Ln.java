@@ -82,8 +82,7 @@ final class Ln extends AbstractFunction<BigDecimal> {
 
 
 
-                case H2:
-                    return function("log", SQLDataType.NUMERIC, argument);
+
 
                 default:
                     return function("ln", SQLDataType.NUMERIC, argument);

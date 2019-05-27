@@ -51,29 +51,85 @@ import java.util.Set;
  */
 public final class DDLExportConfiguration {
 
-    final EnumSet<DDLFlag> flags;
+    private final boolean          createSchemaIfNotExists;
+    private final boolean          createTableIfNotExists;
+    private final EnumSet<DDLFlag> flags;
 
+    /**
+     * Create a new default export configuration instance.
+     */
     public DDLExportConfiguration() {
         this(
-            EnumSet.allOf(DDLFlag.class)
+            EnumSet.allOf(DDLFlag.class),
+            false,
+            false
         );
     }
 
     private DDLExportConfiguration(
-        Set<DDLFlag> flags
+        Collection<DDLFlag> flags,
+        boolean createSchemaIfNotExists,
+        boolean createTableIfNotExists
     ) {
         this.flags = EnumSet.copyOf(flags);
+        this.createSchemaIfNotExists = createSchemaIfNotExists;
+        this.createTableIfNotExists = createTableIfNotExists;
     }
 
+    /**
+     * The {@link DDLFlag} that are enabled on this configuration.
+     */
     public final Set<DDLFlag> flags() {
         return Collections.unmodifiableSet(flags);
     }
 
+    /**
+     * The {@link DDLFlag} that are enabled on this configuration.
+     */
     public final DDLExportConfiguration flags(DDLFlag... newFlags) {
         return flags(Arrays.asList(newFlags));
     }
 
+    /**
+     * The {@link DDLFlag} that are enabled on this configuration.
+     */
     public final DDLExportConfiguration flags(Collection<DDLFlag> newFlags) {
-        return new DDLExportConfiguration(EnumSet.copyOf(newFlags));
+        return new DDLExportConfiguration(newFlags, createSchemaIfNotExists, createTableIfNotExists);
+    }
+
+    /**
+     * Whether to generate <code>CREATE SCHEMA IF NOT EXISTS</code> statements.
+     * <p>
+     * Not all RDBMS support this flag. Check
+     * {@link DSLContext#createSchemaIfNotExists(Schema)} to see if your
+     * {@link SQLDialect} supports the clause.
+     */
+    public final boolean createSchemaIfNotExists() {
+        return createSchemaIfNotExists;
+    }
+
+    /**
+     * Whether to generate <code>CREATE SCHEMA IF NOT EXISTS</code> statements.
+     */
+    public final DDLExportConfiguration createSchemaIfNotExists(boolean newCreateSchemaIfNotExists) {
+        return new DDLExportConfiguration(flags, newCreateSchemaIfNotExists, createTableIfNotExists);
+    }
+
+    /**
+     * Whether to generate <code>CREATE TABLE IF NOT EXISTS</code> statements.
+     * <p>
+     * Not all RDBMS support this flag. Check
+     * {@link DSLContext#createTableIfNotExists(Table)} to see if your
+     * {@link SQLDialect} supports the clause.
+     */
+    public final boolean createTableIfNotExists() {
+        return createTableIfNotExists;
+    }
+
+    /**
+     * Whether to generate <code>CREATE TABLE IF NOT EXISTS</code> statements.
+     */
+    public final DDLExportConfiguration createTableIfNotExists(boolean newCreateTableIfNotExists) {
+        return new DDLExportConfiguration(flags, createSchemaIfNotExists, newCreateTableIfNotExists);
     }
 }

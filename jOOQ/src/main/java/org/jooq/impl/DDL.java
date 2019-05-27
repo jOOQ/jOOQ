@@ -47,6 +47,7 @@ import static org.jooq.impl.DSL.constraint;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import org.jooq.Catalog;
@@ -75,10 +76,16 @@ final class DDL {
         this.configuration = configuration;
     }
 
-    private final Query createTable(Table<?> table) {
-        return ctx.createTable(table)
+    private final Query createTable(Table<?> table, Collection<? extends Constraint> constraints) {
+        return (configuration.createTableIfNotExists()
+                    ? ctx.createTableIfNotExists(table)
+                    : ctx.createTable(table))
                   .columns(table.fields())
-                  .constraints(constraints(table));
+                  .constraints(constraints);
+    }
+
+    private final Query createTable(Table<?> table) {
+        return createTable(table, constraints(table));
     }
 
     private final List<Query> alterTableAddConstraints(Table<?> table) {
@@ -172,7 +179,10 @@ final class DDL {
         List<Query> queries = new ArrayList<Query>();
 
         if (configuration.flags().contains(SCHEMA) && !StringUtils.isBlank(schema.getName()))
-            queries.add(ctx.createSchema(schema.getName()));
+            if (configuration.createSchemaIfNotExists())
+                queries.add(ctx.createSchemaIfNotExists(schema.getName()));
+            else
+                queries.add(ctx.createSchema(schema.getName()));
 
         if (configuration.flags().contains(TABLE)) {
             for (Table<?> table : schema.getTables()) {
@@ -181,11 +191,7 @@ final class DDL {
                 constraints.addAll(primaryKeys(table));
                 constraints.addAll(uniqueKeys(table));
 
-                queries.add(
-                    ctx.createTable(table)
-                       .columns(table.fields())
-                       .constraints(constraints)
-                );
+                queries.add(createTable(table, constraints));
             }
         }
         else {

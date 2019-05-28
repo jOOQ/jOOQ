@@ -59,6 +59,7 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
+// ...
 import static org.jooq.impl.Keywords.K_IS_NOT_NULL;
 import static org.jooq.impl.Keywords.K_IS_NULL;
 
@@ -110,7 +111,7 @@ final class RowIsNull extends AbstractCondition {
 
     private final QueryPartInternal delegate(Configuration configuration) {
 
-        // CUBRID 9.0.0 and HSQLDB have buggy implementations of the NULL predicate.
+        // CUBRID 9, HSQLDB, and Vertica have incorrect implementations of the NULL predicate.
         // Informix doesn't implement the RVE IS NULL predicate.
         if (EMULATE_NULL.contains(configuration.family())) {
             Field<?>[] fields = row.fields();

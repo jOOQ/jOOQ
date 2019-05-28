@@ -18,7 +18,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class LanguageRecord extends UpdatableRecordImpl<LanguageRecord> implements Record2<Integer, String> {
 
-    private static final long serialVersionUID = 2038674978;
+    private static final long serialVersionUID = -850822280;
 
     /**
      * Setter for <code>PUBLIC.LANGUAGE.LANGUAGEID</code>.
@@ -52,9 +52,6 @@ public class LanguageRecord extends UpdatableRecordImpl<LanguageRecord> implemen
     // Primary key information
     // -------------------------------------------------------------------------
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Record1<Integer> key() {
         return (Record1) super.key();
@@ -64,91 +61,58 @@ public class LanguageRecord extends UpdatableRecordImpl<LanguageRecord> implemen
     // Record2 type implementation
     // -------------------------------------------------------------------------
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Row2<Integer, String> fieldsRow() {
         return (Row2) super.fieldsRow();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Row2<Integer, String> valuesRow() {
         return (Row2) super.valuesRow();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Field<Integer> field1() {
         return Language.LANGUAGE.LANGUAGEID;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Field<String> field2() {
         return Language.LANGUAGE.NAME;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Integer component1() {
         return getLanguageid();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String component2() {
         return getName();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Integer value1() {
         return getLanguageid();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String value2() {
         return getName();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public LanguageRecord value1(Integer value) {
         setLanguageid(value);
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public LanguageRecord value2(String value) {
         setName(value);
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public LanguageRecord values(Integer value1, String value2) {
         value1(value1);

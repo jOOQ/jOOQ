@@ -23,7 +23,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Public extends SchemaImpl {
 
-    private static final long serialVersionUID = -1403523900;
+    private static final long serialVersionUID = -1878258063;
 
     /**
      * The reference instance of <code>PUBLIC</code>
@@ -58,9 +58,6 @@ public class Public extends SchemaImpl {
     }
 
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Catalog getCatalog() {
         return DefaultCatalog.DEFAULT_CATALOG;

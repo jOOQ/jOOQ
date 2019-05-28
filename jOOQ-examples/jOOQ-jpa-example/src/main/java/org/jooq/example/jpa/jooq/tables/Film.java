@@ -33,7 +33,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Film extends TableImpl<FilmRecord> {
 
-    private static final long serialVersionUID = -1567412069;
+    private static final long serialVersionUID = -694610440;
 
     /**
      * The reference instance of <code>PUBLIC.FILM</code>
@@ -111,49 +111,31 @@ public class Film extends TableImpl<FilmRecord> {
         super(child, key, FILM);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Schema getSchema() {
         return Public.PUBLIC;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public List<Index> getIndexes() {
         return Arrays.<Index>asList(Indexes.FKD2YJC1RU34H1SMWLA3FX7B6NX_INDEX_2, Indexes.FKN2UB730RPO5B5E9X6U2LWL9FT_INDEX_2, Indexes.PRIMARY_KEY_2);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Identity<FilmRecord, Integer> getIdentity() {
         return Keys.IDENTITY_FILM;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public UniqueKey<FilmRecord> getPrimaryKey() {
         return Keys.CONSTRAINT_2;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public List<UniqueKey<FilmRecord>> getKeys() {
         return Arrays.<UniqueKey<FilmRecord>>asList(Keys.CONSTRAINT_2);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public List<ForeignKey<FilmRecord, ?>> getReferences() {
         return Arrays.<ForeignKey<FilmRecord, ?>>asList(Keys.FKD2YJC1RU34H1SMWLA3FX7B6NX, Keys.FKN2UB730RPO5B5E9X6U2LWL9FT);
@@ -167,17 +149,11 @@ public class Film extends TableImpl<FilmRecord> {
         return new Language(this, Keys.FKN2UB730RPO5B5E9X6U2LWL9FT);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Film as(String alias) {
         return new Film(DSL.name(alias), this);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Film as(Name alias) {
         return new Film(alias, this);
@@ -203,9 +179,6 @@ public class Film extends TableImpl<FilmRecord> {
     // Row6 type methods
     // -------------------------------------------------------------------------
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Row6<Integer, Integer, Year, String, Integer, Integer> fieldsRow() {
         return (Row6) super.fieldsRow();

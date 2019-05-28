@@ -17,7 +17,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class BookStoreRecord extends UpdatableRecordImpl<BookStoreRecord> implements Record1<String> {
 
-    private static final long serialVersionUID = 2138507794;
+    private static final long serialVersionUID = -1867804630;
 
     /**
      * Setter for <code>PUBLIC.BOOK_STORE.NAME</code>.
@@ -37,9 +37,6 @@ public class BookStoreRecord extends UpdatableRecordImpl<BookStoreRecord> implem
     // Primary key information
     // -------------------------------------------------------------------------
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Record1<String> key() {
         return (Record1) super.key();
@@ -49,58 +46,37 @@ public class BookStoreRecord extends UpdatableRecordImpl<BookStoreRecord> implem
     // Record1 type implementation
     // -------------------------------------------------------------------------
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Row1<String> fieldsRow() {
         return (Row1) super.fieldsRow();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Row1<String> valuesRow() {
         return (Row1) super.valuesRow();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Field<String> field1() {
         return BookStore.BOOK_STORE.NAME;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String component1() {
         return getName();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String value1() {
         return getName();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public BookStoreRecord value1(String value) {
         setName(value);
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public BookStoreRecord values(String value1) {
         value1(value1);

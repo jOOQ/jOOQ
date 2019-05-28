@@ -20,7 +20,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FilmRecord extends UpdatableRecordImpl<FilmRecord> implements Record6<Integer, Integer, Year, String, Integer, Integer> {
 
-    private static final long serialVersionUID = 2076456687;
+    private static final long serialVersionUID = -1504094455;
 
     /**
      * Setter for <code>PUBLIC.FILM.FILMID</code>.
@@ -110,9 +110,6 @@ public class FilmRecord extends UpdatableRecordImpl<FilmRecord> implements Recor
     // Primary key information
     // -------------------------------------------------------------------------
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Record1<Integer> key() {
         return (Record1) super.key();
@@ -122,223 +119,142 @@ public class FilmRecord extends UpdatableRecordImpl<FilmRecord> implements Recor
     // Record6 type implementation
     // -------------------------------------------------------------------------
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Row6<Integer, Integer, Year, String, Integer, Integer> fieldsRow() {
         return (Row6) super.fieldsRow();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Row6<Integer, Integer, Year, String, Integer, Integer> valuesRow() {
         return (Row6) super.valuesRow();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Field<Integer> field1() {
         return Film.FILM.FILMID;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Field<Integer> field2() {
         return Film.FILM.LENGTH;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Field<Year> field3() {
         return Film.FILM.RELEASE_YEAR;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Field<String> field4() {
         return Film.FILM.TITLE;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Field<Integer> field5() {
         return Film.FILM.LANGUAGE_LANGUAGEID;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Field<Integer> field6() {
         return Film.FILM.ORIGINALLANGUAGE_LANGUAGEID;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Integer component1() {
         return getFilmid();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Integer component2() {
         return getLength();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Year component3() {
         return getReleaseYear();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String component4() {
         return getTitle();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Integer component5() {
         return getLanguageLanguageid();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Integer component6() {
         return getOriginallanguageLanguageid();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Integer value1() {
         return getFilmid();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Integer value2() {
         return getLength();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Year value3() {
         return getReleaseYear();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String value4() {
         return getTitle();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Integer value5() {
         return getLanguageLanguageid();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Integer value6() {
         return getOriginallanguageLanguageid();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public FilmRecord value1(Integer value) {
         setFilmid(value);
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public FilmRecord value2(Integer value) {
         setLength(value);
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public FilmRecord value3(Year value) {
         setReleaseYear(value);
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public FilmRecord value4(String value) {
         setTitle(value);
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public FilmRecord value5(Integer value) {
         setLanguageLanguageid(value);
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public FilmRecord value6(Integer value) {
         setOriginallanguageLanguageid(value);
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public FilmRecord values(Integer value1, Integer value2, Year value3, String value4, Integer value5, Integer value6) {
         value1(value1);

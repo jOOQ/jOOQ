@@ -31,7 +31,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FilmActor extends TableImpl<FilmActorRecord> {
 
-    private static final long serialVersionUID = -1107628909;
+    private static final long serialVersionUID = -705857387;
 
     /**
      * The reference instance of <code>PUBLIC.FILM_ACTOR</code>
@@ -89,41 +89,26 @@ public class FilmActor extends TableImpl<FilmActorRecord> {
         super(child, key, FILM_ACTOR);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Schema getSchema() {
         return Public.PUBLIC;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public List<Index> getIndexes() {
         return Arrays.<Index>asList(Indexes.FK3FSUXQ0JJ1XONRE7BHROOPVBX_INDEX_7, Indexes.FK43SD2F45W7YN0GAXQ94EHTWT2_INDEX_7, Indexes.PRIMARY_KEY_7);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public UniqueKey<FilmActorRecord> getPrimaryKey() {
         return Keys.CONSTRAINT_7;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public List<UniqueKey<FilmActorRecord>> getKeys() {
         return Arrays.<UniqueKey<FilmActorRecord>>asList(Keys.CONSTRAINT_7);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public List<ForeignKey<FilmActorRecord, ?>> getReferences() {
         return Arrays.<ForeignKey<FilmActorRecord, ?>>asList(Keys.FK3FSUXQ0JJ1XONRE7BHROOPVBX, Keys.FK43SD2F45W7YN0GAXQ94EHTWT2);
@@ -137,17 +122,11 @@ public class FilmActor extends TableImpl<FilmActorRecord> {
         return new Actor(this, Keys.FK43SD2F45W7YN0GAXQ94EHTWT2);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public FilmActor as(String alias) {
         return new FilmActor(DSL.name(alias), this);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public FilmActor as(Name alias) {
         return new FilmActor(alias, this);
@@ -173,9 +152,6 @@ public class FilmActor extends TableImpl<FilmActorRecord> {
     // Row2 type methods
     // -------------------------------------------------------------------------
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Row2<Integer, Integer> fieldsRow() {
         return (Row2) super.fieldsRow();

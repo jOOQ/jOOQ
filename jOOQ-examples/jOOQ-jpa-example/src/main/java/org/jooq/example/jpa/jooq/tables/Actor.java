@@ -32,7 +32,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Actor extends TableImpl<ActorRecord> {
 
-    private static final long serialVersionUID = -1700943295;
+    private static final long serialVersionUID = 14087797;
 
     /**
      * The reference instance of <code>PUBLIC.ACTOR</code>
@@ -95,57 +95,36 @@ public class Actor extends TableImpl<ActorRecord> {
         super(child, key, ACTOR);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Schema getSchema() {
         return Public.PUBLIC;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public List<Index> getIndexes() {
         return Arrays.<Index>asList(Indexes.PRIMARY_KEY_3);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Identity<ActorRecord, Integer> getIdentity() {
         return Keys.IDENTITY_ACTOR;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public UniqueKey<ActorRecord> getPrimaryKey() {
         return Keys.CONSTRAINT_3;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public List<UniqueKey<ActorRecord>> getKeys() {
         return Arrays.<UniqueKey<ActorRecord>>asList(Keys.CONSTRAINT_3);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Actor as(String alias) {
         return new Actor(DSL.name(alias), this);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Actor as(Name alias) {
         return new Actor(alias, this);
@@ -171,9 +150,6 @@ public class Actor extends TableImpl<ActorRecord> {
     // Row3 type methods
     // -------------------------------------------------------------------------
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Row3<Integer, String, String> fieldsRow() {
         return (Row3) super.fieldsRow();

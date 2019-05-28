@@ -33,7 +33,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Book extends TableImpl<BookRecord> {
 
-    private static final long serialVersionUID = -1946957800;
+    private static final long serialVersionUID = 594626133;
 
     /**
      * The reference instance of <code>PUBLIC.BOOK</code>
@@ -136,49 +136,31 @@ public class Book extends TableImpl<BookRecord> {
         super(child, key, BOOK);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Schema getSchema() {
         return Public.PUBLIC;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public List<Index> getIndexes() {
         return Arrays.<Index>asList(Indexes.FK_T_BOOK_AUTHOR_ID_INDEX_1, Indexes.FK_T_BOOK_CO_AUTHOR_ID_INDEX_1, Indexes.PRIMARY_KEY_1);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Identity<BookRecord, Integer> getIdentity() {
         return Keys.IDENTITY_BOOK;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public UniqueKey<BookRecord> getPrimaryKey() {
         return Keys.PK_T_BOOK;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public List<UniqueKey<BookRecord>> getKeys() {
         return Arrays.<UniqueKey<BookRecord>>asList(Keys.PK_T_BOOK);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public List<ForeignKey<BookRecord, ?>> getReferences() {
         return Arrays.<ForeignKey<BookRecord, ?>>asList(Keys.FK_T_BOOK_AUTHOR_ID, Keys.FK_T_BOOK_CO_AUTHOR_ID);
@@ -192,17 +174,11 @@ public class Book extends TableImpl<BookRecord> {
         return new Author(this, Keys.FK_T_BOOK_CO_AUTHOR_ID);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Book as(String alias) {
         return new Book(DSL.name(alias), this);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Book as(Name alias) {
         return new Book(alias, this);
@@ -228,9 +204,6 @@ public class Book extends TableImpl<BookRecord> {
     // Row11 type methods
     // -------------------------------------------------------------------------
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Row11<Integer, Integer, Integer, Integer, String, Integer, Integer, String, byte[], Integer, Timestamp> fieldsRow() {
         return (Row11) super.fieldsRow();

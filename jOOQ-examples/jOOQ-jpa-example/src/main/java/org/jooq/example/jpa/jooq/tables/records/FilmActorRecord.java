@@ -17,7 +17,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FilmActorRecord extends UpdatableRecordImpl<FilmActorRecord> implements Record2<Integer, Integer> {
 
-    private static final long serialVersionUID = -1830742445;
+    private static final long serialVersionUID = -674253481;
 
     /**
      * Setter for <code>PUBLIC.FILM_ACTOR.FILMS_FILMID</code>.
@@ -51,9 +51,6 @@ public class FilmActorRecord extends UpdatableRecordImpl<FilmActorRecord> implem
     // Primary key information
     // -------------------------------------------------------------------------
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Record2<Integer, Integer> key() {
         return (Record2) super.key();
@@ -63,91 +60,58 @@ public class FilmActorRecord extends UpdatableRecordImpl<FilmActorRecord> implem
     // Record2 type implementation
     // -------------------------------------------------------------------------
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Row2<Integer, Integer> fieldsRow() {
         return (Row2) super.fieldsRow();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Row2<Integer, Integer> valuesRow() {
         return (Row2) super.valuesRow();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Field<Integer> field1() {
         return FilmActor.FILM_ACTOR.FILMS_FILMID;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Field<Integer> field2() {
         return FilmActor.FILM_ACTOR.ACTORS_ACTORID;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Integer component1() {
         return getFilmsFilmid();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Integer component2() {
         return getActorsActorid();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Integer value1() {
         return getFilmsFilmid();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Integer value2() {
         return getActorsActorid();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public FilmActorRecord value1(Integer value) {
         setFilmsFilmid(value);
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public FilmActorRecord value2(Integer value) {
         setActorsActorid(value);
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public FilmActorRecord values(Integer value1, Integer value2) {
         value1(value1);

@@ -32,7 +32,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Language extends TableImpl<LanguageRecord> {
 
-    private static final long serialVersionUID = -2110031383;
+    private static final long serialVersionUID = 462156551;
 
     /**
      * The reference instance of <code>PUBLIC.LANGUAGE</code>
@@ -90,57 +90,36 @@ public class Language extends TableImpl<LanguageRecord> {
         super(child, key, LANGUAGE);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Schema getSchema() {
         return Public.PUBLIC;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public List<Index> getIndexes() {
         return Arrays.<Index>asList(Indexes.PRIMARY_KEY_C);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Identity<LanguageRecord, Integer> getIdentity() {
         return Keys.IDENTITY_LANGUAGE;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public UniqueKey<LanguageRecord> getPrimaryKey() {
         return Keys.CONSTRAINT_C;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public List<UniqueKey<LanguageRecord>> getKeys() {
         return Arrays.<UniqueKey<LanguageRecord>>asList(Keys.CONSTRAINT_C);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Language as(String alias) {
         return new Language(DSL.name(alias), this);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Language as(Name alias) {
         return new Language(alias, this);
@@ -166,9 +145,6 @@ public class Language extends TableImpl<LanguageRecord> {
     // Row2 type methods
     // -------------------------------------------------------------------------
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Row2<Integer, String> fieldsRow() {
         return (Row2) super.fieldsRow();

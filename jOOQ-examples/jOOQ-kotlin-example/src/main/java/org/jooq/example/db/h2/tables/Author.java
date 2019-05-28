@@ -33,7 +33,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Author extends TableImpl<AuthorRecord> {
 
-    private static final long serialVersionUID = 670209307;
+    private static final long serialVersionUID = -2056329379;
 
     /**
      * The reference instance of <code>PUBLIC.AUTHOR</code>
@@ -111,57 +111,36 @@ public class Author extends TableImpl<AuthorRecord> {
         super(child, key, AUTHOR);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Schema getSchema() {
         return Public.PUBLIC;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public List<Index> getIndexes() {
         return Arrays.<Index>asList(Indexes.PRIMARY_KEY_7);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Identity<AuthorRecord, Integer> getIdentity() {
         return Keys.IDENTITY_AUTHOR;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public UniqueKey<AuthorRecord> getPrimaryKey() {
         return Keys.PK_T_AUTHOR;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public List<UniqueKey<AuthorRecord>> getKeys() {
         return Arrays.<UniqueKey<AuthorRecord>>asList(Keys.PK_T_AUTHOR);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Author as(String alias) {
         return new Author(DSL.name(alias), this);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Author as(Name alias) {
         return new Author(alias, this);
@@ -187,9 +166,6 @@ public class Author extends TableImpl<AuthorRecord> {
     // Row6 type methods
     // -------------------------------------------------------------------------
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Row6<Integer, String, String, Date, Integer, String> fieldsRow() {
         return (Row6) super.fieldsRow();

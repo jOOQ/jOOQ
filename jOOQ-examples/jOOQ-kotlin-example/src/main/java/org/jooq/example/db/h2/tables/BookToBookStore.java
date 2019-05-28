@@ -31,7 +31,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class BookToBookStore extends TableImpl<BookToBookStoreRecord> {
 
-    private static final long serialVersionUID = -1554472368;
+    private static final long serialVersionUID = -1158704816;
 
     /**
      * The reference instance of <code>PUBLIC.BOOK_TO_BOOK_STORE</code>
@@ -94,41 +94,26 @@ public class BookToBookStore extends TableImpl<BookToBookStoreRecord> {
         super(child, key, BOOK_TO_BOOK_STORE);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Schema getSchema() {
         return Public.PUBLIC;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public List<Index> getIndexes() {
         return Arrays.<Index>asList(Indexes.FK_B2BS_BS_NAME_INDEX_2, Indexes.FK_B2BS_B_ID_INDEX_2, Indexes.PRIMARY_KEY_2);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public UniqueKey<BookToBookStoreRecord> getPrimaryKey() {
         return Keys.PK_B2BS;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public List<UniqueKey<BookToBookStoreRecord>> getKeys() {
         return Arrays.<UniqueKey<BookToBookStoreRecord>>asList(Keys.PK_B2BS);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public List<ForeignKey<BookToBookStoreRecord, ?>> getReferences() {
         return Arrays.<ForeignKey<BookToBookStoreRecord, ?>>asList(Keys.FK_B2BS_BS_NAME, Keys.FK_B2BS_B_ID);
@@ -142,17 +127,11 @@ public class BookToBookStore extends TableImpl<BookToBookStoreRecord> {
         return new Book(this, Keys.FK_B2BS_B_ID);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public BookToBookStore as(String alias) {
         return new BookToBookStore(DSL.name(alias), this);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public BookToBookStore as(Name alias) {
         return new BookToBookStore(alias, this);
@@ -178,9 +157,6 @@ public class BookToBookStore extends TableImpl<BookToBookStoreRecord> {
     // Row3 type methods
     // -------------------------------------------------------------------------
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Row3<String, Integer, Integer> fieldsRow() {
         return (Row3) super.fieldsRow();

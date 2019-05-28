@@ -18,7 +18,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActorRecord extends UpdatableRecordImpl<ActorRecord> implements Record3<Integer, String, String> {
 
-    private static final long serialVersionUID = 626739272;
+    private static final long serialVersionUID = 1456506232;
 
     /**
      * Setter for <code>PUBLIC.ACTOR.ACTORID</code>.
@@ -66,9 +66,6 @@ public class ActorRecord extends UpdatableRecordImpl<ActorRecord> implements Rec
     // Primary key information
     // -------------------------------------------------------------------------
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Record1<Integer> key() {
         return (Record1) super.key();
@@ -78,124 +75,79 @@ public class ActorRecord extends UpdatableRecordImpl<ActorRecord> implements Rec
     // Record3 type implementation
     // -------------------------------------------------------------------------
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Row3<Integer, String, String> fieldsRow() {
         return (Row3) super.fieldsRow();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Row3<Integer, String, String> valuesRow() {
         return (Row3) super.valuesRow();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Field<Integer> field1() {
         return Actor.ACTOR.ACTORID;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Field<String> field2() {
         return Actor.ACTOR.FIRSTNAME;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Field<String> field3() {
         return Actor.ACTOR.LASTNAME;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Integer component1() {
         return getActorid();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String component2() {
         return getFirstname();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String component3() {
         return getLastname();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Integer value1() {
         return getActorid();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String value2() {
         return getFirstname();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String value3() {
         return getLastname();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public ActorRecord value1(Integer value) {
         setActorid(value);
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public ActorRecord value2(String value) {
         setFirstname(value);
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public ActorRecord value3(String value) {
         setLastname(value);
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public ActorRecord values(Integer value1, String value2, String value3) {
         value1(value1);

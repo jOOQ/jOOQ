@@ -18,7 +18,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class BookToBookStoreRecord extends UpdatableRecordImpl<BookToBookStoreRecord> implements Record3<String, Integer, Integer> {
 
-    private static final long serialVersionUID = -377224659;
+    private static final long serialVersionUID = 453087503;
 
     /**
      * Setter for <code>PUBLIC.BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>.
@@ -66,9 +66,6 @@ public class BookToBookStoreRecord extends UpdatableRecordImpl<BookToBookStoreRe
     // Primary key information
     // -------------------------------------------------------------------------
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Record2<String, Integer> key() {
         return (Record2) super.key();
@@ -78,124 +75,79 @@ public class BookToBookStoreRecord extends UpdatableRecordImpl<BookToBookStoreRe
     // Record3 type implementation
     // -------------------------------------------------------------------------
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Row3<String, Integer, Integer> fieldsRow() {
         return (Row3) super.fieldsRow();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Row3<String, Integer, Integer> valuesRow() {
         return (Row3) super.valuesRow();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Field<String> field1() {
         return BookToBookStore.BOOK_TO_BOOK_STORE.BOOK_STORE_NAME;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Field<Integer> field2() {
         return BookToBookStore.BOOK_TO_BOOK_STORE.BOOK_ID;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Field<Integer> field3() {
         return BookToBookStore.BOOK_TO_BOOK_STORE.STOCK;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String component1() {
         return getBookStoreName();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Integer component2() {
         return getBookId();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Integer component3() {
         return getStock();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String value1() {
         return getBookStoreName();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Integer value2() {
         return getBookId();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Integer value3() {
         return getStock();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public BookToBookStoreRecord value1(String value) {
         setBookStoreName(value);
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public BookToBookStoreRecord value2(Integer value) {
         setBookId(value);
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public BookToBookStoreRecord value3(Integer value) {
         setStock(value);
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public BookToBookStoreRecord values(String value1, Integer value2, Integer value3) {
         value1(value1);

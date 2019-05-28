@@ -94,8 +94,10 @@ final class Trim extends AbstractFunction<String> {
         }
         else {
             switch (configuration.dialect()) {
-                case SQLITE_3_25:
-                case SQLITE_3_28:
+
+
+
+
                 case SQLITE:
                     return DSL.function("trim", VARCHAR, argument, characters);
 

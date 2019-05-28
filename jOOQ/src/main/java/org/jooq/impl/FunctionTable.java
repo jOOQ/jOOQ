@@ -82,7 +82,7 @@ final class FunctionTable<R extends Record> extends AbstractTable<R> {
 
     @Override
     public final void accept(Context<?> ctx) {
-        switch (ctx.dialect()) {
+        switch (ctx.family()) {
             case HSQLDB: {
                 ctx.visit(K_TABLE).sql('(').visit(function).sql(')');
                 break;

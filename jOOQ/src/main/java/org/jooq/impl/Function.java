@@ -642,7 +642,7 @@ class Function<T> extends AbstractField<T> implements
         if (name != null)
             ctx.visit(name);
         else if (term != null)
-            ctx.sql(term.translate(ctx.configuration().dialect()));
+            ctx.sql(term.translate(ctx.dialect()));
         else
             ctx.sql(getName());
     }

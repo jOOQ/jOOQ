@@ -1444,7 +1444,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         final BigInteger get0(BindingGetResultSetContext<U> ctx) throws SQLException {
 
             // The SQLite JDBC driver doesn't support BigDecimals
-            if (ctx.configuration().dialect() == SQLDialect.SQLITE)
+            if (ctx.family() == SQLDialect.SQLITE)
                 return Convert.convert(ctx.resultSet().getString(ctx.index()), BigInteger.class);
 
             BigDecimal b = ctx.resultSet().getBigDecimal(ctx.index());

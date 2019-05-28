@@ -226,7 +226,7 @@ final class CaseWhenStepImpl<V, T> extends AbstractFunction<T> implements CaseWh
                .visit(K_CASE);
 
             int size = compareValues.size();
-            switch (ctx.configuration().dialect()) {
+            switch (ctx.dialect()) {
 
                 // The DERBY dialect doesn't support the simple CASE clause
                 case DERBY: {

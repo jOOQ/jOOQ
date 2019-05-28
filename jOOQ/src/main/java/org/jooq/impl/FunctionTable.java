@@ -82,7 +82,7 @@ final class FunctionTable<R extends Record> extends AbstractTable<R> {
 
     @Override
     public final void accept(Context<?> ctx) {
-        switch (ctx.configuration().dialect()) {
+        switch (ctx.dialect()) {
             case HSQLDB: {
                 ctx.visit(K_TABLE).sql('(').visit(function).sql(')');
                 break;
@@ -99,7 +99,7 @@ final class FunctionTable<R extends Record> extends AbstractTable<R> {
             }
 
             default:
-                throw new SQLDialectNotSupportedException("FUNCTION TABLE is not supported for " + ctx.configuration().dialect());
+                throw new SQLDialectNotSupportedException("FUNCTION TABLE is not supported for " + ctx.dialect());
         }
     }
 

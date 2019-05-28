@@ -429,7 +429,7 @@ final class MetaImpl extends AbstractMeta {
 
             // SQLite JDBC's DatabaseMetaData.getColumns() can only return a single
             // table's columns
-            if (columnCache == null && configuration.dialect() != SQLITE) {
+            if (columnCache == null && configuration.family() != SQLITE) {
                 Result<Record> columns = getColumns0(schema, "%");
 
                 Field<String> tableCat   = (Field<String>) columns.field(0); // TABLE_CAT

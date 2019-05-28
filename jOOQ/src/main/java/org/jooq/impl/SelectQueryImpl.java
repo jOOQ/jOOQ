@@ -2028,7 +2028,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @Override
     public final List<Field<?>> getSelect() {
-        return getSelectResolveAllAsterisks(configuration().family());
+        return getSelectResolveAllAsterisks(configuration() != null ? configuration().family() : SQLDialect.DEFAULT);
     }
 
     private final Collection<? extends Field<?>> subtract(List<Field<?>> left, List<Field<?>> right) {

@@ -101,6 +101,12 @@ final class Ln extends AbstractFunction<BigDecimal> {
 
 
 
+
+
+
+
+
+
                 case DERBY:
                 case H2:
                 case HSQLDB:

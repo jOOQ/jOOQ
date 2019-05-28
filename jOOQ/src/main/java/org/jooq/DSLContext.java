@@ -8461,6 +8461,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * Set the current schema to a new value.
      *
      * @see DSL#schema(Name)
+     * @see DSL#setSchema(String)
      */
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Query setSchema(String schema);
@@ -8469,12 +8470,15 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * Set the current schema to a new value.
      *
      * @see DSL#schema(Name)
+     * @see DSL#setSchema(Name)
      */
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Query setSchema(Name schema);
 
     /**
      * Set the current schema to a new value.
+     *
+     * @see DSL#setSchema(Schema)
      */
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Query setSchema(Schema schema);

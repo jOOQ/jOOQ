@@ -40,6 +40,7 @@ package org.jooq;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.POSTGRES;
+// ...
 
 /**
  * The step in the <code>DROP SCHEMA</code> DSL used to specify

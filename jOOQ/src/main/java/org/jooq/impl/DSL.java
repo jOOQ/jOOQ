@@ -6529,6 +6529,7 @@ public class DSL {
      * Set the current schema to a new value.
      *
      * @see DSL#schema(Name)
+     * @see DSLContext#setSchema(String)
      */
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Query setSchema(String schema) {
@@ -6539,6 +6540,7 @@ public class DSL {
      * Set the current schema to a new value.
      *
      * @see DSL#schema(Name)
+     * @see DSLContext#setSchema(Name)
      */
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Query setSchema(Name schema) {
@@ -6547,6 +6549,8 @@ public class DSL {
 
     /**
      * Set the current schema to a new value.
+     *
+     * @see DSLContext#setSchema(Schema)
      */
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Query setSchema(Schema schema) {

@@ -6081,11 +6081,28 @@ final class ParserImpl implements Parser {
     private static final Field<?> parseFieldLogIf(ParserContext ctx) {
         if (parseFunctionNameIf(ctx, "LOG")) {
             parse(ctx, '(');
-            Field<?> base = toField(ctx, parseNumericOp(ctx, N));
-            parse(ctx, ',');
-            Field<?> field = toField(ctx, parseNumericOp(ctx, N));
-            parse(ctx, ')');
-            return log((Field) field, (Field) base);
+            switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                default:
+                    base = toField(ctx, parseNumericOp(ctx, N));
+                    parse(ctx, ',');
+                    value = toField(ctx, parseNumericOp(ctx, N));
+                    parse(ctx, ')');
+                    return log((Field) value, (Field) base);
+            }
         }
 
         return null;

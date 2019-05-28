@@ -17118,7 +17118,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> log(Number value, int base) {
-        return log(val(value), base);
+        return log(Tools.field(value), base);
     }
 
     /**

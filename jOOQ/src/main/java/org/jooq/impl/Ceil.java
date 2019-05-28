@@ -60,7 +60,7 @@ final class Ceil<T extends Number> extends AbstractFunction<T> {
 
     @Override
     final Field<T> getFunction0(Configuration configuration) {
-        switch (configuration.dialect().family()) {
+        switch (configuration.family()) {
 
 
 

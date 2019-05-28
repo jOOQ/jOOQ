@@ -66,7 +66,7 @@ final class Iif<T> extends AbstractFunction<T> {
 
     @Override
     final QueryPart getFunction0(Configuration configuration) {
-        switch (configuration.dialect().family()) {
+        switch (configuration.family()) {
 
 
 

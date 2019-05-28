@@ -87,7 +87,7 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      * The {@link SQLDialect#family()} wrapped by this context.
      * <p>
      * This method is a convenient way of accessing
-     * <code>configuration().dialect().family()</code>.
+     * <code>configuration().family()</code>.
      */
     SQLDialect family();
 

@@ -540,7 +540,7 @@ public class DefaultDataType<T> implements DataType<T> {
         // If this is a SQLDataType find the most suited dialect-specific
         // data type
         if (getDialect() == null) {
-            DataType<?> dataType = TYPES_BY_SQL_DATATYPE[configuration.dialect().family().ordinal()]
+            DataType<?> dataType = TYPES_BY_SQL_DATATYPE[configuration.family().ordinal()]
 
                 // Be sure to reset length, precision, and scale, as those values
                 // were not registered in the below cache
@@ -555,7 +555,7 @@ public class DefaultDataType<T> implements DataType<T> {
         }
 
         // If this is already the dialect's specific data type, return this
-        else if (getDialect().family() == configuration.dialect().family()) {
+        else if (getDialect().family() == configuration.family()) {
             return this;
         }
 

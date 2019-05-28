@@ -126,7 +126,7 @@ public interface Scope {
      * The {@link SQLDialect#family()} wrapped by this context.
      * <p>
      * This method is a convenient way of accessing
-     * <code>configuration().dialect().family()</code>.
+     * <code>configuration().family()</code>.
      */
     SQLDialect family();
 

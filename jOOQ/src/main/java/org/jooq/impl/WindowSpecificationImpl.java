@@ -50,6 +50,7 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
+// ...
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.select;
@@ -182,9 +183,18 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
 
 
         else if (TRUE.equals(ctx.data(BooleanDataKey.DATA_RANKING_FUNCTION)) && REQUIRES_ORDER_BY_IN_RANKING.contains(ctx.family())) {
+            Field<Integer> constant;
+
+
+
+
+
+
+                constant = field(select(one()));
+
             ctx.sql(glue)
                .visit(K_ORDER_BY).sql(' ')
-               .visit(field(select(one())));
+               .visit(constant);
 
             glue = " ";
         }

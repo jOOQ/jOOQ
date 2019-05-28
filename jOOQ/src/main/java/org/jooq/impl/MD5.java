@@ -74,10 +74,6 @@ final class MD5 extends AbstractFunction<String> {
 
 
 
-
-
-            case MARIADB:
-            case MYSQL:
             default:
                 return DSL.field("{md5}({0})", VARCHAR, argument);
         }

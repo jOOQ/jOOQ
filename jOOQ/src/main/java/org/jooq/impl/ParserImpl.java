@@ -6097,9 +6097,9 @@ final class ParserImpl implements Parser {
 
 
                 default:
-                    base = toField(ctx, parseNumericOp(ctx, N));
+                    Field<?> base = toField(ctx, parseNumericOp(ctx, N));
                     parse(ctx, ',');
-                    value = toField(ctx, parseNumericOp(ctx, N));
+                    Field<?> value = toField(ctx, parseNumericOp(ctx, N));
                     parse(ctx, ')');
                     return log((Field) value, (Field) base);
             }

@@ -119,15 +119,6 @@ final class Limit extends AbstractQueryPart {
 
 
 
-
-
-
-
-
-
-
-
-
             // LIMIT [offset], [limit] supported by CUBRID
             // -------------------------------------------
             case CUBRID: {

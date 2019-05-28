@@ -6081,11 +6081,11 @@ final class ParserImpl implements Parser {
     private static final Field<?> parseFieldLogIf(ParserContext ctx) {
         if (parseFunctionNameIf(ctx, "LOG")) {
             parse(ctx, '(');
-            long base = parseUnsignedInteger(ctx);
+            Field<?> base = toField(ctx, parseNumericOp(ctx, N));
             parse(ctx, ',');
             Field<?> field = toField(ctx, parseNumericOp(ctx, N));
             parse(ctx, ')');
-            return log((Field) field, (int) base);
+            return log((Field) field, (Field) base);
         }
 
         return null;

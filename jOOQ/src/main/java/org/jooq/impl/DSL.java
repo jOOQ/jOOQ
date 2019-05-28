@@ -17131,6 +17131,19 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> log(Field<? extends Number> field, int base) {
+        return new Ln(nullSafe(field), Tools.field(base));
+    }
+
+    /**
+     * Get the log(field, base) function.
+     * <p>
+     * This renders the log function where available:
+     * <code><pre>log([field])</pre></code> ... or emulates it elsewhere (in
+     * most RDBMS) using the natural logarithm:
+     * <code><pre>ln([field]) / ln([base])</pre></code>
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<BigDecimal> log(Field<? extends Number> field, Field<? extends Number> base) {
         return new Ln(nullSafe(field), base);
     }
 

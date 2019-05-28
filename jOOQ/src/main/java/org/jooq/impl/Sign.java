@@ -65,7 +65,7 @@ final class Sign extends AbstractFunction<Integer> {
     @SuppressWarnings("unchecked")
     @Override
     final Field<Integer> getFunction0(Configuration configuration) {
-        switch (configuration.dialect()) {
+        switch (configuration.family()) {
 
 
 

@@ -62,7 +62,7 @@ final class Atan extends AbstractFunction<BigDecimal> {
 
     @Override
     final QueryPart getFunction0(Configuration configuration) {
-        switch (configuration.dialect().family()) {
+        switch (configuration.family()) {
 
 
 

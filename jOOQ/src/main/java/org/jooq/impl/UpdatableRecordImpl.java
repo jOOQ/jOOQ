@@ -419,7 +419,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
         // [#1547] MS Access and SQLite doesn't support FOR UPDATE. CUBRID and SQL Server
         // can emulate it, though!
-        if (!NO_SUPPORT_FOR_UPDATE.contains(create().configuration().dialect().family()))
+        if (!NO_SUPPORT_FOR_UPDATE.contains(create().configuration().family()))
             select.setForUpdate(true);
 
         R record = select.fetchOne();

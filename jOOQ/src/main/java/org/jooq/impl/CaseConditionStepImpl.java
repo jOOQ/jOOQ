@@ -133,7 +133,7 @@ final class CaseConditionStepImpl<T> extends AbstractFunction<T> implements Case
 
     @Override
     final QueryPart getFunction0(Configuration configuration) {
-        switch (configuration.dialect().family()) {
+        switch (configuration.family()) {
 
 
 

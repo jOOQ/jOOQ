@@ -163,7 +163,7 @@ final class CaseWhenStepImpl<V, T> extends AbstractFunction<T> implements CaseWh
 
     @Override
     final QueryPart getFunction0(Configuration configuration) {
-        switch (configuration.dialect().family()) {
+        switch (configuration.family()) {
 
 
 

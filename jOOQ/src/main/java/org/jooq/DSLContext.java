@@ -9242,7 +9242,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
     /**
      * Create a new DSL <code>CREATE SEQUENCE</code> statement.
      *
-     * @see DSL#createSequenceIfNotExists(String)
+     * @see DSL#createSequenceIfNotExists(Sequence)
      */
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     CreateSequenceFlagsStep createSequenceIfNotExists(Sequence<?> sequence);

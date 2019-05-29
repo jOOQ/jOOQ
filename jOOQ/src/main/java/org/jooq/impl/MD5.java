@@ -74,6 +74,15 @@ final class MD5 extends AbstractFunction<String> {
 
 
 
+
+
+
+
+
+
+
+
+
             default:
                 return DSL.field("{md5}({0})", VARCHAR, argument);
         }

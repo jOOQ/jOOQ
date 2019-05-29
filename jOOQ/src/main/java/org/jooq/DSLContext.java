@@ -8610,7 +8610,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createTable(String)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     CreateTableColumnStep createTable(String table);
 
     /**
@@ -8618,7 +8618,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createTable(Name)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     CreateTableColumnStep createTable(Name table);
 
     /**
@@ -8626,7 +8626,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createTable(Table)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     CreateTableColumnStep createTable(Table<?> table);
 
     /**

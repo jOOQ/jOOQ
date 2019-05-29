@@ -6627,7 +6627,7 @@ public class DSL {
      *
      * @see DSLContext#createTable(String)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static CreateTableColumnStep createTable(String table) {
         return dsl().createTable(table);
     }
@@ -6637,7 +6637,7 @@ public class DSL {
      *
      * @see DSLContext#createTable(Name)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static CreateTableColumnStep createTable(Name table) {
         return dsl().createTable(table);
     }
@@ -6647,7 +6647,7 @@ public class DSL {
      *
      * @see DSLContext#createTable(Table)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static CreateTableColumnStep createTable(Table<?> table) {
         return dsl().createTable(table);
     }

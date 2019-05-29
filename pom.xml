@@ -142,6 +142,11 @@
 
 
 
+
+
+
+
+
             <!-- Optional logging dependency -->
             <dependency>
                 <groupId>org.slf4j</groupId>
@@ -340,6 +345,12 @@
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.22.2</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
                     <version>3.0.2</version>
 
@@ -374,6 +385,12 @@
     <modules>
         <module>jOOQ</module>
 
+
+
+
+
+
+
         <module>jOOQ-checker</module>
 
         <module>jOOQ-meta</module>
@@ -381,6 +398,8 @@
         <module>jOOQ-codegen</module>
         <module>jOOQ-codegen-maven</module>
         <module>jOOQ-scala_2.12</module>
+
+
 
 
 

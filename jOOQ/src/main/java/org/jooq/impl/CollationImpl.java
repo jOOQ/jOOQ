@@ -37,17 +37,30 @@
  */
 package org.jooq.impl;
 
+// ...
+// ...
+
+import java.util.EnumSet;
+
 import org.jooq.Collation;
 import org.jooq.Context;
 import org.jooq.Name;
+// ...
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
  */
 final class CollationImpl extends AbstractQueryPart implements Collation {
 
-    private static final long serialVersionUID = 21679143762776222L;
-    private final Name        name;
+    private static final long                serialVersionUID        = 21679143762776222L;
+
+
+
+
+
+
+    private final Name                       name;
 
     CollationImpl(Name name) {
         this.name = name;
@@ -55,6 +68,12 @@ final class CollationImpl extends AbstractQueryPart implements Collation {
 
     @Override
     public final void accept(Context<?> ctx) {
+
+
+
+
+
+
         ctx.visit(name);
     }
 

@@ -112,6 +112,17 @@ public interface MergeMatchedSetStep<R extends Record> {
     <T> MergeMatchedSetMoreStep<R> set(Field<T> field, Select<? extends Record1<T>> value);
 
     /**
+     * Set a <code>null</code> value for <code>UPDATE</code> in the
+     * <code>MERGE</code> statement's <code>WHEN MATCHED</code> clause.
+     * <p>
+     * This method is convenience for calling {@link #set(Field, Object)},
+     * without the necessity of casting the Java <code>null</code> literal to
+     * <code>(T)</code>.
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB })
+    <T> MergeMatchedSetMoreStep<R> setNull(Field<T> field);
+
+    /**
      * Set multiple values for <code>UPDATE</code> in the <code>MERGE</code>
      * statement's <code>WHEN MATCHED</code> clause.
      * <p>

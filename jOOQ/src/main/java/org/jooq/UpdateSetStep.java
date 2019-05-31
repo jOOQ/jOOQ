@@ -93,6 +93,17 @@ public interface UpdateSetStep<R extends Record> {
     <T> UpdateSetMoreStep<R> set(Field<T> field, Select<? extends Record1<T>> value);
 
     /**
+     * Set a <code>null</code> value for a field in the <code>UPDATE</code>
+     * statement.
+     * <p>
+     * This method is convenience for calling {@link #set(Field, Object)},
+     * without the necessity of casting the Java <code>null</code> literal to
+     * <code>(T)</code>.
+     */
+    @Support
+    <T> UpdateSetMoreStep<R> setNull(Field<T> field);
+
+    /**
      * Set a value for a field in the <code>UPDATE</code> statement.
      * <p>
      * Keys can either be of type {@link String}, {@link Name}, or

@@ -929,17 +929,19 @@ implements
 
     @Override
     public final <T> MergeImpl set(Field<T> field, Field<T> value) {
-        if (matchedClause) {
+        if (matchedClause)
             matchedUpdate.put(field, nullSafe(value));
-        }
-        else if (notMatchedClause) {
+        else if (notMatchedClause)
             notMatchedInsert.set(field, nullSafe(value));
-        }
-        else {
+        else
             throw new IllegalStateException("Cannot call where() on the current state of the MERGE statement");
-        }
 
         return this;
+    }
+
+    @Override
+    public final <T> MergeImpl setNull(Field<T> field) {
+        return set(field, (T) null);
     }
 
     @Override
@@ -952,15 +954,12 @@ implements
 
     @Override
     public final MergeImpl set(Map<?, ?> map) {
-        if (matchedClause) {
+        if (matchedClause)
             matchedUpdate.set(map);
-        }
-        else if (notMatchedClause) {
+        else if (notMatchedClause)
             notMatchedInsert.set(map);
-        }
-        else {
+        else
             throw new IllegalStateException("Cannot call where() on the current state of the MERGE statement");
-        }
 
         return this;
     }

@@ -163,6 +163,11 @@ final class UpdateImpl<R extends Record>
     }
 
     @Override
+    public final <T> UpdateImpl<R> setNull(Field<T> field) {
+        return set(field, (T) null);
+    }
+
+    @Override
     public final UpdateImpl<R> set(Map<?, ?> map) {
         getDelegate().addValues(map);
         return this;

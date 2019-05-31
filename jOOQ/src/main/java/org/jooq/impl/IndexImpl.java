@@ -38,9 +38,12 @@
 package org.jooq.impl;
 
 // ...
+// ...
 import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.POSTGRES;
+// ...
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 
@@ -69,7 +72,7 @@ class IndexImpl extends AbstractNamed implements Index {
 
     // [#8723] TODO: Specify the dialects that require table qualification once they're known.
     private static final EnumSet<SQLDialect> REQUIRE_TABLE_QUALIFICATION    = EnumSet.noneOf(SQLDialect.class);
-    private static final EnumSet<SQLDialect> NO_SUPPORT_INDEX_QUALIFICATION = EnumSet.of(MARIADB, MYSQL);
+    private static final EnumSet<SQLDialect> NO_SUPPORT_INDEX_QUALIFICATION = EnumSet.of(MARIADB, MYSQL, POSTGRES);
 
     private final Table<?>                   table;
     private final SortField<?>[]             fields;

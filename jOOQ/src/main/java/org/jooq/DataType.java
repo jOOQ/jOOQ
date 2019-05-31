@@ -255,6 +255,17 @@ public interface DataType<T> extends Serializable {
     Collation collation();
 
     /**
+     * Return a new data type like this, with a new character set.
+     */
+    DataType<T> characterSet(CharacterSet characterSet);
+
+    /**
+     * Get the character set of this data type, or <code>null</code> if there is
+     * no character set, or if the default character set applies.
+     */
+    CharacterSet characterSet();
+
+    /**
      * Return a new data type like this, with a new identity flag.
      * <p>
      * [#5709] The IDENTITY flag imposes a NOT NULL constraint, and removes all

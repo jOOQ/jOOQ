@@ -136,6 +136,7 @@ import org.jooq.Case;
 import org.jooq.CaseConditionStep;
 import org.jooq.CaseValueStep;
 import org.jooq.Catalog;
+import org.jooq.CharacterSet;
 import org.jooq.Collation;
 import org.jooq.Comment;
 import org.jooq.CommentOnIsStep;
@@ -8433,6 +8434,20 @@ public class DSL {
      */
     public static Collation collation(Name collation) {
         return new CollationImpl(collation);
+    }
+
+    /**
+     * Create a character set by its unqualified name.
+     */
+    public static CharacterSet characterSet(String characterSet) {
+        return characterSet(name(characterSet));
+    }
+
+    /**
+     * Create a character set by its qualified name.
+     */
+    public static CharacterSet characterSet(Name characterSet) {
+        return new CharacterSetImpl(characterSet);
     }
 
     /**

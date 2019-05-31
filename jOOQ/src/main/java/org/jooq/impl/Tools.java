@@ -103,6 +103,7 @@ import static org.jooq.impl.Keywords.K_AUTO_INCREMENT;
 import static org.jooq.impl.Keywords.K_BEGIN;
 import static org.jooq.impl.Keywords.K_BEGIN_CATCH;
 import static org.jooq.impl.Keywords.K_BEGIN_TRY;
+import static org.jooq.impl.Keywords.K_CHARACTER_SET;
 import static org.jooq.impl.Keywords.K_COLLATE;
 import static org.jooq.impl.Keywords.K_DECLARE;
 import static org.jooq.impl.Keywords.K_DEFAULT;
@@ -4659,6 +4660,10 @@ final class Tools {
         else {
             ctx.sql(typeName);
         }
+
+        // [#8041] Character sets are vendor-specific storage clauses, which we might need to ignore
+        if (type.characterSet() != null && ctx.configuration().data("org.jooq.meta.extensions.ddl.ignore-storage-clauses") == null)
+            ctx.sql(' ').visit(K_CHARACTER_SET).sql(' ').visit(type.characterSet());
 
         // [#8011] Collations are vendor-specific storage clauses, which we might need to ignore
         if (type.collation() != null && ctx.configuration().data("org.jooq.meta.extensions.ddl.ignore-storage-clauses") == null)

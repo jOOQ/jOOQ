@@ -72,6 +72,7 @@ import static org.jooq.impl.DSL.catalog;
 import static org.jooq.impl.DSL.ceil;
 import static org.jooq.impl.DSL.century;
 import static org.jooq.impl.DSL.charLength;
+import static org.jooq.impl.DSL.characterSet;
 import static org.jooq.impl.DSL.check;
 import static org.jooq.impl.DSL.choose;
 import static org.jooq.impl.DSL.coalesce;
@@ -331,6 +332,7 @@ import org.jooq.CaseConditionStep;
 import org.jooq.CaseValueStep;
 import org.jooq.CaseWhenStep;
 import org.jooq.Catalog;
+import org.jooq.CharacterSet;
 import org.jooq.Collation;
 import org.jooq.Comment;
 import org.jooq.CommentOnIsStep;
@@ -8446,6 +8448,10 @@ final class ParserImpl implements Parser {
         return collation(parseName(ctx));
     }
 
+    private static final CharacterSet parseCharacterSet(ParserContext ctx) {
+        return characterSet(parseName(ctx));
+    }
+
     private static final Name parseName(ParserContext ctx) {
         Name result = parseNameIf(ctx);
 
@@ -8894,6 +8900,9 @@ final class ParserImpl implements Parser {
     }
 
     private static final DataType<?> parseDataTypeCollation(ParserContext ctx, DataType<?> result) {
+        if (parseKeywordIf(ctx, "CHARACTER SET") || parseKeywordIf(ctx, "CHARSET"))
+            result = result.characterSet(parseCharacterSet(ctx));
+
         if (parseKeywordIf(ctx, "COLLATE"))
             result = result.collation(parseCollation(ctx));
 

@@ -56,6 +56,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
+// ...
 
 import org.jooq.Comparator;
 import org.jooq.conf.Settings;
@@ -283,7 +284,7 @@ public interface Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      * @see #greaterThan(Select)
      * @see #greaterOrEqual(Select)
      */
-    @Support
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition compare(Comparator comparator, QuantifiedSelect<? extends Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select);
 
     // ------------------------------------------------------------------------
@@ -346,7 +347,7 @@ public interface Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition equal(QuantifiedSelect<? extends Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select);
 
     /**
@@ -402,7 +403,7 @@ public interface Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition eq(QuantifiedSelect<? extends Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select);
 
     /**
@@ -461,7 +462,7 @@ public interface Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition notEqual(QuantifiedSelect<? extends Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select);
 
     /**
@@ -517,7 +518,7 @@ public interface Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition ne(QuantifiedSelect<? extends Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select);
 
     // ------------------------------------------------------------------------
@@ -640,7 +641,7 @@ public interface Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition lessThan(QuantifiedSelect<? extends Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select);
 
     /**
@@ -696,7 +697,7 @@ public interface Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition lt(QuantifiedSelect<? extends Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select);
 
     /**
@@ -755,7 +756,7 @@ public interface Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition lessOrEqual(QuantifiedSelect<? extends Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select);
 
     /**
@@ -811,7 +812,7 @@ public interface Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition le(QuantifiedSelect<? extends Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select);
 
     /**
@@ -870,7 +871,7 @@ public interface Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition greaterThan(QuantifiedSelect<? extends Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select);
 
     /**
@@ -926,7 +927,7 @@ public interface Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition gt(QuantifiedSelect<? extends Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select);
 
     /**
@@ -985,7 +986,7 @@ public interface Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition greaterOrEqual(QuantifiedSelect<? extends Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select);
 
     /**
@@ -1041,7 +1042,7 @@ public interface Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition ge(QuantifiedSelect<? extends Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select);
 
     // ------------------------------------------------------------------------

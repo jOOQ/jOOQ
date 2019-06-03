@@ -56,6 +56,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
+// ...
 
 import org.jooq.Comparator;
 import org.jooq.conf.Settings;
@@ -228,7 +229,7 @@ public interface Row4<T1, T2, T3, T4> extends Row {
      * @see #greaterThan(Select)
      * @see #greaterOrEqual(Select)
      */
-    @Support
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition compare(Comparator comparator, QuantifiedSelect<? extends Record4<T1, T2, T3, T4>> select);
 
     // ------------------------------------------------------------------------
@@ -291,7 +292,7 @@ public interface Row4<T1, T2, T3, T4> extends Row {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition equal(QuantifiedSelect<? extends Record4<T1, T2, T3, T4>> select);
 
     /**
@@ -347,7 +348,7 @@ public interface Row4<T1, T2, T3, T4> extends Row {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition eq(QuantifiedSelect<? extends Record4<T1, T2, T3, T4>> select);
 
     /**
@@ -406,7 +407,7 @@ public interface Row4<T1, T2, T3, T4> extends Row {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition notEqual(QuantifiedSelect<? extends Record4<T1, T2, T3, T4>> select);
 
     /**
@@ -462,7 +463,7 @@ public interface Row4<T1, T2, T3, T4> extends Row {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition ne(QuantifiedSelect<? extends Record4<T1, T2, T3, T4>> select);
 
     // ------------------------------------------------------------------------
@@ -585,7 +586,7 @@ public interface Row4<T1, T2, T3, T4> extends Row {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition lessThan(QuantifiedSelect<? extends Record4<T1, T2, T3, T4>> select);
 
     /**
@@ -641,7 +642,7 @@ public interface Row4<T1, T2, T3, T4> extends Row {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition lt(QuantifiedSelect<? extends Record4<T1, T2, T3, T4>> select);
 
     /**
@@ -700,7 +701,7 @@ public interface Row4<T1, T2, T3, T4> extends Row {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition lessOrEqual(QuantifiedSelect<? extends Record4<T1, T2, T3, T4>> select);
 
     /**
@@ -756,7 +757,7 @@ public interface Row4<T1, T2, T3, T4> extends Row {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition le(QuantifiedSelect<? extends Record4<T1, T2, T3, T4>> select);
 
     /**
@@ -815,7 +816,7 @@ public interface Row4<T1, T2, T3, T4> extends Row {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition greaterThan(QuantifiedSelect<? extends Record4<T1, T2, T3, T4>> select);
 
     /**
@@ -871,7 +872,7 @@ public interface Row4<T1, T2, T3, T4> extends Row {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition gt(QuantifiedSelect<? extends Record4<T1, T2, T3, T4>> select);
 
     /**
@@ -930,7 +931,7 @@ public interface Row4<T1, T2, T3, T4> extends Row {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition greaterOrEqual(QuantifiedSelect<? extends Record4<T1, T2, T3, T4>> select);
 
     /**
@@ -986,7 +987,7 @@ public interface Row4<T1, T2, T3, T4> extends Row {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition ge(QuantifiedSelect<? extends Record4<T1, T2, T3, T4>> select);
 
     // ------------------------------------------------------------------------

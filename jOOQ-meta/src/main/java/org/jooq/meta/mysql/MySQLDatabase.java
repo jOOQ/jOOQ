@@ -59,7 +59,6 @@ import java.util.Map.Entry;
 import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Record;
-import org.jooq.Record4;
 import org.jooq.Record5;
 import org.jooq.Record6;
 import org.jooq.Result;
@@ -239,7 +238,7 @@ public class MySQLDatabase extends AbstractDatabase {
         return is8;
     }
 
-    private Result<Record4<String, String, String, String>> fetchKeys(boolean primary) {
+    private Result<?> fetchKeys(boolean primary) {
 
         // [#3560] It has been shown that querying the STATISTICS table is much faster on
         // very large databases than going through TABLE_CONSTRAINTS and KEY_COLUMN_USAGE
@@ -249,7 +248,8 @@ public class MySQLDatabase extends AbstractDatabase {
                            Statistics.TABLE_SCHEMA,
                            Statistics.TABLE_NAME,
                            Statistics.COLUMN_NAME,
-                           Statistics.INDEX_NAME)
+                           Statistics.INDEX_NAME,
+                           Statistics.SEQ_IN_INDEX)
                        .from(STATISTICS)
                        // [#5213] Duplicate schema value to work around MySQL issue https://bugs.mysql.com/bug.php?id=86022
                        .where(Statistics.TABLE_SCHEMA.in(getInputSchemata()).or(

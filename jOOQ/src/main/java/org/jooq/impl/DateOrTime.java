@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.Tools.castIfNeeded;
 
 import org.jooq.Configuration;
@@ -84,14 +83,13 @@ final class DateOrTime<T> extends AbstractFunction<T> {
                 return DSL.field("{" + name(getDataType()) + "}({0})", getDataType(), field);
 
             case SQLITE: {
-                String name =
-                      getDataType().isDate()
-                    ? "date"
-                    : getDataType().isTime()
-                    ? "time"
-                    : "datetime";
-
-                return DSL.field("{0}({1})", getDataType(), keyword(name), field);
+                if (getDataType().isDate())
+                    return DSL.field("{date}({0})", getDataType(), field);
+                else if (getDataType().isTime())
+                    // [#8733] No fractional seconds for time literals
+                    return DSL.field("{time}({0})", getDataType(), field);
+                else
+                    return DSL.field("{strftime}('%Y-%m-%d %H:%M:%f', {0})", getDataType(), field);
             }
 
             default:

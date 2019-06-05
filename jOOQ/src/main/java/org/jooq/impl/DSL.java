@@ -15769,7 +15769,7 @@ public class DSL {
      * UTC. Regardless of this fact, the result should be the same
      * {@link Instant} (in UTC) as the input.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES, SQLITE })
     public static Field<OffsetTime> offsetTime(String value) {
         return Tools.field(Convert.convert(value, OffsetTime.class));
     }
@@ -15783,7 +15783,7 @@ public class DSL {
      * UTC. Regardless of this fact, the result should be the same
      * {@link Instant} (in UTC) as the input.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES, SQLITE })
     public static Field<OffsetTime> offsetTime(OffsetTime value) {
         return Tools.field(value);
     }
@@ -15797,7 +15797,7 @@ public class DSL {
      * UTC. Regardless of this fact, the result should be the same
      * {@link Instant} (in UTC) as the input.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES, SQLITE })
     public static Field<OffsetTime> offsetTime(Field<OffsetTime> field) {
         return new DateOrTime<OffsetTime>(field, SQLDataType.OFFSETTIME);
     }
@@ -15811,7 +15811,7 @@ public class DSL {
      * UTC. Regardless of this fact, the result should be the same
      * {@link Instant} (in UTC) as the input.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES, SQLITE })
     public static Field<OffsetDateTime> offsetDateTime(String value) {
         return Tools.field(Convert.convert(value, OffsetDateTime.class));
     }
@@ -15825,7 +15825,7 @@ public class DSL {
      * UTC. Regardless of this fact, the result should be the same
      * {@link Instant} (in UTC) as the input.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES, SQLITE })
     public static Field<OffsetDateTime> offsetDateTime(OffsetDateTime value) {
         return Tools.field(value);
     }
@@ -15839,7 +15839,7 @@ public class DSL {
      * UTC. Regardless of this fact, the result should be the same
      * {@link Instant} (in UTC) as the input.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES, SQLITE })
     public static Field<OffsetDateTime> offsetDateTime(Field<OffsetDateTime> field) {
         return new DateOrTime<OffsetDateTime>(field, SQLDataType.OFFSETDATETIME);
     }
@@ -15853,7 +15853,7 @@ public class DSL {
      * UTC. Regardless of this fact, the result should be the same
      * {@link Instant} (in UTC) as the input.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES, SQLITE })
     public static Field<Instant> instant(String value) {
         return Tools.field(Convert.convert(value, Instant.class));
     }
@@ -15867,7 +15867,7 @@ public class DSL {
      * UTC. Regardless of this fact, the result should be the same
      * {@link Instant} (in UTC) as the input.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES, SQLITE })
     public static Field<Instant> instant(Instant value) {
         return Tools.field(value);
     }
@@ -15881,7 +15881,7 @@ public class DSL {
      * UTC. Regardless of this fact, the result should be the same
      * {@link Instant} (in UTC) as the input.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES, SQLITE })
     public static Field<Instant> instant(Field<Instant> field) {
         return new DateOrTime<Instant>(field, SQLDataType.INSTANT);
     }

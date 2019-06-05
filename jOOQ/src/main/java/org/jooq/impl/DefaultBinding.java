@@ -2656,14 +2656,22 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         final void sqlInline0(BindingSQLContext<U> ctx, OffsetDateTime value) {
             SQLDialect family = ctx.family();
 
-            // [#5806] H2 doesn't support TIMESTAMP WITH TIME ZONE literals, see
-            if (family == H2)
-                ctx.render().visit(K_CAST).sql("('").sql(escape(format(value, family), ctx.render())).sql("' ")
-                            .visit(K_AS).sql(' ').visit(K_TIMESTAMP_WITH_TIME_ZONE).sql(')');
+            switch (family) {
+                // [#5806] H2 doesn't support TIMESTAMP WITH TIME ZONE literals, see
+                case H2:
+                    ctx.render().visit(K_CAST).sql("('").sql(escape(format(value, family), ctx.render())).sql("' ")
+                    .visit(K_AS).sql(' ').visit(K_TIMESTAMP_WITH_TIME_ZONE).sql(')');
+                    break;
 
-            // [#5895] HSQLDB derives the specific data type from the literal
-            else if (family == HSQLDB)
-                ctx.render().visit(K_TIMESTAMP).sql(" '").sql(escape(format(value, family), ctx.render())).sql('\'');
+                // [#5895] HSQLDB derives the specific data type from the literal
+                case HSQLDB:
+                    ctx.render().visit(K_TIMESTAMP).sql(" '").sql(escape(format(value, family), ctx.render())).sql('\'');
+                    break;
+
+                // [#8735] SQLite renders as ISO formatted string literals
+                case SQLITE:
+                    ctx.render().sql('\'').sql(escape(format(value, family), ctx.render())).sql('\'');
+                    break;
 
 
 
@@ -2675,9 +2683,14 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-            // Some dialects implement SQL standard time literals
-            else
-                ctx.render().visit(K_TIMESTAMP_WITH_TIME_ZONE).sql(" '").sql(escape(format(value, family), ctx.render())).sql('\'');
+
+
+
+                // Some dialects implement SQL standard time literals
+                default:
+                    ctx.render().visit(K_TIMESTAMP_WITH_TIME_ZONE).sql(" '").sql(escape(format(value, family), ctx.render())).sql('\'');
+                    break;
+            }
         }
 
         @Override
@@ -2826,9 +2839,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final void sqlInline0(BindingSQLContext<U> ctx, OffsetTime value) {
 
-            // [#5895] HSQLDB derives the specific data type from the literal
-            if (ctx.family() == HSQLDB)
-                ctx.render().visit(K_TIME).sql(" '").sql(escape(format(value), ctx.render())).sql('\'');
+            switch (ctx.family()) {
+                // [#5895] HSQLDB derives the specific data type from the literal
+                case HSQLDB:
+                    ctx.render().visit(K_TIME).sql(" '").sql(escape(format(value), ctx.render())).sql('\'');
+                    break;
+
+                // [#8735] SQLite renders as ISO formatted string literals
+                case SQLITE:
+                    ctx.render().sql('\'').sql(escape(format(value), ctx.render())).sql('\'');
+                    break;
 
 
 
@@ -2836,9 +2856,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-            // Some dialects implement SQL standard time literals
-            else
-                ctx.render().visit(K_TIME_WITH_TIME_ZONE).sql(" '").sql(escape(format(value), ctx.render())).sql('\'');
+                // Some dialects implement SQL standard time literals
+                default:
+                    ctx.render().visit(K_TIME_WITH_TIME_ZONE).sql(" '").sql(escape(format(value), ctx.render())).sql('\'');
+                    break;
+            }
         }
 
         @Override

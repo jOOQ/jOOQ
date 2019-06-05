@@ -376,7 +376,7 @@ final class Expression<T> extends AbstractFunction<T> {
                         interval = interval.neg();
 
                     interval = interval.concat(inline(ytm ? " months" : " seconds"));
-                    return DSL.field("{datetime}({0}, {1})", getDataType(), lhs, interval);
+                    return DSL.field("{strftime}('%Y-%m-%d %H:%M:%f', {0}, {1})", getDataType(), lhs, interval);
                 }
 
 
@@ -651,9 +651,9 @@ final class Expression<T> extends AbstractFunction<T> {
 
                 case SQLITE:
                     if (operator == ADD)
-                        return DSL.field("{datetime}({0}, {1})", getDataType(), lhs, rhsAsNumber().concat(inline(" day")));
+                        return DSL.field("{strftime}('%Y-%m-%d %H:%M:%f', {0}, {1})", getDataType(), lhs, rhsAsNumber().concat(inline(" day")));
                     else
-                        return DSL.field("{datetime}({0}, {1})", getDataType(), lhs, rhsAsNumber().neg().concat(inline(" day")));
+                        return DSL.field("{strftime}('%Y-%m-%d %H:%M:%f', {0}, {1})", getDataType(), lhs, rhsAsNumber().neg().concat(inline(" day")));
 
 
 

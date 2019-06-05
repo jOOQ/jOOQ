@@ -176,7 +176,7 @@ final class DateAdd<T> extends AbstractFunction<T> {
                     default: throwUnsupported();
                 }
 
-                return DSL.field("{datetime}({0}, '+' || {1} || {2})", getDataType(), date, interval, inline(keyword));
+                return DSL.field("{strftime}('%Y-%m-%d %H:%M:%f', {0}, {1})", getDataType(), date, interval.concat(inline(keyword)));
             }
 
 

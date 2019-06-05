@@ -1752,6 +1752,88 @@ final class Tools {
         return result;
     }
 
+    // adapted from com.google.common.primitives.Longs#tryParse()
+    static Integer tryParseInt(String string) {
+        if (string == null || string.isEmpty())
+            return null;
+
+        int radix = 10;
+        char firstChar = string.charAt(0);
+        boolean negative = firstChar == '-';
+        int index = negative || firstChar == '+' ? 1 : 0;
+        int length = string.length();
+        if (index == length)
+            return null;
+
+        int digit = Character.digit(string.charAt(index++), 10);
+        if (digit < 0 || digit >= radix)
+            return null;
+
+        int accum = -digit;
+
+        int cap = Integer.MIN_VALUE / radix;
+
+        while (index < length) {
+            digit = Character.digit(string.charAt(index++), 10);
+            if (digit < 0 || digit >= radix || accum < cap)
+                return null;
+
+            accum *= radix;
+            if (accum < Integer.MIN_VALUE + digit)
+                return null;
+
+            accum -= digit;
+        }
+
+        if (negative)
+            return accum;
+        else if (accum == Integer.MIN_VALUE)
+            return null;
+        else
+            return -accum;
+    }
+
+    // adapted from com.google.common.primitives.Longs#tryParse()
+    static Long tryParseLong(String string) {
+        if (string == null || string.isEmpty())
+            return null;
+
+        int radix = 10;
+        char firstChar = string.charAt(0);
+        boolean negative = firstChar == '-';
+        int index = negative || firstChar == '+' ? 1 : 0;
+        int length = string.length();
+        if (index == length)
+            return null;
+
+        int digit = Character.digit(string.charAt(index++), 10);
+        if (digit < 0 || digit >= radix)
+            return null;
+
+        long accum = -digit;
+
+        long cap = Long.MIN_VALUE / radix;
+
+        while (index < length) {
+            digit = Character.digit(string.charAt(index++), 10);
+            if (digit < 0 || digit >= radix || accum < cap)
+                return null;
+
+            accum *= radix;
+            if (accum < Long.MIN_VALUE + digit)
+                return null;
+
+            accum -= digit;
+        }
+
+        if (negative)
+            return accum;
+        else if (accum == Long.MIN_VALUE)
+            return null;
+        else
+            return -accum;
+    }
+
     static final <T> List<Field<T>> inline(T[] values) {
         if (values == null)
             return new ArrayList<Field<T>>();
@@ -2370,17 +2452,16 @@ final class Tools {
                     String token = sql.substring(start, end);
 
                     // Try getting the {numbered placeholder}
-                    try {
-                        QueryPart substitute = substitutes.get(Integer.valueOf(token));
+                    Integer index = tryParseInt(token);
+                    if (index != null) {
+                        QueryPart substitute = substitutes.get(index);
                         render.visit(substitute);
 
                         if (bind != null) {
                             bind.visit(substitute);
                         }
-                    }
-
-                    // If the above failed, then we're dealing with a {keyword}
-                    catch (NumberFormatException e) {
+                    } else {
+                        // Then we're dealing with a {keyword}
                         render.visit(DSL.keyword(token));
                     }
                 }

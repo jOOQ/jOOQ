@@ -15701,7 +15701,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<LocalDate> localDate(LocalDate value) {
-        return localDate(Tools.field(value));
+        return Tools.field(value);
     }
 
     /**
@@ -15725,7 +15725,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<LocalTime> localTime(LocalTime value) {
-        return localTime(Tools.field(value));
+        return Tools.field(value);
     }
 
     /**
@@ -15749,7 +15749,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<LocalDateTime> localDateTime(LocalDateTime value) {
-        return localDateTime(Tools.field(value));
+        return Tools.field(value);
     }
 
     /**
@@ -15785,7 +15785,7 @@ public class DSL {
      */
     @Support({ H2, HSQLDB, POSTGRES })
     public static Field<OffsetTime> offsetTime(OffsetTime value) {
-        return offsetTime(Tools.field(value));
+        return Tools.field(value);
     }
 
     /**
@@ -15827,7 +15827,7 @@ public class DSL {
      */
     @Support({ H2, HSQLDB, POSTGRES })
     public static Field<OffsetDateTime> offsetDateTime(OffsetDateTime value) {
-        return offsetDateTime(Tools.field(value));
+        return Tools.field(value);
     }
 
     /**
@@ -15869,7 +15869,7 @@ public class DSL {
      */
     @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Instant> instant(Instant value) {
-        return instant(Tools.field(value));
+        return Tools.field(value);
     }
 
     /**

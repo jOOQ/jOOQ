@@ -40,6 +40,7 @@ package org.jooq;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
@@ -91,7 +92,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
      * Add a <code>WHERE</code> clause to the <code>INSERT</code> statement's
      * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT ... DO UPDATE</code> clause.
      */
-    @Support({ CUBRID, DERBY, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, H2, POSTGRES, SQLITE })
     InsertOnConflictConditionStep<R> where(Condition condition);
 
     /**
@@ -99,7 +100,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
      * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT ... DO UPDATE</code> clause,
      * connecting them with each other using {@link Operator#AND}.
      */
-    @Support({ CUBRID, DERBY, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, H2, POSTGRES, SQLITE })
     InsertOnConflictConditionStep<R> where(Condition... conditions);
 
     /**
@@ -107,14 +108,14 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
      * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT ... DO UPDATE</code> clause,
      * connecting them with each other using {@link Operator#AND}.
      */
-    @Support({ CUBRID, DERBY, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, H2, POSTGRES, SQLITE })
     InsertOnConflictConditionStep<R> where(Collection<? extends Condition> conditions);
 
     /**
      * Add a <code>WHERE</code> clause to the <code>INSERT</code> statement's
      * <code>ON DUPLICATE KEY UPDATE</code> or <code>ON CONFLICT ... DO UPDATE</code> clause.
      */
-    @Support({ CUBRID, DERBY, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, H2, POSTGRES, SQLITE })
     InsertOnConflictConditionStep<R> where(Field<Boolean> field);
 
     /**
@@ -129,7 +130,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
      * @see DSL#condition(SQL)
      * @see SQL
      */
-    @Support({ CUBRID, DERBY, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, H2, POSTGRES, SQLITE })
     @PlainSQL
     InsertOnConflictConditionStep<R> where(SQL sql);
 
@@ -145,7 +146,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
      * @see DSL#condition(String)
      * @see SQL
      */
-    @Support({ CUBRID, DERBY, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, H2, POSTGRES, SQLITE })
     @PlainSQL
     InsertOnConflictConditionStep<R> where(String sql);
 
@@ -162,7 +163,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
-    @Support({ CUBRID, DERBY, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, H2, POSTGRES, SQLITE })
     @PlainSQL
     InsertOnConflictConditionStep<R> where(String sql, Object... bindings);
 
@@ -179,7 +180,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
-    @Support({ CUBRID, DERBY, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, H2, POSTGRES, SQLITE })
     @PlainSQL
     InsertOnConflictConditionStep<R> where(String sql, QueryPart... parts);
 

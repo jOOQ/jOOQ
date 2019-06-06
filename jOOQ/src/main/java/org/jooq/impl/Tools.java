@@ -1948,6 +1948,25 @@ final class Tools {
     }
 
     /**
+     * Reverse an array.
+     */
+
+    @SafeVarargs
+
+    static final <T> T[] reverse(T... array) {
+        if (array == null)
+            return null;
+
+        for (int i = 0; i < array.length / 2; i++) {
+            T tmp = array[i];
+            array[i] = array[array.length - i - 1];
+            array[array.length - i - 1] = tmp;
+        }
+
+        return array;
+    }
+
+    /**
      * Use this rather than {@link Arrays#asList(Object...)} for
      * <code>null</code>-safety
      */

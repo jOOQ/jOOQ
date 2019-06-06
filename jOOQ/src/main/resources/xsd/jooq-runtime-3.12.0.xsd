@@ -175,6 +175,38 @@ case of which, this defaults to INLINED]]></jxb:javadoc></jxb:property></appinfo
 </ul>]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="transactionListenerStartInvocationOrder" type="jooq-runtime:InvocationOrder" minOccurs="0" maxOccurs="1" default="DEFAULT">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The order of invocation for [action]start() methods registered {@link TransactionListener}s.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="transactionListenerEndInvocationOrder" type="jooq-runtime:InvocationOrder" minOccurs="0" maxOccurs="1" default="DEFAULT">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The order of invocation for [action]end() methods registered {@link TransactionListener}s.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="visitListenerStartInvocationOrder" type="jooq-runtime:InvocationOrder" minOccurs="0" maxOccurs="1" default="DEFAULT">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The order of invocation for [action]start() methods registered {@link VisitListener}s.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="visitListenerEndInvocationOrder" type="jooq-runtime:InvocationOrder" minOccurs="0" maxOccurs="1" default="DEFAULT">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The order of invocation for [action]end() methods registered {@link VisitListener}s.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="recordListenerStartInvocationOrder" type="jooq-runtime:InvocationOrder" minOccurs="0" maxOccurs="1" default="DEFAULT">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The order of invocation for [action]start() methods registered {@link RecordListener}s.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="recordListenerEndInvocationOrder" type="jooq-runtime:InvocationOrder" minOccurs="0" maxOccurs="1" default="DEFAULT">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The order of invocation for [action]end() methods registered {@link RecordListener}s.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="executeListenerStartInvocationOrder" type="jooq-runtime:InvocationOrder" minOccurs="0" maxOccurs="1" default="DEFAULT">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The order of invocation for [action]start() methods registered {@link ExecuteListener}s.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="executeListenerEndInvocationOrder" type="jooq-runtime:InvocationOrder" minOccurs="0" maxOccurs="1" default="DEFAULT">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The order of invocation for [action]end() methods registered {@link ExecuteListener}s.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="executeLogging" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[When set to true, this will add jOOQ's default logging ExecuteListeners.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -471,13 +503,22 @@ Either &lt;input/> or &lt;inputExpression/> must be provided]]></jxb:javadoc></j
   <simpleType name="StatementType">
     <restriction base="string">
 
-      <!-- Execute statements with inlined bind values, avoiding JDBC's
-           PreparedStatements -->
+      <!-- Execute statements with inlined bind values, avoiding JDBC's PreparedStatements -->
       <enumeration value="STATIC_STATEMENT"/>
 
-      <!-- Execute statements with bind values, using JDBC's
-           PreparedStatements -->
+      <!-- Execute statements with bind values, using JDBC's PreparedStatements -->
       <enumeration value="PREPARED_STATEMENT"/>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="InvocationOrder">
+    <restriction base="string">
+
+      <!-- The first registered listener is invoked first -->
+      <enumeration value="DEFAULT"/>
+
+      <!-- The first registered listener is invoked last -->
+      <enumeration value="REVERSE"/>
     </restriction>
   </simpleType>
 

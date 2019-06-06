@@ -85,6 +85,30 @@ public class Settings
     protected StatementType statementType = StatementType.PREPARED_STATEMENT;
     @XmlElement(defaultValue = "0")
     protected Integer inlineThreshold = 0;
+    @XmlElement(defaultValue = "DEFAULT")
+    @XmlSchemaType(name = "string")
+    protected InvocationOrder transactionListenerStartInvocationOrder = InvocationOrder.DEFAULT;
+    @XmlElement(defaultValue = "DEFAULT")
+    @XmlSchemaType(name = "string")
+    protected InvocationOrder transactionListenerEndInvocationOrder = InvocationOrder.DEFAULT;
+    @XmlElement(defaultValue = "DEFAULT")
+    @XmlSchemaType(name = "string")
+    protected InvocationOrder visitListenerStartInvocationOrder = InvocationOrder.DEFAULT;
+    @XmlElement(defaultValue = "DEFAULT")
+    @XmlSchemaType(name = "string")
+    protected InvocationOrder visitListenerEndInvocationOrder = InvocationOrder.DEFAULT;
+    @XmlElement(defaultValue = "DEFAULT")
+    @XmlSchemaType(name = "string")
+    protected InvocationOrder recordListenerStartInvocationOrder = InvocationOrder.DEFAULT;
+    @XmlElement(defaultValue = "DEFAULT")
+    @XmlSchemaType(name = "string")
+    protected InvocationOrder recordListenerEndInvocationOrder = InvocationOrder.DEFAULT;
+    @XmlElement(defaultValue = "DEFAULT")
+    @XmlSchemaType(name = "string")
+    protected InvocationOrder executeListenerStartInvocationOrder = InvocationOrder.DEFAULT;
+    @XmlElement(defaultValue = "DEFAULT")
+    @XmlSchemaType(name = "string")
+    protected InvocationOrder executeListenerEndInvocationOrder = InvocationOrder.DEFAULT;
     @XmlElement(defaultValue = "true")
     protected Boolean executeLogging = true;
     @XmlElement(defaultValue = "false")
@@ -744,6 +768,198 @@ public class Settings
      */
     public void setInlineThreshold(Integer value) {
         this.inlineThreshold = value;
+    }
+
+    /**
+     * The order of invocation for [action]start() methods registered {@link TransactionListener}s.
+     *
+     * @return
+     *     possible object is
+     *     {@link InvocationOrder }
+     *
+     */
+    public InvocationOrder getTransactionListenerStartInvocationOrder() {
+        return transactionListenerStartInvocationOrder;
+    }
+
+    /**
+     * Sets the value of the transactionListenerStartInvocationOrder property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link InvocationOrder }
+     *
+     */
+    public void setTransactionListenerStartInvocationOrder(InvocationOrder value) {
+        this.transactionListenerStartInvocationOrder = value;
+    }
+
+    /**
+     * The order of invocation for [action]end() methods registered {@link TransactionListener}s.
+     *
+     * @return
+     *     possible object is
+     *     {@link InvocationOrder }
+     *
+     */
+    public InvocationOrder getTransactionListenerEndInvocationOrder() {
+        return transactionListenerEndInvocationOrder;
+    }
+
+    /**
+     * Sets the value of the transactionListenerEndInvocationOrder property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link InvocationOrder }
+     *
+     */
+    public void setTransactionListenerEndInvocationOrder(InvocationOrder value) {
+        this.transactionListenerEndInvocationOrder = value;
+    }
+
+    /**
+     * The order of invocation for [action]start() methods registered {@link VisitListener}s.
+     *
+     * @return
+     *     possible object is
+     *     {@link InvocationOrder }
+     *
+     */
+    public InvocationOrder getVisitListenerStartInvocationOrder() {
+        return visitListenerStartInvocationOrder;
+    }
+
+    /**
+     * Sets the value of the visitListenerStartInvocationOrder property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link InvocationOrder }
+     *
+     */
+    public void setVisitListenerStartInvocationOrder(InvocationOrder value) {
+        this.visitListenerStartInvocationOrder = value;
+    }
+
+    /**
+     * The order of invocation for [action]end() methods registered {@link VisitListener}s.
+     *
+     * @return
+     *     possible object is
+     *     {@link InvocationOrder }
+     *
+     */
+    public InvocationOrder getVisitListenerEndInvocationOrder() {
+        return visitListenerEndInvocationOrder;
+    }
+
+    /**
+     * Sets the value of the visitListenerEndInvocationOrder property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link InvocationOrder }
+     *
+     */
+    public void setVisitListenerEndInvocationOrder(InvocationOrder value) {
+        this.visitListenerEndInvocationOrder = value;
+    }
+
+    /**
+     * The order of invocation for [action]start() methods registered {@link RecordListener}s.
+     *
+     * @return
+     *     possible object is
+     *     {@link InvocationOrder }
+     *
+     */
+    public InvocationOrder getRecordListenerStartInvocationOrder() {
+        return recordListenerStartInvocationOrder;
+    }
+
+    /**
+     * Sets the value of the recordListenerStartInvocationOrder property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link InvocationOrder }
+     *
+     */
+    public void setRecordListenerStartInvocationOrder(InvocationOrder value) {
+        this.recordListenerStartInvocationOrder = value;
+    }
+
+    /**
+     * The order of invocation for [action]end() methods registered {@link RecordListener}s.
+     *
+     * @return
+     *     possible object is
+     *     {@link InvocationOrder }
+     *
+     */
+    public InvocationOrder getRecordListenerEndInvocationOrder() {
+        return recordListenerEndInvocationOrder;
+    }
+
+    /**
+     * Sets the value of the recordListenerEndInvocationOrder property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link InvocationOrder }
+     *
+     */
+    public void setRecordListenerEndInvocationOrder(InvocationOrder value) {
+        this.recordListenerEndInvocationOrder = value;
+    }
+
+    /**
+     * The order of invocation for [action]start() methods registered {@link ExecuteListener}s.
+     *
+     * @return
+     *     possible object is
+     *     {@link InvocationOrder }
+     *
+     */
+    public InvocationOrder getExecuteListenerStartInvocationOrder() {
+        return executeListenerStartInvocationOrder;
+    }
+
+    /**
+     * Sets the value of the executeListenerStartInvocationOrder property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link InvocationOrder }
+     *
+     */
+    public void setExecuteListenerStartInvocationOrder(InvocationOrder value) {
+        this.executeListenerStartInvocationOrder = value;
+    }
+
+    /**
+     * The order of invocation for [action]end() methods registered {@link ExecuteListener}s.
+     *
+     * @return
+     *     possible object is
+     *     {@link InvocationOrder }
+     *
+     */
+    public InvocationOrder getExecuteListenerEndInvocationOrder() {
+        return executeListenerEndInvocationOrder;
+    }
+
+    /**
+     * Sets the value of the executeListenerEndInvocationOrder property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link InvocationOrder }
+     *
+     */
+    public void setExecuteListenerEndInvocationOrder(InvocationOrder value) {
+        this.executeListenerEndInvocationOrder = value;
     }
 
     /**
@@ -1669,6 +1885,46 @@ public class Settings
         return this;
     }
 
+    public Settings withTransactionListenerStartInvocationOrder(InvocationOrder value) {
+        setTransactionListenerStartInvocationOrder(value);
+        return this;
+    }
+
+    public Settings withTransactionListenerEndInvocationOrder(InvocationOrder value) {
+        setTransactionListenerEndInvocationOrder(value);
+        return this;
+    }
+
+    public Settings withVisitListenerStartInvocationOrder(InvocationOrder value) {
+        setVisitListenerStartInvocationOrder(value);
+        return this;
+    }
+
+    public Settings withVisitListenerEndInvocationOrder(InvocationOrder value) {
+        setVisitListenerEndInvocationOrder(value);
+        return this;
+    }
+
+    public Settings withRecordListenerStartInvocationOrder(InvocationOrder value) {
+        setRecordListenerStartInvocationOrder(value);
+        return this;
+    }
+
+    public Settings withRecordListenerEndInvocationOrder(InvocationOrder value) {
+        setRecordListenerEndInvocationOrder(value);
+        return this;
+    }
+
+    public Settings withExecuteListenerStartInvocationOrder(InvocationOrder value) {
+        setExecuteListenerStartInvocationOrder(value);
+        return this;
+    }
+
+    public Settings withExecuteListenerEndInvocationOrder(InvocationOrder value) {
+        setExecuteListenerEndInvocationOrder(value);
+        return this;
+    }
+
     public Settings withExecuteLogging(Boolean value) {
         setExecuteLogging(value);
         return this;
@@ -1962,6 +2218,46 @@ public class Settings
             sb.append("<inlineThreshold>");
             sb.append(inlineThreshold);
             sb.append("</inlineThreshold>");
+        }
+        if (transactionListenerStartInvocationOrder!= null) {
+            sb.append("<transactionListenerStartInvocationOrder>");
+            sb.append(transactionListenerStartInvocationOrder);
+            sb.append("</transactionListenerStartInvocationOrder>");
+        }
+        if (transactionListenerEndInvocationOrder!= null) {
+            sb.append("<transactionListenerEndInvocationOrder>");
+            sb.append(transactionListenerEndInvocationOrder);
+            sb.append("</transactionListenerEndInvocationOrder>");
+        }
+        if (visitListenerStartInvocationOrder!= null) {
+            sb.append("<visitListenerStartInvocationOrder>");
+            sb.append(visitListenerStartInvocationOrder);
+            sb.append("</visitListenerStartInvocationOrder>");
+        }
+        if (visitListenerEndInvocationOrder!= null) {
+            sb.append("<visitListenerEndInvocationOrder>");
+            sb.append(visitListenerEndInvocationOrder);
+            sb.append("</visitListenerEndInvocationOrder>");
+        }
+        if (recordListenerStartInvocationOrder!= null) {
+            sb.append("<recordListenerStartInvocationOrder>");
+            sb.append(recordListenerStartInvocationOrder);
+            sb.append("</recordListenerStartInvocationOrder>");
+        }
+        if (recordListenerEndInvocationOrder!= null) {
+            sb.append("<recordListenerEndInvocationOrder>");
+            sb.append(recordListenerEndInvocationOrder);
+            sb.append("</recordListenerEndInvocationOrder>");
+        }
+        if (executeListenerStartInvocationOrder!= null) {
+            sb.append("<executeListenerStartInvocationOrder>");
+            sb.append(executeListenerStartInvocationOrder);
+            sb.append("</executeListenerStartInvocationOrder>");
+        }
+        if (executeListenerEndInvocationOrder!= null) {
+            sb.append("<executeListenerEndInvocationOrder>");
+            sb.append(executeListenerEndInvocationOrder);
+            sb.append("</executeListenerEndInvocationOrder>");
         }
         if (executeLogging!= null) {
             sb.append("<executeLogging>");
@@ -2341,6 +2637,78 @@ public class Settings
                 return false;
             }
         }
+        if (transactionListenerStartInvocationOrder == null) {
+            if (other.transactionListenerStartInvocationOrder!= null) {
+                return false;
+            }
+        } else {
+            if (!transactionListenerStartInvocationOrder.equals(other.transactionListenerStartInvocationOrder)) {
+                return false;
+            }
+        }
+        if (transactionListenerEndInvocationOrder == null) {
+            if (other.transactionListenerEndInvocationOrder!= null) {
+                return false;
+            }
+        } else {
+            if (!transactionListenerEndInvocationOrder.equals(other.transactionListenerEndInvocationOrder)) {
+                return false;
+            }
+        }
+        if (visitListenerStartInvocationOrder == null) {
+            if (other.visitListenerStartInvocationOrder!= null) {
+                return false;
+            }
+        } else {
+            if (!visitListenerStartInvocationOrder.equals(other.visitListenerStartInvocationOrder)) {
+                return false;
+            }
+        }
+        if (visitListenerEndInvocationOrder == null) {
+            if (other.visitListenerEndInvocationOrder!= null) {
+                return false;
+            }
+        } else {
+            if (!visitListenerEndInvocationOrder.equals(other.visitListenerEndInvocationOrder)) {
+                return false;
+            }
+        }
+        if (recordListenerStartInvocationOrder == null) {
+            if (other.recordListenerStartInvocationOrder!= null) {
+                return false;
+            }
+        } else {
+            if (!recordListenerStartInvocationOrder.equals(other.recordListenerStartInvocationOrder)) {
+                return false;
+            }
+        }
+        if (recordListenerEndInvocationOrder == null) {
+            if (other.recordListenerEndInvocationOrder!= null) {
+                return false;
+            }
+        } else {
+            if (!recordListenerEndInvocationOrder.equals(other.recordListenerEndInvocationOrder)) {
+                return false;
+            }
+        }
+        if (executeListenerStartInvocationOrder == null) {
+            if (other.executeListenerStartInvocationOrder!= null) {
+                return false;
+            }
+        } else {
+            if (!executeListenerStartInvocationOrder.equals(other.executeListenerStartInvocationOrder)) {
+                return false;
+            }
+        }
+        if (executeListenerEndInvocationOrder == null) {
+            if (other.executeListenerEndInvocationOrder!= null) {
+                return false;
+            }
+        } else {
+            if (!executeListenerEndInvocationOrder.equals(other.executeListenerEndInvocationOrder)) {
+                return false;
+            }
+        }
         if (executeLogging == null) {
             if (other.executeLogging!= null) {
                 return false;
@@ -2675,6 +3043,14 @@ public class Settings
         result = ((prime*result)+((paramCastMode == null)? 0 :paramCastMode.hashCode()));
         result = ((prime*result)+((statementType == null)? 0 :statementType.hashCode()));
         result = ((prime*result)+((inlineThreshold == null)? 0 :inlineThreshold.hashCode()));
+        result = ((prime*result)+((transactionListenerStartInvocationOrder == null)? 0 :transactionListenerStartInvocationOrder.hashCode()));
+        result = ((prime*result)+((transactionListenerEndInvocationOrder == null)? 0 :transactionListenerEndInvocationOrder.hashCode()));
+        result = ((prime*result)+((visitListenerStartInvocationOrder == null)? 0 :visitListenerStartInvocationOrder.hashCode()));
+        result = ((prime*result)+((visitListenerEndInvocationOrder == null)? 0 :visitListenerEndInvocationOrder.hashCode()));
+        result = ((prime*result)+((recordListenerStartInvocationOrder == null)? 0 :recordListenerStartInvocationOrder.hashCode()));
+        result = ((prime*result)+((recordListenerEndInvocationOrder == null)? 0 :recordListenerEndInvocationOrder.hashCode()));
+        result = ((prime*result)+((executeListenerStartInvocationOrder == null)? 0 :executeListenerStartInvocationOrder.hashCode()));
+        result = ((prime*result)+((executeListenerEndInvocationOrder == null)? 0 :executeListenerEndInvocationOrder.hashCode()));
         result = ((prime*result)+((executeLogging == null)? 0 :executeLogging.hashCode()));
         result = ((prime*result)+((executeWithOptimisticLocking == null)? 0 :executeWithOptimisticLocking.hashCode()));
         result = ((prime*result)+((executeWithOptimisticLockingExcludeUnversioned == null)? 0 :executeWithOptimisticLockingExcludeUnversioned.hashCode()));

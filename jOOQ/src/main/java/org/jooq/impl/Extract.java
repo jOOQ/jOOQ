@@ -342,6 +342,8 @@ final class Extract extends AbstractFunction<Integer> {
 
                     case QUARTER:
                         return DSL.field("{quarter}({0})", INTEGER, field);
+                    case WEEK:
+                        return DSL.field("{iso_week}({0})", INTEGER, field);
 
                     default:
                         return getNativeFunction();

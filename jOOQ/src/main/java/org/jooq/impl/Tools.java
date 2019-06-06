@@ -1752,17 +1752,20 @@ final class Tools {
         return result;
     }
 
-    // adapted from com.google.common.primitives.Longs#tryParse()
     static Integer tryParseInt(String string) {
-        if (string == null || string.isEmpty())
+        return tryParseInt(string, 0, string.length());
+    }
+
+    // adapted from com.google.common.primitives.Longs#tryParse()
+    private static Integer tryParseInt(String string, int begin, int end) {
+        if (string == null || end - begin < 1)
             return null;
 
         int radix = 10;
-        char firstChar = string.charAt(0);
+        char firstChar = string.charAt(begin);
         boolean negative = firstChar == '-';
-        int index = negative || firstChar == '+' ? 1 : 0;
-        int length = string.length();
-        if (index == length)
+        int index = negative || firstChar == '+' ? begin + 1 : begin;
+        if (index == end)
             return null;
 
         int digit = Character.digit(string.charAt(index++), 10);
@@ -1773,7 +1776,7 @@ final class Tools {
 
         int cap = Integer.MIN_VALUE / radix;
 
-        while (index < length) {
+        while (index < end) {
             digit = Character.digit(string.charAt(index++), 10);
             if (digit < 0 || digit >= radix || accum < cap)
                 return null;
@@ -2510,10 +2513,8 @@ final class Tools {
                     for (; i < sqlChars.length && sqlChars[i] != '}'; i++);
                     int end = i;
 
-                    String token = sql.substring(start, end);
-
                     // Try getting the {numbered placeholder}
-                    Integer index = tryParseInt(token);
+                    Integer index = tryParseInt(sql, start, end);
                     if (index != null) {
                         QueryPart substitute = substitutes.get(index);
                         render.visit(substitute);
@@ -2523,7 +2524,7 @@ final class Tools {
                         }
                     } else {
                         // Then we're dealing with a {keyword}
-                        render.visit(DSL.keyword(token));
+                        render.visit(DSL.keyword(sql.substring(start, end)));
                     }
                 }
             }

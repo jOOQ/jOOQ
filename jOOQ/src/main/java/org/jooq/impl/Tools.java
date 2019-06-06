@@ -1966,28 +1966,44 @@ final class Tools {
         return array;
     }
 
-    static final <T> Iterable<T> reverseIterable(T... array) {
+    /**
+     * Reverse iterate over an array.
+     */
+
+    @SafeVarargs
+
+    static final <T> Iterable<T> reverseIterable(final T... array) {
         return new Iterable<T>() {
             @Override
             public Iterator<T> iterator() {
-                return new Iterator<T>() {
-                    int index = array.length;
+                return reverseIterator(array);
+            }
+        };
+    }
 
-                    @Override
-                    public boolean hasNext() {
-                        return index > 0;
-                    }
+    /**
+     * Reverse iterate over an array.
+     */
 
-                    @Override
-                    public T next() {
-                        return array[--index];
-                    }
+    @SafeVarargs
 
-                    @Override
-                    public void remove() {
-                        throw new UnsupportedOperationException("remove");
-                    }
-                };
+    static final <T> Iterator<T> reverseIterator(final T... array) {
+        return new Iterator<T>() {
+            int index = array.length;
+
+            @Override
+            public boolean hasNext() {
+                return index > 0;
+            }
+
+            @Override
+            public T next() {
+                return array[--index];
+            }
+
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException("remove");
             }
         };
     }

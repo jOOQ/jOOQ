@@ -1966,6 +1966,32 @@ final class Tools {
         return array;
     }
 
+    static final <T> Iterable<T> reverseIterable(T... array) {
+        return new Iterable<T>() {
+            @Override
+            public Iterator<T> iterator() {
+                return new Iterator<T>() {
+                    int index = array.length;
+
+                    @Override
+                    public boolean hasNext() {
+                        return index > 0;
+                    }
+
+                    @Override
+                    public T next() {
+                        return array[--index];
+                    }
+
+                    @Override
+                    public void remove() {
+                        throw new UnsupportedOperationException("remove");
+                    }
+                };
+            }
+        };
+    }
+
     /**
      * Use this rather than {@link Arrays#asList(Object...)} for
      * <code>null</code>-safety

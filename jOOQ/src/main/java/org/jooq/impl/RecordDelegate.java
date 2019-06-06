@@ -43,11 +43,14 @@ import static org.jooq.impl.RecordDelegate.RecordLifecycleType.LOAD;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.REFRESH;
 import static org.jooq.impl.Tools.attachRecords;
 
+import java.util.Arrays;
+
 import org.jooq.Configuration;
 import org.jooq.ExecuteType;
 import org.jooq.Record;
 import org.jooq.RecordListener;
 import org.jooq.RecordListenerProvider;
+import org.jooq.conf.InvocationOrder;
 import org.jooq.exception.ControlFlowSignal;
 
 /**
@@ -94,14 +97,17 @@ final class RecordDelegate<R extends Record> {
                 listeners = new RecordListener[providers.length];
                 ctx = new DefaultRecordContext(configuration, executeType(), record);
 
-                for (int i = 0; i < providers.length; i++) {
+                for (int i = 0; i < providers.length; i++)
                     listeners[i] = providers[i].provide();
-                }
             }
         }
 
         if (listeners != null) {
-            for (RecordListener listener : listeners) {
+            for (RecordListener listener : (
+                ctx == null || ctx.settings().getRecordListenerStartInvocationOrder() == InvocationOrder.DEFAULT
+                ? Arrays.asList(listeners)
+                : Tools.reverseIterable(listeners)
+            )) {
                 switch (type) {
                     case LOAD:    listener.loadStart(ctx);    break;
                     case REFRESH: listener.refreshStart(ctx); break;
@@ -116,9 +122,8 @@ final class RecordDelegate<R extends Record> {
         }
 
         // [#1684] Do not attach configuration if settings say no
-        if (attachRecords(configuration)) {
+        if (attachRecords(configuration))
             record.attach(configuration);
-        }
 
         if (operation != null) {
             try {
@@ -142,7 +147,11 @@ final class RecordDelegate<R extends Record> {
         }
 
         if (listeners != null) {
-            for (RecordListener listener : listeners) {
+            for (RecordListener listener : (
+                ctx == null || ctx.settings().getRecordListenerEndInvocationOrder() == InvocationOrder.DEFAULT
+                ? Arrays.asList(listeners)
+                : Tools.reverseIterable(listeners)
+            )) {
                 switch (type) {
                     case LOAD:    listener.loadEnd(ctx);    break;
                     case REFRESH: listener.refreshEnd(ctx); break;
@@ -156,9 +165,8 @@ final class RecordDelegate<R extends Record> {
             }
         }
 
-        if (exception != null) {
+        if (exception != null)
             throw exception;
-        }
 
         return record;
     }

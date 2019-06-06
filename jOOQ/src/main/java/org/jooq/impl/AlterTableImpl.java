@@ -218,6 +218,8 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
 
 
+
+
     private final Table<?>                   table;
     private final boolean                    ifExists;
     private boolean                          ifExistsColumn;
@@ -851,6 +853,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
                     return;
             }
         }
+
 
 
 

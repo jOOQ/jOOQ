@@ -55,19 +55,37 @@ final class KeywordImpl extends AbstractQueryPart implements Keyword {
     private static final long serialVersionUID = 9137269798087732005L;
 
     private final String      asIs;
-    private final String      upper;
-    private final String      lower;
-    private final String      pascal;
+
+    private       String      lower;
+    private       String      upper;
+    private       String      pascal;
 
     KeywordImpl(String keyword) {
         this.asIs = keyword;
-        this.upper = keyword.toUpperCase();
-        this.lower = keyword.toLowerCase();
-        this.pascal = keyword.length() > 0 ? pascal(keyword) : keyword;
+    }
+
+    @Override
+    public final void accept(Context<?> ctx) {
+        ctx.sql(render(ctx), true);
+    }
+
+    private String render(Context<?> ctx) {
+        RenderKeywordCase style = SettingsTools.getRenderKeywordCase(ctx.settings());
+
+        switch (style) {
+            case AS_IS:  return asIs;
+            case LOWER:  return lower == null  ? lower  = asIs.toLowerCase() : lower;
+            case UPPER:  return upper == null  ? upper  = asIs.toUpperCase() : upper;
+            case PASCAL: return pascal == null ? pascal = pascal(asIs)       : pascal;
+            default:
+                throw new UnsupportedOperationException("Unsupported style: " + style);
+        }
     }
 
     private static final String pascal(String keyword) {
-        if (keyword.contains(" ")) {
+        if (keyword.isEmpty())
+            return keyword;
+        else if (keyword.indexOf(' ') >= 0) {
             StringBuilder sb = new StringBuilder();
 
             int prev = 0;
@@ -89,20 +107,6 @@ final class KeywordImpl extends AbstractQueryPart implements Keyword {
             return sb.toString();
         }
         else
-            return keyword.substring(0, 1).toUpperCase() + keyword.substring(1, keyword.length()).toLowerCase();
-    }
-
-    @Override
-    public final void accept(Context<?> ctx) {
-        RenderKeywordCase style = SettingsTools.getRenderKeywordCase(ctx.settings());
-
-        switch (style) {
-            case AS_IS:  ctx.sql(asIs, true);   break;
-            case LOWER:  ctx.sql(lower, true);  break;
-            case UPPER:  ctx.sql(upper, true);  break;
-            case PASCAL: ctx.sql(pascal, true); break;
-            default:
-                throw new UnsupportedOperationException("Unsupported style: " + style);
-        }
+            return Character.toUpperCase(keyword.charAt(0)) + keyword.substring(1).toLowerCase();
     }
 }

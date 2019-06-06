@@ -75,6 +75,7 @@ import org.jooq.Table;
 import org.jooq.VisitContext;
 import org.jooq.VisitListener;
 import org.jooq.VisitListenerProvider;
+import org.jooq.conf.InvocationOrder;
 import org.jooq.conf.ParamCastMode;
 import org.jooq.conf.ParamType;
 import org.jooq.conf.Settings;
@@ -108,7 +109,8 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     final ScopeStack<QueryPart, ScopeStackElement> scopeStack;
 
     // [#2665] VisitListener API
-    final VisitListener[]                          visitListeners;
+    private final VisitListener[]                  visitListenersStart;
+    private final VisitListener[]                  visitListenersEnd;
     private final Deque<Clause>                    visitClauses;
     private final DefaultVisitContext              visitContext;
     private final Deque<QueryPart>                 visitParts;
@@ -137,13 +139,13 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
             ;
 
         // [#6758] Avoid this allocation if unneeded
-        this.visitListeners = providers.length > 0 || useInternalVisitListener
+        VisitListener[] visitListeners = providers.length > 0 || useInternalVisitListener
             ? new VisitListener[providers.length + (useInternalVisitListener ? 1 : 0)]
             : null;
 
-        if (this.visitListeners != null) {
+        if (visitListeners != null) {
             for (int i = 0; i < providers.length; i++)
-                this.visitListeners[i] = providers[i].provide();
+                visitListeners[i] = providers[i].provide();
 
 
 
@@ -153,11 +155,20 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
             this.visitContext = new DefaultVisitContext();
             this.visitParts = new ArrayDeque<QueryPart>();
             this.visitClauses = new ArrayDeque<Clause>();
+
+            this.visitListenersStart = configuration.settings().getVisitListenerStartInvocationOrder() == InvocationOrder.DEFAULT
+                ? visitListeners
+                : Tools.reverse(visitListeners.clone());
+            this.visitListenersEnd = configuration.settings().getVisitListenerEndInvocationOrder() == InvocationOrder.DEFAULT
+                ? visitListeners
+                : Tools.reverse(visitListeners.clone());
         }
         else {
             this.visitContext = null;
             this.visitParts = null;
             this.visitClauses = null;
+            this.visitListenersStart = null;
+            this.visitListenersEnd = null;
         }
 
         this.forcedParamType = SettingsTools.getStatementType(settings()) == StatementType.STATIC_STATEMENT
@@ -193,7 +204,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
             // Issue start clause events
             // -----------------------------------------------------------------
-            Clause[] clauses = Tools.isNotEmpty(visitListeners) ? clause(part) : null;
+            Clause[] clauses = Tools.isNotEmpty(visitListenersStart) ? clause(part) : null;
             if (clauses != null)
                 for (int i = 0; i < clauses.length; i++)
                     start(clauses[i]);
@@ -248,7 +259,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
         if (clause != null && visitClauses != null) {
             visitClauses.addLast(clause);
 
-            for (VisitListener listener : visitListeners)
+            for (VisitListener listener : visitListenersStart)
                 listener.clauseStart(visitContext);
         }
 
@@ -258,7 +269,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     @Override
     public final C end(Clause clause) {
         if (clause != null && visitClauses != null) {
-            for (VisitListener listener : visitListeners)
+            for (VisitListener listener : visitListenersEnd)
                 listener.clauseEnd(visitContext);
 
             if (visitClauses.removeLast() != clause)
@@ -272,7 +283,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
         if (visitParts != null) {
             visitParts.addLast(part);
 
-            for (VisitListener listener : visitListeners)
+            for (VisitListener listener : visitListenersStart)
                 listener.visitStart(visitContext);
 
             return visitParts.peekLast();
@@ -284,7 +295,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
     private final void end(QueryPart part) {
         if (visitParts != null) {
-            for (VisitListener listener : visitListeners)
+            for (VisitListener listener : visitListenersEnd)
                 listener.visitEnd(visitContext);
 
             if (visitParts.removeLast() != part)

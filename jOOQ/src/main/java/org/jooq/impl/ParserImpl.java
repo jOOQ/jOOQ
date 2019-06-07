@@ -1670,7 +1670,12 @@ final class ParserImpl implements Parser {
                 if (fields == null && parseIf(ctx, ')'))
                     break valuesLoop;
 
-                List<Field<?>> values = parseFields(ctx);
+                List<Field<?>> values = new ArrayList<Field<?>>();
+                do {
+                    Field<?> value = parseKeywordIf(ctx, "DEFAULT") ? default_() : parseField(ctx);
+                    values.add(value);
+                }
+                while (parseIf(ctx, ','));
 
                 if (fields != null && fields.length != values.size())
                     throw ctx.exception("Insert field size (" + fields.length + ") must match values size (" + values.size() + ")");
@@ -1884,7 +1889,12 @@ final class ParserImpl implements Parser {
                 parse(ctx, ')');
                 parseKeyword(ctx, "VALUES");
                 parse(ctx, '(');
-                insertValues = parseFields(ctx);
+                insertValues = new ArrayList<Field<?>>();
+                do {
+                    Field<?> value = parseKeywordIf(ctx, "DEFAULT") ? default_() : parseField(ctx);
+                    insertValues.add(value);
+                }
+                while (parseIf(ctx, ','));
                 parse(ctx, ')');
 
                 if (insertColumns.length != insertValues.size())

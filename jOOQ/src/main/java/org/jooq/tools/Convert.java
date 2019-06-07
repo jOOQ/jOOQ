@@ -580,7 +580,9 @@ public final class Convert {
                         return (U) (((Boolean) from) ? Byte.valueOf((byte) 1) : Byte.valueOf((byte) 0));
 
                     try {
-                        return (U) Byte.valueOf(new BigDecimal(from.toString().trim()).byteValue());
+                        String fromString = from.toString().trim();
+                        Integer asInt = Ints.tryParse(fromString);
+                        return (U) Byte.valueOf(asInt != null ? asInt.byteValue() : new BigDecimal(fromString).byteValue());
                     }
                     catch (NumberFormatException e) {
                         return Reflect.initValue(toClass);
@@ -594,7 +596,9 @@ public final class Convert {
                         return (U) (((Boolean) from) ? Short.valueOf((short) 1) : Short.valueOf((short) 0));
 
                     try {
-                        return (U) Short.valueOf(new BigDecimal(from.toString().trim()).shortValue());
+                        String fromString = from.toString().trim();
+                        Integer asInt = Ints.tryParse(fromString);
+                        return (U) Short.valueOf(asInt != null ? asInt.shortValue() : new BigDecimal(fromString).shortValue());
                     }
                     catch (NumberFormatException e) {
                         return Reflect.initValue(toClass);
@@ -608,7 +612,9 @@ public final class Convert {
                         return (U) (((Boolean) from) ? Integer.valueOf(1) : Integer.valueOf(0));
 
                     try {
-                        return (U) Integer.valueOf(new BigDecimal(from.toString().trim()).intValue());
+                        String fromString = from.toString().trim();
+                        Integer asInt = Ints.tryParse(fromString);
+                        return (U) Integer.valueOf(asInt != null ? asInt.intValue() : new BigDecimal(fromString).intValue());
                     }
                     catch (NumberFormatException e) {
                         return Reflect.initValue(toClass);
@@ -632,7 +638,9 @@ public final class Convert {
 
 
                     try {
-                        return (U) Long.valueOf(new BigDecimal(from.toString().trim()).longValue());
+                        String fromString = from.toString().trim();
+                        Long asLong = Longs.tryParse(fromString);
+                        return (U) Long.valueOf(asLong != null ? asLong.longValue() : new BigDecimal(fromString).longValue());
                     }
                     catch (NumberFormatException e) {
                         return Reflect.initValue(toClass);
@@ -648,7 +656,9 @@ public final class Convert {
                         if (wrapperFrom == Boolean.class)
                             return (U) (((Boolean) from) ? ubyte(1) : ubyte(0));
 
-                        return (U) ubyte(new BigDecimal(from.toString().trim()).shortValue());
+                        String fromString = from.toString().trim();
+                        Integer asInt = Ints.tryParse(fromString);
+                        return (U) ubyte(asInt != null ? asInt.shortValue() : new BigDecimal(fromString).shortValue());
                     }
                     catch (NumberFormatException e) {
                         return null;
@@ -662,7 +672,9 @@ public final class Convert {
                         if (wrapperFrom == Boolean.class)
                             return (U) (((Boolean) from) ? ushort(1) : ushort(0));
 
-                        return (U) ushort(new BigDecimal(from.toString().trim()).intValue());
+                        String fromString = from.toString().trim();
+                        Integer asInt = Ints.tryParse(fromString);
+                        return (U) ushort(asInt != null ? asInt.intValue() : new BigDecimal(fromString).intValue());
                     }
                     catch (NumberFormatException e) {
                         return null;
@@ -676,7 +688,9 @@ public final class Convert {
                         if (wrapperFrom == Boolean.class)
                             return (U) (((Boolean) from) ? uint(1) : uint(0));
 
-                        return (U) uint(new BigDecimal(from.toString().trim()).longValue());
+                        String fromString = from.toString().trim();
+                        Long asLong = Longs.tryParse(fromString);
+                        return (U) uint(asLong != null ? asLong.longValue() : new BigDecimal(fromString).longValue());
                     }
                     catch (NumberFormatException e) {
                         return null;
@@ -695,7 +709,10 @@ public final class Convert {
 
 
                     try {
-                        return (U) ulong(new BigDecimal(from.toString().trim()).toBigInteger().toString());
+                        String fromString = from.toString().trim();
+                        // tryParse() will return null in case of overflow
+                        Long asLong = Longs.tryParse(fromString);
+                        return asLong != null ? (U) ulong(asLong.longValue()) : (U) ulong(new BigDecimal(fromString).toBigInteger());
                     }
                     catch (NumberFormatException e) {
                         return null;

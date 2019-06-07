@@ -80,6 +80,7 @@ import org.jooq.conf.SettingsTools;
 import org.jooq.conf.StatementType;
 import org.jooq.exception.ControlFlowSignal;
 import org.jooq.exception.DetachedException;
+import org.jooq.tools.Ints;
 import org.jooq.tools.JooqLogger;
 
 /**
@@ -160,7 +161,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
     @SuppressWarnings("deprecation")
     @Override
     public Query bind(String param, Object value) {
-        Integer index = Tools.tryParseInt(param);
+        Integer index = Ints.tryParse(param);
         if (index != null)
             return bind(index, value);
 

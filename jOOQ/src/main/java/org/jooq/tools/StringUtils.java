@@ -1424,4 +1424,5 @@ public final class StringUtils {
         String[] result = new String[matchList.size()];
         return matchList.toArray(result);
     }
+
 }

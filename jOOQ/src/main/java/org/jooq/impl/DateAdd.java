@@ -40,8 +40,6 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.sql;
-import static org.jooq.impl.SQLDataType.VARCHAR;
-import static org.jooq.impl.Tools.castIfNeeded;
 
 import org.jooq.Configuration;
 import org.jooq.DatePart;

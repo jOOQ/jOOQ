@@ -45,6 +45,7 @@ import static java.util.Collections.singletonList;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.conf.ParseWithMetaLookups.IGNORE_ON_FAILURE;
 import static org.jooq.conf.ParseWithMetaLookups.THROW_ON_FAILURE;
 import static org.jooq.impl.DSL.abs;
@@ -5284,6 +5285,14 @@ final class ParserImpl implements Parser {
             case '?':
                 return parseBindVariable(ctx);
 
+
+
+
+
+
+
+
+
             case '\'':
                 return inline(parseStringLiteral(ctx));
 
@@ -9050,9 +9059,13 @@ final class ParserImpl implements Parser {
         if (parseIf(ctx, 'q', '\'', false) || parseIf(ctx, 'Q', '\'', false))
             return parseOracleQuotedStringLiteral(ctx);
         else if (parseIf(ctx, 'e', '\'', false) || parseIf(ctx, 'E', '\'', false))
-            return parseUnquotedStringLiteral(ctx, true);
+            return parseUnquotedStringLiteral(ctx, true, '\'');
         else if (peek(ctx, '\''))
-            return parseUnquotedStringLiteral(ctx, false);
+            return parseUnquotedStringLiteral(ctx, false, '\'');
+
+
+
+
         else if (peek(ctx, '$'))
             return parseDollarQuotedStringLiteralIf(ctx);
         else
@@ -9201,8 +9214,8 @@ final class ParserImpl implements Parser {
         return null;
     }
 
-    private static final String parseUnquotedStringLiteral(ParserContext ctx, boolean postgresEscaping) {
-        parse(ctx, '\'', false);
+    private static final String parseUnquotedStringLiteral(ParserContext ctx, boolean postgresEscaping, char delimiter) {
+        parse(ctx, delimiter, false);
 
         StringBuilder sb = new StringBuilder();
 
@@ -9305,8 +9318,18 @@ final class ParserImpl implements Parser {
 
                     break;
                 }
+
+
+
+
+
+
+
+
+
+
                 case '\'': {
-                    if (ctx.character(i + 1) != '\'') {
+                    if (ctx.character(i + 1) != delimiter) {
                         ctx.position(i + 1);
                         parseWhitespaceIf(ctx);
                         return sb.toString();

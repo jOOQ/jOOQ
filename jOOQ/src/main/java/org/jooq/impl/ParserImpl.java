@@ -106,6 +106,7 @@ import static org.jooq.impl.DSL.dayOfYear;
 import static org.jooq.impl.DSL.decade;
 // ...
 import static org.jooq.impl.DSL.defaultValue;
+import static org.jooq.impl.DSL.default_;
 import static org.jooq.impl.DSL.deg;
 import static org.jooq.impl.DSL.denseRank;
 import static org.jooq.impl.DSL.epoch;
@@ -1819,7 +1820,8 @@ final class ParserImpl implements Parser {
                 throw ctx.exception("Duplicate column in set clause list: " + field);
 
             parse(ctx, '=');
-            Field<?> value = parseField(ctx);
+
+            Field<?> value = parseKeywordIf(ctx, "DEFAULT") ? default_() : parseField(ctx);
             map.put(field,  value);
         }
         while (parseIf(ctx, ','));

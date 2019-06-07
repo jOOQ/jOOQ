@@ -2380,7 +2380,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final void sqlInline0(BindingSQLContext<U> ctx, Integer value) {
-            ctx.render().sql(value.toString());
+            ctx.render().sql(value);
         }
 
         @Override

@@ -5743,6 +5743,8 @@ final class ParserImpl implements Parser {
                         return field;
                     else if ((field = parseFieldToTimestampIf(ctx)) != null)
                         return field;
+                    else if ((field = parseFieldTimestampDiffIf(ctx)) != null)
+                        return field;
 
                 if (N.is(type) || D.is(type))
                     if ((field = parseFieldTruncIf(ctx)) != null)
@@ -7060,6 +7062,20 @@ final class ParserImpl implements Parser {
             parse(ctx, ')');
 
             return toTimestamp(f1, f2);
+        }
+
+        return null;
+    }
+
+    private static final Field<?> parseFieldTimestampDiffIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "TIMESTAMPDIFF")) {
+            parse(ctx, '(');
+            Field<Timestamp> ts1 = (Field<Timestamp>) parseField(ctx, Type.D);
+            parse(ctx, ',');
+            Field<Timestamp> ts2 = (Field<Timestamp>) parseField(ctx, Type.D);
+            parse(ctx, ')');
+
+            return DSL.timestampDiff(ts1, ts2);
         }
 
         return null;

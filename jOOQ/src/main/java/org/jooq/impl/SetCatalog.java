@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Keywords.K_CATALOG;
+import static org.jooq.impl.Keywords.K_DATABASE;
 import static org.jooq.impl.Keywords.K_SET;
 import static org.jooq.impl.Keywords.K_USE;
 
@@ -62,6 +63,10 @@ final class SetCatalog extends AbstractRowCountQuery {
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
+
+
+
+
 
 
 

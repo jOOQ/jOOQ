@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Keywords.K_ALTER;
 import static org.jooq.impl.Keywords.K_CURRENT_SCHEMA;
+import static org.jooq.impl.Keywords.K_DATABASE;
 import static org.jooq.impl.Keywords.K_SCHEMA;
 import static org.jooq.impl.Keywords.K_SEARCH_PATH;
 import static org.jooq.impl.Keywords.K_SESSION;
@@ -66,6 +67,10 @@ final class SetSchema extends AbstractRowCountQuery {
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
+
+
+
+
 
 
 

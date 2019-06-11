@@ -9400,7 +9400,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#alterView(String)
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     AlterViewStep alterView(String view);
 
     /**
@@ -9408,7 +9408,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#alterView(Name)
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     AlterViewStep alterView(Name view);
 
     /**
@@ -9416,7 +9416,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#alterView(Table)
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     AlterViewStep alterView(Table<?> view);
 
     /**

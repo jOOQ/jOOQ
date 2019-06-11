@@ -7470,7 +7470,7 @@ public class DSL {
      *
      * @see DSLContext#alterView(String)
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static AlterViewStep alterView(String view) {
         return dsl().alterView(view);
     }
@@ -7480,7 +7480,7 @@ public class DSL {
      *
      * @see DSLContext#alterView(Name)
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static AlterViewStep alterView(Name view) {
         return dsl().alterView(view);
     }
@@ -7490,7 +7490,7 @@ public class DSL {
      *
      * @see DSLContext#alterView(Table)
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static AlterViewStep alterView(Table<?> view) {
         return dsl().alterView(view);
     }

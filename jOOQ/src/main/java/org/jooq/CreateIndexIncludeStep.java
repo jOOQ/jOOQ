@@ -37,6 +37,30 @@
  */
 package org.jooq;
 
+// ...
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.CUBRID;
+// ...
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
+// ...
+import static org.jooq.SQLDialect.HSQLDB;
+// ...
+// ...
+import static org.jooq.SQLDialect.MARIADB;
+// ...
+import static org.jooq.SQLDialect.MYSQL;
+// ...
+import static org.jooq.SQLDialect.POSTGRES;
+// ...
+import static org.jooq.SQLDialect.SQLITE;
+// ...
+// ...
+// ...
+
 import java.util.Collection;
 
 /**
@@ -71,7 +95,7 @@ public interface CreateIndexIncludeStep extends CreateIndexWhereStep {
      * will simply be put in the index as ordinary columns, making the index a
      * composite index.
      */
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateIndexWhereStep include(Field<?>... fields);
 
     /**
@@ -81,7 +105,7 @@ public interface CreateIndexIncludeStep extends CreateIndexWhereStep {
      * will simply be put in the index as ordinary columns, making the index a
      * composite index.
      */
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateIndexWhereStep include(Name... fields);
 
     /**
@@ -91,7 +115,7 @@ public interface CreateIndexIncludeStep extends CreateIndexWhereStep {
      * will simply be put in the index as ordinary columns, making the index a
      * composite index.
      */
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateIndexWhereStep include(String... fields);
 
     /**
@@ -101,7 +125,7 @@ public interface CreateIndexIncludeStep extends CreateIndexWhereStep {
      * will simply be put in the index as ordinary columns, making the index a
      * composite index.
      */
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateIndexWhereStep include(Collection<? extends Field<?>> fields);
 
 }

@@ -128,7 +128,7 @@ public interface SelectLimitAfterOffsetStep<R extends Record> extends SelectForU
      * RDBMS, this may be emulated with a <code>ROW_NUMBER()</code> window
      * function and nested <code>SELECT</code> statements.
      */
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     SelectLimitPercentAfterOffsetStep<R> limit(int numberOfRows);
 
     /**
@@ -138,7 +138,7 @@ public interface SelectLimitAfterOffsetStep<R extends Record> extends SelectForU
      * RDBMS, this may be emulated with a <code>ROW_NUMBER()</code> window
      * function and nested <code>SELECT</code> statements.
      */
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     SelectLimitPercentAfterOffsetStep<R> limit(Number numberOfRows);
 
     /**

@@ -76,16 +76,18 @@ public class Example_4_3_Settings {
         out.println(using(H2, new Settings().withRenderNameCase(RenderNameCase.AS_IS)).render(select));
         out.println(using(H2, new Settings().withRenderNameCase(RenderNameCase.UPPER)).render(select));
         out.println(using(H2, new Settings().withRenderNameCase(RenderNameCase.LOWER)).render(select));
-        out.println(using(H2, new Settings().withRenderNameCase(RenderNameCase.PASCAL)).render(select));
 
         Tools.title("A couple of settings at work - Name quoting");
         out.println(using(H2, new Settings().withRenderQuotedNames(RenderQuotedNames.ALWAYS)).render(select));
-        out.println(using(H2, new Settings().withRenderQuotedNames(RenderQuotedNames.WHEN_NEEDED)).render(select));
+        out.println(using(H2, new Settings().withRenderQuotedNames(RenderQuotedNames.EXPLICIT_DEFAULT_QUOTED)).render(select));
+        out.println(using(H2, new Settings().withRenderQuotedNames(RenderQuotedNames.EXPLICIT_DEFAULT_UNQUOTED)).render(select));
         out.println(using(H2, new Settings().withRenderQuotedNames(RenderQuotedNames.NEVER)).render(select));
 
         Tools.title("A couple of settings at work - Keyword case");
-        out.println(using(H2, new Settings().withRenderKeywordCase(RenderKeywordCase.UPPER)).render(select));
+        out.println(using(H2, new Settings().withRenderKeywordCase(RenderKeywordCase.AS_IS)).render(select));
         out.println(using(H2, new Settings().withRenderKeywordCase(RenderKeywordCase.LOWER)).render(select));
+        out.println(using(H2, new Settings().withRenderKeywordCase(RenderKeywordCase.UPPER)).render(select));
+        out.println(using(H2, new Settings().withRenderKeywordCase(RenderKeywordCase.PASCAL)).render(select));
 
         Tools.title("A couple of settings at work - Mapping");
         out.println(using(H2, new Settings()

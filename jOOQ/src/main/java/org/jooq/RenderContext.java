@@ -115,6 +115,24 @@ public interface RenderContext extends Context<RenderContext> {
     RenderContext sql(int sql);
 
     /**
+     * Append some SQL to the context's contained {@link StringBuilder}.
+     */
+    @Override
+    RenderContext sql(long sql);
+
+    /**
+     * Append some SQL to the context's contained {@link StringBuilder}.
+     */
+    @Override
+    RenderContext sql(float sql);
+
+    /**
+     * Append some SQL to the context's contained {@link StringBuilder}.
+     */
+    @Override
+    RenderContext sql(double sql);
+
+    /**
      * Recurse rendering.
      *
      * @deprecated - 3.2.0 - [#2666] - Use {@link #visit(QueryPart)} instead

@@ -290,6 +290,21 @@ public interface Context<C extends Context<C>> extends Scope {
     C sql(int sql);
 
     /**
+     * Append some SQL to the context's contained {@link StringBuilder}.
+     */
+    C sql(long sql);
+
+    /**
+     * Append some SQL to the context's contained {@link StringBuilder}.
+     */
+    C sql(float sql);
+
+    /**
+     * Append some SQL to the context's contained {@link StringBuilder}.
+     */
+    C sql(double sql);
+
+    /**
      * Override the value of {@link Settings#isRenderFormatted()}.
      */
     C format(boolean format);

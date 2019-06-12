@@ -382,6 +382,30 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     }
 
     @Override
+    public final RenderContext sql(long l) {
+        sql.append(l);
+        separator = false;
+        newline = false;
+        return this;
+    }
+
+    @Override
+    public final RenderContext sql(float f) {
+        sql.append(f);
+        separator = false;
+        newline = false;
+        return this;
+    }
+
+    @Override
+    public final RenderContext sql(double d) {
+        sql.append(d);
+        separator = false;
+        newline = false;
+        return this;
+    }
+
+    @Override
     public final RenderContext formatNewLine() {
         if (cachedRenderFormatted) {
             sql(cachedNewline, true);

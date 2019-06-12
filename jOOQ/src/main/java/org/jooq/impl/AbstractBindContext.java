@@ -178,6 +178,21 @@ abstract class AbstractBindContext extends AbstractContext<BindContext> implemen
     }
 
     @Override
+    public final BindContext sql(long sql) {
+        return this;
+    }
+
+    @Override
+    public final BindContext sql(float sql) {
+        return this;
+    }
+
+    @Override
+    public final BindContext sql(double sql) {
+        return this;
+    }
+
+    @Override
     public final BindContext format(boolean format) {
         return this;
     }

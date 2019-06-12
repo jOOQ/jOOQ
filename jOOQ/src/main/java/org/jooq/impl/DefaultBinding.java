@@ -1659,7 +1659,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final void sqlInline0(BindingSQLContext<U> ctx, Byte value) {
-            ctx.render().sql(value.toString());
+            ctx.render().sql(value);
         }
 
         @Override
@@ -2151,7 +2151,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 else
                     ctx.render().visit(K_CAST).sql('(').visit(inline("NaN")).sql(' ').visit(K_AS).sql(' ').visit(keyword(DOUBLE.getCastTypeName(ctx.configuration()))).sql(')');
             else
-                ctx.render().sql(value.toString());
+                ctx.render().sql(value);
         }
 
         @Override
@@ -2324,7 +2324,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 else
                     ctx.render().visit(K_CAST).sql('(').visit(inline("NaN")).sql(' ').visit(K_AS).sql(' ').visit(keyword(DOUBLE.getCastTypeName(ctx.configuration()))).sql(')');
             else
-                ctx.render().sql(value.toString());
+                ctx.render().sql(value);
         }
 
         @Override
@@ -2428,7 +2428,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final void sqlInline0(BindingSQLContext<U> ctx, Long value) {
-            ctx.render().sql(value.toString());
+            ctx.render().sql(value);
         }
 
         @Override
@@ -3485,7 +3485,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final void sqlInline0(BindingSQLContext<U> ctx, Short value) {
-            ctx.render().sql(value.toString());
+            ctx.render().sql(value);
         }
 
         @Override

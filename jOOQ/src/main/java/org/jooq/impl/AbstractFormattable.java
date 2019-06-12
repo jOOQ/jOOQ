@@ -151,7 +151,7 @@ abstract class AbstractFormattable implements Formattable, Serializable {
     @Override
     public final String formatCSV(boolean header, char delimiter) {
         StringWriter writer = new StringWriter();
-        formatCSV(writer, delimiter);
+        formatCSV(writer, header, delimiter);
         return writer.toString();
     }
 
@@ -162,7 +162,7 @@ abstract class AbstractFormattable implements Formattable, Serializable {
 
     @Override
     public final void formatCSV(OutputStream stream, boolean header, char delimiter) {
-        formatCSV(new OutputStreamWriter(stream), delimiter);
+        formatCSV(new OutputStreamWriter(stream), header, delimiter);
     }
 
     @Override

@@ -875,12 +875,7 @@ public class GenerationTool {
             // [#2283] If no explicit class loader was provided try loading the class
             // with "default" techniques
             if (loader == null) {
-                try {
-                    return Class.forName(className);
-                }
-                catch (ClassNotFoundException e) {
-                    return Thread.currentThread().getContextClassLoader().loadClass(className);
-                }
+                return loadClass0(className);
             }
 
             // Prefer the explicit class loader if available
@@ -892,10 +887,22 @@ public class GenerationTool {
         catch (ClassNotFoundException e) {
             String message = null;
 
-            // [#7556]
+            // [#7556] [#8781]
             if (className.startsWith("org.jooq.util.")) {
+                String alternative = null;
+
+                alternativeLoop:
+                for (String pkg : new String[] { "org.jooq.meta", "org.jooq.meta.extensions", "org.jooq.codegen", "org.jooq.codegen.maven" }) {
+                    try {
+                        alternative = loadClass0(className.replace("org.jooq.util", pkg)).getName();
+                        break alternativeLoop;
+                    }
+                    catch (ClassNotFoundException ignore) {}
+                }
+
                 log.warn("Type not found", message =
-                    "Your configured org.jooq.util type was not found.\n"
+                    "Your configured " + className + " type was not found.\n"
+                  + (alternative != null ? ("Did you mean " + alternative + "?\n") : "")
                   + "Do note that in jOOQ 3.11, jOOQ-meta and jOOQ-codegen packages have been renamed. New package names are:\n"
                   + "- org.jooq.meta\n"
                   + "- org.jooq.meta.extensions\n"
@@ -916,6 +923,15 @@ public class GenerationTool {
                 throw e;
             else
                 throw new ClassNotFoundException(message, e);
+        }
+    }
+
+    private Class<?> loadClass0(String className) throws ClassNotFoundException {
+        try {
+            return Class.forName(className);
+        }
+        catch (ClassNotFoundException e) {
+            return Thread.currentThread().getContextClassLoader().loadClass(className);
         }
     }
 

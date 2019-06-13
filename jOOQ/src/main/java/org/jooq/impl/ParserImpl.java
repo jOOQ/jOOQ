@@ -6369,8 +6369,43 @@ final class ParserImpl implements Parser {
                 return inline(parseIntervalLiteral(ctx));
             }
             else {
-                ctx.position(position);
-                return field(parseIdentifier(ctx));
+                Long interval = parseUnsignedIntegerIf(ctx);
+
+                if (interval != null) {
+                    DatePart part = parseIntervalDatePart(ctx);
+                    long l = interval;
+                    int i = (int) l;
+
+                    switch (part) {
+                        case YEAR:
+                            return inline(new YearToMonth(i));
+                        case QUARTER:
+                            return inline(new YearToMonth(0, 3 * i));
+                        case MONTH:
+                            return inline(new YearToMonth(0, i));
+                        case WEEK:
+                            return inline(new DayToSecond(7 * i));
+                        case DAY:
+                            return inline(new DayToSecond(i));
+                        case HOUR:
+                            return inline(new DayToSecond(0, i));
+                        case MINUTE:
+                            return inline(new DayToSecond(0, 0, i));
+                        case SECOND:
+                            return inline(new DayToSecond(0, 0, 0, i));
+                        case MILLISECOND:
+                            return inline(new DayToSecond(0, 0, 0, (int) (l / 1000), (int) (l % 1000 * 1000000)));
+                        case MICROSECOND:
+                            return inline(new DayToSecond(0, 0, 0, (int) (l / 1000000), (int) (l % 1000000 * 1000)));
+                        case NANOSECOND:
+                            return inline(new DayToSecond(0, 0, 0, (int) (l / 1000000000), (int) (l % 1000000000)));
+                    }
+                }
+
+                else {
+                    ctx.position(position);
+                    return field(parseIdentifier(ctx));
+                }
             }
         }
 
@@ -6779,6 +6814,87 @@ final class ParserImpl implements Parser {
         }
 
         throw ctx.expected("DatePart");
+    }
+
+    private static final DatePart parseIntervalDatePart(ParserContext ctx) {
+        char character = ctx.character();
+
+        switch (character) {
+            case 'd':
+            case 'D':
+                if (parseKeywordIf(ctx, "DAY") ||
+                    parseKeywordIf(ctx, "DAYS"))
+                    return DatePart.DAY;
+
+                break;
+
+            case 'h':
+            case 'H':
+                if (parseKeywordIf(ctx, "HOUR") ||
+                    parseKeywordIf(ctx, "HOURS"))
+                    return DatePart.HOUR;
+
+                break;
+
+            case 'm':
+            case 'M':
+                if (parseKeywordIf(ctx, "MINUTE") ||
+                    parseKeywordIf(ctx, "MINUTES"))
+                    return DatePart.MINUTE;
+                else if (parseKeywordIf(ctx, "MICROSECOND") ||
+                    parseKeywordIf(ctx, "MICROSECONDS"))
+                    return DatePart.MICROSECOND;
+                else if (parseKeywordIf(ctx, "MILLISECOND") ||
+                    parseKeywordIf(ctx, "MILLISECONDS"))
+                    return DatePart.MILLISECOND;
+                else if (parseKeywordIf(ctx, "MONTH") ||
+                    parseKeywordIf(ctx, "MONTHS"))
+                    return DatePart.MONTH;
+
+                break;
+
+            case 'n':
+            case 'N':
+                if (parseKeywordIf(ctx, "NANOSECOND") ||
+                    parseKeywordIf(ctx, "NANOSECONDS"))
+                    return DatePart.NANOSECOND;
+
+                break;
+
+            case 'q':
+            case 'Q':
+                if (parseKeywordIf(ctx, "QUARTER") ||
+                    parseKeywordIf(ctx, "QUARTERS"))
+                    return DatePart.QUARTER;
+
+                break;
+
+            case 's':
+            case 'S':
+                if (parseKeywordIf(ctx, "SECOND") ||
+                    parseKeywordIf(ctx, "SECONDS"))
+                    return DatePart.SECOND;
+
+                break;
+
+            case 'w':
+            case 'W':
+                if (parseKeywordIf(ctx, "WEEK") ||
+                    parseKeywordIf(ctx, "WEEKS"))
+                    return DatePart.WEEK;
+
+                break;
+
+            case 'y':
+            case 'Y':
+                if (parseKeywordIf(ctx, "YEAR") ||
+                    parseKeywordIf(ctx, "YEARS"))
+                    return DatePart.YEAR;
+
+                break;
+        }
+
+        throw ctx.expected("Interval DatePart");
     }
 
     private static final Field<?> parseFieldAsciiIf(ParserContext ctx) {

@@ -37,12 +37,14 @@
  */
 package org.jooq;
 
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
 // ...
@@ -72,19 +74,19 @@ public interface MergeValuesStepN<R extends Record> {
     /**
      * Specify a <code>VALUES</code> clause
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MYSQL })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL })
     Merge<R> values(Object... values);
 
     /**
      * Specify a <code>VALUES</code> clause
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MYSQL })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL })
     Merge<R> values(Field<?>... values);
 
     /**
      * Specify a <code>VALUES</code> clause
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MYSQL })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL })
     Merge<R> values(Collection<?> values);
 
     /**

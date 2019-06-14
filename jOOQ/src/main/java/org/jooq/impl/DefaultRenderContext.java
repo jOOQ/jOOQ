@@ -193,11 +193,9 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             if (part instanceof TableImpl) {
                 Table<?> root = (Table<?>) part;
                 Table<?> child = root;
-                List<ForeignKey<?, ?>> keys = new ArrayList<ForeignKey<?, ?>>();
                 List<Table<?>> tables = new ArrayList<Table<?>>();
 
                 while (root instanceof TableImpl && (child = ((TableImpl<?>) root).child) != null) {
-                    keys.add(((TableImpl<?>) root).childPath);
                     tables.add(root);
                     root = child;
                 }
@@ -207,9 +205,9 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                     e.joinNode = new JoinNode(root);
 
                 JoinNode childNode = e.joinNode;
-                for (int i = keys.size() - 1; i >= 0; i--) {
-                    ForeignKey<?, ?> k = keys.get(i);
+                for (int i = tables.size() - 1; i >= 0; i--) {
                     Table<?> t = tables.get(i);
+                    ForeignKey<?, ?> k = ((TableImpl<?>) t).childPath;
 
                     JoinNode next = childNode.children.get(k);
                     if (next == null) {

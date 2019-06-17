@@ -10026,11 +10026,14 @@ final class ParserImpl implements Parser {
             }
         }
 
-        if (ctx.isIdentifierPart(position + length + skip))
+        int pos = position + length + skip;
+
+        // [#8806] A keyword that is followed by a period is very likely an identifier
+        if (ctx.isIdentifierPart(pos) || ctx.character(pos) == '.')
             return false;
 
         if (requireFunction)
-            if (ctx.character(afterWhitespace(ctx, position + length + skip)) != '(')
+            if (ctx.character(afterWhitespace(ctx, pos)) != '(')
                 return false;
 
         if (updatePosition) {

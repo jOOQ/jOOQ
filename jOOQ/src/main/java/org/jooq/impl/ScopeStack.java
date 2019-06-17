@@ -76,12 +76,18 @@ final class ScopeStack<K, V> implements Iterable<V> {
     }
 
     private final void trim() {
-        int size;
-
-        if (scopeLevel > 0)
-            for (List<V> list : stack().values())
-                while ((size = list.size()) > scopeLevel || size > 0 && list.get(size - 1) == null)
+        int l = scopeLevel + 1;
+        if (l >= 0) {
+            int size;
+            for (Iterator<Map.Entry<K, List<V>>> it = stack().entrySet().iterator(); it.hasNext(); ) {
+                Map.Entry<K, List<V>> entry = it.next();
+                List<V> list = entry.getValue();
+                while ((size = list.size()) > l || size > 0 && list.get(size - 1) == null)
                     list.remove(size - 1);
+                if (list.isEmpty())
+                    it.remove();
+            }
+        }
     }
     @Override
     public final Iterator<V> iterator() {
@@ -110,9 +116,10 @@ final class ScopeStack<K, V> implements Iterable<V> {
                 while (it.hasNext()) {
                     List<V> list = it.next();
 
-                    int l = scopeLevel + 1;
-                    if (list.size() >= l && (next = list.get(scopeLevel)) != null)
+                    if (!list.isEmpty()) {
+                        next = list.get(list.size() - 1);
                         break;
+                    }
                 }
 
                 return next;
@@ -126,16 +133,12 @@ final class ScopeStack<K, V> implements Iterable<V> {
     }
 
     final void set(K key, V value) {
-        List<V> list = list(key);
-        list.set(scopeLevel, value);
+        set0(list(key), value);
     }
 
     private final V get0(List<V> list) {
-        V result = null;
-        for (int i = scopeLevel; i >= 0 && result == null; i--)
-            result = list.get(i);
-
-        return result;
+        int i = list.size() - 1;
+        return i == -1 ? null : list.get(i);
     }
 
     final V get(K key) {
@@ -148,24 +151,26 @@ final class ScopeStack<K, V> implements Iterable<V> {
 
         if (result == null) {
             result = constructor.create();
-            list.set(scopeLevel, result);
+            set0(list, result);
         }
 
         return result;
+    }
+
+    private void set0(List<V> list, V value) {
+        int l = scopeLevel + 1;
+        int size = list.size();
+        if (size < l)
+            list.addAll(Collections.<V> nCopies(l - size, null));
+        list.set(scopeLevel, value);
     }
 
     private List<V> list(K key) {
         List<V> list = stack().get(key);
 
         if (list == null) {
-            list = new ArrayList<V>();
-            stack().put(key, list);
+            stack().put(key, list = new ArrayList<V>());
         }
-
-        int l = scopeLevel + 1;
-        int size = list.size();
-        if (size < l)
-            list.addAll(Collections.<V>nCopies(l - size, null));
 
         return list;
     }

@@ -505,7 +505,7 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
                         ctx.sql(',')
                            .formatSeparator()
                            .visit(DSL.constraint(table.getName() + "_" + field.getName() + "_chk")
-                                     .check(((Field) field).in(Tools.enumLiterals((Class<EnumType>) type.getType()))));
+                                     .check(((Field) field).in(Tools.inline(Tools.enumLiterals((Class<EnumType>) type.getType())))));
                     }
                 }
             }

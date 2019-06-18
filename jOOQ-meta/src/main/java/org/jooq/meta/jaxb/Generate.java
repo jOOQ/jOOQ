@@ -65,6 +65,8 @@ public class Generate implements Serializable
     protected Boolean records = true;
     @XmlElement(defaultValue = "true")
     protected Boolean recordsImplementingRecordN = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean recordToPojoMappers = true;
     @XmlElement(defaultValue = "false")
     protected Boolean pojos = false;
     @XmlElement(defaultValue = "false")
@@ -599,6 +601,30 @@ public class Generate implements Serializable
      */
     public void setRecordsImplementingRecordN(Boolean value) {
         this.recordsImplementingRecordN = value;
+    }
+
+    /**
+     * If both {@link #records} and {@link #pojos} are generated, then an auxiliary default {@link org.jooq.RecordMapper} can be generated as well, that bypasses reflection.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isRecordToPojoMappers() {
+        return recordToPojoMappers;
+    }
+
+    /**
+     * Sets the value of the recordToPojoMappers property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setRecordToPojoMappers(Boolean value) {
+        this.recordToPojoMappers = value;
     }
 
     /**
@@ -1869,6 +1895,11 @@ public class Generate implements Serializable
         return this;
     }
 
+    public Generate withRecordToPojoMappers(Boolean value) {
+        setRecordToPojoMappers(value);
+        return this;
+    }
+
     public Generate withPojos(Boolean value) {
         setPojos(value);
         return this;
@@ -2201,6 +2232,11 @@ public class Generate implements Serializable
             sb.append("<recordsImplementingRecordN>");
             sb.append(recordsImplementingRecordN);
             sb.append("</recordsImplementingRecordN>");
+        }
+        if (recordToPojoMappers!= null) {
+            sb.append("<recordToPojoMappers>");
+            sb.append(recordToPojoMappers);
+            sb.append("</recordToPojoMappers>");
         }
         if (pojos!= null) {
             sb.append("<pojos>");
@@ -2616,6 +2652,15 @@ public class Generate implements Serializable
             }
         } else {
             if (!recordsImplementingRecordN.equals(other.recordsImplementingRecordN)) {
+                return false;
+            }
+        }
+        if (recordToPojoMappers == null) {
+            if (other.recordToPojoMappers!= null) {
+                return false;
+            }
+        } else {
+            if (!recordToPojoMappers.equals(other.recordToPojoMappers)) {
                 return false;
             }
         }
@@ -3076,6 +3121,7 @@ public class Generate implements Serializable
         result = ((prime*result)+((embeddables == null)? 0 :embeddables.hashCode()));
         result = ((prime*result)+((records == null)? 0 :records.hashCode()));
         result = ((prime*result)+((recordsImplementingRecordN == null)? 0 :recordsImplementingRecordN.hashCode()));
+        result = ((prime*result)+((recordToPojoMappers == null)? 0 :recordToPojoMappers.hashCode()));
         result = ((prime*result)+((pojos == null)? 0 :pojos.hashCode()));
         result = ((prime*result)+((pojosEqualsAndHashCode == null)? 0 :pojosEqualsAndHashCode.hashCode()));
         result = ((prime*result)+((pojosToString == null)? 0 :pojosToString.hashCode()));

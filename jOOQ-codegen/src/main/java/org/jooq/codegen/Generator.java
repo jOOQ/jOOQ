@@ -233,6 +233,16 @@ public interface Generator {
     void setGenerateRecordsImplementingRecordN(boolean generateRecordsImplementingRecordN);
 
     /**
+     * Whether out of the box record to POJO mappers should be generated.
+     */
+    boolean generateRecordToPojoMappers();
+
+    /**
+     * Whether out of the box record to POJO mappers should be generated.
+     */
+    void setGenerateRecordToPojoMappers(boolean generateRecordToPojoMappers);
+
+    /**
      * Whether POJO's should be generated in addition to records
      */
     boolean generatePojos();

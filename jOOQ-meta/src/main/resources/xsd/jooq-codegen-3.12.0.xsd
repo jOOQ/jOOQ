@@ -1075,6 +1075,10 @@ jOOQ version used for source code.]]></jxb:javadoc></jxb:property></appinfo></an
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate TableRecord classes that implement Record[N] super types]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="recordToPojoMappers" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[If both {@link #records} and {@link #pojos} are generated, then an auxiliary default {@link org.jooq.RecordMapper} can be generated as well, that bypasses reflection.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="pojos" type="boolean" default="false" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate POJOs.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

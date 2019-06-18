@@ -670,6 +670,8 @@ public class GenerationTool {
                 generator.setGenerateRecordsImplementingRecordN(g.getGenerate().isRecordsImplementingRecordN());
             if (g.getGenerate().isRecordToPojoMappers() != null)
                 generator.setGenerateRecordToPojoMappers(g.getGenerate().isRecordToPojoMappers());
+            if (g.getGenerate().isRecordFromPojoUnmappers() != null)
+                generator.setGenerateRecordFromPojoUnmappers(g.getGenerate().isRecordFromPojoUnmappers());
             if (g.getGenerate().isPojos() != null)
                 generator.setGeneratePojos(g.getGenerate().isPojos());
             if (g.getGenerate().isImmutablePojos() != null)

@@ -76,6 +76,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateRecords                    = true;
     boolean                            generateRecordsImplementingRecordN = true;
     boolean                            generateRecordToPojoMappers        = true;
+    boolean                            generateRecordFromPojoUnmappers    = true;
     boolean                            generatePojos                      = false;
     boolean                            generatePojosEqualsAndHashCode     = false;
     boolean                            generatePojosToString              = true;
@@ -398,6 +399,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateRecordToPojoMappers(boolean generateRecordToPojoMappers) {
         this.generateRecordToPojoMappers = generateRecordToPojoMappers;
+    }
+
+    @Override
+    public boolean generateRecordFromPojoUnmappers() {
+        return generateRecords() && generatePojos() && generateRecordFromPojoUnmappers;
+    }
+
+    @Override
+    public void setGenerateRecordFromPojoUnmappers(boolean generateRecordFromPojoUnmappers) {
+        this.generateRecordFromPojoUnmappers = generateRecordFromPojoUnmappers;
     }
 
     @Override

@@ -320,6 +320,7 @@ import org.jooq.Row6;
 import org.jooq.Row7;
 import org.jooq.Row8;
 import org.jooq.Row9;
+import org.jooq.RowCountQuery;
 import org.jooq.RowN;
 import org.jooq.SQL;
 import org.jooq.SQLDialect;
@@ -6504,7 +6505,7 @@ public class DSL {
      * @see DSL#catalog(Name)
      */
     @Support({ MARIADB, MYSQL })
-    public static Query setCatalog(String catalog) {
+    public static RowCountQuery setCatalog(String catalog) {
         return dsl().setCatalog(catalog);
     }
 
@@ -6514,7 +6515,7 @@ public class DSL {
      * @see DSL#catalog(Name)
      */
     @Support({ MARIADB, MYSQL })
-    public static Query setCatalog(Name catalog) {
+    public static RowCountQuery setCatalog(Name catalog) {
         return dsl().setCatalog(catalog);
     }
 
@@ -6522,7 +6523,7 @@ public class DSL {
      * Set the current catalog to a new value.
      */
     @Support({ MARIADB, MYSQL })
-    public static Query setCatalog(Catalog catalog) {
+    public static RowCountQuery setCatalog(Catalog catalog) {
         return dsl().setCatalog(catalog);
     }
 
@@ -6533,7 +6534,7 @@ public class DSL {
      * @see DSLContext#setSchema(String)
      */
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Query setSchema(String schema) {
+    public static RowCountQuery setSchema(String schema) {
         return dsl().setSchema(schema);
     }
 
@@ -6544,7 +6545,7 @@ public class DSL {
      * @see DSLContext#setSchema(Name)
      */
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Query setSchema(Name schema) {
+    public static RowCountQuery setSchema(Name schema) {
         return dsl().setSchema(schema);
     }
 
@@ -6554,7 +6555,7 @@ public class DSL {
      * @see DSLContext#setSchema(Schema)
      */
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Query setSchema(Schema schema) {
+    public static RowCountQuery setSchema(Schema schema) {
         return dsl().setSchema(schema);
     }
 
@@ -10388,7 +10389,7 @@ public class DSL {
      */
     @Support
     @PlainSQL
-    public static Query query(SQL sql) {
+    public static RowCountQuery query(SQL sql) {
         return dsl().query(sql);
     }
 
@@ -10412,7 +10413,7 @@ public class DSL {
      */
     @Support
     @PlainSQL
-    public static Query query(String sql) {
+    public static RowCountQuery query(String sql) {
         return dsl().query(sql);
     }
 
@@ -10438,7 +10439,7 @@ public class DSL {
      */
     @Support
     @PlainSQL
-    public static Query query(String sql, Object... bindings) {
+    public static RowCountQuery query(String sql, Object... bindings) {
         return dsl().query(sql, bindings);
     }
 
@@ -10472,7 +10473,7 @@ public class DSL {
      */
     @Support
     @PlainSQL
-    public static Query query(String sql, QueryPart... parts) {
+    public static RowCountQuery query(String sql, QueryPart... parts) {
         return dsl().query(sql, parts);
     }
 

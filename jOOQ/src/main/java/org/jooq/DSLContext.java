@@ -819,7 +819,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      */
     @Support
     @PlainSQL
-    Query query(SQL sql);
+    RowCountQuery query(SQL sql);
 
     /**
      * Create a new query holding plain SQL. There must not be any binding
@@ -841,7 +841,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      */
     @Support
     @PlainSQL
-    Query query(String sql);
+    RowCountQuery query(String sql);
 
     /**
      * Create a new query holding plain SQL. There must be as many bind
@@ -865,7 +865,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      */
     @Support
     @PlainSQL
-    Query query(String sql, Object... bindings);
+    RowCountQuery query(String sql, Object... bindings);
 
     /**
      * Create a new query holding plain SQL.
@@ -897,7 +897,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      */
     @Support
     @PlainSQL
-    Query query(String sql, QueryPart... parts);
+    RowCountQuery query(String sql, QueryPart... parts);
 
     /**
      * Execute a new query holding plain SQL.
@@ -8441,7 +8441,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#catalog(Name)
      */
     @Support({ MARIADB, MYSQL })
-    Query setCatalog(String catalog);
+    RowCountQuery setCatalog(String catalog);
 
     /**
      * Set the current catalog to a new value.
@@ -8449,13 +8449,13 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#catalog(Name)
      */
     @Support({ MARIADB, MYSQL })
-    Query setCatalog(Name catalog);
+    RowCountQuery setCatalog(Name catalog);
 
     /**
      * Set the current catalog to a new value.
      */
     @Support({ MARIADB, MYSQL })
-    Query setCatalog(Catalog catalog);
+    RowCountQuery setCatalog(Catalog catalog);
 
     /**
      * Set the current schema to a new value.
@@ -8464,7 +8464,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#setSchema(String)
      */
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    Query setSchema(String schema);
+    RowCountQuery setSchema(String schema);
 
     /**
      * Set the current schema to a new value.
@@ -8473,7 +8473,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#setSchema(Name)
      */
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    Query setSchema(Name schema);
+    RowCountQuery setSchema(Name schema);
 
     /**
      * Set the current schema to a new value.
@@ -8481,7 +8481,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see DSL#setSchema(Schema)
      */
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    Query setSchema(Schema schema);
+    RowCountQuery setSchema(Schema schema);
 
     // -------------------------------------------------------------------------
     // XXX DDL Statements

@@ -108,7 +108,7 @@ final class DDL {
         return result;
     }
 
-    private List<Constraint> primaryKeys(Table<?> table) {
+    private final List<Constraint> primaryKeys(Table<?> table) {
         List<Constraint> result = new ArrayList<Constraint>();
 
         if (configuration.flags().contains(PRIMARY_KEY))
@@ -119,7 +119,7 @@ final class DDL {
         return result;
     }
 
-    private List<Constraint> uniqueKeys(Table<?> table) {
+    private final List<Constraint> uniqueKeys(Table<?> table) {
         List<Constraint> result = new ArrayList<Constraint>();
 
         if (configuration.flags().contains(UNIQUE))
@@ -130,7 +130,7 @@ final class DDL {
         return result;
     }
 
-    private List<Constraint> foreignKeys(Table<?> table) {
+    private final List<Constraint> foreignKeys(Table<?> table) {
         List<Constraint> result = new ArrayList<Constraint>();
 
         if (configuration.flags().contains(FOREIGN_KEY))
@@ -155,7 +155,7 @@ final class DDL {
         return ctx.queries(queries);
     }
 
-    private List<Query> commentOn(Table<?> table) {
+    private final List<Query> commentOn(Table<?> table) {
         List<Query> result = new ArrayList<Query>();
 
         if (configuration.flags().contains(COMMENT)) {

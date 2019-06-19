@@ -225,6 +225,7 @@ import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.Results;
 import org.jooq.RevokeOnStep;
+import org.jooq.RowCountQuery;
 import org.jooq.SQL;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
@@ -827,22 +828,22 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     // -------------------------------------------------------------------------
 
     @Override
-    public Query query(SQL sql) {
+    public RowCountQuery query(SQL sql) {
         return new SQLQuery(configuration(), sql);
     }
 
     @Override
-    public Query query(String sql) {
+    public RowCountQuery query(String sql) {
         return query(sql, new Object[0]);
     }
 
     @Override
-    public Query query(String sql, Object... bindings) {
+    public RowCountQuery query(String sql, Object... bindings) {
         return query(sql(sql, bindings));
     }
 
     @Override
-    public Query query(String sql, QueryPart... parts) {
+    public RowCountQuery query(String sql, QueryPart... parts) {
         return query(sql, (Object[]) parts);
     }
 
@@ -2833,32 +2834,32 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     // -------------------------------------------------------------------------
 
     @Override
-    public Query setCatalog(String catalog) {
+    public RowCountQuery setCatalog(String catalog) {
         return setCatalog(name(catalog));
     }
 
     @Override
-    public Query setCatalog(Name catalog) {
+    public RowCountQuery setCatalog(Name catalog) {
         return setCatalog(catalog(catalog));
     }
 
     @Override
-    public Query setCatalog(Catalog catalog) {
+    public RowCountQuery setCatalog(Catalog catalog) {
         return new SetCatalog(configuration(), catalog);
     }
 
     @Override
-    public Query setSchema(String schema) {
+    public RowCountQuery setSchema(String schema) {
         return setSchema(name(schema));
     }
 
     @Override
-    public Query setSchema(Name schema) {
+    public RowCountQuery setSchema(Name schema) {
         return setSchema(schema(schema));
     }
 
     @Override
-    public Query setSchema(Schema schema) {
+    public RowCountQuery setSchema(Schema schema) {
         return new SetSchema(configuration(), schema);
     }
 

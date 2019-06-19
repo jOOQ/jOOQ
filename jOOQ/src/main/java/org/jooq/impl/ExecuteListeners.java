@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.FALSE;
+import static org.jooq.conf.InvocationOrder.REVERSE;
 import static org.jooq.impl.Tools.EMPTY_EXECUTE_LISTENER;
 
 import java.util.ArrayList;
@@ -46,7 +47,6 @@ import java.util.List;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.ExecuteListenerProvider;
-import org.jooq.conf.InvocationOrder;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.tools.JooqLogger;
@@ -119,8 +119,8 @@ final class ExecuteListeners implements ExecuteListener {
         ExecuteListener[] rev = null;
 
         return new ExecuteListener[][] {
-            ctx.settings().getExecuteListenerStartInvocationOrder() == InvocationOrder.DEFAULT ? def : (                     rev = Tools.reverse(def.clone())),
-            ctx.settings().getExecuteListenerEndInvocationOrder()   == InvocationOrder.DEFAULT ? def : (rev != null ? rev : (rev = Tools.reverse(def.clone())))
+            ctx.settings().getExecuteListenerStartInvocationOrder() != REVERSE ? def : (                     rev = Tools.reverse(def.clone())),
+            ctx.settings().getExecuteListenerEndInvocationOrder()   != REVERSE ? def : (rev != null ? rev : (rev = Tools.reverse(def.clone())))
         };
     }
 

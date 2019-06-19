@@ -44,6 +44,7 @@ import static java.lang.Boolean.TRUE;
 // ...
 // ...
 // ...
+import static org.jooq.conf.InvocationOrder.REVERSE;
 import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.impl.Tools.EMPTY_CLAUSE;
 import static org.jooq.impl.Tools.EMPTY_QUERYPART;
@@ -75,7 +76,6 @@ import org.jooq.Table;
 import org.jooq.VisitContext;
 import org.jooq.VisitListener;
 import org.jooq.VisitListenerProvider;
-import org.jooq.conf.InvocationOrder;
 import org.jooq.conf.ParamCastMode;
 import org.jooq.conf.ParamType;
 import org.jooq.conf.Settings;
@@ -156,10 +156,10 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
             this.visitParts = new ArrayDeque<QueryPart>();
             this.visitClauses = new ArrayDeque<Clause>();
 
-            this.visitListenersStart = configuration.settings().getVisitListenerStartInvocationOrder() == InvocationOrder.DEFAULT
+            this.visitListenersStart = configuration.settings().getVisitListenerStartInvocationOrder() != REVERSE
                 ? visitListeners
                 : Tools.reverse(visitListeners.clone());
-            this.visitListenersEnd = configuration.settings().getVisitListenerEndInvocationOrder() == InvocationOrder.DEFAULT
+            this.visitListenersEnd = configuration.settings().getVisitListenerEndInvocationOrder() != REVERSE
                 ? visitListeners
                 : Tools.reverse(visitListeners.clone());
         }

@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.ExecuteType.READ;
 import static org.jooq.ExecuteType.WRITE;
+import static org.jooq.conf.InvocationOrder.REVERSE;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.LOAD;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.REFRESH;
 import static org.jooq.impl.Tools.attachRecords;
@@ -50,7 +51,6 @@ import org.jooq.ExecuteType;
 import org.jooq.Record;
 import org.jooq.RecordListener;
 import org.jooq.RecordListenerProvider;
-import org.jooq.conf.InvocationOrder;
 import org.jooq.exception.ControlFlowSignal;
 
 /**
@@ -104,7 +104,7 @@ final class RecordDelegate<R extends Record> {
 
         if (listeners != null) {
             for (RecordListener listener : (
-                ctx == null || ctx.settings().getRecordListenerStartInvocationOrder() == InvocationOrder.DEFAULT
+                ctx == null || ctx.settings().getRecordListenerStartInvocationOrder() != REVERSE
                 ? Arrays.asList(listeners)
                 : Tools.reverseIterable(listeners)
             )) {
@@ -148,7 +148,7 @@ final class RecordDelegate<R extends Record> {
 
         if (listeners != null) {
             for (RecordListener listener : (
-                ctx == null || ctx.settings().getRecordListenerEndInvocationOrder() == InvocationOrder.DEFAULT
+                ctx == null || ctx.settings().getRecordListenerEndInvocationOrder() != REVERSE
                 ? Arrays.asList(listeners)
                 : Tools.reverseIterable(listeners)
             )) {

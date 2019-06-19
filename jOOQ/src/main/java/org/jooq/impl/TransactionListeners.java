@@ -37,13 +37,14 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.conf.InvocationOrder.REVERSE;
+
 import java.util.Arrays;
 
 import org.jooq.Configuration;
 import org.jooq.TransactionContext;
 import org.jooq.TransactionListener;
 import org.jooq.TransactionListenerProvider;
-import org.jooq.conf.InvocationOrder;
 
 /**
  * @author Lukas Eder
@@ -62,7 +63,7 @@ class TransactionListeners implements TransactionListener {
 
     @Override
     public final void beginStart(TransactionContext ctx) {
-        for (TransactionListener listener : ctx.settings().getTransactionListenerStartInvocationOrder() == InvocationOrder.DEFAULT
+        for (TransactionListener listener : ctx.settings().getTransactionListenerStartInvocationOrder() != REVERSE
             ? Arrays.asList(listeners)
             : Tools.reverseIterable(listeners))
             listener.beginStart(ctx);
@@ -70,7 +71,7 @@ class TransactionListeners implements TransactionListener {
 
     @Override
     public final void beginEnd(TransactionContext ctx) {
-        for (TransactionListener listener : ctx.settings().getTransactionListenerEndInvocationOrder() == InvocationOrder.DEFAULT
+        for (TransactionListener listener : ctx.settings().getTransactionListenerEndInvocationOrder() != REVERSE
             ? Arrays.asList(listeners)
             : Tools.reverseIterable(listeners))
             listener.beginEnd(ctx);
@@ -78,7 +79,7 @@ class TransactionListeners implements TransactionListener {
 
     @Override
     public final void commitStart(TransactionContext ctx) {
-        for (TransactionListener listener : ctx.settings().getTransactionListenerStartInvocationOrder() == InvocationOrder.DEFAULT
+        for (TransactionListener listener : ctx.settings().getTransactionListenerStartInvocationOrder() != REVERSE
             ? Arrays.asList(listeners)
             : Tools.reverseIterable(listeners))
             listener.commitStart(ctx);
@@ -86,7 +87,7 @@ class TransactionListeners implements TransactionListener {
 
     @Override
     public final void commitEnd(TransactionContext ctx) {
-        for (TransactionListener listener : ctx.settings().getTransactionListenerEndInvocationOrder() == InvocationOrder.DEFAULT
+        for (TransactionListener listener : ctx.settings().getTransactionListenerEndInvocationOrder() != REVERSE
             ? Arrays.asList(listeners)
             : Tools.reverseIterable(listeners))
             listener.commitEnd(ctx);
@@ -94,7 +95,7 @@ class TransactionListeners implements TransactionListener {
 
     @Override
     public final void rollbackStart(TransactionContext ctx) {
-        for (TransactionListener listener : ctx.settings().getTransactionListenerStartInvocationOrder() == InvocationOrder.DEFAULT
+        for (TransactionListener listener : ctx.settings().getTransactionListenerStartInvocationOrder() != REVERSE
             ? Arrays.asList(listeners)
             : Tools.reverseIterable(listeners))
             listener.rollbackStart(ctx);
@@ -102,7 +103,7 @@ class TransactionListeners implements TransactionListener {
 
     @Override
     public final void rollbackEnd(TransactionContext ctx) {
-        for (TransactionListener listener : ctx.settings().getTransactionListenerEndInvocationOrder() == InvocationOrder.DEFAULT
+        for (TransactionListener listener : ctx.settings().getTransactionListenerEndInvocationOrder() != REVERSE
             ? Arrays.asList(listeners)
             : Tools.reverseIterable(listeners))
             listener.rollbackEnd(ctx);

@@ -85,17 +85,11 @@ public class DefaultExecuteListenerProvider implements ExecuteListenerProvider, 
         this.listener = listener;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final ExecuteListener provide() {
         return listener;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String toString() {
         return listener.toString();

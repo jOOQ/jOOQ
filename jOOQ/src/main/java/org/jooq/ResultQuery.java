@@ -3746,15 +3746,9 @@ extends
      */
     Class<? extends R> getRecordType();
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     ResultQuery<R> bind(String param, Object value) throws IllegalArgumentException, DataTypeException;
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     ResultQuery<R> bind(int index, Object value) throws IllegalArgumentException, DataTypeException;
 
@@ -3762,21 +3756,12 @@ extends
     // JDBC methods
     // ------------------------------------------------------------------------
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     ResultQuery<R> poolable(boolean poolable);
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     ResultQuery<R> queryTimeout(int timeout);
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     ResultQuery<R> keepStatement(boolean keepStatement);
 

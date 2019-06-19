@@ -764,9 +764,6 @@ public interface Name extends QueryPart {
 
 // [jooq-tools] END [fields]
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     boolean equals(Object other);
 

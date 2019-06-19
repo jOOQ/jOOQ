@@ -85,17 +85,11 @@ public class DefaultDiagnosticsListenerProvider implements DiagnosticsListenerPr
         this.listener = listener;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final DiagnosticsListener provide() {
         return listener;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String toString() {
         return listener.toString();

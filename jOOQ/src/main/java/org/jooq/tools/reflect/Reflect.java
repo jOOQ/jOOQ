@@ -775,17 +775,11 @@ public class Reflect {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int hashCode() {
         return object.hashCode();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Reflect) {
@@ -795,9 +789,6 @@ public class Reflect {
         return false;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String toString() {
         return String.valueOf(object);

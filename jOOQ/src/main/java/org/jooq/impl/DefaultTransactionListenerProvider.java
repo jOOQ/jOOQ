@@ -85,17 +85,11 @@ public class DefaultTransactionListenerProvider implements TransactionListenerPr
         this.listener = listener;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final TransactionListener provide() {
         return listener;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String toString() {
         return listener.toString();

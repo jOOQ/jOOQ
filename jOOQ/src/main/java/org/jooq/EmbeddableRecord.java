@@ -45,21 +45,12 @@ package org.jooq;
  */
 public interface EmbeddableRecord<R extends EmbeddableRecord<R>> extends Record {
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     R original();
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     <T> R with(Field<T> field, T value);
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     <T, U> R with(Field<T> field, U value, Converter<? extends T, ? super U> converter);
 }

@@ -85,17 +85,11 @@ public class DefaultVisitListenerProvider implements VisitListenerProvider, Seri
         this.listener = listener;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final VisitListener provide() {
         return listener;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String toString() {
         return listener.toString();

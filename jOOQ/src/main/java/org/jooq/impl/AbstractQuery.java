@@ -567,17 +567,11 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
 
 
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final String getSQL() {
         return getSQL(getParamType(Tools.settings(configuration())));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final String getSQL(ParamType paramType) {
         switch (paramType) {
@@ -596,9 +590,6 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
         throw new IllegalArgumentException("ParamType not supported: " + paramType);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     @Deprecated
     public final String getSQL(boolean inline) {

@@ -85,17 +85,11 @@ public class DefaultRecordListenerProvider implements RecordListenerProvider, Se
         this.listener = listener;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public final RecordListener provide() {
         return listener;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String toString() {
         return listener.toString();

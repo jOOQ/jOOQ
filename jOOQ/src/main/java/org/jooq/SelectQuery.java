@@ -542,44 +542,26 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     // Methods from ConditionProvider, OrderProvider, LockProvider
     // ------------------------------------------------------------------------
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     @Support
     void addConditions(Condition condition);
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     @Support
     void addConditions(Condition... conditions);
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     @Support
     void addConditions(Collection<? extends Condition> conditions);
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     @Support
     void addConditions(Operator operator, Condition condition);
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     @Support
     void addConditions(Operator operator, Condition... conditions);
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     @Support
     void addConditions(Operator operator, Collection<? extends Condition> conditions);

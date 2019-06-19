@@ -46,6 +46,7 @@ import static java.util.Collections.singletonList;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.conf.ParseWithMetaLookups.IGNORE_ON_FAILURE;
 import static org.jooq.conf.ParseWithMetaLookups.THROW_ON_FAILURE;
 import static org.jooq.impl.DSL.abs;
@@ -5211,6 +5212,12 @@ final class ParserImpl implements Parser {
                     r = ((Field) r).div((Field) parseExp(ctx, type));
                 else if (parseIf(ctx, '%'))
                     r = ((Field) r).mod((Field) parseExp(ctx, type));
+
+
+
+
+
+
                 else
                     break;
 

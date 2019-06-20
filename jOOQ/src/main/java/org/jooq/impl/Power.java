@@ -37,15 +37,17 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Keywords.F_POWER;
+
 import java.math.BigDecimal;
 
-import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
 
 /**
  * @author Lukas Eder
  */
-final class Power extends AbstractFunction<BigDecimal> {
+final class Power extends AbstractField<BigDecimal> {
 
     /**
      * Generated UID
@@ -56,15 +58,16 @@ final class Power extends AbstractFunction<BigDecimal> {
     private final Field<? extends Number> arg2;
 
     Power(Field<? extends Number> arg1, Field<? extends Number> arg2) {
-        super("power", SQLDataType.NUMERIC, arg1, arg2);
+        super(DSL.name("power"), SQLDataType.NUMERIC);
 
         this.arg1 = arg1;
         this.arg2 = arg2;
     }
 
     @Override
-    final Field<BigDecimal> getFunction0(Configuration configuration) {
-        switch (configuration.family()) {
+    public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
+
 
 
 
@@ -72,10 +75,12 @@ final class Power extends AbstractFunction<BigDecimal> {
 
             case DERBY:
             case SQLITE:
-                return DSL.exp(DSL.ln(arg1).mul(arg2));
+                ctx.visit(DSL.exp(DSL.ln(arg1).mul(arg2)));
+                break;
 
             default:
-                return DSL.field("{power}({0}, {1})", SQLDataType.NUMERIC, getArguments());
+                ctx.visit(F_POWER).sql('(').visit(arg1).sql(", ").visit(arg2).sql(')');
+                break;
         }
     }
 }

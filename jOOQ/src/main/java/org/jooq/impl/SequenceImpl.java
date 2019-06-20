@@ -45,6 +45,11 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.Keywords.F_GEN_ID;
+import static org.jooq.impl.Keywords.K_CURRENT_VALUE_FOR;
+import static org.jooq.impl.Keywords.K_CURRVAL;
+import static org.jooq.impl.Keywords.K_NEXTVAL;
+import static org.jooq.impl.Keywords.K_NEXT_VALUE_FOR;
 
 import org.jooq.Catalog;
 import org.jooq.Clause;
@@ -52,8 +57,8 @@ import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Keyword;
 import org.jooq.Name;
-import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Sequence;
@@ -119,23 +124,24 @@ public class SequenceImpl<T extends Number> extends AbstractNamed implements Seq
         return new SequenceFunction("nextval");
     }
 
-    private class SequenceFunction extends AbstractFunction<T> {
+    private class SequenceFunction extends AbstractField<T> {
 
         /**
          * Generated UID
          */
         private static final long     serialVersionUID = 2292275568395094887L;
 
-        private final String          method;
+        private final Keyword         keyword;
 
         SequenceFunction(String method) {
-            super(method, type);
+            super(DSL.name(method), type);
 
-            this.method = method;
+            this.keyword = method.equals("nextval") ? K_NEXTVAL : K_CURRVAL;
         }
 
         @Override
-        final Field<T> getFunction0(Configuration configuration) {
+        public final void accept(Context<?> ctx) {
+            Configuration configuration = ctx.configuration();
             SQLDialect family = configuration.family();
 
             switch (family) {
@@ -151,13 +157,15 @@ public class SequenceImpl<T extends Number> extends AbstractNamed implements Seq
 
 
                 case POSTGRES: {
-                    String field = method + "('" + getQualifiedName(configuration) + "')";
-                    return DSL.field(field, getDataType());
+                    ctx.visit(keyword).sql("('").visit(SequenceImpl.this).sql("')");
+                    break;
                 }
 
                 case H2: {
-                    String field = method + "(" + getQualifiedName(configuration, true) + ")";
-                    return DSL.field(field, getDataType());
+                    ctx.visit(keyword).sql('(');
+                    SequenceImpl.this.accept0(ctx, true);
+                    ctx.sql(')');
+                    break;
                 }
 
 
@@ -166,12 +174,12 @@ public class SequenceImpl<T extends Number> extends AbstractNamed implements Seq
                 case FIREBIRD:
                 case DERBY:
                 case HSQLDB: {
-                    if ("nextval".equals(method))
-                        return DSL.field("next value for " + getQualifiedName(configuration), getDataType());
+                    if (K_NEXTVAL == keyword)
+                        ctx.visit(K_NEXT_VALUE_FOR).sql(' ').visit(SequenceImpl.this);
                     else if (family == HSQLDB)
-                        return DSL.field("current value for " + getQualifiedName(configuration), getDataType());
+                        ctx.visit(K_CURRENT_VALUE_FOR).sql(' ').visit(SequenceImpl.this);
                     else if (family == FIREBIRD)
-                        return DSL.field("gen_id(" + getQualifiedName(configuration) + ", 0)", getDataType());
+                        ctx.visit(F_GEN_ID).sql('(').visit(SequenceImpl.this).sql(", 0)");
 
 
 
@@ -189,37 +197,27 @@ public class SequenceImpl<T extends Number> extends AbstractNamed implements Seq
                     else {
                         throw new SQLDialectNotSupportedException("The sequence's current value functionality is not supported for the " + family + " dialect.");
                     }
+                    break;
                 }
 
                 case CUBRID: {
-                    String field = getQualifiedName(configuration) + ".";
+                    ctx.visit(SequenceImpl.this).sql('.');
 
-                    if ("nextval".equals(method)) {
-                        field += "next_value";
+                    if (K_NEXTVAL == keyword) {
+                        ctx.visit(DSL.keyword("next_value"));
                     }
                     else {
-                        field += "current_value";
+                        ctx.visit(DSL.keyword("current_value"));
                     }
-
-                    return DSL.field(field, getDataType());
+                    break;
                 }
 
                 // Default is needed for hashCode() and toString()
                 default: {
-                    String field = getQualifiedName(configuration) + "." + method;
-                    return DSL.field(field, getDataType());
+                    ctx.visit(SequenceImpl.this).sql('.').visit(keyword);
+                    break;
                 }
             }
-        }
-
-        private final String getQualifiedName(Configuration configuration) {
-            return getQualifiedName(configuration, false);
-        }
-
-        private final String getQualifiedName(Configuration configuration, boolean asStringLiterals) {
-            RenderContext local = create(configuration).renderContext();
-            accept0(local, asStringLiterals);
-            return local.render();
         }
     }
 

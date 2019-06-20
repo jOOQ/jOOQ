@@ -37,14 +37,16 @@
  */
 package org.jooq.impl;
 
-import org.jooq.Configuration;
+import static org.jooq.impl.Keywords.F_REVERSE;
+import static org.jooq.impl.Keywords.F_STRREVERSE;
+
+import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.QueryPart;
 
 /**
  * @author Lukas Eder
  */
-final class Reverse extends AbstractFunction<String> {
+final class Reverse extends AbstractField<String> {
 
     /**
      * Generated UID
@@ -53,14 +55,15 @@ final class Reverse extends AbstractFunction<String> {
     private final Field<String> field;
 
     Reverse(Field<String> field) {
-        super("reverse", field.getDataType(), field);
+        super(DSL.name("reverse"), field.getDataType());
 
         this.field = field;
     }
 
     @Override
-    QueryPart getFunction0(Configuration configuration) {
-        switch (configuration.family()) {
+    public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
+
 
 
 
@@ -80,7 +83,8 @@ final class Reverse extends AbstractFunction<String> {
             case MARIADB:
             case MYSQL:
             default:
-                return DSL.field("{reverse}({0})", getDataType(), field);
+                ctx.visit(F_REVERSE).sql('(').visit(field).sql(')');
+                break;
         }
     }
 }

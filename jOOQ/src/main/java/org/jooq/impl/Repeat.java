@@ -37,15 +37,19 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.Keywords.F_HEX;
+import static org.jooq.impl.Keywords.F_REPEAT;
+import static org.jooq.impl.Keywords.F_REPLACE;
+import static org.jooq.impl.Keywords.F_REPLICATE;
+import static org.jooq.impl.Keywords.F_ZEROBLOB;
 
-import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
 
 /**
  * @author Lukas Eder
  */
-final class Repeat extends AbstractFunction<String> {
+final class Repeat extends AbstractField<String> {
 
     /**
      * Generated UID
@@ -56,15 +60,15 @@ final class Repeat extends AbstractFunction<String> {
     private final Field<? extends Number> count;
 
     Repeat(Field<String> string, Field<? extends Number> count) {
-        super("rpad", SQLDataType.VARCHAR, string, count);
+        super(DSL.name("rpad"), SQLDataType.VARCHAR);
 
         this.string = string;
         this.count = count;
     }
 
     @Override
-    final Field<String> getFunction0(Configuration configuration) {
-        switch (configuration.family()) {
+    public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
 
 
 
@@ -74,14 +78,17 @@ final class Repeat extends AbstractFunction<String> {
 
 
             case FIREBIRD:
-                return DSL.rpad(string, DSL.length(string).mul(count), string);
+                ctx.visit(DSL.rpad(string, DSL.length(string).mul(count), string));
+                break;
 
             // Emulation of REPEAT() for SQLite currently cannot be achieved
             // using RPAD() above, as RPAD() expects characters, not strings
             // Another option is documented here, though:
             // https://stackoverflow.com/a/51792334/521799
             case SQLITE:
-                return DSL.field("replace(hex(zeroblob({0})), '00', {1})", String.class, count, string);
+                ctx.visit(F_REPLACE).sql('(').visit(F_HEX).sql('(').visit(F_ZEROBLOB).sql('(').visit(count).sql(")), '00', ").visit(string).sql(')');
+                break;
+
 
 
 
@@ -91,7 +98,8 @@ final class Repeat extends AbstractFunction<String> {
 
 
             default:
-                return function("repeat", SQLDataType.VARCHAR, string, count);
+                ctx.visit(F_REPEAT).sql('(').visit(string).sql(", ").visit(count).sql(')');
+                break;
         }
     }
 }

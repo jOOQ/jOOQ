@@ -37,13 +37,15 @@
  */
 package org.jooq.impl;
 
-import org.jooq.Configuration;
+import static org.jooq.impl.Keywords.F_NVL2;
+
+import org.jooq.Context;
 import org.jooq.Field;
 
 /**
  * @author Lukas Eder
  */
-final class Nvl2<T> extends AbstractFunction<T> {
+final class Nvl2<T> extends AbstractField<T> {
 
     /**
      * Generated UID
@@ -55,7 +57,7 @@ final class Nvl2<T> extends AbstractFunction<T> {
     private final Field<T>    arg3;
 
     Nvl2(Field<?> arg1, Field<T> arg2, Field<T> arg3) {
-        super("nvl2", arg2.getDataType(), arg1, arg2, arg3);
+        super(DSL.name("nvl2"), arg2.getDataType());
 
         this.arg1 = arg1;
         this.arg2 = arg2;
@@ -63,8 +65,8 @@ final class Nvl2<T> extends AbstractFunction<T> {
     }
 
     @Override
-    final Field<T> getFunction0(Configuration configuration) {
-        switch (configuration.family()) {
+    public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
 
 
 
@@ -72,10 +74,12 @@ final class Nvl2<T> extends AbstractFunction<T> {
 
             case H2:
             case HSQLDB:
-                return DSL.field("{nvl2}({0}, {1}, {2})", getDataType(), arg1, arg2, arg3);
+                ctx.visit(F_NVL2).sql('(').visit(arg1).sql(", ").visit(arg2).sql(", ").visit(arg3).sql(')');
+                break;
 
             default:
-                return DSL.when(arg1.isNotNull(), arg2).otherwise(arg3);
+                ctx.visit(DSL.when(arg1.isNotNull(), arg2).otherwise(arg3));
+                break;
         }
     }
 }

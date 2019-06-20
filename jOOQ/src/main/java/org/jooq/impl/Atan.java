@@ -37,16 +37,18 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Keywords.F_ATAN;
+import static org.jooq.impl.Keywords.F_ATN;
+
 import java.math.BigDecimal;
 
-import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.QueryPart;
 
 /**
  * @author Lukas Eder
  */
-final class Atan extends AbstractFunction<BigDecimal> {
+final class Atan extends AbstractField<BigDecimal> {
 
     /**
      * Generated UID
@@ -55,21 +57,23 @@ final class Atan extends AbstractFunction<BigDecimal> {
     private final Field<? extends Number> arg;
 
     Atan(Field<? extends Number> arg) {
-        super("atan", SQLDataType.NUMERIC);
+        super(DSL.name("atan"), SQLDataType.NUMERIC);
 
         this.arg = arg;
     }
 
     @Override
-    final QueryPart getFunction0(Configuration configuration) {
-        switch (configuration.family()) {
+    public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
+
 
 
 
 
 
             default:
-                return DSL.field("{atan}({0})", getDataType(), arg);
+                ctx.visit(F_ATAN).sql('(').visit(arg).sql(')');
+                break;
         }
     }
 }

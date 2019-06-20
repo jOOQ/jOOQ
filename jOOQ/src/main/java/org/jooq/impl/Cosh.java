@@ -37,19 +37,19 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.two;
+import static org.jooq.impl.Keywords.F_COSH;
 
 import java.math.BigDecimal;
 
-import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
 
 /**
  * @author Lukas Eder
  */
-final class Cosh extends AbstractFunction<BigDecimal> {
+final class Cosh extends AbstractField<BigDecimal> {
 
     /**
      * Generated UID
@@ -59,14 +59,14 @@ final class Cosh extends AbstractFunction<BigDecimal> {
     private final Field<? extends Number> argument;
 
     Cosh(Field<? extends Number> argument) {
-        super("cosh", SQLDataType.NUMERIC, argument);
+        super(DSL.name("cosh"), SQLDataType.NUMERIC);
 
         this.argument = argument;
     }
 
     @Override
-    final Field<BigDecimal> getFunction0(Configuration configuration) {
-        switch (configuration.family()) {
+    public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
 
 
 
@@ -85,10 +85,12 @@ final class Cosh extends AbstractFunction<BigDecimal> {
             case MARIADB:
             case MYSQL:
             case POSTGRES:
-                return DSL.exp(argument.mul(two())).add(one()).div(DSL.exp(argument).mul(two()));
+                ctx.visit(DSL.exp(argument.mul(two())).add(one()).div(DSL.exp(argument).mul(two())));
+                break;
 
             default:
-                return function("cosh", SQLDataType.NUMERIC, argument);
+                ctx.visit(F_COSH).sql('(').visit(argument).sql(')');
+                break;
         }
     }
 }

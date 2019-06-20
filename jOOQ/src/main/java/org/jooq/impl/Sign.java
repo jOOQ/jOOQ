@@ -37,17 +37,18 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.zero;
+import static org.jooq.impl.Keywords.F_SGN;
+import static org.jooq.impl.Keywords.F_SIGN;
 
-import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
 
 /**
  * @author Lukas Eder
  */
-final class Sign extends AbstractFunction<Integer> {
+final class Sign extends AbstractField<Integer> {
 
     /**
      * Generated UID
@@ -57,28 +58,31 @@ final class Sign extends AbstractFunction<Integer> {
     private final Field<?>    argument;
 
     Sign(Field<?> argument) {
-        super("sign", SQLDataType.INTEGER, argument);
+        super(DSL.name("sign"), SQLDataType.INTEGER);
 
         this.argument = argument;
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    final Field<Integer> getFunction0(Configuration configuration) {
-        switch (configuration.family()) {
+    public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
+
 
 
 
 
 
             case SQLITE:
-                return DSL
+                ctx.visit(DSL
                     .when(((Field<Integer>) argument).greaterThan(zero()), one())
                     .when(((Field<Integer>) argument).lessThan(zero()), one().neg())
-                    .otherwise(zero());
+                    .otherwise(zero()));
+                break;
 
             default:
-                return function("sign", getDataType(), argument);
+                ctx.visit(F_SIGN).sql('(').visit(argument).sql(')');
+                break;
         }
     }
 }

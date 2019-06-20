@@ -37,16 +37,19 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.Keywords.F_CURRENT_BIGDATETIME;
+import static org.jooq.impl.Keywords.F_CURRENT_TIMESTAMP;
+import static org.jooq.impl.Keywords.F_NOW;
+import static org.jooq.impl.Keywords.K_CURRENT;
+import static org.jooq.impl.Keywords.K_TIMESTAMP;
 
-import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.DataType;
-import org.jooq.Field;
 
 /**
  * @author Lukas Eder
  */
-final class CurrentTimestamp<T> extends AbstractFunction<T> {
+final class CurrentTimestamp<T> extends AbstractField<T> {
 
     /**
      * Generated UID
@@ -54,12 +57,14 @@ final class CurrentTimestamp<T> extends AbstractFunction<T> {
     private static final long serialVersionUID = -7273879239726265322L;
 
     CurrentTimestamp(DataType<T> type) {
-        super("current_timestamp", type);
+        super(DSL.name("current_timestamp"), type);
     }
 
     @Override
-    final Field<T> getFunction0(Configuration configuration) {
-        switch (configuration.family()) {
+    public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
+
+
 
 
 
@@ -91,9 +96,11 @@ final class CurrentTimestamp<T> extends AbstractFunction<T> {
             case HSQLDB:
             case POSTGRES:
             case SQLITE:
-                return DSL.field("{current_timestamp}", getDataType());
+                ctx.visit(F_CURRENT_TIMESTAMP);
+                break;
+            default:
+                ctx.visit(F_CURRENT_TIMESTAMP).sql("()");
+                break;
         }
-
-        return function("current_timestamp", getDataType());
     }
 }

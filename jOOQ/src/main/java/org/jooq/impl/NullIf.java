@@ -37,14 +37,17 @@
  */
 package org.jooq.impl;
 
-import org.jooq.Configuration;
+import static org.jooq.impl.Keywords.F_IIF;
+import static org.jooq.impl.Keywords.F_NULLIF;
+import static org.jooq.impl.Keywords.K_NULL;
+
+import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.QueryPart;
 
 /**
  * @author Lukas Eder
  */
-final class NullIf<T> extends AbstractFunction<T> {
+final class NullIf<T> extends AbstractField<T> {
 
     /**
      * Generated UID
@@ -55,22 +58,24 @@ final class NullIf<T> extends AbstractFunction<T> {
     private final Field<T>    arg2;
 
     NullIf(Field<T> arg1, Field<T> arg2) {
-        super("nullif", arg1.getDataType(), arg1, arg2);
+        super(DSL.name("nullif"), arg1.getDataType());
 
         this.arg1 = arg1;
         this.arg2 = arg2;
     }
 
     @Override
-    final QueryPart getFunction0(Configuration configuration) {
-        switch (configuration.family()) {
+    public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
+
 
 
 
 
 
             default:
-                return DSL.field("{nullif}({0}, {1})", getDataType(), arg1, arg2);
+                ctx.visit(F_NULLIF).sql('(').visit(arg1).sql(",").visit(arg2).sql(')');
+                break;
         }
     }
 }

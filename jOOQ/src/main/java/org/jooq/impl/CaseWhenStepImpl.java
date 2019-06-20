@@ -51,14 +51,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.jooq.CaseWhenStep;
-import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 // ...
-import org.jooq.QueryPart;
 
-final class CaseWhenStepImpl<V, T> extends AbstractFunction<T> implements CaseWhenStep<V, T> {
+final class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V, T> {
 
     /**
      * Generated UID
@@ -84,7 +82,7 @@ final class CaseWhenStepImpl<V, T> extends AbstractFunction<T> implements CaseWh
     }
 
     private CaseWhenStepImpl(Field<V> value, DataType<T> type) {
-        super("case", type);
+        super(DSL.name("case"), type);
 
         this.value = value;
         this.compareValues = new ArrayList<Field<V>>();
@@ -162,15 +160,17 @@ final class CaseWhenStepImpl<V, T> extends AbstractFunction<T> implements CaseWh
     }
 
     @Override
-    final QueryPart getFunction0(Configuration configuration) {
-        switch (configuration.family()) {
+    public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
+
 
 
 
 
 
             default:
-                return new Native();
+                ctx.visit(new Native());
+                break;
         }
     }
 

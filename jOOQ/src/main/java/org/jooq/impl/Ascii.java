@@ -37,13 +37,17 @@
  */
 package org.jooq.impl;
 
-import org.jooq.Configuration;
+import static org.jooq.impl.Keywords.F_ASC;
+import static org.jooq.impl.Keywords.F_ASCII;
+import static org.jooq.impl.Keywords.F_ASCII_VAL;
+
+import org.jooq.Context;
 import org.jooq.Field;
 
 /**
  * @author Lukas Eder
  */
-final class Ascii extends AbstractFunction<Integer> {
+final class Ascii extends AbstractField<Integer> {
 
     /**
      * Generated UID
@@ -53,21 +57,23 @@ final class Ascii extends AbstractFunction<Integer> {
     private final Field<?>                string;
 
     Ascii(Field<?> string) {
-        super("ascii", SQLDataType.INTEGER, string);
+        super(DSL.name("ascii"), SQLDataType.INTEGER);
 
         this.string = string;
     }
 
     @Override
-    final Field<Integer> getFunction0(Configuration configuration) {
-        switch (configuration.family()) {
+    public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
+
 
 
 
 
 
             case FIREBIRD:
-                return DSL.field("{ascii_val}({0})", SQLDataType.INTEGER, string);
+                ctx.visit(F_ASCII_VAL).sql('(').visit(string).sql(')');
+                break;
 
             // TODO [#862] [#864] emulate this for some dialects
 
@@ -77,7 +83,7 @@ final class Ascii extends AbstractFunction<Integer> {
             case SQLITE:
 
             default:
-                return DSL.field("{ascii}({0})", SQLDataType.INTEGER, string);
+                ctx.visit(F_ASCII).sql('(').visit(string).sql(')');
         }
     }
 }

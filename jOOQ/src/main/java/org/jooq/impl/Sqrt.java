@@ -37,15 +37,18 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Keywords.F_SQR;
+import static org.jooq.impl.Keywords.F_SQRT;
+
 import java.math.BigDecimal;
 
-import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
 
 /**
  * @author Lukas Eder
  */
-final class Sqrt extends AbstractFunction<BigDecimal> {
+final class Sqrt extends AbstractField<BigDecimal> {
 
     /**
      * Generated UID
@@ -55,24 +58,27 @@ final class Sqrt extends AbstractFunction<BigDecimal> {
     private final Field<? extends Number> argument;
 
     Sqrt(Field<? extends Number> argument) {
-        super("sqrt", SQLDataType.NUMERIC, argument);
+        super(DSL.name("sqrt"), SQLDataType.NUMERIC);
 
         this.argument = argument;
     }
 
     @Override
-    final Field<BigDecimal> getFunction0(Configuration configuration) {
-        switch (configuration.family()) {
+    public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
+
 
 
 
 
 
             case SQLITE:
-                return DSL.power(argument, 0.5);
+                ctx.visit(DSL.power(argument, 0.5));
+                break;
 
             default:
-                return DSL.field("{sqrt}({0})", SQLDataType.NUMERIC, argument);
+                ctx.visit(F_SQRT).sql('(').visit(argument).sql(')');
+                break;
         }
     }
 }

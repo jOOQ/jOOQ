@@ -37,14 +37,16 @@
  */
 package org.jooq.impl;
 
-import org.jooq.Configuration;
+import static org.jooq.impl.Keywords.F_LCASE;
+import static org.jooq.impl.Keywords.F_LOWER;
+
+import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.QueryPart;
 
 /**
  * @author Lukas Eder
  */
-final class Lower extends AbstractFunction<String> {
+final class Lower extends AbstractField<String> {
 
     /**
      * Generated UID
@@ -53,21 +55,23 @@ final class Lower extends AbstractFunction<String> {
     private final Field<String> field;
 
     Lower(Field<String> field) {
-        super("lower", field.getDataType(), field);
+        super(DSL.name("lower"), field.getDataType());
 
         this.field = field;
     }
 
     @Override
-    final QueryPart getFunction0(Configuration configuration) {
-        switch (configuration.family()) {
+    public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
+
 
 
 
 
 
             default:
-                return DSL.field("{lower}({0})", getDataType(), field);
+                ctx.visit(F_LOWER).sql('(').visit(field).sql(')');
+                break;
         }
     }
 }

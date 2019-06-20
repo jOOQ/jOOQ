@@ -37,15 +37,32 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Keywords.F_CONVERT;
+import static org.jooq.impl.Keywords.F_HASHBYTES;
+import static org.jooq.impl.Keywords.F_LOWER;
+import static org.jooq.impl.Keywords.F_MD5;
+import static org.jooq.impl.Keywords.F_RAWTOHEX;
+import static org.jooq.impl.Keywords.F_STANDARD_HASH;
+import static org.jooq.impl.Keywords.K_VARCHAR;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 
-import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Name;
+// ...
+// ...
 
 /**
  * @author Lukas Eder
  */
-final class MD5 extends AbstractFunction<String> {
+final class MD5 extends AbstractField<String> {
+
+
+
+
+
+
+
 
     /**
      * Generated UID
@@ -55,14 +72,17 @@ final class MD5 extends AbstractFunction<String> {
     private final Field<String> argument;
 
     MD5(Field<String> argument) {
-        super("md5", VARCHAR, argument);
+        super(DSL.name("md5"), VARCHAR);
 
         this.argument = argument;
     }
 
     @Override
-    final Field<String> getFunction0(Configuration configuration) {
-        switch (configuration.dialect()) {
+    public final void accept(Context<?> ctx) {
+        switch (ctx.configuration().dialect()) {
+
+
+
 
 
 
@@ -84,7 +104,8 @@ final class MD5 extends AbstractFunction<String> {
 
 
             default:
-                return DSL.field("{md5}({0})", VARCHAR, argument);
+                ctx.visit(F_MD5).sql('(').visit(argument).sql(')');
+                break;
         }
     }
 }

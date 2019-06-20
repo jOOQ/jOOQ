@@ -37,47 +37,60 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.Keywords.F_MID;
+import static org.jooq.impl.Keywords.F_SUBSTR;
+import static org.jooq.impl.Keywords.F_SUBSTRING;
+import static org.jooq.impl.Keywords.K_FOR;
+import static org.jooq.impl.Keywords.K_FROM;
 
-import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Keyword;
 
 /**
  * @author Lukas Eder
  */
-final class Substring extends AbstractFunction<String> {
+final class Substring extends AbstractField<String> {
 
     /**
      * Generated UID
      */
-    private static final long             serialVersionUID = -7273879239726265322L;
+    private static final long                    serialVersionUID = -7273879239726265322L;
 
-    Substring(Field<?>... arguments) {
-        super("substring", SQLDataType.VARCHAR, arguments);
+    private final        Field<String>           field;
+    private final        Field<? extends Number> startingPosition;
+    private final        Field<? extends Number> length;
+
+    Substring(Field<String> field, Field<? extends Number> startingPosition) {
+        this(field, startingPosition, null);
+    }
+
+    Substring(Field<String> field, Field<? extends Number> startingPosition, Field<? extends Number> length) {
+        super(DSL.name("substring"), SQLDataType.VARCHAR);
+
+        this.field = field;
+        this.startingPosition = startingPosition;
+        this.length = length;
     }
 
     @Override
-    final Field<String> getFunction0(Configuration configuration) {
-        String functionName = "substring";
+    public final void accept(Context<?> ctx) {
+        Keyword functionName = F_SUBSTRING;
 
-        switch (configuration.family()) {
+        switch (ctx.family()) {
 
             // [#430] These databases use SQL standard syntax
 
 
 
             case FIREBIRD: {
-                if (getArguments().length == 2)
-                    return DSL.field("{substring}({0} {from} {1})", SQLDataType.VARCHAR, getArguments());
+                if (length == null)
+                    ctx.visit(F_SUBSTRING).sql('(').visit(field).sql(' ').visit(K_FROM).sql(' ').visit(startingPosition).sql(')');
                 else
-                    return DSL.field("{substring}({0} {from} {1} {for} {2})", SQLDataType.VARCHAR, getArguments());
+                    ctx.visit(F_SUBSTRING).sql('(').visit(field).sql(' ').visit(K_FROM).sql(' ').visit(startingPosition).sql(' ').visit(K_FOR).visit(length).sql(')');
+                return;
             }
-
-
-
-
-
 
 
 
@@ -112,10 +125,13 @@ final class Substring extends AbstractFunction<String> {
 
             case DERBY:
             case SQLITE:
-                functionName = "substr";
+                functionName = F_SUBSTR;
                 break;
         }
 
-        return function(functionName, SQLDataType.VARCHAR, getArguments());
+        if (length == null)
+            ctx.visit(functionName).sql('(').visit(field).sql(", ").visit(startingPosition).sql(')');
+        else
+            ctx.visit(functionName).sql('(').visit(field).sql(", ").visit(startingPosition).sql(", ").visit(length).sql(')');
     }
 }

@@ -39,22 +39,25 @@ package org.jooq.impl;
 
 import static java.math.BigDecimal.TEN;
 import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.DSL.keyword;
-import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.zero;
+import static org.jooq.impl.Keywords.F_ROUND;
+import static org.jooq.impl.Keywords.F_ROUND_DOWN;
+import static org.jooq.impl.Keywords.F_TRUNC;
+import static org.jooq.impl.Keywords.F_TRUNCATE;
+import static org.jooq.impl.Keywords.F_TRUNCNUM;
 import static org.jooq.impl.Tools.castIfNeeded;
 import static org.jooq.impl.Tools.extractVal;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
 
-import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
 
 /**
  * @author Lukas Eder
  */
-final class Trunc<T> extends AbstractFunction<T> {
+final class Trunc<T> extends AbstractField<T> {
 
     /**
      * Generated UID
@@ -65,15 +68,15 @@ final class Trunc<T> extends AbstractFunction<T> {
     private final Field<Integer> decimals;
 
     Trunc(Field<T> field, Field<Integer> decimals) {
-        super("trunc", field.getDataType());
+        super(DSL.name("trunc"), field.getDataType());
 
         this.field = field;
         this.decimals = decimals;
     }
 
     @Override
-    final Field<T> getFunction0(Configuration configuration) {
-        switch (configuration.family()) {
+    public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
 
 
 
@@ -91,11 +94,12 @@ final class Trunc<T> extends AbstractFunction<T> {
                     power = DSL.power(inline(TEN), decimals);
                 }
 
-                return DSL.decode()
+                ctx.visit(DSL.decode()
                     .when(field.sign().greaterOrEqual(zero()),
                           field.mul(power).floor().div(power))
                     .otherwise(
-                          field.mul(power).ceil().div(power));
+                          field.mul(power).ceil().div(power)));
+                break;
             }
 
 
@@ -105,7 +109,8 @@ final class Trunc<T> extends AbstractFunction<T> {
             case H2:
             case MARIADB:
             case MYSQL:
-                return DSL.field("{truncate}({0}, {1})", field.getDataType(), field, decimals);
+                ctx.visit(F_TRUNCATE).sql('(').visit(field).sql(", ").visit(decimals).sql(')');
+                break;
 
             // Postgres TRUNC() only takes NUMERIC arguments, no
             // DOUBLE PRECISION ones
@@ -113,13 +118,17 @@ final class Trunc<T> extends AbstractFunction<T> {
 
 
             case POSTGRES:
-                return castIfNeeded(
+                ctx.visit(castIfNeeded(
                     DSL.field("{trunc}({0}, {1})", SQLDataType.NUMERIC,
                         castIfNeeded(field, BigDecimal.class),
                         decimals
                     ),
                     field.getDataType()
-                );
+                ));
+                break;
+
+
+
 
 
 
@@ -142,7 +151,8 @@ final class Trunc<T> extends AbstractFunction<T> {
             case CUBRID:
             case HSQLDB:
             default:
-                return DSL.field("{trunc}({0}, {1})", field.getDataType(), field, decimals);
+                ctx.visit(F_TRUNC).sql('(').visit(field).sql(", ").visit(decimals).sql(')');
+                break;
         }
     }
 }

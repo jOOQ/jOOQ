@@ -39,17 +39,17 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.two;
+import static org.jooq.impl.Keywords.F_ACOS;
 
 import java.math.BigDecimal;
 
-import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.QueryPart;
 
 /**
  * @author Lukas Eder
  */
-final class Acos extends AbstractFunction<BigDecimal> {
+final class Acos extends AbstractField<BigDecimal> {
 
     /**
      * Generated UID
@@ -58,21 +58,23 @@ final class Acos extends AbstractFunction<BigDecimal> {
     private final Field<? extends Number> arg;
 
     Acos(Field<? extends Number> arg) {
-        super("acos", SQLDataType.NUMERIC);
+        super(DSL.name("acos"), SQLDataType.NUMERIC);
 
         this.arg = arg;
     }
 
     @Override
-    final QueryPart getFunction0(Configuration configuration) {
-        switch (configuration.family()) {
+    public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
+
 
 
 
 
 
             default:
-                return DSL.field("{acos}({0})", getDataType(), arg);
+                ctx.visit(F_ACOS).sql('(').visit(arg).sql(')');
+                break;
         }
     }
 }

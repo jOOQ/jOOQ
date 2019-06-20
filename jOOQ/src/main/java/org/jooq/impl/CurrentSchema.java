@@ -37,17 +37,21 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.Keywords.F_SCHEMA_NAME;
+import static org.jooq.impl.Keywords.F_USER;
+import static org.jooq.impl.Keywords.K_CURRENT;
+import static org.jooq.impl.Keywords.K_CURRENT_SCHEMA;
+import static org.jooq.impl.Keywords.K_DATABASE;
+import static org.jooq.impl.Keywords.K_SCHEMA;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 
-import org.jooq.Configuration;
-import org.jooq.Field;
+import org.jooq.Context;
 
 /**
  * @author Lukas Eder
  */
-final class CurrentSchema extends AbstractFunction<String> {
+final class CurrentSchema extends AbstractField<String> {
 
     /**
      * Generated UID
@@ -55,12 +59,13 @@ final class CurrentSchema extends AbstractFunction<String> {
     private static final long serialVersionUID = -7273879239726265322L;
 
     CurrentSchema() {
-        super("current_schema", VARCHAR);
+        super(DSL.name("current_schema"), VARCHAR);
     }
 
     @Override
-    final Field<String> getFunction0(Configuration configuration) {
-        switch (configuration.family()) {
+    public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
+
 
 
 
@@ -82,13 +87,16 @@ final class CurrentSchema extends AbstractFunction<String> {
             case CUBRID:
             case FIREBIRD:
             case SQLITE:
-                return inline("");
+                ctx.visit(inline(""));
+                break;
 
             case DERBY:
-                return DSL.field("{current schema}", VARCHAR);
+                ctx.visit(K_CURRENT).sql(' ').visit(K_SCHEMA);
+                break;
 
             case H2:
-                return DSL.field("{schema}()", VARCHAR);
+                ctx.visit(K_SCHEMA).sql("()");
+                break;
 
 
 
@@ -96,16 +104,20 @@ final class CurrentSchema extends AbstractFunction<String> {
 
             case MARIADB:
             case MYSQL:
-                return DSL.field("{database}()", VARCHAR);
+                ctx.visit(K_DATABASE).sql("()");
+                break;
+
 
 
 
 
             case HSQLDB:
             case POSTGRES:
-                return DSL.field("{current_schema}", VARCHAR);
+                ctx.visit(K_CURRENT_SCHEMA);
+                break;
+            default:
+                ctx.visit(K_CURRENT_SCHEMA).sql("()");
+                break;
         }
-
-        return function("current_schema", VARCHAR);
     }
 }

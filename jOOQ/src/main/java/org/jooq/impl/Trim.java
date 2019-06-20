@@ -37,16 +37,17 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.function;
-import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.impl.Keywords.F_TRIM;
+import static org.jooq.impl.Keywords.K_BOTH;
+import static org.jooq.impl.Keywords.K_FROM;
 
-import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
 
 /**
  * @author Lukas Eder
  */
-final class Trim extends AbstractFunction<String> {
+final class Trim extends AbstractField<String> {
 
     /**
      * Generated UID
@@ -57,23 +58,21 @@ final class Trim extends AbstractFunction<String> {
     private final Field<String> characters;
 
     Trim(Field<String> argument) {
-        super("trim", SQLDataType.VARCHAR, argument);
-
-        this.argument = argument;
-        this.characters = null;
+        this(argument, null);
     }
 
     Trim(Field<String> argument, Field<String> characters) {
-        super("trim", SQLDataType.VARCHAR, argument, characters);
+        super(DSL.name("trim"), SQLDataType.VARCHAR);
 
         this.argument = argument;
         this.characters = characters;
     }
 
     @Override
-    final Field<String> getFunction0(Configuration configuration) {
+    public final void accept(Context<?> ctx) {
         if (characters == null) {
-            switch (configuration.dialect()) {
+            switch (ctx.configuration().dialect()) {
+
 
 
 
@@ -89,17 +88,20 @@ final class Trim extends AbstractFunction<String> {
 
 
                 default:
-                    return function("trim", VARCHAR, argument);
+                    ctx.visit(F_TRIM).sql('(').visit(argument).sql(')');
+                    break;
             }
         }
         else {
-            switch (configuration.dialect()) {
+            switch (ctx.configuration().dialect()) {
 
 
 
 
                 case SQLITE:
-                    return DSL.function("trim", VARCHAR, argument, characters);
+                    ctx.visit(F_TRIM).sql('(').visit(argument).sql(", ").visit(characters).sql(')');
+                    break;
+
 
 
 
@@ -107,7 +109,8 @@ final class Trim extends AbstractFunction<String> {
 
 
                 default:
-                    return DSL.field("{trim}({both} {0} {from} {1})", VARCHAR, characters, argument);
+                    ctx.visit(F_TRIM).sql('(').visit(K_BOTH).sql(' ').visit(characters).sql(' ').visit(K_FROM).sql(' ').visit(argument).sql(')');
+                    break;
             }
         }
     }

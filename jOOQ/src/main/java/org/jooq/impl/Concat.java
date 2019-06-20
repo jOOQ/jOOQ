@@ -43,39 +43,45 @@ import static org.jooq.impl.ExpressionOperator.BIT_AND;
 import static org.jooq.impl.ExpressionOperator.CONCAT;
 import static org.jooq.impl.Tools.castAllIfNeeded;
 
-import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
 
 /**
  * @author Lukas Eder
  */
-final class Concat extends AbstractFunction<String> {
+final class Concat extends AbstractField<String> {
 
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -7273879239726265322L;
+    private static final long       serialVersionUID = -7273879239726265322L;
+
+    private final        Field<?>[] arguments;
 
     Concat(Field<?>... arguments) {
-        super("concat", SQLDataType.VARCHAR, arguments);
+        super(DSL.name("concat"), SQLDataType.VARCHAR);
+
+        this.arguments = arguments;
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    final Field<String> getFunction0(Configuration configuration) {
+    public final void accept(Context<?> ctx) {
 
         // [#461] Type cast the concat expression, if this isn't a VARCHAR field
-        Field<String>[] cast = castAllIfNeeded(getArguments(), String.class);
+        Field<String>[] cast = castAllIfNeeded(arguments, String.class);
 
         // If there is only one argument, return it immediately
-        if (cast.length == 1)
-            return cast[0];
+        if (cast.length == 1) {
+            ctx.visit(cast[0]);
+            return;
+        }
 
         Field<String> first = cast[0];
         Field<String>[] others = new Field[cast.length - 1];
         System.arraycopy(cast, 1, others, 0, others.length);
 
-        switch (configuration.family()) {
+        switch (ctx.family()) {
 
 
 
@@ -83,7 +89,10 @@ final class Concat extends AbstractFunction<String> {
 
             case MARIADB:
             case MYSQL:
-                return function("concat", SQLDataType.VARCHAR, cast);
+                ctx.visit(function("concat", SQLDataType.VARCHAR, cast));
+                break;
+
+
 
 
 
@@ -96,7 +105,8 @@ final class Concat extends AbstractFunction<String> {
 
 
             default:
-                return new Expression<String>(CONCAT, first, others);
+                ctx.visit(new Expression<String>(CONCAT, first, others));
+                break;
         }
     }
 }

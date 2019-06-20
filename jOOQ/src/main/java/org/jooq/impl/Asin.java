@@ -38,17 +38,17 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.Keywords.F_ASIN;
 
 import java.math.BigDecimal;
 
-import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.QueryPart;
 
 /**
  * @author Lukas Eder
  */
-final class Asin extends AbstractFunction<BigDecimal> {
+final class Asin extends AbstractField<BigDecimal> {
 
     /**
      * Generated UID
@@ -57,21 +57,23 @@ final class Asin extends AbstractFunction<BigDecimal> {
     private final Field<? extends Number> arg;
 
     Asin(Field<? extends Number> arg) {
-        super("asin", SQLDataType.NUMERIC);
+        super(DSL.name("asin"), SQLDataType.NUMERIC);
 
         this.arg = arg;
     }
 
     @Override
-    final QueryPart getFunction0(Configuration configuration) {
-        switch (configuration.family()) {
+    public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
+
 
 
 
 
 
             default:
-                return DSL.field("{asin}({0})", getDataType(), arg);
+                ctx.visit(F_ASIN).sql('(').visit(arg).sql(')');
+                break;
         }
     }
 }

@@ -37,16 +37,18 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.function;
-import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.impl.Keywords.F_RTRIM;
+import static org.jooq.impl.Keywords.F_TRIM;
+import static org.jooq.impl.Keywords.K_FROM;
+import static org.jooq.impl.Keywords.K_TRAILING;
 
-import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
 
 /**
  * @author Lukas Eder
  */
-final class RTrim extends AbstractFunction<String> {
+final class RTrim extends AbstractField<String> {
 
     /**
      * Generated UID
@@ -57,42 +59,43 @@ final class RTrim extends AbstractFunction<String> {
     private final Field<String> characters;
 
     RTrim(Field<String> argument) {
-        super("rtrim", SQLDataType.VARCHAR, argument);
-
-        this.argument = argument;
-        this.characters = null;
+        this(argument, null);
     }
 
     RTrim(Field<String> argument, Field<String> characters) {
-        super("rtrim", SQLDataType.VARCHAR, argument, characters);
+        super(DSL.name("rtrim"), SQLDataType.VARCHAR);
 
         this.argument = argument;
         this.characters = characters;
     }
 
     @Override
-    final Field<String> getFunction0(Configuration configuration) {
+    public final void accept(Context<?> ctx) {
         if (characters == null) {
-            switch (configuration.family()) {
+            switch (ctx.family()) {
                 case FIREBIRD:
-                    return DSL.field("{trim}({trailing} {from} {0})", VARCHAR, argument);
+                    ctx.visit(F_TRIM).sql('(').visit(K_TRAILING).sql(' ').visit(K_FROM).sql(' ').visit(argument).sql(')');
+                    break;
 
                 default:
-                    return function("rtrim", VARCHAR, argument);
+                    ctx.visit(F_RTRIM).sql('(').visit(argument).sql(')');
+                    break;
             }
         }
         else {
-            switch (configuration.family()) {
+            switch (ctx.family()) {
 
 
 
 
 
                 case SQLITE:
-                    return DSL.function("rtrim", VARCHAR, argument, characters);
+                    ctx.visit(F_RTRIM).sql('(').visit(argument).sql(", ").visit(characters).sql(')');
+                    break;
 
                 default:
-                    return DSL.field("{trim}({trailing} {0} {from} {1})", VARCHAR, characters, argument);
+                    ctx.visit(F_TRIM).sql('(').visit(K_TRAILING).sql(' ').visit(characters).sql(' ').visit(K_FROM).sql(' ').visit(argument).sql(')');
+                    break;
             }
         }
     }

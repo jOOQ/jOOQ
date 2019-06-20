@@ -37,15 +37,18 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.impl.Keywords.F_LTRIM;
+import static org.jooq.impl.Keywords.F_TRIM;
+import static org.jooq.impl.Keywords.K_FROM;
+import static org.jooq.impl.Keywords.K_LEADING;
 
-import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
 
 /**
  * @author Lukas Eder
  */
-final class LTrim extends AbstractFunction<String> {
+final class LTrim extends AbstractField<String> {
 
     /**
      * Generated UID
@@ -56,42 +59,43 @@ final class LTrim extends AbstractFunction<String> {
     private final Field<String> characters;
 
     LTrim(Field<String> argument) {
-        super("ltrim", SQLDataType.VARCHAR, argument);
-
-        this.argument = argument;
-        this.characters = null;
+        this(argument, null);
     }
 
     LTrim(Field<String> argument, Field<String> characters) {
-        super("ltrim", SQLDataType.VARCHAR, argument, characters);
+        super(DSL.name("ltrim"), SQLDataType.VARCHAR);
 
         this.argument = argument;
         this.characters = characters;
     }
 
     @Override
-    final Field<String> getFunction0(Configuration configuration) {
+    public final void accept(Context<?> ctx) {
         if (characters == null) {
-            switch (configuration.family()) {
+            switch (ctx.family()) {
                 case FIREBIRD:
-                    return DSL.field("{trim}({leading} {from} {0})", VARCHAR, argument);
+                    ctx.visit(F_TRIM).sql('(').visit(K_LEADING).sql(' ').visit(K_FROM).sql(' ').visit(argument).sql(')');
+                    break;
 
                 default:
-                    return DSL.function("ltrim", VARCHAR, argument);
+                    ctx.visit(F_LTRIM).sql('(').visit(argument).sql(')');
+                    break;
             }
         }
         else {
-            switch (configuration.family()) {
+            switch (ctx.family()) {
 
 
 
 
 
                 case SQLITE:
-                    return DSL.function("ltrim", VARCHAR, argument, characters);
+                    ctx.visit(F_LTRIM).sql('(').visit(argument).sql(", ").visit(characters).sql(')');
+                    break;
 
                 default:
-                    return DSL.field("{trim}({leading} {0} {from} {1})", VARCHAR, characters, argument);
+                    ctx.visit(F_TRIM).sql('(').visit(K_LEADING).sql(' ').visit(characters).sql(' ').visit(K_FROM).sql(' ').visit(argument).sql(')');
+                    break;
             }
         }
     }

@@ -39,14 +39,19 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.Keywords.F_CHARINDEX;
+import static org.jooq.impl.Keywords.F_INSTR;
+import static org.jooq.impl.Keywords.F_LOCATE;
+import static org.jooq.impl.Keywords.F_POSITION;
+import static org.jooq.impl.Keywords.K_IN;
 
-import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
 
 /**
  * @author Lukas Eder
  */
-final class Position extends AbstractFunction<Integer> {
+final class Position extends AbstractField<Integer> {
 
     private static final long             serialVersionUID = 3544690069533526544L;
 
@@ -59,7 +64,7 @@ final class Position extends AbstractFunction<Integer> {
     }
 
     Position(Field<String> search, Field<String> in, Field<? extends Number> startIndex) {
-        super("position", SQLDataType.INTEGER, search, in, startIndex);
+        super(DSL.name("position"), SQLDataType.INTEGER);
 
         this.search = search;
         this.in = in;
@@ -67,9 +72,11 @@ final class Position extends AbstractFunction<Integer> {
     }
 
     @Override
-    final Field<Integer> getFunction0(Configuration configuration) {
+    public final void accept(Context<?> ctx) {
         if (startIndex != null)
-            switch (configuration.family()) {
+            switch (ctx.family()) {
+
+
 
 
 
@@ -81,15 +88,19 @@ final class Position extends AbstractFunction<Integer> {
 
 
                 default:
-                    return DSL.position(DSL.substring(in, startIndex), search).add(startIndex).sub(one());
+                    ctx.visit(DSL.position(DSL.substring(in, startIndex), search).add(startIndex).sub(one()));
+                    break;
             }
         else
-            switch (configuration.family()) {
+            switch (ctx.family()) {
 
 
 
                 case DERBY:
-                    return DSL.field("{locate}({0}, {1})", SQLDataType.INTEGER, search, in);
+                    ctx.visit(F_LOCATE).sql('(').visit(search).sql(", ").visit(in).sql(')');
+                    break;
+
+
 
 
 
@@ -106,10 +117,12 @@ final class Position extends AbstractFunction<Integer> {
 
 
                 case SQLITE:
-                    return DSL.field("{instr}({0}, {1})", SQLDataType.INTEGER, in, search);
+                    ctx.visit(F_INSTR).sql('(').visit(in).sql(", ").visit(search).sql(')');
+                    break;
 
                 default:
-                    return DSL.field("{position}({0} {in} {1})", SQLDataType.INTEGER, search, in);
+                    ctx.visit(F_POSITION).sql('(').visit(search).sql(' ').visit(K_IN).sql(' ').visit(in).sql(')');
+                    break;
             }
     }
 }

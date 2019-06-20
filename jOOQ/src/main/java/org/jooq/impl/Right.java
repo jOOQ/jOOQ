@@ -38,15 +38,15 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.Keywords.F_RIGHT;
 
-import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.QueryPart;
 
 /**
  * @author Lukas Eder
  */
-final class Right extends AbstractFunction<String> {
+final class Right extends AbstractField<String> {
 
     /**
      * Generated UID
@@ -57,23 +57,25 @@ final class Right extends AbstractFunction<String> {
     private Field<? extends Number> length;
 
     Right(Field<String> field, Field<? extends Number> length) {
-        super("right", field.getDataType());
+        super(DSL.name("right"), field.getDataType());
 
         this.field = field;
         this.length = length;
     }
 
     @Override
-    final QueryPart getFunction0(Configuration configuration) {
-        switch (configuration.family()) {
+    public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
             case DERBY:
-                return DSL.substring(field, field.length().add(one()).sub(length));
+                ctx.visit(DSL.substring(field, field.length().add(one()).sub(length)));
+                break;
 
 
 
 
             case SQLITE:
-                return DSL.substring(field, length.neg());
+                ctx.visit(DSL.substring(field, length.neg()));
+                break;
 
 
 
@@ -93,7 +95,8 @@ final class Right extends AbstractFunction<String> {
             case MYSQL:
             case POSTGRES:
             default:
-                return DSL.field("{right}({0}, {1})", field, length);
+                ctx.visit(F_RIGHT).sql('(').visit(field).sql(", ").visit(length).sql(')');
+                break;
         }
     }
 }

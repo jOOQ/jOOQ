@@ -37,16 +37,22 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.Keywords.F_CONVERT;
+import static org.jooq.impl.Keywords.F_CURRENT_DATE;
+import static org.jooq.impl.Keywords.F_CURRENT_TIMESTAMP;
+import static org.jooq.impl.Keywords.F_SYSDATE;
+import static org.jooq.impl.Keywords.F_TRUNC;
+import static org.jooq.impl.Keywords.K_CURRENT;
+import static org.jooq.impl.Keywords.K_DATE;
+import static org.jooq.impl.Keywords.K_YEAR_TO_DAY;
 
-import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.DataType;
-import org.jooq.Field;
 
 /**
  * @author Lukas Eder
  */
-final class CurrentDate<T> extends AbstractFunction<T> {
+final class CurrentDate<T> extends AbstractField<T> {
 
     /**
      * Generated UID
@@ -54,12 +60,17 @@ final class CurrentDate<T> extends AbstractFunction<T> {
     private static final long serialVersionUID = -7273879239726265322L;
 
     CurrentDate(DataType<T> type) {
-        super("current_date", type);
+        super(DSL.name("current_date"), type);
     }
 
     @Override
-    final Field<T> getFunction0(Configuration configuration) {
-        switch (configuration.family()) {
+    public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
+
+
+
+
+
 
 
 
@@ -91,9 +102,11 @@ final class CurrentDate<T> extends AbstractFunction<T> {
             case HSQLDB:
             case POSTGRES:
             case SQLITE:
-                return DSL.field("{current_date}", getDataType());
+                ctx.visit(F_CURRENT_DATE);
+                break;
+            default:
+                ctx.visit(F_CURRENT_DATE).sql("()");
+                break;
         }
-
-        return function("current_date", getDataType());
     }
 }

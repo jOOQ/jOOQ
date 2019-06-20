@@ -50,18 +50,16 @@ import java.util.List;
 
 import org.jooq.CaseConditionStep;
 import org.jooq.Condition;
-import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
 // ...
-import org.jooq.QueryPart;
 import org.jooq.Record1;
 import org.jooq.Select;
 
 /**
  * @author Lukas Eder
  */
-final class CaseConditionStepImpl<T> extends AbstractFunction<T> implements CaseConditionStep<T> {
+final class CaseConditionStepImpl<T> extends AbstractField<T> implements CaseConditionStep<T> {
 
     /**
      * Generated UID
@@ -73,7 +71,7 @@ final class CaseConditionStepImpl<T> extends AbstractFunction<T> implements Case
     private Field<T>              else_;
 
     CaseConditionStepImpl(Condition condition, Field<T> result) {
-        super("case", result.getDataType());
+        super(DSL.name("case"), result.getDataType());
 
         this.conditions = new ArrayList<Condition>();
         this.results = new ArrayList<Field<T>>();
@@ -132,15 +130,17 @@ final class CaseConditionStepImpl<T> extends AbstractFunction<T> implements Case
     }
 
     @Override
-    final QueryPart getFunction0(Configuration configuration) {
-        switch (configuration.family()) {
+    public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
+
 
 
 
 
 
             default:
-                return new Native();
+                ctx.visit(new Native());
+                break;
         }
     }
 

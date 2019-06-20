@@ -41,13 +41,12 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.not;
 
 import org.jooq.Condition;
-import org.jooq.Configuration;
-import org.jooq.QueryPart;
+import org.jooq.Context;
 
 /**
  * @author Lukas Eder
  */
-final class ConditionAsField extends AbstractFunction<Boolean> {
+final class ConditionAsField extends AbstractField<Boolean> {
 
     /**
      * Generated UID
@@ -56,14 +55,14 @@ final class ConditionAsField extends AbstractFunction<Boolean> {
     final Condition           condition;
 
     ConditionAsField(Condition condition) {
-        super(condition.toString(), SQLDataType.BOOLEAN);
+        super(DSL.name(condition.toString()), SQLDataType.BOOLEAN);
 
         this.condition = condition;
     }
 
     @Override
-    final QueryPart getFunction0(Configuration configuration) {
-        switch (configuration.family()) {
+    public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
 
             // Some databases don't accept predicates where column expressions
             // are expected.
@@ -81,9 +80,10 @@ final class ConditionAsField extends AbstractFunction<Boolean> {
             case FIREBIRD:
 
                 // [#3206] Correct implementation of three-valued logic is important here
-                return DSL.when(condition, inline(true))
-                          .when(not(condition), inline(false))
-                          .otherwise(inline((Boolean) null));
+                ctx.visit(DSL.when(condition, inline(true))
+                             .when(not(condition), inline(false))
+                             .otherwise(inline((Boolean) null)));
+                break;
 
             // These databases can inline predicates in column expression contexts
             case DERBY:
@@ -102,7 +102,8 @@ final class ConditionAsField extends AbstractFunction<Boolean> {
 
             // The default, for new dialects
             default:
-                return DSL.sql("({0})", condition);
+                ctx.sql('(').visit(condition).sql(')');
+                break;
         }
     }
 }

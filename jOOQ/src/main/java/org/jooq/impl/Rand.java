@@ -37,31 +37,44 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.function;
-import static org.jooq.impl.SQLDataType.NUMERIC;
+import static org.jooq.impl.Keywords.F_RAND;
+import static org.jooq.impl.Keywords.F_RANDOM;
+import static org.jooq.impl.Keywords.F_RND;
+import static org.jooq.impl.Keywords.K_AS;
+import static org.jooq.impl.Keywords.K_CAST;
+import static org.jooq.impl.Keywords.K_NUMERIC;
 
 import java.math.BigDecimal;
 
-import org.jooq.Configuration;
-import org.jooq.Field;
+import org.jooq.Context;
+// ...
+import org.jooq.QueryPart;
 
 /**
  * @author Lukas Eder
  */
-final class Rand extends AbstractFunction<BigDecimal> {
+final class Rand extends AbstractField<BigDecimal> {
 
     /**
      * Generated UID
      */
     private static final long serialVersionUID = -7273879239726265322L;
 
+
+
+
+
+
     Rand() {
-        super("rand", SQLDataType.NUMERIC);
+        super(DSL.name("rand"), SQLDataType.NUMERIC);
     }
 
     @Override
-    final Field<BigDecimal> getFunction0(Configuration configuration) {
-        switch (configuration.family()) {
+    public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
+
+
+
 
 
 
@@ -81,9 +94,11 @@ final class Rand extends AbstractFunction<BigDecimal> {
             case DERBY:
             case POSTGRES:
             case SQLITE:
-                return function("random", SQLDataType.NUMERIC);
+                ctx.visit(F_RANDOM).sql("()");
+                break;
+            default:
+                ctx.visit(F_RAND).sql("()");
+                break;
         }
-
-        return function("rand", SQLDataType.NUMERIC);
     }
 }

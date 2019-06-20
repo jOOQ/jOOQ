@@ -37,13 +37,19 @@
  */
 package org.jooq.impl;
 
-import org.jooq.Configuration;
+import static org.jooq.impl.Keywords.F_IFNULL;
+import static org.jooq.impl.Keywords.F_IIF;
+import static org.jooq.impl.Keywords.F_NVL;
+import static org.jooq.impl.Keywords.K_COALESCE;
+import static org.jooq.impl.Keywords.K_IS_NULL;
+
+import org.jooq.Context;
 import org.jooq.Field;
 
 /**
  * @author Lukas Eder
  */
-final class Nvl<T> extends AbstractFunction<T> {
+final class Nvl<T> extends AbstractField<T> {
 
     /**
      * Generated UID
@@ -54,15 +60,16 @@ final class Nvl<T> extends AbstractFunction<T> {
     private final Field<T>    arg2;
 
     Nvl(Field<T> arg1, Field<T> arg2) {
-        super("nvl", arg1.getDataType(), arg1, arg2);
+        super(DSL.name("nvl"), arg1.getDataType());
 
         this.arg1 = arg1;
         this.arg2 = arg2;
     }
 
     @Override
-    final Field<T> getFunction0(Configuration configuration) {
-        switch (configuration.family()) {
+    public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
+
 
 
 
@@ -74,14 +81,16 @@ final class Nvl<T> extends AbstractFunction<T> {
 
             case H2:
             case HSQLDB:
-                return DSL.field("{nvl}({0}, {1})", getDataType(), arg1, arg2);
+                ctx.visit(F_NVL).sql('(').visit(arg1).sql(", ").visit(arg2).sql(')');
+                break;
 
 
 
 
             case DERBY:
             case POSTGRES:
-                return DSL.field("{coalesce}({0}, {1})", getDataType(), arg1, arg2);
+                ctx.visit(K_COALESCE).sql('(').visit(arg1).sql(", ").visit(arg2).sql(')');
+                break;
 
 
 
@@ -90,10 +99,12 @@ final class Nvl<T> extends AbstractFunction<T> {
             case MARIADB:
             case MYSQL:
             case SQLITE:
-                return DSL.field("{ifnull}({0}, {1})", getDataType(), arg1, arg2);
+                ctx.visit(F_IFNULL).sql('(').visit(arg1).sql(", ").visit(arg2).sql(')');
+                break;
 
             default:
-                return DSL.when(arg1.isNotNull(), arg1).otherwise(arg2);
+                ctx.visit(DSL.when(arg1.isNotNull(), arg1).otherwise(arg2));
+                break;
         }
     }
 }

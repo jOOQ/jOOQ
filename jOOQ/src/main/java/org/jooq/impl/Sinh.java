@@ -37,19 +37,19 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.two;
+import static org.jooq.impl.Keywords.F_SINH;
 
 import java.math.BigDecimal;
 
-import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
 
 /**
  * @author Lukas Eder
  */
-final class Sinh extends AbstractFunction<BigDecimal> {
+final class Sinh extends AbstractField<BigDecimal> {
 
     /**
      * Generated UID
@@ -59,14 +59,14 @@ final class Sinh extends AbstractFunction<BigDecimal> {
     private final Field<? extends Number> argument;
 
     Sinh(Field<? extends Number> argument) {
-        super("sinh", SQLDataType.NUMERIC, argument);
+        super(DSL.name("sinh"), SQLDataType.NUMERIC);
 
         this.argument = argument;
     }
 
     @Override
-    final Field<BigDecimal> getFunction0(Configuration configuration) {
-        switch (configuration.family()) {
+    public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
 
 
 
@@ -85,10 +85,12 @@ final class Sinh extends AbstractFunction<BigDecimal> {
             case MARIADB:
             case MYSQL:
             case POSTGRES:
-                return DSL.exp(argument.mul(two())).sub(one()).div(DSL.exp(argument).mul(two()));
+                ctx.visit(DSL.exp(argument.mul(two())).sub(one()).div(DSL.exp(argument).mul(two())));
+                break;
 
             default:
-                return function("sinh", SQLDataType.NUMERIC, argument);
+                ctx.visit(F_SINH).sql('(').visit(argument).sql(')');
+                break;
         }
     }
 }

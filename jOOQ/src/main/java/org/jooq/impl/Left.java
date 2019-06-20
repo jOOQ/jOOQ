@@ -38,15 +38,15 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.Keywords.F_LEFT;
 
-import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.QueryPart;
 
 /**
  * @author Lukas Eder
  */
-final class Left extends AbstractFunction<String> {
+final class Left extends AbstractField<String> {
 
     /**
      * Generated UID
@@ -57,21 +57,22 @@ final class Left extends AbstractFunction<String> {
     private Field<? extends Number> length;
 
     Left(Field<String> field, Field<? extends Number> length) {
-        super("left", field.getDataType());
+        super(DSL.name("left"), field.getDataType());
 
         this.field = field;
         this.length = length;
     }
 
     @Override
-    final QueryPart getFunction0(Configuration configuration) {
-        switch (configuration.family()) {
+    public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
 
 
 
             case DERBY:
             case SQLITE:
-                return DSL.substring(field, inline(1), length);
+                ctx.visit(DSL.substring(field, inline(1), length));
+                break;
 
 
 
@@ -91,7 +92,8 @@ final class Left extends AbstractFunction<String> {
             case MYSQL:
             case POSTGRES:
             default:
-                return DSL.field("{left}({0}, {1})", field, length);
+                ctx.visit(F_LEFT).sql('(').visit(field).sql(", ").visit(length).sql(')');
+                break;
         }
     }
 }

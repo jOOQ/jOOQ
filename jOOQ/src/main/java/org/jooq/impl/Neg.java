@@ -82,7 +82,7 @@ final class Neg<T> extends AbstractField<T> {
 
     @Override
     public final void accept(Context<?> ctx) {
-        SQLDialect family = ctx.configuration().family();
+        SQLDialect family = ctx.family();
 
         if (operator == BIT_NOT && EMULATE_BIT_NOT.contains(family))
             ctx.sql("(0 - ")

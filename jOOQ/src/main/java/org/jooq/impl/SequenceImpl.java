@@ -156,11 +156,7 @@ public class SequenceImpl<T extends Number> extends AbstractNamed implements Seq
 
 
 
-                case POSTGRES: {
-                    ctx.visit(keyword).sql("('").visit(SequenceImpl.this).sql("')");
-                    break;
-                }
-
+                case POSTGRES:
                 case H2: {
                     ctx.visit(keyword).sql('(');
                     SequenceImpl.this.accept0(ctx, true);

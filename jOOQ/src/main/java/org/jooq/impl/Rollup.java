@@ -37,12 +37,11 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Keywords.F_ROLLUP;
 import static org.jooq.impl.Keywords.K_WITH_ROLLUP;
 
-import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.FieldOrRow;
-import org.jooq.QueryPart;
 
 /**
  * @author Lukas Eder
@@ -63,21 +62,19 @@ final class Rollup extends AbstractField<Object> {
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(delegate(ctx.configuration()));
-    }
-
-    private final QueryPart delegate(Configuration configuration) {
-        switch (configuration.family()) {
+        switch (ctx.family()) {
 
 
 
             case CUBRID:
             case MARIADB:
             case MYSQL:
-                return new MySQLWithRollup();
+                ctx.visit(new MySQLWithRollup());
+                break;
 
             default:
-                return DSL.field("{rollup}({0})", Object.class, arguments);
+                ctx.visit(F_ROLLUP).sql('(').visit(arguments).sql(')');
+                break;
         }
     }
 

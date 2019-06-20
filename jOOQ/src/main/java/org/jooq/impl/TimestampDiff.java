@@ -38,17 +38,22 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.DSL.keyword;
+import static org.jooq.impl.Keywords.F_DATEDIFF;
+import static org.jooq.impl.Keywords.F_STRFTIME;
+import static org.jooq.impl.Keywords.F_TIMESTAMPDIFF;
+import static org.jooq.impl.Keywords.K_MILLISECOND;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.Tools.castIfNeeded;
 
-import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.types.DayToSecond;
 
 /**
  * @author Lukas Eder
  */
-final class TimestampDiff extends AbstractFunction<DayToSecond> {
+final class TimestampDiff extends AbstractField<DayToSecond> {
 
     /**
      * Generated UID
@@ -59,16 +64,19 @@ final class TimestampDiff extends AbstractFunction<DayToSecond> {
     private final Field<?>    timestamp2;
 
     TimestampDiff(Field<?> timestamp1, Field<?> timestamp2) {
-        super("timestampdiff", SQLDataType.INTERVALDAYTOSECOND, timestamp1, timestamp2);
+        super(DSL.name("timestampdiff"), SQLDataType.INTERVALDAYTOSECOND);
 
         this.timestamp1 = timestamp1;
         this.timestamp2 = timestamp2;
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    final Field<DayToSecond> getFunction0(Configuration configuration) {
-        switch (configuration.family()) {
+    public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
+
+
+
+
 
 
 
@@ -106,25 +114,30 @@ final class TimestampDiff extends AbstractFunction<DayToSecond> {
 
                 // [#4481] Parentheses are important in case this expression is
                 //         placed in the context of other arithmetic
-                return DSL.field("({0} - {1})", getDataType(), timestamp1, timestamp2);
+                ctx.sql('(').visit(timestamp1).sql(" - ").visit(timestamp2).sql(')');
+                break;
 
             // CUBRID's datetime operations operate on a millisecond level
             case CUBRID:
-                return (Field) timestamp1.sub(timestamp2);
+                ctx.visit(timestamp1.sub(timestamp2));
+                break;
 
             case DERBY:
-                return (Field) DSL.field("1000 * {fn {timestampdiff}({sql_tsi_second}, {0}, {1}) }", INTEGER, timestamp2, timestamp1);
+                ctx.sql("1000 * {fn ").visit(F_TIMESTAMPDIFF).sql('(').visit(keyword("sql_tsi_second")).sql(", ").visit(timestamp2).sql(", ").visit(timestamp1).sql(") }");
+                break;
 
 
 
 
 
             case FIREBIRD:
-                return DSL.field("{datediff}(millisecond, {0}, {1})", getDataType(), timestamp2, timestamp1);
+                ctx.visit(F_DATEDIFF).sql('(').visit(K_MILLISECOND).sql(", ").visit(timestamp2).sql(", ").visit(timestamp1).sql(')');
+                break;
 
             case H2:
             case HSQLDB:
-                return DSL.field("{datediff}('ms', {0}, {1})", getDataType(), timestamp2, timestamp1);
+                ctx.visit(F_DATEDIFF).sql("('ms', ").visit(timestamp2).sql(", ").visit(timestamp1).sql(')');
+                break;
 
             // MySQL's datetime operations operate on a microsecond level
 
@@ -134,18 +147,21 @@ final class TimestampDiff extends AbstractFunction<DayToSecond> {
 
             case MARIADB:
             case MYSQL:
-                return DSL.field("{timestampdiff}(microsecond, {0}, {1}) / 1000", getDataType(), timestamp2, timestamp1);
+                ctx.visit(F_TIMESTAMPDIFF).sql('(').visit(keyword("microsecond")).sql(", ").visit(timestamp2).sql(", ").visit(timestamp1).sql(") / 1000");
+                break;
 
             case SQLITE:
-                return DSL.field("({strftime}('%s', {0}) - {strftime}('%s', {1})) * 1000", getDataType(), timestamp1, timestamp2);
+                ctx.sql('(').visit(F_STRFTIME).sql("('%s', ").visit(timestamp1).sql(") - ").visit(F_STRFTIME).sql("('%s', ").visit(timestamp2).sql(")) * 1000");
+                break;
 
 
 
 
 
+            default:
+                // Default implementation for equals() and hashCode()
+                ctx.visit(castIfNeeded(timestamp1.sub(timestamp2), DayToSecond.class));
+                break;
         }
-
-        // Default implementation for equals() and hashCode()
-        return castIfNeeded(timestamp1.sub(timestamp2), DayToSecond.class);
     }
 }

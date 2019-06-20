@@ -38,18 +38,31 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.sql;
+import static org.jooq.impl.Keywords.F_ADD_MONTHS;
+import static org.jooq.impl.Keywords.F_DATEADD;
+import static org.jooq.impl.Keywords.F_DATE_ADD;
+import static org.jooq.impl.Keywords.F_STRFTIME;
+import static org.jooq.impl.Keywords.F_TIMESTAMPADD;
+import static org.jooq.impl.Keywords.K_AS;
+import static org.jooq.impl.Keywords.K_CAST;
+import static org.jooq.impl.Keywords.K_DAY;
+import static org.jooq.impl.Keywords.K_HOUR;
+import static org.jooq.impl.Keywords.K_INTERVAL;
+import static org.jooq.impl.Keywords.K_MINUTE;
+import static org.jooq.impl.Keywords.K_MONTH;
+import static org.jooq.impl.Keywords.K_SECOND;
+import static org.jooq.impl.Keywords.K_YEAR;
 
-import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.DatePart;
 import org.jooq.Field;
-import org.jooq.QueryPart;
+import org.jooq.Keyword;
 
 /**
  * @author Lukas Eder
  */
-final class DateAdd<T> extends AbstractFunction<T> {
+final class DateAdd<T> extends AbstractField<T> {
 
     /**
      * Generated UID
@@ -61,7 +74,7 @@ final class DateAdd<T> extends AbstractFunction<T> {
     private final DatePart                datePart;
 
     DateAdd(Field<T> date, Field<? extends Number> interval, DatePart datePart) {
-        super("dateadd", date.getDataType());
+        super(DSL.name("dateadd"), date.getDataType());
 
         this.date = date;
         this.interval = interval;
@@ -69,10 +82,11 @@ final class DateAdd<T> extends AbstractFunction<T> {
     }
 
     @Override
-    final QueryPart getFunction0(Configuration configuration) {
-        String keyword = null;
+    public final void accept(Context<?> ctx) {
+        Keyword keyword = null;
+        String  string  = null;
 
-        switch (configuration.family()) {
+        switch (ctx.family()) {
 
 
 
@@ -81,59 +95,63 @@ final class DateAdd<T> extends AbstractFunction<T> {
             case MARIADB:
             case MYSQL: {
                 switch (datePart) {
-                    case YEAR:   keyword = "year";   break;
-                    case MONTH:  keyword = "month";  break;
-                    case DAY:    keyword = "day";    break;
-                    case HOUR:   keyword = "hour";   break;
-                    case MINUTE: keyword = "minute"; break;
-                    case SECOND: keyword = "second"; break;
+                    case YEAR:   keyword = K_YEAR;   break;
+                    case MONTH:  keyword = K_MONTH;  break;
+                    case DAY:    keyword = K_DAY;    break;
+                    case HOUR:   keyword = K_HOUR;   break;
+                    case MINUTE: keyword = K_MINUTE; break;
+                    case SECOND: keyword = K_SECOND; break;
                     default: throwUnsupported();
                 }
 
-                return DSL.field("{date_add}({0}, {interval} {1} {2})", getDataType(), date, interval, keyword(keyword));
+                ctx.visit(F_DATE_ADD).sql('(').visit(date).sql(", ").visit(K_INTERVAL).sql(' ').visit(interval).sql(' ').visit(keyword).sql(')');
+                break;
             }
 
             case DERBY:
             case HSQLDB: {
                 switch (datePart) {
-                    case YEAR:   keyword = "sql_tsi_year";   break;
-                    case MONTH:  keyword = "sql_tsi_month";  break;
-                    case DAY:    keyword = "sql_tsi_day";    break;
-                    case HOUR:   keyword = "sql_tsi_hour";   break;
-                    case MINUTE: keyword = "sql_tsi_minute"; break;
-                    case SECOND: keyword = "sql_tsi_second"; break;
+                    case YEAR:   keyword = DSL.keyword("sql_tsi_year");   break;
+                    case MONTH:  keyword = DSL.keyword("sql_tsi_month");  break;
+                    case DAY:    keyword = DSL.keyword("sql_tsi_day");    break;
+                    case HOUR:   keyword = DSL.keyword("sql_tsi_hour");   break;
+                    case MINUTE: keyword = DSL.keyword("sql_tsi_minute"); break;
+                    case SECOND: keyword = DSL.keyword("sql_tsi_second"); break;
                     default: throwUnsupported();
                 }
 
-                return DSL.field("{fn {timestampadd}({0}, {1}, {2}) }", getDataType(), keyword(keyword), interval, date);
+                ctx.sql("{fn ").visit(F_TIMESTAMPADD).sql('(').visit(keyword).sql(", ").visit(interval).sql(", ").visit(date).sql(") }");
+                break;
             }
 
             case FIREBIRD: {
                 switch (datePart) {
-                    case YEAR:   keyword = "year";   break;
-                    case MONTH:  keyword = "month";  break;
-                    case DAY:    keyword = "day";    break;
-                    case HOUR:   keyword = "hour";   break;
-                    case MINUTE: keyword = "minute"; break;
-                    case SECOND: keyword = "second"; break;
+                    case YEAR:   keyword = K_YEAR;   break;
+                    case MONTH:  keyword = K_MONTH;  break;
+                    case DAY:    keyword = K_DAY;    break;
+                    case HOUR:   keyword = K_HOUR;   break;
+                    case MINUTE: keyword = K_MINUTE; break;
+                    case SECOND: keyword = K_SECOND; break;
                     default: throwUnsupported();
                 }
 
-                return DSL.field("{dateadd}({0}, {1}, {2})", getDataType(), keyword(keyword), interval, date);
+                ctx.visit(F_DATEADD).sql('(').visit(keyword).sql(", ").visit(interval).sql(", ").visit(date).sql(')');
+                break;
             }
 
             case H2: {
                 switch (datePart) {
-                    case YEAR:   keyword = "year";   break;
-                    case MONTH:  keyword = "month";  break;
-                    case DAY:    keyword = "day";    break;
-                    case HOUR:   keyword = "hour";   break;
-                    case MINUTE: keyword = "minute"; break;
-                    case SECOND: keyword = "second"; break;
+                    case YEAR:   string = "year";   break;
+                    case MONTH:  string = "month";  break;
+                    case DAY:    string = "day";    break;
+                    case HOUR:   string = "hour";   break;
+                    case MINUTE: string = "minute"; break;
+                    case SECOND: string = "second"; break;
                     default: throwUnsupported();
                 }
 
-                return DSL.field("{dateadd}({0}, {1}, {2})", getDataType(), inline(keyword), interval, date);
+                ctx.visit(F_DATEADD).sql('(').visit(inline(string)).sql(", ").visit(interval).sql(", ").visit(date).sql(')');
+                break;
             }
 
 
@@ -146,36 +164,49 @@ final class DateAdd<T> extends AbstractFunction<T> {
 
             case POSTGRES: {
                 switch (datePart) {
-                    case YEAR:   keyword = " year";   break;
-                    case MONTH:  keyword = " month";  break;
-                    case DAY:    keyword = " day";    break;
-                    case HOUR:   keyword = " hour";   break;
-                    case MINUTE: keyword = " minute"; break;
-                    case SECOND: keyword = " second"; break;
+                    case YEAR:   string = " year";   break;
+                    case MONTH:  string = " month";  break;
+                    case DAY:    string = " day";    break;
+                    case HOUR:   string = " hour";   break;
+                    case MINUTE: string = " minute"; break;
+                    case SECOND: string = " second"; break;
                     default: throwUnsupported();
                 }
 
                 // [#3824] Ensure that the output for DATE arithmetic will also
                 // be of type DATE, not TIMESTAMP
                 if (getDataType().isDate())
-                    return DSL.field("({0} + ({1} || {2})::interval)::date", getDataType(), date, interval, inline(keyword));
+                    ctx.sql('(').visit(date).sql(" + (").visit(interval).sql(" || ").visit(inline(string)).sql(")::interval)::date");
                 else
-                    return DSL.field("({0} + ({1} || {2})::interval)", getDataType(), date, interval, inline(keyword));
+                    ctx.sql('(').visit(date).sql(" + (").visit(interval).sql(" || ").visit(inline(string)).sql(")::interval)");
+                break;
             }
 
             case SQLITE: {
                 switch (datePart) {
-                    case YEAR:   keyword = " year";   break;
-                    case MONTH:  keyword = " month";  break;
-                    case DAY:    keyword = " day";    break;
-                    case HOUR:   keyword = " hour";   break;
-                    case MINUTE: keyword = " minute"; break;
-                    case SECOND: keyword = " second"; break;
+                    case YEAR:   string = " year";   break;
+                    case MONTH:  string = " month";  break;
+                    case DAY:    string = " day";    break;
+                    case HOUR:   string = " hour";   break;
+                    case MINUTE: string = " minute"; break;
+                    case SECOND: string = " second"; break;
                     default: throwUnsupported();
                 }
 
-                return DSL.field("{strftime}('%Y-%m-%d %H:%M:%f', {0}, {1})", getDataType(), date, interval.concat(inline(keyword)));
+                ctx.visit(F_STRFTIME).sql("('%Y-%m-%d %H:%M:%f', ").visit(date).sql(", ").visit(interval.concat(inline(string))).sql(')');
+                break;
             }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -298,8 +329,6 @@ final class DateAdd<T> extends AbstractFunction<T> {
 
 
         }
-
-        return null;
     }
 
     private final void throwUnsupported() {

@@ -38,15 +38,21 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.DSL.keyword;
+import static org.jooq.impl.Keywords.F_DATEDIFF;
+import static org.jooq.impl.Keywords.F_DAYS_BETWEEN;
+import static org.jooq.impl.Keywords.F_STRFTIME;
+import static org.jooq.impl.Keywords.F_TIMESTAMPDIFF;
+import static org.jooq.impl.Keywords.K_DAY;
 import static org.jooq.impl.Tools.castIfNeeded;
 
-import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
 
 /**
  * @author Lukas Eder
  */
-final class DateDiff<T> extends AbstractFunction<Integer> {
+final class DateDiff<T> extends AbstractField<Integer> {
 
     /**
      * Generated UID
@@ -57,38 +63,43 @@ final class DateDiff<T> extends AbstractFunction<Integer> {
     private final Field<T>    date2;
 
     DateDiff(Field<T> date1, Field<T> date2) {
-        super("datediff", SQLDataType.INTEGER, date1, date2);
+        super(DSL.name("datediff"), SQLDataType.INTEGER);
 
         this.date1 = date1;
         this.date2 = date2;
     }
 
     @Override
-    final Field<Integer> getFunction0(Configuration configuration) {
-        switch (configuration.family()) {
+    public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
 
 
 
 
             case MARIADB:
             case MYSQL:
-                return function("datediff", getDataType(), date1, date2);
+                ctx.visit(F_DATEDIFF).sql('(').visit(date1).sql(", ").visit(date2).sql(')');
+                break;
 
             case DERBY:
-                return DSL.field("{fn {timestampdiff}({sql_tsi_day}, {0}, {1}) }", getDataType(), date2, date1);
+                ctx.sql("{fn ").visit(F_TIMESTAMPDIFF).sql('(').visit(keyword("sql_tsi_day")).sql(", ").visit(date2).sql(", ").visit(date1).sql(") }");
+                break;
 
             case FIREBIRD:
-                return DSL.field("{datediff}(day, {0}, {1})", getDataType(), date2, date1);
+                ctx.visit(F_DATEDIFF).sql('(').visit(K_DAY).sql(", ").visit(date2).sql(", ").visit(date1).sql(')');
+                break;
 
             case H2:
             case HSQLDB:
 
 
 
-                return DSL.field("{datediff}('day', {0}, {1})", getDataType(), date2, date1);
+                ctx.visit(F_DATEDIFF).sql("('day', ").visit(date2).sql(", ").visit(date1).sql(')');
+                break;
 
             case SQLITE:
-                return DSL.field("({strftime}('%s', {0}) - {strftime}('%s', {1})) / 86400", getDataType(), date1, date2);
+                ctx.sql('(').visit(F_STRFTIME).sql("('%s', ").visit(date1).sql(") - ").visit(F_STRFTIME).sql("('%s', ").visit(date2).sql(")) / 86400");
+                break;
 
 
 
@@ -99,7 +110,8 @@ final class DateDiff<T> extends AbstractFunction<Integer> {
 
                 // [#4481] Parentheses are important in case this expression is
                 //         placed in the context of other arithmetic
-                return DSL.field("({0} - {1})", getDataType(), date1, date2);
+                ctx.sql('(').visit(date1).sql(" - ").visit(date2).sql(')');
+                break;
 
 
 
@@ -122,9 +134,13 @@ final class DateDiff<T> extends AbstractFunction<Integer> {
 
 
 
+
+
+
+            default:
+                // Default implementation for equals() and hashCode()
+                ctx.visit(castIfNeeded(date1.sub(date2), Integer.class));
+                break;
         }
-
-        // Default implementation for equals() and hashCode()
-        return castIfNeeded(date1.sub(date2), Integer.class);
     }
 }

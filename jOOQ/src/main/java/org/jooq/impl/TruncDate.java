@@ -38,19 +38,21 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.Keywords.F_DATE_TRUNC;
+import static org.jooq.impl.Keywords.F_TRUNC;
+import static org.jooq.impl.Keywords.K_CAST;
 import static org.jooq.impl.Tools.castIfNeeded;
 
 import java.sql.Date;
 
-import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.DatePart;
 import org.jooq.Field;
-import org.jooq.QueryPart;
 
 /**
  * @author Lukas Eder
  */
-final class TruncDate<T> extends AbstractFunction<T> {
+final class TruncDate<T> extends AbstractField<T> {
 
     /**
      * Generated UID
@@ -61,18 +63,18 @@ final class TruncDate<T> extends AbstractFunction<T> {
     private final DatePart    part;
 
     TruncDate(Field<T> date, DatePart part) {
-        super("trunc", date.getDataType());
+        super(DSL.name("trunc"), date.getDataType());
 
         this.date = date;
         this.part = part;
     }
 
     @Override
-    final QueryPart getFunction0(Configuration configuration) {
+    public final void accept(Context<?> ctx) {
         String keyword = null;
         String format = null;
 
-        switch (configuration.family()) {
+        switch (ctx.family()) {
 
             // [http://jira.cubrid.org/browse/ENGINE-120] This currently doesn't work for all date parts in CUBRID
             case CUBRID:
@@ -87,7 +89,8 @@ final class TruncDate<T> extends AbstractFunction<T> {
                     default: throwUnsupported();
                 }
 
-                return DSL.field("{trunc}({0}, {1})", getDataType(), date, inline(keyword));
+                ctx.visit(F_TRUNC).sql('(').visit(date).sql(", ").visit(inline(keyword)).sql(')');
+                break;
             }
 
             case H2: {
@@ -101,7 +104,9 @@ final class TruncDate<T> extends AbstractFunction<T> {
                     default: throwUnsupported();
                 }
 
-                return DSL.field("{parsedatetime}({formatdatetime}({0}, {1}), {1})", getDataType(), date, inline(format));
+                ctx.visit(DSL.keyword("parsedatetime")).sql('(')
+                   .visit(DSL.keyword("formatdatetime")).sql('(').visit(date).sql(", ").visit(inline(format)).sql("), ").visit(inline(format)).sql(')');
+                break;
             }
 
 // These don't work yet and need better integration-testing:
@@ -136,7 +141,8 @@ final class TruncDate<T> extends AbstractFunction<T> {
                     default: throwUnsupported();
                 }
 
-                return DSL.field("{date_trunc}({0}, {1})", getDataType(), inline(keyword), date);
+                ctx.visit(F_DATE_TRUNC).sql('(').visit(inline(keyword)).sql(", ").visit(date).sql(')');
+                break;
             }
 
 // These don't work yet and need better integration-testing:
@@ -227,8 +233,15 @@ final class TruncDate<T> extends AbstractFunction<T> {
 
 
 
+
+
+
+
+
+
             default:
-                return DSL.field("{trunc}({0}, {1})", getDataType(), date, inline(part.name()));
+                ctx.visit(F_TRUNC).sql('(').visit(date).sql(", ").visit(inline(keyword)).sql(')');
+                break;
         }
     }
 

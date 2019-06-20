@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.impl.Keywords.F_RATIO_TO_REPORT;
 import static org.jooq.impl.SQLDataType.DECIMAL;
 import static org.jooq.impl.SQLDataType.DOUBLE;
 import static org.jooq.impl.Tools.castIfNeeded;

@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_COMPARISON;
+import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.Keywords.K_LIKE_REGEX;
 import static org.jooq.impl.Keywords.K_REGEXP;
 
@@ -92,8 +93,7 @@ final class RegexpLike extends AbstractCondition {
             // [#620] HSQLDB has its own syntax
             case HSQLDB: {
 
-                // [#1570] TODO: Replace this by SQL.condition(String, QueryPart...)
-                ctx.visit(DSL.condition("{regexp_matches}({0}, {1})", search, pattern));
+                ctx.visit(keyword("regexp_matches")).sql('(').visit(search).sql(", ").visit(pattern).sql(')');
                 break;
             }
 
@@ -104,11 +104,9 @@ final class RegexpLike extends AbstractCondition {
 
             case POSTGRES: {
 
-                // [#1570] TODO: Replace this by SQL.condition(String, QueryPart...)
-                ctx.visit(DSL.condition("{0} ~ {1}", search, pattern));
+                ctx.visit(search).sql(" ~ ").visit(pattern);
                 break;
             }
-
 
 
 

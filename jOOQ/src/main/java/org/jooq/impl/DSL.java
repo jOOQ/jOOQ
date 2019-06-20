@@ -15929,7 +15929,7 @@ public class DSL {
      */
     @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Date> toDate(Field<String> value, Field<String> format) {
-        return DSL.field("{to_date}({0}, {1})", SQLDataType.DATE, nullSafe(value), nullSafe(format));
+        return function("to_date", SQLDataType.DATE, nullSafe(value), nullSafe(format));
     }
 
     /**
@@ -15973,7 +15973,7 @@ public class DSL {
      */
     @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Timestamp> toTimestamp(Field<String> value, Field<String> format) {
-        return DSL.field("{to_timestamp}({0}, {1})", SQLDataType.TIMESTAMP, nullSafe(value), nullSafe(format));
+        return function("to_timestamp", SQLDataType.TIMESTAMP, nullSafe(value), nullSafe(format));
     }
 
 
@@ -17580,7 +17580,7 @@ public class DSL {
      */
     @Support({ CUBRID })
     public static Field<String> sysConnectByPath(Field<?> field, String separator) {
-        return field("{sys_connect_by_path}({0}, {1})", String.class, field, inline(separator));
+        return function("sys_connect_by_path", String.class, field, inline(separator));
     }
 
     /**

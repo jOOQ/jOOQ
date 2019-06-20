@@ -38,24 +38,42 @@
 
 package org.jooq.impl;
 
-// ...
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.Keywords.F_DATEDIFF;
+import static org.jooq.impl.Keywords.F_DATEPART;
+import static org.jooq.impl.Keywords.F_DAYOFWEEK;
+import static org.jooq.impl.Keywords.F_EXTRACT;
+import static org.jooq.impl.Keywords.F_STRFTIME;
+import static org.jooq.impl.Keywords.F_TO_CHAR;
+import static org.jooq.impl.Keywords.F_TO_NUMBER;
+import static org.jooq.impl.Keywords.F_TRUNC;
+import static org.jooq.impl.Keywords.K_DATE;
+import static org.jooq.impl.Keywords.K_DAY;
+import static org.jooq.impl.Keywords.K_FROM;
+import static org.jooq.impl.Keywords.K_HOUR;
+import static org.jooq.impl.Keywords.K_INT;
+import static org.jooq.impl.Keywords.K_MINUTE;
+import static org.jooq.impl.Keywords.K_MONTH;
+import static org.jooq.impl.Keywords.K_SECOND;
+import static org.jooq.impl.Keywords.K_YEAR;
 import static org.jooq.impl.SQLDataType.INTEGER;
+import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.castIfNeeded;
 
 import java.sql.Date;
 import java.sql.Timestamp;
 
-import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.DatePart;
 import org.jooq.Field;
 
 /**
  * @author Lukas Eder
  */
-final class Extract extends AbstractFunction<Integer> {
+final class Extract extends AbstractField<Integer> {
 
     private static final long serialVersionUID = 3748640920856031034L;
 
@@ -63,48 +81,67 @@ final class Extract extends AbstractFunction<Integer> {
     private final DatePart    datePart;
 
     Extract(Field<?> field, DatePart datePart) {
-        super("extract", INTEGER, field);
+        super(DSL.name("extract"), INTEGER);
 
         this.field = field;
         this.datePart = datePart;
     }
 
     @Override
-    final Field<Integer> getFunction0(Configuration configuration) {
-        switch (configuration.family()) {
+    public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
             case SQLITE:
                 switch (datePart) {
-                    case QUARTER:
-                    case DECADE:
-                    case CENTURY:
-                    case MILLENNIUM:
-                        return getDefaultEmulation();
-
                     case YEAR:
-                        return DSL.field("{strftime}('%Y', {0})", INTEGER, field);
+                        ctx.visit(F_STRFTIME).sql("('%Y', ").visit(field).sql(')');
+                        return;
                     case MONTH:
-                        return DSL.field("{strftime}('%m', {0})", INTEGER, field);
+                        ctx.visit(F_STRFTIME).sql("('%m', ").visit(field).sql(')');
+                        return;
                     case DAY:
-                        return DSL.field("{strftime}('%d', {0})", INTEGER, field);
+                        ctx.visit(F_STRFTIME).sql("('%d', ").visit(field).sql(')');
+                        return;
                     case HOUR:
-                        return DSL.field("{strftime}('%H', {0})", INTEGER, field);
+                        ctx.visit(F_STRFTIME).sql("('%H', ").visit(field).sql(')');
+                        return;
                     case MINUTE:
-                        return DSL.field("{strftime}('%M', {0})", INTEGER, field);
+                        ctx.visit(F_STRFTIME).sql("('%M', ").visit(field).sql(')');
+                        return;
                     case SECOND:
-                        return DSL.field("{strftime}('%S', {0})", INTEGER, field);
+                        ctx.visit(F_STRFTIME).sql("('%S', ").visit(field).sql(')');
+                        return;
 
                     // See: https://www.sqlite.org/lang_datefunc.html
                     case EPOCH:
-                        return DSL.field("{strftime}('%s', {0})", INTEGER, field);
+                        ctx.visit(F_STRFTIME).sql("('%s', ").visit(field).sql(')');
+                        return;
                     case ISO_DAY_OF_WEEK:
-                        return dowSun0ToISO(DSL.field("{strftime}('%w', {0})", INTEGER, field));
+                        ctx.visit(dowSun0ToISO(function("strftime", INTEGER, inline("%w"), field)));
+                        return;
                     case DAY_OF_WEEK:
-                        return DSL.field("{strftime}('%w', {0})", INTEGER, field).add(one());
+                        ctx.visit(F_STRFTIME).sql("('%w', ").visit(field).sql(") + ").visit(one());
+                        return;
                     case DAY_OF_YEAR:
-                        return DSL.field("{strftime}('%j', {0})", INTEGER, field);
-                    default:
-                        return getNativeFunction();
+                        ctx.visit(F_STRFTIME).sql("('%j', ").visit(field).sql(')');
+                        return;
                 }
+                break;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -134,48 +171,26 @@ final class Extract extends AbstractFunction<Integer> {
 
             case DERBY:
                 switch (datePart) {
-                    case DECADE:
-                    case CENTURY:
-                    case MILLENNIUM:
-                        return getDefaultEmulation();
-
                     case YEAR:
-                        return function("year", INTEGER, field);
+                        ctx.visit(K_YEAR).sql('(').visit(field).sql(')');
+                        return;
                     case MONTH:
-                        return function("month", INTEGER, field);
+                        ctx.visit(K_MONTH).sql('(').visit(field).sql(')');
+                        return;
                     case DAY:
-                        return function("day", INTEGER, field);
+                        ctx.visit(K_DAY).sql('(').visit(field).sql(')');
+                        return;
                     case HOUR:
-                        return function("hour", INTEGER, field);
+                        ctx.visit(K_HOUR).sql('(').visit(field).sql(')');
+                        return;
                     case MINUTE:
-                        return function("minute", INTEGER, field);
+                        ctx.visit(K_MINUTE).sql('(').visit(field).sql(')');
+                        return;
                     case SECOND:
-                        return function("second", INTEGER, field);
+                        ctx.visit(K_SECOND).sql('(').visit(field).sql(')');
+                        return;
                 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                return getDefaultEmulation();
-
-
-
-
-
+                break;
 
 
 
@@ -277,81 +292,68 @@ final class Extract extends AbstractFunction<Integer> {
             case MARIADB:
             case MYSQL:
                 switch (datePart) {
-                    case DECADE:
-                    case CENTURY:
-                    case MILLENNIUM:
-                        return getDefaultEmulation();
-
                     case DAY_OF_WEEK:
-                        return DSL.field("{dayofweek}({0})", INTEGER, field);
+                        ctx.visit(F_DAYOFWEEK).sql('(').visit(field).sql(')');
+                        return;
                     case DAY_OF_YEAR:
-                        return DSL.field("{dayofyear}({0})", INTEGER, field);
+                        ctx.visit(keyword("dayofyear")).sql('(').visit(field).sql(')');
+                        return;
                     case EPOCH:
-                        return DSL.field("{unix_timestamp}({0})", INTEGER, field);
+                        ctx.visit(keyword("unix_timestamp")).sql('(').visit(field).sql(')');
+                        return;
                     case ISO_DAY_OF_WEEK:
-                        return DSL.field("{weekday}({0})", INTEGER, field).add(one());
+                        ctx.visit(keyword("weekday")).sql('(').visit(field).sql(") + 1");
+                        return;
                     case QUARTER:
-                        return DSL.field("{quarter}({0})", INTEGER, field);
-
-                    default:
-                        return getNativeFunction();
+                        ctx.visit(datePart.toKeyword()).sql('(').visit(field).sql(')');
+                        return;
                 }
+                break;
 
 
 
             case POSTGRES:
                 switch (datePart) {
                     case DAY_OF_WEEK:
-                        return DSL.field("({extract}({dow from} {0}) + 1)", INTEGER, field);
+                        ctx.sql('(').visit(F_EXTRACT).sql('(').visit(keyword("dow")).sql(' ').visit(K_FROM).sql(' ').visit(field).sql(") + 1)");
+                        return;
                     case DAY_OF_YEAR:
-                        return DSL.field("{extract}({doy from} {0})", INTEGER, field);
+                        ctx.visit(F_EXTRACT).sql('(').visit(keyword("doy")).sql(' ').visit(K_FROM).sql(' ').visit(field).sql(')');
+                        return;
                     case ISO_DAY_OF_WEEK:
-                        return DSL.field("{extract}({isodow from} {0})", INTEGER, field);
-
-                    default:
-                        return getNativeFunction();
+                        ctx.visit(F_EXTRACT).sql('(').visit(keyword("isodow")).sql(' ').visit(K_FROM).sql(' ').visit(field).sql(')');
+                        return;
                 }
+                break;
 
             case HSQLDB:
                 switch (datePart) {
-                    case DECADE:
-                    case CENTURY:
-                    case MILLENNIUM:
-                    case TIMEZONE:
-                        return getDefaultEmulation();
-
                     case EPOCH:
-                        return DSL.field("{unix_timestamp}({0})", INTEGER, field);
+                        ctx.visit(keyword("unix_timestamp")).sql('(').visit(field).sql(')');
+                        return;
                     case ISO_DAY_OF_WEEK:
-                        return dowSun1ToISO(DSL.field("{extract}({day_of_week from} {0})", INTEGER, field));
+                        ctx.visit(dowSun1ToISO(DSL.field("{extract}({day_of_week from} {0})", INTEGER, field)));
+                        return;
                     case QUARTER:
-                        return DSL.field("{quarter}({0})", INTEGER, field);
                     case WEEK:
-                        return DSL.field("{week}({0})", INTEGER, field);
-
-                    default:
-                        return getNativeFunction();
+                        ctx.visit(datePart.toKeyword()).sql('(').visit(field).sql(')');
+                        return;
                 }
+                break;
+
             case H2:
                 switch (datePart) {
-                    case DECADE:
-                    case CENTURY:
-                    case MILLENNIUM:
-                    case TIMEZONE:
-                        return getDefaultEmulation();
-
                     case QUARTER:
-                        return DSL.field("{quarter}({0})", INTEGER, field);
+                        ctx.visit(datePart.toKeyword()).sql('(').visit(field).sql(')');
+                        return;
                     case WEEK:
-                        return DSL.field("{iso_week}({0})", INTEGER, field);
-
-                    default:
-                        return getNativeFunction();
+                        ctx.visit(keyword("iso_week")).sql('(').visit(field).sql(')');
+                        return;
                 }
-
-            default:
-                return getNativeFunction();
+                break;
         }
+
+        acceptDefaultEmulation(ctx);
     }
 
     private final static Field<Integer> dowISOToSun1(Field<Integer> dow) {
@@ -366,31 +368,37 @@ final class Extract extends AbstractFunction<Integer> {
         return dow.add(inline(6)).mod(inline(7)).add(one());
     }
 
-    private final Field<Integer> getDefaultEmulation() {
+    private final void acceptDefaultEmulation(Context<?> ctx) {
         switch (datePart) {
             case DECADE:
-                return castIfNeeded(DSL.year(field).div(inline(10)), INTEGER);
+                ctx.visit(castIfNeeded(DSL.year(field).div(inline(10)), INTEGER));
+                break;
             case CENTURY:
-                return castIfNeeded(
+                ctx.visit(castIfNeeded(
                     DSL.sign(DSL.year(field))
                        .mul(DSL.abs(DSL.year(field)).add(inline(99)))
-                       .div(inline(100)), INTEGER);
+                       .div(inline(100)), INTEGER));
+                break;
             case MILLENNIUM:
-                return castIfNeeded(
+                ctx.visit(castIfNeeded(
                     DSL.sign(DSL.year(field))
                        .mul(DSL.abs(DSL.year(field)).add(inline(999)))
-                       .div(inline(1000)), INTEGER);
+                       .div(inline(1000)), INTEGER));
+                break;
             case QUARTER:
-                return DSL.month(field).add(inline(2)).div(inline(3));
+                ctx.visit(DSL.month(field).add(inline(2)).div(inline(3)));
+                break;
             case TIMEZONE:
-                return DSL.extract(field, DatePart.TIMEZONE_HOUR).mul(inline(3600))
-                    .add(DSL.extract(field, DatePart.TIMEZONE_MINUTE).mul(inline(60)));
+                ctx.visit(DSL.extract(field, DatePart.TIMEZONE_HOUR).mul(inline(3600))
+                    .add(DSL.extract(field, DatePart.TIMEZONE_MINUTE).mul(inline(60))));
+                break;
             default:
-                return getNativeFunction();
+                acceptNativeFunction(ctx);
+                break;
         }
     }
 
-    private final Field<Integer> getNativeFunction() {
-        return DSL.field("{extract}({0} {from} {1})", INTEGER, datePart.toKeyword(), field);
+    private final void acceptNativeFunction(Context<?> ctx) {
+        ctx.visit(F_EXTRACT).sql('(').visit(datePart.toKeyword()).sql(' ').visit(K_FROM).sql(' ').visit(field).sql(')');
     }
 }

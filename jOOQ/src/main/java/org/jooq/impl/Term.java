@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import org.jooq.Keyword;
 import org.jooq.Name;
 // ...
 import org.jooq.SQLDialect;
@@ -312,11 +313,13 @@ enum Term {
 
     ;
 
-    private final Name   name;
-    private final String translation;
+    private final Name    name;
+    private final Keyword keyword;
+    private final String  translation;
 
     private Term() {
         this.name = DSL.name(name());
+        this.keyword = DSL.keyword(name());
         this.translation = name().toLowerCase();
     }
 
@@ -327,6 +330,10 @@ enum Term {
 
     public final Name toName() {
         return name;
+    }
+
+    public Keyword toKeyword() {
+        return keyword;
     }
 
     /**

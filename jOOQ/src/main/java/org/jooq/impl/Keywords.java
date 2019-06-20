@@ -105,6 +105,10 @@ final class Keywords {
     static final Keyword K_DATE                             = keyword("date");
     static final Keyword K_DATETIME                         = keyword("datetime");
     static final Keyword K_DATETIMEOFFSET                   = keyword("datetimeoffset");
+    static final Keyword K_DAY                              = keyword("day");
+    static final Keyword K_DAY_MICROSECOND                  = keyword("day_microsecond");
+    static final Keyword K_DAY_MILLISECOND                  = keyword("day_millisecond");
+    static final Keyword K_DAY_TO_SECOND                    = keyword("day_to_second");
     static final Keyword K_DECIMAL                          = keyword("decimal");
     static final Keyword K_DECLARE                          = keyword("declare");
     static final Keyword K_DEFAULT                          = keyword("default");
@@ -167,6 +171,7 @@ final class Keywords {
     static final Keyword K_GRANT_OPTION_FOR                 = keyword("grant option for");
     static final Keyword K_GROUP_BY                         = keyword("group by");
     static final Keyword K_HAVING                           = keyword("having");
+    static final Keyword K_HOUR                             = keyword("hour");
     static final Keyword K_HOUR_TO_SECOND                   = keyword("hour to second");
     static final Keyword K_IDENTITY                         = keyword("identity");
     static final Keyword K_IF                               = keyword("if");
@@ -182,6 +187,7 @@ final class Keywords {
     static final Keyword K_INNER_JOIN                       = keyword("inner join");
     static final Keyword K_INSERT                           = keyword("insert");
     static final Keyword K_INT                              = keyword("int");
+    static final Keyword K_INTERVAL                         = keyword("interval");
     static final Keyword K_INTO                             = keyword("into");
     static final Keyword K_IS                               = keyword("is");
     static final Keyword K_IS_NOT_NULL                      = keyword("is not null");
@@ -202,10 +208,13 @@ final class Keywords {
     static final Keyword K_MATCHED                          = keyword("matched");
     static final Keyword K_MAXVALUE                         = keyword("maxvalue");
     static final Keyword K_MERGE_INTO                       = keyword("merge into");
+    static final Keyword K_MILLISECOND                      = keyword("millisecond");
     static final Keyword K_MINUS                            = keyword("minus");
+    static final Keyword K_MINUTE                           = keyword("minute");
     static final Keyword K_MINVALUE                         = keyword("minvalue");
     static final Keyword K_MOD                              = keyword("mod");
     static final Keyword K_MODIFY                           = keyword("modify");
+    static final Keyword K_MONTH                            = keyword("month");
     static final Keyword K_MULTISET                         = keyword("multiset");
     static final Keyword K_NEW_TABLE                        = keyword("new table");
     static final Keyword K_NEXT_VALUE_FOR                   = keyword("next value for");
@@ -286,6 +295,7 @@ final class Keywords {
     static final Keyword K_SCHEMA                           = keyword("schema");
     static final Keyword K_SCN                              = keyword("scn");
     static final Keyword K_SEARCH_PATH                      = keyword("search_path");
+    static final Keyword K_SECOND                           = keyword("second");
     static final Keyword K_SELECT                           = keyword("select");
     static final Keyword K_SEPARATOR                        = keyword("separator");
     static final Keyword K_SEQUENCE                         = keyword("sequence");
@@ -350,10 +360,14 @@ final class Keywords {
     static final Keyword K_WITH_TIES                        = keyword("with ties");
     static final Keyword K_WITHIN_GROUP                     = keyword("within group");
     static final Keyword K_XMLTABLE                         = keyword("xmltable");
+    static final Keyword K_YEAR                             = keyword("year");
+    static final Keyword K_YEAR_MONTH                       = keyword("year_month");
     static final Keyword K_YEAR_TO_DAY                      = keyword("year to day");
+    static final Keyword K_YEAR_TO_MONTH                    = keyword("year to month");
     static final Keyword K_YEAR_TO_FRACTION                 = keyword("year to fraction");
 
     static final Keyword F_ACOS                             = keyword("acos");
+    static final Keyword F_ADD_MONTHS                       = keyword("add_months");
     static final Keyword F_ASC                              = keyword("asc");
     static final Keyword F_ASCII                            = keyword("ascii");
     static final Keyword F_ASCII_VAL                        = keyword("ascii_val");
@@ -376,7 +390,16 @@ final class Keywords {
     static final Keyword F_CURRENT_TIMESTAMP                = keyword("current_timestamp");
     static final Keyword F_CURRENT_USER                     = keyword("current_user");
     static final Keyword F_CURRENTUSER                      = keyword("currentuser");
+    static final Keyword F_DATE_ADD                         = keyword("date_add");
+    static final Keyword F_DATE_DIFF                        = keyword("date_diff");
+    static final Keyword F_DATE_TRUNC                       = keyword("date_trunc");
+    static final Keyword F_DATEADD                          = keyword("dateadd");
+    static final Keyword F_DATEDIFF                         = keyword("datediff");
+    static final Keyword F_DATEPART                         = keyword("datepart");
+    static final Keyword F_DAYOFWEEK                        = keyword("dayofweek");
+    static final Keyword F_DAYS_BETWEEN                     = keyword("days_between");
     static final Keyword F_DEGREES                          = keyword("degrees");
+    static final Keyword F_EXTRACT                          = keyword("extract");
     static final Keyword F_FLOOR                            = keyword("floor");
     static final Keyword F_GEN_ID                           = keyword("gen_id");
     static final Keyword F_HASHBYTES                        = keyword("hashbytes");
@@ -396,12 +419,14 @@ final class Keywords {
     static final Keyword F_MID                              = keyword("mid");
     static final Keyword F_NOW                              = keyword("now");
     static final Keyword F_NULLIF                           = keyword("nullif");
+    static final Keyword F_NUMTODSINTERVAL                  = keyword("numtodsinterval");
     static final Keyword F_NVL                              = keyword("nvl");
     static final Keyword F_NVL2                             = keyword("nvl2");
     static final Keyword F_POSITION                         = keyword("position");
     static final Keyword F_POWER                            = keyword("power");
     static final Keyword F_RAND                             = keyword("rand");
     static final Keyword F_RANDOM                           = keyword("random");
+    static final Keyword F_RATIO_TO_REPORT                  = keyword("ratio_to_report");
     static final Keyword F_RAWTOHEX                         = keyword("rawtohex");
     static final Keyword F_REPEAT                           = keyword("repeat");
     static final Keyword F_REPLACE                          = keyword("replace");
@@ -409,6 +434,7 @@ final class Keywords {
     static final Keyword F_REVERSE                          = keyword("reverse");
     static final Keyword F_RIGHT                            = keyword("right");
     static final Keyword F_RND                              = keyword("rnd");
+    static final Keyword F_ROLLUP                           = keyword("rollup");
     static final Keyword F_ROUND                            = keyword("round");
     static final Keyword F_ROUND_DOWN                       = keyword("round_down");
     static final Keyword F_RPAD                             = keyword("rpad");
@@ -427,9 +453,12 @@ final class Keywords {
     static final Keyword F_SUBSTRING                        = keyword("substring");
     static final Keyword F_SYSDATE                          = keyword("sysdate");
     static final Keyword F_TANH                             = keyword("tanh");
+    static final Keyword F_TIMESTAMPADD                     = keyword("timestampadd");
+    static final Keyword F_TIMESTAMPDIFF                    = keyword("timestampdiff");
     static final Keyword F_TO_CHAR                          = keyword("to_char");
     static final Keyword F_TO_CLOB                          = keyword("to_clob");
     static final Keyword F_TO_DATE                          = keyword("to_date");
+    static final Keyword F_TO_NUMBER                        = keyword("to_number");
     static final Keyword F_TO_TIMESTAMP                     = keyword("to_timestamp");
     static final Keyword F_TRIM                             = keyword("trim");
     static final Keyword F_TRUNC                            = keyword("trunc");

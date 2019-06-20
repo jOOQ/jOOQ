@@ -38,7 +38,6 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.Keywords.K_COALESCE;
 
 import org.jooq.Context;

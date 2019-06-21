@@ -2932,7 +2932,7 @@ final class ParserImpl implements Parser {
                 s = s.minvalue(parseUnsignedInteger(ctx));
                 continue;
             }
-            else if (parseKeywordIf(ctx, "NO MINVALUE")) {
+            else if (parseKeywordIf(ctx, "NO MINVALUE") || parseKeywordIf(ctx, "NOMINVALUE")) {
                 s = s.noMinvalue();
                 continue;
             }
@@ -2940,7 +2940,7 @@ final class ParserImpl implements Parser {
                 s = s.maxvalue(parseUnsignedInteger(ctx));
                 continue;
             }
-            else if (parseKeywordIf(ctx, "NO MAXVALUE")) {
+            else if (parseKeywordIf(ctx, "NO MAXVALUE") || parseKeywordIf(ctx, "NOMAXVALUE")) {
                 s = s.noMaxvalue();
                 continue;
             }
@@ -2948,7 +2948,7 @@ final class ParserImpl implements Parser {
                 s = s.cycle();
                 continue;
             }
-            else if (parseKeywordIf(ctx, "NO CYCLE")) {
+            else if (parseKeywordIf(ctx, "NO CYCLE") || parseKeywordIf(ctx, "NOCYCLE")) {
                 s = s.noCycle();
                 continue;
             }
@@ -2956,7 +2956,7 @@ final class ParserImpl implements Parser {
                 s = s.cache(parseUnsignedInteger(ctx));
                 continue;
             }
-            else if (parseKeywordIf(ctx, "NO CACHE")) {
+            else if (parseKeywordIf(ctx, "NO CACHE") || parseKeywordIf(ctx, "NOCACHE")) {
                 s = s.noCache();
                 continue;
             }

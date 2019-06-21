@@ -43,7 +43,6 @@ import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
-import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.F_GEN_ID;
 import static org.jooq.impl.Keywords.K_CURRENT_VALUE_FOR;
@@ -145,6 +144,7 @@ public class SequenceImpl<T extends Number> extends AbstractNamed implements Seq
             SQLDialect family = configuration.family();
 
             switch (family) {
+                case H2:
 
 
 
@@ -156,10 +156,9 @@ public class SequenceImpl<T extends Number> extends AbstractNamed implements Seq
 
 
 
-                case POSTGRES:
-                case H2: {
+                case POSTGRES: {
                     ctx.visit(keyword).sql('(');
-                    SequenceImpl.this.accept0(ctx, true);
+                    ctx.sql('\'').stringLiteral(true).visit(SequenceImpl.this).stringLiteral(false).sql('\'');
                     ctx.sql(')');
                     break;
                 }
@@ -223,23 +222,13 @@ public class SequenceImpl<T extends Number> extends AbstractNamed implements Seq
 
     @Override
     public final void accept(Context<?> ctx) {
-        accept0(ctx, false);
-    }
-
-    private final void accept0(Context<?> ctx, boolean asStringLiterals) {
         Schema mappedSchema = Tools.getMappedSchema(ctx.configuration(), schema);
 
         if (mappedSchema != null && !"".equals(mappedSchema.getName()) && ctx.family() != CUBRID)
-            if (asStringLiterals)
-                ctx.visit(inline(mappedSchema.getName()))
-                   .sql(", ");
-            else
                 ctx.visit(mappedSchema)
                    .sql('.');
 
-        if (asStringLiterals)
-            ctx.visit(inline(getName()));
-        else if (nameIsPlainSQL)
+        if (nameIsPlainSQL)
             ctx.sql(getName());
         else
             ctx.visit(getUnqualifiedName());

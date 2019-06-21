@@ -48,11 +48,13 @@ public enum Operator {
     /**
      * The and operator
      */
+    @Support
     AND("and"),
 
     /**
      * The or operator
      */
+    @Support
     OR("or");
 
     private final String sql;

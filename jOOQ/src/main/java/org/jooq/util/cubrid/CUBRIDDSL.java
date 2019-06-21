@@ -68,7 +68,7 @@ public class CUBRIDDSL extends DSL {
      * WHERE article_id = 130,987</pre></code>
      */
     public static <T> Field<T> incr(Field<T> field) {
-        return field("{incr}({0})", field.getDataType(), field);
+        return function("incr", field.getDataType(), field);
     }
 
     /**
@@ -81,6 +81,6 @@ public class CUBRIDDSL extends DSL {
      * WHERE article_id = 130,987</pre></code>
      */
     public static <T> Field<T> decr(Field<T> field) {
-        return field("{decr}({0})", field.getDataType(), field);
+        return function("decr", field.getDataType(), field);
     }
 }

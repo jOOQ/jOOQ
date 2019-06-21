@@ -180,7 +180,7 @@ public class PostgresDSL extends DSL {
     // Java 8 is stricter than Java 7 with respect to generics and overload
     // resolution (http://stackoverflow.com/q/5361513/521799)
     static <T> Field<T[]> arrayAppend0(Field<T[]> array, Field<T> value) {
-        return field("{array_append}({0}, {1})", nullSafe(array).getDataType(), nullSafe(array), nullSafe(value));
+        return function("array_append", nullSafe(array).getDataType(), nullSafe(array), nullSafe(value));
     }
 
     /**
@@ -234,7 +234,7 @@ public class PostgresDSL extends DSL {
     // Java 8 is stricter than Java 7 with respect to generics and overload
     // resolution (http://stackoverflow.com/q/5361513/521799)
     static <T> Field<T[]> arrayPrepend0(Field<T> value, Field<T[]> array) {
-        return field("{array_prepend}({0}, {1})", nullSafe(array).getDataType(), nullSafe(value), nullSafe(array));
+        return function("array_prepend", nullSafe(array).getDataType(), nullSafe(value), nullSafe(array));
     }
 
     /**
@@ -282,7 +282,7 @@ public class PostgresDSL extends DSL {
      */
     @Support({ POSTGRES })
     public static <T> Field<T[]> arrayCat(Field<T[]> array1, Field<T[]> array2) {
-        return field("{array_cat}({0}, {1})", nullSafe(array1).getDataType(), nullSafe(array1), nullSafe(array2));
+        return function("array_cat", nullSafe(array1).getDataType(), nullSafe(array1), nullSafe(array2));
     }
 
     /**
@@ -336,7 +336,7 @@ public class PostgresDSL extends DSL {
     // Java 8 is stricter than Java 7 with respect to generics and overload
     // resolution (http://stackoverflow.com/q/5361513/521799)
     static <T> Field<T[]> arrayRemove0(Field<T[]> array, Field<T> element) {
-        return field("{array_remove}({0}, {1})", array.getDataType(), array, element);
+        return function("array_remove", array.getDataType(), array, element);
     }
 
     /**
@@ -394,7 +394,7 @@ public class PostgresDSL extends DSL {
     // Java 8 is stricter than Java 7 with respect to generics and overload
     // resolution (http://stackoverflow.com/q/5361513/521799)
     static <T> Field<T[]> arrayReplace0(Field<T[]> array, Field<T> search, Field<T> replace) {
-        return field("{array_replace}({0}, {1}, {2})", array.getDataType(), nullSafe(array), nullSafe(search), nullSafe(replace));
+        return function("array_replace", array.getDataType(), nullSafe(array), nullSafe(search), nullSafe(replace));
     }
 
     /**
@@ -442,7 +442,7 @@ public class PostgresDSL extends DSL {
      */
     @Support({ POSTGRES })
     public static <T> Field<T[]> arrayFill(Field<T> value, Field<Integer[]> dimensions) {
-        return field("{array_fill}({0}, {1})", nullSafe(value).getDataType().getArrayDataType(), nullSafe(value), nullSafe(dimensions));
+        return function("array_fill", nullSafe(value).getDataType().getArrayDataType(), nullSafe(value), nullSafe(dimensions));
     }
 
     /**
@@ -490,7 +490,7 @@ public class PostgresDSL extends DSL {
      */
     @Support({ POSTGRES })
     public static <T> Field<T[]> arrayFill(Field<T> value, Field<Integer[]> dimensions, Field<Integer[]> bounds) {
-        return field("{array_fill}({0}, {1})", nullSafe(value).getDataType().getArrayDataType(), nullSafe(value), nullSafe(dimensions), nullSafe(bounds));
+        return function("array_fill", nullSafe(value).getDataType().getArrayDataType(), nullSafe(value), nullSafe(dimensions), nullSafe(bounds));
     }
 
     /**
@@ -616,7 +616,7 @@ public class PostgresDSL extends DSL {
      */
     @Support({ POSTGRES })
     public static Field<String[]> stringToArray(Field<String> string, Field<String> delimiter) {
-        return field("{string_to_array}({0}, {1})", SQLDataType.VARCHAR.getArrayDataType(), nullSafe(string), nullSafe(delimiter));
+        return function("string_to_array", SQLDataType.VARCHAR.getArrayDataType(), nullSafe(string), nullSafe(delimiter));
     }
 
     /**
@@ -664,7 +664,7 @@ public class PostgresDSL extends DSL {
      */
     @Support({ POSTGRES })
     public static Field<String[]> stringToArray(Field<String> string, Field<String> delimiter, Field<String> nullString) {
-        return field("{string_to_array}({0}, {1}, {2})", SQLDataType.VARCHAR.getArrayDataType(), nullSafe(string), nullSafe(delimiter), nullSafe(nullString));
+        return function("string_to_array", SQLDataType.VARCHAR.getArrayDataType(), nullSafe(string), nullSafe(delimiter), nullSafe(nullString));
     }
 
     // -------------------------------------------------------------------------

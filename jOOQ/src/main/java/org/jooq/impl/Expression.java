@@ -94,7 +94,6 @@ import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.regex.Pattern;
 
-import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.DatePart;
@@ -566,22 +565,16 @@ final class Expression<T> extends AbstractField<T> {
 
 
 
+
+
+
+
+
                 case POSTGRES:
                 default:
                     ctx.visit(new DefaultExpression<T>(lhs, operator, new QueryPartList<Field<?>>(Arrays.asList(rhs))));
                     break;
             }
-        }
-
-        /**
-         * Cast a field to its actual type if it is not a <code>TIMESTAMP</code>
-         * field
-         */
-        private final Field<T> castNonTimestamps(Configuration configuration, Field<T> result) {
-            if (getDataType().getType() != Timestamp.class)
-                return DSL.field("{cast}({0} {as} " + getDataType().getCastTypeName(configuration) + ")", getDataType(), result);
-
-            return result;
         }
 
         /**

@@ -41,6 +41,7 @@ import static org.jooq.Clause.CREATE_SEQUENCE;
 import static org.jooq.Clause.CREATE_SEQUENCE_SEQUENCE;
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
@@ -49,6 +50,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
+import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.impl.Keywords.K_CACHE;
 import static org.jooq.impl.Keywords.K_CREATE;
@@ -88,6 +90,7 @@ final class CreateSequenceImpl extends AbstractRowCountQuery implements
     private static final EnumSet<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS = EnumSet.of(DERBY, FIREBIRD);
     private static final EnumSet<SQLDialect> REQUIRES_START_WITH      = EnumSet.of(DERBY);
     private static final EnumSet<SQLDialect> NO_SUPPORT_CACHE         = EnumSet.of(DERBY, HSQLDB);
+    private static final EnumSet<SQLDialect> OMIT_NO_CACHE            = EnumSet.of(POSTGRES);
 
     private final Sequence<?>                sequence;
     private final boolean                    ifNotExists;
@@ -219,10 +222,12 @@ final class CreateSequenceImpl extends AbstractRowCountQuery implements
     }
 
     private final void accept0(Context<?> ctx) {
+        SQLDialect family = ctx.family();
+
         ctx.start(CREATE_SEQUENCE_SEQUENCE)
            .visit(K_CREATE)
            .sql(' ')
-           .visit(ctx.family() == CUBRID ? K_SERIAL : K_SEQUENCE)
+           .visit(family == CUBRID ? K_SERIAL : K_SEQUENCE)
            .sql(' ');
 
         if (ifNotExists && supportsIfNotExists(ctx))
@@ -238,7 +243,7 @@ final class CreateSequenceImpl extends AbstractRowCountQuery implements
 
 
         // Some databases default to sequences starting with MIN_VALUE
-        if (startWith == null && REQUIRES_START_WITH.contains(ctx.family()))
+        if (startWith == null && REQUIRES_START_WITH.contains(family))
             ctx.sql(' ').visit(K_START_WITH).sql(" 1");
         else if (startWith != null)
             ctx.sql(' ').visit(K_START_WITH).sql(' ').visit(startWith);
@@ -261,10 +266,10 @@ final class CreateSequenceImpl extends AbstractRowCountQuery implements
         else if (noCycle)
             ctx.sql(' ').visit(K_NO).sql(noSeparator).visit(K_CYCLE);
 
-        if (!NO_SUPPORT_CACHE.contains(ctx.family()))
+        if (!NO_SUPPORT_CACHE.contains(family))
             if (cache != null)
                 ctx.sql(' ').visit(K_CACHE).sql(' ').visit(cache);
-            else if (noCache)
+            else if (noCache && !OMIT_NO_CACHE.contains(family))
                 ctx.sql(' ').visit(K_NO).sql(noSeparator).visit(K_CACHE);
 
         ctx.end(CREATE_SEQUENCE_SEQUENCE);

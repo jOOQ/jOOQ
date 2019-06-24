@@ -6,6 +6,8 @@ package org.jooq.example.db.h2.tables.records;
 
 import org.jooq.Field;
 import org.jooq.Record1;
+import org.jooq.RecordMapper;
+import org.jooq.RecordUnmapper;
 import org.jooq.Row1;
 import org.jooq.example.db.h2.tables.BookStore;
 import org.jooq.impl.UpdatableRecordImpl;
@@ -17,7 +19,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class BookStoreRecord extends UpdatableRecordImpl<BookStoreRecord> implements Record1<String> {
 
-    private static final long serialVersionUID = -1867804630;
+    private static final long serialVersionUID = -1737806109;
 
     /**
      * Setter for <code>PUBLIC.BOOK_STORE.NAME</code>.
@@ -101,5 +103,32 @@ public class BookStoreRecord extends UpdatableRecordImpl<BookStoreRecord> implem
         super(BookStore.BOOK_STORE);
 
         set(0, name);
+    }
+
+    public RecordMapper<BookStoreRecord, org.jooq.example.db.h2.tables.pojos.BookStore> mapper() {
+        return new RecordMapper<BookStoreRecord, org.jooq.example.db.h2.tables.pojos.BookStore>() {
+            @Override
+            public org.jooq.example.db.h2.tables.pojos.BookStore map(BookStoreRecord record) {
+                org.jooq.example.db.h2.tables.pojos.BookStore result = new org.jooq.example.db.h2.tables.pojos.BookStore();
+
+                result.setName(getName());
+
+                return result;
+            }
+        };
+    }
+
+    public RecordUnmapper<org.jooq.example.db.h2.tables.pojos.BookStore, BookStoreRecord> unmapper() {
+        return new RecordUnmapper<org.jooq.example.db.h2.tables.pojos.BookStore, BookStoreRecord>() {
+            @Override
+            public BookStoreRecord unmap(org.jooq.example.db.h2.tables.pojos.BookStore pojo) {
+                BookStoreRecord result = new BookStoreRecord();
+
+                result.setName(pojo.getName());
+
+                result.attach(configuration());
+                return result;
+            }
+        };
     }
 }

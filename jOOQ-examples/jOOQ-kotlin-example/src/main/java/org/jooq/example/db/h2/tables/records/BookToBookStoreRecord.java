@@ -7,6 +7,8 @@ package org.jooq.example.db.h2.tables.records;
 import org.jooq.Field;
 import org.jooq.Record2;
 import org.jooq.Record3;
+import org.jooq.RecordMapper;
+import org.jooq.RecordUnmapper;
 import org.jooq.Row3;
 import org.jooq.example.db.h2.tables.BookToBookStore;
 import org.jooq.impl.UpdatableRecordImpl;
@@ -18,7 +20,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class BookToBookStoreRecord extends UpdatableRecordImpl<BookToBookStoreRecord> implements Record3<String, Integer, Integer> {
 
-    private static final long serialVersionUID = 453087503;
+    private static final long serialVersionUID = 132127486;
 
     /**
      * Setter for <code>PUBLIC.BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>.
@@ -176,5 +178,36 @@ public class BookToBookStoreRecord extends UpdatableRecordImpl<BookToBookStoreRe
         set(0, bookStoreName);
         set(1, bookId);
         set(2, stock);
+    }
+
+    public RecordMapper<BookToBookStoreRecord, org.jooq.example.db.h2.tables.pojos.BookToBookStore> mapper() {
+        return new RecordMapper<BookToBookStoreRecord, org.jooq.example.db.h2.tables.pojos.BookToBookStore>() {
+            @Override
+            public org.jooq.example.db.h2.tables.pojos.BookToBookStore map(BookToBookStoreRecord record) {
+                org.jooq.example.db.h2.tables.pojos.BookToBookStore result = new org.jooq.example.db.h2.tables.pojos.BookToBookStore();
+
+                result.setBookStoreName(getBookStoreName());
+                result.setBookId(getBookId());
+                result.setStock(getStock());
+
+                return result;
+            }
+        };
+    }
+
+    public RecordUnmapper<org.jooq.example.db.h2.tables.pojos.BookToBookStore, BookToBookStoreRecord> unmapper() {
+        return new RecordUnmapper<org.jooq.example.db.h2.tables.pojos.BookToBookStore, BookToBookStoreRecord>() {
+            @Override
+            public BookToBookStoreRecord unmap(org.jooq.example.db.h2.tables.pojos.BookToBookStore pojo) {
+                BookToBookStoreRecord result = new BookToBookStoreRecord();
+
+                result.setBookStoreName(pojo.getBookStoreName());
+                result.setBookId(pojo.getBookId());
+                result.setStock(pojo.getStock());
+
+                result.attach(configuration());
+                return result;
+            }
+        };
     }
 }

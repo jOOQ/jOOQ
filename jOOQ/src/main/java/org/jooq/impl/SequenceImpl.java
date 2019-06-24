@@ -115,12 +115,25 @@ public class SequenceImpl<T extends Number> extends AbstractNamed implements Seq
 
     @Override
     public final Field<T> currval() {
-        return new SequenceFunction("currval");
+        return new SequenceFunction(SequenceMethod.CURRVAL);
     }
 
     @Override
     public final Field<T> nextval() {
-        return new SequenceFunction("nextval");
+        return new SequenceFunction(SequenceMethod.NEXTVAL);
+    }
+
+    private enum SequenceMethod {
+        CURRVAL(K_CURRVAL, DSL.name("currval")),
+        NEXTVAL(K_NEXTVAL, DSL.name("nextval"));
+
+        final Keyword keyword;
+        final Name name;
+
+        private SequenceMethod(Keyword keyword, Name name) {
+            this.keyword = keyword;
+            this.name = name;
+        }
     }
 
     private class SequenceFunction extends AbstractField<T> {
@@ -128,14 +141,13 @@ public class SequenceImpl<T extends Number> extends AbstractNamed implements Seq
         /**
          * Generated UID
          */
-        private static final long     serialVersionUID = 2292275568395094887L;
+        private static final long    serialVersionUID = 2292275568395094887L;
+        private final SequenceMethod method;
 
-        private final Keyword         keyword;
+        SequenceFunction(SequenceMethod method) {
+            super(method.name, type);
 
-        SequenceFunction(String method) {
-            super(DSL.name(method), type);
-
-            this.keyword = method.equals("nextval") ? K_NEXTVAL : K_CURRVAL;
+            this.method = method;
         }
 
         @Override
@@ -157,7 +169,7 @@ public class SequenceImpl<T extends Number> extends AbstractNamed implements Seq
 
 
                 case POSTGRES: {
-                    ctx.visit(keyword).sql('(');
+                    ctx.visit(method.keyword).sql('(');
                     ctx.sql('\'').stringLiteral(true).visit(SequenceImpl.this).stringLiteral(false).sql('\'');
                     ctx.sql(')');
                     break;
@@ -169,7 +181,7 @@ public class SequenceImpl<T extends Number> extends AbstractNamed implements Seq
                 case FIREBIRD:
                 case DERBY:
                 case HSQLDB: {
-                    if (K_NEXTVAL == keyword)
+                    if (method == SequenceMethod.NEXTVAL)
                         ctx.visit(K_NEXT_VALUE_FOR).sql(' ').visit(SequenceImpl.this);
                     else if (family == HSQLDB)
                         ctx.visit(K_CURRENT_VALUE_FOR).sql(' ').visit(SequenceImpl.this);
@@ -198,18 +210,17 @@ public class SequenceImpl<T extends Number> extends AbstractNamed implements Seq
                 case CUBRID: {
                     ctx.visit(SequenceImpl.this).sql('.');
 
-                    if (K_NEXTVAL == keyword) {
+                    if (method == SequenceMethod.NEXTVAL)
                         ctx.visit(DSL.keyword("next_value"));
-                    }
-                    else {
+                    else
                         ctx.visit(DSL.keyword("current_value"));
-                    }
+
                     break;
                 }
 
                 // Default is needed for hashCode() and toString()
                 default: {
-                    ctx.visit(SequenceImpl.this).sql('.').visit(keyword);
+                    ctx.visit(SequenceImpl.this).sql('.').visit(method.keyword);
                     break;
                 }
             }

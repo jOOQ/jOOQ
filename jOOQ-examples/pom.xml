@@ -71,6 +71,7 @@
     <modules>
         <module>jOOQ-kotlin-example</module>
         <module>jOOQ-spring-example</module>
+        <module>jOOQ-spring-boot-example</module>
         <module>jOOQ-spring-guice-example</module>
         <module>jOOQ-jpa-example-entities</module>
         <module>jOOQ-jpa-example</module>

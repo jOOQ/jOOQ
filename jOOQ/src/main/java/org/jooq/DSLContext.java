@@ -9376,7 +9376,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#alterSchemaIfExists(String)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2 })
     AlterSchemaStep alterSchemaIfExists(String schema);
 
     /**
@@ -9384,7 +9384,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#alterSchemaIfExists(Name)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2 })
     AlterSchemaStep alterSchemaIfExists(Name schema);
 
     /**
@@ -9392,7 +9392,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#alterSchemaIfExists(Schema)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2 })
     AlterSchemaStep alterSchemaIfExists(Schema schema);
 
     /**

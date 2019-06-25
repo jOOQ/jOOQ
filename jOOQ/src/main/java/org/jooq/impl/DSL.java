@@ -7441,7 +7441,7 @@ public class DSL {
      *
      * @see DSLContext#alterSchemaIfExists(String)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2 })
     public static AlterSchemaStep alterSchemaIfExists(String schema) {
         return dsl().alterSchemaIfExists(schema);
     }
@@ -7451,7 +7451,7 @@ public class DSL {
      *
      * @see DSLContext#alterSchemaIfExists(Name)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2 })
     public static AlterSchemaStep alterSchemaIfExists(Name schema) {
         return dsl().alterSchemaIfExists(schema);
     }
@@ -7461,7 +7461,7 @@ public class DSL {
      *
      * @see DSLContext#alterSchemaIfExists(Schema)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2 })
     public static AlterSchemaStep alterSchemaIfExists(Schema schema) {
         return dsl().alterSchemaIfExists(schema);
     }

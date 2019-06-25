@@ -104,7 +104,7 @@ final class RegexpLike extends AbstractCondition {
 
             case POSTGRES: {
 
-                ctx.visit(search).sql(" ~ ").visit(pattern);
+                ctx.sql('(').visit(search).sql(" ~ ").visit(pattern).sql(')');
                 break;
             }
 
@@ -130,11 +130,13 @@ final class RegexpLike extends AbstractCondition {
             case DERBY:
             case FIREBIRD:
             default: {
-                ctx.visit(search)
+                ctx.sql('(')
+                   .visit(search)
                    .sql(' ')
                    .visit(K_LIKE_REGEX)
                    .sql(' ')
-                   .visit(pattern);
+                   .visit(pattern)
+                   .sql(')');
 
                 break;
             }

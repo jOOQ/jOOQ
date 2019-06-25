@@ -71,7 +71,7 @@ final class TableComparison<R extends Record> extends AbstractCondition {
 
 
             case POSTGRES: {
-                ctx.visit(lhs).sql(' ').sql(comparator.toSQL()).sql(' ').visit(rhs);
+                ctx.sql('(').visit(lhs).sql(' ').sql(comparator.toSQL()).sql(' ').visit(rhs).sql(')');
                 break;
             }
 

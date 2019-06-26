@@ -152,7 +152,7 @@ public interface InsertOnDuplicateSetStep<R extends Record> {
      * <code>ON CONFLICT ... DO UPDATE</code> clause.
      * <p>
      * This is the same as calling {@link #set(Map)} with the argument record
-     * treated as a <code>Map&lt;Field&lt;?>, Object></code>.
+     * treated as a <code>Map&lt;Field&lt;?&gt;, Object&gt;</code>.
      *
      * @see #set(Map)
      */

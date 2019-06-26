@@ -84,7 +84,7 @@ import org.jooq.tools.Convert;
  * <h5>Records of well-defined degree</h5>
  * <p>
  * When projecting custom record types in SQL, new ad-hoc types of a certain
- * degree are formed on the fly. Records with degree &lt= 22 are reflected by
+ * degree are formed on the fly. Records with degree &lt;= 22 are reflected by
  * jOOQ through the {@link Record1}, {@link Record2}, ... {@link Record22}
  * classes, which cover the respective row value expressions {@link Row1},
  * {@link Row2}, ... {@link Row22}
@@ -1408,7 +1408,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * <li><code>X = Y</code> means <code>X.compareTo(Y) == 0</code></li>
      * <li><code>X &lt; Y</code> means <code>X.compareTo(Y) &lt; 0</code></li>
      * <li><code>X[i] = Y[i]</code> means
-     * <code>(X[i] == null && Y[i] == null) || X[i].compareTo(Y[i]) == 0</code>
+     * <code>(X[i] == null &amp;&amp; Y[i] == null) || X[i].compareTo(Y[i]) == 0</code>
      * </li>
      * <li><code>X[i] &lt; Y[i]</code> means
      * <code>Y[i] == null || X[i].compareTo(Y[i]) &lt; 0</code>. This
@@ -1427,10 +1427,10 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * OR (r1[0] = r2[0] AND ... AND r1[N-1] = r2[N-1] AND r1[N] = r2[N])</pre></code>
      * </li>
      * <li><strong><code>x = 1</code></strong>: if <code><pre>
-     *    (r1[0] > r2[0])
-     * OR (r1[0] = r2[0] AND r1[1] > r2[1])
+     *    (r1[0] &gt; r2[0])
+     * OR (r1[0] = r2[0] AND r1[1] &gt; r2[1])
      * OR  ...
-     * OR (r1[0] = r2[0] AND ... AND r1[N-1] = r2[N-1] AND r1[N] > r2[N])</pre></code>
+     * OR (r1[0] = r2[0] AND ... AND r1[N-1] = r2[N-1] AND r1[N] &gt; r2[N])</pre></code>
      * </li>
      * </ul>
      * <p>

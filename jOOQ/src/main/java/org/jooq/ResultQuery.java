@@ -208,7 +208,7 @@ extends
      * Stream this query, mapping records into a custom type.
      * <p>
      * This is the same as calling
-     * <code>fetchStream().map(r -> r.into(type))</code>. See
+     * <code>fetchStream().map(r -&gt; r.into(type))</code>. See
      * {@link Record#into(Class)} for more details
      *
      * @param <E> The generic entity type.
@@ -227,7 +227,7 @@ extends
      * Stream this query, mapping records into a custom record.
      * <p>
      * This is the same as calling
-     * <code>fetchStream().map(r -> r.into(table))</code>. See
+     * <code>fetchStream().map(r -&gt; r.into(table))</code>. See
      * {@link Record#into(Table)} for more details
      * <p>
      * The result and its contained records are attached to the original
@@ -252,7 +252,7 @@ extends
      * try-with-resources statement:
      * <p>
      * <code><pre>
-     * try (Stream&lt;R> stream = query.stream()) {
+     * try (Stream&lt;R&gt; stream = query.stream()) {
      *     // Do things with stream
      * }
      * </pre></code>
@@ -273,7 +273,7 @@ extends
      *
      * <pre>
      * <code>
-     * try (Stream&lt;R> stream = resultQuery.stream()) {
+     * try (Stream&lt;R&gt; stream = resultQuery.stream()) {
      *     X result = stream.collect(collector);
      * }
      * </code>
@@ -1251,7 +1251,7 @@ extends
      * Map resulting records onto a custom type.
      * <p>
      * This is the same as calling <code><pre>
-     * Optional&lt;E> result = q.fetchOptional().map(r -> r.into(type));
+     * Optional&lt;E&gt; result = q.fetchOptional().map(r -&gt; r.into(type));
      * </pre></code>. See {@link Record#into(Class)} for more details
      *
      * @param <E> The generic entity type.
@@ -1271,7 +1271,7 @@ extends
      * Map resulting records onto a custom record.
      * <p>
      * This is the same as calling <code><pre>
-     * Optional&lt;Z> result = q.fetchOptional().map(r -> r.into(table));
+     * Optional&lt;Z&gt; result = q.fetchOptional().map(r -&gt; r.into(table));
      * </pre></code>. See {@link Record#into(Table)} for more details
      * <p>
      * The resulting record is attached to the original {@link Configuration} by
@@ -2712,7 +2712,7 @@ extends
      * @param keys The keys used for result grouping. If this is
      *            <code>null</code> or an empty array, the resulting map will
      *            contain at most one entry.
-     * @param value The values.
+     * @param values The values.
      * @return A Map containing grouped results. This will never be
      *         <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query

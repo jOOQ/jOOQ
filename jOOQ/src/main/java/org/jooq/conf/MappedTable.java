@@ -38,7 +38,7 @@ public class MappedTable
 
     /**
      * The input table as defined in {@link org.jooq.Table#getName()}
-     * Either &lt;input/> or &lt;inputExpression/> must be provided.
+     * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided.
      *
      * @return
      *     possible object is
@@ -63,7 +63,7 @@ public class MappedTable
 
     /**
      * A regular expression matching the input table name as defined in {@link org.jooq.Table#getName()}
-     * Either &lt;input/> or &lt;inputExpression/> must be provided
+     * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided
      *
      * @return
      *     possible object is
@@ -89,8 +89,8 @@ public class MappedTable
     /**
      * The output table as it will be rendered in SQL.
      * <ul>
-     * <li>When &lt;input/> is provided, &lt;output/> is a constant value.</li>
-     * <li>When &lt;inputExpression/> is provided, &lt;output/> is a replacement expression.</li>
+     * <li>When &lt;input/&gt; is provided, &lt;output/&gt; is a constant value.</li>
+     * <li>When &lt;inputExpression/&gt; is provided, &lt;output/&gt; is a replacement expression.</li>
      * </ul>
      *
      * @return

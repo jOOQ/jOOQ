@@ -58,10 +58,10 @@ public class Reflect {
      * <p>
      * For example:
      * <code><pre>
-     * Supplier&lt;String> supplier = Reflect.compile(
+     * Supplier&lt;String&gt; supplier = Reflect.compile(
      *   "org.joor.Test",
      *   "package org.joor;\n" +
-     *   "class Test implements java.util.function.Supplier&lt;String> {\n" +
+     *   "class Test implements java.util.function.Supplier&lt;String&gt; {\n" +
      *   "  public String get() {\n" +
      *   "    return \"Hello World!\";\n" +
      *   "  }\n" +
@@ -82,10 +82,10 @@ public class Reflect {
      * <p>
      * For example:
      * <code><pre>
-     * Supplier&lt;String> supplier = Reflect.compile(
+     * Supplier&lt;String&gt; supplier = Reflect.compile(
      *   "org.joor.Test",
      *   "package org.joor;\n" +
-     *   "class Test implements java.util.function.Supplier&lt;String> {\n" +
+     *   "class Test implements java.util.function.Supplier&lt;String&gt; {\n" +
      *   "  public String get() {\n" +
      *   "    return \"Hello World!\";\n" +
      *   "  }\n" +

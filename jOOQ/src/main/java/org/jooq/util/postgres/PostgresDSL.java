@@ -69,10 +69,10 @@ public class PostgresDSL extends DSL {
     // -------------------------------------------------------------------------
 
     /**
-     * The PostgreSQL <code>array1 && array2</code> overlap operator.
+     * The PostgreSQL <code>array1 &amp;&amp; array2</code> overlap operator.
      * <p>
      * Example: <code><pre>
-     * true = array[1, 2, 3] && array[3, 4, 5]
+     * true = array[1, 2, 3] &amp;&amp; array[3, 4, 5]
      * </pre></code>
      */
     @Support({ POSTGRES })
@@ -81,10 +81,10 @@ public class PostgresDSL extends DSL {
     }
 
     /**
-     * The PostgreSQL <code>array1 && array2</code> overlap operator.
+     * The PostgreSQL <code>array1 &amp;&amp; array2</code> overlap operator.
      * <p>
      * Example: <code><pre>
-     * true = array[1, 2, 3] && array[3, 4, 5]
+     * true = array[1, 2, 3] &amp;&amp; array[3, 4, 5]
      * </pre></code>
      */
     @Support({ POSTGRES })
@@ -93,10 +93,10 @@ public class PostgresDSL extends DSL {
     }
 
     /**
-     * The PostgreSQL <code>array1 && array2</code> overlap operator.
+     * The PostgreSQL <code>array1 &amp;&amp; array2</code> overlap operator.
      * <p>
      * Example: <code><pre>
-     * true = array[1, 2, 3] && array[3, 4, 5]
+     * true = array[1, 2, 3] &amp;&amp; array[3, 4, 5]
      * </pre></code>
      */
     @Support({ POSTGRES })
@@ -105,10 +105,10 @@ public class PostgresDSL extends DSL {
     }
 
     /**
-     * The PostgreSQL <code>array1 && array2</code> overlap operator.
+     * The PostgreSQL <code>array1 &amp;&amp; array2</code> overlap operator.
      * <p>
      * Example: <code><pre>
-     * true = array[1, 2, 3] && array[3, 4, 5]
+     * true = array[1, 2, 3] &amp;&amp; array[3, 4, 5]
      * </pre></code>
      */
     @Support({ POSTGRES })

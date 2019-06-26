@@ -48,7 +48,7 @@ import org.jooq.exception.TooManyRowsException;
  * Example: <code><pre>
  * DSLContext create = DSL.using(configuration);
  *
- * TableRecord&lt;?> record =
+ * TableRecord&lt;?&gt; record =
  * create.insertInto(table, field1, field2)
  *       .values(value1, value2)
  *       .returning(field1)

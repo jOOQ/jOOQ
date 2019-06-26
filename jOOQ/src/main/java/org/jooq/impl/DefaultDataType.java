@@ -184,13 +184,13 @@ public class DefaultDataType<T> implements DataType<T> {
     private final DataType<T>                            sqlDataType;
 
     /**
-     * The Java class corresponding to this data type's <code>&lt;U></code>
+     * The Java class corresponding to this data type's <code>&lt;U&gt;</code>
      * type, i.e. the user type in case a {@link Binding} applies.
      */
     private final Class<T>                               uType;
 
     /**
-     * The Java class corresponding to this data type's <code>&lt;T></code>
+     * The Java class corresponding to this data type's <code>&lt;T&gt;</code>
      * type, i.e. the database type in case a {@link Binding} applies.
      */
     private final Class<?>                               tType;

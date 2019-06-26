@@ -105,8 +105,8 @@ public interface Results extends List<Result<Record>>, Attachable {
      * <code><pre>
      * result.resultsOrRows()
      *       .stream()
-     *       .filter(r -> r.result() != null)
-     *       .map(r -> r.result())
+     *       .filter(r -&gt; r.result() != null)
+     *       .map(r -&gt; r.result())
      *       .collect(Collectors.toList())
      *       .equals(result);
      * </pre></code>

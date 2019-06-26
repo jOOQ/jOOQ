@@ -51,8 +51,8 @@ import org.jooq.impl.DSL;
  * are equivalent in SQL:
  * <p>
  * <code><pre>
- * (A, B) > (X, Y)
- * (A > X) OR (A = X AND B > Y)
+ * (A, B) &gt; (X, Y)
+ * (A &gt; X) OR (A = X AND B &gt; Y)
  * </pre></code>
  * <p>
  * <strong>Example:</strong>

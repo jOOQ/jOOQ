@@ -49,12 +49,12 @@ import org.jooq.tools.jdbc.MockDataProvider;
  * <p>
  * <code><pre>
  * select "TABLE2"."ID2", "TABLE2"."NAME2" from "TABLE2"
- * > +---+-----+
- * > |ID2|NAME2|
- * > +---+-----+
- * > |1  |X    |
- * > |2  |Y    |
- * > +---+-----+
+ * &gt; +---+-----+
+ * &gt; |ID2|NAME2|
+ * &gt; +---+-----+
+ * &gt; |1  |X    |
+ * &gt; |2  |Y    |
+ * &gt; +---+-----+
  * &#64; rows: 1000
  * </pre></code>
  *

@@ -59,7 +59,7 @@ public interface Parameter<T> extends Named {
      * The parameter's underlying {@link Converter}.
      * <p>
      * By default, all parameters reference an identity-converter
-     * <code>Converter&lt;T, T></code>. Custom data types may be obtained by a
+     * <code>Converter&lt;T, T&gt;</code>. Custom data types may be obtained by a
      * custom {@link Converter} placed on the generated {@link Parameter}.
      */
     Converter<?, T> getConverter();
@@ -95,11 +95,11 @@ public interface Parameter<T> extends Named {
      *   MY_PROCEDURE(1, 2);
      *
      *   -- Assign parameters by name
-     *   MY_PROCEDURE(P_DEFAULTED => 1,
-     *                P_MANDATORY => 2);
+     *   MY_PROCEDURE(P_DEFAULTED =&gt; 1,
+     *                P_MANDATORY =&gt; 2);
      *
      *   -- Omitting defaulted parameters
-     *   MY_PROCEDURE(P_MANDATORY => 2);
+     *   MY_PROCEDURE(P_MANDATORY =&gt; 2);
      * END;
      * </pre></code>
      * <p>

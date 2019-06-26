@@ -100,7 +100,7 @@ import org.jooq.tools.reflect.ReflectException;
  * <p>
  * The mapping algorithm is this:
  * <p>
- * <h5>If <code>&lt;E></code> is an array type:</h5>
+ * <h5>If <code>&lt;E&gt;</code> is an array type:</h5>
  * <p>
  * The resulting array is of the nature described in {@link Record#intoArray()}.
  * Arrays more specific than <code>Object[]</code> can be specified as well,
@@ -108,7 +108,7 @@ import org.jooq.tools.reflect.ReflectException;
  * specific arrays fails, a {@link MappingException} is thrown, wrapping
  * conversion exceptions.
  * <p>
- * <h5>If <code>&lt;E></code> is a field "value type" and <code>&lt;R></code>
+ * <h5>If <code>&lt;E&gt;</code> is a field "value type" and <code>&lt;R&gt;</code>
  * has exactly one column:</h5>
  * <p>
  * Any Java type available from {@link SQLDataType} qualifies as a well-known
@@ -116,28 +116,28 @@ import org.jooq.tools.reflect.ReflectException;
  * following rules apply:
  * <p>
  * <ul>
- * <li>If <code>&lt;E></code> is a reference type like {@link String},
+ * <li>If <code>&lt;E&gt;</code> is a reference type like {@link String},
  * {@link Integer}, {@link Long}, {@link Timestamp}, etc., then converting from
- * <code>&lt;R></code> to <code>&lt;E></code> is mere convenience for calling
+ * <code>&lt;R&gt;</code> to <code>&lt;E&gt;</code> is mere convenience for calling
  * {@link Record#getValue(int, Class)} with <code>fieldIndex = 0</code></li>
- * <li>If <code>&lt;E></code> is a primitive type, the mapping result will be
+ * <li>If <code>&lt;E&gt;</code> is a primitive type, the mapping result will be
  * the corresponding wrapper type. <code>null</code> will map to the primitive
  * type's initialisation value, e.g. <code>0</code> for <code>int</code>,
  * <code>0.0</code> for <code>double</code>, <code>false</code> for
  * <code>boolean</code>.</li>
  * </ul>
  * <h5>If a default constructor is available and any JPA {@link Column}
- * annotations are found on the provided <code>&lt;E></code>, only those are
+ * annotations are found on the provided <code>&lt;E&gt;</code>, only those are
  * used:</h5>
  * <p>
  * <ul>
- * <li>If <code>&lt;E></code> contains single-argument instance methods of any
+ * <li>If <code>&lt;E&gt;</code> contains single-argument instance methods of any
  * visibility annotated with <code>Column</code>, those methods are invoked</li>
- * <li>If <code>&lt;E></code> contains no-argument instance methods of any
+ * <li>If <code>&lt;E&gt;</code> contains no-argument instance methods of any
  * visibility starting with <code>getXXX</code> or <code>isXXX</code>, annotated
  * with <code>Column</code>, then matching <code>setXXX()</code> instance
  * methods of any visibility are invoked</li>
- * <li>If <code>&lt;E></code> contains instance member fields of any visibility
+ * <li>If <code>&lt;E&gt;</code> contains instance member fields of any visibility
  * annotated with <code>Column</code>, those members are set</li>
  * </ul>
  * Additional rules:
@@ -243,7 +243,7 @@ import org.jooq.tools.reflect.ReflectException;
  * <h5>Other restrictions</h5>
  * <p>
  * <ul>
- * <li><code>&lt;E></code> must provide a default or a "matching" constructor.
+ * <li><code>&lt;E&gt;</code> must provide a default or a "matching" constructor.
  * Non-public default constructors are made accessible using
  * {@link Constructor#setAccessible(boolean)}</li>
  * <li>primitive types are supported. If a value is <code>null</code>, this will

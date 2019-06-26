@@ -60,9 +60,9 @@ import java.sql.SQLXML;
  * <strong>Example:</strong>
  * <p>
  * <code><pre>
- * class StreamingLobBinding implements Binding<String, File> {
+ * class StreamingLobBinding implements Binding&lt;String, File&gt; {
  *     ...
- *     public void set(BindingSetStatementContext&lt;File> ctx) {
+ *     public void set(BindingSetStatementContext&lt;File&gt; ctx) {
  *         ctx.statement()
  *            .setBinaryStream(ctx.index(), ctx.closeAfterExecution(new FileInputStream(ctx.value())));
  *     }

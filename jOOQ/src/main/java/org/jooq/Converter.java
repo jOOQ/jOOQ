@@ -194,7 +194,7 @@ public interface Converter<T, U> extends Serializable {
      * Example:
      * <p>
      * <code><pre>
-     * Converter<String, Integer> converter =
+     * Converter&lt;String, Integer&gt; converter =
      *   Converter.ofNullable(String.class, Integer.class, Integer::parseInt, Object::toString);
      *
      * // No exceptions thrown

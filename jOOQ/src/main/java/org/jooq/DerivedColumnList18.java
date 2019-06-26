@@ -66,7 +66,7 @@ import static org.jooq.SQLDialect.SQLITE;
  * <code><pre>
  * // Assuming import static org.jooq.impl.DSL.*;
  *
- * Table<?> t = name("t").fields("v").as(select(one()));
+ * Table&lt;?&gt; t = name("t").fields("v").as(select(one()));
  * //           ^^^^^^^^^^^^^^^^^^^^^ -- DerivedColumnList
  *
  * using(configuration)

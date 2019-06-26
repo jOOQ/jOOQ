@@ -132,7 +132,7 @@ public class GenerationTool {
     /**
      * The JDBC connection to use with this generation tool.
      * <p>
-     * If set, the configuration XML's <code>&lt;jdbc/></code> configuration is
+     * If set, the configuration XML's <code>&lt;jdbc/&gt;</code> configuration is
      * ignored, and this connection is used for meta data inspection, instead.
      */
     public void setConnection(Connection connection) {
@@ -142,7 +142,7 @@ public class GenerationTool {
     /**
      * The JDBC data source to use with this generation tool.
      * <p>
-     * If set, the configuration XML's <code>&lt;jdbc/></code> configuration is
+     * If set, the configuration XML's <code>&lt;jdbc/&gt;</code> configuration is
      * ignored, and this connection is used for meta data inspection, instead.
      */
     public void setDataSource(DataSource dataSource) {

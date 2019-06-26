@@ -43,7 +43,7 @@ package org.jooq;
  * <p>
  * This type differs from {@link Row} in several ways:
  * <ul>
- * <li>It is generic using <code>&lt;R></code></li>
+ * <li>It is generic using <code>&lt;R&gt;</code></li>
  * <li>It is not repeated for degrees 1 to 22, such as {@link Row1} ..
  * {@link RowN}</li>
  * <li>It is not part of the DSL</li>

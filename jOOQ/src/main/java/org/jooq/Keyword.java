@@ -54,7 +54,7 @@ import org.jooq.impl.DSL;
  * <code><pre>
  * // Assuming import static org.jooq.impl.DSL.*;
  *
- * Field&lt;Integer> field = field(
+ * Field&lt;Integer&gt; field = field(
  *     "{0}({1} {2} {3})",
  *     SQLDataType.INTEGER,
  *     keyword("extract"), keyword("year"), keyword("from"), ACTOR.LAST_UPDATE

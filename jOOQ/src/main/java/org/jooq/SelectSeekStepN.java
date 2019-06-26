@@ -52,9 +52,9 @@ package org.jooq;
  *     FROM T_AUTHOR
  *     JOIN T_BOOK ON T_AUTHOR.ID = T_BOOK.AUTHOR_ID
  *    WHERE T_BOOK.LANGUAGE = 'DE'
- *      AND T_BOOK.PUBLISHED > '2008-01-01'
+ *      AND T_BOOK.PUBLISHED &gt; '2008-01-01'
  * GROUP BY T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME
- *   HAVING COUNT(*) > 5
+ *   HAVING COUNT(*) &gt; 5
  * ORDER BY T_AUTHOR.LAST_NAME ASC NULLS FIRST
  *    LIMIT 2
  *   OFFSET 1
@@ -109,7 +109,7 @@ public interface SelectSeekStepN<R extends Record> extends SelectLimitStep<R> {
      * <p>
      * <code><pre>
      * SELECT * FROM table
-     * WHERE (id, code) > (3, 'abc')
+     * WHERE (id, code) &gt; (3, 'abc')
      * ORDER BY id ASC, code ASC
      * </pre></code>
      * <p>
@@ -117,7 +117,7 @@ public interface SelectSeekStepN<R extends Record> extends SelectLimitStep<R> {
      * equivalent predicate:
      * <p>
      * <code><pre>
-     * WHERE (id > 3) OR (id = 3 AND code > 'abc')
+     * WHERE (id &gt; 3) OR (id = 3 AND code &gt; 'abc')
      * </pre></code>
      * <p>
      * The <code>SEEK AFTER</code> method currently does not support seeking
@@ -160,7 +160,7 @@ public interface SelectSeekStepN<R extends Record> extends SelectLimitStep<R> {
      * <p>
      * <code><pre>
      * SELECT * FROM table
-     * WHERE (id, code) > (3, 'abc')
+     * WHERE (id, code) &gt; (3, 'abc')
      * ORDER BY id ASC, code ASC
      * </pre></code>
      * <p>
@@ -168,7 +168,7 @@ public interface SelectSeekStepN<R extends Record> extends SelectLimitStep<R> {
      * equivalent predicate:
      * <p>
      * <code><pre>
-     * WHERE (id > 3) OR (id = 3 AND code > 'abc')
+     * WHERE (id &gt; 3) OR (id = 3 AND code &gt; 'abc')
      * </pre></code>
      * <p>
      * The <code>SEEK AFTER</code> method currently does not support seeking
@@ -211,7 +211,7 @@ public interface SelectSeekStepN<R extends Record> extends SelectLimitStep<R> {
      * <p>
      * <code><pre>
      * SELECT * FROM table
-     * WHERE (id, code) > (3, 'abc')
+     * WHERE (id, code) &gt; (3, 'abc')
      * ORDER BY id ASC, code ASC
      * </pre></code>
      * <p>
@@ -219,7 +219,7 @@ public interface SelectSeekStepN<R extends Record> extends SelectLimitStep<R> {
      * equivalent predicate:
      * <p>
      * <code><pre>
-     * WHERE (id > 3) OR (id = 3 AND code > 'abc')
+     * WHERE (id &gt; 3) OR (id = 3 AND code &gt; 'abc')
      * </pre></code>
      * <p>
      * The <code>SEEK AFTER</code> method currently does not support seeking
@@ -261,7 +261,7 @@ public interface SelectSeekStepN<R extends Record> extends SelectLimitStep<R> {
      * <p>
      * <code><pre>
      * SELECT * FROM table
-     * WHERE (id, code) > (3, 'abc')
+     * WHERE (id, code) &gt; (3, 'abc')
      * ORDER BY id ASC, code ASC
      * </pre></code>
      * <p>
@@ -269,7 +269,7 @@ public interface SelectSeekStepN<R extends Record> extends SelectLimitStep<R> {
      * equivalent predicate:
      * <p>
      * <code><pre>
-     * WHERE (id > 3) OR (id = 3 AND code > 'abc')
+     * WHERE (id &gt; 3) OR (id = 3 AND code &gt; 'abc')
      * </pre></code>
      * <p>
      * The <code>SEEK AFTER</code> method currently does not support seeking

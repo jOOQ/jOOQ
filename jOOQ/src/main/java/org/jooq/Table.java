@@ -435,7 +435,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * columns with a common prefix:
      * <p>
      * <code><pre>
-     * MY_TABLE.as("t1", f -> "prefix_" + f.getName());
+     * MY_TABLE.as("t1", f -&gt;"prefix_" + f.getName());
      * </pre></code>
      *
      * @param alias The alias name
@@ -453,7 +453,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * columns with a common prefix:
      * <p>
      * <code><pre>
-     * MY_TABLE.as("t1", (f, i) -> "column" + i);
+     * MY_TABLE.as("t1", (f, i) -&gt;"column" + i);
      * </pre></code>
      *
      * @param alias The alias name
@@ -548,7 +548,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * columns with a common prefix:
      * <p>
      * <code><pre>
-     * MY_TABLE.as("t1", f -> "prefix_" + f.getName());
+     * MY_TABLE.as("t1", f -&gt;"prefix_" + f.getName());
      * </pre></code>
      *
      * @param alias The alias name
@@ -566,7 +566,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * columns with a common prefix:
      * <p>
      * <code><pre>
-     * MY_TABLE.as("t1", (f, i) -> "column" + i);
+     * MY_TABLE.as("t1", (f, i) -&gt;"column" + i);
      * </pre></code>
      *
      * @param alias The alias name
@@ -606,7 +606,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * columns with a common prefix:
      * <p>
      * <code><pre>
-     * MY_TABLE.as(MY_OTHER_TABLE, f -> MY_OTHER_TABLE.field(f));
+     * MY_TABLE.as(MY_OTHER_TABLE, f -&gt;MY_OTHER_TABLE.field(f));
      * </pre></code>
      *
      * @param otherTable The other table whose name is used as alias name
@@ -624,7 +624,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * columns with a common prefix:
      * <p>
      * <code><pre>
-     * MY_TABLE.as("t1", (f, i) -> "column" + i);
+     * MY_TABLE.as("t1", (f, i) -&gt;"column" + i);
      * </pre></code>
      *
      * @param otherTable The other table whose name is used as alias name

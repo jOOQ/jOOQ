@@ -68,44 +68,44 @@ import org.jooq.tools.JooqLogger;
  *
  * # Statement strings have no prefix and should be ended with a semi-colon
  * select 'A' from dual;
- * # Statements may be followed by results, using >
- * > A
- * > -
- * > A
+ * # Statements may be followed by results, using &gt;
+ * &gt; A
+ * &gt; -
+ * &gt; A
  * # Statements should be followed by "&#64; rows: [N]" indicating the update count
  * &#64; rows: 1
  *
  * # New statements can be listed int his file
  * select 'A', 'B' from dual;
- * > A B
- * > - -
- * > A B
+ * &gt; A B
+ * &gt; - -
+ * &gt; A B
  * &#64; rows: 1
  *
  * # Beware of the exact syntax (e.g. using quotes)
  * select "TABLE1"."ID1", "TABLE1"."NAME1" from "TABLE1";
- * > ID1 NAME1
- * > --- -----
- * > 1   X
- * > 2   Y
+ * &gt; ID1 NAME1
+ * &gt; --- -----
+ * &gt; 1   X
+ * &gt; 2   Y
  * &#64; rows: 2
  *
  * # Statements can return several results
- * > F1  F2  F3 is a bit more complex
- * > --- --  ----------------------------
- * > 1   2   and a string containing data
- * > 1.1 x   another string
+ * &gt; F1  F2  F3 is a bit more complex
+ * &gt; --- --  ----------------------------
+ * &gt; 1   2   and a string containing data
+ * &gt; 1.1 x   another string
  * &#64; rows: 2
  *
- * > A B "C D"
- * > - - -----
- * > x y z
+ * &gt; A B "C D"
+ * &gt; - - -----
+ * &gt; x y z
  * &#64; rows: 1
  * </pre></code>
  * <p>
  * Results can be loaded using several techniques:
  * <ul>
- * <li>When results are prefixed with <code>></code>, then
+ * <li>When results are prefixed with <code>&gt;</code>, then
  * {@link DSLContext#fetchFromTXT(String)} is used</li>
  * <li>In the future, other types of result sources will be supported, such as
  * CSV, XML, JSON</li>

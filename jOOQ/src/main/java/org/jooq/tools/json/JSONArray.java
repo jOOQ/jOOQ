@@ -30,7 +30,7 @@ import java.util.List;
 /**
  * A JSON array. JSONObject supports java.util.List interface.
  *
- * @author FangYidong<fangyidong@yahoo.com.cn>
+ * @author FangYidong&lt;fangyidong@yahoo.com.cn&gt;
  */
 @SuppressWarnings({ "serial", "rawtypes", "unchecked" })
 public class JSONArray extends ArrayList {

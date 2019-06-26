@@ -120,7 +120,7 @@ public interface UpdateSetStep<R extends Record> {
      * Set a value for a field in the <code>UPDATE</code> statement.
      * <p>
      * This is the same as calling {@link #set(Map)} with the argument record
-     * treated as a <code>Map&lt;Field&lt;?>, Object></code>, except that the
+     * treated as a <code>Map&lt;Field&lt;?&gt;, Object&gt;</code>, except that the
      * {@link Record#changed()} flags are taken into consideration in order to
      * update only changed values.
      *

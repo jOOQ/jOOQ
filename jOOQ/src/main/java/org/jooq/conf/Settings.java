@@ -771,7 +771,7 @@ public class Settings
     }
 
     /**
-     * The order of invocation for [action]start() methods registered {@link TransactionListener}s.
+     * The order of invocation for [action]start() methods registered {@link org.jooq.TransactionListener}s.
      *
      * @return
      *     possible object is
@@ -795,7 +795,7 @@ public class Settings
     }
 
     /**
-     * The order of invocation for [action]end() methods registered {@link TransactionListener}s.
+     * The order of invocation for [action]end() methods registered {@link org.jooq.TransactionListener}s.
      *
      * @return
      *     possible object is
@@ -819,7 +819,7 @@ public class Settings
     }
 
     /**
-     * The order of invocation for [action]start() methods registered {@link VisitListener}s.
+     * The order of invocation for [action]start() methods registered {@link org.jooq.VisitListener}s.
      *
      * @return
      *     possible object is
@@ -843,7 +843,7 @@ public class Settings
     }
 
     /**
-     * The order of invocation for [action]end() methods registered {@link VisitListener}s.
+     * The order of invocation for [action]end() methods registered {@link org.jooq.VisitListener}s.
      *
      * @return
      *     possible object is
@@ -867,7 +867,7 @@ public class Settings
     }
 
     /**
-     * The order of invocation for [action]start() methods registered {@link RecordListener}s.
+     * The order of invocation for [action]start() methods registered {@link org.jooq.RecordListener}s.
      *
      * @return
      *     possible object is
@@ -891,7 +891,7 @@ public class Settings
     }
 
     /**
-     * The order of invocation for [action]end() methods registered {@link RecordListener}s.
+     * The order of invocation for [action]end() methods registered {@link org.jooq.RecordListener}s.
      *
      * @return
      *     possible object is
@@ -915,7 +915,7 @@ public class Settings
     }
 
     /**
-     * The order of invocation for [action]start() methods registered {@link ExecuteListener}s.
+     * The order of invocation for [action]start() methods registered {@link org.jooq.ExecuteListener}s.
      *
      * @return
      *     possible object is
@@ -939,7 +939,7 @@ public class Settings
     }
 
     /**
-     * The order of invocation for [action]end() methods registered {@link ExecuteListener}s.
+     * The order of invocation for [action]end() methods registered {@link org.jooq.ExecuteListener}s.
      *
      * @return
      *     possible object is

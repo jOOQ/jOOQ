@@ -90,13 +90,13 @@ public interface FieldLike {
      * columns with a common prefix (on {@link Table#as(String, Function)}):
      * <p>
      * <code><pre>
-     * MY_TABLE.as("t1", f -> "prefix_" + f.getName());
+     * MY_TABLE.as("t1", f -&gt; "prefix_" + f.getName());
      * </pre></code>
      * <p>
      * And then to use the same function also for individual fields:
      * <p>
      * <code><pre>
-     * MY_TABLE.MY_COLUMN.as(f -> "prefix_" + f.getName());
+     * MY_TABLE.MY_COLUMN.as(f -&gt; "prefix_" + f.getName());
      * </pre></code>
      */
     @Support

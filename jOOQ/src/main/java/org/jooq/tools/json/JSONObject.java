@@ -31,7 +31,7 @@ import java.util.Map;
  * A JSON object. Key value pairs are unordered. JSONObject supports
  * java.util.Map interface.
  *
- * @author FangYidong<fangyidong@yahoo.com.cn>
+ * @author FangYidong&lt;fangyidong@yahoo.com.cn&gt;
  */
 @SuppressWarnings({ "serial", "rawtypes", "unchecked" })
 public class JSONObject extends HashMap{

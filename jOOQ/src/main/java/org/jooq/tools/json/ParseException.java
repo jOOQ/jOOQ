@@ -3,7 +3,7 @@ package org.jooq.tools.json;
 /**
  * ParseException explains why and where the error occurs in source JSON text.
  *
- * @author FangYidong<fangyidong@yahoo.com.cn>
+ * @author FangYidong&lt;fangyidong@yahoo.com.cn&gt;
  *
  */
 public class ParseException extends Exception {

@@ -46,8 +46,8 @@ import org.jooq.ExecuteListener;
  * <p>
  * For example: <code><pre>
  * ExecuteListener listener = new CallbackExecuteListener()
- *   .onExecuteStart(ctx -> something())
- *   .onExecuteEnd(ctx -> something());
+ *   .onExecuteStart(ctx -&gt; something())
+ *   .onExecuteEnd(ctx -&gt; something());
  * </pre></code>
  *
  * @author Lukas Eder

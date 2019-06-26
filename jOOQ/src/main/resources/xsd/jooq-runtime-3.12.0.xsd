@@ -176,35 +176,35 @@ case of which, this defaults to INLINED]]></jxb:javadoc></jxb:property></appinfo
       </element>
 
       <element name="transactionListenerStartInvocationOrder" type="jooq-runtime:InvocationOrder" minOccurs="0" maxOccurs="1" default="DEFAULT">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The order of invocation for [action]start() methods registered {@link TransactionListener}s.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The order of invocation for [action]start() methods registered {@link org.jooq.TransactionListener}s.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="transactionListenerEndInvocationOrder" type="jooq-runtime:InvocationOrder" minOccurs="0" maxOccurs="1" default="DEFAULT">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The order of invocation for [action]end() methods registered {@link TransactionListener}s.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The order of invocation for [action]end() methods registered {@link org.jooq.TransactionListener}s.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="visitListenerStartInvocationOrder" type="jooq-runtime:InvocationOrder" minOccurs="0" maxOccurs="1" default="DEFAULT">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The order of invocation for [action]start() methods registered {@link VisitListener}s.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The order of invocation for [action]start() methods registered {@link org.jooq.VisitListener}s.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="visitListenerEndInvocationOrder" type="jooq-runtime:InvocationOrder" minOccurs="0" maxOccurs="1" default="DEFAULT">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The order of invocation for [action]end() methods registered {@link VisitListener}s.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The order of invocation for [action]end() methods registered {@link org.jooq.VisitListener}s.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="recordListenerStartInvocationOrder" type="jooq-runtime:InvocationOrder" minOccurs="0" maxOccurs="1" default="DEFAULT">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The order of invocation for [action]start() methods registered {@link RecordListener}s.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The order of invocation for [action]start() methods registered {@link org.jooq.RecordListener}s.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="recordListenerEndInvocationOrder" type="jooq-runtime:InvocationOrder" minOccurs="0" maxOccurs="1" default="DEFAULT">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The order of invocation for [action]end() methods registered {@link RecordListener}s.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The order of invocation for [action]end() methods registered {@link org.jooq.RecordListener}s.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="executeListenerStartInvocationOrder" type="jooq-runtime:InvocationOrder" minOccurs="0" maxOccurs="1" default="DEFAULT">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The order of invocation for [action]start() methods registered {@link ExecuteListener}s.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The order of invocation for [action]start() methods registered {@link org.jooq.ExecuteListener}s.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="executeListenerEndInvocationOrder" type="jooq-runtime:InvocationOrder" minOccurs="0" maxOccurs="1" default="DEFAULT">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The order of invocation for [action]end() methods registered {@link ExecuteListener}s.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The order of invocation for [action]end() methods registered {@link org.jooq.ExecuteListener}s.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="executeLogging" type="boolean" minOccurs="0" maxOccurs="1" default="true">
@@ -407,20 +407,20 @@ This schema will be omitted in rendered SQL.]]></jxb:javadoc></jxb:property></ap
       <element name="input" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The input schema name as defined in {@link org.jooq.Schema#getName()}
 <p>
-Either &lt;input/> or &lt;inputExpression/> must be provided]]></jxb:javadoc></jxb:property></appinfo></annotation>
+Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="inputExpression" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching the input schema name as defined in {@link org.jooq.Schema#getName()}
-Either &lt;input/> or &lt;inputExpression/> must be provided]]></jxb:javadoc></jxb:property></appinfo></annotation>
+Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="output" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The output schema as it will be rendered in SQL.
 <ul>
 <li>When this is omitted, you can still apply table mapping.</li>
-<li>When &lt;input/> is provided, &lt;output/> is a constant value.</li>
-<li>When &lt;inputExpression/> is provided, &lt;output/> is a replacement expression</li>
+<li>When &lt;input/&gt; is provided, &lt;output/&gt; is a constant value.</li>
+<li>When &lt;inputExpression/&gt; is provided, &lt;output/&gt; is a replacement expression</li>
 </ul>]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
@@ -443,19 +443,19 @@ Either &lt;input/> or &lt;inputExpression/> must be provided]]></jxb:javadoc></j
 
       <element name="input" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The input table as defined in {@link org.jooq.Table#getName()}
-Either &lt;input/> or &lt;inputExpression/> must be provided.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="inputExpression" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching the input table name as defined in {@link org.jooq.Table#getName()}
-Either &lt;input/> or &lt;inputExpression/> must be provided]]></jxb:javadoc></jxb:property></appinfo></annotation>
+Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="output" type="string" minOccurs="1" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The output table as it will be rendered in SQL.
 <ul>
-<li>When &lt;input/> is provided, &lt;output/> is a constant value.</li>
-<li>When &lt;inputExpression/> is provided, &lt;output/> is a replacement expression.</li>
+<li>When &lt;input/&gt; is provided, &lt;output/&gt; is a constant value.</li>
+<li>When &lt;inputExpression/&gt; is provided, &lt;output/&gt; is a replacement expression.</li>
 </ul>]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
     </all>

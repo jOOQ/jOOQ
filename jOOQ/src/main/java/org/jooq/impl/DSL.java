@@ -2807,7 +2807,7 @@ public class DSL {
      * using plain SQL</li>
      * </ul>
      *
-     * @see DSLContext#select(SelectField...)
+     * @see DSLContext#select(SelectFieldOrAsterisk...)
      */
     @Support
     public static SelectSelectStep<Record> select(SelectFieldOrAsterisk... fields) {
@@ -3705,7 +3705,7 @@ public class DSL {
      * using plain SQL</li>
      * </ul>
      *
-     * @see DSLContext#selectDistinct(SelectField...)
+     * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
      */
     @Support
     public static SelectSelectStep<Record> selectDistinct(SelectFieldOrAsterisk... fields) {
@@ -10504,7 +10504,7 @@ public class DSL {
      * Example (Postgres):
      * <p>
      * <code><pre>
-     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
      * (SQLite):
      * <p>
      * <code><pre>
@@ -10552,7 +10552,7 @@ public class DSL {
      * Example (Postgres):
      * <p>
      * <code><pre>
-     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
      * (SQLite):
      * <p>
      * <code><pre>
@@ -10601,7 +10601,7 @@ public class DSL {
      * Example (Postgres):
      * <p>
      * <code><pre>
-     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
      * (SQLite):
      * <p>
      * <code><pre>
@@ -11391,10 +11391,10 @@ public class DSL {
      * <code>Condition</code> types are expected. An example for this are
      * Postgres's various operators, some of which are missing in the jOOQ API.
      * For instance, the "overlap" operator for arrays:
-     * <code><pre>ARRAY[1,4,3] && ARRAY[2,1]</pre></code>
+     * <code><pre>ARRAY[1,4,3] &amp;&amp; ARRAY[2,1]</pre></code>
      * <p>
      * The above Postgres operator can be expressed as such: <code><pre>
-     * condition("{0} && {1}", array1, array2);
+     * condition("{0} &amp;&amp; {1}", array1, array2);
      * </pre></code>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
@@ -16333,13 +16333,13 @@ public class DSL {
      * <p>
      * This function is emulated in most other databases like this (for a
      * TINYINT field): <code><pre>
-     * ([field] &   1) +
-     * ([field] &   2) >> 1 +
-     * ([field] &   4) >> 2 +
-     * ([field] &   8) >> 3 +
-     * ([field] &  16) >> 4 +
+     * ([field] &amp;   1) +
+     * ([field] &amp;   2) &gt;&gt; 1 +
+     * ([field] &amp;   4) &gt;&gt; 2 +
+     * ([field] &amp;   8) &gt;&gt; 3 +
+     * ([field] &amp;  16) &gt;&gt; 4 +
      *  ...
-     * ([field] & 128) >> 7
+     * ([field] &amp; 128) &gt;&gt; 7
      * </pre></code>
      * <p>
      * More efficient algorithms are very welcome
@@ -16406,7 +16406,7 @@ public class DSL {
      * This is not supported by Derby, Ingres
      * <p>
      * This renders the and operation where available:
-     * <code><pre>[field1] & [field2]</pre></code>
+     * <code><pre>[field1] &amp; [field2]</pre></code>
      * ... or the and function elsewhere:
      * <code><pre>bitand([field1], [field2])</pre></code>
      */
@@ -16454,7 +16454,7 @@ public class DSL {
      * This is not supported by Derby, Ingres
      * <p>
      * This renders the not and operation where available:
-     * <code><pre>~([field1] & [field2])</pre></code>
+     * <code><pre>~([field1] &amp; [field2])</pre></code>
      * ... or the not and function elsewhere:
      * <code><pre>bitnot(bitand([field1], [field2]))</pre></code>
      *
@@ -16734,7 +16734,7 @@ public class DSL {
     /**
      * The bitwise right shift operator.
      * <p>
-     * Some dialects natively support this using <code>[field1] >> [field2]</code>.
+     * Some dialects natively support this using <code>[field1] &gt;&gt; [field2]</code>.
      * jOOQ emulates this operator in some dialects using
      * <code>[field1] / power(2, [field2])</code>, where power might also be emulated.
      *
@@ -16854,7 +16854,7 @@ public class DSL {
      * <code><pre>sign([field])</pre></code>
      * ... or emulates it elsewhere (without bind variables on values -1, 0, 1):
      * <code><pre>
-     * CASE WHEN [this] > 0 THEN 1
+     * CASE WHEN [this] &gt; 0 THEN 1
      *      WHEN [this] &lt; 0 THEN -1
      *      ELSE 0
      * END
@@ -21149,7 +21149,7 @@ public class DSL {
 // [jooq-tools] END [row-value]
 
     /**
-     * Create a row value expression of degree <code>N > 22</code>.
+     * Create a row value expression of degree <code>N &gt; 22</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be emulated on all databases. See relevant row
@@ -21429,7 +21429,7 @@ public class DSL {
 // [jooq-tools] END [row-expression]
 
     /**
-     * Create a row value expression of degree <code>N > 22</code>.
+     * Create a row value expression of degree <code>N &gt; 22</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be emulated on all databases. See relevant row
@@ -21441,7 +21441,7 @@ public class DSL {
     }
 
     /**
-     * Create a row value expression of degree <code>N > 22</code>.
+     * Create a row value expression of degree <code>N &gt; 22</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be emulated on all databases. See relevant row

@@ -67,7 +67,7 @@ import java.util.Properties;
  * <code><pre>
  * MockDataProvider provider = new MockDataProvider() {
  *     public MockResult[] execute(MockExecuteContext context) throws SQLException {
- *         Result&lt;MyTableRecord> result = executor.newResult(MY_TABLE);
+ *         Result&lt;MyTableRecord&gt; result = executor.newResult(MY_TABLE);
  *         result.add(executor.newRecord(MY_TABLE));
  *
  *         return new MockResult[] {

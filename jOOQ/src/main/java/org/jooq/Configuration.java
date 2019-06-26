@@ -272,7 +272,7 @@ public interface Configuration extends Serializable {
      * <code>null</code>, then {@link ExecutorProvider#provide()} is called to
      * obtain an <code>Executor</code> for the asynchronous task.</li>
      * <li>In the jOOQ Java 8 distribution, {@link ForkJoinPool#commonPool()} is
-     * used if <code>{@link ForkJoinPool#getCommonPoolParallelism()} > 1</code>
+     * used if <code>{@link ForkJoinPool#getCommonPoolParallelism()} &gt; 1</code>
      * </li>
      * <li>A new "one thread per call" <code>Executor</code> is used in any
      * other case.</li>

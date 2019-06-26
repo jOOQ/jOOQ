@@ -566,7 +566,7 @@ public interface WithStep extends QueryPart {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#select(SelectField...)} instead.
+     * {@link DSL#select(SelectFieldOrAsterisk...)} instead.
      * <p>
      * Example: <code><pre>
      * DSLContext create = DSL.using(configuration);
@@ -579,7 +579,7 @@ public interface WithStep extends QueryPart {
      *       .execute();
      * </pre></code>
      *
-     * @see DSL#select(SelectField...)
+     * @see DSL#select(SelectFieldOrAsterisk...)
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     SelectSelectStep<Record> select(SelectFieldOrAsterisk... fields);
@@ -1279,7 +1279,7 @@ public interface WithStep extends QueryPart {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#selectDistinct(SelectField...)} instead.
+     * {@link DSL#selectDistinct(SelectFieldOrAsterisk...)} instead.
      * <p>
      * Example: <code><pre>
      * DSLContext create = DSL.using(configuration);
@@ -1291,7 +1291,7 @@ public interface WithStep extends QueryPart {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see DSL#selectDistinct(SelectField...)
+     * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      */
     @Support({ FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     SelectSelectStep<Record> selectDistinct(SelectFieldOrAsterisk... fields);

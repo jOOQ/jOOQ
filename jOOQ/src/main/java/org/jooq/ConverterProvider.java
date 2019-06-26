@@ -39,7 +39,7 @@ package org.jooq;
 
 /**
  * A <code>ConverterProvider</code> providers {@link Converter} implementations
- * for any combination of types <code>&lt;T></code> and <code>&lt;U></code>.
+ * for any combination of types <code>&lt;T&gt;</code> and <code>&lt;U&gt;</code>.
  *
  * @author Lukas Eder
  * @deprecated - This API is still EXPERIMENTAL. Do not use yet
@@ -51,8 +51,8 @@ package org.jooq;
 public interface ConverterProvider {
 
     /**
-     * Provide a converter that can convert between <code>&lt;T></code> and
-     * <code>&lt;U></code> types.
+     * Provide a converter that can convert between <code>&lt;T&gt;</code> and
+     * <code>&lt;U&gt;</code> types.
      */
     <T, U> Converter<T, U> provide(Class<T> tType, Class<U> uType);
 }

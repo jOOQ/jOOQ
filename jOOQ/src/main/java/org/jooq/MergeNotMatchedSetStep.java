@@ -141,7 +141,7 @@ public interface MergeNotMatchedSetStep<R extends Record> {
      * statement's <code>WHEN NOT MATCHED</code> clause.
      * <p>
      * This is the same as calling {@link #set(Map)} with the argument record
-     * treated as a <code>Map&lt;Field&lt;?>, Object></code>.
+     * treated as a <code>Map&lt;Field&lt;?&gt;, Object&gt;</code>.
      *
      * @see #set(Map)
      */

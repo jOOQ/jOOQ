@@ -45,7 +45,7 @@ public class MappedSchema
     /**
      * The input schema name as defined in {@link org.jooq.Schema#getName()}
      * <p>
-     * Either &lt;input/> or &lt;inputExpression/> must be provided
+     * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided
      *
      * @return
      *     possible object is
@@ -70,7 +70,7 @@ public class MappedSchema
 
     /**
      * A regular expression matching the input schema name as defined in {@link org.jooq.Schema#getName()}
-     * Either &lt;input/> or &lt;inputExpression/> must be provided
+     * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided
      *
      * @return
      *     possible object is
@@ -97,8 +97,8 @@ public class MappedSchema
      * The output schema as it will be rendered in SQL.
      * <ul>
      * <li>When this is omitted, you can still apply table mapping.</li>
-     * <li>When &lt;input/> is provided, &lt;output/> is a constant value.</li>
-     * <li>When &lt;inputExpression/> is provided, &lt;output/> is a replacement expression</li>
+     * <li>When &lt;input/&gt; is provided, &lt;output/&gt; is a constant value.</li>
+     * <li>When &lt;inputExpression/&gt; is provided, &lt;output/&gt; is a replacement expression</li>
      * </ul>
      *
      * @return

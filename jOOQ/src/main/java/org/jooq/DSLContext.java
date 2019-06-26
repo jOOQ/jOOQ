@@ -905,7 +905,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * Example (Postgres):
      * <p>
      * <code><pre>
-     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
      * (SQLite):
      * <p>
      * <code><pre>
@@ -932,7 +932,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * Example (Postgres):
      * <p>
      * <code><pre>
-     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
      * (SQLite):
      * <p>
      * <code><pre>
@@ -962,7 +962,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * Example (Postgres):
      * <p>
      * <code><pre>
-     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
      * (SQLite):
      * <p>
      * <code><pre>
@@ -1030,7 +1030,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * Example (Postgres):
      * <p>
      * <code><pre>
-     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
      * (SQLite):
      * <p>
      * <code><pre>
@@ -1062,7 +1062,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * Example (Postgres):
      * <p>
      * <code><pre>
-     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
      * (SQLite):
      * <p>
      * <code><pre>
@@ -1097,7 +1097,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * Example (Postgres):
      * <p>
      * <code><pre>
-     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
      * (SQLite):
      * <p>
      * <code><pre>
@@ -1170,7 +1170,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * Example (Postgres):
      * <p>
      * <code><pre>
-     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
      * (SQLite):
      * <p>
      * <code><pre>
@@ -1200,7 +1200,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * Example (Postgres):
      * <p>
      * <code><pre>
-     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
      * (SQLite):
      * <p>
      * <code><pre>
@@ -1233,7 +1233,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * Example (Postgres):
      * <p>
      * <code><pre>
-     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
      * (SQLite):
      * <p>
      * <code><pre>
@@ -1299,7 +1299,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * Example (Postgres):
      * <p>
      * <code><pre>
-     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
      * (SQLite):
      * <p>
      * <code><pre>
@@ -1326,7 +1326,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * Example (Postgres):
      * <p>
      * <code><pre>
-     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
      * (SQLite):
      * <p>
      * <code><pre>
@@ -1356,7 +1356,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * Example (Postgres):
      * <p>
      * <code><pre>
-     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
      * (SQLite):
      * <p>
      * <code><pre>
@@ -1424,7 +1424,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * Example (Postgres):
      * <p>
      * <code><pre>
-     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
      * (SQLite):
      * <p>
      * <code><pre>
@@ -1458,7 +1458,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * Example (Postgres):
      * <p>
      * <code><pre>
-     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
      * (SQLite):
      * <p>
      * <code><pre>
@@ -1495,7 +1495,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * Example (Postgres):
      * <p>
      * <code><pre>
-     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
      * (SQLite):
      * <p>
      * <code><pre>
@@ -1675,7 +1675,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * Example (Postgres):
      * <p>
      * <code><pre>
-     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
      * (SQLite):
      * <p>
      * <code><pre>
@@ -1702,7 +1702,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * Example (Postgres):
      * <p>
      * <code><pre>
-     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
      * (SQLite):
      * <p>
      * <code><pre>
@@ -1732,7 +1732,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * Example (Postgres):
      * <p>
      * <code><pre>
-     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
      * (SQLite):
      * <p>
      * <code><pre>
@@ -1795,7 +1795,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * Example (Postgres):
      * <p>
      * <code><pre>
-     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
      * (SQLite):
      * <p>
      * <code><pre>
@@ -1823,7 +1823,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * Example (Postgres):
      * <p>
      * <code><pre>
-     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
      * (SQLite):
      * <p>
      * <code><pre>
@@ -1854,7 +1854,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * Example (Postgres):
      * <p>
      * <code><pre>
-     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
      * (SQLite):
      * <p>
      * <code><pre>
@@ -1920,7 +1920,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * Example (Postgres):
      * <p>
      * <code><pre>
-     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
      * (SQLite):
      * <p>
      * <code><pre>
@@ -1947,7 +1947,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * Example (Postgres):
      * <p>
      * <code><pre>
-     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
      * (SQLite):
      * <p>
      * <code><pre>
@@ -1977,7 +1977,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * Example (Postgres):
      * <p>
      * <code><pre>
-     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
      * (SQLite):
      * <p>
      * <code><pre>
@@ -2041,7 +2041,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * Example (Postgres):
      * <p>
      * <code><pre>
-     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
      * (SQLite):
      * <p>
      * <code><pre>
@@ -2070,7 +2070,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * Example (Postgres):
      * <p>
      * <code><pre>
-     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
      * (SQLite):
      * <p>
      * <code><pre>
@@ -2102,7 +2102,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * Example (Postgres):
      * <p>
      * <code><pre>
-     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
      * (SQLite):
      * <p>
      * <code><pre>
@@ -2170,7 +2170,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * Example (Postgres):
      * <p>
      * <code><pre>
-     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
      * (SQLite):
      * <p>
      * <code><pre>
@@ -2199,7 +2199,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * Example (Postgres):
      * <p>
      * <code><pre>
-     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
      * (SQLite):
      * <p>
      * <code><pre>
@@ -2231,7 +2231,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * Example (Postgres):
      * <p>
      * <code><pre>
-     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
      * (SQLite):
      * <p>
      * <code><pre>
@@ -2299,7 +2299,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * Example (Postgres):
      * <p>
      * <code><pre>
-     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
      * (SQLite):
      * <p>
      * <code><pre>
@@ -2327,7 +2327,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * Example (Postgres):
      * <p>
      * <code><pre>
-     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
      * (SQLite):
      * <p>
      * <code><pre>
@@ -2358,7 +2358,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * Example (Postgres):
      * <p>
      * <code><pre>
-     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
      * (SQLite):
      * <p>
      * <code><pre>
@@ -2533,7 +2533,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * Example (Postgres):
      * <p>
      * <code><pre>
-     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
      * (SQLite):
      * <p>
      * <code><pre>
@@ -2579,7 +2579,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * Example (Postgres):
      * <p>
      * <code><pre>
-     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
      * (SQLite):
      * <p>
      * <code><pre>
@@ -2626,7 +2626,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * Example (Postgres):
      * <p>
      * <code><pre>
-     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code> Example
+     * String sql = "FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"";</pre></code> Example
      * (SQLite):
      * <p>
      * <code><pre>
@@ -3551,15 +3551,15 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * <ul>
      * <li>The input is expected to be well-formed XML. XHTML conformance is not
      * required - i.e. unknown elements / attributes, or elements / attributes
-     * not specified here, such as <code>&lt;caption></code>,
-     * <code>&lt;thead></code>, <code>&lt;tbody></code> are simply ignored.</li>
-     * <li>The surrounding <code>&lt;table></code> element is optional, but it
+     * not specified here, such as <code>&lt;caption&gt;</code>,
+     * <code>&lt;thead&gt;</code>, <code>&lt;tbody&gt;</code> are simply ignored.</li>
+     * <li>The surrounding <code>&lt;table&gt;</code> element is optional, but it
      * may appear only once</li>
-     * <li>A single row containing table headings <code>&lt;th></code> is
+     * <li>A single row containing table headings <code>&lt;th&gt;</code> is
      * allowed. Further rows containing table headings are ignored. Table
      * headings define field names. In the absence of table headings, field
      * names are generated.</li>
-     * <li>The first row <code>&lt;tr></code> specifies the number of columns in
+     * <li>The first row <code>&lt;tr&gt;</code> specifies the number of columns in
      * the table (regardless if it contains table headings or not). Subsequent
      * rows containing less columns will be padded. Subsequent rows containing
      * more columns will be truncated.</li>
@@ -3568,11 +3568,11 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * </ul>
      * <p>
      * Ideal input looks like this: <code><pre>
-     * &lt;table>
-     * &lt;tr>&lt;th>COL1&lt;/th>&lt;th>COL2&lt;/th>&lt;/tr>
-     * &lt;tr>&lt;td>1&lt;/td>&lt;td>a&lt;/td>&lt;/tr>
-     * &lt;tr>&lt;td>2&lt;/td>&lt;td>b&lt;/td>&lt;/tr>
-     * &lt;/table>
+     * &lt;table&gt;
+     * &lt;tr&gt;&lt;th&gt;COL1&lt;/th&gt;&lt;th&gt;COL2&lt;/th&gt;&lt;/tr&gt;
+     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;a&lt;/td&gt;&lt;/tr&gt;
+     * &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;b&lt;/td&gt;&lt;/tr&gt;
+     * &lt;/table&gt;
      * </code>
      * </pre>
      *
@@ -5629,7 +5629,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link DSL#select(SelectField...)} instead.
+     * {@link DSL#select(SelectFieldOrAsterisk...)} instead.
      * <p>
      * Example: <code><pre>
      * DSLContext create = DSL.using(configuration);
@@ -5651,7 +5651,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * using plain SQL</li>
      * </ul>
      *
-     * @see DSL#select(SelectField...)
+     * @see DSL#select(SelectFieldOrAsterisk...)
      */
     @Support
     SelectSelectStep<Record> select(SelectFieldOrAsterisk... fields);
@@ -5661,7 +5661,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Field#in(Select)}, {@link Field#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -5690,7 +5690,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row2#in(Select)}, {@link Row2#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -5719,7 +5719,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row3#in(Select)}, {@link Row3#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -5748,7 +5748,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row4#in(Select)}, {@link Row4#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -5777,7 +5777,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row5#in(Select)}, {@link Row5#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -5806,7 +5806,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row6#in(Select)}, {@link Row6#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -5835,7 +5835,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row7#in(Select)}, {@link Row7#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -5864,7 +5864,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row8#in(Select)}, {@link Row8#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -5893,7 +5893,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row9#in(Select)}, {@link Row9#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -5922,7 +5922,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row10#in(Select)}, {@link Row10#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -5951,7 +5951,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row11#in(Select)}, {@link Row11#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -5980,7 +5980,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row12#in(Select)}, {@link Row12#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -6009,7 +6009,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row13#in(Select)}, {@link Row13#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -6038,7 +6038,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row14#in(Select)}, {@link Row14#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -6067,7 +6067,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row15#in(Select)}, {@link Row15#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -6096,7 +6096,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row16#in(Select)}, {@link Row16#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -6125,7 +6125,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row17#in(Select)}, {@link Row17#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -6154,7 +6154,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row18#in(Select)}, {@link Row18#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -6183,7 +6183,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row19#in(Select)}, {@link Row19#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -6212,7 +6212,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row20#in(Select)}, {@link Row20#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -6241,7 +6241,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row21#in(Select)}, {@link Row21#equal(Select)} and other predicate
      * building methods taking subselect arguments.
@@ -6270,7 +6270,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
     /**
      * Create a new DSL select statement.
      * <p>
-     * This is the same as {@link #select(SelectField...)}, except that it
+     * This is the same as {@link #select(SelectFieldOrAsterisk...)}, except that it
      * declares additional record-level typesafety, which is needed by
      * {@link Row22#in(Select)}, {@link Row22#equal(Select)} and other predicate
      * building methods taking subselect arguments.

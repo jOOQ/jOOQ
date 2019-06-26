@@ -4648,7 +4648,7 @@ public class JavaGenerator extends AbstractGenerator {
             final String seqType = out.ref(seqTypeFull);
             final String seqId = getStrategy().getJavaIdentifier(sequence);
             final String seqName = sequence.getOutputName();
-            final String schemaId = out.ref(getStrategy().getFullJavaIdentifier(schema), 2);
+            final String schemaId = getStrategy().getFullJavaIdentifier(schema);
             final String typeRef = getJavaTypeReference(sequence.getDatabase(), sequence.getType(resolver()));
 
             if (!printDeprecationIfUnknownType(out, seqTypeFull))

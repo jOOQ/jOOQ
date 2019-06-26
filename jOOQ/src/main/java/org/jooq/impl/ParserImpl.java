@@ -301,6 +301,7 @@ import static org.jooq.impl.Tools.EMPTY_COMMON_TABLE_EXPRESSION;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_NAME;
 import static org.jooq.impl.Tools.EMPTY_QUERYPART;
+import static org.jooq.impl.Tools.EMPTY_ROWN;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
@@ -4342,7 +4343,15 @@ final class ParserImpl implements Parser {
                 Condition result;
 
                 parse(ctx, '(');
-                if (peekKeyword(ctx, "SELECT") || peekKeyword(ctx, "SEL"))
+                if (peek(ctx, ')'))
+                    result = not
+                        ? left instanceof Field
+                            ? ((Field) left).notIn(EMPTY_FIELD)
+                            : ((RowN) left).notIn(EMPTY_ROWN)
+                        : left instanceof Field
+                            ? ((Field) left).in(EMPTY_FIELD)
+                            : ((RowN) left).in(EMPTY_ROWN);
+                else if (peekKeyword(ctx, "SELECT") || peekKeyword(ctx, "SEL"))
                     result = not
                         ? left instanceof Field
                             ? ((Field) left).notIn(parseSelect(ctx, 1))

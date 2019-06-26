@@ -44,6 +44,8 @@ import java.util.List;
 import org.jooq.meta.AttributeDefinition;
 import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.Definition;
+import org.jooq.meta.DomainDefinition;
+import org.jooq.meta.EnumDefinition;
 import org.jooq.meta.ParameterDefinition;
 import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.TableDefinition;

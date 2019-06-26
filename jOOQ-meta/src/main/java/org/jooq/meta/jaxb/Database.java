@@ -773,7 +773,7 @@ public class Database implements Serializable
      * All table and view columns that are used as "version" fields for optimistic locking.
      * <p>
      * This is a Java regular expression. Use the pipe to separate several expressions.
-     * See {@link org.jooq.UpdatableRecord.store()} and {@link org.jooq.UpdatableRecord.delete()} for details about optimistic locking.
+     * See {@link org.jooq.UpdatableRecord#store()} and {@link org.jooq.UpdatableRecord#delete()} for details about optimistic locking.
      *
      * @return
      *     possible object is
@@ -800,7 +800,7 @@ public class Database implements Serializable
      * All table and view columns that are used as "timestamp" fields for optimistic locking.
      * <p>
      * This is a Java regular expression. Use the pipe to separate several expressions.
-     * See {@link org.jooq.UpdatableRecord.store()} and {@link org.jooq.UpdatableRecord.delete()} for details about optimistic locking.
+     * See {@link org.jooq.UpdatableRecord#store()} and {@link org.jooq.UpdatableRecord#delete()} for details about optimistic locking.
      *
      * @return
      *     possible object is
@@ -855,10 +855,10 @@ public class Database implements Serializable
      * <p>
      * To be used with:
      * <ul>
-     * <li>{@link org.jooq.UpdatableRecord.store()}</li>
-     * <li>{@link org.jooq.UpdatableRecord.update()}</li>
-     * <li>{@link org.jooq.UpdatableRecord.delete()}</li>
-     * <li>{@link org.jooq.UpdatableRecord.refresh()}</li>
+     * <li>{@link org.jooq.UpdatableRecord#store()}</li>
+     * <li>{@link org.jooq.UpdatableRecord#update()}</li>
+     * <li>{@link org.jooq.UpdatableRecord#delete()}</li>
+     * <li>{@link org.jooq.UpdatableRecord#refresh()}</li>
      * </ul>
      * <p>
      * Synthetic primary keys will override existing primary keys.
@@ -890,10 +890,10 @@ public class Database implements Serializable
      * <p>
      * To be used with:
      * <ul>
-     * <li>{@link org.jooq.UpdatableRecord.store()}</li>
-     * <li>{@link org.jooq.UpdatableRecord.update()}</li>
-     * <li>{@link org.jooq.UpdatableRecord.delete()}</li>
-     * <li>{@link org.jooq.UpdatableRecord.refresh()}</li>
+     * <li>{@link org.jooq.UpdatableRecord#store()}</li>
+     * <li>{@link org.jooq.UpdatableRecord#update()}</li>
+     * <li>{@link org.jooq.UpdatableRecord#delete()}</li>
+     * <li>{@link org.jooq.UpdatableRecord#refresh()}</li>
      * </ul>
      * <p>
      * If several keys match, a warning is emitted and the first one encountered will be used.

@@ -557,14 +557,14 @@ Excludes match before includes, i.e. excludes have a higher priority.]]></jxb:ja
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[All table and view columns that are used as "version" fields for optimistic locking.
 <p>
 This is a Java regular expression. Use the pipe to separate several expressions.
-See {@link org.jooq.UpdatableRecord.store()} and {@link org.jooq.UpdatableRecord.delete()} for details about optimistic locking.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+See {@link org.jooq.UpdatableRecord#store()} and {@link org.jooq.UpdatableRecord#delete()} for details about optimistic locking.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="recordTimestampFields" type="string" default="" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[All table and view columns that are used as "timestamp" fields for optimistic locking.
 <p>
 This is a Java regular expression. Use the pipe to separate several expressions.
-See {@link org.jooq.UpdatableRecord.store()} and {@link org.jooq.UpdatableRecord.delete()} for details about optimistic locking.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+See {@link org.jooq.UpdatableRecord#store()} and {@link org.jooq.UpdatableRecord#delete()} for details about optimistic locking.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="syntheticIdentities" type="string" default="" minOccurs="0" maxOccurs="1">
@@ -579,10 +579,10 @@ which should be placed on generated {@link org.jooq.UpdatableRecord}
 <p>
 To be used with:
 <ul>
-<li>{@link org.jooq.UpdatableRecord.store()}</li>
-<li>{@link org.jooq.UpdatableRecord.update()}</li>
-<li>{@link org.jooq.UpdatableRecord.delete()}</li>
-<li>{@link org.jooq.UpdatableRecord.refresh()}</li>
+<li>{@link org.jooq.UpdatableRecord#store()}</li>
+<li>{@link org.jooq.UpdatableRecord#update()}</li>
+<li>{@link org.jooq.UpdatableRecord#delete()}</li>
+<li>{@link org.jooq.UpdatableRecord#refresh()}</li>
 </ul>
 <p>
 Synthetic primary keys will override existing primary keys.]]></jxb:javadoc></jxb:property></appinfo></annotation>
@@ -594,10 +594,10 @@ generated {@link org.jooq.UpdatableRecord}.
 <p>
 To be used with:
 <ul>
-<li>{@link org.jooq.UpdatableRecord.store()}</li>
-<li>{@link org.jooq.UpdatableRecord.update()}</li>
-<li>{@link org.jooq.UpdatableRecord.delete()}</li>
-<li>{@link org.jooq.UpdatableRecord.refresh()}</li>
+<li>{@link org.jooq.UpdatableRecord#store()}</li>
+<li>{@link org.jooq.UpdatableRecord#update()}</li>
+<li>{@link org.jooq.UpdatableRecord#delete()}</li>
+<li>{@link org.jooq.UpdatableRecord#refresh()}</li>
 </ul>
 <p>
 If several keys match, a warning is emitted and the first one encountered will be used.

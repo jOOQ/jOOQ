@@ -427,6 +427,7 @@ public class JavaGenerator extends AbstractGenerator {
             && database.getEnums(schema).isEmpty()
             && database.getPackages(schema).isEmpty()
             && database.getRoutines(schema).isEmpty()
+            && database.getSequences(schema).isEmpty()
             && database.getTables(schema).isEmpty()
             && database.getUDTs(schema).isEmpty())
             return false;

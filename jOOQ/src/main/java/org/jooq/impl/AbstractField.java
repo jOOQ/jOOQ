@@ -853,6 +853,40 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
     }
 
     @Override
+    public final LikeEscapeStep likeAny(String... values) {
+        return likeAny(Tools.fields(values));
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public final LikeEscapeStep likeAny(Field<String>... fields) {
+        return likeAny(Arrays.asList(fields));
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public final LikeEscapeStep likeAny(Collection<?> values) {
+        return new CombinedCompareCondition(this, LIKE, Quantifier.ANY, (Collection<? extends Field<String>>) Tools.fields(values, SQLDataType.VARCHAR));
+    }
+
+    @Override
+    public final LikeEscapeStep notLikeAll(String... values) {
+        return notLikeAll(Tools.fields(values));
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public final LikeEscapeStep notLikeAll(Field<String>... fields) {
+        return notLikeAll(Arrays.asList(fields));
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public final LikeEscapeStep notLikeAll(Collection<?> values) {
+        return new CombinedCompareCondition(this, NOT_LIKE, Quantifier.ALL, (Collection<? extends Field<String>>) Tools.fields(values, SQLDataType.VARCHAR));
+    }
+
+    @Override
     public final Condition notLikeRegex(String pattern) {
         return likeRegex(pattern).not();
     }

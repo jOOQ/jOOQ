@@ -400,6 +400,7 @@ import org.jooq.InsertValuesStepN;
 import org.jooq.JoinType;
 import org.jooq.Keyword;
 // ...
+import org.jooq.LikeEscapeStep;
 // ...
 import org.jooq.Merge;
 import org.jooq.MergeFinalStep;
@@ -4388,16 +4389,54 @@ final class ParserImpl implements Parser {
                             : ((RowN) left).between((RowN) r1, (RowN) r2);
             }
             else if (left instanceof Field && parseKeywordIf(ctx, "LIKE")) {
-                Field right = toField(ctx, parseConcat(ctx, null));
-                boolean escape = parseKeywordIf(ctx, "ESCAPE");
-                char character = escape ? parseCharacterLiteral(ctx) : ' ';
-                return escape
-                    ? not
-                        ? ((Field) left).notLike(right, character)
-                        : ((Field) left).like(right, character)
-                    : not
-                        ? ((Field) left).notLike(right)
-                        : ((Field) left).like(right);
+                if (!not && parseKeywordIf(ctx, "ANY")) {
+                    parse(ctx, '(');
+                    List<Field<?>> fields = null;
+                    if (parseIf(ctx, ')'))
+                        fields = Collections.<Field<?>> emptyList();
+                    else {
+                        fields = new ArrayList<Field<?>>();
+                        do {
+                            fields.add(toField(ctx, parseConcat(ctx, null)));
+                        }
+                        while (parseIf(ctx, ','));
+                        parse(ctx, ')');
+                    }
+                    boolean escape = parseKeywordIf(ctx, "ESCAPE");
+                    char character = escape ? parseCharacterLiteral(ctx) : ' ';
+                    LikeEscapeStep result = ((Field) left).likeAny(fields);
+                    return escape ? result.escape(character) : result;
+                }
+                else if (not && parseKeywordIf(ctx, "ALL")) {
+                    parse(ctx, '(');
+                    List<Field<?>> fields = null;
+                    if (parseIf(ctx, ')'))
+                        fields = Collections.<Field<?>> emptyList();
+                    else {
+                        fields = new ArrayList<Field<?>>();
+                        do {
+                            fields.add(toField(ctx, parseConcat(ctx, null)));
+                        }
+                        while (parseIf(ctx, ','));
+                        parse(ctx, ')');
+                    }
+                    boolean escape = parseKeywordIf(ctx, "ESCAPE");
+                    char character = escape ? parseCharacterLiteral(ctx) : ' ';
+                    LikeEscapeStep result = ((Field) left).notLikeAll(fields);
+                    return escape ? result.escape(character) : result;
+                }
+                else {
+                    Field right = toField(ctx, parseConcat(ctx, null));
+                    boolean escape = parseKeywordIf(ctx, "ESCAPE");
+                    char character = escape ? parseCharacterLiteral(ctx) : ' ';
+                    return escape
+                        ? not
+                            ? ((Field) left).notLike(right, character)
+                            : ((Field) left).like(right, character)
+                        : not
+                            ? ((Field) left).notLike(right)
+                            : ((Field) left).like(right);
+                }
             }
             else if (left instanceof Field && parseKeywordIf(ctx, "ILIKE")) {
                 Field right = toField(ctx, parseConcat(ctx, null));
@@ -6114,6 +6153,7 @@ final class ParserImpl implements Parser {
         if (parseFunctionNameIf(ctx, "LOG")) {
             parse(ctx, '(');
             switch (ctx.family()) {
+
 
 
 

@@ -1628,6 +1628,68 @@ extends
     Condition notLikeIgnoreCase(String value, char escape);
 
     /**
+     * Create a condition to pattern-check this field against any element in an array of values.
+     * <p>
+     * SQL: <code>(this like value0 or this like value1 or ...)</code>
+     *
+     * @see LikeEscapeStep#escape(char)
+     */
+    @Support
+    LikeEscapeStep likeAny(String... values);
+
+    /**
+     * Create a condition to pattern-check this field against any element in an array of fields.
+     * <p>
+     * SQL: <code>(this like field0 or this like field1 or ...)</code>
+     *
+     * @see LikeEscapeStep#escape(char)
+     */
+    @Support
+    @SuppressWarnings("unchecked")
+    LikeEscapeStep likeAny(Field<String>... fields);
+
+    /**
+     * Create a condition to pattern-check this field against any element in a collection of fields or values.
+     * <p>
+     * SQL: <code>(this like field0 or this like field1 or ...)</code>
+     *
+     * @see LikeEscapeStep#escape(char)
+     */
+    @Support
+    LikeEscapeStep likeAny(Collection<?> values);
+
+    /**
+     * Create a condition to pattern-check this field against all elements in an array of values.
+     * <p>
+     * SQL: <code>(this not like value0 and this not like value1 and ...)</code>
+     *
+     * @see LikeEscapeStep#escape(char)
+     */
+    @Support
+    LikeEscapeStep notLikeAll(String... values);
+
+    /**
+     * Create a condition to pattern-check this field against all elements in an array of fields.
+     * <p>
+     * SQL: <code>(this not like field0 and this not like field1 and ...)</code>
+     *
+     * @see LikeEscapeStep#escape(char)
+     */
+    @Support
+    @SuppressWarnings("unchecked")
+    LikeEscapeStep notLikeAll(Field<String>... fields);
+
+    /**
+     * Create a condition to pattern-check this field against all elements in a collection of fields or values.
+     * <p>
+     * SQL: <code>(this not like field0 and this not like field1 and ...)</code>
+     *
+     * @see LikeEscapeStep#escape(char)
+     */
+    @Support
+    LikeEscapeStep notLikeAll(Collection<?> values);
+
+    /**
      * Convenience method for {@link #like(String, char)} including proper
      * adding of wildcards and escaping.
      * <p>

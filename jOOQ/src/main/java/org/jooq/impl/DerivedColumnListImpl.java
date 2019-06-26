@@ -99,7 +99,7 @@ implements
     DerivedColumnList21,
     DerivedColumnList22,
 
-// [jooq-tools] END [implements-derived-column-list]
+    // [jooq-tools] END [implements-derived-column-list]
 
     DerivedColumnList {
 

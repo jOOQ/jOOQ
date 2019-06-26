@@ -171,7 +171,7 @@ implements
     // Cascading interface implementations for Merge behaviour
     MergeUsingStep<R>,
 
-// [jooq-tools] START [implementsKeyStep]
+    // [jooq-tools] START [implementsKeyStep]
 
     MergeKeyStep1<R, T1>,
     MergeKeyStep2<R, T1, T2>,
@@ -196,7 +196,7 @@ implements
     MergeKeyStep21<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>,
     MergeKeyStep22<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>,
 
-// [jooq-tools] END [implementsKeyStep]
+    // [jooq-tools] END [implementsKeyStep]
 
     MergeOnStep<R>,
     MergeOnConditionStep<R>,
@@ -204,7 +204,7 @@ implements
     MergeMatchedDeleteStep<R>,
     MergeNotMatchedSetMoreStep<R>,
 
-// [jooq-tools] START [implementsNotMatchedValuesStep]
+    // [jooq-tools] START [implementsNotMatchedValuesStep]
 
     MergeNotMatchedValuesStep1<R, T1>,
     MergeNotMatchedValuesStep2<R, T1, T2>,
@@ -229,7 +229,7 @@ implements
     MergeNotMatchedValuesStep21<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>,
     MergeNotMatchedValuesStep22<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>,
 
-// [jooq-tools] END [implementsNotMatchedValuesStep]
+    // [jooq-tools] END [implementsNotMatchedValuesStep]
 
     MergeNotMatchedValuesStepN<R> {
 
@@ -451,7 +451,7 @@ implements
         return columns(Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22));
     }
 
-// [jooq-tools] END [columns]
+    // [jooq-tools] END [columns]
 
     @Override
     public final MergeImpl select(Select select) {
@@ -476,7 +476,7 @@ implements
     // Shared MERGE API
     // -------------------------------------------------------------------------
 
-// [jooq-tools] START [values]
+    // [jooq-tools] START [values]
 
     @Override
     public final MergeImpl values(T1 value1) {
@@ -699,7 +699,7 @@ implements
         return values(new Field[] { value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, value11, value12, value13, value14, value15, value16, value17, value18, value19, value20, value21, value22 });
     }
 
-// [jooq-tools] END [values]
+    // [jooq-tools] END [values]
 
     @Override
     public final MergeImpl values(Object... values) {
@@ -974,7 +974,7 @@ implements
         return whenNotMatchedThenInsert(Collections.<Field<?>>emptyList());
     }
 
-// [jooq-tools] START [whenNotMatchedThenInsert]
+    // [jooq-tools] START [whenNotMatchedThenInsert]
 
     @Override
     @SuppressWarnings("hiding")
@@ -1109,7 +1109,7 @@ implements
     }
 
 
-// [jooq-tools] END [whenNotMatchedThenInsert]
+    // [jooq-tools] END [whenNotMatchedThenInsert]
 
     @Override
     public final MergeImpl whenNotMatchedThenInsert(Field<?>... fields) {

@@ -68,7 +68,7 @@ import java.util.Collection;
 @SuppressWarnings("deprecation")
 public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionProvider, Update<R> {
 
-// [jooq-tools] START [addValues]
+    // [jooq-tools] START [addValues]
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
@@ -346,7 +346,7 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
     @Support({ H2, HSQLDB })
     void addValues(RowN row, Select<?> select);
 
-// [jooq-tools] END [addValues]
+    // [jooq-tools] END [addValues]
 
     /**
      * Add tables to the table product.

@@ -112,7 +112,7 @@ public final class Constants {
      */
     public static final int    MAX_ROW_DEGREE = 22;
 
-// [jooq-tools] END [max-row-degree]
+    // [jooq-tools] END [max-row-degree]
 
     /**
      * No further instances

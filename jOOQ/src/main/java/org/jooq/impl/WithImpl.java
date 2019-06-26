@@ -156,7 +156,7 @@ implements
     WithAsStep21,
     WithAsStep22,
 
-// [jooq-tools] END [implements-with-as-step]
+    // [jooq-tools] END [implements-with-as-step]
 
     WithStep
 {
@@ -515,7 +515,7 @@ implements
         return with(a, new Name[] { fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20, fieldAlias21, fieldAlias22 });
     }
 
-// [jooq-tools] END [with]
+    // [jooq-tools] END [with]
 
     @Override
     public final WithStep with(CommonTableExpression<?>... tables) {
@@ -677,7 +677,7 @@ implements
         return (SelectSelectStep) select(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
     }
 
-// [jooq-tools] END [select]
+    // [jooq-tools] END [select]
 
     @Override
     public final SelectSelectStep<Record> selectDistinct(Collection<? extends SelectFieldOrAsterisk> fields) {
@@ -801,7 +801,7 @@ implements
         return (SelectSelectStep) selectDistinct(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
     }
 
-// [jooq-tools] END [selectDistinct]
+    // [jooq-tools] END [selectDistinct]
 
     @Override
     public final SelectSelectStep<Record1<Integer>> selectZero() {
@@ -935,7 +935,7 @@ implements
         return insertInto(into, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22));
     }
 
-// [jooq-tools] END [insert]
+    // [jooq-tools] END [insert]
 
     @Override
     public final <R extends Record> InsertImpl insertInto(Table<R> into, Field<?>... fields) {
@@ -1069,7 +1069,7 @@ implements
         return mergeInto(table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22));
     }
 
-// [jooq-tools] END [merge]
+    // [jooq-tools] END [merge]
 
     @Override
     public final <R extends Record> MergeImpl mergeInto(Table<R> table, Field<?>... fields) {

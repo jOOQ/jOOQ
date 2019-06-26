@@ -49,7 +49,25 @@ import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_IN;
 import static org.jooq.Clause.CONDITION_NOT_IN;
 import static org.jooq.Comparator.IN;
+// ...
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.CUBRID;
+// ...
+import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
+// ...
+import static org.jooq.SQLDialect.HSQLDB;
+// ...
+// ...
+import static org.jooq.SQLDialect.MARIADB;
+// ...
+import static org.jooq.SQLDialect.MYSQL;
+// ...
+import static org.jooq.SQLDialect.POSTGRES;
+// ...
+// ...
 // ...
 // ...
 // ...
@@ -81,11 +99,12 @@ import org.jooq.SQLDialect;
  */
 final class InCondition<T> extends AbstractCondition {
 
-    private static final long                serialVersionUID  = -1653924248576930761L;
-    private static final int                 IN_LIMIT          = 1000;
-    private static final Clause[]            CLAUSES_IN        = { CONDITION, CONDITION_IN };
-    private static final Clause[]            CLAUSES_IN_NOT    = { CONDITION, CONDITION_NOT_IN };
-    private static final EnumSet<SQLDialect> REQUIRES_IN_LIMIT = EnumSet.of(FIREBIRD);
+    private static final long                serialVersionUID       = -1653924248576930761L;
+    private static final int                 IN_LIMIT               = 1000;
+    private static final Clause[]            CLAUSES_IN             = { CONDITION, CONDITION_IN };
+    private static final Clause[]            CLAUSES_IN_NOT         = { CONDITION, CONDITION_NOT_IN };
+    private static final EnumSet<SQLDialect> REQUIRES_IN_LIMIT      = EnumSet.of(FIREBIRD);
+    private static final EnumSet<SQLDialect> NO_SUPPORT_EMPTY_LISTS = EnumSet.of(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES);
 
     private final Field<T>                   field;
     private final Field<?>[]                 values;
@@ -125,7 +144,7 @@ final class InCondition<T> extends AbstractCondition {
     private final void accept0(Context<?> ctx) {
         List<Field<?>> list = Arrays.asList(values);
 
-        if (list.size() == 0) {
+        if (list.size() == 0 && NO_SUPPORT_EMPTY_LISTS.contains(ctx.family())) {
             if (comparator == IN)
                 ctx.visit(falseCondition());
             else

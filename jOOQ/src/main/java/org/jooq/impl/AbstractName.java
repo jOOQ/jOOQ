@@ -120,7 +120,7 @@ abstract class AbstractName extends AbstractQueryPart implements Name {
 
 
 
-    // [jooq-tools] START [fields]
+
 
     @Override
     public final DerivedColumnListImpl fields(String fieldName1) {
@@ -342,7 +342,7 @@ abstract class AbstractName extends AbstractQueryPart implements Name {
         return fields(new Name[] { fieldName1, fieldName2, fieldName3, fieldName4, fieldName5, fieldName6, fieldName7, fieldName8, fieldName9, fieldName10, fieldName11, fieldName12, fieldName13, fieldName14, fieldName15, fieldName16, fieldName17, fieldName18, fieldName19, fieldName20, fieldName21, fieldName22 });
     }
 
-    // [jooq-tools] END [fields]
+
 
     // ------------------------------------------------------------------------
     // XXX: Object API

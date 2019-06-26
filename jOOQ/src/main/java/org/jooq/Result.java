@@ -2482,7 +2482,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      */
     Result<Record> into(Field<?>... fields);
 
-    // [jooq-tools] START [into-fields]
+
 
     /**
      * Copy all records from this result into a new result with new records
@@ -2660,7 +2660,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      */
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> Result<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22);
 
-    // [jooq-tools] END [into-fields]
+
 
     /**
      * Map resulting records onto a custom type.

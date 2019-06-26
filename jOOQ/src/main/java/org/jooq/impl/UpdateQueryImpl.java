@@ -183,7 +183,7 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         return updateMap;
     }
 
-    // [jooq-tools] START [addValues]
+
 
     @Override
     public final <T1> void addValues(Row1<T1> row, Row1<T1> value) {
@@ -415,7 +415,7 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         addValues0(row, select);
     }
 
-    // [jooq-tools] END [addValues]
+
 
     private final void addValues0(Row row, Row value) {
         multiRow = row;

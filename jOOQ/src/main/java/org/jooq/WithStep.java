@@ -148,7 +148,7 @@ public interface WithStep extends QueryPart {
     WithAsStep with(String alias, BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction);
 
 
-    // [jooq-tools] START [with]
+
 
     /**
      * Add another common table expression to the <code>WITH</code> clause.
@@ -414,7 +414,7 @@ public interface WithStep extends QueryPart {
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep22 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19, Name fieldAlias20, Name fieldAlias21, Name fieldAlias22);
 
-    // [jooq-tools] END [with]
+
 
     /**
      * Add another common table expression to the <code>WITH</code> clause.
@@ -584,7 +584,7 @@ public interface WithStep extends QueryPart {
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     SelectSelectStep<Record> select(SelectFieldOrAsterisk... fields);
 
-    // [jooq-tools] START [select]
+
 
     /**
      * Create a new DSL select statement.
@@ -1246,7 +1246,7 @@ public interface WithStep extends QueryPart {
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> SelectSelectStep<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20, SelectField<T21> field21, SelectField<T22> field22);
 
-    // [jooq-tools] END [select]
+
 
     /**
      * Create a new DSL select statement.
@@ -1296,7 +1296,7 @@ public interface WithStep extends QueryPart {
     @Support({ FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     SelectSelectStep<Record> selectDistinct(SelectFieldOrAsterisk... fields);
 
-    // [jooq-tools] START [selectDistinct]
+
 
     /**
      * Create a new DSL select statement.
@@ -1958,7 +1958,7 @@ public interface WithStep extends QueryPart {
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> SelectSelectStep<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20, SelectField<T21> field21, SelectField<T22> field22);
 
-    // [jooq-tools] END [selectDistinct]
+
 
     /**
      * Create a new DSL select statement for a constant <code>0</code> literal.
@@ -2058,7 +2058,7 @@ public interface WithStep extends QueryPart {
     @Support({ POSTGRES, SQLITE })
     <R extends Record> InsertSetStep<R> insertInto(Table<R> into);
 
-    // [jooq-tools] START [insert]
+
 
     /**
      * Create a new DSL insert statement.
@@ -2456,7 +2456,7 @@ public interface WithStep extends QueryPart {
     @Support({ POSTGRES, SQLITE })
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> InsertValuesStep22<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22);
 
-    // [jooq-tools] END [insert]
+
 
     /**
      * Create a new DSL insert statement.
@@ -2597,7 +2597,7 @@ public interface WithStep extends QueryPart {
     @Support({})
     <R extends Record> MergeUsingStep<R> mergeInto(Table<R> table);
 
-    // [jooq-tools] START [merge]
+
 
     /**
      * Create a new DSL merge statement (H2-specific syntax).
@@ -3105,7 +3105,7 @@ public interface WithStep extends QueryPart {
     @Support({})
     <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> MergeKeyStep22<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22);
 
-    // [jooq-tools] END [merge]
+
 
     /**
      * Create a new DSL merge statement (H2-specific syntax).

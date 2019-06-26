@@ -354,7 +354,7 @@ final class DeleteImpl<R extends Record>
         return this;
     }
 
-    // [jooq-tools] START [returning]
+
 
     @Override
     public final <T1> DeleteResultStep<Record1<T1>> returningResult(SelectField<T1> field1) {
@@ -466,7 +466,7 @@ final class DeleteImpl<R extends Record>
         return returningResult(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
     }
 
-    // [jooq-tools] END [returning]
+
 
     @Override
     public final Result<R> fetch() {

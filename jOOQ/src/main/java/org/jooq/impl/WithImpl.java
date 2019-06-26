@@ -132,7 +132,7 @@ final class WithImpl extends AbstractQueryPart
 implements
     WithAsStep,
 
-    // [jooq-tools] START [implements-with-as-step]
+
     WithAsStep1,
     WithAsStep2,
     WithAsStep3,
@@ -156,7 +156,7 @@ implements
     WithAsStep21,
     WithAsStep22,
 
-    // [jooq-tools] END [implements-with-as-step]
+
 
     WithStep
 {
@@ -293,7 +293,7 @@ implements
     }
 
 
-    // [jooq-tools] START [with]
+
 
     @Override
     public final WithImpl with(String a, String fieldAlias1) {
@@ -515,7 +515,7 @@ implements
         return with(a, new Name[] { fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20, fieldAlias21, fieldAlias22 });
     }
 
-    // [jooq-tools] END [with]
+
 
     @Override
     public final WithStep with(CommonTableExpression<?>... tables) {
@@ -565,7 +565,7 @@ implements
         return new SelectImpl(configuration, this).select(fields);
     }
 
-    // [jooq-tools] START [select]
+
 
     @Override
     public final <T1> SelectSelectStep<Record1<T1>> select(SelectField<T1> field1) {
@@ -677,7 +677,7 @@ implements
         return (SelectSelectStep) select(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
     }
 
-    // [jooq-tools] END [select]
+
 
     @Override
     public final SelectSelectStep<Record> selectDistinct(Collection<? extends SelectFieldOrAsterisk> fields) {
@@ -689,7 +689,7 @@ implements
         return new SelectImpl(configuration, this, true).select(fields);
     }
 
-    // [jooq-tools] START [selectDistinct]
+
 
     @Override
     public final <T1> SelectSelectStep<Record1<T1>> selectDistinct(SelectField<T1> field1) {
@@ -801,7 +801,7 @@ implements
         return (SelectSelectStep) selectDistinct(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
     }
 
-    // [jooq-tools] END [selectDistinct]
+
 
     @Override
     public final SelectSelectStep<Record1<Integer>> selectZero() {
@@ -823,7 +823,7 @@ implements
         return new InsertImpl(configuration, this, into);
     }
 
-    // [jooq-tools] START [insert]
+
 
     @Override
     public final <R extends Record, T1> InsertImpl insertInto(Table<R> into, Field<T1> field1) {
@@ -935,7 +935,7 @@ implements
         return insertInto(into, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22));
     }
 
-    // [jooq-tools] END [insert]
+
 
     @Override
     public final <R extends Record> InsertImpl insertInto(Table<R> into, Field<?>... fields) {
@@ -957,7 +957,7 @@ implements
         return new MergeImpl(configuration, this, table);
     }
 
-    // [jooq-tools] START [merge]
+
 
     @Override
     public final <R extends Record, T1> MergeImpl mergeInto(Table<R> table, Field<T1> field1) {
@@ -1069,7 +1069,7 @@ implements
         return mergeInto(table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22));
     }
 
-    // [jooq-tools] END [merge]
+
 
     @Override
     public final <R extends Record> MergeImpl mergeInto(Table<R> table, Field<?>... fields) {

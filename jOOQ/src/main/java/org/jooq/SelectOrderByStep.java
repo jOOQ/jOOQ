@@ -105,7 +105,7 @@ import java.util.Collection;
  */
 public interface SelectOrderByStep<R extends Record> extends SelectLimitStep<R> {
 
-    // [jooq-tools] START [order-by-orderfield-array]
+
 
     /**
      * Add an <code>ORDER BY</code> clause to the query.
@@ -239,7 +239,7 @@ public interface SelectOrderByStep<R extends Record> extends SelectLimitStep<R> 
     @Support
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> SelectSeekStep22<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> orderBy(OrderField<T1> field1, OrderField<T2> field2, OrderField<T3> field3, OrderField<T4> field4, OrderField<T5> field5, OrderField<T6> field6, OrderField<T7> field7, OrderField<T8> field8, OrderField<T9> field9, OrderField<T10> field10, OrderField<T11> field11, OrderField<T12> field12, OrderField<T13> field13, OrderField<T14> field14, OrderField<T15> field15, OrderField<T16> field16, OrderField<T17> field17, OrderField<T18> field18, OrderField<T19> field19, OrderField<T20> field20, OrderField<T21> field21, OrderField<T22> field22);
 
-    // [jooq-tools] END [order-by-orderfield-array]
+
 
     /**
      * Add an <code>ORDER BY</code> clause to the query

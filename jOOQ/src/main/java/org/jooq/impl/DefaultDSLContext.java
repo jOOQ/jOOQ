@@ -1579,7 +1579,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
 
-    // [jooq-tools] START [with]
+
 
     @Override
     public WithAsStep1 with(String alias, String fieldAlias1) {
@@ -1801,7 +1801,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return new WithImpl(configuration(), false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20, fieldAlias21, fieldAlias22);
     }
 
-    // [jooq-tools] END [with]
+
 
     @Override
     public WithStep with(CommonTableExpression<?>... tables) {
@@ -1840,7 +1840,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
 
-    // [jooq-tools] START [with-recursive]
+
 
     @Override
     public WithAsStep1 withRecursive(String alias, String fieldAlias1) {
@@ -2062,7 +2062,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return new WithImpl(configuration(), true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20, fieldAlias21, fieldAlias22);
     }
 
-    // [jooq-tools] END [with-recursive]
+
 
     @Override
     public WithStep withRecursive(CommonTableExpression<?>... tables) {
@@ -2109,7 +2109,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return new SelectImpl(configuration(), null).select(fields);
     }
 
-    // [jooq-tools] START [select]
+
 
     @Override
     public <T1> SelectSelectStep<Record1<T1>> select(SelectField<T1> field1) {
@@ -2221,7 +2221,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return (SelectSelectStep) select(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
     }
 
-    // [jooq-tools] END [select]
+
 
     @Override
     public SelectSelectStep<Record> selectDistinct(Collection<? extends SelectFieldOrAsterisk> fields) {
@@ -2233,7 +2233,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return new SelectImpl(configuration(), null, true).select(fields);
     }
 
-    // [jooq-tools] START [selectDistinct]
+
 
     @Override
     public <T1> SelectSelectStep<Record1<T1>> selectDistinct(SelectField<T1> field1) {
@@ -2345,7 +2345,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return (SelectSelectStep) selectDistinct(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
     }
 
-    // [jooq-tools] END [selectDistinct]
+
 
     @Override
     public SelectSelectStep<Record1<Integer>> selectZero() {
@@ -2382,7 +2382,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return new InsertImpl(configuration(), null, into, Collections.<Field<?>>emptyList());
     }
 
-    // [jooq-tools] START [insert]
+
 
     @Override
     public <R extends Record, T1> InsertValuesStep1<R, T1> insertInto(Table<R> into, Field<T1> field1) {
@@ -2494,7 +2494,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return new InsertImpl(configuration(), null, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 }));
     }
 
-    // [jooq-tools] END [insert]
+
 
     @Override
     public <R extends Record> InsertValuesStepN<R> insertInto(Table<R> into, Field<?>... fields) {
@@ -2521,7 +2521,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return new MergeImpl(configuration(), null, table);
     }
 
-    // [jooq-tools] START [merge]
+
 
     @Override
     public <R extends Record, T1> MergeKeyStep1<R, T1> mergeInto(Table<R> table, Field<T1> field1) {
@@ -2633,7 +2633,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return new MergeImpl(configuration(), null, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22));
     }
 
-    // [jooq-tools] END [merge]
+
 
     @Override
     public <R extends Record> MergeKeyStepN<R> mergeInto(Table<R> table, Field<?>... fields) {
@@ -3804,7 +3804,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return newRecord(fields.toArray(EMPTY_FIELD));
     }
 
-    // [jooq-tools] START [newRecord]
+
 
     @Override
     public <T1> Record1<T1> newRecord(Field<T1> field1) {
@@ -3916,7 +3916,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return (Record22) newRecord(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
     }
 
-    // [jooq-tools] END [newRecord]
+
 
     @Override
     public <R extends UDTRecord<R>> R newRecord(UDT<R> type) {
@@ -3956,7 +3956,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return new ResultImpl<Record>(configuration(), fields);
     }
 
-    // [jooq-tools] START [newResult]
+
 
     @Override
     public <T1> Result<Record1<T1>> newResult(Field<T1> field1) {
@@ -4068,7 +4068,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return (Result) newResult(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
     }
 
-    // [jooq-tools] END [newResult]
+
 
     // -------------------------------------------------------------------------
     // XXX Executing queries
@@ -4398,7 +4398,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return fetchSingle(DSL.select(fields));
     }
 
-    // [jooq-tools] START [fetch-single]
+
 
     @Override
     public <T1> Record1<T1> fetchSingle(SelectField<T1> field1) {
@@ -4510,7 +4510,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return (Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>) fetchSingle(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
     }
 
-    // [jooq-tools] END [fetch-single]
+
 
 
     @Override

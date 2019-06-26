@@ -173,7 +173,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     SelectHavingConditionStep<R>,
     SelectQualifyConditionStep<R>,
 
-    // [jooq-tools] START [implements-select-seek-step]
+
     SelectSeekStep1<R, T1>,
     SelectSeekStep2<R, T1, T2>,
     SelectSeekStep3<R, T1, T2, T3>,
@@ -197,7 +197,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     SelectSeekStep21<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>,
     SelectSeekStep22<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>,
 
-    // [jooq-tools] END [implements-select-seek-step]
+
 
     SelectSeekStepN<R>,
     SelectSeekLimitStep<R>,
@@ -718,7 +718,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
         return this;
     }
 
-    // [jooq-tools] START [order-by-orderfield-array]
+
 
     @Override
     public final SelectSeekStep1 orderBy(OrderField t1) {
@@ -830,7 +830,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
         return orderBy(new OrderField[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22 });
     }
 
-    // [jooq-tools] END [order-by-orderfield-array]
+
 
     @Override
     public final SelectImpl orderBy(OrderField<?>... fields) {
@@ -871,7 +871,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
         return this;
     }
 
-    // [jooq-tools] START [seek]
+
 
     @Override
     public final SelectSeekLimitStep<R> seek(Object t1) {
@@ -1577,7 +1577,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
         return seekAfter(new Field[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22 });
     }
 
-    // [jooq-tools] END [seek]
+
 
     private final List<? extends Field<?>> seekValues(Object[] values) {
         if (getQuery() instanceof SelectQueryImpl) {
@@ -3949,7 +3949,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
         return getDelegate().coerce(fields);
     }
 
-    // [jooq-tools] START [coerce]
+
 
     @Override
     @SuppressWarnings("hiding")
@@ -4083,7 +4083,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
         return getDelegate().coerce(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22);
     }
 
-    // [jooq-tools] END [coerce]
+
 
     /**
      * The {@link SelectImpl} current condition step

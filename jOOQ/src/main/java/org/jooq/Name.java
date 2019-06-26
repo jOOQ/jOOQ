@@ -276,7 +276,7 @@ public interface Name extends QueryPart {
     DerivedColumnList fields(BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction);
 
 
-    // [jooq-tools] START [fields]
+
 
     /**
      * Add a list of fields to this name to make this name a
@@ -762,7 +762,7 @@ public interface Name extends QueryPart {
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList22 fields(Name fieldName1, Name fieldName2, Name fieldName3, Name fieldName4, Name fieldName5, Name fieldName6, Name fieldName7, Name fieldName8, Name fieldName9, Name fieldName10, Name fieldName11, Name fieldName12, Name fieldName13, Name fieldName14, Name fieldName15, Name fieldName16, Name fieldName17, Name fieldName18, Name fieldName19, Name fieldName20, Name fieldName21, Name fieldName22);
 
-    // [jooq-tools] END [fields]
+
 
     @Override
     boolean equals(Object other);

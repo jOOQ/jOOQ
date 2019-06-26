@@ -119,7 +119,7 @@ public interface ConstraintTypeStep extends ConstraintFinalStep {
     @Support
     ConstraintForeignKeyReferencesStepN foreignKey(Field<?>... fields);
 
-    // [jooq-tools] START [foreignKey]
+
 
     /**
      * Add a <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
@@ -517,7 +517,7 @@ public interface ConstraintTypeStep extends ConstraintFinalStep {
     @Support
     ConstraintForeignKeyReferencesStep22<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14, String field15, String field16, String field17, String field18, String field19, String field20, String field21, String field22);
 
-    // [jooq-tools] END [foreignKey]
+
 
     /**
      * Create a <code>UNIQUE</code> constraint.

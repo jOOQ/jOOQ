@@ -105,14 +105,14 @@ public final class Constants {
      */
     public static final String NS_CODEGEN     = "http://www.jooq.org/xsd/" + XSD_CODEGEN;
 
-    // [jooq-tools] START [max-row-degree]
+
 
     /**
      * The maximum degree of {@link Row} and {@link Record} subtypes
      */
     public static final int    MAX_ROW_DEGREE = 22;
 
-    // [jooq-tools] END [max-row-degree]
+
 
     /**
      * No further instances

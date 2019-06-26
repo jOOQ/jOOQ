@@ -812,7 +812,7 @@ public class DSL {
     }
 
 
-    // [jooq-tools] START [with]
+
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -1606,7 +1606,7 @@ public class DSL {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20, fieldAlias21, fieldAlias22);
     }
 
-    // [jooq-tools] END [with]
+
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -1742,7 +1742,7 @@ public class DSL {
     }
 
 
-    // [jooq-tools] START [with-recursive]
+
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -2536,7 +2536,7 @@ public class DSL {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20, fieldAlias21, fieldAlias22);
     }
 
-    // [jooq-tools] END [with-recursive]
+
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -2814,7 +2814,7 @@ public class DSL {
         return dsl().select(fields);
     }
 
-    // [jooq-tools] START [select]
+
 
     /**
      * Create a new DSL subselect statement.
@@ -3630,7 +3630,7 @@ public class DSL {
         return (SelectSelectStep) select(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
     }
 
-    // [jooq-tools] END [select]
+
 
     /**
      * Create a new DSL subselect statement.
@@ -3712,7 +3712,7 @@ public class DSL {
         return dsl().selectDistinct(fields);
     }
 
-    // [jooq-tools] START [selectDistinct]
+
 
     /**
      * Create a new DSL subselect statement.
@@ -4528,7 +4528,7 @@ public class DSL {
         return (SelectSelectStep) selectDistinct(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
     }
 
-    // [jooq-tools] END [selectDistinct]
+
 
     /**
      * Create a new DSL subselect statement for a constant <code>0</code>
@@ -4661,7 +4661,7 @@ public class DSL {
         return dsl().insertInto(into);
     }
 
-    // [jooq-tools] START [insert]
+
 
     /**
      * Create a new DSL insert statement.
@@ -5257,7 +5257,7 @@ public class DSL {
         return (InsertValuesStep22) insertInto(into, new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
     }
 
-    // [jooq-tools] END [insert]
+
 
     /**
      * Create a new DSL insert statement.
@@ -5431,7 +5431,7 @@ public class DSL {
         return dsl().mergeInto(table);
     }
 
-    // [jooq-tools] START [merge]
+
 
     /**
      * Create a new DSL UPSERT statement ({@link SQLDialect#H2}
@@ -5675,7 +5675,7 @@ public class DSL {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22);
     }
 
-    // [jooq-tools] END [merge]
+
 
     /**
      * Create a new DSL merge statement (H2-specific syntax).
@@ -5931,7 +5931,7 @@ public class DSL {
         return constraint().foreignKey(fields);
     }
 
-    // [jooq-tools] START [foreignKey]
+
 
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
@@ -6461,7 +6461,7 @@ public class DSL {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22);
     }
 
-    // [jooq-tools] END [foreignKey]
+
 
     /**
      * Create an unnamed (system named) <code>UNIQUE</code> constraint.
@@ -11729,7 +11729,7 @@ public class DSL {
         return field instanceof Field ? (Field<T>) field : field("{0}", field.getDataType(), field);
     }
 
-    // [jooq-tools] START [row-field]
+
 
     /**
      * EXPERIMENTAL: Turn a row value expression of degree <code>1</code> into a {@code Field}.
@@ -11995,7 +11995,7 @@ public class DSL {
         return new RowField<Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>, Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>>(row);
     }
 
-    // [jooq-tools] END [row-field]
+
 
     /**
      * EXPERIMENTAL: Turn a row value expression of arbitrary degree into a {@code Field}.
@@ -20722,7 +20722,7 @@ public class DSL {
         return new Fields(fields);
     }
 
-    // [jooq-tools] START [record-type]
+
 
     /**
      * Create a {@link RecordType} of degree <code>1</code>.
@@ -20878,9 +20878,9 @@ public class DSL {
         return new Fields(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22);
     }
 
-    // [jooq-tools] END [record-type]
 
-    // [jooq-tools] START [row-value]
+
+
 
     /**
      * Create a row value expression of degree <code>1</code>.
@@ -21146,7 +21146,7 @@ public class DSL {
         return row(Tools.field(t1), Tools.field(t2), Tools.field(t3), Tools.field(t4), Tools.field(t5), Tools.field(t6), Tools.field(t7), Tools.field(t8), Tools.field(t9), Tools.field(t10), Tools.field(t11), Tools.field(t12), Tools.field(t13), Tools.field(t14), Tools.field(t15), Tools.field(t16), Tools.field(t17), Tools.field(t18), Tools.field(t19), Tools.field(t20), Tools.field(t21), Tools.field(t22));
     }
 
-    // [jooq-tools] END [row-value]
+
 
     /**
      * Create a row value expression of degree <code>N &gt; 22</code>.
@@ -21160,7 +21160,7 @@ public class DSL {
         return row(Tools.fields(values).toArray(EMPTY_FIELD));
     }
 
-    // [jooq-tools] START [row-expression]
+
 
     /**
      * Create a row value expression of degree <code>1</code>.
@@ -21426,7 +21426,7 @@ public class DSL {
         return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22);
     }
 
-    // [jooq-tools] END [row-expression]
+
 
     /**
      * Create a row value expression of degree <code>N &gt; 22</code>.
@@ -21500,7 +21500,7 @@ public class DSL {
         return new Values<Record>(rows).as("v", columns);
     }
 
-    // [jooq-tools] START [values]
+
 
     /**
      * Create a <code>VALUES()</code> expression of degree <code>1</code>.
@@ -22250,7 +22250,7 @@ public class DSL {
         return new Values<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12", "c13", "c14", "c15", "c16", "c17", "c18", "c19", "c20", "c21", "c22");
     }
 
-    // [jooq-tools] END [values]
+
 
     // -------------------------------------------------------------------------
     // XXX Literals

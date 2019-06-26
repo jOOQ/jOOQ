@@ -1161,7 +1161,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
         return result;
     }
 
-    // [jooq-tools] START [into-fields]
+
 
     @Override
     public final <T1> Result<Record1<T1>> into(Field<T1> field1) {
@@ -1273,7 +1273,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
         return (Result) into(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
     }
 
-    // [jooq-tools] END [into-fields]
+
 
     @Override
     public final <E> List<E> into(Class<? extends E> type) {

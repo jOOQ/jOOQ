@@ -4643,12 +4643,15 @@ public class JavaGenerator extends AbstractGenerator {
         else
             out.println("public class Sequences {");
 
+        boolean qualifySequenceClassReferences = containsConflictingDefinition(schema, database.getSequences(schema));
+
         for (SequenceDefinition sequence : database.getSequences(schema)) {
             final String seqTypeFull = getJavaType(sequence.getType(resolver()));
             final String seqType = out.ref(seqTypeFull);
             final String seqId = getStrategy().getJavaIdentifier(sequence);
             final String seqName = sequence.getOutputName();
-            final String schemaId = getStrategy().getFullJavaIdentifier(schema);
+            final String schemaId = qualifySequenceClassReferences ? getStrategy().getFullJavaIdentifier(schema)
+                : out.ref(getStrategy().getFullJavaIdentifier(schema), 2);
             final String typeRef = getJavaTypeReference(sequence.getDatabase(), sequence.getType(resolver()));
 
             if (!printDeprecationIfUnknownType(out, seqTypeFull))
@@ -4664,6 +4667,14 @@ public class JavaGenerator extends AbstractGenerator {
         closeJavaWriter(out);
 
         watch.splitInfo("Sequences generated");
+    }
+
+    private boolean containsConflictingDefinition(SchemaDefinition schema, List<? extends Definition> definitions) {
+        final String unqualifiedSchemaId = getStrategy().getJavaIdentifier(schema);
+        for (Definition def : definitions)
+            if (unqualifiedSchemaId.equals(getStrategy().getJavaIdentifier(def)))
+                return true;
+        return false;
     }
 
     protected void generateCatalog(CatalogDefinition catalog) {

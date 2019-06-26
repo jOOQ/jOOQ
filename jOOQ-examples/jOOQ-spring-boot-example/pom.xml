@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.0.2.RELEASE</version>
+        <version>2.1.6.RELEASE</version>
     </parent>
 
     <groupId>org.jooq</groupId>
@@ -34,6 +34,25 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jooq</artifactId>
+
+            <!-- Exclude the default jOOQ dependency if
+
+                 1. You want a more or less recent jOOQ dependency
+                 2. You want to depend on a commercial jOOQ distribution
+              -->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.jooq</groupId>
+                    <artifactId>jooq</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- Keep this explicit dependency only if you excluded jOOQ above -->
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq</artifactId>
+            <version>${jooq.version}</version>
         </dependency>
 
         <dependency>
@@ -121,6 +140,7 @@
             <plugin>
                 <groupId>org.jooq</groupId>
                 <artifactId>jooq-codegen-maven</artifactId>
+                <version>${jooq.version}</version>
 
                 <executions>
                     <execution>
@@ -157,13 +177,6 @@
                         </configuration>
                     </execution>
                 </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.h2database</groupId>
-                        <artifactId>h2</artifactId>
-                        <version>${h2.version}</version>
-                    </dependency>
-                </dependencies>
             </plugin>
         </plugins>
     </build>

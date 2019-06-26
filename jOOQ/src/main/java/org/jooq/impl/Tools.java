@@ -1576,11 +1576,11 @@ final class Tools {
      * @return The argument objects themselves, if they are {@link Field}s, or a bind
      *         values created from the argument objects.
      */
-    static final List<Field<?>> fields(Object[] values, Field<?> field) {
+    static final <T> List<Field<T>> fields(Object[] values, Field<T> field) {
         if (values == null || field == null)
-            return new ArrayList<Field<?>>();
+            return new ArrayList<Field<T>>();
 
-        List<Field<?>> result = new ArrayList<Field<?>>(values.length);
+        List<Field<T>> result = new ArrayList<Field<T>>(values.length);
 
         for (int i = 0; i < values.length; i++)
             result.add(field(values[i], field));
@@ -1638,11 +1638,11 @@ final class Tools {
      * @return The argument objects themselves, if they are {@link Field}s, or a bind
      *         values created from the argument objects.
      */
-    static final List<Field<?>> fields(Object[] values, Class<?> type) {
+    static final <T> List<Field<T>> fields(Object[] values, Class<T> type) {
         if (values == null || type == null)
-            return new ArrayList<Field<?>>();
+            return new ArrayList<Field<T>>();
 
-        List<Field<?>> result = new ArrayList<Field<?>>(values.length);
+        List<Field<T>> result = new ArrayList<Field<T>>(values.length);
 
         for (int i = 0; i < values.length; i++)
             result.add(field(values[i], type));
@@ -1679,11 +1679,11 @@ final class Tools {
      * @return The argument objects themselves, if they are {@link Field}s, or a bind
      *         values created from the argument objects.
      */
-    static final List<Field<?>> fields(Object[] values, DataType<?> type) {
+    static final <T> List<Field<T>> fields(Object[] values, DataType<T> type) {
         if (values == null || type == null)
-            return new ArrayList<Field<?>>();
+            return new ArrayList<Field<T>>();
 
-        List<Field<?>> result = new ArrayList<Field<?>>(values.length);
+        List<Field<T>> result = new ArrayList<Field<T>>(values.length);
 
         for (Object value : values)
             result.add(field(value, type));
@@ -1699,11 +1699,11 @@ final class Tools {
      * @return The argument objects themselves, if they are {@link Field}s, or a bind
      *         values created from the argument objects.
      */
-    static final List<Field<?>> fields(Collection<?> values, DataType<?> type) {
+    static final <T> List<Field<T>> fields(Collection<?> values, DataType<T> type) {
         if (values == null || type == null)
-            return new ArrayList<Field<?>>();
+            return new ArrayList<Field<T>>();
 
-        List<Field<?>> result = new ArrayList<Field<?>>(values.size());
+        List<Field<T>> result = new ArrayList<Field<T>>(values.size());
 
         for (Object value : values)
             result.add(field(value, type));

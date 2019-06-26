@@ -864,9 +864,8 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public final LikeEscapeStep likeAny(Collection<?> values) {
-        return new CombinedCompareCondition(this, LIKE, Quantifier.ANY, (Collection<? extends Field<String>>) Tools.fields(values, SQLDataType.VARCHAR));
+        return new CombinedCompareCondition(this, LIKE, Quantifier.ANY, Tools.fields(values, SQLDataType.VARCHAR));
     }
 
     @Override
@@ -881,9 +880,8 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public final LikeEscapeStep notLikeAll(Collection<?> values) {
-        return new CombinedCompareCondition(this, NOT_LIKE, Quantifier.ALL, (Collection<? extends Field<String>>) Tools.fields(values, SQLDataType.VARCHAR));
+        return new CombinedCompareCondition(this, NOT_LIKE, Quantifier.ALL, Tools.fields(values, SQLDataType.VARCHAR));
     }
 
     @Override

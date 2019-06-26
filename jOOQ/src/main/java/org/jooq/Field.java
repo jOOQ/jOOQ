@@ -1659,7 +1659,69 @@ extends
     LikeEscapeStep likeAny(Collection<?> values);
 
     /**
+     * Create a condition to negatively pattern-check this field against any element in an array of values.
+     * <p>
+     * SQL: <code>(this not like value0 or this not like value1 or ...)</code>
+     *
+     * @see LikeEscapeStep#escape(char)
+     */
+    @Support
+    LikeEscapeStep notLikeAny(String... values);
+
+    /**
+     * Create a condition to negatively pattern-check this field against any element in an array of values.
+     * <p>
+     * SQL: <code>(this not like value0 or this not like value1 or ...)</code>
+     *
+     * @see LikeEscapeStep#escape(char)
+     */
+    @Support
+    @SuppressWarnings("unchecked")
+    LikeEscapeStep notLikeAny(Field<String>... fields);
+
+    /**
+     * Create a condition to negatively pattern-check this field against any element in an array of values.
+     * <p>
+     * SQL: <code>(this not like value0 or this not like value1 or ...)</code>
+     *
+     * @see LikeEscapeStep#escape(char)
+     */
+    @Support
+    LikeEscapeStep notLikeAny(Collection<?> values);
+
+    /**
      * Create a condition to pattern-check this field against all elements in an array of values.
+     * <p>
+     * SQL: <code>(this like value0 and this like value1 and ...)</code>
+     *
+     * @see LikeEscapeStep#escape(char)
+     */
+    @Support
+    LikeEscapeStep likeAll(String... values);
+
+    /**
+     * Create a condition to pattern-check this field against all elements in an array of fields.
+     * <p>
+     * SQL: <code>(this like field0 and this like field1 and ...)</code>
+     *
+     * @see LikeEscapeStep#escape(char)
+     */
+    @Support
+    @SuppressWarnings("unchecked")
+    LikeEscapeStep likeAll(Field<String>... fields);
+
+    /**
+     * Create a condition to pattern-check this field against all elements in a collection of fields or values.
+     * <p>
+     * SQL: <code>(this like field0 and this like field1 and ...)</code>
+     *
+     * @see LikeEscapeStep#escape(char)
+     */
+    @Support
+    LikeEscapeStep likeAll(Collection<?> values);
+
+    /**
+     * Create a condition to negatively pattern-check this field against all elements in an array of values.
      * <p>
      * SQL: <code>(this not like value0 and this not like value1 and ...)</code>
      *
@@ -1669,7 +1731,7 @@ extends
     LikeEscapeStep notLikeAll(String... values);
 
     /**
-     * Create a condition to pattern-check this field against all elements in an array of fields.
+     * Create a condition to negatively pattern-check this field against all elements in an array of fields.
      * <p>
      * SQL: <code>(this not like field0 and this not like field1 and ...)</code>
      *
@@ -1680,7 +1742,7 @@ extends
     LikeEscapeStep notLikeAll(Field<String>... fields);
 
     /**
-     * Create a condition to pattern-check this field against all elements in a collection of fields or values.
+     * Create a condition to negatively pattern-check this field against all elements in a collection of fields or values.
      * <p>
      * SQL: <code>(this not like field0 and this not like field1 and ...)</code>
      *

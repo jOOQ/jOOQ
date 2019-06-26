@@ -4398,7 +4398,7 @@ final class ParserImpl implements Parser {
                             : ((RowN) left).between((RowN) r1, (RowN) r2);
             }
             else if (left instanceof Field && parseKeywordIf(ctx, "LIKE")) {
-                if (!not && parseKeywordIf(ctx, "ANY")) {
+                if (parseKeywordIf(ctx, "ANY")) {
                     parse(ctx, '(');
                     List<Field<?>> fields = null;
                     if (parseIf(ctx, ')'))
@@ -4413,10 +4413,10 @@ final class ParserImpl implements Parser {
                     }
                     boolean escape = parseKeywordIf(ctx, "ESCAPE");
                     char character = escape ? parseCharacterLiteral(ctx) : ' ';
-                    LikeEscapeStep result = ((Field) left).likeAny(fields);
+                    LikeEscapeStep result = not ? ((Field) left).notLikeAny(fields) : ((Field) left).likeAny(fields);
                     return escape ? result.escape(character) : result;
                 }
-                else if (not && parseKeywordIf(ctx, "ALL")) {
+                else if (parseKeywordIf(ctx, "ALL")) {
                     parse(ctx, '(');
                     List<Field<?>> fields = null;
                     if (parseIf(ctx, ')'))
@@ -4431,7 +4431,7 @@ final class ParserImpl implements Parser {
                     }
                     boolean escape = parseKeywordIf(ctx, "ESCAPE");
                     char character = escape ? parseCharacterLiteral(ctx) : ' ';
-                    LikeEscapeStep result = ((Field) left).notLikeAll(fields);
+                    LikeEscapeStep result = not ? ((Field) left).notLikeAll(fields) : ((Field) left).likeAll(fields);
                     return escape ? result.escape(character) : result;
                 }
                 else {

@@ -733,6 +733,7 @@ final class Tools {
     private static final EnumSet<SQLDialect> REQUIRES_BACKSLASH_ESCAPING       = EnumSet.of(MARIADB, MYSQL);
     private static final EnumSet<SQLDialect> NO_SUPPORT_NULL                   = EnumSet.of(DERBY, FIREBIRD, HSQLDB);
     private static final EnumSet<SQLDialect> NO_SUPPORT_BINARY_TYPE_LENGTH     = EnumSet.of(POSTGRES);
+    private static final EnumSet<SQLDialect> NO_SUPPORT_CAST_TYPE_IN_DDL       = EnumSet.of(MARIADB, MYSQL);
     private static final EnumSet<SQLDialect> DEFAULT_BEFORE_NULL               = EnumSet.of(FIREBIRD, HSQLDB);
     private static final EnumSet<SQLDialect> SUPPORT_MYSQL_SYNTAX              = EnumSet.of(MARIADB, MYSQL);
 
@@ -4673,14 +4674,9 @@ final class Tools {
         }
 
         // [#5807] These databases cannot use the DataType.getCastTypeName() (which is simply char in this case)
-        if (type.getType() == UUID.class) {
-            switch (ctx.family()) {
-                case MARIADB:
-                case MYSQL: {
-                    toSQLDDLTypeDeclaration(ctx, VARCHAR(36));
-                    return;
-                }
-            }
+        if (type.getType() == UUID.class && NO_SUPPORT_CAST_TYPE_IN_DDL.contains(ctx.family())) {
+            toSQLDDLTypeDeclaration(ctx, VARCHAR(36));
+            return;
         }
 
         String typeName = type.getTypeName(ctx.configuration());
@@ -4693,6 +4689,10 @@ final class Tools {
                 ctx.sql(typeName);
             else if (type.length() > 0)
                 ctx.sql(typeName).sql('(').sql(type.length()).sql(')');
+
+            // [#6745] The DataType.getCastTypeName() cannot be used in some dialects, for DDL
+            else if (NO_SUPPORT_CAST_TYPE_IN_DDL.contains(ctx.family()))
+                ctx.sql(SQLDataType.CLOB.getTypeName(ctx.configuration()));
 
             // Some databases don't allow for length-less VARCHAR, VARBINARY types
             else {

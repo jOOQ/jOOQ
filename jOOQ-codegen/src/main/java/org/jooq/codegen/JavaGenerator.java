@@ -2995,7 +2995,14 @@ public class JavaGenerator extends AbstractGenerator {
                 ? ""
                 : out.ref(getStrategy().getFullJavaClassName(table));
             final String id = getStrategy().getJavaIdentifier(table);
-            final String fullId = getStrategy().getFullJavaIdentifier(table);
+
+            // [#8863] Use the imported table class to dereference the singleton
+            //         table instance, *only* if the class name is not equal to
+            //         the instance name. Otherwise, we would get a
+            //         "error: self-reference in initializer" compilation error
+            final String referencedId = className.equals(id)
+                ? getStrategy().getFullJavaIdentifier(table)
+                : out.ref(getStrategy().getFullJavaIdentifier(table), 2);
             final String comment = !StringUtils.isBlank(table.getComment()) && generateCommentsOnTables()
                 ? escapeEntities(table.getComment())
                 : "The table <code>" + table.getQualifiedOutputName() + "</code>.";
@@ -3007,9 +3014,9 @@ public class JavaGenerator extends AbstractGenerator {
                 out.tab(1).javadoc(comment);
 
                 if (scala)
-                    out.tab(1).println("val %s = %s", id, fullId);
+                    out.tab(1).println("val %s = %s", id, referencedId);
                 else
-                    out.tab(1).println("public static final %s %s = %s;", className, id, fullId);
+                    out.tab(1).println("public static final %s %s = %s;", className, id, referencedId);
             }
 
             // [#3797] Table-valued functions generate two different literals in

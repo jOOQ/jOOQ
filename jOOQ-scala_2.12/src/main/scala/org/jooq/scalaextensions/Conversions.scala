@@ -62,7 +62,7 @@ import scala.collection.convert.WrapAsScala
  *
  * object Test {
  *   def main(args: Array[String]): Unit = {
- *     val c = DriverManager.getConnection("jdbc:h2:~/scala-test", "sa", "");
+ *     val c = DriverManager.getConnection("jdbc:h2:~/scala-test-", "sa", "");
  *     val f = DSL.using(c, SQLDialect.H2);
  *
  *     for (

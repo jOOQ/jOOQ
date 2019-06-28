@@ -15,6 +15,7 @@
 
     <properties>
         <scala.version>2.12.4</scala.version>
+        <jdbc-url-postfix>default</jdbc-url-postfix>
     </properties>
 
     <build>

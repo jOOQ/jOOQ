@@ -204,7 +204,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
     private static final EnumSet<SQLDialect> SUPPORT_RENAME_TABLE                  = EnumSet.of(DERBY);
     private static final EnumSet<SQLDialect> NO_SUPPORT_RENAME_QUALIFIED_TABLE     = EnumSet.of(POSTGRES);
     private static final EnumSet<SQLDialect> NO_SUPPORT_ALTER_TYPE_AND_NULL        = EnumSet.of(POSTGRES);
-    private static final EnumSet<SQLDialect> NO_SUPPORT_DROP_CONSTRAINT            = EnumSet.of(MYSQL);
+    private static final EnumSet<SQLDialect> NO_SUPPORT_DROP_CONSTRAINT            = EnumSet.of(MARIADB, MYSQL);
     private static final EnumSet<SQLDialect> REQUIRE_REPEAT_ADD_ON_MULTI_ALTER     = EnumSet.of(FIREBIRD, MARIADB, MYSQL, POSTGRES);
     private static final EnumSet<SQLDialect> REQUIRE_REPEAT_DROP_ON_MULTI_ALTER    = EnumSet.of(FIREBIRD, MARIADB, MYSQL, POSTGRES);
 

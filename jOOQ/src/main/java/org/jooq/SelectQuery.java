@@ -654,7 +654,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * emulated with a <code>ROW_NUMBER()</code> window function and nested
      * <code>SELECT</code> statements.
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     void addOffset(int offset);
 
     /**
@@ -665,7 +665,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * emulated with a <code>ROW_NUMBER()</code> window function and nested
      * <code>SELECT</code> statements.
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     void addOffset(Number offset);
 
     /**
@@ -676,7 +676,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * emulated with a <code>ROW_NUMBER()</code> window function and nested
      * <code>SELECT</code> statements.
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     void addOffset(Param<? extends Number> offset);
 
     /**
@@ -715,7 +715,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param numberOfRows The number of rows to return
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     void addLimit(Param<? extends Number> numberOfRows);
 
     /**
@@ -732,7 +732,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * @param offset The lowest offset starting at 0
      * @param numberOfRows The number of rows to return
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     void addLimit(int offset, int numberOfRows);
 
     /**
@@ -749,7 +749,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * @param offset The lowest offset starting at 0
      * @param numberOfRows The number of rows to return
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     void addLimit(Number offset, Number numberOfRows);
 
     /**
@@ -767,7 +767,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * @param offset The lowest offset starting at 0
      * @param numberOfRows The number of rows to return
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     void addLimit(Param<Integer> offset, int numberOfRows);
 
     /**
@@ -785,7 +785,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * @param offset The lowest offset starting at 0
      * @param numberOfRows The number of rows to return
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     void addLimit(Param<? extends Number> offset, Number numberOfRows);
 
     /**
@@ -803,7 +803,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * @param offset The lowest offset starting at 0
      * @param numberOfRows The number of rows to return
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     void addLimit(int offset, Param<Integer> numberOfRows);
 
     /**
@@ -821,7 +821,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * @param offset The lowest offset starting at 0
      * @param numberOfRows The number of rows to return
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     void addLimit(Number offset, Param<? extends Number> numberOfRows);
 
     /**
@@ -839,7 +839,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * @param offset The lowest offset starting at 0
      * @param numberOfRows The number of rows to return
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     void addLimit(Param<? extends Number> offset, Param<? extends Number> numberOfRows);
 
     /**

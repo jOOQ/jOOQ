@@ -331,7 +331,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
     /**
      * Set an empty record with the <code>DEFAULT VALUES</code> clause.
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     void setDefaultValues();
 
     /**

@@ -95,6 +95,6 @@ public interface LikeEscapeStep extends Condition {
      * some_column LIKE 'A!%%' ESCAPE '!'
      * </pre></code>
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     Condition escape(char c);
 }

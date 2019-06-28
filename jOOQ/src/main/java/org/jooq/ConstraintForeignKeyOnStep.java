@@ -116,7 +116,7 @@ public interface ConstraintForeignKeyOnStep extends ConstraintFinalStep {
      * Add an <code>ON DELETE SET NULL</code> clause to the
      * <code>FOREIGN KEY</code> constraint.
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     ConstraintForeignKeyOnStep onDeleteSetNull();
 
     /**

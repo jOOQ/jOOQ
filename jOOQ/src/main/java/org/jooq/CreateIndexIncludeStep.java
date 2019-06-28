@@ -95,7 +95,7 @@ public interface CreateIndexIncludeStep extends CreateIndexWhereStep {
      * will simply be put in the index as ordinary columns, making the index a
      * composite index.
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     CreateIndexWhereStep include(Field<?>... fields);
 
     /**
@@ -105,7 +105,7 @@ public interface CreateIndexIncludeStep extends CreateIndexWhereStep {
      * will simply be put in the index as ordinary columns, making the index a
      * composite index.
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     CreateIndexWhereStep include(Name... fields);
 
     /**
@@ -115,7 +115,7 @@ public interface CreateIndexIncludeStep extends CreateIndexWhereStep {
      * will simply be put in the index as ordinary columns, making the index a
      * composite index.
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     CreateIndexWhereStep include(String... fields);
 
     /**
@@ -125,7 +125,7 @@ public interface CreateIndexIncludeStep extends CreateIndexWhereStep {
      * will simply be put in the index as ordinary columns, making the index a
      * composite index.
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     CreateIndexWhereStep include(Collection<? extends Field<?>> fields);
 
 }

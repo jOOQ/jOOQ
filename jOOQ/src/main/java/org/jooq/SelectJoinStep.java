@@ -357,7 +357,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      *
      * @see Table#crossJoin(TableLike)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     SelectJoinStep<R> crossJoin(TableLike<?> table);
 
     /**
@@ -381,7 +381,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#crossJoin(SQL)
      * @see SQL
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     @PlainSQL
     SelectJoinStep<R> crossJoin(SQL sql);
 
@@ -406,7 +406,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#crossJoin(String)
      * @see SQL
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     @PlainSQL
     SelectJoinStep<R> crossJoin(String sql);
 
@@ -432,7 +432,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#crossJoin(String, Object...)
      * @see SQL
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     @PlainSQL
     SelectJoinStep<R> crossJoin(String sql, Object... bindings);
 
@@ -458,7 +458,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#crossJoin(String, QueryPart...)
      * @see SQL
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     @PlainSQL
     SelectJoinStep<R> crossJoin(String sql, QueryPart... parts);
 
@@ -477,7 +477,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see DSL#table(Name)
      * @see Table#crossJoin(Name)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     SelectJoinStep<R> crossJoin(Name name);
 
     /**

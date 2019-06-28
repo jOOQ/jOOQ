@@ -7091,7 +7091,7 @@ public class DSL {
      *
      * @see DSLContext#createIndex()
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static CreateIndexStep createIndex() {
         return dsl().createIndex();
     }
@@ -7101,7 +7101,7 @@ public class DSL {
      *
      * @see DSLContext#createIndex(String)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static CreateIndexStep createIndex(String index) {
         return dsl().createIndex(index);
     }
@@ -7111,7 +7111,7 @@ public class DSL {
      *
      * @see DSLContext#createIndex(Name)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static CreateIndexStep createIndex(Name index) {
         return dsl().createIndex(index);
     }
@@ -7121,7 +7121,7 @@ public class DSL {
      *
      * @see DSLContext#createIndex(Index)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static CreateIndexStep createIndex(Index index) {
         return dsl().createIndex(index);
     }
@@ -7161,7 +7161,7 @@ public class DSL {
      *
      * @see DSLContext#createUniqueIndex()
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static CreateIndexStep createUniqueIndex() {
         return dsl().createUniqueIndex();
     }
@@ -7171,7 +7171,7 @@ public class DSL {
      *
      * @see DSLContext#createUniqueIndex(String)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static CreateIndexStep createUniqueIndex(String index) {
         return dsl().createUniqueIndex(index);
     }
@@ -7181,7 +7181,7 @@ public class DSL {
      *
      * @see DSLContext#createUniqueIndex(Name)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static CreateIndexStep createUniqueIndex(Name index) {
         return dsl().createUniqueIndex(index);
     }
@@ -7191,7 +7191,7 @@ public class DSL {
      *
      * @see DSLContext#createUniqueIndex(Index)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static CreateIndexStep createUniqueIndex(Index index) {
         return dsl().createUniqueIndex(index);
     }
@@ -7684,7 +7684,7 @@ public class DSL {
      *
      * @see DSLContext#dropViewIfExists(String)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static DropViewFinalStep dropViewIfExists(String view) {
         return dsl().dropViewIfExists(view);
     }
@@ -7697,7 +7697,7 @@ public class DSL {
      *
      * @see DSLContext#dropViewIfExists(Name)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static DropViewFinalStep dropViewIfExists(Name view) {
         return dsl().dropViewIfExists(view);
     }
@@ -7710,7 +7710,7 @@ public class DSL {
      *
      * @see DSLContext#dropViewIfExists(Table)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static DropViewFinalStep dropViewIfExists(Table<?> view) {
         return dsl().dropViewIfExists(view);
     }
@@ -7783,7 +7783,7 @@ public class DSL {
      *
      * @see DSLContext#dropTableIfExists(String)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static DropTableStep dropTableIfExists(String table) {
         return dsl().dropTableIfExists(table);
     }
@@ -7796,7 +7796,7 @@ public class DSL {
      *
      * @see DSLContext#dropTableIfExists(Name)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static DropTableStep dropTableIfExists(Name table) {
         return dsl().dropTableIfExists(table);
     }
@@ -7809,7 +7809,7 @@ public class DSL {
      *
      * @see DSLContext#dropTableIfExists(Table)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static DropTableStep dropTableIfExists(Table<?> table) {
         return dsl().dropTableIfExists(table);
     }
@@ -7819,7 +7819,7 @@ public class DSL {
      *
      * @see DSLContext#dropIndex(String)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static DropIndexOnStep dropIndex(String index) {
         return dsl().dropIndex(index);
     }
@@ -7829,7 +7829,7 @@ public class DSL {
      *
      * @see DSLContext#dropIndex(Name)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static DropIndexOnStep dropIndex(Name index) {
         return dsl().dropIndex(index);
     }
@@ -7839,7 +7839,7 @@ public class DSL {
      *
      * @see DSLContext#dropIndex(Index)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static DropIndexOnStep dropIndex(Index index) {
         return dsl().dropIndex(index);
     }
@@ -13314,7 +13314,7 @@ public class DSL {
      * @see #replace(Field, String, String)
      * @see Field#like(Field, char)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static String escape(String value, char escape) {
         String esc = "" + escape;
         return StringUtils.replace(
@@ -13333,7 +13333,7 @@ public class DSL {
      * @see #replace(Field, String, String)
      * @see Field#like(Field, char)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static Field<String> escape(Field<String> field, char escape) {
         Field<String> replace = field;
 
@@ -13396,7 +13396,7 @@ public class DSL {
      *
      * @see #position(Field, Field)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static Field<Integer> position(String in, String search) {
         return position(Tools.field(in), Tools.field(search));
     }
@@ -13406,7 +13406,7 @@ public class DSL {
      *
      * @see #position(Field, Field)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static Field<Integer> position(String in, Field<String> search) {
         return position(Tools.field(in), nullSafe(search));
     }
@@ -13416,7 +13416,7 @@ public class DSL {
      *
      * @see #position(Field, Field)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static Field<Integer> position(Field<String> in, String search) {
         return position(nullSafe(in), Tools.field(search));
     }
@@ -13431,7 +13431,7 @@ public class DSL {
      * instr([in], [search]) or
      * charindex([search], [in])</pre></code>
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static Field<Integer> position(Field<String> in, Field<String> search) {
         return new Position(nullSafe(search), nullSafe(in));
     }
@@ -13441,7 +13441,7 @@ public class DSL {
      *
      * @see #position(Field, Field, Field)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static Field<Integer> position(String in, String search, int startIndex) {
         return position(Tools.field(in), Tools.field(search), Tools.field(startIndex));
     }
@@ -13451,7 +13451,7 @@ public class DSL {
      *
      * @see #position(Field, Field, Field)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static Field<Integer> position(String in, Field<String> search, int startIndex) {
         return position(Tools.field(in), nullSafe(search), Tools.field(startIndex));
     }
@@ -13461,7 +13461,7 @@ public class DSL {
      *
      * @see #position(Field, Field)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static Field<Integer> position(Field<String> in, String search, int startIndex) {
         return position(nullSafe(in), Tools.field(search), Tools.field(startIndex));
     }
@@ -13476,7 +13476,7 @@ public class DSL {
      * instr([in], [search]) or
      * charindex([search], [in])</pre></code>
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static Field<Integer> position(Field<String> in, Field<String> search, int startIndex) {
         return position(nullSafe(search), nullSafe(in), Tools.field(startIndex));
     }
@@ -13486,7 +13486,7 @@ public class DSL {
      *
      * @see #position(Field, Field, Field)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static Field<Integer> position(String in, String search, Field<? extends Number> startIndex) {
         return position(Tools.field(in), Tools.field(search), nullSafe(startIndex));
     }
@@ -13496,7 +13496,7 @@ public class DSL {
      *
      * @see #position(Field, Field, Field)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static Field<Integer> position(String in, Field<String> search, Field<? extends Number> startIndex) {
         return position(Tools.field(in), nullSafe(search), nullSafe(startIndex));
     }
@@ -13506,7 +13506,7 @@ public class DSL {
      *
      * @see #position(Field, Field)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static Field<Integer> position(Field<String> in, String search, Field<? extends Number> startIndex) {
         return position(nullSafe(in), Tools.field(search), nullSafe(startIndex));
     }
@@ -13521,7 +13521,7 @@ public class DSL {
      * instr([in], [search]) or
      * charindex([search], [in])</pre></code>
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static Field<Integer> position(Field<String> in, Field<String> search, Field<? extends Number> startIndex) {
         return new Position(nullSafe(search), nullSafe(in), nullSafe(startIndex));
     }
@@ -16752,7 +16752,7 @@ public class DSL {
     /**
      * Get the rand() function.
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static Field<BigDecimal> rand() {
         return new Rand();
     }
@@ -17647,7 +17647,7 @@ public class DSL {
     /**
      * Get the count(distinct field) function.
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static AggregateFunction<Integer> countDistinct(Field<?> field) {
         return new org.jooq.impl.Function<Integer>("count", true, SQLDataType.INTEGER, nullSafe(field));
     }
@@ -17655,7 +17655,7 @@ public class DSL {
     /**
      * Get the count(distinct field) function.
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static AggregateFunction<Integer> countDistinct(SelectFieldOrAsterisk field) {
         return new org.jooq.impl.Function<Integer>("count", true, SQLDataType.INTEGER, field("{0}", field));
     }
@@ -17667,7 +17667,7 @@ public class DSL {
      * {@link SQLDialect#POSTGRES}, then the primary key is used with
      * {@link #count(Field)}, instead.
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static AggregateFunction<Integer> countDistinct(Table<?> table) {
         return new CountTable(table, true);
     }
@@ -18751,7 +18751,7 @@ public class DSL {
      * {@link SQLDialect#HSQLDB} can emulate this function using
      * <code>ROWNUM()</code>
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static WindowOverStep<Integer> rowNumber() {
         return new org.jooq.impl.Function<Integer>(ROW_NUMBER, SQLDataType.INTEGER);
     }
@@ -22407,7 +22407,7 @@ public class DSL {
     /**
      * Get the <code>current_user()</code> function.
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static Field<String> currentUser() {
         return new CurrentUser();
     }
@@ -22415,7 +22415,7 @@ public class DSL {
     /**
      * Get the <code>current_schema()</code> function.
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     public static Field<String> currentSchema() {
         return new CurrentSchema();
     }

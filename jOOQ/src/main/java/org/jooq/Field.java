@@ -1474,7 +1474,7 @@ extends
      *
      * @see LikeEscapeStep#escape(char)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     Condition like(Field<String> value, char escape);
 
     /**
@@ -1492,7 +1492,7 @@ extends
      *
      * @see LikeEscapeStep#escape(char)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     Condition like(String value, char escape);
 
     /**
@@ -1516,7 +1516,7 @@ extends
      *
      * @see LikeEscapeStep#escape(char)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     Condition likeIgnoreCase(Field<String> field, char escape);
 
     /**
@@ -1540,7 +1540,7 @@ extends
      *
      * @see LikeEscapeStep#escape(char)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     Condition likeIgnoreCase(String value, char escape);
 
     /**
@@ -1558,7 +1558,7 @@ extends
      *
      * @see LikeEscapeStep#escape(char)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     Condition notLike(Field<String> field, char escape);
 
     /**
@@ -1576,7 +1576,7 @@ extends
      *
      * @see LikeEscapeStep#escape(char)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     Condition notLike(String value, char escape);
 
     /**
@@ -1600,7 +1600,7 @@ extends
      *
      * @see LikeEscapeStep#escape(char)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     Condition notLikeIgnoreCase(Field<String> field, char escape);
 
     /**
@@ -1624,7 +1624,7 @@ extends
      *
      * @see LikeEscapeStep#escape(char)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     Condition notLikeIgnoreCase(String value, char escape);
 
     /**

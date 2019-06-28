@@ -1533,7 +1533,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * A join B on 1 = 1
      * </pre></code>
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     Table<Record> crossJoin(TableLike<?> table);
 
     /**
@@ -1554,7 +1554,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#table(SQL)
      * @see SQL
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     @PlainSQL
     Table<Record> crossJoin(SQL sql);
 
@@ -1576,7 +1576,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#table(String)
      * @see SQL
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     @PlainSQL
     Table<Record> crossJoin(String sql);
 
@@ -1599,7 +1599,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     @PlainSQL
     Table<Record> crossJoin(String sql, Object... bindings);
 
@@ -1622,7 +1622,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     @PlainSQL
     Table<Record> crossJoin(String sql, QueryPart... parts);
 
@@ -1638,7 +1638,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      *
      * @see DSL#table(Name)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     Table<Record> crossJoin(Name name);
 
     /**
@@ -2667,7 +2667,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * <p>
      * This has been observed to work with all dialects
      */
-    @Support({CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE})
+    @Support
     DivideByOnStep divideBy(Table<?> divisor);
 
     /**

@@ -88,7 +88,7 @@ public interface WindowOverStep<T> {
      * </code>
      * </pre>
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     WindowPartitionByStep<T> over();
 
     /**

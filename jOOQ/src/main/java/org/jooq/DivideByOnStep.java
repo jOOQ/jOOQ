@@ -94,20 +94,20 @@ public interface DivideByOnStep {
      * Add a division condition to the <code>DIVIDE BY</code> clause, connecting
      * them with each other with {@link Operator#AND}.
      */
-    @Support({CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE})
+    @Support
     DivideByOnConditionStep on(Condition condition);
 
     /**
      * Add a division condition to the <code>DIVIDE BY</code> clause, connecting
      * them with each other with {@link Operator#AND}.
      */
-    @Support({CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE})
+    @Support
     DivideByOnConditionStep on(Condition... conditions);
 
     /**
      * Add a division condition to the <code>DIVIDE BY</code> clause
      */
-    @Support({CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE})
+    @Support
     DivideByOnConditionStep on(Field<Boolean> condition);
 
     /**
@@ -120,7 +120,7 @@ public interface DivideByOnStep {
      *             argument, this method will be removed in the future.
      */
     @Deprecated
-    @Support({CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE})
+    @Support
     DivideByOnConditionStep on(Boolean condition);
 
     /**
@@ -134,7 +134,7 @@ public interface DivideByOnStep {
      * @see DSL#condition(SQL)
      * @see SQL
      */
-    @Support({CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE})
+    @Support
     @PlainSQL
     DivideByOnConditionStep on(SQL sql);
 
@@ -149,7 +149,7 @@ public interface DivideByOnStep {
      * @see DSL#condition(String)
      * @see SQL
      */
-    @Support({CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE})
+    @Support
     @PlainSQL
     DivideByOnConditionStep on(String sql);
 
@@ -165,7 +165,7 @@ public interface DivideByOnStep {
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
-    @Support({CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE})
+    @Support
     @PlainSQL
     DivideByOnConditionStep on(String sql, Object... bindings);
 
@@ -181,7 +181,7 @@ public interface DivideByOnStep {
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
-    @Support({CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE})
+    @Support
     @PlainSQL
     DivideByOnConditionStep on(String sql, QueryPart... parts);
 }

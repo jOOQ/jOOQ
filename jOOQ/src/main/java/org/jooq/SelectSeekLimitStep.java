@@ -150,7 +150,7 @@ public interface SelectSeekLimitStep<R extends Record> extends SelectForUpdateSt
      * <code>ROW_NUMBER()</code> window function and nested <code>SELECT</code>
      * statements.
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     SelectForUpdateStep<R> limit(Param<? extends Number> numberOfRows);
 
 }

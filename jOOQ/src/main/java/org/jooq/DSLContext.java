@@ -9096,7 +9096,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createIndex()
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     CreateIndexStep createIndex();
 
     /**
@@ -9104,7 +9104,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createIndex(String)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     CreateIndexStep createIndex(String index);
 
     /**
@@ -9112,7 +9112,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createIndex(Name)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     CreateIndexStep createIndex(Name index);
 
     /**
@@ -9120,7 +9120,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createIndex(Index)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     CreateIndexStep createIndex(Index index);
 
     /**
@@ -9152,7 +9152,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createUniqueIndex()
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     CreateIndexStep createUniqueIndex();
 
     /**
@@ -9160,7 +9160,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createIndex(String)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     CreateIndexStep createUniqueIndex(String index);
 
     /**
@@ -9168,7 +9168,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createIndex(Name)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     CreateIndexStep createUniqueIndex(Name index);
 
     /**
@@ -9176,7 +9176,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createIndex(Index)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     CreateIndexStep createUniqueIndex(Index index);
 
     /**
@@ -9571,7 +9571,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropViewIfExists(String)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     DropViewFinalStep dropViewIfExists(String view);
 
     /**
@@ -9582,7 +9582,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropViewIfExists(Name)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     DropViewFinalStep dropViewIfExists(Name view);
 
     /**
@@ -9593,7 +9593,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropViewIfExists(Table)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     DropViewFinalStep dropViewIfExists(Table<?> view);
 
     /**
@@ -9628,7 +9628,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropTableIfExists(String)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     DropTableStep dropTableIfExists(String table);
 
     /**
@@ -9639,7 +9639,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropTableIfExists(Name)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     DropTableStep dropTableIfExists(Name table);
 
     /**
@@ -9650,7 +9650,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropTableIfExists(Table)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     DropTableStep dropTableIfExists(Table<?> table);
 
     /**
@@ -9682,7 +9682,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropIndex(String)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     DropIndexOnStep dropIndex(String index);
 
     /**
@@ -9690,7 +9690,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropIndex(Name)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     DropIndexOnStep dropIndex(Name index);
 
     /**
@@ -9698,7 +9698,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropIndex(Name)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support
     DropIndexOnStep dropIndex(Index index);
 
     /**

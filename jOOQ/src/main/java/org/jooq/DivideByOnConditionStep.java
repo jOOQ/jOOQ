@@ -94,14 +94,14 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#AND} operator.
      */
-    @Support({CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE})
+    @Support
     DivideByOnConditionStep and(Condition condition);
 
     /**
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#AND} operator.
      */
-    @Support({CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE})
+    @Support
     DivideByOnConditionStep and(Field<Boolean> condition);
 
     /**
@@ -115,7 +115,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      *             argument, this method will be removed in the future.
      */
     @Deprecated
-    @Support({CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE})
+    @Support
     DivideByOnConditionStep and(Boolean condition);
 
     /**
@@ -130,7 +130,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      * @see DSL#condition(SQL)
      * @see SQL
      */
-    @Support({CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE})
+    @Support
     @PlainSQL
     DivideByOnConditionStep and(SQL sql);
 
@@ -146,7 +146,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      * @see DSL#condition(String)
      * @see SQL
      */
-    @Support({CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE})
+    @Support
     @PlainSQL
     DivideByOnConditionStep and(String sql);
 
@@ -163,7 +163,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
-    @Support({CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE})
+    @Support
     @PlainSQL
     DivideByOnConditionStep and(String sql, Object... bindings);
 
@@ -180,7 +180,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
-    @Support({CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE})
+    @Support
     @PlainSQL
     DivideByOnConditionStep and(String sql, QueryPart... parts);
 
@@ -188,14 +188,14 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#AND} operator.
      */
-    @Support({CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE})
+    @Support
     DivideByOnConditionStep andNot(Condition condition);
 
     /**
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#AND} operator.
      */
-    @Support({CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE})
+    @Support
     DivideByOnConditionStep andNot(Field<Boolean> condition);
 
     /**
@@ -210,35 +210,35 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      *             removed in the future.
      */
     @Deprecated
-    @Support({CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE})
+    @Support
     DivideByOnConditionStep andNot(Boolean condition);
 
     /**
      * Combine the currently assembled conditions with an <code>EXISTS</code>
      * clause using the {@link Operator#AND} operator.
      */
-    @Support({CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE})
+    @Support
     DivideByOnConditionStep andExists(Select<?> select);
 
     /**
      * Combine the currently assembled conditions with a <code>NOT EXISTS</code>
      * clause using the {@link Operator#AND} operator.
      */
-    @Support({CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE})
+    @Support
     DivideByOnConditionStep andNotExists(Select<?> select);
 
     /**
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#OR} operator.
      */
-    @Support({CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE})
+    @Support
     DivideByOnConditionStep or(Condition condition);
 
     /**
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#OR} operator.
      */
-    @Support({CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE})
+    @Support
     DivideByOnConditionStep or(Field<Boolean> condition);
 
     /**
@@ -252,7 +252,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      *             argument, this method will be removed in the future.
      */
     @Deprecated
-    @Support({CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE})
+    @Support
     DivideByOnConditionStep or(Boolean condition);
 
     /**
@@ -267,7 +267,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      * @see DSL#condition(SQL)
      * @see SQL
      */
-    @Support({CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE})
+    @Support
     @PlainSQL
     DivideByOnConditionStep or(SQL sql);
 
@@ -283,7 +283,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      * @see DSL#condition(String)
      * @see SQL
      */
-    @Support({CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE})
+    @Support
     @PlainSQL
     DivideByOnConditionStep or(String sql);
 
@@ -300,7 +300,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
-    @Support({CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE})
+    @Support
     @PlainSQL
     DivideByOnConditionStep or(String sql, Object... bindings);
 
@@ -317,7 +317,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
-    @Support({CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE})
+    @Support
     @PlainSQL
     DivideByOnConditionStep or(String sql, QueryPart... parts);
 
@@ -325,14 +325,14 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#OR} operator.
      */
-    @Support({CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE})
+    @Support
     DivideByOnConditionStep orNot(Condition condition);
 
     /**
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#OR} operator.
      */
-    @Support({CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE})
+    @Support
     DivideByOnConditionStep orNot(Field<Boolean> condition);
 
     /**
@@ -347,20 +347,20 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      *             removed in the future.
      */
     @Deprecated
-    @Support({CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE})
+    @Support
     DivideByOnConditionStep orNot(Boolean condition);
 
     /**
      * Combine the currently assembled conditions with an <code>EXISTS</code>
      * clause using the {@link Operator#OR} operator.
      */
-    @Support({CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE})
+    @Support
     DivideByOnConditionStep orExists(Select<?> select);
 
     /**
      * Combine the currently assembled conditions with a <code>NOT EXISTS</code>
      * clause using the {@link Operator#OR} operator.
      */
-    @Support({CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE})
+    @Support
     DivideByOnConditionStep orNotExists(Select<?> select);
 }

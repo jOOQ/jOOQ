@@ -64,7 +64,7 @@ public enum SQLDialect {
      *             pseudo-dialect.
      */
     @Deprecated
-    SQL99("", false),
+    SQL99("", false, false),
 
     /**
      * The default SQL dialect.
@@ -73,7 +73,7 @@ public enum SQLDialect {
      * not intended to be used with any actual database as it may combined
      * dialect-specific things from various dialects.
      */
-    DEFAULT("", false),
+    DEFAULT("", false, false),
 
     // -------------------------------------------------------------------------
     // SQL dialects for free usage
@@ -82,17 +82,17 @@ public enum SQLDialect {
     /**
      * The CUBRID dialect family.
      */
-    CUBRID("CUBRID", false),
+    CUBRID("CUBRID", false, true),
 
     /**
      * The Apache Derby dialect family.
      */
-    DERBY("Derby", false),
+    DERBY("Derby", false, true),
 
     /**
      * The Firebird dialect family.
      */
-    FIREBIRD("Firebird", false),
+    FIREBIRD("Firebird", false, true),
 
 
 
@@ -111,17 +111,17 @@ public enum SQLDialect {
     /**
      * The H2 dialect family.
      */
-    H2("H2", false),
+    H2("H2", false, true),
 
     /**
      * The Hypersonic dialect family.
      */
-    HSQLDB("HSQLDB", false),
+    HSQLDB("HSQLDB", false, true),
 
     /**
      * The MariaDB dialect family.
      */
-    MARIADB("MariaDB", false),
+    MARIADB("MariaDB", false, true),
 
 
 
@@ -133,7 +133,7 @@ public enum SQLDialect {
     /**
      * The MySQL dialect family.
      */
-    MYSQL("MySQL", false),
+    MYSQL("MySQL", false, true),
 
 
 
@@ -156,7 +156,7 @@ public enum SQLDialect {
      * extent on Amazon RedShift as well, we strongly suggest you use the
      * official {@link #REDSHIFT} support, instead.
      */
-    POSTGRES("Postgres", false),
+    POSTGRES("Postgres", false, true),
 
 
 
@@ -213,7 +213,7 @@ public enum SQLDialect {
     /**
      * The SQLite dialect family.
      */
-    SQLITE("SQLite", false),
+    SQLITE("SQLite", false, true),
 
 
 
@@ -499,23 +499,25 @@ public enum SQLDialect {
         FAMILIES = set.toArray(new SQLDialect[0]);
     }
 
-    private final String              name;
-    private final boolean             commercial;
-    private final SQLDialect          family;
-    private SQLDialect                predecessor;
-    private final ThirdParty          thirdParty;
+    private final String     name;
+    private final boolean    commercial;
+    private final boolean    supported;
+    private final SQLDialect family;
+    private SQLDialect       predecessor;
+    private final ThirdParty thirdParty;
 
-    private SQLDialect(String name, boolean commercial) {
-        this(name, commercial, null, null);
+    private SQLDialect(String name, boolean commercial, boolean supported) {
+        this(name, commercial, supported, null, null);
     }
 
-    private SQLDialect(String name, boolean commercial, SQLDialect family) {
-        this(name, commercial, family, null);
+    private SQLDialect(String name, boolean commercial, boolean supported, SQLDialect family) {
+        this(name, commercial, supported, family, null);
     }
 
-    private SQLDialect(String name, boolean commercial, SQLDialect family, SQLDialect predecessor) {
+    private SQLDialect(String name, boolean commercial, boolean supported, SQLDialect family, SQLDialect predecessor) {
         this.name = name;
         this.commercial = commercial;
+        this.supported = supported;
         this.family = family == null ? this : family;
         this.predecessor = predecessor == null ? this : predecessor;
 
@@ -530,6 +532,21 @@ public enum SQLDialect {
      */
     public final boolean commercial() {
         return commercial;
+    }
+
+    /**
+     * Whether this dialect is supported by jOOQ as an output dialect.
+     * <p>
+     * Unsupported, non-output dialects include:
+     * <ul>
+     * <li>{@link #DEFAULT}: A hypothetical dialect used for
+     * {@link QueryPart#toString()} calls of unattached query parts.</li>
+     * <li>{@link #SQL99}: A legacy version of {@link #DEFAULT}.</li>
+     * <li>{@link #POSTGRESPLUS}: A not yet supported dialect.</li>
+     * </ul>
+     */
+    public final boolean supported() {
+        return supported;
     }
 
     /**

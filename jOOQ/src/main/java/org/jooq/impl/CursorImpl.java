@@ -104,6 +104,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
     private final boolean[]                                intern;
     private final boolean                                  keepResultSet;
     private final boolean                                  keepStatement;
+    private final boolean                                  autoclosing;
     private final int                                      maxRows;
     private final RecordFactory<? extends R>               factory;
     private boolean                                        isClosed;
@@ -123,10 +124,10 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
 
     @SuppressWarnings("unchecked")
     CursorImpl(ExecuteContext ctx, ExecuteListener listener, Field<?>[] fields, int[] internIndexes, boolean keepStatement, boolean keepResultSet) {
-        this(ctx, listener, fields, internIndexes, keepStatement, keepResultSet, (Class<? extends R>) RecordImpl.class, 0);
+        this(ctx, listener, fields, internIndexes, keepStatement, keepResultSet, (Class<? extends R>) RecordImpl.class, 0, true);
     }
 
-    CursorImpl(ExecuteContext ctx, ExecuteListener listener, Field<?>[] fields, int[] internIndexes, boolean keepStatement, boolean keepResultSet, Class<? extends R> type, int maxRows) {
+    CursorImpl(ExecuteContext ctx, ExecuteListener listener, Field<?>[] fields, int[] internIndexes, boolean keepStatement, boolean keepResultSet, Class<? extends R> type, int maxRows, boolean autoclosing) {
         super(ctx.configuration(), new Fields<R>(fields));
 
         this.ctx = ctx;
@@ -142,6 +143,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
 
         this.maxRows = maxRows;
         this.lockRowsForUpdate = TRUE.equals(ctx.data(DATA_LOCK_ROWS_FOR_UPDATE));
+        this.autoclosing = autoclosing;
 
         if (internIndexes != null) {
             this.intern = new boolean[fields.length];
@@ -1630,10 +1632,10 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
                 throw ctx.exception();
             }
 
-            // [#1868] [#2373] [#2385] This calls through to Utils.safeClose()
-            // if necessary, lazy-terminating the ExecuteListener lifecycle if
-            // the result is not eager-fetched.
-            if (record == null) {
+            // [#1868] [#2373] [#2385] [#8544] This calls through to
+            // Utils.safeClose() if necessary, lazy-terminating the ExecuteListener
+            // lifecycle if the result is not eager-fetched.
+            if (record == null && autoclosing) {
                 CursorImpl.this.close();
             }
 

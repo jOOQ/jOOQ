@@ -143,6 +143,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     private transient boolean                lazy;
     private transient boolean                many;
     private transient Cursor<R>              cursor;
+    private transient boolean                autoclosing           = true;
     private Result<R>                        result;
     private ResultsImpl                      results;
 
@@ -316,7 +317,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
             }
 
             Field<?>[] fields = getFields(ctx.resultSet().getMetaData());
-            cursor = new CursorImpl<R>(ctx, listener, fields, intern.internIndexes(fields), keepStatement(), keepResultSet(), getRecordType(), SettingsTools.getMaxRows(maxRows, ctx.settings()));
+            cursor = new CursorImpl<R>(ctx, listener, fields, intern.internIndexes(fields), keepStatement(), keepResultSet(), getRecordType(), SettingsTools.getMaxRows(maxRows, ctx.settings()), autoclosing);
 
             if (!lazy) {
                 result = cursor.fetch();
@@ -386,7 +387,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
                 try {
                     if (c == null)
-                        c = fetchLazy();
+                        c = fetchLazyNonAutoClosing();
 
                     if (buffer == null)
                         buffer = new ArrayDeque<R>();
@@ -457,7 +458,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
     @Override
     public final <X, A> X collect(Collector<? super R, A, X> collector) {
-        try (Cursor<R> c = fetchLazy()) {
+        try (Cursor<R> c = fetchLazyNonAutoClosing()) {
             return c.collect(collector);
         }
     }
@@ -467,6 +468,24 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     @Override
     public final Cursor<R> fetchLazy() {
         return fetchLazy(fetchSize);
+    }
+
+    /**
+     * When we manage the lifecycle of a returned {@link Cursor} internally in
+     * jOOQ, then the cursor must not be auto-closed.
+     */
+    final Cursor<R> fetchLazyNonAutoClosing() {
+        final boolean previousAutoClosing = autoclosing;
+
+        // [#3515] TODO: Avoid modifying a Query's per-execution state
+        autoclosing = false;
+
+        try {
+            return fetchLazy();
+        }
+        finally {
+            autoclosing = previousAutoClosing;
+        }
     }
 
     @Override
@@ -631,7 +650,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
     @Override
     public final R fetchOne() {
-        return Tools.fetchOne(fetchLazy(), hasLimit1());
+        return Tools.fetchOne(fetchLazyNonAutoClosing(), hasLimit1());
     }
 
     @Override
@@ -726,7 +745,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
     @Override
     public final R fetchSingle() {
-        return Tools.fetchSingle(fetchLazy(), hasLimit1());
+        return Tools.fetchSingle(fetchLazyNonAutoClosing(), hasLimit1());
     }
 
     @Override
@@ -912,7 +931,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
     @Override
     public final R fetchAny() {
-        Cursor<R> c = fetchLazy();
+        Cursor<R> c = fetchLazyNonAutoClosing();
 
         try {
             return c.fetchNext();

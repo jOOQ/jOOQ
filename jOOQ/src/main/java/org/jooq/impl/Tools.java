@@ -1995,13 +1995,17 @@ final class Tools {
 
     /**
      * Get the only element from a list or <code>null</code>, or throw an
-     * exception
+     * exception.
      *
      * @param list The list
      * @return The only element from the list or <code>null</code>
      * @throws TooManyRowsException Thrown if the list contains more than one
      *             element
+     * @deprecated - [#8881] - Do not reuse this method as it doesn't properly
+     *             manage the {@link ExecuteListener#exception(ExecuteContext)}
+     *             lifecycle event. Use {@link #fetchOne(Cursor)} instead.
      */
+    @Deprecated
     static final <R extends Record> R filterOne(List<R> list) throws TooManyRowsException {
         int size = list.size();
 

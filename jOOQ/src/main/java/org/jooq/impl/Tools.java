@@ -2058,7 +2058,7 @@ final class Tools {
             else if (size == 1)
                 return result.get(0);
             else
-                throw new TooManyRowsException("Cursor returned more than one result");
+                throw exception((CursorImpl<R>) cursor, new TooManyRowsException("Cursor returned more than one result"));
         }
         finally {
             cursor.close();
@@ -2106,15 +2106,23 @@ final class Tools {
             int size = result.size();
 
             if (size == 0)
-                throw new NoDataFoundException("Cursor returned no rows");
+                throw exception((CursorImpl<R>) cursor, new NoDataFoundException("Cursor returned no rows"));
             else if (size == 1)
                 return result.get(0);
             else
-                throw new TooManyRowsException("Cursor returned more than one result");
+                throw exception((CursorImpl<R>) cursor, new TooManyRowsException("Cursor returned more than one result"));
         }
         finally {
             cursor.close();
         }
+    }
+
+    private static final RuntimeException exception(CursorImpl<?> cursor, RuntimeException e) {
+
+        // [#8877] Make sure these exceptions pass through ExecuteListeners as well
+        cursor.ctx.exception(e);
+        cursor.listener.exception(cursor.ctx);
+        return cursor.ctx.exception();
     }
 
     /**

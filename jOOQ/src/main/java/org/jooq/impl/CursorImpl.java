@@ -99,8 +99,8 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
 
     private static final JooqLogger                        log = JooqLogger.getLogger(CursorImpl.class);
 
-    private final ExecuteContext                           ctx;
-    private final ExecuteListener                          listener;
+    final ExecuteContext                                   ctx;
+    final ExecuteListener                                  listener;
     private final boolean[]                                intern;
     private final boolean                                  keepResultSet;
     private final boolean                                  keepStatement;

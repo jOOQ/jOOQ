@@ -2991,7 +2991,8 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("public class Tables {");
 
         for (TableDefinition table : database.getTables(schema)) {
-            final String className = scala
+            final String className = getStrategy().getJavaClassName(table);
+            final String fullClassName = scala
                 ? ""
                 : out.ref(getStrategy().getFullJavaClassName(table));
             final String id = getStrategy().getJavaIdentifier(table);
@@ -3016,7 +3017,7 @@ public class JavaGenerator extends AbstractGenerator {
                 if (scala)
                     out.tab(1).println("val %s = %s", id, referencedId);
                 else
-                    out.tab(1).println("public static final %s %s = %s;", className, id, referencedId);
+                    out.tab(1).println("public static final %s %s = %s;", fullClassName, id, referencedId);
             }
 
             // [#3797] Table-valued functions generate two different literals in

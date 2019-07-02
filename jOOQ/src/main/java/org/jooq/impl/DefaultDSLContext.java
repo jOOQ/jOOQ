@@ -46,6 +46,7 @@ import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.index;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.schema;
 import static org.jooq.impl.DSL.sequence;
@@ -4268,7 +4269,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public int fetchCount(Table<?> table) {
-        return selectCount().from(table).fetchOne(0, int.class);
+        return fetchCount(table, noCondition());
     }
 
     @Override
@@ -4293,7 +4294,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public boolean fetchExists(Table<?> table) {
-        return fetchExists(selectOne().from(table));
+        return fetchExists(table, noCondition());
     }
 
     @Override
@@ -4330,7 +4331,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <R extends Record> Result<R> fetch(Table<R> table) {
-        return selectFrom(table).fetch();
+        return fetch(table, noCondition());
     }
 
     @Override
@@ -4350,7 +4351,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <R extends Record> R fetchOne(Table<R> table) {
-        return Tools.fetchOne(fetchLazy(table));
+        return fetchOne(table, noCondition());
     }
 
     @Override
@@ -4370,7 +4371,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <R extends Record> R fetchSingle(Table<R> table) {
-        return Tools.fetchSingle(fetchLazy(table));
+        return fetchSingle(table, noCondition());
     }
 
     @Override
@@ -4515,7 +4516,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <R extends Record> Optional<R> fetchOptional(Table<R> table) {
-        return Optional.ofNullable(fetchOne(table));
+        return fetchOptional(table, noCondition());
     }
 
     @Override
@@ -4536,7 +4537,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <R extends Record> R fetchAny(Table<R> table) {
-        return selectFrom(table).limit(1).fetchOne();
+        return fetchAny(table, noCondition());
     }
 
     @Override
@@ -4556,7 +4557,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <R extends Record> Cursor<R> fetchLazy(Table<R> table) {
-        return selectFrom(table).fetchLazy();
+        return fetchLazy(table, noCondition());
     }
 
     @Override
@@ -4578,7 +4579,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <R extends Record> CompletionStage<Result<R>> fetchAsync(Table<R> table) {
-        return selectFrom(table).fetchAsync();
+        return fetchAsync(table, noCondition());
     }
 
     @Override
@@ -4598,7 +4599,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <R extends Record> CompletionStage<Result<R>> fetchAsync(Executor executor, Table<R> table) {
-        return selectFrom(table).fetchAsync(executor);
+        return fetchAsync(executor, table, noCondition());
     }
 
     @Override
@@ -4618,7 +4619,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <R extends Record> Stream<R> fetchStream(Table<R> table) {
-        return selectFrom(table).stream();
+        return fetchStream(table, noCondition());
     }
 
     @Override

@@ -4536,12 +4536,12 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <R extends Record> R fetchAny(Table<R> table) {
-        return Tools.filterOne(selectFrom(table).limit(1).fetch());
+        return selectFrom(table).limit(1).fetchOne();
     }
 
     @Override
     public <R extends Record> R fetchAny(Table<R> table, Condition condition) {
-        return Tools.filterOne(selectFrom(table).where(condition).limit(1).fetch());
+        return selectFrom(table).where(condition).limit(1).fetchOne();
     }
 
     @Override

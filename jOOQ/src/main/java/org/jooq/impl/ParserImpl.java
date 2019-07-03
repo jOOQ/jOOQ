@@ -4452,28 +4452,14 @@ final class ParserImpl implements Parser {
                 }
                 else {
                     Field right = toField(ctx, parseConcat(ctx, null));
-                    boolean escape = parseKeywordIf(ctx, "ESCAPE");
-                    char character = escape ? parseCharacterLiteral(ctx) : ' ';
-                    return escape
-                        ? not
-                            ? ((Field) left).notLike(right, character)
-                            : ((Field) left).like(right, character)
-                        : not
-                            ? ((Field) left).notLike(right)
-                            : ((Field) left).like(right);
+                    LikeEscapeStep like = not ? ((Field) left).notLike(right) : ((Field) left).like(right);
+                    return parseEscapeClauseIf(ctx, like);
                 }
             }
             else if (left instanceof Field && parseKeywordIf(ctx, "ILIKE")) {
                 Field right = toField(ctx, parseConcat(ctx, null));
-                boolean escape = parseKeywordIf(ctx, "ESCAPE");
-                char character = escape ? parseCharacterLiteral(ctx) : ' ';
-                return escape
-                    ? not
-                        ? ((Field) left).notLikeIgnoreCase(right, character)
-                        : ((Field) left).likeIgnoreCase(right, character)
-                    : not
-                        ? ((Field) left).notLikeIgnoreCase(right)
-                        : ((Field) left).likeIgnoreCase(right);
+                LikeEscapeStep like = not ? ((Field) left).notLikeIgnoreCase(right) : ((Field) left).likeIgnoreCase(right);
+                return parseEscapeClauseIf(ctx, like);
             }
             else if (left instanceof Field && (parseKeywordIf(ctx, "REGEXP")
                                             || parseKeywordIf(ctx, "RLIKE")
@@ -4485,15 +4471,8 @@ final class ParserImpl implements Parser {
             }
             else if (left instanceof Field && parseKeywordIf(ctx, "SIMILAR TO")) {
                 Field right = toField(ctx, parseConcat(ctx, null));
-                boolean escape = parseKeywordIf(ctx, "ESCAPE");
-                char character = escape ? parseCharacterLiteral(ctx) : ' ';
-                return escape
-                    ? not
-                        ? ((Field) left).notSimilarTo(right, character)
-                        : ((Field) left).similarTo(right, character)
-                    : not
-                        ? ((Field) left).notSimilarTo(right)
-                        : ((Field) left).similarTo(right);
+                LikeEscapeStep like = not ? ((Field) left).notSimilarTo(right) : ((Field) left).similarTo(right);
+                return parseEscapeClauseIf(ctx, like);
             }
             else if (left instanceof RowN && ((RowN) left).size() == 2 && parseKeywordIf(ctx, "OVERLAPS")) {
                 return ((Row2) left).overlaps((Row2) parseRow(ctx, 2));

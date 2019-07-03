@@ -94,8 +94,6 @@ import org.jooq.OrderField;
 import org.jooq.Package;
 import org.jooq.Parameter;
 import org.jooq.Record;
-import org.jooq.RecordMapper;
-import org.jooq.RecordUnmapper;
 import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.Schema;
@@ -1590,87 +1588,6 @@ public class JavaGenerator extends AbstractGenerator {
             }
 
             out.tab(1).println("}");
-        }
-
-        if (generateRecordToPojoMappers()) {
-            final String pojoName = out.ref(getStrategy().getFullJavaClassName(tableUdtOrEmbeddable, Mode.POJO));
-
-            // Feature not supported in the Scala generator
-            if (scala) {
-            }
-            else {
-                out.println();
-                out.tab(1).println("public %s<%s, %s> mapper() {", RecordMapper.class, className, pojoName);
-                out.tab(2).println("return new %s<%s, %s>() {", RecordMapper.class, className, pojoName);
-                out.tab(3).override();
-                out.tab(3).println("public %s map(%s record) {", pojoName, className);
-
-                if (generateImmutablePojos()) {
-                    out.tab(4).println("return new %s(", pojoName);
-
-                    for (int i = 0; i < degree; i++) {
-                        final TypedElementDefinition<?> column = columns.get(i);
-                        final String columnGetter = getStrategy().getJavaGetterName(column, Mode.RECORD);
-
-                        out.tab(5).println("%s()[[%s]]", columnGetter, list(i == degree - 1 ? null : ","));
-                    }
-
-                    out.tab(4).println(");");
-                }
-                else {
-                    out.tab(4).println("%s result = new %s();", pojoName, pojoName);
-                    out.println();
-
-                    for (int i = 0; i < degree; i++) {
-                        final TypedElementDefinition<?> column = columns.get(i);
-                        final String columnGetter = getStrategy().getJavaGetterName(column, Mode.RECORD);
-                        final String columnSetter = getStrategy().getJavaSetterName(column, Mode.POJO);
-
-                        out.tab(4).println("result.%s(%s());", columnSetter, columnGetter);
-                    }
-
-                    out.println();
-                    out.tab(4).println("return result;");
-                }
-
-                out.tab(3).println("}");
-                out.tab(2).println("};");
-                out.tab(1).println("}");
-            }
-        }
-
-        if (generateRecordFromPojoUnmappers()) {
-            final String pojoName = out.ref(getStrategy().getFullJavaClassName(tableUdtOrEmbeddable, Mode.POJO));
-
-            // Feature not supported in the Scala generator
-            if (scala) {
-            }
-            else {
-                out.println();
-                out.tab(1).println("public %s<%s, %s> unmapper() {", RecordUnmapper.class, pojoName, className);
-                out.tab(2).println("return new %s<%s, %s>() {", RecordUnmapper.class, pojoName, className);
-                out.tab(3).override();
-                out.tab(3).println("public %s unmap(%s pojo) {", className, pojoName);
-
-                out.tab(4).println("%s result = new %s();", className, className);
-                out.println();
-
-                for (int i = 0; i < degree; i++) {
-                    final TypedElementDefinition<?> column = columns.get(i);
-                    final String columnGetter = getStrategy().getJavaGetterName(column, Mode.POJO);
-                    final String columnSetter = getStrategy().getJavaSetterName(column, Mode.RECORD);
-
-                    out.tab(4).println("result.%s(pojo.%s());", columnSetter, columnGetter);
-                }
-
-                out.println();
-                out.tab(4).println("result.attach(configuration());");
-                out.tab(4).println("return result;");
-
-                out.tab(3).println("}");
-                out.tab(2).println("};");
-                out.tab(1).println("}");
-            }
         }
 
         if (tableUdtOrEmbeddable instanceof TableDefinition)

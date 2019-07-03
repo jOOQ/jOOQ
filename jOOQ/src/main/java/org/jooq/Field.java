@@ -1496,6 +1496,25 @@ extends
     Condition like(String value, char escape);
 
     /**
+     * Create a condition to pattern-check this field against a quantified select.
+     * <p>
+     * For example a query like {@code field.like(any("a%", "b%"))} translates into
+     * the SQL {@code (field like 'a%' or field like 'b%')}.
+     *
+     * @see DSL#all(Field)
+     * @see DSL#all(Field...)
+     * @see DSL#all(Select)
+     * @see DSL#all(Object...)
+     * @see DSL#any(Field)
+     * @see DSL#any(Field...)
+     * @see DSL#any(Select)
+     * @see DSL#any(Object...)
+     * @see LikeEscapeStep#escape(char)
+     */
+    @Support
+    LikeEscapeStep like(QuantifiedSelect<Record1<String>> query);
+
+    /**
      * Create a condition to case-insensitively pattern-check this field against
      * a field.
      * <p>
@@ -1580,6 +1599,25 @@ extends
     Condition notLike(String value, char escape);
 
     /**
+     * Create a condition to pattern-check this field against a quantified select.
+     * <p>
+     * For example a query like {@code field.notLike(any("a%", "b%"))} translates into
+     * the SQL {@code (field not like 'a%' or field not like 'b%')}.
+     *
+     * @see DSL#all(Field)
+     * @see DSL#all(Field...)
+     * @see DSL#all(Select)
+     * @see DSL#all(Object...)
+     * @see DSL#any(Field)
+     * @see DSL#any(Field...)
+     * @see DSL#any(Select)
+     * @see DSL#any(Object...)
+     * @see LikeEscapeStep#escape(char)
+     */
+    @Support
+    LikeEscapeStep notLike(QuantifiedSelect<Record1<String>> query);
+
+    /**
      * Create a condition to case-insensitively pattern-check this field against
      * a field.
      * <p>
@@ -1626,130 +1664,6 @@ extends
      */
     @Support
     Condition notLikeIgnoreCase(String value, char escape);
-
-    /**
-     * Create a condition to pattern-check this field against any element in an array of values.
-     * <p>
-     * SQL: <code>(this like value0 or this like value1 or ...)</code>
-     *
-     * @see LikeEscapeStep#escape(char)
-     */
-    @Support
-    LikeEscapeStep likeAny(String... values);
-
-    /**
-     * Create a condition to pattern-check this field against any element in an array of fields.
-     * <p>
-     * SQL: <code>(this like field0 or this like field1 or ...)</code>
-     *
-     * @see LikeEscapeStep#escape(char)
-     */
-    @Support
-    @SuppressWarnings("unchecked")
-    LikeEscapeStep likeAny(Field<String>... fields);
-
-    /**
-     * Create a condition to pattern-check this field against any element in a collection of fields or values.
-     * <p>
-     * SQL: <code>(this like field0 or this like field1 or ...)</code>
-     *
-     * @see LikeEscapeStep#escape(char)
-     */
-    @Support
-    LikeEscapeStep likeAny(Collection<?> values);
-
-    /**
-     * Create a condition to negatively pattern-check this field against any element in an array of values.
-     * <p>
-     * SQL: <code>(this not like value0 or this not like value1 or ...)</code>
-     *
-     * @see LikeEscapeStep#escape(char)
-     */
-    @Support
-    LikeEscapeStep notLikeAny(String... values);
-
-    /**
-     * Create a condition to negatively pattern-check this field against any element in an array of values.
-     * <p>
-     * SQL: <code>(this not like value0 or this not like value1 or ...)</code>
-     *
-     * @see LikeEscapeStep#escape(char)
-     */
-    @Support
-    @SuppressWarnings("unchecked")
-    LikeEscapeStep notLikeAny(Field<String>... fields);
-
-    /**
-     * Create a condition to negatively pattern-check this field against any element in an array of values.
-     * <p>
-     * SQL: <code>(this not like value0 or this not like value1 or ...)</code>
-     *
-     * @see LikeEscapeStep#escape(char)
-     */
-    @Support
-    LikeEscapeStep notLikeAny(Collection<?> values);
-
-    /**
-     * Create a condition to pattern-check this field against all elements in an array of values.
-     * <p>
-     * SQL: <code>(this like value0 and this like value1 and ...)</code>
-     *
-     * @see LikeEscapeStep#escape(char)
-     */
-    @Support
-    LikeEscapeStep likeAll(String... values);
-
-    /**
-     * Create a condition to pattern-check this field against all elements in an array of fields.
-     * <p>
-     * SQL: <code>(this like field0 and this like field1 and ...)</code>
-     *
-     * @see LikeEscapeStep#escape(char)
-     */
-    @Support
-    @SuppressWarnings("unchecked")
-    LikeEscapeStep likeAll(Field<String>... fields);
-
-    /**
-     * Create a condition to pattern-check this field against all elements in a collection of fields or values.
-     * <p>
-     * SQL: <code>(this like field0 and this like field1 and ...)</code>
-     *
-     * @see LikeEscapeStep#escape(char)
-     */
-    @Support
-    LikeEscapeStep likeAll(Collection<?> values);
-
-    /**
-     * Create a condition to negatively pattern-check this field against all elements in an array of values.
-     * <p>
-     * SQL: <code>(this not like value0 and this not like value1 and ...)</code>
-     *
-     * @see LikeEscapeStep#escape(char)
-     */
-    @Support
-    LikeEscapeStep notLikeAll(String... values);
-
-    /**
-     * Create a condition to negatively pattern-check this field against all elements in an array of fields.
-     * <p>
-     * SQL: <code>(this not like field0 and this not like field1 and ...)</code>
-     *
-     * @see LikeEscapeStep#escape(char)
-     */
-    @Support
-    @SuppressWarnings("unchecked")
-    LikeEscapeStep notLikeAll(Field<String>... fields);
-
-    /**
-     * Create a condition to negatively pattern-check this field against all elements in a collection of fields or values.
-     * <p>
-     * SQL: <code>(this not like field0 and this not like field1 and ...)</code>
-     *
-     * @see LikeEscapeStep#escape(char)
-     */
-    @Support
-    LikeEscapeStep notLikeAll(Collection<?> values);
 
     /**
      * Convenience method for {@link #like(String, char)} including proper

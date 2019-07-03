@@ -37,7 +37,13 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.DSL.all;
+import static org.jooq.impl.DSL.any;
+
 import org.jooq.Keyword;
+import org.jooq.QuantifiedSelect;
+import org.jooq.Record;
+import org.jooq.Select;
 
 /**
  * A quantifier used for quantified comparison predicates
@@ -72,5 +78,16 @@ enum Quantifier {
 
     public final Keyword toKeyword() {
         return keyword;
+    }
+
+    public <R extends Record> QuantifiedSelect<R> apply(Select<R> select) {
+        switch (this) {
+            case ANY:
+                return any(select);
+            case ALL:
+                return all(select);
+            default:
+                throw new IllegalStateException();
+        }
     }
 }

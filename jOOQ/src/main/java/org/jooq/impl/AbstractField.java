@@ -783,6 +783,11 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
     }
 
     @Override
+    public LikeEscapeStep like(QuantifiedSelect<Record1<String>> query) {
+        return new QuantifiedComparisonCondition(query, this, LIKE);
+    }
+
+    @Override
     public final LikeEscapeStep likeIgnoreCase(String value) {
         return likeIgnoreCase(Tools.field(value));
     }
@@ -833,6 +838,11 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
     }
 
     @Override
+    public LikeEscapeStep notLike(QuantifiedSelect<Record1<String>> query) {
+        return new QuantifiedComparisonCondition(query, this, NOT_LIKE);
+    }
+
+    @Override
     public final LikeEscapeStep notLikeIgnoreCase(String value) {
         return notLikeIgnoreCase(Tools.field(value));
     }
@@ -850,70 +860,6 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
     @Override
     public final Condition notLikeIgnoreCase(Field<String> field, char escape) {
         return notLikeIgnoreCase(field).escape(escape);
-    }
-
-    @Override
-    public final LikeEscapeStep likeAny(String... values) {
-        return likeAny(Tools.fields(values));
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public final LikeEscapeStep likeAny(Field<String>... fields) {
-        return likeAny(Arrays.asList(fields));
-    }
-
-    @Override
-    public final LikeEscapeStep likeAny(Collection<?> values) {
-        return new CombinedCompareCondition(this, LIKE, Quantifier.ANY, Tools.fields(values, SQLDataType.VARCHAR));
-    }
-
-    @Override
-    public final LikeEscapeStep notLikeAny(String... values) {
-        return notLikeAny(Tools.fields(values));
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public final LikeEscapeStep notLikeAny(Field<String>... fields) {
-        return notLikeAny(Arrays.asList(fields));
-    }
-
-    @Override
-    public final LikeEscapeStep notLikeAny(Collection<?> values) {
-        return new CombinedCompareCondition(this, NOT_LIKE, Quantifier.ANY, Tools.fields(values, SQLDataType.VARCHAR));
-    }
-
-    @Override
-    public final LikeEscapeStep likeAll(String... values) {
-        return likeAll(Tools.fields(values));
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public final LikeEscapeStep likeAll(Field<String>... fields) {
-        return likeAll(Arrays.asList(fields));
-    }
-
-    @Override
-    public final LikeEscapeStep likeAll(Collection<?> values) {
-        return new CombinedCompareCondition(this, LIKE, Quantifier.ALL, Tools.fields(values, SQLDataType.VARCHAR));
-    }
-
-    @Override
-    public final LikeEscapeStep notLikeAll(String... values) {
-        return notLikeAll(Tools.fields(values));
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public final LikeEscapeStep notLikeAll(Field<String>... fields) {
-        return notLikeAll(Arrays.asList(fields));
-    }
-
-    @Override
-    public final LikeEscapeStep notLikeAll(Collection<?> values) {
-        return new CombinedCompareCondition(this, NOT_LIKE, Quantifier.ALL, Tools.fields(values, SQLDataType.VARCHAR));
     }
 
     @Override

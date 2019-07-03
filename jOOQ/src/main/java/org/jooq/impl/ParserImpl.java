@@ -51,6 +51,8 @@ import static org.jooq.conf.ParseWithMetaLookups.IGNORE_ON_FAILURE;
 import static org.jooq.conf.ParseWithMetaLookups.THROW_ON_FAILURE;
 import static org.jooq.impl.DSL.abs;
 import static org.jooq.impl.DSL.acos;
+import static org.jooq.impl.DSL.all;
+import static org.jooq.impl.DSL.any;
 import static org.jooq.impl.DSL.arrayAgg;
 import static org.jooq.impl.DSL.arrayAggDistinct;
 import static org.jooq.impl.DSL.ascii;
@@ -4400,39 +4402,61 @@ final class ParserImpl implements Parser {
             else if (left instanceof Field && parseKeywordIf(ctx, "LIKE")) {
                 if (parseKeywordIf(ctx, "ANY")) {
                     parse(ctx, '(');
-                    List<Field<?>> fields = null;
-                    if (parseIf(ctx, ')'))
-                        fields = Collections.<Field<?>> emptyList();
-                    else {
-                        fields = new ArrayList<Field<?>>();
-                        do {
-                            fields.add(toField(ctx, parseConcat(ctx, null)));
-                        }
-                        while (parseIf(ctx, ','));
+                    if (peekKeyword(ctx, "SELECT") || peekKeyword(ctx, "SEL")) {
+                        SelectQueryImpl<Record> select = parseSelect(ctx);
                         parse(ctx, ')');
+                        boolean escape = parseKeywordIf(ctx, "ESCAPE");
+                        char character = escape ? parseCharacterLiteral(ctx) : ' ';
+                        LikeEscapeStep result = not ? ((Field) left).notLike(any(select)) : ((Field) left).like(any(select));
+                        return escape ? result.escape(character) : result;
                     }
-                    boolean escape = parseKeywordIf(ctx, "ESCAPE");
-                    char character = escape ? parseCharacterLiteral(ctx) : ' ';
-                    LikeEscapeStep result = not ? ((Field) left).notLikeAny(fields) : ((Field) left).likeAny(fields);
-                    return escape ? result.escape(character) : result;
+                    else {
+                        List<Field<?>> fields = null;
+                        if (parseIf(ctx, ')'))
+                            fields = Collections.<Field<?>> emptyList();
+                        else {
+                            fields = new ArrayList<Field<?>>();
+                            do {
+                                fields.add(toField(ctx, parseConcat(ctx, null)));
+                            }
+                            while (parseIf(ctx, ','));
+                            parse(ctx, ')');
+                        }
+                        boolean escape = parseKeywordIf(ctx, "ESCAPE");
+                        char character = escape ? parseCharacterLiteral(ctx) : ' ';
+                        Field<?>[] fieldArray = fields.toArray(new Field[0]);
+                        LikeEscapeStep result = not ? ((Field) left).notLike(any(fieldArray)) : ((Field) left).like(any(fieldArray));
+                        return escape ? result.escape(character) : result;
+                    }
                 }
                 else if (parseKeywordIf(ctx, "ALL")) {
                     parse(ctx, '(');
-                    List<Field<?>> fields = null;
-                    if (parseIf(ctx, ')'))
-                        fields = Collections.<Field<?>> emptyList();
-                    else {
-                        fields = new ArrayList<Field<?>>();
-                        do {
-                            fields.add(toField(ctx, parseConcat(ctx, null)));
-                        }
-                        while (parseIf(ctx, ','));
+                    if (peekKeyword(ctx, "SELECT") || peekKeyword(ctx, "SEL")) {
+                        SelectQueryImpl<Record> select = parseSelect(ctx);
                         parse(ctx, ')');
+                        boolean escape = parseKeywordIf(ctx, "ESCAPE");
+                        char character = escape ? parseCharacterLiteral(ctx) : ' ';
+                        LikeEscapeStep result = not ? ((Field) left).notLike(all(select)) : ((Field) left).like(all(select));
+                        return escape ? result.escape(character) : result;
                     }
-                    boolean escape = parseKeywordIf(ctx, "ESCAPE");
-                    char character = escape ? parseCharacterLiteral(ctx) : ' ';
-                    LikeEscapeStep result = not ? ((Field) left).notLikeAll(fields) : ((Field) left).likeAll(fields);
-                    return escape ? result.escape(character) : result;
+                    else {
+                        List<Field<?>> fields = null;
+                        if (parseIf(ctx, ')'))
+                            fields = Collections.<Field<?>> emptyList();
+                        else {
+                            fields = new ArrayList<Field<?>>();
+                            do {
+                                fields.add(toField(ctx, parseConcat(ctx, null)));
+                            }
+                            while (parseIf(ctx, ','));
+                            parse(ctx, ')');
+                        }
+                        boolean escape = parseKeywordIf(ctx, "ESCAPE");
+                        char character = escape ? parseCharacterLiteral(ctx) : ' ';
+                        Field<?>[] fieldArray = fields.toArray(new Field[0]);
+                        LikeEscapeStep result = not ? ((Field) left).notLike(all(fieldArray)) : ((Field) left).like(all(fieldArray));
+                        return escape ? result.escape(character) : result;
+                    }
                 }
                 else {
                     Field right = toField(ctx, parseConcat(ctx, null));

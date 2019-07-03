@@ -48,7 +48,7 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Param;
 import org.jooq.QuantifiedSelect;
-import org.jooq.QueryPartInternal;
+import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Select;
@@ -62,22 +62,32 @@ final class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart imp
     /**
      * Generated UID
      */
-    private static final long               serialVersionUID = -1224570388944748450L;
+    private static final long       serialVersionUID = -1224570388944748450L;
 
-    private final Quantifier                quantifier;
-    private final Select<R>                 query;
-    private final Field<? extends Object[]> array;
+    final Quantifier                quantifier;
+    final Select<R>                 query;
+    final Field<? extends Object[]> array;
+    final Field<?>[]                values;
 
     QuantifiedSelectImpl(Quantifier quantifier, Select<R> query) {
         this.quantifier = quantifier;
         this.query = query;
         this.array = null;
+        this.values = null;
     }
 
     QuantifiedSelectImpl(Quantifier quantifier, Field<? extends Object[]> array) {
         this.quantifier = quantifier;
         this.query = null;
         this.array = array;
+        this.values = null;
+    }
+
+    QuantifiedSelectImpl(Quantifier quantifier, Field<?>... values) {
+        this.quantifier = quantifier;
+        this.query = null;
+        this.array = null;
+        this.values = values;
     }
 
     @Override
@@ -106,9 +116,20 @@ final class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart imp
 
     }
 
-    private final QueryPartInternal delegate(Configuration ctx) {
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    private final QueryPart delegate(Configuration ctx) {
         if (query != null) {
-            return (QueryPartInternal) query;
+            return query;
+        }
+        else if (values != null) {
+            Select<Record1<?>> select = null;
+            for (Field value : values)
+                if (select == null)
+                    select = select(value);
+                else
+                    select = select.unionAll(select(value));
+
+            return select;
         }
         else {
             switch (ctx.family()) {
@@ -118,14 +139,14 @@ final class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart imp
 
 
                 case POSTGRES: {
-                    return (QueryPartInternal) array;
+                    return array;
                 }
 
                 // [#869] H2 and HSQLDB can emulate this syntax by unnesting
                 // the array in a subselect
                 case H2:
                 case HSQLDB:
-                    return (QueryPartInternal) create(ctx).select().from(table(array));
+                    return create(ctx).select().from(table(array));
 
                 // [#1048] All other dialects emulate unnesting of arrays using
                 // UNION ALL-connected subselects
@@ -134,19 +155,19 @@ final class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart imp
                     // The Informix database has an interesting bug when quantified comparison predicates
                     // use nested derived tables with UNION ALL
                     if (array instanceof Param) {
-                        Object[] values = ((Param<? extends Object[]>) array).getValue();
+                        Object[] values0 = ((Param<? extends Object[]>) array).getValue();
 
                         Select<Record1<Object>> select = null;
-                        for (Object value : values)
+                        for (Object value : values0)
                             if (select == null)
                                 select = select(val(value));
                             else
                                 select = select.unionAll(select(val(value)));
 
-                        return (QueryPartInternal) select;
+                        return select;
                     }
                     else {
-                        return (QueryPartInternal) select().from(table(array));
+                        return select().from(table(array));
                     }
                 }
             }

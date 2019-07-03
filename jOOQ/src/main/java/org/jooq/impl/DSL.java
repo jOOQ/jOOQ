@@ -8137,6 +8137,7 @@ public class DSL {
      * @see Field#greaterOrEqual(QuantifiedSelect)
      * @see Field#lessThan(QuantifiedSelect)
      * @see Field#lessOrEqual(QuantifiedSelect)
+     * @see Field#like(QuantifiedSelect)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record> QuantifiedSelect<R> all(Select<R> select) {
@@ -8156,6 +8157,7 @@ public class DSL {
      * @see Field#greaterOrEqual(QuantifiedSelect)
      * @see Field#lessThan(QuantifiedSelect)
      * @see Field#lessOrEqual(QuantifiedSelect)
+     * @see Field#like(QuantifiedSelect)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <T> QuantifiedSelect<Record1<T>> all(T... array) {
@@ -8175,10 +8177,34 @@ public class DSL {
      * @see Field#greaterOrEqual(QuantifiedSelect)
      * @see Field#lessThan(QuantifiedSelect)
      * @see Field#lessOrEqual(QuantifiedSelect)
+     * @see Field#like(QuantifiedSelect)
      */
     @Support({ H2, HSQLDB, POSTGRES })
     public static <T> QuantifiedSelect<Record1<T>> all(Field<T[]> array) {
         return new QuantifiedSelectImpl<Record1<T>>(Quantifier.ALL, array);
+    }
+
+    /**
+     * Create an <code>ALL</code> quantified select to be used in quantified
+     * comparison predicate expressions.
+     * <p>
+     * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
+     * will render a subselect unnesting the array.
+     *
+     * @see Field#equal(QuantifiedSelect)
+     * @see Field#notEqual(QuantifiedSelect)
+     * @see Field#greaterThan(QuantifiedSelect)
+     * @see Field#greaterOrEqual(QuantifiedSelect)
+     * @see Field#lessThan(QuantifiedSelect)
+     * @see Field#lessOrEqual(QuantifiedSelect)
+     * @see Field#like(QuantifiedSelect)
+     */
+    @Support
+
+    @SafeVarargs
+
+    public static <T> QuantifiedSelect<Record1<T>> all(Field<T>... fields) {
+        return new QuantifiedSelectImpl<Record1<T>>(Quantifier.ALL, fields);
     }
 
     /**
@@ -8191,6 +8217,7 @@ public class DSL {
      * @see Field#greaterOrEqual(QuantifiedSelect)
      * @see Field#lessThan(QuantifiedSelect)
      * @see Field#lessOrEqual(QuantifiedSelect)
+     * @see Field#like(QuantifiedSelect)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record> QuantifiedSelect<R> any(Select<R> select) {
@@ -8210,6 +8237,7 @@ public class DSL {
      * @see Field#greaterOrEqual(QuantifiedSelect)
      * @see Field#lessThan(QuantifiedSelect)
      * @see Field#lessOrEqual(QuantifiedSelect)
+     * @see Field#like(QuantifiedSelect)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <T> QuantifiedSelect<Record1<T>> any(T... array) {
@@ -8229,10 +8257,34 @@ public class DSL {
      * @see Field#greaterOrEqual(QuantifiedSelect)
      * @see Field#lessThan(QuantifiedSelect)
      * @see Field#lessOrEqual(QuantifiedSelect)
+     * @see Field#like(QuantifiedSelect)
      */
     @Support({ H2, HSQLDB, POSTGRES })
     public static <T> QuantifiedSelect<Record1<T>> any(Field<T[]> array) {
         return new QuantifiedSelectImpl<Record1<T>>(Quantifier.ANY, array);
+    }
+
+    /**
+     * Create an <code>ANY</code> quantified select to be used in quantified
+     * comparison predicate expressions.
+     * <p>
+     * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
+     * will render a subselect unnesting the array.
+     *
+     * @see Field#equal(QuantifiedSelect)
+     * @see Field#notEqual(QuantifiedSelect)
+     * @see Field#greaterThan(QuantifiedSelect)
+     * @see Field#greaterOrEqual(QuantifiedSelect)
+     * @see Field#lessThan(QuantifiedSelect)
+     * @see Field#lessOrEqual(QuantifiedSelect)
+     * @see Field#like(QuantifiedSelect)
+     */
+    @Support
+
+    @SafeVarargs
+
+    public static <T> QuantifiedSelect<Record1<T>> any(Field<T>... fields) {
+        return new QuantifiedSelectImpl<Record1<T>>(Quantifier.ANY, fields);
     }
 
     // -------------------------------------------------------------------------

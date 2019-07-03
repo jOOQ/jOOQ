@@ -4405,10 +4405,8 @@ final class ParserImpl implements Parser {
                     if (peekKeyword(ctx, "SELECT") || peekKeyword(ctx, "SEL")) {
                         SelectQueryImpl<Record> select = parseSelect(ctx);
                         parse(ctx, ')');
-                        boolean escape = parseKeywordIf(ctx, "ESCAPE");
-                        char character = escape ? parseCharacterLiteral(ctx) : ' ';
                         LikeEscapeStep result = not ? ((Field) left).notLike(any(select)) : ((Field) left).like(any(select));
-                        return escape ? result.escape(character) : result;
+                        return parseEscapeClauseIf(ctx, result);
                     }
                     else {
                         List<Field<?>> fields = null;
@@ -4422,11 +4420,9 @@ final class ParserImpl implements Parser {
                             while (parseIf(ctx, ','));
                             parse(ctx, ')');
                         }
-                        boolean escape = parseKeywordIf(ctx, "ESCAPE");
-                        char character = escape ? parseCharacterLiteral(ctx) : ' ';
                         Field<String>[] fieldArray = fields.toArray(new Field[0]);
                         LikeEscapeStep result = not ? ((Field<String>) left).notLike(any(fieldArray)) : ((Field<String>) left).like(any(fieldArray));
-                        return escape ? result.escape(character) : result;
+                        return parseEscapeClauseIf(ctx, result);
                     }
                 }
                 else if (parseKeywordIf(ctx, "ALL")) {
@@ -4434,10 +4430,8 @@ final class ParserImpl implements Parser {
                     if (peekKeyword(ctx, "SELECT") || peekKeyword(ctx, "SEL")) {
                         SelectQueryImpl<Record> select = parseSelect(ctx);
                         parse(ctx, ')');
-                        boolean escape = parseKeywordIf(ctx, "ESCAPE");
-                        char character = escape ? parseCharacterLiteral(ctx) : ' ';
                         LikeEscapeStep result = not ? ((Field) left).notLike(all(select)) : ((Field) left).like(all(select));
-                        return escape ? result.escape(character) : result;
+                        return parseEscapeClauseIf(ctx, result);
                     }
                     else {
                         List<Field<?>> fields = null;
@@ -4451,11 +4445,9 @@ final class ParserImpl implements Parser {
                             while (parseIf(ctx, ','));
                             parse(ctx, ')');
                         }
-                        boolean escape = parseKeywordIf(ctx, "ESCAPE");
-                        char character = escape ? parseCharacterLiteral(ctx) : ' ';
                         Field<String>[] fieldArray = fields.toArray(new Field[0]);
                         LikeEscapeStep result = not ? ((Field<String>) left).notLike(all(fieldArray)) : ((Field<String>) left).like(all(fieldArray));
-                        return escape ? result.escape(character) : result;
+                        return parseEscapeClauseIf(ctx, result);
                     }
                 }
                 else {
@@ -4509,6 +4501,10 @@ final class ParserImpl implements Parser {
             else
                 return left;
         }
+    }
+
+    private static QueryPart parseEscapeClauseIf(ParserContext ctx, LikeEscapeStep like) {
+        return parseKeywordIf(ctx, "ESCAPE") ? like.escape(parseCharacterLiteral(ctx)) : like;
     }
 
     private static final List<Table<?>> parseTables(ParserContext ctx) {

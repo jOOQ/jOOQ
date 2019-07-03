@@ -14,7 +14,7 @@
     <name>jOOQ Scala 2.12</name>
 
     <properties>
-        <scala.version>2.12.4</scala.version>
+        <scala.version>2.12.8</scala.version>
         <jdbc-url-postfix>default</jdbc-url-postfix>
     </properties>
 

@@ -4424,8 +4424,8 @@ final class ParserImpl implements Parser {
                         }
                         boolean escape = parseKeywordIf(ctx, "ESCAPE");
                         char character = escape ? parseCharacterLiteral(ctx) : ' ';
-                        Field<?>[] fieldArray = fields.toArray(new Field[0]);
-                        LikeEscapeStep result = not ? ((Field) left).notLike(any(fieldArray)) : ((Field) left).like(any(fieldArray));
+                        Field<String>[] fieldArray = fields.toArray(new Field[0]);
+                        LikeEscapeStep result = not ? ((Field<String>) left).notLike(any(fieldArray)) : ((Field<String>) left).like(any(fieldArray));
                         return escape ? result.escape(character) : result;
                     }
                 }
@@ -4453,8 +4453,8 @@ final class ParserImpl implements Parser {
                         }
                         boolean escape = parseKeywordIf(ctx, "ESCAPE");
                         char character = escape ? parseCharacterLiteral(ctx) : ' ';
-                        Field<?>[] fieldArray = fields.toArray(new Field[0]);
-                        LikeEscapeStep result = not ? ((Field) left).notLike(all(fieldArray)) : ((Field) left).like(all(fieldArray));
+                        Field<String>[] fieldArray = fields.toArray(new Field[0]);
+                        LikeEscapeStep result = not ? ((Field<String>) left).notLike(all(fieldArray)) : ((Field<String>) left).like(all(fieldArray));
                         return escape ? result.escape(character) : result;
                     }
                 }

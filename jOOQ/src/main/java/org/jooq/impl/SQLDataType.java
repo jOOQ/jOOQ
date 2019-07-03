@@ -277,6 +277,13 @@ public final class SQLDataType {
      */
     public static final DataType<BigInteger> DECIMAL_INTEGER = new DefaultDataType<BigInteger>(null, BigInteger.class, "decimal_integer");
 
+    /**
+     * The zero-scale {@link Types#DECIMAL} type.
+     */
+    public static final DataType<BigInteger> DECIMAL_INTEGER(int precision) {
+        return DECIMAL_INTEGER.precision(precision);
+    }
+
     // -------------------------------------------------------------------------
     // Unsigned integer types
     // -------------------------------------------------------------------------

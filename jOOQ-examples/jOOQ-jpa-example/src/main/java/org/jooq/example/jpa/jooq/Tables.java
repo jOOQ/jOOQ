@@ -19,20 +19,20 @@ public class Tables {
     /**
      * The table <code>PUBLIC.ACTOR</code>.
      */
-    public static final Actor ACTOR = org.jooq.example.jpa.jooq.tables.Actor.ACTOR;
+    public static final Actor ACTOR = Actor.ACTOR;
 
     /**
      * The table <code>PUBLIC.FILM</code>.
      */
-    public static final Film FILM = org.jooq.example.jpa.jooq.tables.Film.FILM;
+    public static final Film FILM = Film.FILM;
 
     /**
      * The table <code>PUBLIC.FILM_ACTOR</code>.
      */
-    public static final FilmActor FILM_ACTOR = org.jooq.example.jpa.jooq.tables.FilmActor.FILM_ACTOR;
+    public static final FilmActor FILM_ACTOR = FilmActor.FILM_ACTOR;
 
     /**
      * The table <code>PUBLIC.LANGUAGE</code>.
      */
-    public static final Language LANGUAGE = org.jooq.example.jpa.jooq.tables.Language.LANGUAGE;
+    public static final Language LANGUAGE = Language.LANGUAGE;
 }

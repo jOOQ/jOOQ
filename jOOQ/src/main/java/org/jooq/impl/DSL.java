@@ -9078,6 +9078,7 @@ public class DSL {
      * );
      * </pre></code>
      */
+    @Support
     public static Keyword keyword(String keyword) {
         return new KeywordImpl(keyword);
     }
@@ -9109,6 +9110,7 @@ public class DSL {
      * @param unqualifiedName The SQL identifier's unqualified name
      * @return A {@link QueryPart} that will render the SQL identifier
      */
+    @Support
     public static Name name(String unqualifiedName) {
         return new UnqualifiedName(unqualifiedName);
     }
@@ -9136,6 +9138,7 @@ public class DSL {
      * @param qualifiedName The SQL identifier's qualified name parts
      * @return A {@link QueryPart} that will render the SQL identifier
      */
+    @Support
     public static Name name(String... qualifiedName) {
         if (qualifiedName == null || qualifiedName.length != 1)
             return new QualifiedName(qualifiedName);
@@ -9170,6 +9173,7 @@ public class DSL {
      * @param nameParts The SQL identifier's qualified name parts
      * @return A {@link QueryPart} that will render the SQL identifier
      */
+    @Support
     public static Name name(Name... nameParts) {
         return new QualifiedName(nameParts);
     }
@@ -9197,6 +9201,7 @@ public class DSL {
      * @param qualifiedName The SQL identifier's qualified name parts
      * @return A {@link QueryPart} that will render the SQL identifier
      */
+    @Support
     public static Name name(Collection<String> qualifiedName) {
         return name(qualifiedName.toArray(Tools.EMPTY_STRING));
     }
@@ -9211,6 +9216,7 @@ public class DSL {
      * @param unqualifiedName The SQL identifier's unqualified name
      * @return A {@link QueryPart} that will render the SQL identifier
      */
+    @Support
     public static Name quotedName(String unqualifiedName) {
         return new UnqualifiedName(unqualifiedName, Quoted.QUOTED);
     }
@@ -9225,6 +9231,7 @@ public class DSL {
      * @param qualifiedName The SQL identifier's qualified name parts
      * @return A {@link QueryPart} that will render the SQL identifier
      */
+    @Support
     public static Name quotedName(String... qualifiedName) {
         return new QualifiedName(qualifiedName, Quoted.QUOTED);
     }
@@ -9239,6 +9246,7 @@ public class DSL {
      * @param qualifiedName The SQL identifier's qualified name parts
      * @return A {@link QueryPart} that will render the SQL identifier
      */
+    @Support
     public static Name quotedName(Collection<String> qualifiedName) {
         return quotedName(qualifiedName.toArray(Tools.EMPTY_STRING));
     }
@@ -9253,6 +9261,7 @@ public class DSL {
      * @param unqualifiedName The SQL identifier's unqualified name
      * @return A {@link QueryPart} that will render the SQL identifier
      */
+    @Support
     public static Name unquotedName(String unqualifiedName) {
         return new UnqualifiedName(unqualifiedName, Quoted.UNQUOTED);
     }
@@ -9267,6 +9276,7 @@ public class DSL {
      * @param qualifiedName The SQL identifier's qualified name parts
      * @return A {@link QueryPart} that will render the SQL identifier
      */
+    @Support
     public static Name unquotedName(String... qualifiedName) {
         if (qualifiedName == null || qualifiedName.length != 1)
             return new QualifiedName(qualifiedName, Quoted.UNQUOTED);
@@ -9284,6 +9294,7 @@ public class DSL {
      * @param qualifiedName The SQL identifier's qualified name parts
      * @return A {@link QueryPart} that will render the SQL identifier
      */
+    @Support
     public static Name unquotedName(Collection<String> qualifiedName) {
         return unquotedName(qualifiedName.toArray(Tools.EMPTY_STRING));
     }
@@ -9296,6 +9307,7 @@ public class DSL {
      * Compose a list of <code>QueryParts</code> into a new
      * <code>QueryPart</code>, with individual parts being comma-separated.
      */
+    @Support
     public static QueryPart list(QueryPart... parts) {
         return list(Arrays.asList(parts));
     }
@@ -9304,6 +9316,7 @@ public class DSL {
      * Compose a list of <code>QueryParts</code> into a new
      * <code>QueryPart</code>, with individual parts being comma-separated.
      */
+    @Support
     public static QueryPart list(Collection<? extends QueryPart> parts) {
         return new QueryPartList<QueryPart>(parts);
     }

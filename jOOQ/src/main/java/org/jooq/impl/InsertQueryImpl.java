@@ -866,13 +866,17 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         return insertMaps.isExecutable() || defaultValues || select != null;
     }
 
-    @Override
-    final int estimatedRowCount() {
-        if (defaultValues)
-            return 1;
-        else if (select != null)
-            return Integer.MAX_VALUE;
-        else
-            return insertMaps.rows;
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

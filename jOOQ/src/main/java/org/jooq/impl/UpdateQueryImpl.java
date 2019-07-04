@@ -710,8 +710,12 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         return updateMap.size() > 0 || multiRow != null;
     }
 
-    @Override
-    final int estimatedRowCount() {
-        return Integer.MAX_VALUE;
-    }
+
+
+
+
+
+
+
+
 }

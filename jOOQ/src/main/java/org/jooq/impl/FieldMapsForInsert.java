@@ -105,7 +105,11 @@ final class FieldMapsForInsert extends AbstractQueryPart {
         }
 
         // Single record inserts can use the standard syntax in any dialect
-        else if (rows == 1                                                ) {
+
+
+
+
+        else if (rows == 1                                                                                                              ) {
             ctx.formatSeparator()
                .start(INSERT_VALUES)
                .visit(K_VALUES)

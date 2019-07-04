@@ -113,19 +113,7 @@ public class MiniJAXB {
                 return;
             }
             catch (Throwable t) {
-                if (t instanceof Error) {
-                    ExceptionTools.sneakyThrow(t);
-                }
-                else if (ExceptionTools.getCause(t, ClassNotFoundException.class) != null ||
-                    ExceptionTools.getCause(t, Error.class) != null) {
-                    jaxbAvailable = false;
-                    log.debug("JAXB is not available from the classpath / module path");
-                }
-                else {
-                    jaxbAvailable = true;
-                    log.debug("JAXB is available from the classpath / module path");
-                    throw new ConfigurationException("Error while reading xml", t);
-                }
+                handleJaxbException(t);
             }
         }
 
@@ -141,6 +129,24 @@ public class MiniJAXB {
         }
         catch (Exception e) {
             throw new ConfigurationException("Cannot print object", e);
+        }
+    }
+
+    private static void handleJaxbException(Throwable t) {
+        if (t instanceof Error) {
+            jaxbAvailable = true;
+            log.debug("JAXB is available from the classpath / module path");
+            ExceptionTools.sneakyThrow(t);
+        }
+        else if (ExceptionTools.getCause(t, ClassNotFoundException.class) != null ||
+            ExceptionTools.getCause(t, Error.class) != null) {
+            jaxbAvailable = false;
+            log.debug("JAXB is not available from the classpath / module path");
+        }
+        else {
+            jaxbAvailable = true;
+            log.debug("JAXB is available from the classpath / module path");
+            throw new ConfigurationException("Error while reading xml", t);
         }
     }
 
@@ -174,19 +180,7 @@ public class MiniJAXB {
                 return result;
             }
             catch (Throwable t) {
-                if (t instanceof Error) {
-                    ExceptionTools.sneakyThrow(t);
-                }
-                if (ExceptionTools.getCause(t, ClassNotFoundException.class) != null ||
-                    ExceptionTools.getCause(t, Error.class) != null) {
-                    jaxbAvailable = false;
-                    log.debug("JAXB is not available from the classpath / module path");
-                }
-                else {
-                    jaxbAvailable = true;
-                    log.debug("JAXB is available from the classpath / module path");
-                    throw new ConfigurationException("Error while reading xml", t);
-                }
+                handleJaxbException(t);
             }
         }
 

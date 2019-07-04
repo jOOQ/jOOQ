@@ -47,11 +47,13 @@ public enum Nullability {
     /**
      * The data type is explicitly nullable.
      */
+    @Support
     NULL,
 
     /**
      * The data type is explicitly not nullable.
      */
+    @Support
     NOT_NULL,
 
     /**
@@ -69,6 +71,7 @@ public enum Nullability {
      * {@link SQLDialect#SQLSERVER}).</li>
      * </ul>
      */
+    @Support
     DEFAULT;
 
     /**

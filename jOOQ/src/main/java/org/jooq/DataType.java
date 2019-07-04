@@ -37,6 +37,18 @@
  */
 package org.jooq;
 
+// ...
+// ...
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.MARIADB;
+// ...
+import static org.jooq.SQLDialect.MYSQL;
+// ...
+import static org.jooq.SQLDialect.POSTGRES;
+// ...
+import static org.jooq.SQLDialect.SQLITE;
+// ...
+
 import java.io.Serializable;
 import java.sql.Types;
 import java.util.Collection;
@@ -210,6 +222,7 @@ public interface DataType<T> extends Serializable {
      * @param nullability The new nullability
      * @return The new data type
      */
+    @Support
     DataType<T> nullability(Nullability nullability);
 
     /**
@@ -231,6 +244,7 @@ public interface DataType<T> extends Serializable {
      * @param nullable The new nullability
      * @return The new data type
      */
+    @Support
     DataType<T> nullable(boolean nullable);
 
     /**
@@ -246,6 +260,7 @@ public interface DataType<T> extends Serializable {
     /**
      * Return a new data type like this, with a new collation.
      */
+    @Support({ HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DataType<T> collation(Collation collation);
 
     /**
@@ -257,6 +272,7 @@ public interface DataType<T> extends Serializable {
     /**
      * Return a new data type like this, with a new character set.
      */
+    @Support({ MARIADB, MYSQL })
     DataType<T> characterSet(CharacterSet characterSet);
 
     /**
@@ -274,6 +290,7 @@ public interface DataType<T> extends Serializable {
      * @param identity The new identity flag
      * @return The new data type
      */
+    @Support // TODO: List the correct dialects that support identities
     DataType<T> identity(boolean identity);
 
     /**
@@ -293,6 +310,7 @@ public interface DataType<T> extends Serializable {
      *
      * @see #defaultValue(Field)
      */
+    @Support
     DataType<T> defaultValue(T defaultValue);
 
     /**
@@ -333,6 +351,7 @@ public interface DataType<T> extends Serializable {
      *
      * @see #defaultValue(Field)
      */
+    @Support
     DataType<T> default_(T defaultValue);
 
     /**
@@ -349,6 +368,7 @@ public interface DataType<T> extends Serializable {
      * defined by the underlying database. Please refer to your database manual
      * to learn what expressions are possible.
      */
+    @Support
     DataType<T> default_(Field<T> defaultValue);
 
     /**
@@ -390,6 +410,7 @@ public interface DataType<T> extends Serializable {
      * @param precision The new precision value
      * @return The new data type
      */
+    @Support
     DataType<T> precision(int precision);
 
     /**
@@ -403,6 +424,7 @@ public interface DataType<T> extends Serializable {
      * @param scale The new scale value
      * @return The new data type
      */
+    @Support
     DataType<T> precision(int precision, int scale);
 
     /**
@@ -427,6 +449,7 @@ public interface DataType<T> extends Serializable {
      * @param scale The new scale value
      * @return The new data type
      */
+    @Support
     DataType<T> scale(int scale);
 
     /**
@@ -451,6 +474,7 @@ public interface DataType<T> extends Serializable {
      * @param length The new length value
      * @return The new data type
      */
+    @Support
     DataType<T> length(int length);
 
     /**

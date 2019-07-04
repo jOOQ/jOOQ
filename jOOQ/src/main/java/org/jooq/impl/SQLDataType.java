@@ -746,6 +746,7 @@ public final class SQLDataType {
     }
 
     private static final void initJSR310Types(SQLDialect family) {
+
         Configuration configuration = new DefaultConfiguration(family);
 
         // [#8561] Register JSR-310 types according to their matching JDBC
@@ -753,6 +754,7 @@ public final class SQLDataType {
         new DefaultDataType<LocalDate>(family, SQLDataType.LOCALDATE, DATE.getTypeName(configuration), DATE.getCastTypeName(configuration));
         new DefaultDataType<LocalTime>(family, SQLDataType.LOCALTIME, TIME.getTypeName(configuration), TIME.getCastTypeName(configuration));
         new DefaultDataType<LocalDateTime>(family, SQLDataType.LOCALDATETIME, TIMESTAMP.getTypeName(configuration), TIMESTAMP.getCastTypeName(configuration));
+
     }
 
     /**

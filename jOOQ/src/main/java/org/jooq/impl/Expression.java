@@ -565,12 +565,6 @@ final class Expression<T> extends AbstractField<T> {
 
 
 
-
-
-
-
-
-
                 case POSTGRES:
                 default:
                     ctx.visit(new DefaultExpression<T>(lhs, operator, new QueryPartList<Field<?>>(Arrays.asList(rhs))));

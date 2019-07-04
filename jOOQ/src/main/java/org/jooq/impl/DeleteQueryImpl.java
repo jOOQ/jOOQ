@@ -89,6 +89,7 @@ import org.jooq.Field;
 import org.jooq.Operator;
 import org.jooq.OrderField;
 import org.jooq.Param;
+// ...
 import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
@@ -260,6 +261,7 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
 
         return super.isExecutable();
     }
+
 
 
 

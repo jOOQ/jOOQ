@@ -309,6 +309,7 @@ public class Routines extends TableImpl<Record> {
      */
     public final TableField<Record, String> AS_LOCATOR = createField("as_locator", org.jooq.impl.SQLDataType.VARCHAR(3), this, "");
 
+
     /**
      * The column <code>information_schema.routines.created</code>.
      */
@@ -318,6 +319,7 @@ public class Routines extends TableImpl<Record> {
      * The column <code>information_schema.routines.last_altered</code>.
      */
     public final TableField<Record, OffsetDateTime> LAST_ALTERED = createField("last_altered", org.jooq.impl.SQLDataType.TIMESTAMPWITHTIMEZONE, this, "");
+
 
     /**
      * The column <code>information_schema.routines.new_savepoint_level</code>.

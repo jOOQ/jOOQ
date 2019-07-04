@@ -258,8 +258,8 @@ class Function<T> extends AbstractField<T> implements
         }
         else if (term == PRODUCT) {
             @SuppressWarnings({ "unchecked", "rawtypes" })
-            Field<Integer> f = (Field) DSL.field("{0}", arguments.get(0));
-            Field<Integer> negatives = DSL.when(f.lt(zero()), inline(-1));
+            final Field<Integer> f = (Field) DSL.field("{0}", arguments.get(0));
+            final Field<Integer> negatives = DSL.when(f.lt(zero()), inline(-1));
 
             @SuppressWarnings("serial")
             Field<BigDecimal> negativesSum = new CustomField<BigDecimal>("sum", NUMERIC) {

@@ -169,7 +169,9 @@ public class DefaultConfiguration implements Configuration {
             null,
             null,
             null,
+
             null,
+
             dialect,
             SettingsTools.defaultSettings(),
             null

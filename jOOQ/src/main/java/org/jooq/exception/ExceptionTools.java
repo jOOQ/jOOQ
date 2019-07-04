@@ -74,5 +74,20 @@ public final class ExceptionTools {
         return null;
     }
 
+    /**
+     * Sneaky throw any type of Throwable.
+     */
+    public static void sneakyThrow(Throwable throwable) {
+        ExceptionTools.<RuntimeException> sneakyThrow0(throwable);
+    }
+
+    /**
+     * Sneaky throw any type of Throwable.
+     */
+    @SuppressWarnings("unchecked")
+    private static <E extends Throwable> void sneakyThrow0(Throwable throwable) throws E {
+        throw (E) throwable;
+    }
+
     private ExceptionTools() {}
 }

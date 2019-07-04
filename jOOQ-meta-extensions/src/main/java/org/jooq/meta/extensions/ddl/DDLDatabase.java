@@ -105,7 +105,7 @@ public class DDLDatabase extends H2Database {
             String encoding = getProperties().getProperty("encoding", "UTF-8");
             String sort = getProperties().getProperty("sort", "semantic").toLowerCase();
             String unqualifiedSchema = getProperties().getProperty("unqualifiedSchema", "none").toLowerCase();
-            String defaultNameCase = getProperties().getProperty("defaultNameCase", "as_is").toUpperCase();
+            final String defaultNameCase = getProperties().getProperty("defaultNameCase", "as_is").toUpperCase();
             boolean parseIgnoreComments = !"false".equalsIgnoreCase(getProperties().getProperty("parseIgnoreComments"));
             String parseIgnoreCommentStart = getProperties().getProperty("parseIgnoreCommentStart", defaultSettings.getParseIgnoreCommentStart());
             String parseIgnoreCommentStop = getProperties().getProperty("parseIgnoreCommentStop", defaultSettings.getParseIgnoreCommentStop());

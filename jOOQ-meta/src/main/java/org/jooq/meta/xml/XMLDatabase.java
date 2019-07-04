@@ -230,7 +230,8 @@ public class XMLDatabase extends AbstractDatabase {
                                 info = MiniJAXB.append(info, MiniJAXB.unmarshal(content, InformationSchema.class));
                             }
                             else
-                                throw t;
+                                // required due to Java 6
+                                ExceptionTools.sneakyThrow(t);
                         }
                     }
 

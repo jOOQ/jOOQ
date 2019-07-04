@@ -8498,6 +8498,7 @@ public class DSL {
     /**
      * Create a character set by its unqualified name.
      */
+    @Support({ MARIADB, MYSQL })
     public static CharacterSet characterSet(String characterSet) {
         return characterSet(name(characterSet));
     }
@@ -8505,6 +8506,7 @@ public class DSL {
     /**
      * Create a character set by its qualified name.
      */
+    @Support({ MARIADB, MYSQL })
     public static CharacterSet characterSet(Name characterSet) {
         return new CharacterSetImpl(characterSet);
     }

@@ -31,7 +31,7 @@ import org.jooq.meta.postgres.information_schema.tables.Tables;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class InformationSchema extends SchemaImpl {
 
-    private static final long serialVersionUID = 484336433;
+    private static final long serialVersionUID = -1162303064;
 
     /**
      * The reference instance of <code>information_schema</code>
@@ -106,9 +106,6 @@ public class InformationSchema extends SchemaImpl {
     }
 
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Catalog getCatalog() {
         return DefaultCatalog.DEFAULT_CATALOG;

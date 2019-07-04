@@ -22,7 +22,7 @@ import org.jooq.meta.postgres.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ConstraintColumnUsage extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -912876227;
+    private static final long serialVersionUID = -1292333537;
 
     /**
      * The reference instance of <code>information_schema.constraint_column_usage</code>
@@ -40,37 +40,37 @@ public class ConstraintColumnUsage extends TableImpl<Record> {
     /**
      * The column <code>information_schema.constraint_column_usage.table_catalog</code>.
      */
-    public final TableField<Record, String> TABLE_CATALOG = createField("table_catalog", org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> TABLE_CATALOG = createField(DSL.name("table_catalog"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.constraint_column_usage.table_schema</code>.
      */
-    public final TableField<Record, String> TABLE_SCHEMA = createField("table_schema", org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> TABLE_SCHEMA = createField(DSL.name("table_schema"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.constraint_column_usage.table_name</code>.
      */
-    public final TableField<Record, String> TABLE_NAME = createField("table_name", org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> TABLE_NAME = createField(DSL.name("table_name"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.constraint_column_usage.column_name</code>.
      */
-    public final TableField<Record, String> COLUMN_NAME = createField("column_name", org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> COLUMN_NAME = createField(DSL.name("column_name"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.constraint_column_usage.constraint_catalog</code>.
      */
-    public final TableField<Record, String> CONSTRAINT_CATALOG = createField("constraint_catalog", org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> CONSTRAINT_CATALOG = createField(DSL.name("constraint_catalog"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.constraint_column_usage.constraint_schema</code>.
      */
-    public final TableField<Record, String> CONSTRAINT_SCHEMA = createField("constraint_schema", org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> CONSTRAINT_SCHEMA = createField(DSL.name("constraint_schema"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.constraint_column_usage.constraint_name</code>.
      */
-    public final TableField<Record, String> CONSTRAINT_NAME = createField("constraint_name", org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> CONSTRAINT_NAME = createField(DSL.name("constraint_name"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
     /**
      * Create a <code>information_schema.constraint_column_usage</code> table reference
@@ -105,25 +105,16 @@ public class ConstraintColumnUsage extends TableImpl<Record> {
         super(child, key, CONSTRAINT_COLUMN_USAGE);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Schema getSchema() {
         return InformationSchema.INFORMATION_SCHEMA;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public ConstraintColumnUsage as(String alias) {
         return new ConstraintColumnUsage(DSL.name(alias), this);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public ConstraintColumnUsage as(Name alias) {
         return new ConstraintColumnUsage(alias, this);

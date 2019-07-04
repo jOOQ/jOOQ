@@ -22,7 +22,7 @@ import org.jooq.meta.postgres.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ReferentialConstraints extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -1688095578;
+    private static final long serialVersionUID = 1260359938;
 
     /**
      * The reference instance of <code>information_schema.referential_constraints</code>
@@ -40,47 +40,47 @@ public class ReferentialConstraints extends TableImpl<Record> {
     /**
      * The column <code>information_schema.referential_constraints.constraint_catalog</code>.
      */
-    public final TableField<Record, String> CONSTRAINT_CATALOG = createField("constraint_catalog", org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> CONSTRAINT_CATALOG = createField(DSL.name("constraint_catalog"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.referential_constraints.constraint_schema</code>.
      */
-    public final TableField<Record, String> CONSTRAINT_SCHEMA = createField("constraint_schema", org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> CONSTRAINT_SCHEMA = createField(DSL.name("constraint_schema"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.referential_constraints.constraint_name</code>.
      */
-    public final TableField<Record, String> CONSTRAINT_NAME = createField("constraint_name", org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> CONSTRAINT_NAME = createField(DSL.name("constraint_name"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.referential_constraints.unique_constraint_catalog</code>.
      */
-    public final TableField<Record, String> UNIQUE_CONSTRAINT_CATALOG = createField("unique_constraint_catalog", org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> UNIQUE_CONSTRAINT_CATALOG = createField(DSL.name("unique_constraint_catalog"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.referential_constraints.unique_constraint_schema</code>.
      */
-    public final TableField<Record, String> UNIQUE_CONSTRAINT_SCHEMA = createField("unique_constraint_schema", org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> UNIQUE_CONSTRAINT_SCHEMA = createField(DSL.name("unique_constraint_schema"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.referential_constraints.unique_constraint_name</code>.
      */
-    public final TableField<Record, String> UNIQUE_CONSTRAINT_NAME = createField("unique_constraint_name", org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> UNIQUE_CONSTRAINT_NAME = createField(DSL.name("unique_constraint_name"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.referential_constraints.match_option</code>.
      */
-    public final TableField<Record, String> MATCH_OPTION = createField("match_option", org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> MATCH_OPTION = createField(DSL.name("match_option"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.referential_constraints.update_rule</code>.
      */
-    public final TableField<Record, String> UPDATE_RULE = createField("update_rule", org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> UPDATE_RULE = createField(DSL.name("update_rule"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.referential_constraints.delete_rule</code>.
      */
-    public final TableField<Record, String> DELETE_RULE = createField("delete_rule", org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> DELETE_RULE = createField(DSL.name("delete_rule"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
     /**
      * Create a <code>information_schema.referential_constraints</code> table reference
@@ -115,25 +115,16 @@ public class ReferentialConstraints extends TableImpl<Record> {
         super(child, key, REFERENTIAL_CONSTRAINTS);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Schema getSchema() {
         return InformationSchema.INFORMATION_SCHEMA;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public ReferentialConstraints as(String alias) {
         return new ReferentialConstraints(DSL.name(alias), this);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public ReferentialConstraints as(Name alias) {
         return new ReferentialConstraints(alias, this);

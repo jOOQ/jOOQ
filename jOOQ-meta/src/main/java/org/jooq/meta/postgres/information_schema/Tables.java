@@ -26,57 +26,57 @@ public class Tables {
     /**
      * The table <code>information_schema.attributes</code>.
      */
-    public static final Attributes ATTRIBUTES = org.jooq.meta.postgres.information_schema.tables.Attributes.ATTRIBUTES;
+    public static final Attributes ATTRIBUTES = Attributes.ATTRIBUTES;
 
     /**
      * The table <code>information_schema.check_constraints</code>.
      */
-    public static final CheckConstraints CHECK_CONSTRAINTS = org.jooq.meta.postgres.information_schema.tables.CheckConstraints.CHECK_CONSTRAINTS;
+    public static final CheckConstraints CHECK_CONSTRAINTS = CheckConstraints.CHECK_CONSTRAINTS;
 
     /**
      * The table <code>information_schema.columns</code>.
      */
-    public static final Columns COLUMNS = org.jooq.meta.postgres.information_schema.tables.Columns.COLUMNS;
+    public static final Columns COLUMNS = Columns.COLUMNS;
 
     /**
      * The table <code>information_schema.constraint_column_usage</code>.
      */
-    public static final ConstraintColumnUsage CONSTRAINT_COLUMN_USAGE = org.jooq.meta.postgres.information_schema.tables.ConstraintColumnUsage.CONSTRAINT_COLUMN_USAGE;
+    public static final ConstraintColumnUsage CONSTRAINT_COLUMN_USAGE = ConstraintColumnUsage.CONSTRAINT_COLUMN_USAGE;
 
     /**
      * The table <code>information_schema.key_column_usage</code>.
      */
-    public static final KeyColumnUsage KEY_COLUMN_USAGE = org.jooq.meta.postgres.information_schema.tables.KeyColumnUsage.KEY_COLUMN_USAGE;
+    public static final KeyColumnUsage KEY_COLUMN_USAGE = KeyColumnUsage.KEY_COLUMN_USAGE;
 
     /**
      * The table <code>information_schema.parameters</code>.
      */
-    public static final Parameters PARAMETERS = org.jooq.meta.postgres.information_schema.tables.Parameters.PARAMETERS;
+    public static final Parameters PARAMETERS = Parameters.PARAMETERS;
 
     /**
      * The table <code>information_schema.referential_constraints</code>.
      */
-    public static final ReferentialConstraints REFERENTIAL_CONSTRAINTS = org.jooq.meta.postgres.information_schema.tables.ReferentialConstraints.REFERENTIAL_CONSTRAINTS;
+    public static final ReferentialConstraints REFERENTIAL_CONSTRAINTS = ReferentialConstraints.REFERENTIAL_CONSTRAINTS;
 
     /**
      * The table <code>information_schema.routines</code>.
      */
-    public static final Routines ROUTINES = org.jooq.meta.postgres.information_schema.tables.Routines.ROUTINES;
+    public static final Routines ROUTINES = Routines.ROUTINES;
 
     /**
      * The table <code>information_schema.schemata</code>.
      */
-    public static final Schemata SCHEMATA = org.jooq.meta.postgres.information_schema.tables.Schemata.SCHEMATA;
+    public static final Schemata SCHEMATA = Schemata.SCHEMATA;
 
     /**
      * The table <code>information_schema.sequences</code>.
      */
-    public static final Sequences SEQUENCES = org.jooq.meta.postgres.information_schema.tables.Sequences.SEQUENCES;
+    public static final Sequences SEQUENCES = Sequences.SEQUENCES;
 
     /**
      * The table <code>information_schema.table_constraints</code>.
      */
-    public static final TableConstraints TABLE_CONSTRAINTS = org.jooq.meta.postgres.information_schema.tables.TableConstraints.TABLE_CONSTRAINTS;
+    public static final TableConstraints TABLE_CONSTRAINTS = TableConstraints.TABLE_CONSTRAINTS;
 
     /**
      * The table <code>information_schema.tables</code>.

@@ -22,7 +22,7 @@ import org.jooq.meta.postgres.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Schemata extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 1413204621;
+    private static final long serialVersionUID = -1708093253;
 
     /**
      * The reference instance of <code>information_schema.schemata</code>
@@ -40,37 +40,37 @@ public class Schemata extends TableImpl<Record> {
     /**
      * The column <code>information_schema.schemata.catalog_name</code>.
      */
-    public final TableField<Record, String> CATALOG_NAME = createField("catalog_name", org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> CATALOG_NAME = createField(DSL.name("catalog_name"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.schemata.schema_name</code>.
      */
-    public final TableField<Record, String> SCHEMA_NAME = createField("schema_name", org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> SCHEMA_NAME = createField(DSL.name("schema_name"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.schemata.schema_owner</code>.
      */
-    public final TableField<Record, String> SCHEMA_OWNER = createField("schema_owner", org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> SCHEMA_OWNER = createField(DSL.name("schema_owner"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.schemata.default_character_set_catalog</code>.
      */
-    public final TableField<Record, String> DEFAULT_CHARACTER_SET_CATALOG = createField("default_character_set_catalog", org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> DEFAULT_CHARACTER_SET_CATALOG = createField(DSL.name("default_character_set_catalog"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.schemata.default_character_set_schema</code>.
      */
-    public final TableField<Record, String> DEFAULT_CHARACTER_SET_SCHEMA = createField("default_character_set_schema", org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> DEFAULT_CHARACTER_SET_SCHEMA = createField(DSL.name("default_character_set_schema"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.schemata.default_character_set_name</code>.
      */
-    public final TableField<Record, String> DEFAULT_CHARACTER_SET_NAME = createField("default_character_set_name", org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> DEFAULT_CHARACTER_SET_NAME = createField(DSL.name("default_character_set_name"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.schemata.sql_path</code>.
      */
-    public final TableField<Record, String> SQL_PATH = createField("sql_path", org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> SQL_PATH = createField(DSL.name("sql_path"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
     /**
      * Create a <code>information_schema.schemata</code> table reference
@@ -105,25 +105,16 @@ public class Schemata extends TableImpl<Record> {
         super(child, key, SCHEMATA);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Schema getSchema() {
         return InformationSchema.INFORMATION_SCHEMA;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Schemata as(String alias) {
         return new Schemata(DSL.name(alias), this);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Schemata as(Name alias) {
         return new Schemata(alias, this);

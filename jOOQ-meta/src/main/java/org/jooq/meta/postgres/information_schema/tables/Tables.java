@@ -22,7 +22,7 @@ import org.jooq.meta.postgres.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 927517987;
+    private static final long serialVersionUID = 1692316602;
 
     /**
      * The reference instance of <code>information_schema.tables</code>
@@ -40,62 +40,62 @@ public class Tables extends TableImpl<Record> {
     /**
      * The column <code>information_schema.tables.table_catalog</code>.
      */
-    public final TableField<Record, String> TABLE_CATALOG = createField("table_catalog", org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> TABLE_CATALOG = createField(DSL.name("table_catalog"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.tables.table_schema</code>.
      */
-    public final TableField<Record, String> TABLE_SCHEMA = createField("table_schema", org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> TABLE_SCHEMA = createField(DSL.name("table_schema"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.tables.table_name</code>.
      */
-    public final TableField<Record, String> TABLE_NAME = createField("table_name", org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> TABLE_NAME = createField(DSL.name("table_name"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.tables.table_type</code>.
      */
-    public final TableField<Record, String> TABLE_TYPE = createField("table_type", org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> TABLE_TYPE = createField(DSL.name("table_type"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.tables.self_referencing_column_name</code>.
      */
-    public final TableField<Record, String> SELF_REFERENCING_COLUMN_NAME = createField("self_referencing_column_name", org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> SELF_REFERENCING_COLUMN_NAME = createField(DSL.name("self_referencing_column_name"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.tables.reference_generation</code>.
      */
-    public final TableField<Record, String> REFERENCE_GENERATION = createField("reference_generation", org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> REFERENCE_GENERATION = createField(DSL.name("reference_generation"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.tables.user_defined_type_catalog</code>.
      */
-    public final TableField<Record, String> USER_DEFINED_TYPE_CATALOG = createField("user_defined_type_catalog", org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> USER_DEFINED_TYPE_CATALOG = createField(DSL.name("user_defined_type_catalog"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.tables.user_defined_type_schema</code>.
      */
-    public final TableField<Record, String> USER_DEFINED_TYPE_SCHEMA = createField("user_defined_type_schema", org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> USER_DEFINED_TYPE_SCHEMA = createField(DSL.name("user_defined_type_schema"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.tables.user_defined_type_name</code>.
      */
-    public final TableField<Record, String> USER_DEFINED_TYPE_NAME = createField("user_defined_type_name", org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> USER_DEFINED_TYPE_NAME = createField(DSL.name("user_defined_type_name"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.tables.is_insertable_into</code>.
      */
-    public final TableField<Record, String> IS_INSERTABLE_INTO = createField("is_insertable_into", org.jooq.impl.SQLDataType.VARCHAR(3), this, "");
+    public final TableField<Record, String> IS_INSERTABLE_INTO = createField(DSL.name("is_insertable_into"), org.jooq.impl.SQLDataType.VARCHAR(3), this, "");
 
     /**
      * The column <code>information_schema.tables.is_typed</code>.
      */
-    public final TableField<Record, String> IS_TYPED = createField("is_typed", org.jooq.impl.SQLDataType.VARCHAR(3), this, "");
+    public final TableField<Record, String> IS_TYPED = createField(DSL.name("is_typed"), org.jooq.impl.SQLDataType.VARCHAR(3), this, "");
 
     /**
      * The column <code>information_schema.tables.commit_action</code>.
      */
-    public final TableField<Record, String> COMMIT_ACTION = createField("commit_action", org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> COMMIT_ACTION = createField(DSL.name("commit_action"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
     /**
      * Create a <code>information_schema.tables</code> table reference
@@ -130,25 +130,16 @@ public class Tables extends TableImpl<Record> {
         super(child, key, TABLES);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Schema getSchema() {
         return InformationSchema.INFORMATION_SCHEMA;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Tables as(String alias) {
         return new Tables(DSL.name(alias), this);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Tables as(Name alias) {
         return new Tables(alias, this);

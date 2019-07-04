@@ -139,7 +139,7 @@ import static org.jooq.impl.Tools.BooleanDataKey.DATA_INSERT_SELECT_WITHOUT_INSE
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_NESTED_SET_OPERATIONS;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_OMIT_INTO_CLAUSE;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE;
-import static org.jooq.impl.Tools.BooleanDataKey.DATA_UNALIAS_ALIASES_IN_ORDER_BY;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_UNALIAS_ALIASED_EXPRESSIONS;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
 import static org.jooq.impl.Tools.DataKey.DATA_COLLECTED_SEMI_ANTI_JOIN;
 import static org.jooq.impl.Tools.DataKey.DATA_DML_TARGET_TABLE;
@@ -943,7 +943,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
                     // [#3575] Ensure that no column aliases from the surrounding SELECT clause
                     // are referenced from the below ranking functions' ORDER BY clause.
-                    c.data(DATA_UNALIAS_ALIASES_IN_ORDER_BY, !wrapQueryExpressionBodyInDerivedTable);
+                    c.data(DATA_UNALIAS_ALIASED_EXPRESSIONS, !wrapQueryExpressionBodyInDerivedTable);
 
                     boolean qualify = c.qualify();
 
@@ -969,7 +969,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                         : DSL.rowNumber().over(orderBy(getNonEmptyOrderBy(c.configuration())))
                     );
 
-                    c.data().remove(DATA_UNALIAS_ALIASES_IN_ORDER_BY);
+                    c.data().remove(DATA_UNALIAS_ALIASED_EXPRESSIONS);
                     c.data().remove(DATA_OVERRIDE_ALIASES_IN_ORDER_BY);
                     if (wrapQueryExpressionBodyInDerivedTable)
                         c.qualify(qualify);

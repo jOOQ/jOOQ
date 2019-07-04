@@ -404,8 +404,9 @@ final class Tools {
          * aliases are generated that must be referenced also in
          * <code>ORDER BY</code> clauses, in lieu of their corresponding original
          * aliases.
+         * [#8898] Oracle doesn't support aliases in RETURNING clauses.
          */
-        DATA_UNALIAS_ALIASES_IN_ORDER_BY,
+        DATA_UNALIAS_ALIASED_EXPRESSIONS,
 
         /**
          * [#7139] No data must be selected in the <code>SELECT</code> statement.

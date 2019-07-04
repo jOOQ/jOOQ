@@ -72,7 +72,7 @@ import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.K_AS;
-import static org.jooq.impl.Tools.BooleanDataKey.DATA_UNALIAS_ALIASES_IN_ORDER_BY;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_UNALIAS_ALIASED_EXPRESSIONS;
 
 import java.util.EnumSet;
 
@@ -133,6 +133,14 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
     @Override
     public final void accept(Context<?> context) {
         boolean qualify = context.qualify();
+
+
+
+
+
+
+
+
 
         if (context.declareAliases() && (context.declareFields() || context.declareTables())) {
             context.declareAliases(false);
@@ -263,13 +271,6 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
 
             context.declareAliases(true);
         }
-
-
-
-
-
-
-
         else {
             context.qualify(false)
                    .visit(alias)

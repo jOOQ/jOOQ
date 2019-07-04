@@ -8482,6 +8482,7 @@ public class DSL {
     /**
      * Create a collation by its unqualified name.
      */
+    @Support({ HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Collation collation(String collation) {
         return collation(name(collation));
     }
@@ -8489,6 +8490,7 @@ public class DSL {
     /**
      * Create a collation by its qualified name.
      */
+    @Support({ HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Collation collation(Name collation) {
         return new CollationImpl(collation);
     }

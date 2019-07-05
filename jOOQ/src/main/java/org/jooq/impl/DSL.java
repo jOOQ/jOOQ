@@ -12158,7 +12158,9 @@ public class DSL {
      * The T-SQL <code>CHOOSE()</code> function.
      */
     @Support
+
     @SafeVarargs
+
     public static <T> Field<T> choose(int index, Field<T>... values) {
         return choose(val(index), values);
     }
@@ -12175,7 +12177,9 @@ public class DSL {
      * The T-SQL <code>CHOOSE()</code> function.
      */
     @Support
+
     @SafeVarargs
+
     public static <T> Field<T> choose(Field<Integer> index, Field<T>... values) {
         return new Choose<T>(index, values);
     }

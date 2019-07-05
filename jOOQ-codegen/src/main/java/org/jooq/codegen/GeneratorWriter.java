@@ -269,7 +269,7 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
         try {
             // [#3756] Regenerate files only if there is a difference
             String oldContent = null;
-            if (file.exists() && file.length() == newContent.getBytes("UTF-8").length) {
+            if (file.exists() && file.length() == newContent.getBytes(encoding()).length) {
                 RandomAccessFile old = null;
 
                 try {

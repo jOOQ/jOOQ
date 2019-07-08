@@ -537,11 +537,11 @@ final class ParserImpl implements Parser {
             parseDelimiterSpecifications(ctx);
             while (parseDelimiterIf(ctx));
 
-            query = parseQuery(ctx, false, false);
+            query = patchParsedQuery(ctx, parseQuery(ctx, false, false));
             if (query == IGNORE || query == IGNORE_NO_DELIMITER)
                 continue;
             if (query != null)
-                result.add(patchParsedQuery(ctx, query));
+                result.add(query);
         }
         while (query == IGNORE_NO_DELIMITER || parseDelimiterIf(ctx));
 

@@ -134,6 +134,9 @@ public class DDLDatabase extends H2Database {
                 // [#7771] [#8011] Ignore all parsed storage clauses when executing the statements
                 ctx.data("org.jooq.meta.extensions.ddl.ignore-storage-clauses", true);
 
+                // [#8910] Parse things a bit differently for use with the DDLDatabase
+                ctx.data("org.jooq.meta.extensions.ddl.parse-for-ddldatabase", true);
+
                 if (!"AS_IS".equals(defaultNameCase)) {
                     ctx.configuration().set(new DefaultVisitListener() {
                         @Override

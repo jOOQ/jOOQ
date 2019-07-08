@@ -321,6 +321,8 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.jooq.AggregateFilterStep;
 import org.jooq.AggregateFunction;
@@ -473,7 +475,11 @@ import org.jooq.conf.ParseSearchSchema;
 import org.jooq.conf.ParseUnknownFunctions;
 import org.jooq.conf.ParseUnsupportedSyntax;
 import org.jooq.conf.ParseWithMetaLookups;
+import org.jooq.conf.RenderKeywordCase;
+import org.jooq.conf.RenderNameCase;
+import org.jooq.conf.RenderQuotedNames;
 import org.jooq.conf.Settings;
+import org.jooq.conf.SettingsTools;
 import org.jooq.tools.reflect.Reflect;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.Interval;
@@ -530,12 +536,42 @@ final class ParserImpl implements Parser {
             if (query == IGNORE || query == IGNORE_NO_DELIMITER)
                 continue;
             if (query != null)
-                result.add(query);
+                result.add(patchParsedQuery(ctx, query));
         }
         while (query == IGNORE_NO_DELIMITER || parseDelimiterIf(ctx));
 
         ctx.done("Unexpected token or missing query delimiter");
         return dsl.queries(result);
+    }
+
+    private static final Pattern P_SEARCH_PATH = Pattern.compile("select\\s+(pg_catalog\\s*\\.\\s*)?set_config\\s*\\(\\s*'search_path'\\s*,\\s*'([^']*)'\\s*,\\s*\\w+\\s*\\)");
+
+    private final Query patchParsedQuery(ParserContext ctx, Query query) {
+
+        // [#8910] Some statements can be parsed differently when we know we're
+        //         parsing them for the DDLDatabase. This method patches these
+        //         statements.
+        if (TRUE.equals(ctx.configuration().data("org.jooq.meta.extensions.ddl.parse-for-ddldatabase"))) {
+            if (query instanceof Select) {
+                String sql =
+                ctx.configuration().derive(SettingsTools.clone(ctx.configuration().settings())
+                    .withRenderFormatted(false)
+                    .withRenderKeywordCase(RenderKeywordCase.LOWER)
+                    .withRenderNameCase(RenderNameCase.LOWER)
+                    .withRenderQuotedNames(RenderQuotedNames.NEVER)
+                    .withRenderSchema(false))
+                    .dsl()
+                    .render(query);
+
+                // [#8910] special treatment for PostgreSQL pg_dump's curious
+                //         usage of the SET SCHEMA command
+                Matcher matcher = P_SEARCH_PATH.matcher(sql);
+                if (matcher.find())
+                    return ctx.configuration().dsl().setSchema(matcher.group(2));
+            }
+        }
+
+        return query;
     }
 
     @Override

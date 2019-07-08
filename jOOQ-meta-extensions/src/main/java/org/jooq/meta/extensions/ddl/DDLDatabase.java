@@ -61,6 +61,7 @@ import org.jooq.Name.Quoted;
 import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.VisitContext;
+import org.jooq.conf.ParseUnknownFunctions;
 import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
@@ -126,7 +127,9 @@ public class DDLDatabase extends H2Database {
                 ctx = DSL.using(connection, new Settings()
                     .withParseIgnoreComments(parseIgnoreComments)
                     .withParseIgnoreCommentStart(parseIgnoreCommentStart)
-                    .withParseIgnoreCommentStop(parseIgnoreCommentStop));
+                    .withParseIgnoreCommentStop(parseIgnoreCommentStop)
+                    .withParseUnknownFunctions(ParseUnknownFunctions.IGNORE)
+                );
 
                 // [#7771] [#8011] Ignore all parsed storage clauses when executing the statements
                 ctx.data("org.jooq.meta.extensions.ddl.ignore-storage-clauses", true);

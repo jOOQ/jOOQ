@@ -423,6 +423,7 @@ import org.jooq.QualifiedAsterisk;
 import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.QueryPart;
+import org.jooq.QueryPartInternal;
 import org.jooq.Record;
 import org.jooq.ResultQuery;
 import org.jooq.RevokeFromStep;
@@ -10351,8 +10352,8 @@ final class ParserImpl implements Parser {
         "FOR"
     };
 
-    private static final DDLQuery IGNORE              = Reflect.on(DSL.query("/* ignored */")).as(DDLQuery.class);
-    private static final Query    IGNORE_NO_DELIMITER = Reflect.on(DSL.query("/* ignored */")).as(Query.class);
+    private static final DDLQuery IGNORE              = Reflect.on(DSL.query("/* ignored */")).as(DDLQuery.class, QueryPartInternal.class);
+    private static final Query    IGNORE_NO_DELIMITER = Reflect.on(DSL.query("/* ignored */")).as(Query.class, QueryPartInternal.class);
 }
 
 final class ParserContext {

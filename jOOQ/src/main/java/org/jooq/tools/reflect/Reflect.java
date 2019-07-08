@@ -99,7 +99,7 @@ public class Reflect {
      * @throws ReflectException if anything went wrong compiling the class.
      */
     public static Reflect compile(String name, String content, CompileOptions options) throws ReflectException {
-        return on(Compile.compile(name, content, options));
+        return onClass(Compile.compile(name, content, options));
     }
 
 
@@ -111,10 +111,12 @@ public class Reflect {
      * @param name A fully qualified class name
      * @return A wrapped class object, to be used for further reflection.
      * @throws ReflectException If any reflection exception occurred.
-     * @see #on(Class)
+     * @see #onClass(Class)
+     * @deprecated [#78] 0.9.11, use {@link #onClass(String)} instead.
      */
+    @Deprecated
     public static Reflect on(String name) throws ReflectException {
-        return on(forName(name));
+        return onClass(name);
     }
 
     /**
@@ -128,10 +130,59 @@ public class Reflect {
      *            loaded.
      * @return A wrapped class object, to be used for further reflection.
      * @throws ReflectException If any reflection exception occurred.
-     * @see #on(Class)
+     * @see #onClass(Class)
+     * @deprecated [#78] 0.9.11, use {@link #onClass(String, ClassLoader)} instead.
      */
+    @Deprecated
     public static Reflect on(String name, ClassLoader classLoader) throws ReflectException {
-        return on(forName(name, classLoader));
+        return onClass(name, classLoader);
+    }
+
+    /**
+     * Wrap a class.
+     * <p>
+     * Use this when you want to access static fields and methods on a
+     * {@link Class} object, or as a basis for constructing objects of that
+     * class using {@link #create(Object...)}
+     *
+     * @param clazz The class to be wrapped
+     * @return A wrapped class object, to be used for further reflection.
+     * @deprecated [#78] 0.9.11, use {@link #onClass(Class)} instead.
+     */
+    @Deprecated
+    public static Reflect on(Class<?> clazz) {
+        return onClass(clazz);
+    }
+
+    /**
+     * Wrap a class name.
+     * <p>
+     * This is the same as calling <code>onClass(Class.forName(name))</code>
+     *
+     * @param name A fully qualified class name
+     * @return A wrapped class object, to be used for further reflection.
+     * @throws ReflectException If any reflection exception occurred.
+     * @see #onClass(Class)
+     */
+    public static Reflect onClass(String name) throws ReflectException {
+        return onClass(forName(name));
+    }
+
+    /**
+     * Wrap a class name, loading it via a given class loader.
+     * <p>
+     * This is the same as calling
+     * <code>onClass(Class.forName(name, classLoader))</code>
+     *
+     * @param name A fully qualified class name.
+     * @param classLoader The class loader in whose context the class should be
+     *            loaded.
+     * @return A wrapped class object, to be used for further reflection.
+     * @throws ReflectException If any reflection exception occurred.
+     * @see #onClass(Class)
+     */
+    public static Reflect onClass(String name, ClassLoader classLoader) throws ReflectException {
+        return onClass(forName(name, classLoader));
     }
 
     /**
@@ -144,7 +195,7 @@ public class Reflect {
      * @param clazz The class to be wrapped
      * @return A wrapped class object, to be used for further reflection.
      */
-    public static Reflect on(Class<?> clazz) {
+    public static Reflect onClass(Class<?> clazz) {
         return new Reflect(clazz);
     }
 
@@ -661,18 +712,31 @@ public class Reflect {
     }
 
     /**
-     * Create a proxy for the wrapped object allowing to typesafely invoke
-     * methods on it using a custom interface
+     * Create a proxy for the wrapped object allowing to typesafely invoke methods
+     * on it using a custom interface.
      *
      * @param proxyType The interface type that is implemented by the proxy
      * @return A proxy for the wrapped object
      */
+    public <P> P as(Class<P> proxyType) {
+        return as(proxyType, new Class[0]);
+    }
+
+    /**
+     * Create a proxy for the wrapped object allowing to typesafely invoke methods
+     * on it using a custom interface.
+     *
+     * @param proxyType            The interface type that is implemented by the
+     *                             proxy
+     * @param additionalInterfaces Additional interfaces that are implemented by the
+     *                             proxy
+     * @return A proxy for the wrapped object
+     */
     @SuppressWarnings("unchecked")
-    public <P> P as(final Class<P> proxyType) {
+    public <P> P as(final Class<P> proxyType, final Class<?>... additionalInterfaces) {
         final boolean isMap = (object instanceof Map);
         final InvocationHandler handler = new InvocationHandler() {
             @Override
-            @SuppressWarnings("null")
             public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
                 String name = method.getName();
 
@@ -728,7 +792,10 @@ public class Reflect {
             }
         };
 
-        return (P) Proxy.newProxyInstance(proxyType.getClassLoader(), new Class[] { proxyType }, handler);
+        Class<?>[] interfaces = new Class[1 + additionalInterfaces.length];
+        interfaces[0] = proxyType;
+        System.arraycopy(additionalInterfaces, 0, interfaces, 1, additionalInterfaces.length);
+        return (P) Proxy.newProxyInstance(proxyType.getClassLoader(), interfaces, handler);
     }
 
     /**

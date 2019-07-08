@@ -484,6 +484,7 @@ import org.jooq.conf.RenderNameCase;
 import org.jooq.conf.RenderQuotedNames;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
+import org.jooq.tools.StringUtils;
 import org.jooq.tools.reflect.Reflect;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.Interval;
@@ -570,8 +571,12 @@ final class ParserImpl implements Parser {
                 // [#8910] special treatment for PostgreSQL pg_dump's curious
                 //         usage of the SET SCHEMA command
                 Matcher matcher = P_SEARCH_PATH.matcher(sql);
+                String schema;
                 if (matcher.find())
-                    return ctx.configuration().dsl().setSchema(matcher.group(2));
+                    if (!StringUtils.isBlank(schema = matcher.group(2)))
+                        return ctx.configuration().dsl().setSchema(schema);
+                    else
+                        return IGNORE;
             }
         }
 

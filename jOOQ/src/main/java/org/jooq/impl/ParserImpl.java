@@ -2114,6 +2114,8 @@ final class ParserImpl implements Parser {
             return parseCreateView(ctx, true);
         else if (parseKeywordIf(ctx, "VIEW"))
             return parseCreateView(ctx, false);
+        else if (parseKeywordIf(ctx, "EXTENSION"))
+            return parseCreateExtension(ctx);
         else
             throw ctx.expected(
                 "GENERATOR",
@@ -2170,6 +2172,8 @@ final class ParserImpl implements Parser {
             return parseDropSequence(ctx);
         else if (parseKeywordIf(ctx, "SCHEMA"))
             return parseDropSchema(ctx);
+        else if (parseKeywordIf(ctx, "EXTENSION"))
+            return parseDropExtension(ctx);
         else
             throw ctx.expected("GENERATOR", "INDEX", "SCHEMA", "SEQUENCE", "TABLE", "TEMPORARY TABLE", "TYPE", "VIEW");
     }
@@ -2886,6 +2890,30 @@ final class ParserImpl implements Parser {
             : orReplace
             ? ctx.dsl.createOrReplaceView(view, fields).as(select)
             : ctx.dsl.createView(view, fields).as(select);
+    }
+
+    private static final DDLQuery parseCreateExtension(ParserContext ctx) {
+        parseKeywordIf(ctx, "IF NOT EXISTS");
+        parseIdentifier(ctx);
+        parseKeywordIf(ctx, "WITH");
+        if (parseKeywordIf(ctx, "SCHEMA"))
+            parseIdentifier(ctx);
+        if (parseKeywordIf(ctx, "VERSION"))
+            if (parseIdentifierIf(ctx) == null)
+                parseStringLiteral(ctx);
+        if (parseKeywordIf(ctx, "FROM"))
+            if (parseIdentifierIf(ctx) == null)
+                parseStringLiteral(ctx);
+        parseKeywordIf(ctx, "CASCADE");
+        return IGNORE;
+    }
+
+    private static final DDLQuery parseDropExtension(ParserContext ctx) {
+        parseKeywordIf(ctx, "IF EXISTS");
+        parseIdentifiers(ctx);
+        if (!parseKeywordIf(ctx, "CASCADE"))
+            parseKeywordIf(ctx, "RESTRICT");
+        return IGNORE;
     }
 
     private static final DDLQuery parseAlterView(ParserContext ctx) {
@@ -4483,7 +4511,7 @@ final class ParserImpl implements Parser {
         }
     }
 
-    private static QueryPart parseEscapeClauseIf(ParserContext ctx, LikeEscapeStep like) {
+    private static final QueryPart parseEscapeClauseIf(ParserContext ctx, LikeEscapeStep like) {
         return parseKeywordIf(ctx, "ESCAPE") ? like.escape(parseCharacterLiteral(ctx)) : like;
     }
 

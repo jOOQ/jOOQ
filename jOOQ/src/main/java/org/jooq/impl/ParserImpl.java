@@ -314,13 +314,16 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumSet;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -414,6 +417,7 @@ import org.jooq.MergeNotMatchedStep;
 import org.jooq.MergeUsingStep;
 import org.jooq.Meta;
 import org.jooq.Name;
+import org.jooq.Name.Quoted;
 import org.jooq.OrderedAggregateFunction;
 import org.jooq.OrderedAggregateFunctionOfDeferredType;
 import org.jooq.Param;
@@ -3668,9 +3672,30 @@ final class ParserImpl implements Parser {
         return e;
     }
 
+    private static final Set<String> ALTER_KEYWORDS = new HashSet<String>(Arrays.asList("ADD", "ALTER", "COMMENT", "DROP", "MODIFY", "RENAME"));
+
     private static final DDLQuery parseAlterTable(ParserContext ctx) {
         boolean ifTableExists = parseKeywordIf(ctx, "IF EXISTS");
-        Table<?> tableName = parseTableName(ctx);
+        Table<?> tableName;
+
+        if (peekKeyword(ctx, "ONLY")) {
+
+            // [#7751] ONLY is only supported by PostgreSQL. In other RDBMS, it
+            //         corresponds to a table name.
+            Name only = parseIdentifier(ctx);
+            int position = ctx.position();
+
+            if ((tableName = parseTableNameIf(ctx)) == null || (
+                    !tableName.getQualifiedName().qualified()
+                &&  tableName.getUnqualifiedName().quoted() == Quoted.UNQUOTED
+                &&  ALTER_KEYWORDS.contains(tableName.getName().toUpperCase()))) {
+                tableName = table(only);
+                ctx.position(position);
+            }
+        }
+        else {
+            tableName = parseTableName(ctx);
+        }
 
         AlterTableStep s1 = ifTableExists
             ? ctx.dsl.alterTableIfExists(tableName)

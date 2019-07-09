@@ -122,6 +122,21 @@ want to prevent jOOQ from rendering this <code>OUTPUT</code> clause can deactiva
 to revert to jOOQ calling {@code java.sql.Statement#getGeneratedKeys()} instead, which
 is only supported for single row inserts.
 <p>
+This <code>OUTPUT</code> clause does not support fetching trigger generated values. In order
+to fetch trigger generated values, {@link #fetchTriggerValuesAfterSQLServerOutput} needs to
+be enabled as well.
+<p>
+For details, see <a href="https://github.com/jOOQ/jOOQ/issues/4498">https://github.com/jOOQ/jOOQ/issues/4498</a>.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="fetchTriggerValuesAfterSQLServerOutput" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Fetch trigger values after SQL Server <code>OUTPUT</code> clause.
+<p>
+SQL Server <code>OUTPUT</code> statements do not support fetching trigger generated values.
+This is a limitation of the {@link #renderOutputForSQLServerReturningClause}. An additional
+<code>MERGE</code> statement can run a second query if (and only if) the primary key has been
+included in the <code>OUTPUT</code> clause.
+<p>
 For details, see <a href="https://github.com/jOOQ/jOOQ/issues/4498">https://github.com/jOOQ/jOOQ/issues/4498</a>.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 

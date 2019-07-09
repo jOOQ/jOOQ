@@ -69,6 +69,8 @@ public class Settings
     protected Boolean renderOrderByRownumberForEmulatedPagination = true;
     @XmlElement(defaultValue = "true")
     protected Boolean renderOutputForSQLServerReturningClause = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean fetchTriggerValuesAfterSQLServerOutput = true;
     @XmlElement(defaultValue = "false")
     protected Boolean transformTableListsToAnsiJoin = false;
     @XmlElement(defaultValue = "DEFAULT")
@@ -577,6 +579,10 @@ public class Settings
      * to revert to jOOQ calling {@code java.sql.Statement#getGeneratedKeys()} instead, which
      * is only supported for single row inserts.
      * <p>
+     * This <code>OUTPUT</code> clause does not support fetching trigger generated values. In order
+     * to fetch trigger generated values, {@link #fetchTriggerValuesAfterSQLServerOutput} needs to
+     * be enabled as well.
+     * <p>
      * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/4498">https://github.com/jOOQ/jOOQ/issues/4498</a>.
      *
      * @return
@@ -598,6 +604,37 @@ public class Settings
      */
     public void setRenderOutputForSQLServerReturningClause(Boolean value) {
         this.renderOutputForSQLServerReturningClause = value;
+    }
+
+    /**
+     * Fetch trigger values after SQL Server <code>OUTPUT</code> clause.
+     * <p>
+     * SQL Server <code>OUTPUT</code> statements do not support fetching trigger generated values.
+     * This is a limitation of the {@link #renderOutputForSQLServerReturningClause}. An additional
+     * <code>MERGE</code> statement can run a second query if (and only if) the primary key has been
+     * included in the <code>OUTPUT</code> clause.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/4498">https://github.com/jOOQ/jOOQ/issues/4498</a>.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isFetchTriggerValuesAfterSQLServerOutput() {
+        return fetchTriggerValuesAfterSQLServerOutput;
+    }
+
+    /**
+     * Sets the value of the fetchTriggerValuesAfterSQLServerOutput property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setFetchTriggerValuesAfterSQLServerOutput(Boolean value) {
+        this.fetchTriggerValuesAfterSQLServerOutput = value;
     }
 
     /**
@@ -1855,6 +1892,11 @@ public class Settings
         return this;
     }
 
+    public Settings withFetchTriggerValuesAfterSQLServerOutput(Boolean value) {
+        setFetchTriggerValuesAfterSQLServerOutput(value);
+        return this;
+    }
+
     public Settings withTransformTableListsToAnsiJoin(Boolean value) {
         setTransformTableListsToAnsiJoin(value);
         return this;
@@ -2188,6 +2230,11 @@ public class Settings
             sb.append("<renderOutputForSQLServerReturningClause>");
             sb.append(renderOutputForSQLServerReturningClause);
             sb.append("</renderOutputForSQLServerReturningClause>");
+        }
+        if (fetchTriggerValuesAfterSQLServerOutput!= null) {
+            sb.append("<fetchTriggerValuesAfterSQLServerOutput>");
+            sb.append(fetchTriggerValuesAfterSQLServerOutput);
+            sb.append("</fetchTriggerValuesAfterSQLServerOutput>");
         }
         if (transformTableListsToAnsiJoin!= null) {
             sb.append("<transformTableListsToAnsiJoin>");
@@ -2580,6 +2627,15 @@ public class Settings
             }
         } else {
             if (!renderOutputForSQLServerReturningClause.equals(other.renderOutputForSQLServerReturningClause)) {
+                return false;
+            }
+        }
+        if (fetchTriggerValuesAfterSQLServerOutput == null) {
+            if (other.fetchTriggerValuesAfterSQLServerOutput!= null) {
+                return false;
+            }
+        } else {
+            if (!fetchTriggerValuesAfterSQLServerOutput.equals(other.fetchTriggerValuesAfterSQLServerOutput)) {
                 return false;
             }
         }
@@ -3037,6 +3093,7 @@ public class Settings
         result = ((prime*result)+((renderScalarSubqueriesForStoredFunctions == null)? 0 :renderScalarSubqueriesForStoredFunctions.hashCode()));
         result = ((prime*result)+((renderOrderByRownumberForEmulatedPagination == null)? 0 :renderOrderByRownumberForEmulatedPagination.hashCode()));
         result = ((prime*result)+((renderOutputForSQLServerReturningClause == null)? 0 :renderOutputForSQLServerReturningClause.hashCode()));
+        result = ((prime*result)+((fetchTriggerValuesAfterSQLServerOutput == null)? 0 :fetchTriggerValuesAfterSQLServerOutput.hashCode()));
         result = ((prime*result)+((transformTableListsToAnsiJoin == null)? 0 :transformTableListsToAnsiJoin.hashCode()));
         result = ((prime*result)+((backslashEscaping == null)? 0 :backslashEscaping.hashCode()));
         result = ((prime*result)+((paramType == null)? 0 :paramType.hashCode()));

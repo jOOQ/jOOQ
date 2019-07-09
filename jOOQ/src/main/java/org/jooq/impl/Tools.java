@@ -4876,6 +4876,26 @@ final class Tools {
         return false;
     }
 
+    @SuppressWarnings("serial")
+    static final QueryPartList<SelectFieldOrAsterisk> qualify(Table<?> table, SelectFieldList<SelectFieldOrAsterisk> fields) {
+        QueryPartList<SelectFieldOrAsterisk> result = new QueryPartList<SelectFieldOrAsterisk>() {
+            @Override
+            protected void toSQLEmptyList(Context<?> context) {
+                table.asterisk();
+            }
+
+            @Override
+            public boolean declaresFields() {
+                return true;
+            }
+        };
+
+        for (SelectFieldOrAsterisk field : fields)
+            result.add(qualify(table, field));
+
+        return result;
+    }
+
     static final SelectFieldOrAsterisk qualify(Table<?> table, SelectFieldOrAsterisk field) {
         if (field instanceof Field)
             return qualify(table, (Field<?>) field);

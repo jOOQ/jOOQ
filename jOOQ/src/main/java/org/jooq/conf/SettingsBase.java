@@ -40,8 +40,6 @@ package org.jooq.conf;
 import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 
-import javax.xml.bind.JAXB;
-
 /**
  * This base class is extended by all XJC-generated {@link Settings} classes
  * <p>
@@ -49,8 +47,8 @@ import javax.xml.bind.JAXB;
  * of those many JAXB / XJC plugins. Besides, cloning objects through the
  * standard Java {@link Cloneable} mechanism is around factor 1000x faster than
  * using {@link Serializable}, and even 10000x faster than using
- * {@link JAXB#marshal(Object, java.io.OutputStream)}, marshalling a JAXB object
- * into a {@link ByteArrayOutputStream}.
+ * {@link javax.xml.bind.JAXB#marshal(Object, java.io.OutputStream)},
+ * marshalling a JAXB object into a {@link ByteArrayOutputStream}.
  *
  * @author Lukas Eder
  */

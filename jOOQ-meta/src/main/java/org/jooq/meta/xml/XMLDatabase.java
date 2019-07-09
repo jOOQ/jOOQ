@@ -64,7 +64,6 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import javax.xml.bind.JAXB;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
@@ -80,7 +79,6 @@ import org.jooq.Name;
 import org.jooq.SQLDialect;
 import org.jooq.SortOrder;
 import org.jooq.conf.MiniJAXB;
-import org.jooq.exception.ExceptionTools;
 import org.jooq.impl.DSL;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
@@ -217,22 +215,7 @@ public class XMLDatabase extends AbstractDatabase {
                             "<information_schema>",
                             "<information_schema xmlns=\"" + Constants.NS_META + "\">");
 
-                        // [#7579] [#8044] Workaround for obscure JAXB bug on JDK 9+
-                        content = MiniJAXB.jaxbNamespaceBugWorkaround(content, new InformationSchema());
-
-                        try {
-                            info = MiniJAXB.append(info, JAXB.unmarshal(new StringReader(content), InformationSchema.class));
-                        }
-                        catch (Throwable t) {
-                            if (ExceptionTools.getCause(t, ClassNotFoundException.class) != null ||
-                                ExceptionTools.getCause(t, Error.class) != null) {
-
-                                info = MiniJAXB.append(info, MiniJAXB.unmarshal(content, InformationSchema.class));
-                            }
-                            else
-                                // required due to Java 6
-                                ExceptionTools.sneakyThrow(t);
-                        }
+                        info = MiniJAXB.append(info, MiniJAXB.unmarshal(content, InformationSchema.class));
                     }
 
                     private byte[] bytes(InputStream in) throws IOException {

@@ -50,7 +50,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.StringReader;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.SQLException;
@@ -60,17 +59,10 @@ import java.util.List;
 import java.util.Properties;
 
 import javax.sql.DataSource;
-import javax.xml.XMLConstants;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.bind.ValidationEvent;
-import javax.xml.bind.ValidationEventHandler;
-import javax.xml.validation.SchemaFactory;
 
 import org.jooq.Constants;
 import org.jooq.Log.Level;
 import org.jooq.conf.MiniJAXB;
-import org.jooq.exception.ExceptionTools;
 import org.jooq.meta.CatalogVersionProvider;
 import org.jooq.meta.Database;
 import org.jooq.meta.Databases;
@@ -91,7 +83,6 @@ import org.jooq.meta.jaxb.Target;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
-import org.jooq.util.xml.jaxb.InformationSchema;
 
 
 /**
@@ -978,41 +969,6 @@ public class GenerationTool {
             "<(\\w+:)?configuration xmlns(:\\w+)?=\"http://www.jooq.org/xsd/jooq-codegen-\\d+\\.\\d+\\.\\d+.xsd\">",
             "<$1configuration xmlns$2=\"" + Constants.NS_CODEGEN + "\">");
 
-        xml = xml.replace(
-            "<configuration>",
-            "<configuration xmlns=\"" + Constants.NS_CODEGEN + "\">");
-
-        try {
-            SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            javax.xml.validation.Schema schema = sf.newSchema(
-                GenerationTool.class.getResource("/xsd/" + Constants.XSD_CODEGEN)
-            );
-
-            JAXBContext ctx = JAXBContext.newInstance(Configuration.class);
-            Unmarshaller unmarshaller = ctx.createUnmarshaller();
-            unmarshaller.setSchema(schema);
-            unmarshaller.setEventHandler(new ValidationEventHandler() {
-                @Override
-                public boolean handleEvent(ValidationEvent event) {
-                    log.warn("Unmarshal warning", event.getMessage());
-                    return true;
-                }
-            });
-
-            // [#7579] [#8044] Workaround for obscure JAXB bug on JDK 9+
-            xml = MiniJAXB.jaxbNamespaceBugWorkaround(xml, new InformationSchema());
-
-            return (Configuration) unmarshaller.unmarshal(new StringReader(xml));
-        }
-        catch (Throwable t) {
-
-            // [#7734] If JAXB cannot be loaded, try using our own
-            if (ExceptionTools.getCause(t, ClassNotFoundException.class) != null ||
-                ExceptionTools.getCause(t, Error.class) != null) {
-                return MiniJAXB.unmarshal(xml, Configuration.class);
-            }
-
-            throw new GeneratorException("Error while reading XML configuration", t);
-        }
+        return MiniJAXB.unmarshal(xml, Configuration.class);
     }
 }

@@ -53,7 +53,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import javax.xml.bind.JAXB;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlEnum;
@@ -66,9 +65,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.jooq.exception.ConfigurationException;
-import org.jooq.exception.ExceptionTools;
 import org.jooq.tools.Convert;
-import org.jooq.tools.JooqLogger;
 import org.jooq.tools.reflect.Reflect;
 import org.jooq.tools.reflect.ReflectException;
 
@@ -91,9 +88,6 @@ import org.xml.sax.InputSource;
  */
 public class MiniJAXB {
 
-    private static final JooqLogger log = JooqLogger.getLogger(MiniJAXB.class);
-    private static volatile Boolean jaxbAvailable;
-
     public static String marshal(Object object) {
         StringWriter writer = new StringWriter();
         marshal(object, writer);
@@ -105,18 +99,6 @@ public class MiniJAXB {
     }
 
     public static void marshal(Object object, Writer out) {
-        if (!Boolean.FALSE.equals(jaxbAvailable)) {
-            try {
-                JAXB.marshal(object, out);
-                jaxbAvailable = true;
-                log.debug("JAXB is available from the classpath / module path");
-                return;
-            }
-            catch (Throwable t) {
-                handleJaxbException(t);
-            }
-        }
-
         try {
             XmlRootElement e = object.getClass().getAnnotation(XmlRootElement.class);
             if (e != null)
@@ -129,24 +111,6 @@ public class MiniJAXB {
         }
         catch (Exception e) {
             throw new ConfigurationException("Cannot print object", e);
-        }
-    }
-
-    private static void handleJaxbException(Throwable t) {
-        if (t instanceof Error) {
-            jaxbAvailable = true;
-            log.debug("JAXB is available from the classpath / module path");
-            ExceptionTools.sneakyThrow(t);
-        }
-        else if (ExceptionTools.getCause(t, ClassNotFoundException.class) != null ||
-            ExceptionTools.getCause(t, Error.class) != null) {
-            jaxbAvailable = false;
-            log.debug("JAXB is not available from the classpath / module path");
-        }
-        else {
-            jaxbAvailable = true;
-            log.debug("JAXB is available from the classpath / module path");
-            throw new ConfigurationException("Error while reading xml", t);
         }
     }
 
@@ -168,22 +132,6 @@ public class MiniJAXB {
     }
 
     private static <T> T unmarshal0(InputSource in, Class<T> type) {
-        if (!Boolean.FALSE.equals(jaxbAvailable)) {
-            try {
-                T result = in.getByteStream() != null
-                    ? JAXB.unmarshal(in.getByteStream(), type)
-                    : in.getCharacterStream() != null
-                    ? JAXB.unmarshal(in.getCharacterStream(), type)
-                    : null;
-                jaxbAvailable = true;
-                log.debug("JAXB is available from the classpath / module path");
-                return result;
-            }
-            catch (Throwable t) {
-                handleJaxbException(t);
-            }
-        }
-
         try {
             Document document = builder().parse(in);
             T result = Reflect.on(type).create().get();
@@ -323,32 +271,6 @@ public class MiniJAXB {
         catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    /**
-     * This method is used internally by jOOQ to patch XML content in order to
-     * work around a bug in JAXB.
-     * <p>
-     * [#7579] [#8044] On JDK 9, 10, depending on how JAXB is loaded onto the
-     * classpath / module path, the xmlns seems to be considered for
-     * (un)marshalling, or not. This seems to be a bug in JAXB, with no known
-     * tracking ID as of yet.
-     * <p>
-     * The following quick fix tests the presence of the xmlns when marshalling,
-     * and if absent removes it prior to unmarshalling.
-     */
-    public static String jaxbNamespaceBugWorkaround(String xml, Object annotated) {
-        StringWriter test = new StringWriter();
-
-        try {
-            JAXB.marshal(annotated, test);
-
-            if (!test.toString().contains("xmlns"))
-                xml = xml.replaceAll("xmlns=\"[^\"]*\"", "");
-        }
-        catch (Exception ignore) {}
-
-        return xml;
     }
 
     /**

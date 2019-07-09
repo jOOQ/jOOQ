@@ -159,7 +159,7 @@
                             <classesDirectory>${basedir}/javadoc</classesDirectory>
                             <archive>
                                 <manifestEntries>
-                                    <Automatic-Module-Name>org.jooq.scala_2_11</Automatic-Module-Name>
+                                    <Automatic-Module-Name>org.jooq.scala_2_12</Automatic-Module-Name>
                                 </manifestEntries>
                             </archive>
                         </configuration>

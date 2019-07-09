@@ -466,7 +466,8 @@ public class XMLDatabase extends AbstractDatabase {
         List<SchemaDefinition> result = new ArrayList<SchemaDefinition>();
 
         for (Schema schema : info().getSchemata()) {
-            result.add(new SchemaDefinition(this, schema.getSchemaName(), schema.getComment()));
+            String schemaName = schema.getSchemaName();
+            result.add(new SchemaDefinition(this, StringUtils.defaultIfNull(schemaName, ""), schema.getComment()));
         }
 
         return result;

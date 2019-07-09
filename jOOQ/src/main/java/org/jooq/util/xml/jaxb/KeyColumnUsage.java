@@ -298,11 +298,9 @@ public class KeyColumnUsage implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        if ((columnName!= null)&&(!"".equals(columnName))) {
-            sb.append("<column_name>");
-            sb.append(columnName);
-            sb.append("</column_name>");
-        }
+        sb.append("<column_name>");
+        sb.append(((columnName == null)?"":columnName));
+        sb.append("</column_name>");
         if ((constraintCatalog!= null)&&(!"".equals(constraintCatalog))) {
             sb.append("<constraint_catalog>");
             sb.append(constraintCatalog);
@@ -313,11 +311,9 @@ public class KeyColumnUsage implements Serializable
             sb.append(constraintSchema);
             sb.append("</constraint_schema>");
         }
-        if ((constraintName!= null)&&(!"".equals(constraintName))) {
-            sb.append("<constraint_name>");
-            sb.append(constraintName);
-            sb.append("</constraint_name>");
-        }
+        sb.append("<constraint_name>");
+        sb.append(((constraintName == null)?"":constraintName));
+        sb.append("</constraint_name>");
         sb.append("<ordinal_position>");
         sb.append(ordinalPosition);
         sb.append("</ordinal_position>");
@@ -331,11 +327,9 @@ public class KeyColumnUsage implements Serializable
             sb.append(tableSchema);
             sb.append("</table_schema>");
         }
-        if ((tableName!= null)&&(!"".equals(tableName))) {
-            sb.append("<table_name>");
-            sb.append(tableName);
-            sb.append("</table_name>");
-        }
+        sb.append("<table_name>");
+        sb.append(((tableName == null)?"":tableName));
+        sb.append("</table_name>");
         return sb.toString();
     }
 

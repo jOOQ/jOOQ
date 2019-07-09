@@ -292,11 +292,9 @@ public class Jdbc implements Serializable
             sb.append(driver);
             sb.append("</driver>");
         }
-        if ((url!= null)&&(!"".equals(url))) {
-            sb.append("<url>");
-            sb.append(url);
-            sb.append("</url>");
-        }
+        sb.append("<url>");
+        sb.append(((url == null)?"":url));
+        sb.append("</url>");
         if ((schema!= null)&&(!"".equals(schema))) {
             sb.append("<schema>");
             sb.append(schema);

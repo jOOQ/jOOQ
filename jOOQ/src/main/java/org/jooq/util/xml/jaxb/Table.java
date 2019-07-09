@@ -184,11 +184,9 @@ public class Table implements Serializable
             sb.append(tableSchema);
             sb.append("</table_schema>");
         }
-        if ((tableName!= null)&&(!"".equals(tableName))) {
-            sb.append("<table_name>");
-            sb.append(tableName);
-            sb.append("</table_name>");
-        }
+        sb.append("<table_name>");
+        sb.append(((tableName == null)?"":tableName));
+        sb.append("</table_name>");
         if ((comment!= null)&&(!"".equals(comment))) {
             sb.append("<comment>");
             sb.append(comment);

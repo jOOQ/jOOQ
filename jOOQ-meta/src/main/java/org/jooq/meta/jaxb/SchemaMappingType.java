@@ -125,11 +125,9 @@ public class SchemaMappingType implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        if ((inputSchema!= null)&&(!"".equals(inputSchema))) {
-            sb.append("<inputSchema>");
-            sb.append(inputSchema);
-            sb.append("</inputSchema>");
-        }
+        sb.append("<inputSchema>");
+        sb.append(((inputSchema == null)?"":inputSchema));
+        sb.append("</inputSchema>");
         if ((outputSchema!= null)&&(!"".equals(outputSchema))) {
             sb.append("<outputSchema>");
             sb.append(outputSchema);

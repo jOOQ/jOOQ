@@ -186,11 +186,9 @@ public class CustomType implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        if ((name!= null)&&(!"".equals(name))) {
-            sb.append("<name>");
-            sb.append(name);
-            sb.append("</name>");
-        }
+        sb.append("<name>");
+        sb.append(((name == null)?"":name));
+        sb.append("</name>");
         if ((type!= null)&&(!"".equals(type))) {
             sb.append("<type>");
             sb.append(type);

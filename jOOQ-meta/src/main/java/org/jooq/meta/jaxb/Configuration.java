@@ -187,11 +187,9 @@ public class Configuration implements Serializable
             sb.append(jdbc);
             sb.append("</jdbc>");
         }
-        if (generator!= null) {
-            sb.append("<generator>");
-            sb.append(generator);
-            sb.append("</generator>");
-        }
+        sb.append("<generator>");
+        sb.append(((generator == null)?"":generator));
+        sb.append("</generator>");
         return sb.toString();
     }
 

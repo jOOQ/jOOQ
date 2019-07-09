@@ -413,21 +413,15 @@ public class ElementType implements Serializable
             sb.append(objectSchema);
             sb.append("</object_schema>");
         }
-        if ((objectName!= null)&&(!"".equals(objectName))) {
-            sb.append("<object_name>");
-            sb.append(objectName);
-            sb.append("</object_name>");
-        }
-        if ((objectType!= null)&&(!"".equals(objectType))) {
-            sb.append("<object_type>");
-            sb.append(objectType);
-            sb.append("</object_type>");
-        }
-        if ((dataType!= null)&&(!"".equals(dataType))) {
-            sb.append("<data_type>");
-            sb.append(dataType);
-            sb.append("</data_type>");
-        }
+        sb.append("<object_name>");
+        sb.append(((objectName == null)?"":objectName));
+        sb.append("</object_name>");
+        sb.append("<object_type>");
+        sb.append(((objectType == null)?"":objectType));
+        sb.append("</object_type>");
+        sb.append("<data_type>");
+        sb.append(((dataType == null)?"":dataType));
+        sb.append("</data_type>");
         if (characterMaximumLength!= null) {
             sb.append("<character_maximum_length>");
             sb.append(characterMaximumLength);

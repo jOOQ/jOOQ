@@ -251,11 +251,9 @@ public class ReferentialConstraint implements Serializable
             sb.append(constraintSchema);
             sb.append("</constraint_schema>");
         }
-        if ((constraintName!= null)&&(!"".equals(constraintName))) {
-            sb.append("<constraint_name>");
-            sb.append(constraintName);
-            sb.append("</constraint_name>");
-        }
+        sb.append("<constraint_name>");
+        sb.append(((constraintName == null)?"":constraintName));
+        sb.append("</constraint_name>");
         if ((uniqueConstraintCatalog!= null)&&(!"".equals(uniqueConstraintCatalog))) {
             sb.append("<unique_constraint_catalog>");
             sb.append(uniqueConstraintCatalog);
@@ -266,11 +264,9 @@ public class ReferentialConstraint implements Serializable
             sb.append(uniqueConstraintSchema);
             sb.append("</unique_constraint_schema>");
         }
-        if ((uniqueConstraintName!= null)&&(!"".equals(uniqueConstraintName))) {
-            sb.append("<unique_constraint_name>");
-            sb.append(uniqueConstraintName);
-            sb.append("</unique_constraint_name>");
-        }
+        sb.append("<unique_constraint_name>");
+        sb.append(((uniqueConstraintName == null)?"":uniqueConstraintName));
+        sb.append("</unique_constraint_name>");
         return sb.toString();
     }
 

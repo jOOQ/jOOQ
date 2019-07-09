@@ -575,21 +575,15 @@ public class Column implements Serializable
             sb.append(tableSchema);
             sb.append("</table_schema>");
         }
-        if ((tableName!= null)&&(!"".equals(tableName))) {
-            sb.append("<table_name>");
-            sb.append(tableName);
-            sb.append("</table_name>");
-        }
-        if ((columnName!= null)&&(!"".equals(columnName))) {
-            sb.append("<column_name>");
-            sb.append(columnName);
-            sb.append("</column_name>");
-        }
-        if ((dataType!= null)&&(!"".equals(dataType))) {
-            sb.append("<data_type>");
-            sb.append(dataType);
-            sb.append("</data_type>");
-        }
+        sb.append("<table_name>");
+        sb.append(((tableName == null)?"":tableName));
+        sb.append("</table_name>");
+        sb.append("<column_name>");
+        sb.append(((columnName == null)?"":columnName));
+        sb.append("</column_name>");
+        sb.append("<data_type>");
+        sb.append(((dataType == null)?"":dataType));
+        sb.append("</data_type>");
         if (characterMaximumLength!= null) {
             sb.append("<character_maximum_length>");
             sb.append(characterMaximumLength);

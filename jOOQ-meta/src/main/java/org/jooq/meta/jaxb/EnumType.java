@@ -109,16 +109,12 @@ public class EnumType implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        if ((name!= null)&&(!"".equals(name))) {
-            sb.append("<name>");
-            sb.append(name);
-            sb.append("</name>");
-        }
-        if ((literals!= null)&&(!"".equals(literals))) {
-            sb.append("<literals>");
-            sb.append(literals);
-            sb.append("</literals>");
-        }
+        sb.append("<name>");
+        sb.append(((name == null)?"":name));
+        sb.append("</name>");
+        sb.append("<literals>");
+        sb.append(((literals == null)?"":literals));
+        sb.append("</literals>");
         return sb.toString();
     }
 

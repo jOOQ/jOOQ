@@ -97,11 +97,9 @@ public class ParseSearchSchema
             sb.append(catalog);
             sb.append("</catalog>");
         }
-        if ((schema!= null)&&(!"".equals(schema))) {
-            sb.append("<schema>");
-            sb.append(schema);
-            sb.append("</schema>");
-        }
+        sb.append("<schema>");
+        sb.append(((schema == null)?"":schema));
+        sb.append("</schema>");
         return sb.toString();
     }
 

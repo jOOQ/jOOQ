@@ -96,16 +96,12 @@ public class Property implements Serializable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        if ((key!= null)&&(!"".equals(key))) {
-            sb.append("<key>");
-            sb.append(key);
-            sb.append("</key>");
-        }
-        if ((value!= null)&&(!"".equals(value))) {
-            sb.append("<value>");
-            sb.append(value);
-            sb.append("</value>");
-        }
+        sb.append("<key>");
+        sb.append(((key == null)?"":key));
+        sb.append("</key>");
+        sb.append("<value>");
+        sb.append(((value == null)?"":value));
+        sb.append("</value>");
         return sb.toString();
     }
 

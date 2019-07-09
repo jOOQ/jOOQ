@@ -146,11 +146,9 @@ public class Schema implements Serializable
             sb.append(catalogName);
             sb.append("</catalog_name>");
         }
-        if ((schemaName!= null)&&(!"".equals(schemaName))) {
-            sb.append("<schema_name>");
-            sb.append(schemaName);
-            sb.append("</schema_name>");
-        }
+        sb.append("<schema_name>");
+        sb.append(((schemaName == null)?"":schemaName));
+        sb.append("</schema_name>");
         if ((comment!= null)&&(!"".equals(comment))) {
             sb.append("<comment>");
             sb.append(comment);

@@ -315,11 +315,9 @@ public class Index implements Serializable
             sb.append(indexSchema);
             sb.append("</index_schema>");
         }
-        if ((indexName!= null)&&(!"".equals(indexName))) {
-            sb.append("<index_name>");
-            sb.append(indexName);
-            sb.append("</index_name>");
-        }
+        sb.append("<index_name>");
+        sb.append(((indexName == null)?"":indexName));
+        sb.append("</index_name>");
         if ((tableCatalog!= null)&&(!"".equals(tableCatalog))) {
             sb.append("<table_catalog>");
             sb.append(tableCatalog);
@@ -330,11 +328,9 @@ public class Index implements Serializable
             sb.append(tableSchema);
             sb.append("</table_schema>");
         }
-        if ((tableName!= null)&&(!"".equals(tableName))) {
-            sb.append("<table_name>");
-            sb.append(tableName);
-            sb.append("</table_name>");
-        }
+        sb.append("<table_name>");
+        sb.append(((tableName == null)?"":tableName));
+        sb.append("</table_name>");
         if (isUnique!= null) {
             sb.append("<is_unique>");
             sb.append(isUnique);

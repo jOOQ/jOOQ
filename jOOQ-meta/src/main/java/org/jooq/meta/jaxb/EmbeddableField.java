@@ -113,11 +113,9 @@ public class EmbeddableField implements Serializable
             sb.append(name);
             sb.append("</name>");
         }
-        if ((expression!= null)&&(!"".equals(expression))) {
-            sb.append("<expression>");
-            sb.append(expression);
-            sb.append("</expression>");
-        }
+        sb.append("<expression>");
+        sb.append(((expression == null)?"":expression));
+        sb.append("</expression>");
         return sb.toString();
     }
 

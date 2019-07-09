@@ -142,11 +142,9 @@ public class MappedTable
             sb.append(inputExpression.pattern());
             sb.append("</inputExpression>");
         }
-        if ((output!= null)&&(!"".equals(output))) {
-            sb.append("<output>");
-            sb.append(output);
-            sb.append("</output>");
-        }
+        sb.append("<output>");
+        sb.append(((output == null)?"":output));
+        sb.append("</output>");
         return sb.toString();
     }
 

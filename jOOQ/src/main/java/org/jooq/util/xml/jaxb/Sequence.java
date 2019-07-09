@@ -313,16 +313,12 @@ public class Sequence implements Serializable
             sb.append(sequenceSchema);
             sb.append("</sequence_schema>");
         }
-        if ((sequenceName!= null)&&(!"".equals(sequenceName))) {
-            sb.append("<sequence_name>");
-            sb.append(sequenceName);
-            sb.append("</sequence_name>");
-        }
-        if ((dataType!= null)&&(!"".equals(dataType))) {
-            sb.append("<data_type>");
-            sb.append(dataType);
-            sb.append("</data_type>");
-        }
+        sb.append("<sequence_name>");
+        sb.append(((sequenceName == null)?"":sequenceName));
+        sb.append("</sequence_name>");
+        sb.append("<data_type>");
+        sb.append(((dataType == null)?"":dataType));
+        sb.append("</data_type>");
         if (characterMaximumLength!= null) {
             sb.append("<character_maximum_length>");
             sb.append(characterMaximumLength);

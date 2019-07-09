@@ -340,11 +340,9 @@ public class IndexColumnUsage implements Serializable
             sb.append(indexSchema);
             sb.append("</index_schema>");
         }
-        if ((indexName!= null)&&(!"".equals(indexName))) {
-            sb.append("<index_name>");
-            sb.append(indexName);
-            sb.append("</index_name>");
-        }
+        sb.append("<index_name>");
+        sb.append(((indexName == null)?"":indexName));
+        sb.append("</index_name>");
         if ((tableCatalog!= null)&&(!"".equals(tableCatalog))) {
             sb.append("<table_catalog>");
             sb.append(tableCatalog);
@@ -355,16 +353,12 @@ public class IndexColumnUsage implements Serializable
             sb.append(tableSchema);
             sb.append("</table_schema>");
         }
-        if ((tableName!= null)&&(!"".equals(tableName))) {
-            sb.append("<table_name>");
-            sb.append(tableName);
-            sb.append("</table_name>");
-        }
-        if ((columnName!= null)&&(!"".equals(columnName))) {
-            sb.append("<column_name>");
-            sb.append(columnName);
-            sb.append("</column_name>");
-        }
+        sb.append("<table_name>");
+        sb.append(((tableName == null)?"":tableName));
+        sb.append("</table_name>");
+        sb.append("<column_name>");
+        sb.append(((columnName == null)?"":columnName));
+        sb.append("</column_name>");
         sb.append("<ordinal_position>");
         sb.append(ordinalPosition);
         sb.append("</ordinal_position>");

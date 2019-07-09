@@ -636,16 +636,12 @@ public class Routine implements Serializable
             sb.append(routinePackage);
             sb.append("</routine_package>");
         }
-        if ((routineName!= null)&&(!"".equals(routineName))) {
-            sb.append("<routine_name>");
-            sb.append(routineName);
-            sb.append("</routine_name>");
-        }
-        if (routineType!= null) {
-            sb.append("<routine_type>");
-            sb.append(routineType);
-            sb.append("</routine_type>");
-        }
+        sb.append("<routine_name>");
+        sb.append(((routineName == null)?"":routineName));
+        sb.append("</routine_name>");
+        sb.append("<routine_type>");
+        sb.append(((routineType == null)?"":routineType));
+        sb.append("</routine_type>");
         if ((dataType!= null)&&(!"".equals(dataType))) {
             sb.append("<data_type>");
             sb.append(dataType);

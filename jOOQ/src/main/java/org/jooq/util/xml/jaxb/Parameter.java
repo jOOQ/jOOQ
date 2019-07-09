@@ -574,19 +574,15 @@ public class Parameter implements Serializable
             sb.append(specificPackage);
             sb.append("</specific_package>");
         }
-        if ((specificName!= null)&&(!"".equals(specificName))) {
-            sb.append("<specific_name>");
-            sb.append(specificName);
-            sb.append("</specific_name>");
-        }
+        sb.append("<specific_name>");
+        sb.append(((specificName == null)?"":specificName));
+        sb.append("</specific_name>");
         sb.append("<ordinal_position>");
         sb.append(ordinalPosition);
         sb.append("</ordinal_position>");
-        if (parameterMode!= null) {
-            sb.append("<parameter_mode>");
-            sb.append(parameterMode);
-            sb.append("</parameter_mode>");
-        }
+        sb.append("<parameter_mode>");
+        sb.append(((parameterMode == null)?"":parameterMode));
+        sb.append("</parameter_mode>");
         if ((parameterName!= null)&&(!"".equals(parameterName))) {
             sb.append("<parameter_name>");
             sb.append(parameterName);

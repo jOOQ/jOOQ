@@ -111,6 +111,7 @@ import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.UniqueKey;
 import org.jooq.exception.SQLDialectNotSupportedException;
+import org.jooq.impl.Tools.DataExtendedKey;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -392,6 +393,12 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                 }
 
                 // Some databases allow for emulating this clause using a MERGE statement
+
+
+
+
+
+
 
 
 

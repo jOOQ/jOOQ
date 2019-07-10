@@ -720,7 +720,6 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
 
 
-
     final void toSQLReturning(Context<?> ctx) {
         if (!returning.isEmpty()) {
             switch (ctx.family()) {

@@ -177,7 +177,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.EnumMap;
 import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -305,6 +307,11 @@ final class Tools {
     // Some constants for use with Context.data()
     // ------------------------------------------------------------------------
 
+    /**
+     * Keys for {@link Configuration#data()}, which may be referenced frequently
+     * and represent a {@code boolean} value and are thus stored in an
+     * {@link EnumSet} for speedier access.
+     */
     enum BooleanDataKey {
 
         /**
@@ -474,6 +481,10 @@ final class Tools {
 
     }
 
+    /**
+     * Keys for {@link Configuration#data()}, which may be referenced frequently
+     * and are thus stored in an {@link EnumMap} for speedier access.
+     */
     enum DataKey {
 
         /**
@@ -572,9 +583,19 @@ final class Tools {
     }
 
     /**
-     * Like {@link DataKey}, but not an enum - for rare usage.
+     * Keys for {@link Configuration#data()}, which may be referenced very
+     * infrequently and are thus stored in an ordinary {@link HashMap} for a
+     * more optimal memory layout.
      */
-    static class DataExtendedKey {
+    enum DataExtendedKey {
+
+
+
+
+
+
+
+
 
     }
 

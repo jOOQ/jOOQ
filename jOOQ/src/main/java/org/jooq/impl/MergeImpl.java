@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.FALSE;
 import static org.jooq.Clause.MERGE;
 import static org.jooq.Clause.MERGE_DELETE_WHERE;
 import static org.jooq.Clause.MERGE_MERGE_INTO;
@@ -157,6 +158,7 @@ import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableLike;
 import org.jooq.UniqueKey;
+import org.jooq.impl.Tools.DataExtendedKey;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -1589,6 +1591,18 @@ implements
 
         ctx.end(MERGE_WHERE)
            .end(MERGE_WHEN_NOT_MATCHED_THEN_INSERT);
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

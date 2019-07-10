@@ -226,6 +226,14 @@ case of which, this defaults to INLINED]]></jxb:javadoc></jxb:property></appinfo
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[When set to true, this will add jOOQ's default logging ExecuteListeners.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="updateRecordVersion" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether store(), insert(), and update() methods should update the record version prior to the operation, for use with {@link #executeWithOptimisticLocking}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="updateRecordTimestamp" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether store(), insert(), and update() methods should update the record timestamp prior to the operation, for use with {@link #executeWithOptimisticLocking}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="executeWithOptimisticLocking" type="boolean" minOccurs="0" maxOccurs="1" default="false">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether store() and delete() methods should be executed with optimistic locking.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

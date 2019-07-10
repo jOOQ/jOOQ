@@ -229,23 +229,21 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         }
 
         // [#1596] Set timestamp and/or version columns to appropriate values
+        // [#8924] Allow for overriding this using a setting
         BigInteger version = addRecordVersion(update);
         Timestamp timestamp = addRecordTimestamp(update);
 
-        if (isExecuteWithOptimisticLocking()) {
+        if (isExecuteWithOptimisticLocking())
 
             // [#1596] Add additional conditions for version and/or timestamp columns
-            if (isTimestampOrVersionAvailable()) {
+            if (isTimestampOrVersionAvailable())
                 addConditionForVersionAndTimestamp(update);
-            }
 
             // [#1547] Try fetching the Record again first, and compare this
             // Record's original values with the ones in the database
             // [#5384] Do this only if the exclusion flag for unversioned records is off
-            else if (isExecuteWithOptimisticLockingIncludeUnversioned()) {
+            else if (isExecuteWithOptimisticLockingIncludeUnversioned())
                 checkIfChanged(keys);
-            }
-        }
 
         // [#1596] Check if the record was really changed in the database
         // [#1859] Specify the returning clause if needed
@@ -288,20 +286,17 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
             DeleteQuery<R> delete1 = create().deleteQuery(getTable());
             Tools.addConditions(delete1, this, keys);
 
-            if (isExecuteWithOptimisticLocking()) {
+            if (isExecuteWithOptimisticLocking())
 
                 // [#1596] Add additional conditions for version and/or timestamp columns
-                if (isTimestampOrVersionAvailable()) {
+                if (isTimestampOrVersionAvailable())
                     addConditionForVersionAndTimestamp(delete1);
-                }
 
                 // [#1547] Try fetching the Record again first, and compare this
                 // Record's original values with the ones in the database
                 // [#5384] Do this only if the exclusion flag for unversioned records is off
-                else if (isExecuteWithOptimisticLockingIncludeUnversioned()) {
+                else if (isExecuteWithOptimisticLockingIncludeUnversioned())
                     checkIfChanged(keys);
-                }
-            }
 
             int result = delete1.execute();
             checkIfChanged(result, null, null);
@@ -360,15 +355,14 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
         	@Override
             public R operate(R copy) throws RuntimeException {
-                // Copy all fields. This marks them all as isChanged, which is important
+
+        	    // Copy all fields. This marks them all as isChanged, which is important
                 List<TableField<R, ?>> key = getPrimaryKey().getFields();
-                for (Field<?> field : fields.fields.fields) {
+                for (Field<?> field : fields.fields.fields)
 
                     // Don't copy key values
-                    if (!key.contains(field)) {
+                    if (!key.contains(field))
                         setValue(copy, field);
-                    }
-                }
 
                 return copy;
             }
@@ -385,7 +379,6 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
     private final boolean isExecuteWithOptimisticLocking() {
         Configuration configuration = configuration();
 
-        // This can be null when the current record is detached
         return configuration != null
             ? TRUE.equals(configuration.settings().isExecuteWithOptimisticLocking())
             : false;
@@ -394,13 +387,11 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
     private final boolean isExecuteWithOptimisticLockingIncludeUnversioned() {
         Configuration configuration = configuration();
 
-        // This can be null when the current record is detached
         return configuration != null
             ? !TRUE.equals(configuration.settings().isExecuteWithOptimisticLockingExcludeUnversioned())
             : true;
     }
 
-    @SuppressWarnings("deprecation")
     private final void addConditionForVersionAndTimestamp(org.jooq.ConditionProvider query) {
         TableField<R, ?> v = getTable().getRecordVersion();
         TableField<R, ?> t = getTable().getRecordTimestamp();
@@ -444,13 +435,11 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         // [#1596] If update/delete was successful, update version and/or
         // timestamp columns.
         // [#673] Do this also for deletions, in case a deleted record is re-added
-        if (result > 0) {
+        if (result > 0)
             setRecordVersionAndTimestamp(version, timestamp);
-        }
 
         // [#1596] No records were updated due to version and/or timestamp change
-        else if (isExecuteWithOptimisticLocking()) {
+        else if (isExecuteWithOptimisticLocking())
             throw new DataChangedException("Database record has been changed or doesn't exist any longer");
-        }
     }
 }

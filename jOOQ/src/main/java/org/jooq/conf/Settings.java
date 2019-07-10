@@ -115,6 +115,10 @@ public class Settings
     protected InvocationOrder executeListenerEndInvocationOrder = InvocationOrder.DEFAULT;
     @XmlElement(defaultValue = "true")
     protected Boolean executeLogging = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean updateRecordVersion = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean updateRecordTimestamp = true;
     @XmlElement(defaultValue = "false")
     protected Boolean executeWithOptimisticLocking = false;
     @XmlElement(defaultValue = "false")
@@ -1023,6 +1027,54 @@ public class Settings
      */
     public void setExecuteLogging(Boolean value) {
         this.executeLogging = value;
+    }
+
+    /**
+     * Whether store(), insert(), and update() methods should update the record version prior to the operation, for use with {@link #executeWithOptimisticLocking}.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isUpdateRecordVersion() {
+        return updateRecordVersion;
+    }
+
+    /**
+     * Sets the value of the updateRecordVersion property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setUpdateRecordVersion(Boolean value) {
+        this.updateRecordVersion = value;
+    }
+
+    /**
+     * Whether store(), insert(), and update() methods should update the record timestamp prior to the operation, for use with {@link #executeWithOptimisticLocking}.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isUpdateRecordTimestamp() {
+        return updateRecordTimestamp;
+    }
+
+    /**
+     * Sets the value of the updateRecordTimestamp property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setUpdateRecordTimestamp(Boolean value) {
+        this.updateRecordTimestamp = value;
     }
 
     /**
@@ -1974,6 +2026,16 @@ public class Settings
         return this;
     }
 
+    public Settings withUpdateRecordVersion(Boolean value) {
+        setUpdateRecordVersion(value);
+        return this;
+    }
+
+    public Settings withUpdateRecordTimestamp(Boolean value) {
+        setUpdateRecordTimestamp(value);
+        return this;
+    }
+
     public Settings withExecuteWithOptimisticLocking(Boolean value) {
         setExecuteWithOptimisticLocking(value);
         return this;
@@ -2188,6 +2250,8 @@ public class Settings
         builder.append("executeListenerStartInvocationOrder", executeListenerStartInvocationOrder);
         builder.append("executeListenerEndInvocationOrder", executeListenerEndInvocationOrder);
         builder.append("executeLogging", executeLogging);
+        builder.append("updateRecordVersion", updateRecordVersion);
+        builder.append("updateRecordTimestamp", updateRecordTimestamp);
         builder.append("executeWithOptimisticLocking", executeWithOptimisticLocking);
         builder.append("executeWithOptimisticLockingExcludeUnversioned", executeWithOptimisticLockingExcludeUnversioned);
         builder.append("attachRecords", attachRecords);
@@ -2518,6 +2582,24 @@ public class Settings
             }
         } else {
             if (!executeLogging.equals(other.executeLogging)) {
+                return false;
+            }
+        }
+        if (updateRecordVersion == null) {
+            if (other.updateRecordVersion!= null) {
+                return false;
+            }
+        } else {
+            if (!updateRecordVersion.equals(other.updateRecordVersion)) {
+                return false;
+            }
+        }
+        if (updateRecordTimestamp == null) {
+            if (other.updateRecordTimestamp!= null) {
+                return false;
+            }
+        } else {
+            if (!updateRecordTimestamp.equals(other.updateRecordTimestamp)) {
                 return false;
             }
         }
@@ -2856,6 +2938,8 @@ public class Settings
         result = ((prime*result)+((executeListenerStartInvocationOrder == null)? 0 :executeListenerStartInvocationOrder.hashCode()));
         result = ((prime*result)+((executeListenerEndInvocationOrder == null)? 0 :executeListenerEndInvocationOrder.hashCode()));
         result = ((prime*result)+((executeLogging == null)? 0 :executeLogging.hashCode()));
+        result = ((prime*result)+((updateRecordVersion == null)? 0 :updateRecordVersion.hashCode()));
+        result = ((prime*result)+((updateRecordTimestamp == null)? 0 :updateRecordTimestamp.hashCode()));
         result = ((prime*result)+((executeWithOptimisticLocking == null)? 0 :executeWithOptimisticLocking.hashCode()));
         result = ((prime*result)+((executeWithOptimisticLockingExcludeUnversioned == null)? 0 :executeWithOptimisticLockingExcludeUnversioned.hashCode()));
         result = ((prime*result)+((attachRecords == null)? 0 :attachRecords.hashCode()));

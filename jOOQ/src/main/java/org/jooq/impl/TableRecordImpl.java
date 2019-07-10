@@ -62,6 +62,7 @@ import java.util.Collection;
 import java.util.EnumSet;
 import java.util.LinkedHashSet;
 
+import org.jooq.Configuration;
 import org.jooq.Converter;
 import org.jooq.DSLContext;
 import org.jooq.Field;
@@ -321,21 +322,18 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
      */
     final Timestamp addRecordTimestamp(StoreQuery<?> store) {
         Timestamp result = null;
+        TableField<R, ?> timestamp = getTable().getRecordTimestamp();
 
-        if (isTimestampOrVersionAvailable()) {
-            TableField<R, ?> timestamp = getTable().getRecordTimestamp();
+        if (timestamp != null && isUpdateRecordTimestamp()) {
 
-            if (timestamp != null) {
-
-                // Use Timestamp locally, to provide maximum precision
+            // Use Timestamp locally, to provide maximum precision
 
 
 
 
-                result = new Timestamp(configuration().clock().millis());
+            result = new Timestamp(configuration().clock().millis());
 
-                addValue(store, timestamp, result);
-            }
+            addValue(store, timestamp, result);
         }
 
         return result;
@@ -346,30 +344,42 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
      */
     final BigInteger addRecordVersion(StoreQuery<?> store) {
         BigInteger result = null;
+        TableField<R, ?> version = getTable().getRecordVersion();
 
-        if (isTimestampOrVersionAvailable()) {
-            TableField<R, ?> version = getTable().getRecordVersion();
+        if (version != null && isUpdateRecordVersion()) {
+            Object value = get(version);
 
-            if (version != null) {
-                Object value = get(version);
+            // Use BigInteger locally to avoid arithmetic overflows
+            if (value == null)
+                result = BigInteger.ONE;
+            else
+                result = new BigInteger(value.toString()).add(BigInteger.ONE);
 
-                // Use BigInteger locally to avoid arithmetic overflows
-                if (value == null) {
-                    result = BigInteger.ONE;
-                }
-                else {
-                    result = new BigInteger(value.toString()).add(BigInteger.ONE);
-                }
-
-                addValue(store, version, result);
-            }
+            addValue(store, version, result);
         }
 
         return result;
     }
 
+    final boolean isUpdateRecordVersion() {
+        Configuration configuration = configuration();
+
+        return configuration != null
+            ? !FALSE.equals(configuration.settings().isUpdateRecordVersion())
+            : true;
+    }
+
+    final boolean isUpdateRecordTimestamp() {
+        Configuration configuration = configuration();
+
+        return configuration != null
+            ? !FALSE.equals(configuration.settings().isUpdateRecordTimestamp())
+            : true;
+    }
+
     final boolean isTimestampOrVersionAvailable() {
-        return getTable().getRecordTimestamp() != null || getTable().getRecordVersion() != null;
+        return getTable().getRecordTimestamp() != null && isUpdateRecordTimestamp()
+            || getTable().getRecordVersion() != null && isUpdateRecordVersion();
     }
 
     final Collection<Field<?>> getReturning() {

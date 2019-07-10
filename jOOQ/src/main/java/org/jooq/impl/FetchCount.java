@@ -40,9 +40,9 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.Tools.fieldNameStrings;
 
 import java.sql.ResultSetMetaData;
-import java.util.List;
 
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -77,13 +77,6 @@ final class FetchCount extends AbstractResultQuery<Record1<Integer>> {
 
     private final QueryPart delegate(Configuration configuration) {
         switch (configuration.family()) {
-
-
-
-
-
-
-
 
 
 

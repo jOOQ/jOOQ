@@ -64,6 +64,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.jooq.Internal;
 import org.jooq.exception.ConfigurationException;
 import org.jooq.tools.Convert;
 import org.jooq.tools.reflect.Reflect;
@@ -86,6 +87,7 @@ import org.xml.sax.InputSource;
  *
  * @author Lukas Eder
  */
+@Internal
 public class MiniJAXB {
 
     public static String marshal(XMLAppendable object) {

@@ -35,21 +35,25 @@
  *
  *
  */
-package org.jooq.util.jaxb.tools;
+package org.jooq;
 
-import org.jooq.Internal;
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.TYPE;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * Interface to be implemented by JAXB annotated Java classes which are
- * serialized to XML using {@link XMLBuilder}.
- * <p>
- * The implementing classes are expected to call the various {@code append()}
- * methods on the {@link XMLBuilder} instance.
+ * Signifies that a API (public class, method or field) is internal and subject to incompatible
+ * changes, or even removal, in a future release. An API bearing this annotation is exempt from any
+ * compatibility guarantees made by its containing library.
  *
  * @author Knut Wannheden
  */
-@Internal
-public interface XMLAppendable {
-
-    void appendTo(XMLBuilder builder);
-}
+@Documented
+@Retention(RetentionPolicy.CLASS)
+@Target(value={FIELD, METHOD, TYPE})
+public @interface Internal {}

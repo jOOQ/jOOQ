@@ -41,9 +41,20 @@ import java.io.IOException;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import org.jooq.Internal;
+
 /**
+ * Wrapper around a {@link StringBuilder} which can be used to serialize
+ * a JAXB-annotated Java object graph to XML. The JAXB objects must however
+ * also implement the {@link XMLAppendable} interface for this to work.
+ * <p>
+ * Use {@link #formatting()} to create an instance producing formatted XML
+ * output and {@link #nonFormatting()} to produce XML without any formatting
+ * whitespace (i.e. everything on one line).
+ *
  * @author Knut Wannheden
  */
+@Internal
 public class XMLBuilder {
 
     private final StringBuilder builder = new StringBuilder();

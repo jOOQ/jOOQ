@@ -252,6 +252,20 @@ public interface DAO<R extends TableRecord<R>, P, T> {
     <Z> List<P> fetch(Field<Z> field, Z... values) throws DataAccessException;
 
     /**
+     * Find records by a given field and a range of values.
+     *
+     * @param field The field to compare values against
+     * @param lowerInclusive The range's lower bound (inclusive), or unbounded
+     *            if <code>null</code>.
+     * @param upperInclusive The range's upper bound (inclusive), or unbounded
+     *            if <code>null</code>.
+     * @return A list of records fulfilling
+     *         <code>field BETWEEN lowerInclusive AND upperInclusive</code>
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    <Z> List<P> fetchRange(Field<Z> field, Z lowerInclusive, Z upperInclusive) throws DataAccessException;
+
+    /**
      * Find a unique record by a given field and a value.
      *
      * @param field The field to compare value against

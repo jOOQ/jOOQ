@@ -3103,6 +3103,22 @@ public class JavaGenerator extends AbstractGenerator {
             final String colType = out.ref(colTypeFull);
             final String colIdentifier = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegments(column));
 
+            // fetchRangeOf[Column]([T]...)
+            // -----------------------
+            if (!printDeprecationIfUnknownType(out, colTypeFull))
+                out.tab(1).javadoc("Fetch records that have <code>%s BETWEEN lowerInclusive AND upperInclusive</code>", colName);
+
+            if (scala) {
+                out.tab(1).println("def fetchRangeOf%s(lowerInclusive : %s, upperInclusive : %s) : %s[%s] = {", colClass, colType, colType, List.class, pType);
+                out.tab(2).println("fetchRange(%s, lowerInclusive, upperInclusive)", colIdentifier);
+                out.tab(1).println("}");
+            }
+            else {
+                out.tab(1).println("public %s<%s> fetchRangeOf%s(%s lowerInclusive, %s upperInclusive) {", List.class, pType, colClass, colType, colType);
+                out.tab(2).println("return fetchRange(%s, lowerInclusive, upperInclusive);", colIdentifier);
+                out.tab(1).println("}");
+            }
+
             // fetchBy[Column]([T]...)
             // -----------------------
             if (!printDeprecationIfUnknownType(out, colTypeFull))

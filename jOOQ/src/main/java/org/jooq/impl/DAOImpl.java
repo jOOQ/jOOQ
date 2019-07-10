@@ -41,6 +41,7 @@ import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
+import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.Tools.EMPTY_RECORD;
@@ -300,6 +301,22 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
         }
 
         return record == null ? null : mapper().map(record);
+    }
+
+    @Override
+    public /* non-final */ <Z> List<P> fetchRange(Field<Z> field, Z lowerInclusive, Z upperInclusive) {
+        return using(configuration)
+                .selectFrom(table)
+                .where(
+                    lowerInclusive == null
+                  ? upperInclusive == null
+                    ? noCondition()
+                    : field.le(upperInclusive)
+                  : upperInclusive == null
+                    ? field.ge(lowerInclusive)
+                    : field.between(lowerInclusive, upperInclusive))
+                .fetch()
+                .map(mapper());
     }
 
     @SuppressWarnings("unchecked")

@@ -353,10 +353,10 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         return Tools.newRecord(false, getTable(), configuration())
                     .operate(new RecordOperation<R, RuntimeException>() {
 
-        	@Override
+            @Override
             public R operate(R copy) throws RuntimeException {
 
-        	    // Copy all fields. This marks them all as isChanged, which is important
+                // Copy all fields. This marks them all as isChanged, which is important
                 List<TableField<R, ?>> key = getPrimaryKey().getFields();
                 for (Field<?> field : fields.fields.fields)
 

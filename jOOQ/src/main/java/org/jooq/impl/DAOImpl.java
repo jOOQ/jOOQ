@@ -284,23 +284,20 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
     public /* non-final */ List<P> findAll() {
         return using(configuration)
                  .selectFrom(table)
-                 .fetch()
-                 .map(mapper());
+                 .fetch(mapper());
     }
 
     @Override
     public /* non-final */ P findById(T id) {
         Field<?>[] pk = pk();
-        R record = null;
 
-        if (pk != null) {
-            record = using(configuration)
+        if (pk != null)
+            return using(configuration)
                         .selectFrom(table)
                         .where(equal(pk, id))
-                        .fetchOne();
-        }
+                        .fetchOne(mapper());
 
-        return record == null ? null : mapper().map(record);
+        return null;
     }
 
     @Override
@@ -315,8 +312,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
                   : upperInclusive == null
                     ? field.ge(lowerInclusive)
                     : field.between(lowerInclusive, upperInclusive))
-                .fetch()
-                .map(mapper());
+                .fetch(mapper());
     }
 
     @SuppressWarnings("unchecked")
@@ -325,18 +321,15 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
         return using(configuration)
                  .selectFrom(table)
                  .where(field.in(values))
-                 .fetch()
-                 .map(mapper());
+                 .fetch(mapper());
     }
 
     @Override
     public /* non-final */ <Z> P fetchOne(Field<Z> field, Z value) {
-        R record = using(configuration)
+        return using(configuration)
                      .selectFrom(table)
                      .where(field.equal(value))
-                     .fetchOne();
-
-        return record == null ? null : mapper().map(record);
+                     .fetchOne(mapper());
     }
 
 

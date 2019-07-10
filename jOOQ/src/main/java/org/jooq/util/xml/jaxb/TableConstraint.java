@@ -9,6 +9,8 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.jooq.util.jaxb.tools.StringAdapter;
+import org.jooq.util.jaxb.tools.XMLAppendable;
+import org.jooq.util.jaxb.tools.XMLBuilder;
 
 
 /**
@@ -44,7 +46,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 @SuppressWarnings({
     "all"
 })
-public class TableConstraint implements Serializable
+public class TableConstraint implements Serializable, XMLAppendable
 {
 
     private final static long serialVersionUID = 31200L;
@@ -305,43 +307,22 @@ public class TableConstraint implements Serializable
     }
 
     @Override
+    public final void appendTo(XMLBuilder builder) {
+        builder.append("constraint_catalog", constraintCatalog);
+        builder.append("constraint_schema", constraintSchema);
+        builder.append("constraint_name", constraintName);
+        builder.append("constraint_type", constraintType);
+        builder.append("table_catalog", tableCatalog);
+        builder.append("table_schema", tableSchema);
+        builder.append("table_name", tableName);
+        builder.append("comment", comment);
+    }
+
+    @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        if ((constraintCatalog!= null)&&(!"".equals(constraintCatalog))) {
-            sb.append("<constraint_catalog>");
-            sb.append(constraintCatalog);
-            sb.append("</constraint_catalog>");
-        }
-        if ((constraintSchema!= null)&&(!"".equals(constraintSchema))) {
-            sb.append("<constraint_schema>");
-            sb.append(constraintSchema);
-            sb.append("</constraint_schema>");
-        }
-        sb.append("<constraint_name>");
-        sb.append(((constraintName == null)?"":constraintName));
-        sb.append("</constraint_name>");
-        sb.append("<constraint_type>");
-        sb.append(((constraintType == null)?"":constraintType));
-        sb.append("</constraint_type>");
-        if ((tableCatalog!= null)&&(!"".equals(tableCatalog))) {
-            sb.append("<table_catalog>");
-            sb.append(tableCatalog);
-            sb.append("</table_catalog>");
-        }
-        if ((tableSchema!= null)&&(!"".equals(tableSchema))) {
-            sb.append("<table_schema>");
-            sb.append(tableSchema);
-            sb.append("</table_schema>");
-        }
-        sb.append("<table_name>");
-        sb.append(((tableName == null)?"":tableName));
-        sb.append("</table_name>");
-        if ((comment!= null)&&(!"".equals(comment))) {
-            sb.append("<comment>");
-            sb.append(comment);
-            sb.append("</comment>");
-        }
-        return sb.toString();
+        XMLBuilder builder = XMLBuilder.nonFormatting();
+        appendTo(builder);
+        return builder.toString();
     }
 
     @Override

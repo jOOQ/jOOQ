@@ -7,6 +7,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.jooq.util.jaxb.tools.StringAdapter;
+import org.jooq.util.jaxb.tools.XMLAppendable;
+import org.jooq.util.jaxb.tools.XMLBuilder;
 
 
 /**
@@ -22,7 +24,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 @SuppressWarnings({
     "all"
 })
-public class MatchersTableType implements Serializable
+public class MatchersTableType implements Serializable, XMLAppendable
 {
 
     private final static long serialVersionUID = 31200L;
@@ -425,74 +427,27 @@ public class MatchersTableType implements Serializable
     }
 
     @Override
+    public final void appendTo(XMLBuilder builder) {
+        builder.append("expression", expression);
+        builder.append("tableClass", tableClass);
+        builder.append("tableIdentifier", tableIdentifier);
+        builder.append("tableImplements", tableImplements);
+        builder.append("recordClass", recordClass);
+        builder.append("recordImplements", recordImplements);
+        builder.append("interfaceClass", interfaceClass);
+        builder.append("interfaceImplements", interfaceImplements);
+        builder.append("daoClass", daoClass);
+        builder.append("daoImplements", daoImplements);
+        builder.append("pojoClass", pojoClass);
+        builder.append("pojoExtends", pojoExtends);
+        builder.append("pojoImplements", pojoImplements);
+    }
+
+    @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        if ((expression!= null)&&(!"".equals(expression))) {
-            sb.append("<expression>");
-            sb.append(expression);
-            sb.append("</expression>");
-        }
-        if (tableClass!= null) {
-            sb.append("<tableClass>");
-            sb.append(tableClass);
-            sb.append("</tableClass>");
-        }
-        if (tableIdentifier!= null) {
-            sb.append("<tableIdentifier>");
-            sb.append(tableIdentifier);
-            sb.append("</tableIdentifier>");
-        }
-        if ((tableImplements!= null)&&(!"".equals(tableImplements))) {
-            sb.append("<tableImplements>");
-            sb.append(tableImplements);
-            sb.append("</tableImplements>");
-        }
-        if (recordClass!= null) {
-            sb.append("<recordClass>");
-            sb.append(recordClass);
-            sb.append("</recordClass>");
-        }
-        if ((recordImplements!= null)&&(!"".equals(recordImplements))) {
-            sb.append("<recordImplements>");
-            sb.append(recordImplements);
-            sb.append("</recordImplements>");
-        }
-        if (interfaceClass!= null) {
-            sb.append("<interfaceClass>");
-            sb.append(interfaceClass);
-            sb.append("</interfaceClass>");
-        }
-        if ((interfaceImplements!= null)&&(!"".equals(interfaceImplements))) {
-            sb.append("<interfaceImplements>");
-            sb.append(interfaceImplements);
-            sb.append("</interfaceImplements>");
-        }
-        if (daoClass!= null) {
-            sb.append("<daoClass>");
-            sb.append(daoClass);
-            sb.append("</daoClass>");
-        }
-        if ((daoImplements!= null)&&(!"".equals(daoImplements))) {
-            sb.append("<daoImplements>");
-            sb.append(daoImplements);
-            sb.append("</daoImplements>");
-        }
-        if (pojoClass!= null) {
-            sb.append("<pojoClass>");
-            sb.append(pojoClass);
-            sb.append("</pojoClass>");
-        }
-        if ((pojoExtends!= null)&&(!"".equals(pojoExtends))) {
-            sb.append("<pojoExtends>");
-            sb.append(pojoExtends);
-            sb.append("</pojoExtends>");
-        }
-        if ((pojoImplements!= null)&&(!"".equals(pojoImplements))) {
-            sb.append("<pojoImplements>");
-            sb.append(pojoImplements);
-            sb.append("</pojoImplements>");
-        }
-        return sb.toString();
+        XMLBuilder builder = XMLBuilder.nonFormatting();
+        appendTo(builder);
+        return builder.toString();
     }
 
     @Override

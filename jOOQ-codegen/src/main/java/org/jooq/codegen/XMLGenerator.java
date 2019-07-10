@@ -47,7 +47,6 @@ import java.io.StringWriter;
 import java.util.List;
 
 import org.jooq.SortOrder;
-import org.jooq.conf.MiniJAXB;
 import org.jooq.meta.CatalogDefinition;
 import org.jooq.meta.CheckConstraintDefinition;
 import org.jooq.meta.ColumnDefinition;
@@ -65,6 +64,7 @@ import org.jooq.meta.TableDefinition;
 import org.jooq.meta.UniqueKeyDefinition;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
+import org.jooq.util.jaxb.tools.MiniJAXB;
 import org.jooq.util.xml.jaxb.Catalog;
 import org.jooq.util.xml.jaxb.Column;
 import org.jooq.util.xml.jaxb.Index;

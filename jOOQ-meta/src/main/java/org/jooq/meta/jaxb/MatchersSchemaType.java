@@ -7,6 +7,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.jooq.util.jaxb.tools.StringAdapter;
+import org.jooq.util.jaxb.tools.XMLAppendable;
+import org.jooq.util.jaxb.tools.XMLBuilder;
 
 
 /**
@@ -22,7 +24,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 @SuppressWarnings({
     "all"
 })
-public class MatchersSchemaType implements Serializable
+public class MatchersSchemaType implements Serializable, XMLAppendable
 {
 
     private final static long serialVersionUID = 31200L;
@@ -150,29 +152,18 @@ public class MatchersSchemaType implements Serializable
     }
 
     @Override
+    public final void appendTo(XMLBuilder builder) {
+        builder.append("expression", expression);
+        builder.append("schemaClass", schemaClass);
+        builder.append("schemaIdentifier", schemaIdentifier);
+        builder.append("schemaImplements", schemaImplements);
+    }
+
+    @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        if ((expression!= null)&&(!"".equals(expression))) {
-            sb.append("<expression>");
-            sb.append(expression);
-            sb.append("</expression>");
-        }
-        if (schemaClass!= null) {
-            sb.append("<schemaClass>");
-            sb.append(schemaClass);
-            sb.append("</schemaClass>");
-        }
-        if (schemaIdentifier!= null) {
-            sb.append("<schemaIdentifier>");
-            sb.append(schemaIdentifier);
-            sb.append("</schemaIdentifier>");
-        }
-        if ((schemaImplements!= null)&&(!"".equals(schemaImplements))) {
-            sb.append("<schemaImplements>");
-            sb.append(schemaImplements);
-            sb.append("</schemaImplements>");
-        }
-        return sb.toString();
+        XMLBuilder builder = XMLBuilder.nonFormatting();
+        appendTo(builder);
+        return builder.toString();
     }
 
     @Override

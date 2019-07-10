@@ -13,6 +13,8 @@ import javax.xml.bind.annotation.XmlList;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.jooq.util.jaxb.tools.StringAdapter;
+import org.jooq.util.jaxb.tools.XMLAppendable;
+import org.jooq.util.jaxb.tools.XMLBuilder;
 
 
 /**
@@ -28,7 +30,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 @SuppressWarnings({
     "all"
 })
-public class Database implements Serializable
+public class Database implements Serializable, XMLAppendable
 {
 
     private final static long serialVersionUID = 31200L;
@@ -1853,301 +1855,66 @@ public class Database implements Serializable
     }
 
     @Override
+    public final void appendTo(XMLBuilder builder) {
+        builder.append("name", name);
+        builder.append("regexFlags", "regexFlags", regexFlags);
+        builder.append("regexMatchesPartialQualification", regexMatchesPartialQualification);
+        builder.append("sqlMatchesPartialQualification", sqlMatchesPartialQualification);
+        builder.append("includes", includes);
+        builder.append("excludes", excludes);
+        builder.append("includeExcludeColumns", includeExcludeColumns);
+        builder.append("includeTables", includeTables);
+        builder.append("includeEmbeddables", includeEmbeddables);
+        builder.append("includeRoutines", includeRoutines);
+        builder.append("includeTriggerRoutines", includeTriggerRoutines);
+        builder.append("includePackages", includePackages);
+        builder.append("includePackageRoutines", includePackageRoutines);
+        builder.append("includePackageUDTs", includePackageUDTs);
+        builder.append("includePackageConstants", includePackageConstants);
+        builder.append("includeUDTs", includeUDTs);
+        builder.append("includeSequences", includeSequences);
+        builder.append("includeIndexes", includeIndexes);
+        builder.append("includePrimaryKeys", includePrimaryKeys);
+        builder.append("includeUniqueKeys", includeUniqueKeys);
+        builder.append("includeForeignKeys", includeForeignKeys);
+        builder.append("includeCheckConstraints", includeCheckConstraints);
+        builder.append("includeInvisibleColumns", includeInvisibleColumns);
+        builder.append("recordVersionFields", recordVersionFields);
+        builder.append("recordTimestampFields", recordTimestampFields);
+        builder.append("syntheticIdentities", syntheticIdentities);
+        builder.append("syntheticPrimaryKeys", syntheticPrimaryKeys);
+        builder.append("overridePrimaryKeys", overridePrimaryKeys);
+        builder.append("dateAsTimestamp", dateAsTimestamp);
+        builder.append("ignoreProcedureReturnValues", ignoreProcedureReturnValues);
+        builder.append("unsignedTypes", unsignedTypes);
+        builder.append("integerDisplayWidths", integerDisplayWidths);
+        builder.append("inputCatalog", inputCatalog);
+        builder.append("outputCatalog", outputCatalog);
+        builder.append("outputCatalogToDefault", outputCatalogToDefault);
+        builder.append("inputSchema", inputSchema);
+        builder.append("outputSchema", outputSchema);
+        builder.append("outputSchemaToDefault", outputSchemaToDefault);
+        builder.append("schemaVersionProvider", schemaVersionProvider);
+        builder.append("catalogVersionProvider", catalogVersionProvider);
+        builder.append("orderProvider", orderProvider);
+        builder.append("forceIntegerTypesOnZeroScaleDecimals", forceIntegerTypesOnZeroScaleDecimals);
+        builder.append("tableValuedFunctions", tableValuedFunctions);
+        builder.append("logSlowQueriesAfterSeconds", logSlowQueriesAfterSeconds);
+        builder.append("logSlowResultsAfterSeconds", logSlowResultsAfterSeconds);
+        builder.append("properties", "property", properties);
+        builder.append("catalogs", "catalog", catalogs);
+        builder.append("schemata", "schema", schemata);
+        builder.append("embeddables", "embeddable", embeddables);
+        builder.append("customTypes", "customType", customTypes);
+        builder.append("enumTypes", "enumType", enumTypes);
+        builder.append("forcedTypes", "forcedType", forcedTypes);
+    }
+
+    @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        if ((name!= null)&&(!"".equals(name))) {
-            sb.append("<name>");
-            sb.append(name);
-            sb.append("</name>");
-        }
-        if (regexFlags!= null) {
-            sb.append("<regexFlags>");
-            for (int i = 0; (i<regexFlags.size()); i ++) {
-                sb.append("<regexFlags>");
-                sb.append(regexFlags.get(i));
-                sb.append("</regexFlags>");
-            }
-            sb.append("</regexFlags>");
-        }
-        if (regexMatchesPartialQualification!= null) {
-            sb.append("<regexMatchesPartialQualification>");
-            sb.append(regexMatchesPartialQualification);
-            sb.append("</regexMatchesPartialQualification>");
-        }
-        if (sqlMatchesPartialQualification!= null) {
-            sb.append("<sqlMatchesPartialQualification>");
-            sb.append(sqlMatchesPartialQualification);
-            sb.append("</sqlMatchesPartialQualification>");
-        }
-        if ((includes!= null)&&(!"".equals(includes))) {
-            sb.append("<includes>");
-            sb.append(includes);
-            sb.append("</includes>");
-        }
-        if ((excludes!= null)&&(!"".equals(excludes))) {
-            sb.append("<excludes>");
-            sb.append(excludes);
-            sb.append("</excludes>");
-        }
-        if (includeExcludeColumns!= null) {
-            sb.append("<includeExcludeColumns>");
-            sb.append(includeExcludeColumns);
-            sb.append("</includeExcludeColumns>");
-        }
-        if (includeTables!= null) {
-            sb.append("<includeTables>");
-            sb.append(includeTables);
-            sb.append("</includeTables>");
-        }
-        if (includeEmbeddables!= null) {
-            sb.append("<includeEmbeddables>");
-            sb.append(includeEmbeddables);
-            sb.append("</includeEmbeddables>");
-        }
-        if (includeRoutines!= null) {
-            sb.append("<includeRoutines>");
-            sb.append(includeRoutines);
-            sb.append("</includeRoutines>");
-        }
-        if (includeTriggerRoutines!= null) {
-            sb.append("<includeTriggerRoutines>");
-            sb.append(includeTriggerRoutines);
-            sb.append("</includeTriggerRoutines>");
-        }
-        if (includePackages!= null) {
-            sb.append("<includePackages>");
-            sb.append(includePackages);
-            sb.append("</includePackages>");
-        }
-        if (includePackageRoutines!= null) {
-            sb.append("<includePackageRoutines>");
-            sb.append(includePackageRoutines);
-            sb.append("</includePackageRoutines>");
-        }
-        if (includePackageUDTs!= null) {
-            sb.append("<includePackageUDTs>");
-            sb.append(includePackageUDTs);
-            sb.append("</includePackageUDTs>");
-        }
-        if (includePackageConstants!= null) {
-            sb.append("<includePackageConstants>");
-            sb.append(includePackageConstants);
-            sb.append("</includePackageConstants>");
-        }
-        if (includeUDTs!= null) {
-            sb.append("<includeUDTs>");
-            sb.append(includeUDTs);
-            sb.append("</includeUDTs>");
-        }
-        if (includeSequences!= null) {
-            sb.append("<includeSequences>");
-            sb.append(includeSequences);
-            sb.append("</includeSequences>");
-        }
-        if (includeIndexes!= null) {
-            sb.append("<includeIndexes>");
-            sb.append(includeIndexes);
-            sb.append("</includeIndexes>");
-        }
-        if (includePrimaryKeys!= null) {
-            sb.append("<includePrimaryKeys>");
-            sb.append(includePrimaryKeys);
-            sb.append("</includePrimaryKeys>");
-        }
-        if (includeUniqueKeys!= null) {
-            sb.append("<includeUniqueKeys>");
-            sb.append(includeUniqueKeys);
-            sb.append("</includeUniqueKeys>");
-        }
-        if (includeForeignKeys!= null) {
-            sb.append("<includeForeignKeys>");
-            sb.append(includeForeignKeys);
-            sb.append("</includeForeignKeys>");
-        }
-        if (includeCheckConstraints!= null) {
-            sb.append("<includeCheckConstraints>");
-            sb.append(includeCheckConstraints);
-            sb.append("</includeCheckConstraints>");
-        }
-        if (includeInvisibleColumns!= null) {
-            sb.append("<includeInvisibleColumns>");
-            sb.append(includeInvisibleColumns);
-            sb.append("</includeInvisibleColumns>");
-        }
-        if ((recordVersionFields!= null)&&(!"".equals(recordVersionFields))) {
-            sb.append("<recordVersionFields>");
-            sb.append(recordVersionFields);
-            sb.append("</recordVersionFields>");
-        }
-        if ((recordTimestampFields!= null)&&(!"".equals(recordTimestampFields))) {
-            sb.append("<recordTimestampFields>");
-            sb.append(recordTimestampFields);
-            sb.append("</recordTimestampFields>");
-        }
-        if ((syntheticIdentities!= null)&&(!"".equals(syntheticIdentities))) {
-            sb.append("<syntheticIdentities>");
-            sb.append(syntheticIdentities);
-            sb.append("</syntheticIdentities>");
-        }
-        if ((syntheticPrimaryKeys!= null)&&(!"".equals(syntheticPrimaryKeys))) {
-            sb.append("<syntheticPrimaryKeys>");
-            sb.append(syntheticPrimaryKeys);
-            sb.append("</syntheticPrimaryKeys>");
-        }
-        if ((overridePrimaryKeys!= null)&&(!"".equals(overridePrimaryKeys))) {
-            sb.append("<overridePrimaryKeys>");
-            sb.append(overridePrimaryKeys);
-            sb.append("</overridePrimaryKeys>");
-        }
-        if (dateAsTimestamp!= null) {
-            sb.append("<dateAsTimestamp>");
-            sb.append(dateAsTimestamp);
-            sb.append("</dateAsTimestamp>");
-        }
-        if (ignoreProcedureReturnValues!= null) {
-            sb.append("<ignoreProcedureReturnValues>");
-            sb.append(ignoreProcedureReturnValues);
-            sb.append("</ignoreProcedureReturnValues>");
-        }
-        if (unsignedTypes!= null) {
-            sb.append("<unsignedTypes>");
-            sb.append(unsignedTypes);
-            sb.append("</unsignedTypes>");
-        }
-        if (integerDisplayWidths!= null) {
-            sb.append("<integerDisplayWidths>");
-            sb.append(integerDisplayWidths);
-            sb.append("</integerDisplayWidths>");
-        }
-        if ((inputCatalog!= null)&&(!"".equals(inputCatalog))) {
-            sb.append("<inputCatalog>");
-            sb.append(inputCatalog);
-            sb.append("</inputCatalog>");
-        }
-        if ((outputCatalog!= null)&&(!"".equals(outputCatalog))) {
-            sb.append("<outputCatalog>");
-            sb.append(outputCatalog);
-            sb.append("</outputCatalog>");
-        }
-        if (outputCatalogToDefault!= null) {
-            sb.append("<outputCatalogToDefault>");
-            sb.append(outputCatalogToDefault);
-            sb.append("</outputCatalogToDefault>");
-        }
-        if ((inputSchema!= null)&&(!"".equals(inputSchema))) {
-            sb.append("<inputSchema>");
-            sb.append(inputSchema);
-            sb.append("</inputSchema>");
-        }
-        if ((outputSchema!= null)&&(!"".equals(outputSchema))) {
-            sb.append("<outputSchema>");
-            sb.append(outputSchema);
-            sb.append("</outputSchema>");
-        }
-        if (outputSchemaToDefault!= null) {
-            sb.append("<outputSchemaToDefault>");
-            sb.append(outputSchemaToDefault);
-            sb.append("</outputSchemaToDefault>");
-        }
-        if ((schemaVersionProvider!= null)&&(!"".equals(schemaVersionProvider))) {
-            sb.append("<schemaVersionProvider>");
-            sb.append(schemaVersionProvider);
-            sb.append("</schemaVersionProvider>");
-        }
-        if ((catalogVersionProvider!= null)&&(!"".equals(catalogVersionProvider))) {
-            sb.append("<catalogVersionProvider>");
-            sb.append(catalogVersionProvider);
-            sb.append("</catalogVersionProvider>");
-        }
-        if ((orderProvider!= null)&&(!"".equals(orderProvider))) {
-            sb.append("<orderProvider>");
-            sb.append(orderProvider);
-            sb.append("</orderProvider>");
-        }
-        if (forceIntegerTypesOnZeroScaleDecimals!= null) {
-            sb.append("<forceIntegerTypesOnZeroScaleDecimals>");
-            sb.append(forceIntegerTypesOnZeroScaleDecimals);
-            sb.append("</forceIntegerTypesOnZeroScaleDecimals>");
-        }
-        if (tableValuedFunctions!= null) {
-            sb.append("<tableValuedFunctions>");
-            sb.append(tableValuedFunctions);
-            sb.append("</tableValuedFunctions>");
-        }
-        if (logSlowQueriesAfterSeconds!= null) {
-            sb.append("<logSlowQueriesAfterSeconds>");
-            sb.append(logSlowQueriesAfterSeconds);
-            sb.append("</logSlowQueriesAfterSeconds>");
-        }
-        if (logSlowResultsAfterSeconds!= null) {
-            sb.append("<logSlowResultsAfterSeconds>");
-            sb.append(logSlowResultsAfterSeconds);
-            sb.append("</logSlowResultsAfterSeconds>");
-        }
-        if (properties!= null) {
-            sb.append("<properties>");
-            for (int i = 0; (i<properties.size()); i ++) {
-                sb.append("<property>");
-                sb.append(properties.get(i));
-                sb.append("</property>");
-            }
-            sb.append("</properties>");
-        }
-        if (catalogs!= null) {
-            sb.append("<catalogs>");
-            for (int i = 0; (i<catalogs.size()); i ++) {
-                sb.append("<catalog>");
-                sb.append(catalogs.get(i));
-                sb.append("</catalog>");
-            }
-            sb.append("</catalogs>");
-        }
-        if (schemata!= null) {
-            sb.append("<schemata>");
-            for (int i = 0; (i<schemata.size()); i ++) {
-                sb.append("<schema>");
-                sb.append(schemata.get(i));
-                sb.append("</schema>");
-            }
-            sb.append("</schemata>");
-        }
-        if (embeddables!= null) {
-            sb.append("<embeddables>");
-            for (int i = 0; (i<embeddables.size()); i ++) {
-                sb.append("<embeddable>");
-                sb.append(embeddables.get(i));
-                sb.append("</embeddable>");
-            }
-            sb.append("</embeddables>");
-        }
-        if (customTypes!= null) {
-            sb.append("<customTypes>");
-            for (int i = 0; (i<customTypes.size()); i ++) {
-                sb.append("<customType>");
-                sb.append(customTypes.get(i));
-                sb.append("</customType>");
-            }
-            sb.append("</customTypes>");
-        }
-        if (enumTypes!= null) {
-            sb.append("<enumTypes>");
-            for (int i = 0; (i<enumTypes.size()); i ++) {
-                sb.append("<enumType>");
-                sb.append(enumTypes.get(i));
-                sb.append("</enumType>");
-            }
-            sb.append("</enumTypes>");
-        }
-        if (forcedTypes!= null) {
-            sb.append("<forcedTypes>");
-            for (int i = 0; (i<forcedTypes.size()); i ++) {
-                sb.append("<forcedType>");
-                sb.append(forcedTypes.get(i));
-                sb.append("</forcedType>");
-            }
-            sb.append("</forcedTypes>");
-        }
-        return sb.toString();
+        XMLBuilder builder = XMLBuilder.nonFormatting();
+        appendTo(builder);
+        return builder.toString();
     }
 
     @Override

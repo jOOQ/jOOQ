@@ -14,6 +14,8 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.jooq.SQLDialect;
+import org.jooq.util.jaxb.tools.XMLAppendable;
+import org.jooq.util.jaxb.tools.XMLBuilder;
 
 
 /**
@@ -31,7 +33,7 @@ import org.jooq.SQLDialect;
 })
 public class Settings
     extends SettingsBase
-    implements Serializable, Cloneable
+    implements Serializable, Cloneable, XMLAppendable
 {
 
     private final static long serialVersionUID = 31200L;
@@ -2154,333 +2156,78 @@ public class Settings
     }
 
     @Override
+    public final void appendTo(XMLBuilder builder) {
+        builder.append("renderCatalog", renderCatalog);
+        builder.append("renderSchema", renderSchema);
+        builder.append("renderMapping", renderMapping);
+        builder.append("renderQuotedNames", renderQuotedNames);
+        builder.append("renderNameCase", renderNameCase);
+        builder.append("renderNameStyle", renderNameStyle);
+        builder.append("renderNamedParamPrefix", renderNamedParamPrefix);
+        builder.append("renderKeywordCase", renderKeywordCase);
+        builder.append("renderKeywordStyle", renderKeywordStyle);
+        builder.append("renderLocale", renderLocale);
+        builder.append("renderFormatted", renderFormatted);
+        builder.append("renderFormatting", renderFormatting);
+        builder.append("renderScalarSubqueriesForStoredFunctions", renderScalarSubqueriesForStoredFunctions);
+        builder.append("renderOrderByRownumberForEmulatedPagination", renderOrderByRownumberForEmulatedPagination);
+        builder.append("renderOutputForSQLServerReturningClause", renderOutputForSQLServerReturningClause);
+        builder.append("fetchTriggerValuesAfterSQLServerOutput", fetchTriggerValuesAfterSQLServerOutput);
+        builder.append("transformTableListsToAnsiJoin", transformTableListsToAnsiJoin);
+        builder.append("backslashEscaping", backslashEscaping);
+        builder.append("paramType", paramType);
+        builder.append("paramCastMode", paramCastMode);
+        builder.append("statementType", statementType);
+        builder.append("inlineThreshold", inlineThreshold);
+        builder.append("transactionListenerStartInvocationOrder", transactionListenerStartInvocationOrder);
+        builder.append("transactionListenerEndInvocationOrder", transactionListenerEndInvocationOrder);
+        builder.append("visitListenerStartInvocationOrder", visitListenerStartInvocationOrder);
+        builder.append("visitListenerEndInvocationOrder", visitListenerEndInvocationOrder);
+        builder.append("recordListenerStartInvocationOrder", recordListenerStartInvocationOrder);
+        builder.append("recordListenerEndInvocationOrder", recordListenerEndInvocationOrder);
+        builder.append("executeListenerStartInvocationOrder", executeListenerStartInvocationOrder);
+        builder.append("executeListenerEndInvocationOrder", executeListenerEndInvocationOrder);
+        builder.append("executeLogging", executeLogging);
+        builder.append("executeWithOptimisticLocking", executeWithOptimisticLocking);
+        builder.append("executeWithOptimisticLockingExcludeUnversioned", executeWithOptimisticLockingExcludeUnversioned);
+        builder.append("attachRecords", attachRecords);
+        builder.append("updatablePrimaryKeys", updatablePrimaryKeys);
+        builder.append("reflectionCaching", reflectionCaching);
+        builder.append("cacheRecordMappers", cacheRecordMappers);
+        builder.append("throwExceptions", throwExceptions);
+        builder.append("fetchWarnings", fetchWarnings);
+        builder.append("fetchServerOutputSize", fetchServerOutputSize);
+        builder.append("returnIdentityOnUpdatableRecord", returnIdentityOnUpdatableRecord);
+        builder.append("returnAllOnUpdatableRecord", returnAllOnUpdatableRecord);
+        builder.append("returnRecordToPojo", returnRecordToPojo);
+        builder.append("mapJPAAnnotations", mapJPAAnnotations);
+        builder.append("mapConstructorParameterNames", mapConstructorParameterNames);
+        builder.append("queryPoolable", queryPoolable);
+        builder.append("queryTimeout", queryTimeout);
+        builder.append("maxRows", maxRows);
+        builder.append("fetchSize", fetchSize);
+        builder.append("debugInfoOnStackTrace", debugInfoOnStackTrace);
+        builder.append("inListPadding", inListPadding);
+        builder.append("inListPadBase", inListPadBase);
+        builder.append("delimiter", delimiter);
+        builder.append("emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly", emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly);
+        builder.append("executeUpdateWithoutWhere", executeUpdateWithoutWhere);
+        builder.append("executeDeleteWithoutWhere", executeDeleteWithoutWhere);
+        builder.append("parseDialect", parseDialect);
+        builder.append("parseWithMetaLookups", parseWithMetaLookups);
+        builder.append("parseUnsupportedSyntax", parseUnsupportedSyntax);
+        builder.append("parseUnknownFunctions", parseUnknownFunctions);
+        builder.append("parseIgnoreComments", parseIgnoreComments);
+        builder.append("parseIgnoreCommentStart", parseIgnoreCommentStart);
+        builder.append("parseIgnoreCommentStop", parseIgnoreCommentStop);
+        builder.append("parseSearchPath", "schema", parseSearchPath);
+    }
+
+    @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        if (renderCatalog!= null) {
-            sb.append("<renderCatalog>");
-            sb.append(renderCatalog);
-            sb.append("</renderCatalog>");
-        }
-        if (renderSchema!= null) {
-            sb.append("<renderSchema>");
-            sb.append(renderSchema);
-            sb.append("</renderSchema>");
-        }
-        if (renderMapping!= null) {
-            sb.append("<renderMapping>");
-            sb.append(renderMapping);
-            sb.append("</renderMapping>");
-        }
-        if (renderQuotedNames!= null) {
-            sb.append("<renderQuotedNames>");
-            sb.append(renderQuotedNames);
-            sb.append("</renderQuotedNames>");
-        }
-        if (renderNameCase!= null) {
-            sb.append("<renderNameCase>");
-            sb.append(renderNameCase);
-            sb.append("</renderNameCase>");
-        }
-        if (renderNameStyle!= null) {
-            sb.append("<renderNameStyle>");
-            sb.append(renderNameStyle);
-            sb.append("</renderNameStyle>");
-        }
-        if ((renderNamedParamPrefix!= null)&&(!"".equals(renderNamedParamPrefix))) {
-            sb.append("<renderNamedParamPrefix>");
-            sb.append(renderNamedParamPrefix);
-            sb.append("</renderNamedParamPrefix>");
-        }
-        if (renderKeywordCase!= null) {
-            sb.append("<renderKeywordCase>");
-            sb.append(renderKeywordCase);
-            sb.append("</renderKeywordCase>");
-        }
-        if (renderKeywordStyle!= null) {
-            sb.append("<renderKeywordStyle>");
-            sb.append(renderKeywordStyle);
-            sb.append("</renderKeywordStyle>");
-        }
-        if (renderLocale!= null) {
-            sb.append("<renderLocale>");
-            sb.append(renderLocale);
-            sb.append("</renderLocale>");
-        }
-        if (renderFormatted!= null) {
-            sb.append("<renderFormatted>");
-            sb.append(renderFormatted);
-            sb.append("</renderFormatted>");
-        }
-        if (renderFormatting!= null) {
-            sb.append("<renderFormatting>");
-            sb.append(renderFormatting);
-            sb.append("</renderFormatting>");
-        }
-        if (renderScalarSubqueriesForStoredFunctions!= null) {
-            sb.append("<renderScalarSubqueriesForStoredFunctions>");
-            sb.append(renderScalarSubqueriesForStoredFunctions);
-            sb.append("</renderScalarSubqueriesForStoredFunctions>");
-        }
-        if (renderOrderByRownumberForEmulatedPagination!= null) {
-            sb.append("<renderOrderByRownumberForEmulatedPagination>");
-            sb.append(renderOrderByRownumberForEmulatedPagination);
-            sb.append("</renderOrderByRownumberForEmulatedPagination>");
-        }
-        if (renderOutputForSQLServerReturningClause!= null) {
-            sb.append("<renderOutputForSQLServerReturningClause>");
-            sb.append(renderOutputForSQLServerReturningClause);
-            sb.append("</renderOutputForSQLServerReturningClause>");
-        }
-        if (fetchTriggerValuesAfterSQLServerOutput!= null) {
-            sb.append("<fetchTriggerValuesAfterSQLServerOutput>");
-            sb.append(fetchTriggerValuesAfterSQLServerOutput);
-            sb.append("</fetchTriggerValuesAfterSQLServerOutput>");
-        }
-        if (transformTableListsToAnsiJoin!= null) {
-            sb.append("<transformTableListsToAnsiJoin>");
-            sb.append(transformTableListsToAnsiJoin);
-            sb.append("</transformTableListsToAnsiJoin>");
-        }
-        if (backslashEscaping!= null) {
-            sb.append("<backslashEscaping>");
-            sb.append(backslashEscaping);
-            sb.append("</backslashEscaping>");
-        }
-        if (paramType!= null) {
-            sb.append("<paramType>");
-            sb.append(paramType);
-            sb.append("</paramType>");
-        }
-        if (paramCastMode!= null) {
-            sb.append("<paramCastMode>");
-            sb.append(paramCastMode);
-            sb.append("</paramCastMode>");
-        }
-        if (statementType!= null) {
-            sb.append("<statementType>");
-            sb.append(statementType);
-            sb.append("</statementType>");
-        }
-        if (inlineThreshold!= null) {
-            sb.append("<inlineThreshold>");
-            sb.append(inlineThreshold);
-            sb.append("</inlineThreshold>");
-        }
-        if (transactionListenerStartInvocationOrder!= null) {
-            sb.append("<transactionListenerStartInvocationOrder>");
-            sb.append(transactionListenerStartInvocationOrder);
-            sb.append("</transactionListenerStartInvocationOrder>");
-        }
-        if (transactionListenerEndInvocationOrder!= null) {
-            sb.append("<transactionListenerEndInvocationOrder>");
-            sb.append(transactionListenerEndInvocationOrder);
-            sb.append("</transactionListenerEndInvocationOrder>");
-        }
-        if (visitListenerStartInvocationOrder!= null) {
-            sb.append("<visitListenerStartInvocationOrder>");
-            sb.append(visitListenerStartInvocationOrder);
-            sb.append("</visitListenerStartInvocationOrder>");
-        }
-        if (visitListenerEndInvocationOrder!= null) {
-            sb.append("<visitListenerEndInvocationOrder>");
-            sb.append(visitListenerEndInvocationOrder);
-            sb.append("</visitListenerEndInvocationOrder>");
-        }
-        if (recordListenerStartInvocationOrder!= null) {
-            sb.append("<recordListenerStartInvocationOrder>");
-            sb.append(recordListenerStartInvocationOrder);
-            sb.append("</recordListenerStartInvocationOrder>");
-        }
-        if (recordListenerEndInvocationOrder!= null) {
-            sb.append("<recordListenerEndInvocationOrder>");
-            sb.append(recordListenerEndInvocationOrder);
-            sb.append("</recordListenerEndInvocationOrder>");
-        }
-        if (executeListenerStartInvocationOrder!= null) {
-            sb.append("<executeListenerStartInvocationOrder>");
-            sb.append(executeListenerStartInvocationOrder);
-            sb.append("</executeListenerStartInvocationOrder>");
-        }
-        if (executeListenerEndInvocationOrder!= null) {
-            sb.append("<executeListenerEndInvocationOrder>");
-            sb.append(executeListenerEndInvocationOrder);
-            sb.append("</executeListenerEndInvocationOrder>");
-        }
-        if (executeLogging!= null) {
-            sb.append("<executeLogging>");
-            sb.append(executeLogging);
-            sb.append("</executeLogging>");
-        }
-        if (executeWithOptimisticLocking!= null) {
-            sb.append("<executeWithOptimisticLocking>");
-            sb.append(executeWithOptimisticLocking);
-            sb.append("</executeWithOptimisticLocking>");
-        }
-        if (executeWithOptimisticLockingExcludeUnversioned!= null) {
-            sb.append("<executeWithOptimisticLockingExcludeUnversioned>");
-            sb.append(executeWithOptimisticLockingExcludeUnversioned);
-            sb.append("</executeWithOptimisticLockingExcludeUnversioned>");
-        }
-        if (attachRecords!= null) {
-            sb.append("<attachRecords>");
-            sb.append(attachRecords);
-            sb.append("</attachRecords>");
-        }
-        if (updatablePrimaryKeys!= null) {
-            sb.append("<updatablePrimaryKeys>");
-            sb.append(updatablePrimaryKeys);
-            sb.append("</updatablePrimaryKeys>");
-        }
-        if (reflectionCaching!= null) {
-            sb.append("<reflectionCaching>");
-            sb.append(reflectionCaching);
-            sb.append("</reflectionCaching>");
-        }
-        if (cacheRecordMappers!= null) {
-            sb.append("<cacheRecordMappers>");
-            sb.append(cacheRecordMappers);
-            sb.append("</cacheRecordMappers>");
-        }
-        if (throwExceptions!= null) {
-            sb.append("<throwExceptions>");
-            sb.append(throwExceptions);
-            sb.append("</throwExceptions>");
-        }
-        if (fetchWarnings!= null) {
-            sb.append("<fetchWarnings>");
-            sb.append(fetchWarnings);
-            sb.append("</fetchWarnings>");
-        }
-        if (fetchServerOutputSize!= null) {
-            sb.append("<fetchServerOutputSize>");
-            sb.append(fetchServerOutputSize);
-            sb.append("</fetchServerOutputSize>");
-        }
-        if (returnIdentityOnUpdatableRecord!= null) {
-            sb.append("<returnIdentityOnUpdatableRecord>");
-            sb.append(returnIdentityOnUpdatableRecord);
-            sb.append("</returnIdentityOnUpdatableRecord>");
-        }
-        if (returnAllOnUpdatableRecord!= null) {
-            sb.append("<returnAllOnUpdatableRecord>");
-            sb.append(returnAllOnUpdatableRecord);
-            sb.append("</returnAllOnUpdatableRecord>");
-        }
-        if (returnRecordToPojo!= null) {
-            sb.append("<returnRecordToPojo>");
-            sb.append(returnRecordToPojo);
-            sb.append("</returnRecordToPojo>");
-        }
-        if (mapJPAAnnotations!= null) {
-            sb.append("<mapJPAAnnotations>");
-            sb.append(mapJPAAnnotations);
-            sb.append("</mapJPAAnnotations>");
-        }
-        if (mapConstructorParameterNames!= null) {
-            sb.append("<mapConstructorParameterNames>");
-            sb.append(mapConstructorParameterNames);
-            sb.append("</mapConstructorParameterNames>");
-        }
-        if (queryPoolable!= null) {
-            sb.append("<queryPoolable>");
-            sb.append(queryPoolable);
-            sb.append("</queryPoolable>");
-        }
-        if (queryTimeout!= null) {
-            sb.append("<queryTimeout>");
-            sb.append(queryTimeout);
-            sb.append("</queryTimeout>");
-        }
-        if (maxRows!= null) {
-            sb.append("<maxRows>");
-            sb.append(maxRows);
-            sb.append("</maxRows>");
-        }
-        if (fetchSize!= null) {
-            sb.append("<fetchSize>");
-            sb.append(fetchSize);
-            sb.append("</fetchSize>");
-        }
-        if (debugInfoOnStackTrace!= null) {
-            sb.append("<debugInfoOnStackTrace>");
-            sb.append(debugInfoOnStackTrace);
-            sb.append("</debugInfoOnStackTrace>");
-        }
-        if (inListPadding!= null) {
-            sb.append("<inListPadding>");
-            sb.append(inListPadding);
-            sb.append("</inListPadding>");
-        }
-        if (inListPadBase!= null) {
-            sb.append("<inListPadBase>");
-            sb.append(inListPadBase);
-            sb.append("</inListPadBase>");
-        }
-        if ((delimiter!= null)&&(!"".equals(delimiter))) {
-            sb.append("<delimiter>");
-            sb.append(delimiter);
-            sb.append("</delimiter>");
-        }
-        if (emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly!= null) {
-            sb.append("<emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly>");
-            sb.append(emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly);
-            sb.append("</emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly>");
-        }
-        if (executeUpdateWithoutWhere!= null) {
-            sb.append("<executeUpdateWithoutWhere>");
-            sb.append(executeUpdateWithoutWhere);
-            sb.append("</executeUpdateWithoutWhere>");
-        }
-        if (executeDeleteWithoutWhere!= null) {
-            sb.append("<executeDeleteWithoutWhere>");
-            sb.append(executeDeleteWithoutWhere);
-            sb.append("</executeDeleteWithoutWhere>");
-        }
-        if (parseDialect!= null) {
-            sb.append("<parseDialect>");
-            sb.append(parseDialect);
-            sb.append("</parseDialect>");
-        }
-        if (parseWithMetaLookups!= null) {
-            sb.append("<parseWithMetaLookups>");
-            sb.append(parseWithMetaLookups);
-            sb.append("</parseWithMetaLookups>");
-        }
-        if (parseUnsupportedSyntax!= null) {
-            sb.append("<parseUnsupportedSyntax>");
-            sb.append(parseUnsupportedSyntax);
-            sb.append("</parseUnsupportedSyntax>");
-        }
-        if (parseUnknownFunctions!= null) {
-            sb.append("<parseUnknownFunctions>");
-            sb.append(parseUnknownFunctions);
-            sb.append("</parseUnknownFunctions>");
-        }
-        if (parseIgnoreComments!= null) {
-            sb.append("<parseIgnoreComments>");
-            sb.append(parseIgnoreComments);
-            sb.append("</parseIgnoreComments>");
-        }
-        if ((parseIgnoreCommentStart!= null)&&(!"".equals(parseIgnoreCommentStart))) {
-            sb.append("<parseIgnoreCommentStart>");
-            sb.append(parseIgnoreCommentStart);
-            sb.append("</parseIgnoreCommentStart>");
-        }
-        if ((parseIgnoreCommentStop!= null)&&(!"".equals(parseIgnoreCommentStop))) {
-            sb.append("<parseIgnoreCommentStop>");
-            sb.append(parseIgnoreCommentStop);
-            sb.append("</parseIgnoreCommentStop>");
-        }
-        if (parseSearchPath!= null) {
-            sb.append("<parseSearchPath>");
-            for (int i = 0; (i<parseSearchPath.size()); i ++) {
-                sb.append("<schema>");
-                sb.append(parseSearchPath.get(i));
-                sb.append("</schema>");
-            }
-            sb.append("</parseSearchPath>");
-        }
-        return sb.toString();
+        XMLBuilder builder = XMLBuilder.nonFormatting();
+        appendTo(builder);
+        return builder.toString();
     }
 
     @Override

@@ -8,6 +8,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.jooq.util.jaxb.tools.StringAdapter;
+import org.jooq.util.jaxb.tools.XMLAppendable;
+import org.jooq.util.jaxb.tools.XMLBuilder;
 
 
 /**
@@ -51,7 +53,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 @SuppressWarnings({
     "all"
 })
-public class Column implements Serializable
+public class Column implements Serializable, XMLAppendable
 {
 
     private final static long serialVersionUID = 31200L;
@@ -563,83 +565,30 @@ public class Column implements Serializable
     }
 
     @Override
+    public final void appendTo(XMLBuilder builder) {
+        builder.append("table_catalog", tableCatalog);
+        builder.append("table_schema", tableSchema);
+        builder.append("table_name", tableName);
+        builder.append("column_name", columnName);
+        builder.append("data_type", dataType);
+        builder.append("character_maximum_length", characterMaximumLength);
+        builder.append("numeric_precision", numericPrecision);
+        builder.append("numeric_scale", numericScale);
+        builder.append("udt_catalog", udtCatalog);
+        builder.append("udt_schema", udtSchema);
+        builder.append("udt_name", udtName);
+        builder.append("ordinal_position", ordinalPosition);
+        builder.append("identity_generation", identityGeneration);
+        builder.append("is_nullable", isNullable);
+        builder.append("column_default", columnDefault);
+        builder.append("comment", comment);
+    }
+
+    @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        if ((tableCatalog!= null)&&(!"".equals(tableCatalog))) {
-            sb.append("<table_catalog>");
-            sb.append(tableCatalog);
-            sb.append("</table_catalog>");
-        }
-        if ((tableSchema!= null)&&(!"".equals(tableSchema))) {
-            sb.append("<table_schema>");
-            sb.append(tableSchema);
-            sb.append("</table_schema>");
-        }
-        sb.append("<table_name>");
-        sb.append(((tableName == null)?"":tableName));
-        sb.append("</table_name>");
-        sb.append("<column_name>");
-        sb.append(((columnName == null)?"":columnName));
-        sb.append("</column_name>");
-        sb.append("<data_type>");
-        sb.append(((dataType == null)?"":dataType));
-        sb.append("</data_type>");
-        if (characterMaximumLength!= null) {
-            sb.append("<character_maximum_length>");
-            sb.append(characterMaximumLength);
-            sb.append("</character_maximum_length>");
-        }
-        if (numericPrecision!= null) {
-            sb.append("<numeric_precision>");
-            sb.append(numericPrecision);
-            sb.append("</numeric_precision>");
-        }
-        if (numericScale!= null) {
-            sb.append("<numeric_scale>");
-            sb.append(numericScale);
-            sb.append("</numeric_scale>");
-        }
-        if ((udtCatalog!= null)&&(!"".equals(udtCatalog))) {
-            sb.append("<udt_catalog>");
-            sb.append(udtCatalog);
-            sb.append("</udt_catalog>");
-        }
-        if ((udtSchema!= null)&&(!"".equals(udtSchema))) {
-            sb.append("<udt_schema>");
-            sb.append(udtSchema);
-            sb.append("</udt_schema>");
-        }
-        if ((udtName!= null)&&(!"".equals(udtName))) {
-            sb.append("<udt_name>");
-            sb.append(udtName);
-            sb.append("</udt_name>");
-        }
-        if (ordinalPosition!= null) {
-            sb.append("<ordinal_position>");
-            sb.append(ordinalPosition);
-            sb.append("</ordinal_position>");
-        }
-        if ((identityGeneration!= null)&&(!"".equals(identityGeneration))) {
-            sb.append("<identity_generation>");
-            sb.append(identityGeneration);
-            sb.append("</identity_generation>");
-        }
-        if (isNullable!= null) {
-            sb.append("<is_nullable>");
-            sb.append(isNullable);
-            sb.append("</is_nullable>");
-        }
-        if ((columnDefault!= null)&&(!"".equals(columnDefault))) {
-            sb.append("<column_default>");
-            sb.append(columnDefault);
-            sb.append("</column_default>");
-        }
-        if ((comment!= null)&&(!"".equals(comment))) {
-            sb.append("<comment>");
-            sb.append(comment);
-            sb.append("</comment>");
-        }
-        return sb.toString();
+        XMLBuilder builder = XMLBuilder.nonFormatting();
+        appendTo(builder);
+        return builder.toString();
     }
 
     @Override

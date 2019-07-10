@@ -62,7 +62,6 @@ import javax.sql.DataSource;
 
 import org.jooq.Constants;
 import org.jooq.Log.Level;
-import org.jooq.conf.MiniJAXB;
 import org.jooq.meta.CatalogVersionProvider;
 import org.jooq.meta.Database;
 import org.jooq.meta.Databases;
@@ -83,6 +82,7 @@ import org.jooq.meta.jaxb.Target;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
+import org.jooq.util.jaxb.tools.MiniJAXB;
 
 
 /**

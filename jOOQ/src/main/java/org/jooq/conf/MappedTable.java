@@ -8,6 +8,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import org.jooq.util.jaxb.tools.XMLAppendable;
+import org.jooq.util.jaxb.tools.XMLBuilder;
 
 
 /**
@@ -25,7 +27,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 })
 public class MappedTable
     extends SettingsBase
-    implements Serializable, Cloneable
+    implements Serializable, Cloneable, XMLAppendable
 {
 
     private final static long serialVersionUID = 31200L;
@@ -130,22 +132,17 @@ public class MappedTable
     }
 
     @Override
+    public final void appendTo(XMLBuilder builder) {
+        builder.append("input", input);
+        builder.append("inputExpression", inputExpression);
+        builder.append("output", output);
+    }
+
+    @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        if ((input!= null)&&(!"".equals(input))) {
-            sb.append("<input>");
-            sb.append(input);
-            sb.append("</input>");
-        }
-        if (inputExpression!= null) {
-            sb.append("<inputExpression>");
-            sb.append(inputExpression.pattern());
-            sb.append("</inputExpression>");
-        }
-        sb.append("<output>");
-        sb.append(((output == null)?"":output));
-        sb.append("</output>");
-        return sb.toString();
+        XMLBuilder builder = XMLBuilder.nonFormatting();
+        appendTo(builder);
+        return builder.toString();
     }
 
     @Override

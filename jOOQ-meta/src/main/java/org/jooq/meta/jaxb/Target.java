@@ -8,6 +8,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.jooq.util.jaxb.tools.StringAdapter;
+import org.jooq.util.jaxb.tools.XMLAppendable;
+import org.jooq.util.jaxb.tools.XMLBuilder;
 
 
 /**
@@ -23,7 +25,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 @SuppressWarnings({
     "all"
 })
-public class Target implements Serializable
+public class Target implements Serializable, XMLAppendable
 {
 
     private final static long serialVersionUID = 31200L;
@@ -159,29 +161,18 @@ public class Target implements Serializable
     }
 
     @Override
+    public final void appendTo(XMLBuilder builder) {
+        builder.append("packageName", packageName);
+        builder.append("directory", directory);
+        builder.append("encoding", encoding);
+        builder.append("clean", clean);
+    }
+
+    @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        if ((packageName!= null)&&(!"".equals(packageName))) {
-            sb.append("<packageName>");
-            sb.append(packageName);
-            sb.append("</packageName>");
-        }
-        if ((directory!= null)&&(!"".equals(directory))) {
-            sb.append("<directory>");
-            sb.append(directory);
-            sb.append("</directory>");
-        }
-        if ((encoding!= null)&&(!"".equals(encoding))) {
-            sb.append("<encoding>");
-            sb.append(encoding);
-            sb.append("</encoding>");
-        }
-        if (clean!= null) {
-            sb.append("<clean>");
-            sb.append(clean);
-            sb.append("</clean>");
-        }
-        return sb.toString();
+        XMLBuilder builder = XMLBuilder.nonFormatting();
+        appendTo(builder);
+        return builder.toString();
     }
 
     @Override

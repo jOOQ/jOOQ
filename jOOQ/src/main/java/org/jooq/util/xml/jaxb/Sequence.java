@@ -8,6 +8,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.jooq.util.jaxb.tools.StringAdapter;
+import org.jooq.util.jaxb.tools.XMLAppendable;
+import org.jooq.util.jaxb.tools.XMLBuilder;
 
 
 /**
@@ -43,7 +45,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 @SuppressWarnings({
     "all"
 })
-public class Sequence implements Serializable
+public class Sequence implements Serializable, XMLAppendable
 {
 
     private final static long serialVersionUID = 31200L;
@@ -301,45 +303,22 @@ public class Sequence implements Serializable
     }
 
     @Override
+    public final void appendTo(XMLBuilder builder) {
+        builder.append("sequence_catalog", sequenceCatalog);
+        builder.append("sequence_schema", sequenceSchema);
+        builder.append("sequence_name", sequenceName);
+        builder.append("data_type", dataType);
+        builder.append("character_maximum_length", characterMaximumLength);
+        builder.append("numeric_precision", numericPrecision);
+        builder.append("numeric_scale", numericScale);
+        builder.append("comment", comment);
+    }
+
+    @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        if ((sequenceCatalog!= null)&&(!"".equals(sequenceCatalog))) {
-            sb.append("<sequence_catalog>");
-            sb.append(sequenceCatalog);
-            sb.append("</sequence_catalog>");
-        }
-        if ((sequenceSchema!= null)&&(!"".equals(sequenceSchema))) {
-            sb.append("<sequence_schema>");
-            sb.append(sequenceSchema);
-            sb.append("</sequence_schema>");
-        }
-        sb.append("<sequence_name>");
-        sb.append(((sequenceName == null)?"":sequenceName));
-        sb.append("</sequence_name>");
-        sb.append("<data_type>");
-        sb.append(((dataType == null)?"":dataType));
-        sb.append("</data_type>");
-        if (characterMaximumLength!= null) {
-            sb.append("<character_maximum_length>");
-            sb.append(characterMaximumLength);
-            sb.append("</character_maximum_length>");
-        }
-        if (numericPrecision!= null) {
-            sb.append("<numeric_precision>");
-            sb.append(numericPrecision);
-            sb.append("</numeric_precision>");
-        }
-        if (numericScale!= null) {
-            sb.append("<numeric_scale>");
-            sb.append(numericScale);
-            sb.append("</numeric_scale>");
-        }
-        if ((comment!= null)&&(!"".equals(comment))) {
-            sb.append("<comment>");
-            sb.append(comment);
-            sb.append("</comment>");
-        }
-        return sb.toString();
+        XMLBuilder builder = XMLBuilder.nonFormatting();
+        appendTo(builder);
+        return builder.toString();
     }
 
     @Override

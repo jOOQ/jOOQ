@@ -6,6 +6,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+import org.jooq.util.jaxb.tools.XMLAppendable;
+import org.jooq.util.jaxb.tools.XMLBuilder;
 
 
 /**
@@ -23,7 +25,7 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class RenderFormatting
     extends SettingsBase
-    implements Serializable, Cloneable
+    implements Serializable, Cloneable, XMLAppendable
 {
 
     private final static long serialVersionUID = 31200L;
@@ -122,24 +124,17 @@ public class RenderFormatting
     }
 
     @Override
+    public final void appendTo(XMLBuilder builder) {
+        builder.append("newline", newline);
+        builder.append("indentation", indentation);
+        builder.append("printMargin", printMargin);
+    }
+
+    @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        if ((newline!= null)&&(!"".equals(newline))) {
-            sb.append("<newline>");
-            sb.append(newline);
-            sb.append("</newline>");
-        }
-        if ((indentation!= null)&&(!"".equals(indentation))) {
-            sb.append("<indentation>");
-            sb.append(indentation);
-            sb.append("</indentation>");
-        }
-        if (printMargin!= null) {
-            sb.append("<printMargin>");
-            sb.append(printMargin);
-            sb.append("</printMargin>");
-        }
-        return sb.toString();
+        XMLBuilder builder = XMLBuilder.nonFormatting();
+        appendTo(builder);
+        return builder.toString();
     }
 
     @Override

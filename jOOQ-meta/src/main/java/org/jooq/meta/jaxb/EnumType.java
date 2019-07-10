@@ -8,6 +8,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.jooq.util.jaxb.tools.StringAdapter;
+import org.jooq.util.jaxb.tools.XMLAppendable;
+import org.jooq.util.jaxb.tools.XMLBuilder;
 
 
 /**
@@ -37,7 +39,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 @SuppressWarnings({
     "all"
 })
-public class EnumType implements Serializable
+public class EnumType implements Serializable, XMLAppendable
 {
 
     private final static long serialVersionUID = 31200L;
@@ -107,15 +109,16 @@ public class EnumType implements Serializable
     }
 
     @Override
+    public final void appendTo(XMLBuilder builder) {
+        builder.append("name", name);
+        builder.append("literals", literals);
+    }
+
+    @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("<name>");
-        sb.append(((name == null)?"":name));
-        sb.append("</name>");
-        sb.append("<literals>");
-        sb.append(((literals == null)?"":literals));
-        sb.append("</literals>");
-        return sb.toString();
+        XMLBuilder builder = XMLBuilder.nonFormatting();
+        appendTo(builder);
+        return builder.toString();
     }
 
     @Override

@@ -8,6 +8,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.jooq.util.jaxb.tools.StringAdapter;
+import org.jooq.util.jaxb.tools.XMLAppendable;
+import org.jooq.util.jaxb.tools.XMLBuilder;
 
 
 /**
@@ -24,7 +26,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 @SuppressWarnings({
     "all"
 })
-public class Strategy implements Serializable
+public class Strategy implements Serializable, XMLAppendable
 {
 
     private final static long serialVersionUID = 31200L;
@@ -92,19 +94,16 @@ public class Strategy implements Serializable
     }
 
     @Override
+    public final void appendTo(XMLBuilder builder) {
+        builder.append("name", name);
+        builder.append("matchers", matchers);
+    }
+
+    @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        if ((name!= null)&&(!"".equals(name))) {
-            sb.append("<name>");
-            sb.append(name);
-            sb.append("</name>");
-        }
-        if (matchers!= null) {
-            sb.append("<matchers>");
-            sb.append(matchers);
-            sb.append("</matchers>");
-        }
-        return sb.toString();
+        XMLBuilder builder = XMLBuilder.nonFormatting();
+        appendTo(builder);
+        return builder.toString();
     }
 
     @Override

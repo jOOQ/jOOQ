@@ -8,6 +8,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.jooq.util.jaxb.tools.StringAdapter;
+import org.jooq.util.jaxb.tools.XMLAppendable;
+import org.jooq.util.jaxb.tools.XMLBuilder;
 
 
 /**
@@ -39,7 +41,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 @SuppressWarnings({
     "all"
 })
-public class Table implements Serializable
+public class Table implements Serializable, XMLAppendable
 {
 
     private final static long serialVersionUID = 31200L;
@@ -172,27 +174,18 @@ public class Table implements Serializable
     }
 
     @Override
+    public final void appendTo(XMLBuilder builder) {
+        builder.append("table_catalog", tableCatalog);
+        builder.append("table_schema", tableSchema);
+        builder.append("table_name", tableName);
+        builder.append("comment", comment);
+    }
+
+    @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        if ((tableCatalog!= null)&&(!"".equals(tableCatalog))) {
-            sb.append("<table_catalog>");
-            sb.append(tableCatalog);
-            sb.append("</table_catalog>");
-        }
-        if ((tableSchema!= null)&&(!"".equals(tableSchema))) {
-            sb.append("<table_schema>");
-            sb.append(tableSchema);
-            sb.append("</table_schema>");
-        }
-        sb.append("<table_name>");
-        sb.append(((tableName == null)?"":tableName));
-        sb.append("</table_name>");
-        if ((comment!= null)&&(!"".equals(comment))) {
-            sb.append("<comment>");
-            sb.append(comment);
-            sb.append("</comment>");
-        }
-        return sb.toString();
+        XMLBuilder builder = XMLBuilder.nonFormatting();
+        appendTo(builder);
+        return builder.toString();
     }
 
     @Override

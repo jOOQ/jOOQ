@@ -7,6 +7,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.jooq.util.jaxb.tools.StringAdapter;
+import org.jooq.util.jaxb.tools.XMLAppendable;
+import org.jooq.util.jaxb.tools.XMLBuilder;
 
 
 /**
@@ -22,7 +24,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 @SuppressWarnings({
     "all"
 })
-public class MatchersFieldType implements Serializable
+public class MatchersFieldType implements Serializable, XMLAppendable
 {
 
     private final static long serialVersionUID = 31200L;
@@ -179,34 +181,19 @@ public class MatchersFieldType implements Serializable
     }
 
     @Override
+    public final void appendTo(XMLBuilder builder) {
+        builder.append("expression", expression);
+        builder.append("fieldIdentifier", fieldIdentifier);
+        builder.append("fieldMember", fieldMember);
+        builder.append("fieldSetter", fieldSetter);
+        builder.append("fieldGetter", fieldGetter);
+    }
+
+    @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        if ((expression!= null)&&(!"".equals(expression))) {
-            sb.append("<expression>");
-            sb.append(expression);
-            sb.append("</expression>");
-        }
-        if (fieldIdentifier!= null) {
-            sb.append("<fieldIdentifier>");
-            sb.append(fieldIdentifier);
-            sb.append("</fieldIdentifier>");
-        }
-        if (fieldMember!= null) {
-            sb.append("<fieldMember>");
-            sb.append(fieldMember);
-            sb.append("</fieldMember>");
-        }
-        if (fieldSetter!= null) {
-            sb.append("<fieldSetter>");
-            sb.append(fieldSetter);
-            sb.append("</fieldSetter>");
-        }
-        if (fieldGetter!= null) {
-            sb.append("<fieldGetter>");
-            sb.append(fieldGetter);
-            sb.append("</fieldGetter>");
-        }
-        return sb.toString();
+        XMLBuilder builder = XMLBuilder.nonFormatting();
+        appendTo(builder);
+        return builder.toString();
     }
 
     @Override

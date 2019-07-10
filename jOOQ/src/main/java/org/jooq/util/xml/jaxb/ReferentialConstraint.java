@@ -8,6 +8,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.jooq.util.jaxb.tools.StringAdapter;
+import org.jooq.util.jaxb.tools.XMLAppendable;
+import org.jooq.util.jaxb.tools.XMLBuilder;
 
 
 /**
@@ -41,7 +43,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 @SuppressWarnings({
     "all"
 })
-public class ReferentialConstraint implements Serializable
+public class ReferentialConstraint implements Serializable, XMLAppendable
 {
 
     private final static long serialVersionUID = 31200L;
@@ -239,35 +241,20 @@ public class ReferentialConstraint implements Serializable
     }
 
     @Override
+    public final void appendTo(XMLBuilder builder) {
+        builder.append("constraint_catalog", constraintCatalog);
+        builder.append("constraint_schema", constraintSchema);
+        builder.append("constraint_name", constraintName);
+        builder.append("unique_constraint_catalog", uniqueConstraintCatalog);
+        builder.append("unique_constraint_schema", uniqueConstraintSchema);
+        builder.append("unique_constraint_name", uniqueConstraintName);
+    }
+
+    @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        if ((constraintCatalog!= null)&&(!"".equals(constraintCatalog))) {
-            sb.append("<constraint_catalog>");
-            sb.append(constraintCatalog);
-            sb.append("</constraint_catalog>");
-        }
-        if ((constraintSchema!= null)&&(!"".equals(constraintSchema))) {
-            sb.append("<constraint_schema>");
-            sb.append(constraintSchema);
-            sb.append("</constraint_schema>");
-        }
-        sb.append("<constraint_name>");
-        sb.append(((constraintName == null)?"":constraintName));
-        sb.append("</constraint_name>");
-        if ((uniqueConstraintCatalog!= null)&&(!"".equals(uniqueConstraintCatalog))) {
-            sb.append("<unique_constraint_catalog>");
-            sb.append(uniqueConstraintCatalog);
-            sb.append("</unique_constraint_catalog>");
-        }
-        if ((uniqueConstraintSchema!= null)&&(!"".equals(uniqueConstraintSchema))) {
-            sb.append("<unique_constraint_schema>");
-            sb.append(uniqueConstraintSchema);
-            sb.append("</unique_constraint_schema>");
-        }
-        sb.append("<unique_constraint_name>");
-        sb.append(((uniqueConstraintName == null)?"":uniqueConstraintName));
-        sb.append("</unique_constraint_name>");
-        return sb.toString();
+        XMLBuilder builder = XMLBuilder.nonFormatting();
+        appendTo(builder);
+        return builder.toString();
     }
 
     @Override

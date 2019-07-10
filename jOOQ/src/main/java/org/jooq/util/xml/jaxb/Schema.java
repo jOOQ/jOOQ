@@ -8,6 +8,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.jooq.util.jaxb.tools.StringAdapter;
+import org.jooq.util.jaxb.tools.XMLAppendable;
+import org.jooq.util.jaxb.tools.XMLBuilder;
 
 
 /**
@@ -38,7 +40,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 @SuppressWarnings({
     "all"
 })
-public class Schema implements Serializable
+public class Schema implements Serializable, XMLAppendable
 {
 
     private final static long serialVersionUID = 31200L;
@@ -139,22 +141,17 @@ public class Schema implements Serializable
     }
 
     @Override
+    public final void appendTo(XMLBuilder builder) {
+        builder.append("catalog_name", catalogName);
+        builder.append("schema_name", schemaName);
+        builder.append("comment", comment);
+    }
+
+    @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        if ((catalogName!= null)&&(!"".equals(catalogName))) {
-            sb.append("<catalog_name>");
-            sb.append(catalogName);
-            sb.append("</catalog_name>");
-        }
-        sb.append("<schema_name>");
-        sb.append(((schemaName == null)?"":schemaName));
-        sb.append("</schema_name>");
-        if ((comment!= null)&&(!"".equals(comment))) {
-            sb.append("<comment>");
-            sb.append(comment);
-            sb.append("</comment>");
-        }
-        return sb.toString();
+        XMLBuilder builder = XMLBuilder.nonFormatting();
+        appendTo(builder);
+        return builder.toString();
     }
 
     @Override

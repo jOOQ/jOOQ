@@ -49,6 +49,8 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.Locale;
 
+import org.jooq.util.jaxb.tools.MiniJAXB;
+
 /**
  * Convenience methods for jOOQ runtime settings.
  *

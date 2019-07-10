@@ -9,6 +9,8 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.jooq.util.jaxb.tools.StringAdapter;
+import org.jooq.util.jaxb.tools.XMLAppendable;
+import org.jooq.util.jaxb.tools.XMLBuilder;
 
 
 /**
@@ -53,7 +55,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 @SuppressWarnings({
     "all"
 })
-public class Routine implements Serializable
+public class Routine implements Serializable, XMLAppendable
 {
 
     private final static long serialVersionUID = 31200L;
@@ -599,90 +601,31 @@ public class Routine implements Serializable
     }
 
     @Override
+    public final void appendTo(XMLBuilder builder) {
+        builder.append("specific_catalog", specificCatalog);
+        builder.append("specific_schema", specificSchema);
+        builder.append("specific_package", specificPackage);
+        builder.append("specific_name", specificName);
+        builder.append("routine_catalog", routineCatalog);
+        builder.append("routine_schema", routineSchema);
+        builder.append("routine_package", routinePackage);
+        builder.append("routine_name", routineName);
+        builder.append("routine_type", routineType);
+        builder.append("data_type", dataType);
+        builder.append("character_maximum_length", characterMaximumLength);
+        builder.append("numeric_precision", numericPrecision);
+        builder.append("numeric_scale", numericScale);
+        builder.append("udt_catalog", udtCatalog);
+        builder.append("udt_schema", udtSchema);
+        builder.append("udt_name", udtName);
+        builder.append("comment", comment);
+    }
+
+    @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        if ((specificCatalog!= null)&&(!"".equals(specificCatalog))) {
-            sb.append("<specific_catalog>");
-            sb.append(specificCatalog);
-            sb.append("</specific_catalog>");
-        }
-        if ((specificSchema!= null)&&(!"".equals(specificSchema))) {
-            sb.append("<specific_schema>");
-            sb.append(specificSchema);
-            sb.append("</specific_schema>");
-        }
-        if ((specificPackage!= null)&&(!"".equals(specificPackage))) {
-            sb.append("<specific_package>");
-            sb.append(specificPackage);
-            sb.append("</specific_package>");
-        }
-        if ((specificName!= null)&&(!"".equals(specificName))) {
-            sb.append("<specific_name>");
-            sb.append(specificName);
-            sb.append("</specific_name>");
-        }
-        if ((routineCatalog!= null)&&(!"".equals(routineCatalog))) {
-            sb.append("<routine_catalog>");
-            sb.append(routineCatalog);
-            sb.append("</routine_catalog>");
-        }
-        if ((routineSchema!= null)&&(!"".equals(routineSchema))) {
-            sb.append("<routine_schema>");
-            sb.append(routineSchema);
-            sb.append("</routine_schema>");
-        }
-        if ((routinePackage!= null)&&(!"".equals(routinePackage))) {
-            sb.append("<routine_package>");
-            sb.append(routinePackage);
-            sb.append("</routine_package>");
-        }
-        sb.append("<routine_name>");
-        sb.append(((routineName == null)?"":routineName));
-        sb.append("</routine_name>");
-        sb.append("<routine_type>");
-        sb.append(((routineType == null)?"":routineType));
-        sb.append("</routine_type>");
-        if ((dataType!= null)&&(!"".equals(dataType))) {
-            sb.append("<data_type>");
-            sb.append(dataType);
-            sb.append("</data_type>");
-        }
-        if (characterMaximumLength!= null) {
-            sb.append("<character_maximum_length>");
-            sb.append(characterMaximumLength);
-            sb.append("</character_maximum_length>");
-        }
-        if (numericPrecision!= null) {
-            sb.append("<numeric_precision>");
-            sb.append(numericPrecision);
-            sb.append("</numeric_precision>");
-        }
-        if (numericScale!= null) {
-            sb.append("<numeric_scale>");
-            sb.append(numericScale);
-            sb.append("</numeric_scale>");
-        }
-        if ((udtCatalog!= null)&&(!"".equals(udtCatalog))) {
-            sb.append("<udt_catalog>");
-            sb.append(udtCatalog);
-            sb.append("</udt_catalog>");
-        }
-        if ((udtSchema!= null)&&(!"".equals(udtSchema))) {
-            sb.append("<udt_schema>");
-            sb.append(udtSchema);
-            sb.append("</udt_schema>");
-        }
-        if ((udtName!= null)&&(!"".equals(udtName))) {
-            sb.append("<udt_name>");
-            sb.append(udtName);
-            sb.append("</udt_name>");
-        }
-        if ((comment!= null)&&(!"".equals(comment))) {
-            sb.append("<comment>");
-            sb.append(comment);
-            sb.append("</comment>");
-        }
-        return sb.toString();
+        XMLBuilder builder = XMLBuilder.nonFormatting();
+        appendTo(builder);
+        return builder.toString();
     }
 
     @Override

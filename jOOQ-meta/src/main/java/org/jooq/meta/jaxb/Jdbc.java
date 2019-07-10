@@ -12,6 +12,8 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.jooq.util.jaxb.tools.StringAdapter;
+import org.jooq.util.jaxb.tools.XMLAppendable;
+import org.jooq.util.jaxb.tools.XMLBuilder;
 
 
 /**
@@ -27,7 +29,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 @SuppressWarnings({
     "all"
 })
-public class Jdbc implements Serializable
+public class Jdbc implements Serializable, XMLAppendable
 {
 
     private final static long serialVersionUID = 31200L;
@@ -285,51 +287,22 @@ public class Jdbc implements Serializable
     }
 
     @Override
+    public final void appendTo(XMLBuilder builder) {
+        builder.append("driver", driver);
+        builder.append("url", url);
+        builder.append("schema", schema);
+        builder.append("user", user);
+        builder.append("username", username);
+        builder.append("password", password);
+        builder.append("autoCommit", autoCommit);
+        builder.append("properties", "property", properties);
+    }
+
+    @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        if ((driver!= null)&&(!"".equals(driver))) {
-            sb.append("<driver>");
-            sb.append(driver);
-            sb.append("</driver>");
-        }
-        sb.append("<url>");
-        sb.append(((url == null)?"":url));
-        sb.append("</url>");
-        if ((schema!= null)&&(!"".equals(schema))) {
-            sb.append("<schema>");
-            sb.append(schema);
-            sb.append("</schema>");
-        }
-        if ((user!= null)&&(!"".equals(user))) {
-            sb.append("<user>");
-            sb.append(user);
-            sb.append("</user>");
-        }
-        if ((username!= null)&&(!"".equals(username))) {
-            sb.append("<username>");
-            sb.append(username);
-            sb.append("</username>");
-        }
-        if ((password!= null)&&(!"".equals(password))) {
-            sb.append("<password>");
-            sb.append(password);
-            sb.append("</password>");
-        }
-        if (autoCommit!= null) {
-            sb.append("<autoCommit>");
-            sb.append(autoCommit);
-            sb.append("</autoCommit>");
-        }
-        if (properties!= null) {
-            sb.append("<properties>");
-            for (int i = 0; (i<properties.size()); i ++) {
-                sb.append("<property>");
-                sb.append(properties.get(i));
-                sb.append("</property>");
-            }
-            sb.append("</properties>");
-        }
-        return sb.toString();
+        XMLBuilder builder = XMLBuilder.nonFormatting();
+        appendTo(builder);
+        return builder.toString();
     }
 
     @Override

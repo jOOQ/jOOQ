@@ -11,6 +11,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import org.jooq.util.jaxb.tools.XMLAppendable;
+import org.jooq.util.jaxb.tools.XMLBuilder;
 
 
 /**
@@ -52,7 +54,7 @@ import javax.xml.bind.annotation.XmlType;
 @SuppressWarnings({
     "all"
 })
-public class InformationSchema implements Serializable
+public class InformationSchema implements Serializable, XMLAppendable
 {
 
     private final static long serialVersionUID = 31200L;
@@ -513,126 +515,27 @@ public class InformationSchema implements Serializable
     }
 
     @Override
+    public final void appendTo(XMLBuilder builder) {
+        builder.append("catalogs", "catalog", catalogs);
+        builder.append("schemata", "schema", schemata);
+        builder.append("sequences", "sequence", sequences);
+        builder.append("tables", "table", tables);
+        builder.append("columns", "column", columns);
+        builder.append("table_constraints", "table_constraint", tableConstraints);
+        builder.append("key_column_usages", "key_column_usage", keyColumnUsages);
+        builder.append("referential_constraints", "referential_constraint", referentialConstraints);
+        builder.append("indexes", "index", indexes);
+        builder.append("index_column_usages", "index_column_usage", indexColumnUsages);
+        builder.append("routines", "routine", routines);
+        builder.append("parameters", "parameter", parameters);
+        builder.append("element_types", "element_type", elementTypes);
+    }
+
+    @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        if (catalogs!= null) {
-            sb.append("<catalogs>");
-            for (int i = 0; (i<catalogs.size()); i ++) {
-                sb.append("<catalog>");
-                sb.append(catalogs.get(i));
-                sb.append("</catalog>");
-            }
-            sb.append("</catalogs>");
-        }
-        if (schemata!= null) {
-            sb.append("<schemata>");
-            for (int i = 0; (i<schemata.size()); i ++) {
-                sb.append("<schema>");
-                sb.append(schemata.get(i));
-                sb.append("</schema>");
-            }
-            sb.append("</schemata>");
-        }
-        if (sequences!= null) {
-            sb.append("<sequences>");
-            for (int i = 0; (i<sequences.size()); i ++) {
-                sb.append("<sequence>");
-                sb.append(sequences.get(i));
-                sb.append("</sequence>");
-            }
-            sb.append("</sequences>");
-        }
-        if (tables!= null) {
-            sb.append("<tables>");
-            for (int i = 0; (i<tables.size()); i ++) {
-                sb.append("<table>");
-                sb.append(tables.get(i));
-                sb.append("</table>");
-            }
-            sb.append("</tables>");
-        }
-        if (columns!= null) {
-            sb.append("<columns>");
-            for (int i = 0; (i<columns.size()); i ++) {
-                sb.append("<column>");
-                sb.append(columns.get(i));
-                sb.append("</column>");
-            }
-            sb.append("</columns>");
-        }
-        if (tableConstraints!= null) {
-            sb.append("<table_constraints>");
-            for (int i = 0; (i<tableConstraints.size()); i ++) {
-                sb.append("<table_constraint>");
-                sb.append(tableConstraints.get(i));
-                sb.append("</table_constraint>");
-            }
-            sb.append("</table_constraints>");
-        }
-        if (keyColumnUsages!= null) {
-            sb.append("<key_column_usages>");
-            for (int i = 0; (i<keyColumnUsages.size()); i ++) {
-                sb.append("<key_column_usage>");
-                sb.append(keyColumnUsages.get(i));
-                sb.append("</key_column_usage>");
-            }
-            sb.append("</key_column_usages>");
-        }
-        if (referentialConstraints!= null) {
-            sb.append("<referential_constraints>");
-            for (int i = 0; (i<referentialConstraints.size()); i ++) {
-                sb.append("<referential_constraint>");
-                sb.append(referentialConstraints.get(i));
-                sb.append("</referential_constraint>");
-            }
-            sb.append("</referential_constraints>");
-        }
-        if (indexes!= null) {
-            sb.append("<indexes>");
-            for (int i = 0; (i<indexes.size()); i ++) {
-                sb.append("<index>");
-                sb.append(indexes.get(i));
-                sb.append("</index>");
-            }
-            sb.append("</indexes>");
-        }
-        if (indexColumnUsages!= null) {
-            sb.append("<index_column_usages>");
-            for (int i = 0; (i<indexColumnUsages.size()); i ++) {
-                sb.append("<index_column_usage>");
-                sb.append(indexColumnUsages.get(i));
-                sb.append("</index_column_usage>");
-            }
-            sb.append("</index_column_usages>");
-        }
-        if (routines!= null) {
-            sb.append("<routines>");
-            for (int i = 0; (i<routines.size()); i ++) {
-                sb.append("<routine>");
-                sb.append(routines.get(i));
-                sb.append("</routine>");
-            }
-            sb.append("</routines>");
-        }
-        if (parameters!= null) {
-            sb.append("<parameters>");
-            for (int i = 0; (i<parameters.size()); i ++) {
-                sb.append("<parameter>");
-                sb.append(parameters.get(i));
-                sb.append("</parameter>");
-            }
-            sb.append("</parameters>");
-        }
-        if (elementTypes!= null) {
-            sb.append("<element_types>");
-            for (int i = 0; (i<elementTypes.size()); i ++) {
-                sb.append("<element_type>");
-                sb.append(elementTypes.get(i));
-                sb.append("</element_type>");
-            }
-            sb.append("</element_types>");
-        }
-        return sb.toString();
+        XMLBuilder builder = XMLBuilder.nonFormatting();
+        appendTo(builder);
+        return builder.toString();
     }
 
     @Override

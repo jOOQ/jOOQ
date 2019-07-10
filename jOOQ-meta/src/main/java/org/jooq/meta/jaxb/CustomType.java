@@ -8,6 +8,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.jooq.util.jaxb.tools.StringAdapter;
+import org.jooq.util.jaxb.tools.XMLAppendable;
+import org.jooq.util.jaxb.tools.XMLBuilder;
 
 
 /**
@@ -23,7 +25,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 @SuppressWarnings({
     "all"
 })
-public class CustomType implements Serializable
+public class CustomType implements Serializable, XMLAppendable
 {
 
     private final static long serialVersionUID = 31200L;
@@ -184,32 +186,19 @@ public class CustomType implements Serializable
     }
 
     @Override
+    public final void appendTo(XMLBuilder builder) {
+        builder.append("name", name);
+        builder.append("type", type);
+        builder.append("converter", converter);
+        builder.append("enumConverter", enumConverter);
+        builder.append("binding", binding);
+    }
+
+    @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("<name>");
-        sb.append(((name == null)?"":name));
-        sb.append("</name>");
-        if ((type!= null)&&(!"".equals(type))) {
-            sb.append("<type>");
-            sb.append(type);
-            sb.append("</type>");
-        }
-        if ((converter!= null)&&(!"".equals(converter))) {
-            sb.append("<converter>");
-            sb.append(converter);
-            sb.append("</converter>");
-        }
-        if (enumConverter!= null) {
-            sb.append("<enumConverter>");
-            sb.append(enumConverter);
-            sb.append("</enumConverter>");
-        }
-        if ((binding!= null)&&(!"".equals(binding))) {
-            sb.append("<binding>");
-            sb.append(binding);
-            sb.append("</binding>");
-        }
-        return sb.toString();
+        XMLBuilder builder = XMLBuilder.nonFormatting();
+        appendTo(builder);
+        return builder.toString();
     }
 
     @Override

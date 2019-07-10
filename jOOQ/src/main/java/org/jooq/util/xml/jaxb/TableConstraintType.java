@@ -52,4 +52,16 @@ public enum TableConstraintType {
         throw new IllegalArgumentException(v);
     }
 
+    @Override
+    public String toString() {
+        switch (this) {
+            case PRIMARY_KEY:
+                return "PRIMARY KEY";
+            case FOREIGN_KEY:
+                return "FOREIGN KEY";
+            default:
+                return this.name();
+        }
+    }
+
 }

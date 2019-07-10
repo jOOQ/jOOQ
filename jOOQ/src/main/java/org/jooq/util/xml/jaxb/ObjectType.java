@@ -51,4 +51,14 @@ public enum ObjectType {
         throw new IllegalArgumentException(v);
     }
 
+    @Override
+    public String toString() {
+        switch (this) {
+            case USER_DEFINED_TYPE:
+                return "USER-DEFINED TYPE";
+            default:
+                return this.name();
+        }
+    }
+
 }

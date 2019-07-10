@@ -8,6 +8,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.jooq.util.jaxb.tools.StringAdapter;
+import org.jooq.util.jaxb.tools.XMLAppendable;
+import org.jooq.util.jaxb.tools.XMLBuilder;
 
 
 /**
@@ -23,7 +25,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 @SuppressWarnings({
     "all"
 })
-public class SchemaMappingType implements Serializable
+public class SchemaMappingType implements Serializable, XMLAppendable
 {
 
     private final static long serialVersionUID = 31200L;
@@ -123,22 +125,17 @@ public class SchemaMappingType implements Serializable
     }
 
     @Override
+    public final void appendTo(XMLBuilder builder) {
+        builder.append("inputSchema", inputSchema);
+        builder.append("outputSchema", outputSchema);
+        builder.append("outputSchemaToDefault", outputSchemaToDefault);
+    }
+
+    @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("<inputSchema>");
-        sb.append(((inputSchema == null)?"":inputSchema));
-        sb.append("</inputSchema>");
-        if ((outputSchema!= null)&&(!"".equals(outputSchema))) {
-            sb.append("<outputSchema>");
-            sb.append(outputSchema);
-            sb.append("</outputSchema>");
-        }
-        if (outputSchemaToDefault!= null) {
-            sb.append("<outputSchemaToDefault>");
-            sb.append(outputSchemaToDefault);
-            sb.append("</outputSchemaToDefault>");
-        }
-        return sb.toString();
+        XMLBuilder builder = XMLBuilder.nonFormatting();
+        appendTo(builder);
+        return builder.toString();
     }
 
     @Override

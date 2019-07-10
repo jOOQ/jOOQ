@@ -9,6 +9,8 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.jooq.util.jaxb.tools.StringAdapter;
+import org.jooq.util.jaxb.tools.XMLAppendable;
+import org.jooq.util.jaxb.tools.XMLBuilder;
 
 
 /**
@@ -38,7 +40,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 @SuppressWarnings({
     "all"
 })
-public class MatcherRule implements Serializable
+public class MatcherRule implements Serializable, XMLAppendable
 {
 
     private final static long serialVersionUID = 31200L;
@@ -107,17 +109,16 @@ public class MatcherRule implements Serializable
     }
 
     @Override
+    public final void appendTo(XMLBuilder builder) {
+        builder.append("transform", transform);
+        builder.append("expression", expression);
+    }
+
+    @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        if (transform!= null) {
-            sb.append("<transform>");
-            sb.append(transform);
-            sb.append("</transform>");
-        }
-        sb.append("<expression>");
-        sb.append(((expression == null)?"":expression));
-        sb.append("</expression>");
-        return sb.toString();
+        XMLBuilder builder = XMLBuilder.nonFormatting();
+        appendTo(builder);
+        return builder.toString();
     }
 
     @Override

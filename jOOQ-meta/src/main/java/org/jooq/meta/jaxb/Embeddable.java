@@ -12,6 +12,8 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.jooq.util.jaxb.tools.StringAdapter;
+import org.jooq.util.jaxb.tools.XMLAppendable;
+import org.jooq.util.jaxb.tools.XMLBuilder;
 
 
 /**
@@ -27,7 +29,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 @SuppressWarnings({
     "all"
 })
-public class Embeddable implements Serializable
+public class Embeddable implements Serializable, XMLAppendable
 {
 
     private final static long serialVersionUID = 31200L;
@@ -99,23 +101,16 @@ public class Embeddable implements Serializable
     }
 
     @Override
+    public final void appendTo(XMLBuilder builder) {
+        builder.append("name", name);
+        builder.append("fields", "field", fields);
+    }
+
+    @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        if ((name!= null)&&(!"".equals(name))) {
-            sb.append("<name>");
-            sb.append(name);
-            sb.append("</name>");
-        }
-        if (fields!= null) {
-            sb.append("<fields>");
-            for (int i = 0; (i<fields.size()); i ++) {
-                sb.append("<field>");
-                sb.append(fields.get(i));
-                sb.append("</field>");
-            }
-            sb.append("</fields>");
-        }
-        return sb.toString();
+        XMLBuilder builder = XMLBuilder.nonFormatting();
+        appendTo(builder);
+        return builder.toString();
     }
 
     @Override

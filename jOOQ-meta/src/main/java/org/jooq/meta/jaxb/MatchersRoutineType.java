@@ -7,6 +7,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.jooq.util.jaxb.tools.StringAdapter;
+import org.jooq.util.jaxb.tools.XMLAppendable;
+import org.jooq.util.jaxb.tools.XMLBuilder;
 
 
 /**
@@ -22,7 +24,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 @SuppressWarnings({
     "all"
 })
-public class MatchersRoutineType implements Serializable
+public class MatchersRoutineType implements Serializable, XMLAppendable
 {
 
     private final static long serialVersionUID = 31200L;
@@ -150,29 +152,18 @@ public class MatchersRoutineType implements Serializable
     }
 
     @Override
+    public final void appendTo(XMLBuilder builder) {
+        builder.append("expression", expression);
+        builder.append("routineClass", routineClass);
+        builder.append("routineMethod", routineMethod);
+        builder.append("routineImplements", routineImplements);
+    }
+
+    @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        if ((expression!= null)&&(!"".equals(expression))) {
-            sb.append("<expression>");
-            sb.append(expression);
-            sb.append("</expression>");
-        }
-        if (routineClass!= null) {
-            sb.append("<routineClass>");
-            sb.append(routineClass);
-            sb.append("</routineClass>");
-        }
-        if (routineMethod!= null) {
-            sb.append("<routineMethod>");
-            sb.append(routineMethod);
-            sb.append("</routineMethod>");
-        }
-        if ((routineImplements!= null)&&(!"".equals(routineImplements))) {
-            sb.append("<routineImplements>");
-            sb.append(routineImplements);
-            sb.append("</routineImplements>");
-        }
-        return sb.toString();
+        XMLBuilder builder = XMLBuilder.nonFormatting();
+        appendTo(builder);
+        return builder.toString();
     }
 
     @Override

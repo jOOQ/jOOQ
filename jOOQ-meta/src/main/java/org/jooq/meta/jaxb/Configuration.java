@@ -8,6 +8,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+import org.jooq.util.jaxb.tools.XMLAppendable;
+import org.jooq.util.jaxb.tools.XMLBuilder;
 
 
 /**
@@ -40,7 +42,7 @@ import javax.xml.bind.annotation.XmlType;
 @SuppressWarnings({
     "all"
 })
-public class Configuration implements Serializable
+public class Configuration implements Serializable, XMLAppendable
 {
 
     private final static long serialVersionUID = 31200L;
@@ -170,27 +172,18 @@ public class Configuration implements Serializable
     }
 
     @Override
+    public final void appendTo(XMLBuilder builder) {
+        builder.append("logging", logging);
+        builder.append("onError", onError);
+        builder.append("jdbc", jdbc);
+        builder.append("generator", generator);
+    }
+
+    @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        if (logging!= null) {
-            sb.append("<logging>");
-            sb.append(logging);
-            sb.append("</logging>");
-        }
-        if (onError!= null) {
-            sb.append("<onError>");
-            sb.append(onError);
-            sb.append("</onError>");
-        }
-        if (jdbc!= null) {
-            sb.append("<jdbc>");
-            sb.append(jdbc);
-            sb.append("</jdbc>");
-        }
-        sb.append("<generator>");
-        sb.append(((generator == null)?"":generator));
-        sb.append("</generator>");
-        return sb.toString();
+        XMLBuilder builder = XMLBuilder.nonFormatting();
+        appendTo(builder);
+        return builder.toString();
     }
 
     @Override

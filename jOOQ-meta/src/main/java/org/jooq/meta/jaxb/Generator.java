@@ -8,6 +8,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.jooq.util.jaxb.tools.StringAdapter;
+import org.jooq.util.jaxb.tools.XMLAppendable;
+import org.jooq.util.jaxb.tools.XMLBuilder;
 
 
 /**
@@ -23,7 +25,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 @SuppressWarnings({
     "all"
 })
-public class Generator implements Serializable
+public class Generator implements Serializable, XMLAppendable
 {
 
     private final static long serialVersionUID = 31200L;
@@ -181,34 +183,19 @@ public class Generator implements Serializable
     }
 
     @Override
+    public final void appendTo(XMLBuilder builder) {
+        builder.append("name", name);
+        builder.append("strategy", strategy);
+        builder.append("database", database);
+        builder.append("generate", generate);
+        builder.append("target", target);
+    }
+
+    @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        if ((name!= null)&&(!"".equals(name))) {
-            sb.append("<name>");
-            sb.append(name);
-            sb.append("</name>");
-        }
-        if (strategy!= null) {
-            sb.append("<strategy>");
-            sb.append(strategy);
-            sb.append("</strategy>");
-        }
-        if (database!= null) {
-            sb.append("<database>");
-            sb.append(database);
-            sb.append("</database>");
-        }
-        if (generate!= null) {
-            sb.append("<generate>");
-            sb.append(generate);
-            sb.append("</generate>");
-        }
-        if (target!= null) {
-            sb.append("<target>");
-            sb.append(target);
-            sb.append("</target>");
-        }
-        return sb.toString();
+        XMLBuilder builder = XMLBuilder.nonFormatting();
+        appendTo(builder);
+        return builder.toString();
     }
 
     @Override

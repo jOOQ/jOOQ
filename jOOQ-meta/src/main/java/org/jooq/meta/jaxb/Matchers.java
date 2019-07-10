@@ -10,6 +10,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlType;
+import org.jooq.util.jaxb.tools.XMLAppendable;
+import org.jooq.util.jaxb.tools.XMLBuilder;
 
 
 /**
@@ -30,7 +32,7 @@ import javax.xml.bind.annotation.XmlType;
 @SuppressWarnings({
     "all"
 })
-public class Matchers implements Serializable
+public class Matchers implements Serializable, XMLAppendable
 {
 
     private final static long serialVersionUID = 31200L;
@@ -246,63 +248,20 @@ public class Matchers implements Serializable
     }
 
     @Override
+    public final void appendTo(XMLBuilder builder) {
+        builder.append("schemas", "schema", schemas);
+        builder.append("tables", "table", tables);
+        builder.append("fields", "field", fields);
+        builder.append("routines", "routine", routines);
+        builder.append("sequences", "sequence", sequences);
+        builder.append("enums", "enum", enums);
+    }
+
+    @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        if (schemas!= null) {
-            sb.append("<schemas>");
-            for (int i = 0; (i<schemas.size()); i ++) {
-                sb.append("<schema>");
-                sb.append(schemas.get(i));
-                sb.append("</schema>");
-            }
-            sb.append("</schemas>");
-        }
-        if (tables!= null) {
-            sb.append("<tables>");
-            for (int i = 0; (i<tables.size()); i ++) {
-                sb.append("<table>");
-                sb.append(tables.get(i));
-                sb.append("</table>");
-            }
-            sb.append("</tables>");
-        }
-        if (fields!= null) {
-            sb.append("<fields>");
-            for (int i = 0; (i<fields.size()); i ++) {
-                sb.append("<field>");
-                sb.append(fields.get(i));
-                sb.append("</field>");
-            }
-            sb.append("</fields>");
-        }
-        if (routines!= null) {
-            sb.append("<routines>");
-            for (int i = 0; (i<routines.size()); i ++) {
-                sb.append("<routine>");
-                sb.append(routines.get(i));
-                sb.append("</routine>");
-            }
-            sb.append("</routines>");
-        }
-        if (sequences!= null) {
-            sb.append("<sequences>");
-            for (int i = 0; (i<sequences.size()); i ++) {
-                sb.append("<sequence>");
-                sb.append(sequences.get(i));
-                sb.append("</sequence>");
-            }
-            sb.append("</sequences>");
-        }
-        if (enums!= null) {
-            sb.append("<enums>");
-            for (int i = 0; (i<enums.size()); i ++) {
-                sb.append("<enum>");
-                sb.append(enums.get(i));
-                sb.append("</enum>");
-            }
-            sb.append("</enums>");
-        }
-        return sb.toString();
+        XMLBuilder builder = XMLBuilder.nonFormatting();
+        appendTo(builder);
+        return builder.toString();
     }
 
     @Override

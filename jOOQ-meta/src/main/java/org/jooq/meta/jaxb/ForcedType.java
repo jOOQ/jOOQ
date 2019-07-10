@@ -9,6 +9,8 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.jooq.util.jaxb.tools.StringAdapter;
+import org.jooq.util.jaxb.tools.XMLAppendable;
+import org.jooq.util.jaxb.tools.XMLBuilder;
 
 
 /**
@@ -24,7 +26,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 @SuppressWarnings({
     "all"
 })
-public class ForcedType implements Serializable
+public class ForcedType implements Serializable, XMLAppendable
 {
 
     private final static long serialVersionUID = 31200L;
@@ -506,84 +508,29 @@ public class ForcedType implements Serializable
     }
 
     @Override
+    public final void appendTo(XMLBuilder builder) {
+        builder.append("name", name);
+        builder.append("userType", userType);
+        builder.append("converter", converter);
+        builder.append("enumConverter", enumConverter);
+        builder.append("binding", binding);
+        builder.append("excludeExpression", excludeExpression);
+        builder.append("includeExpression", includeExpression);
+        builder.append("expression", expression);
+        builder.append("expressions", expressions);
+        builder.append("sql", sql);
+        builder.append("excludeTypes", excludeTypes);
+        builder.append("includeTypes", includeTypes);
+        builder.append("types", types);
+        builder.append("nullability", nullability);
+        builder.append("objectType", objectType);
+    }
+
+    @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        if ((name!= null)&&(!"".equals(name))) {
-            sb.append("<name>");
-            sb.append(name);
-            sb.append("</name>");
-        }
-        if ((userType!= null)&&(!"".equals(userType))) {
-            sb.append("<userType>");
-            sb.append(userType);
-            sb.append("</userType>");
-        }
-        if ((converter!= null)&&(!"".equals(converter))) {
-            sb.append("<converter>");
-            sb.append(converter);
-            sb.append("</converter>");
-        }
-        if (enumConverter!= null) {
-            sb.append("<enumConverter>");
-            sb.append(enumConverter);
-            sb.append("</enumConverter>");
-        }
-        if ((binding!= null)&&(!"".equals(binding))) {
-            sb.append("<binding>");
-            sb.append(binding);
-            sb.append("</binding>");
-        }
-        if ((excludeExpression!= null)&&(!"".equals(excludeExpression))) {
-            sb.append("<excludeExpression>");
-            sb.append(excludeExpression);
-            sb.append("</excludeExpression>");
-        }
-        if ((includeExpression!= null)&&(!"".equals(includeExpression))) {
-            sb.append("<includeExpression>");
-            sb.append(includeExpression);
-            sb.append("</includeExpression>");
-        }
-        if ((expression!= null)&&(!"".equals(expression))) {
-            sb.append("<expression>");
-            sb.append(expression);
-            sb.append("</expression>");
-        }
-        if ((expressions!= null)&&(!"".equals(expressions))) {
-            sb.append("<expressions>");
-            sb.append(expressions);
-            sb.append("</expressions>");
-        }
-        if ((sql!= null)&&(!"".equals(sql))) {
-            sb.append("<sql>");
-            sb.append(sql);
-            sb.append("</sql>");
-        }
-        if ((excludeTypes!= null)&&(!"".equals(excludeTypes))) {
-            sb.append("<excludeTypes>");
-            sb.append(excludeTypes);
-            sb.append("</excludeTypes>");
-        }
-        if ((includeTypes!= null)&&(!"".equals(includeTypes))) {
-            sb.append("<includeTypes>");
-            sb.append(includeTypes);
-            sb.append("</includeTypes>");
-        }
-        if ((types!= null)&&(!"".equals(types))) {
-            sb.append("<types>");
-            sb.append(types);
-            sb.append("</types>");
-        }
-        if (nullability!= null) {
-            sb.append("<nullability>");
-            sb.append(nullability);
-            sb.append("</nullability>");
-        }
-        if (objectType!= null) {
-            sb.append("<objectType>");
-            sb.append(objectType);
-            sb.append("</objectType>");
-        }
-        return sb.toString();
+        XMLBuilder builder = XMLBuilder.nonFormatting();
+        appendTo(builder);
+        return builder.toString();
     }
 
     @Override

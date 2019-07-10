@@ -7,6 +7,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.jooq.util.jaxb.tools.StringAdapter;
+import org.jooq.util.jaxb.tools.XMLAppendable;
+import org.jooq.util.jaxb.tools.XMLBuilder;
 
 
 /**
@@ -22,7 +24,7 @@ import org.jooq.util.jaxb.tools.StringAdapter;
 @SuppressWarnings({
     "all"
 })
-public class MatchersEnumType implements Serializable
+public class MatchersEnumType implements Serializable, XMLAppendable
 {
 
     private final static long serialVersionUID = 31200L;
@@ -120,24 +122,17 @@ public class MatchersEnumType implements Serializable
     }
 
     @Override
+    public final void appendTo(XMLBuilder builder) {
+        builder.append("expression", expression);
+        builder.append("enumClass", enumClass);
+        builder.append("enumImplements", enumImplements);
+    }
+
+    @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        if ((expression!= null)&&(!"".equals(expression))) {
-            sb.append("<expression>");
-            sb.append(expression);
-            sb.append("</expression>");
-        }
-        if (enumClass!= null) {
-            sb.append("<enumClass>");
-            sb.append(enumClass);
-            sb.append("</enumClass>");
-        }
-        if ((enumImplements!= null)&&(!"".equals(enumImplements))) {
-            sb.append("<enumImplements>");
-            sb.append(enumImplements);
-            sb.append("</enumImplements>");
-        }
-        return sb.toString();
+        XMLBuilder builder = XMLBuilder.nonFormatting();
+        appendTo(builder);
+        return builder.toString();
     }
 
     @Override

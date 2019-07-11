@@ -249,7 +249,7 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     SelectImpl(Configuration configuration, WithImpl with, boolean distinct) {
-        this(new SelectQueryImpl<R>(configuration, with, distinct));
+        this(new SelectQueryImpl<>(configuration, with, distinct));
     }
 
     SelectImpl(Select<R> query) {

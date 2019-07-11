@@ -205,7 +205,7 @@ final class InCondition<T> extends AbstractCondition {
 
     static <T> List<T> padded(Context<?> ctx, List<T> list) {
         return ctx.paramType() == INDEXED && TRUE.equals(ctx.settings().isInListPadding())
-            ? new PaddedList<T>(list, REQUIRES_IN_LIMIT.contains(ctx.family())
+            ? new PaddedList<>(list, REQUIRES_IN_LIMIT.contains(ctx.family())
                 ? IN_LIMIT
                 : Integer.MAX_VALUE,
                   defaultIfNull(ctx.settings().getInListPadBase(), 2))

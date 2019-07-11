@@ -116,7 +116,7 @@ public class JDBCDatabase extends AbstractDatabase {
 
     @Override
     protected List<CatalogDefinition> getCatalogs0() throws SQLException {
-        List<CatalogDefinition> result = new ArrayList<CatalogDefinition>();
+        List<CatalogDefinition> result = new ArrayList<>();
 
         for (Catalog catalog : getCatalogsFromMeta())
             result.add(new CatalogDefinition(this, catalog.getName(), ""));
@@ -126,7 +126,7 @@ public class JDBCDatabase extends AbstractDatabase {
 
     private List<Catalog> getCatalogsFromMeta() {
         if (catalogs == null) {
-            catalogs = new ArrayList<Catalog>();
+            catalogs = new ArrayList<>();
 
             for (Catalog catalog : create().meta().getCatalogs())
                 catalogs.add(catalog);
@@ -137,7 +137,7 @@ public class JDBCDatabase extends AbstractDatabase {
 
     @Override
     protected List<SchemaDefinition> getSchemata0() throws SQLException {
-        List<SchemaDefinition> result = new ArrayList<SchemaDefinition>();
+        List<SchemaDefinition> result = new ArrayList<>();
 
         for (Schema schema : getSchemasFromMeta()) {
             if (schema.getCatalog() != null) {
@@ -155,7 +155,7 @@ public class JDBCDatabase extends AbstractDatabase {
 
     private List<Schema> getSchemasFromMeta() {
         if (schemas == null) {
-            schemas = new ArrayList<Schema>();
+            schemas = new ArrayList<>();
 
             for (Schema schema : create().meta().getSchemas())
                 schemas.add(schema);
@@ -166,7 +166,7 @@ public class JDBCDatabase extends AbstractDatabase {
 
     @Override
     protected List<SequenceDefinition> getSequences0() throws SQLException {
-        List<SequenceDefinition> result = new ArrayList<SequenceDefinition>();
+        List<SequenceDefinition> result = new ArrayList<>();
 
         for (Schema schema : getSchemasFromMeta()) {
             for (Sequence<?> sequence : schema.getSequences()) {
@@ -188,7 +188,7 @@ public class JDBCDatabase extends AbstractDatabase {
 
     @Override
     protected List<TableDefinition> getTables0() throws SQLException {
-        List<TableDefinition> result = new ArrayList<TableDefinition>();
+        List<TableDefinition> result = new ArrayList<>();
 
         for (Schema schema : getSchemasFromMeta()) {
             SchemaDefinition sd = getSchema(schema.getName());
@@ -203,37 +203,37 @@ public class JDBCDatabase extends AbstractDatabase {
 
     @Override
     protected List<EnumDefinition> getEnums0() throws SQLException {
-        List<EnumDefinition> result = new ArrayList<EnumDefinition>();
+        List<EnumDefinition> result = new ArrayList<>();
         return result;
     }
 
     @Override
     protected List<DomainDefinition> getDomains0() throws SQLException {
-        List<DomainDefinition> result = new ArrayList<DomainDefinition>();
+        List<DomainDefinition> result = new ArrayList<>();
         return result;
     }
 
     @Override
     protected List<UDTDefinition> getUDTs0() throws SQLException {
-        List<UDTDefinition> result = new ArrayList<UDTDefinition>();
+        List<UDTDefinition> result = new ArrayList<>();
         return result;
     }
 
     @Override
     protected List<ArrayDefinition> getArrays0() throws SQLException {
-        List<ArrayDefinition> result = new ArrayList<ArrayDefinition>();
+        List<ArrayDefinition> result = new ArrayList<>();
         return result;
     }
 
     @Override
     protected List<RoutineDefinition> getRoutines0() throws SQLException {
-        List<RoutineDefinition> result = new ArrayList<RoutineDefinition>();
+        List<RoutineDefinition> result = new ArrayList<>();
         return result;
     }
 
     @Override
     protected List<PackageDefinition> getPackages0() throws SQLException {
-        List<PackageDefinition> result = new ArrayList<PackageDefinition>();
+        List<PackageDefinition> result = new ArrayList<>();
         return result;
     }
 }

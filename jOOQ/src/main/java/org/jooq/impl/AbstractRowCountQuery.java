@@ -86,7 +86,7 @@ abstract class AbstractRowCountQuery extends AbstractQuery implements RowCountQu
 
     @Override
     public final void subscribe(java.util.concurrent.Flow.Subscriber<? super Integer> subscriber) {
-        subscribe(new FlowToReactiveStreamsSubscriberBridge<Integer>(subscriber));
+        subscribe(new FlowToReactiveStreamsSubscriberBridge<>(subscriber));
     }
 
 

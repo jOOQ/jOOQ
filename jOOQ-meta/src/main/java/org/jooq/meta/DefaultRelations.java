@@ -54,11 +54,11 @@ public class DefaultRelations implements Relations {
 
     private static final JooqLogger                                         log              = JooqLogger.getLogger(DefaultRelations.class);
 
-    private final Map<Key, UniqueKeyDefinition>                             primaryKeys      = new LinkedHashMap<Key, UniqueKeyDefinition>();
-    private final Map<Key, UniqueKeyDefinition>                             uniqueKeys       = new LinkedHashMap<Key, UniqueKeyDefinition>();
-    private final Map<Key, ForeignKeyDefinition>                            foreignKeys      = new LinkedHashMap<Key, ForeignKeyDefinition>();
-    private final Map<Key, CheckConstraintDefinition>                       checkConstraints = new LinkedHashMap<Key, CheckConstraintDefinition>();
-    private final Set<Key>                                                  incompleteKeys   = new HashSet<Key>();
+    private final Map<Key, UniqueKeyDefinition>                             primaryKeys      = new LinkedHashMap<>();
+    private final Map<Key, UniqueKeyDefinition>                             uniqueKeys       = new LinkedHashMap<>();
+    private final Map<Key, ForeignKeyDefinition>                            foreignKeys      = new LinkedHashMap<>();
+    private final Map<Key, CheckConstraintDefinition>                       checkConstraints = new LinkedHashMap<>();
+    private final Set<Key>                                                  incompleteKeys   = new HashSet<>();
 
     private transient Map<ColumnDefinition, UniqueKeyDefinition>            primaryKeysByColumn;
     private transient Map<ColumnDefinition, List<UniqueKeyDefinition>>      uniqueKeysByColumn;
@@ -226,7 +226,7 @@ public class DefaultRelations implements Relations {
 	@Override
 	public UniqueKeyDefinition getPrimaryKey(ColumnDefinition column) {
 	    if (primaryKeysByColumn == null) {
-	        primaryKeysByColumn = new LinkedHashMap<ColumnDefinition, UniqueKeyDefinition>();
+	        primaryKeysByColumn = new LinkedHashMap<>();
 
 	        for (UniqueKeyDefinition primaryKey : primaryKeys.values())
 	            for (ColumnDefinition keyColumn : primaryKey.getKeyColumns())
@@ -239,14 +239,14 @@ public class DefaultRelations implements Relations {
 	@Override
     public List<UniqueKeyDefinition> getUniqueKeys(ColumnDefinition column) {
 	    if (uniqueKeysByColumn == null) {
-	        uniqueKeysByColumn = new LinkedHashMap<ColumnDefinition, List<UniqueKeyDefinition>>();
+	        uniqueKeysByColumn = new LinkedHashMap<>();
 
 	        for (UniqueKeyDefinition uniqueKey : uniqueKeys.values()) {
                 for (ColumnDefinition keyColumn : uniqueKey.getKeyColumns()) {
                     List<UniqueKeyDefinition> list = uniqueKeysByColumn.get(keyColumn);
 
                     if (list == null) {
-                        list = new ArrayList<UniqueKeyDefinition>();
+                        list = new ArrayList<>();
                         uniqueKeysByColumn.put(keyColumn, list);
                     }
 
@@ -261,40 +261,40 @@ public class DefaultRelations implements Relations {
 
     @Override
     public List<UniqueKeyDefinition> getUniqueKeys(TableDefinition table) {
-        Set<UniqueKeyDefinition> result = new LinkedHashSet<UniqueKeyDefinition>();
+        Set<UniqueKeyDefinition> result = new LinkedHashSet<>();
 
         for (ColumnDefinition column : table.getColumns())
             result.addAll(getUniqueKeys(column));
 
-        return new ArrayList<UniqueKeyDefinition>(result);
+        return new ArrayList<>(result);
     }
 
     @Override
     public List<UniqueKeyDefinition> getUniqueKeys(SchemaDefinition schema) {
-        Set<UniqueKeyDefinition> result = new LinkedHashSet<UniqueKeyDefinition>();
+        Set<UniqueKeyDefinition> result = new LinkedHashSet<>();
 
         for (TableDefinition table : schema.getDatabase().getTables(schema))
             result.addAll(getUniqueKeys(table));
 
-        return new ArrayList<UniqueKeyDefinition>(result);
+        return new ArrayList<>(result);
     }
 
     @Override
     public List<UniqueKeyDefinition> getUniqueKeys() {
-        return new ArrayList<UniqueKeyDefinition>(uniqueKeys.values());
+        return new ArrayList<>(uniqueKeys.values());
     }
 
     @Override
 	public List<ForeignKeyDefinition> getForeignKeys(ColumnDefinition column) {
         if (foreignKeysByColumn == null) {
-            foreignKeysByColumn = new LinkedHashMap<ColumnDefinition, List<ForeignKeyDefinition>>();
+            foreignKeysByColumn = new LinkedHashMap<>();
 
             for (ForeignKeyDefinition foreignKey : foreignKeys.values()) {
                 for (ColumnDefinition keyColumn : foreignKey.getKeyColumns()) {
                     List<ForeignKeyDefinition> list = foreignKeysByColumn.get(keyColumn);
 
                     if (list == null) {
-                        list = new ArrayList<ForeignKeyDefinition>();
+                        list = new ArrayList<>();
                         foreignKeysByColumn.put(keyColumn, list);
                     }
 
@@ -310,24 +310,24 @@ public class DefaultRelations implements Relations {
 
     @Override
     public List<ForeignKeyDefinition> getForeignKeys(TableDefinition table) {
-        Set<ForeignKeyDefinition> result = new LinkedHashSet<ForeignKeyDefinition>();
+        Set<ForeignKeyDefinition> result = new LinkedHashSet<>();
 
         for (ColumnDefinition column : table.getColumns())
             result.addAll(getForeignKeys(column));
 
-        return new ArrayList<ForeignKeyDefinition>(result);
+        return new ArrayList<>(result);
     }
 
     @Override
     public List<CheckConstraintDefinition> getCheckConstraints(TableDefinition table) {
         if (checkConstraintsByTable == null) {
-            checkConstraintsByTable = new LinkedHashMap<TableDefinition, List<CheckConstraintDefinition>>();
+            checkConstraintsByTable = new LinkedHashMap<>();
 
             for (CheckConstraintDefinition constraint : checkConstraints.values()) {
                 List<CheckConstraintDefinition> list = checkConstraintsByTable.get(table);
 
                 if (list == null) {
-                    list = new ArrayList<CheckConstraintDefinition>();
+                    list = new ArrayList<>();
                     checkConstraintsByTable.put(table, list);
                 }
 

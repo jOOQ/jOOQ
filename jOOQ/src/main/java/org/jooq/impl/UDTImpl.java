@@ -86,7 +86,7 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractNamed implements UD
     public UDTImpl(String name, Schema schema, Package pkg, boolean synthetic) {
         super(qualify(pkg != null ? pkg : schema, DSL.name(name)), CommentImpl.NO_COMMENT);
 
-        this.fields = new Fields<R>();
+        this.fields = new Fields<>();
         this.schema = schema;
 
 
@@ -215,9 +215,8 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractNamed implements UD
 
     @Override
     public final DataType<R> getDataType() {
-        if (type == null) {
-            type = new UDTDataType<R>(this);
-        }
+        if (type == null)
+            type = new UDTDataType<>(this);
 
         return type;
     }
@@ -371,7 +370,7 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractNamed implements UD
             : type.asConvertedDataType(actualBinding);
 
         // [#5999] TODO: Allow for user-defined Names
-        final UDTFieldImpl<R, U> udtField = new UDTFieldImpl<R, U>(name, actualType, udt, DSL.comment(comment), actualBinding);
+        final UDTFieldImpl<R, U> udtField = new UDTFieldImpl<>(name, actualType, udt, DSL.comment(comment), actualBinding);
 
         return udtField;
     }

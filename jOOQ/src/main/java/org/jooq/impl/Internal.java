@@ -65,7 +65,7 @@ public final class Internal {
      * Factory method for embeddable types.
      */
     public static final <R extends Record, T extends Record> TableField<R, T> createEmbeddable(Name name, Class<T> recordType, Table<R> table, TableField<R, ?>... fields) {
-        return new EmbeddableTableField<R, T>(name, recordType, table, fields);
+        return new EmbeddableTableField<>(name, recordType, table, fields);
     }
 
     /**
@@ -86,7 +86,7 @@ public final class Internal {
      * Factory method for identities.
      */
     public static final <R extends Record, T> Identity<R, T> createIdentity(Table<R> table, TableField<R, T> field) {
-        return new IdentityImpl<R, T>(table, field);
+        return new IdentityImpl<>(table, field);
     }
 
     /**
@@ -96,7 +96,7 @@ public final class Internal {
     @SafeVarargs
 
     public static final <R extends Record> UniqueKey<R> createUniqueKey(Table<R> table, TableField<R, ?>... fields) {
-        return new UniqueKeyImpl<R>(table, fields);
+        return new UniqueKeyImpl<>(table, fields);
     }
 
     /**
@@ -106,7 +106,7 @@ public final class Internal {
     @SafeVarargs
 
     public static final <R extends Record> UniqueKey<R> createUniqueKey(Table<R> table, String name, TableField<R, ?>... fields) {
-        return new UniqueKeyImpl<R>(table, name, fields);
+        return new UniqueKeyImpl<>(table, name, fields);
     }
 
     /**
@@ -126,7 +126,7 @@ public final class Internal {
     @SafeVarargs
 
     public static final <R extends Record, U extends Record> ForeignKey<R, U> createForeignKey(UniqueKey<U> key, Table<R> table, String name, TableField<R, ?>... fields) {
-        ForeignKey<R, U> result = new ReferenceImpl<R, U>(key, table, name, fields);
+        ForeignKey<R, U> result = new ReferenceImpl<>(key, table, name, fields);
 
         if (key instanceof UniqueKeyImpl)
             ((UniqueKeyImpl<U>) key).references.add(result);
@@ -183,7 +183,7 @@ public final class Internal {
             ? (DataType<U>) type
             : type.asConvertedDataType(actualBinding);
 
-        return new ParameterImpl<U>(name, actualType, actualBinding, isDefaulted, isUnnamed);
+        return new ParameterImpl<>(name, actualType, actualBinding, isDefaulted, isUnnamed);
     }
 
     private Internal() {}

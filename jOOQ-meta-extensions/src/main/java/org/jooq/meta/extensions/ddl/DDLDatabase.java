@@ -238,7 +238,7 @@ public class DDLDatabase extends H2Database {
 
     @Override
     protected List<SchemaDefinition> getSchemata0() throws SQLException {
-        List<SchemaDefinition> result = new ArrayList<SchemaDefinition>(super.getSchemata0());
+        List<SchemaDefinition> result = new ArrayList<>(super.getSchemata0());
 
         // [#5608] The H2-specific INFORMATION_SCHEMA is undesired in the DDLDatabase's output
         //         we're explicitly omitting it here for user convenience.

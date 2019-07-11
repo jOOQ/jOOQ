@@ -73,13 +73,13 @@ abstract class AbstractMeta implements Meta, Serializable {
     AbstractMeta() {
 
         // [#7165] TODO: Allow for opting out of this cache
-        this.cachedCatalogs = new LinkedHashMap<Name, Catalog>();
-        this.cachedQualifiedSchemas = new LinkedHashMap<Name, Schema>();
-        this.cachedQualifiedTables = new LinkedHashMap<Name, Table<?>>();
-        this.cachedQualifiedSequences = new LinkedHashMap<Name, Sequence<?>>();
-        this.cachedUnqualifiedSchemas = new LinkedHashMap<Name, List<Schema>>();
-        this.cachedUnqualifiedTables = new LinkedHashMap<Name, List<Table<?>>>();
-        this.cachedUnqualifiedSequences = new LinkedHashMap<Name, List<Sequence<?>>>();
+        this.cachedCatalogs = new LinkedHashMap<>();
+        this.cachedQualifiedSchemas = new LinkedHashMap<>();
+        this.cachedQualifiedTables = new LinkedHashMap<>();
+        this.cachedQualifiedSequences = new LinkedHashMap<>();
+        this.cachedUnqualifiedSchemas = new LinkedHashMap<>();
+        this.cachedUnqualifiedTables = new LinkedHashMap<>();
+        this.cachedUnqualifiedSequences = new LinkedHashMap<>();
     }
 
     @Override
@@ -151,7 +151,7 @@ abstract class AbstractMeta implements Meta, Serializable {
 
                 List<T> list = unqualified.get(u);
                 if (list == null) {
-                    list = new ArrayList<T>();
+                    list = new ArrayList<>();
                     unqualified.put(u, list);
                 }
 

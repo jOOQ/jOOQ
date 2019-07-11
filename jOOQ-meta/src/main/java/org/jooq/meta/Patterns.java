@@ -56,7 +56,7 @@ public final class Patterns {
     private List<RegexFlag>            regexFlags;
 
     public Patterns() {
-        patterns = new HashMap<String, Pattern>();
+        patterns = new HashMap<>();
     }
 
     public final Pattern pattern(String regex) {
@@ -68,7 +68,7 @@ public final class Patterns {
         if (pattern == null) {
             int flags = 0;
 
-            List<RegexFlag> list = new ArrayList<RegexFlag>(getRegexFlags());
+            List<RegexFlag> list = new ArrayList<>(getRegexFlags());
 
             // [#3860] This should really be handled by JAXB, but apparently, @XmlList and @XmlElement(defaultValue=...)
             // cannot be combined: http://stackoverflow.com/q/27528698/521799
@@ -105,7 +105,7 @@ public final class Patterns {
 
     public List<RegexFlag> getRegexFlags() {
         if (regexFlags == null)
-            regexFlags = new ArrayList<RegexFlag>();
+            regexFlags = new ArrayList<>();
 
         return regexFlags;
     }

@@ -98,26 +98,26 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
     InformationSchemaMetaImpl(Configuration configuration, InformationSchema source) {
         this.configuration = configuration;
         this.source = source;
-        this.catalogs = new ArrayList<Catalog>();
-        this.catalogsByName = new HashMap<Name, Catalog>();
-        this.schemas = new ArrayList<Schema>();
-        this.schemasByName = new HashMap<Name, Schema>();
-        this.schemasPerCatalog = new HashMap<Catalog, List<Schema>>();
-        this.tables = new ArrayList<InformationSchemaTable>();
-        this.tablesByName = new HashMap<Name, InformationSchemaTable>();
-        this.tablesPerSchema = new HashMap<Schema, List<InformationSchemaTable>>();
-        this.sequences = new ArrayList<Sequence<?>>();
-        this.sequencesPerSchema = new HashMap<Schema, List<Sequence<?>>>();
-        this.primaryKeys = new ArrayList<UniqueKeyImpl<Record>>();
-        this.uniqueKeysByName = new HashMap<Name, UniqueKeyImpl<Record>>();
-        this.referentialKeys = new HashMap<Name, Name>();
-        this.indexesByName = new HashMap<Name, IndexImpl>();
+        this.catalogs = new ArrayList<>();
+        this.catalogsByName = new HashMap<>();
+        this.schemas = new ArrayList<>();
+        this.schemasByName = new HashMap<>();
+        this.schemasPerCatalog = new HashMap<>();
+        this.tables = new ArrayList<>();
+        this.tablesByName = new HashMap<>();
+        this.tablesPerSchema = new HashMap<>();
+        this.sequences = new ArrayList<>();
+        this.sequencesPerSchema = new HashMap<>();
+        this.primaryKeys = new ArrayList<>();
+        this.uniqueKeysByName = new HashMap<>();
+        this.referentialKeys = new HashMap<>();
+        this.indexesByName = new HashMap<>();
 
         init(source);
     }
 
     private final void init(InformationSchema meta) {
-        List<String> errors = new ArrayList<String>();
+        List<String> errors = new ArrayList<>();
 
         // Catalogs
         // -------------------------------------------------------------------------------------------------------------
@@ -176,7 +176,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
 
         // Columns
         // -------------------------------------------------------------------------------------------------------------
-        List<Column> columns = new ArrayList<Column>(meta.getColumns());
+        List<Column> columns = new ArrayList<>(meta.getColumns());
         Collections.sort(columns, new Comparator<Column>() {
             @Override
             public int compare(Column o1, Column o2) {
@@ -221,8 +221,8 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
 
         // Indexes
         // -------------------------------------------------------------------------------------------------------------
-        Map<Name, List<SortField<?>>> columnsByIndex = new HashMap<Name, List<SortField<?>>>();
-        List<IndexColumnUsage> indexColumnUsages = new ArrayList<IndexColumnUsage>(meta.getIndexColumnUsages());
+        Map<Name, List<SortField<?>>> columnsByIndex = new HashMap<>();
+        List<IndexColumnUsage> indexColumnUsages = new ArrayList<>(meta.getIndexColumnUsages());
         Collections.sort(indexColumnUsages, new Comparator<IndexColumnUsage>() {
             @Override
             public int compare(IndexColumnUsage o1, IndexColumnUsage o2) {
@@ -239,7 +239,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
             List<SortField<?>> fields = columnsByIndex.get(indexName);
 
             if (fields == null) {
-                fields = new ArrayList<SortField<?>>();
+                fields = new ArrayList<>();
                 columnsByIndex.put(indexName, fields);
             }
 
@@ -288,8 +288,8 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
 
         // Constraints
         // -------------------------------------------------------------------------------------------------------------
-        Map<Name, List<TableField<Record, ?>>> columnsByConstraint = new HashMap<Name, List<TableField<Record, ?>>>();
-        List<KeyColumnUsage> keyColumnUsages = new ArrayList<KeyColumnUsage>(meta.getKeyColumnUsages());
+        Map<Name, List<TableField<Record, ?>>> columnsByConstraint = new HashMap<>();
+        List<KeyColumnUsage> keyColumnUsages = new ArrayList<>(meta.getKeyColumnUsages());
         Collections.sort(keyColumnUsages, new Comparator<KeyColumnUsage>() {
             @Override
             public int compare(KeyColumnUsage o1, KeyColumnUsage o2) {
@@ -306,7 +306,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
             List<TableField<Record, ?>> fields = columnsByConstraint.get(constraintName);
 
             if (fields == null) {
-                fields = new ArrayList<TableField<Record, ?>>();
+                fields = new ArrayList<>();
                 columnsByConstraint.put(constraintName, fields);
             }
 
@@ -439,7 +439,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
             List<Schema> list = schemasPerCatalog.get(c);
 
             if (list == null) {
-                list = new ArrayList<Schema>();
+                list = new ArrayList<>();
                 schemasPerCatalog.put(c, list);
             }
 
@@ -451,7 +451,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
             List<InformationSchemaTable> list = tablesPerSchema.get(s);
 
             if (list == null) {
-                list = new ArrayList<InformationSchemaTable>();
+                list = new ArrayList<>();
                 tablesPerSchema.put(s, list);
             }
 
@@ -463,7 +463,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
             List<Sequence<?>> list = sequencesPerSchema.get(s);
 
             if (list == null) {
-                list = new ArrayList<Sequence<?>>();
+                list = new ArrayList<>();
                 sequencesPerSchema.put(s, list);
             }
 
@@ -565,9 +565,9 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
         private static final long              serialVersionUID = 4314110578549768267L;
 
         UniqueKey<Record>                      primaryKey;
-        final List<UniqueKey<Record>>          uniqueKeys       = new ArrayList<UniqueKey<Record>>();
-        final List<ForeignKey<Record, Record>> foreignKeys      = new ArrayList<ForeignKey<Record, Record>>();
-        final List<Index>                      indexes          = new ArrayList<Index>();
+        final List<UniqueKey<Record>>          uniqueKeys       = new ArrayList<>();
+        final List<ForeignKey<Record, Record>> foreignKeys      = new ArrayList<>();
+        final List<Index>                      indexes          = new ArrayList<>();
 
         public InformationSchemaTable(String name, Schema schema, String comment) {
             super(name, schema, null, null, comment);

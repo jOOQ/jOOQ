@@ -254,9 +254,9 @@ public class XMLDatabase extends AbstractDatabase {
 
     @Override
     protected List<IndexDefinition> getIndexes0() throws SQLException {
-        List<IndexDefinition> result = new ArrayList<IndexDefinition>();
+        List<IndexDefinition> result = new ArrayList<>();
 
-        final Map<Name, SortedSet<IndexColumnUsage>> indexColumnUsage = new HashMap<Name, SortedSet<IndexColumnUsage>>();
+        final Map<Name, SortedSet<IndexColumnUsage>> indexColumnUsage = new HashMap<>();
         for (IndexColumnUsage ic : info().getIndexColumnUsages()) {
             Name name = name(ic.getIndexCatalog(), ic.getIndexSchema(), ic.getTableName(), ic.getIndexName());
 
@@ -307,7 +307,7 @@ public class XMLDatabase extends AbstractDatabase {
                     private final List<IndexColumnDefinition> indexColumns;
 
                     {
-                        indexColumns = new ArrayList<IndexColumnDefinition>();
+                        indexColumns = new ArrayList<>();
                         SortedSet<IndexColumnUsage> list = indexColumnUsage.get(name);
 
                         if (list != null)
@@ -370,7 +370,7 @@ public class XMLDatabase extends AbstractDatabase {
     }
 
     private List<KeyColumnUsage> keyColumnUsage(TableConstraintType constraintType) {
-        List<KeyColumnUsage> result = new ArrayList<KeyColumnUsage>();
+        List<KeyColumnUsage> result = new ArrayList<>();
 
         for (TableConstraint constraint : info().getTableConstraints())
             if (constraintType == constraint.getConstraintType()
@@ -456,14 +456,14 @@ public class XMLDatabase extends AbstractDatabase {
 
     @Override
     protected List<CatalogDefinition> getCatalogs0() throws SQLException {
-        List<CatalogDefinition> result = new ArrayList<CatalogDefinition>();
+        List<CatalogDefinition> result = new ArrayList<>();
         result.add(new CatalogDefinition(this, "", ""));
         return result;
     }
 
     @Override
     protected List<SchemaDefinition> getSchemata0() {
-        List<SchemaDefinition> result = new ArrayList<SchemaDefinition>();
+        List<SchemaDefinition> result = new ArrayList<>();
 
         for (Schema schema : info().getSchemata()) {
             String schemaName = schema.getSchemaName();
@@ -475,7 +475,7 @@ public class XMLDatabase extends AbstractDatabase {
 
     @Override
     protected List<SequenceDefinition> getSequences0() {
-        List<SequenceDefinition> result = new ArrayList<SequenceDefinition>();
+        List<SequenceDefinition> result = new ArrayList<>();
 
         for (Sequence sequence : info().getSequences()) {
             if (getInputSchemata().contains(sequence.getSequenceSchema())) {
@@ -501,7 +501,7 @@ public class XMLDatabase extends AbstractDatabase {
 
     @Override
     protected List<TableDefinition> getTables0() {
-        List<TableDefinition> result = new ArrayList<TableDefinition>();
+        List<TableDefinition> result = new ArrayList<>();
 
         for (Table table : info().getTables()) {
             if (getInputSchemata().contains(table.getTableSchema())) {
@@ -516,31 +516,31 @@ public class XMLDatabase extends AbstractDatabase {
 
     @Override
     protected List<EnumDefinition> getEnums0() {
-        List<EnumDefinition> result = new ArrayList<EnumDefinition>();
+        List<EnumDefinition> result = new ArrayList<>();
         return result;
     }
 
     @Override
     protected List<DomainDefinition> getDomains0() throws SQLException {
-        List<DomainDefinition> result = new ArrayList<DomainDefinition>();
+        List<DomainDefinition> result = new ArrayList<>();
         return result;
     }
 
     @Override
     protected List<UDTDefinition> getUDTs0() {
-        List<UDTDefinition> result = new ArrayList<UDTDefinition>();
+        List<UDTDefinition> result = new ArrayList<>();
         return result;
     }
 
     @Override
     protected List<ArrayDefinition> getArrays0() {
-        List<ArrayDefinition> result = new ArrayList<ArrayDefinition>();
+        List<ArrayDefinition> result = new ArrayList<>();
         return result;
     }
 
     @Override
     protected List<RoutineDefinition> getRoutines0() {
-        List<RoutineDefinition> result = new ArrayList<RoutineDefinition>();
+        List<RoutineDefinition> result = new ArrayList<>();
 
         for (Routine routine : info().getRoutines()) {
             if (isBlank(routine.getSpecificPackage()) && isBlank(routine.getRoutinePackage())) {
@@ -559,9 +559,9 @@ public class XMLDatabase extends AbstractDatabase {
 
     @Override
     protected List<PackageDefinition> getPackages0() {
-        List<PackageDefinition> result = new ArrayList<PackageDefinition>();
+        List<PackageDefinition> result = new ArrayList<>();
 
-        Set<String> packages = new HashSet<String>();
+        Set<String> packages = new HashSet<>();
         for (Routine routine : info().getRoutines()) {
             String schemaName = defaultIfBlank(routine.getSpecificSchema(), routine.getRoutineSchema());
 

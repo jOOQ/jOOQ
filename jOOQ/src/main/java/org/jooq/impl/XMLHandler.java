@@ -74,8 +74,8 @@ final class XMLHandler extends DefaultHandler {
 
     XMLHandler(DSLContext ctx) {
         this.ctx = ctx;
-        this.fields = new ArrayList<Field<?>>();
-        this.values = new ArrayList<String>();
+        this.fields = new ArrayList<>();
+        this.values = new ArrayList<>();
     }
 
     @Override

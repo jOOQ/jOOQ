@@ -129,7 +129,7 @@ public class JPADatabase extends H2Database {
                 connection = new org.h2.Driver().connect("jdbc:h2:mem:jooq-meta-extensions-" + UUID.randomUUID(), info);
 
                 // [#6709] Apply default settings first, then allow custom overrides
-                Map<String, Object> settings = new LinkedHashMap<String, Object>();
+                Map<String, Object> settings = new LinkedHashMap<>();
                 settings.put("hibernate.dialect", HIBERNATE_DIALECT);
                 settings.put("javax.persistence.schema-generation-connection", connection);
                 settings.put("javax.persistence.create-database-schemas", true);
@@ -251,7 +251,7 @@ public class JPADatabase extends H2Database {
 
     @Override
     protected List<SchemaDefinition> getSchemata0() throws SQLException {
-        List<SchemaDefinition> result = new ArrayList<SchemaDefinition>(super.getSchemata0());
+        List<SchemaDefinition> result = new ArrayList<>(super.getSchemata0());
 
         // [#5608] The H2-specific INFORMATION_SCHEMA is undesired in the JPADatabase's output
         //         we're explicitly omitting it here for user convenience.

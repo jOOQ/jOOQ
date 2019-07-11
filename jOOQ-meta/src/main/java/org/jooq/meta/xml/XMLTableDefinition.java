@@ -76,7 +76,7 @@ public class XMLTableDefinition extends AbstractTableDefinition {
 
     @Override
     protected List<ColumnDefinition> getElements0() throws SQLException {
-        List<ColumnDefinition> result = new ArrayList<ColumnDefinition>();
+        List<ColumnDefinition> result = new ArrayList<>();
 
         for (Column column : info.getColumns()) {
             if (StringUtils.equals(defaultIfNull(table.getTableCatalog(), ""), defaultIfNull(column.getTableCatalog(), "")) &&

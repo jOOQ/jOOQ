@@ -67,7 +67,7 @@ public class JDBCTableDefinition extends AbstractTableDefinition {
 
 	@Override
 	public List<ColumnDefinition> getElements0() throws SQLException {
-		List<ColumnDefinition> result = new ArrayList<ColumnDefinition>();
+		List<ColumnDefinition> result = new ArrayList<>();
 
 		int ordinal = 0;
         for (Field<?> field : table.fields()) {

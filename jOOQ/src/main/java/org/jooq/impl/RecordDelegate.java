@@ -76,11 +76,11 @@ final class RecordDelegate<R extends Record> {
     }
 
     static final <R extends Record> RecordDelegate<R> delegate(Configuration configuration, R record) {
-        return new RecordDelegate<R>(configuration, record);
+        return new RecordDelegate<>(configuration, record);
     }
 
     static final <R extends Record> RecordDelegate<R> delegate(Configuration configuration, R record, RecordLifecycleType type) {
-        return new RecordDelegate<R>(configuration, record, type);
+        return new RecordDelegate<>(configuration, record, type);
     }
 
     @SuppressWarnings("unchecked")

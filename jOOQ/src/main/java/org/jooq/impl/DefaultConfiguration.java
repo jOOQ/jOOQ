@@ -700,8 +700,8 @@ public class DefaultConfiguration implements Configuration {
         set(settings);
 
         this.data = data != null
-            ? new ConcurrentHashMap<Object, Object>(data)
-            : new ConcurrentHashMap<Object, Object>();
+            ? new ConcurrentHashMap<>(data)
+            : new ConcurrentHashMap<>();
     }
 
     // -------------------------------------------------------------------------
@@ -1805,7 +1805,7 @@ public class DefaultConfiguration implements Configuration {
         diagnosticsListenerProviders = (DiagnosticsListenerProvider[]) ois.readObject();
         unwrapperProvider = (UnwrapperProvider) ois.readObject();
         converterProvider = (ConverterProvider) ois.readObject();
-        data = new ConcurrentHashMap<Object, Object>();
+        data = new ConcurrentHashMap<>();
 
         Object key;
         Object value;

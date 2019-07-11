@@ -80,7 +80,7 @@ final class CaseValueStepImpl<V> implements CaseValueStep<V> {
 
     @Override
     public final <T> CaseWhenStep<V, T> when(Field<V> compareValue, Field<T> result) {
-        return new CaseWhenStepImpl<V, T>(value, compareValue, result);
+        return new CaseWhenStepImpl<>(value, compareValue, result);
     }
 
     @Override
@@ -90,7 +90,7 @@ final class CaseValueStepImpl<V> implements CaseValueStep<V> {
 
     @Override
     public final <T> CaseWhenStep<V, T> mapValues(Map<V, T> values) {
-        Map<Field<V>, Field<T>> fields = new LinkedHashMap<Field<V>, Field<T>>();
+        Map<Field<V>, Field<T>> fields = new LinkedHashMap<>();
 
         for (Entry<V, T> entry : values.entrySet())
             fields.put(Tools.field(entry.getKey(), value), Tools.field(entry.getValue()));
@@ -100,6 +100,6 @@ final class CaseValueStepImpl<V> implements CaseValueStep<V> {
 
     @Override
     public final <T> CaseWhenStep<V, T> mapFields(Map<? extends Field<V>, ? extends Field<T>> fields) {
-        return new CaseWhenStepImpl<V, T>(value, fields);
+        return new CaseWhenStepImpl<>(value, fields);
     }
 }

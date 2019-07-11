@@ -76,7 +76,7 @@ public class AbstractXMLasObjectBinding<T> extends AbstractVarcharBinding<T> {
     private final Converter<Object, T> converter;
 
     protected AbstractXMLasObjectBinding(final Class<T> theType) {
-        this.converter = new XMLasObjectConverter<T>(theType);
+        this.converter = new XMLasObjectConverter<>(theType);
     }
 
     @Override
@@ -128,7 +128,7 @@ public class AbstractXMLasObjectBinding<T> extends AbstractVarcharBinding<T> {
 
                 Object o = u;
                 if (root == null) {
-                    o = new JAXBElement<T>(new QName(decapitalize(type.getSimpleName())), type, u);
+                    o = new JAXBElement<>(new QName(decapitalize(type.getSimpleName())), type, u);
                 }
 
                 Marshaller m = ctx.createMarshaller();

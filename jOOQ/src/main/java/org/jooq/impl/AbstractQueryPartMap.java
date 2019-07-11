@@ -60,7 +60,7 @@ implements Map<K, V> {
     private final Map<K, V> map;
 
     AbstractQueryPartMap() {
-        map = new LinkedHashMap<K, V>();
+        map = new LinkedHashMap<>();
     }
 
     // -------------------------------------------------------------------------

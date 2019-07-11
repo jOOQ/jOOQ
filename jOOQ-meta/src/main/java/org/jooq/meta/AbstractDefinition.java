@@ -97,7 +97,7 @@ public abstract class AbstractDefinition implements Definition {
 
     @Override
     public List<Definition> getDefinitionPath() {
-        List<Definition> result = new ArrayList<Definition>();
+        List<Definition> result = new ArrayList<>();
         result.addAll(getSchema().getDefinitionPath());
 
         if (getPackage() != null)
@@ -213,7 +213,7 @@ public abstract class AbstractDefinition implements Definition {
     @Override
     public final Name getQualifiedInputNamePart() {
         if (qualifiedInputNamePart == null) {
-            List<String> list = new ArrayList<String>();
+            List<String> list = new ArrayList<>();
 
             for (Definition part : getDefinitionPath())
                 list.add(part.getInputName());
@@ -227,7 +227,7 @@ public abstract class AbstractDefinition implements Definition {
     @Override
     public final Name getQualifiedOutputNamePart() {
         if (qualifiedOutputNamePart == null) {
-            List<String> list = new ArrayList<String>();
+            List<String> list = new ArrayList<>();
 
             for (Definition part : getDefinitionPath()) {
                 if (part instanceof CatalogDefinition && ((CatalogDefinition) part).isDefaultCatalog())

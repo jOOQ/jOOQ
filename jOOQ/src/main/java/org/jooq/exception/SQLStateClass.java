@@ -152,7 +152,7 @@ public enum SQLStateClass {
     NONE("")
     ;
 
-    private static final Map<String, SQLStateClass> lookup = new HashMap<String, SQLStateClass>();
+    private static final Map<String, SQLStateClass> lookup = new HashMap<>();
     private final String                            className;
 
     static {

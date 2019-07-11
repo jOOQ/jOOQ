@@ -247,23 +247,23 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
     protected <X, Y> AbstractRoutine(String name, Schema schema, Package pkg, DataType<X> type, Converter<Y, T> converter, Binding<X, Y> binding) {
         super(qualify(pkg != null ? pkg : schema, DSL.name(name)), CommentImpl.NO_COMMENT);
 
-        this.resultIndexes = new HashMap<Parameter<?>, Integer>();
+        this.resultIndexes = new HashMap<>();
 
         this.schema = schema;
 
 
 
-        this.allParameters = new ArrayList<Parameter<?>>();
-        this.inParameters = new ArrayList<Parameter<?>>();
-        this.outParameters = new ArrayList<Parameter<?>>();
+        this.allParameters = new ArrayList<>();
+        this.inParameters = new ArrayList<>();
+        this.outParameters = new ArrayList<>();
 
 
 
         this.results = new ResultsImpl(null);
-        this.inValues = new HashMap<Parameter<?>, Field<?>>();
-        this.inValuesDefaulted = new HashSet<Parameter<?>>();
-        this.inValuesNonDefaulted = new HashSet<Parameter<?>>();
-        this.outValues = new HashMap<Parameter<?>, Object>();
+        this.inValues = new HashMap<>();
+        this.inValuesDefaulted = new HashSet<>();
+        this.inValuesNonDefaulted = new HashSet<>();
+        this.outValues = new HashMap<>();
         this.type = converter == null && binding == null
             ? (DataType<T>) type
             : type.asConvertedDataType(DefaultBinding.newBinding((Converter) converter, type, binding));
@@ -449,7 +449,7 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
     private final int executeSelectFromPOSTGRES() {
         DSLContext create = create(configuration);
 
-        List<Field<?>> fields = new ArrayList<Field<?>>(1 + outParameters.size());
+        List<Field<?>> fields = new ArrayList<>(1 + outParameters.size());
         if (returnParameter != null)
             fields.add(DSL.field(DSL.name(getName()), returnParameter.getDataType()));
         for (Parameter<?> p : outParameters)
@@ -691,7 +691,7 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
 
         String separator = "";
         List<Parameter<?>> parameters = getParameters();
-        Map<Integer, Parameter<?>> indexes = new LinkedHashMap<Integer, Parameter<?>>();
+        Map<Integer, Parameter<?>> indexes = new LinkedHashMap<>();
         for (int i = 0; i < parameters.size(); i++) {
             Parameter<?> parameter = parameters.get(i);
 
@@ -1200,7 +1200,7 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
 
 
         {
-            DefaultBindingGetStatementContext<U> out = new DefaultBindingGetStatementContext<U>(
+            DefaultBindingGetStatementContext<U> out = new DefaultBindingGetStatementContext<>(
                 ctx.configuration(),
                 ctx.data(),
                 (CallableStatement) ctx.statement(),
@@ -1231,7 +1231,7 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
 
 
 
-        parameter.getBinding().register(new DefaultBindingRegisterContext<U>(c, data, statement, resultIndexes.get(parameter)));
+        parameter.getBinding().register(new DefaultBindingRegisterContext<>(c, data, statement, resultIndexes.get(parameter)));
     }
 
     // ------------------------------------------------------------------------
@@ -1632,7 +1632,7 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
             ? (DataType<U>) type
             : type.asConvertedDataType(actualBinding);
 
-        return new ParameterImpl<U>(name, actualType, actualBinding, isDefaulted, isUnnamed);
+        return new ParameterImpl<>(name, actualType, actualBinding, isDefaulted, isUnnamed);
     }
 
     /**
@@ -1747,7 +1747,7 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
 
             String name;
             DataType<?> returnType;
-            List<Field<?>> fields = new ArrayList<Field<?>>(getInParameters().size());
+            List<Field<?>> fields = new ArrayList<>(getInParameters().size());
 
 
 

@@ -110,7 +110,7 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
 
     @Override
     public List<Definition> getDefinitionPath() {
-        List<Definition> result = new ArrayList<Definition>();
+        List<Definition> result = new ArrayList<>();
 
         result.addAll(getContainer().getDefinitionPath());
         result.add(this);

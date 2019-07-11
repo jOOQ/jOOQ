@@ -72,7 +72,7 @@ public class SQLiteTableDefinition extends AbstractTableDefinition {
 
     @Override
     public List<ColumnDefinition> getElements0() throws SQLException {
-        List<ColumnDefinition> result = new ArrayList<ColumnDefinition>();
+        List<ColumnDefinition> result = new ArrayList<>();
 
         Field<String> fName = field(name("name"), String.class);
         Field<String> fType = field(name("type"), String.class);

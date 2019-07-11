@@ -317,7 +317,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
             }
 
             Field<?>[] fields = getFields(ctx.resultSet().getMetaData());
-            cursor = new CursorImpl<R>(ctx, listener, fields, intern.internIndexes(fields), keepStatement(), keepResultSet(), getRecordType(), SettingsTools.getMaxRows(maxRows, ctx.settings()), autoclosing);
+            cursor = new CursorImpl<>(ctx, listener, fields, intern.internIndexes(fields), keepStatement(), keepResultSet(), getRecordType(), SettingsTools.getMaxRows(maxRows, ctx.settings()), autoclosing);
 
             if (!lazy) {
                 result = cursor.fetch();
@@ -368,7 +368,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
     @Override
     public final void subscribe(Flow.Subscriber<? super R> subscriber) {
-        subscribe(new FlowToReactiveStreamsSubscriberBridge<R>(subscriber));
+        subscribe(new FlowToReactiveStreamsSubscriberBridge<>(subscriber));
     }
 
 
@@ -390,7 +390,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
                         c = fetchLazyNonAutoClosing();
 
                     if (buffer == null)
-                        buffer = new ArrayDeque<R>();
+                        buffer = new ArrayDeque<>();
 
                     if (buffer.size() < i)
                         buffer.addAll(c.fetchNext(i - buffer.size()));
@@ -1569,14 +1569,14 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     public final org.jooq.FutureResult<R> fetchLater() {
         ExecutorService executor = newSingleThreadExecutor();
         Future<Result<R>> future = executor.submit(new ResultQueryCallable());
-        return new FutureResultImpl<R>(future, executor);
+        return new FutureResultImpl<>(future, executor);
     }
 
     @Override
     @Deprecated
     public final org.jooq.FutureResult<R> fetchLater(ExecutorService executor) {
         Future<Result<R>> future = executor.submit(new ResultQueryCallable());
-        return new FutureResultImpl<R>(future);
+        return new FutureResultImpl<>(future);
     }
 
     @Override

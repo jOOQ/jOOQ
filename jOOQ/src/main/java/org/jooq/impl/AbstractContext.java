@@ -153,8 +153,8 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
 
             this.visitContext = new DefaultVisitContext();
-            this.visitParts = new ArrayDeque<QueryPart>();
-            this.visitClauses = new ArrayDeque<Clause>();
+            this.visitParts = new ArrayDeque<>();
+            this.visitClauses = new ArrayDeque<>();
 
             this.visitListenersStart = configuration.settings().getVisitListenerStartInvocationOrder() != REVERSE
                 ? visitListeners
@@ -775,7 +775,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
         JoinNode(Table<?> table) {
             this.table = table;
-            this.children = new LinkedHashMap<ForeignKey<?, ?>, JoinNode>();
+            this.children = new LinkedHashMap<>();
         }
 
         public Table<?> joinTree() {

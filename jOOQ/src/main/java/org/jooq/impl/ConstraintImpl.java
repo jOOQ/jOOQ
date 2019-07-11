@@ -200,7 +200,7 @@ implements
                 ctx.visit(K_UNIQUE)
                    .sql(" (")
                    .qualify(false)
-                   .visit(new QueryPartList<Field<?>>(unique))
+                   .visit(new QueryPartList<>(unique))
                    .qualify(qualify)
                    .sql(')');
 
@@ -219,7 +219,7 @@ implements
 
                 ctx.sql(" (")
                    .qualify(false)
-                   .visit(new QueryPartList<Field<?>>(primaryKey))
+                   .visit(new QueryPartList<>(primaryKey))
                    .qualify(qualify)
                    .sql(')');
 
@@ -232,7 +232,7 @@ implements
                 ctx.visit(K_FOREIGN_KEY)
                    .sql(" (")
                    .qualify(false)
-                   .visit(new QueryPartList<Field<?>>(foreignKey))
+                   .visit(new QueryPartList<>(foreignKey))
                    .qualify(qualify)
                    .sql(')')
                    .formatSeparator()
@@ -243,7 +243,7 @@ implements
                 if (references.length > 0)
                     ctx.sql(" (")
                        .qualify(false)
-                       .visit(new QueryPartList<Field<?>>(references))
+                       .visit(new QueryPartList<>(references))
                        .qualify(qualify)
                        .sql(')');
 

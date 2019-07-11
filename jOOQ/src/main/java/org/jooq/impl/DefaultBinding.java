@@ -249,19 +249,19 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             DateToLocalDateConverter c1 = new DateToLocalDateConverter();
             Converter<LocalDate, U> c2 = (Converter<LocalDate, U>) converter;
             Converter<Date, U> c3 = Converters.of(c1, c2);
-            return (Binding<T, U>) new DelegatingBinding<LocalDate, Date, U>(c1, c2, new DefaultDateBinding<U>(c3, isLob), isLob);
+            return (Binding<T, U>) new DelegatingBinding<>(c1, c2, new DefaultDateBinding<>(c3, isLob), isLob);
         }
         else if (type == LocalDateTime.class) {
             TimestampToLocalDateTimeConverter c1 = new TimestampToLocalDateTimeConverter();
             Converter<LocalDateTime, U> c2 = (Converter<LocalDateTime, U>) converter;
             Converter<Timestamp, U> c3 = Converters.of(c1, c2);
-            return (Binding<T, U>) new DelegatingBinding<LocalDateTime, Timestamp, U>(c1, c2, new DefaultTimestampBinding<U>(c3, isLob), isLob);
+            return (Binding<T, U>) new DelegatingBinding<>(c1, c2, new DefaultTimestampBinding<>(c3, isLob), isLob);
         }
         else if (type == LocalTime.class) {
             TimeToLocalTimeConverter c1 = new TimeToLocalTimeConverter();
             Converter<LocalTime, U> c2 = (Converter<LocalTime, U>) converter;
             Converter<Time, U> c3 = Converters.of(c1, c2);
-            return (Binding<T, U>) new DelegatingBinding<LocalTime, Time, U>(c1, c2, new DefaultTimeBinding<U>(c3, isLob), isLob);
+            return (Binding<T, U>) new DelegatingBinding<>(c1, c2, new DefaultTimeBinding<>(c3, isLob), isLob);
         }
 
         else if (type == Long.class || type == long.class)
@@ -411,7 +411,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     static final Map<String, Class<?>> typeMap(Class<?> type, Configuration configuration) {
-        return typeMap(type, configuration, new HashMap<String, Class<?>>());
+        return typeMap(type, configuration, new HashMap<>());
     }
 
     @SuppressWarnings("unchecked")
@@ -957,7 +957,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 for (Object o : value) {
                     ctx.render().sql(separator);
-                    binding((Class<Object>) type.getComponentType(), isLob).sql(new DefaultBindingSQLContext<Object>(ctx.configuration(), ctx.data(), ctx.render(), o));
+                    binding((Class<Object>) type.getComponentType(), isLob).sql(new DefaultBindingSQLContext<>(ctx.configuration(), ctx.data(), ctx.render(), o));
                     separator = ", ";
                 }
 
@@ -975,7 +975,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 for (Object o : value) {
                     ctx.render().sql(separator);
-                    binding((Class<Object>) type.getComponentType(), isLob).sql(new DefaultBindingSQLContext<Object>(ctx.configuration(), ctx.data(), ctx.render(), o));
+                    binding((Class<Object>) type.getComponentType(), isLob).sql(new DefaultBindingSQLContext<>(ctx.configuration(), ctx.data(), ctx.render(), o));
                     separator = ", ";
                 }
 
@@ -1109,14 +1109,14 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 // This might be a UDT (not implemented exception...)
                 catch (Exception e) {
-                    List<Object> result = new ArrayList<Object>();
+                    List<Object> result = new ArrayList<>();
                     ResultSet arrayRs = null;
 
                     // Try fetching the array as a JDBC ResultSet
                     try {
                         arrayRs = array.getResultSet();
                         Binding<T, T> binding = binding((Class<T>) type.getComponentType(), false);
-                        DefaultBindingGetResultSetContext<T> out = new DefaultBindingGetResultSetContext<T>(ctx.configuration(), ctx.data(), arrayRs, 2);
+                        DefaultBindingGetResultSetContext<T> out = new DefaultBindingGetResultSetContext<>(ctx.configuration(), ctx.data(), arrayRs, 2);
 
                         while (arrayRs.next()) {
                             binding.get(out);
@@ -2211,9 +2211,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             String literal = value.getLiteral();
 
             if (literal == null)
-                binding(String.class, isLob).sql(new DefaultBindingSQLContext<String>(ctx.configuration(), ctx.data(), ctx.render(), literal));
+                binding(String.class, isLob).sql(new DefaultBindingSQLContext<>(ctx.configuration(), ctx.data(), ctx.render(), literal));
             else
-                binding(String.class, isLob).sql(new DefaultBindingSQLContext<String>(ctx.configuration(), ctx.data(), ctx.render(), literal));
+                binding(String.class, isLob).sql(new DefaultBindingSQLContext<>(ctx.configuration(), ctx.data(), ctx.render(), literal));
         }
 
         @Override
@@ -2939,7 +2939,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         DefaultInstantBinding(Converter<Instant, U> converter, boolean isLob) {
             super(converter, isLob);
 
-            delegate = new DefaultOffsetDateTimeBinding<U>(Converters.of(CONVERTER, converter()), isLob);
+            delegate = new DefaultOffsetDateTimeBinding<>(Converters.of(CONVERTER, converter()), isLob);
         }
 
         @Override

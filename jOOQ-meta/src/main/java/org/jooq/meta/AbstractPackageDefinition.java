@@ -59,7 +59,7 @@ public abstract class AbstractPackageDefinition extends AbstractDefinition imple
 
     @Override
     public List<Definition> getDefinitionPath() {
-        List<Definition> result = new ArrayList<Definition>();
+        List<Definition> result = new ArrayList<>();
 
         result.addAll(getSchema().getDefinitionPath());
         result.add(this);
@@ -70,7 +70,7 @@ public abstract class AbstractPackageDefinition extends AbstractDefinition imple
     @Override
     public final List<RoutineDefinition> getRoutines() {
         if (routines == null) {
-            routines = new ArrayList<RoutineDefinition>();
+            routines = new ArrayList<>();
 
             if (getDatabase().getIncludePackageRoutines()) {
                 try {
@@ -90,7 +90,7 @@ public abstract class AbstractPackageDefinition extends AbstractDefinition imple
     @Override
     public final List<AttributeDefinition> getConstants() {
         if (constants == null) {
-            constants = new ArrayList<AttributeDefinition>();
+            constants = new ArrayList<>();
 
             if (getDatabase().getIncludePackageConstants()) {
                 try {

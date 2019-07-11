@@ -68,7 +68,7 @@ public class FirebirdTableDefinition extends AbstractTableDefinition {
 
     @Override
     protected List<ColumnDefinition> getElements0() throws SQLException {
-        List<ColumnDefinition> result = new ArrayList<ColumnDefinition>();
+        List<ColumnDefinition> result = new ArrayList<>();
 
         Rdb$relationFields r = RDB$RELATION_FIELDS.as("r");
         Rdb$fields f = RDB$FIELDS.as("f");

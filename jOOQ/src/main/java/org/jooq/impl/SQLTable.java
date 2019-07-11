@@ -69,12 +69,12 @@ final class SQLTable extends AbstractTable<Record> {
 
     @Override
     public final Table<Record> as(Name alias) {
-        return new TableAlias<Record>(this, alias);
+        return new TableAlias<>(this, alias);
     }
 
     @Override
     public final Table<Record> as(Name alias, Name... fieldAliases) {
-        return new TableAlias<Record>(this, alias, fieldAliases);
+        return new TableAlias<>(this, alias, fieldAliases);
     }
 
     @Override
@@ -84,6 +84,6 @@ final class SQLTable extends AbstractTable<Record> {
 
     @Override
     final Fields<Record> fields0() {
-        return new Fields<Record>();
+        return new Fields<>();
     }
 }

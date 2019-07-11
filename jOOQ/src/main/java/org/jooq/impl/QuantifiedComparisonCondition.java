@@ -109,7 +109,7 @@ final class QuantifiedComparisonCondition extends AbstractCondition implements L
         Select<?> subquery = ((QuantifiedSelectImpl<?>) query).query;
 
         if (values != null || array instanceof Param<?>) {
-            List<Condition> conditions = new ArrayList<Condition>();
+            List<Condition> conditions = new ArrayList<>();
             if (values != null)
                 for (Field<String> value : values)
                     conditions.add(comparisonCondition(comparator, value));

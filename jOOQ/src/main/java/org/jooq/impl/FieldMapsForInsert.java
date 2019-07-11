@@ -87,8 +87,8 @@ final class FieldMapsForInsert extends AbstractQueryPart {
 
     FieldMapsForInsert(Table<?> table) {
         this.table = table;
-        this.values = new LinkedHashMap<Field<?>, List<Field<?>>>();
-        this.empty = new LinkedHashMap<Field<?>, Field<?>>();
+        this.values = new LinkedHashMap<>();
+        this.empty = new LinkedHashMap<>();
     }
 
     // -------------------------------------------------------------------------
@@ -221,7 +221,7 @@ final class FieldMapsForInsert extends AbstractQueryPart {
         Select<Record> select = null;
 
         for (int row = 0; row < rows; row++) {
-            List<Field<?>> fields = new ArrayList<Field<?>>(values.size());
+            List<Field<?>> fields = new ArrayList<>(values.size());
 
             for (List<Field<?>> list : values.values())
                 fields.add(list.get(row));
@@ -295,14 +295,14 @@ final class FieldMapsForInsert extends AbstractQueryPart {
             Field<?> e = empty.get(f);
 
             if (e == null) {
-                e = new LazyVal<Object>(null, (Field<Object>) f);
+                e = new LazyVal<>(null, (Field<Object>) f);
                 empty.put(f, e);
             }
 
             if (!values.containsKey(f)) {
                 values.put(f, rows > 0
-                    ? new ArrayList<Field<?>>(Collections.nCopies(rows, e))
-                    : new ArrayList<Field<?>>()
+                    ? new ArrayList<>(Collections.nCopies(rows, e))
+                    : new ArrayList<>()
                 );
             }
         }
@@ -449,7 +449,7 @@ final class FieldMapsForInsert extends AbstractQueryPart {
                         @Override
                         public Entry<Field<?>, Field<?>> next() {
                             Entry<Field<?>, List<Field<?>>> entry = delegate.next();
-                            return new SimpleImmutableEntry<Field<?>, Field<?>>(entry.getKey(), entry.getValue().get(index));
+                            return new SimpleImmutableEntry<>(entry.getKey(), entry.getValue().get(index));
                         }
 
                         @Override

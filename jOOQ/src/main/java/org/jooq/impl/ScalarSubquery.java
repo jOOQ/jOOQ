@@ -60,7 +60,7 @@ final class ScalarSubquery<T> extends AbstractField<T> {
 
     @Override
     public final Field<T> as(Name alias) {
-        return new FieldAlias<T>(this, alias);
+        return new FieldAlias<>(this, alias);
     }
 
     @Override

@@ -232,7 +232,7 @@ public abstract class AbstractGeneratorStrategy implements GeneratorStrategy {
     @Override
     public final List<String> getJavaIdentifiers(Collection<? extends Definition> definitions) {
         List<? extends Definition> nonNull = nonNull(definitions);
-        List<String> result = new ArrayList<String>(nonNull.size());
+        List<String> result = new ArrayList<>(nonNull.size());
 
         for (Definition definition : nonNull)
             result.add(getJavaIdentifier(definition));
@@ -248,7 +248,7 @@ public abstract class AbstractGeneratorStrategy implements GeneratorStrategy {
     @Override
     public final List<String> getFullJavaIdentifiers(Collection<? extends Definition> definitions) {
         List<? extends Definition> nonNull = nonNull(definitions);
-        List<String> result = new ArrayList<String>(nonNull.size());
+        List<String> result = new ArrayList<>(nonNull.size());
 
         for (Definition definition : nonNull)
             result.add(getFullJavaIdentifier(definition));
@@ -262,7 +262,7 @@ public abstract class AbstractGeneratorStrategy implements GeneratorStrategy {
     }
 
     private static final <T> List<T> nonNull(Collection<? extends T> collection) {
-        List<T> result = new ArrayList<T>();
+        List<T> result = new ArrayList<>();
 
         for (T t : collection)
             if (t != null)

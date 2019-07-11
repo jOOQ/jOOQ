@@ -201,7 +201,7 @@ class Function<T> extends AbstractField<T> implements
         this.term = null;
         this.name = null;
         this.distinct = distinct;
-        this.arguments = new QueryPartList<QueryPart>(arguments);
+        this.arguments = new QueryPartList<>(arguments);
     }
 
     Function(Term term, boolean distinct, DataType<T> type, QueryPart... arguments) {
@@ -210,7 +210,7 @@ class Function<T> extends AbstractField<T> implements
         this.term = term;
         this.name = null;
         this.distinct = distinct;
-        this.arguments = new QueryPartList<QueryPart>(arguments);
+        this.arguments = new QueryPartList<>(arguments);
     }
 
     Function(Name name, boolean distinct, DataType<T> type, QueryPart... arguments) {
@@ -219,7 +219,7 @@ class Function<T> extends AbstractField<T> implements
         this.term = null;
         this.name = name;
         this.distinct = distinct;
-        this.arguments = new QueryPartList<QueryPart>(arguments);
+        this.arguments = new QueryPartList<>(arguments);
     }
 
     // -------------------------------------------------------------------------
@@ -392,7 +392,7 @@ class Function<T> extends AbstractField<T> implements
     final void toSQLGroupConcat(Context<?> ctx) {
         toSQLFunctionName(ctx);
         ctx.sql('(');
-        toSQLArguments1(ctx, new QueryPartList<QueryPart>(Arrays.asList(arguments.get(0))));
+        toSQLArguments1(ctx, new QueryPartList<>(Arrays.asList(arguments.get(0))));
 
         if (!Tools.isEmpty(withinGroupOrderBy))
             ctx.sql(' ').visit(K_ORDER_BY).sql(' ')
@@ -583,7 +583,7 @@ class Function<T> extends AbstractField<T> implements
                 ctx.visit(args);
             }
             else {
-                QueryPartList<Field<?>> expressions = new QueryPartList<Field<?>>();
+                QueryPartList<Field<?>> expressions = new QueryPartList<>();
 
                 for (QueryPart argument : args)
                     expressions.add(DSL.when(filter, argument == ASTERISK ? one() : argument));

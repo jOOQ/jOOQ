@@ -408,7 +408,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
     }
 
     private /* non-final */ List<R> records(Collection<P> objects, boolean forUpdate) {
-        List<R> result = new ArrayList<R>(objects.size());
+        List<R> result = new ArrayList<>(objects.size());
         Field<?>[] pk = pk();
         DSLContext ctx;
 
@@ -419,7 +419,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
         // [#2536] Upon store(), insert(), update(), delete(), returned values in the record
         //         are copied back to the relevant POJO using the RecordListener SPI
         if (!FALSE.equals(configuration.settings().isReturnRecordToPojo())) {
-            mapping = new IdentityHashMap<R, Object>();
+            mapping = new IdentityHashMap<>();
             ctx = using(configuration.derive(providers(configuration.recordListenerProviders(), mapping)));
         }
         else {

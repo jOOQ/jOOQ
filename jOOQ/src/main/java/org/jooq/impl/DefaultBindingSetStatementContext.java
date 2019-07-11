@@ -78,7 +78,7 @@ class DefaultBindingSetStatementContext<U> extends AbstractResourceManagingScope
 
     @Override
     public final <T> BindingSetStatementContext<T> convert(Converter<? extends T, ? super U> converter) {
-        return new DefaultBindingSetStatementContext<T>(configuration, data, statement, index, converter.to(value));
+        return new DefaultBindingSetStatementContext<>(configuration, data, statement, index, converter.to(value));
     }
 
     @Override

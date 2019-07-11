@@ -445,7 +445,7 @@ public enum SQLStateSubclass {
     NONE(SQLStateClass.OTHER, ""),
     ;
 
-    private static final Map<String, SQLStateSubclass> lookup = new HashMap<String, SQLStateSubclass>();
+    private static final Map<String, SQLStateSubclass> lookup = new HashMap<>();
     private final SQLStateClass                        clazz;
     private final String                               subclass;
 

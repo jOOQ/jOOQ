@@ -399,7 +399,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
     @Override
     public final AlterTableImpl add(Collection<? extends FieldOrConstraint> fields) {
-        add = new QueryPartList<FieldOrConstraint>(fields);
+        add = new QueryPartList<>(fields);
         return this;
     }
 
@@ -676,7 +676,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
     @Override
     public final AlterTableImpl dropColumns(Collection<? extends Field<?>> fields) {
-        dropColumns = new QueryPartList<Field<?>>(fields);
+        dropColumns = new QueryPartList<>(fields);
         return this;
     }
 

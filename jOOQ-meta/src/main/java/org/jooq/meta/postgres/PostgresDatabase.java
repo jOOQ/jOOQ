@@ -153,7 +153,7 @@ public class PostgresDatabase extends AbstractDatabase {
 
     @Override
     protected List<IndexDefinition> getIndexes0() throws SQLException {
-        List<IndexDefinition> result = new ArrayList<IndexDefinition>();
+        List<IndexDefinition> result = new ArrayList<>();
 
         PgIndex i = PG_INDEX.as("i");
         PgClass trel = PG_CLASS.as("trel");
@@ -201,7 +201,7 @@ public class PostgresDatabase extends AbstractDatabase {
                     continue indexLoop;
 
             result.add(new AbstractIndexDefinition(tableSchema, indexName, table, unique) {
-                List<IndexColumnDefinition> indexColumns = new ArrayList<IndexColumnDefinition>();
+                List<IndexColumnDefinition> indexColumns = new ArrayList<>();
 
                 {
                     for (int ordinal = 0; ordinal < columns.length; ordinal++) {
@@ -355,8 +355,8 @@ public class PostgresDatabase extends AbstractDatabase {
 
     @Override
     protected List<TableDefinition> getTables0() throws SQLException {
-        List<TableDefinition> result = new ArrayList<TableDefinition>();
-        Map<Name, PostgresTableDefinition> map = new HashMap<Name, PostgresTableDefinition>();
+        List<TableDefinition> result = new ArrayList<>();
+        Map<Name, PostgresTableDefinition> map = new HashMap<>();
 
         Select<Record6<String, String, String, Boolean, Boolean, String>> empty =
             select(inline(""), inline(""), inline(""), inline(false), inline(false), inline(""))
@@ -513,14 +513,14 @@ public class PostgresDatabase extends AbstractDatabase {
 
     @Override
     protected List<CatalogDefinition> getCatalogs0() throws SQLException {
-        List<CatalogDefinition> result = new ArrayList<CatalogDefinition>();
+        List<CatalogDefinition> result = new ArrayList<>();
         result.add(new CatalogDefinition(this, "", ""));
         return result;
     }
 
     @Override
     protected List<SchemaDefinition> getSchemata0() throws SQLException {
-        List<SchemaDefinition> result = new ArrayList<SchemaDefinition>();
+        List<SchemaDefinition> result = new ArrayList<>();
 
         // [#1409] Shouldn't select from INFORMATION_SCHEMA.SCHEMATA, as that
         // would only return schemata of which CURRENT_USER is the owner
@@ -538,7 +538,7 @@ public class PostgresDatabase extends AbstractDatabase {
 
     @Override
     protected List<SequenceDefinition> getSequences0() throws SQLException {
-        List<SequenceDefinition> result = new ArrayList<SequenceDefinition>();
+        List<SequenceDefinition> result = new ArrayList<>();
 
         for (Record record : create()
                 .select(
@@ -574,7 +574,7 @@ public class PostgresDatabase extends AbstractDatabase {
 
     @Override
     protected List<EnumDefinition> getEnums0() throws SQLException {
-        List<EnumDefinition> result = new ArrayList<EnumDefinition>();
+        List<EnumDefinition> result = new ArrayList<>();
 
         // [#2736] This table is unavailable in Amazon Redshift
         if (exists(PG_ENUM)) {
@@ -620,7 +620,7 @@ public class PostgresDatabase extends AbstractDatabase {
     @SuppressWarnings("unchecked")
     @Override
     protected List<DomainDefinition> getDomains0() throws SQLException {
-        List<DomainDefinition> result = new ArrayList<DomainDefinition>();
+        List<DomainDefinition> result = new ArrayList<>();
 
         if (existAll(PG_CONSTRAINT, PG_TYPE)) {
             PgNamespace n = PG_NAMESPACE.as("n");
@@ -719,7 +719,7 @@ public class PostgresDatabase extends AbstractDatabase {
 
     @Override
     protected List<UDTDefinition> getUDTs0() throws SQLException {
-        List<UDTDefinition> result = new ArrayList<UDTDefinition>();
+        List<UDTDefinition> result = new ArrayList<>();
 
         // [#2736] This table is unavailable in Amazon Redshift
         if (exists(ATTRIBUTES)) {
@@ -746,13 +746,13 @@ public class PostgresDatabase extends AbstractDatabase {
 
     @Override
     protected List<ArrayDefinition> getArrays0() throws SQLException {
-        List<ArrayDefinition> result = new ArrayList<ArrayDefinition>();
+        List<ArrayDefinition> result = new ArrayList<>();
         return result;
     }
 
     @Override
     protected List<RoutineDefinition> getRoutines0() throws SQLException {
-        List<RoutineDefinition> result = new ArrayList<RoutineDefinition>();
+        List<RoutineDefinition> result = new ArrayList<>();
 
         if (!canUseRoutines())
             return result;
@@ -816,7 +816,7 @@ public class PostgresDatabase extends AbstractDatabase {
 
     @Override
     protected List<PackageDefinition> getPackages0() throws SQLException {
-        List<PackageDefinition> result = new ArrayList<PackageDefinition>();
+        List<PackageDefinition> result = new ArrayList<>();
         return result;
     }
 

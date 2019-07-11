@@ -73,7 +73,7 @@ public class FirebirdTableValuedFunction extends AbstractTableDefinition {
 
     @Override
     protected List<ColumnDefinition> getElements0() throws SQLException {
-        List<ColumnDefinition> result = new ArrayList<ColumnDefinition>();
+        List<ColumnDefinition> result = new ArrayList<>();
 
         Rdb$procedureParameters p = RDB$PROCEDURE_PARAMETERS.as("p");
         Rdb$fields f = RDB$FIELDS.as("f");

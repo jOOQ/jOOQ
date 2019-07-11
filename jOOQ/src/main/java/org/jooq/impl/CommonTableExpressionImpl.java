@@ -78,12 +78,12 @@ final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R>
 
     @Override
     public final Table<R> as(Name alias) {
-        return new TableAlias<R>(this, alias);
+        return new TableAlias<>(this, alias);
     }
 
     @Override
     public final Table<R> as(Name alias, Name... fieldAliases) {
-        return new TableAlias<R>(this, alias, fieldAliases);
+        return new TableAlias<>(this, alias, fieldAliases);
     }
 
     @Override
@@ -132,7 +132,7 @@ final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R>
             );
         }
 
-        Fields<R> result = new Fields<R>(f);
+        Fields<R> result = new Fields<>(f);
         return result;
     }
 }

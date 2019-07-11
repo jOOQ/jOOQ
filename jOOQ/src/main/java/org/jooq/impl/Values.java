@@ -85,12 +85,12 @@ final class Values<R extends Record> extends AbstractTable<R> {
 
     @Override
     public final Table<R> as(Name alias) {
-        return new TableAlias<R>(this, alias, true);
+        return new TableAlias<>(this, alias, true);
     }
 
     @Override
     public final Table<R> as(Name alias, Name... fieldAliases) {
-        return new TableAlias<R>(this, alias, fieldAliases, true);
+        return new TableAlias<>(this, alias, fieldAliases, true);
     }
 
     @Override
@@ -189,6 +189,6 @@ final class Values<R extends Record> extends AbstractTable<R> {
 
     @Override
     final Fields<R> fields0() {
-        return new Fields<R>(rows[0].fields());
+        return new Fields<>(rows[0].fields());
     }
 }

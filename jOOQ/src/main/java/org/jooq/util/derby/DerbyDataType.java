@@ -75,70 +75,70 @@ public class DerbyDataType {
     // Default SQL data types and synonyms thereof
     // -------------------------------------------------------------------------
 
-    public static final DataType<Short>      SMALLINT                   = new DefaultDataType<Short>(SQLDialect.DERBY, SQLDataType.SMALLINT, "smallint");
-    public static final DataType<Integer>    INT                        = new DefaultDataType<Integer>(SQLDialect.DERBY, SQLDataType.INTEGER, "int");
-    public static final DataType<Integer>    INTEGER                    = new DefaultDataType<Integer>(SQLDialect.DERBY, SQLDataType.INTEGER, "integer");
-    public static final DataType<Long>       BIGINT                     = new DefaultDataType<Long>(SQLDialect.DERBY, SQLDataType.BIGINT, "bigint");
-    public static final DataType<Double>     DOUBLE                     = new DefaultDataType<Double>(SQLDialect.DERBY, SQLDataType.DOUBLE, "double");
-    public static final DataType<Double>     DOUBLEPRECISION            = new DefaultDataType<Double>(SQLDialect.DERBY, SQLDataType.DOUBLE, "double precision");
-    public static final DataType<Double>     FLOAT                      = new DefaultDataType<Double>(SQLDialect.DERBY, SQLDataType.FLOAT, "float");
-    public static final DataType<Float>      REAL                       = new DefaultDataType<Float>(SQLDialect.DERBY, SQLDataType.REAL, "real");
-    public static final DataType<BigDecimal> DECIMAL                    = new DefaultDataType<BigDecimal>(SQLDialect.DERBY, SQLDataType.DECIMAL, "decimal");
-    public static final DataType<BigDecimal> DEC                        = new DefaultDataType<BigDecimal>(SQLDialect.DERBY, SQLDataType.DECIMAL, "dec");
-    public static final DataType<BigDecimal> NUMERIC                    = new DefaultDataType<BigDecimal>(SQLDialect.DERBY, SQLDataType.NUMERIC, "numeric");
-    public static final DataType<String>     VARCHAR                    = new DefaultDataType<String>(SQLDialect.DERBY, SQLDataType.VARCHAR, "varchar", "varchar(32672)");
-    public static final DataType<String>     LONGVARCHAR                = new DefaultDataType<String>(SQLDialect.DERBY, SQLDataType.LONGVARCHAR, "long varchar");
-    public static final DataType<String>     CHAR                       = new DefaultDataType<String>(SQLDialect.DERBY, SQLDataType.CHAR, "char", "varchar(32672)");
-    public static final DataType<String>     CHARACTER                  = new DefaultDataType<String>(SQLDialect.DERBY, SQLDataType.CHAR, "character", "varchar(32672)");
-    public static final DataType<String>     CLOB                       = new DefaultDataType<String>(SQLDialect.DERBY, SQLDataType.CLOB, "clob");
-    public static final DataType<String>     CHARACTERLARGEOBJECT       = new DefaultDataType<String>(SQLDialect.DERBY, SQLDataType.CLOB, "character large object");
-    public static final DataType<String>     CHARVARYING                = new DefaultDataType<String>(SQLDialect.DERBY, SQLDataType.VARCHAR, "char varying", "char varying(32672)");
-    public static final DataType<String>     CHARACTERVARYING           = new DefaultDataType<String>(SQLDialect.DERBY, SQLDataType.VARCHAR, "character varying", "character varying(32672)");
-    public static final DataType<Boolean>    BOOLEAN                    = new DefaultDataType<Boolean>(SQLDialect.DERBY, SQLDataType.BOOLEAN, "boolean");
-    public static final DataType<Date>       DATE                       = new DefaultDataType<Date>(SQLDialect.DERBY, SQLDataType.DATE, "date");
-    public static final DataType<Time>       TIME                       = new DefaultDataType<Time>(SQLDialect.DERBY, SQLDataType.TIME, "time");
-    public static final DataType<Timestamp>  TIMESTAMP                  = new DefaultDataType<Timestamp>(SQLDialect.DERBY, SQLDataType.TIMESTAMP, "timestamp");
-    public static final DataType<byte[]>     BLOB                       = new DefaultDataType<byte[]>(SQLDialect.DERBY, SQLDataType.BLOB, "blob");
-    public static final DataType<byte[]>     BINARYLARGEOBJECT          = new DefaultDataType<byte[]>(SQLDialect.DERBY, SQLDataType.BLOB, "binary large object");
+    public static final DataType<Short>      SMALLINT                   = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.SMALLINT, "smallint");
+    public static final DataType<Integer>    INT                        = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.INTEGER, "int");
+    public static final DataType<Integer>    INTEGER                    = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.INTEGER, "integer");
+    public static final DataType<Long>       BIGINT                     = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.BIGINT, "bigint");
+    public static final DataType<Double>     DOUBLE                     = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.DOUBLE, "double");
+    public static final DataType<Double>     DOUBLEPRECISION            = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.DOUBLE, "double precision");
+    public static final DataType<Double>     FLOAT                      = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.FLOAT, "float");
+    public static final DataType<Float>      REAL                       = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.REAL, "real");
+    public static final DataType<BigDecimal> DECIMAL                    = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.DECIMAL, "decimal");
+    public static final DataType<BigDecimal> DEC                        = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.DECIMAL, "dec");
+    public static final DataType<BigDecimal> NUMERIC                    = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.NUMERIC, "numeric");
+    public static final DataType<String>     VARCHAR                    = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.VARCHAR, "varchar", "varchar(32672)");
+    public static final DataType<String>     LONGVARCHAR                = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.LONGVARCHAR, "long varchar");
+    public static final DataType<String>     CHAR                       = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.CHAR, "char", "varchar(32672)");
+    public static final DataType<String>     CHARACTER                  = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.CHAR, "character", "varchar(32672)");
+    public static final DataType<String>     CLOB                       = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.CLOB, "clob");
+    public static final DataType<String>     CHARACTERLARGEOBJECT       = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.CLOB, "character large object");
+    public static final DataType<String>     CHARVARYING                = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.VARCHAR, "char varying", "char varying(32672)");
+    public static final DataType<String>     CHARACTERVARYING           = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.VARCHAR, "character varying", "character varying(32672)");
+    public static final DataType<Boolean>    BOOLEAN                    = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.BOOLEAN, "boolean");
+    public static final DataType<Date>       DATE                       = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.DATE, "date");
+    public static final DataType<Time>       TIME                       = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.TIME, "time");
+    public static final DataType<Timestamp>  TIMESTAMP                  = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.TIMESTAMP, "timestamp");
+    public static final DataType<byte[]>     BLOB                       = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.BLOB, "blob");
+    public static final DataType<byte[]>     BINARYLARGEOBJECT          = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.BLOB, "binary large object");
 
     // -------------------------------------------------------------------------
     // Compatibility types for supported SQLDialect.DERBY, SQLDataTypes
     // -------------------------------------------------------------------------
 
-    protected static final DataType<byte[]>     __BINARY                = new DefaultDataType<byte[]>(SQLDialect.DERBY, SQLDataType.BINARY, "blob");
-    protected static final DataType<Boolean>    __BIT                   = new DefaultDataType<Boolean>(SQLDialect.DERBY, SQLDataType.BIT, "boolean");
-    protected static final DataType<byte[]>     __LONGVARBINARY         = new DefaultDataType<byte[]>(SQLDialect.DERBY, SQLDataType.LONGVARBINARY, "blob");
-    protected static final DataType<String>     __NCHAR                 = new DefaultDataType<String>(SQLDialect.DERBY, SQLDataType.NCHAR, "char", "varchar(32672)");
-    protected static final DataType<String>     __NCLOB                 = new DefaultDataType<String>(SQLDialect.DERBY, SQLDataType.NCLOB, "clob");
-    protected static final DataType<String>     __LONGNVARCHAR          = new DefaultDataType<String>(SQLDialect.DERBY, SQLDataType.LONGNVARCHAR, "long varchar");
-    protected static final DataType<String>     __NVARCHAR              = new DefaultDataType<String>(SQLDialect.DERBY, SQLDataType.NVARCHAR, "varchar", "varchar(32672)");
-    protected static final DataType<Byte>       __TINYINT               = new DefaultDataType<Byte>(SQLDialect.DERBY, SQLDataType.TINYINT, "smallint");
-    protected static final DataType<byte[]>     __VARBINARY             = new DefaultDataType<byte[]>(SQLDialect.DERBY, SQLDataType.VARBINARY, "blob");
-    protected static final DataType<UByte>      __TINYINTUNSIGNED       = new DefaultDataType<UByte>(SQLDialect.DERBY, SQLDataType.TINYINTUNSIGNED, "smallint");
-    protected static final DataType<UShort>     __SMALLINTUNSIGNED      = new DefaultDataType<UShort>(SQLDialect.DERBY, SQLDataType.SMALLINTUNSIGNED, "int");
-    protected static final DataType<UInteger>   __INTEGERUNSIGNED       = new DefaultDataType<UInteger>(SQLDialect.DERBY, SQLDataType.INTEGERUNSIGNED, "bigint");
-    protected static final DataType<ULong>      __BIGINTUNSIGNED        = new DefaultDataType<ULong>(SQLDialect.DERBY, SQLDataType.BIGINTUNSIGNED, "decimal", "decimal(20)");
+    protected static final DataType<byte[]>     __BINARY                = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.BINARY, "blob");
+    protected static final DataType<Boolean>    __BIT                   = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.BIT, "boolean");
+    protected static final DataType<byte[]>     __LONGVARBINARY         = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.LONGVARBINARY, "blob");
+    protected static final DataType<String>     __NCHAR                 = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.NCHAR, "char", "varchar(32672)");
+    protected static final DataType<String>     __NCLOB                 = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.NCLOB, "clob");
+    protected static final DataType<String>     __LONGNVARCHAR          = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.LONGNVARCHAR, "long varchar");
+    protected static final DataType<String>     __NVARCHAR              = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.NVARCHAR, "varchar", "varchar(32672)");
+    protected static final DataType<Byte>       __TINYINT               = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.TINYINT, "smallint");
+    protected static final DataType<byte[]>     __VARBINARY             = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.VARBINARY, "blob");
+    protected static final DataType<UByte>      __TINYINTUNSIGNED       = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.TINYINTUNSIGNED, "smallint");
+    protected static final DataType<UShort>     __SMALLINTUNSIGNED      = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.SMALLINTUNSIGNED, "int");
+    protected static final DataType<UInteger>   __INTEGERUNSIGNED       = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.INTEGERUNSIGNED, "bigint");
+    protected static final DataType<ULong>      __BIGINTUNSIGNED        = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.BIGINTUNSIGNED, "decimal", "decimal(20)");
 
     // -------------------------------------------------------------------------
     // Compatibility types for supported Java types
     // -------------------------------------------------------------------------
 
-    protected static final DataType<BigInteger> __BIGINTEGER            = new DefaultDataType<BigInteger>(SQLDialect.DERBY, SQLDataType.DECIMAL_INTEGER, "decimal", "decimal(31)");
-    protected static final DataType<UUID>       __UUID                  = new DefaultDataType<UUID>(SQLDialect.DERBY, SQLDataType.UUID, "varchar", "varchar(36)");
+    protected static final DataType<BigInteger> __BIGINTEGER            = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.DECIMAL_INTEGER, "decimal", "decimal(31)");
+    protected static final DataType<UUID>       __UUID                  = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.UUID, "varchar", "varchar(36)");
 
     // -------------------------------------------------------------------------
     // Dialect-specific data types and synonyms thereof
     // -------------------------------------------------------------------------
 
-    public static final DataType<byte[]>     CHARFORBITDATA             = new DefaultDataType<byte[]>(SQLDialect.DERBY, SQLDataType.BINARY, "char for bit data");
-    public static final DataType<byte[]>     CHARACTERFORBITDATA        = new DefaultDataType<byte[]>(SQLDialect.DERBY, SQLDataType.BINARY, "character for bit data");
-    public static final DataType<byte[]>     LONGVARCHARFORBITDATA      = new DefaultDataType<byte[]>(SQLDialect.DERBY, SQLDataType.BINARY, "long varchar for bit data");
-    public static final DataType<byte[]>     VARCHARFORBITDATA          = new DefaultDataType<byte[]>(SQLDialect.DERBY, SQLDataType.VARBINARY, "varchar for bit data", "varchar(32672) for bit data");
-    public static final DataType<byte[]>     CHARVARYINGFORBITDATA      = new DefaultDataType<byte[]>(SQLDialect.DERBY, SQLDataType.VARBINARY, "char varying for bit data", "char varying(32672) for bit data");
-    public static final DataType<byte[]>     CHARACTERVARYINGFORBITDATA = new DefaultDataType<byte[]>(SQLDialect.DERBY, SQLDataType.VARBINARY, "character varying for bit data", "character varying (32672) for bit data");
+    public static final DataType<byte[]>     CHARFORBITDATA             = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.BINARY, "char for bit data");
+    public static final DataType<byte[]>     CHARACTERFORBITDATA        = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.BINARY, "character for bit data");
+    public static final DataType<byte[]>     LONGVARCHARFORBITDATA      = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.BINARY, "long varchar for bit data");
+    public static final DataType<byte[]>     VARCHARFORBITDATA          = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.VARBINARY, "varchar for bit data", "varchar(32672) for bit data");
+    public static final DataType<byte[]>     CHARVARYINGFORBITDATA      = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.VARBINARY, "char varying for bit data", "char varying(32672) for bit data");
+    public static final DataType<byte[]>     CHARACTERVARYINGFORBITDATA = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.VARBINARY, "character varying for bit data", "character varying (32672) for bit data");
     public static final DataType<String>     ORGAPACHEDERBYCATALOGTYPEDESCRIPTOR
-                                                                        = new DefaultDataType<String>(SQLDialect.DERBY, SQLDataType.CLOB, "org.apache.derby.catalog.TypeDescriptor");
+                                                                        = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.CLOB, "org.apache.derby.catalog.TypeDescriptor");
     public static final DataType<String>     ORGAPACHEDERBYCATALOGINDEXDESCRIPTOR
-                                                                        = new DefaultDataType<String>(SQLDialect.DERBY, SQLDataType.CLOB, "org.apache.derby.catalog.IndexDescriptor");
-    public static final DataType<String>     JAVAIOSERIALIZABLE         = new DefaultDataType<String>(SQLDialect.DERBY, SQLDataType.CLOB, "java.io.Serializable");
+                                                                        = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.CLOB, "org.apache.derby.catalog.IndexDescriptor");
+    public static final DataType<String>     JAVAIOSERIALIZABLE         = new DefaultDataType<>(SQLDialect.DERBY, SQLDataType.CLOB, "java.io.Serializable");
 }

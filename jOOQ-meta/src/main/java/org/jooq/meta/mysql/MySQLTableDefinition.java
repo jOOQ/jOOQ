@@ -73,7 +73,7 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
 
     @Override
     public List<ColumnDefinition> getElements0() throws SQLException {
-        List<ColumnDefinition> result = new ArrayList<ColumnDefinition>();
+        List<ColumnDefinition> result = new ArrayList<>();
 
         for (Record record : create().select(
                     Columns.ORDINAL_POSITION,

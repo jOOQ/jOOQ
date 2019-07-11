@@ -47,7 +47,6 @@ import java.sql.SQLException;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.EmbeddableRecord;
-import org.jooq.Field;
 import org.jooq.RenderContext;
 import org.jooq.conf.ParamType;
 import org.jooq.exception.DataAccessException;
@@ -78,7 +77,7 @@ final class Val<T> extends AbstractParam<T> {
             Object previous = ctx.data(DATA_LIST_ALREADY_INDENTED);
 
             ctx.data(DATA_LIST_ALREADY_INDENTED, true);
-            ctx.visit(new QueryPartList<Field<?>>(embeddedFields(this)));
+            ctx.visit(new QueryPartList<>(embeddedFields(this)));
             ctx.data(DATA_LIST_ALREADY_INDENTED, previous);
         }
         else if (ctx instanceof RenderContext) {
@@ -88,7 +87,7 @@ final class Val<T> extends AbstractParam<T> {
                 ctx.paramType(ParamType.INLINED);
 
             try {
-                getBinding().sql(new DefaultBindingSQLContext<T>(ctx.configuration(), ctx.data(), (RenderContext) ctx, value, getBindVariable(ctx)));
+                getBinding().sql(new DefaultBindingSQLContext<>(ctx.configuration(), ctx.data(), (RenderContext) ctx, value, getBindVariable(ctx)));
             }
             catch (SQLException e) {
                 throw new DataAccessException("Error while generating SQL for Binding", e);

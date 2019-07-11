@@ -54,7 +54,7 @@ import org.jooq.tools.JooqLogger;
  */
 public class BufferedLog implements Log {
 
-    private static final Queue<Message> messages = new ConcurrentLinkedQueue<Message>();
+    private static final Queue<Message> messages = new ConcurrentLinkedQueue<>();
     private final JooqLogger            delegate;
 
     public static BufferedLog getLogger(Class<?> type) {

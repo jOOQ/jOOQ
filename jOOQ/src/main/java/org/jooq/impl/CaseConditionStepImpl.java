@@ -73,8 +73,8 @@ final class CaseConditionStepImpl<T> extends AbstractField<T> implements CaseCon
     CaseConditionStepImpl(Condition condition, Field<T> result) {
         super(DSL.name("case"), result.getDataType());
 
-        this.conditions = new ArrayList<Condition>();
-        this.results = new ArrayList<Field<T>>();
+        this.conditions = new ArrayList<>();
+        this.results = new ArrayList<>();
 
         when(condition, result);
     }

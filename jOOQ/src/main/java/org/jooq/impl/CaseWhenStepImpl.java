@@ -85,8 +85,8 @@ final class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenS
         super(DSL.name("case"), type);
 
         this.value = value;
-        this.compareValues = new ArrayList<Field<V>>();
-        this.results = new ArrayList<Field<T>>();
+        this.compareValues = new ArrayList<>();
+        this.results = new ArrayList<>();
     }
 
 

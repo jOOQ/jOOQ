@@ -121,7 +121,7 @@ class DefaultExecuteContext implements ExecuteContext {
     // XXX: Static utility methods for handling blob / clob lifecycle
     // ------------------------------------------------------------------------
 
-    private static final ThreadLocal<List<Closeable>> RESOURCES = new ThreadLocal<List<Closeable>>();
+    private static final ThreadLocal<List<Closeable>> RESOURCES = new ThreadLocal<>();
 
     /**
      * Clean up blobs, clobs and the local configuration.
@@ -246,7 +246,7 @@ class DefaultExecuteContext implements ExecuteContext {
         List<Closeable> list = RESOURCES.get();
 
         if (list == null) {
-            list = new ArrayList<Closeable>();
+            list = new ArrayList<>();
             RESOURCES.set(list);
         }
 
@@ -279,8 +279,8 @@ class DefaultExecuteContext implements ExecuteContext {
     // XXX: Static utility methods for handling Configuration lifecycle
     // ------------------------------------------------------------------------
 
-    private static final ThreadLocal<Configuration>       LOCAL_CONFIGURATION = new ThreadLocal<Configuration>();
-    private static final ThreadLocal<Map<Object, Object>> LOCAL_DATA          = new ThreadLocal<Map<Object, Object>>();
+    private static final ThreadLocal<Configuration>       LOCAL_CONFIGURATION = new ThreadLocal<>();
+    private static final ThreadLocal<Map<Object, Object>> LOCAL_DATA          = new ThreadLocal<>();
 
     /**
      * Get the registered configuration.
@@ -308,7 +308,7 @@ class DefaultExecuteContext implements ExecuteContext {
     // XXX: Static utility methods for handling Configuration lifecycle
     // ------------------------------------------------------------------------
 
-    private static final ThreadLocal<Connection> LOCAL_CONNECTION = new ThreadLocal<Connection>();
+    private static final ThreadLocal<Connection> LOCAL_CONNECTION = new ThreadLocal<>();
 
     /**
      * Get the registered connection.

@@ -69,13 +69,13 @@ final class SchemaMetaImpl extends AbstractMeta {
 
     @Override
     public final List<Catalog> getCatalogs() {
-        Set<Catalog> result = new LinkedHashSet<Catalog>();
+        Set<Catalog> result = new LinkedHashSet<>();
 
         for (Schema schema : schemas)
             if (schema.getCatalog() != null)
                 result.add(schema.getCatalog());
 
-        return new ArrayList<Catalog>(result);
+        return new ArrayList<>(result);
     }
 
     @Override
@@ -85,7 +85,7 @@ final class SchemaMetaImpl extends AbstractMeta {
 
     @Override
     public final List<Table<?>> getTables() {
-        List<Table<?>> result = new ArrayList<Table<?>>();
+        List<Table<?>> result = new ArrayList<>();
 
         for (Schema schema : schemas)
             result.addAll(schema.getTables());
@@ -95,7 +95,7 @@ final class SchemaMetaImpl extends AbstractMeta {
 
     @Override
     public final List<Sequence<?>> getSequences() {
-        List<Sequence<?>> result = new ArrayList<Sequence<?>>();
+        List<Sequence<?>> result = new ArrayList<>();
 
         for (Schema schema : schemas)
             result.addAll(schema.getSequences());
@@ -105,7 +105,7 @@ final class SchemaMetaImpl extends AbstractMeta {
 
     @Override
     public final List<UniqueKey<?>> getPrimaryKeys() {
-        List<UniqueKey<?>> result = new ArrayList<UniqueKey<?>>();
+        List<UniqueKey<?>> result = new ArrayList<>();
 
         for (Schema schema : schemas)
             for (Table<?> table : schema.getTables())

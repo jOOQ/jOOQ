@@ -72,7 +72,7 @@ final class CatalogMetaImpl extends AbstractMeta {
 
     @Override
     public final List<Schema> getSchemas() {
-        List<Schema> result = new ArrayList<Schema>();
+        List<Schema> result = new ArrayList<>();
 
         for (Catalog catalog : catalogs)
             result.addAll(catalog.getSchemas());
@@ -82,7 +82,7 @@ final class CatalogMetaImpl extends AbstractMeta {
 
     @Override
     public final List<Table<?>> getTables() {
-        List<Table<?>> result = new ArrayList<Table<?>>();
+        List<Table<?>> result = new ArrayList<>();
 
         for (Catalog catalog : catalogs)
             for (Schema schema : catalog.getSchemas())
@@ -93,7 +93,7 @@ final class CatalogMetaImpl extends AbstractMeta {
 
     @Override
     public final List<Sequence<?>> getSequences() {
-        List<Sequence<?>> result = new ArrayList<Sequence<?>>();
+        List<Sequence<?>> result = new ArrayList<>();
 
         for (Catalog catalog : catalogs)
             for (Schema schema : catalog.getSchemas())
@@ -104,7 +104,7 @@ final class CatalogMetaImpl extends AbstractMeta {
 
     @Override
     public final List<UniqueKey<?>> getPrimaryKeys() {
-        List<UniqueKey<?>> result = new ArrayList<UniqueKey<?>>();
+        List<UniqueKey<?>> result = new ArrayList<>();
 
         for (Catalog catalog : catalogs)
             for (Schema schema : catalog.getSchemas())

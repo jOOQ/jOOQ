@@ -108,7 +108,7 @@ final class CombinedCondition extends AbstractCondition {
             throw new IllegalArgumentException("The argument 'operator' must not be null");
 
         this.operator = operator;
-        this.conditions = new ArrayList<Condition>(size);
+        this.conditions = new ArrayList<>(size);
     }
 
     private CombinedCondition(Operator operator, Condition left, Condition right) {

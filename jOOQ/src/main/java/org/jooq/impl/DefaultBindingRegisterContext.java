@@ -71,7 +71,7 @@ class DefaultBindingRegisterContext<U> extends AbstractScope implements BindingR
 
     @Override
     public final <T> BindingRegisterContext<T> convert(Converter<? super T, ? extends U> converter) {
-        return new DefaultBindingRegisterContext<T>(configuration, data, statement, index);
+        return new DefaultBindingRegisterContext<>(configuration, data, statement, index);
     }
 
     @Override

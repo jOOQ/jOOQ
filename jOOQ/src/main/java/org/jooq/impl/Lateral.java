@@ -73,12 +73,12 @@ final class Lateral<R extends Record> extends AbstractTable<R> {
 
     @Override
     public final Table<R> as(Name alias) {
-        return new Lateral<R>(table.as(alias));
+        return new Lateral<>(table.as(alias));
     }
 
     @Override
     public final Table<R> as(Name alias, Name... fieldAliases) {
-        return new Lateral<R>(table.as(alias, fieldAliases));
+        return new Lateral<>(table.as(alias, fieldAliases));
     }
 
     @Override
@@ -88,6 +88,6 @@ final class Lateral<R extends Record> extends AbstractTable<R> {
 
     @Override
     final Fields<R> fields0() {
-        return new Fields<R>(table.fields());
+        return new Fields<>(table.fields());
     }
 }

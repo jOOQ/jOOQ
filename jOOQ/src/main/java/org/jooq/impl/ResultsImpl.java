@@ -63,7 +63,7 @@ final class ResultsImpl extends AbstractList<Result<Record>> implements Results 
 
     ResultsImpl(Configuration configuration) {
         this.configuration = configuration;
-        this.resultsOrRows = new ArrayList<ResultOrRows>();
+        this.resultsOrRows = new ArrayList<>();
     }
 
     // ------------------------------------------------------------------------
@@ -175,7 +175,7 @@ final class ResultsImpl extends AbstractList<Result<Record>> implements Results 
     }
 
     private final List<Result<Record>> list() {
-        List<Result<Record>> list = new ArrayList<Result<Record>>();
+        List<Result<Record>> list = new ArrayList<>();
 
         for (ResultOrRows result : resultsOrRows)
             if (result.result() != null)

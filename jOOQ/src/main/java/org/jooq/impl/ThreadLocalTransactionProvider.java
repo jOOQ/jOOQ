@@ -82,8 +82,8 @@ public class ThreadLocalTransactionProvider implements TransactionProvider {
     public ThreadLocalTransactionProvider(ConnectionProvider connectionProvider, boolean nested) {
         this.localConnectionProvider = new ThreadLocalConnectionProvider(connectionProvider);
         this.delegateTransactionProvider = new DefaultTransactionProvider(localConnectionProvider, nested);
-        this.localConfigurations = new ThreadLocal<Deque<Configuration>>();
-        this.localTxConnection = new ThreadLocal<Connection>();
+        this.localConfigurations = new ThreadLocal<>();
+        this.localTxConnection = new ThreadLocal<>();
     }
 
     @Override
@@ -119,7 +119,7 @@ public class ThreadLocalTransactionProvider implements TransactionProvider {
         Deque<Configuration> result = localConfigurations.get();
 
         if (result == null) {
-            result = new ArrayDeque<Configuration>();
+            result = new ArrayDeque<>();
             localConfigurations.set(result);
         }
 

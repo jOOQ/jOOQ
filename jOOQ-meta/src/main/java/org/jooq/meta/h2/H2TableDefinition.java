@@ -73,7 +73,7 @@ public class H2TableDefinition extends AbstractTableDefinition {
 
     @Override
     public List<ColumnDefinition> getElements0() throws SQLException {
-        List<ColumnDefinition> result = new ArrayList<ColumnDefinition>();
+        List<ColumnDefinition> result = new ArrayList<>();
 
         // [#7206] H2 defaults to these precision/scale values when a DECIMAL/NUMERIC type
         //         does not have any precision/scale. What works in H2 works in almost no

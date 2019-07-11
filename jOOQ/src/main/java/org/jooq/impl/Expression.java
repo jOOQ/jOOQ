@@ -129,7 +129,7 @@ final class Expression<T> extends AbstractField<T> {
 
         this.operator = operator;
         this.lhs = lhs;
-        this.rhs = new QueryPartList<Field<?>>(rhs);
+        this.rhs = new QueryPartList<>(rhs);
         this.arguments = Tools.combine(lhs, rhs);
     }
 
@@ -227,7 +227,7 @@ final class Expression<T> extends AbstractField<T> {
              lhs.getDataType().isDateTime() &&
             (rhs.get(0).getDataType().isNumeric() ||
              rhs.get(0).getDataType().isInterval()))
-            ctx.visit(new DateExpression<T>(lhs, operator, rhs.get(0)));
+            ctx.visit(new DateExpression<>(lhs, operator, rhs.get(0)));
 
         // ---------------------------------------------------------------------
         // XXX: Other operators
@@ -235,7 +235,7 @@ final class Expression<T> extends AbstractField<T> {
 
         // Use the default operator expression for all other cases
         else
-            ctx.visit(new DefaultExpression<T>(lhs, operator, rhs));
+            ctx.visit(new DefaultExpression<>(lhs, operator, rhs));
     }
 
     /**
@@ -299,8 +299,8 @@ final class Expression<T> extends AbstractField<T> {
         private final Field<T> getYTSExpression() {
             YearToSecond yts = rhsAsYTS();
 
-            return new DateExpression<T>(
-                new DateExpression<T>(lhs, operator, p(yts.getYearToMonth())),
+            return new DateExpression<>(
+                new DateExpression<>(lhs, operator, p(yts.getYearToMonth())),
                 operator,
                 p(yts.getDayToSecond())
             );
@@ -567,7 +567,7 @@ final class Expression<T> extends AbstractField<T> {
 
                 case POSTGRES:
                 default:
-                    ctx.visit(new DefaultExpression<T>(lhs, operator, new QueryPartList<Field<?>>(Arrays.asList(rhs))));
+                    ctx.visit(new DefaultExpression<>(lhs, operator, new QueryPartList<>(Arrays.asList(rhs))));
                     break;
             }
         }
@@ -704,7 +704,7 @@ final class Expression<T> extends AbstractField<T> {
 
                 case H2:
                 default:
-                    ctx.visit(new DefaultExpression<T>(lhs, operator, new QueryPartList<Field<?>>(Arrays.asList(rhs))));
+                    ctx.visit(new DefaultExpression<>(lhs, operator, new QueryPartList<>(Arrays.asList(rhs))));
                     break;
             }
         }

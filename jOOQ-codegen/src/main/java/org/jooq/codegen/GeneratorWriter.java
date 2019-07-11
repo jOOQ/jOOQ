@@ -149,7 +149,7 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
 
         if (args.length > 0) {
             List<Object> originals = Arrays.asList(args);
-            List<Object> translated = new ArrayList<Object>();
+            List<Object> translated = new ArrayList<>();
 
             for (;;) {
                 for (Object arg : originals) {
@@ -201,7 +201,7 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
                 }
 
                 originals = translated;
-                translated = new ArrayList<Object>();
+                translated = new ArrayList<>();
             }
 
             sb.append(String.format(string, translated.toArray()));

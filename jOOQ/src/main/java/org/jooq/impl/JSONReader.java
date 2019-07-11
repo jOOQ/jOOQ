@@ -95,7 +95,7 @@ final class JSONReader {
                 }
             });
 
-            List<Field<?>> f = new ArrayList<Field<?>>();
+            List<Field<?>> f = new ArrayList<>();
 
             List<?> records;
             Result<Record> result = null;
@@ -139,7 +139,7 @@ final class JSONReader {
                     }
 
                     if (fieldIndexes == null) {
-                        fieldIndexes = new HashMap<String, Integer>();
+                        fieldIndexes = new HashMap<>();
 
                         int i = 0;
                         for (String name : record.keySet())

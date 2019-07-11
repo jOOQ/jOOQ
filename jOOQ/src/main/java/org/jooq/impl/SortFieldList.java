@@ -100,7 +100,7 @@ final class SortFieldList extends QueryPartList<SortField<?>> {
     }
 
     final List<Field<?>> fields() {
-        List<Field<?>> result = new ArrayList<Field<?>>(size());
+        List<Field<?>> result = new ArrayList<>(size());
 
         for (SortField<?> field : this)
             result.add(((SortFieldImpl<?>) field).getField());

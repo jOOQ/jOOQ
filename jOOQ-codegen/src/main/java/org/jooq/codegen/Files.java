@@ -57,8 +57,8 @@ public final class Files {
     private final Set<File> mkdirs;
 
     public Files() {
-        this.lists = new HashMap<File, String[]>();
-        this.mkdirs = new HashSet<File>();
+        this.lists = new HashMap<>();
+        this.mkdirs = new HashSet<>();
     }
 
     public final String[] list(File dir, FilenameFilter filter) {
@@ -69,7 +69,7 @@ public final class Files {
             lists.put(dir, list);
         }
 
-        List<String> result = new ArrayList<String>();
+        List<String> result = new ArrayList<>();
         for (String s : list)
             if (filter.accept(dir, s))
                 result.add(s);

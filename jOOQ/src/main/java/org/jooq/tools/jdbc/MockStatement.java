@@ -116,15 +116,14 @@ public class MockStatement extends JDBC41Statement implements CallableStatement 
     public MockStatement(MockConnection connection, MockDataProvider data, String sql) {
         this.connection = connection;
         this.data = data;
-        this.sql = new ArrayList<String>();
-        this.bindings = new ArrayList<List<Object>>();
-        this.outParameterTypes = new ArrayList<Integer>();
+        this.sql = new ArrayList<>();
+        this.bindings = new ArrayList<>();
+        this.outParameterTypes = new ArrayList<>();
 
-        if (sql != null) {
+        if (sql != null)
             this.sql.add(sql);
-        }
 
-        this.bindings.add(new ArrayList<Object>());
+        this.bindings.add(new ArrayList<>());
     }
 
     // -------------------------------------------------------------------------
@@ -138,21 +137,18 @@ public class MockStatement extends JDBC41Statement implements CallableStatement 
     private void ensureBindingsCapacity(int index) {
         List<Object> b = bindings();
 
-        if (b.size() < index) {
+        if (b.size() < index)
             b.addAll(nCopies(index - b.size(), null));
-        }
     }
 
     private void ensureOutParameterTypesCapacity(int index) {
-        if (outParameterTypes.size() < index) {
+        if (outParameterTypes.size() < index)
             outParameterTypes.addAll(nCopies(index - outParameterTypes.size(), (Integer) null));
-        }
     }
 
     private void checkNotClosed() throws SQLException {
-        if (isClosed) {
+        if (isClosed)
             throw new SQLException("Connection is already closed");
-        }
     }
 
     @Override
@@ -314,7 +310,7 @@ public class MockStatement extends JDBC41Statement implements CallableStatement 
     @Override
     public void addBatch() throws SQLException {
         checkNotClosed();
-        bindings.add(new ArrayList<Object>());
+        bindings.add(new ArrayList<>());
     }
 
     @Override
@@ -328,7 +324,7 @@ public class MockStatement extends JDBC41Statement implements CallableStatement 
         checkNotClosed();
         sql.clear();
         bindings.clear();
-        bindings.add(new ArrayList<Object>());
+        bindings.add(new ArrayList<>());
     }
 
     @Override

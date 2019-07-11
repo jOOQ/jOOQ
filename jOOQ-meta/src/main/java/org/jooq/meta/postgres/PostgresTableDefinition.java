@@ -73,7 +73,7 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
 
     @Override
     public List<ColumnDefinition> getElements0() throws SQLException {
-        List<ColumnDefinition> result = new ArrayList<ColumnDefinition>();
+        List<ColumnDefinition> result = new ArrayList<>();
 
         for (Record record : create().select(
                 COLUMNS.COLUMN_NAME,

@@ -53,12 +53,12 @@ public class DefaultDomainDefinition extends AbstractDefinition implements Domai
         super(schema.getDatabase(), schema, name, "");
         this.baseType = baseType;
 
-        this.checkClauses = new ArrayList<String>();
+        this.checkClauses = new ArrayList<>();
     }
 
     @Override
     public List<Definition> getDefinitionPath() {
-        List<Definition> result = new ArrayList<Definition>();
+        List<Definition> result = new ArrayList<>();
 
         result.addAll(getSchema().getDefinitionPath());
         result.add(this);

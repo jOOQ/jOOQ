@@ -128,7 +128,7 @@ class DefaultRecordContext implements RecordContext {
     @Override
     public final RecordType<?> recordType() {
         Record record = record();
-        return record != null ? new Fields<Record>(record.fields()) : null;
+        return record != null ? new Fields<>(record.fields()) : null;
     }
 
     @Override

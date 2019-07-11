@@ -125,7 +125,7 @@ final class ExecuteListeners implements ExecuteListener {
     }
 
     private static final List<ExecuteListener> init(List<ExecuteListener> result) {
-        return result == null ? new ArrayList<ExecuteListener>() : result;
+        return result == null ? new ArrayList<>() : result;
     }
 
     private ExecuteListeners(ExecuteContext ctx, ExecuteListener[][] listeners) {

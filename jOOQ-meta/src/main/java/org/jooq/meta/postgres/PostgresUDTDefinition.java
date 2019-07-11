@@ -62,7 +62,7 @@ public class PostgresUDTDefinition extends AbstractUDTDefinition {
 
     @Override
     protected List<AttributeDefinition> getElements0() throws SQLException {
-        List<AttributeDefinition> result = new ArrayList<AttributeDefinition>();
+        List<AttributeDefinition> result = new ArrayList<>();
 
         for (Record record : create().select(
                     ATTRIBUTES.ATTRIBUTE_NAME,

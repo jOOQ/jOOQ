@@ -57,8 +57,8 @@ final class Statements {
     private final Map<String, Set<?>>    sqlCacheSingleColumnSet;
 
     Statements() {
-        this.sqlCache = new HashMap<String, Result<?>>();
-        this.sqlCacheSingleColumnSet = new HashMap<String, Set<?>>();
+        this.sqlCache = new HashMap<>();
+        this.sqlCacheSingleColumnSet = new HashMap<>();
     }
 
     final void dslContext(DSLContext c) {

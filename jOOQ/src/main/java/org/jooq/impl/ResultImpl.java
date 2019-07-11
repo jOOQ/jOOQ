@@ -109,17 +109,17 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
     private final List<R>     records;
 
     ResultImpl(Configuration configuration, Collection<? extends Field<?>> fields) {
-        this(configuration, new Fields<R>(fields));
+        this(configuration, new Fields<>(fields));
     }
 
     ResultImpl(Configuration configuration, Field<?>... fields) {
-        this(configuration, new Fields<R>(fields));
+        this(configuration, new Fields<>(fields));
     }
 
     ResultImpl(Configuration configuration, Fields<R> fields) {
         super(configuration, fields);
 
-        this.records = new ArrayList<R>();
+        this.records = new ArrayList<>();
     }
 
     // -------------------------------------------------------------------------
@@ -209,7 +209,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
     @Override
     public final List<?> getValues(int fieldIndex) {
-        List<Object> result = new ArrayList<Object>(size());
+        List<Object> result = new ArrayList<>(size());
 
         for (R record : this)
             result.add(record.get(fieldIndex));
@@ -263,7 +263,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
     @Override
     public final List<Map<String, Object>> intoMaps() {
-        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>(size());
+        List<Map<String, Object>> list = new ArrayList<>(size());
 
         for (R record : this)
             list.add(record.intoMap());
@@ -292,7 +292,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
     }
 
     private final <K> Map<K, R> intoMap0(int kIndex) {
-        Map<K, R> map = new LinkedHashMap<K, R>();
+        Map<K, R> map = new LinkedHashMap<>();
 
         for (R record : this)
             if (map.put((K) record.get(kIndex), record) != null)
@@ -325,7 +325,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
     }
 
     private final <K, V> Map<K, V> intoMap0(int kIndex, int vIndex) {
-        Map<K, V> map = new LinkedHashMap<K, V>();
+        Map<K, V> map = new LinkedHashMap<>();
 
         for (R record : this)
             if (map.put((K) record.get(kIndex), (V) record.get(vIndex)) != null)
@@ -354,7 +354,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
         if (keys == null)
             keys = new Field[0];
 
-        Map<Record, R> map = new LinkedHashMap<Record, R>();
+        Map<Record, R> map = new LinkedHashMap<>();
         for (R record : this) {
             RecordImpl key = new RecordImpl(keys);
 
@@ -388,7 +388,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
         if (keys == null)
             keys = new Field[0];
 
-        Map<Record, Record> map = new LinkedHashMap<Record, Record>();
+        Map<Record, Record> map = new LinkedHashMap<>();
         for (R record : this) {
             RecordImpl key = new RecordImpl(keys);
             RecordImpl value = new RecordImpl(values);
@@ -446,10 +446,10 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
         if (keys == null)
             keys = new Field[0];
 
-        Map<List<?>, E> map = new LinkedHashMap<List<?>, E>();
+        Map<List<?>, E> map = new LinkedHashMap<>();
 
         for (R record : this) {
-            List<Object> keyValueList = new ArrayList<Object>(keys.length);
+            List<Object> keyValueList = new ArrayList<>(keys.length);
 
             for (Field<?> key : keys)
                 keyValueList.add(record.get(key));
@@ -481,7 +481,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
     @Override
     public final <K> Map<K, R> intoMap(RecordMapper<? super R, K> keyMapper) {
-        Map<K, R> map = new LinkedHashMap<K, R>();
+        Map<K, R> map = new LinkedHashMap<>();
 
         for (R record : this) {
             K key = keyMapper.map(record);
@@ -500,7 +500,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
     @Override
     public final <K, V> Map<K, V> intoMap(RecordMapper<? super R, K> keyMapper, RecordMapper<? super R, V> valueMapper) {
-        Map<K, V> map = new LinkedHashMap<K, V>();
+        Map<K, V> map = new LinkedHashMap<>();
 
         for (R record : this) {
             K key = keyMapper.map(record);
@@ -515,7 +515,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
     @Override
     public final <S extends Record> Map<S, R> intoMap(Table<S> table) {
-        Map<S, R> map = new LinkedHashMap<S, R>();
+        Map<S, R> map = new LinkedHashMap<>();
 
         for (R record : this) {
             S key = record.into(table);
@@ -529,7 +529,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
     @Override
     public final <S extends Record, T extends Record> Map<S, T> intoMap(Table<S> keyTable, Table<T> valueTable) {
-        Map<S, T> map = new LinkedHashMap<S, T>();
+        Map<S, T> map = new LinkedHashMap<>();
 
         for (R record : this) {
             S key = record.into(keyTable);
@@ -549,7 +549,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
     @Override
     public final <E, S extends Record> Map<S, E> intoMap(Table<S> table, RecordMapper<? super R, E> mapper) {
-        Map<S, E> map = new LinkedHashMap<S, E>();
+        Map<S, E> map = new LinkedHashMap<>();
 
         for (R record : this) {
             S key = record.into(table);
@@ -602,7 +602,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
     }
 
     private final <K, E> Map<K, E> intoMap0(int kIndex, RecordMapper<? super R, E> mapper) {
-        Map<K, E> map = new LinkedHashMap<K, E>();
+        Map<K, E> map = new LinkedHashMap<>();
 
         for (R record : this)
             if (map.put((K) record.get(kIndex), mapper.map(record)) != null)
@@ -632,14 +632,14 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
     }
 
     private final <K> Map<K, Result<R>> intoGroups0(int keyFieldIndex) {
-        Map<K, Result<R>> map = new LinkedHashMap<K, Result<R>>();
+        Map<K, Result<R>> map = new LinkedHashMap<>();
 
         for (R record : this) {
             K val = (K) record.get(keyFieldIndex);
             Result<R> result = map.get(val);
 
             if (result == null)
-                map.put(val, result = new ResultImpl<R>(configuration, fields));
+                map.put(val, result = new ResultImpl<>(configuration, fields));
 
             result.add(record);
         }
@@ -671,7 +671,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
     }
 
     private final <K, V> Map<K, List<V>> intoGroups0(int kIndex, int vIndex) {
-        Map<K, List<V>> map = new LinkedHashMap<K, List<V>>();
+        Map<K, List<V>> map = new LinkedHashMap<>();
 
         for (R record : this) {
             K k = (K) record.get(kIndex);
@@ -679,7 +679,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
             List<V> result = map.get(k);
             if (result == null)
-                map.put(k, result = new ArrayList<V>());
+                map.put(k, result = new ArrayList<>());
 
             result.add(v);
         }
@@ -728,14 +728,14 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
     }
 
     private final <K, E> Map<K, List<E>> intoGroups0(int keyFieldIndex, RecordMapper<? super R, E> mapper) {
-        Map<K, List<E>> map = new LinkedHashMap<K, List<E>>();
+        Map<K, List<E>> map = new LinkedHashMap<>();
 
         for (R record : this) {
             K keyVal = (K) record.get(keyFieldIndex);
 
             List<E> list = map.get(keyVal);
             if (list == null)
-                map.put(keyVal, list = new ArrayList<E>());
+                map.put(keyVal, list = new ArrayList<>());
 
             list.add(mapper.map(record));
         }
@@ -763,7 +763,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
         if (keys == null)
             keys = new Field[0];
 
-        Map<Record, Result<R>> map = new LinkedHashMap<Record, Result<R>>();
+        Map<Record, Result<R>> map = new LinkedHashMap<>();
         for (R record : this) {
             RecordImpl key = new RecordImpl(keys);
 
@@ -772,7 +772,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
             Result<R> result = map.get(key);
             if (result == null)
-                map.put(key, result = new ResultImpl<R>(configuration(), this.fields));
+                map.put(key, result = new ResultImpl<>(configuration(), this.fields));
 
             result.add(record);
         }
@@ -803,7 +803,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
         if (values == null)
             values = new Field[0];
 
-        Map<Record, Result<Record>> map = new LinkedHashMap<Record, Result<Record>>();
+        Map<Record, Result<Record>> map = new LinkedHashMap<>();
         for (R record : this) {
             RecordImpl key = new RecordImpl(keys);
             RecordImpl value = new RecordImpl(values);
@@ -816,7 +816,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
             Result<Record> result = map.get(key);
             if (result == null)
-                map.put(key, result = new ResultImpl<Record>(configuration(), values));
+                map.put(key, result = new ResultImpl<>(configuration(), values));
 
             result.add(value);
         }
@@ -864,7 +864,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
         if (keys == null)
             keys = new Field[0];
 
-        Map<Record, List<E>> map = new LinkedHashMap<Record, List<E>>();
+        Map<Record, List<E>> map = new LinkedHashMap<>();
         for (R record : this) {
             RecordImpl key = new RecordImpl(keys);
 
@@ -873,7 +873,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
             List<E> list = map.get(key);
             if (list == null)
-                map.put(key, list = new ArrayList<E>());
+                map.put(key, list = new ArrayList<>());
 
             list.add(mapper.map(record));
         }
@@ -901,14 +901,14 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
     @Override
     public final <K> Map<K, Result<R>> intoGroups(RecordMapper<? super R, K> keyMapper) {
-        Map<K, Result<R>> map = new LinkedHashMap<K, Result<R>>();
+        Map<K, Result<R>> map = new LinkedHashMap<>();
 
         for (R record : this) {
             K key = keyMapper.map(record);
 
             Result<R> result = map.get(key);
             if (result == null)
-                map.put(key, result = new ResultImpl(configuration(), fields()));
+                map.put(key, result = new ResultImpl<>(configuration(), fields()));
 
             result.add(record);
         }
@@ -923,14 +923,14 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
     @Override
     public final <K, V> Map<K, List<V>> intoGroups(RecordMapper<? super R, K> keyMapper, RecordMapper<? super R, V> valueMapper) {
-        Map<K, List<V>> map = new LinkedHashMap<K, List<V>>();
+        Map<K, List<V>> map = new LinkedHashMap<>();
 
         for (R record : this) {
             K key = keyMapper.map(record);
 
             List<V> list = map.get(key);
             if (list == null)
-                map.put(key, list = new ArrayList<V>());
+                map.put(key, list = new ArrayList<>());
 
             list.add(valueMapper.map(record));
         }
@@ -940,14 +940,14 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
     @Override
     public final <S extends Record> Map<S, Result<R>> intoGroups(Table<S> table) {
-        Map<S, Result<R>> map = new LinkedHashMap<S, Result<R>>();
+        Map<S, Result<R>> map = new LinkedHashMap<>();
 
         for (R record : this) {
             S key = record.into(table);
 
             Result<R> result = map.get(key);
             if (result == null)
-                map.put(key, result = new ResultImpl<R>(configuration(), this.fields));
+                map.put(key, result = new ResultImpl<>(configuration(), this.fields));
 
             result.add(record);
         }
@@ -957,7 +957,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
     @Override
     public final <S extends Record, T extends Record> Map<S, Result<T>> intoGroups(Table<S> keyTable, Table<T> valueTable) {
-        Map<S, Result<T>> map = new LinkedHashMap<S, Result<T>>();
+        Map<S, Result<T>> map = new LinkedHashMap<>();
 
         for (R record : this) {
             S key = record.into(keyTable);
@@ -980,14 +980,14 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
     @Override
     public final <E, S extends Record> Map<S, List<E>> intoGroups(Table<S> table, RecordMapper<? super R, E> mapper) {
-        Map<S, List<E>> map = new LinkedHashMap<S, List<E>>();
+        Map<S, List<E>> map = new LinkedHashMap<>();
 
         for (R record : this) {
             S key = record.into(table);
 
             List<E> list = map.get(key);
             if (list == null) {
-                list = new ArrayList<E>();
+                list = new ArrayList<>();
                 map.put(key, list);
             }
 
@@ -1083,7 +1083,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
     @Override
     public final <E> Set<E> intoSet(RecordMapper<? super R, E> mapper) {
-        Set<E> result = new LinkedHashSet<E>();
+        Set<E> result = new LinkedHashSet<>();
 
         for (R record : this)
             result.add(mapper.map(record));
@@ -1093,67 +1093,67 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
     @Override
     public final Set<?> intoSet(int fieldIndex) {
-        return new LinkedHashSet<Object>(getValues(fieldIndex));
+        return new LinkedHashSet<>(getValues(fieldIndex));
     }
 
     @Override
     public final <T> Set<T> intoSet(int fieldIndex, Class<? extends T> type) {
-        return new LinkedHashSet<T>(getValues(fieldIndex, type));
+        return new LinkedHashSet<>(getValues(fieldIndex, type));
     }
 
     @Override
     public final <U> Set<U> intoSet(int fieldIndex, Converter<?, ? extends U> converter) {
-        return new LinkedHashSet<U>(getValues(fieldIndex, converter));
+        return new LinkedHashSet<>(getValues(fieldIndex, converter));
     }
 
     @Override
     public final Set<?> intoSet(String fieldName) {
-        return new LinkedHashSet<Object>(getValues(fieldName));
+        return new LinkedHashSet<>(getValues(fieldName));
     }
 
     @Override
     public final <T> Set<T> intoSet(String fieldName, Class<? extends T> type) {
-        return new LinkedHashSet<T>(getValues(fieldName, type));
+        return new LinkedHashSet<>(getValues(fieldName, type));
     }
 
     @Override
     public final <U> Set<U> intoSet(String fieldName, Converter<?, ? extends U> converter) {
-        return new LinkedHashSet<U>(getValues(fieldName, converter));
+        return new LinkedHashSet<>(getValues(fieldName, converter));
     }
 
     @Override
     public final Set<?> intoSet(Name fieldName) {
-        return new LinkedHashSet<Object>(getValues(fieldName));
+        return new LinkedHashSet<>(getValues(fieldName));
     }
 
     @Override
     public final <T> Set<T> intoSet(Name fieldName, Class<? extends T> type) {
-        return new LinkedHashSet<T>(getValues(fieldName, type));
+        return new LinkedHashSet<>(getValues(fieldName, type));
     }
 
     @Override
     public final <U> Set<U> intoSet(Name fieldName, Converter<?, ? extends U> converter) {
-        return new LinkedHashSet<U>(getValues(fieldName, converter));
+        return new LinkedHashSet<>(getValues(fieldName, converter));
     }
 
     @Override
     public final <T> Set<T> intoSet(Field<T> field) {
-        return new LinkedHashSet<T>(getValues(field));
+        return new LinkedHashSet<>(getValues(field));
     }
 
     @Override
     public final <T> Set<T> intoSet(Field<?> field, Class<? extends T> type) {
-        return new LinkedHashSet<T>(getValues(field, type));
+        return new LinkedHashSet<>(getValues(field, type));
     }
 
     @Override
     public final <T, U> Set<U> intoSet(Field<T> field, Converter<? super T, ? extends U> converter) {
-        return new LinkedHashSet<U>(getValues(field, converter));
+        return new LinkedHashSet<>(getValues(field, converter));
     }
 
     @Override
     public final Result<Record> into(Field<?>... f) {
-        Result<Record> result = new ResultImpl<Record>(Tools.configuration(this), f);
+        Result<Record> result = new ResultImpl<>(Tools.configuration(this), f);
 
         for (Record record : this)
             result.add(record.into(f));
@@ -1277,7 +1277,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
     @Override
     public final <E> List<E> into(Class<? extends E> type) {
-        List<E> list = new ArrayList<E>(size());
+        List<E> list = new ArrayList<>(size());
         RecordMapper<R, E> mapper = Tools.configuration(this).recordMapperProvider().provide(fields, type);
 
         for (R record : this)
@@ -1288,7 +1288,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
     @Override
     public final <Z extends Record> Result<Z> into(Table<Z> table) {
-        Result<Z> list = new ResultImpl<Z>(configuration(), table.fields());
+        Result<Z> list = new ResultImpl<>(configuration(), table.fields());
 
         for (R record : this)
             list.add(record.into(table));
@@ -1311,7 +1311,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
     @Override
     public final <E> List<E> map(RecordMapper<? super R, E> mapper) {
-        List<E> result = new ArrayList<E>(size());
+        List<E> result = new ArrayList<>(size());
 
         for (R record : this)
             result.add(mapper.map(record));
@@ -1321,7 +1321,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
     @Override
     public final <T extends Comparable<? super T>> Result<R> sortAsc(Field<T> field) {
-        return sortAsc(field, new NaturalComparator<T>());
+        return sortAsc(field, new NaturalComparator<>());
     }
 
     @Override

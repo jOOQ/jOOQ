@@ -8141,7 +8141,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record> QuantifiedSelect<R> all(Select<R> select) {
-        return new QuantifiedSelectImpl<R>(Quantifier.ALL, select);
+        return new QuantifiedSelectImpl<>(Quantifier.ALL, select);
     }
 
     /**
@@ -8163,7 +8163,7 @@ public class DSL {
     public static <T> QuantifiedSelect<Record1<T>> all(T... array) {
         if (array instanceof Field[])
             return all((Field<T>[]) array);
-        return new QuantifiedSelectImpl<Record1<T>>(Quantifier.ALL, val(array));
+        return new QuantifiedSelectImpl<>(Quantifier.ALL, val(array));
     }
 
     /**
@@ -8183,7 +8183,7 @@ public class DSL {
      */
     @Support({ H2, HSQLDB, POSTGRES })
     public static <T> QuantifiedSelect<Record1<T>> all(Field<T[]> array) {
-        return new QuantifiedSelectImpl<Record1<T>>(Quantifier.ALL, array);
+        return new QuantifiedSelectImpl<>(Quantifier.ALL, array);
     }
 
     /**
@@ -8206,7 +8206,7 @@ public class DSL {
     @SafeVarargs
 
     public static <T> QuantifiedSelect<Record1<T>> all(Field<T>... fields) {
-        return new QuantifiedSelectImpl<Record1<T>>(Quantifier.ALL, fields);
+        return new QuantifiedSelectImpl<>(Quantifier.ALL, fields);
     }
 
     /**
@@ -8223,7 +8223,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record> QuantifiedSelect<R> any(Select<R> select) {
-        return new QuantifiedSelectImpl<R>(Quantifier.ANY, select);
+        return new QuantifiedSelectImpl<>(Quantifier.ANY, select);
     }
 
     /**
@@ -8245,7 +8245,7 @@ public class DSL {
     public static <T> QuantifiedSelect<Record1<T>> any(T... array) {
         if (array instanceof Field[])
             return any((Field<T>[]) array);
-        return new QuantifiedSelectImpl<Record1<T>>(Quantifier.ANY, val(array));
+        return new QuantifiedSelectImpl<>(Quantifier.ANY, val(array));
     }
 
     /**
@@ -8265,7 +8265,7 @@ public class DSL {
      */
     @Support({ H2, HSQLDB, POSTGRES })
     public static <T> QuantifiedSelect<Record1<T>> any(Field<T[]> array) {
-        return new QuantifiedSelectImpl<Record1<T>>(Quantifier.ANY, array);
+        return new QuantifiedSelectImpl<>(Quantifier.ANY, array);
     }
 
     /**
@@ -8288,7 +8288,7 @@ public class DSL {
     @SafeVarargs
 
     public static <T> QuantifiedSelect<Record1<T>> any(Field<T>... fields) {
-        return new QuantifiedSelectImpl<Record1<T>>(Quantifier.ANY, fields);
+        return new QuantifiedSelectImpl<>(Quantifier.ANY, fields);
     }
 
     // -------------------------------------------------------------------------
@@ -9039,7 +9039,7 @@ public class DSL {
      */
     @Support({ MYSQL, POSTGRES })
     public static <R extends Record> Table<R> lateral(TableLike<R> table) {
-        return new Lateral<R>(table.asTable());
+        return new Lateral<>(table.asTable());
     }
 
     /**
@@ -9318,7 +9318,7 @@ public class DSL {
      */
     @Support
     public static QueryPart list(Collection<? extends QueryPart> parts) {
-        return new QueryPartList<QueryPart>(parts);
+        return new QueryPartList<>(parts);
     }
 
     // -------------------------------------------------------------------------
@@ -9411,7 +9411,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <T> Field<T> default_(DataType<T> type) {
-        return new SQLField<T>(type, keyword("default"));
+        return new SQLField<>(type, keyword("default"));
     }
 
     /**
@@ -9420,7 +9420,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <T> Field<T> default_(Field<T> field) {
-        return new SQLField<T>(field.getDataType(), keyword("default"));
+        return new SQLField<>(field.getDataType(), keyword("default"));
     }
 
     /**
@@ -9562,7 +9562,7 @@ public class DSL {
         String name = qualifiedName[qualifiedName.length - 1];
         Schema schema = qualifiedName.length == 2 ? schemaByName(qualifiedName[0]) : null;
 
-        return new SequenceImpl<T>(name, schema, type);
+        return new SequenceImpl<>(name, schema, type);
     }
 
     /**
@@ -9625,7 +9625,7 @@ public class DSL {
         Name n = name.unqualifiedName();
         Schema s = name.parts().length == 2 ? schema(name.qualifier()) : null;
 
-        return new SequenceImpl<T>(n, s, type, false);
+        return new SequenceImpl<>(n, s, type, false);
     }
 
     /**
@@ -9670,7 +9670,7 @@ public class DSL {
      */
     @Support
     public static Table<Record> table(Name name) {
-        return new TableImpl<Record>(name);
+        return new TableImpl<>(name);
     }
 
     /**
@@ -9691,7 +9691,7 @@ public class DSL {
      */
     @Support
     public static Table<Record> table(Name name, Comment comment) {
-        return new TableImpl<Record>(name, null, null, null, comment);
+        return new TableImpl<>(name, null, null, null, comment);
     }
 
     /**
@@ -9873,7 +9873,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> field(Name name, DataType<T> type) {
-        return new QualifiedField<T>(name, type);
+        return new QualifiedField<>(name, type);
     }
 
     /**
@@ -9900,7 +9900,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> field(Name name, DataType<T> type, Comment comment) {
-        return new QualifiedField<T>(name, type, comment);
+        return new QualifiedField<>(name, type, comment);
     }
 
     /**
@@ -10924,7 +10924,7 @@ public class DSL {
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     @PlainSQL
     public static <T extends Number> Sequence<T> sequence(String sql, DataType<T> type) {
-        return new SequenceImpl<T>(sql, null, type, true);
+        return new SequenceImpl<>(sql, null, type, true);
     }
 
     /**
@@ -11813,7 +11813,7 @@ public class DSL {
      */
     @Support
     public static <T1> Field<Record1<T1>> rowField(Row1<T1> row) {
-        return new RowField<Row1<T1>, Record1<T1>>(row);
+        return new RowField<>(row);
     }
 
     /**
@@ -11825,7 +11825,7 @@ public class DSL {
      */
     @Support
     public static <T1, T2> Field<Record2<T1, T2>> rowField(Row2<T1, T2> row) {
-        return new RowField<Row2<T1, T2>, Record2<T1, T2>>(row);
+        return new RowField<>(row);
     }
 
     /**
@@ -11837,7 +11837,7 @@ public class DSL {
      */
     @Support
     public static <T1, T2, T3> Field<Record3<T1, T2, T3>> rowField(Row3<T1, T2, T3> row) {
-        return new RowField<Row3<T1, T2, T3>, Record3<T1, T2, T3>>(row);
+        return new RowField<>(row);
     }
 
     /**
@@ -11849,7 +11849,7 @@ public class DSL {
      */
     @Support
     public static <T1, T2, T3, T4> Field<Record4<T1, T2, T3, T4>> rowField(Row4<T1, T2, T3, T4> row) {
-        return new RowField<Row4<T1, T2, T3, T4>, Record4<T1, T2, T3, T4>>(row);
+        return new RowField<>(row);
     }
 
     /**
@@ -11861,7 +11861,7 @@ public class DSL {
      */
     @Support
     public static <T1, T2, T3, T4, T5> Field<Record5<T1, T2, T3, T4, T5>> rowField(Row5<T1, T2, T3, T4, T5> row) {
-        return new RowField<Row5<T1, T2, T3, T4, T5>, Record5<T1, T2, T3, T4, T5>>(row);
+        return new RowField<>(row);
     }
 
     /**
@@ -11873,7 +11873,7 @@ public class DSL {
      */
     @Support
     public static <T1, T2, T3, T4, T5, T6> Field<Record6<T1, T2, T3, T4, T5, T6>> rowField(Row6<T1, T2, T3, T4, T5, T6> row) {
-        return new RowField<Row6<T1, T2, T3, T4, T5, T6>, Record6<T1, T2, T3, T4, T5, T6>>(row);
+        return new RowField<>(row);
     }
 
     /**
@@ -11885,7 +11885,7 @@ public class DSL {
      */
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7> Field<Record7<T1, T2, T3, T4, T5, T6, T7>> rowField(Row7<T1, T2, T3, T4, T5, T6, T7> row) {
-        return new RowField<Row7<T1, T2, T3, T4, T5, T6, T7>, Record7<T1, T2, T3, T4, T5, T6, T7>>(row);
+        return new RowField<>(row);
     }
 
     /**
@@ -11897,7 +11897,7 @@ public class DSL {
      */
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8> Field<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> rowField(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row) {
-        return new RowField<Row8<T1, T2, T3, T4, T5, T6, T7, T8>, Record8<T1, T2, T3, T4, T5, T6, T7, T8>>(row);
+        return new RowField<>(row);
     }
 
     /**
@@ -11909,7 +11909,7 @@ public class DSL {
      */
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9> Field<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> rowField(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> row) {
-        return new RowField<Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9>, Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>>(row);
+        return new RowField<>(row);
     }
 
     /**
@@ -11921,7 +11921,7 @@ public class DSL {
      */
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> Field<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> rowField(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row) {
-        return new RowField<Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>, Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>>(row);
+        return new RowField<>(row);
     }
 
     /**
@@ -11933,7 +11933,7 @@ public class DSL {
      */
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> Field<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> rowField(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row) {
-        return new RowField<Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>, Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>>(row);
+        return new RowField<>(row);
     }
 
     /**
@@ -11945,7 +11945,7 @@ public class DSL {
      */
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> Field<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> rowField(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> row) {
-        return new RowField<Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>, Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>>(row);
+        return new RowField<>(row);
     }
 
     /**
@@ -11957,7 +11957,7 @@ public class DSL {
      */
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> Field<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> rowField(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row) {
-        return new RowField<Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>, Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>>(row);
+        return new RowField<>(row);
     }
 
     /**
@@ -11969,7 +11969,7 @@ public class DSL {
      */
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> Field<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> rowField(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> row) {
-        return new RowField<Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>, Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>>(row);
+        return new RowField<>(row);
     }
 
     /**
@@ -11981,7 +11981,7 @@ public class DSL {
      */
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> Field<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> rowField(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> row) {
-        return new RowField<Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>, Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>>(row);
+        return new RowField<>(row);
     }
 
     /**
@@ -11993,7 +11993,7 @@ public class DSL {
      */
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> Field<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> rowField(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row) {
-        return new RowField<Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>, Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>>(row);
+        return new RowField<>(row);
     }
 
     /**
@@ -12005,7 +12005,7 @@ public class DSL {
      */
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> Field<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> rowField(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> row) {
-        return new RowField<Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>, Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>>(row);
+        return new RowField<>(row);
     }
 
     /**
@@ -12017,7 +12017,7 @@ public class DSL {
      */
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> Field<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> rowField(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row) {
-        return new RowField<Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>, Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>>(row);
+        return new RowField<>(row);
     }
 
     /**
@@ -12029,7 +12029,7 @@ public class DSL {
      */
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> Field<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> rowField(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row) {
-        return new RowField<Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>, Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>>(row);
+        return new RowField<>(row);
     }
 
     /**
@@ -12041,7 +12041,7 @@ public class DSL {
      */
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> Field<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> rowField(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> row) {
-        return new RowField<Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>, Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>>(row);
+        return new RowField<>(row);
     }
 
     /**
@@ -12053,7 +12053,7 @@ public class DSL {
      */
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> Field<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> rowField(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> row) {
-        return new RowField<Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>, Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>>(row);
+        return new RowField<>(row);
     }
 
     /**
@@ -12065,7 +12065,7 @@ public class DSL {
      */
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> Field<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> rowField(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row) {
-        return new RowField<Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>, Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>>(row);
+        return new RowField<>(row);
     }
 
 
@@ -12079,7 +12079,7 @@ public class DSL {
      */
     @Support
     public static Field<Record> rowField(RowN row) {
-        return new RowField<RowN, Record>(row);
+        return new RowField<>(row);
     }
 
     /**
@@ -12181,7 +12181,7 @@ public class DSL {
     @SafeVarargs
 
     public static <T> Field<T> choose(Field<Integer> index, Field<T>... values) {
-        return new Choose<T>(index, values);
+        return new Choose<>(index, values);
     }
 
     /**
@@ -12354,7 +12354,7 @@ public class DSL {
      */
     @Support
     public static <Z, T> Field<Z> decode(Field<T> value, Field<T> search, Field<Z> result, Field<?>... more) {
-        return new Decode<T, Z>(nullSafe(value), nullSafe(search), nullSafe(result), nullSafe(more));
+        return new Decode<>(nullSafe(value), nullSafe(search), nullSafe(result), nullSafe(more));
     }
 
     /**
@@ -12670,7 +12670,7 @@ public class DSL {
     // Java 8 is stricter than Java 7 with respect to generics and overload
     // resolution (http://stackoverflow.com/q/5361513/521799)
     static <T> Field<T> coalesce0(Field<T> field, Field<?>... fields) {
-        return new Coalesce<T>(nullSafeDataType(field), nullSafe(combine(field, fields)));
+        return new Coalesce<>(nullSafeDataType(field), nullSafe(combine(field, fields)));
     }
 
     /**
@@ -12819,7 +12819,7 @@ public class DSL {
     // Java 8 is stricter than Java 7 with respect to generics and overload
     // resolution (http://stackoverflow.com/q/5361513/521799)
     static <T> Field<T> nvl0(Field<T> value, Field<T> defaultValue) {
-        return new Nvl<T>(nullSafe(value), nullSafe(defaultValue));
+        return new Nvl<>(nullSafe(value), nullSafe(defaultValue));
     }
 
     /**
@@ -12872,7 +12872,7 @@ public class DSL {
     // Java 8 is stricter than Java 7 with respect to generics and overload
     // resolution (http://stackoverflow.com/q/5361513/521799)
     static <Z> Field<Z> nvl20(Field<?> value, Field<Z> valueIfNotNull, Field<Z> valueIfNull) {
-        return new Nvl2<Z>(nullSafe(value), nullSafe(valueIfNotNull), nullSafe(valueIfNull));
+        return new Nvl2<>(nullSafe(value), nullSafe(valueIfNotNull), nullSafe(valueIfNull));
     }
 
     /**
@@ -12923,7 +12923,7 @@ public class DSL {
     // Java 8 is stricter than Java 7 with respect to generics and overload
     // resolution (http://stackoverflow.com/q/5361513/521799)
     static <T> Field<T> nullif0(Field<T> value, Field<T> other) {
-        return new NullIf<T>(nullSafe(value), nullSafe(other));
+        return new NullIf<>(nullSafe(value), nullSafe(other));
     }
 
     /**
@@ -12967,7 +12967,7 @@ public class DSL {
     // Java 8 is stricter than Java 7 with respect to generics and overload
     // resolution (http://stackoverflow.com/q/5361513/521799)
     static <T> Field<T> iif0(Condition condition, Field<T> ifTrue, Field<T> ifFalse) {
-        return new Iif<T>(condition, nullSafe(ifTrue), nullSafe(ifFalse));
+        return new Iif<>(condition, nullSafe(ifTrue), nullSafe(ifFalse));
     }
 
     // -------------------------------------------------------------------------
@@ -14009,7 +14009,7 @@ public class DSL {
      */
     @Support
     public static Field<Date> currentDate() {
-        return new CurrentDate<Date>(SQLDataType.DATE);
+        return new CurrentDate<>(SQLDataType.DATE);
     }
 
     /**
@@ -14020,7 +14020,7 @@ public class DSL {
      */
     @Support
     public static Field<Time> currentTime() {
-        return new CurrentTime<Time>(SQLDataType.TIME);
+        return new CurrentTime<>(SQLDataType.TIME);
     }
 
     /**
@@ -14031,7 +14031,7 @@ public class DSL {
      */
     @Support
     public static Field<Timestamp> currentTimestamp() {
-        return new CurrentTimestamp<Timestamp>(SQLDataType.TIMESTAMP);
+        return new CurrentTimestamp<>(SQLDataType.TIMESTAMP);
     }
 
     /**
@@ -14158,7 +14158,7 @@ public class DSL {
      */
     @Support
     public static Field<Integer> dateDiff(Field<Date> date1, Field<Date> date2) {
-        return new DateDiff<Date>(nullSafe(date1), nullSafe(date2));
+        return new DateDiff<>(nullSafe(date1), nullSafe(date2));
     }
 
     /**
@@ -14222,7 +14222,7 @@ public class DSL {
      */
     @Support
     public static Field<Date> dateAdd(Field<Date> date, Field<? extends Number> interval, DatePart datePart) {
-        return new DateAdd<Date>(nullSafe(date), nullSafe(interval), datePart);
+        return new DateAdd<>(nullSafe(date), nullSafe(interval), datePart);
     }
 
     /**
@@ -14286,7 +14286,7 @@ public class DSL {
      */
     @Support
     public static Field<Date> dateSub(Field<Date> date, Field<? extends Number> interval, DatePart datePart) {
-        return new DateAdd<Date>(nullSafe(date), nullSafe(interval).neg(), datePart);
+        return new DateAdd<>(nullSafe(date), nullSafe(interval).neg(), datePart);
     }
 
     /**
@@ -14320,7 +14320,7 @@ public class DSL {
      */
     @Support
     public static Field<Timestamp> timestampAdd(Timestamp date, Number interval, DatePart datePart) {
-        return new DateAdd<Timestamp>(Tools.field(date), Tools.field(interval), datePart);
+        return new DateAdd<>(Tools.field(date), Tools.field(interval), datePart);
     }
 
     /**
@@ -14330,7 +14330,7 @@ public class DSL {
      */
     @Support
     public static Field<Timestamp> timestampAdd(Timestamp date, Field<? extends Number> interval, DatePart datePart) {
-        return new DateAdd<Timestamp>(Tools.field(date), nullSafe(interval), datePart);
+        return new DateAdd<>(Tools.field(date), nullSafe(interval), datePart);
     }
 
     /**
@@ -14340,7 +14340,7 @@ public class DSL {
      */
     @Support
     public static Field<Timestamp> timestampAdd(Field<Timestamp> date, Number interval, DatePart datePart) {
-        return new DateAdd<Timestamp>(nullSafe(date), Tools.field(interval), datePart);
+        return new DateAdd<>(nullSafe(date), Tools.field(interval), datePart);
     }
 
     /**
@@ -14350,7 +14350,7 @@ public class DSL {
      */
     @Support
     public static Field<Timestamp> timestampAdd(Field<Timestamp> date, Field<? extends Number> interval, DatePart datePart) {
-        return new DateAdd<Timestamp>(nullSafe(date), nullSafe(interval), datePart);
+        return new DateAdd<>(nullSafe(date), nullSafe(interval), datePart);
     }
 
     /**
@@ -14384,7 +14384,7 @@ public class DSL {
      */
     @Support
     public static Field<Timestamp> timestampSub(Timestamp date, Number interval, DatePart datePart) {
-        return new DateAdd<Timestamp>(Tools.field(date), Tools.field(interval).neg(), datePart);
+        return new DateAdd<>(Tools.field(date), Tools.field(interval).neg(), datePart);
     }
 
     /**
@@ -14394,7 +14394,7 @@ public class DSL {
      */
     @Support
     public static Field<Timestamp> timestampSub(Timestamp date, Field<? extends Number> interval, DatePart datePart) {
-        return new DateAdd<Timestamp>(Tools.field(date), nullSafe(interval).neg(), datePart);
+        return new DateAdd<>(Tools.field(date), nullSafe(interval).neg(), datePart);
     }
 
     /**
@@ -14404,7 +14404,7 @@ public class DSL {
      */
     @Support
     public static Field<Timestamp> timestampSub(Field<Timestamp> date, Number interval, DatePart datePart) {
-        return new DateAdd<Timestamp>(nullSafe(date), Tools.field(interval).neg(), datePart);
+        return new DateAdd<>(nullSafe(date), Tools.field(interval).neg(), datePart);
     }
 
     /**
@@ -14414,7 +14414,7 @@ public class DSL {
      */
     @Support
     public static Field<Timestamp> timestampSub(Field<Timestamp> date, Field<? extends Number> interval, DatePart datePart) {
-        return new DateAdd<Timestamp>(nullSafe(date), nullSafe(interval).neg(), datePart);
+        return new DateAdd<>(nullSafe(date), nullSafe(interval).neg(), datePart);
     }
 
     /**
@@ -14516,7 +14516,7 @@ public class DSL {
      */
     @Support
     public static Field<Integer> localDateDiff(Field<LocalDate> date1, Field<LocalDate> date2) {
-        return new DateDiff<LocalDate>(nullSafe(date1), nullSafe(date2));
+        return new DateDiff<>(nullSafe(date1), nullSafe(date2));
     }
 
     /**
@@ -14580,7 +14580,7 @@ public class DSL {
      */
     @Support
     public static Field<LocalDate> localDateAdd(Field<LocalDate> date, Field<? extends Number> interval, DatePart datePart) {
-        return new DateAdd<LocalDate>(nullSafe(date), nullSafe(interval), datePart);
+        return new DateAdd<>(nullSafe(date), nullSafe(interval), datePart);
     }
 
     /**
@@ -14644,7 +14644,7 @@ public class DSL {
      */
     @Support
     public static Field<LocalDate> localDateSub(Field<LocalDate> date, Field<? extends Number> interval, DatePart datePart) {
-        return new DateAdd<LocalDate>(nullSafe(date), nullSafe(interval).neg(), datePart);
+        return new DateAdd<>(nullSafe(date), nullSafe(interval).neg(), datePart);
     }
 
     /**
@@ -14678,7 +14678,7 @@ public class DSL {
      */
     @Support
     public static Field<LocalDateTime> localDateTimeAdd(LocalDateTime date, Number interval, DatePart datePart) {
-        return new DateAdd<LocalDateTime>(Tools.field(date), Tools.field(interval), datePart);
+        return new DateAdd<>(Tools.field(date), Tools.field(interval), datePart);
     }
 
     /**
@@ -14688,7 +14688,7 @@ public class DSL {
      */
     @Support
     public static Field<LocalDateTime> localDateTimeAdd(LocalDateTime date, Field<? extends Number> interval, DatePart datePart) {
-        return new DateAdd<LocalDateTime>(Tools.field(date), nullSafe(interval), datePart);
+        return new DateAdd<>(Tools.field(date), nullSafe(interval), datePart);
     }
 
     /**
@@ -14698,7 +14698,7 @@ public class DSL {
      */
     @Support
     public static Field<LocalDateTime> localDateTimeAdd(Field<LocalDateTime> date, Number interval, DatePart datePart) {
-        return new DateAdd<LocalDateTime>(nullSafe(date), Tools.field(interval), datePart);
+        return new DateAdd<>(nullSafe(date), Tools.field(interval), datePart);
     }
 
     /**
@@ -14708,7 +14708,7 @@ public class DSL {
      */
     @Support
     public static Field<LocalDateTime> localDateTimeAdd(Field<LocalDateTime> date, Field<? extends Number> interval, DatePart datePart) {
-        return new DateAdd<LocalDateTime>(nullSafe(date), nullSafe(interval), datePart);
+        return new DateAdd<>(nullSafe(date), nullSafe(interval), datePart);
     }
 
     /**
@@ -14742,7 +14742,7 @@ public class DSL {
      */
     @Support
     public static Field<LocalDateTime> localDateTimeSub(LocalDateTime date, Number interval, DatePart datePart) {
-        return new DateAdd<LocalDateTime>(Tools.field(date), Tools.field(interval).neg(), datePart);
+        return new DateAdd<>(Tools.field(date), Tools.field(interval).neg(), datePart);
     }
 
     /**
@@ -14752,7 +14752,7 @@ public class DSL {
      */
     @Support
     public static Field<LocalDateTime> localDateTimeSub(LocalDateTime date, Field<? extends Number> interval, DatePart datePart) {
-        return new DateAdd<LocalDateTime>(Tools.field(date), nullSafe(interval).neg(), datePart);
+        return new DateAdd<>(Tools.field(date), nullSafe(interval).neg(), datePart);
     }
 
     /**
@@ -14762,7 +14762,7 @@ public class DSL {
      */
     @Support
     public static Field<LocalDateTime> localDateTimeSub(Field<LocalDateTime> date, Number interval, DatePart datePart) {
-        return new DateAdd<LocalDateTime>(nullSafe(date), Tools.field(interval).neg(), datePart);
+        return new DateAdd<>(nullSafe(date), Tools.field(interval).neg(), datePart);
     }
 
     /**
@@ -14772,7 +14772,7 @@ public class DSL {
      */
     @Support
     public static Field<LocalDateTime> localDateTimeSub(Field<LocalDateTime> date, Field<? extends Number> interval, DatePart datePart) {
-        return new DateAdd<LocalDateTime>(nullSafe(date), nullSafe(interval).neg(), datePart);
+        return new DateAdd<>(nullSafe(date), nullSafe(interval).neg(), datePart);
     }
 
     /**
@@ -14914,7 +14914,7 @@ public class DSL {
      */
     @Support({ CUBRID, H2, HSQLDB, POSTGRES })
     public static <T> Field<T> trunc(Field<T> date, DatePart part) {
-        return new TruncDate<T>(date, part);
+        return new TruncDate<>(date, part);
     }
 
     // -------------------------------------------------------------------------
@@ -15714,7 +15714,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Date> date(Field<? extends java.util.Date> field) {
-        return new DateOrTime<Date>(field, SQLDataType.DATE);
+        return new DateOrTime<>(field, SQLDataType.DATE);
     }
 
     /**
@@ -15738,7 +15738,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Time> time(Field<? extends java.util.Date> field) {
-        return new DateOrTime<Time>(field, SQLDataType.TIME);
+        return new DateOrTime<>(field, SQLDataType.TIME);
     }
 
     /**
@@ -15762,7 +15762,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Timestamp> timestamp(Field<? extends java.util.Date> field) {
-        return new DateOrTime<Timestamp>(field, SQLDataType.TIMESTAMP);
+        return new DateOrTime<>(field, SQLDataType.TIMESTAMP);
     }
 
 
@@ -15787,7 +15787,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<LocalDate> localDate(Field<LocalDate> field) {
-        return new DateOrTime<LocalDate>(field, SQLDataType.LOCALDATE);
+        return new DateOrTime<>(field, SQLDataType.LOCALDATE);
     }
 
     /**
@@ -15811,7 +15811,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<LocalTime> localTime(Field<LocalTime> field) {
-        return new DateOrTime<LocalTime>(field, SQLDataType.LOCALTIME);
+        return new DateOrTime<>(field, SQLDataType.LOCALTIME);
     }
 
     /**
@@ -15835,7 +15835,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<LocalDateTime> localDateTime(Field<LocalDateTime> field) {
-        return new DateOrTime<LocalDateTime>(field, SQLDataType.LOCALDATETIME);
+        return new DateOrTime<>(field, SQLDataType.LOCALDATETIME);
     }
 
     /**
@@ -15877,7 +15877,7 @@ public class DSL {
      */
     @Support({ H2, HSQLDB, POSTGRES, SQLITE })
     public static Field<OffsetTime> offsetTime(Field<OffsetTime> field) {
-        return new DateOrTime<OffsetTime>(field, SQLDataType.OFFSETTIME);
+        return new DateOrTime<>(field, SQLDataType.OFFSETTIME);
     }
 
     /**
@@ -15919,7 +15919,7 @@ public class DSL {
      */
     @Support({ H2, HSQLDB, POSTGRES, SQLITE })
     public static Field<OffsetDateTime> offsetDateTime(Field<OffsetDateTime> field) {
-        return new DateOrTime<OffsetDateTime>(field, SQLDataType.OFFSETDATETIME);
+        return new DateOrTime<>(field, SQLDataType.OFFSETDATETIME);
     }
 
     /**
@@ -15961,7 +15961,7 @@ public class DSL {
      */
     @Support({ H2, HSQLDB, POSTGRES, SQLITE })
     public static Field<Instant> instant(Field<Instant> field) {
-        return new DateOrTime<Instant>(field, SQLDataType.INSTANT);
+        return new DateOrTime<>(field, SQLDataType.INSTANT);
     }
 
 
@@ -16222,7 +16222,7 @@ public class DSL {
      */
     @Support({ POSTGRES })
     public static GroupField cube(FieldOrRow... fields) {
-        return field("{cube}({0})", Object.class, new QueryPartList<FieldOrRow>(fields));
+        return field("{cube}({0})", Object.class, new QueryPartList<>(fields));
     }
 
     /**
@@ -16252,9 +16252,8 @@ public class DSL {
     public static GroupField groupingSets(Field<?>... fields) {
         List<Field<?>>[] array = new List[fields.length];
 
-        for (int i = 0; i < fields.length; i++) {
+        for (int i = 0; i < fields.length; i++)
             array[i] = Arrays.<Field<?>>asList(fields[i]);
-        }
 
         return groupingSets(array);
     }
@@ -16286,9 +16285,8 @@ public class DSL {
     public static GroupField groupingSets(Field<?>[]... fieldSets) {
         List<Field<?>>[] array = new List[fieldSets.length];
 
-        for (int i = 0; i < fieldSets.length; i++) {
+        for (int i = 0; i < fieldSets.length; i++)
             array[i] = Arrays.asList(fieldSets[i]);
-        }
 
         return groupingSets(array);
     }
@@ -16320,9 +16318,8 @@ public class DSL {
     public static GroupField groupingSets(Collection<? extends Field<?>>... fieldSets) {
         WrappedList[] array = new WrappedList[fieldSets.length];
 
-        for (int i = 0; i < fieldSets.length; i++) {
-            array[i] = new WrappedList(new QueryPartList<Field<?>>(fieldSets[i]));
-        }
+        for (int i = 0; i < fieldSets.length; i++)
+            array[i] = new WrappedList(new QueryPartList<>(fieldSets[i]));
 
         return new org.jooq.impl.Function<Object>("grouping sets", SQLDataType.OTHER, array);
     }
@@ -16444,7 +16441,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitNot(Field<T> field) {
-        return new Neg<T>(nullSafe(field), ExpressionOperator.BIT_NOT);
+        return new Neg<>(nullSafe(field), ExpressionOperator.BIT_NOT);
     }
 
     /**
@@ -16489,7 +16486,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitAnd(Field<T> field1, Field<T> field2) {
-        return new Expression<T>(ExpressionOperator.BIT_AND, nullSafe(field1), nullSafe(field2));
+        return new Expression<>(ExpressionOperator.BIT_AND, nullSafe(field1), nullSafe(field2));
     }
 
     /**
@@ -16539,7 +16536,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitNand(Field<T> field1, Field<T> field2) {
-        return new Expression<T>(ExpressionOperator.BIT_NAND, nullSafe(field1), nullSafe(field2));
+        return new Expression<>(ExpressionOperator.BIT_NAND, nullSafe(field1), nullSafe(field2));
     }
 
     /**
@@ -16584,7 +16581,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitOr(Field<T> field1, Field<T> field2) {
-        return new Expression<T>(ExpressionOperator.BIT_OR, nullSafe(field1), nullSafe(field2));
+        return new Expression<>(ExpressionOperator.BIT_OR, nullSafe(field1), nullSafe(field2));
     }
 
     /**
@@ -16632,7 +16629,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitNor(Field<T> field1, Field<T> field2) {
-        return new Expression<T>(ExpressionOperator.BIT_NOR, nullSafe(field1), nullSafe(field2));
+        return new Expression<>(ExpressionOperator.BIT_NOR, nullSafe(field1), nullSafe(field2));
     }
 
     /**
@@ -16677,7 +16674,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitXor(Field<T> field1, Field<T> field2) {
-        return new Expression<T>(ExpressionOperator.BIT_XOR, nullSafe(field1), nullSafe(field2));
+        return new Expression<>(ExpressionOperator.BIT_XOR, nullSafe(field1), nullSafe(field2));
     }
 
     /**
@@ -16725,7 +16722,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitXNor(Field<T> field1, Field<T> field2) {
-        return new Expression<T>(ExpressionOperator.BIT_XNOR, nullSafe(field1), nullSafe(field2));
+        return new Expression<>(ExpressionOperator.BIT_XNOR, nullSafe(field1), nullSafe(field2));
     }
 
     /**
@@ -16772,7 +16769,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> shl(Field<T> field1, Field<? extends Number> field2) {
-        return new Expression<T>(ExpressionOperator.SHL, nullSafe(field1), nullSafe(field2));
+        return new Expression<>(ExpressionOperator.SHL, nullSafe(field1), nullSafe(field2));
     }
 
     /**
@@ -16819,7 +16816,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> shr(Field<T> field1, Field<? extends Number> field2) {
-        return new Expression<T>(ExpressionOperator.SHR, nullSafe(field1), nullSafe(field2));
+        return new Expression<>(ExpressionOperator.SHR, nullSafe(field1), nullSafe(field2));
     }
 
     // ------------------------------------------------------------------------
@@ -16861,7 +16858,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> greatest(Field<T> field, Field<?>... others) {
-        return new Greatest<T>(nullSafeDataType(field), nullSafe(combine(field, others)));
+        return new Greatest<>(nullSafeDataType(field), nullSafe(combine(field, others)));
     }
 
     /**
@@ -16891,7 +16888,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> least(Field<T> field, Field<?>... others) {
-        return new Least<T>(nullSafeDataType(field), nullSafe(combine(field, others)));
+        return new Least<>(nullSafeDataType(field), nullSafe(combine(field, others)));
     }
 
     /**
@@ -16982,7 +16979,7 @@ public class DSL {
      */
     @Support
     public static <T extends Number> Field<T> round(Field<T> field) {
-        return new Round<T>(nullSafe(field));
+        return new Round<>(nullSafe(field));
     }
 
     /**
@@ -17004,7 +17001,7 @@ public class DSL {
      */
     @Support
     public static <T extends Number> Field<T> round(Field<T> field, int decimals) {
-        return new Round<T>(nullSafe(field), decimals);
+        return new Round<>(nullSafe(field), decimals);
     }
 
     /**
@@ -17027,7 +17024,7 @@ public class DSL {
      */
     @Support
     public static <T extends Number> Field<T> floor(Field<T> field) {
-        return new Floor<T>(nullSafe(field));
+        return new Floor<>(nullSafe(field));
     }
 
     /**
@@ -17051,7 +17048,7 @@ public class DSL {
      */
     @Support
     public static <T extends Number> Field<T> ceil(Field<T> field) {
-        return new Ceil<T>(nullSafe(field));
+        return new Ceil<>(nullSafe(field));
     }
 
     /**
@@ -17139,7 +17136,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <T extends Number> Field<T> trunc(Field<T> number, Field<Integer> decimals) {
-        return new Trunc<T>(nullSafe(number), nullSafe(decimals));
+        return new Trunc<>(nullSafe(number), nullSafe(decimals));
     }
 
     /**
@@ -17666,7 +17663,7 @@ public class DSL {
      */
     @Support({ CUBRID })
     public static <T> Field<T> prior(Field<T> field) {
-        return new Prior<T>(field);
+        return new Prior<>(field);
     }
 
     // -------------------------------------------------------------------------
@@ -17972,7 +17969,7 @@ public class DSL {
      */
     @Support({ H2, HSQLDB, POSTGRES })
     public static <T> Field<T[]> array(Collection<? extends Field<T>> fields) {
-        return new Array<T>(fields);
+        return new Array<>(fields);
     }
 
     /**
@@ -18926,7 +18923,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field) {
-        return new LeadLag<T>(LEAD, nullSafe(field));
+        return new LeadLag<>(LEAD, nullSafe(field));
     }
 
     /**
@@ -18934,7 +18931,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset) {
-        return new LeadLag<T>(LEAD, nullSafe(field), offset);
+        return new LeadLag<>(LEAD, nullSafe(field), offset);
     }
 
     /**
@@ -18954,7 +18951,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset, Field<T> defaultValue) {
-        return new LeadLag<T>(LEAD, nullSafe(field), offset, nullSafe(defaultValue));
+        return new LeadLag<>(LEAD, nullSafe(field), offset, nullSafe(defaultValue));
     }
 
     /**
@@ -18962,7 +18959,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field) {
-        return new LeadLag<T>(LAG, nullSafe(field));
+        return new LeadLag<>(LAG, nullSafe(field));
     }
 
     /**
@@ -18970,7 +18967,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset) {
-        return new LeadLag<T>(LAG, nullSafe(field), offset);
+        return new LeadLag<>(LAG, nullSafe(field), offset);
     }
 
     /**
@@ -18990,7 +18987,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset, Field<T> defaultValue) {
-        return new LeadLag<T>(LAG, nullSafe(field), offset, nullSafe(defaultValue));
+        return new LeadLag<>(LAG, nullSafe(field), offset, nullSafe(defaultValue));
     }
 
     // -------------------------------------------------------------------------
@@ -19038,7 +19035,7 @@ public class DSL {
      */
     @Support
     public static <T> Param<T> param(DataType<T> type) {
-        return new Val<T>(null, type);
+        return new Val<>(null, type);
     }
 
     /**
@@ -19093,7 +19090,7 @@ public class DSL {
      */
     @Support
     public static <T> Param<T> param(String name, DataType<T> type) {
-        return new Val<T>(null, type, name);
+        return new Val<>(null, type, name);
     }
 
     /**
@@ -19126,7 +19123,7 @@ public class DSL {
      */
     @Support
     public static <T> Param<T> param(String name, T value) {
-        return new Val<T>(value, Tools.field(value).getDataType(), name);
+        return new Val<>(value, Tools.field(value).getDataType(), name);
     }
 
     /**
@@ -20746,7 +20743,7 @@ public class DSL {
         // The default behaviour
         else {
             T converted = type.convert(value);
-            return new Val<T>(converted, mostSpecific(converted, type));
+            return new Val<>(converted, mostSpecific(converted, type));
         }
     }
 
@@ -21526,7 +21523,7 @@ public class DSL {
      */
     @Support
     public static RowN row(Collection<?> values) {
-        Collection<Field<?>> fields = new ArrayList<Field<?>>(values.size());
+        Collection<Field<?>> fields = new ArrayList<>(values.size());
 
         for (Object o : values)
             fields.add(o instanceof Field<?> ? (Field<?>) o : val(o));
@@ -22504,7 +22501,7 @@ public class DSL {
 
     @Support
     public static <T extends Number> Field<T> widthBucket(Field<T> field, Field<T> low, Field<T> high, Field<Integer> buckets) {
-        return new WidthBucket<T>(field, low, high, buckets);
+        return new WidthBucket<>(field, low, high, buckets);
     }
 
     // -------------------------------------------------------------------------

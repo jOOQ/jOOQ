@@ -75,6 +75,6 @@ public class DefaultRecordUnmapperProvider implements RecordUnmapperProvider, Se
 
     @Override
     public final <E, R extends Record> RecordUnmapper<E, R> provide(Class<? extends E> type, RecordType<R> rowType) {
-        return new DefaultRecordUnmapper<E, R>(type, rowType, configuration);
+        return new DefaultRecordUnmapper<>(type, rowType, configuration);
     }
 }

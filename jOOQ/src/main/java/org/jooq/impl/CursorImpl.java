@@ -128,7 +128,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
     }
 
     CursorImpl(ExecuteContext ctx, ExecuteListener listener, Field<?>[] fields, int[] internIndexes, boolean keepStatement, boolean keepResultSet, Class<? extends R> type, int maxRows, boolean autoclosing) {
-        super(ctx.configuration(), new Fields<R>(fields));
+        super(ctx.configuration(), new Fields<>(fields));
 
         this.ctx = ctx;
         this.listener = (listener != null ? listener : ExecuteListeners.get(ctx));
@@ -136,7 +136,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
         this.keepStatement = keepStatement;
         this.keepResultSet = keepResultSet;
         this.rs = new CursorResultSet();
-        this.rsContext = new DefaultBindingGetResultSetContext<Object>(ctx.configuration(), ctx.data(), rs, 0);
+        this.rsContext = new DefaultBindingGetResultSetContext<>(ctx.configuration(), ctx.data(), rs, 0);
 
 
 
@@ -345,7 +345,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
         // Before listener.resultStart(ctx)
         iterator();
 
-        ResultImpl<R> result = new ResultImpl<R>(((DefaultExecuteContext) ctx).originalConfiguration(), fields.fields);
+        ResultImpl<R> result = new ResultImpl<>(((DefaultExecuteContext) ctx).originalConfiguration(), fields.fields);
 
         ctx.result(result);
         listener.resultStart(ctx);

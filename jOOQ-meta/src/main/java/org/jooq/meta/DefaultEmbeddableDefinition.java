@@ -57,7 +57,7 @@ public class DefaultEmbeddableDefinition
 
         this.columnNames = columnNames;
         this.table = table;
-        this.embeddableColumns = new ArrayList<EmbeddableColumnDefinition>();
+        this.embeddableColumns = new ArrayList<>();
 
         for (int i = 0; i < columns.size(); i++)
             embeddableColumns.add(new DefaultEmbeddableColumnDefinition(this, columnNames.get(i), columns.get(i), i));

@@ -71,7 +71,7 @@ class DefaultBindingSetSQLOutputContext<U> extends AbstractResourceManagingScope
 
     @Override
     public final <T> BindingSetSQLOutputContext<T> convert(Converter<? extends T, ? super U> converter) {
-        return new DefaultBindingSetSQLOutputContext<T>(configuration, data, output, converter.to(value));
+        return new DefaultBindingSetSQLOutputContext<>(configuration, data, output, converter.to(value));
     }
 
     @Override

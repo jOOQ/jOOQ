@@ -184,7 +184,7 @@ implements
         this.type = type;
 
         this.condition = new ConditionProviderImpl();
-        this.using = new QueryPartList<Field<?>>();
+        this.using = new QueryPartList<>();
     }
 
     // ------------------------------------------------------------------------
@@ -196,7 +196,7 @@ implements
     public final List<ForeignKey<Record, ?>> getReferences() {
         List<? extends ForeignKey<?, ?>> lhsReferences = lhs.getReferences();
         List<? extends ForeignKey<?, ?>> rhsReferences = rhs.getReferences();
-        List<ForeignKey<?, ?>> result = new ArrayList<ForeignKey<?, ?>>(lhsReferences.size() + rhsReferences.size());
+        List<ForeignKey<?, ?>> result = new ArrayList<>(lhsReferences.size() + rhsReferences.size());
         result.addAll(lhsReferences);
         result.addAll(rhsReferences);
         return (List) result;
@@ -243,7 +243,7 @@ implements
                     List<Condition> semiAntiJoinPredicates = (List<Condition>) ctx.data(DATA_COLLECTED_SEMI_ANTI_JOIN);
 
                     if (semiAntiJoinPredicates == null) {
-                        semiAntiJoinPredicates = new ArrayList<Condition>();
+                        semiAntiJoinPredicates = new ArrayList<>();
                         ctx.data(DATA_COLLECTED_SEMI_ANTI_JOIN, semiAntiJoinPredicates);
                     }
 
@@ -490,12 +490,12 @@ implements
 
     @Override
     public final Table<Record> as(Name alias) {
-        return new TableAlias<Record>(this, alias, true);
+        return new TableAlias<>(this, alias, true);
     }
 
     @Override
     public final Table<Record> as(Name alias, Name... fieldAliases) {
-        return new TableAlias<Record>(this, alias, fieldAliases, true);
+        return new TableAlias<>(this, alias, fieldAliases, true);
     }
 
     @Override
@@ -506,7 +506,7 @@ implements
     @Override
     final Fields<Record> fields0() {
         if (type == LEFT_SEMI_JOIN || type == LEFT_ANTI_JOIN) {
-            return new Fields<Record>(lhs.asTable().fields());
+            return new Fields<>(lhs.asTable().fields());
         }
         else {
             Field<?>[] l = lhs.asTable().fields();
@@ -516,7 +516,7 @@ implements
             System.arraycopy(l, 0, all, 0, l.length);
             System.arraycopy(r, 0, all, l.length, r.length);
 
-            return new Fields<Record>(all);
+            return new Fields<>(all);
         }
     }
 

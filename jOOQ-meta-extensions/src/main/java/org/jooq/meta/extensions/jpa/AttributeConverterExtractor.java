@@ -105,7 +105,7 @@ final class AttributeConverterExtractor implements Integrator {
 
     @SuppressWarnings("unchecked")
     final Map<Name, AttributeConverter<?, ?>> extract() {
-        Map<Name, AttributeConverter<?, ?>> result = new LinkedHashMap<Name, AttributeConverter<?, ?>>();
+        Map<Name, AttributeConverter<?, ?>> result = new LinkedHashMap<>();
 
         initEntityManagerFactory();
         for (PersistentClass persistentClass : meta.getEntityBindings()) {
@@ -141,7 +141,7 @@ final class AttributeConverterExtractor implements Integrator {
 
     private final EntityManagerFactory initEntityManagerFactory() {
         PersistenceUnitInfo persistenceUnitInfo = persistenceUnitInfo(getClass().getSimpleName());
-        Map<String, Object> configuration = new HashMap<String, Object>();
+        Map<String, Object> configuration = new HashMap<>();
         configuration.put("hibernate.integrator_provider", integratorProvider());
         configuration.put(AvailableSettings.CONNECTION_PROVIDER, database.connectionProvider());
         PersistenceUnitInfoDescriptor descriptor = new PersistenceUnitInfoDescriptor(persistenceUnitInfo);
@@ -169,7 +169,7 @@ final class AttributeConverterExtractor implements Integrator {
     }
 
     private final List<String> entityClassNames() {
-        List<String> result = new ArrayList<String>(classes.size());
+        List<String> result = new ArrayList<>(classes.size());
 
         for (Class<?> klass : classes)
             result.add(klass.getName());

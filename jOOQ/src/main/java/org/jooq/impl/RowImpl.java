@@ -10916,25 +10916,25 @@ implements
 
     @Override
     public final Condition in(Collection rows) {
-        QueryPartList<Row> list = new QueryPartList<Row>(rows);
+        QueryPartList<Row> list = new QueryPartList<>(rows);
         return new RowInCondition(this, list, Comparator.IN);
     }
 
     @Override
     public final Condition in(Result result) {
-        QueryPartList<Row> list = new QueryPartList<Row>(Tools.rows(result));
+        QueryPartList<Row> list = new QueryPartList<>(Tools.rows(result));
         return new RowInCondition(this, list, Comparator.IN);
     }
 
     @Override
     public final Condition notIn(Collection rows) {
-        QueryPartList<Row> list = new QueryPartList<Row>(rows);
+        QueryPartList<Row> list = new QueryPartList<>(rows);
         return new RowInCondition(this, list, Comparator.NOT_IN);
     }
 
     @Override
     public final Condition notIn(Result result) {
-        QueryPartList<Row> list = new QueryPartList<Row>(Tools.rows(result));
+        QueryPartList<Row> list = new QueryPartList<>(Tools.rows(result));
         return new RowInCondition(this, list, Comparator.NOT_IN);
     }
 

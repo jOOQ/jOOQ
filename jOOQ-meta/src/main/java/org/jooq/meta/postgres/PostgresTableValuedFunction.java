@@ -91,7 +91,7 @@ public class PostgresTableValuedFunction extends AbstractTableDefinition {
 
     @Override
     public List<ColumnDefinition> getElements0() throws SQLException {
-        List<ColumnDefinition> result = new ArrayList<ColumnDefinition>();
+        List<ColumnDefinition> result = new ArrayList<>();
 
         Routines r = ROUTINES;
         Parameters p = PARAMETERS;

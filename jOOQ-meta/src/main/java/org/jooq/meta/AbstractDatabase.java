@@ -140,8 +140,8 @@ public abstract class AbstractDatabase implements Database {
     private boolean                                                          integerDisplayWidths;
     private boolean                                                          ignoreProcedureReturnValues;
     private boolean                                                          dateAsTimestamp;
-    private List<CatalogMappingType>                                         configuredCatalogs                   = new ArrayList<CatalogMappingType>();
-    private List<SchemaMappingType>                                          configuredSchemata                   = new ArrayList<SchemaMappingType>();
+    private List<CatalogMappingType>                                         configuredCatalogs                   = new ArrayList<>();
+    private List<SchemaMappingType>                                          configuredSchemata                   = new ArrayList<>();
     private List<CustomType>                                                 configuredCustomTypes;
     private List<EnumType>                                                   configuredEnumTypes;
     private List<ForcedType>                                                 configuredForcedTypes;
@@ -205,13 +205,13 @@ public abstract class AbstractDatabase implements Database {
     private final Statements                                                 statements;
 
     protected AbstractDatabase() {
-        exists = new HashMap<Table<?>, Boolean>();
+        exists = new HashMap<>();
         patterns = new Patterns();
         statements = new Statements();
-        filters = new ArrayList<Filter>();
-        all = new ArrayList<Definition>();
-        included = new ArrayList<Definition>();
-        excluded = new ArrayList<Definition>();
+        filters = new ArrayList<>();
+        all = new ArrayList<>();
+        included = new ArrayList<>();
+        excluded = new ArrayList<>();
     }
 
     @Override
@@ -434,7 +434,7 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final List<CatalogDefinition> getCatalogs() {
         if (catalogs == null) {
-            catalogs = new ArrayList<CatalogDefinition>();
+            catalogs = new ArrayList<>();
 
             try {
                 catalogs = getCatalogs0();
@@ -484,7 +484,7 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final List<SchemaDefinition> getSchemata() {
         if (schemata == null) {
-            schemata = new ArrayList<SchemaDefinition>();
+            schemata = new ArrayList<>();
 
             try {
                 schemata = getSchemata0();
@@ -512,7 +512,7 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public final List<SchemaDefinition> getSchemata(CatalogDefinition catalog) {
-        List<SchemaDefinition> result = new ArrayList<SchemaDefinition>();
+        List<SchemaDefinition> result = new ArrayList<>();
 
         for (SchemaDefinition schema : getSchemata())
             if (catalog.equals(schema.getCatalog()))
@@ -533,7 +533,7 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final List<String> getInputCatalogs() {
         if (inputCatalogs == null) {
-            inputCatalogs = new ArrayList<String>();
+            inputCatalogs = new ArrayList<>();
 
             // [#1312] Allow for ommitting inputSchema configuration. Generate
             // All catalogs instead
@@ -564,8 +564,8 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final List<String> getInputSchemata() {
         if (inputSchemataPerCatalog == null) {
-            inputSchemata = new ArrayList<String>();
-            inputSchemataPerCatalog = new LinkedHashMap<String, List<String>>();
+            inputSchemata = new ArrayList<>();
+            inputSchemataPerCatalog = new LinkedHashMap<>();
 
             // [#1312] Allow for ommitting inputSchema configuration. Generate all schemata instead.
             if (configuredSchemata.size() == 1 && StringUtils.isBlank(configuredSchemata.get(0).getInputSchema())) {
@@ -620,7 +620,7 @@ public abstract class AbstractDatabase implements Database {
                             List<String> list = inputSchemataPerCatalog.get(inputCatalog);
 
                             if (list == null) {
-                                list = new ArrayList<String>();
+                                list = new ArrayList<>();
                                 inputSchemataPerCatalog.put(inputCatalog, list);
                             }
 
@@ -641,7 +641,7 @@ public abstract class AbstractDatabase implements Database {
                 List<String> list = inputSchemataPerCatalog.get(schema.getCatalog().getName());
 
                 if (list == null) {
-                    list = new ArrayList<String>();
+                    list = new ArrayList<>();
                     inputSchemataPerCatalog.put(schema.getCatalog().getName(), list);
                 }
 
@@ -722,7 +722,7 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final List<Filter> getFilters() {
         if (filters == null) {
-            filters = new ArrayList<Filter>();
+            filters = new ArrayList<>();
         }
 
         return Collections.unmodifiableList(filters);
@@ -1053,7 +1053,7 @@ public abstract class AbstractDatabase implements Database {
     @Deprecated
     public final List<CustomType> getConfiguredCustomTypes() {
         if (configuredCustomTypes == null) {
-            configuredCustomTypes = new ArrayList<CustomType>();
+            configuredCustomTypes = new ArrayList<>();
         }
 
         return configuredCustomTypes;
@@ -1162,7 +1162,7 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final List<ForcedType> getConfiguredForcedTypes() {
         if (configuredForcedTypes == null)
-            configuredForcedTypes = new ArrayList<ForcedType>();
+            configuredForcedTypes = new ArrayList<>();
 
         return configuredForcedTypes;
     }
@@ -1290,7 +1290,7 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final List<SequenceDefinition> getSequences(SchemaDefinition schema) {
         if (sequences == null) {
-            sequences = new ArrayList<SequenceDefinition>();
+            sequences = new ArrayList<>();
 
             if (getIncludeSequences()) {
                 try {
@@ -1308,7 +1308,7 @@ public abstract class AbstractDatabase implements Database {
         }
 
         if (sequencesBySchema == null)
-            sequencesBySchema = new LinkedHashMap<SchemaDefinition, List<SequenceDefinition>>();
+            sequencesBySchema = new LinkedHashMap<>();
 
         return filterSchema(sequences, schema, sequencesBySchema);
     }
@@ -1316,7 +1316,7 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final List<IdentityDefinition> getIdentities(SchemaDefinition schema) {
         if (identities == null) {
-            identities = new ArrayList<IdentityDefinition>();
+            identities = new ArrayList<>();
 
             for (SchemaDefinition s : getSchemata()) {
                 for (TableDefinition table : getTables(s)) {
@@ -1329,7 +1329,7 @@ public abstract class AbstractDatabase implements Database {
         }
 
         if (identitiesBySchema == null)
-            identitiesBySchema = new LinkedHashMap<SchemaDefinition, List<IdentityDefinition>>();
+            identitiesBySchema = new LinkedHashMap<>();
 
         return filterSchema(identities, schema, identitiesBySchema);
     }
@@ -1339,7 +1339,7 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final List<UniqueKeyDefinition> getUniqueKeys(SchemaDefinition schema) {
         if (uniqueKeys == null) {
-            uniqueKeys = new ArrayList<UniqueKeyDefinition>();
+            uniqueKeys = new ArrayList<>();
 
             if (getIncludeUniqueKeys() || getIncludePrimaryKeys())
                 for (SchemaDefinition s : getSchemata())
@@ -1349,7 +1349,7 @@ public abstract class AbstractDatabase implements Database {
         }
 
         if (uniqueKeysBySchema == null)
-            uniqueKeysBySchema = new LinkedHashMap<SchemaDefinition, List<UniqueKeyDefinition>>();
+            uniqueKeysBySchema = new LinkedHashMap<>();
 
         return filterSchema(uniqueKeys, schema, uniqueKeysBySchema);
     }
@@ -1357,7 +1357,7 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final List<ForeignKeyDefinition> getForeignKeys(SchemaDefinition schema) {
         if (foreignKeys == null) {
-            foreignKeys = new ArrayList<ForeignKeyDefinition>();
+            foreignKeys = new ArrayList<>();
 
             if (getIncludeForeignKeys())
                 for (SchemaDefinition s : getSchemata())
@@ -1367,7 +1367,7 @@ public abstract class AbstractDatabase implements Database {
         }
 
         if (foreignKeysBySchema == null)
-            foreignKeysBySchema = new LinkedHashMap<SchemaDefinition, List<ForeignKeyDefinition>>();
+            foreignKeysBySchema = new LinkedHashMap<>();
 
         return filterSchema(foreignKeys, schema, foreignKeysBySchema);
     }
@@ -1375,7 +1375,7 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final List<CheckConstraintDefinition> getCheckConstraints(SchemaDefinition schema) {
         if (checkConstraints == null) {
-            checkConstraints = new ArrayList<CheckConstraintDefinition>();
+            checkConstraints = new ArrayList<>();
 
             if (getIncludeCheckConstraints())
                 for (SchemaDefinition s : getSchemata())
@@ -1385,7 +1385,7 @@ public abstract class AbstractDatabase implements Database {
         }
 
         if (checkConstraintsBySchema == null)
-            checkConstraintsBySchema = new LinkedHashMap<SchemaDefinition, List<CheckConstraintDefinition>>();
+            checkConstraintsBySchema = new LinkedHashMap<>();
 
         return filterSchema(checkConstraints, schema, checkConstraintsBySchema);
     }
@@ -1393,7 +1393,7 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final List<TableDefinition> getTables(SchemaDefinition schema) {
         if (tables == null) {
-            tables = new ArrayList<TableDefinition>();
+            tables = new ArrayList<>();
 
             if (getIncludeTables()) {
                 try {
@@ -1411,7 +1411,7 @@ public abstract class AbstractDatabase implements Database {
         }
 
         if (tablesBySchema == null)
-            tablesBySchema = new LinkedHashMap<SchemaDefinition, List<TableDefinition>>();
+            tablesBySchema = new LinkedHashMap<>();
 
         return filterSchema(tables, schema, tablesBySchema);
     }
@@ -1439,7 +1439,7 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final List<EnumDefinition> getEnums(SchemaDefinition schema) {
         if (enums == null) {
-            enums = new ArrayList<EnumDefinition>();
+            enums = new ArrayList<>();
 
             try {
                 List<EnumDefinition> e = getEnums0();
@@ -1455,13 +1455,13 @@ public abstract class AbstractDatabase implements Database {
         }
 
         if (enumsBySchema == null)
-            enumsBySchema = new LinkedHashMap<SchemaDefinition, List<EnumDefinition>>();
+            enumsBySchema = new LinkedHashMap<>();
 
         return filterSchema(enums, schema, enumsBySchema);
     }
 
     private final List<EnumDefinition> getConfiguredEnums() {
-        List<EnumDefinition> result = new ArrayList<EnumDefinition>(configuredCustomTypes.size());
+        List<EnumDefinition> result = new ArrayList<>(configuredCustomTypes.size());
 
         for (EnumType enumType : configuredEnumTypes) {
             String name = enumType.getName();
@@ -1565,20 +1565,20 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final List<Embeddable> getConfiguredEmbeddables() {
         if (configuredEmbeddables == null)
-            configuredEmbeddables = new ArrayList<Embeddable>();
+            configuredEmbeddables = new ArrayList<>();
 
         return configuredEmbeddables;
     }
 
     @Override
     public final List<EmbeddableDefinition> getEmbeddables() {
-        List<EmbeddableDefinition> result = new ArrayList<EmbeddableDefinition>();
+        List<EmbeddableDefinition> result = new ArrayList<>();
 
         for (SchemaDefinition schema : getSchemata()) {
             for (TableDefinition table : getTables(schema)) {
                 for (Embeddable embeddable : getConfiguredEmbeddables()) {
-                    List<ColumnDefinition> columns = new ArrayList<ColumnDefinition>();
-                    List<String> names = new ArrayList<String>();
+                    List<ColumnDefinition> columns = new ArrayList<>();
+                    List<String> names = new ArrayList<>();
 
                     for (EmbeddableField embeddableField : embeddable.getFields()) {
                         boolean matched = false;
@@ -1603,7 +1603,7 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final List<EmbeddableDefinition> getEmbeddables(SchemaDefinition schema) {
         if (embeddables == null) {
-            embeddables = new ArrayList<EmbeddableDefinition>();
+            embeddables = new ArrayList<>();
 
             if (getIncludeEmbeddables()) {
                 try {
@@ -1622,7 +1622,7 @@ public abstract class AbstractDatabase implements Database {
         }
 
         if (embeddablesBySchema == null)
-            embeddablesBySchema = new LinkedHashMap<SchemaDefinition, List<EmbeddableDefinition>>();
+            embeddablesBySchema = new LinkedHashMap<>();
 
         return filterSchema(embeddables, schema, embeddablesBySchema);
     }
@@ -1630,7 +1630,7 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final List<EmbeddableDefinition> getEmbeddables(TableDefinition table) {
         if (embeddablesByTable == null)
-            embeddablesByTable = new LinkedHashMap<TableDefinition, List<EmbeddableDefinition>>();
+            embeddablesByTable = new LinkedHashMap<>();
 
         return filterTable(getEmbeddables(table.getSchema()), table, embeddablesByTable);
     }
@@ -1658,7 +1658,7 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final List<DomainDefinition> getDomains(SchemaDefinition schema) {
         if (domains == null) {
-            domains = new ArrayList<DomainDefinition>();
+            domains = new ArrayList<>();
 
             try {
                 List<DomainDefinition> e = getDomains0();
@@ -1697,7 +1697,7 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final List<ArrayDefinition> getArrays(SchemaDefinition schema) {
         if (arrays == null) {
-            arrays = new ArrayList<ArrayDefinition>();
+            arrays = new ArrayList<>();
 
             if (getIncludeUDTs()) {
                 try {
@@ -1715,7 +1715,7 @@ public abstract class AbstractDatabase implements Database {
         }
 
         if (arraysBySchema == null)
-            arraysBySchema = new LinkedHashMap<SchemaDefinition, List<ArrayDefinition>>();
+            arraysBySchema = new LinkedHashMap<>();
 
         return filterSchema(arrays, schema, arraysBySchema);
     }
@@ -1742,7 +1742,7 @@ public abstract class AbstractDatabase implements Database {
 
     private final List<UDTDefinition> getAllUDTs(SchemaDefinition schema) {
         if (udts == null) {
-            udts = new ArrayList<UDTDefinition>();
+            udts = new ArrayList<>();
 
             if (getIncludeUDTs()) {
                 try {
@@ -1760,13 +1760,13 @@ public abstract class AbstractDatabase implements Database {
         }
 
         if (udtsBySchema == null)
-            udtsBySchema = new LinkedHashMap<SchemaDefinition, List<UDTDefinition>>();
+            udtsBySchema = new LinkedHashMap<>();
 
         return filterSchema(udts, schema, udtsBySchema);
     }
 
     private final List<UDTDefinition> ifInPackage(List<UDTDefinition> allUDTs, boolean expected) {
-        List<UDTDefinition> result = new ArrayList<UDTDefinition>();
+        List<UDTDefinition> result = new ArrayList<>();
 
         for (UDTDefinition u : allUDTs)
             if ((u.getPackage() != null) == expected)
@@ -1828,7 +1828,7 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final List<IndexDefinition> getIndexes(SchemaDefinition schema) {
         if (indexes == null) {
-            indexes = new ArrayList<IndexDefinition>();
+            indexes = new ArrayList<>();
 
             if (getIncludeIndexes()) {
                 try {
@@ -1847,7 +1847,7 @@ public abstract class AbstractDatabase implements Database {
         }
 
         if (indexesBySchema == null)
-            indexesBySchema = new LinkedHashMap<SchemaDefinition, List<IndexDefinition>>();
+            indexesBySchema = new LinkedHashMap<>();
 
         return filterSchema(indexes, schema, indexesBySchema);
     }
@@ -1855,21 +1855,21 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final List<IndexDefinition> getIndexes(TableDefinition table) {
         if (indexesByTable == null)
-            indexesByTable = new HashMap<TableDefinition, List<IndexDefinition>>();
+            indexesByTable = new HashMap<>();
 
         List<IndexDefinition> list = indexesByTable.get(table);
         if (list == null) {
-            indexesByTable.put(table, list = new ArrayList<IndexDefinition>());
+            indexesByTable.put(table, list = new ArrayList<>());
 
             for (TableDefinition otherTable : getTables(table.getSchema()))
                 if (!indexesByTable.containsKey(otherTable))
-                    indexesByTable.put(otherTable, new ArrayList<IndexDefinition>());
+                    indexesByTable.put(otherTable, new ArrayList<>());
 
             for (IndexDefinition index : getIndexes(table.getSchema())) {
                 List<IndexDefinition> otherList = indexesByTable.get(index.getTable());
 
                 if (otherList == null)
-                    indexesByTable.put(index.getTable(), otherList = new ArrayList<IndexDefinition>());
+                    indexesByTable.put(index.getTable(), otherList = new ArrayList<>());
 
                 otherList.add(index);
             }
@@ -1881,7 +1881,7 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final List<RoutineDefinition> getRoutines(SchemaDefinition schema) {
         if (routines == null) {
-            routines = new ArrayList<RoutineDefinition>();
+            routines = new ArrayList<>();
 
             if (getIncludeRoutines()) {
                 try {
@@ -1899,7 +1899,7 @@ public abstract class AbstractDatabase implements Database {
         }
 
         if (routinesBySchema == null)
-            routinesBySchema = new LinkedHashMap<SchemaDefinition, List<RoutineDefinition>>();
+            routinesBySchema = new LinkedHashMap<>();
 
         return filterSchema(routines, schema, routinesBySchema);
     }
@@ -1907,7 +1907,7 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final List<PackageDefinition> getPackages(SchemaDefinition schema) {
         if (packages == null) {
-            packages = new ArrayList<PackageDefinition>();
+            packages = new ArrayList<>();
 
             if (getIncludePackages()) {
                 try {
@@ -1925,7 +1925,7 @@ public abstract class AbstractDatabase implements Database {
         }
 
         if (packagesBySchema == null)
-            packagesBySchema = new LinkedHashMap<SchemaDefinition, List<PackageDefinition>>();
+            packagesBySchema = new LinkedHashMap<>();
 
         return filterSchema(packages, schema, packagesBySchema);
     }
@@ -1980,7 +1980,7 @@ public abstract class AbstractDatabase implements Database {
         if (schema == null)
             return definitions;
 
-        List<T> result = new ArrayList<T>();
+        List<T> result = new ArrayList<>();
 
         for (T definition : definitions)
             if (definition.getSchema().equals(schema))
@@ -2004,7 +2004,7 @@ public abstract class AbstractDatabase implements Database {
         if (table == null)
             return definitions;
 
-        List<T> result = new ArrayList<T>();
+        List<T> result = new ArrayList<>();
 
         for (T definition : definitions)
             if (definition.getTable().equals(table))
@@ -2049,7 +2049,7 @@ public abstract class AbstractDatabase implements Database {
     }
 
     protected final <T extends Definition> List<T> filterExcludeInclude(List<T> definitions, String[] e, String[] i, List<Filter> f) {
-        List<T> result = new ArrayList<T>();
+        List<T> result = new ArrayList<>();
 
         definitionsLoop: for (T definition : definitions) {
             if (e != null) {
@@ -2178,7 +2178,7 @@ public abstract class AbstractDatabase implements Database {
     }
 
     private final void syntheticPrimaryKeys(DefaultRelations r) {
-        List<UniqueKeyDefinition> syntheticKeys = new ArrayList<UniqueKeyDefinition>();
+        List<UniqueKeyDefinition> syntheticKeys = new ArrayList<>();
 
         for (SchemaDefinition schema : getSchemata()) {
             for (TableDefinition table : schema.getTables()) {

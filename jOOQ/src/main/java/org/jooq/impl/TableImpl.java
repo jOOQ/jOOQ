@@ -165,7 +165,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
     public TableImpl(Name name, Schema schema, Table<?> child, ForeignKey<?, R> path, Table<R> aliased, Field<?>[] parameters, Comment comment) {
         super(name, schema, comment);
 
-        this.fields = new Fields<R>();
+        this.fields = new Fields<>();
         this.child = child;
         this.childPath = path;
 
@@ -176,9 +176,9 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
             Alias<Table<R>> existingAlias = Tools.alias(aliased);
 
             if (existingAlias != null)
-                alias = new Alias<Table<R>>(existingAlias.wrapped, this, name, existingAlias.fieldAliases, existingAlias.wrapInParentheses);
+                alias = new Alias<>(existingAlias.wrapped, this, name, existingAlias.fieldAliases, existingAlias.wrapInParentheses);
             else
-                alias = new Alias<Table<R>>(aliased, this, name);
+                alias = new Alias<>(aliased, this, name);
         }
         else
             alias = null;
@@ -254,10 +254,10 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
 
             // [#2925] Some dialects don't like empty parameter lists
             if (ctx.family() == FIREBIRD && parameters.length == 0)
-                ctx.visit(new QueryPartList<Field<?>>(parameters));
+                ctx.visit(new QueryPartList<>(parameters));
             else
                 ctx.sql('(')
-                   .visit(new QueryPartList<Field<?>>(parameters))
+                   .visit(new QueryPartList<>(parameters))
                    .sql(')');
         }
 
@@ -276,7 +276,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
         if (alias != null)
             return alias.wrapped().as(as);
         else
-            return new TableAlias<R>(this, as);
+            return new TableAlias<>(this, as);
     }
 
     /**
@@ -290,15 +290,15 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
         if (alias != null)
             return alias.wrapped().as(as, fieldAliases);
         else
-            return new TableAlias<R>(this, as, fieldAliases);
+            return new TableAlias<>(this, as, fieldAliases);
     }
 
     public Table<R> rename(String rename) {
-        return new TableImpl<R>(rename, getSchema());
+        return new TableImpl<>(rename, getSchema());
     }
 
     public Table<R> rename(Name rename) {
-        return new TableImpl<R>(rename, getSchema());
+        return new TableImpl<>(rename, getSchema());
     }
 
     /**

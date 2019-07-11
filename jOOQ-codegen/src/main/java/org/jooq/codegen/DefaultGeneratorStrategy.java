@@ -203,7 +203,7 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
 
     @Override
     public List<String> getJavaClassImplements(Definition definition, Mode mode) {
-        return new ArrayList<String>();
+        return new ArrayList<>();
     }
 
     @Override

@@ -234,23 +234,23 @@ public class JavaGenerator extends AbstractGenerator {
     /**
      * All files modified by this generator.
      */
-    private Set<File>                             files                        = new LinkedHashSet<File>();
+    private Set<File>                             files                        = new LinkedHashSet<>();
 
     /**
      * These directories were not modified by this generator, but flagged as not
      * for removal (e.g. because of {@link #schemaVersions} or
      * {@link #catalogVersions}).
      */
-    private Set<File>                             directoriesNotForRemoval     = new LinkedHashSet<File>();
+    private Set<File>                             directoriesNotForRemoval     = new LinkedHashSet<>();
 
     private final boolean                         scala;
     private final String                          tokenVoid;
     private final Files                           fileCache;
 
     static {
-        SQLDATATYPE_LITERAL_LOOKUP = new IdentityHashMap<DataType<?>, String>();
-        SQLDATATYPE_WITH_LENGTH = new HashSet<String>();
-        SQLDATATYPE_WITH_PRECISION = new HashSet<String>();
+        SQLDATATYPE_LITERAL_LOOKUP = new IdentityHashMap<>();
+        SQLDATATYPE_WITH_LENGTH = new HashSet<>();
+        SQLDATATYPE_WITH_PRECISION = new HashSet<>();
 
         try {
             for (java.lang.reflect.Field f : SQLDataType.class.getFields()) {
@@ -295,8 +295,8 @@ public class JavaGenerator extends AbstractGenerator {
     @Override
     public final void generate(Database db) {
         this.isoDate = DatatypeConverter.printDateTime(Calendar.getInstance(TimeZone.getTimeZone("UTC")));
-        this.schemaVersions = new LinkedHashMap<SchemaDefinition, String>();
-        this.catalogVersions = new LinkedHashMap<CatalogDefinition, String>();
+        this.schemaVersions = new LinkedHashMap<>();
+        this.catalogVersions = new LinkedHashMap<>();
 
         this.database = db;
         this.database.addFilter(new AvoidAmbiguousClassesFilter());
@@ -605,7 +605,7 @@ public class JavaGenerator extends AbstractGenerator {
 
     private class AvoidAmbiguousClassesFilter implements Database.Filter {
 
-        private Map<String, String> included = new HashMap<String, String>();
+        private Map<String, String> included = new HashMap<>();
 
         @Override
         public boolean exclude(Definition definition) {
@@ -738,9 +738,9 @@ public class JavaGenerator extends AbstractGenerator {
         else
             out.println("public class Keys {");
 
-        List<IdentityDefinition> allIdentities = new ArrayList<IdentityDefinition>();
-        List<UniqueKeyDefinition> allUniqueKeys = new ArrayList<UniqueKeyDefinition>();
-        List<ForeignKeyDefinition> allForeignKeys = new ArrayList<ForeignKeyDefinition>();
+        List<IdentityDefinition> allIdentities = new ArrayList<>();
+        List<UniqueKeyDefinition> allUniqueKeys = new ArrayList<>();
+        List<ForeignKeyDefinition> allForeignKeys = new ArrayList<>();
 
         out.tab(1).header("IDENTITY definitions");
         out.println();
@@ -905,7 +905,7 @@ public class JavaGenerator extends AbstractGenerator {
         else
             out.println("public class Indexes {");
 
-        List<IndexDefinition> allIndexes = new ArrayList<IndexDefinition>();
+        List<IndexDefinition> allIndexes = new ArrayList<>();
 
         out.tab(1).header("INDEX definitions");
         out.println();
@@ -1473,8 +1473,8 @@ public class JavaGenerator extends AbstractGenerator {
                 }
             }
 
-            List<String> arguments = new ArrayList<String>(degree);
-            List<String> calls = new ArrayList<String>(degree);
+            List<String> arguments = new ArrayList<>(degree);
+            List<String> calls = new ArrayList<>(degree);
             for (int i = 1; i <= degree; i++) {
                 TypedElementDefinition<?> column = columns.get(i - 1);
 
@@ -1547,7 +1547,7 @@ public class JavaGenerator extends AbstractGenerator {
         // [#3130] Invalid UDTs may have a degree of 0
         // [#3176] Avoid generating constructors for tables with more than 255 columns (Java's method argument limit)
         if (degree > 0 && degree < 256) {
-            List<String> arguments = new ArrayList<String>(degree);
+            List<String> arguments = new ArrayList<>(degree);
 
             for (int i = 0; i < degree; i++) {
                 final TypedElementDefinition<?> column = columns.get(i);
@@ -2515,7 +2515,7 @@ public class JavaGenerator extends AbstractGenerator {
         final String className = getStrategy().getJavaClassName(e, Mode.ENUM);
         final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(e, Mode.ENUM));
         final List<String> literals = e.getLiterals();
-        final List<String> identifiers = new ArrayList<String>(literals.size());
+        final List<String> identifiers = new ArrayList<>(literals.size());
 
         for (int i = 0; i < literals.size(); i++) {
             String identifier = convertToIdentifier(literals.get(i), language);
@@ -3429,7 +3429,7 @@ public class JavaGenerator extends AbstractGenerator {
             // [#3010] Invalid UDTs may have no attributes. Avoid generating this constructor in that case
             int size = getTypedElements(tableOrUDT).size();
             if (size > 0) {
-                List<String> nulls = new ArrayList<String>(size);
+                List<String> nulls = new ArrayList<>(size);
                 for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT))
 
                     // Avoid ambiguities between a single-T-value constructor
@@ -3913,7 +3913,7 @@ public class JavaGenerator extends AbstractGenerator {
             final String columnId = out.ref(getStrategy().getJavaIdentifier(embeddable), colRefSegments(null));
             final String columnType = out.ref(getStrategy().getFullJavaClassName(embeddable, Mode.RECORD));
 
-            final List<String> columnIds = new ArrayList<String>();
+            final List<String> columnIds = new ArrayList<>();
             for (EmbeddableColumnDefinition column : embeddable.getColumns())
                 columnIds.add(out.ref(getStrategy().getJavaIdentifier(column), colRefSegments(column)));
 
@@ -4656,7 +4656,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(1).println("public static final %s %s = new %s();", className, catalogId, className);
         }
 
-        List<SchemaDefinition> schemas = new ArrayList<SchemaDefinition>();
+        List<SchemaDefinition> schemas = new ArrayList<>();
         if (generateGlobalSchemaReferences()) {
             for (SchemaDefinition schema : catalog.getSchemata()) {
                 if (generateSchemaIfEmpty(schema)) {
@@ -5544,17 +5544,15 @@ public class JavaGenerator extends AbstractGenerator {
 
         // [#2502] - Some name mangling in the event of procedure arguments
         // called "configuration"
-        Set<String> names = new HashSet<String>();
+        Set<String> names = new HashSet<>();
 
-        for (Definition definition : definitions) {
+        for (Definition definition : definitions)
             names.add(getStrategy().getJavaMemberName(definition));
-        }
 
         String name = defaultName;
 
-        while (names.contains(name)) {
+        while (names.contains(name))
             name += "_";
-        }
 
         return name;
     }
@@ -6494,7 +6492,7 @@ public class JavaGenerator extends AbstractGenerator {
     @SafeVarargs
 
     private static final <T> List<T> list(T... objects) {
-        List<T> result = new ArrayList<T>();
+        List<T> result = new ArrayList<>();
 
         if (objects != null)
             for (T object : objects)
@@ -6505,7 +6503,7 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     private static final <T> List<T> list(T first, List<T> remaining) {
-        List<T> result = new ArrayList<T>();
+        List<T> result = new ArrayList<>();
 
         result.addAll(list(first));
         result.addAll(remaining);
@@ -6514,7 +6512,7 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     private static final <T> List<T> first(Collection<T> objects) {
-        List<T> result = new ArrayList<T>();
+        List<T> result = new ArrayList<>();
 
         if (objects != null) {
             for (T object : objects) {
@@ -6527,7 +6525,7 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     private static final <T> List<T> remaining(Collection<T> objects) {
-        List<T> result = new ArrayList<T>();
+        List<T> result = new ArrayList<>();
 
         if (objects != null) {
             result.addAll(objects);

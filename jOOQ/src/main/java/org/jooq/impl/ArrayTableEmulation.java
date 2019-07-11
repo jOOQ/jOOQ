@@ -84,7 +84,7 @@ final class ArrayTableEmulation extends AbstractTable<Record> {
         this.array = array;
         this.alias = alias;
         this.fieldAlias = fieldAlias == null ? DSL.name("COLUMN_VALUE") : fieldAlias;
-        this.field = new Fields<Record>(DSL.field(name(alias.last(), this.fieldAlias.last()), DSL.getDataType(array.getClass().getComponentType())));
+        this.field = new Fields<>(DSL.field(name(alias.last(), this.fieldAlias.last()), DSL.getDataType(array.getClass().getComponentType())));
     }
 
     @Override

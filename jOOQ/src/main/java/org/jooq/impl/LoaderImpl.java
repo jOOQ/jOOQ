@@ -178,7 +178,7 @@ final class LoaderImpl<R extends Record> implements
         this.create = DSL.using(configuration);
         this.configuration = configuration;
         this.table = table;
-        this.errors = new ArrayList<LoaderError>();
+        this.errors = new ArrayList<>();
     }
 
     // -------------------------------------------------------------------------

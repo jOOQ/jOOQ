@@ -86,7 +86,7 @@ public class PostgresMaterializedViewDefinition extends AbstractTableDefinition 
 
     @Override
     public List<ColumnDefinition> getElements0() throws SQLException {
-        List<ColumnDefinition> result = new ArrayList<ColumnDefinition>();
+        List<ColumnDefinition> result = new ArrayList<>();
 
         Columns col = COLUMNS;
         PgAttribute a = PG_ATTRIBUTE.as("a");

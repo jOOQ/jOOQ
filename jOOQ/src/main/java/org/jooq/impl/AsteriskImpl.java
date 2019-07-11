@@ -55,7 +55,7 @@ final class AsteriskImpl extends AbstractQueryPart implements Asterisk {
      * Generated UI
      */
     private static final long     serialVersionUID = 6298415939984684260L;
-    static final AsteriskImpl     INSTANCE         = new AsteriskImpl(new QueryPartList<Field<?>>());
+    static final AsteriskImpl     INSTANCE         = new AsteriskImpl(new QueryPartList<>());
     final QueryPartList<Field<?>> fields;
 
     private AsteriskImpl(QueryPartList<Field<?>> fields) {
@@ -84,7 +84,7 @@ final class AsteriskImpl extends AbstractQueryPart implements Asterisk {
 
     @Override
     public final Asterisk except(Field<?>... f) {
-        QueryPartList<Field<?>> list = new QueryPartList<Field<?>>();
+        QueryPartList<Field<?>> list = new QueryPartList<>();
 
         list.addAll(fields);
         list.addAll(Arrays.asList(f));

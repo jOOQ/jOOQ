@@ -124,7 +124,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         Settings settings = configuration.settings();
 
         this.sql = new StringBuilder();
-        this.bindValues = new QueryPartList<Param<?>>();
+        this.bindValues = new QueryPartList<>();
         this.cachedRenderKeywordCase = SettingsTools.getRenderKeywordCase(settings);
         this.cachedRenderFormatted = Boolean.TRUE.equals(settings.isRenderFormatted());
         this.cachedRenderNameCase = SettingsTools.getRenderNameCase(settings);
@@ -193,7 +193,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             if (part instanceof TableImpl) {
                 Table<?> root = (Table<?>) part;
                 Table<?> child = root;
-                List<Table<?>> tables = new ArrayList<Table<?>>();
+                List<Table<?>> tables = new ArrayList<>();
 
                 while (root instanceof TableImpl && (child = ((TableImpl<?>) root).child) != null) {
                     tables.add(root);
@@ -481,7 +481,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     private final Deque<Integer> indentLock() {
         if (indentLock == null)
-            indentLock = new ArrayDeque<Integer>();
+            indentLock = new ArrayDeque<>();
 
         return indentLock;
     }
@@ -701,7 +701,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     // ------------------------------------------------------------------------
 
     static {
-        SQLITE_KEYWORDS = new HashSet<String>();
+        SQLITE_KEYWORDS = new HashSet<>();
 
         // [#2367] Taken from http://www.sqlite.org/lang_keywords.html
         SQLITE_KEYWORDS.addAll(Arrays.asList(

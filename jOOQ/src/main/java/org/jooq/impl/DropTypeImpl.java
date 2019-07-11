@@ -68,7 +68,7 @@ final class DropTypeImpl extends AbstractRowCountQuery implements
     DropTypeImpl(Configuration configuration, Collection<?> type, boolean ifExists) {
         super(configuration);
 
-        this.type = new QueryPartList<Name>(Tools.names(type));
+        this.type = new QueryPartList<>(Tools.names(type));
         this.ifExists = ifExists;
     }
 

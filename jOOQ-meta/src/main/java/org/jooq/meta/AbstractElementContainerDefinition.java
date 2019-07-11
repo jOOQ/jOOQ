@@ -77,7 +77,7 @@ extends AbstractDefinition {
 
     protected final List<E> getElements() {
         if (elements == null) {
-            elements = new ArrayList<E>();
+            elements = new ArrayList<>();
 
             try {
                 Database db = getDatabase();

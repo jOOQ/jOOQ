@@ -61,9 +61,9 @@ import org.jooq.tools.StringUtils;
  */
 final class ParamCollector extends AbstractBindContext {
 
-    final Map<String, Param<?>>         resultFlat = new LinkedHashMap<String, Param<?>>();
-    final Map<String, List<Param<?>>>   result     = new LinkedHashMap<String, List<Param<?>>>();
-    final List<Entry<String, Param<?>>> resultList = new ArrayList<Map.Entry<String, Param<?>>>();
+    final Map<String, Param<?>>         resultFlat = new LinkedHashMap<>();
+    final Map<String, List<Param<?>>>   result     = new LinkedHashMap<>();
+    final List<Entry<String, Param<?>>> resultList = new ArrayList<>();
 
     private final boolean               includeInlinedParams;
 
@@ -85,12 +85,12 @@ final class ParamCollector extends AbstractBindContext {
 
                 if (StringUtils.isBlank(paramName)) {
                     resultFlat.put(i, param);
-                    resultList.add(new SimpleImmutableEntry<String, Param<?>>(i, param));
+                    resultList.add(new SimpleImmutableEntry<>(i, param));
                     result(i).add(param);
                 }
                 else {
                     resultFlat.put(param.getParamName(), param);
-                    resultList.add(new SimpleImmutableEntry<String, Param<?>>(param.getParamName(), param));
+                    resultList.add(new SimpleImmutableEntry<>(param.getParamName(), param));
                     result(param.getParamName()).add(param);
                 }
             }
@@ -104,7 +104,7 @@ final class ParamCollector extends AbstractBindContext {
         List<Param<?>> list = result.get(key);
 
         if (list == null) {
-            list = new ArrayList<Param<?>>();
+            list = new ArrayList<>();
             result.put(key, list);
         }
 

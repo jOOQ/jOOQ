@@ -173,10 +173,10 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
         this.table = table;
         this.temporary = temporary;
         this.ifNotExists = ifNotExists;
-        this.columnFields = new ArrayList<Field<?>>();
-        this.columnTypes = new ArrayList<DataType<?>>();
-        this.constraints = new ArrayList<Constraint>();
-        this.indexes = new ArrayList<Index>();
+        this.columnFields = new ArrayList<>();
+        this.columnTypes = new ArrayList<>();
+        this.constraints = new ArrayList<>();
+        this.indexes = new ArrayList<>();
     }
 
     // ------------------------------------------------------------------------

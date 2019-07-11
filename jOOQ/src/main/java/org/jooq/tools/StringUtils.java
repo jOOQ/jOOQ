@@ -1395,7 +1395,7 @@ public final class StringUtils {
      */
     public static String[] split(String regex, CharSequence input) {
         int index = 0;
-        ArrayList<String> matchList = new ArrayList<String>();
+        ArrayList<String> matchList = new ArrayList<>();
         Matcher m = Pattern.compile(regex).matcher(input);
 
         // Add segments before each match found

@@ -120,7 +120,7 @@ final class ArrayTable extends AbstractTable<Record> {
     }
 
     private static final Fields<Record> init(Class<?> arrayType, Name alias) {
-        List<Field<?>> result = new ArrayList<Field<?>>();
+        List<Field<?>> result = new ArrayList<>();
 
         // [#1114] VARRAY/TABLE of OBJECT have more than one field
         if (UDTRecord.class.isAssignableFrom(arrayType)) {
@@ -140,7 +140,7 @@ final class ArrayTable extends AbstractTable<Record> {
             result.add(DSL.field(name(alias.last(), "COLUMN_VALUE"), DSL.getDataType(arrayType)));
         }
 
-        return new Fields<Record>(result);
+        return new Fields<>(result);
     }
 
     @Override
@@ -281,12 +281,12 @@ final class ArrayTable extends AbstractTable<Record> {
 
         @Override
         public final Table<Record> as(Name as) {
-            return new TableAlias<Record>(this, as);
+            return new TableAlias<>(this, as);
         }
 
         @Override
         public final Table<Record> as(Name as, Name... fields) {
-            return new TableAlias<Record>(this, as, fields);
+            return new TableAlias<>(this, as, fields);
         }
 
         @Override

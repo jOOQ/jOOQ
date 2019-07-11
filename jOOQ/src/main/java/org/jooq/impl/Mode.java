@@ -57,6 +57,6 @@ final class Mode implements OrderedAggregateFunctionOfDeferredType {
             ? ((AbstractField<T>) field).getDataType()
             : (DataType<T>) SQLDataType.NUMERIC;
 
-        return new Function<T>("mode", type).withinGroupOrderBy(field);
+        return new Function<>("mode", type).withinGroupOrderBy(field);
     }
 }

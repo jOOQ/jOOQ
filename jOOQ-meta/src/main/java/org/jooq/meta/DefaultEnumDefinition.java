@@ -56,13 +56,13 @@ public class DefaultEnumDefinition extends AbstractDefinition implements EnumDef
     public DefaultEnumDefinition(SchemaDefinition schema, String name, String comment, boolean isSynthetic) {
         super(schema.getDatabase(), schema, name, comment);
 
-        this.literals = new ArrayList<String>();
+        this.literals = new ArrayList<>();
         this.isSynthetic = isSynthetic;
     }
 
     @Override
     public List<Definition> getDefinitionPath() {
-        List<Definition> result = new ArrayList<Definition>();
+        List<Definition> result = new ArrayList<>();
 
         result.addAll(getSchema().getDefinitionPath());
         result.add(this);

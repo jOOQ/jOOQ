@@ -360,7 +360,7 @@ public final class ParserCLI {
     }
 
     public static final class Args {
-        List<String>      history     = new ArrayList<String>();
+        List<String>      history     = new ArrayList<>();
         String            sql;
         RenderKeywordCase keywords    = RenderKeywordCase.LOWER;
         RenderNameCase    name        = RenderNameCase.LOWER;

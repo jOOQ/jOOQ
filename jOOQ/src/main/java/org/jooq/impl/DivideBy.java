@@ -77,7 +77,7 @@ implements
         this.divisor = divisor;
 
         this.condition = new ConditionProviderImpl();
-        this.returning = new QueryPartList<Field<?>>();
+        this.returning = new QueryPartList<>();
     }
 
     // ------------------------------------------------------------------------
@@ -95,7 +95,7 @@ implements
      */
     private final Table<Record> table() {
         ConditionProviderImpl selfJoin = new ConditionProviderImpl();
-        List<Field<?>> select = new ArrayList<Field<?>>(returning.size());
+        List<Field<?>> select = new ArrayList<>(returning.size());
         Table<?> outer = dividend.as("dividend");
 
         for (Field<?> field : returning) {

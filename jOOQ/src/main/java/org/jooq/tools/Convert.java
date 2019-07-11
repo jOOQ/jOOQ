@@ -123,8 +123,8 @@ public final class Convert {
     private static final Pattern UUID_PATTERN = Pattern.compile("(\\p{XDigit}{8})-?(\\p{XDigit}{4})-?(\\p{XDigit}{4})-?(\\p{XDigit}{4})-?(\\p{XDigit}{12})");
 
     static {
-        Set<String> trueValues = new HashSet<String>();
-        Set<String> falseValues = new HashSet<String>();
+        Set<String> trueValues = new HashSet<>();
+        Set<String> falseValues = new HashSet<>();
 
         trueValues.add("1");
         trueValues.add("1.0");
@@ -318,7 +318,7 @@ public final class Convert {
      * Conversion type-safety
      */
     private static final <T, U> U convert0(Object from, Converter<T, ? extends U> converter) throws DataTypeException {
-        ConvertAll<T> all = new ConvertAll<T>(converter.fromType());
+        ConvertAll<T> all = new ConvertAll<>(converter.fromType());
         return converter.from(all.from(from));
     }
 
@@ -396,7 +396,7 @@ public final class Convert {
      * @see #convert(Object, Class)
      */
     public static final <T> List<T> convert(Collection<?> collection, Class<? extends T> type) throws DataTypeException {
-        return convert(collection, new ConvertAll<T>(type));
+        return convert(collection, new ConvertAll<>(type));
     }
 
     /**
@@ -417,8 +417,8 @@ public final class Convert {
      * Type safe conversion
      */
     private static final <T, U> List<U> convert0(Collection<?> collection, Converter<T, ? extends U> converter) throws DataTypeException {
-        ConvertAll<T> all = new ConvertAll<T>(converter.fromType());
-        List<U> result = new ArrayList<U>(collection.size());
+        ConvertAll<T> all = new ConvertAll<>(converter.fromType());
+        List<U> result = new ArrayList<>(collection.size());
 
         for (Object o : collection) {
             result.add(convert(all.from(o), converter));
@@ -521,11 +521,11 @@ public final class Convert {
                     // [#3062] [#5796] Default collections if no specific collection type was requested
                     if (Collection.class.isAssignableFrom(toClass) &&
                             toClass.isAssignableFrom(ArrayList.class)) {
-                        return (U) new ArrayList<Object>(Arrays.asList(fromArray));
+                        return (U) new ArrayList<>(Arrays.asList(fromArray));
                     }
                     else if (Collection.class.isAssignableFrom(toClass) &&
                             toClass.isAssignableFrom(LinkedHashSet.class)) {
-                        return (U) new LinkedHashSet<Object>(Arrays.asList(fromArray));
+                        return (U) new LinkedHashSet<>(Arrays.asList(fromArray));
                     }
 
                     // [#3443] Conversion from Object[] to JDBC Array

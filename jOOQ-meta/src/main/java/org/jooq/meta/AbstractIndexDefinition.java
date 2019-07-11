@@ -62,7 +62,7 @@ public abstract class AbstractIndexDefinition extends AbstractDefinition impleme
 
     @Override
     public List<Definition> getDefinitionPath() {
-        List<Definition> result = new ArrayList<Definition>();
+        List<Definition> result = new ArrayList<>();
 
         switch (getDialect().family()) {
 

@@ -121,7 +121,7 @@ final class RowCondition extends AbstractCondition {
             Field<?>[] leftFields = left.fields();
             Field<?>[] rightFields = right.fields();
 
-            List<Condition> conditions = new ArrayList<Condition>(leftFields.length);
+            List<Condition> conditions = new ArrayList<>(leftFields.length);
             for (int i = 0; i < leftFields.length; i++)
                 conditions.add(leftFields[i].equal((Field) rightFields[i]));
 
@@ -164,10 +164,10 @@ final class RowCondition extends AbstractCondition {
             // The following algorithm emulates the equivalency of these expressions:
             // (A, B, C) > (X, Y, Z)
             // (A > X) OR (A = X AND B > Y) OR (A = X AND B = Y AND C > Z)
-            List<Condition> outer = new ArrayList<Condition>(1 + leftFields.length);
+            List<Condition> outer = new ArrayList<>(1 + leftFields.length);
 
             for (int i = 0; i < leftFields.length; i++) {
-                List<Condition> inner = new ArrayList<Condition>(1 + i);
+                List<Condition> inner = new ArrayList<>(1 + i);
 
                 for (int j = 0; j < i; j++)
                     inner.add(leftFields[j].equal((Field) rightFields[j]));

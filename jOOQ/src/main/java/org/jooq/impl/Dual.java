@@ -95,22 +95,18 @@ final class Dual extends AbstractTable<Record> {
 
     @Override
     public final Table<Record> as(Name alias) {
-        if (force) {
+        if (force)
             return FORCED_DUAL.as(alias);
-        }
-        else {
-            return new TableAlias<Record>(this, alias);
-        }
+        else
+            return new TableAlias<>(this, alias);
     }
 
     @Override
     public final Table<Record> as(Name alias, Name... fieldAliases) {
-        if (force) {
+        if (force)
             return FORCED_DUAL.as(alias, fieldAliases);
-        }
-        else {
-            return new TableAlias<Record>(this, alias, fieldAliases);
-        }
+        else
+            return new TableAlias<>(this, alias, fieldAliases);
     }
 
     @Override
@@ -200,6 +196,6 @@ final class Dual extends AbstractTable<Record> {
 
     @Override
     final Fields<Record> fields0() {
-        return new Fields<Record>();
+        return new Fields<>();
     }
 }

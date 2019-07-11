@@ -128,7 +128,7 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
 
     WindowSpecificationImpl(WindowDefinitionImpl windowDefinition) {
         this.windowDefinition = windowDefinition;
-        this.partitionBy = new QueryPartList<Field<?>>();
+        this.partitionBy = new QueryPartList<>();
         this.orderBy = new SortFieldList();
     }
 

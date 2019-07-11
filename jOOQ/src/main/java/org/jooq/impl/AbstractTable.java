@@ -208,7 +208,7 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
     @Override
     public final DataType<R> getDataType() {
         if (tabletype == null)
-            tabletype = new TableDataType<R>(this);
+            tabletype = new TableDataType<>(this);
 
         return tabletype;
     }
@@ -505,7 +505,7 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
     @SuppressWarnings("unchecked")
     @Override
     public final <O extends Record> List<ForeignKey<R, O>> getReferencesTo(Table<O> other) {
-        List<ForeignKey<R, O>> result = new ArrayList<ForeignKey<R, O>>();
+        List<ForeignKey<R, O>> result = new ArrayList<>();
 
         for (ForeignKey<R, ?> reference : getReferences()) {
             if (other.equals(reference.getKey().getTable())) {
@@ -733,7 +733,7 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
           : type.asConvertedDataType(actualBinding);
 
         // [#5999] TODO: Allow for user-defined Names
-        final TableFieldImpl<R, U> tableField = new TableFieldImpl<R, U>(name, actualType, table, DSL.comment(comment), actualBinding);
+        final TableFieldImpl<R, U> tableField = new TableFieldImpl<>(name, actualType, table, DSL.comment(comment), actualBinding);
 
         // [#1199] The public API of Table returns immutable field lists
         if (table instanceof TableImpl) {
@@ -809,7 +809,7 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
 
     @Override
     public final Condition equal(Table<R> that) {
-        return new TableComparison<R>(this, that, Comparator.EQUALS);
+        return new TableComparison<>(this, that, Comparator.EQUALS);
     }
 
     @Override
@@ -819,7 +819,7 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
 
     @Override
     public final Condition notEqual(Table<R> that) {
-        return new TableComparison<R>(this, that, Comparator.NOT_EQUALS);
+        return new TableComparison<>(this, that, Comparator.NOT_EQUALS);
     }
 
     // ------------------------------------------------------------------------
@@ -828,62 +828,62 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
 
     @Override
     public final Table<R> useIndex(String... indexes) {
-        return new HintedTable<R>(this, "use index", indexes);
+        return new HintedTable<>(this, "use index", indexes);
     }
 
     @Override
     public final Table<R> useIndexForJoin(String... indexes) {
-        return new HintedTable<R>(this, "use index for join", indexes);
+        return new HintedTable<>(this, "use index for join", indexes);
     }
 
     @Override
     public final Table<R> useIndexForOrderBy(String... indexes) {
-        return new HintedTable<R>(this, "use index for order by", indexes);
+        return new HintedTable<>(this, "use index for order by", indexes);
     }
 
     @Override
     public final Table<R> useIndexForGroupBy(String... indexes) {
-        return new HintedTable<R>(this, "use index for group by", indexes);
+        return new HintedTable<>(this, "use index for group by", indexes);
     }
 
     @Override
     public final Table<R> ignoreIndex(String... indexes) {
-        return new HintedTable<R>(this, "ignore index", indexes);
+        return new HintedTable<>(this, "ignore index", indexes);
     }
 
     @Override
     public final Table<R> ignoreIndexForJoin(String... indexes) {
-        return new HintedTable<R>(this, "ignore index for join", indexes);
+        return new HintedTable<>(this, "ignore index for join", indexes);
     }
 
     @Override
     public final Table<R> ignoreIndexForOrderBy(String... indexes) {
-        return new HintedTable<R>(this, "ignore index for order by", indexes);
+        return new HintedTable<>(this, "ignore index for order by", indexes);
     }
 
     @Override
     public final Table<R> ignoreIndexForGroupBy(String... indexes) {
-        return new HintedTable<R>(this, "ignore index for group by", indexes);
+        return new HintedTable<>(this, "ignore index for group by", indexes);
     }
 
     @Override
     public final Table<R> forceIndex(String... indexes) {
-        return new HintedTable<R>(this, "force index", indexes);
+        return new HintedTable<>(this, "force index", indexes);
     }
 
     @Override
     public final Table<R> forceIndexForJoin(String... indexes) {
-        return new HintedTable<R>(this, "force index for join", indexes);
+        return new HintedTable<>(this, "force index for join", indexes);
     }
 
     @Override
     public final Table<R> forceIndexForOrderBy(String... indexes) {
-        return new HintedTable<R>(this, "force index for order by", indexes);
+        return new HintedTable<>(this, "force index for order by", indexes);
     }
 
     @Override
     public final Table<R> forceIndexForGroupBy(String... indexes) {
-        return new HintedTable<R>(this, "force index for group by", indexes);
+        return new HintedTable<>(this, "force index for group by", indexes);
     }
 
     // ------------------------------------------------------------------------

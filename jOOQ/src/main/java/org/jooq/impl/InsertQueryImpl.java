@@ -173,7 +173,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
     @Override
     public final void onConflict(Collection<? extends Field<?>> fields) {
-        this.onConflict = new QueryPartList<Field<?>>(fields);
+        this.onConflict = new QueryPartList<>(fields);
     }
 
     @Override
@@ -366,7 +366,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                             ctx.sql("[unknown primary key]");
                         else
                             ctx.qualify(false)
-                               .visit(new Fields<Record>(table().getPrimaryKey().getFields()))
+                               .visit(new Fields<>(table().getPrimaryKey().getFields()))
                                .qualify(qualify);
 
                         ctx.sql(')');
@@ -695,7 +695,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         // [#6462] MySQL ON DUPLICATE KEY UPDATE clause
         //         All conflicting keys are considered
         List<UniqueKey<R>> keys = table().getKeys();
-        List<List<? extends Field<?>>> result = new ArrayList<List<? extends Field<?>>>(keys.size());
+        List<List<? extends Field<?>>> result = new ArrayList<>(keys.size());
         for (UniqueKey<R> key : keys)
             result.add(key.getFields());
 

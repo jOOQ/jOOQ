@@ -130,16 +130,16 @@ final class GenerateSeries extends AbstractTable<Record1<Integer>> {
 
     @Override
     public final Table<Record1<Integer>> as(Name alias) {
-        return new TableAlias<Record1<Integer>>(this, alias);
+        return new TableAlias<>(this, alias);
     }
 
     @Override
     public final Table<Record1<Integer>> as(Name alias, Name... fieldAliases) {
-        return new TableAlias<Record1<Integer>>(this, alias, fieldAliases);
+        return new TableAlias<>(this, alias, fieldAliases);
     }
 
     @Override
     final Fields<Record1<Integer>> fields0() {
-        return new Fields<Record1<Integer>>(DSL.field(name("generate_series"), Integer.class));
+        return new Fields<>(DSL.field(name("generate_series"), Integer.class));
     }
 }

@@ -67,7 +67,7 @@ final class DataMap extends AbstractMap<Object, Object> {
 
     DataMap() {
         internalSet = EnumSet.noneOf(BooleanDataKey.class);
-        internalMap = new EnumMap<DataKey, Object>(DataKey.class);
+        internalMap = new EnumMap<>(DataKey.class);
         entrySet = new EntrySet();
     }
 
@@ -150,7 +150,7 @@ final class DataMap extends AbstractMap<Object, Object> {
     private final Map<Object, Object> external(boolean initialise) {
         if (externalMap == null) {
             if (initialise)
-                externalMap = new HashMap<Object, Object>();
+                externalMap = new HashMap<>();
             else
                 return Collections.emptyMap();
         }
@@ -181,7 +181,7 @@ final class DataMap extends AbstractMap<Object, Object> {
                 @Override
                 public final Entry<Object, Object> next() {
                     return internalSetIterator.hasNext()
-                         ? new SimpleImmutableEntry<Object, Object>(internalSetIterator.next(), true)
+                         ? new SimpleImmutableEntry<>(internalSetIterator.next(), true)
                          : internalMapIterator.hasNext()
                          ? internalMapIterator.next()
                          : externalMapIterator.next();

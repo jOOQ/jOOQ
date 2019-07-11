@@ -234,12 +234,12 @@ public class DefaultDataType<T> implements DataType<T> {
         TYPES_BY_TYPE = new Map[SQLDialect.values().length];
 
         for (SQLDialect dialect : SQLDialect.values()) {
-            TYPES_BY_SQL_DATATYPE[dialect.ordinal()] = new LinkedHashMap<DataType<?>, DataType<?>>();
-            TYPES_BY_NAME[dialect.ordinal()] = new LinkedHashMap<String, DataType<?>>();
-            TYPES_BY_TYPE[dialect.ordinal()] = new LinkedHashMap<Class<?>, DataType<?>>();
+            TYPES_BY_SQL_DATATYPE[dialect.ordinal()] = new LinkedHashMap<>();
+            TYPES_BY_NAME[dialect.ordinal()] = new LinkedHashMap<>();
+            TYPES_BY_TYPE[dialect.ordinal()] = new LinkedHashMap<>();
         }
 
-        SQL_DATATYPES_BY_TYPE = new LinkedHashMap<Class<?>, DataType<?>>();
+        SQL_DATATYPES_BY_TYPE = new LinkedHashMap<>();
 
         // [#2506] Transitively load all dialect-specific data types
         try {
@@ -384,7 +384,7 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final DataType<T> nullability(Nullability n) {
-        return new DefaultDataType<T>(this, precision, scale, length, n, collation, characterSet, n.nullable() ? false : identity, defaultValue);
+        return new DefaultDataType<>(this, precision, scale, length, n, collation, characterSet, n.nullable() ? false : identity, defaultValue);
     }
 
     @Override
@@ -404,7 +404,7 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final DataType<T> collation(Collation c) {
-        return new DefaultDataType<T>(this, precision, scale, length, nullability, c, characterSet, identity, defaultValue);
+        return new DefaultDataType<>(this, precision, scale, length, nullability, c, characterSet, identity, defaultValue);
     }
 
     @Override
@@ -414,7 +414,7 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final DataType<T> characterSet(CharacterSet c) {
-        return new DefaultDataType<T>(this, precision, scale, length, nullability, collation, c, identity, defaultValue);
+        return new DefaultDataType<>(this, precision, scale, length, nullability, collation, c, identity, defaultValue);
     }
 
     @Override
@@ -424,7 +424,7 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final DataType<T> identity(boolean i) {
-        return new DefaultDataType<T>(this, precision, scale, length, i ? NOT_NULL : nullability, collation, characterSet, i, i ? null : defaultValue);
+        return new DefaultDataType<>(this, precision, scale, length, i ? NOT_NULL : nullability, collation, characterSet, i, i ? null : defaultValue);
     }
 
     @Override
@@ -454,7 +454,7 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final DataType<T> default_(Field<T> d) {
-        return new DefaultDataType<T>(this, precision, scale, length, nullability, collation, characterSet, d != null ? false : identity, d);
+        return new DefaultDataType<>(this, precision, scale, length, nullability, collation, characterSet, d != null ? false : identity, d);
     }
 
     @Override
@@ -487,7 +487,7 @@ public class DefaultDataType<T> implements DataType<T> {
         else if (isLob())
             return this;
         else
-            return new DefaultDataType<T>(this, p, s, length, nullability, collation, characterSet, identity, defaultValue);
+            return new DefaultDataType<>(this, p, s, length, nullability, collation, characterSet, identity, defaultValue);
     }
 
     @Override
@@ -518,7 +518,7 @@ public class DefaultDataType<T> implements DataType<T> {
         if (isLob())
             return this;
         else
-            return new DefaultDataType<T>(this, precision, s, length, nullability, collation, characterSet, identity, defaultValue);
+            return new DefaultDataType<>(this, precision, s, length, nullability, collation, characterSet, identity, defaultValue);
     }
 
     @Override
@@ -540,7 +540,7 @@ public class DefaultDataType<T> implements DataType<T> {
         if (isLob())
             return this;
         else
-            return new DefaultDataType<T>(this, precision, scale, l, nullability, collation, characterSet, identity, defaultValue);
+            return new DefaultDataType<>(this, precision, scale, l, nullability, collation, characterSet, identity, defaultValue);
     }
 
     @Override
@@ -756,7 +756,7 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final DataType<T[]> getArrayDataType() {
-        return new ArrayDataType<T>(this);
+        return new ArrayDataType<>(this);
     }
 
 
@@ -771,7 +771,7 @@ public class DefaultDataType<T> implements DataType<T> {
     @Override
     public final <E extends EnumType> DataType<E> asEnumDataType(Class<E> enumDataType) {
         String enumTypeName = Tools.enums(enumDataType)[0].getName();
-        return new DefaultDataType<E>(dialect, (DataType<E>) null, enumDataType, enumTypeName, enumTypeName, precision, scale, length, nullability, (Field) defaultValue);
+        return new DefaultDataType<>(dialect, (DataType<E>) null, enumDataType, enumTypeName, enumTypeName, precision, scale, length, nullability, (Field) defaultValue);
     }
 
     @Override
@@ -788,7 +788,7 @@ public class DefaultDataType<T> implements DataType<T> {
         if (newBinding == null)
             newBinding = (Binding<? super T, U>) DefaultBinding.binding(getType(), isLob());
 
-        return new ConvertedDataType<T, U>(this, newBinding);
+        return new ConvertedDataType<>(this, newBinding);
     }
 
     @Override
@@ -819,11 +819,11 @@ public class DefaultDataType<T> implements DataType<T> {
     }
 
     public static final DataType<Object> getDefaultDataType(String typeName) {
-        return new DefaultDataType<Object>(SQLDialect.DEFAULT, Object.class, typeName, typeName);
+        return new DefaultDataType<>(SQLDialect.DEFAULT, Object.class, typeName, typeName);
     }
 
     public static final DataType<Object> getDefaultDataType(SQLDialect dialect, String typeName) {
-        return new DefaultDataType<Object>(dialect, Object.class, typeName, typeName);
+        return new DefaultDataType<>(dialect, Object.class, typeName, typeName);
     }
 
     public static final DataType<?> getDataType(SQLDialect dialect, String typeName) {

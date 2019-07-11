@@ -530,7 +530,7 @@ final class ParserImpl implements Parser {
     @Override
     public final Queries parse(String sql, Object... bindings) {
         ParserContext ctx = ctx(sql, bindings);
-        List<Query> result = new ArrayList<Query>();
+        List<Query> result = new ArrayList<>();
         Query query;
 
         do {
@@ -959,7 +959,7 @@ final class ParserImpl implements Parser {
         parseKeyword(ctx, "WITH");
         boolean recursive = parseKeywordIf(ctx, "RECURSIVE");
 
-        List<CommonTableExpression<?>> cte = new ArrayList<CommonTableExpression<?>>();
+        List<CommonTableExpression<?>> cte = new ArrayList<>();
         do {
             Name table = parseIdentifier(ctx);
             DerivedColumnList dcl = null;
@@ -1318,7 +1318,7 @@ final class ParserImpl implements Parser {
                 parse(ctx, ')');
             }
             else if (parseKeywordIf(ctx, "GROUPING SETS")) {
-                List<List<Field<?>>> fieldSets = new ArrayList<List<Field<?>>>();
+                List<List<Field<?>>> fieldSets = new ArrayList<>();
                 parse(ctx, '(');
                 do {
                     parse(ctx, '(');
@@ -1351,7 +1351,7 @@ final class ParserImpl implements Parser {
         if (parseKeywordIf(ctx, "QUALIFY"))
             qualify = parseCondition(ctx);
 
-        SelectQueryImpl<Record> result = new SelectQueryImpl<Record>(ctx.dsl.configuration(), with);
+        SelectQueryImpl<Record> result = new SelectQueryImpl<>(ctx.dsl.configuration(), with);
         if (hints != null)
             result.addHint(hints);
 
@@ -1413,7 +1413,7 @@ final class ParserImpl implements Parser {
     }
 
     private static final List<WindowDefinition> parseWindowDefinitions(ParserContext ctx) {
-        List<WindowDefinition> result = new ArrayList<WindowDefinition>();
+        List<WindowDefinition> result = new ArrayList<>();
 
         do {
             Name name = parseIdentifier(ctx);
@@ -1711,7 +1711,7 @@ final class ParserImpl implements Parser {
         InsertReturningStep<?> returning;
 
         if (parseKeywordIf(ctx, "VALUES")) {
-            List<List<Field<?>>> allValues = new ArrayList<List<Field<?>>>();
+            List<List<Field<?>>> allValues = new ArrayList<>();
 
             valuesLoop:
             do {
@@ -1721,7 +1721,7 @@ final class ParserImpl implements Parser {
                 if (fields == null && parseIf(ctx, ')'))
                     break valuesLoop;
 
-                List<Field<?>> values = new ArrayList<Field<?>>();
+                List<Field<?>> values = new ArrayList<>();
                 do {
                     Field<?> value = parseKeywordIf(ctx, "DEFAULT") ? default_() : parseField(ctx);
                     values.add(value);
@@ -1867,7 +1867,7 @@ final class ParserImpl implements Parser {
     }
 
     private static final Map<Field<?>, Object> parseSetClauseList(ParserContext ctx) {
-        Map<Field<?>, Object> map = new LinkedHashMap<Field<?>, Object>();
+        Map<Field<?>, Object> map = new LinkedHashMap<>();
 
         do {
             Field<?> field = parseFieldName(ctx);
@@ -1940,7 +1940,7 @@ final class ParserImpl implements Parser {
                 parse(ctx, ')');
                 parseKeyword(ctx, "VALUES");
                 parse(ctx, '(');
-                insertValues = new ArrayList<Field<?>>();
+                insertValues = new ArrayList<>();
                 do {
                     Field<?> value = parseKeywordIf(ctx, "DEFAULT") ? default_() : parseField(ctx);
                     insertValues.add(value);
@@ -2257,7 +2257,7 @@ final class ParserImpl implements Parser {
 
         while (parseIf(ctx, ',')) {
             if (privileges == null) {
-                privileges = new ArrayList<Privilege>();
+                privileges = new ArrayList<>();
                 privileges.add(privilege);
             }
 
@@ -2288,7 +2288,7 @@ final class ParserImpl implements Parser {
 
         while (parseIf(ctx, ',')) {
             if (privileges == null) {
-                privileges = new ArrayList<Privilege>();
+                privileges = new ArrayList<>();
                 privileges.add(privilege);
             }
 
@@ -2351,7 +2351,7 @@ final class ParserImpl implements Parser {
     }
 
     private static final Block parseBlock(ParserContext ctx) {
-        List<Statement> statements = new ArrayList<Statement>();
+        List<Statement> statements = new ArrayList<>();
 
 
 
@@ -2394,7 +2394,7 @@ final class ParserImpl implements Parser {
     }
 
     private static final List<Statement> parseStatements(ParserContext ctx, String... peek) {
-        List<Statement> statements = new ArrayList<Statement>();
+        List<Statement> statements = new ArrayList<>();
 
         for (;;) {
             Statement parsed;
@@ -3095,9 +3095,9 @@ final class ParserImpl implements Parser {
         CreateTableCommentStep commentStep;
         CreateTableStorageStep storageStep;
 
-        List<Field<?>> fields = new ArrayList<Field<?>>();
-        List<Constraint> constraints = new ArrayList<Constraint>();
-        List<Index> indexes = new ArrayList<Index>();
+        List<Field<?>> fields = new ArrayList<>();
+        List<Constraint> constraints = new ArrayList<>();
+        List<Index> indexes = new ArrayList<>();
         boolean primary = false;
 
         // Three valued boolean:
@@ -3403,7 +3403,7 @@ final class ParserImpl implements Parser {
 
         storageStep = commentStep;
 
-        List<SQL> storage = new ArrayList<SQL>();
+        List<SQL> storage = new ArrayList<>();
         Comment comment = null;
 
         storageLoop:
@@ -3543,7 +3543,7 @@ final class ParserImpl implements Parser {
     private static final DDLQuery parseCreateType(ParserContext ctx) {
         Name name = parseIdentifier(ctx);
         parseKeyword(ctx, "AS ENUM");
-        List<String> values = new ArrayList<String>();
+        List<String> values = new ArrayList<>();
         parse(ctx, '(');
 
         if (!parseIf(ctx, ')')) {
@@ -3677,7 +3677,7 @@ final class ParserImpl implements Parser {
         return e;
     }
 
-    private static final Set<String> ALTER_KEYWORDS = new HashSet<String>(Arrays.asList("ADD", "ALTER", "COMMENT", "DROP", "MODIFY", "RENAME"));
+    private static final Set<String> ALTER_KEYWORDS = new HashSet<>(Arrays.asList("ADD", "ALTER", "COMMENT", "DROP", "MODIFY", "RENAME"));
 
     private static final DDLQuery parseAlterTable(ParserContext ctx) {
         boolean ifTableExists = parseKeywordIf(ctx, "IF EXISTS");
@@ -3755,7 +3755,7 @@ final class ParserImpl implements Parser {
                         if (!ifColumnExists) {
                             while (parseIf(ctx, ',')) {
                                 if (fields == null) {
-                                    fields = new ArrayList<Field<?>>();
+                                    fields = new ArrayList<>();
                                     fields.add(field);
                                 }
 
@@ -3837,7 +3837,7 @@ final class ParserImpl implements Parser {
     }
 
     private static final DDLQuery parseAlterTableAdd(ParserContext ctx, AlterTableStep s1, Table<?> tableName) {
-        List<FieldOrConstraint> list = new ArrayList<FieldOrConstraint>();
+        List<FieldOrConstraint> list = new ArrayList<>();
 
         if (((parseKeywordIf(ctx, "SPATIAL INDEX")
             || parseKeywordIf(ctx, "SPATIAL KEY")
@@ -4508,7 +4508,7 @@ final class ParserImpl implements Parser {
                         if (parseIf(ctx, ')'))
                             fields = Collections.<Field<?>> emptyList();
                         else {
-                            fields = new ArrayList<Field<?>>();
+                            fields = new ArrayList<>();
                             do {
                                 fields.add(toField(ctx, parseConcat(ctx, null)));
                             }
@@ -4533,7 +4533,7 @@ final class ParserImpl implements Parser {
                         if (parseIf(ctx, ')'))
                             fields = Collections.<Field<?>> emptyList();
                         else {
-                            fields = new ArrayList<Field<?>>();
+                            fields = new ArrayList<>();
                             do {
                                 fields.add(toField(ctx, parseConcat(ctx, null)));
                             }
@@ -4582,7 +4582,7 @@ final class ParserImpl implements Parser {
     }
 
     private static final List<Table<?>> parseTables(ParserContext ctx) {
-        List<Table<?>> result = new ArrayList<Table<?>>();
+        List<Table<?>> result = new ArrayList<>();
 
         do {
             result.add(parseTable(ctx));
@@ -4882,7 +4882,7 @@ final class ParserImpl implements Parser {
     private static final Table<?> parseTableValueConstructor(ParserContext ctx) {
         parseKeyword(ctx, "VALUES");
 
-        List<RowN> rows = new ArrayList<RowN>();
+        List<RowN> rows = new ArrayList<>();
         do {
             rows.add(parseTuple(ctx));
         }
@@ -5000,7 +5000,7 @@ final class ParserImpl implements Parser {
     }
 
     private static final List<SelectFieldOrAsterisk> parseSelectList(ParserContext ctx) {
-        List<SelectFieldOrAsterisk> result = new ArrayList<SelectFieldOrAsterisk>();
+        List<SelectFieldOrAsterisk> result = new ArrayList<>();
 
         do {
             if (peekKeyword(ctx, KEYWORDS_IN_SELECT))
@@ -5056,7 +5056,7 @@ final class ParserImpl implements Parser {
     }
 
     private static final List<SortField<?>> parseSortSpecification(ParserContext ctx) {
-        List<SortField<?>> result = new ArrayList<SortField<?>>();
+        List<SortField<?>> result = new ArrayList<>();
 
         do {
             result.add(parseSortField(ctx));
@@ -5085,7 +5085,7 @@ final class ParserImpl implements Parser {
     }
 
     private static final List<Field<?>> parseFields(ParserContext ctx) {
-        List<Field<?>> result = new ArrayList<Field<?>>();
+        List<Field<?>> result = new ArrayList<>();
         do {
             result.add(parseField(ctx));
         }
@@ -5094,7 +5094,7 @@ final class ParserImpl implements Parser {
     }
 
     private static final List<FieldOrRow> parseFieldsOrRows(ParserContext ctx) {
-        List<FieldOrRow> result = new ArrayList<FieldOrRow>();
+        List<FieldOrRow> result = new ArrayList<>();
         do {
             result.add(parseFieldOrRow(ctx));
         }
@@ -5115,7 +5115,7 @@ final class ParserImpl implements Parser {
     }
 
     private static final List<RowN> parseRows(ParserContext ctx, Integer degree) {
-        List<RowN> result = new ArrayList<RowN>();
+        List<RowN> result = new ArrayList<>();
 
         do {
             result.add(parseRow(ctx, degree));
@@ -6039,7 +6039,7 @@ final class ParserImpl implements Parser {
                 if (r instanceof Field) {
                     while (parseIf(ctx, ',')) {
                         if (list == null) {
-                            list = new ArrayList<Field<?>>();
+                            list = new ArrayList<>();
                             list.add((Field) r);
                         }
 
@@ -7888,7 +7888,7 @@ final class ParserImpl implements Parser {
         if (parseFunctionNameIf(ctx, "FIELD")) {
             parse(ctx, '(');
 
-            List<Field<?>> args = new ArrayList<Field<?>>();
+            List<Field<?>> args = new ArrayList<>();
 
             args.add(parseField(ctx));
             parse(ctx, ',');
@@ -8685,7 +8685,7 @@ final class ParserImpl implements Parser {
         }
 
         if (ctx.dsl.settings().getParseUnknownFunctions() == ParseUnknownFunctions.IGNORE && parseIf(ctx, '(')) {
-            List<Field<?>> arguments = new ArrayList<Field<?>>();
+            List<Field<?>> arguments = new ArrayList<>();
 
             if (!parseIf(ctx, ')')) {
                 do {
@@ -8717,7 +8717,7 @@ final class ParserImpl implements Parser {
     }
 
     private static final List<Field<?>> parseFieldNames(ParserContext ctx) {
-        List<Field<?>> result = new ArrayList<Field<?>>();
+        List<Field<?>> result = new ArrayList<>();
 
         do {
             result.add(parseFieldName(ctx));
@@ -8773,7 +8773,7 @@ final class ParserImpl implements Parser {
         // Avoid .. token in indexed for loops:
         // FOR i IN identifier1 .. identifier2 LOOP <...> END LOOP;
         if (peek(ctx, '.') && !peek(ctx, "..")) {
-            List<Name> result = new ArrayList<Name>();
+            List<Name> result = new ArrayList<>();
             result.add(identifier);
 
             while (parseIf(ctx, '.'))
@@ -8799,7 +8799,7 @@ final class ParserImpl implements Parser {
             do {
                 if ((i2 = parseIdentifierIf(ctx)) != null) {
                     if (result == null) {
-                        result = new ArrayList<Name>();
+                        result = new ArrayList<>();
                         result.add(i1);
                     }
 
@@ -8818,14 +8818,14 @@ final class ParserImpl implements Parser {
     }
 
     private static final List<Name> parseIdentifiers(ParserContext ctx) {
-        LinkedHashSet<Name> result = new LinkedHashSet<Name>();
+        LinkedHashSet<Name> result = new LinkedHashSet<>();
 
         do {
             if (!result.add(parseIdentifier(ctx)))
                 throw ctx.exception("Duplicate identifier encountered");
         }
         while (parseIf(ctx, ','));
-        return new ArrayList<Name>(result);
+        return new ArrayList<>(result);
     }
 
     private static final Name parseIdentifier(ParserContext ctx) {
@@ -9263,7 +9263,7 @@ final class ParserImpl implements Parser {
 
     private static final DataType<?> parseDataTypeEnum(ParserContext ctx) {
         parse(ctx, '(');
-        List<String> literals = new ArrayList<String>();
+        List<String> literals = new ArrayList<>();
         int length = 0;
 
         do {

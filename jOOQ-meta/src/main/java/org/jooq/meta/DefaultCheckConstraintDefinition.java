@@ -54,7 +54,7 @@ public class DefaultCheckConstraintDefinition extends AbstractDefinition impleme
 
     @Override
     public List<Definition> getDefinitionPath() {
-        List<Definition> result = new ArrayList<Definition>();
+        List<Definition> result = new ArrayList<>();
 
         result.addAll(getSchema().getDefinitionPath());
         result.add(this);

@@ -110,7 +110,7 @@ final class RowInCondition extends AbstractCondition {
 
     private final QueryPartInternal delegate(Configuration configuration) {
         if (EMULATE_IN.contains(configuration.family())) {
-            List<Condition> conditions = new ArrayList<Condition>(right.size());
+            List<Condition> conditions = new ArrayList<>(right.size());
 
             for (Row row : right)
                 conditions.add(new RowCondition(left, row, EQUALS));
@@ -147,7 +147,7 @@ final class RowInCondition extends AbstractCondition {
                    .sql(' ')
                    .visit(comparator.toKeyword())
                    .sql(" (")
-                   .visit(new QueryPartList<Row>(padded(ctx, right)))
+                   .visit(new QueryPartList<>(padded(ctx, right)))
                    .sql(')');
             }
         }

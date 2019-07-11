@@ -98,7 +98,7 @@ final class BatchCRUD implements Batch {
     }
 
     private final int[] executePrepared() {
-        Map<String, List<Query>> queries = new LinkedHashMap<String, List<Query>>();
+        Map<String, List<Query>> queries = new LinkedHashMap<>();
         QueryCollector collector = new QueryCollector();
 
         // Add the QueryCollector to intercept query execution after rendering
@@ -129,7 +129,7 @@ final class BatchCRUD implements Batch {
                     List<Query> list = queries.get(sql);
 
                     if (list == null) {
-                        list = new ArrayList<Query>();
+                        list = new ArrayList<>();
                         queries.put(sql, list);
                     }
 
@@ -144,7 +144,7 @@ final class BatchCRUD implements Batch {
         // Execute one batch statement for each identical SQL statement. Every
         // SQL statement may have several queries with different bind values.
         // The order is preserved as much as possible
-        List<Integer> result = new ArrayList<Integer>();
+        List<Integer> result = new ArrayList<>();
         for (Entry<String, List<Query>> entry : queries.entrySet()) {
             BatchBindStep batch = create.batch(entry.getValue().get(0));
 
@@ -168,7 +168,7 @@ final class BatchCRUD implements Batch {
     }
 
     private final int[] executeStatic() {
-        List<Query> queries = new ArrayList<Query>();
+        List<Query> queries = new ArrayList<>();
         QueryCollector collector = new QueryCollector();
 
         Configuration local = configuration.derive(Tools.combine(

@@ -130,7 +130,7 @@ final class DefaultDiagnosticsContext implements DiagnosticsContext {
     }
 
     private final List<String> resultSetColumnNames(boolean fetched) {
-        List<String> result = new ArrayList<String>();
+        List<String> result = new ArrayList<>();
 
         if (resultSet != null) {
             try {

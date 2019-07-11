@@ -186,7 +186,7 @@ final class MetaImpl extends AbstractMeta {
 
     @Override
     public final List<Catalog> getCatalogs() {
-        List<Catalog> result = new ArrayList<Catalog>();
+        List<Catalog> result = new ArrayList<>();
 
 
 
@@ -220,7 +220,7 @@ final class MetaImpl extends AbstractMeta {
 
     @Override
     public final List<Schema> getSchemas() {
-        List<Schema> result = new ArrayList<Schema>();
+        List<Schema> result = new ArrayList<>();
 
         for (Catalog catalog : getCatalogs())
             result.addAll(catalog.getSchemas());
@@ -230,7 +230,7 @@ final class MetaImpl extends AbstractMeta {
 
     @Override
     public final List<Table<?>> getTables() {
-        List<Table<?>> result = new ArrayList<Table<?>>();
+        List<Table<?>> result = new ArrayList<>();
 
         for (Schema schema : getSchemas())
             result.addAll(schema.getTables());
@@ -240,7 +240,7 @@ final class MetaImpl extends AbstractMeta {
 
     @Override
     public final List<Sequence<?>> getSequences() {
-        List<Sequence<?>> result = new ArrayList<Sequence<?>>();
+        List<Sequence<?>> result = new ArrayList<>();
 
         for (Schema schema : getSchemas())
             result.addAll(schema.getSequences());
@@ -250,7 +250,7 @@ final class MetaImpl extends AbstractMeta {
 
     @Override
     public final List<UniqueKey<?>> getPrimaryKeys() {
-        List<UniqueKey<?>> result = new ArrayList<UniqueKey<?>>();
+        List<UniqueKey<?>> result = new ArrayList<>();
 
         for (Table<?> table : getTables()) {
             UniqueKey<?> pk = table.getPrimaryKey();
@@ -275,7 +275,7 @@ final class MetaImpl extends AbstractMeta {
 
         @Override
         public final List<Schema> getSchemas() {
-            List<Schema> result = new ArrayList<Schema>();
+            List<Schema> result = new ArrayList<>();
 
 
 
@@ -402,7 +402,7 @@ final class MetaImpl extends AbstractMeta {
                 }
             });
 
-            List<Table<?>> result = new ArrayList<Table<?>>(tables.size());
+            List<Table<?>> result = new ArrayList<>(tables.size());
             for (Record table : tables) {
                 String catalog = table.get(0, String.class);
                 String schema = table.get(1, String.class);
@@ -442,7 +442,7 @@ final class MetaImpl extends AbstractMeta {
                     tableName
                 });
 
-                columnCache = new LinkedHashMap<Name, Result<Record>>();
+                columnCache = new LinkedHashMap<>();
 
                 for (Entry<Record, Result<Record>> entry : groups.entrySet()) {
                     Record key = entry.getKey();
@@ -635,11 +635,11 @@ final class MetaImpl extends AbstractMeta {
                 result.field(12),
             });
 
-            Map<String, Schema> schemas = new HashMap<String, Schema>();
+            Map<String, Schema> schemas = new HashMap<>();
             for (Schema schema : getSchemas())
                 schemas.put(schema.getName(), schema);
 
-            List<ForeignKey<Record, ?>> references = new ArrayList<ForeignKey<Record, ?>>(groups.size());
+            List<ForeignKey<Record, ?>> references = new ArrayList<>(groups.size());
             for (Entry<Record, Result<Record>> entry : groups.entrySet()) {
                 Schema schema = schemas.get(entry.getKey().get(1));
 
@@ -655,7 +655,7 @@ final class MetaImpl extends AbstractMeta {
                     fkFields[i] = (TableField<Record, ?>)         field(record.get(7, String.class));
                 }
 
-                references.add(new ReferenceImpl<Record, Record>(new MetaPrimaryKey(pkTable, pkName, pkFields), this, fkName, fkFields));
+                references.add(new ReferenceImpl<>(new MetaPrimaryKey(pkTable, pkName, pkFields), this, fkName, fkFields));
             }
 
             return references;
@@ -733,8 +733,8 @@ final class MetaImpl extends AbstractMeta {
         }
 
         private final List<Index> createIndexes(Result<Record> result) {
-            List<Index> indexes = new ArrayList<Index>();
-            List<SortField<?>> sortFields = new ArrayList<SortField<?>>();
+            List<Index> indexes = new ArrayList<>();
+            List<SortField<?>> sortFields = new ArrayList<>();
             String previousIndexName = null;
             Name name = null;
             Condition where = null;
@@ -910,11 +910,11 @@ final class MetaImpl extends AbstractMeta {
                 result.field(12),
             });
 
-            Map<String, Schema> schemas = new HashMap<String, Schema>();
+            Map<String, Schema> schemas = new HashMap<>();
             for (Schema schema : getSchemas())
                 schemas.put(schema.getName(), schema);
 
-            List<ForeignKey<?, Record>> references = new ArrayList<ForeignKey<?, Record>>(groups.size());
+            List<ForeignKey<?, Record>> references = new ArrayList<>(groups.size());
             for (Entry<Record, Result<Record>> entry : groups.entrySet()) {
                 Record key = entry.getKey();
                 Result<Record> value = entry.getValue();
@@ -928,7 +928,7 @@ final class MetaImpl extends AbstractMeta {
                 for (int i = 0; i < value.size(); i++)
                     fkFields[i] = (TableField<Record, ?>) fkTable.field(value.get(i).get(7, String.class));
 
-                references.add(new ReferenceImpl<Record, Record>(this, fkTable, fkName, fkFields));
+                references.add(new ReferenceImpl<>(this, fkTable, fkName, fkFields));
             }
 
             return references;

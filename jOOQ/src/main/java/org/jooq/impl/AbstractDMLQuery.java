@@ -159,8 +159,8 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
         this.with = with;
         this.table = table;
-        this.returning = new SelectFieldList<SelectFieldOrAsterisk>();
-        this.returningResolvedAsterisks = new ArrayList<Field<?>>();
+        this.returning = new SelectFieldList<>();
+        this.returningResolvedAsterisks = new ArrayList<>();
     }
 
     // @Override
@@ -248,7 +248,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
     // @Override
     public final Result<?> getResult() {
         if (returnedResult == null)
-            returnedResult = new ResultImpl<Record>(configuration(), returningResolvedAsterisks);
+            returnedResult = new ResultImpl<>(configuration(), returningResolvedAsterisks);
 
         return returnedResult;
     }
@@ -1065,7 +1065,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
             ExecuteListener listener2 = ExecuteListeners.get(ctx2);
 
             ctx2.resultSet(rs);
-            returnedResult = new CursorImpl<Record>(ctx2, listener2, returningResolvedAsterisks.toArray(EMPTY_FIELD), null, false, true).fetch();
+            returnedResult = new CursorImpl<>(ctx2, listener2, returningResolvedAsterisks.toArray(EMPTY_FIELD), null, false, true).fetch();
 
             // [#5366] HSQLDB currently doesn't support fetching updated records in UPDATE statements.
             // [#5408] Other dialects may fall through the switch above (PostgreSQL, Firebird, Oracle) and must
@@ -1111,7 +1111,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
         }
 
         try {
-            List<Object> list = new ArrayList<Object>();
+            List<Object> list = new ArrayList<>();
 
             // Some JDBC drivers seem to illegally return null
             // from getGeneratedKeys() sometimes
@@ -1162,7 +1162,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
                 // Only the IDENTITY value was requested. No need for an
                 // additional query
-                if (returningResolvedAsterisks.size() == 1 && new Fields<Record>(returningResolvedAsterisks).field(field) != null) {
+                if (returningResolvedAsterisks.size() == 1 && new Fields<>(returningResolvedAsterisks).field(field) != null) {
                     for (final Object id : ids) {
                         ((Result) getResult()).add(
                         Tools.newRecord(

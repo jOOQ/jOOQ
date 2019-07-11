@@ -64,7 +64,7 @@ final class Array<T> extends AbstractField<T[]> {
     Array(Collection<? extends Field<T>> fields) {
         super(DSL.name("array"), type(fields));
 
-        this.fields = new Fields<Record>(fields);
+        this.fields = new Fields<>(fields);
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })

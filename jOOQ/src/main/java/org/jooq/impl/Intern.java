@@ -41,7 +41,6 @@ import java.io.Serializable;
 
 import org.jooq.Field;
 import org.jooq.Name;
-import org.jooq.Record;
 
 /**
  * @author Lukas Eder
@@ -60,18 +59,14 @@ final class Intern implements Serializable {
     Name[]     internNames;
 
     final int[] internIndexes(Field<?>[] fields) {
-        if (internIndexes != null) {
+        if (internIndexes != null)
             return internIndexes;
-        }
-        else if (internFields != null) {
-            return new Fields<Record>(fields).indexesOf(internFields);
-        }
-        else if (internNameStrings != null) {
-            return new Fields<Record>(fields).indexesOf(internNameStrings);
-        }
-        else if (internNames != null) {
-            return new Fields<Record>(fields).indexesOf(internNames);
-        }
+        else if (internFields != null)
+            return new Fields<>(fields).indexesOf(internFields);
+        else if (internNameStrings != null)
+            return new Fields<>(fields).indexesOf(internNameStrings);
+        else if (internNames != null)
+            return new Fields<>(fields).indexesOf(internNames);
 
         return null;
     }

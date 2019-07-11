@@ -33,8 +33,8 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
 
     private final Pattern             fullyQualifiedTypes;
     private final boolean             javadoc;
-    private final Set<String>         qualifiedTypes   = new TreeSet<String>(qualifiedTypeComparator());
-    private final Map<String, String> unqualifiedTypes = new TreeMap<String, String>();
+    private final Set<String>         qualifiedTypes   = new TreeSet<>(qualifiedTypeComparator());
+    private final Map<String, String> unqualifiedTypes = new TreeMap<>();
     private final String              className;
     private final boolean             isJava;
     private final boolean             isScala;
@@ -223,7 +223,7 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
 
     @Override
     protected List<String> ref(List<String> clazz, int keepSegments) {
-        List<String> result = new ArrayList<String>(clazz == null ? 0 : clazz.size());
+        List<String> result = new ArrayList<>(clazz == null ? 0 : clazz.size());
 
         if (clazz != null) {
             for (String c : clazz) {

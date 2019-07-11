@@ -76,7 +76,7 @@ import org.jooq.tools.StringUtils;
  */
 class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
 
-    private final Map<Class<?>, Set<String>> reservedColumns = new HashMap<Class<?>, Set<String>>();
+    private final Map<Class<?>, Set<String>> reservedColumns = new HashMap<>();
 
     final Generator         generator;
     final GeneratorStrategy delegate;
@@ -262,7 +262,7 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
         Set<String> result = reservedColumns.get(clazz);
 
         if (result == null) {
-            result = new HashSet<String>();
+            result = new HashSet<>();
             reservedColumns.put(clazz, result);
 
             // Recurse up in class hierarchy
@@ -295,7 +295,7 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
     public List<String> getJavaClassImplements(Definition definition, Mode mode) {
 
         // [#1243] All generation modes can accept interfaces
-        Set<String> result = new LinkedHashSet<String>(delegate.getJavaClassImplements(definition, mode));
+        Set<String> result = new LinkedHashSet<>(delegate.getJavaClassImplements(definition, mode));
 
         // [#1528] [#7210] Generated interfaces (implemented by RECORD and POJO) are
         //                 Serializable by default
@@ -310,7 +310,7 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
                 && (!generator.generateInterfaces() || !generator.generateSerializableInterfaces()))
             result.add(Serializable.class.getName());
 
-        return new ArrayList<String>(result);
+        return new ArrayList<>(result);
     }
 
     @Override

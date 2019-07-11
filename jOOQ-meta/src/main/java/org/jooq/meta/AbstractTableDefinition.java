@@ -65,7 +65,7 @@ implements TableDefinition {
         super(schema, name, comment);
 
         this.parentTable = null;
-        this.childTables = new ArrayList<TableDefinition>();
+        this.childTables = new ArrayList<>();
     }
 
     @Override
@@ -104,7 +104,7 @@ implements TableDefinition {
 
     @Override
     public final List<ForeignKeyDefinition> getForeignKeys(TableDefinition referenced) {
-        List<ForeignKeyDefinition> result = new ArrayList<ForeignKeyDefinition>();
+        List<ForeignKeyDefinition> result = new ArrayList<>();
 
         for (ForeignKeyDefinition key : getForeignKeys())
             if (referenced.equals(key.getReferencedTable()))

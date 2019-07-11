@@ -98,7 +98,7 @@ final class CreateTypeImpl extends AbstractRowCountQuery implements
 
     @Override
     public final CreateTypeFinalStep asEnum(Collection<?> v) {
-        values = new QueryPartList<Field<String>>(Tools.fields(v, VARCHAR));
+        values = new QueryPartList<>(Tools.fields(v, VARCHAR));
         return this;
     }
 

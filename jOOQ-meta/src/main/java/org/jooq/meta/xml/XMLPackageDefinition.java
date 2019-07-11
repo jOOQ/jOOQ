@@ -65,7 +65,7 @@ public class XMLPackageDefinition extends AbstractPackageDefinition {
 
     @Override
     protected List<RoutineDefinition> getRoutines0() throws SQLException {
-        List<RoutineDefinition> result = new ArrayList<RoutineDefinition>();
+        List<RoutineDefinition> result = new ArrayList<>();
 
         for (Routine routine : info.getRoutines()) {
             String routineName = defaultIfBlank(routine.getSpecificPackage(), routine.getRoutinePackage());
@@ -80,7 +80,7 @@ public class XMLPackageDefinition extends AbstractPackageDefinition {
 
     @Override
     protected List<AttributeDefinition> getConstants0() throws SQLException {
-        List<AttributeDefinition> result = new ArrayList<AttributeDefinition>();
+        List<AttributeDefinition> result = new ArrayList<>();
         return result;
     }
 }

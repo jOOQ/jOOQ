@@ -76,9 +76,9 @@ public abstract class AbstractRoutineDefinition extends AbstractDefinition imple
     }
 
     protected void init() {
-        inParameters = new ArrayList<ParameterDefinition>();
-        outParameters = new ArrayList<ParameterDefinition>();
-        allParameters = new ArrayList<ParameterDefinition>();
+        inParameters = new ArrayList<>();
+        outParameters = new ArrayList<>();
+        allParameters = new ArrayList<>();
 
         try {
             if (returnValue != null)

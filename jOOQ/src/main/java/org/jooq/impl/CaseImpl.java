@@ -60,7 +60,7 @@ final class CaseImpl implements Case {
 
     @Override
     public final <V> CaseValueStep<V> value(Field<V> value) {
-        return new CaseValueStepImpl<V>(value);
+        return new CaseValueStepImpl<>(value);
     }
 
     @Override
@@ -70,7 +70,7 @@ final class CaseImpl implements Case {
 
     @Override
     public final <T> CaseConditionStep<T> when(Condition condition, Field<T> result) {
-        return new CaseConditionStepImpl<T>(condition, result);
+        return new CaseConditionStepImpl<>(condition, result);
     }
 
     @Override

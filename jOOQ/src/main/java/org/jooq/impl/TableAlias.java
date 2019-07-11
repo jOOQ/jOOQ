@@ -78,7 +78,7 @@ final class TableAlias<R extends Record> extends AbstractTable<R> {
     TableAlias(Table<R> table, Name alias, Name[] fieldAliases, boolean wrapInParentheses) {
         super(alias, table.getSchema());
 
-        this.alias = new Alias<Table<R>>(table, this, alias, fieldAliases, wrapInParentheses);
+        this.alias = new Alias<>(table, this, alias, fieldAliases, wrapInParentheses);
         this.aliasedFields = init(fieldAliases);
     }
 
@@ -89,7 +89,7 @@ final class TableAlias<R extends Record> extends AbstractTable<R> {
     private final Fields<R> init(Name[] fieldAliases) {
         Row row = this.alias.wrapped().fieldsRow();
         int size = row.size();
-        List<Field<?>> result = new ArrayList<Field<?>>(size);
+        List<Field<?>> result = new ArrayList<>(size);
 
         for (int i = 0; i < size; i++) {
             Field<?> field = row.field(i);
@@ -100,7 +100,7 @@ final class TableAlias<R extends Record> extends AbstractTable<R> {
             result.add(new TableFieldImpl(name, field.getDataType(), this, DSL.comment(field.getComment()), field.getBinding()));
         }
 
-        return new Fields<R>(result);
+        return new Fields<>(result);
     }
 
     /**

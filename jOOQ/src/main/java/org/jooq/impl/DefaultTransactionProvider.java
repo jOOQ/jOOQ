@@ -112,7 +112,7 @@ public class DefaultTransactionProvider implements TransactionProvider {
         Deque<Savepoint> savepoints = (Deque<Savepoint>) configuration.data(DATA_DEFAULT_TRANSACTION_PROVIDER_SAVEPOINTS);
 
         if (savepoints == null) {
-            savepoints = new ArrayDeque<Savepoint>();
+            savepoints = new ArrayDeque<>();
             configuration.data(DATA_DEFAULT_TRANSACTION_PROVIDER_SAVEPOINTS, savepoints);
         }
 

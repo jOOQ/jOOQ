@@ -278,7 +278,7 @@ final class CreateIndexImpl extends AbstractRowCountQuery implements
             ;
         boolean supportsFieldsBeforeTable = false                                                     ;
 
-        QueryPartList<QueryPart> list = new QueryPartList<QueryPart>();
+        QueryPartList<QueryPart> list = new QueryPartList<>();
         if (fields != null)
             list.addAll(asList(fields));
         else
@@ -314,7 +314,7 @@ final class CreateIndexImpl extends AbstractRowCountQuery implements
                .visit(K_INCLUDE)
                .sql(" (")
                .qualify(false)
-               .visit(new QueryPartList<QueryPart>(include))
+               .visit(new QueryPartList<>(include))
                .qualify(true)
                .sql(')');
 

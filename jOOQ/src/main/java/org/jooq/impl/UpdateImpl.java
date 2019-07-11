@@ -139,7 +139,7 @@ final class UpdateImpl<R extends Record>
     private boolean           returningResult;
 
     UpdateImpl(Configuration configuration, WithImpl with, Table<R> table) {
-        super(new UpdateQueryImpl<R>(configuration, with, table));
+        super(new UpdateQueryImpl<>(configuration, with, table));
     }
 
     @Override

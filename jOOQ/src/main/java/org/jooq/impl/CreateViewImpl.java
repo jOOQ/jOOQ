@@ -263,7 +263,7 @@ final class CreateViewImpl<R extends Record> extends AbstractRowCountQuery imple
 
             ctx.sql('(')
                .qualify(false)
-               .visit(new QueryPartList<Field<?>>(f))
+               .visit(new QueryPartList<>(f))
                .qualify(qualify)
                .sql(')');
         }

@@ -216,7 +216,7 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
 
             // The max number of records that will be considered for formatting purposes
             final int MAX_RECORDS = min(50, format.maxRows());
-            final Deque<R> buffer = new ArrayDeque<R>();
+            final Deque<R> buffer = new ArrayDeque<>();
             final Iterator<R> it = iterator();
 
             // Buffer some rows for formatting purposes
@@ -229,7 +229,7 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
 
             for (int index = 0; index < fields.fields.length; index++) {
                 if (Number.class.isAssignableFrom(fields.fields[index].getType())) {
-                    List<Integer> decimalPlacesList = new ArrayList<Integer>(1 + buffer.size());
+                    List<Integer> decimalPlacesList = new ArrayList<>(1 + buffer.size());
 
                     // Initialize
                     decimalPlacesList.add(0);
@@ -253,7 +253,7 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
                 colMaxWidth = isNumCol ? NUM_COL_MAX_WIDTH : format.maxColWidth();
 
                 // Collect all widths for the column
-                List<Integer> widthList = new ArrayList<Integer>(1 + buffer.size());
+                List<Integer> widthList = new ArrayList<>(1 + buffer.size());
 
                 // Add column name width first
                 widthList.add(min(colMaxWidth, max(format.minColWidth(), fields.fields[index].getName().length())));
@@ -872,7 +872,7 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
         try {
             DSLContext ctx = configuration.dsl();
             Field<?> category = fields.field(format.category());
-            TreeMap<Object, Result<R>> groups = new TreeMap<Object, Result<R>>(result.intoGroups(format.category()));
+            TreeMap<Object, Result<R>> groups = new TreeMap<>(result.intoGroups(format.category()));
 
             if (!format.categoryAsText()) {
                 if (Date.class.isAssignableFrom(category.getType())) {
@@ -885,7 +885,7 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
                 }
             }
 
-            List<?> categories = new ArrayList<Object>(groups.keySet());
+            List<?> categories = new ArrayList<>(groups.keySet());
 
             int categoryPadding = 1;
             int categoryWidth = 0;

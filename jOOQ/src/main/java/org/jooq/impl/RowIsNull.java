@@ -115,7 +115,7 @@ final class RowIsNull extends AbstractCondition {
         // Informix doesn't implement the RVE IS NULL predicate.
         if (EMULATE_NULL.contains(configuration.family())) {
             Field<?>[] fields = row.fields();
-            List<Condition> conditions = new ArrayList<Condition>(fields.length);
+            List<Condition> conditions = new ArrayList<>(fields.length);
 
             for (Field<?> field : fields)
                 conditions.add(isNull ? field.isNull() : field.isNotNull());

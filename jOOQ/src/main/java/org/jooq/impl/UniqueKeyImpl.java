@@ -73,7 +73,7 @@ final class UniqueKeyImpl<R extends Record> extends AbstractKey<R> implements Un
     UniqueKeyImpl(Table<R> table, String name, TableField<R, ?>... fields) {
         super(table, name, fields);
 
-        this.references = new ArrayList<ForeignKey<?, R>>();
+        this.references = new ArrayList<>();
     }
 
     @Override

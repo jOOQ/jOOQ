@@ -67,7 +67,7 @@ final class PersistenceUnitInfoImpl implements PersistenceUnitInfo {
     private final String                   persistenceUnitName;
     private PersistenceUnitTransactionType transactionType  = PersistenceUnitTransactionType.RESOURCE_LOCAL;
     private final List<String>             managedClassNames;
-    private final List<String>             mappingFileNames = new ArrayList<String>();
+    private final List<String>             mappingFileNames = new ArrayList<>();
     private final Properties               properties;
     private DataSource                     jtaDataSource;
     private DataSource                     nonJtaDataSource;

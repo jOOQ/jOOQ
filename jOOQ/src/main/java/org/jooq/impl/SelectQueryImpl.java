@@ -294,7 +294,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         this.with = with;
         this.distinct = distinct;
-        this.select = new SelectFieldList<SelectFieldOrAsterisk>();
+        this.select = new SelectFieldList<>();
         this.from = new TableList();
         this.condition = new ConditionProviderImpl();
         this.connectBy = new ConditionProviderImpl();
@@ -302,12 +302,12 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         this.having = new ConditionProviderImpl();
         this.qualify = new ConditionProviderImpl();
         this.orderBy = new SortFieldList();
-        this.seek = new QueryPartList<Field<?>>();
+        this.seek = new QueryPartList<>();
         this.limit = new Limit();
-        this.unionOp = new ArrayList<CombineOperator>();
-        this.union = new ArrayList<QueryPartList<Select<?>>>();
+        this.unionOp = new ArrayList<>();
+        this.union = new ArrayList<>();
         this.unionOrderBy = new SortFieldList();
-        this.unionSeek = new QueryPartList<Field<?>>();
+        this.unionSeek = new QueryPartList<>();
         this.unionLimit = new Limit();
 
         if (from != null)
@@ -324,11 +324,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     public final <T> Field<T> asField() {
         List<Field<?>> s = getSelect();
 
-        if (s.size() != 1) {
+        if (s.size() != 1)
             throw new IllegalStateException("Can only use single-column ResultProviderQuery as a field");
-        }
 
-        return new ScalarSubquery<T>(this, (DataType<T>) s.get(0).getDataType());
+        return new ScalarSubquery<>(this, (DataType<T>) s.get(0).getDataType());
     }
 
     @Override
@@ -449,28 +448,28 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     public final Table<R> asTable() {
         // Its usually better to alias nested selects that are used in
         // the FROM clause of a query
-        return new DerivedTable<R>(this).as("alias_" + Tools.hash(this));
+        return new DerivedTable<>(this).as("alias_" + Tools.hash(this));
     }
 
     @Override
     public final Table<R> asTable(String alias) {
-        return new DerivedTable<R>(this).as(alias);
+        return new DerivedTable<>(this).as(alias);
     }
 
     @Override
     public final Table<R> asTable(String alias, String... fieldAliases) {
-        return new DerivedTable<R>(this).as(alias, fieldAliases);
+        return new DerivedTable<>(this).as(alias, fieldAliases);
     }
 
 
     @Override
     public final Table<R> asTable(String alias, Function<? super Field<?>, ? extends String> aliasFunction) {
-        return new DerivedTable<R>(this).as(alias, aliasFunction);
+        return new DerivedTable<>(this).as(alias, aliasFunction);
     }
 
     @Override
     public final Table<R> asTable(String alias, BiFunction<? super Field<?>, ? super Integer, ? extends String> aliasFunction) {
-        return new DerivedTable<R>(this).as(alias, aliasFunction);
+        return new DerivedTable<>(this).as(alias, aliasFunction);
     }
 
 
@@ -982,7 +981,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         ctx.visit(K_SELECT).sql(' ')
            .declareFields(true)
-           .visit(new SelectFieldList<Field<?>>(unaliasedFields))
+           .visit(new SelectFieldList<>(unaliasedFields))
            .declareFields(false)
            .formatSeparator()
            .visit(K_FROM).sql(" (")
@@ -1258,9 +1257,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // non-ambiguous column names as ambiguous column names are not allowed in subqueries
         if (alternativeFields != null) {
             if (wrapQueryExpressionBodyInDerivedTable && originalFields.length < alternativeFields.length)
-                context.visit(new SelectFieldList<Field<?>>(Arrays.copyOf(alternativeFields, alternativeFields.length - 1)));
+                context.visit(new SelectFieldList<>(Arrays.copyOf(alternativeFields, alternativeFields.length - 1)));
             else
-                context.visit(new SelectFieldList<Field<?>>(alternativeFields));
+                context.visit(new SelectFieldList<>(alternativeFields));
         }
 
         // The default behaviour
@@ -1794,7 +1793,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
                 // [#7222] Workaround for https://issues.apache.org/jira/browse/DERBY-6983
                 if (ctx.family() == DERBY)
-                    ctx.visit(new SelectFieldList<Field<?>>(Tools.unqualified(fields)));
+                    ctx.visit(new SelectFieldList<>(Tools.unqualified(fields)));
                 else
                     ctx.sql('*');
 
@@ -1854,7 +1853,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     @Override
     public final void addDistinctOn(Collection<? extends SelectFieldOrAsterisk> fields) {
         if (distinctOn == null)
-            distinctOn = new QueryPartList<SelectFieldOrAsterisk>();
+            distinctOn = new QueryPartList<>();
 
         distinctOn.addAll(fields);
     }
@@ -1966,7 +1965,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     @Override
     public final void setForUpdateOf(Collection<? extends Field<?>> fields) {
         setForUpdate(true);
-        forUpdateOf = new QueryPartList<Field<?>>(fields);
+        forUpdateOf = new QueryPartList<>(fields);
         forUpdateOfTables = null;
     }
 
@@ -2034,8 +2033,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private final Collection<? extends Field<?>> subtract(List<Field<?>> left, List<Field<?>> right) {
 
         // [#7921] TODO Make this functionality more generally reusable
-        Fields<?> e = new Fields<Record>(right);
-        List<Field<?>> result = new ArrayList<Field<?>>();
+        Fields<?> e = new Fields<>(right);
+        List<Field<?>> result = new ArrayList<>();
 
         for (Field<?> f : left)
             if (e.field(f) == null)
@@ -2056,7 +2055,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
      */
     final SelectFieldList<SelectFieldOrAsterisk> getSelectResolveImplicitAsterisks() {
         if (getSelectAsSpecified().isEmpty())
-            return resolveAsterisk(new SelectFieldList<SelectFieldOrAsterisk>());
+            return resolveAsterisk(new SelectFieldList<>());
 
         return getSelectAsSpecified();
     }
@@ -2079,7 +2078,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     private final SelectFieldList<SelectFieldOrAsterisk> getSelectResolveSomeAsterisks0(SQLDialect family, boolean resolveSupported) {
-        SelectFieldList<SelectFieldOrAsterisk> result = new SelectFieldList<SelectFieldOrAsterisk>();
+        SelectFieldList<SelectFieldOrAsterisk> result = new SelectFieldList<>();
 
         // [#7921] Only H2 supports the * EXCEPT (..) syntax
         boolean resolveExcept = resolveSupported || family != H2;
@@ -2101,11 +2100,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             else if (f instanceof Asterisk)
                 if (((AsteriskImpl) f).fields.isEmpty())
                     if (resolveSupported)
-                        result.addAll(resolveAsterisk(new QueryPartList<Field<?>>()));
+                        result.addAll(resolveAsterisk(new QueryPartList<>()));
                     else
                         result.add(f);
                 else if (resolveExcept)
-                    result.addAll(resolveAsterisk(new QueryPartList<Field<?>>(), ((AsteriskImpl) f).fields));
+                    result.addAll(resolveAsterisk(new QueryPartList<>(), ((AsteriskImpl) f).fields));
                 else
                     result.add(f);
             else
@@ -2119,7 +2118,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     private final <Q extends QueryPartList<? super Field<?>>> Q resolveAsterisk(Q result, QueryPartList<Field<?>> except) {
-        Fields<?> e = except == null ? null : new Fields<Record>(except);
+        Fields<?> e = except == null ? null : new Fields<>(except);
 
         // [#109] [#489] [#7231]: SELECT * is only applied when at least one
         // table from the table source is "unknown", i.e. not generated from a
@@ -2475,7 +2474,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         setGrouping();
 
         if (groupBy == null)
-            groupBy = new QueryPartList<GroupField>();
+            groupBy = new QueryPartList<>();
 
         groupBy.addAll(fields);
     }
@@ -2570,7 +2569,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         if (index == -1 || unionOp.get(index) != op || op == EXCEPT || op == EXCEPT_ALL) {
             unionOp.add(op);
-            union.add(new QueryPartList<Select<?>>());
+            union.add(new QueryPartList<>());
 
             index++;
         }

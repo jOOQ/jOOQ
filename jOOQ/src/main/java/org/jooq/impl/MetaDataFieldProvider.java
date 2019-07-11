@@ -160,7 +160,7 @@ final class MetaDataFieldProvider implements Serializable {
             throw Tools.translate(null, e);
         }
 
-        return new Fields<Record>(fields);
+        return new Fields<>(fields);
     }
 
     final Field<?>[] getFields() {

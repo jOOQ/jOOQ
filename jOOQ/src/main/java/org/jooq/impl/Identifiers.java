@@ -66,7 +66,7 @@ final class Identifiers {
     static final int                             QUOTE_END_DELIMITER_ESCAPED = 2;
 
     static {
-        QUOTES = new EnumMap<SQLDialect, char[][][]>(SQLDialect.class);
+        QUOTES = new EnumMap<>(SQLDialect.class);
 
         for (SQLDialect family : SQLDialect.families()) {
             switch (family) {

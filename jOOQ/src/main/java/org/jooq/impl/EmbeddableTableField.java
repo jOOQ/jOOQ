@@ -60,7 +60,7 @@ final class EmbeddableTableField<R extends Record, T extends Record> extends Abs
     final Class<T>            recordType;
 
     EmbeddableTableField(Name name, Class<T> recordType, Table<R> table, TableField<R, ?>[] fields) {
-        super(name, new DefaultDataType<T>(SQLDialect.DEFAULT, recordType, name.last()));
+        super(name, new DefaultDataType<>(SQLDialect.DEFAULT, recordType, name.last()));
 
         this.table = table;
         this.recordType = recordType;
@@ -76,7 +76,7 @@ final class EmbeddableTableField<R extends Record, T extends Record> extends Abs
         Object previous = ctx.data(DATA_LIST_ALREADY_INDENTED);
 
         ctx.data(DATA_LIST_ALREADY_INDENTED, true);
-        ctx.visit(new QueryPartList<TableField<?, ?>>(fields));
+        ctx.visit(new QueryPartList<>(fields));
         ctx.data(DATA_LIST_ALREADY_INDENTED, previous);
     }
 

@@ -112,22 +112,18 @@ final class ReferenceImpl<R extends Record, O extends Record> extends AbstractKe
 
     @Override
     public final Result<O> fetchParents(Collection<? extends R> records) {
-        if (records == null || records.size() == 0) {
-            return new ResultImpl<O>(new DefaultConfiguration(), key.getFields());
-        }
-        else {
+        if (records == null || records.size() == 0)
+            return new ResultImpl<>(new DefaultConfiguration(), key.getFields());
+        else
             return fetch(records, key.getTable(), key.getFieldsArray(), getFieldsArray());
-        }
     }
 
     @Override
     public final Result<R> fetchChildren(Collection<? extends O> records) {
-        if (records == null || records.size() == 0) {
-            return new ResultImpl<R>(new DefaultConfiguration(), getFields());
-        }
-        else {
+        if (records == null || records.size() == 0)
+            return new ResultImpl<>(new DefaultConfiguration(), getFields());
+        else
             return fetch(records, getTable(), getFieldsArray(), key.getFieldsArray());
-        }
     }
 
     /**
@@ -162,7 +158,7 @@ final class ReferenceImpl<R extends Record, O extends Record> extends AbstractKe
      * Extract a list of values from a set of records given some fields
      */
     private static <R extends Record> List<Object> extractValues(Collection<? extends R> records, TableField<R, ?> field2) {
-        List<Object> result = new ArrayList<Object>(records.size());
+        List<Object> result = new ArrayList<>(records.size());
 
         for (R record : records)
             result.add(record.get(field2));
@@ -174,7 +170,7 @@ final class ReferenceImpl<R extends Record, O extends Record> extends AbstractKe
      * Extract a list of row value expressions from a set of records given some fields
      */
     private static <R extends Record> List<RowN> extractRows(Collection<? extends R> records, TableField<R, ?>[] fields) {
-        List<RowN> rows = new ArrayList<RowN>(records.size());
+        List<RowN> rows = new ArrayList<>(records.size());
 
         for (R record : records) {
             Object[] values = new Object[fields.length];

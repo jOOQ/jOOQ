@@ -92,9 +92,9 @@ final class GroupConcat extends AbstractFunction<String> implements GroupConcatO
         Function<String> result;
 
         if (separator == null)
-            result = new Function<String>(Term.LIST_AGG, distinct, SQLDataType.VARCHAR, field, inline(","));
+            result = new Function<>(Term.LIST_AGG, distinct, SQLDataType.VARCHAR, field, inline(","));
         else
-            result = new Function<String>(Term.LIST_AGG, distinct, SQLDataType.VARCHAR, field, inline(separator));
+            result = new Function<>(Term.LIST_AGG, distinct, SQLDataType.VARCHAR, field, inline(separator));
 
 
 

@@ -105,7 +105,7 @@ final class DeleteImpl<R extends Record>
     private boolean           returningResult;
 
     DeleteImpl(Configuration configuration, WithImpl with, Table<R> table) {
-        super(new DeleteQueryImpl<R>(configuration, with, table));
+        super(new DeleteQueryImpl<>(configuration, with, table));
     }
 
     @Override

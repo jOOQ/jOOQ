@@ -58,7 +58,7 @@ final class HintedTable<R extends Record> extends AbstractTable<R> {
     private final QueryPartList<Name> arguments;
 
     HintedTable(AbstractTable<R> delegate, String keywords, String... arguments) {
-        this(delegate, keywords, new QueryPartList<Name>(Tools.names(arguments)));
+        this(delegate, keywords, new QueryPartList<>(Tools.names(arguments)));
     }
 
     HintedTable(AbstractTable<R> delegate, String keywords, QueryPartList<Name> arguments) {
@@ -66,7 +66,7 @@ final class HintedTable<R extends Record> extends AbstractTable<R> {
     }
 
     HintedTable(AbstractTable<R> delegate, Keyword keywords, String... arguments) {
-        this(delegate, keywords, new QueryPartList<Name>(Tools.names(arguments)));
+        this(delegate, keywords, new QueryPartList<>(Tools.names(arguments)));
     }
 
     HintedTable(AbstractTable<R> delegate, Keyword keywords, QueryPartList<Name> arguments) {
@@ -97,12 +97,12 @@ final class HintedTable<R extends Record> extends AbstractTable<R> {
 
     @Override
     public final Table<R> as(Name alias) {
-        return new HintedTable<R>(new TableAlias<R>(delegate, alias), keywords, arguments);
+        return new HintedTable<>(new TableAlias<>(delegate, alias), keywords, arguments);
     }
 
     @Override
     public final Table<R> as(Name alias, Name... fieldAliases) {
-        return new HintedTable<R>(new TableAlias<R>(delegate, alias, fieldAliases), keywords, arguments);
+        return new HintedTable<>(new TableAlias<>(delegate, alias, fieldAliases), keywords, arguments);
     }
 
     @Override

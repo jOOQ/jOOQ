@@ -166,7 +166,7 @@ public class CSVReader implements Closeable, Iterator<String[]> {
      */
     public List<String[]> readAll() throws IOException {
 
-        List<String[]> allElements = new ArrayList<String[]>();
+        List<String[]> allElements = new ArrayList<>();
         while (hasNext) {
             String[] nextLineAsTokens = readNext();
             if (nextLineAsTokens != null)

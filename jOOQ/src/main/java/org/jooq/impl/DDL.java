@@ -90,7 +90,7 @@ final class DDL {
 
     private final List<Query> alterTableAddConstraints(Table<?> table) {
         List<Constraint> constraints = constraints(table);
-        List<Query> result = new ArrayList<Query>(constraints.size());
+        List<Query> result = new ArrayList<>(constraints.size());
 
         for (Constraint constraint : constraints)
             result.add(ctx.alterTable(table).add(constraint));
@@ -99,7 +99,7 @@ final class DDL {
     }
 
     private final List<Constraint> constraints(Table<?> table) {
-        List<Constraint> result = new ArrayList<Constraint>();
+        List<Constraint> result = new ArrayList<>();
 
         result.addAll(primaryKeys(table));
         result.addAll(uniqueKeys(table));
@@ -109,7 +109,7 @@ final class DDL {
     }
 
     private final List<Constraint> primaryKeys(Table<?> table) {
-        List<Constraint> result = new ArrayList<Constraint>();
+        List<Constraint> result = new ArrayList<>();
 
         if (configuration.flags().contains(PRIMARY_KEY))
             for (UniqueKey<?> key : table.getKeys())
@@ -120,7 +120,7 @@ final class DDL {
     }
 
     private final List<Constraint> uniqueKeys(Table<?> table) {
-        List<Constraint> result = new ArrayList<Constraint>();
+        List<Constraint> result = new ArrayList<>();
 
         if (configuration.flags().contains(UNIQUE))
             for (UniqueKey<?> key : table.getKeys())
@@ -131,7 +131,7 @@ final class DDL {
     }
 
     private final List<Constraint> foreignKeys(Table<?> table) {
-        List<Constraint> result = new ArrayList<Constraint>();
+        List<Constraint> result = new ArrayList<>();
 
         if (configuration.flags().contains(FOREIGN_KEY))
             for (ForeignKey<?, ?> key : table.getReferences())
@@ -141,7 +141,7 @@ final class DDL {
     }
 
     final Queries queries(Table<?>... tables) {
-        List<Query> queries = new ArrayList<Query>();
+        List<Query> queries = new ArrayList<>();
 
         for (Table<?> table : tables) {
             if (configuration.flags().contains(TABLE))
@@ -156,7 +156,7 @@ final class DDL {
     }
 
     private final List<Query> commentOn(Table<?> table) {
-        List<Query> result = new ArrayList<Query>();
+        List<Query> result = new ArrayList<>();
 
         if (configuration.flags().contains(COMMENT)) {
             String tComment = table.getComment();
@@ -176,7 +176,7 @@ final class DDL {
     }
 
     final Queries queries(Schema schema) {
-        List<Query> queries = new ArrayList<Query>();
+        List<Query> queries = new ArrayList<>();
 
         if (configuration.flags().contains(SCHEMA) && !StringUtils.isBlank(schema.getName()))
             if (configuration.createSchemaIfNotExists())
@@ -186,7 +186,7 @@ final class DDL {
 
         if (configuration.flags().contains(TABLE)) {
             for (Table<?> table : schema.getTables()) {
-                List<Constraint> constraints = new ArrayList<Constraint>();
+                List<Constraint> constraints = new ArrayList<>();
 
                 constraints.addAll(primaryKeys(table));
                 constraints.addAll(uniqueKeys(table));
@@ -219,7 +219,7 @@ final class DDL {
     }
 
     final Queries queries(Catalog catalog) {
-        List<Query> queries = new ArrayList<Query>();
+        List<Query> queries = new ArrayList<>();
 
         for (Schema schema : catalog.getSchemas())
             queries.addAll(Arrays.asList(queries(schema).queries()));

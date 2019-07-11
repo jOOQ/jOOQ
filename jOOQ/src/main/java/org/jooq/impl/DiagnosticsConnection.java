@@ -68,9 +68,9 @@ final class DiagnosticsConnection extends DefaultConnection {
     static final int                      LRU_SIZE_GLOBAL = 50000;
     static final int                      LRU_SIZE_LOCAL  = 500;
     static final int                      DUP_SIZE        = 500;
-    static final Map<String, Set<String>> DUPLICATE_SQL   = Collections.synchronizedMap(new LRU<Set<String>>(LRU_SIZE_GLOBAL));
+    static final Map<String, Set<String>> DUPLICATE_SQL   = Collections.synchronizedMap(new LRU<>(LRU_SIZE_GLOBAL));
 
-    final Map<String, List<String>>       repeatedSQL     = new LRU<List<String>>(LRU_SIZE_LOCAL);
+    final Map<String, List<String>>       repeatedSQL     = new LRU<>(LRU_SIZE_LOCAL);
     final Configuration                   configuration;
     final RenderContext                   normalisingRenderer;
     final Parser                          parser;
@@ -193,7 +193,7 @@ final class DiagnosticsConnection extends DefaultConnection {
         Set<String> v = map.get(normalised);
 
         if (v == null) {
-            v = new HashSet<String>();
+            v = new HashSet<>();
             map.put(normalised, v);
         }
 
@@ -207,7 +207,7 @@ final class DiagnosticsConnection extends DefaultConnection {
         List<String> v = map.get(normalised);
 
         if (v == null) {
-            v = new ArrayList<String>();
+            v = new ArrayList<>();
             map.put(normalised, v);
         }
 

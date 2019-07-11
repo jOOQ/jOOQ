@@ -176,7 +176,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
             else if (fieldAliases != null && SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL2.contains(family)) {
                 emulatedDerivedColumnList = true;
 
-                SelectFieldList<Field<?>> fields = new SelectFieldList<Field<?>>();
+                SelectFieldList<Field<?>> fields = new SelectFieldList<>();
                 for (Name fieldAlias : fieldAliases) {
                     switch (family) {
 

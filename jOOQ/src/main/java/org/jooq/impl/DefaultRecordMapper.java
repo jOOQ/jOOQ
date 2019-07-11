@@ -353,7 +353,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
         // [#1340] Allow for using non-public default constructors
         try {
-            delegate = new MutablePOJOMapper(new ConstructorCall<E>(accessible(type.getDeclaredConstructor())), instance);
+            delegate = new MutablePOJOMapper(new ConstructorCall<>(accessible(type.getDeclaredConstructor())), instance);
             return;
         }
         catch (NoSuchMethodException ignore) {}
@@ -397,7 +397,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                     Class<?> klassType = Tools.ktKClass().type();
                     Method getJavaClass = jvmClassMappingKt.type().getMethod("getJavaClass", klassType);
 
-                    List<String> parameterNames = new ArrayList<String>(parameters.size());
+                    List<String> parameterNames = new ArrayList<>(parameters.size());
                     Class<?>[] parameterTypes = new Class[parameters.size()];
 
                     for (int i = 0; i < parameterTypes.length; i++) {
@@ -567,7 +567,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
         private E proxy() {
             final Object[] result = new Object[1];
-            final Map<String, Object> map = new HashMap<String, Object>();
+            final Map<String, Object> map = new HashMap<>();
             final InvocationHandler handler = new InvocationHandler() {
 
                 @SuppressWarnings("null")
@@ -665,10 +665,10 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             this.useAnnotations = hasColumnAnnotations(configuration, type);
             this.members = new List[fields.length];
             this.methods = new List[fields.length];
-            this.nested = new HashMap<String, List<RecordMapper<R, Object>>>();
+            this.nested = new HashMap<>();
             this.instance = instance;
 
-            Map<String, Field<?>[]> nestedFields = new HashMap<String, Field<?>[]>();
+            Map<String, Field<?>[]> nestedFields = new HashMap<>();
             for (int i = 0; i < fields.length; i++) {
                 Field<?> field = fields[i];
                 String name = field.getName();
@@ -709,11 +709,11 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
             for (Entry<String, Field<?>[]> entry : nestedFields.entrySet()) {
                 String prefix = entry.getKey();
-                List<RecordMapper<R, Object>> list = new ArrayList<RecordMapper<R, Object>>();
+                List<RecordMapper<R, Object>> list = new ArrayList<>();
 
                 for (java.lang.reflect.Field member : getMatchingMembers(configuration, type, prefix)) {
-                    list.add(new DefaultRecordMapper<R, Object>(
-                        new Fields<R>(entry.getValue()),
+                    list.add(new DefaultRecordMapper<>(
+                        new Fields<>(entry.getValue()),
                         member.getType(),
                         null,
                         configuration
@@ -721,8 +721,8 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                 }
 
                 for (Method method : getMatchingSetters(configuration, type, prefix)) {
-                    list.add(new DefaultRecordMapper<R, Object>(
-                        new Fields<R>(entry.getValue()),
+                    list.add(new DefaultRecordMapper<>(
+                        new Fields<>(entry.getValue()),
                         method.getParameterTypes()[0],
                         null,
                         configuration

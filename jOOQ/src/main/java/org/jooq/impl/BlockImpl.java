@@ -235,7 +235,7 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
 
         ;
 
-        acceptDeclarations(ctx, new ArrayList<Statement>(statements), wrapInBeginEnd);
+        acceptDeclarations(ctx, new ArrayList<>(statements), wrapInBeginEnd);
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })

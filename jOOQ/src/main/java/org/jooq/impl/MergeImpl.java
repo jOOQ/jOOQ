@@ -287,21 +287,21 @@ implements
 
     QueryPartList<Field<?>> getUpsertFields() {
         if (upsertFields == null)
-            upsertFields = new QueryPartList<Field<?>>(table.fields());
+            upsertFields = new QueryPartList<>(table.fields());
 
         return upsertFields;
     }
 
     QueryPartList<Field<?>> getUpsertKeys() {
         if (upsertKeys == null)
-            upsertKeys = new QueryPartList<Field<?>>();
+            upsertKeys = new QueryPartList<>();
 
         return upsertKeys;
     }
 
     QueryPartList<Field<?>> getUpsertValues() {
         if (upsertValues == null)
-            upsertValues = new QueryPartList<Field<?>>();
+            upsertValues = new QueryPartList<>();
 
         return upsertValues;
     }
@@ -314,7 +314,7 @@ implements
     @Override
     public final MergeImpl columns(Collection<? extends Field<?>> fields) {
         upsertStyle = true;
-        upsertFields = new QueryPartList<Field<?>>(fields);
+        upsertFields = new QueryPartList<>(fields);
 
         return this;
     }
@@ -1188,7 +1188,7 @@ implements
         // [#5110] This is not yet supported by Derby
         if (upsertSelect != null) {
             Row row = upsertSelect.fieldsRow();
-            List<Field<?>> v = new ArrayList<Field<?>>(row.size());
+            List<Field<?>> v = new ArrayList<>(row.size());
 
             for (int i = 0; i < row.size(); i++)
                 v.add(row.field(i).as("s" + (i + 1)));
@@ -1199,7 +1199,7 @@ implements
             srcFields = Arrays.asList(src.fields());
         }
         else if (usingSubqueries) {
-            List<Field<?>> v = new ArrayList<Field<?>>(getUpsertValues().size());
+            List<Field<?>> v = new ArrayList<>(getUpsertValues().size());
 
             for (int i = 0; i < getUpsertValues().size(); i++)
                 v.add(getUpsertValues().get(i).as("s" + (i + 1)));
@@ -1209,7 +1209,7 @@ implements
         }
         else {
             src = new Dual();
-            srcFields = new ArrayList<Field<?>>(getUpsertValues().size());
+            srcFields = new ArrayList<>(getUpsertValues().size());
 
             for (int i = 0; i < getUpsertValues().size(); i++)
                 srcFields.add(getUpsertValues().get(i));
@@ -1217,7 +1217,7 @@ implements
 
         // The condition for the ON clause:
         // --------------------------------
-        Set<Field<?>> onFields = new HashSet<Field<?>>();
+        Set<Field<?>> onFields = new HashSet<>();
         Condition condition = null;
         if (getUpsertKeys().isEmpty()) {
             UniqueKey<?> key = table.getPrimaryKey();
@@ -1260,8 +1260,8 @@ implements
 
         // INSERT and UPDATE clauses
         // -------------------------
-        Map<Field<?>, Field<?>> update = new LinkedHashMap<Field<?>, Field<?>>();
-        Map<Field<?>, Field<?>> insert = new LinkedHashMap<Field<?>, Field<?>>();
+        Map<Field<?>, Field<?>> update = new LinkedHashMap<>();
+        Map<Field<?>, Field<?>> insert = new LinkedHashMap<>();
 
         for (int i = 0; i < srcFields.size(); i++) {
 
@@ -1329,8 +1329,8 @@ implements
     }
 
     private final void toSQLMySQLOnDuplicateKeyUpdate(Context<?> ctx) {
-        Fields<?> fields = new Fields<Record>(getUpsertFields());
-        Map<Field<?>, Field<?>> map = new LinkedHashMap<Field<?>, Field<?>>();
+        Fields<?> fields = new Fields<>(getUpsertFields());
+        Map<Field<?>, Field<?>> map = new LinkedHashMap<>();
         for (Field<?> field : fields.fields)
             map.put(field, getUpsertValues().get(fields.indexOf(field)));
 
@@ -1350,8 +1350,8 @@ implements
             ctx.sql("[ merge with select is not supported in PostgreSQL ]");
         }
         else {
-            Fields<?> fields = new Fields<Record>(getUpsertFields());
-            Map<Field<?>, Field<?>> map = new LinkedHashMap<Field<?>, Field<?>>();
+            Fields<?> fields = new Fields<>(getUpsertFields());
+            Map<Field<?>, Field<?>> map = new LinkedHashMap<>();
 
             for (Field<?> field : fields.fields) {
                 int i = fields.indexOf(field);

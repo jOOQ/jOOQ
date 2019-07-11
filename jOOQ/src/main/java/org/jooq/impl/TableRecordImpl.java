@@ -294,13 +294,11 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
      * Set all changed values of this record to a store query
      */
     final void addChangedValues(Field<?>[] storeFields, StoreQuery<R> query) {
-        Fields<Record> f = new Fields<Record>(storeFields);
+        Fields<Record> f = new Fields<>(storeFields);
 
-        for (Field<?> field : fields.fields.fields) {
-            if (changed(field) && f.field(field) != null) {
+        for (Field<?> field : fields.fields.fields)
+            if (changed(field) && f.field(field) != null)
                 addValue(query, field);
-            }
-        }
     }
 
     /**
@@ -383,7 +381,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
     }
 
     final Collection<Field<?>> getReturning() {
-        Collection<Field<?>> result = new LinkedHashSet<Field<?>>();
+        Collection<Field<?>> result = new LinkedHashSet<>();
 
         Identity<R, ?> identity = getTable().getIdentity();
         if (identity != null)

@@ -388,16 +388,16 @@ public class SchemaMapping implements Serializable {
                                         // Ignore self-mappings and void-mappings
                                         if (!isBlank(t.getOutput()))
                                             if (t.getInput() != null && !t.getOutput().equals(tableName))
-                                                result = new RenamedTable<R>(map(schema), result, t.getOutput());
+                                                result = new RenamedTable<>(map(schema), result, t.getOutput());
                                             else if (t.getInputExpression() != null)
-                                                result = new RenamedTable<R>(map(schema), result, t.getInputExpression().matcher(tableName).replaceAll(t.getOutput()));
+                                                result = new RenamedTable<>(map(schema), result, t.getInputExpression().matcher(tableName).replaceAll(t.getOutput()));
 
                                         break schemaLoop;
                                     }
                                 }
 
                                 // [#7498] Even without table mapping configuration, we may still need to map the schema
-                                result = new RenamedTable<R>(map(schema), result, tableName);
+                                result = new RenamedTable<>(map(schema), result, tableName);
                                 break schemaLoop;
                             }
                         }
@@ -448,7 +448,7 @@ public class SchemaMapping implements Serializable {
             // want to use Configuration and dependent objects in a "thread-safe" manner
             synchronized (this) {
                 if (schemata == null) {
-                    schemata = new HashMap<String, Schema>();
+                    schemata = new HashMap<>();
                 }
             }
         }
@@ -462,7 +462,7 @@ public class SchemaMapping implements Serializable {
             // want to use Configuration and dependent objects in a "thread-safe" manner
             synchronized (this) {
                 if (tables == null) {
-                    tables = new HashMap<String, Table<?>>();
+                    tables = new HashMap<>();
                 }
             }
         }

@@ -195,7 +195,7 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
 
     @Override
     public Field<T> as(Name alias) {
-        return new FieldAlias<T>(this, alias);
+        return new FieldAlias<>(this, alias);
     }
 
     @Override
@@ -248,7 +248,7 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
 
     @Override
     public final <Z> Field<Z> cast(DataType<Z> type) {
-        return new Cast<Z>(this, type);
+        return new Cast<>(this, type);
     }
 
     @Override
@@ -267,7 +267,7 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
 
     @Override
     public final <Z> Field<Z> coerce(DataType<Z> type) {
-        return new Coerce<Z>(this, type);
+        return new Coerce<>(this, type);
     }
 
     @Override
@@ -296,12 +296,12 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
 
     @Override
     public final SortField<T> sort(SortOrder order) {
-        return new SortFieldImpl<T>(this, order);
+        return new SortFieldImpl<>(this, order);
     }
 
     @Override
     public final SortField<Integer> sortAsc(Collection<T> sortList) {
-        Map<T, Integer> map = new LinkedHashMap<T, Integer>();
+        Map<T, Integer> map = new LinkedHashMap<>();
 
         int i = 0;
         for (T value : sortList)
@@ -320,7 +320,7 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
 
     @Override
     public final SortField<Integer> sortDesc(Collection<T> sortList) {
-        Map<T, Integer> map = new LinkedHashMap<T, Integer>();
+        Map<T, Integer> map = new LinkedHashMap<>();
 
         int i = 0;
         for (T value : sortList)
@@ -350,7 +350,7 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
                 result.when(entry.getKey(), inline(entry.getValue()));
 
         if (result == null)
-            return new SortFieldImpl<Z>(new ConstantSortField<Z>((Field) this), SortOrder.DEFAULT);
+            return new SortFieldImpl<>(new ConstantSortField<>((Field) this), SortOrder.DEFAULT);
         else
             return result.asc();
     }
@@ -361,7 +361,7 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
 
     @Override
     public final Field<T> neg() {
-        return new Neg<T>(this, ExpressionOperator.SUBTRACT);
+        return new Neg<>(this, ExpressionOperator.SUBTRACT);
     }
 
     @Override
@@ -385,7 +385,7 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
      */
     @Override
     public Field<T> add(Field<?> value) {
-        return new Expression<T>(ADD, this, nullSafe(value, getDataType()));
+        return new Expression<>(ADD, this, nullSafe(value, getDataType()));
     }
 
     @Override
@@ -395,7 +395,7 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
 
     @Override
     public final Field<T> sub(Field<?> value) {
-        return new Expression<T>(SUBTRACT, this, nullSafe(value, getDataType()));
+        return new Expression<>(SUBTRACT, this, nullSafe(value, getDataType()));
     }
 
     @Override
@@ -409,7 +409,7 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
      */
     @Override
     public Field<T> mul(Field<? extends Number> value) {
-        return new Expression<T>(MULTIPLY, this, nullSafe(value, getDataType()));
+        return new Expression<>(MULTIPLY, this, nullSafe(value, getDataType()));
     }
 
     @Override
@@ -419,7 +419,7 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
 
     @Override
     public final Field<T> div(Field<? extends Number> value) {
-        return new Expression<T>(DIVIDE, this, nullSafe(value, getDataType()));
+        return new Expression<>(DIVIDE, this, nullSafe(value, getDataType()));
     }
 
     @Override
@@ -429,7 +429,7 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
 
     @Override
     public final Field<T> mod(Field<? extends Number> value) {
-        return new Mod<T>(this, nullSafe(value, getDataType()));
+        return new Mod<>(this, nullSafe(value, getDataType()));
     }
 
     // ------------------------------------------------------------------------
@@ -878,12 +878,12 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
         if (value instanceof Field)
             return contains((Field) value);
         else
-            return new Contains<T>(this, value);
+            return new Contains<>(this, value);
     }
 
     @Override
     public final Condition contains(Field<T> value) {
-        return new Contains<T>(this, value);
+        return new Contains<>(this, value);
     }
 
     @Override
@@ -983,7 +983,7 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
 
     @Override
     public final Condition in(Field<?>... values) {
-        return new InCondition<T>(this, nullSafe(values), IN);
+        return new InCondition<>(this, nullSafe(values), IN);
     }
 
     @Override
@@ -1024,7 +1024,7 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
 
     @Override
     public final Condition notIn(Field<?>... values) {
-        return new InCondition<T>(this, nullSafe(values), NOT_IN);
+        return new InCondition<>(this, nullSafe(values), NOT_IN);
     }
 
     @Override
@@ -1095,7 +1095,7 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
 
     @Override
     public final BetweenAndStep<T> between(Field<T> minValue) {
-        return new BetweenCondition<T>(this, nullSafe(minValue, getDataType()), false, false);
+        return new BetweenCondition<>(this, nullSafe(minValue, getDataType()), false, false);
     }
 
     @Override
@@ -1105,7 +1105,7 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
 
     @Override
     public final BetweenAndStep<T> betweenSymmetric(Field<T> minValue) {
-        return new BetweenCondition<T>(this, nullSafe(minValue, getDataType()), false, true);
+        return new BetweenCondition<>(this, nullSafe(minValue, getDataType()), false, true);
     }
 
     @Override
@@ -1115,7 +1115,7 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
 
     @Override
     public final BetweenAndStep<T> notBetween(Field<T> minValue) {
-        return new BetweenCondition<T>(this, nullSafe(minValue, getDataType()), true, false);
+        return new BetweenCondition<>(this, nullSafe(minValue, getDataType()), true, false);
     }
 
     @Override
@@ -1125,7 +1125,7 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
 
     @Override
     public final BetweenAndStep<T> notBetweenSymmetric(Field<T> minValue) {
-        return new BetweenCondition<T>(this, nullSafe(minValue, getDataType()), true, true);
+        return new BetweenCondition<>(this, nullSafe(minValue, getDataType()), true, true);
     }
 
     @Override
@@ -1398,7 +1398,7 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
         switch (comparator) {
             case IS_DISTINCT_FROM:
             case IS_NOT_DISTINCT_FROM:
-                return new IsDistinctFrom<T>(this, nullSafe(field, getDataType()), comparator);
+                return new IsDistinctFrom<>(this, nullSafe(field, getDataType()), comparator);
 
             default:
                 return new CompareCondition(this, nullSafe(field, getDataType()), comparator);
@@ -1407,7 +1407,7 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
 
     @Override
     public final Condition compare(Comparator comparator, Select<? extends Record1<T>> query) {
-        return compare(comparator, new ScalarSubquery<T>(query, getDataType()));
+        return compare(comparator, new ScalarSubquery<>(query, getDataType()));
     }
 
     @Override

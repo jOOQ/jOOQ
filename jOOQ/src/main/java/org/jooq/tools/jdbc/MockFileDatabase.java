@@ -168,8 +168,8 @@ public class MockFileDatabase implements MockDataProvider {
 
     public MockFileDatabase(MockFileDatabaseConfiguration configuration) throws IOException {
         this.configuration = configuration;
-        this.matchExactly = new LinkedHashMap<String, List<MockResult>>();
-        this.matchPattern = new LinkedHashMap<Pattern, List<MockResult>>();
+        this.matchExactly = new LinkedHashMap<>();
+        this.matchPattern = new LinkedHashMap<>();
         this.create = DSL.using(SQLDialect.DEFAULT);
 
         load();
@@ -269,7 +269,7 @@ public class MockFileDatabase implements MockDataProvider {
                 List<MockResult> results = matchExactly.get(previousSQL);
 
                 if (results == null) {
-                    results = new ArrayList<MockResult>();
+                    results = new ArrayList<>();
 
                     if (configuration.patterns) {
                         try {

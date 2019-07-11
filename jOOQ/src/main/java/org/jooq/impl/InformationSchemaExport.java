@@ -75,9 +75,9 @@ final class InformationSchemaExport {
     static final InformationSchema exportTables(Configuration configuration, List<Table<?>> tables) {
         InformationSchema result = new InformationSchema();
 
-        Set<Catalog> includedCatalogs = new LinkedHashSet<Catalog>();
-        Set<Schema> includedSchemas = new LinkedHashSet<Schema>();
-        Set<Table<?>> includedTables = new LinkedHashSet<Table<?>>(tables);
+        Set<Catalog> includedCatalogs = new LinkedHashSet<>();
+        Set<Schema> includedSchemas = new LinkedHashSet<>();
+        Set<Table<?>> includedTables = new LinkedHashSet<>(tables);
 
         for (Table<?> t : tables)
             includedSchemas.add(t.getSchema());
@@ -100,8 +100,8 @@ final class InformationSchemaExport {
     static final InformationSchema exportSchemas(Configuration configuration, List<Schema> schemas) {
         InformationSchema result = new InformationSchema();
 
-        Set<Catalog> includedCatalogs = new LinkedHashSet<Catalog>();
-        Set<Table<?>> includedTables = new LinkedHashSet<Table<?>>();
+        Set<Catalog> includedCatalogs = new LinkedHashSet<>();
+        Set<Table<?>> includedTables = new LinkedHashSet<>();
 
         for (Schema s : schemas) {
             includedCatalogs.add(s.getCatalog());
@@ -129,7 +129,7 @@ final class InformationSchemaExport {
     static final InformationSchema exportCatalogs(Configuration configuration, List<Catalog> catalogs) {
         InformationSchema result = new InformationSchema();
 
-        Set<Table<?>> includedTables = new LinkedHashSet<Table<?>>();
+        Set<Table<?>> includedTables = new LinkedHashSet<>();
 
         for (Catalog c : catalogs)
             for (Schema s : c.getSchemas())

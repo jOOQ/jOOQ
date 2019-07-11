@@ -72,12 +72,12 @@ final class FunctionTable<R extends Record> extends AbstractTable<R> {
 
     @Override
     public final Table<R> as(Name as) {
-        return new TableAlias<R>(new FunctionTable<R>(function), as);
+        return new TableAlias<>(new FunctionTable<>(function), as);
     }
 
     @Override
     public final Table<R> as(Name as, Name... fieldAliases) {
-        return new TableAlias<R>(new FunctionTable<R>(function), as, fieldAliases);
+        return new TableAlias<>(new FunctionTable<>(function), as, fieldAliases);
     }
 
     @Override
@@ -105,6 +105,6 @@ final class FunctionTable<R extends Record> extends AbstractTable<R> {
 
     @Override
     final Fields<R> fields0() {
-        return new Fields<R>();
+        return new Fields<>();
     }
 }

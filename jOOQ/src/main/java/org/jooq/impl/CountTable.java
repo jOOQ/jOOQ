@@ -77,7 +77,7 @@ final class CountTable extends Function<Integer> {
                 UniqueKey<?> pk = table.getPrimaryKey();
 
                 if (pk != null)
-                    ctx.visit(new Function<Integer>("count", distinct, SQLDataType.INTEGER, table.fields(pk.getFieldsArray())));
+                    ctx.visit(new Function<>("count", distinct, SQLDataType.INTEGER, table.fields(pk.getFieldsArray())));
                 else
                     super.accept(ctx);
 

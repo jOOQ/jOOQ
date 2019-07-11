@@ -62,7 +62,7 @@ final class QualifiedAsteriskImpl extends AbstractQueryPart implements Qualified
 
     QualifiedAsteriskImpl(Table<?> table, QueryPartList<Field<?>> fields) {
         this.table = table;
-        this.fields = fields == null ? new QueryPartList<Field<?>>() : fields;
+        this.fields = fields == null ? new QueryPartList<>() : fields;
     }
 
     @Override
@@ -92,7 +92,7 @@ final class QualifiedAsteriskImpl extends AbstractQueryPart implements Qualified
 
     @Override
     public final QualifiedAsterisk except(Field<?>... f) {
-        QueryPartList<Field<?>> list = new QueryPartList<Field<?>>();
+        QueryPartList<Field<?>> list = new QueryPartList<>();
 
         list.addAll(fields);
         list.addAll(Arrays.asList(f));

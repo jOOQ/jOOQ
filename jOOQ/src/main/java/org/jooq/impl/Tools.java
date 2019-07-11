@@ -767,7 +767,7 @@ final class Tools {
      * Turn a {@link Result} into a list of {@link Row}
      */
     static final List<Row> rows(Result<?> result) {
-        List<Row> rows = new ArrayList<Row>(result.size());
+        List<Row> rows = new ArrayList<>(result.size());
 
         for (Record record : result)
             rows.add(record.valuesRow());
@@ -854,7 +854,7 @@ final class Tools {
             if (record instanceof AbstractRecord)
                 ((AbstractRecord) record).fetched = fetched;
 
-            return new RecordDelegate<R>(configuration, record);
+            return new RecordDelegate<>(configuration, record);
         }
         catch (Exception e) {
             throw new IllegalStateException("Could not construct new record", e);
@@ -1106,7 +1106,7 @@ final class Tools {
             return null;
 
         int size = fields.size();
-        List<SortField<?>> result = new ArrayList<SortField<?>>(size);
+        List<SortField<?>> result = new ArrayList<>(size);
         for (OrderField<?> field : fields)
             result.add(sortField(field));
 
@@ -1278,7 +1278,7 @@ final class Tools {
         if (names == null)
             return null;
 
-        List<Name> result = new ArrayList<Name>(names.size());
+        List<Name> result = new ArrayList<>(names.size());
 
         for (Object o : names)
             result.add(o instanceof Name ? (Name) o : DSL.name(String.valueOf(o)));
@@ -1581,9 +1581,9 @@ final class Tools {
      */
     static final <T> List<Field<T>> fields(T[] values) {
         if (values == null)
-            return new ArrayList<Field<T>>();
+            return new ArrayList<>();
 
-        List<Field<T>> result = new ArrayList<Field<T>>(values.length);
+        List<Field<T>> result = new ArrayList<>(values.length);
 
         for (int i = 0; i < values.length; i++)
             result.add(field(values[i]));
@@ -1601,9 +1601,9 @@ final class Tools {
      */
     static final <T> List<Field<T>> fields(Object[] values, Field<T> field) {
         if (values == null || field == null)
-            return new ArrayList<Field<T>>();
+            return new ArrayList<>();
 
-        List<Field<T>> result = new ArrayList<Field<T>>(values.length);
+        List<Field<T>> result = new ArrayList<>(values.length);
 
         for (int i = 0; i < values.length; i++)
             result.add(field(values[i], field));
@@ -1621,10 +1621,10 @@ final class Tools {
      */
     static final List<Field<?>> fields(Object[] values, Field<?>[] fields) {
         if (values == null || fields == null)
-            return new ArrayList<Field<?>>();
+            return new ArrayList<>();
 
         int length = Math.min(values.length, fields.length);
-        List<Field<?>> result = new ArrayList<Field<?>>(length);
+        List<Field<?>> result = new ArrayList<>(length);
 
         for (int i = 0; i < length; i++)
             result.add(field(values[i], fields[i]));
@@ -1663,9 +1663,9 @@ final class Tools {
      */
     static final <T> List<Field<T>> fields(Object[] values, Class<T> type) {
         if (values == null || type == null)
-            return new ArrayList<Field<T>>();
+            return new ArrayList<>();
 
-        List<Field<T>> result = new ArrayList<Field<T>>(values.length);
+        List<Field<T>> result = new ArrayList<>(values.length);
 
         for (int i = 0; i < values.length; i++)
             result.add(field(values[i], type));
@@ -1683,10 +1683,10 @@ final class Tools {
      */
     static final List<Field<?>> fields(Object[] values, Class<?>[] types) {
         if (values == null || types == null)
-            return new ArrayList<Field<?>>();
+            return new ArrayList<>();
 
         int length = Math.min(values.length, types.length);
-        List<Field<?>> result = new ArrayList<Field<?>>(length);
+        List<Field<?>> result = new ArrayList<>(length);
 
         for (int i = 0; i < length; i++)
             result.add(field(values[i], types[i]));
@@ -1704,9 +1704,9 @@ final class Tools {
      */
     static final <T> List<Field<T>> fields(Object[] values, DataType<T> type) {
         if (values == null || type == null)
-            return new ArrayList<Field<T>>();
+            return new ArrayList<>();
 
-        List<Field<T>> result = new ArrayList<Field<T>>(values.length);
+        List<Field<T>> result = new ArrayList<>(values.length);
 
         for (Object value : values)
             result.add(field(value, type));
@@ -1724,9 +1724,9 @@ final class Tools {
      */
     static final <T> List<Field<T>> fields(Collection<?> values, DataType<T> type) {
         if (values == null || type == null)
-            return new ArrayList<Field<T>>();
+            return new ArrayList<>();
 
-        List<Field<T>> result = new ArrayList<Field<T>>(values.size());
+        List<Field<T>> result = new ArrayList<>(values.size());
 
         for (Object value : values)
             result.add(field(value, type));
@@ -1744,10 +1744,10 @@ final class Tools {
      */
     static final List<Field<?>> fields(Object[] values, DataType<?>[] types) {
         if (values == null || types == null)
-            return new ArrayList<Field<?>>();
+            return new ArrayList<>();
 
         int length = Math.min(values.length, types.length);
-        List<Field<?>> result = new ArrayList<Field<?>>(length);
+        List<Field<?>> result = new ArrayList<>(length);
 
         for (int i = 0; i < length; i++)
             result.add(field(values[i], types[i]));
@@ -1778,9 +1778,9 @@ final class Tools {
 
     static final <T> List<Field<T>> inline(T[] values) {
         if (values == null)
-            return new ArrayList<Field<T>>();
+            return new ArrayList<>();
 
-        List<Field<T>> result = new ArrayList<Field<T>>(values.length);
+        List<Field<T>> result = new ArrayList<>(values.length);
 
         for (int i = 0; i < values.length; i++)
             result.add(DSL.inline(values[i]));
@@ -1965,7 +1965,7 @@ final class Tools {
      * Turn a {@link Record} into a {@link Map}
      */
     static final Map<Field<?>, Object> mapOfChangedValues(Record record) {
-        Map<Field<?>, Object> result = new LinkedHashMap<Field<?>, Object>();
+        Map<Field<?>, Object> result = new LinkedHashMap<>();
         int size = record.size();
 
         for (int i = 0; i < size; i++)
@@ -1986,12 +1986,10 @@ final class Tools {
         else {
             Iterator<? extends T> iterator = iterable.iterator();
 
-            if (iterator.hasNext()) {
+            if (iterator.hasNext())
                 return iterator.next();
-            }
-            else {
+            else
                 return null;
-            }
         }
     }
 
@@ -2578,7 +2576,7 @@ final class Tools {
             return queryParts(new Object[] { null });
         }
         else {
-            List<QueryPart> result = new ArrayList<QueryPart>(substitutes.length);
+            List<QueryPart> result = new ArrayList<>(substitutes.length);
 
             for (Object substitute : substitutes) {
 
@@ -2589,7 +2587,7 @@ final class Tools {
                 else {
                     @SuppressWarnings("unchecked")
                     Class<Object> type = (Class<Object>) (substitute != null ? substitute.getClass() : Object.class);
-                    result.add(new Val<Object>(substitute, DSL.getDataType(type)));
+                    result.add(new Val<>(substitute, DSL.getDataType(type)));
                 }
             }
 
@@ -3064,7 +3062,7 @@ final class Tools {
         static enum Guard {
             RECORD_TOSTRING;
 
-            ThreadLocal<Object> tl = new ThreadLocal<Object>();
+            ThreadLocal<Object> tl = new ThreadLocal<>();
         }
 
         /**
@@ -3158,7 +3156,7 @@ final class Tools {
                     cache = (Map<Object, Object>) configuration.data(type);
 
                     if (cache == null) {
-                        cache = new ConcurrentHashMap<Object, Object>();
+                        cache = new ConcurrentHashMap<>();
                         configuration.data(type, cache);
                     }
                 }
@@ -3391,7 +3389,7 @@ final class Tools {
 
             @Override
             public List<java.lang.reflect.Field> call() {
-                List<java.lang.reflect.Field> result = new ArrayList<java.lang.reflect.Field>();
+                List<java.lang.reflect.Field> result = new ArrayList<>();
 
                 for (java.lang.reflect.Field member : getInstanceMembers(type)) {
                     Column column = member.getAnnotation(Column.class);
@@ -3432,7 +3430,7 @@ final class Tools {
 
             @Override
             public List<java.lang.reflect.Field> call() {
-                List<java.lang.reflect.Field> result = new ArrayList<java.lang.reflect.Field>();
+                List<java.lang.reflect.Field> result = new ArrayList<>();
 
                 // [#1942] Caching these values before the field-loop significantly
                 // accerates POJO mapping
@@ -3458,7 +3456,7 @@ final class Tools {
 
             @Override
             public List<Method> call() {
-                Set<SourceMethod> set = new LinkedHashSet<SourceMethod>();
+                Set<SourceMethod> set = new LinkedHashSet<>();
 
                 for (Method method : getInstanceMethods(type)) {
                     Column column = method.getAnnotation(Column.class);
@@ -3562,7 +3560,7 @@ final class Tools {
             public List<Method> call() {
 
                 // [#8460] Prevent duplicate methods in the call hierarchy
-                Set<SourceMethod> set = new LinkedHashSet<SourceMethod>();
+                Set<SourceMethod> set = new LinkedHashSet<>();
 
                 // [#1942] Caching these values before the method-loop significantly
                 // accerates POJO mapping
@@ -3638,7 +3636,7 @@ final class Tools {
         }
 
         static List<Method> methods(Collection<? extends SourceMethod> methods) {
-            List<Method> result = new ArrayList<Method>(methods.size());
+            List<Method> result = new ArrayList<>(methods.size());
 
             for (SourceMethod s : methods)
                 result.add(s.method);
@@ -3707,7 +3705,7 @@ final class Tools {
      * afterwards, from lowest to highest type in the type hierarchy.
      */
     private static final Set<Method> getInstanceMethods(Class<?> type) {
-        Set<Method> result = new LinkedHashSet<Method>();
+        Set<Method> result = new LinkedHashSet<>();
 
         for (Method method : type.getMethods())
             if ((method.getModifiers() & Modifier.STATIC) == 0)
@@ -3726,7 +3724,7 @@ final class Tools {
     }
 
     private static final List<java.lang.reflect.Field> getInstanceMembers(Class<?> type) {
-        List<java.lang.reflect.Field> result = new ArrayList<java.lang.reflect.Field>();
+        List<java.lang.reflect.Field> result = new ArrayList<>();
 
         for (java.lang.reflect.Field field : type.getFields())
             if ((field.getModifiers() & Modifier.STATIC) == 0)
@@ -3958,7 +3956,7 @@ final class Tools {
                     anyResults = true;
 
                     Field<?>[] fields = new MetaDataFieldProvider(ctx.configuration(), ctx.resultSet().getMetaData()).getFields();
-                    Cursor<Record> c = new CursorImpl<Record>(ctx, listener, fields, intern != null ? intern.internIndexes(fields) : null, true, false);
+                    Cursor<Record> c = new CursorImpl<>(ctx, listener, fields, intern != null ? intern.internIndexes(fields) : null, true, false);
                     results.resultsOrRows().add(new ResultOrRowsImpl(c.fetch()));
                 }
                 else if (prev == null) {
@@ -4086,7 +4084,7 @@ final class Tools {
             int dataLineStart,
             int dataLineEnd) {
 
-        List<int[]> positions = new ArrayList<int[]>();
+        List<int[]> positions = new ArrayList<>();
         Matcher m = pattern.matcher(strings[matchLine]);
 
         while (m.find()) {
@@ -4094,7 +4092,7 @@ final class Tools {
         }
 
         // Parse header line and data lines into string arrays
-        List<String[]> result = new ArrayList<String[]>();
+        List<String[]> result = new ArrayList<>();
         parseTXTLine(positions, result, strings[headerLine], nullLiteral);
 
         for (int j = dataLineStart; j < dataLineEnd; j++) {
@@ -4129,12 +4127,12 @@ final class Tools {
     private static final Pattern P_PARSE_HTML_COL_BODY = Pattern.compile("<td>(.*?)</td>");
 
     static final List<String[]> parseHTML(String string) {
-        List<String[]> result = new ArrayList<String[]>();
+        List<String[]> result = new ArrayList<>();
 
         Matcher mRow = P_PARSE_HTML_ROW.matcher(string);
         while (mRow.find()) {
             String row = mRow.group(1);
-            List<String> col = new ArrayList<String>();
+            List<String> col = new ArrayList<>();
 
             // Header was not yet emitted
             if (result.isEmpty()) {
@@ -4351,7 +4349,7 @@ final class Tools {
             }
 
             case MARIADB: {
-                List<String> sqlstates = new ArrayList<String>();
+                List<String> sqlstates = new ArrayList<>();
 
 //                if (type == CREATE_SCHEMA)
 //                    sqlstates.add("42710");
@@ -4889,7 +4887,7 @@ final class Tools {
         if (fields == null)
             return false;
 
-        Set<String> names = new HashSet<String>();
+        Set<String> names = new HashSet<>();
         for (Field<?> field : fields)
             if (!names.add(field.getName()))
                 return true;
@@ -4898,7 +4896,7 @@ final class Tools {
     }
 
     @SuppressWarnings("serial")
-    static final QueryPartList<SelectFieldOrAsterisk> qualify(Table<?> table, SelectFieldList<SelectFieldOrAsterisk> fields) {
+    static final QueryPartList<SelectFieldOrAsterisk> qualify(final Table<?> table, SelectFieldList<SelectFieldOrAsterisk> fields) {
         QueryPartList<SelectFieldOrAsterisk> result = new QueryPartList<SelectFieldOrAsterisk>() {
             @Override
             protected void toSQLEmptyList(Context<?> context) {
@@ -5149,7 +5147,7 @@ final class Tools {
                     @Override
                     List<E> flatten(E e) {
                         if (e.getKey() instanceof EmbeddableTableField) {
-                            List<E> result = new ArrayList<E>();
+                            List<E> result = new ArrayList<>();
                             Field<?>[] keys = embeddedFields(e.getKey());
                             Field<?>[] values = embeddedFields(e.getValue());
 

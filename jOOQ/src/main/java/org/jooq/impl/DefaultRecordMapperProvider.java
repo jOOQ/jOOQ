@@ -84,10 +84,10 @@ public class DefaultRecordMapperProvider implements RecordMapperProvider, Serial
             return Cache.run(configuration, new CachedOperation<RecordMapper<R, E>>() {
                 @Override
                 public RecordMapper<R, E> call() {
-                    return new DefaultRecordMapper<R, E>(rowType, type, configuration);
+                    return new DefaultRecordMapper<>(rowType, type, configuration);
                 }
             }, DATA_CACHE_RECORD_MAPPERS, Cache.key(rowType, type));
         else
-            return new DefaultRecordMapper<R, E>(rowType, type, configuration);
+            return new DefaultRecordMapper<>(rowType, type, configuration);
     }
 }

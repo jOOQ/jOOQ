@@ -70,7 +70,7 @@ final class ScopeStack<K, V> implements Iterable<V> {
 
     private final Map<K, List<V>> stack() {
         if (stack == null)
-            stack = new LinkedHashMap<K, List<V>>();
+            stack = new LinkedHashMap<>();
 
         return stack;
     }
@@ -168,9 +168,8 @@ final class ScopeStack<K, V> implements Iterable<V> {
     private List<V> list(K key) {
         List<V> list = stack().get(key);
 
-        if (list == null) {
-            stack().put(key, list = new ArrayList<V>());
-        }
+        if (list == null)
+            stack().put(key, list = new ArrayList<>());
 
         return list;
     }

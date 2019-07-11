@@ -725,7 +725,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         ParamCollector collector = new ParamCollector(configuration(), false);
         collector.visit(part);
 
-        List<Object> result = new ArrayList<Object>(collector.resultList.size());
+        List<Object> result = new ArrayList<>(collector.resultList.size());
         for (Entry<String, Param<?>> entry : collector.resultList)
             result.add(entry.getValue().getValue());
 
@@ -781,7 +781,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <R extends Record> LoaderOptionsStep<R> loadInto(Table<R> table) {
-        return new LoaderImpl<R>(configuration(), table);
+        return new LoaderImpl<>(configuration(), table);
     }
 
     // -------------------------------------------------------------------------
@@ -1299,7 +1299,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         ExecuteListener listener = ExecuteListeners.get(ctx);
 
         ctx.resultSet(rs);
-        return new CursorImpl<Record>(ctx, listener, fields, null, false, true);
+        return new CursorImpl<>(ctx, listener, fields, null, false, true);
     }
 
     @Override
@@ -1512,10 +1512,10 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public Result<Record> fetchFromStringData(List<String[]> strings, boolean header) {
         if (strings.size() == 0) {
-            return new ResultImpl<Record>(configuration());
+            return new ResultImpl<>(configuration());
         }
         else {
-            List<Field<?>> fields = new ArrayList<Field<?>>(strings.get(0).length);
+            List<Field<?>> fields = new ArrayList<>(strings.get(0).length);
             int firstRow = header ? 1 : 0;
 
             if (header)
@@ -1525,7 +1525,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
                 for (int i = 0; i < strings.get(0).length; i++)
                     fields.add(field(name("COL" + (i + 1)), String.class));
 
-            Result<Record> result = new ResultImpl<Record>(configuration(), fields);
+            Result<Record> result = new ResultImpl<>(configuration(), fields);
 
             if (strings.size() > firstRow) {
                 for (String[] values : strings.subList(firstRow, strings.size())) {
@@ -2370,12 +2370,12 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <R extends Record> SelectQuery<R> selectQuery(TableLike<R> table) {
-        return new SelectQueryImpl<R>(configuration(), null, table);
+        return new SelectQueryImpl<>(configuration(), null, table);
     }
 
     @Override
     public <R extends Record> InsertQuery<R> insertQuery(Table<R> into) {
-        return new InsertQueryImpl<R>(configuration(), null, into);
+        return new InsertQueryImpl<>(configuration(), null, into);
     }
 
     @Override
@@ -2509,12 +2509,12 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <R extends Record> UpdateQuery<R> updateQuery(Table<R> table) {
-        return new UpdateQueryImpl<R>(configuration(), null, table);
+        return new UpdateQueryImpl<>(configuration(), null, table);
     }
 
     @Override
     public <R extends Record> UpdateSetFirstStep<R> update(Table<R> table) {
-        return new UpdateImpl<R>(configuration(), null, table);
+        return new UpdateImpl<>(configuration(), null, table);
     }
 
     @Override
@@ -2648,7 +2648,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <R extends Record> DeleteQuery<R> deleteQuery(Table<R> table) {
-        return new DeleteQueryImpl<R>(configuration(), null, table);
+        return new DeleteQueryImpl<>(configuration(), null, table);
     }
 
     @Override
@@ -2658,7 +2658,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <R extends Record> DeleteWhereStep<R> deleteFrom(Table<R> table) {
-        return new DeleteImpl<R>(configuration(), null, table);
+        return new DeleteImpl<>(configuration(), null, table);
     }
 
     // -------------------------------------------------------------------------
@@ -2916,7 +2916,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public CreateViewAsStep<Record> createView(Table<?> view, Field<?>... fields) {
-        return new CreateViewImpl<Record>(configuration(), view, fields, false, false);
+        return new CreateViewImpl<>(configuration(), view, fields, false, false);
     }
 
 
@@ -2947,7 +2947,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public CreateViewAsStep<Record> createView(Table<?> view, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction) {
-        return new CreateViewImpl<Record>(configuration(), view, fieldNameFunction, false, false);
+        return new CreateViewImpl<>(configuration(), view, fieldNameFunction, false, false);
     }
 
 
@@ -2963,7 +2963,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public CreateViewAsStep<Record> createOrReplaceView(Table<?> view, Field<?>... fields) {
-        return new CreateViewImpl<Record>(configuration(), view, fields, false, true);
+        return new CreateViewImpl<>(configuration(), view, fields, false, true);
     }
 
 
@@ -2994,7 +2994,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public CreateViewAsStep<Record> createOrReplaceView(Table<?> view, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction) {
-        return new CreateViewImpl<Record>(configuration(), view, fieldNameFunction, false, true);
+        return new CreateViewImpl<>(configuration(), view, fieldNameFunction, false, true);
     }
 
 
@@ -3010,7 +3010,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, Field<?>... fields) {
-        return new CreateViewImpl<Record>(configuration(), view, fields, true, false);
+        return new CreateViewImpl<>(configuration(), view, fields, true, false);
     }
 
 
@@ -3041,7 +3041,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction) {
-        return new CreateViewImpl<Record>(configuration(), view, fieldNameFunction, true, false);
+        return new CreateViewImpl<>(configuration(), view, fieldNameFunction, true, false);
     }
 
 
@@ -3307,7 +3307,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <T extends Number> AlterSequenceStep<T> alterSequence(Sequence<T> sequence) {
-        return new AlterSequenceImpl<T>(configuration(), sequence);
+        return new AlterSequenceImpl<>(configuration(), sequence);
     }
 
     @Override
@@ -3322,7 +3322,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <T extends Number> AlterSequenceStep<T> alterSequenceIfExists(Sequence<T> sequence) {
-        return new AlterSequenceImpl<T>(configuration(), sequence, true);
+        return new AlterSequenceImpl<>(configuration(), sequence, true);
     }
 
     @Override
@@ -3637,7 +3637,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <R extends Record> TruncateIdentityStep<R> truncateTable(Table<R> table) {
-        return new TruncateImpl<R>(configuration(), table);
+        return new TruncateImpl<>(configuration(), table);
     }
 
     // -------------------------------------------------------------------------
@@ -3944,17 +3944,17 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <R extends Record> Result<R> newResult(Table<R> table) {
-        return new ResultImpl<R>(configuration(), table.fields());
+        return new ResultImpl<>(configuration(), table.fields());
     }
 
     @Override
     public Result<Record> newResult(Field<?>... fields) {
-        return new ResultImpl<Record>(configuration(), fields);
+        return new ResultImpl<>(configuration(), fields);
     }
 
     @Override
     public Result<Record> newResult(Collection<? extends Field<?>> fields) {
-        return new ResultImpl<Record>(configuration(), fields);
+        return new ResultImpl<>(configuration(), fields);
     }
 
 

@@ -53,14 +53,14 @@ public class DefaultForeignKeyDefinition extends AbstractDefinition implements F
 
         super(schema.getDatabase(), schema, name, null);
 
-        this.keyColumns = new ArrayList<ColumnDefinition>();
+        this.keyColumns = new ArrayList<>();
         this.table = table;
         this.uniqueKey = uniqueKey;
     }
 
     @Override
     public List<Definition> getDefinitionPath() {
-        List<Definition> result = new ArrayList<Definition>();
+        List<Definition> result = new ArrayList<>();
 
         result.addAll(getSchema().getDefinitionPath());
         result.add(this);
@@ -95,7 +95,7 @@ public class DefaultForeignKeyDefinition extends AbstractDefinition implements F
 
     @Override
     public int countSimilarReferences() {
-        Set<String> keys = new HashSet<String>();
+        Set<String> keys = new HashSet<>();
 
         for (ForeignKeyDefinition key : getDatabase().getRelations().getForeignKeys(table)) {
             if (key.getReferencedTable().equals(getReferencedTable())) {

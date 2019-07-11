@@ -596,6 +596,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *             completely internal with jOOQ 4.0
      */
     @Deprecated
+    @Internal
     RenderContext renderContext();
 
     /**
@@ -699,6 +700,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *             completely internal with jOOQ 4.0
      */
     @Deprecated
+    @Internal
     BindContext bindContext(PreparedStatement stmt);
 
     /**

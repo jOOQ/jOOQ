@@ -47,6 +47,7 @@ import org.jooq.exception.DataAccessException;
  *
  * @author Lukas Eder
  */
+@Internal
 public interface QueryPartInternal extends QueryPart {
 
     /**

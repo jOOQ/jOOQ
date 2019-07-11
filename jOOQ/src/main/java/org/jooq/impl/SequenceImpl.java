@@ -70,6 +70,7 @@ import org.jooq.exception.SQLDialectNotSupportedException;
  *
  * @author Lukas Eder
  */
+@org.jooq.Internal
 public class SequenceImpl<T extends Number> extends AbstractNamed implements Sequence<T> {
 
     /**

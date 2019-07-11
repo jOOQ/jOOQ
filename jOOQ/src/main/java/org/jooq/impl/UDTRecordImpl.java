@@ -59,6 +59,7 @@ import org.jooq.UDTRecord;
  *
  * @author Lukas Eder
  */
+@org.jooq.Internal
 public class UDTRecordImpl<R extends UDTRecord<R>> extends AbstractRecord implements UDTRecord<R> {
 
     /**

@@ -59,6 +59,7 @@ import org.jooq.UniqueKey;
  *
  * @author Lukas Eder
  */
+@org.jooq.Internal
 public final class Internal {
 
     /**

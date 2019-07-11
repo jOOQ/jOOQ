@@ -87,6 +87,7 @@ import org.jooq.tools.JooqLogger;
  *
  * @author Lukas Eder
  */
+@org.jooq.Internal
 public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord implements TableRecord<R> {
 
     /**

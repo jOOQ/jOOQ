@@ -53,6 +53,7 @@ import org.jooq.exception.DataAccessException;
  * @author Lukas Eder
  * @see RenderContext
  */
+@Internal
 public interface BindContext extends Context<BindContext> {
 
     /**

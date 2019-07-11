@@ -88,7 +88,7 @@ import org.xml.sax.InputSource;
  * @author Lukas Eder
  */
 @Internal
-public class MiniJAXB {
+public final class MiniJAXB {
 
     public static String marshal(XMLAppendable object) {
         StringWriter writer = new StringWriter();

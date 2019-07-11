@@ -62,6 +62,7 @@ import org.jooq.UDT;
  *
  * @author Lukas Eder
  */
+@org.jooq.Internal
 public class SchemaImpl extends AbstractNamed implements Schema {
 
     private static final long     serialVersionUID = -8101463810207566546L;

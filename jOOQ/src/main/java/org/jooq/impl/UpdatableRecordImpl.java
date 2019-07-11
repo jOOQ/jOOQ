@@ -81,6 +81,7 @@ import org.jooq.tools.StringUtils;
  *
  * @author Lukas Eder
  */
+@org.jooq.Internal
 public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableRecordImpl<R> implements UpdatableRecord<R> {
 
     /**

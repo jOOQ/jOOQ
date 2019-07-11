@@ -58,6 +58,7 @@ import org.jooq.Schema;
  *
  * @author Lukas Eder
  */
+@org.jooq.Internal
 public class CatalogImpl extends AbstractNamed implements Catalog {
 
     /**

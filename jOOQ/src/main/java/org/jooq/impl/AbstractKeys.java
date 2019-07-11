@@ -55,6 +55,7 @@ import org.jooq.UniqueKey;
  * @deprecated - [#6875] [#7158] - 3.11.0 - Please re-generate your code
  */
 @Deprecated
+@org.jooq.Internal
 public abstract class AbstractKeys {
 
     /**

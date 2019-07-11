@@ -49,6 +49,7 @@ import org.jooq.Row;
  *
  * @author Lukas Eder
  */
+@org.jooq.Internal
 public class EmbeddableRecordImpl<R extends EmbeddableRecord<R>> extends AbstractRecord implements EmbeddableRecord<R> {
 
     /**

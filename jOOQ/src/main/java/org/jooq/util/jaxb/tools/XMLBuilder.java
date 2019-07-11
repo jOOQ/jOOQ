@@ -55,7 +55,7 @@ import org.jooq.Internal;
  * @author Knut Wannheden
  */
 @Internal
-public class XMLBuilder {
+public final class XMLBuilder {
 
     private final StringBuilder builder = new StringBuilder();
 

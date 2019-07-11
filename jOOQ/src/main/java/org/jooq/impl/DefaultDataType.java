@@ -99,6 +99,7 @@ import org.jooq.types.UShort;
  * @author Lukas Eder
  */
 @SuppressWarnings({"unchecked"})
+@org.jooq.Internal
 public class DefaultDataType<T> implements DataType<T> {
 
     /**

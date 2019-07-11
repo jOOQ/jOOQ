@@ -71,6 +71,7 @@ import org.jooq.tools.StringUtils;
  *
  * @author Lukas Eder
  */
+@org.jooq.Internal
 public class TableImpl<R extends Record> extends AbstractTable<R> {
 
     private static final long                serialVersionUID               = 261033315221985068L;

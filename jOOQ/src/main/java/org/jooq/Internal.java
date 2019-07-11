@@ -37,6 +37,7 @@
  */
 package org.jooq;
 
+import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.ElementType.TYPE;
@@ -47,13 +48,16 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Signifies that a API (public class, method or field) is internal and subject to incompatible
- * changes, or even removal, in a future release. An API bearing this annotation is exempt from any
- * compatibility guarantees made by its containing library.
+ * Signifies that a API (public class, method or field) is internal and subject
+ * to incompatible changes, or even removal, in a future release. An API bearing
+ * this annotation is exempt from any compatibility guarantees made by its
+ * containing library.
  *
  * @author Knut Wannheden
  */
 @Documented
 @Retention(RetentionPolicy.CLASS)
-@Target(value={FIELD, METHOD, TYPE})
-public @interface Internal {}
+@Target(value = { FIELD, METHOD, TYPE, ANNOTATION_TYPE })
+@Internal
+public @interface Internal {
+}

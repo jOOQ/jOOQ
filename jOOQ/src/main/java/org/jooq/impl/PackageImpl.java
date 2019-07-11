@@ -53,6 +53,7 @@ import org.jooq.Schema;
  *
  * @author Lukas Eder
  */
+@org.jooq.Internal
 public class PackageImpl extends AbstractNamed implements Package {
 
     /**

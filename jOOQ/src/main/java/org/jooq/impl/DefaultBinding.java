@@ -965,9 +965,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             }
 
             else if (                                                            ctx.family() == POSTGRES) {
+
+                // [#8933] In some cases, we cannot derive the cast type from
+                //         array type directly
                 Class<?> arrayType =
                     type == Object[].class
-                  ? componentType(value)
+                  ? deriveArrayTypeFromComponentType(value)
                   : type;
 
                 ctx.render().visit(cast(inline(PostgresUtils.toPGArrayString(value)), arrayType));
@@ -992,7 +995,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             }
         }
 
-        private final Class<?> componentType(Object[] value) {
+        private final Class<?> deriveArrayTypeFromComponentType(Object[] value) {
             for (Object o : value)
                 if (o != null)
                     return java.lang.reflect.Array.newInstance(o.getClass(), 0).getClass();

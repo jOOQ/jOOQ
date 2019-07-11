@@ -965,7 +965,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             }
 
             else if (                                                            ctx.family() == POSTGRES) {
-                ctx.render().visit(cast(inline(PostgresUtils.toPGArrayString(value)), type));
+                Class<?> arrayType =
+                    type == Object[].class
+                  ? componentType(value)
+                  : type;
+
+                ctx.render().visit(cast(inline(PostgresUtils.toPGArrayString(value)), arrayType));
             }
 
             // By default, render HSQLDB syntax
@@ -985,6 +990,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 if ((                                                            ctx.family() == POSTGRES) && EnumType.class.isAssignableFrom(type.getComponentType()))
                     DefaultEnumTypeBinding.pgRenderEnumCast(ctx.render(), type);
             }
+        }
+
+        private final Class<?> componentType(Object[] value) {
+            for (Object o : value)
+                if (o != null)
+                    return java.lang.reflect.Array.newInstance(o.getClass(), 0).getClass();
+
+            // PostgreSQL often defaults to using varchar as well, so we can
+            // mimick this behaviour (without documenting it).
+            return String[].class;
         }
 
         @Override

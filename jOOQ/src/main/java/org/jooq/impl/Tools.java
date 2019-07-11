@@ -4682,8 +4682,8 @@ final class Tools {
                     ctx.visit(K_ENUM).sql('(');
 
                     String separator = "";
-                    for (Object e : enumConstants(enumType)) {
-                        ctx.sql(separator).visit(DSL.inline(((EnumType) e).getLiteral()));
+                    for (EnumType e : enumConstants(enumType)) {
+                        ctx.sql(separator).visit(DSL.inline(e.getLiteral()));
                         separator = ", ";
                     }
 
@@ -4695,11 +4695,18 @@ final class Tools {
 
 
 
-                case POSTGRES:
+                case POSTGRES: {
+
+                    // [#7597] but only if the EnumType.getSchema() value is present
+                    //         i.e. when it is a known, stored enum type
+                    if (!storedEnumType(enumType))
+                        type = emulateEnumType(enumType);
+
                     break;
+                }
 
                 default: {
-                    type = emulateEnumType(enumType, enumConstants(enumType));
+                    type = emulateEnumType(enumType);
                     break;
                 }
             }
@@ -4761,8 +4768,12 @@ final class Tools {
             ctx.sql(' ').visit(K_COLLATE).sql(' ').visit(type.collation());
     }
 
-    private static Object[] enumConstants(DataType<? extends EnumType> type) {
-        Object[] enums = type.getType().getEnumConstants();
+    static boolean storedEnumType(DataType<EnumType> enumType) {
+        return enumConstants(enumType)[0].getSchema() != null;
+    }
+
+    private static EnumType[] enumConstants(DataType<? extends EnumType> type) {
+        EnumType[] enums = type.getType().getEnumConstants();
 
         if (enums == null)
             throw new DataTypeException("EnumType must be a Java enum");
@@ -4774,11 +4785,12 @@ final class Tools {
         return emulateEnumType(type, enumConstants(type));
     }
 
-    static final DataType<String> emulateEnumType(DataType<? extends EnumType> type, Object[] enums) {
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    private static final DataType<String> emulateEnumType(DataType<? extends EnumType> type, EnumType[] enums) {
         int length = 0;
-        for (Object e : enums)
-            if (((EnumType) e).getLiteral() != null)
-                length = Math.max(length, ((EnumType) e).getLiteral().length());
+        for (EnumType e : enums)
+            if (e.getLiteral() != null)
+                length = Math.max(length, e.getLiteral().length());
 
         return VARCHAR(length).nullability(type.nullability()).defaultValue((Field) type.defaultValue());
     }

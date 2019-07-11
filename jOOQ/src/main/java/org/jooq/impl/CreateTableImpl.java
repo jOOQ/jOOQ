@@ -97,6 +97,8 @@ import static org.jooq.impl.Tools.begin;
 import static org.jooq.impl.Tools.beginExecuteImmediate;
 import static org.jooq.impl.Tools.end;
 import static org.jooq.impl.Tools.endExecuteImmediate;
+import static org.jooq.impl.Tools.enumLiterals;
+import static org.jooq.impl.Tools.storedEnumType;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_SELECT_NO_DATA;
 import static org.jooq.impl.Tools.DataKey.DATA_SELECT_INTO_TABLE;
 
@@ -137,16 +139,17 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
     /**
      * Generated UID
      */
-    private static final long                serialVersionUID               = 8904572826501186329L;
-    private static final EnumSet<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS       = EnumSet.of(DERBY, FIREBIRD);
-    private static final EnumSet<SQLDialect> NO_SUPPORT_WITH_DATA           = EnumSet.of(H2, MARIADB, MYSQL, SQLITE);
-    private static final EnumSet<SQLDialect> NO_SUPPORT_CTAS_COLUMN_NAMES   = EnumSet.of(H2);
-    private static final EnumSet<SQLDialect> EMULATE_INDEXES_IN_BLOCK       = EnumSet.of(POSTGRES);
-    private static final EnumSet<SQLDialect> EMULATE_ENUM_TYPES_AS_CHECK    = EnumSet.of(CUBRID, DERBY, FIREBIRD, HSQLDB, SQLITE);
-    private static final EnumSet<SQLDialect> REQUIRES_WITH_DATA             = EnumSet.of(HSQLDB);
-    private static final EnumSet<SQLDialect> WRAP_SELECT_IN_PARENS          = EnumSet.of(HSQLDB);
-    private static final EnumSet<SQLDialect> SUPPORT_TEMPORARY              = EnumSet.of(MARIADB, MYSQL, POSTGRES);
-    private static final EnumSet<SQLDialect> EMULATE_COMMENT_IN_BLOCK       = EnumSet.of(POSTGRES);
+    private static final long                serialVersionUID                   = 8904572826501186329L;
+    private static final EnumSet<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS           = EnumSet.of(DERBY, FIREBIRD);
+    private static final EnumSet<SQLDialect> NO_SUPPORT_WITH_DATA               = EnumSet.of(H2, MARIADB, MYSQL, SQLITE);
+    private static final EnumSet<SQLDialect> NO_SUPPORT_CTAS_COLUMN_NAMES       = EnumSet.of(H2);
+    private static final EnumSet<SQLDialect> EMULATE_INDEXES_IN_BLOCK           = EnumSet.of(POSTGRES);
+    private static final EnumSet<SQLDialect> EMULATE_SOME_ENUM_TYPES_AS_CHECK   = EnumSet.of(CUBRID, DERBY, FIREBIRD, HSQLDB, POSTGRES, SQLITE);
+    private static final EnumSet<SQLDialect> EMULATE_STORED_ENUM_TYPES_AS_CHECK = EnumSet.of(CUBRID, DERBY, FIREBIRD, HSQLDB, SQLITE);
+    private static final EnumSet<SQLDialect> REQUIRES_WITH_DATA                 = EnumSet.of(HSQLDB);
+    private static final EnumSet<SQLDialect> WRAP_SELECT_IN_PARENS              = EnumSet.of(HSQLDB);
+    private static final EnumSet<SQLDialect> SUPPORT_TEMPORARY                  = EnumSet.of(MARIADB, MYSQL, POSTGRES);
+    private static final EnumSet<SQLDialect> EMULATE_COMMENT_IN_BLOCK           = EnumSet.of(POSTGRES);
 
 
 
@@ -495,17 +498,23 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
                            .formatSeparator()
                            .visit(constraint);
 
-            if (EMULATE_ENUM_TYPES_AS_CHECK.contains(ctx.family())) {
+            if (EMULATE_SOME_ENUM_TYPES_AS_CHECK.contains(ctx.family())) {
                 for (int i = 0; i < columnFields.size(); i++) {
                     DataType<?> type = columnTypes.get(i);
 
                     if (EnumType.class.isAssignableFrom(type.getType())) {
-                        Field<?> field = columnFields.get(i);
 
-                        ctx.sql(',')
-                           .formatSeparator()
-                           .visit(DSL.constraint(table.getName() + "_" + field.getName() + "_chk")
-                                     .check(((Field) field).in(Tools.inline(Tools.enumLiterals((Class<EnumType>) type.getType())))));
+                        @SuppressWarnings("unchecked")
+                        DataType<EnumType> enumType = (DataType<EnumType>) type;
+
+                        if (EMULATE_STORED_ENUM_TYPES_AS_CHECK.contains(ctx.family()) || !storedEnumType(enumType)) {
+                            Field<?> field = columnFields.get(i);
+
+                            ctx.sql(',')
+                               .formatSeparator()
+                               .visit(DSL.constraint(table.getName() + "_" + field.getName() + "_chk")
+                                         .check(((Field) field).in(Tools.inline(enumLiterals(enumType.getType())))));
+                        }
                     }
                 }
             }

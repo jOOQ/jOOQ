@@ -335,9 +335,25 @@ public class DefaultDataType<T> implements DataType<T> {
     }
 
     /**
+     * [#7811] Allow for subtypes to override the constructor
+     */
+    DefaultDataType<T> construct(
+        int newPrecision,
+        int newScale,
+        int newLength,
+        Nullability newNullability,
+        Collation newCollation,
+        CharacterSet newCharacterSet,
+        boolean newIdentity,
+        Field<T> newDefaultValue
+    ) {
+        return new DefaultDataType<>(this, newPrecision, newScale, newLength, newNullability, newCollation, newCharacterSet, newIdentity, newDefaultValue);
+    }
+
+    /**
      * [#3225] Performant constructor for creating derived types.
      */
-    private DefaultDataType(
+    DefaultDataType(
         DefaultDataType<T> t,
         int precision,
         int scale,
@@ -385,7 +401,7 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final DataType<T> nullability(Nullability n) {
-        return new DefaultDataType<>(this, precision, scale, length, n, collation, characterSet, n.nullable() ? false : identity, defaultValue);
+        return construct(precision, scale, length, n, collation, characterSet, n.nullable() ? false : identity, defaultValue);
     }
 
     @Override
@@ -405,7 +421,7 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final DataType<T> collation(Collation c) {
-        return new DefaultDataType<>(this, precision, scale, length, nullability, c, characterSet, identity, defaultValue);
+        return construct(precision, scale, length, nullability, c, characterSet, identity, defaultValue);
     }
 
     @Override
@@ -415,7 +431,7 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final DataType<T> characterSet(CharacterSet c) {
-        return new DefaultDataType<>(this, precision, scale, length, nullability, collation, c, identity, defaultValue);
+        return construct(precision, scale, length, nullability, collation, c, identity, defaultValue);
     }
 
     @Override
@@ -425,7 +441,7 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final DataType<T> identity(boolean i) {
-        return new DefaultDataType<>(this, precision, scale, length, i ? NOT_NULL : nullability, collation, characterSet, i, i ? null : defaultValue);
+        return construct(precision, scale, length, i ? NOT_NULL : nullability, collation, characterSet, i, i ? null : defaultValue);
     }
 
     @Override
@@ -455,7 +471,7 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final DataType<T> default_(Field<T> d) {
-        return new DefaultDataType<>(this, precision, scale, length, nullability, collation, characterSet, d != null ? false : identity, d);
+        return construct(precision, scale, length, nullability, collation, characterSet, d != null ? false : identity, d);
     }
 
     @Override
@@ -488,7 +504,7 @@ public class DefaultDataType<T> implements DataType<T> {
         else if (isLob())
             return this;
         else
-            return new DefaultDataType<>(this, p, s, length, nullability, collation, characterSet, identity, defaultValue);
+            return construct(p, s, length, nullability, collation, characterSet, identity, defaultValue);
     }
 
     @Override
@@ -519,7 +535,7 @@ public class DefaultDataType<T> implements DataType<T> {
         if (isLob())
             return this;
         else
-            return new DefaultDataType<>(this, precision, s, length, nullability, collation, characterSet, identity, defaultValue);
+            return construct(precision, s, length, nullability, collation, characterSet, identity, defaultValue);
     }
 
     @Override
@@ -541,7 +557,7 @@ public class DefaultDataType<T> implements DataType<T> {
         if (isLob())
             return this;
         else
-            return new DefaultDataType<>(this, precision, scale, l, nullability, collation, characterSet, identity, defaultValue);
+            return construct(precision, scale, l, nullability, collation, characterSet, identity, defaultValue);
     }
 
     @Override

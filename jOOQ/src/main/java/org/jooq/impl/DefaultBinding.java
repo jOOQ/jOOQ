@@ -155,6 +155,8 @@ import org.jooq.Converters;
 import org.jooq.DataType;
 import org.jooq.EnumType;
 import org.jooq.Field;
+import org.jooq.JSON;
+import org.jooq.JSONB;
 // ...
 import org.jooq.Record;
 import org.jooq.RenderContext;
@@ -244,6 +246,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             return new DefaultFloatBinding(converter, isLob);
         else if (type == Integer.class || type == int.class)
             return new DefaultIntegerBinding(converter, isLob);
+        else if (type == JSON.class)
+            return new DefaultJSONBinding(converter, isLob);
+        else if (type == JSONB.class)
+            return new DefaultJSONBBinding(converter, isLob);
 
         else if (type == LocalDate.class) {
             DateToLocalDateConverter c1 = new DateToLocalDateConverter();
@@ -608,6 +614,17 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 }
             }
 
+            // [#7242] Other vendor specific types also need a lot of casting
+            if (type == JSON.class || type == JSONB.class) {
+                switch (ctx.family()) {
+
+
+
+                    case POSTGRES:
+                        return true;
+                }
+            }
+
             return false;
         }
 
@@ -662,7 +679,13 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             // [#4338] ... specifically when using JSR-310 types
             // [#1130] TODO type can be null for ARRAY types, etc.
             // [#7351] UUID data types need to be cast too
-            else if ((                                                      POSTGRES == family) && (sqlDataType == null || (!sqlDataType.isTemporal() && sqlDataType != SQLDataType.UUID)))
+            // [#7242] JSON(B) data types need to be cast too
+            else if ((                                                      POSTGRES == family) &&
+                    (sqlDataType == null ||
+                    (!sqlDataType.isTemporal()
+                        && sqlDataType != SQLDataType.UUID
+                        && sqlDataType != SQLDataType.JSON
+                        && sqlDataType != SQLDataType.JSONB)))
                 sql(ctx, converted);
 
             // [#1727] VARCHAR types should be cast to their actual lengths in some
@@ -4138,6 +4161,90 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 default:
                     return Types.VARCHAR;
             }
+        }
+    }
+
+    static final class DefaultJSONBinding<U> extends AbstractBinding<JSON, U> {
+
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = 3430629127218407737L;
+
+        DefaultJSONBinding(Converter<JSON, U> converter, boolean isLob) {
+            super(converter, isLob);
+        }
+
+        @Override
+        final void set0(BindingSetStatementContext<U> ctx, JSON value) throws SQLException {
+            ctx.statement().setString(ctx.index(), value.toString());
+        }
+
+        @Override
+        final void set0(BindingSetSQLOutputContext<U> ctx, JSON value) throws SQLException {
+            ctx.output().writeString(value.toString());
+        }
+
+        @Override
+        final JSON get0(BindingGetResultSetContext<U> ctx) throws SQLException {
+            return JSON.valueOf(ctx.resultSet().getString(ctx.index()));
+        }
+
+        @Override
+        final JSON get0(BindingGetStatementContext<U> ctx) throws SQLException {
+            return JSON.valueOf(ctx.statement().getString(ctx.index()));
+        }
+
+        @Override
+        final JSON get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
+            return JSON.valueOf(ctx.input().readString());
+        }
+
+        @Override
+        final int sqltype(Statement statement, Configuration configuration) {
+            return Types.VARCHAR;
+        }
+    }
+
+    static final class DefaultJSONBBinding<U> extends AbstractBinding<JSONB, U> {
+
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = 3430629127218407737L;
+
+        DefaultJSONBBinding(Converter<JSONB, U> converter, boolean isLob) {
+            super(converter, isLob);
+        }
+
+        @Override
+        final void set0(BindingSetStatementContext<U> ctx, JSONB value) throws SQLException {
+            ctx.statement().setString(ctx.index(), value.toString());
+        }
+
+        @Override
+        final void set0(BindingSetSQLOutputContext<U> ctx, JSONB value) throws SQLException {
+            ctx.output().writeString(value.toString());
+        }
+
+        @Override
+        final JSONB get0(BindingGetResultSetContext<U> ctx) throws SQLException {
+            return JSONB.valueOf(ctx.resultSet().getString(ctx.index()));
+        }
+
+        @Override
+        final JSONB get0(BindingGetStatementContext<U> ctx) throws SQLException {
+            return JSONB.valueOf(ctx.statement().getString(ctx.index()));
+        }
+
+        @Override
+        final JSONB get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
+            return JSONB.valueOf(ctx.input().readString());
+        }
+
+        @Override
+        final int sqltype(Statement statement, Configuration configuration) {
+            return Types.VARCHAR;
         }
     }
 

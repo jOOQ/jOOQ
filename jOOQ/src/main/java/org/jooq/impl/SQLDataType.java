@@ -81,6 +81,8 @@ import java.util.UUID;
 
 import org.jooq.Configuration;
 import org.jooq.DataType;
+import org.jooq.JSON;
+import org.jooq.JSONB;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.RowId;
@@ -655,6 +657,22 @@ public final class SQLDataType {
      * they are supported
      */
     public static final DataType<UUID> UUID = new DefaultDataType<>(null, UUID.class, "uuid");
+
+    /**
+     * The {@link JSON} type.
+     * <p>
+     * This is not a SQL or JDBC standard. This type handles JSON types where
+     * they are supported.
+     */
+    public static final DataType<JSON> JSON = new DefaultDataType<>(null, JSON.class, "json");
+
+    /**
+     * The {@link JSONB} type.
+     * <p>
+     * This is not a SQL or JDBC standard. This type handles JSONB types where
+     * they are supported
+     */
+    public static final DataType<JSONB> JSONB = new DefaultDataType<>(null, JSONB.class, "jsonb");
 
     // -------------------------------------------------------------------------
     // Static initialisation of dialect-specific data types

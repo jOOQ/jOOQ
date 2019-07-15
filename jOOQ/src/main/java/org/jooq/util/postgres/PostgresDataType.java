@@ -49,6 +49,8 @@ import java.time.OffsetTime;
 import java.util.UUID;
 
 import org.jooq.DataType;
+import org.jooq.JSON;
+import org.jooq.JSONB;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
@@ -166,7 +168,8 @@ public class PostgresDataType {
     public static final DataType<Result<Record>> REFCURSOR              = new DefaultDataType<>(SQLDialect.POSTGRES, SQLDataType.RESULT, "refcursor");
     public static final DataType<Object>     ANY                        = new DefaultDataType<>(SQLDialect.POSTGRES, SQLDataType.OTHER, "any");
     public static final DataType<UUID>       UUID                       = new DefaultDataType<>(SQLDialect.POSTGRES, SQLDataType.UUID, "uuid");
-    public static final DataType<Object>     JSON                       = new DefaultDataType<>(SQLDialect.POSTGRES, SQLDataType.OTHER, "json");
+    public static final DataType<JSON>       JSON                       = new DefaultDataType<>(SQLDialect.POSTGRES, SQLDataType.JSON, "json");
+    public static final DataType<JSONB>      JSONB                      = new DefaultDataType<>(SQLDialect.POSTGRES, SQLDataType.JSONB, "jsonb");
 
     // Meta-table types
     public static final DataType<Long>       OID                        = new DefaultDataType<>(SQLDialect.POSTGRES, SQLDataType.BIGINT, "oid");

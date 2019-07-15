@@ -44,6 +44,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.regex.Pattern;
 
+import org.jooq.Internal;
 import org.jooq.tools.JooqLogger;
 
 /**
@@ -55,6 +56,7 @@ import org.jooq.tools.JooqLogger;
  *
  * @author Lukas Eder
  */
+@Internal
 public final class FilePattern {
 
     private static final JooqLogger log = JooqLogger.getLogger(FilePattern.class);

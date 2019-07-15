@@ -84,6 +84,7 @@ import org.jooq.Converter;
 import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.JSON;
+import org.jooq.JSONB;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.UDTRecord;
@@ -1011,6 +1012,11 @@ public final class Convert {
                 // [#8943] JSON data types can be read from Strings
                 else if (fromClass == String.class && toClass == JSON.class) {
                     return (U) JSON.valueOf((String) from);
+                }
+
+                // [#8943] JSONB data types can be read from Strings
+                else if (fromClass == String.class && toClass == JSONB.class) {
+                    return (U) JSONB.valueOf((String) from);
                 }
 
                 // [#3023] Record types can be converted using the supplied Configuration's

@@ -83,6 +83,7 @@ import java.util.regex.Pattern;
 import org.jooq.Converter;
 import org.jooq.EnumType;
 import org.jooq.Field;
+import org.jooq.JSON;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.UDTRecord;
@@ -420,9 +421,8 @@ public final class Convert {
         ConvertAll<T> all = new ConvertAll<>(converter.fromType());
         List<U> result = new ArrayList<>(collection.size());
 
-        for (Object o : collection) {
+        for (Object o : collection)
             result.add(convert(all.from(o), converter));
-        }
 
         return result;
     }
@@ -1006,6 +1006,11 @@ public final class Convert {
                     catch (IllegalArgumentException e) {
                         return null;
                     }
+                }
+
+                // [#8943] JSON data types can be read from Strings
+                else if (fromClass == String.class && toClass == JSON.class) {
+                    return (U) JSON.valueOf((String) from);
                 }
 
                 // [#3023] Record types can be converted using the supplied Configuration's

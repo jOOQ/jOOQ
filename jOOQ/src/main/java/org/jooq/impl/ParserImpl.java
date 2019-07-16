@@ -4425,6 +4425,10 @@ final class ParserImpl implements Parser {
                         : left instanceof Field
                             ? ((Field) left).isNull()
                             : ((RowN) left).isNull();
+                else if (left instanceof Field && parseKeywordIf(ctx, "JSON"))
+                    return not
+                        ? ((Field) left).isNotJson()
+                        : ((Field) left).isJson();
 
                 parseKeyword(ctx, "DISTINCT FROM");
                 if (left instanceof Field) {

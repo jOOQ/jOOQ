@@ -1087,7 +1087,7 @@ extends
      * Create a condition to check if this field contains JSON data.
      */
     @Support({ MYSQL })
-    Condition isJSON();
+    Condition isJson();
 
     /**
      * Create a condition to check if this field does not contain JSON data.

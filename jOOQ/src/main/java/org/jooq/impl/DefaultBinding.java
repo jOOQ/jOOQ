@@ -4217,33 +4217,98 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             super(converter, isLob);
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        @Override
+        void sqlInline0(BindingSQLContext<U> ctx, JSONB value) throws SQLException {
+
+
+
+
+
+            super.sqlInline0(ctx, value);
+        }
+
         @Override
         final void set0(BindingSetStatementContext<U> ctx, JSONB value) throws SQLException {
+
+
+
+
+
             ctx.statement().setString(ctx.index(), value.toString());
         }
 
         @Override
         final void set0(BindingSetSQLOutputContext<U> ctx, JSONB value) throws SQLException {
+
+
+
+
+
             ctx.output().writeString(value.toString());
         }
 
         @Override
         final JSONB get0(BindingGetResultSetContext<U> ctx) throws SQLException {
+
+
+
+
             return JSONB.valueOf(ctx.resultSet().getString(ctx.index()));
         }
 
         @Override
         final JSONB get0(BindingGetStatementContext<U> ctx) throws SQLException {
+
+
+
+
+
             return JSONB.valueOf(ctx.statement().getString(ctx.index()));
         }
 
         @Override
         final JSONB get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
+
+
+
+
+
             return JSONB.valueOf(ctx.input().readString());
         }
 
         @Override
         final int sqltype(Statement statement, Configuration configuration) {
+
+
+
+
+
             return Types.VARCHAR;
         }
     }

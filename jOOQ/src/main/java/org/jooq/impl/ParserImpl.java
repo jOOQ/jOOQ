@@ -147,6 +147,7 @@ import static org.jooq.impl.DSL.iif;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.isnull;
 import static org.jooq.impl.DSL.isoDayOfWeek;
+import static org.jooq.impl.DSL.jsonEntry;
 import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.lag;
 import static org.jooq.impl.DSL.lastValue;
@@ -406,6 +407,7 @@ import org.jooq.InsertOnDuplicateStep;
 import org.jooq.InsertReturningStep;
 import org.jooq.InsertSetStep;
 import org.jooq.InsertValuesStepN;
+import org.jooq.JSONEntry;
 import org.jooq.JoinType;
 import org.jooq.Keyword;
 // ...
@@ -5699,6 +5701,8 @@ final class ParserImpl implements Parser {
                 if (J.is(type))
                     if ((field = parseFieldJSONArrayConstructorIf(ctx)) != null)
                         return field;
+                    else if ((field = parseFieldJSONObjectConstructorIf(ctx)) != null)
+                        return field;
 
                 break;
 
@@ -6251,6 +6255,40 @@ final class ParserImpl implements Parser {
             return DSL.jsonArray(parseFieldsOrEmptyParenthesised(ctx));
 
         return null;
+    }
+
+    private static final Field<?> parseFieldJSONObjectConstructorIf(ParserContext ctx) {
+        if (parseKeywordIf(ctx, "JSON_OBJECT")) {
+            parse(ctx, '(');
+            if (parseIf(ctx, ')'))
+                return DSL.jsonObject();
+
+            List<JSONEntry<?>> result = new ArrayList<>();
+            do {
+                result.add(parseJSONEntry(ctx));
+            }
+            while (parseIf(ctx, ','));
+            parse(ctx, ')');
+
+            return DSL.jsonObject(result);
+        }
+
+        return null;
+    }
+
+    private static final JSONEntry<?> parseJSONEntry(ParserContext ctx) {
+        boolean valueRequired = parseKeywordIf(ctx, "KEY");
+
+        Field<String> key = (Field<String>) parseField(ctx, Type.S);
+        if (parseKeywordIf(ctx, "VALUE"))
+            ;
+        else if (valueRequired)
+            throw ctx.expected("VALUE");
+        else
+            parse(ctx, ',');
+
+        Field<?> value = parseField(ctx);
+        return jsonEntry(key, value);
     }
 
     private static final Field<?> parseArrayValueConstructorIf(ParserContext ctx) {

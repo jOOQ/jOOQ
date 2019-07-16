@@ -229,6 +229,7 @@ import org.jooq.InsertValuesStep9;
 import org.jooq.InsertValuesStepN;
 import org.jooq.JSON;
 import org.jooq.JSONB;
+import org.jooq.JSONEntry;
 import org.jooq.Keyword;
 // ...
 // ...
@@ -17699,7 +17700,7 @@ public class DSL {
      */
     @Support({ MYSQL, POSTGRES })
     public static Field<JSON> jsonArray(Collection<? extends Field<?>> fields) {
-        return new JSONArray(JSON, fields);
+        return new JSONArray<>(JSON, fields);
     }
 
     /**
@@ -17715,7 +17716,55 @@ public class DSL {
      */
     @Support({ MYSQL, POSTGRES })
     public static Field<JSONB> jsonbArray(Collection<? extends Field<?>> fields) {
-        return new JSONArray(JSONB, fields);
+        return new JSONArray<>(JSONB, fields);
+    }
+
+    /**
+     * A constructor for JSON entries to be used with {@link #jsonObject(JSONEntry...)}.
+     */
+    @Support({ MYSQL, POSTGRES })
+    public static <T> JSONEntry<T> jsonEntry(Field<String> key, Field<T> value) {
+        return new JSONEntryImpl<>(key, value);
+    }
+
+    /**
+     * The JSON object constructor.
+     */
+    @Support({ MYSQL, POSTGRES })
+    public static Field<JSON> jsonObject(Field<String> key, Field<?> value) {
+        return jsonObject(jsonEntry(key, value));
+    }
+
+    /**
+     * The JSON object constructor.
+     */
+    @Support({ MYSQL, POSTGRES })
+    public static Field<JSON> jsonObject(JSONEntry<?>... entries) {
+        return jsonObject(Arrays.asList(entries));
+    }
+
+    /**
+     * The JSON object constructor.
+     */
+    @Support({ MYSQL, POSTGRES })
+    public static Field<JSON> jsonObject(Collection<? extends JSONEntry<?>> entries) {
+        return new JSONObject<>(JSON, entries);
+    }
+
+    /**
+     * The JSONB object constructor.
+     */
+    @Support({ MYSQL, POSTGRES })
+    public static Field<JSONB> jsonbObject(JSONEntry<?>... entries) {
+        return jsonbObject(Arrays.asList(entries));
+    }
+
+    /**
+     * The JSONB object constructor.
+     */
+    @Support({ MYSQL, POSTGRES })
+    public static Field<JSONB> jsonbObject(Collection<? extends JSONEntry<?>> entries) {
+        return new JSONObject<>(JSONB, entries);
     }
 
     // -------------------------------------------------------------------------

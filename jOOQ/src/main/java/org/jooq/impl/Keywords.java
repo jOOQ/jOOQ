@@ -61,6 +61,7 @@ final class Keywords {
     static final Keyword K_AS                               = keyword("as");
     static final Keyword K_AS_OF                            = keyword("as of");
     static final Keyword K_ATOMIC                           = keyword("atomic");
+    static final Keyword K_AUTO                             = keyword("auto");
     static final Keyword K_AUTO_INCREMENT                   = keyword("auto_increment");
     static final Keyword K_AUTOINCREMENT                    = keyword("autoincrement");
     static final Keyword K_BEGIN                            = keyword("begin");
@@ -193,6 +194,7 @@ final class Keywords {
     static final Keyword K_IS_NOT_NULL                      = keyword("is not null");
     static final Keyword K_IS_NULL                          = keyword("is null");
     static final Keyword K_ITERATE                          = keyword("iterate");
+    static final Keyword K_JSON                             = keyword("json");
     static final Keyword K_JSON_ARRAY                       = keyword("json_array");
     static final Keyword K_JSON_OBJECT                      = keyword("json_object");
     static final Keyword K_KEEP                             = keyword("keep");
@@ -341,6 +343,7 @@ final class Keywords {
     static final Keyword K_USE                              = keyword("use");
     static final Keyword K_USING                            = keyword("using");
     static final Keyword K_USING_INDEX                      = keyword("using index");
+    static final Keyword K_VALUE                            = keyword("value");
     static final Keyword K_VALUES                           = keyword("values");
     static final Keyword K_VARCHAR                          = keyword("varchar");
     static final Keyword K_VERSIONS_BETWEEN                 = keyword("versions between");
@@ -361,6 +364,7 @@ final class Keywords {
     static final Keyword K_WITH_ROLLUP                      = keyword("with rollup");
     static final Keyword K_WITH_TIES                        = keyword("with ties");
     static final Keyword K_WITHIN_GROUP                     = keyword("within group");
+    static final Keyword K_WITHOUT_ARRAY_WRAPPER            = keyword("without_array_wrapper");
     static final Keyword K_XMLTABLE                         = keyword("xmltable");
     static final Keyword K_YEAR                             = keyword("year");
     static final Keyword K_YEAR_MONTH                       = keyword("year_month");

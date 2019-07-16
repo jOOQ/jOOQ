@@ -193,6 +193,8 @@ final class Keywords {
     static final Keyword K_IS_NOT_NULL                      = keyword("is not null");
     static final Keyword K_IS_NULL                          = keyword("is null");
     static final Keyword K_ITERATE                          = keyword("iterate");
+    static final Keyword K_JSON_ARRAY                       = keyword("json_array");
+    static final Keyword K_JSON_OBJECT                      = keyword("json_object");
     static final Keyword K_KEEP                             = keyword("keep");
     static final Keyword K_KEY                              = keyword("key");
     static final Keyword K_LAST                             = keyword("last");

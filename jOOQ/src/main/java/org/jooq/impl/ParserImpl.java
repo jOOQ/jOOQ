@@ -292,6 +292,7 @@ import static org.jooq.impl.Keywords.K_UPDATE;
 import static org.jooq.impl.ParserImpl.Type.A;
 import static org.jooq.impl.ParserImpl.Type.B;
 import static org.jooq.impl.ParserImpl.Type.D;
+import static org.jooq.impl.ParserImpl.Type.J;
 import static org.jooq.impl.ParserImpl.Type.N;
 import static org.jooq.impl.ParserImpl.Type.S;
 import static org.jooq.impl.ParserImpl.Type.X;
@@ -5084,6 +5085,24 @@ final class ParserImpl implements Parser {
         return sort;
     }
 
+    private static final List<Field<?>> parseFieldsOrEmptyParenthesised(ParserContext ctx) {
+        List<Field<?>> result = new ArrayList<>();
+
+        parse(ctx, '(');
+        if (parseIf(ctx, ')')) {
+            return result;
+        }
+        else {
+            do {
+                result.add(parseField(ctx));
+            }
+            while (parseIf(ctx, ','));
+            parse(ctx, ')');
+        }
+
+        return result;
+    }
+
     private static final List<Field<?>> parseFields(ParserContext ctx) {
         List<Field<?>> result = new ArrayList<>();
         do {
@@ -5143,7 +5162,8 @@ final class ParserImpl implements Parser {
         S("string"),
         N("numeric"),
         B("boolean"),
-        X("binary");
+        X("binary"),
+        J("json");
 
         private final String name;
 
@@ -5673,6 +5693,14 @@ final class ParserImpl implements Parser {
                     return field;
                 else
                     break;
+
+            case 'j':
+            case 'J':
+                if (J.is(type))
+                    if ((field = parseFieldJSONArrayConstructorIf(ctx)) != null)
+                        return field;
+
+                break;
 
             case 'l':
             case 'L':
@@ -6216,6 +6244,13 @@ final class ParserImpl implements Parser {
     private static enum SequenceMethod {
         NEXTVAL,
         CURRVAL;
+    }
+
+    private static final Field<?> parseFieldJSONArrayConstructorIf(ParserContext ctx) {
+        if (parseKeywordIf(ctx, "JSON_ARRAY"))
+            return DSL.jsonArray(parseFieldsOrEmptyParenthesised(ctx));
+
+        return null;
     }
 
     private static final Field<?> parseArrayValueConstructorIf(ParserContext ctx) {

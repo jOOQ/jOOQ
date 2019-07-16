@@ -78,6 +78,8 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+import static org.jooq.impl.SQLDataType.JSON;
+import static org.jooq.impl.SQLDataType.JSONB;
 import static org.jooq.impl.Term.CUME_DIST;
 import static org.jooq.impl.Term.DENSE_RANK;
 import static org.jooq.impl.Term.FIRST_VALUE;
@@ -225,6 +227,8 @@ import org.jooq.InsertValuesStep7;
 import org.jooq.InsertValuesStep8;
 import org.jooq.InsertValuesStep9;
 import org.jooq.InsertValuesStepN;
+import org.jooq.JSON;
+import org.jooq.JSONB;
 import org.jooq.Keyword;
 // ...
 // ...
@@ -17676,6 +17680,42 @@ public class DSL {
     @Support({ CUBRID })
     public static Field<Integer> rownum() {
         return field("rownum", Integer.class);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX JSON functions
+    // -------------------------------------------------------------------------
+
+    /**
+     * The JSON array constructor.
+     */
+    @Support({ MYSQL, POSTGRES })
+    public static Field<JSON> jsonArray(Field<?>... fields) {
+        return jsonArray(Arrays.asList(fields));
+    }
+
+    /**
+     * The JSON array constructor.
+     */
+    @Support({ MYSQL, POSTGRES })
+    public static Field<JSON> jsonArray(Collection<? extends Field<?>> fields) {
+        return new JSONArray(JSON, fields);
+    }
+
+    /**
+     * The JSONB array constructor.
+     */
+    @Support({ MYSQL, POSTGRES })
+    public static Field<JSONB> jsonbArray(Field<?>... fields) {
+        return jsonbArray(Arrays.asList(fields));
+    }
+
+    /**
+     * The JSONB array constructor.
+     */
+    @Support({ MYSQL, POSTGRES })
+    public static Field<JSONB> jsonbArray(Collection<? extends Field<?>> fields) {
+        return new JSONArray(JSONB, fields);
     }
 
     // -------------------------------------------------------------------------

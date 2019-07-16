@@ -11354,7 +11354,7 @@ public class DSL {
     @Support
     @PlainSQL
     public static <T> Field<T> function(String name, DataType<T> type, Field<?>... arguments) {
-        return new org.jooq.impl.Function<T>(name, type, nullSafe(arguments));
+        return new org.jooq.impl.Function<>(name, type, nullSafe(arguments));
     }
 
     /**
@@ -11380,7 +11380,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> function(Name name, DataType<T> type, Field<?>... arguments) {
-        return new org.jooq.impl.Function<T>(name, type, nullSafe(arguments));
+        return new org.jooq.impl.Function<>(name, type, nullSafe(arguments));
     }
 
     /**
@@ -13883,7 +13883,7 @@ public class DSL {
      */
     @Support
     public static Field<Integer> charLength(Field<String> field) {
-        return new org.jooq.impl.Function<Integer>(Term.CHAR_LENGTH, SQLDataType.INTEGER, nullSafe(field));
+        return new org.jooq.impl.Function<>(Term.CHAR_LENGTH, SQLDataType.INTEGER, nullSafe(field));
     }
 
     /**
@@ -13903,7 +13903,7 @@ public class DSL {
      */
     @Support
     public static Field<Integer> bitLength(Field<String> field) {
-        return new org.jooq.impl.Function<Integer>(Term.BIT_LENGTH, SQLDataType.INTEGER, nullSafe(field));
+        return new org.jooq.impl.Function<>(Term.BIT_LENGTH, SQLDataType.INTEGER, nullSafe(field));
     }
 
     /**
@@ -13923,7 +13923,7 @@ public class DSL {
      */
     @Support
     public static Field<Integer> octetLength(Field<String> field) {
-        return new org.jooq.impl.Function<Integer>(Term.OCTET_LENGTH, SQLDataType.INTEGER, nullSafe(field));
+        return new org.jooq.impl.Function<>(Term.OCTET_LENGTH, SQLDataType.INTEGER, nullSafe(field));
     }
 
     // ------------------------------------------------------------------------
@@ -16326,7 +16326,7 @@ public class DSL {
         for (int i = 0; i < fieldSets.length; i++)
             array[i] = new WrappedList(new QueryPartList<>(fieldSets[i]));
 
-        return new org.jooq.impl.Function<Object>("grouping sets", SQLDataType.OTHER, array);
+        return new org.jooq.impl.Function<>("grouping sets", SQLDataType.OTHER, array);
     }
 
 
@@ -17391,7 +17391,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> atan2(Field<? extends Number> x, Field<? extends Number> y) {
-        return new org.jooq.impl.Function<BigDecimal>(Term.ATAN2, SQLDataType.NUMERIC, nullSafe(x), nullSafe(y));
+        return new org.jooq.impl.Function<>(Term.ATAN2, SQLDataType.NUMERIC, nullSafe(x), nullSafe(y));
     }
 
     /**
@@ -17784,7 +17784,7 @@ public class DSL {
      */
     @Support
     public static AggregateFunction<Integer> count(Field<?> field) {
-        return new org.jooq.impl.Function<Integer>("count", SQLDataType.INTEGER, nullSafe(field));
+        return new org.jooq.impl.Function<>("count", SQLDataType.INTEGER, nullSafe(field));
     }
 
     /**
@@ -17792,7 +17792,7 @@ public class DSL {
      */
     @Support
     public static AggregateFunction<Integer> count(SelectFieldOrAsterisk field) {
-        return new org.jooq.impl.Function<Integer>("count", SQLDataType.INTEGER, field("{0}", field));
+        return new org.jooq.impl.Function<>("count", SQLDataType.INTEGER, field("{0}", field));
     }
 
     /**
@@ -17812,7 +17812,7 @@ public class DSL {
      */
     @Support
     public static AggregateFunction<Integer> countDistinct(Field<?> field) {
-        return new org.jooq.impl.Function<Integer>("count", true, SQLDataType.INTEGER, nullSafe(field));
+        return new org.jooq.impl.Function<>("count", true, SQLDataType.INTEGER, nullSafe(field));
     }
 
     /**
@@ -17820,7 +17820,7 @@ public class DSL {
      */
     @Support
     public static AggregateFunction<Integer> countDistinct(SelectFieldOrAsterisk field) {
-        return new org.jooq.impl.Function<Integer>("count", true, SQLDataType.INTEGER, field("{0}", field));
+        return new org.jooq.impl.Function<>("count", true, SQLDataType.INTEGER, field("{0}", field));
     }
 
     /**
@@ -17846,7 +17846,7 @@ public class DSL {
      */
     @Support({ HSQLDB, MYSQL, POSTGRES })
     public static AggregateFunction<Integer> countDistinct(Field<?>... fields) {
-        return new org.jooq.impl.Function<Integer>("count", true, SQLDataType.INTEGER, nullSafe(fields));
+        return new org.jooq.impl.Function<>("count", true, SQLDataType.INTEGER, nullSafe(fields));
     }
 
     /**
@@ -17906,7 +17906,7 @@ public class DSL {
      */
     @Support({ HSQLDB, POSTGRES })
     public static <T> ArrayAggOrderByStep<T[]> arrayAgg(Field<T> field) {
-        return new org.jooq.impl.Function<T[]>(Term.ARRAY_AGG, field.getDataType().getArrayDataType(), nullSafe(field));
+        return new org.jooq.impl.Function<>(Term.ARRAY_AGG, field.getDataType().getArrayDataType(), nullSafe(field));
     }
 
     /**
@@ -17914,7 +17914,7 @@ public class DSL {
      */
     @Support({ HSQLDB, POSTGRES })
     public static <T> ArrayAggOrderByStep<T[]> arrayAggDistinct(Field<T> field) {
-        return new org.jooq.impl.Function<T[]>(Term.ARRAY_AGG, true, field.getDataType().getArrayDataType(), nullSafe(field));
+        return new org.jooq.impl.Function<>(Term.ARRAY_AGG, true, field.getDataType().getArrayDataType(), nullSafe(field));
     }
 
 
@@ -18066,7 +18066,7 @@ public class DSL {
      */
     @Support
     public static <T> AggregateFunction<T> max(Field<T> field) {
-        return new org.jooq.impl.Function<T>("max", nullSafeDataType(field), nullSafe(field));
+        return new org.jooq.impl.Function<>("max", nullSafeDataType(field), nullSafe(field));
     }
 
     /**
@@ -18074,7 +18074,7 @@ public class DSL {
      */
     @Support
     public static <T> AggregateFunction<T> maxDistinct(Field<T> field) {
-        return new org.jooq.impl.Function<T>("max", true, nullSafeDataType(field), nullSafe(field));
+        return new org.jooq.impl.Function<>("max", true, nullSafeDataType(field), nullSafe(field));
     }
 
     /**
@@ -18082,7 +18082,7 @@ public class DSL {
      */
     @Support
     public static <T> AggregateFunction<T> min(Field<T> field) {
-        return new org.jooq.impl.Function<T>("min", nullSafeDataType(field), nullSafe(field));
+        return new org.jooq.impl.Function<>("min", nullSafeDataType(field), nullSafe(field));
     }
 
     /**
@@ -18090,7 +18090,7 @@ public class DSL {
      */
     @Support
     public static <T> AggregateFunction<T> minDistinct(Field<T> field) {
-        return new org.jooq.impl.Function<T>("min", true, nullSafeDataType(field), nullSafe(field));
+        return new org.jooq.impl.Function<>("min", true, nullSafeDataType(field), nullSafe(field));
     }
 
     /**
@@ -18098,7 +18098,7 @@ public class DSL {
      */
     @Support
     public static AggregateFunction<BigDecimal> sum(Field<? extends Number> field) {
-        return new org.jooq.impl.Function<BigDecimal>("sum", SQLDataType.NUMERIC, nullSafe(field));
+        return new org.jooq.impl.Function<>("sum", SQLDataType.NUMERIC, nullSafe(field));
     }
 
     /**
@@ -18106,7 +18106,7 @@ public class DSL {
      */
     @Support
     public static AggregateFunction<BigDecimal> sumDistinct(Field<? extends Number> field) {
-        return new org.jooq.impl.Function<BigDecimal>("sum", true, SQLDataType.NUMERIC, nullSafe(field));
+        return new org.jooq.impl.Function<>("sum", true, SQLDataType.NUMERIC, nullSafe(field));
     }
 
     /**
@@ -18124,7 +18124,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static AggregateFunction<BigDecimal> product(Field<? extends Number> field) {
-        return new org.jooq.impl.Function<BigDecimal>(Term.PRODUCT, SQLDataType.NUMERIC, nullSafe(field));
+        return new org.jooq.impl.Function<>(Term.PRODUCT, SQLDataType.NUMERIC, nullSafe(field));
     }
 
     /**
@@ -18142,7 +18142,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static AggregateFunction<BigDecimal> productDistinct(Field<? extends Number> field) {
-        return new org.jooq.impl.Function<BigDecimal>(Term.PRODUCT, true, SQLDataType.NUMERIC, nullSafe(field));
+        return new org.jooq.impl.Function<>(Term.PRODUCT, true, SQLDataType.NUMERIC, nullSafe(field));
     }
 
     /**
@@ -18150,7 +18150,7 @@ public class DSL {
      */
     @Support
     public static AggregateFunction<BigDecimal> avg(Field<? extends Number> field) {
-        return new org.jooq.impl.Function<BigDecimal>("avg", SQLDataType.NUMERIC, nullSafe(field));
+        return new org.jooq.impl.Function<>("avg", SQLDataType.NUMERIC, nullSafe(field));
     }
 
     /**
@@ -18158,7 +18158,7 @@ public class DSL {
      */
     @Support
     public static AggregateFunction<BigDecimal> avgDistinct(Field<? extends Number> field) {
-        return new org.jooq.impl.Function<BigDecimal>("avg", true, SQLDataType.NUMERIC, nullSafe(field));
+        return new org.jooq.impl.Function<>("avg", true, SQLDataType.NUMERIC, nullSafe(field));
     }
 
     /**
@@ -18166,7 +18166,7 @@ public class DSL {
      */
     @Support({ H2, POSTGRES })
     public static <T> AggregateFunction<T> mode(Field<T> field) {
-        return new org.jooq.impl.Function<T>(Term.MODE, nullSafeDataType(field), field);
+        return new org.jooq.impl.Function<>(Term.MODE, nullSafeDataType(field), field);
     }
 
     /**
@@ -18174,7 +18174,7 @@ public class DSL {
      */
     @Support({ CUBRID, H2, HSQLDB, MARIADB, POSTGRES })
     public static AggregateFunction<BigDecimal> median(Field<? extends Number> field) {
-        return new org.jooq.impl.Function<BigDecimal>(Term.MEDIAN, SQLDataType.NUMERIC, nullSafe(field));
+        return new org.jooq.impl.Function<>(Term.MEDIAN, SQLDataType.NUMERIC, nullSafe(field));
     }
 
     /**
@@ -18182,7 +18182,7 @@ public class DSL {
      */
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static AggregateFunction<BigDecimal> stddevPop(Field<? extends Number> field) {
-        return new org.jooq.impl.Function<BigDecimal>(Term.STDDEV_POP, SQLDataType.NUMERIC, nullSafe(field));
+        return new org.jooq.impl.Function<>(Term.STDDEV_POP, SQLDataType.NUMERIC, nullSafe(field));
     }
 
     /**
@@ -18190,7 +18190,7 @@ public class DSL {
      */
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static AggregateFunction<BigDecimal> stddevSamp(Field<? extends Number> field) {
-        return new org.jooq.impl.Function<BigDecimal>(Term.STDDEV_SAMP, SQLDataType.NUMERIC, nullSafe(field));
+        return new org.jooq.impl.Function<>(Term.STDDEV_SAMP, SQLDataType.NUMERIC, nullSafe(field));
     }
 
     /**
@@ -18198,7 +18198,7 @@ public class DSL {
      */
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static AggregateFunction<BigDecimal> varPop(Field<? extends Number> field) {
-        return new org.jooq.impl.Function<BigDecimal>(Term.VAR_POP, SQLDataType.NUMERIC, nullSafe(field));
+        return new org.jooq.impl.Function<>(Term.VAR_POP, SQLDataType.NUMERIC, nullSafe(field));
     }
 
     /**
@@ -18206,7 +18206,7 @@ public class DSL {
      */
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static AggregateFunction<BigDecimal> varSamp(Field<? extends Number> field) {
-        return new org.jooq.impl.Function<BigDecimal>(Term.VAR_SAMP, SQLDataType.NUMERIC, nullSafe(field));
+        return new org.jooq.impl.Function<>(Term.VAR_SAMP, SQLDataType.NUMERIC, nullSafe(field));
     }
 
     /**
@@ -18221,7 +18221,7 @@ public class DSL {
      */
     @Support({ POSTGRES })
     public static AggregateFunction<BigDecimal> regrSlope(Field<? extends Number> y, Field<? extends Number> x) {
-        return new org.jooq.impl.Function<BigDecimal>("regr_slope", SQLDataType.NUMERIC, nullSafe(y), nullSafe(x));
+        return new org.jooq.impl.Function<>("regr_slope", SQLDataType.NUMERIC, nullSafe(y), nullSafe(x));
     }
 
     /**
@@ -18236,7 +18236,7 @@ public class DSL {
      */
     @Support({ POSTGRES })
     public static AggregateFunction<BigDecimal> regrIntercept(Field<? extends Number> y, Field<? extends Number> x) {
-        return new org.jooq.impl.Function<BigDecimal>("regr_intercept", SQLDataType.NUMERIC, nullSafe(y), nullSafe(x));
+        return new org.jooq.impl.Function<>("regr_intercept", SQLDataType.NUMERIC, nullSafe(y), nullSafe(x));
     }
 
     /**
@@ -18251,7 +18251,7 @@ public class DSL {
      */
     @Support({ POSTGRES })
     public static AggregateFunction<BigDecimal> regrCount(Field<? extends Number> y, Field<? extends Number> x) {
-        return new org.jooq.impl.Function<BigDecimal>("regr_count", SQLDataType.NUMERIC, nullSafe(y), nullSafe(x));
+        return new org.jooq.impl.Function<>("regr_count", SQLDataType.NUMERIC, nullSafe(y), nullSafe(x));
     }
 
     /**
@@ -18266,7 +18266,7 @@ public class DSL {
      */
     @Support({ POSTGRES })
     public static AggregateFunction<BigDecimal> regrR2(Field<? extends Number> y, Field<? extends Number> x) {
-        return new org.jooq.impl.Function<BigDecimal>("regr_r2", SQLDataType.NUMERIC, nullSafe(y), nullSafe(x));
+        return new org.jooq.impl.Function<>("regr_r2", SQLDataType.NUMERIC, nullSafe(y), nullSafe(x));
     }
 
     /**
@@ -18281,7 +18281,7 @@ public class DSL {
      */
     @Support({ POSTGRES })
     public static AggregateFunction<BigDecimal> regrAvgX(Field<? extends Number> y, Field<? extends Number> x) {
-        return new org.jooq.impl.Function<BigDecimal>("regr_avgx", SQLDataType.NUMERIC, nullSafe(y), nullSafe(x));
+        return new org.jooq.impl.Function<>("regr_avgx", SQLDataType.NUMERIC, nullSafe(y), nullSafe(x));
     }
 
     /**
@@ -18296,7 +18296,7 @@ public class DSL {
      */
     @Support({ POSTGRES })
     public static AggregateFunction<BigDecimal> regrAvgY(Field<? extends Number> y, Field<? extends Number> x) {
-        return new org.jooq.impl.Function<BigDecimal>("regr_avgy", SQLDataType.NUMERIC, nullSafe(y), nullSafe(x));
+        return new org.jooq.impl.Function<>("regr_avgy", SQLDataType.NUMERIC, nullSafe(y), nullSafe(x));
     }
 
     /**
@@ -18311,7 +18311,7 @@ public class DSL {
      */
     @Support({ POSTGRES })
     public static AggregateFunction<BigDecimal> regrSXX(Field<? extends Number> y, Field<? extends Number> x) {
-        return new org.jooq.impl.Function<BigDecimal>("regr_sxx", SQLDataType.NUMERIC, nullSafe(y), nullSafe(x));
+        return new org.jooq.impl.Function<>("regr_sxx", SQLDataType.NUMERIC, nullSafe(y), nullSafe(x));
     }
 
     /**
@@ -18326,7 +18326,7 @@ public class DSL {
      */
     @Support({ POSTGRES })
     public static AggregateFunction<BigDecimal> regrSYY(Field<? extends Number> y, Field<? extends Number> x) {
-        return new org.jooq.impl.Function<BigDecimal>("regr_syy", SQLDataType.NUMERIC, nullSafe(y), nullSafe(x));
+        return new org.jooq.impl.Function<>("regr_syy", SQLDataType.NUMERIC, nullSafe(y), nullSafe(x));
     }
 
     /**
@@ -18341,7 +18341,7 @@ public class DSL {
      */
     @Support({ POSTGRES })
     public static AggregateFunction<BigDecimal> regrSXY(Field<? extends Number> y, Field<? extends Number> x) {
-        return new org.jooq.impl.Function<BigDecimal>("regr_sxy", SQLDataType.NUMERIC, nullSafe(y), nullSafe(x));
+        return new org.jooq.impl.Function<>("regr_sxy", SQLDataType.NUMERIC, nullSafe(y), nullSafe(x));
     }
 
     /**
@@ -18364,7 +18364,7 @@ public class DSL {
      */
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static OrderedAggregateFunction<String> listAgg(Field<?> field) {
-        return new org.jooq.impl.Function<String>(Term.LIST_AGG, SQLDataType.VARCHAR, nullSafe(field));
+        return new org.jooq.impl.Function<>(Term.LIST_AGG, SQLDataType.VARCHAR, nullSafe(field));
     }
 
     /**
@@ -18387,7 +18387,7 @@ public class DSL {
      */
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static OrderedAggregateFunction<String> listAgg(Field<?> field, String separator) {
-        return new org.jooq.impl.Function<String>(Term.LIST_AGG, SQLDataType.VARCHAR, nullSafe(field), inline(separator));
+        return new org.jooq.impl.Function<>(Term.LIST_AGG, SQLDataType.VARCHAR, nullSafe(field), inline(separator));
     }
 
     /**
@@ -18495,7 +18495,7 @@ public class DSL {
      */
     @Support({ H2, POSTGRES })
     public static OrderedAggregateFunction<Integer> rank(Field<?>... fields) {
-        return new org.jooq.impl.Function<Integer>("rank", SQLDataType.INTEGER, fields);
+        return new org.jooq.impl.Function<>("rank", SQLDataType.INTEGER, fields);
     }
 
     /**
@@ -18504,7 +18504,7 @@ public class DSL {
      */
     @Support({ H2, POSTGRES })
     public static OrderedAggregateFunction<Integer> rank(Collection<? extends Field<?>> fields) {
-        return new org.jooq.impl.Function<Integer>("rank", SQLDataType.INTEGER, fields.toArray(EMPTY_QUERYPART));
+        return new org.jooq.impl.Function<>("rank", SQLDataType.INTEGER, fields.toArray(EMPTY_QUERYPART));
     }
 
     /**
@@ -18513,7 +18513,7 @@ public class DSL {
      */
     @Support({ H2, POSTGRES })
     public static OrderedAggregateFunction<Integer> denseRank(Field<?>... fields) {
-        return new org.jooq.impl.Function<Integer>("dense_rank", SQLDataType.INTEGER, fields);
+        return new org.jooq.impl.Function<>("dense_rank", SQLDataType.INTEGER, fields);
     }
 
     /**
@@ -18522,7 +18522,7 @@ public class DSL {
      */
     @Support({ H2, POSTGRES })
     public static OrderedAggregateFunction<Integer> denseRank(Collection<? extends Field<?>> fields) {
-        return new org.jooq.impl.Function<Integer>("dense_rank", SQLDataType.INTEGER, fields.toArray(EMPTY_QUERYPART));
+        return new org.jooq.impl.Function<>("dense_rank", SQLDataType.INTEGER, fields.toArray(EMPTY_QUERYPART));
     }
 
     /**
@@ -18531,7 +18531,7 @@ public class DSL {
      */
     @Support({ H2, POSTGRES })
     public static OrderedAggregateFunction<Integer> percentRank(Field<?>... fields) {
-        return new org.jooq.impl.Function<Integer>("percent_rank", SQLDataType.INTEGER, fields);
+        return new org.jooq.impl.Function<>("percent_rank", SQLDataType.INTEGER, fields);
     }
 
     /**
@@ -18540,7 +18540,7 @@ public class DSL {
      */
     @Support({ H2, POSTGRES })
     public static OrderedAggregateFunction<Integer> percentRank(Collection<? extends Field<?>> fields) {
-        return new org.jooq.impl.Function<Integer>("percent_rank", SQLDataType.INTEGER, fields.toArray(EMPTY_QUERYPART));
+        return new org.jooq.impl.Function<>("percent_rank", SQLDataType.INTEGER, fields.toArray(EMPTY_QUERYPART));
     }
 
     /**
@@ -18549,7 +18549,7 @@ public class DSL {
      */
     @Support({ H2, POSTGRES })
     public static OrderedAggregateFunction<BigDecimal> cumeDist(Field<?>... fields) {
-        return new org.jooq.impl.Function<BigDecimal>("cume_dist", SQLDataType.NUMERIC, fields);
+        return new org.jooq.impl.Function<>("cume_dist", SQLDataType.NUMERIC, fields);
     }
 
     /**
@@ -18558,7 +18558,7 @@ public class DSL {
      */
     @Support({ H2, POSTGRES })
     public static OrderedAggregateFunction<BigDecimal> cumeDist(Collection<? extends Field<?>> fields) {
-        return new org.jooq.impl.Function<BigDecimal>("cume_dist", SQLDataType.NUMERIC, fields.toArray(EMPTY_QUERYPART));
+        return new org.jooq.impl.Function<>("cume_dist", SQLDataType.NUMERIC, fields.toArray(EMPTY_QUERYPART));
     }
 
     /**
@@ -18586,7 +18586,7 @@ public class DSL {
      */
     @Support({ H2, POSTGRES })
     public static OrderedAggregateFunction<BigDecimal> percentileCont(Field<? extends Number> field) {
-        return new org.jooq.impl.Function<BigDecimal>("percentile_cont", SQLDataType.NUMERIC, nullSafe(field));
+        return new org.jooq.impl.Function<>("percentile_cont", SQLDataType.NUMERIC, nullSafe(field));
     }
 
     /**
@@ -18614,7 +18614,7 @@ public class DSL {
      */
     @Support({ H2, POSTGRES })
     public static OrderedAggregateFunction<BigDecimal> percentileDisc(Field<? extends Number> field) {
-        return new org.jooq.impl.Function<BigDecimal>("percentile_disc", SQLDataType.NUMERIC, nullSafe(field));
+        return new org.jooq.impl.Function<>("percentile_disc", SQLDataType.NUMERIC, nullSafe(field));
     }
 
     // -------------------------------------------------------------------------
@@ -18916,7 +18916,7 @@ public class DSL {
      */
     @Support
     public static WindowOverStep<Integer> rowNumber() {
-        return new org.jooq.impl.Function<Integer>(ROW_NUMBER, SQLDataType.INTEGER);
+        return new org.jooq.impl.Function<>(ROW_NUMBER, SQLDataType.INTEGER);
     }
 
     /**
@@ -18924,7 +18924,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowOverStep<Integer> rank() {
-        return new org.jooq.impl.Function<Integer>(RANK, SQLDataType.INTEGER);
+        return new org.jooq.impl.Function<>(RANK, SQLDataType.INTEGER);
     }
 
     /**
@@ -18932,7 +18932,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowOverStep<Integer> denseRank() {
-        return new org.jooq.impl.Function<Integer>(DENSE_RANK, SQLDataType.INTEGER);
+        return new org.jooq.impl.Function<>(DENSE_RANK, SQLDataType.INTEGER);
     }
 
     /**
@@ -18940,7 +18940,7 @@ public class DSL {
      */
     @Support({ CUBRID, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowOverStep<BigDecimal> percentRank() {
-        return new org.jooq.impl.Function<BigDecimal>(PERCENT_RANK, SQLDataType.NUMERIC);
+        return new org.jooq.impl.Function<>(PERCENT_RANK, SQLDataType.NUMERIC);
     }
 
     /**
@@ -18948,7 +18948,7 @@ public class DSL {
      */
     @Support({ CUBRID, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowOverStep<BigDecimal> cumeDist() {
-        return new org.jooq.impl.Function<BigDecimal>(CUME_DIST, SQLDataType.NUMERIC);
+        return new org.jooq.impl.Function<>(CUME_DIST, SQLDataType.NUMERIC);
     }
 
     /**
@@ -18956,7 +18956,7 @@ public class DSL {
      */
     @Support({ CUBRID, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowOverStep<Integer> ntile(int number) {
-        return new org.jooq.impl.Function<Integer>(NTILE, SQLDataType.INTEGER, inline(number));
+        return new org.jooq.impl.Function<>(NTILE, SQLDataType.INTEGER, inline(number));
     }
 
     /**
@@ -18980,7 +18980,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T> WindowIgnoreNullsStep<T> firstValue(Field<T> field) {
-        return new org.jooq.impl.Function<T>(FIRST_VALUE, nullSafeDataType(field), nullSafe(field));
+        return new org.jooq.impl.Function<>(FIRST_VALUE, nullSafeDataType(field), nullSafe(field));
     }
 
     /**
@@ -18988,7 +18988,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T> WindowIgnoreNullsStep<T> lastValue(Field<T> field) {
-        return new org.jooq.impl.Function<T>(LAST_VALUE, nullSafeDataType(field), nullSafe(field));
+        return new org.jooq.impl.Function<>(LAST_VALUE, nullSafeDataType(field), nullSafe(field));
     }
 
     /**
@@ -19004,7 +19004,7 @@ public class DSL {
      */
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T> WindowFromFirstLastStep<T> nthValue(Field<T> field, Field<Integer> nth) {
-        return new org.jooq.impl.Function<T>(NTH_VALUE, nullSafeDataType(field), nullSafe(field), nullSafe(nth));
+        return new org.jooq.impl.Function<>(NTH_VALUE, nullSafeDataType(field), nullSafe(field), nullSafe(nth));
     }
 
     /**

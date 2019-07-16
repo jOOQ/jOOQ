@@ -1080,6 +1080,22 @@ extends
     Field<T> shr(Field<? extends Number> value);
 
     // ------------------------------------------------------------------------
+    // JSON predicates
+    // ------------------------------------------------------------------------
+
+    /**
+     * Create a condition to check if this field contains JSON data.
+     */
+    @Support({ MYSQL })
+    Condition isJSON();
+
+    /**
+     * Create a condition to check if this field does not contain JSON data.
+     */
+    @Support({ MYSQL })
+    Condition isNotJson();
+
+    // ------------------------------------------------------------------------
     // NULL predicates
     // ------------------------------------------------------------------------
 

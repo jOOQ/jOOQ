@@ -663,6 +663,16 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
     // ------------------------------------------------------------------------
 
     @Override
+    public final Condition isJSON() {
+        return new IsJSON(this, true);
+    }
+
+    @Override
+    public final Condition isNotJson() {
+        return new IsJSON(this, false);
+    }
+
+    @Override
     public final Condition isNull() {
         return new IsNull(this, true);
     }

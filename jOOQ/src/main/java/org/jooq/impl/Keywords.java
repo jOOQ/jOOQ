@@ -191,7 +191,9 @@ final class Keywords {
     static final Keyword K_INTERVAL                         = keyword("interval");
     static final Keyword K_INTO                             = keyword("into");
     static final Keyword K_IS                               = keyword("is");
+    static final Keyword K_IS_NOT_JSON                      = keyword("is not json");
     static final Keyword K_IS_NOT_NULL                      = keyword("is not null");
+    static final Keyword K_IS_JSON                          = keyword("is json");
     static final Keyword K_IS_NULL                          = keyword("is null");
     static final Keyword K_ITERATE                          = keyword("iterate");
     static final Keyword K_JSON                             = keyword("json");

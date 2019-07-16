@@ -1324,14 +1324,7 @@ final class ParserImpl implements Parser {
                 List<List<Field<?>>> fieldSets = new ArrayList<>();
                 parse(ctx, '(');
                 do {
-                    parse(ctx, '(');
-                    if (parseIf(ctx, ')')) {
-                        fieldSets.add(Collections.<Field<?>>emptyList());
-                    }
-                    else {
-                        fieldSets.add(parseFields(ctx));
-                        parse(ctx, ')');
-                    }
+                    fieldSets.add(parseFieldsOrEmptyParenthesised(ctx));
                 }
                 while (parseIf(ctx, ','));
                 parse(ctx, ')');
@@ -5092,21 +5085,16 @@ final class ParserImpl implements Parser {
     }
 
     private static final List<Field<?>> parseFieldsOrEmptyParenthesised(ParserContext ctx) {
-        List<Field<?>> result = new ArrayList<>();
-
         parse(ctx, '(');
+
         if (parseIf(ctx, ')')) {
-            return result;
+            return Collections.emptyList();
         }
         else {
-            do {
-                result.add(parseField(ctx));
-            }
-            while (parseIf(ctx, ','));
+            List<Field<?>> result = parseFields(ctx);
             parse(ctx, ')');
+            return result;
         }
-
-        return result;
     }
 
     private static final List<Field<?>> parseFields(ParserContext ctx) {

@@ -117,8 +117,10 @@ public final class ParserCLI {
 
             if (a.sql == null && line.startsWith("/")) {
                 if ("/q".equals(line) || "/quit".equals(line) ||
-                    "/e".equals(line) || "/exit".equals(line))
+                    "/e".equals(line) || "/exit".equals(line)) {
+                    System.out.println("Bye");
                     break cliLoop;
+                }
                 else if ("/?".equals(line) || "/h".equals(line) || "/help".equals(line))
                     helpInteractive();
                 else if ("/d".equals(line) || "/display".equals(line))
@@ -133,10 +135,12 @@ public final class ParserCLI {
                         if (flag != null && arg != null) {
                             if ("f".equals(flag) || "formatted".equals(flag)) {
                                 a.formatted = Boolean.parseBoolean(arg.toLowerCase());
+                                displayFormatted(a);
                             }
                             else if ("k".equals(flag) || "keyword".equals(flag)) {
                                 try {
                                     a.keywords = RenderKeywordCase.valueOf(arg.toUpperCase());
+                                    displayKeywords(a);
                                 }
                                 catch (IllegalArgumentException e) {
                                     invalid(arg, RenderKeywordCase.class);
@@ -145,6 +149,7 @@ public final class ParserCLI {
                             else if ("i".equals(flag) || "identifier".equals(flag)) {
                                 try {
                                     a.name = RenderNameCase.valueOf(arg.toUpperCase());
+                                    displayIdentifiers(a);
                                 }
                                 catch (IllegalArgumentException e) {
                                     invalid(arg, RenderNameCase.class);
@@ -153,6 +158,7 @@ public final class ParserCLI {
                             else if ("f".equals(flag) || "from-dialect".equals(flag)) {
                                 try {
                                     a.fromDialect = SQLDialect.valueOf(arg.toUpperCase());
+                                    displayFromDialect(a);
                                 }
                                 catch (IllegalArgumentException e) {
                                     invalid(arg, SQLDialect.class);
@@ -161,6 +167,7 @@ public final class ParserCLI {
                             else if ("t".equals(flag) || "to-dialect".equals(flag)) {
                                 try {
                                     a.toDialect = SQLDialect.valueOf(arg.toUpperCase());
+                                    displayToDialect(a);
                                 }
                                 catch (IllegalArgumentException e) {
                                     invalid(arg, SQLDialect.class);
@@ -197,11 +204,31 @@ public final class ParserCLI {
     }
 
     private static final void displayArguments(Args a) {
-        System.out.println("Formatted    : " + a.formatted);
-        System.out.println("From dialect : " + a.fromDialect);
-        System.out.println("To dialect   : " + a.toDialect);
-        System.out.println("Keywords     : " + a.keywords);
+        displayFormatted(a);
+        displayFromDialect(a);
+        displayToDialect(a);
+        displayKeywords(a);
+        displayIdentifiers(a);
+    }
+
+    private static void displayIdentifiers(Args a) {
         System.out.println("Identifiers  : " + a.name);
+    }
+
+    private static void displayKeywords(Args a) {
+        System.out.println("Keywords     : " + a.keywords);
+    }
+
+    private static void displayToDialect(Args a) {
+        System.out.println("To dialect   : " + a.toDialect);
+    }
+
+    private static void displayFromDialect(Args a) {
+        System.out.println("From dialect : " + a.fromDialect);
+    }
+
+    private static void displayFormatted(Args a) {
+        System.out.println("Formatted    : " + a.formatted);
     }
 
     private static final void render(DSLContext ctx, Args a) {

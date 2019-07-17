@@ -307,7 +307,6 @@ import static org.jooq.impl.Tools.EMPTY_NAME;
 import static org.jooq.impl.Tools.EMPTY_QUERYPART;
 import static org.jooq.impl.Tools.EMPTY_ROWN;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
-import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.io.ByteArrayOutputStream;
 import java.math.BigDecimal;
@@ -1085,7 +1084,7 @@ final class ParserImpl implements Parser {
         boolean offsetPostgres = false;
 
         if (offset && parseKeywordIf(ctx, "OFFSET")) {
-            result.addOffset(inline((int) (long) parseUnsignedInteger(ctx)));
+            result.addOffset(parseParenthesisedUnsignedIntegerOrBindVariable(ctx));
 
             if (parseKeywordIf(ctx, "ROWS") || parseKeywordIf(ctx, "ROW"))
                 offsetStandard = true;
@@ -1098,7 +1097,7 @@ final class ParserImpl implements Parser {
         }
 
         if (!offsetStandard && parseKeywordIf(ctx, "LIMIT")) {
-            Param<Integer> limit = inline((int) (long) parseUnsignedInteger(ctx));
+            Param<Long> limit = parseParenthesisedUnsignedIntegerOrBindVariable(ctx);
 
             if (offsetPostgres) {
                 result.addLimit(limit);
@@ -1113,7 +1112,7 @@ final class ParserImpl implements Parser {
                     result.setWithTies(true);
             }
             else if (offset && parseIf(ctx, ',')) {
-                result.addLimit(limit, inline((int) (long) parseUnsignedInteger(ctx)));
+                result.addLimit(limit, parseParenthesisedUnsignedIntegerOrBindVariable(ctx));
             }
             else {
                 if (parseKeywordIf(ctx, "PERCENT") && ctx.requireProEdition())
@@ -1126,22 +1125,29 @@ final class ParserImpl implements Parser {
                     result.setWithTies(true);
 
                 if (offset && parseKeywordIf(ctx, "OFFSET"))
-                    result.addLimit(inline((int) (long) parseUnsignedInteger(ctx)), limit);
+                    result.addLimit(parseParenthesisedUnsignedIntegerOrBindVariable(ctx), limit);
                 else
                     result.addLimit(limit);
             }
         }
         else if (!offsetPostgres && parseKeywordIf(ctx, "FETCH")) {
             parseAndGetKeyword(ctx, "FIRST", "NEXT");
-            result.addLimit(inline((int) (long) defaultIfNull(parseUnsignedIntegerIf(ctx), 1L)));
 
-            if (parseKeywordIf(ctx, "PERCENT") && ctx.requireProEdition())
+            if (parseAndGetKeywordIf(ctx, "ROW", "ROWS") != null) {
+                result.addLimit(inline(1L));
+            }
+            else {
+                result.addLimit(parseParenthesisedUnsignedIntegerOrBindVariable(ctx));
+
+                if (parseKeywordIf(ctx, "PERCENT") && ctx.requireProEdition())
 
 
 
-                ;
+                    ;
 
-            parseAndGetKeyword(ctx, "ROW", "ROWS");
+                parseAndGetKeyword(ctx, "ROW", "ROWS");
+            }
+
             if (parseKeywordIf(ctx, "WITH TIES"))
                 result.setWithTies(true);
             else
@@ -1229,31 +1235,31 @@ final class ParserImpl implements Parser {
         else
             parseKeywordIf(ctx, "ALL");
 
-        Long limit = null;
-        Long offset = null;
+        Param<Long> limit = null;
+        Param<Long> offset = null;
         boolean percent = false;
         boolean withTies = false;
 
         // T-SQL style TOP .. START AT
         if (parseKeywordIf(ctx, "TOP")) {
-            limit = parseParenthesisedUnsignedInteger(ctx);
+            limit = parseParenthesisedUnsignedIntegerOrBindVariable(ctx);
             percent = parseKeywordIf(ctx, "PERCENT") && ctx.requireProEdition();
 
             if (parseKeywordIf(ctx, "START AT"))
-                offset = parseUnsignedInteger(ctx);
+                offset = parseParenthesisedUnsignedIntegerOrBindVariable(ctx);
             else if (parseKeywordIf(ctx, "WITH TIES"))
                 withTies = true;
         }
 
         // Informix style SKIP .. FIRST
         else if (parseKeywordIf(ctx, "SKIP")) {
-            offset = parseUnsignedInteger(ctx);
+            offset = parseParenthesisedUnsignedIntegerOrBindVariable(ctx);
 
             if (parseKeywordIf(ctx, "FIRST"))
-                limit = parseUnsignedInteger(ctx);
+                limit = parseParenthesisedUnsignedIntegerOrBindVariable(ctx);
         }
         else if (parseKeywordIf(ctx, "FIRST")) {
-            limit = parseUnsignedInteger(ctx);
+            limit = parseParenthesisedUnsignedIntegerOrBindVariable(ctx);
         }
 
         List<SelectFieldOrAsterisk> select = parseSelectList(ctx);
@@ -1392,9 +1398,9 @@ final class ParserImpl implements Parser {
 
         if (limit != null)
             if (offset != null)
-                result.addLimit(inline((int) (long) offset), inline((int) (long) limit));
+                result.addLimit(offset, limit);
             else
-                result.addLimit(inline((int) (long) limit));
+                result.addLimit(limit);
 
         if (percent)
 
@@ -1647,11 +1653,11 @@ final class ParserImpl implements Parser {
         if (!parseKeywordIf(ctx, "DEL"))
             parseKeyword(ctx, "DELETE");
 
-        Long limit = null;
+        Param<Long> limit = null;
 
         // T-SQL style TOP .. START AT
         if (parseKeywordIf(ctx, "TOP")) {
-            limit = parseParenthesisedUnsignedInteger(ctx);
+            limit = parseParenthesisedUnsignedIntegerOrBindVariable(ctx);
 
             // [#8623] TODO Support this
             // percent = parseKeywordIf(ctx, "PERCENT") && ctx.requireProEdition();
@@ -1672,7 +1678,7 @@ final class ParserImpl implements Parser {
         DeleteOrderByStep<?> s2 = parseKeywordIf(ctx, "WHERE") ? s1.where(parseCondition(ctx)) : s1;
         DeleteLimitStep<?> s3 = parseKeywordIf(ctx, "ORDER BY") ? s2.orderBy(parseSortSpecification(ctx)) : s2;
         DeleteReturningStep<?> s4 = (limit != null || parseKeywordIf(ctx, "LIMIT"))
-            ? s3.limit(limit != null ? limit : parseUnsignedInteger(ctx))
+            ? s3.limit(limit != null ? limit : parseParenthesisedUnsignedIntegerOrBindVariable(ctx))
             : s3;
         Delete<?> s5 = parseKeywordIf(ctx, "RETURNING") ? s4.returning(parseSelectList(ctx)) : s4;
 
@@ -1825,11 +1831,11 @@ final class ParserImpl implements Parser {
         if (!parseKeywordIf(ctx, "UPD"))
             parseKeyword(ctx, "UPDATE");
 
-        Long limit = null;
+        Param<Long> limit = null;
 
         // T-SQL style TOP .. START AT
         if (parseKeywordIf(ctx, "TOP")) {
-            limit = parseParenthesisedUnsignedInteger(ctx);
+            limit = parseParenthesisedUnsignedIntegerOrBindVariable(ctx);
 
             // [#8623] TODO Support this
             // percent = parseKeywordIf(ctx, "PERCENT") && ctx.requireProEdition();
@@ -1855,7 +1861,7 @@ final class ParserImpl implements Parser {
         UpdateOrderByStep<?> s4 = parseKeywordIf(ctx, "WHERE") ? s3.where(parseCondition(ctx)) : s3;
         UpdateLimitStep<?> s5 = parseKeywordIf(ctx, "ORDER BY") ? s4.orderBy(parseSortSpecification(ctx)) : s4;
         UpdateReturningStep<?> s6 = (limit != null || parseKeywordIf(ctx, "LIMIT"))
-            ? s5.limit(limit != null ? limit : parseUnsignedInteger(ctx))
+            ? s5.limit(limit != null ? limit : parseParenthesisedUnsignedIntegerOrBindVariable(ctx))
             : s5;
         Update<?> s7 = parseKeywordIf(ctx, "RETURNING") ? s6.returning(parseSelectList(ctx)) : s6;
 
@@ -9391,7 +9397,7 @@ final class ParserImpl implements Parser {
         return c;
     }
 
-    private static final Field<?> parseBindVariable(ParserContext ctx) {
+    private static final Param<?> parseBindVariable(ParserContext ctx) {
         switch (ctx.character()) {
             case '?':
                 parse(ctx, '?');
@@ -9823,15 +9829,39 @@ final class ParserImpl implements Parser {
              : unsigned;
     }
 
-    private static final Long parseParenthesisedUnsignedInteger(ParserContext ctx) {
-        Long result;
+    private static final Long parseParenthesisedUnsignedIntegerIf(ParserContext ctx) {
+        Long result = null;
 
         int parens;
         for (parens = 0; parseIf(ctx, '('); parens++);
 
-        result = parseUnsignedInteger(ctx);
+        result = parens > 0 ? parseUnsignedInteger(ctx) : parseUnsignedIntegerIf(ctx);
 
         for (; parens > 0 && parse(ctx, ')'); parens--);
+
+        return result;
+    }
+
+    private static final Long parseParenthesisedUnsignedInteger(ParserContext ctx) {
+        Long result = parseParenthesisedUnsignedIntegerIf(ctx);
+
+        if (result == null)
+            throw ctx.expected("Unsigned integer");
+
+        return result;
+    }
+
+    private static final Param<Long> parseParenthesisedUnsignedIntegerOrBindVariable(ParserContext ctx) {
+        Param<Long> result;
+
+        int parens;
+        for (parens = 0; parseIf(ctx, '('); parens++);
+
+        Long i = parseUnsignedIntegerIf(ctx);
+        result = i != null ? DSL.inline(i) : (Param<Long>) parseBindVariable(ctx);
+
+        for (; parens > 0 && parse(ctx, ')'); parens--);
+
         return result;
     }
 

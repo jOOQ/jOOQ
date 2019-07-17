@@ -651,6 +651,7 @@ final class Tools {
     private static volatile Reflect          ktJvmClassMapping;
     private static volatile Reflect          ktKClasses;
     private static volatile Reflect          ktKClass;
+    private static volatile Reflect          ktKTypeParameter;
 
     /**
      * [#3696] The maximum number of consumed exceptions in
@@ -3342,6 +3343,21 @@ final class Tools {
         }
 
         return ktKClass;
+    }
+
+    static final Reflect ktKTypeParameter() {
+        if (ktKTypeParameter == null) {
+            synchronized (initLock) {
+                if (ktKTypeParameter == null) {
+                    try {
+                        ktKTypeParameter = Reflect.on("kotlin.reflect.KTypeParameter");
+                    }
+                    catch (ReflectException ignore) {}
+                }
+            }
+        }
+
+        return ktKTypeParameter;
     }
 
     /**

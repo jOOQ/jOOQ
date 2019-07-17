@@ -388,6 +388,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             try {
                 Reflect jvmClassMappingKt = Tools.ktJvmClassMapping();
                 Reflect kClasses = Tools.ktKClasses();
+                Reflect kTypeParameter = Tools.ktKTypeParameter();
 
                 Object klass = jvmClassMappingKt.call("getKotlinClass", type).get();
                 Reflect primaryConstructor = kClasses.call("getPrimaryConstructor", klass);
@@ -404,13 +405,22 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                     for (int i = 0; i < parameterTypes.length; i++) {
                         Reflect parameter = Reflect.on(parameters.get(i));
                         Object typeClassifier = parameter.call("getType").call("getClassifier").get();
-                        parameterTypes[i] = (Class<?>) getJavaClass.invoke(jvmClassMappingKt.get(), typeClassifier);
                         String name = parameter.call("getName").<String>get();
+
+                        // [#8578] If the constructor parameter is a KTypeParameter, we need an additional step to
+                        //         extract the first upper bounds' classifier, which (hopefully) is a KClass
+                        parameterTypes[i] = (Class<?>) getJavaClass.invoke(
+                            jvmClassMappingKt.get(),
+                            (kTypeParameter.type().isInstance(typeClassifier)
+                                ? Reflect.on(typeClassifier).call("getUpperBounds").call("get", 0).call("getClassifier").get()
+                                : typeClassifier)
+                        );
 
                         // [#8004] Clean up kotlin field name for boolean types
                         String typeName = parameterTypes[i].getTypeName();
+
                         if (name.startsWith("is") &&
-                                (boolean.class.getName().equalsIgnoreCase(typeName) || Boolean.class.getName().equals(parameterTypes[i].getTypeName())))
+                            (boolean.class.getName().equalsIgnoreCase(typeName) || Boolean.class.getName().equals(typeName)))
                             name = getPropertyName(name);
 
                         parameterNames.add(name);

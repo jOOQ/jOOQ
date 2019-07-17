@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static java.util.Collections.nCopies;
 import static org.jooq.impl.DSL.field;
@@ -383,7 +384,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         }
 
         // [#7324] Map immutable Kotlin classes by parameter names if kotlin-reflect is on the classpath
-        if (Tools.isKotlinAvailable()) {
+        if (Tools.isKotlinAvailable() && !FALSE.equals(configuration.settings().isMapConstructorParameterNamesInKotlin())) {
             try {
                 Reflect jvmClassMappingKt = Tools.ktJvmClassMapping();
                 Reflect kClasses = Tools.ktKClasses();

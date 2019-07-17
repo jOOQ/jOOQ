@@ -148,6 +148,8 @@ public class Settings
     protected Boolean mapJPAAnnotations = true;
     @XmlElement(defaultValue = "false")
     protected Boolean mapConstructorParameterNames = false;
+    @XmlElement(defaultValue = "true")
+    protected Boolean mapConstructorParameterNamesInKotlin = true;
     @XmlElement(defaultValue = "DEFAULT")
     @XmlSchemaType(name = "string")
     protected QueryPoolable queryPoolable = QueryPoolable.DEFAULT;
@@ -1425,6 +1427,30 @@ public class Settings
     }
 
     /**
+     * Whether constructor parameter names obtained via reflection in Kotlin should be considered by the DefaultRecordMapper. This flag has no effect in Java.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isMapConstructorParameterNamesInKotlin() {
+        return mapConstructorParameterNamesInKotlin;
+    }
+
+    /**
+     * Sets the value of the mapConstructorParameterNamesInKotlin property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setMapConstructorParameterNamesInKotlin(Boolean value) {
+        this.mapConstructorParameterNamesInKotlin = value;
+    }
+
+    /**
      * The default JDBC poolable property that should be applied to all
      * jOOQ queries, for which no specific poolable flag was specified.
      *
@@ -2106,6 +2132,11 @@ public class Settings
         return this;
     }
 
+    public Settings withMapConstructorParameterNamesInKotlin(Boolean value) {
+        setMapConstructorParameterNamesInKotlin(value);
+        return this;
+    }
+
     public Settings withQueryPoolable(QueryPoolable value) {
         setQueryPoolable(value);
         return this;
@@ -2266,6 +2297,7 @@ public class Settings
         builder.append("returnRecordToPojo", returnRecordToPojo);
         builder.append("mapJPAAnnotations", mapJPAAnnotations);
         builder.append("mapConstructorParameterNames", mapConstructorParameterNames);
+        builder.append("mapConstructorParameterNamesInKotlin", mapConstructorParameterNamesInKotlin);
         builder.append("queryPoolable", queryPoolable);
         builder.append("queryTimeout", queryTimeout);
         builder.append("maxRows", maxRows);
@@ -2729,6 +2761,15 @@ public class Settings
                 return false;
             }
         }
+        if (mapConstructorParameterNamesInKotlin == null) {
+            if (other.mapConstructorParameterNamesInKotlin!= null) {
+                return false;
+            }
+        } else {
+            if (!mapConstructorParameterNamesInKotlin.equals(other.mapConstructorParameterNamesInKotlin)) {
+                return false;
+            }
+        }
         if (queryPoolable == null) {
             if (other.queryPoolable!= null) {
                 return false;
@@ -2954,6 +2995,7 @@ public class Settings
         result = ((prime*result)+((returnRecordToPojo == null)? 0 :returnRecordToPojo.hashCode()));
         result = ((prime*result)+((mapJPAAnnotations == null)? 0 :mapJPAAnnotations.hashCode()));
         result = ((prime*result)+((mapConstructorParameterNames == null)? 0 :mapConstructorParameterNames.hashCode()));
+        result = ((prime*result)+((mapConstructorParameterNamesInKotlin == null)? 0 :mapConstructorParameterNamesInKotlin.hashCode()));
         result = ((prime*result)+((queryPoolable == null)? 0 :queryPoolable.hashCode()));
         result = ((prime*result)+((queryTimeout == null)? 0 :queryTimeout.hashCode()));
         result = ((prime*result)+((maxRows == null)? 0 :maxRows.hashCode()));

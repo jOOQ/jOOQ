@@ -301,6 +301,10 @@ IDENTITY values, and if <returnAllOnUpdatableRecord/> is active, also other valu
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether constructor parameter names obtained via reflection in Java 8+ should be considered by the DefaultRecordMapper. This flag has no effect in Java 6 or 7.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="mapConstructorParameterNamesInKotlin" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether constructor parameter names obtained via reflection in Kotlin should be considered by the DefaultRecordMapper. This flag has no effect in Java.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="queryPoolable" type="jooq-runtime:QueryPoolable" minOccurs="0" maxOccurs="1" default="DEFAULT">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The default JDBC poolable property that should be applied to all
 jOOQ queries, for which no specific poolable flag was specified.]]></jxb:javadoc></jxb:property></appinfo></annotation>

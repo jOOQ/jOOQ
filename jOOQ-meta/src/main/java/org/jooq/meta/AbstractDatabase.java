@@ -61,6 +61,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
+import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.ExecuteContext;
@@ -68,7 +69,9 @@ import org.jooq.ExecuteListenerProvider;
 import org.jooq.Name;
 import org.jooq.Query;
 import org.jooq.SQLDialect;
+import org.jooq.Schema;
 import org.jooq.Table;
+import org.jooq.TableField;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.DataAccessException;
@@ -200,12 +203,14 @@ public abstract class AbstractDatabase implements Database {
     private final List<Definition>                                           all;
     private final List<Definition>                                           included;
     private final List<Definition>                                           excluded;
-    private final Map<Table<?>, Boolean>                                     exists;
+    private final Map<Table<?>, Boolean>                                     existTables;
+    private final Map<TableField<?, ?>, Boolean>                             existFields;
     private final Patterns                                                   patterns;
     private final Statements                                                 statements;
 
     protected AbstractDatabase() {
-        exists = new HashMap<>();
+        existTables = new HashMap<>();
+        existFields = new HashMap<>();
         patterns = new Patterns();
         statements = new Statements();
         filters = new ArrayList<>();
@@ -364,25 +369,102 @@ public abstract class AbstractDatabase implements Database {
         }
     }
 
+    // [#8972] TODO: Implement these for all non-PostgresDatabase databases.
     @Override
-    public final boolean exists(Table<?> table) {
-        Boolean result = exists.get(table);
+    public TableQualifier tableQualifier() {
+        return null;
+    }
+
+    @Override
+    public ColumnQualifier columnQualifier() {
+        return null;
+    }
+
+    @Override
+    public final boolean exists(TableField<?, ?> field) {
+        Boolean result = existFields.get(field);
 
         if (result == null) {
-            try {
-                create(true)
-                    .selectOne()
-                    .from(table)
-                    .where(falseCondition())
-                    .fetch();
+            ColumnQualifier qualifier = columnQualifier();
 
-                result = true;
+            // [#8972] In the presence of a qualifier, avoid running an error-
+            //         triggering query, which may lead to unwanted log messages
+            if (qualifier == null) {
+                try {
+                    create(true)
+                        .select(field)
+                        .from(field.getTable())
+                        .where(falseCondition())
+                        .fetch();
+
+                    result = true;
+                }
+                catch (DataAccessException e) {
+                    result = false;
+                }
             }
-            catch (DataAccessException e) {
-                result = false;
+            else {
+                Condition condition = qualifier.columnName().eq(field.getName());
+
+                Table<?> table = field.getTable();
+                condition = condition.and(qualifier.tableName().eq(table.getName()));
+
+                Schema schema = table.getSchema();
+                if (schema != null)
+                    condition = condition.and(qualifier.tableSchema().eq(schema.getName()));
+
+                result = create().fetchExists(qualifier.table(), condition);
             }
 
-            exists.put(table, result);
+            existFields.put(field, result);
+        }
+
+        return result;
+    }
+
+    @Override
+    public final boolean existAll(TableField<?, ?>... f) {
+        for (TableField<?, ?> field : f)
+            if (!exists(field))
+                return false;
+
+        return true;
+    }
+
+    @Override
+    public final boolean exists(Table<?> table) {
+        Boolean result = existTables.get(table);
+
+        if (result == null) {
+            TableQualifier qualifier = tableQualifier();
+
+            // [#8972] In the presence of a qualifier, avoid running an error-
+            //         triggering query, which may lead to unwanted log messages
+            if (qualifier == null) {
+                try {
+                    create(true)
+                        .selectOne()
+                        .from(table)
+                        .where(falseCondition())
+                        .fetch();
+
+                    result = true;
+                }
+                catch (DataAccessException e) {
+                    result = false;
+                }
+            }
+            else {
+                Condition condition = qualifier.tableName().eq(table.getName());
+
+                Schema schema = table.getSchema();
+                if (schema != null)
+                    condition = condition.and(qualifier.tableSchema().eq(schema.getName()));
+
+                result = create().fetchExists(qualifier.table(), condition);
+            }
+
+            existTables.put(table, result);
         }
 
         return result;

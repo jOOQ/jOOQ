@@ -47,6 +47,7 @@ import org.jooq.DSLContext;
 import org.jooq.Name;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
+import org.jooq.TableField;
 import org.jooq.meta.jaxb.CatalogMappingType;
 import org.jooq.meta.jaxb.CustomType;
 import org.jooq.meta.jaxb.Embeddable;
@@ -902,6 +903,28 @@ public interface Database  extends AutoCloseable  {
      * [#4838] Whether table-valued functions should be reported as tables.
      */
     boolean tableValuedFunctions();
+
+    /**
+     * The table qualifier used by this database, or <code>null</code>, if this
+     * database doesn't specify such a qualifier.
+     */
+    TableQualifier tableQualifier();
+
+    /**
+     * The column qualifier used by this database, or <code>null</code>, if this
+     * database doesn't specify such a qualifier.
+     */
+    ColumnQualifier columnQualifier();
+
+    /**
+     * Check for the existence of a table field in the dictionary views.
+     */
+    boolean exists(TableField<?, ?> field);
+
+    /**
+     * Check for the existence of several table fields in the dictionary views.
+     */
+    boolean existAll(TableField<?, ?>... fields);
 
     /**
      * Check for the existence of a table in the dictionary views.

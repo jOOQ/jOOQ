@@ -57,6 +57,7 @@ import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.meta.postgres.information_schema.Tables.ATTRIBUTES;
 import static org.jooq.meta.postgres.information_schema.Tables.CHECK_CONSTRAINTS;
+import static org.jooq.meta.postgres.information_schema.Tables.COLUMNS;
 import static org.jooq.meta.postgres.information_schema.Tables.KEY_COLUMN_USAGE;
 import static org.jooq.meta.postgres.information_schema.Tables.PARAMETERS;
 import static org.jooq.meta.postgres.information_schema.Tables.ROUTINES;
@@ -102,14 +103,17 @@ import org.jooq.meta.AbstractIndexDefinition;
 import org.jooq.meta.ArrayDefinition;
 import org.jooq.meta.CatalogDefinition;
 import org.jooq.meta.ColumnDefinition;
+import org.jooq.meta.ColumnQualifier;
 import org.jooq.meta.DataTypeDefinition;
 import org.jooq.meta.DefaultCheckConstraintDefinition;
+import org.jooq.meta.DefaultColumnQualifier;
 import org.jooq.meta.DefaultDataTypeDefinition;
 import org.jooq.meta.DefaultDomainDefinition;
 import org.jooq.meta.DefaultEnumDefinition;
 import org.jooq.meta.DefaultIndexColumnDefinition;
 import org.jooq.meta.DefaultRelations;
 import org.jooq.meta.DefaultSequenceDefinition;
+import org.jooq.meta.DefaultTableQualifier;
 import org.jooq.meta.DomainDefinition;
 import org.jooq.meta.EnumDefinition;
 import org.jooq.meta.IndexColumnDefinition;
@@ -119,6 +123,7 @@ import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
 import org.jooq.meta.TableDefinition;
+import org.jooq.meta.TableQualifier;
 import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.hsqldb.HSQLDBDatabase;
 import org.jooq.meta.postgres.information_schema.tables.CheckConstraints;
@@ -871,21 +876,20 @@ public class PostgresDatabase extends AbstractDatabase {
 
             // [#7785] pg_proc.prokind was added in PostgreSQL 11 only, and
             //         pg_proc.proisagg was removed, incompatibly
-            try {
-                create(true)
-                    .select(PG_PROC.PROKIND)
-                    .from(PG_PROC)
-                    .where(falseCondition())
-                    .fetch();
-
-                is11 = true;
-            }
-            catch (DataAccessException e) {
-                is11 = false;
-            }
+            is11 = exists(PG_PROC.PROKIND);
         }
 
         return is11;
+    }
+
+    @Override
+    public TableQualifier tableQualifier() {
+        return new DefaultTableQualifier(TABLES, TABLES.TABLE_CATALOG, TABLES.TABLE_SCHEMA, TABLES.TABLE_NAME);
+    }
+
+    @Override
+    public ColumnQualifier columnQualifier() {
+        return new DefaultColumnQualifier(COLUMNS, COLUMNS.TABLE_CATALOG, COLUMNS.TABLE_SCHEMA, COLUMNS.TABLE_NAME, COLUMNS.COLUMN_NAME);
     }
 
     boolean canCombineArrays() {

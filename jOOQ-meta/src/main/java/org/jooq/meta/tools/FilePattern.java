@@ -69,6 +69,8 @@ public final class FilePattern {
             };
         else if ("none".equals(sort))
             return null;
+        else if ("flyway".equals(sort))
+            return FlywayFileComparator.INSTANCE;
         else
             return FileComparator.INSTANCE;
     }

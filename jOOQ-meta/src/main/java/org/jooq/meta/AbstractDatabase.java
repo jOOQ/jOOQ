@@ -38,6 +38,9 @@
 
 package org.jooq.meta;
 
+import static org.jooq.SQLDialect.CUBRID;
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.meta.AbstractTypedElementDefinition.customType;
 import static org.jooq.tools.StringUtils.defaultIfEmpty;
@@ -51,6 +54,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -103,7 +107,8 @@ import org.jooq.tools.csv.CSVReader;
  */
 public abstract class AbstractDatabase implements Database {
 
-    private static final JooqLogger                                          log = JooqLogger.getLogger(AbstractDatabase.class);
+    private static final JooqLogger                                          log                                  = JooqLogger.getLogger(AbstractDatabase.class);
+    private static final EnumSet<SQLDialect>                                 NO_SUPPORT_SCHEMATA                  = EnumSet.of(CUBRID, FIREBIRD, SQLITE);
 
     // -------------------------------------------------------------------------
     // Configuration elements
@@ -599,10 +604,14 @@ public abstract class AbstractDatabase implements Database {
                     it.remove();
             }
 
-            if (schemata.isEmpty())
+            if (schemata.isEmpty()) {
                 log.warn(
                     "No schemata were loaded",
                     "Please check your connection settings, and whether your database (and your database version!) is really supported by jOOQ. Also, check the case-sensitivity in your configured <inputSchema/> elements : " + inputSchemataPerCatalog);
+
+                if (NO_SUPPORT_SCHEMATA.contains(getDialect().family()))
+                    log.warn("No schemata were loaded", "The database you're using (" + getClass().getName() + ") does not support schemata. Consider removing all <inputSchema/> and related configuration : " + inputSchemataPerCatalog);
+            }
         }
 
         return schemata;

@@ -37,7 +37,6 @@
  */
 package org.jooq.meta.h2;
 
-import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
@@ -67,7 +66,8 @@ import org.jooq.Record4;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.SortOrder;
-import org.jooq.exception.DataAccessException;
+import org.jooq.Table;
+import org.jooq.TableField;
 import org.jooq.impl.DSL;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
@@ -113,6 +113,16 @@ public class H2Database extends AbstractDatabase {
     @Override
     protected DSLContext create0() {
         return DSL.using(getConnection(), SQLDialect.H2);
+    }
+
+    @Override
+    protected boolean exists0(TableField<?, ?> field) {
+        return exists1(field, COLUMNS, Columns.TABLE_SCHEMA, Columns.TABLE_NAME, Columns.COLUMN_NAME);
+    }
+
+    @Override
+    protected boolean exists0(Table<?> table) {
+        return exists1(table, TABLES, Tables.TABLE_SCHEMA, Tables.TABLE_NAME);
     }
 
     @Override
@@ -619,43 +629,19 @@ public class H2Database extends AbstractDatabase {
     private static Boolean is1_4_198;
 
     boolean is1_4_197() {
-        if (is1_4_197 == null) {
 
-            // [#5874] The COLUMNS.COLUMN_TYPE column was introduced in H2 1.4.197
-            try {
-                create(true)
-                    .select(Columns.COLUMN_TYPE)
-                    .from(COLUMNS)
-                    .where(falseCondition())
-                    .fetch();
-
-                is1_4_197 = true;
-            }
-            catch (DataAccessException e) {
-                is1_4_197 = false;
-            }
-        }
+        // [#5874] The COLUMNS.COLUMN_TYPE column was introduced in H2 1.4.197
+        if (is1_4_197 == null)
+            is1_4_197 = exists(Columns.COLUMN_TYPE);
 
         return is1_4_197;
     }
 
     boolean is1_4_198() {
-        if (is1_4_198 == null) {
 
-            // [#5874] The COLUMNS.IS_VISIBLE column was introduced in H2 1.4.198
-            try {
-                create(true)
-                    .select(Columns.IS_VISIBLE)
-                    .from(COLUMNS)
-                    .where(falseCondition())
-                    .fetch();
-
-                is1_4_198 = true;
-            }
-            catch (DataAccessException e) {
-                is1_4_198 = false;
-            }
-        }
+        // [#5874] The COLUMNS.IS_VISIBLE column was introduced in H2 1.4.198
+        if (is1_4_198 == null)
+            is1_4_198 = exists(Columns.IS_VISIBLE);
 
         return is1_4_198;
     }

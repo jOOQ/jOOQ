@@ -95,6 +95,8 @@ import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.SortOrder;
+import org.jooq.Table;
+import org.jooq.TableField;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
@@ -103,17 +105,14 @@ import org.jooq.meta.AbstractIndexDefinition;
 import org.jooq.meta.ArrayDefinition;
 import org.jooq.meta.CatalogDefinition;
 import org.jooq.meta.ColumnDefinition;
-import org.jooq.meta.ColumnQualifier;
 import org.jooq.meta.DataTypeDefinition;
 import org.jooq.meta.DefaultCheckConstraintDefinition;
-import org.jooq.meta.DefaultColumnQualifier;
 import org.jooq.meta.DefaultDataTypeDefinition;
 import org.jooq.meta.DefaultDomainDefinition;
 import org.jooq.meta.DefaultEnumDefinition;
 import org.jooq.meta.DefaultIndexColumnDefinition;
 import org.jooq.meta.DefaultRelations;
 import org.jooq.meta.DefaultSequenceDefinition;
-import org.jooq.meta.DefaultTableQualifier;
 import org.jooq.meta.DomainDefinition;
 import org.jooq.meta.EnumDefinition;
 import org.jooq.meta.IndexColumnDefinition;
@@ -123,7 +122,6 @@ import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
 import org.jooq.meta.TableDefinition;
-import org.jooq.meta.TableQualifier;
 import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.hsqldb.HSQLDBDatabase;
 import org.jooq.meta.postgres.information_schema.tables.CheckConstraints;
@@ -622,7 +620,6 @@ public class PostgresDatabase extends AbstractDatabase {
         return result;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     protected List<DomainDefinition> getDomains0() throws SQLException {
         List<DomainDefinition> result = new ArrayList<>();
@@ -850,46 +847,34 @@ public class PostgresDatabase extends AbstractDatabase {
     }
 
     boolean is94() {
-        if (is94 == null) {
 
-            // [#4254] INFORMATION_SCHEMA.PARAMETERS.PARAMETER_DEFAULT was added
-            // in PostgreSQL 9.4 only
-            try {
-                create(true)
-                    .select(PARAMETERS.PARAMETER_DEFAULT)
-                    .from(PARAMETERS)
-                    .where(falseCondition())
-                    .fetch();
-
-                is94 = true;
-            }
-            catch (DataAccessException e) {
-                is94 = false;
-            }
-        }
+        // [#4254] INFORMATION_SCHEMA.PARAMETERS.PARAMETER_DEFAULT was added
+        // in PostgreSQL 9.4 only
+        if (is94 == null)
+            is94 = exists(PARAMETERS.PARAMETER_DEFAULT);
 
         return is94;
     }
 
     boolean is11() {
-        if (is11 == null) {
 
-            // [#7785] pg_proc.prokind was added in PostgreSQL 11 only, and
-            //         pg_proc.proisagg was removed, incompatibly
+        // [#7785] pg_proc.prokind was added in PostgreSQL 11 only, and
+        //         pg_proc.proisagg was removed, incompatibly
+        if (is11 == null)
             is11 = exists(PG_PROC.PROKIND);
-        }
 
         return is11;
     }
 
+
     @Override
-    public TableQualifier tableQualifier() {
-        return new DefaultTableQualifier(TABLES, TABLES.TABLE_CATALOG, TABLES.TABLE_SCHEMA, TABLES.TABLE_NAME);
+    protected boolean exists0(TableField<?, ?> field) {
+        return exists1(field, COLUMNS, COLUMNS.TABLE_SCHEMA, COLUMNS.TABLE_NAME, COLUMNS.COLUMN_NAME);
     }
 
     @Override
-    public ColumnQualifier columnQualifier() {
-        return new DefaultColumnQualifier(COLUMNS, COLUMNS.TABLE_CATALOG, COLUMNS.TABLE_SCHEMA, COLUMNS.TABLE_NAME, COLUMNS.COLUMN_NAME);
+    protected boolean exists0(Table<?> table) {
+        return exists1(table, TABLES, TABLES.TABLE_SCHEMA, TABLES.TABLE_NAME);
     }
 
     boolean canCombineArrays() {
@@ -929,18 +914,11 @@ public class PostgresDatabase extends AbstractDatabase {
     }
 
     boolean canUseRoutines() {
-        if (canUseRoutines == null) {
 
-            // [#7892] The information_schema.routines table is not available in all PostgreSQL
-            //         style databases, e.g. CockroachDB
-            try {
-                create(true).fetchExists(ROUTINES);
-                canUseRoutines = true;
-            }
-            catch (DataAccessException e) {
-                canUseRoutines = false;
-            }
-        }
+        // [#7892] The information_schema.routines table is not available in all PostgreSQL
+        //         style databases, e.g. CockroachDB
+        if (canUseRoutines == null)
+            canUseRoutines = exists(ROUTINES);
 
         return canUseRoutines;
     }

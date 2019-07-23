@@ -64,7 +64,8 @@ import org.jooq.Record6;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.SortOrder;
-import org.jooq.exception.DataAccessException;
+import org.jooq.Table;
+import org.jooq.TableField;
 import org.jooq.impl.DSL;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
@@ -223,17 +224,10 @@ public class MySQLDatabase extends AbstractDatabase {
     }
 
     protected boolean is8() {
-        if (is8 == null) {
 
-            // [#6602] The mysql.proc table got removed in MySQL 8.0
-            try {
-                create(true).fetchExists(PROC);
-                is8 = false;
-            }
-            catch (DataAccessException ignore) {
-                is8 = true;
-            }
-        }
+        // [#6602] The mysql.proc table got removed in MySQL 8.0
+        if (is8 == null)
+            is8 = !exists(PROC);
 
         return is8;
     }
@@ -531,5 +525,15 @@ public class MySQLDatabase extends AbstractDatabase {
     @Override
     protected DSLContext create0() {
         return DSL.using(getConnection(), SQLDialect.MYSQL);
+    }
+
+    @Override
+    protected boolean exists0(TableField<?, ?> field) {
+        return exists1(field, Columns.COLUMNS, Columns.TABLE_SCHEMA, Columns.TABLE_NAME, Columns.COLUMN_NAME);
+    }
+
+    @Override
+    protected boolean exists0(Table<?> table) {
+        return exists1(table, Tables.TABLES, Tables.TABLE_SCHEMA, Tables.TABLE_NAME);
     }
 }

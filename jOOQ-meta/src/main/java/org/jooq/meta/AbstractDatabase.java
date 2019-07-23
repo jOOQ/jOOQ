@@ -68,6 +68,7 @@ import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListenerProvider;
 import org.jooq.Name;
 import org.jooq.Query;
+import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -369,57 +370,60 @@ public abstract class AbstractDatabase implements Database {
         }
     }
 
-    // [#8972] TODO: Implement these for all non-PostgresDatabase databases.
-    @Override
-    public TableQualifier tableQualifier() {
-        return null;
-    }
-
-    @Override
-    public ColumnQualifier columnQualifier() {
-        return null;
-    }
-
     @Override
     public final boolean exists(TableField<?, ?> field) {
         Boolean result = existFields.get(field);
 
-        if (result == null) {
-            ColumnQualifier qualifier = columnQualifier();
-
-            // [#8972] In the presence of a qualifier, avoid running an error-
-            //         triggering query, which may lead to unwanted log messages
-            if (qualifier == null) {
-                try {
-                    create(true)
-                        .select(field)
-                        .from(field.getTable())
-                        .where(falseCondition())
-                        .fetch();
-
-                    result = true;
-                }
-                catch (DataAccessException e) {
-                    result = false;
-                }
-            }
-            else {
-                Condition condition = qualifier.columnName().eq(field.getName());
-
-                Table<?> table = field.getTable();
-                condition = condition.and(qualifier.tableName().eq(table.getName()));
-
-                Schema schema = table.getSchema();
-                if (schema != null)
-                    condition = condition.and(qualifier.tableSchema().eq(schema.getName()));
-
-                result = create().fetchExists(qualifier.table(), condition);
-            }
-
-            existFields.put(field, result);
-        }
+        if (result == null)
+            existFields.put(field, result = exists0(field));
 
         return result;
+    }
+
+    /**
+     * [#8972] Subclasses may override this method for a more efficient implementation.
+     */
+    protected boolean exists0(TableField<?, ?> field) {
+        try {
+            create(true)
+                .select(field)
+                .from(field.getTable())
+                .where(falseCondition())
+                .fetch();
+
+            return true;
+        }
+        catch (DataAccessException e) {
+            return false;
+        }
+    }
+
+    /**
+     * A utility method to look up a field in a single dictionary view.
+     *
+     * @param find The field to look up
+     * @param in The dictionary view
+     * @param schemaQualifier The column in the dictionary view qualifying the schema
+     * @param tableQualifier The column in the dictionary view qualifying the table
+     * @param columnQualifier The column in the dictionary view qualifying the column
+     */
+    protected final <R extends Record> boolean exists1(
+        TableField<?, ?> find,
+        Table<R> in,
+        TableField<R, String> schemaQualifier,
+        TableField<R, String> tableQualifier,
+        TableField<R, String> columnQualifier
+    ) {
+        Condition condition = columnQualifier.eq(find.getName());
+
+        Table<?> table = find.getTable();
+        condition = condition.and(tableQualifier.eq(table.getName()));
+
+        Schema schema = table.getSchema();
+        if (schema != null)
+            condition = condition.and(schemaQualifier.eq(schema.getName()));
+
+        return create().fetchExists(in, condition);
     }
 
     @Override
@@ -435,39 +439,51 @@ public abstract class AbstractDatabase implements Database {
     public final boolean exists(Table<?> table) {
         Boolean result = existTables.get(table);
 
-        if (result == null) {
-            TableQualifier qualifier = tableQualifier();
-
-            // [#8972] In the presence of a qualifier, avoid running an error-
-            //         triggering query, which may lead to unwanted log messages
-            if (qualifier == null) {
-                try {
-                    create(true)
-                        .selectOne()
-                        .from(table)
-                        .where(falseCondition())
-                        .fetch();
-
-                    result = true;
-                }
-                catch (DataAccessException e) {
-                    result = false;
-                }
-            }
-            else {
-                Condition condition = qualifier.tableName().eq(table.getName());
-
-                Schema schema = table.getSchema();
-                if (schema != null)
-                    condition = condition.and(qualifier.tableSchema().eq(schema.getName()));
-
-                result = create().fetchExists(qualifier.table(), condition);
-            }
-
-            existTables.put(table, result);
-        }
+        if (result == null)
+            existTables.put(table, result = exists0(table));
 
         return result;
+    }
+
+    /**
+     * [#8972] Subclasses may override this method for a more efficient implementation.
+     */
+    protected boolean exists0(Table<?> table) {
+        try {
+            create(true)
+                .selectOne()
+                .from(table)
+                .where(falseCondition())
+                .fetch();
+
+            return true;
+        }
+        catch (DataAccessException e) {
+            return false;
+        }
+    }
+
+    /**
+     * A utility method to look up a table in a single dictionary view.
+     *
+     * @param find The table to look up
+     * @param in The dictionary view
+     * @param schemaQualifier The column in the dictionary view qualifying the schema
+     * @param tableQualifier The column in the dictionary view qualifying the table
+     */
+    protected final <R extends Record> boolean exists1(
+        Table<?> find,
+        Table<R> in,
+        TableField<R, String> schemaQualifier,
+        TableField<R, String> tableQualifier
+    ) {
+        Condition condition = tableQualifier.eq(find.getName());
+
+        Schema schema = find.getSchema();
+        if (schema != null)
+            condition = condition.and(schemaQualifier.eq(schema.getName()));
+
+        return create().fetchExists(in, condition);
     }
 
     @Override

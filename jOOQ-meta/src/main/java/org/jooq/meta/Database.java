@@ -905,18 +905,6 @@ public interface Database  extends AutoCloseable  {
     boolean tableValuedFunctions();
 
     /**
-     * The table qualifier used by this database, or <code>null</code>, if this
-     * database doesn't specify such a qualifier.
-     */
-    TableQualifier tableQualifier();
-
-    /**
-     * The column qualifier used by this database, or <code>null</code>, if this
-     * database doesn't specify such a qualifier.
-     */
-    ColumnQualifier columnQualifier();
-
-    /**
      * Check for the existence of a table field in the dictionary views.
      */
     boolean exists(TableField<?, ?> field);

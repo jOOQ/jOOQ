@@ -49,9 +49,19 @@ public final class FlywayFileComparator implements Comparator<File> {
         String s1 = o1 == null ? null : o1.getName();
         String s2 = o2 == null ? null : o2.getName();
 
-        FlywayVersion v1 = FlywayVersion.fromVersion(s1 == null ? null : s1.substring(1, s1.indexOf("__")));
-        FlywayVersion v2 = FlywayVersion.fromVersion(s2 == null ? null : s2.substring(1, s2.indexOf("__")));
+        if (s1 != null && s2 != null) {
+            int i1 = s1.indexOf("__");
+            int i2 = s2.indexOf("__");
 
-        return v1.compareTo(v2);
+            if (i1 != -1 && i2 != -1) {
+                FlywayVersion v1 = FlywayVersion.fromVersion(s1.substring(1, i1));
+                FlywayVersion v2 = FlywayVersion.fromVersion(s2.substring(1, i2));
+
+                return v1.compareTo(v2);
+            }
+        }
+
+        // In case we're not comparing two Flyway files, fall back to default comparator logic
+        return FileComparator.INSTANCE.compare(o1, o2);
     }
 }

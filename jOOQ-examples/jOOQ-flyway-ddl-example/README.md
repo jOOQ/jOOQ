@@ -10,3 +10,6 @@ $ cd jOOQ-examples/jOOQ-flyway-ddl-example
 ...
 $ mvn clean install
 ```
+
+This example uses Flyway and jOOQ's `DDLDatabase` which emulates Flyway's
+file ordering.

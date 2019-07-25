@@ -24,6 +24,8 @@ import org.jooq.tools.StringUtils;
 
 /**
  * A version of a migration.
+ * <p>
+ * [#8939] Minor adaptations have been made to use this class in jOOQ directly.
  *
  * @author Axel Fontaine
  */

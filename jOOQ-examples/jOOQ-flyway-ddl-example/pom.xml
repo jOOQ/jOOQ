@@ -3,10 +3,15 @@
 
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>org.jooq</groupId>
+        <artifactId>jooq-examples</artifactId>
+        <version>3.12.0-SNAPSHOT</version>
+    </parent>
+
     <groupId>org.jooq</groupId>
     <artifactId>jooq-flyway-ddl-example</artifactId>
-    <version>1.0</version>
-    <name>jOOQ Flyway/DDL Example</name>
+    <name>jOOQ Flyway DDL Example</name>
 
     <licenses>
         <license>
@@ -23,23 +28,37 @@
     </properties>
 
     <dependencies>
-
-        <!-- Database access -->
         <dependency>
             <groupId>org.jooq</groupId>
             <artifactId>jooq</artifactId>
-            <version>${org.jooq.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>5.2.4</version>
         </dependency>
 
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
 
             <plugin>
                 <groupId>org.jooq</groupId>
                 <artifactId>jooq-codegen-maven</artifactId>
-                <version>${org.jooq.version}</version>
 
                 <executions>
                     <execution>
@@ -61,13 +80,13 @@
                                         </property>
                                         <property>
                                             <key>scripts</key>
-                                            <value>src/main/resources/db/migration/*</value>
+                                            <value>${basedir}/src/main/resources/db/migration/*</value>
                                         </property>
                                     </properties>
                                 </database>
                                 <target>
-                                    <packageName>org.jooq.example.flyway.j.db.h2</packageName>
-                                    <directory>${project.build.directory}/generated-sources/jooq-h2-java</directory>
+                                    <packageName>org.jooq.example.flyway.ddl.db.h2</packageName>
+                                    <directory>src/main/java</directory>
                                 </target>
                             </generator>
                         </configuration>
@@ -78,34 +97,10 @@
                     <dependency>
                         <groupId>org.jooq</groupId>
                         <artifactId>jooq-meta-extensions</artifactId>
-                        <version>${org.jooq.version}</version>
+                        <version>${project.version}</version>
                     </dependency>
                 </dependencies>
-
             </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.0</version>
-                <configuration>
-                    <fork>true</fork>
-                    <maxmem>1024m</maxmem>
-                    <meminitial>256m</meminitial>
-                    <encoding>UTF-8</encoding>
-
-                    <release>11</release>
-
-
-                    <!-- IntelliJ needs these https://youtrack.jetbrains.com/issue/IDEA-195472 -->
-                    <source>11</source>
-                    <target>11</target>
-
-                    <debug>true</debug>
-                    <debuglevel>lines,vars,source</debuglevel>
-                </configuration>
-            </plugin>
-
         </plugins>
     </build>
 </project>

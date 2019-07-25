@@ -9,8 +9,6 @@ import java.sql.Timestamp;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record11;
-import org.jooq.RecordMapper;
-import org.jooq.RecordUnmapper;
 import org.jooq.Row11;
 import org.jooq.example.db.h2.tables.Book;
 import org.jooq.impl.UpdatableRecordImpl;
@@ -22,7 +20,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class BookRecord extends UpdatableRecordImpl<BookRecord> implements Record11<Integer, Integer, Integer, Integer, String, Integer, Integer, String, byte[], Integer, Timestamp> {
 
-    private static final long serialVersionUID = 541237262;
+    private static final long serialVersionUID = 1300065611;
 
     /**
      * Setter for <code>PUBLIC.BOOK.ID</code>.
@@ -476,52 +474,5 @@ public class BookRecord extends UpdatableRecordImpl<BookRecord> implements Recor
         set(8, contentPdf);
         set(9, recVersion);
         set(10, recTimestamp);
-    }
-
-    public RecordMapper<BookRecord, org.jooq.example.db.h2.tables.pojos.Book> mapper() {
-        return new RecordMapper<BookRecord, org.jooq.example.db.h2.tables.pojos.Book>() {
-            @Override
-            public org.jooq.example.db.h2.tables.pojos.Book map(BookRecord record) {
-                org.jooq.example.db.h2.tables.pojos.Book result = new org.jooq.example.db.h2.tables.pojos.Book();
-
-                result.setId(getId());
-                result.setAuthorId(getAuthorId());
-                result.setCoAuthorId(getCoAuthorId());
-                result.setDetailsId(getDetailsId());
-                result.setTitle(getTitle());
-                result.setPublishedIn(getPublishedIn());
-                result.setLanguageId(getLanguageId());
-                result.setContentText(getContentText());
-                result.setContentPdf(getContentPdf());
-                result.setRecVersion(getRecVersion());
-                result.setRecTimestamp(getRecTimestamp());
-
-                return result;
-            }
-        };
-    }
-
-    public RecordUnmapper<org.jooq.example.db.h2.tables.pojos.Book, BookRecord> unmapper() {
-        return new RecordUnmapper<org.jooq.example.db.h2.tables.pojos.Book, BookRecord>() {
-            @Override
-            public BookRecord unmap(org.jooq.example.db.h2.tables.pojos.Book pojo) {
-                BookRecord result = new BookRecord();
-
-                result.setId(pojo.getId());
-                result.setAuthorId(pojo.getAuthorId());
-                result.setCoAuthorId(pojo.getCoAuthorId());
-                result.setDetailsId(pojo.getDetailsId());
-                result.setTitle(pojo.getTitle());
-                result.setPublishedIn(pojo.getPublishedIn());
-                result.setLanguageId(pojo.getLanguageId());
-                result.setContentText(pojo.getContentText());
-                result.setContentPdf(pojo.getContentPdf());
-                result.setRecVersion(pojo.getRecVersion());
-                result.setRecTimestamp(pojo.getRecTimestamp());
-
-                result.attach(configuration());
-                return result;
-            }
-        };
     }
 }

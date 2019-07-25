@@ -9,8 +9,6 @@ import java.sql.Date;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record6;
-import org.jooq.RecordMapper;
-import org.jooq.RecordUnmapper;
 import org.jooq.Row6;
 import org.jooq.example.db.h2.tables.Author;
 import org.jooq.impl.UpdatableRecordImpl;
@@ -22,7 +20,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class AuthorRecord extends UpdatableRecordImpl<AuthorRecord> implements Record6<Integer, String, String, Date, Integer, String> {
 
-    private static final long serialVersionUID = -563985765;
+    private static final long serialVersionUID = 1334443580;
 
     /**
      * Setter for <code>PUBLIC.AUTHOR.ID</code>.
@@ -291,42 +289,5 @@ public class AuthorRecord extends UpdatableRecordImpl<AuthorRecord> implements R
         set(3, dateOfBirth);
         set(4, yearOfBirth);
         set(5, address);
-    }
-
-    public RecordMapper<AuthorRecord, org.jooq.example.db.h2.tables.pojos.Author> mapper() {
-        return new RecordMapper<AuthorRecord, org.jooq.example.db.h2.tables.pojos.Author>() {
-            @Override
-            public org.jooq.example.db.h2.tables.pojos.Author map(AuthorRecord record) {
-                org.jooq.example.db.h2.tables.pojos.Author result = new org.jooq.example.db.h2.tables.pojos.Author();
-
-                result.setId(getId());
-                result.setFirstName(getFirstName());
-                result.setLastName(getLastName());
-                result.setDateOfBirth(getDateOfBirth());
-                result.setYearOfBirth(getYearOfBirth());
-                result.setAddress(getAddress());
-
-                return result;
-            }
-        };
-    }
-
-    public RecordUnmapper<org.jooq.example.db.h2.tables.pojos.Author, AuthorRecord> unmapper() {
-        return new RecordUnmapper<org.jooq.example.db.h2.tables.pojos.Author, AuthorRecord>() {
-            @Override
-            public AuthorRecord unmap(org.jooq.example.db.h2.tables.pojos.Author pojo) {
-                AuthorRecord result = new AuthorRecord();
-
-                result.setId(pojo.getId());
-                result.setFirstName(pojo.getFirstName());
-                result.setLastName(pojo.getLastName());
-                result.setDateOfBirth(pojo.getDateOfBirth());
-                result.setYearOfBirth(pojo.getYearOfBirth());
-                result.setAddress(pojo.getAddress());
-
-                result.attach(configuration());
-                return result;
-            }
-        };
     }
 }

@@ -3328,7 +3328,7 @@ public class JavaGenerator extends AbstractGenerator {
     /**
      * Subclasses may override this method to provide their own pojo copy constructors.
      */
-    private void generatePojoMultiConstructor(Definition tableOrUDT, JavaWriter out) {
+    protected void generatePojoMultiConstructor(Definition tableOrUDT, JavaWriter out) {
         final String className = getStrategy().getJavaClassName(tableOrUDT, Mode.POJO);
 
         int maxLength = 0;

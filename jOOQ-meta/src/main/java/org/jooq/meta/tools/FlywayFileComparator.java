@@ -1,0 +1,57 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * Other licenses:
+ * -----------------------------------------------------------------------------
+ * Commercial licenses for this work are available. These replace the above
+ * ASL 2.0 and offer limited warranties, support, maintenance, and commercial
+ * database integrations.
+ *
+ * For more information, please visit: http://www.jooq.org/licenses
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ */
+package org.jooq.meta.tools;
+
+import java.io.File;
+import java.util.Comparator;
+
+public final class FlywayFileComparator implements Comparator<File> {
+
+    public static final FlywayFileComparator INSTANCE = new FlywayFileComparator();
+
+    @Override
+    public final int compare(File o1, File o2) {
+        String s1 = o1 == null ? null : o1.getName();
+        String s2 = o2 == null ? null : o2.getName();
+
+        FlywayVersion v1 = FlywayVersion.fromVersion(s1 == null ? null : s1.substring(1, s1.indexOf("__")));
+        FlywayVersion v2 = FlywayVersion.fromVersion(s2 == null ? null : s2.substring(1, s2.indexOf("__")));
+
+        return v1.compareTo(v2);
+    }
+}

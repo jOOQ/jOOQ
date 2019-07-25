@@ -53,7 +53,7 @@ public final class FlywayFileComparator implements Comparator<File> {
             int i1 = s1.indexOf("__");
             int i2 = s2.indexOf("__");
 
-            if (i1 != -1 && i2 != -1) {
+            if (i1 >= 1 && i2 >= 1) {
                 FlywayVersion v1 = FlywayVersion.fromVersion(s1.substring(1, i1));
                 FlywayVersion v2 = FlywayVersion.fromVersion(s2.substring(1, i2));
 

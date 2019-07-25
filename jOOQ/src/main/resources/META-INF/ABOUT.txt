@@ -34,6 +34,7 @@ Authors and contributors of jOOQ or parts of jOOQ in alphabetical order:
 - Michael Simons
 - Michał Kołodziejski
 - Miguel Gonzalez Sanchez
+- Mustafa Yücel
 - Nathaniel Fischer
 - Oliver Flege
 - Peter Ertl

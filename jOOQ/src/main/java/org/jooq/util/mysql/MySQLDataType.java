@@ -122,14 +122,6 @@ public class MySQLDataType {
     protected static final DataType<byte[]>     __LONGVARBINARY = new DefaultDataType<>(SQLDialect.MYSQL, SQLDataType.LONGVARBINARY, "varbinary", "binary");
 
     // -------------------------------------------------------------------------
-    // Compatibility types for supported Java types
-    // -------------------------------------------------------------------------
-
-    protected static final DataType<BigInteger> __BIGINTEGER    = new DefaultDataType<>(SQLDialect.MYSQL, SQLDataType.DECIMAL_INTEGER, "decimal", "decimal");
-    protected static final DataType<UUID>       __UUID          = new DefaultDataType<>(SQLDialect.MYSQL, SQLDataType.UUID, "varchar", "char");
-    protected static final DataType<JSONB>      __JSONB         = new DefaultDataType<>(SQLDialect.MYSQL, SQLDataType.JSONB, "json");
-
-    // -------------------------------------------------------------------------
     // Dialect-specific data types and synonyms thereof
     // -------------------------------------------------------------------------
 
@@ -143,4 +135,12 @@ public class MySQLDataType {
     public static final DataType<byte[]>     LONGBLOB           = new DefaultDataType<>(SQLDialect.MYSQL, SQLDataType.BLOB, "longblob", "binary");
     public static final DataType<Date>       YEAR               = new DefaultDataType<>(SQLDialect.MYSQL, SQLDataType.DATE, "year", "date");
     public static final DataType<JSON>       JSON               = new DefaultDataType<>(SQLDialect.MYSQL, SQLDataType.JSON, "json");
+
+    // -------------------------------------------------------------------------
+    // Compatibility types for supported Java types
+    // -------------------------------------------------------------------------
+
+    protected static final DataType<BigInteger> __BIGINTEGER    = new DefaultDataType<>(SQLDialect.MYSQL, SQLDataType.DECIMAL_INTEGER, "decimal", "decimal");
+    protected static final DataType<UUID>       __UUID          = new DefaultDataType<>(SQLDialect.MYSQL, SQLDataType.UUID, "varchar", "char");
+    protected static final DataType<JSONB>      __JSONB         = new DefaultDataType<>(SQLDialect.MYSQL, SQLDataType.JSONB, "json");
 }

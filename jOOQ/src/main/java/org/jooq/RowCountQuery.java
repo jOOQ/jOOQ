@@ -37,7 +37,7 @@
  */
 package org.jooq;
 
-import java.util.concurrent.Flow;
+// ...
 
 /**
  * Any query that is not a {@link ResultQuery}, and thus possibly produces a row
@@ -49,7 +49,7 @@ public interface RowCountQuery
 extends
     Query
     , org.reactivestreams.Publisher<Integer>
-    , Flow.Publisher<Integer>
+
 {
 
 }

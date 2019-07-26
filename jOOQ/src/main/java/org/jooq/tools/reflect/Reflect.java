@@ -290,9 +290,9 @@ public class Reflect {
         Constructor<MethodHandles.Lookup> result;
 
 
-        if (true)
-            result = null;
-        else
+
+
+
 
         try {
             result = MethodHandles.Lookup.class.getDeclaredConstructor(Class.class);
@@ -767,15 +767,15 @@ public class Reflect {
                     if (method.isDefault()) {
 
 
-                        // Java 9 version
-                        if (CACHED_LOOKUP_CONSTRUCTOR == null) {
-                            return MethodHandles
-                                .privateLookupIn(proxyType, MethodHandles.lookup())
-                                .in(proxyType)
-                                .unreflectSpecial(method, proxyType)
-                                .bindTo(proxy)
-                                .invokeWithArguments(args);
-                        }
+
+
+
+
+
+
+
+
+
 
 
                         // Java 8 version

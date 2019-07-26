@@ -37,7 +37,7 @@
  */
 package org.jooq.impl;
 
-import java.util.concurrent.Flow;
+// ...
 
 import org.jooq.RowCountQuery;
 
@@ -57,10 +57,10 @@ abstract class AbstractDelegatingRowCountQuery<Q extends RowCountQuery> extends 
 
 
 
-    @Override
-    public final void subscribe(Flow.Subscriber<? super Integer> subscriber) {
-        getDelegate().subscribe(subscriber);
-    }
+
+
+
+
 
 
 

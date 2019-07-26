@@ -71,7 +71,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Flow;
+// ...
 import java.util.concurrent.Future;
 import java.util.stream.Collector;
 import java.util.stream.Stream;
@@ -366,10 +366,10 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
 
 
-    @Override
-    public final void subscribe(Flow.Subscriber<? super R> subscriber) {
-        subscribe(new FlowToReactiveStreamsSubscriberBridge<>(subscriber));
-    }
+
+
+
+
 
 
 

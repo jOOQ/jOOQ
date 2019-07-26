@@ -39,50 +39,50 @@ package org.jooq.impl;
 
 
 
-import java.util.concurrent.Flow;
 
-/**
- * A bridge mapping a JDK 9 {@link Flow.Subscriber} to a reactive streams
- * {@link org.reactivestreams.Subscriber}
- *
- * @author Lukas Eder
- */
-final class FlowToReactiveStreamsSubscriberBridge<T> implements org.reactivestreams.Subscriber<T> {
 
-    final Flow.Subscriber<? super T> delegate;
 
-    FlowToReactiveStreamsSubscriberBridge(Flow.Subscriber<? super T> delegate) {
-        this.delegate = delegate;
-    }
 
-    @Override
-    public void onSubscribe(org.reactivestreams.Subscription s) {
-        delegate.onSubscribe(new Flow.Subscription() {
-            @Override
-            public void request(long n) {
-                s.request(n);
-            }
 
-            @Override
-            public void cancel() {
-                s.cancel();
-            }
-        });
-    }
 
-    @Override
-    public void onNext(T t) {
-        delegate.onNext(t);
-    }
 
-    @Override
-    public void onError(Throwable t) {
-        delegate.onError(t);
-    }
 
-    @Override
-    public void onComplete() {
-        delegate.onComplete();
-    }
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

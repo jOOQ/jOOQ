@@ -39,12 +39,12 @@
                 <version>3.8.0</version>
                 <configuration>
 
-                    <release>11</release>
+
 
 
                     <!-- IntelliJ needs these https://youtrack.jetbrains.com/issue/IDEA-195472 -->
-                    <source>11</source>
-                    <target>11</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
 
                     <!-- How to properly set things up in JDK 9+
                          https://stackoverflow.com/a/51409471/521799 -->
@@ -62,7 +62,7 @@
                         <annotationProcessorPath>
                             <groupId>javax.xml.bind</groupId>
                             <artifactId>jaxb-api</artifactId>
-                            <version>2.3.0</version>
+                            <version>2.2.12</version>
                         </annotationProcessorPath>
                     </annotationProcessorPaths>
                 </configuration>
@@ -71,7 +71,7 @@
                     <dependency>
                         <groupId>javax.xml.bind</groupId>
                         <artifactId>jaxb-api</artifactId>
-                        <version>2.3.0</version>
+                        <version>2.2.12</version>
                     </dependency>
                 </dependencies>
             </plugin>

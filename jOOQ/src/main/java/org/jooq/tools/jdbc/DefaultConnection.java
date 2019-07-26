@@ -50,7 +50,7 @@ import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.SQLXML;
 import java.sql.Savepoint;
-import java.sql.ShardingKey;
+// ...;
 import java.sql.Statement;
 import java.sql.Struct;
 import java.util.Map;
@@ -359,39 +359,39 @@ public class DefaultConnection extends JDBC41Connection implements Connection {
 
 
 
-    // ------------------------------------------------------------------------
-    // JDBC 4.3
-    // ------------------------------------------------------------------------
 
-    @Override
-    public void beginRequest() throws SQLException {
-        getDelegate().beginRequest();
-    }
 
-    @Override
-    public void endRequest() throws SQLException {
-        getDelegate().endRequest();
-    }
 
-    @Override
-    public boolean setShardingKeyIfValid(ShardingKey shardingKey, ShardingKey superShardingKey, int timeout) throws SQLException {
-        return getDelegate().setShardingKeyIfValid(shardingKey, superShardingKey, timeout);
-    }
 
-    @Override
-    public boolean setShardingKeyIfValid(ShardingKey shardingKey, int timeout) throws SQLException {
-        return getDelegate().setShardingKeyIfValid(shardingKey, timeout);
-    }
 
-    @Override
-    public void setShardingKey(ShardingKey shardingKey, ShardingKey superShardingKey) throws SQLException {
-        getDelegate().setShardingKey(shardingKey, superShardingKey);
-    }
 
-    @Override
-    public void setShardingKey(ShardingKey shardingKey) throws SQLException {
-        getDelegate().setShardingKey(shardingKey);
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

@@ -52,7 +52,7 @@ import java.util.Spliterator;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Flow;
+// ...
 import java.util.function.Consumer;
 import java.util.stream.Collector;
 import java.util.stream.Stream;
@@ -103,7 +103,7 @@ extends
     Query
   , Iterable<R>
 , org.reactivestreams.Publisher<R>
-, Flow.Publisher<R>
+
 {
 
     /**

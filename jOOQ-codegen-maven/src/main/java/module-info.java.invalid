@@ -1,16 +1,17 @@
 
-/**
- * The jOOQ code generation maven plugin module.
- */
-module org.jooq.codegen.maven {
-    requires org.jooq;
-    requires org.jooq.meta;
-    requires org.jooq.codegen;
 
-    requires maven.plugin.annotations;
 
-    // Split packages between these
-    // See https://issues.apache.org/jira/browse/MPLUGIN-341
-    requires maven.core;
-    requires maven.plugin.api;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+               

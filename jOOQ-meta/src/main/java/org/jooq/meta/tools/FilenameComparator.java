@@ -82,7 +82,7 @@ public final class FilenameComparator implements Comparator<String> {
             char c2 = split2[i].charAt(0);
             int cmp = 0;
 
-            if (c1 >= '0' && c1 <= '9' && c2 >= 0 && c2 <= '9')
+            if (c1 >= '0' && c1 <= '9' && c2 >= '0' && c2 <= '9')
                 cmp = new BigInteger(split1[i]).compareTo(new BigInteger(split2[i]));
 
             if (cmp == 0)
@@ -93,5 +93,9 @@ public final class FilenameComparator implements Comparator<String> {
         }
 
         return split1.length - split2.length;
+    }
+
+    public static void main(String[] args) {
+        INSTANCE.compare("0", new String(new byte[] { 0 }));
     }
 }

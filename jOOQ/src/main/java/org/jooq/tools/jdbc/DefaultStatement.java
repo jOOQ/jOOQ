@@ -266,7 +266,13 @@ public class DefaultStatement extends JDBC41Statement implements Statement {
 
     @Override
     public ResultSet getGeneratedKeys() throws SQLException {
-        return new DefaultResultSet(getDelegateStatement().getGeneratedKeys(), this);
+        ResultSet rs = getDelegateStatement().getGeneratedKeys();
+        // Some JDBC drivers seem to illegally return null
+        // from getGeneratedKeys() sometimes
+        if (rs != null) {
+            return new DefaultResultSet(rs, this);
+        }
+        return null;
     }
 
     @Override

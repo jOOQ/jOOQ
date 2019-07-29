@@ -29,6 +29,7 @@ Authors and contributors of jOOQ or parts of jOOQ in alphabetical order:
 - Laurent Pireyn
 - Luc Marchaud
 - Lukas Eder
+- Lusheng Lyu
 - Matti Tahvonen
 - Michael Doberenz
 - Michael Simons

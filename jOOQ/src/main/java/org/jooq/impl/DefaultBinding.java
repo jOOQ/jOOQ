@@ -2697,12 +2697,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             SQLDialect family = ctx.family();
 
             switch (family) {
-                // [#5806] H2 doesn't support TIMESTAMP WITH TIME ZONE literals, see
-                case H2:
-                    ctx.render().visit(K_CAST).sql("('").sql(escape(format(value, family), ctx.render())).sql("' ")
-                    .visit(K_AS).sql(' ').visit(K_TIMESTAMP_WITH_TIME_ZONE).sql(')');
-                    break;
-
                 // [#5895] HSQLDB derives the specific data type from the literal
                 case HSQLDB:
                     ctx.render().visit(K_TIMESTAMP).sql(" '").sql(escape(format(value, family), ctx.render())).sql('\'');

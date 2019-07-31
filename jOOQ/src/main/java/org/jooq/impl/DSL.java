@@ -16012,7 +16012,7 @@ public class DSL {
      */
     @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Date> toDate(Field<String> value, Field<String> format) {
-        return function("to_date", SQLDataType.DATE, nullSafe(value), nullSafe(format));
+        return function("to_date", SQLDataType.DATE, value, format);
     }
 
     /**
@@ -16056,7 +16056,7 @@ public class DSL {
      */
     @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Timestamp> toTimestamp(Field<String> value, Field<String> format) {
-        return function("to_timestamp", SQLDataType.TIMESTAMP, nullSafe(value), nullSafe(format));
+        return function("to_timestamp", SQLDataType.TIMESTAMP, value, format);
     }
 
 
@@ -16368,7 +16368,7 @@ public class DSL {
      */
     @Support({ POSTGRES })
     public static Field<Integer> grouping(Field<?> field) {
-        return function("grouping", Integer.class, nullSafe(field));
+        return function("grouping", Integer.class, field);
     }
 
     /**
@@ -16389,7 +16389,7 @@ public class DSL {
      */
     @Support({})
     public static Field<Integer> groupingId(Field<?>... fields) {
-        return function("grouping_id", Integer.class, nullSafe(fields));
+        return function("grouping_id", Integer.class, fields);
     }
 
     // ------------------------------------------------------------------------
@@ -16962,7 +16962,7 @@ public class DSL {
      */
     @Support
     public static <T extends Number> Field<T> abs(Field<T> field) {
-        return function("abs", nullSafeDataType(field), nullSafe(field));
+        return function("abs", nullSafeDataType(field), field);
     }
 
     /**
@@ -17186,7 +17186,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> exp(Field<? extends Number> field) {
-        return function("exp", SQLDataType.NUMERIC, nullSafe(field));
+        return function("exp", SQLDataType.NUMERIC, field);
     }
 
     /**
@@ -17413,7 +17413,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> cos(Field<? extends Number> field) {
-        return function("cos", SQLDataType.NUMERIC, nullSafe(field));
+        return function("cos", SQLDataType.NUMERIC, field);
     }
 
     /**
@@ -17434,7 +17434,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> sin(Field<? extends Number> field) {
-        return function("sin", SQLDataType.NUMERIC, nullSafe(field));
+        return function("sin", SQLDataType.NUMERIC, field);
     }
 
     /**
@@ -17455,7 +17455,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> tan(Field<? extends Number> field) {
-        return function("tan", SQLDataType.NUMERIC, nullSafe(field));
+        return function("tan", SQLDataType.NUMERIC, field);
     }
 
     /**
@@ -17650,7 +17650,7 @@ public class DSL {
      */
     @Support({ CUBRID })
     public static <T> Field<T> connectByRoot(Field<T> field) {
-        return field("{connect_by_root} {0}", nullSafe(field).getDataType(), field);
+        return field("{connect_by_root} {0}", nullSafeDataType(field), field);
     }
 
     /**

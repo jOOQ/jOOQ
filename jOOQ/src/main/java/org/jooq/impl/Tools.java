@@ -88,7 +88,7 @@ import static org.jooq.impl.DSL.escape;
 import static org.jooq.impl.DSL.getDataType;
 import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.name;
-import static org.jooq.impl.DSL.nullSafe;
+import static org.jooq.impl.DSL.nullSafeDataType;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DefaultExecuteContext.localConnection;
@@ -2952,7 +2952,7 @@ final class Tools {
      */
     @SuppressWarnings("unchecked")
     static final Field<String> escapeForLike(Field<?> field, Configuration configuration) {
-        if (nullSafe(field).getDataType().isString()) {
+        if (nullSafeDataType(field).isString()) {
 
 
 

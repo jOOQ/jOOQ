@@ -38,7 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.name;
-import static org.jooq.impl.DSL.nullSafe;
+import static org.jooq.impl.DSL.nullSafeDataType;
 import static org.jooq.impl.Keywords.K_PRIOR;
 
 import org.jooq.Context;
@@ -57,7 +57,7 @@ final class Prior<T> extends AbstractField<T> {
     private final Field<T>    field;
 
     Prior(Field<T> field) {
-        super(DSL.name("prior"), nullSafe(field).getDataType());
+        super(DSL.name("prior"), nullSafeDataType(field));
 
         this.field = field;
     }

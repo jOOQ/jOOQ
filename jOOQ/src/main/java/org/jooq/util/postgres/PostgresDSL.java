@@ -180,7 +180,7 @@ public class PostgresDSL extends DSL {
     // Java 8 is stricter than Java 7 with respect to generics and overload
     // resolution (http://stackoverflow.com/q/5361513/521799)
     static <T> Field<T[]> arrayAppend0(Field<T[]> array, Field<T> value) {
-        return function("array_append", nullSafe(array).getDataType(), nullSafe(array), nullSafe(value));
+        return function("array_append", nullSafeDataType(array), array, value);
     }
 
     /**
@@ -234,7 +234,7 @@ public class PostgresDSL extends DSL {
     // Java 8 is stricter than Java 7 with respect to generics and overload
     // resolution (http://stackoverflow.com/q/5361513/521799)
     static <T> Field<T[]> arrayPrepend0(Field<T> value, Field<T[]> array) {
-        return function("array_prepend", nullSafe(array).getDataType(), nullSafe(value), nullSafe(array));
+        return function("array_prepend", nullSafeDataType(array), value, array);
     }
 
     /**
@@ -282,7 +282,7 @@ public class PostgresDSL extends DSL {
      */
     @Support({ POSTGRES })
     public static <T> Field<T[]> arrayCat(Field<T[]> array1, Field<T[]> array2) {
-        return function("array_cat", nullSafe(array1).getDataType(), nullSafe(array1), nullSafe(array2));
+        return function("array_cat", nullSafeDataType(array1), array1, array2);
     }
 
     /**
@@ -318,7 +318,7 @@ public class PostgresDSL extends DSL {
      */
     @Support({ POSTGRES })
     public static <T> Field<T[]> arrayRemove(T[] array, Field<T> element) {
-        return arrayRemove0(val(array), nullSafe(element));
+        return arrayRemove0(val(array), element);
     }
 
     /**
@@ -362,7 +362,7 @@ public class PostgresDSL extends DSL {
      */
     @Support({ POSTGRES })
     public static <T> Field<T[]> arrayReplace(T[] array, Field<T> search, Field<T> replace) {
-        return arrayReplace0(val(array), nullSafe(search), nullSafe(replace));
+        return arrayReplace0(val(array), search, replace);
     }
 
     /**
@@ -394,7 +394,7 @@ public class PostgresDSL extends DSL {
     // Java 8 is stricter than Java 7 with respect to generics and overload
     // resolution (http://stackoverflow.com/q/5361513/521799)
     static <T> Field<T[]> arrayReplace0(Field<T[]> array, Field<T> search, Field<T> replace) {
-        return function("array_replace", array.getDataType(), nullSafe(array), nullSafe(search), nullSafe(replace));
+        return function("array_replace", array.getDataType(), array, search, replace);
     }
 
     /**
@@ -430,7 +430,7 @@ public class PostgresDSL extends DSL {
      */
     @Support({ POSTGRES })
     public static <T> Field<T[]> arrayFill(T value, Field<Integer[]> dimensions) {
-        return arrayFill(val(value), nullSafe(dimensions));
+        return arrayFill(val(value), dimensions);
     }
 
     /**
@@ -442,7 +442,7 @@ public class PostgresDSL extends DSL {
      */
     @Support({ POSTGRES })
     public static <T> Field<T[]> arrayFill(Field<T> value, Field<Integer[]> dimensions) {
-        return function("array_fill", nullSafe(value).getDataType().getArrayDataType(), nullSafe(value), nullSafe(dimensions));
+        return function("array_fill", nullSafeDataType(value).getArrayDataType(), value, dimensions);
     }
 
     /**
@@ -478,7 +478,7 @@ public class PostgresDSL extends DSL {
      */
     @Support({ POSTGRES })
     public static <T> Field<T[]> arrayFill(T value, Field<Integer[]> dimensions, Field<Integer[]> bounds) {
-        return arrayFill(val(value), nullSafe(dimensions), nullSafe(bounds));
+        return arrayFill(val(value), dimensions, bounds);
     }
 
     /**
@@ -490,7 +490,7 @@ public class PostgresDSL extends DSL {
      */
     @Support({ POSTGRES })
     public static <T> Field<T[]> arrayFill(Field<T> value, Field<Integer[]> dimensions, Field<Integer[]> bounds) {
-        return function("array_fill", nullSafe(value).getDataType().getArrayDataType(), nullSafe(value), nullSafe(dimensions), nullSafe(bounds));
+        return function("array_fill", nullSafeDataType(value).getArrayDataType(), value, dimensions, bounds);
     }
 
     /**
@@ -568,7 +568,7 @@ public class PostgresDSL extends DSL {
      */
     @Support({ POSTGRES })
     public static Field<String> arrayToString(Field<? extends Object[]> array, Field<String> delimiter) {
-        return field("{array_to_string}({0}, {1})", SQLDataType.VARCHAR, nullSafe(array), nullSafe(delimiter));
+        return function("array_to_string", SQLDataType.VARCHAR, array, delimiter);
     }
 
     /**
@@ -616,7 +616,7 @@ public class PostgresDSL extends DSL {
      */
     @Support({ POSTGRES })
     public static Field<String[]> stringToArray(Field<String> string, Field<String> delimiter) {
-        return function("string_to_array", SQLDataType.VARCHAR.getArrayDataType(), nullSafe(string), nullSafe(delimiter));
+        return function("string_to_array", SQLDataType.VARCHAR.getArrayDataType(), string, delimiter);
     }
 
     /**
@@ -664,7 +664,7 @@ public class PostgresDSL extends DSL {
      */
     @Support({ POSTGRES })
     public static Field<String[]> stringToArray(Field<String> string, Field<String> delimiter, Field<String> nullString) {
-        return function("string_to_array", SQLDataType.VARCHAR.getArrayDataType(), nullSafe(string), nullSafe(delimiter), nullSafe(nullString));
+        return function("string_to_array", SQLDataType.VARCHAR.getArrayDataType(), string, delimiter, nullString);
     }
 
     // -------------------------------------------------------------------------

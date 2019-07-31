@@ -119,7 +119,7 @@ final class Trunc<T> extends AbstractField<T> {
 
             case POSTGRES:
                 ctx.visit(castIfNeeded(
-                    DSL.field("{trunc}({0}, {1})", SQLDataType.NUMERIC,
+                    DSL.function("trunc", SQLDataType.NUMERIC,
                         castIfNeeded(field, BigDecimal.class),
                         decimals
                     ),

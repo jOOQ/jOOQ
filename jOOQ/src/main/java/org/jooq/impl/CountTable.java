@@ -55,7 +55,7 @@ final class CountTable extends Function<Integer> {
     private final boolean     distinct;
 
     CountTable(Table<?> table, boolean distinct) {
-        super("count", distinct, SQLDataType.INTEGER, DSL.field("{0}", DSL.name(table.getName())));
+        super("count", distinct, SQLDataType.INTEGER, DSL.name(table.getName()));
 
         this.table = table;
         this.distinct = distinct;

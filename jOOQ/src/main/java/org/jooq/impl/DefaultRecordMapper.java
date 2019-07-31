@@ -325,7 +325,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
 
         if (Stream.class.isAssignableFrom(type)) {
-            DefaultRecordMapper<R, Object[]> local = new DefaultRecordMapper<>(rowType, Object[].class, configuration);
+            RecordMapper<R, Object[]> local = configuration.recordMapperProvider().provide(rowType, Object[].class);
             delegate = r -> (E) Stream.of(local.map(r));
             return;
         }
@@ -731,21 +731,17 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                 List<RecordMapper<R, Object>> list = new ArrayList<>();
 
                 for (java.lang.reflect.Field member : getMatchingMembers(configuration, type, prefix)) {
-                    list.add(new DefaultRecordMapper<>(
-                        new Fields<>(entry.getValue()),
-                        member.getType(),
-                        null,
-                        configuration
-                    ));
+                    list.add(configuration
+                        .recordMapperProvider()
+                        .provide(new Fields<>(entry.getValue()), member.getType())
+                    );
                 }
 
                 for (Method method : getMatchingSetters(configuration, type, prefix)) {
-                    list.add(new DefaultRecordMapper<>(
-                        new Fields<>(entry.getValue()),
-                        method.getParameterTypes()[0],
-                        null,
-                        configuration
-                    ));
+                    list.add(configuration
+                        .recordMapperProvider()
+                        .provide(new Fields<>(entry.getValue()), method.getParameterTypes()[0])
+                    );
                 }
 
                 nested.put(prefix, list);

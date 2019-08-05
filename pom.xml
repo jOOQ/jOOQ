@@ -403,6 +403,7 @@
 
         <module>jOOQ-checker</module>
 
+        <module>jOOQ-extensions</module>
         <module>jOOQ-meta</module>
         <module>jOOQ-meta-extensions</module>
         <module>jOOQ-codegen</module>

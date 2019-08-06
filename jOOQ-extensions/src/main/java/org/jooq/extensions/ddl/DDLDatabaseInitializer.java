@@ -115,23 +115,26 @@ public final class DDLDatabaseInitializer {
                             boolean changed = false;
 
                             for (int i = 0; i < parts.length; i++) {
+                                Name replacement = parts[i];
                                 switch (nameCase) {
                                     case LOWER_IF_UNQUOTED:
                                         if (parts[i].quoted() == Quoted.QUOTED) break;
                                     case LOWER:
-                                        parts[i] = DSL.quotedName(parts[i].first().toLowerCase(locale));
-                                        changed = true;
+                                        replacement = DSL.quotedName(parts[i].first().toLowerCase(locale));
                                         break;
 
                                     case UPPER_IF_UNQUOTED:
                                         if (parts[i].quoted() == Quoted.QUOTED) break;
                                     case UPPER:
-                                        parts[i] = DSL.quotedName(parts[i].first().toUpperCase(locale));
-                                        changed = true;
+                                        replacement = DSL.quotedName(parts[i].first().toUpperCase(locale));
                                         break;
 
                                     default:
                                         break;
+                                }
+                                if (!replacement.equals(parts[i])) {
+                                    parts[i] = replacement;
+                                    changed = true;
                                 }
                             }
 

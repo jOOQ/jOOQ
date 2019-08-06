@@ -74,16 +74,7 @@ abstract class AbstractMeta implements Meta, Serializable {
     private List<UniqueKey<?>>           cachedPrimaryKeys;
 
     AbstractMeta() {
-
         // [#9010] TODO: Allow for opting out of this cache
-        this.cachedCatalogs = new LinkedHashMap<>();
-        this.cachedQualifiedSchemas = new LinkedHashMap<>();
-        this.cachedQualifiedTables = new LinkedHashMap<>();
-        this.cachedQualifiedSequences = new LinkedHashMap<>();
-        this.cachedUnqualifiedSchemas = new LinkedHashMap<>();
-        this.cachedUnqualifiedTables = new LinkedHashMap<>();
-        this.cachedUnqualifiedSequences = new LinkedHashMap<>();
-        this.cachedPrimaryKeys = new ArrayList<>();
     }
 
     @Override

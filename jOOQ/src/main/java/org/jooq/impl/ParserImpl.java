@@ -558,7 +558,7 @@ final class ParserImpl implements Parser {
         // [#8910] Some statements can be parsed differently when we know we're
         //         parsing them for the DDLDatabase. This method patches these
         //         statements.
-        if (TRUE.equals(ctx.configuration().data("org.jooq.meta.extensions.ddl.parse-for-ddldatabase"))) {
+        if (TRUE.equals(ctx.configuration().data("org.jooq.extensions.ddl.parse-for-ddldatabase"))) {
             if (query instanceof Select) {
                 String sql =
                 ctx.configuration().derive(SettingsTools.clone(ctx.configuration().settings())

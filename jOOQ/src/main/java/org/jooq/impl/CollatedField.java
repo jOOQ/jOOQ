@@ -75,7 +75,7 @@ final class CollatedField extends AbstractField<String> {
     public final void accept(Context<?> ctx) {
 
         // [#8011] Collations are vendor-specific storage clauses, which we might need to ignore
-        if (ctx.configuration().data("org.jooq.meta.extensions.ddl.ignore-storage-clauses") == null)
+        if (ctx.configuration().data("org.jooq.extensions.ddl.ignore-storage-clauses") == null)
             ctx.sql("((").visit(field).sql(") ").visit(K_COLLATE).sql(' ').visit(collation).sql(')');
         else
             ctx.visit(field);

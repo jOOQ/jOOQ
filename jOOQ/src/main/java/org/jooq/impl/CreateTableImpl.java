@@ -447,7 +447,7 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
                .visit(K_COMMENT).sql(' ').visit(comment);
 
         // [#7772] This data() value should be available from ctx directly, not only from ctx.configuration()
-        if (storage != null && ctx.configuration().data("org.jooq.meta.extensions.ddl.ignore-storage-clauses") == null)
+        if (storage != null && ctx.configuration().data("org.jooq.extensions.ddl.ignore-storage-clauses") == null)
             ctx.formatSeparator()
                .visit(storage);
 

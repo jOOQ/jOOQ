@@ -82,6 +82,11 @@
             </dependency>
             <dependency>
                 <groupId>org.jooq</groupId>
+                <artifactId>jooq-extensions</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jooq</groupId>
                 <artifactId>jooq-meta</artifactId>
                 <version>${project.version}</version>
             </dependency>

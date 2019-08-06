@@ -39,7 +39,6 @@ package org.jooq.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import org.jooq.Catalog;
@@ -66,12 +65,12 @@ final class CatalogMetaImpl extends AbstractMeta {
     }
 
     @Override
-    public final List<Catalog> getCatalogs() {
-        return Collections.unmodifiableList(Arrays.asList(catalogs));
+    protected final List<Catalog> getCatalogs0() {
+        return Arrays.asList(catalogs);
     }
 
     @Override
-    public final List<Schema> getSchemas() {
+    protected final List<Schema> getSchemas0() {
         List<Schema> result = new ArrayList<>();
 
         for (Catalog catalog : catalogs)
@@ -81,7 +80,7 @@ final class CatalogMetaImpl extends AbstractMeta {
     }
 
     @Override
-    public final List<Table<?>> getTables() {
+    protected final List<Table<?>> getTables0() {
         List<Table<?>> result = new ArrayList<>();
 
         for (Catalog catalog : catalogs)
@@ -92,7 +91,7 @@ final class CatalogMetaImpl extends AbstractMeta {
     }
 
     @Override
-    public final List<Sequence<?>> getSequences() {
+    protected final List<Sequence<?>> getSequences0() {
         List<Sequence<?>> result = new ArrayList<>();
 
         for (Catalog catalog : catalogs)
@@ -103,7 +102,7 @@ final class CatalogMetaImpl extends AbstractMeta {
     }
 
     @Override
-    public final List<UniqueKey<?>> getPrimaryKeys() {
+    protected final List<UniqueKey<?>> getPrimaryKeys0() {
         List<UniqueKey<?>> result = new ArrayList<>();
 
         for (Catalog catalog : catalogs)

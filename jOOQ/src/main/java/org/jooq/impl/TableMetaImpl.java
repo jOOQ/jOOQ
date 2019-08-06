@@ -68,7 +68,7 @@ final class TableMetaImpl extends AbstractMeta {
     }
 
     @Override
-    public final List<Catalog> getCatalogs() {
+    protected final List<Catalog> getCatalogs0() {
         Set<Catalog> result = new LinkedHashSet<>();
 
         for (Table<?> table : tables)
@@ -80,7 +80,7 @@ final class TableMetaImpl extends AbstractMeta {
     }
 
     @Override
-    public final List<Schema> getSchemas() {
+    protected final List<Schema> getSchemas0() {
         Set<Schema> result = new LinkedHashSet<>();
 
         for (Table<?> table : tables)
@@ -91,17 +91,17 @@ final class TableMetaImpl extends AbstractMeta {
     }
 
     @Override
-    public final List<Table<?>> getTables() {
+    protected final List<Table<?>> getTables0() {
         return Collections.unmodifiableList(Arrays.asList(tables));
     }
 
     @Override
-    public final List<Sequence<?>> getSequences() {
+    protected final List<Sequence<?>> getSequences0() {
         return Collections.emptyList();
     }
 
     @Override
-    public final List<UniqueKey<?>> getPrimaryKeys() {
+    protected final List<UniqueKey<?>> getPrimaryKeys0() {
         List<UniqueKey<?>> result = new ArrayList<>();
 
         for (Table<?> table : tables)

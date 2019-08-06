@@ -68,7 +68,7 @@ final class SchemaMetaImpl extends AbstractMeta {
     }
 
     @Override
-    public final List<Catalog> getCatalogs() {
+    protected final List<Catalog> getCatalogs0() {
         Set<Catalog> result = new LinkedHashSet<>();
 
         for (Schema schema : schemas)
@@ -79,12 +79,12 @@ final class SchemaMetaImpl extends AbstractMeta {
     }
 
     @Override
-    public final List<Schema> getSchemas() {
+    protected final List<Schema> getSchemas0() {
         return Collections.unmodifiableList(Arrays.asList(schemas));
     }
 
     @Override
-    public final List<Table<?>> getTables() {
+    protected final List<Table<?>> getTables0() {
         List<Table<?>> result = new ArrayList<>();
 
         for (Schema schema : schemas)
@@ -94,7 +94,7 @@ final class SchemaMetaImpl extends AbstractMeta {
     }
 
     @Override
-    public final List<Sequence<?>> getSequences() {
+    protected final List<Sequence<?>> getSequences0() {
         List<Sequence<?>> result = new ArrayList<>();
 
         for (Schema schema : schemas)
@@ -104,7 +104,7 @@ final class SchemaMetaImpl extends AbstractMeta {
     }
 
     @Override
-    public final List<UniqueKey<?>> getPrimaryKeys() {
+    protected final List<UniqueKey<?>> getPrimaryKeys0() {
         List<UniqueKey<?>> result = new ArrayList<>();
 
         for (Schema schema : schemas)

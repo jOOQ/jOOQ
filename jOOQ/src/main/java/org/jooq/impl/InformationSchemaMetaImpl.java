@@ -494,28 +494,30 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
     }
 
     @Override
-    public final List<Catalog> getCatalogs() {
-        return Collections.<Catalog>unmodifiableList(catalogs);
+    protected final List<Catalog> getCatalogs0() {
+        return catalogs;
     }
 
     @Override
-    public final List<Schema> getSchemas() {
-        return Collections.<Schema>unmodifiableList(schemas);
+    protected final List<Schema> getSchemas0() {
+        return schemas;
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    protected final List<Table<?>> getTables0() {
+        return (List) tables;
     }
 
     @Override
-    public final List<Table<?>> getTables() {
-        return Collections.<Table<?>>unmodifiableList(tables);
+    protected final List<Sequence<?>> getSequences0() {
+        return sequences;
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    public final List<Sequence<?>> getSequences() {
-        return Collections.<Sequence<?>>unmodifiableList(sequences);
-    }
-
-    @Override
-    public final List<UniqueKey<?>> getPrimaryKeys() {
-        return Collections.<UniqueKey<?>>unmodifiableList(primaryKeys);
+    protected final List<UniqueKey<?>> getPrimaryKeys0() {
+        return (List) primaryKeys;
     }
 
     private final class InformationSchemaCatalog extends CatalogImpl {

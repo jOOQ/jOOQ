@@ -103,14 +103,20 @@ public class DDLDatabase extends H2Database {
                 log.warn("No scripts defined", "It is recommended that you provide an explicit script directory to scan");
             }
 
+            RenderNameCase renderNameCase = RenderNameCase.AS_IS;
+            if ("UPPER".equals(defaultNameCase))
+                renderNameCase = RenderNameCase.UPPER_IF_UNQUOTED;
+            else if ("LOWER".equals(defaultNameCase))
+                renderNameCase = RenderNameCase.LOWER_IF_UNQUOTED;
+
             Settings settings = new Settings()
                 .withParseIgnoreComments(parseIgnoreComments)
                 .withParseIgnoreCommentStart(parseIgnoreCommentStart)
                 .withParseIgnoreCommentStop(parseIgnoreCommentStop)
                 .withParseUnknownFunctions(ParseUnknownFunctions.IGNORE)
-                .withRenderNameCase(RenderNameCase.valueOf(defaultNameCase));
+                .withRenderNameCase(renderNameCase);
 
-            DDLDatabaseInitializer initializer = DDLDatabaseInitializer.using(settings);
+            final DDLDatabaseInitializer initializer = DDLDatabaseInitializer.using(settings);
             try {
                 FilePattern.load(encoding, scripts, fileComparator, new Loader() {
                     @Override

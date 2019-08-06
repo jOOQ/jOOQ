@@ -29,7 +29,7 @@ import org.jooq.tools.StringUtils;
  *
  * @author Axel Fontaine
  */
-public final class FlywayVersion implements Comparable<FlywayVersion> {
+final class FlywayVersion implements Comparable<FlywayVersion> {
     /**
      * Version for an empty schema.
      */

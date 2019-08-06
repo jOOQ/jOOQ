@@ -40,7 +40,7 @@ package org.jooq.meta.tools;
 import java.io.File;
 import java.util.Comparator;
 
-public final class FlywayFileComparator implements Comparator<File> {
+final class FlywayFileComparator implements Comparator<File> {
 
     public static final FlywayFileComparator INSTANCE = new FlywayFileComparator();
 

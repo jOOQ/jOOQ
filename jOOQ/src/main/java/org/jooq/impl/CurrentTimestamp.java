@@ -37,14 +37,30 @@
  */
 package org.jooq.impl;
 
+// ...
+// ...
+import static org.jooq.SQLDialect.CUBRID;
+import static org.jooq.SQLDialect.DERBY;
+// ...
+// ...
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.SQLITE;
+// ...
+// ...
 import static org.jooq.impl.Keywords.F_CURRENT_BIGDATETIME;
 import static org.jooq.impl.Keywords.F_CURRENT_TIMESTAMP;
 import static org.jooq.impl.Keywords.F_NOW;
 import static org.jooq.impl.Keywords.K_CURRENT;
 import static org.jooq.impl.Keywords.K_TIMESTAMP;
 
+import java.util.EnumSet;
+
 import org.jooq.Context;
 import org.jooq.DataType;
+import org.jooq.Field;
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
@@ -54,10 +70,18 @@ final class CurrentTimestamp<T> extends AbstractField<T> {
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -7273879239726265322L;
+    private static final long                serialVersionUID = -7273879239726265322L;
+    private static final EnumSet<SQLDialect> NO_SUPPORT_PRECISION = EnumSet.of(CUBRID, DERBY, SQLITE);
+
+    private final Field<Integer>             precision;
 
     CurrentTimestamp(DataType<T> type) {
+        this(null, type);
+    }
+
+    CurrentTimestamp(Field<Integer> precision, DataType<T> type) {
         super(DSL.name("current_timestamp"), type);
+        this.precision = precision;
     }
 
     @Override
@@ -96,10 +120,16 @@ final class CurrentTimestamp<T> extends AbstractField<T> {
             case HSQLDB:
             case POSTGRES:
             case SQLITE:
-                ctx.visit(F_CURRENT_TIMESTAMP);
+                if (precision != null && !NO_SUPPORT_PRECISION.contains(ctx.family()))
+                    ctx.visit(F_CURRENT_TIMESTAMP).sql('(').visit(precision).sql(')');
+                else
+                    ctx.visit(F_CURRENT_TIMESTAMP);
                 break;
             default:
-                ctx.visit(F_CURRENT_TIMESTAMP).sql("()");
+                if (precision != null && !NO_SUPPORT_PRECISION.contains(ctx.family()))
+                    ctx.visit(F_CURRENT_TIMESTAMP).sql('(').visit(precision).sql(')');
+                else
+                    ctx.visit(F_CURRENT_TIMESTAMP).sql("()");
                 break;
         }
     }

@@ -5555,8 +5555,15 @@ final class ParserImpl implements Parser {
                 if (D.is(type))
                     if ((parseKeywordIf(ctx, "CURRENT_DATE") || parseKeywordIf(ctx, "CURRENT DATE")) && (parseIf(ctx, '(') && parse(ctx, ')') || true))
                         return currentDate();
-                    else if ((parseKeywordIf(ctx, "CURRENT_TIMESTAMP") || parseKeywordIf(ctx, "CURRENT TIMESTAMP")) && (parseIf(ctx, '(') && parse(ctx, ')') || true))
-                        return currentTimestamp();
+                    else if (parseKeywordIf(ctx, "CURRENT_TIMESTAMP") || parseKeywordIf(ctx, "CURRENT TIMESTAMP")) {
+                        Field<Integer> precision = null;
+                        if (parseIf(ctx, '('))
+                            if (!parseIf(ctx, ')')) {
+                                precision = (Field<Integer>) parseField(ctx, N);
+                                parse(ctx, ')');
+                            }
+                        return precision != null ? currentTimestamp(precision) : currentTimestamp();
+                    }
                     else if ((parseKeywordIf(ctx, "CURRENT_TIME") || parseKeywordIf(ctx, "CURRENT TIME")) && (parseIf(ctx, '(') && parse(ctx, ')') || true))
                         return currentTime();
                     else if (parseFunctionNameIf(ctx, "CURDATE") && parse(ctx, '(') && parse(ctx, ')'))
@@ -5780,8 +5787,13 @@ final class ParserImpl implements Parser {
                     return field;
                 else if ((field = parseNextvalCurrvalIf(ctx, SequenceMethod.NEXTVAL)) != null)
                     return field;
-                else if (parseFunctionNameIf(ctx, "NOW") && parse(ctx, '(') && parse(ctx, ')'))
-                    return now();
+                else if (parseFunctionNameIf(ctx, "NOW") && parse(ctx, '(')) {
+                    if (parseIf(ctx, ')'))
+                        return now();
+                    Field<Integer> precision = (Field<Integer>) parseField(ctx, N);
+                    parse(ctx, ')');
+                    return now(precision);
+                }
 
                 break;
 

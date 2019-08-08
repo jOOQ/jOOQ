@@ -14041,11 +14041,29 @@ public class DSL {
     }
 
     /**
+     * Get the current_timestamp() function returning a SQL standard
+     * {@link SQLDataType#TIMESTAMP} type with the specified fractional
+     * seconds precision.
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<Timestamp> currentTimestamp(Field<Integer> precision) {
+        return new CurrentTimestamp<>(precision, SQLDataType.TIMESTAMP);
+    }
+
+    /**
      * Synonym for {@link #currentTimestamp()}.
      */
     @Support
     public static Field<Timestamp> now() {
         return currentTimestamp();
+    }
+
+    /**
+     * Synonym for {@link #currentTimestamp(Field)}.
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<Timestamp> now(Field<Integer> precision) {
+        return currentTimestamp(precision);
     }
 
 

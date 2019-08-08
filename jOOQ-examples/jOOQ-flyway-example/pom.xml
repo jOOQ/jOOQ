@@ -23,7 +23,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.springframework.version>3.2.6.RELEASE</org.springframework.version>
-        <scala.version>2.12.8</scala.version>
+        <scala.version>2.12.9</scala.version>
 
         <db.url>jdbc:h2:~/flyway-test</db.url>
         <db.username>sa</db.username>

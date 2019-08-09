@@ -97,13 +97,13 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertReturning
     /**
      * Add a <code>ON CONFLICT ON CONSTRAINT</code> clause to this INSERT statement.
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, HSQLDB, MYSQL, POSTGRES })
     InsertOnConflictDoUpdateStep<R> onConflictOnConstraint(Constraint constraint);
 
     /**
      * Add a <code>ON CONFLICT ON CONSTRAINT</code> clause to this INSERT statement.
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, HSQLDB, MYSQL, POSTGRES })
     InsertOnConflictDoUpdateStep<R> onConflictOnConstraint(Name constraint);
 
     /**

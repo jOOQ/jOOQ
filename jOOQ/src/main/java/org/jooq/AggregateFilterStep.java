@@ -97,12 +97,14 @@ public interface AggregateFilterStep<T> extends WindowBeforeOverStep<T> {
     /**
      * Add a <code>FILTER clause</code> to the aggregate function.
      *
-     * @deprecated - 3.8.0 - [#4763] - Use {@link #filterWhere(Condition)} or
-     *             {@link #filterWhere(Field)} instead. Due to ambiguity between
-     *             calling this method using {@link Field#equals(Object)}
-     *             argument, vs. calling the other method via a
-     *             {@link Field#equal(Object)} argument, this method will be
-     *             removed in the future.
+     * @deprecated - 3.8.0 - [#4763] - Use {@link #filterWhere(Condition)}
+     *             (typically with {@link DSL#trueCondition()},
+     *             {@link DSL#falseCondition()}, or {@link DSL#noCondition()} as
+     *             the parameter) or {@link #filterWhere(Field)} instead. Due to
+     *             ambiguity between calling this method using
+     *             {@link Field#equals(Object)} argument, vs. calling the other
+     *             method via a {@link Field#equal(Object)} argument, this
+     *             method will be removed in the future.
      */
     @Deprecated
     @Support

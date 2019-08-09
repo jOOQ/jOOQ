@@ -120,12 +120,14 @@ public interface SelectConnectByAfterStartWithStep<R extends Record> {
     /**
      * Add an Oracle-specific <code>CONNECT BY</code> clause to the query
      *
-     * @deprecated - 3.8.0 - [#4763] - Use {@link #connectBy(Condition)} or
-     *             {@link #connectBy(Field)} instead. Due to ambiguity between
-     *             calling this method using {@link Field#equals(Object)}
-     *             argument, vs. calling the other method via a
-     *             {@link Field#equal(Object)} argument, this method will be
-     *             removed in the future.
+     * @deprecated - 3.8.0 - [#4763] - Use {@link #connectBy(Condition)}
+     *             (typically with {@link DSL#trueCondition()},
+     *             {@link DSL#falseCondition()}, or {@link DSL#noCondition()} as
+     *             the parameter) or {@link #connectBy(Field)} instead. Due to
+     *             ambiguity between calling this method using
+     *             {@link Field#equals(Object)} argument, vs. calling the other
+     *             method via a {@link Field#equal(Object)} argument, this
+     *             method will be removed in the future.
      */
     @Deprecated
     @Support({ CUBRID })
@@ -212,8 +214,10 @@ public interface SelectConnectByAfterStartWithStep<R extends Record> {
      * query
      *
      * @deprecated - 3.8.0 - [#4763] - Use {@link #connectByNoCycle(Condition)}
-     *             or {@link #connectByNoCycle(Field)} instead. Due to ambiguity
-     *             between calling this method using
+     *             (typically with {@link DSL#trueCondition()},
+     *             {@link DSL#falseCondition()}, or {@link DSL#noCondition()} as
+     *             the parameter) or {@link #connectByNoCycle(Field)} instead.
+     *             Due to ambiguity between calling this method using
      *             {@link Field#equals(Object)} argument, vs. calling the other
      *             method via a {@link Field#equal(Object)} argument, this
      *             method will be removed in the future.

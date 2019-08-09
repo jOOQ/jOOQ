@@ -120,12 +120,14 @@ public interface SelectConditionStep<R extends Record> extends SelectConnectBySt
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#AND} operator and proceed to the next step.
      *
-     * @deprecated - 3.8.0 - [#4763] - Use {@link #and(Condition)} or
-     *             {@link #and(Field)} instead. Due to ambiguity between
-     *             calling this method using {@link Field#equals(Object)}
-     *             argument, vs. calling the other method via a
-     *             {@link Field#equal(Object)} argument, this method will be
-     *             removed in the future.
+     * @deprecated - 3.8.0 - [#4763] - Use {@link #and(Condition)} (typically
+     *             with {@link DSL#trueCondition()},
+     *             {@link DSL#falseCondition()}, or {@link DSL#noCondition()} as
+     *             the parameter) or {@link #and(Field)} instead. Due to
+     *             ambiguity between calling this method using
+     *             {@link Field#equals(Object)} argument, vs. calling the other
+     *             method via a {@link Field#equal(Object)} argument, this
+     *             method will be removed in the future.
      */
     @Deprecated
     @Support
@@ -215,12 +217,14 @@ public interface SelectConditionStep<R extends Record> extends SelectConnectBySt
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#AND} operator and proceed to the next step.
      *
-     * @deprecated - 3.8.0 - [#4763] - Use {@link #andNot(Condition)} or
-     *             {@link #andNot(Field)} instead. Due to ambiguity between
-     *             calling this method using {@link Field#equals(Object)}
-     *             argument, vs. calling the other method via a
-     *             {@link Field#equal(Object)} argument, this method will be
-     *             removed in the future.
+     * @deprecated - 3.8.0 - [#4763] - Use {@link #andNot(Condition)} (typically
+     *             with {@link DSL#trueCondition()},
+     *             {@link DSL#falseCondition()}, or {@link DSL#noCondition()} as
+     *             the parameter) or {@link #andNot(Field)} instead. Due to
+     *             ambiguity between calling this method using
+     *             {@link Field#equals(Object)} argument, vs. calling the other
+     *             method via a {@link Field#equal(Object)} argument, this
+     *             method will be removed in the future.
      */
     @Deprecated
     @Support
@@ -258,12 +262,14 @@ public interface SelectConditionStep<R extends Record> extends SelectConnectBySt
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#OR} operator and proceed to the next step.
      *
-     * @deprecated - 3.8.0 - [#4763] - Use {@link #or(Condition)} or
-     *             {@link #or(Field)} instead. Due to ambiguity between
-     *             calling this method using {@link Field#equals(Object)}
-     *             argument, vs. calling the other method via a
-     *             {@link Field#equal(Object)} argument, this method will be
-     *             removed in the future.
+     * @deprecated - 3.8.0 - [#4763] - Use {@link #or(Condition)} (typically
+     *             with {@link DSL#trueCondition()},
+     *             {@link DSL#falseCondition()}, or {@link DSL#noCondition()} as
+     *             the parameter) or {@link #or(Field)} instead. Due to
+     *             ambiguity between calling this method using
+     *             {@link Field#equals(Object)} argument, vs. calling the other
+     *             method via a {@link Field#equal(Object)} argument, this
+     *             method will be removed in the future.
      */
     @Deprecated
     @Support
@@ -353,12 +359,14 @@ public interface SelectConditionStep<R extends Record> extends SelectConnectBySt
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#OR} operator and proceed to the next step.
      *
-     * @deprecated - 3.8.0 - [#4763] - Use {@link #orNot(Condition)} or
-     *             {@link #orNot(Field)} instead. Due to ambiguity between
-     *             calling this method using {@link Field#equals(Object)}
-     *             argument, vs. calling the other method via a
-     *             {@link Field#equal(Object)} argument, this method will be
-     *             removed in the future.
+     * @deprecated - 3.8.0 - [#4763] - Use {@link #orNot(Condition)} (typically
+     *             with {@link DSL#trueCondition()},
+     *             {@link DSL#falseCondition()}, or {@link DSL#noCondition()} as
+     *             the parameter) or {@link #orNot(Field)} instead. Due to
+     *             ambiguity between calling this method using
+     *             {@link Field#equals(Object)} argument, vs. calling the other
+     *             method via a {@link Field#equal(Object)} argument, this
+     *             method will be removed in the future.
      */
     @Deprecated
     @Support

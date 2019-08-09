@@ -93,12 +93,14 @@ public interface TableOnStep<R extends Record> {
     /**
      * Add an <code>ON</code> clause to the <code>JOIN</code>.
      *
-     * @deprecated - 3.8.0 - [#4763] - Use {@link #on(Condition)} or
-     *             {@link #on(Field)} instead. Due to ambiguity between
-     *             calling this method using {@link Field#equals(Object)}
-     *             argument, vs. calling the other method via a
-     *             {@link Field#equal(Object)} argument, this method will be
-     *             removed in the future.
+     * @deprecated - 3.8.0 - [#4763] - Use {@link #on(Condition)} (typically
+     *             with {@link DSL#trueCondition()},
+     *             {@link DSL#falseCondition()}, or {@link DSL#noCondition()} as
+     *             the parameter) or {@link #on(Field)} instead. Due to
+     *             ambiguity between calling this method using
+     *             {@link Field#equals(Object)} argument, vs. calling the other
+     *             method via a {@link Field#equal(Object)} argument, this
+     *             method will be removed in the future.
      */
     @Deprecated
     @Support

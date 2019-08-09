@@ -42,6 +42,8 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.H2;
 // ...
 
+import org.jooq.impl.DSL;
+
 /**
  * This type is used for the {@link Merge}'s DSL API.
  * <p>
@@ -123,12 +125,14 @@ public interface MergeNotMatchedWhereStep<R extends Record> extends MergeFinalSt
      * >http://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_9016.
      * htm</a> for a full definition of the Oracle <code>MERGE</code> statement
      *
-     * @deprecated - 3.8.0 - [#4763] - Use {@link #where(Condition)} or
-     *             {@link #where(Field)} instead. Due to ambiguity between
-     *             calling this method using {@link Field#equals(Object)}
-     *             argument, vs. calling the other method via a
-     *             {@link Field#equal(Object)} argument, this method will be
-     *             removed in the future.
+     * @deprecated - 3.8.0 - [#4763] - Use {@link #where(Condition)} (typically
+     *             with {@link DSL#trueCondition()},
+     *             {@link DSL#falseCondition()}, or {@link DSL#noCondition()} as
+     *             the parameter) or {@link #where(Field)} instead. Due to
+     *             ambiguity between calling this method using
+     *             {@link Field#equals(Object)} argument, vs. calling the other
+     *             method via a {@link Field#equal(Object)} argument, this
+     *             method will be removed in the future.
      */
     @Deprecated
     @Support({ CUBRID, DERBY, H2 })

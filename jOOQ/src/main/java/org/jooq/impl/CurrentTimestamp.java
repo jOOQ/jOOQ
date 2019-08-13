@@ -76,10 +76,10 @@ final class CurrentTimestamp<T> extends AbstractField<T> {
     private final Field<Integer>             precision;
 
     CurrentTimestamp(DataType<T> type) {
-        this(null, type);
+        this(type, null);
     }
 
-    CurrentTimestamp(Field<Integer> precision, DataType<T> type) {
+    CurrentTimestamp(DataType<T> type, Field<Integer> precision) {
         super(DSL.name("current_timestamp"), type);
         this.precision = precision;
     }

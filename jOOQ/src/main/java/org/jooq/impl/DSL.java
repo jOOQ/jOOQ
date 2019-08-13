@@ -14047,7 +14047,7 @@ public class DSL {
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<Timestamp> currentTimestamp(Field<Integer> precision) {
-        return new CurrentTimestamp<>(precision, SQLDataType.TIMESTAMP);
+        return new CurrentTimestamp<>(SQLDataType.TIMESTAMP, precision);
     }
 
     /**

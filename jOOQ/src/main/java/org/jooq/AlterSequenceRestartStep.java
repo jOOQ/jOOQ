@@ -86,4 +86,10 @@ public interface AlterSequenceRestartStep<T extends Number> {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     AlterSequenceFinalStep restartWith(T value);
+
+    /**
+     * Restart the sequence at a given value.
+     */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
+    AlterSequenceFinalStep restartWith(Field<? extends T> value);
 }

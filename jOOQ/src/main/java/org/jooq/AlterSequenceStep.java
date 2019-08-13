@@ -92,6 +92,13 @@ public interface AlterSequenceStep<T extends Number> extends AlterSequenceRestar
     AlterSequenceFinalStep restartWith(T value);
 
     /**
+     * Restart the sequence at a given value.
+     */
+    @Override
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
+    AlterSequenceFinalStep restartWith(Field<? extends T> value);
+
+    /**
      * Add a <code>RENAME TO</code> clause to the <code>ALTER SEQUENCE</code>
      * statement.
      */

@@ -73,6 +73,7 @@ import org.jooq.AlterSequenceStep;
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
+import org.jooq.Field;
 import org.jooq.Name;
 // ...
 import org.jooq.SQLDialect;
@@ -100,7 +101,7 @@ final class AlterSequenceImpl<T extends Number> extends AbstractRowCountQuery im
 
     private final Sequence<T>                sequence;
     private final boolean                    ifExists;
-    private T                                restartWith;
+    private Field<?>                         restartWith;
     private Sequence<?>                      renameTo;
 
     AlterSequenceImpl(Configuration configuration, Sequence<T> sequence) {
@@ -125,6 +126,11 @@ final class AlterSequenceImpl<T extends Number> extends AbstractRowCountQuery im
 
     @Override
     public final AlterSequenceFinalStep restartWith(T value) {
+        return restartWith(Tools.field(value, sequence.getDataType()));
+    }
+
+    @Override
+    public final AlterSequenceFinalStep restartWith(Field<? extends T> value) {
         restartWith = value;
         return this;
     }
@@ -249,7 +255,7 @@ final class AlterSequenceImpl<T extends Number> extends AbstractRowCountQuery im
         else {
             ctx.start(ALTER_SEQUENCE_RESTART);
 
-            T with = restartWith;
+            Field<?> with = restartWith;
             if (with == null) {
 
 
@@ -262,10 +268,10 @@ final class AlterSequenceImpl<T extends Number> extends AbstractRowCountQuery im
             else {
                 if (ctx.family() == CUBRID)
                     ctx.sql(' ').visit(K_START_WITH)
-                       .sql(' ').sql(with.toString());
+                       .sql(' ').visit(with);
                 else
                     ctx.sql(' ').visit(K_RESTART_WITH)
-                       .sql(' ').sql(with.toString());
+                       .sql(' ').visit(with);
             }
 
             ctx.end(ALTER_SEQUENCE_RESTART);

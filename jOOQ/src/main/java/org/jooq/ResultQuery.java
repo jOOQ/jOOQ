@@ -260,6 +260,11 @@ extends
      * If users prefer more fluent style streaming of queries, {@link ResultSet}
      * can be registered and closed via {@link ExecuteListener}, or via "smart"
      * third-party {@link DataSource}s.
+     * <p>
+     * Depending on your JDBC driver's default behaviour, this may load the
+     * whole database result into the driver's memory. In order to indicate to
+     * the driver that you may not want to fetch all records at once, use
+     * {@link #fetchSize(int)} prior to calling this method.
      *
      * @return The result.
      * @throws DataAccessException if something went wrong executing the query
@@ -303,13 +308,13 @@ extends
      * Depending on your JDBC driver's default behaviour, this may load the
      * whole database result into the driver's memory. In order to indicate to
      * the driver that you may not want to fetch all records at once, use
-     * {@link #fetchLazy(int)}
+     * {@link #fetchSize(int)} prior to calling this method.
      * <p>
      * Client code is responsible for closing the cursor after use.
      *
      * @return The resulting cursor. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
-     * @see #fetchLazy(int)
+     * @see #fetchSize(int)
      */
     Cursor<R> fetchLazy() throws DataAccessException;
 

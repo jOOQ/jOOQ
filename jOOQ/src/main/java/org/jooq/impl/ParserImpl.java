@@ -3005,16 +3005,16 @@ final class ParserImpl implements Parser {
         for (;;) {
             if (parseKeywordIf(ctx, "START")) {
                 parseKeywordIf(ctx, "WITH");
-                s = s.startWith(parseUnsignedInteger(ctx));
+                s = s.startWith(parseUnsignedIntegerOrBindVariable(ctx));
                 continue;
             }
             else if (parseKeywordIf(ctx, "INCREMENT")) {
                 parseKeywordIf(ctx, "BY");
-                s = s.incrementBy(parseUnsignedInteger(ctx));
+                s = s.incrementBy(parseUnsignedIntegerOrBindVariable(ctx));
                 continue;
             }
             else if (parseKeywordIf(ctx, "MINVALUE")) {
-                s = s.minvalue(parseUnsignedInteger(ctx));
+                s = s.minvalue(parseUnsignedIntegerOrBindVariable(ctx));
                 continue;
             }
             else if (parseKeywordIf(ctx, "NO MINVALUE") || parseKeywordIf(ctx, "NOMINVALUE")) {
@@ -3022,7 +3022,7 @@ final class ParserImpl implements Parser {
                 continue;
             }
             else if (parseKeywordIf(ctx, "MAXVALUE")) {
-                s = s.maxvalue(parseUnsignedInteger(ctx));
+                s = s.maxvalue(parseUnsignedIntegerOrBindVariable(ctx));
                 continue;
             }
             else if (parseKeywordIf(ctx, "NO MAXVALUE") || parseKeywordIf(ctx, "NOMAXVALUE")) {
@@ -3038,7 +3038,7 @@ final class ParserImpl implements Parser {
                 continue;
             }
             else if (parseKeywordIf(ctx, "CACHE")) {
-                s = s.cache(parseUnsignedInteger(ctx));
+                s = s.cache(parseUnsignedIntegerOrBindVariable(ctx));
                 continue;
             }
             else if (parseKeywordIf(ctx, "NO CACHE") || parseKeywordIf(ctx, "NOCACHE")) {
@@ -3245,7 +3245,7 @@ final class ParserImpl implements Parser {
 
                                     if (parseKeywordIf(ctx, "START WITH")) {
                                         if (!parseKeywordIf(ctx, "LIMIT VALUE"))
-                                            parseUnsignedInteger(ctx);
+                                            parseUnsignedIntegerOrBindVariable(ctx);
                                         identityOption = true;
                                         continue;
                                     }
@@ -3253,7 +3253,7 @@ final class ParserImpl implements Parser {
                                           || parseKeywordIf(ctx, "MAXVALUE")
                                           || parseKeywordIf(ctx, "MINVALUE")
                                           || parseKeywordIf(ctx, "CACHE")) {
-                                        parseUnsignedInteger(ctx);
+                                        parseUnsignedIntegerOrBindVariable(ctx);
                                         identityOption = true;
                                         continue;
                                     }
@@ -9841,40 +9841,20 @@ final class ParserImpl implements Parser {
              : unsigned;
     }
 
-    private static final Long parseParenthesisedUnsignedIntegerIf(ParserContext ctx) {
-        Long result = null;
-
-        int parens;
-        for (parens = 0; parseIf(ctx, '('); parens++);
-
-        result = parens > 0 ? parseUnsignedInteger(ctx) : parseUnsignedIntegerIf(ctx);
-
-        for (; parens > 0 && parse(ctx, ')'); parens--);
-
-        return result;
-    }
-
-    private static final Long parseParenthesisedUnsignedInteger(ParserContext ctx) {
-        Long result = parseParenthesisedUnsignedIntegerIf(ctx);
-
-        if (result == null)
-            throw ctx.expected("Unsigned integer");
-
-        return result;
-    }
-
     private static final Param<Long> parseParenthesisedUnsignedIntegerOrBindVariable(ParserContext ctx) {
         Param<Long> result;
 
         int parens;
         for (parens = 0; parseIf(ctx, '('); parens++);
-
-        Long i = parseUnsignedIntegerIf(ctx);
-        result = i != null ? DSL.inline(i) : (Param<Long>) parseBindVariable(ctx);
-
+        result = parseUnsignedIntegerOrBindVariable(ctx);
         for (; parens > 0 && parse(ctx, ')'); parens--);
 
         return result;
+    }
+
+    private static final Param<Long> parseUnsignedIntegerOrBindVariable(ParserContext ctx) {
+        Long i = parseUnsignedIntegerIf(ctx);
+        return i != null ? DSL.inline(i) : (Param<Long>) parseBindVariable(ctx);
     }
 
     private static final Long parseUnsignedInteger(ParserContext ctx) {

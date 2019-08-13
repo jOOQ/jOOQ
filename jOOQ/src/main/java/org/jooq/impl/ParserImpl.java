@@ -3067,7 +3067,7 @@ final class ParserImpl implements Parser {
         }
         else if (parseKeywordIf(ctx, "RESTART")) {
             if (parseKeywordIf(ctx, "WITH"))
-                return s1.restartWith(parseUnsignedInteger(ctx));
+                return s1.restartWith(parseUnsignedIntegerOrBindVariable(ctx));
             else
                 return s1.restart();
         }

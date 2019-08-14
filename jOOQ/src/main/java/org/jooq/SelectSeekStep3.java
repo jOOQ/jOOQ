@@ -132,6 +132,7 @@ public interface SelectSeekStep3<R extends Record, T1, T2, T3> extends SelectLim
      *      href="http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method/">http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method</a>
      * @see #seekAfter(Object, Object, Object)
      */
+    @Support
     SelectSeekLimitStep<R> seek(T1 t1, T2 t2, T3 t3);
 
     /**
@@ -183,6 +184,7 @@ public interface SelectSeekStep3<R extends Record, T1, T2, T3> extends SelectLim
      *      href="http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method/">http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method</a>
      * @see #seekAfter(Field, Field, Field)
      */
+    @Support
     SelectSeekLimitStep<R> seek(Field<T1> field1, Field<T2> field2, Field<T3> field3);
 
     /**
@@ -233,6 +235,7 @@ public interface SelectSeekStep3<R extends Record, T1, T2, T3> extends SelectLim
      * @see <a
      *      href="http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method/">http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method</a>
      */
+    @Support
     SelectSeekLimitStep<R> seekAfter(T1 t1, T2 t2, T3 t3);
 
     /**
@@ -283,6 +286,7 @@ public interface SelectSeekStep3<R extends Record, T1, T2, T3> extends SelectLim
      * @see <a
      *      href="http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method/">http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method</a>
      */
+    @Support
     SelectSeekLimitStep<R> seekAfter(Field<T1> field1, Field<T2> field2, Field<T3> field3);
 
     /**
@@ -335,6 +339,7 @@ public interface SelectSeekStep3<R extends Record, T1, T2, T3> extends SelectLim
      * @deprecated - [#7461] - SEEK BEFORE is not implemented correctly
      */
     @Deprecated
+    @Support
     SelectSeekLimitStep<R> seekBefore(T1 t1, T2 t2, T3 t3);
 
     /**
@@ -387,5 +392,6 @@ public interface SelectSeekStep3<R extends Record, T1, T2, T3> extends SelectLim
      * @deprecated - [#7461] - SEEK BEFORE is not implemented correctly
      */
     @Deprecated
+    @Support
     SelectSeekLimitStep<R> seekBefore(Field<T1> field1, Field<T2> field2, Field<T3> field3);
 }

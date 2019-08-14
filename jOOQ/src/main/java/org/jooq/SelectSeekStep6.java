@@ -132,6 +132,7 @@ public interface SelectSeekStep6<R extends Record, T1, T2, T3, T4, T5, T6> exten
      *      href="http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method/">http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method</a>
      * @see #seekAfter(Object, Object, Object, Object, Object, Object)
      */
+    @Support
     SelectSeekLimitStep<R> seek(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6);
 
     /**
@@ -183,6 +184,7 @@ public interface SelectSeekStep6<R extends Record, T1, T2, T3, T4, T5, T6> exten
      *      href="http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method/">http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method</a>
      * @see #seekAfter(Field, Field, Field, Field, Field, Field)
      */
+    @Support
     SelectSeekLimitStep<R> seek(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6);
 
     /**
@@ -233,6 +235,7 @@ public interface SelectSeekStep6<R extends Record, T1, T2, T3, T4, T5, T6> exten
      * @see <a
      *      href="http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method/">http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method</a>
      */
+    @Support
     SelectSeekLimitStep<R> seekAfter(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6);
 
     /**
@@ -283,6 +286,7 @@ public interface SelectSeekStep6<R extends Record, T1, T2, T3, T4, T5, T6> exten
      * @see <a
      *      href="http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method/">http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method</a>
      */
+    @Support
     SelectSeekLimitStep<R> seekAfter(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6);
 
     /**
@@ -335,6 +339,7 @@ public interface SelectSeekStep6<R extends Record, T1, T2, T3, T4, T5, T6> exten
      * @deprecated - [#7461] - SEEK BEFORE is not implemented correctly
      */
     @Deprecated
+    @Support
     SelectSeekLimitStep<R> seekBefore(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6);
 
     /**
@@ -387,5 +392,6 @@ public interface SelectSeekStep6<R extends Record, T1, T2, T3, T4, T5, T6> exten
      * @deprecated - [#7461] - SEEK BEFORE is not implemented correctly
      */
     @Deprecated
+    @Support
     SelectSeekLimitStep<R> seekBefore(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6);
 }

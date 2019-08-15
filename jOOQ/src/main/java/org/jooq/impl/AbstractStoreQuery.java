@@ -37,11 +37,7 @@
  */
 package org.jooq.impl;
 
-// ...
-
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -62,11 +58,6 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractDMLQuery<R> 
      * Generated UID
      */
     private static final long     serialVersionUID = 6864591335823160569L;
-
-
-
-
-
 
     AbstractStoreQuery(Configuration configuration, WithImpl with, Table<R> table) {
         super(configuration, with, table);
@@ -94,50 +85,22 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractDMLQuery<R> 
 
     final <T> void addValue(Field<T> field, int index, T value) {
         if (field == null)
-            addUnknownValue(index, value);
+            if (index >= 0)
+                addValue(new UnknownField<T>(index), value);
+            else
+                addValue(new UnknownField<T>(getValues().size()), value);
         else
-            addKnownValue(field, value);
-    }
-
-    private final <T> void addUnknownValue(int index, T value) {
-        if (index >= 0)
-            addValue(new UnknownField<T>(index), value);
-        else
-            addValue(new UnknownField<T>(getValues().size()), value);
-    }
-
-    private final <T> void addKnownValue(Field<T> field, T value) {
-        addKnownValue(field, Tools.field(value, field));
+            getValues().put(field, Tools.field(value, field));
     }
 
     final <T> void addValue(Field<T> field, int index, Field<T> value) {
         if (field == null)
-            addUnknownValue(index, value);
+            if (index >= 0)
+                addValue(new UnknownField<T>(index), value);
+            else
+                addValue(new UnknownField<T>(getValues().size()), value);
         else
-            addKnownValue(field, value);
-    }
-
-    private final <T> void addUnknownValue(int index, Field<T> value) {
-        if (index >= 0)
-            addValue(new UnknownField<T>(index), value);
-        else
-            addValue(new UnknownField<T>(getValues().size()), value);
-    }
-
-    private final <T> void addKnownValue(Field<T> field, Field<T> value) {
-
-
-
-
-
-
-
-
-
-
-
-
-        getValues().put(field, value);
+            getValues().put(field, Tools.field(value, field));
     }
 
     static class UnknownField<T> extends AbstractField<T> {

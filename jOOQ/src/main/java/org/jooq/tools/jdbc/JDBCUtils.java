@@ -382,7 +382,7 @@ public class JDBCUtils {
             case MARIADB:
                 return "org.mariadb.jdbc.Driver";
             case MYSQL:
-                return "com.mysql.jdbc.Driver";
+                return "com.mysql.cj.jdbc.Driver";
             case POSTGRES:
                 return "org.postgresql.Driver";
             case SQLITE:

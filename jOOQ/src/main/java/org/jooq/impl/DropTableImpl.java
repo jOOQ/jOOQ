@@ -47,9 +47,11 @@ import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.impl.Keywords.K_CASCADE;
 import static org.jooq.impl.Keywords.K_DROP_TABLE;
 import static org.jooq.impl.Keywords.K_IF_EXISTS;
+import static org.jooq.impl.Keywords.K_TEMPORARY;
 
 import java.util.EnumSet;
 
@@ -72,9 +74,10 @@ final class DropTableImpl extends AbstractRowCountQuery implements
     /**
      * Generated UID
      */
-    private static final long                serialVersionUID     = 8904572826501186329L;
-    private static final Clause[]            CLAUSES              = { DROP_TABLE };
-    private static final EnumSet<SQLDialect> NO_SUPPORT_IF_EXISTS = EnumSet.of(DERBY, FIREBIRD);
+    private static final long                serialVersionUID             = 8904572826501186329L;
+    private static final Clause[]            CLAUSES                      = { DROP_TABLE };
+    private static final EnumSet<SQLDialect> SUPPORT_DROP_TEMPORARY_TABLE = EnumSet.of(MYSQL);
+    private static final EnumSet<SQLDialect> NO_SUPPORT_IF_EXISTS         = EnumSet.of(DERBY, FIREBIRD);
 
     private final Table<?>                   table;
     private final boolean                    temporary;
@@ -121,6 +124,10 @@ final class DropTableImpl extends AbstractRowCountQuery implements
         return !NO_SUPPORT_IF_EXISTS.contains(ctx.family());
     }
 
+    private final boolean supportsTemporary(Context<?> ctx) {
+        return SUPPORT_DROP_TEMPORARY_TABLE.contains(ctx.family());
+    }
+
     @Override
     public final void accept(Context<?> ctx) {
         if (ifExists && !supportsIfExists(ctx)) {
@@ -137,12 +144,13 @@ final class DropTableImpl extends AbstractRowCountQuery implements
         ctx.start(DROP_TABLE_TABLE)
            .visit(K_DROP_TABLE).sql(' ');
 
-        // [#6371] The keyword isn't strictly required in any dialect we've seen so far.
-        if (temporary)
-            ;
+        if (temporary && supportsTemporary(ctx)) {
+            ctx.visit(K_TEMPORARY).sql(' ');
+        }
 
-        if (ifExists && supportsIfExists(ctx))
+        if (ifExists && supportsIfExists(ctx)) {
             ctx.visit(K_IF_EXISTS).sql(' ');
+        }
 
         ctx.visit(table);
 

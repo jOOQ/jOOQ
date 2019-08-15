@@ -9660,7 +9660,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropTemporaryTable(String)
      */
-    @Support
+    @Support({ MYSQL })
     DropTableStep dropTemporaryTable(String table);
 
     /**
@@ -9668,7 +9668,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropTemporaryTable(Name)
      */
-    @Support
+    @Support({ MYSQL })
     DropTableStep dropTemporaryTable(Name table);
 
     /**

@@ -67,7 +67,6 @@ import org.jooq.Field;
 import org.jooq.Param;
 // ...
 import org.jooq.Record;
-import org.jooq.RenderContext;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.impl.AbstractStoreQuery.UnknownField;
@@ -265,6 +264,7 @@ final class FieldMapsForInsert extends AbstractQueryPart {
 
                 if (indent)
                     ctx.formatNewLine();
+
 
 
 

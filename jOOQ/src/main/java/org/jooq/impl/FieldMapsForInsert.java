@@ -41,6 +41,7 @@ import static java.lang.Boolean.TRUE;
 import static org.jooq.Clause.FIELD_ROW;
 import static org.jooq.Clause.INSERT_SELECT;
 import static org.jooq.Clause.INSERT_VALUES;
+// ...
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.Keywords.K_DEFAULT_VALUES;
@@ -61,10 +62,12 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.jooq.Context;
+import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Param;
 // ...
 import org.jooq.Record;
+import org.jooq.RenderContext;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.impl.AbstractStoreQuery.UnknownField;
@@ -243,6 +246,7 @@ final class FieldMapsForInsert extends AbstractQueryPart {
 
     final void toSQL92Values(Context<?> ctx, boolean emulateBulkInsertReturning) {
         boolean indent = (values.size() > 1);
+        boolean castFirstRowNumericValues = false                                                                  ;
 
         for (int row = 0; row < rows                                                                     ; row++) {
             if (row > 0)
@@ -261,6 +265,14 @@ final class FieldMapsForInsert extends AbstractQueryPart {
 
                 if (indent)
                     ctx.formatNewLine();
+
+
+
+
+
+
+
+
 
 
 

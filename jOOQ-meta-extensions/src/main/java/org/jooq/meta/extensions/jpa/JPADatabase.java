@@ -231,7 +231,7 @@ public class JPADatabase extends H2Database {
                 // to the available qualification
                 String regex = "(.*?\\.)?" + entry.getKey().unquotedName().toString().replace(".", "\\.");
                 ForcedType forcedType = new ForcedType()
-                    .withExpression("(?i:" + regex + ")")
+                    .withIncludeExpression("(?i:" + regex + ")")
                     .withUserType(convertToEntityAttribute.getName())
                     .withConverter(String.format("new %s(%s.class)",
                         JPAConverter.class.getName(),

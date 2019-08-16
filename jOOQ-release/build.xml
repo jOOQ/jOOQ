@@ -98,6 +98,8 @@
                 <exclude name="**/*.iml"/>
                 <exclude name="**/src/test/**"/>
                 <exclude name="**/target/**"/>
+                <exclude name="jOOQ-examples/Benchmarks/**"/>
+                <exclude name="jOOQ-examples/Sakila/**"/>
 
                 <include name="jOOQ/**"/>
                 <include name="jOOQ-extensions/**"/>

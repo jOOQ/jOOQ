@@ -370,7 +370,27 @@ public interface Configuration extends Serializable {
     ExecuteListenerProvider[] executeListenerProviders();
 
     /**
-     * TODO [#2667]
+     * Get the configured <code>VisitListenerProvider</code> instances from this
+     * configuration.
+     * <p>
+     * This method allows for retrieving the configured
+     * <code>VisitListenerProvider</code> instances from this configuration. The
+     * providers will provide jOOQ with {@link VisitListener} instances. These
+     * instances receive query rendering lifecycle notification events every
+     * time jOOQ renders queries. jOOQ makes no assumptions about the internal
+     * state of these listeners, i.e. listener instances may
+     * <ul>
+     * <li>share this <code>Configuration</code>'s lifecycle (i.e. that of a
+     * JDBC <code>Connection</code>, or that of a transaction)</li>
+     * <li>share the lifecycle of an <code>ExecuteContext</code> (i.e. that of a
+     * single query execution)</li>
+     * <li>follow an entirely different lifecycle.</li>
+     * </ul>
+     *
+     * @return The configured set of visit listeners.
+     * @see VisitListenerProvider
+     * @see VisitListener
+     * @see VisitContext
      */
     VisitListenerProvider[] visitListenerProviders();
 

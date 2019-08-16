@@ -172,6 +172,8 @@ implements
 
 
 
+
+
     private final void acceptMySQL(Context<?> ctx) {
         ctx.visit(K_ALTER_TABLE).sql(' ').visit(table).sql(' ').visit(K_COMMENT).sql(" = ").visit(comment);
     }

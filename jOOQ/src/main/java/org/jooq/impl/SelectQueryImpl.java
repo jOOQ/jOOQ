@@ -2315,6 +2315,12 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     private final Select<R> combine(CombineOperator op, Select<? extends R> other) {
+
+        // [#8557] Prevent StackOverflowError when using same query instance on
+        //         both sides of a set operation
+        if (this == other || (other instanceof SelectImpl && this == ((SelectImpl) other).getDelegate()))
+            throw new IllegalArgumentException("In jOOQ 3.x's mutable DSL API, it is not possible to use the same instance of a Select query on both sides of a set operation like s.union(s)");
+
         int index = unionOp.size() - 1;
 
         if (index == -1 || unionOp.get(index) != op || op == EXCEPT || op == EXCEPT_ALL) {

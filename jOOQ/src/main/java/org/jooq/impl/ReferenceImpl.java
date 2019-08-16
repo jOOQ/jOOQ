@@ -73,13 +73,6 @@ final class ReferenceImpl<R extends Record, O extends Record> extends AbstractKe
 
     @SafeVarargs
 
-    ReferenceImpl(UniqueKey<O> key, Table<R> table, TableField<R, ?>... fields) {
-        this(key, table, null, fields);
-    }
-
-
-    @SafeVarargs
-
     ReferenceImpl(UniqueKey<O> key, Table<R> table, String name, TableField<R, ?>... fields) {
         super(table, name, fields);
 

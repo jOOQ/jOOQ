@@ -39,10 +39,26 @@ package org.jooq.tools;
 
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
+import org.jooq.ExecuteListenerProvider;
 
 /**
  * A default {@link ExecuteListener} that just logs events to java.util.logging,
- * log4j, or slf4j using the {@link JooqLogger}
+ * log4j, or slf4j using the {@link JooqLogger}.
+ * <p>
+ * This is a stateful listener, meaning it has a reference to a
+ * {@link StopWatch} that is shared among all query executions that use this
+ * same {@link StopWatchListener}. If the instance is shared among query
+ * executions, the listener measures the time passed since the first
+ * initialisation. In order to let it measure the time for each individual query
+ * execution afresh, use an {@link ExecuteListenerProvider} to create new
+ * instances every time:
+ * <p>
+ *
+ * <pre>
+ * <code>
+ * configuration.set(StopWatchListener::new)
+ * </code>
+ * </pre>
  *
  * @author Lukas Eder
  */

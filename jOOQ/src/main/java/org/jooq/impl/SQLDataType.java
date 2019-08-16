@@ -37,6 +37,31 @@
  */
 package org.jooq.impl;
 
+// ...
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.CUBRID;
+// ...
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
+// ...
+import static org.jooq.SQLDialect.HSQLDB;
+// ...
+// ...
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
+// ...
+import static org.jooq.SQLDialect.POSTGRES;
+// ...
+// ...
+import static org.jooq.SQLDialect.SQLITE;
+// ...
+// ...
+// ...
+// ...
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
@@ -52,6 +77,7 @@ import java.time.OffsetTime;
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
+import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Record;
 import org.jooq.Result;
@@ -604,16 +630,76 @@ public final class SQLDataType {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             Class.forName(CUBRIDDataType.class.getName());
+            initJSR310Types(CUBRID);
+
             Class.forName(DerbyDataType.class.getName());
+            initJSR310Types(DERBY);
+
             Class.forName(FirebirdDataType.class.getName());
+            initJSR310Types(FIREBIRD);
+
             Class.forName(H2DataType.class.getName());
+            initJSR310Types(H2);
+
             Class.forName(HSQLDBDataType.class.getName());
+            initJSR310Types(HSQLDB);
+
             Class.forName(MariaDBDataType.class.getName());
+            initJSR310Types(MARIADB);
+
             Class.forName(MySQLDataType.class.getName());
+            initJSR310Types(MYSQL);
+
             Class.forName(PostgresDataType.class.getName());
+            initJSR310Types(POSTGRES);
+
             Class.forName(SQLiteDataType.class.getName());
+            initJSR310Types(SQLITE);
+
         } catch (Exception ignore) {}
+    }
+
+    private static final void initJSR310Types(SQLDialect family) {
+
+        Configuration configuration = new DefaultConfiguration(family);
+
+        // [#8561] Register JSR-310 types according to their matching JDBC
+        //         type configuration
+        new DefaultDataType<LocalDate>(family, SQLDataType.LOCALDATE, DATE.getTypeName(configuration), DATE.getCastTypeName(configuration));
+        new DefaultDataType<LocalTime>(family, SQLDataType.LOCALTIME, TIME.getTypeName(configuration), TIME.getCastTypeName(configuration));
+        new DefaultDataType<LocalDateTime>(family, SQLDataType.LOCALDATETIME, TIMESTAMP.getTypeName(configuration), TIMESTAMP.getCastTypeName(configuration));
+
     }
 
     /**

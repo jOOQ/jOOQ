@@ -39,6 +39,7 @@ package org.jooq.tools.jdbc;
 
 import java.sql.Statement;
 
+import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Result;
 
@@ -116,9 +117,14 @@ public class MockResult {
     /**
      * Create a new <code>MockResult</code>.
      * <p>
-     * This is a convenience constructor creating a <code>MockResult</code> with exactly one record.
+     * This is a convenience constructor creating a <code>MockResult</code> with
+     * exactly one record.
      *
-     * @param data The single record in this result.
+     * @param data The single record in this result. Record instances can be
+     *            obtained from queries, instantiated from generated record
+     *            classes, or created using
+     *            {@link DSLContext#newRecord(org.jooq.Field...)} and other
+     *            overloads.
      * @see MockDataProvider <code>MockDataProvider</code> for details
      */
     public MockResult(Record data) {
@@ -129,7 +135,10 @@ public class MockResult {
      * Create a new <code>MockResult</code>.
      *
      * @param rows The number of affected rows
-     * @param data The result data
+     * @param data The result data. Result instances can be obtained from
+     *            queries, or created using
+     *            {@link DSLContext#newResult(org.jooq.Field...)} and other
+     *            overloads.
      * @see MockDataProvider <code>MockDataProvider</code> for details
      */
     public MockResult(int rows, Result<?> data) {

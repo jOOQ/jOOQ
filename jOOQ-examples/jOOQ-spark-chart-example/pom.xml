@@ -9,7 +9,7 @@
     <version>1.0</version>
 
     <properties>
-        <org.jooq.version>3.11.11</org.jooq.version>
+        <org.jooq.version>3.11.12</org.jooq.version>
     </properties>
 
     <build>

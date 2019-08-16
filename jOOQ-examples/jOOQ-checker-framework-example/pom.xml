@@ -5,7 +5,7 @@
 
     <groupId>org.jooq</groupId>
     <artifactId>jooq-checker-framework-example</artifactId>
-    <version>3.11.11</version>
+    <version>3.11.12</version>
     <name>jOOQ Checker Framework Example</name>
 
     <licenses>
@@ -18,7 +18,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <org.jooq.version>3.11.11</org.jooq.version>
+        <org.jooq.version>3.11.12</org.jooq.version>
     </properties>
 
     <dependencies>

@@ -122,7 +122,9 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.exception.DataAccessException;
+import org.jooq.exception.DataTypeException;
 import org.jooq.exception.SQLDialectNotSupportedException;
+import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -136,6 +138,7 @@ import org.jooq.tools.StringUtils;
 final class MetaImpl extends AbstractMeta {
 
     private static final long                serialVersionUID                 = 3582980783173033809L;
+    private static final JooqLogger          log                              = JooqLogger.getLogger(MetaImpl.class);
     private static final EnumSet<SQLDialect> INVERSE_SCHEMA_CATALOG           = EnumSet.of(MYSQL, MARIADB);
     private static final EnumSet<SQLDialect> CURRENT_TIMESTAMP_COLUMN_DEFAULT = EnumSet.of(MYSQL, MARIADB);
     private static final EnumSet<SQLDialect> EXPRESSION_COLUMN_DEFAULT        = EnumSet.of(H2);
@@ -783,17 +786,26 @@ final class MetaImpl extends AbstractMeta {
                         type = type.nullable(false);
 
                     // [#6883] Default values may be present
-                    if (!StringUtils.isEmpty(defaultValue))
+                    if (!StringUtils.isEmpty(defaultValue)) {
+                        try {
 
-                        // [#7194] Some databases report all default values as expressions, not as values
-                        if (EXPRESSION_COLUMN_DEFAULT.contains(configuration.family()))
-                            type = type.defaultValue(DSL.field(defaultValue, type));
+                            // [#7194] Some databases report all default values as expressions, not as values
+                            if (EXPRESSION_COLUMN_DEFAULT.contains(configuration.family()))
+                                type = type.defaultValue(DSL.field(defaultValue, type));
 
-                        // [#5574] MySQL mixes constant value expressions with other column expressions here
-                        else if (CURRENT_TIMESTAMP_COLUMN_DEFAULT.contains(configuration.family()) && "CURRENT_TIMESTAMP".equalsIgnoreCase(defaultValue))
-                            type = type.defaultValue(DSL.field(defaultValue, type));
-                        else
-                            type = type.defaultValue(DSL.inline(defaultValue, type));
+                            // [#5574] MySQL mixes constant value expressions with other column expressions here
+                            else if (CURRENT_TIMESTAMP_COLUMN_DEFAULT.contains(configuration.family()) && "CURRENT_TIMESTAMP".equalsIgnoreCase(defaultValue))
+                                type = type.defaultValue(DSL.field(defaultValue, type));
+                            else
+                                type = type.defaultValue(DSL.inline(defaultValue, type));
+                        }
+
+                        // [#8469] Rather than catching exceptions after conversions, we should use the
+                        //         parser to parse default values, if they're expressions
+                        catch (DataTypeException e) {
+                            log.warn("Default value", "Could not load default value: " + defaultValue + " for type: " + type, e);
+                        }
+                    }
                 }
                 catch (SQLDialectNotSupportedException e) {
                     type = SQLDataType.OTHER;
@@ -889,17 +901,19 @@ final class MetaImpl extends AbstractMeta {
 
             List<ForeignKey<?, Record>> references = new ArrayList<ForeignKey<?, Record>>(groups.size());
             for (Entry<Record, Result<Record>> entry : groups.entrySet()) {
-                Schema schema = schemas.get(entry.getKey().get(1));
+                Record key = entry.getKey();
+                Result<Record> value = entry.getValue();
 
-                Table<Record> fkTable = (Table<Record>) schema.getTable(entry.getKey().get(2, String.class));
-                TableField<Record, ?>[] fkFields = new TableField[entry.getValue().size()];
+                Schema schema = schemas.get(key.get(1));
 
-                for (int i = 0; i < entry.getValue().size(); i++) {
-                    Record record = entry.getValue().get(i);
-                    fkFields[i] = (TableField<Record, ?>) fkTable.field(record.get(7, String.class));
-                }
+                Table<Record> fkTable = (Table<Record>) schema.getTable(key.get(2, String.class));
+                String fkName = key.get(3, String.class);
+                TableField<Record, ?>[] fkFields = new TableField[value.size()];
 
-                references.add(new ReferenceImpl<Record, Record>(this, fkTable, fkFields));
+                for (int i = 0; i < value.size(); i++)
+                    fkFields[i] = (TableField<Record, ?>) fkTable.field(value.get(i).get(7, String.class));
+
+                references.add(new ReferenceImpl<Record, Record>(this, fkTable, fkName, fkFields));
             }
 
             return references;

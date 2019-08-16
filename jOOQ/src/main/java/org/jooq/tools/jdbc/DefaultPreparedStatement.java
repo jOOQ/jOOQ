@@ -91,7 +91,7 @@ public class DefaultPreparedStatement extends DefaultStatement implements Prepar
 
     @Override
     public ResultSet executeQuery() throws SQLException {
-        return new DefaultResultSet(getDelegatePreparedStatement().executeQuery(), this);
+        return wrap(getDelegatePreparedStatement().executeQuery());
     }
 
     @Override

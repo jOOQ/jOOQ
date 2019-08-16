@@ -10,6 +10,41 @@ http://www.jooq.org/notes
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 3.11.12 - August 16, 2019
+================================================================================
+
+This is a 3.11 patch release with bug fixes
+
+
+Features and Improvements
+-------------------------
+#8798 - Add Javadoc to StopWatchListener explaining that it should be wrapped in an ExecuteListenerProvider
+#8988 - Improve MockResult Javadoc
+
+
+Bug Fixes
+---------
+#8501 - Support JSR 310 types as <name/> in <forcedType/> data type rewriting feature
+#8523 - DataTypeException when org.jooq.Meta accesses PostgreSQL array column with default expression
+#8558 - StackOverflowError when using same query instance on both sides of a set operation
+#8562 - Wrong cast generated for Informix and others when casting a LocalDateTime value
+#8571 - Wrong Javadoc on Record.setValue()
+#8574 - Outdated Javadoc on ExecuteType.DDL
+#8583 - Generator can fail picking up default values using SQLite 3.27.2.1 driver
+#8664 - Missing NOTICE file from commons-lang
+#8718 - Support parsing SQL Server's UNIQUEIDENTIFIER data type
+#8734 - UniqueKey.getReferences returns unnamed foreign keys
+#8757 - DSL.timestampAdd() produces wrong cast for teradata
+#8778 - Formattable String formatCSV(boolean header, char delimiter) header value is always ignored
+#8811 - Emulated ENUM types produce check constraint with bind variables
+#8816 - Add missing Javadoc to Configuration.visitListenerProviders()
+#8861 - Generator does not generate anything for schemas only containing sequences
+#8916 - COMMENT ON VIEW doesn't work on SQL Server
+#8981 - Make generatePojoMultiConstructor in JavaGenerator protected
+#8998 - Bulk insert of BigDecimals with different scale get truncated to first rows scale
+#9026 - NullPointerException when JDBC driver returns null on getGeneratedKeys call using ZDAL5 driver on MySQL
+
+
 Version 3.11.11 - April 9, 2019
 ================================================================================
 

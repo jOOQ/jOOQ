@@ -418,6 +418,7 @@ public class JavaGenerator extends AbstractGenerator {
             && database.getEnums(schema).isEmpty()
             && database.getPackages(schema).isEmpty()
             && database.getRoutines(schema).isEmpty()
+            && database.getSequences(schema).isEmpty()
             && database.getTables(schema).isEmpty()
             && database.getUDTs(schema).isEmpty())
             return false;
@@ -3211,7 +3212,7 @@ public class JavaGenerator extends AbstractGenerator {
     /**
      * Subclasses may override this method to provide their own pojo copy constructors.
      */
-    private void generatePojoMultiConstructor(Definition tableOrUDT, JavaWriter out) {
+    protected void generatePojoMultiConstructor(Definition tableOrUDT, JavaWriter out) {
         final String className = getStrategy().getJavaClassName(tableOrUDT, Mode.POJO);
 
         int maxLength = 0;

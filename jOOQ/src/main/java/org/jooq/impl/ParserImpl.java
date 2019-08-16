@@ -7243,6 +7243,8 @@ final class ParserImpl implements Parser {
             case 'U':
                 if (parseKeywordOrIdentifierIf(ctx, "UUID"))
                     return SQLDataType.UUID;
+                else if (parseKeywordOrIdentifierIf(ctx, "UNIQUEIDENTIFIER"))
+                    return SQLDataType.UUID;
 
                 break;
 

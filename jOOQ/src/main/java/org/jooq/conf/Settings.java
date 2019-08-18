@@ -41,6 +41,8 @@ public class Settings
     protected Boolean renderCatalog = true;
     @XmlElement(defaultValue = "true")
     protected Boolean renderSchema = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean renderTable = true;
     protected RenderMapping renderMapping;
     @XmlElement(defaultValue = "EXPLICIT_DEFAULT_QUOTED")
     @XmlSchemaType(name = "string")
@@ -257,6 +259,38 @@ public class Settings
      */
     public void setRenderSchema(Boolean value) {
         this.renderSchema = value;
+    }
+
+    /**
+     * Whether any Filed's table name should be rendered at all.
+     * BUT using table alias will always be rendered.
+     * <li> true:  SELECT table.f1, table.f2 FROM table
+     * <li> true:  SELECT t.f1, t.f2 FROM table as t
+     * <li> false: SELECT f1, f2 FROM table
+     * <li> false: SELECT t.f1, t.f2 FROM table as t
+     * <p>
+     * Use this for sharding case. eg. table (`TABLE_##`) name replacing ,
+     * or when all objects are made available using synonyms
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isRenderTable() {
+        return renderTable;
+    }
+
+    /**
+     * Sets the value of the renderTable property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setRenderTable(Boolean value) {
+        this.renderTable = value;
     }
 
     /**
@@ -1688,6 +1722,11 @@ public class Settings
 
     public Settings withRenderSchema(Boolean value) {
         setRenderSchema(value);
+        return this;
+    }
+
+    public Settings withRenderTable(Boolean value) {
+        setRenderTable(value);
         return this;
     }
 

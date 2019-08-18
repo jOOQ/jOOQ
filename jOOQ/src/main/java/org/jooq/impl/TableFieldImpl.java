@@ -90,8 +90,15 @@ final class TableFieldImpl<R extends Record, T> extends AbstractField<T> impleme
         ctx.data(DATA_OMIT_CLAUSE_EVENT_EMISSION, true);
 
         if (ctx.qualify()) {
-            ctx.visit(table);
-            ctx.sql('.');
+            // [#9055] should NO table qualify if NO table alias
+            boolean qualify = true;
+            if (table instanceof TableImpl) {
+                qualify = ((TableImpl) table).alias != null;
+            }
+            if (qualify) {
+                ctx.visit(table);
+                ctx.sql('.');
+            }
         }
 
         ctx.visit(getUnqualifiedName());

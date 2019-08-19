@@ -46,7 +46,6 @@ import static org.jooq.DDLFlag.UNIQUE;
 import static org.jooq.impl.DSL.constraint;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -175,55 +174,57 @@ final class DDL {
         return result;
     }
 
-    final Queries queries(Schema schema) {
+    final Queries queries(Schema... schemas) {
         List<Query> queries = new ArrayList<>();
 
-        if (configuration.flags().contains(SCHEMA) && !StringUtils.isBlank(schema.getName()))
-            if (configuration.createSchemaIfNotExists())
-                queries.add(ctx.createSchemaIfNotExists(schema.getName()));
-            else
-                queries.add(ctx.createSchema(schema.getName()));
+        for (Schema schema : schemas)
+            if (configuration.flags().contains(SCHEMA) && !StringUtils.isBlank(schema.getName()))
+                if (configuration.createSchemaIfNotExists())
+                    queries.add(ctx.createSchemaIfNotExists(schema.getName()));
+                else
+                    queries.add(ctx.createSchema(schema.getName()));
 
         if (configuration.flags().contains(TABLE)) {
-            for (Table<?> table : schema.getTables()) {
-                List<Constraint> constraints = new ArrayList<>();
+            for (Schema schema : schemas) {
+                for (Table<?> table : schema.getTables()) {
+                    List<Constraint> constraints = new ArrayList<>();
 
-                constraints.addAll(primaryKeys(table));
-                constraints.addAll(uniqueKeys(table));
+                    constraints.addAll(primaryKeys(table));
+                    constraints.addAll(uniqueKeys(table));
 
-                queries.add(createTable(table, constraints));
+                    queries.add(createTable(table, constraints));
+                }
             }
         }
         else {
-            if (configuration.flags().contains(PRIMARY_KEY))
-                for (Table<?> table : schema.getTables())
-                    for (Constraint constraint : primaryKeys(table))
-                        queries.add(ctx.alterTable(table).add(constraint));
+            for (Schema schema : schemas) {
+                if (configuration.flags().contains(PRIMARY_KEY))
+                    for (Table<?> table : schema.getTables())
+                        for (Constraint constraint : primaryKeys(table))
+                            queries.add(ctx.alterTable(table).add(constraint));
 
-            if (configuration.flags().contains(UNIQUE))
-                for (Table<?> table : schema.getTables())
-                    for (Constraint constraint : uniqueKeys(table))
-                        queries.add(ctx.alterTable(table).add(constraint));
+                if (configuration.flags().contains(UNIQUE))
+                    for (Table<?> table : schema.getTables())
+                        for (Constraint constraint : uniqueKeys(table))
+                            queries.add(ctx.alterTable(table).add(constraint));
+            }
         }
 
         if (configuration.flags().contains(FOREIGN_KEY))
-            for (Table<?> table : schema.getTables())
-                for (Constraint constraint : foreignKeys(table))
-                    queries.add(ctx.alterTable(table).add(constraint));
+            for (Schema schema : schemas)
+                for (Table<?> table : schema.getTables())
+                    for (Constraint constraint : foreignKeys(table))
+                        queries.add(ctx.alterTable(table).add(constraint));
 
         if (configuration.flags().contains(COMMENT))
-            for (Table<?> table : schema.getTables())
-                queries.addAll(commentOn(table));
+            for (Schema schema : schemas)
+                for (Table<?> table : schema.getTables())
+                    queries.addAll(commentOn(table));
 
         return ctx.queries(queries);
     }
 
     final Queries queries(Catalog catalog) {
-        List<Query> queries = new ArrayList<>();
-
-        for (Schema schema : catalog.getSchemas())
-            queries.addAll(Arrays.asList(queries(schema).queries()));
-
-        return ctx.queries(queries);
+        return queries(catalog.getSchemas().toArray(Tools.EMPTY_SCHEMA));
     }
 }

@@ -296,6 +296,7 @@ final class Tools {
     static final QueryPart[]                EMPTY_QUERYPART                = {};
     static final Record[]                   EMPTY_RECORD                   = {};
     static final RowN[]                     EMPTY_ROWN                     = {};
+    static final Schema[]                   EMPTY_SCHEMA                   = {};
     static final SelectFieldOrAsterisk[]    EMPTY_SELECT_FIELD_OR_ASTERISK = {};
     static final SortField<?>[]             EMPTY_SORTFIELD                = {};
     static final String[]                   EMPTY_STRING                   = {};

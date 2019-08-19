@@ -120,7 +120,12 @@ public class JPADatabase extends H2Database {
                 log.warn("No packages defined", "It is highly recommended that you provide explicit packages to scan");
             }
 
-            boolean useAttributeConverters = Boolean.valueOf(getProperties().getProperty("use-attribute-converters", "true"));
+            // [#9058] Properties use camelCase notation.
+            boolean useAttributeConverters = Boolean.valueOf(
+                getProperties().getProperty("useAttributeConverters",
+                    getProperties().getProperty("use-attribute-converters", "true")
+                )
+            );
 
             try {
                 Properties info = new Properties();

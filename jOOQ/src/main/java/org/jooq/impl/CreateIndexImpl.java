@@ -276,7 +276,7 @@ final class CreateIndexImpl extends AbstractRowCountQuery implements
 
 
             ;
-        boolean supportsFieldsBeforeTable = false                                                     ;
+        boolean supportsFieldsBeforeTable = false;
 
         QueryPartList<QueryPart> list = new QueryPartList<>();
         if (fields != null)

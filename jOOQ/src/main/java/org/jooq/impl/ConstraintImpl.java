@@ -188,7 +188,7 @@ implements
         else {
             boolean qualify = ctx.qualify();
 
-            if (getQualifiedName() != AbstractName.NO_NAME                                                     ) {
+            if (getQualifiedName() != AbstractName.NO_NAME) {
                 ctx.visit(K_CONSTRAINT)
                    .sql(' ')
                    .visit(getUnqualifiedName())

@@ -2288,7 +2288,7 @@ final class Tools {
 
             // [#6704] PostgreSQL supports additional quoted string literals, which we must skip: E'...'
             else if ((sqlChars[i] == 'e' || sqlChars[i] == 'E')
-                        && (                                                            ctx.family() == POSTGRES)
+                        && ( ctx.family() == POSTGRES)
                         && i + 1 < sqlChars.length
                         && sqlChars[i + 1] == '\'') {
 

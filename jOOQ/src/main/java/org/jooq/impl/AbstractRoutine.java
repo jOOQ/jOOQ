@@ -352,7 +352,7 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
         // [#4254] In PostgreSQL, there are only functions, no procedures. Some
         // functions cannot be called using a CallableStatement, e.g. those with
         // DEFAULT parameters
-        if (                                                      family == POSTGRES) {
+        if ( family == POSTGRES) {
             return executeSelectFromPOSTGRES();
         }
 
@@ -1788,7 +1788,7 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
                     continue;
 
                 // Disambiguate overloaded function signatures
-                if (                                                      family == POSTGRES)
+                if ( family == POSTGRES)
 
                     // [#4920] In case there are any unnamed parameters, we mustn't
                     if (hasUnnamedParameters())

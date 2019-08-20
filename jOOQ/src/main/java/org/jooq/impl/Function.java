@@ -246,10 +246,10 @@ class Function<T> extends AbstractField<T> implements
 
 
 
-        else if (term == MODE && (                                                            ctx.family() == H2 || ctx.family() == POSTGRES)) {
+        else if (term == MODE && ( ctx.family() == H2 || ctx.family() == POSTGRES)) {
             ctx.visit(mode().withinGroupOrderBy(DSL.field("{0}", arguments.get(0))));
         }
-        else if (term == MEDIAN && (                                                            ctx.family() == POSTGRES)) {
+        else if (term == MEDIAN && ( ctx.family() == POSTGRES)) {
             Field<?>[] fields = new Field[arguments.size()];
             for (int i = 0; i < fields.length; i++)
                 fields[i] = DSL.field("{0}", arguments.get(i));
@@ -572,7 +572,7 @@ class Function<T> extends AbstractField<T> implements
             ctx.visit(K_DISTINCT);
 
             // [#2883] PostgreSQL can use the DISTINCT keyword with formal row value expressions.
-            if ((                                                            ctx.family() == POSTGRES) && args.size() > 1)
+            if (( ctx.family() == POSTGRES) && args.size() > 1)
                 ctx.sql('(');
             else
                 ctx.sql(' ');
@@ -593,7 +593,7 @@ class Function<T> extends AbstractField<T> implements
         }
 
         if (distinct)
-            if ((                                                            ctx.family() == POSTGRES) && args.size() > 1)
+            if (( ctx.family() == POSTGRES) && args.size() > 1)
                 ctx.sql(')');
 
         if (ctx.family() != H2) {

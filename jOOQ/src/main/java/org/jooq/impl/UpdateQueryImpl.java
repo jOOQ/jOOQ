@@ -585,7 +585,7 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
                     // [#6763] Incompatible change in PostgreSQL 10 requires ROW() constructor for
                     //         single-degree rows. Let's just always render it, here.
-                    if (ctx.family() == POSTGRES                                                                )
+                    if (ctx.family() == POSTGRES)
                         ctx.visit(K_ROW).sql(" ");
 
                     ctx.visit(multiValue);
@@ -650,7 +650,7 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         }
 
         // [#2059] MemSQL does not support UPDATE ... ORDER BY
-        if (limit != null && NO_SUPPORT_LIMIT.contains(ctx.family())                                                                         ) {
+        if (limit != null && NO_SUPPORT_LIMIT.contains(ctx.family())) {
             Field<?>[] keyFields =
                 table().getKeys().isEmpty()
               ? new Field[] { table().rowid() }

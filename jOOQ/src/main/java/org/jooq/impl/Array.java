@@ -92,7 +92,7 @@ final class Array<T> extends AbstractField<T[]> {
                    .visit(fields)
                    .sql(']');
 
-                if (fields.fields.length == 0 && (                                                            ctx.family() == POSTGRES))
+                if (fields.fields.length == 0 && ( ctx.family() == POSTGRES))
                     ctx.sql("::").visit(K_INT).sql("[]");
 
                 break;

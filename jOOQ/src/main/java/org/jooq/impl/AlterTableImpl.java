@@ -900,7 +900,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
                (renameConstraint != null && family == HSQLDB)
             || (renameColumn != null && SUPPORT_RENAME_COLUMN.contains(family));
         boolean renameTable = renameTo != null && SUPPORT_RENAME_TABLE.contains(family);
-        boolean renameObject = renameTo != null && (false                                                                   );
+        boolean renameObject = renameTo != null && (false);
 
         if (!omitAlterTable) {
             ctx.start(ALTER_TABLE_TABLE)
@@ -1041,7 +1041,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
                    .qualify(qualify);
             else
                 ctx.qualify(false)
-                   .visit(                                                         K_RENAME_CONSTRAINT).sql(' ')
+                   .visit( K_RENAME_CONSTRAINT).sql(' ')
                    .visit(renameConstraint)
                    .formatSeparator()
                    .visit(K_TO).sql(' ')
@@ -1053,8 +1053,8 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
         }
         else if (add != null) {
             boolean multiAdd = REQUIRE_REPEAT_ADD_ON_MULTI_ALTER.contains(ctx.family());
-            boolean parens = !multiAdd                                                                                     ;
-            boolean comma = true                                                               ;
+            boolean parens = !multiAdd;
+            boolean comma = true;
 
             ctx.start(ALTER_TABLE_ADD)
                .visit(K_ADD)

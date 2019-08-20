@@ -591,7 +591,7 @@ public interface AlterTableStep {
      * Add a <code>DROP PRIMARY KEY</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
-    @Support({ H2, HSQLDB, MARIADB, MYSQL                                    })
+    @Support({ H2, HSQLDB, MARIADB, MYSQL })
     AlterTableFinalStep dropPrimaryKey();
 
     /**

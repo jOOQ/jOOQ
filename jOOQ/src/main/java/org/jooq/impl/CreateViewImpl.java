@@ -215,8 +215,8 @@ final class CreateViewImpl<R extends Record> extends AbstractRowCountQuery imple
 
         // [#2059] MemSQL doesn't support column aliases at the view level
         boolean rename = f != null && f.length > 0;
-        boolean renameSupported = true                                                   ;
-        boolean replaceSupported = false                                                     ;
+        boolean renameSupported = true;
+        boolean replaceSupported = false;
 
 
 

@@ -680,7 +680,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             // [#1130] TODO type can be null for ARRAY types, etc.
             // [#7351] UUID data types need to be cast too
             // [#7242] JSON(B) data types need to be cast too
-            else if ((                                                      POSTGRES == family) &&
+            else if (( POSTGRES == family) &&
                     (sqlDataType == null ||
                     (!sqlDataType.isTemporal()
                         && sqlDataType != SQLDataType.UUID
@@ -700,7 +700,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
             // [#7379] Most databases cannot cast a bind variable to an enum type
-            else if (                                                      POSTGRES != family && EnumType.class.isAssignableFrom(type))
+            else if ( POSTGRES != family && EnumType.class.isAssignableFrom(type))
                 sqlCast(ctx, converted, Tools.emulateEnumType((DataType<EnumType>) dataType), dataType.length(), dataType.precision(), dataType.scale());
 
             // In all other cases, the bind variable can be cast normally
@@ -987,7 +987,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 ctx.render().sql(')');
             }
 
-            else if (                                                            ctx.family() == POSTGRES) {
+            else if ( ctx.family() == POSTGRES) {
 
                 // [#8933] In some cases, we cannot derive the cast type from
                 //         array type directly
@@ -1013,7 +1013,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 ctx.render().sql(']');
 
                 // [#3214] Some PostgreSQL array type literals need explicit casting
-                if ((                                                            ctx.family() == POSTGRES) && EnumType.class.isAssignableFrom(type.getComponentType()))
+                if (( ctx.family() == POSTGRES) && EnumType.class.isAssignableFrom(type.getComponentType()))
                     DefaultEnumTypeBinding.pgRenderEnumCast(ctx.render(), type);
             }
         }
@@ -1783,7 +1783,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-            else if (                                                            ctx.family() == POSTGRES)
+            else if ( ctx.family() == POSTGRES)
                 ctx.render()
                    .sql("E'")
                    .sql(PostgresUtils.toPGString(value))
@@ -2122,7 +2122,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         final void set0(BindingSetStatementContext<U> ctx, DayToSecond value) throws SQLException {
 
             // [#566] Interval data types are best bound as Strings
-            if (                                                            ctx.family() == POSTGRES)
+            if ( ctx.family() == POSTGRES)
                 ctx.statement().setObject(ctx.index(), toPGInterval(value));
             else
                 ctx.statement().setString(ctx.index(), value.toString());
@@ -2135,7 +2135,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final DayToSecond get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-            if (                                                            ctx.family() == POSTGRES) {
+            if ( ctx.family() == POSTGRES) {
                 Object object = ctx.resultSet().getObject(ctx.index());
                 return object == null ? null : PostgresUtils.toDayToSecond(object);
             }
@@ -2147,7 +2147,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final DayToSecond get0(BindingGetStatementContext<U> ctx) throws SQLException {
-            if (                                                            ctx.family() == POSTGRES) {
+            if ( ctx.family() == POSTGRES) {
                 Object object = ctx.statement().getObject(ctx.index());
                 return object == null ? null : PostgresUtils.toDayToSecond(object);
             }
@@ -2185,7 +2185,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // [#5249] [#6912] [#8063] Special inlining of special floating point values
             if (value.isNaN())
-                if (                                                            ctx.family() == POSTGRES)
+                if ( ctx.family() == POSTGRES)
                     ctx.render().visit(inline("NaN")).sql("::float8");
                 else if (ctx.family() == HSQLDB)
                     ctx.render().visit(sqrt(inline(-1)));
@@ -2262,7 +2262,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             super.sqlBind0(ctx, value);
 
             // Postgres needs explicit casting for enum (array) types
-            if (                                                            ctx.family() == POSTGRES)
+            if ( ctx.family() == POSTGRES)
                 pgRenderEnumCast(ctx.render(), type);
         }
 
@@ -2358,7 +2358,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // [#5249] [#6912] [#8063] Special inlining of special floating point values
             if (value.isNaN())
-                if (                                                            ctx.family() == POSTGRES)
+                if ( ctx.family() == POSTGRES)
                     ctx.render().visit(inline("NaN")).sql("::float4");
                 else if (ctx.family() == HSQLDB)
                     ctx.render().visit(sqrt(inline(-1)));
@@ -3171,13 +3171,13 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         void sqlBind0(BindingSQLContext<U> ctx, Record value) throws SQLException {
             super.sqlBind0(ctx, value);
 
-            if ((                                                            ctx.family() == POSTGRES) && value != null)
+            if (( ctx.family() == POSTGRES) && value != null)
                 pgRenderRecordCast(ctx.render(), value);
         }
 
         @Override
         final void sqlInline0(BindingSQLContext<U> ctx, Record value) throws SQLException {
-            if (                                                            ctx.family() == POSTGRES) {
+            if ( ctx.family() == POSTGRES) {
                 ctx.render().visit(inline(PostgresUtils.toPGString(value)));
                 pgRenderRecordCast(ctx.render(), value);
             }
@@ -3200,7 +3200,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final void set0(BindingSetStatementContext<U> ctx, Record value) throws SQLException {
-            if ((                                                            ctx.family() == POSTGRES) && value != null)
+            if (( ctx.family() == POSTGRES) && value != null)
                 ctx.statement().setString(ctx.index(), PostgresUtils.toPGString(value));
             else
                 ctx.statement().setObject(ctx.index(), value);

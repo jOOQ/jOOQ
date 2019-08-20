@@ -202,7 +202,7 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
 
 
         // [#2059] MemSQL does not support DELETE ... ORDER BY
-        if (limit != null && NO_SUPPORT_LIMIT.contains(ctx.family())                                                                         ) {
+        if (limit != null && NO_SUPPORT_LIMIT.contains(ctx.family())) {
             Field<?>[] keyFields =
                   table().getKeys().isEmpty()
                 ? new Field[] { table().rowid() }

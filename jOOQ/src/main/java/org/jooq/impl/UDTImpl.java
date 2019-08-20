@@ -201,7 +201,7 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractNamed implements UD
 
     @Override
     public final boolean isSQLUsable() {
-        return true                                        ;
+        return true;
     }
 
     @Override

@@ -1599,7 +1599,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     private final boolean hasLimit1() {
         if (this instanceof SelectQueryImpl) {
             Limit l = ((SelectQueryImpl) this).getLimit();
-            return !l.withTies()                                          && l.limitOne();
+            return !l.withTies() && l.limitOne();
         }
 
         return false;

@@ -1510,7 +1510,7 @@ implements
 
 
 
-        boolean onParentheses = false                                                 ;
+        boolean onParentheses = false;
         ctx.end(MERGE_USING)
            .formatSeparator()
            .start(MERGE_ON)

@@ -315,7 +315,7 @@ final class Limit extends AbstractQueryPart {
     private final void acceptStandard(Context<?> ctx, CastMode castMode) {
         ctx.castMode(NEVER);
 
-        if (                                                  !offsetZero())
+        if ( !offsetZero())
             ctx.formatSeparator()
                .visit(K_OFFSET)
                .sql(' ').visit(offsetOrZero)

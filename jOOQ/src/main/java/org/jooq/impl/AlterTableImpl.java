@@ -148,6 +148,7 @@ import static org.jooq.impl.Tools.BooleanDataKey.DATA_CONSTRAINT_REFERENCE;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.EnumSet;
 
 import org.jooq.AlterTableAlterStep;
@@ -620,7 +621,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
     @Override
     public final AlterTableImpl dropColumn(Field<?> field) {
-        return dropColumns(new Field[] { field });
+        return dropColumns0(Collections.singletonList(field));
     }
 
     @Override
@@ -676,6 +677,10 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
     @Override
     public final AlterTableImpl dropColumns(Collection<? extends Field<?>> fields) {
+        return dropColumns0(fields);
+    }
+
+    private final AlterTableImpl dropColumns0(Collection<? extends Field<?>> fields) {
         dropColumns = new QueryPartList<>(fields);
         return this;
     }

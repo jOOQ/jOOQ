@@ -15268,7 +15268,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#WEEK}
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Integer> week(Field<?> field) {
         return extract(field, DatePart.WEEK);
     }

@@ -103,6 +103,7 @@ public class JPADatabase extends H2Database {
     static final JooqLogger log               = JooqLogger.getLogger(JPADatabase.class);
 
     private Connection      connection;
+    private boolean         publicIsDefault;
 
     @Override
     public void close() {
@@ -126,6 +127,8 @@ public class JPADatabase extends H2Database {
                     getProperties().getProperty("use-attribute-converters", "true")
                 )
             );
+            String unqualifiedSchema = getProperties().getProperty("unqualifiedSchema", "none").toLowerCase();
+            publicIsDefault = "none".equals(unqualifiedSchema);
 
             try {
                 Properties info = new Properties();
@@ -266,5 +269,26 @@ public class JPADatabase extends H2Database {
                 it.remove();
 
         return result;
+    }
+
+    @Override
+    @Deprecated
+    public String getOutputSchema(String inputSchema) {
+        String outputSchema = super.getOutputSchema(inputSchema);
+
+        if (publicIsDefault && "PUBLIC".equals(outputSchema))
+            return "";
+
+        return outputSchema;
+    }
+
+    @Override
+    public String getOutputSchema(String inputCatalog, String inputSchema) {
+        String outputSchema = super.getOutputSchema(inputCatalog, inputSchema);
+
+        if (publicIsDefault && "PUBLIC".equals(outputSchema))
+            return "";
+
+        return outputSchema;
     }
 }

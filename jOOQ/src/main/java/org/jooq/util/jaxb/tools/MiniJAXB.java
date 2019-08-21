@@ -112,10 +112,10 @@ public final class MiniJAXB {
 
     static {
         PROVIDED_SCHEMAS = new HashMap<>();
-        PROVIDED_SCHEMAS.put(Constants.NS_CODEGEN, "/xsd/" + Constants.XSD_CODEGEN);
-        PROVIDED_SCHEMAS.put(Constants.NS_EXPORT,  "/xsd/" + Constants.XSD_EXPORT);
-        PROVIDED_SCHEMAS.put(Constants.NS_META,    "/xsd/" + Constants.XSD_META);
-        PROVIDED_SCHEMAS.put(Constants.NS_RUNTIME, "/xsd/" + Constants.XSD_RUNTIME);
+        PROVIDED_SCHEMAS.put(Constants.NS_CODEGEN, Constants.CP_CODEGEN);
+        PROVIDED_SCHEMAS.put(Constants.NS_EXPORT,  Constants.CP_EXPORT);
+        PROVIDED_SCHEMAS.put(Constants.NS_META,    Constants.CP_META);
+        PROVIDED_SCHEMAS.put(Constants.NS_RUNTIME, Constants.CP_RUNTIME);
     }
 
     public static String marshal(XMLAppendable object) {

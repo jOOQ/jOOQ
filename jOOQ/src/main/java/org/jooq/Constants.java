@@ -71,9 +71,14 @@ public final class Constants {
     public static final String XSD_RUNTIME    = "jooq-runtime-3.12.0.xsd";
 
     /**
-     * The current jooq-runtime XML namespace
+     * The current jooq-runtime XML namespace.
      */
     public static final String NS_RUNTIME     = "http://www.jooq.org/xsd/" + XSD_RUNTIME;
+
+    /**
+     * The current jooq-runtime XSD classpath location.
+     */
+    public static final String CP_RUNTIME     = "/xsd/" + XSD_RUNTIME;
 
     /**
      * The current jooq-export XSD file name.
@@ -81,9 +86,14 @@ public final class Constants {
     public static final String XSD_EXPORT     = "jooq-export-3.10.0.xsd";
 
     /**
-     * The current jooq-export XML namespace
+     * The current jooq-export XML namespace.
      */
     public static final String NS_EXPORT      = "http://www.jooq.org/xsd/" + XSD_EXPORT;
+
+    /**
+     * The current jooq-export XSD classpath location.
+     */
+    public static final String CP_EXPORT      = "/xsd/" + XSD_EXPORT;
 
     /**
      * The current jooq-meta XSD file name.
@@ -96,6 +106,11 @@ public final class Constants {
     public static final String NS_META        = "http://www.jooq.org/xsd/" + XSD_META;
 
     /**
+     * The current jooq-meta XSD classpath location.
+     */
+    public static final String CP_META        = "/xsd/" + XSD_META;
+
+    /**
      * The current jooq-codegen XSD file name.
      */
     public static final String XSD_CODEGEN    = "jooq-codegen-3.12.0.xsd";
@@ -104,6 +119,11 @@ public final class Constants {
      * The current jooq-codegen XML namespace.
      */
     public static final String NS_CODEGEN     = "http://www.jooq.org/xsd/" + XSD_CODEGEN;
+
+    /**
+     * The current jooq-codegen XSD classpath location.
+     */
+    public static final String CP_CODEGEN     = "/xsd/" + XSD_CODEGEN;
 
 
 

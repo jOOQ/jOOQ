@@ -9135,7 +9135,8 @@ final class ParserImpl implements Parser {
                 else if (parseKeywordOrIdentifierIf(ctx, "NUMBER") ||
                          parseKeywordOrIdentifierIf(ctx, "NUMERIC"))
                     return parseDataTypePrecisionScale(ctx, SQLDataType.NUMERIC);
-                else if (parseKeywordOrIdentifierIf(ctx, "NVARCHAR"))
+                else if (parseKeywordOrIdentifierIf(ctx, "NVARCHAR") ||
+                         parseKeywordOrIdentifierIf(ctx, "NVARCHAR2"))
                     return parseDataTypeCollation(ctx, parseDataTypeLength(ctx, SQLDataType.NVARCHAR));
 
                 break;

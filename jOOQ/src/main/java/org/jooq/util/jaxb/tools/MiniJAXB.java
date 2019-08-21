@@ -62,6 +62,7 @@ import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.XMLConstants;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlEnum;
@@ -399,7 +400,7 @@ public final class MiniJAXB {
                 url = new URL(namespace);
 
             if (url != null) {
-                SchemaFactory schemaFactory = SchemaFactory.newDefaultInstance();
+                SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
                 Schema schema = schemaFactory.newSchema(url);
                 return schema;
             }

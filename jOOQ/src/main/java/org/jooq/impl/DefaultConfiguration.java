@@ -186,27 +186,27 @@ public class DefaultConfiguration implements Configuration {
      *
      * @param configuration The pre-existing configuration.
      */
-    DefaultConfiguration(Configuration configuration) {
+    DefaultConfiguration(DefaultConfiguration configuration) {
         this(
-            configuration.connectionProvider(),
-            configuration.metaProvider(),
-            configuration.executorProvider(),
-            configuration.transactionProvider(),
-            configuration.recordMapperProvider(),
-            configuration.recordUnmapperProvider(),
-            configuration.recordListenerProviders(),
-            configuration.executeListenerProviders(),
-            configuration.visitListenerProviders(),
-            configuration.transactionListenerProviders(),
-            configuration.diagnosticsListenerProviders(),
-            configuration.unwrapperProvider(),
-            configuration.converterProvider(),
+            configuration.connectionProvider,
+            configuration.metaProvider,
+            configuration.executorProvider,
+            configuration.transactionProvider,
+            configuration.recordMapperProvider,
+            configuration.recordUnmapperProvider,
+            configuration.recordListenerProviders,
+            configuration.executeListenerProviders,
+            configuration.visitListenerProviders,
+            configuration.transactionListenerProviders,
+            configuration.diagnosticsListenerProviders,
+            configuration.unwrapperProvider,
+            configuration.converterProvider,
 
-            configuration.clock(),
+            configuration.clock,
 
-            configuration.dialect(),
-            configuration.settings(),
-            configuration.data()
+            configuration.dialect,
+            configuration.settings,
+            configuration.data
         );
     }
 

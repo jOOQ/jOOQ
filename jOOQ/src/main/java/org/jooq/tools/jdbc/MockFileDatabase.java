@@ -380,8 +380,14 @@ public class MockFileDatabase implements MockDataProvider {
                 }
             }
 
+            // [#9078] Listing possible reasons for this to happen
             if (list == null)
-                throw new SQLException("Invalid SQL: " + sql);
+                throw new SQLException("Invalid SQL: " + sql
+                    + "\nPossible reasons include: "
+                    + "\n  Your regular expressions are case sensitive."
+                    + "\n  Your regular expressions use constant literals (e.g. 'Hello'), but the above SQL string uses bind variable placeholders (e.g. ?)."
+                    + "\n  Your regular expressions did not quote special characters (e.g. \\?)."
+                    + "\n  Your regular expressions' whitespace doesn't match the input SQL's whitespace.");
 
             return list.toArray(new MockResult[list.size()]);
         }

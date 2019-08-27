@@ -318,7 +318,7 @@ final class CreateIndexImpl extends AbstractRowCountQuery implements
                .qualify(true)
                .sql(')');
 
-        if (where != null && ctx.configuration().data("org.jooq.extensions.ddl.ignore-storage-clauses") == null)
+        if (where != null && ctx.configuration().data("org.jooq.ddl.ignore-storage-clauses") == null)
             ctx.formatSeparator()
                .visit(K_WHERE)
                .sql(' ')

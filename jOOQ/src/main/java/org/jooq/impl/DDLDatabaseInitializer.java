@@ -91,10 +91,10 @@ final class DDLDatabaseInitializer {
             ctx = DSL.using(connection, settings);
 
             // [#7771] [#8011] Ignore all parsed storage clauses when executing the statements
-            ctx.data("org.jooq.extensions.ddl.ignore-storage-clauses", true);
+            ctx.data("org.jooq.ddl.ignore-storage-clauses", true);
 
             // [#8910] Parse things a bit differently for use with the DDLDatabase
-            ctx.data("org.jooq.extensions.ddl.parse-for-ddldatabase", true);
+            ctx.data("org.jooq.ddl.parse-for-ddldatabase", true);
 
             final RenderNameCase nameCase = settings.getRenderNameCase();
             final Locale locale = renderLocale(ctx.settings());

@@ -35,13 +35,14 @@
  *
  *
  */
-package org.jooq.extensions.ddl;
+package org.jooq.impl;
 
 import static org.jooq.conf.SettingsTools.renderLocale;
 import static org.jooq.impl.DSL.name;
 
-import java.io.InputStream;
+import java.io.Reader;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Locale;
 import java.util.Properties;
@@ -51,38 +52,29 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.jooq.DSLContext;
-import org.jooq.Internal;
 import org.jooq.Name;
 import org.jooq.Name.Quoted;
 import org.jooq.Queries;
 import org.jooq.Query;
+import org.jooq.Source;
 import org.jooq.VisitContext;
 import org.jooq.conf.RenderNameCase;
 import org.jooq.conf.Settings;
+import org.jooq.conf.SettingsTools;
 import org.jooq.exception.DataAccessException;
-import org.jooq.impl.DSL;
-import org.jooq.impl.DefaultVisitListener;
-import org.jooq.impl.ParserException;
 import org.jooq.tools.JooqLogger;
 
-import org.h2.api.ErrorCode;
-
 /**
- * Utility to create an in-memory H2 database, which can then be
- * {@link DDLDatabaseInitializer#loadScript(String, InputStream) loaded} with
- * DDL scripts.
+ * Utility to create an in-memory H2 database, against which a list of DDL
+ * scripts are executed.
  * <p>
  * Instead of directly executing the DDL scripts against the H2 database, they
  * are first parsed and translated to the H2 dialect, and only then executed
  * against the H2 database.
- * <p>
- * This is INTERNAL API. Please do not use directly as API may change
- * incompatibly.
  *
  * @author Knut Wannheden
  */
-@Internal
-public final class DDLDatabaseInitializer {
+final class DDLDatabaseInitializer {
 
     private static final JooqLogger log    = JooqLogger.getLogger(DDLDatabaseInitializer.class);
     private static final Pattern    P_NAME = Pattern.compile("(?s:.*?\"([^\"]*)\".*)");
@@ -95,7 +87,7 @@ public final class DDLDatabaseInitializer {
             Properties info = new Properties();
             info.put("user", "sa");
             info.put("password", "");
-            connection = new org.h2.Driver().connect("jdbc:h2:mem:jooq-extensions-" + UUID.randomUUID(), info);
+            connection = DriverManager.getConnection("jdbc:h2:mem:jooq-extensions-" + UUID.randomUUID(), info);
             ctx = DSL.using(connection, settings);
 
             // [#7771] [#8011] Ignore all parsed storage clauses when executing the statements
@@ -145,19 +137,27 @@ public final class DDLDatabaseInitializer {
                 });
             }
         }
+        catch (SQLException e) {
+            if ("08001".equals(e.getSQLState()))
+                throw new DataAccessException("The h2.jar was not found on the classpath, which is required for this internal feature", e);
+            throw new DataAccessException("Error while exporting schema", e);
+        }
         catch (Exception e) {
             throw new DataAccessException("Error while exporting schema", e);
         }
     }
 
-    public static DDLDatabaseInitializer using(final Settings settings) {
-        return new DDLDatabaseInitializer(settings);
+    static Connection initializeUsing(final Settings settings, Source... scripts) {
+        DDLDatabaseInitializer initializer = new DDLDatabaseInitializer(settings == null ? SettingsTools.defaultSettings() : settings);
+        for (Source script : scripts)
+            initializer.loadScript(script);
+        return initializer.connection();
     }
 
     /**
-     * Parses and executes the script represented by {@code in} against the H2
-     * database. If the script references a schema which doesn't exist, it will
-     * be automatically created first.
+     * Parses and executes the script represented by {@code reader} against the
+     * H2 database. If the script references a schema which doesn't exist, it
+     * will be automatically created first.
      * <p>
      * Any parser errors will be thrown. It is however possible to delimit
      * sections which cannot be parsed using special comments.
@@ -165,9 +165,10 @@ public final class DDLDatabaseInitializer {
      * @see Settings#getParseIgnoreCommentStart()
      * @see Settings#getParseIgnoreCommentStop()
      */
-    public final void loadScript(String encoding, InputStream in) {
+    private final void loadScript(Source source) {
+        Reader reader = source.reader();
         try {
-            Scanner s = new Scanner(in, encoding).useDelimiter("\\A");
+            Scanner s = new Scanner(reader).useDelimiter("\\A");
             Queries queries = ctx.parser().parse(s.hasNext() ? s.next() : "");
 
             for (Query query : queries) {
@@ -182,7 +183,7 @@ public final class DDLDatabaseInitializer {
                     catch (DataAccessException e) {
 
                         // [#7039] Auto create missing schemas. We're using the
-                        if (Integer.toString(ErrorCode.SCHEMA_NOT_FOUND_1).equals(e.sqlState())) {
+                        if ("90079" /* ErrorCode.SCHEMA_NOT_FOUND_1 */.equals(e.sqlState())) {
                             SQLException cause = e.getCause(SQLException.class);
 
                             if (cause != null) {
@@ -208,15 +209,15 @@ public final class DDLDatabaseInitializer {
             throw e;
         }
         finally {
-            if (in != null)
+            if (reader != null)
                 try {
-                    in.close();
+                    reader.close();
                 }
                 catch (Exception ignore) {}
         }
     }
 
-    public final Connection connection() {
+    private final Connection connection() {
         return connection;
     }
 

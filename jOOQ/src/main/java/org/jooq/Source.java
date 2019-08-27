@@ -38,7 +38,6 @@
 package org.jooq;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -56,7 +55,6 @@ public final class Source {
 
     private final String      string;
     private final byte[]      bytes;
-    private final String      charsetName;
     private final Charset     charset;
     private final Reader      reader;
     private final InputStream inputStream;
@@ -64,14 +62,12 @@ public final class Source {
     private Source(
         String string,
         byte[] bytes,
-        String charsetName,
         Charset charset,
         Reader reader,
         InputStream inputStream
     ) {
         this.string = string;
         this.bytes = bytes;
-        this.charsetName = charsetName;
         this.charset = charset;
         this.reader = reader;
         this.inputStream = inputStream;
@@ -81,50 +77,48 @@ public final class Source {
      * Create a source from a string.
      */
     public static final Source of(String string) {
-        return new Source(string, null, null, null, null, null);
+        return new Source(string, null, null, null, null);
     }
 
     /**
      * Create a source from binary data.
      */
     public static final Source of(byte[] bytes) {
-        return new Source(null, bytes, null, null, null, null);
-    }
-
-    /**
-     * Create a source from binary data using a specific character set.
-     */
-    public static final Source of(byte[] bytes, String charsetName) {
-        return new Source(null, bytes, charsetName, null, null, null);
+        return new Source(null, bytes, null, null, null);
     }
 
     /**
      * Create a source from binary data using a specific character set.
      */
     public static final Source of(byte[] bytes, Charset charset) {
-        return new Source(null, bytes, null, charset, null, null);
+        return new Source(null, bytes, charset, null, null);
     }
 
     /**
      * Create a source from a reader.
      */
     public static final Source of(Reader reader) {
-        return new Source(null, null, null, null, reader, null);
+        return new Source(null, null, null, reader, null);
     }
 
     /**
      * Create a source from an input stream.
      */
     public static final Source of(InputStream inputStream) {
-        return new Source(null, null, null, null, null, inputStream);
+        return new Source(null, null, null, null, inputStream);
+    }
+
+    /**
+     * Create a source from an input stream using a specific character set.
+     */
+    public static final Source of(InputStream inputStream, Charset charset) {
+        return new Source(null, null, charset, null, inputStream);
     }
 
     /**
      * Produce a reader from this source.
-     *
-     * @throws IOException If something went wrong producing the reader.
      */
-    public final Reader reader() throws IOException {
+    public final Reader reader() {
         if (string != null)
             return new StringReader(string);
         else if (bytes != null)
@@ -137,10 +131,8 @@ public final class Source {
             throw new IllegalStateException("Could not produce a reader from this source");
     }
 
-    private final Reader inputStreamReader(InputStream is) throws IOException {
-        if (charsetName != null)
-            return new InputStreamReader(is, charsetName);
-        else if (charset != null)
+    private final Reader inputStreamReader(InputStream is) {
+        if (charset != null)
             return new InputStreamReader(is, charset);
         else
             return new InputStreamReader(is);

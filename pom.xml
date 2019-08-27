@@ -82,11 +82,6 @@
             </dependency>
             <dependency>
                 <groupId>org.jooq</groupId>
-                <artifactId>jooq-extensions</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jooq</groupId>
                 <artifactId>jooq-meta</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -408,7 +403,6 @@
 
         <module>jOOQ-checker</module>
 
-        <module>jOOQ-extensions</module>
         <module>jOOQ-meta</module>
         <module>jOOQ-meta-extensions</module>
         <module>jOOQ-codegen</module>

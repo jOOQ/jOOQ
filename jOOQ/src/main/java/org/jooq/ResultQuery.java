@@ -197,6 +197,24 @@ extends
      * Stream this query.
      * <p>
      * This is just a synonym for {@link #stream()}.
+     * <p>
+     * Clients should ensure the {@link Stream} is properly closed, e.g. in a
+     * try-with-resources statement:
+     * <p>
+     * <code><pre>
+     * try (Stream&lt;R&gt; stream = query.stream()) {
+     *     // Do things with stream
+     * }
+     * </pre></code>
+     * <p>
+     * If users prefer more fluent style streaming of queries, {@link ResultSet}
+     * can be registered and closed via {@link ExecuteListener}, or via "smart"
+     * third-party {@link DataSource}s.
+     * <p>
+     * Depending on your JDBC driver's default behaviour, this may load the
+     * whole database result into the driver's memory. In order to indicate to
+     * the driver that you may not want to fetch all records at once, use
+     * {@link #fetchSize(int)} prior to calling this method.
      *
      * @return The result.
      * @throws DataAccessException if something went wrong executing the query
@@ -209,7 +227,25 @@ extends
      * <p>
      * This is the same as calling
      * <code>fetchStream().map(r -&gt; r.into(type))</code>. See
-     * {@link Record#into(Class)} for more details
+     * {@link Record#into(Class)} for more details.
+     * <p>
+     * Clients should ensure the {@link Stream} is properly closed, e.g. in a
+     * try-with-resources statement:
+     * <p>
+     * <code><pre>
+     * try (Stream&lt;R&gt; stream = query.stream()) {
+     *     // Do things with stream
+     * }
+     * </pre></code>
+     * <p>
+     * If users prefer more fluent style streaming of queries, {@link ResultSet}
+     * can be registered and closed via {@link ExecuteListener}, or via "smart"
+     * third-party {@link DataSource}s.
+     * <p>
+     * Depending on your JDBC driver's default behaviour, this may load the
+     * whole database result into the driver's memory. In order to indicate to
+     * the driver that you may not want to fetch all records at once, use
+     * {@link #fetchSize(int)} prior to calling this method.
      *
      * @param <E> The generic entity type.
      * @param type The entity type.
@@ -228,11 +264,29 @@ extends
      * <p>
      * This is the same as calling
      * <code>fetchStream().map(r -&gt; r.into(table))</code>. See
-     * {@link Record#into(Table)} for more details
+     * {@link Record#into(Table)} for more details.
      * <p>
      * The result and its contained records are attached to the original
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
      * to override this behaviour.
+     * <p>
+     * Clients should ensure the {@link Stream} is properly closed, e.g. in a
+     * try-with-resources statement:
+     * <p>
+     * <code><pre>
+     * try (Stream&lt;R&gt; stream = query.stream()) {
+     *     // Do things with stream
+     * }
+     * </pre></code>
+     * <p>
+     * If users prefer more fluent style streaming of queries, {@link ResultSet}
+     * can be registered and closed via {@link ExecuteListener}, or via "smart"
+     * third-party {@link DataSource}s.
+     * <p>
+     * Depending on your JDBC driver's default behaviour, this may load the
+     * whole database result into the driver's memory. In order to indicate to
+     * the driver that you may not want to fetch all records at once, use
+     * {@link #fetchSize(int)} prior to calling this method.
      *
      * @param <Z> The generic table record type.
      * @param table The table type.

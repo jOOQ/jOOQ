@@ -821,13 +821,13 @@ final class ParserImpl implements Parser {
         if (ctx.done())
             return null;
 
-        ParseWithMetaLookups previous = ctx.metaLookups();
+        boolean metaLookupsForceIgnore = ctx.metaLookupsForceIgnore();
         try {
             switch (ctx.character()) {
                 case 'a':
                 case 'A':
                     if (!parseResultQuery && peekKeyword(ctx, "ALTER"))
-                        return parseAlter(ctx.metaLookups(ParseWithMetaLookups.OFF));
+                        return parseAlter(ctx.metaLookupsForceIgnore(true));
 
                     break;
 
@@ -841,9 +841,9 @@ final class ParserImpl implements Parser {
                 case 'c':
                 case 'C':
                     if (!parseResultQuery && peekKeyword(ctx, "CREATE"))
-                        return parseCreate(ctx.metaLookups(ParseWithMetaLookups.OFF));
+                        return parseCreate(ctx.metaLookupsForceIgnore(true));
                     else if (!parseResultQuery && peekKeyword(ctx, "COMMENT ON"))
-                        return parseCommentOn(ctx.metaLookups(ParseWithMetaLookups.OFF));
+                        return parseCommentOn(ctx.metaLookupsForceIgnore(true));
 
                     break;
 
@@ -854,7 +854,7 @@ final class ParserImpl implements Parser {
                     else if (!parseResultQuery && (peekKeyword(ctx, "DELETE") || peekKeyword(ctx, "DEL")))
                         return parseDelete(ctx, null);
                     else if (!parseResultQuery && peekKeyword(ctx, "DROP"))
-                        return parseDrop(ctx.metaLookups(ParseWithMetaLookups.OFF));
+                        return parseDrop(ctx.metaLookupsForceIgnore(true));
                     else if (!parseResultQuery && peekKeyword(ctx, "DO"))
                         return parseDo(ctx);
 
@@ -872,7 +872,7 @@ final class ParserImpl implements Parser {
                 case 'g':
                 case 'G':
                     if (!parseResultQuery && peekKeyword(ctx, "GRANT"))
-                        return parseGrant(ctx.metaLookups(ParseWithMetaLookups.OFF));
+                        return parseGrant(ctx.metaLookupsForceIgnore(true));
 
                     break;
 
@@ -893,9 +893,9 @@ final class ParserImpl implements Parser {
                 case 'r':
                 case 'R':
                     if (!parseResultQuery && peekKeyword(ctx, "RENAME"))
-                        return parseRename(ctx.metaLookups(ParseWithMetaLookups.OFF));
+                        return parseRename(ctx.metaLookupsForceIgnore(true));
                     else if (!parseResultQuery && peekKeyword(ctx, "REVOKE"))
-                        return parseRevoke(ctx.metaLookups(ParseWithMetaLookups.OFF));
+                        return parseRevoke(ctx.metaLookupsForceIgnore(true));
 
                     break;
 
@@ -951,7 +951,7 @@ final class ParserImpl implements Parser {
             throw ctx.exception("Unsupported query type");
         }
         finally {
-            ctx.metaLookups(previous);
+            ctx.metaLookupsForceIgnore(metaLookupsForceIgnore);
         }
     }
 
@@ -3383,7 +3383,9 @@ final class ParserImpl implements Parser {
 
         if (TRUE.equals(ctas) && parseKeyword(ctx, "AS") ||
            !FALSE.equals(ctas) && parseKeywordIf(ctx, "AS")) {
-            CreateTableWithDataStep withDataStep = columnStep.as((Select<Record>) parseQuery(ctx, true, true));
+            boolean previousMetaLookupsForceIgnore = ctx.metaLookupsForceIgnore();
+            CreateTableWithDataStep withDataStep = columnStep.as((Select<Record>) parseQuery(ctx.metaLookupsForceIgnore(false), true, true));
+            ctx.metaLookupsForceIgnore(previousMetaLookupsForceIgnore);
             commentStep =
                   parseKeywordIf(ctx, "WITH DATA")
                 ? withDataStep.withData()
@@ -10556,7 +10558,8 @@ final class ParserContext {
     final Meta                            meta;
     final String                          sqlString;
     final char[]                          sql;
-    private ParseWithMetaLookups          metaLookups;
+    private final ParseWithMetaLookups    metaLookups;
+    private boolean                       metaLookupsForceIgnore;
     private int                           position        = 0;
     private boolean                       ignoreHints     = true;
     private final Object[]                bindings;
@@ -10603,12 +10606,12 @@ final class ParserContext {
         return dialect().family();
     }
 
-    ParseWithMetaLookups metaLookups() {
-        return this.metaLookups;
+    boolean metaLookupsForceIgnore() {
+        return this.metaLookupsForceIgnore;
     }
 
-    ParserContext metaLookups(ParseWithMetaLookups m) {
-        this.metaLookups = m;
+    ParserContext metaLookupsForceIgnore(boolean m) {
+        this.metaLookupsForceIgnore = m;
         return this;
     }
 
@@ -10812,7 +10815,7 @@ final class ParserContext {
                         return tables.get(0);
         }
 
-        if (metaLookups == THROW_ON_FAILURE)
+        if (!metaLookupsForceIgnore && metaLookups == THROW_ON_FAILURE)
             throw exception("Unknown table identifier");
 
         return table(name);
@@ -10830,7 +10833,7 @@ final class ParserContext {
             }
         }
 
-        if (metaLookups == THROW_ON_FAILURE)
+        if (!metaLookupsForceIgnore && metaLookups == THROW_ON_FAILURE)
             throw exception("Unknown field identifier");
 
         return field(name);

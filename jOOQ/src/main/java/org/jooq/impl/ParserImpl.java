@@ -821,132 +821,138 @@ final class ParserImpl implements Parser {
         if (ctx.done())
             return null;
 
-        switch (ctx.character()) {
-            case 'a':
-            case 'A':
-                if (!parseResultQuery && peekKeyword(ctx, "ALTER"))
-                    return parseAlter(ctx);
+        ParseWithMetaLookups previous = ctx.metaLookups();
+        try {
+            switch (ctx.character()) {
+                case 'a':
+                case 'A':
+                    if (!parseResultQuery && peekKeyword(ctx, "ALTER"))
+                        return parseAlter(ctx.metaLookups(ParseWithMetaLookups.OFF));
 
-                break;
+                    break;
 
-            case 'b':
-            case 'B':
-                if (!parseResultQuery && peekKeyword(ctx, "BEGIN"))
-                    return parseBlock(ctx);
+                case 'b':
+                case 'B':
+                    if (!parseResultQuery && peekKeyword(ctx, "BEGIN"))
+                        return parseBlock(ctx);
 
-                break;
+                    break;
 
-            case 'c':
-            case 'C':
-                if (!parseResultQuery && peekKeyword(ctx, "CREATE"))
-                    return parseCreate(ctx);
-                else if (!parseResultQuery && peekKeyword(ctx, "COMMENT ON"))
-                    return parseCommentOn(ctx);
+                case 'c':
+                case 'C':
+                    if (!parseResultQuery && peekKeyword(ctx, "CREATE"))
+                        return parseCreate(ctx.metaLookups(ParseWithMetaLookups.OFF));
+                    else if (!parseResultQuery && peekKeyword(ctx, "COMMENT ON"))
+                        return parseCommentOn(ctx.metaLookups(ParseWithMetaLookups.OFF));
 
-                break;
+                    break;
 
-            case 'd':
-            case 'D':
-                if (!parseResultQuery && peekKeyword(ctx, "DECLARE") && ctx.requireProEdition())
-                    return parseBlock(ctx);
-                else if (!parseResultQuery && (peekKeyword(ctx, "DELETE") || peekKeyword(ctx, "DEL")))
-                    return parseDelete(ctx, null);
-                else if (!parseResultQuery && peekKeyword(ctx, "DROP"))
-                    return parseDrop(ctx);
-                else if (!parseResultQuery && peekKeyword(ctx, "DO"))
-                    return parseDo(ctx);
+                case 'd':
+                case 'D':
+                    if (!parseResultQuery && peekKeyword(ctx, "DECLARE") && ctx.requireProEdition())
+                        return parseBlock(ctx);
+                    else if (!parseResultQuery && (peekKeyword(ctx, "DELETE") || peekKeyword(ctx, "DEL")))
+                        return parseDelete(ctx, null);
+                    else if (!parseResultQuery && peekKeyword(ctx, "DROP"))
+                        return parseDrop(ctx.metaLookups(ParseWithMetaLookups.OFF));
+                    else if (!parseResultQuery && peekKeyword(ctx, "DO"))
+                        return parseDo(ctx);
 
-                break;
+                    break;
 
-            case 'e':
-            case 'E':
-                if (!parseResultQuery && peekKeyword(ctx, "EXECUTE BLOCK AS BEGIN"))
-                    return parseBlock(ctx);
-                else if (!parseResultQuery && peekKeyword(ctx, "EXEC"))
-                    return parseExec(ctx);
+                case 'e':
+                case 'E':
+                    if (!parseResultQuery && peekKeyword(ctx, "EXECUTE BLOCK AS BEGIN"))
+                        return parseBlock(ctx);
+                    else if (!parseResultQuery && peekKeyword(ctx, "EXEC"))
+                        return parseExec(ctx);
 
-                break;
+                    break;
 
-            case 'g':
-            case 'G':
-                if (!parseResultQuery && peekKeyword(ctx, "GRANT"))
-                    return parseGrant(ctx);
+                case 'g':
+                case 'G':
+                    if (!parseResultQuery && peekKeyword(ctx, "GRANT"))
+                        return parseGrant(ctx.metaLookups(ParseWithMetaLookups.OFF));
 
-                break;
+                    break;
 
-            case 'i':
-            case 'I':
-                if (!parseResultQuery && (peekKeyword(ctx, "INSERT") || peekKeyword(ctx, "INS")))
-                    return parseInsert(ctx, null);
+                case 'i':
+                case 'I':
+                    if (!parseResultQuery && (peekKeyword(ctx, "INSERT") || peekKeyword(ctx, "INS")))
+                        return parseInsert(ctx, null);
 
-                break;
+                    break;
 
-            case 'm':
-            case 'M':
-                if (!parseResultQuery && peekKeyword(ctx, "MERGE"))
-                    return parseMerge(ctx, null);
+                case 'm':
+                case 'M':
+                    if (!parseResultQuery && peekKeyword(ctx, "MERGE"))
+                        return parseMerge(ctx, null);
 
-                break;
+                    break;
 
-            case 'r':
-            case 'R':
-                if (!parseResultQuery && peekKeyword(ctx, "RENAME"))
-                    return parseRename(ctx);
-                else if (!parseResultQuery && peekKeyword(ctx, "REVOKE"))
-                    return parseRevoke(ctx);
+                case 'r':
+                case 'R':
+                    if (!parseResultQuery && peekKeyword(ctx, "RENAME"))
+                        return parseRename(ctx.metaLookups(ParseWithMetaLookups.OFF));
+                    else if (!parseResultQuery && peekKeyword(ctx, "REVOKE"))
+                        return parseRevoke(ctx.metaLookups(ParseWithMetaLookups.OFF));
 
-                break;
+                    break;
 
-            case 's':
-            case 'S':
-                if (peekKeyword(ctx, "SELECT") || peekKeyword(ctx, "SEL"))
-                    return parseSelect(ctx);
-                else if (!parseResultQuery && peekKeyword(ctx, "SET"))
-                    return parseSet(ctx);
+                case 's':
+                case 'S':
+                    if (peekKeyword(ctx, "SELECT") || peekKeyword(ctx, "SEL"))
+                        return parseSelect(ctx);
+                    else if (!parseResultQuery && peekKeyword(ctx, "SET"))
+                        return parseSet(ctx);
 
-                break;
+                    break;
 
-            case 't':
-            case 'T':
-                if (!parseResultQuery && peekKeyword(ctx, "TRUNCATE"))
-                    return parseTruncate(ctx);
+                case 't':
+                case 'T':
+                    if (!parseResultQuery && peekKeyword(ctx, "TRUNCATE"))
+                        return parseTruncate(ctx);
 
-                break;
+                    break;
 
-            case 'u':
-            case 'U':
-                if (!parseResultQuery && (peekKeyword(ctx, "UPDATE") || peekKeyword(ctx, "UPD")))
-                    return parseUpdate(ctx, null);
-                else if (!parseResultQuery && peekKeyword(ctx, "USE"))
-                    return parseUse(ctx);
+                case 'u':
+                case 'U':
+                    if (!parseResultQuery && (peekKeyword(ctx, "UPDATE") || peekKeyword(ctx, "UPD")))
+                        return parseUpdate(ctx, null);
+                    else if (!parseResultQuery && peekKeyword(ctx, "USE"))
+                        return parseUse(ctx);
 
-                break;
+                    break;
 
-            case 'v':
-            case 'V':
-                if (!parseSelect && peekKeyword(ctx, "VALUES"))
-                    return parseSelect(ctx);
+                case 'v':
+                case 'V':
+                    if (!parseSelect && peekKeyword(ctx, "VALUES"))
+                        return parseSelect(ctx);
 
-            case 'w':
-            case 'W':
-                if (peekKeyword(ctx, "WITH"))
-                    return parseWith(ctx, parseSelect);
+                case 'w':
+                case 'W':
+                    if (peekKeyword(ctx, "WITH"))
+                        return parseWith(ctx, parseSelect);
 
-                break;
+                    break;
 
-            case '(':
+                case '(':
 
-                // TODO are there other possible statement types?
-                if (peekKeyword(ctx, "WITH", false, true, false))
-                    return parseWith(ctx, true);
-                else
-                    return parseSelect(ctx);
+                    // TODO are there other possible statement types?
+                    if (peekKeyword(ctx, "WITH", false, true, false))
+                        return parseWith(ctx, true);
+                    else
+                        return parseSelect(ctx);
 
-            default:
-                break;
+                default:
+                    break;
+            }
+
+            throw ctx.exception("Unsupported query type");
         }
-
-        throw ctx.exception("Unsupported query type");
+        finally {
+            ctx.metaLookups(previous);
+        }
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -10548,9 +10554,9 @@ final class ParserContext {
 
     final DSLContext                      dsl;
     final Meta                            meta;
-    final ParseWithMetaLookups            metaLookups;
     final String                          sqlString;
     final char[]                          sql;
+    private ParseWithMetaLookups          metaLookups;
     private int                           position        = 0;
     private boolean                       ignoreHints     = true;
     private final Object[]                bindings;
@@ -10595,6 +10601,15 @@ final class ParserContext {
 
     SQLDialect family() {
         return dialect().family();
+    }
+
+    ParseWithMetaLookups metaLookups() {
+        return this.metaLookups;
+    }
+
+    ParserContext metaLookups(ParseWithMetaLookups m) {
+        this.metaLookups = m;
+        return this;
     }
 
     boolean requireProEdition() {

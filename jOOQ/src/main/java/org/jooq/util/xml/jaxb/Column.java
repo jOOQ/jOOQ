@@ -484,81 +484,209 @@ public class Column implements Serializable, XMLAppendable
         this.comment = value;
     }
 
+    /**
+     * Sets the value of the tableCatalog property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Column withTableCatalog(String value) {
         setTableCatalog(value);
         return this;
     }
 
+    /**
+     * Sets the value of the tableSchema property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Column withTableSchema(String value) {
         setTableSchema(value);
         return this;
     }
 
+    /**
+     * Sets the value of the tableName property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Column withTableName(String value) {
         setTableName(value);
         return this;
     }
 
+    /**
+     * Sets the value of the columnName property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Column withColumnName(String value) {
         setColumnName(value);
         return this;
     }
 
+    /**
+     * Sets the value of the dataType property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Column withDataType(String value) {
         setDataType(value);
         return this;
     }
 
+    /**
+     * Sets the value of the characterMaximumLength property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *
+     */
     public Column withCharacterMaximumLength(Integer value) {
         setCharacterMaximumLength(value);
         return this;
     }
 
+    /**
+     * Sets the value of the numericPrecision property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *
+     */
     public Column withNumericPrecision(Integer value) {
         setNumericPrecision(value);
         return this;
     }
 
+    /**
+     * Sets the value of the numericScale property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *
+     */
     public Column withNumericScale(Integer value) {
         setNumericScale(value);
         return this;
     }
 
+    /**
+     * Sets the value of the udtCatalog property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Column withUdtCatalog(String value) {
         setUdtCatalog(value);
         return this;
     }
 
+    /**
+     * Sets the value of the udtSchema property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Column withUdtSchema(String value) {
         setUdtSchema(value);
         return this;
     }
 
+    /**
+     * Sets the value of the udtName property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Column withUdtName(String value) {
         setUdtName(value);
         return this;
     }
 
+    /**
+     * Sets the value of the ordinalPosition property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *
+     */
     public Column withOrdinalPosition(Integer value) {
         setOrdinalPosition(value);
         return this;
     }
 
+    /**
+     * Sets the value of the identityGeneration property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Column withIdentityGeneration(String value) {
         setIdentityGeneration(value);
         return this;
     }
 
+    /**
+     * Sets the value of the isNullable property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Column withIsNullable(Boolean value) {
         setIsNullable(value);
         return this;
     }
 
+    /**
+     * Sets the value of the columnDefault property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Column withColumnDefault(String value) {
         setColumnDefault(value);
         return this;
     }
 
+    /**
+     * Sets the value of the comment property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Column withComment(String value) {
         setComment(value);
         return this;

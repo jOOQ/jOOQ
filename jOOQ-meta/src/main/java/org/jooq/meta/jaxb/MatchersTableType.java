@@ -361,66 +361,170 @@ public class MatchersTableType implements Serializable, XMLAppendable
         this.pojoImplements = value;
     }
 
+    /**
+     * Sets the value of the expression property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public MatchersTableType withExpression(String value) {
         setExpression(value);
         return this;
     }
 
+    /**
+     * Sets the value of the tableClass property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link MatcherRule }
+     *
+     */
     public MatchersTableType withTableClass(MatcherRule value) {
         setTableClass(value);
         return this;
     }
 
+    /**
+     * Sets the value of the tableIdentifier property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link MatcherRule }
+     *
+     */
     public MatchersTableType withTableIdentifier(MatcherRule value) {
         setTableIdentifier(value);
         return this;
     }
 
+    /**
+     * Sets the value of the tableImplements property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public MatchersTableType withTableImplements(String value) {
         setTableImplements(value);
         return this;
     }
 
+    /**
+     * Sets the value of the recordClass property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link MatcherRule }
+     *
+     */
     public MatchersTableType withRecordClass(MatcherRule value) {
         setRecordClass(value);
         return this;
     }
 
+    /**
+     * Sets the value of the recordImplements property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public MatchersTableType withRecordImplements(String value) {
         setRecordImplements(value);
         return this;
     }
 
+    /**
+     * Sets the value of the interfaceClass property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link MatcherRule }
+     *
+     */
     public MatchersTableType withInterfaceClass(MatcherRule value) {
         setInterfaceClass(value);
         return this;
     }
 
+    /**
+     * Sets the value of the interfaceImplements property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public MatchersTableType withInterfaceImplements(String value) {
         setInterfaceImplements(value);
         return this;
     }
 
+    /**
+     * Sets the value of the daoClass property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link MatcherRule }
+     *
+     */
     public MatchersTableType withDaoClass(MatcherRule value) {
         setDaoClass(value);
         return this;
     }
 
+    /**
+     * Sets the value of the daoImplements property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public MatchersTableType withDaoImplements(String value) {
         setDaoImplements(value);
         return this;
     }
 
+    /**
+     * Sets the value of the pojoClass property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link MatcherRule }
+     *
+     */
     public MatchersTableType withPojoClass(MatcherRule value) {
         setPojoClass(value);
         return this;
     }
 
+    /**
+     * Sets the value of the pojoExtends property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public MatchersTableType withPojoExtends(String value) {
         setPojoExtends(value);
         return this;
     }
 
+    /**
+     * Sets the value of the pojoImplements property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public MatchersTableType withPojoImplements(String value) {
         setPojoImplements(value);
         return this;

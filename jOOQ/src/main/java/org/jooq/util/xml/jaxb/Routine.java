@@ -515,86 +515,222 @@ public class Routine implements Serializable, XMLAppendable
         this.comment = value;
     }
 
+    /**
+     * Sets the value of the specificCatalog property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Routine withSpecificCatalog(String value) {
         setSpecificCatalog(value);
         return this;
     }
 
+    /**
+     * Sets the value of the specificSchema property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Routine withSpecificSchema(String value) {
         setSpecificSchema(value);
         return this;
     }
 
+    /**
+     * Sets the value of the specificPackage property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Routine withSpecificPackage(String value) {
         setSpecificPackage(value);
         return this;
     }
 
+    /**
+     * Sets the value of the specificName property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Routine withSpecificName(String value) {
         setSpecificName(value);
         return this;
     }
 
+    /**
+     * Sets the value of the routineCatalog property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Routine withRoutineCatalog(String value) {
         setRoutineCatalog(value);
         return this;
     }
 
+    /**
+     * Sets the value of the routineSchema property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Routine withRoutineSchema(String value) {
         setRoutineSchema(value);
         return this;
     }
 
+    /**
+     * Sets the value of the routinePackage property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Routine withRoutinePackage(String value) {
         setRoutinePackage(value);
         return this;
     }
 
+    /**
+     * Sets the value of the routineName property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Routine withRoutineName(String value) {
         setRoutineName(value);
         return this;
     }
 
+    /**
+     * Sets the value of the routineType property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link RoutineType }
+     *
+     */
     public Routine withRoutineType(RoutineType value) {
         setRoutineType(value);
         return this;
     }
 
+    /**
+     * Sets the value of the dataType property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Routine withDataType(String value) {
         setDataType(value);
         return this;
     }
 
+    /**
+     * Sets the value of the characterMaximumLength property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *
+     */
     public Routine withCharacterMaximumLength(Integer value) {
         setCharacterMaximumLength(value);
         return this;
     }
 
+    /**
+     * Sets the value of the numericPrecision property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *
+     */
     public Routine withNumericPrecision(Integer value) {
         setNumericPrecision(value);
         return this;
     }
 
+    /**
+     * Sets the value of the numericScale property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *
+     */
     public Routine withNumericScale(Integer value) {
         setNumericScale(value);
         return this;
     }
 
+    /**
+     * Sets the value of the udtCatalog property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Routine withUdtCatalog(String value) {
         setUdtCatalog(value);
         return this;
     }
 
+    /**
+     * Sets the value of the udtSchema property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Routine withUdtSchema(String value) {
         setUdtSchema(value);
         return this;
     }
 
+    /**
+     * Sets the value of the udtName property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Routine withUdtName(String value) {
         setUdtName(value);
         return this;
     }
 
+    /**
+     * Sets the value of the comment property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Routine withComment(String value) {
         setComment(value);
         return this;

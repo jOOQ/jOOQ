@@ -1781,331 +1781,859 @@ public class Generate implements Serializable, XMLAppendable
         this.indentation = value;
     }
 
+    /**
+     * Sets the value of the indexes property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withIndexes(Boolean value) {
         setIndexes(value);
         return this;
     }
 
+    /**
+     * Sets the value of the relations property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withRelations(Boolean value) {
         setRelations(value);
         return this;
     }
 
+    /**
+     * Sets the value of the implicitJoinPathsToOne property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withImplicitJoinPathsToOne(Boolean value) {
         setImplicitJoinPathsToOne(value);
         return this;
     }
 
+    /**
+     * Sets the value of the deprecated property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withDeprecated(Boolean value) {
         setDeprecated(value);
         return this;
     }
 
+    /**
+     * Sets the value of the deprecationOnUnknownTypes property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withDeprecationOnUnknownTypes(Boolean value) {
         setDeprecationOnUnknownTypes(value);
         return this;
     }
 
+    /**
+     * Sets the value of the instanceFields property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withInstanceFields(Boolean value) {
         setInstanceFields(value);
         return this;
     }
 
+    /**
+     * Sets the value of the generatedAnnotation property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withGeneratedAnnotation(Boolean value) {
         setGeneratedAnnotation(value);
         return this;
     }
 
+    /**
+     * Sets the value of the generatedAnnotationType property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link GeneratedAnnotationType }
+     *
+     */
     public Generate withGeneratedAnnotationType(GeneratedAnnotationType value) {
         setGeneratedAnnotationType(value);
         return this;
     }
 
+    /**
+     * Sets the value of the routines property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withRoutines(Boolean value) {
         setRoutines(value);
         return this;
     }
 
+    /**
+     * Sets the value of the sequences property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withSequences(Boolean value) {
         setSequences(value);
         return this;
     }
 
+    /**
+     * Sets the value of the udts property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withUdts(Boolean value) {
         setUdts(value);
         return this;
     }
 
+    /**
+     * Sets the value of the queues property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withQueues(Boolean value) {
         setQueues(value);
         return this;
     }
 
+    /**
+     * Sets the value of the links property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withLinks(Boolean value) {
         setLinks(value);
         return this;
     }
 
+    /**
+     * Sets the value of the keys property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withKeys(Boolean value) {
         setKeys(value);
         return this;
     }
 
+    /**
+     * Sets the value of the tables property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withTables(Boolean value) {
         setTables(value);
         return this;
     }
 
+    /**
+     * Sets the value of the embeddables property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withEmbeddables(Boolean value) {
         setEmbeddables(value);
         return this;
     }
 
+    /**
+     * Sets the value of the records property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withRecords(Boolean value) {
         setRecords(value);
         return this;
     }
 
+    /**
+     * Sets the value of the recordsImplementingRecordN property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withRecordsImplementingRecordN(Boolean value) {
         setRecordsImplementingRecordN(value);
         return this;
     }
 
+    /**
+     * Sets the value of the pojos property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withPojos(Boolean value) {
         setPojos(value);
         return this;
     }
 
+    /**
+     * Sets the value of the pojosEqualsAndHashCode property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withPojosEqualsAndHashCode(Boolean value) {
         setPojosEqualsAndHashCode(value);
         return this;
     }
 
+    /**
+     * Sets the value of the pojosToString property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withPojosToString(Boolean value) {
         setPojosToString(value);
         return this;
     }
 
+    /**
+     * Sets the value of the immutablePojos property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withImmutablePojos(Boolean value) {
         setImmutablePojos(value);
         return this;
     }
 
+    /**
+     * Sets the value of the serializablePojos property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withSerializablePojos(Boolean value) {
         setSerializablePojos(value);
         return this;
     }
 
+    /**
+     * Sets the value of the interfaces property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withInterfaces(Boolean value) {
         setInterfaces(value);
         return this;
     }
 
+    /**
+     * Sets the value of the immutableInterfaces property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withImmutableInterfaces(Boolean value) {
         setImmutableInterfaces(value);
         return this;
     }
 
+    /**
+     * Sets the value of the serializableInterfaces property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withSerializableInterfaces(Boolean value) {
         setSerializableInterfaces(value);
         return this;
     }
 
+    /**
+     * Sets the value of the daos property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withDaos(Boolean value) {
         setDaos(value);
         return this;
     }
 
+    /**
+     * Sets the value of the jpaAnnotations property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withJpaAnnotations(Boolean value) {
         setJpaAnnotations(value);
         return this;
     }
 
+    /**
+     * Sets the value of the jpaVersion property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Generate withJpaVersion(String value) {
         setJpaVersion(value);
         return this;
     }
 
+    /**
+     * Sets the value of the validationAnnotations property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withValidationAnnotations(Boolean value) {
         setValidationAnnotations(value);
         return this;
     }
 
+    /**
+     * Sets the value of the springAnnotations property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withSpringAnnotations(Boolean value) {
         setSpringAnnotations(value);
         return this;
     }
 
+    /**
+     * Sets the value of the globalObjectReferences property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withGlobalObjectReferences(Boolean value) {
         setGlobalObjectReferences(value);
         return this;
     }
 
+    /**
+     * Sets the value of the globalCatalogReferences property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withGlobalCatalogReferences(Boolean value) {
         setGlobalCatalogReferences(value);
         return this;
     }
 
+    /**
+     * Sets the value of the globalSchemaReferences property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withGlobalSchemaReferences(Boolean value) {
         setGlobalSchemaReferences(value);
         return this;
     }
 
+    /**
+     * Sets the value of the globalTableReferences property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withGlobalTableReferences(Boolean value) {
         setGlobalTableReferences(value);
         return this;
     }
 
+    /**
+     * Sets the value of the globalSequenceReferences property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withGlobalSequenceReferences(Boolean value) {
         setGlobalSequenceReferences(value);
         return this;
     }
 
+    /**
+     * Sets the value of the globalUDTReferences property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withGlobalUDTReferences(Boolean value) {
         setGlobalUDTReferences(value);
         return this;
     }
 
+    /**
+     * Sets the value of the globalRoutineReferences property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withGlobalRoutineReferences(Boolean value) {
         setGlobalRoutineReferences(value);
         return this;
     }
 
+    /**
+     * Sets the value of the globalQueueReferences property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withGlobalQueueReferences(Boolean value) {
         setGlobalQueueReferences(value);
         return this;
     }
 
+    /**
+     * Sets the value of the globalLinkReferences property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withGlobalLinkReferences(Boolean value) {
         setGlobalLinkReferences(value);
         return this;
     }
 
+    /**
+     * Sets the value of the globalKeyReferences property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withGlobalKeyReferences(Boolean value) {
         setGlobalKeyReferences(value);
         return this;
     }
 
+    /**
+     * Sets the value of the javadoc property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withJavadoc(Boolean value) {
         setJavadoc(value);
         return this;
     }
 
+    /**
+     * Sets the value of the comments property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withComments(Boolean value) {
         setComments(value);
         return this;
     }
 
+    /**
+     * Sets the value of the commentsOnCatalogs property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withCommentsOnCatalogs(Boolean value) {
         setCommentsOnCatalogs(value);
         return this;
     }
 
+    /**
+     * Sets the value of the commentsOnSchemas property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withCommentsOnSchemas(Boolean value) {
         setCommentsOnSchemas(value);
         return this;
     }
 
+    /**
+     * Sets the value of the commentsOnTables property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withCommentsOnTables(Boolean value) {
         setCommentsOnTables(value);
         return this;
     }
 
+    /**
+     * Sets the value of the commentsOnColumns property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withCommentsOnColumns(Boolean value) {
         setCommentsOnColumns(value);
         return this;
     }
 
+    /**
+     * Sets the value of the commentsOnUDTs property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withCommentsOnUDTs(Boolean value) {
         setCommentsOnUDTs(value);
         return this;
     }
 
+    /**
+     * Sets the value of the commentsOnAttributes property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withCommentsOnAttributes(Boolean value) {
         setCommentsOnAttributes(value);
         return this;
     }
 
+    /**
+     * Sets the value of the commentsOnPackages property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withCommentsOnPackages(Boolean value) {
         setCommentsOnPackages(value);
         return this;
     }
 
+    /**
+     * Sets the value of the commentsOnRoutines property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withCommentsOnRoutines(Boolean value) {
         setCommentsOnRoutines(value);
         return this;
     }
 
+    /**
+     * Sets the value of the commentsOnParameters property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withCommentsOnParameters(Boolean value) {
         setCommentsOnParameters(value);
         return this;
     }
 
+    /**
+     * Sets the value of the commentsOnSequences property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withCommentsOnSequences(Boolean value) {
         setCommentsOnSequences(value);
         return this;
     }
 
+    /**
+     * Sets the value of the commentsOnLinks property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withCommentsOnLinks(Boolean value) {
         setCommentsOnLinks(value);
         return this;
     }
 
+    /**
+     * Sets the value of the commentsOnQueues property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withCommentsOnQueues(Boolean value) {
         setCommentsOnQueues(value);
         return this;
     }
 
+    /**
+     * Sets the value of the commentsOnKeys property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withCommentsOnKeys(Boolean value) {
         setCommentsOnKeys(value);
         return this;
     }
 
+    /**
+     * Sets the value of the fluentSetters property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withFluentSetters(Boolean value) {
         setFluentSetters(value);
         return this;
     }
 
+    /**
+     * Sets the value of the javaBeansGettersAndSetters property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withJavaBeansGettersAndSetters(Boolean value) {
         setJavaBeansGettersAndSetters(value);
         return this;
     }
 
+    /**
+     * Sets the value of the varargSetters property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withVarargSetters(Boolean value) {
         setVarargSetters(value);
         return this;
     }
 
+    /**
+     * Sets the value of the fullyQualifiedTypes property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Generate withFullyQualifiedTypes(String value) {
         setFullyQualifiedTypes(value);
         return this;
     }
 
+    /**
+     * Sets the value of the emptyCatalogs property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withEmptyCatalogs(Boolean value) {
         setEmptyCatalogs(value);
         return this;
     }
 
+    /**
+     * Sets the value of the emptySchemas property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withEmptySchemas(Boolean value) {
         setEmptySchemas(value);
         return this;
     }
 
+    /**
+     * Sets the value of the javaTimeTypes property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withJavaTimeTypes(Boolean value) {
         setJavaTimeTypes(value);
         return this;
     }
 
+    /**
+     * Sets the value of the primaryKeyTypes property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Generate withPrimaryKeyTypes(Boolean value) {
         setPrimaryKeyTypes(value);
         return this;
     }
 
+    /**
+     * Sets the value of the newline property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Generate withNewline(String value) {
         setNewline(value);
         return this;
     }
 
+    /**
+     * Sets the value of the indentation property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Generate withIndentation(String value) {
         setIndentation(value);
         return this;

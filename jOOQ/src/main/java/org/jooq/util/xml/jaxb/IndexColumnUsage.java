@@ -284,46 +284,114 @@ public class IndexColumnUsage implements Serializable, XMLAppendable
         this.isDescending = value;
     }
 
+    /**
+     * Sets the value of the indexCatalog property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public IndexColumnUsage withIndexCatalog(String value) {
         setIndexCatalog(value);
         return this;
     }
 
+    /**
+     * Sets the value of the indexSchema property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public IndexColumnUsage withIndexSchema(String value) {
         setIndexSchema(value);
         return this;
     }
 
+    /**
+     * Sets the value of the indexName property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public IndexColumnUsage withIndexName(String value) {
         setIndexName(value);
         return this;
     }
 
+    /**
+     * Sets the value of the tableCatalog property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public IndexColumnUsage withTableCatalog(String value) {
         setTableCatalog(value);
         return this;
     }
 
+    /**
+     * Sets the value of the tableSchema property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public IndexColumnUsage withTableSchema(String value) {
         setTableSchema(value);
         return this;
     }
 
+    /**
+     * Sets the value of the tableName property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public IndexColumnUsage withTableName(String value) {
         setTableName(value);
         return this;
     }
 
+    /**
+     * Sets the value of the columnName property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public IndexColumnUsage withColumnName(String value) {
         setColumnName(value);
         return this;
     }
 
+    /**
+     * Sets the value of the ordinalPosition property.
+     *
+     */
     public IndexColumnUsage withOrdinalPosition(int value) {
         setOrdinalPosition(value);
         return this;
     }
 
+    /**
+     * Sets the value of the isDescending property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public IndexColumnUsage withIsDescending(Boolean value) {
         setIsDescending(value);
         return this;

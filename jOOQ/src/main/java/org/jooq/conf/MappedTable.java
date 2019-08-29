@@ -116,16 +116,40 @@ public class MappedTable
         this.output = value;
     }
 
+    /**
+     * Sets the value of the input property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public MappedTable withInput(String value) {
         setInput(value);
         return this;
     }
 
+    /**
+     * Sets the value of the inputExpression property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public MappedTable withInputExpression(Pattern value) {
         setInputExpression(value);
         return this;
     }
 
+    /**
+     * Sets the value of the output property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public MappedTable withOutput(String value) {
         setOutput(value);
         return this;

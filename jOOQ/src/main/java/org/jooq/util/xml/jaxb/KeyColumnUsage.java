@@ -257,41 +257,101 @@ public class KeyColumnUsage implements Serializable, XMLAppendable
         this.tableName = value;
     }
 
+    /**
+     * Sets the value of the columnName property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public KeyColumnUsage withColumnName(String value) {
         setColumnName(value);
         return this;
     }
 
+    /**
+     * Sets the value of the constraintCatalog property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public KeyColumnUsage withConstraintCatalog(String value) {
         setConstraintCatalog(value);
         return this;
     }
 
+    /**
+     * Sets the value of the constraintSchema property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public KeyColumnUsage withConstraintSchema(String value) {
         setConstraintSchema(value);
         return this;
     }
 
+    /**
+     * Sets the value of the constraintName property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public KeyColumnUsage withConstraintName(String value) {
         setConstraintName(value);
         return this;
     }
 
+    /**
+     * Sets the value of the ordinalPosition property.
+     *
+     */
     public KeyColumnUsage withOrdinalPosition(int value) {
         setOrdinalPosition(value);
         return this;
     }
 
+    /**
+     * Sets the value of the tableCatalog property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public KeyColumnUsage withTableCatalog(String value) {
         setTableCatalog(value);
         return this;
     }
 
+    /**
+     * Sets the value of the tableSchema property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public KeyColumnUsage withTableSchema(String value) {
         setTableSchema(value);
         return this;
     }
 
+    /**
+     * Sets the value of the tableName property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public KeyColumnUsage withTableName(String value) {
         setTableName(value);
         return this;

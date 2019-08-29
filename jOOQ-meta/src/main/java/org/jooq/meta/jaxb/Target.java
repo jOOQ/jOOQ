@@ -140,21 +140,53 @@ public class Target implements Serializable, XMLAppendable
         this.clean = value;
     }
 
+    /**
+     * Sets the value of the packageName property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Target withPackageName(String value) {
         setPackageName(value);
         return this;
     }
 
+    /**
+     * Sets the value of the directory property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Target withDirectory(String value) {
         setDirectory(value);
         return this;
     }
 
+    /**
+     * Sets the value of the encoding property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Target withEncoding(String value) {
         setEncoding(value);
         return this;
     }
 
+    /**
+     * Sets the value of the clean property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Target withClean(Boolean value) {
         setClean(value);
         return this;

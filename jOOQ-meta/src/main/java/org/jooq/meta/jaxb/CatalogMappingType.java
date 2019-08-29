@@ -127,16 +127,40 @@ public class CatalogMappingType implements Serializable, XMLAppendable
         this.schemata = schemata;
     }
 
+    /**
+     * Sets the value of the inputCatalog property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public CatalogMappingType withInputCatalog(String value) {
         setInputCatalog(value);
         return this;
     }
 
+    /**
+     * Sets the value of the outputCatalog property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public CatalogMappingType withOutputCatalog(String value) {
         setOutputCatalog(value);
         return this;
     }
 
+    /**
+     * Sets the value of the outputCatalogToDefault property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public CatalogMappingType withOutputCatalogToDefault(Boolean value) {
         setOutputCatalogToDefault(value);
         return this;

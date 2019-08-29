@@ -262,41 +262,105 @@ public class Sequence implements Serializable, XMLAppendable
         this.comment = value;
     }
 
+    /**
+     * Sets the value of the sequenceCatalog property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Sequence withSequenceCatalog(String value) {
         setSequenceCatalog(value);
         return this;
     }
 
+    /**
+     * Sets the value of the sequenceSchema property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Sequence withSequenceSchema(String value) {
         setSequenceSchema(value);
         return this;
     }
 
+    /**
+     * Sets the value of the sequenceName property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Sequence withSequenceName(String value) {
         setSequenceName(value);
         return this;
     }
 
+    /**
+     * Sets the value of the dataType property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Sequence withDataType(String value) {
         setDataType(value);
         return this;
     }
 
+    /**
+     * Sets the value of the characterMaximumLength property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *
+     */
     public Sequence withCharacterMaximumLength(Integer value) {
         setCharacterMaximumLength(value);
         return this;
     }
 
+    /**
+     * Sets the value of the numericPrecision property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *
+     */
     public Sequence withNumericPrecision(Integer value) {
         setNumericPrecision(value);
         return this;
     }
 
+    /**
+     * Sets the value of the numericScale property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *
+     */
     public Sequence withNumericScale(Integer value) {
         setNumericScale(value);
         return this;
     }
 
+    /**
+     * Sets the value of the comment property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Sequence withComment(String value) {
         setComment(value);
         return this;

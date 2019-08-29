@@ -108,16 +108,40 @@ public class RenderFormatting
         this.printMargin = value;
     }
 
+    /**
+     * Sets the value of the newline property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public RenderFormatting withNewline(String value) {
         setNewline(value);
         return this;
     }
 
+    /**
+     * Sets the value of the indentation property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public RenderFormatting withIndentation(String value) {
         setIndentation(value);
         return this;
     }
 
+    /**
+     * Sets the value of the printMargin property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *
+     */
     public RenderFormatting withPrintMargin(Integer value) {
         setPrintMargin(value);
         return this;

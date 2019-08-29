@@ -1897,331 +1897,859 @@ public class Settings
         this.parseSearchPath = parseSearchPath;
     }
 
+    /**
+     * Sets the value of the renderCatalog property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Settings withRenderCatalog(Boolean value) {
         setRenderCatalog(value);
         return this;
     }
 
+    /**
+     * Sets the value of the renderSchema property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Settings withRenderSchema(Boolean value) {
         setRenderSchema(value);
         return this;
     }
 
+    /**
+     * Sets the value of the renderMapping property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link RenderMapping }
+     *
+     */
     public Settings withRenderMapping(RenderMapping value) {
         setRenderMapping(value);
         return this;
     }
 
+    /**
+     * Sets the value of the renderQuotedNames property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link RenderQuotedNames }
+     *
+     */
     public Settings withRenderQuotedNames(RenderQuotedNames value) {
         setRenderQuotedNames(value);
         return this;
     }
 
+    /**
+     * Sets the value of the renderNameCase property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link RenderNameCase }
+     *
+     */
     public Settings withRenderNameCase(RenderNameCase value) {
         setRenderNameCase(value);
         return this;
     }
 
+    /**
+     * Sets the value of the renderNameStyle property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link RenderNameStyle }
+     *
+     */
     public Settings withRenderNameStyle(RenderNameStyle value) {
         setRenderNameStyle(value);
         return this;
     }
 
+    /**
+     * Sets the value of the renderNamedParamPrefix property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Settings withRenderNamedParamPrefix(String value) {
         setRenderNamedParamPrefix(value);
         return this;
     }
 
+    /**
+     * Sets the value of the renderKeywordCase property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link RenderKeywordCase }
+     *
+     */
     public Settings withRenderKeywordCase(RenderKeywordCase value) {
         setRenderKeywordCase(value);
         return this;
     }
 
+    /**
+     * Sets the value of the renderKeywordStyle property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link RenderKeywordStyle }
+     *
+     */
     public Settings withRenderKeywordStyle(RenderKeywordStyle value) {
         setRenderKeywordStyle(value);
         return this;
     }
 
+    /**
+     * Sets the value of the renderLocale property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Settings withRenderLocale(Locale value) {
         setRenderLocale(value);
         return this;
     }
 
+    /**
+     * Sets the value of the renderFormatted property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Settings withRenderFormatted(Boolean value) {
         setRenderFormatted(value);
         return this;
     }
 
+    /**
+     * Sets the value of the renderFormatting property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link RenderFormatting }
+     *
+     */
     public Settings withRenderFormatting(RenderFormatting value) {
         setRenderFormatting(value);
         return this;
     }
 
+    /**
+     * Sets the value of the renderScalarSubqueriesForStoredFunctions property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Settings withRenderScalarSubqueriesForStoredFunctions(Boolean value) {
         setRenderScalarSubqueriesForStoredFunctions(value);
         return this;
     }
 
+    /**
+     * Sets the value of the renderOrderByRownumberForEmulatedPagination property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Settings withRenderOrderByRownumberForEmulatedPagination(Boolean value) {
         setRenderOrderByRownumberForEmulatedPagination(value);
         return this;
     }
 
+    /**
+     * Sets the value of the renderOutputForSQLServerReturningClause property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Settings withRenderOutputForSQLServerReturningClause(Boolean value) {
         setRenderOutputForSQLServerReturningClause(value);
         return this;
     }
 
+    /**
+     * Sets the value of the fetchTriggerValuesAfterSQLServerOutput property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Settings withFetchTriggerValuesAfterSQLServerOutput(Boolean value) {
         setFetchTriggerValuesAfterSQLServerOutput(value);
         return this;
     }
 
+    /**
+     * Sets the value of the transformTableListsToAnsiJoin property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Settings withTransformTableListsToAnsiJoin(Boolean value) {
         setTransformTableListsToAnsiJoin(value);
         return this;
     }
 
+    /**
+     * Sets the value of the backslashEscaping property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link BackslashEscaping }
+     *
+     */
     public Settings withBackslashEscaping(BackslashEscaping value) {
         setBackslashEscaping(value);
         return this;
     }
 
+    /**
+     * Sets the value of the paramType property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link ParamType }
+     *
+     */
     public Settings withParamType(ParamType value) {
         setParamType(value);
         return this;
     }
 
+    /**
+     * Sets the value of the paramCastMode property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link ParamCastMode }
+     *
+     */
     public Settings withParamCastMode(ParamCastMode value) {
         setParamCastMode(value);
         return this;
     }
 
+    /**
+     * Sets the value of the statementType property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link StatementType }
+     *
+     */
     public Settings withStatementType(StatementType value) {
         setStatementType(value);
         return this;
     }
 
+    /**
+     * Sets the value of the inlineThreshold property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *
+     */
     public Settings withInlineThreshold(Integer value) {
         setInlineThreshold(value);
         return this;
     }
 
+    /**
+     * Sets the value of the transactionListenerStartInvocationOrder property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link InvocationOrder }
+     *
+     */
     public Settings withTransactionListenerStartInvocationOrder(InvocationOrder value) {
         setTransactionListenerStartInvocationOrder(value);
         return this;
     }
 
+    /**
+     * Sets the value of the transactionListenerEndInvocationOrder property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link InvocationOrder }
+     *
+     */
     public Settings withTransactionListenerEndInvocationOrder(InvocationOrder value) {
         setTransactionListenerEndInvocationOrder(value);
         return this;
     }
 
+    /**
+     * Sets the value of the visitListenerStartInvocationOrder property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link InvocationOrder }
+     *
+     */
     public Settings withVisitListenerStartInvocationOrder(InvocationOrder value) {
         setVisitListenerStartInvocationOrder(value);
         return this;
     }
 
+    /**
+     * Sets the value of the visitListenerEndInvocationOrder property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link InvocationOrder }
+     *
+     */
     public Settings withVisitListenerEndInvocationOrder(InvocationOrder value) {
         setVisitListenerEndInvocationOrder(value);
         return this;
     }
 
+    /**
+     * Sets the value of the recordListenerStartInvocationOrder property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link InvocationOrder }
+     *
+     */
     public Settings withRecordListenerStartInvocationOrder(InvocationOrder value) {
         setRecordListenerStartInvocationOrder(value);
         return this;
     }
 
+    /**
+     * Sets the value of the recordListenerEndInvocationOrder property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link InvocationOrder }
+     *
+     */
     public Settings withRecordListenerEndInvocationOrder(InvocationOrder value) {
         setRecordListenerEndInvocationOrder(value);
         return this;
     }
 
+    /**
+     * Sets the value of the executeListenerStartInvocationOrder property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link InvocationOrder }
+     *
+     */
     public Settings withExecuteListenerStartInvocationOrder(InvocationOrder value) {
         setExecuteListenerStartInvocationOrder(value);
         return this;
     }
 
+    /**
+     * Sets the value of the executeListenerEndInvocationOrder property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link InvocationOrder }
+     *
+     */
     public Settings withExecuteListenerEndInvocationOrder(InvocationOrder value) {
         setExecuteListenerEndInvocationOrder(value);
         return this;
     }
 
+    /**
+     * Sets the value of the executeLogging property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Settings withExecuteLogging(Boolean value) {
         setExecuteLogging(value);
         return this;
     }
 
+    /**
+     * Sets the value of the updateRecordVersion property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Settings withUpdateRecordVersion(Boolean value) {
         setUpdateRecordVersion(value);
         return this;
     }
 
+    /**
+     * Sets the value of the updateRecordTimestamp property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Settings withUpdateRecordTimestamp(Boolean value) {
         setUpdateRecordTimestamp(value);
         return this;
     }
 
+    /**
+     * Sets the value of the executeWithOptimisticLocking property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Settings withExecuteWithOptimisticLocking(Boolean value) {
         setExecuteWithOptimisticLocking(value);
         return this;
     }
 
+    /**
+     * Sets the value of the executeWithOptimisticLockingExcludeUnversioned property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Settings withExecuteWithOptimisticLockingExcludeUnversioned(Boolean value) {
         setExecuteWithOptimisticLockingExcludeUnversioned(value);
         return this;
     }
 
+    /**
+     * Sets the value of the attachRecords property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Settings withAttachRecords(Boolean value) {
         setAttachRecords(value);
         return this;
     }
 
+    /**
+     * Sets the value of the updatablePrimaryKeys property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Settings withUpdatablePrimaryKeys(Boolean value) {
         setUpdatablePrimaryKeys(value);
         return this;
     }
 
+    /**
+     * Sets the value of the reflectionCaching property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Settings withReflectionCaching(Boolean value) {
         setReflectionCaching(value);
         return this;
     }
 
+    /**
+     * Sets the value of the cacheRecordMappers property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Settings withCacheRecordMappers(Boolean value) {
         setCacheRecordMappers(value);
         return this;
     }
 
+    /**
+     * Sets the value of the throwExceptions property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link ThrowExceptions }
+     *
+     */
     public Settings withThrowExceptions(ThrowExceptions value) {
         setThrowExceptions(value);
         return this;
     }
 
+    /**
+     * Sets the value of the fetchWarnings property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Settings withFetchWarnings(Boolean value) {
         setFetchWarnings(value);
         return this;
     }
 
+    /**
+     * Sets the value of the fetchServerOutputSize property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *
+     */
     public Settings withFetchServerOutputSize(Integer value) {
         setFetchServerOutputSize(value);
         return this;
     }
 
+    /**
+     * Sets the value of the returnIdentityOnUpdatableRecord property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Settings withReturnIdentityOnUpdatableRecord(Boolean value) {
         setReturnIdentityOnUpdatableRecord(value);
         return this;
     }
 
+    /**
+     * Sets the value of the returnAllOnUpdatableRecord property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Settings withReturnAllOnUpdatableRecord(Boolean value) {
         setReturnAllOnUpdatableRecord(value);
         return this;
     }
 
+    /**
+     * Sets the value of the returnRecordToPojo property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Settings withReturnRecordToPojo(Boolean value) {
         setReturnRecordToPojo(value);
         return this;
     }
 
+    /**
+     * Sets the value of the mapJPAAnnotations property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Settings withMapJPAAnnotations(Boolean value) {
         setMapJPAAnnotations(value);
         return this;
     }
 
+    /**
+     * Sets the value of the mapConstructorParameterNames property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Settings withMapConstructorParameterNames(Boolean value) {
         setMapConstructorParameterNames(value);
         return this;
     }
 
+    /**
+     * Sets the value of the mapConstructorParameterNamesInKotlin property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Settings withMapConstructorParameterNamesInKotlin(Boolean value) {
         setMapConstructorParameterNamesInKotlin(value);
         return this;
     }
 
+    /**
+     * Sets the value of the queryPoolable property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link QueryPoolable }
+     *
+     */
     public Settings withQueryPoolable(QueryPoolable value) {
         setQueryPoolable(value);
         return this;
     }
 
+    /**
+     * Sets the value of the queryTimeout property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *
+     */
     public Settings withQueryTimeout(Integer value) {
         setQueryTimeout(value);
         return this;
     }
 
+    /**
+     * Sets the value of the maxRows property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *
+     */
     public Settings withMaxRows(Integer value) {
         setMaxRows(value);
         return this;
     }
 
+    /**
+     * Sets the value of the fetchSize property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *
+     */
     public Settings withFetchSize(Integer value) {
         setFetchSize(value);
         return this;
     }
 
+    /**
+     * Sets the value of the debugInfoOnStackTrace property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Settings withDebugInfoOnStackTrace(Boolean value) {
         setDebugInfoOnStackTrace(value);
         return this;
     }
 
+    /**
+     * Sets the value of the inListPadding property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Settings withInListPadding(Boolean value) {
         setInListPadding(value);
         return this;
     }
 
+    /**
+     * Sets the value of the inListPadBase property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *
+     */
     public Settings withInListPadBase(Integer value) {
         setInListPadBase(value);
         return this;
     }
 
+    /**
+     * Sets the value of the delimiter property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Settings withDelimiter(String value) {
         setDelimiter(value);
         return this;
     }
 
+    /**
+     * Sets the value of the emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Settings withEmulateOnDuplicateKeyUpdateOnPrimaryKeyOnly(Boolean value) {
         setEmulateOnDuplicateKeyUpdateOnPrimaryKeyOnly(value);
         return this;
     }
 
+    /**
+     * Sets the value of the executeUpdateWithoutWhere property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link ExecuteWithoutWhere }
+     *
+     */
     public Settings withExecuteUpdateWithoutWhere(ExecuteWithoutWhere value) {
         setExecuteUpdateWithoutWhere(value);
         return this;
     }
 
+    /**
+     * Sets the value of the executeDeleteWithoutWhere property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link ExecuteWithoutWhere }
+     *
+     */
     public Settings withExecuteDeleteWithoutWhere(ExecuteWithoutWhere value) {
         setExecuteDeleteWithoutWhere(value);
         return this;
     }
 
+    /**
+     * Sets the value of the parseDialect property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Settings withParseDialect(SQLDialect value) {
         setParseDialect(value);
         return this;
     }
 
+    /**
+     * Sets the value of the parseWithMetaLookups property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link ParseWithMetaLookups }
+     *
+     */
     public Settings withParseWithMetaLookups(ParseWithMetaLookups value) {
         setParseWithMetaLookups(value);
         return this;
     }
 
+    /**
+     * Sets the value of the parseUnsupportedSyntax property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link ParseUnsupportedSyntax }
+     *
+     */
     public Settings withParseUnsupportedSyntax(ParseUnsupportedSyntax value) {
         setParseUnsupportedSyntax(value);
         return this;
     }
 
+    /**
+     * Sets the value of the parseUnknownFunctions property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link ParseUnknownFunctions }
+     *
+     */
     public Settings withParseUnknownFunctions(ParseUnknownFunctions value) {
         setParseUnknownFunctions(value);
         return this;
     }
 
+    /**
+     * Sets the value of the parseIgnoreComments property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Settings withParseIgnoreComments(Boolean value) {
         setParseIgnoreComments(value);
         return this;
     }
 
+    /**
+     * Sets the value of the parseIgnoreCommentStart property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Settings withParseIgnoreCommentStart(String value) {
         setParseIgnoreCommentStart(value);
         return this;
     }
 
+    /**
+     * Sets the value of the parseIgnoreCommentStop property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Settings withParseIgnoreCommentStop(String value) {
         setParseIgnoreCommentStop(value);
         return this;

@@ -131,21 +131,53 @@ public class MatchersSchemaType implements Serializable, XMLAppendable
         this.schemaImplements = value;
     }
 
+    /**
+     * Sets the value of the expression property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public MatchersSchemaType withExpression(String value) {
         setExpression(value);
         return this;
     }
 
+    /**
+     * Sets the value of the schemaClass property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link MatcherRule }
+     *
+     */
     public MatchersSchemaType withSchemaClass(MatcherRule value) {
         setSchemaClass(value);
         return this;
     }
 
+    /**
+     * Sets the value of the schemaIdentifier property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link MatcherRule }
+     *
+     */
     public MatchersSchemaType withSchemaIdentifier(MatcherRule value) {
         setSchemaIdentifier(value);
         return this;
     }
 
+    /**
+     * Sets the value of the schemaImplements property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public MatchersSchemaType withSchemaImplements(String value) {
         setSchemaImplements(value);
         return this;

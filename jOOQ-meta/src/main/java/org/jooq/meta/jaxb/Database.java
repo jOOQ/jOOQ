@@ -1471,6 +1471,14 @@ public class Database implements Serializable, XMLAppendable
         this.forcedTypes = forcedTypes;
     }
 
+    /**
+     * Sets the value of the name property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Database withName(String value) {
         setName(value);
         return this;
@@ -1492,216 +1500,560 @@ public class Database implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * Sets the value of the regexMatchesPartialQualification property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Database withRegexMatchesPartialQualification(Boolean value) {
         setRegexMatchesPartialQualification(value);
         return this;
     }
 
+    /**
+     * Sets the value of the sqlMatchesPartialQualification property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Database withSqlMatchesPartialQualification(Boolean value) {
         setSqlMatchesPartialQualification(value);
         return this;
     }
 
+    /**
+     * Sets the value of the includes property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Database withIncludes(String value) {
         setIncludes(value);
         return this;
     }
 
+    /**
+     * Sets the value of the excludes property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Database withExcludes(String value) {
         setExcludes(value);
         return this;
     }
 
+    /**
+     * Sets the value of the includeExcludeColumns property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Database withIncludeExcludeColumns(Boolean value) {
         setIncludeExcludeColumns(value);
         return this;
     }
 
+    /**
+     * Sets the value of the includeTables property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Database withIncludeTables(Boolean value) {
         setIncludeTables(value);
         return this;
     }
 
+    /**
+     * Sets the value of the includeEmbeddables property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Database withIncludeEmbeddables(Boolean value) {
         setIncludeEmbeddables(value);
         return this;
     }
 
+    /**
+     * Sets the value of the includeRoutines property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Database withIncludeRoutines(Boolean value) {
         setIncludeRoutines(value);
         return this;
     }
 
+    /**
+     * Sets the value of the includeTriggerRoutines property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Database withIncludeTriggerRoutines(Boolean value) {
         setIncludeTriggerRoutines(value);
         return this;
     }
 
+    /**
+     * Sets the value of the includePackages property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Database withIncludePackages(Boolean value) {
         setIncludePackages(value);
         return this;
     }
 
+    /**
+     * Sets the value of the includePackageRoutines property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Database withIncludePackageRoutines(Boolean value) {
         setIncludePackageRoutines(value);
         return this;
     }
 
+    /**
+     * Sets the value of the includePackageUDTs property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Database withIncludePackageUDTs(Boolean value) {
         setIncludePackageUDTs(value);
         return this;
     }
 
+    /**
+     * Sets the value of the includePackageConstants property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Database withIncludePackageConstants(Boolean value) {
         setIncludePackageConstants(value);
         return this;
     }
 
+    /**
+     * Sets the value of the includeUDTs property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Database withIncludeUDTs(Boolean value) {
         setIncludeUDTs(value);
         return this;
     }
 
+    /**
+     * Sets the value of the includeSequences property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Database withIncludeSequences(Boolean value) {
         setIncludeSequences(value);
         return this;
     }
 
+    /**
+     * Sets the value of the includeIndexes property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Database withIncludeIndexes(Boolean value) {
         setIncludeIndexes(value);
         return this;
     }
 
+    /**
+     * Sets the value of the includePrimaryKeys property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Database withIncludePrimaryKeys(Boolean value) {
         setIncludePrimaryKeys(value);
         return this;
     }
 
+    /**
+     * Sets the value of the includeUniqueKeys property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Database withIncludeUniqueKeys(Boolean value) {
         setIncludeUniqueKeys(value);
         return this;
     }
 
+    /**
+     * Sets the value of the includeForeignKeys property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Database withIncludeForeignKeys(Boolean value) {
         setIncludeForeignKeys(value);
         return this;
     }
 
+    /**
+     * Sets the value of the includeCheckConstraints property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Database withIncludeCheckConstraints(Boolean value) {
         setIncludeCheckConstraints(value);
         return this;
     }
 
+    /**
+     * Sets the value of the includeInvisibleColumns property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Database withIncludeInvisibleColumns(Boolean value) {
         setIncludeInvisibleColumns(value);
         return this;
     }
 
+    /**
+     * Sets the value of the recordVersionFields property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Database withRecordVersionFields(String value) {
         setRecordVersionFields(value);
         return this;
     }
 
+    /**
+     * Sets the value of the recordTimestampFields property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Database withRecordTimestampFields(String value) {
         setRecordTimestampFields(value);
         return this;
     }
 
+    /**
+     * Sets the value of the syntheticIdentities property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Database withSyntheticIdentities(String value) {
         setSyntheticIdentities(value);
         return this;
     }
 
+    /**
+     * Sets the value of the syntheticPrimaryKeys property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Database withSyntheticPrimaryKeys(String value) {
         setSyntheticPrimaryKeys(value);
         return this;
     }
 
+    /**
+     * Sets the value of the overridePrimaryKeys property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Database withOverridePrimaryKeys(String value) {
         setOverridePrimaryKeys(value);
         return this;
     }
 
+    /**
+     * Sets the value of the dateAsTimestamp property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Database withDateAsTimestamp(Boolean value) {
         setDateAsTimestamp(value);
         return this;
     }
 
+    /**
+     * Sets the value of the ignoreProcedureReturnValues property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Database withIgnoreProcedureReturnValues(Boolean value) {
         setIgnoreProcedureReturnValues(value);
         return this;
     }
 
+    /**
+     * Sets the value of the unsignedTypes property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Database withUnsignedTypes(Boolean value) {
         setUnsignedTypes(value);
         return this;
     }
 
+    /**
+     * Sets the value of the integerDisplayWidths property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Database withIntegerDisplayWidths(Boolean value) {
         setIntegerDisplayWidths(value);
         return this;
     }
 
+    /**
+     * Sets the value of the inputCatalog property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Database withInputCatalog(String value) {
         setInputCatalog(value);
         return this;
     }
 
+    /**
+     * Sets the value of the outputCatalog property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Database withOutputCatalog(String value) {
         setOutputCatalog(value);
         return this;
     }
 
+    /**
+     * Sets the value of the outputCatalogToDefault property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Database withOutputCatalogToDefault(Boolean value) {
         setOutputCatalogToDefault(value);
         return this;
     }
 
+    /**
+     * Sets the value of the inputSchema property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Database withInputSchema(String value) {
         setInputSchema(value);
         return this;
     }
 
+    /**
+     * Sets the value of the outputSchema property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Database withOutputSchema(String value) {
         setOutputSchema(value);
         return this;
     }
 
+    /**
+     * Sets the value of the outputSchemaToDefault property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Database withOutputSchemaToDefault(Boolean value) {
         setOutputSchemaToDefault(value);
         return this;
     }
 
+    /**
+     * Sets the value of the schemaVersionProvider property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Database withSchemaVersionProvider(String value) {
         setSchemaVersionProvider(value);
         return this;
     }
 
+    /**
+     * Sets the value of the catalogVersionProvider property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Database withCatalogVersionProvider(String value) {
         setCatalogVersionProvider(value);
         return this;
     }
 
+    /**
+     * Sets the value of the orderProvider property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Database withOrderProvider(String value) {
         setOrderProvider(value);
         return this;
     }
 
+    /**
+     * Sets the value of the forceIntegerTypesOnZeroScaleDecimals property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Database withForceIntegerTypesOnZeroScaleDecimals(Boolean value) {
         setForceIntegerTypesOnZeroScaleDecimals(value);
         return this;
     }
 
+    /**
+     * Sets the value of the tableValuedFunctions property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Database withTableValuedFunctions(Boolean value) {
         setTableValuedFunctions(value);
         return this;
     }
 
+    /**
+     * Sets the value of the logSlowQueriesAfterSeconds property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *
+     */
     public Database withLogSlowQueriesAfterSeconds(Integer value) {
         setLogSlowQueriesAfterSeconds(value);
         return this;
     }
 
+    /**
+     * Sets the value of the logSlowResultsAfterSeconds property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *
+     */
     public Database withLogSlowResultsAfterSeconds(Integer value) {
         setLogSlowResultsAfterSeconds(value);
         return this;

@@ -81,11 +81,27 @@ public class ParseSearchSchema
         this.schema = value;
     }
 
+    /**
+     * Sets the value of the catalog property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public ParseSearchSchema withCatalog(String value) {
         setCatalog(value);
         return this;
     }
 
+    /**
+     * Sets the value of the schema property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public ParseSearchSchema withSchema(String value) {
         setSchema(value);
         return this;

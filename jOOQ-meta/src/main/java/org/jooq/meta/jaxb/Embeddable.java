@@ -74,6 +74,14 @@ public class Embeddable implements Serializable, XMLAppendable
         this.fields = fields;
     }
 
+    /**
+     * Sets the value of the name property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Embeddable withName(String value) {
         setName(value);
         return this;

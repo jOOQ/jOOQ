@@ -157,26 +157,66 @@ public class Generator implements Serializable, XMLAppendable
         this.target = value;
     }
 
+    /**
+     * Sets the value of the name property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Generator withName(String value) {
         setName(value);
         return this;
     }
 
+    /**
+     * Sets the value of the strategy property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Strategy }
+     *
+     */
     public Generator withStrategy(Strategy value) {
         setStrategy(value);
         return this;
     }
 
+    /**
+     * Sets the value of the database property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Database }
+     *
+     */
     public Generator withDatabase(Database value) {
         setDatabase(value);
         return this;
     }
 
+    /**
+     * Sets the value of the generate property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Generate }
+     *
+     */
     public Generator withGenerate(Generate value) {
         setGenerate(value);
         return this;
     }
 
+    /**
+     * Sets the value of the target property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Target }
+     *
+     */
     public Generator withTarget(Target value) {
         setTarget(value);
         return this;

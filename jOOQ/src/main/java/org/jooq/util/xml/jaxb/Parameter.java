@@ -478,81 +478,205 @@ public class Parameter implements Serializable, XMLAppendable
         this.comment = value;
     }
 
+    /**
+     * Sets the value of the specificCatalog property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Parameter withSpecificCatalog(String value) {
         setSpecificCatalog(value);
         return this;
     }
 
+    /**
+     * Sets the value of the specificSchema property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Parameter withSpecificSchema(String value) {
         setSpecificSchema(value);
         return this;
     }
 
+    /**
+     * Sets the value of the specificPackage property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Parameter withSpecificPackage(String value) {
         setSpecificPackage(value);
         return this;
     }
 
+    /**
+     * Sets the value of the specificName property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Parameter withSpecificName(String value) {
         setSpecificName(value);
         return this;
     }
 
+    /**
+     * Sets the value of the ordinalPosition property.
+     *
+     */
     public Parameter withOrdinalPosition(int value) {
         setOrdinalPosition(value);
         return this;
     }
 
+    /**
+     * Sets the value of the parameterMode property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link ParameterMode }
+     *
+     */
     public Parameter withParameterMode(ParameterMode value) {
         setParameterMode(value);
         return this;
     }
 
+    /**
+     * Sets the value of the parameterName property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Parameter withParameterName(String value) {
         setParameterName(value);
         return this;
     }
 
+    /**
+     * Sets the value of the dataType property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Parameter withDataType(String value) {
         setDataType(value);
         return this;
     }
 
+    /**
+     * Sets the value of the characterMaximumLength property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *
+     */
     public Parameter withCharacterMaximumLength(Integer value) {
         setCharacterMaximumLength(value);
         return this;
     }
 
+    /**
+     * Sets the value of the numericPrecision property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *
+     */
     public Parameter withNumericPrecision(Integer value) {
         setNumericPrecision(value);
         return this;
     }
 
+    /**
+     * Sets the value of the numericScale property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *
+     */
     public Parameter withNumericScale(Integer value) {
         setNumericScale(value);
         return this;
     }
 
+    /**
+     * Sets the value of the udtCatalog property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Parameter withUdtCatalog(String value) {
         setUdtCatalog(value);
         return this;
     }
 
+    /**
+     * Sets the value of the udtSchema property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Parameter withUdtSchema(String value) {
         setUdtSchema(value);
         return this;
     }
 
+    /**
+     * Sets the value of the udtName property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Parameter withUdtName(String value) {
         setUdtName(value);
         return this;
     }
 
+    /**
+     * Sets the value of the parameterDefault property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Parameter withParameterDefault(String value) {
         setParameterDefault(value);
         return this;
     }
 
+    /**
+     * Sets the value of the comment property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Parameter withComment(String value) {
         setComment(value);
         return this;

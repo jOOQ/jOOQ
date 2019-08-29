@@ -125,16 +125,40 @@ public class Schema implements Serializable, XMLAppendable
         this.comment = value;
     }
 
+    /**
+     * Sets the value of the catalogName property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Schema withCatalogName(String value) {
         setCatalogName(value);
         return this;
     }
 
+    /**
+     * Sets the value of the schemaName property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Schema withSchemaName(String value) {
         setSchemaName(value);
         return this;
     }
 
+    /**
+     * Sets the value of the comment property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Schema withComment(String value) {
         setComment(value);
         return this;

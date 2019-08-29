@@ -85,11 +85,27 @@ public class Property implements Serializable, XMLAppendable
         this.value = value;
     }
 
+    /**
+     * Sets the value of the key property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Property withKey(String value) {
         setKey(value);
         return this;
     }
 
+    /**
+     * Sets the value of the value property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Property withValue(String value) {
         setValue(value);
         return this;

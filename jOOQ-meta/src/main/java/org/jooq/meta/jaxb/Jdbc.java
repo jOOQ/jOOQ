@@ -230,36 +230,92 @@ public class Jdbc implements Serializable, XMLAppendable
         this.properties = properties;
     }
 
+    /**
+     * Sets the value of the driver property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Jdbc withDriver(String value) {
         setDriver(value);
         return this;
     }
 
+    /**
+     * Sets the value of the url property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Jdbc withUrl(String value) {
         setUrl(value);
         return this;
     }
 
+    /**
+     * Sets the value of the schema property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Jdbc withSchema(String value) {
         setSchema(value);
         return this;
     }
 
+    /**
+     * Sets the value of the user property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Jdbc withUser(String value) {
         setUser(value);
         return this;
     }
 
+    /**
+     * Sets the value of the username property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Jdbc withUsername(String value) {
         setUsername(value);
         return this;
     }
 
+    /**
+     * Sets the value of the password property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Jdbc withPassword(String value) {
         setPassword(value);
         return this;
     }
 
+    /**
+     * Sets the value of the autoCommit property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Jdbc withAutoCommit(Boolean value) {
         setAutoCommit(value);
         return this;

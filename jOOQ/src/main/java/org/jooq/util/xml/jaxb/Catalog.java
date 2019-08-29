@@ -97,11 +97,27 @@ public class Catalog implements Serializable, XMLAppendable
         this.comment = value;
     }
 
+    /**
+     * Sets the value of the catalogName property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Catalog withCatalogName(String value) {
         setCatalogName(value);
         return this;
     }
 
+    /**
+     * Sets the value of the comment property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Catalog withComment(String value) {
         setComment(value);
         return this;

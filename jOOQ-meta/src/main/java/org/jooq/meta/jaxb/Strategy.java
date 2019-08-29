@@ -83,11 +83,27 @@ public class Strategy implements Serializable, XMLAppendable
         this.matchers = value;
     }
 
+    /**
+     * Sets the value of the name property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Strategy withName(String value) {
         setName(value);
         return this;
     }
 
+    /**
+     * Sets the value of the matchers property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Matchers }
+     *
+     */
     public Strategy withMatchers(Matchers value) {
         setMatchers(value);
         return this;

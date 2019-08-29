@@ -98,11 +98,27 @@ public class MatcherRule implements Serializable, XMLAppendable
         this.expression = value;
     }
 
+    /**
+     * Sets the value of the transform property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link MatcherTransformType }
+     *
+     */
     public MatcherRule withTransform(MatcherTransformType value) {
         setTransform(value);
         return this;
     }
 
+    /**
+     * Sets the value of the expression property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public MatcherRule withExpression(String value) {
         setExpression(value);
         return this;

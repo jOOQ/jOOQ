@@ -80,11 +80,27 @@ public class MatchersSequenceType implements Serializable, XMLAppendable
         this.sequenceIdentifier = value;
     }
 
+    /**
+     * Sets the value of the expression property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public MatchersSequenceType withExpression(String value) {
         setExpression(value);
         return this;
     }
 
+    /**
+     * Sets the value of the sequenceIdentifier property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link MatcherRule }
+     *
+     */
     public MatchersSequenceType withSequenceIdentifier(MatcherRule value) {
         setSequenceIdentifier(value);
         return this;

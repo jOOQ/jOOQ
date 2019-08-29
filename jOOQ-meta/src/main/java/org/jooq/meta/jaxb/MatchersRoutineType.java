@@ -131,21 +131,53 @@ public class MatchersRoutineType implements Serializable, XMLAppendable
         this.routineImplements = value;
     }
 
+    /**
+     * Sets the value of the expression property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public MatchersRoutineType withExpression(String value) {
         setExpression(value);
         return this;
     }
 
+    /**
+     * Sets the value of the routineClass property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link MatcherRule }
+     *
+     */
     public MatchersRoutineType withRoutineClass(MatcherRule value) {
         setRoutineClass(value);
         return this;
     }
 
+    /**
+     * Sets the value of the routineMethod property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link MatcherRule }
+     *
+     */
     public MatchersRoutineType withRoutineMethod(MatcherRule value) {
         setRoutineMethod(value);
         return this;
     }
 
+    /**
+     * Sets the value of the routineImplements property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public MatchersRoutineType withRoutineImplements(String value) {
         setRoutineImplements(value);
         return this;

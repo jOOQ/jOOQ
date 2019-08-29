@@ -432,76 +432,196 @@ public class ForcedType implements Serializable, XMLAppendable
         this.objectType = value;
     }
 
+    /**
+     * Sets the value of the name property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public ForcedType withName(String value) {
         setName(value);
         return this;
     }
 
+    /**
+     * Sets the value of the userType property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public ForcedType withUserType(String value) {
         setUserType(value);
         return this;
     }
 
+    /**
+     * Sets the value of the converter property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public ForcedType withConverter(String value) {
         setConverter(value);
         return this;
     }
 
+    /**
+     * Sets the value of the enumConverter property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public ForcedType withEnumConverter(Boolean value) {
         setEnumConverter(value);
         return this;
     }
 
+    /**
+     * Sets the value of the binding property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public ForcedType withBinding(String value) {
         setBinding(value);
         return this;
     }
 
+    /**
+     * Sets the value of the excludeExpression property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public ForcedType withExcludeExpression(String value) {
         setExcludeExpression(value);
         return this;
     }
 
+    /**
+     * Sets the value of the includeExpression property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public ForcedType withIncludeExpression(String value) {
         setIncludeExpression(value);
         return this;
     }
 
+    /**
+     * Sets the value of the expression property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public ForcedType withExpression(String value) {
         setExpression(value);
         return this;
     }
 
+    /**
+     * Sets the value of the expressions property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public ForcedType withExpressions(String value) {
         setExpressions(value);
         return this;
     }
 
+    /**
+     * Sets the value of the sql property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public ForcedType withSql(String value) {
         setSql(value);
         return this;
     }
 
+    /**
+     * Sets the value of the excludeTypes property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public ForcedType withExcludeTypes(String value) {
         setExcludeTypes(value);
         return this;
     }
 
+    /**
+     * Sets the value of the includeTypes property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public ForcedType withIncludeTypes(String value) {
         setIncludeTypes(value);
         return this;
     }
 
+    /**
+     * Sets the value of the types property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public ForcedType withTypes(String value) {
         setTypes(value);
         return this;
     }
 
+    /**
+     * Sets the value of the nullability property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Nullability }
+     *
+     */
     public ForcedType withNullability(Nullability value) {
         setNullability(value);
         return this;
     }
 
+    /**
+     * Sets the value of the objectType property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link ForcedTypeObjectType }
+     *
+     */
     public ForcedType withObjectType(ForcedTypeObjectType value) {
         setObjectType(value);
         return this;

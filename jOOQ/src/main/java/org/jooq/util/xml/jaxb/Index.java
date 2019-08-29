@@ -264,41 +264,105 @@ public class Index implements Serializable, XMLAppendable
         this.comment = value;
     }
 
+    /**
+     * Sets the value of the indexCatalog property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Index withIndexCatalog(String value) {
         setIndexCatalog(value);
         return this;
     }
 
+    /**
+     * Sets the value of the indexSchema property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Index withIndexSchema(String value) {
         setIndexSchema(value);
         return this;
     }
 
+    /**
+     * Sets the value of the indexName property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Index withIndexName(String value) {
         setIndexName(value);
         return this;
     }
 
+    /**
+     * Sets the value of the tableCatalog property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Index withTableCatalog(String value) {
         setTableCatalog(value);
         return this;
     }
 
+    /**
+     * Sets the value of the tableSchema property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Index withTableSchema(String value) {
         setTableSchema(value);
         return this;
     }
 
+    /**
+     * Sets the value of the tableName property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Index withTableName(String value) {
         setTableName(value);
         return this;
     }
 
+    /**
+     * Sets the value of the isUnique property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public Index withIsUnique(Boolean value) {
         setIsUnique(value);
         return this;
     }
 
+    /**
+     * Sets the value of the comment property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public Index withComment(String value) {
         setComment(value);
         return this;

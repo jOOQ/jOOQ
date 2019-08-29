@@ -155,26 +155,66 @@ public class MatchersFieldType implements Serializable, XMLAppendable
         this.fieldGetter = value;
     }
 
+    /**
+     * Sets the value of the expression property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public MatchersFieldType withExpression(String value) {
         setExpression(value);
         return this;
     }
 
+    /**
+     * Sets the value of the fieldIdentifier property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link MatcherRule }
+     *
+     */
     public MatchersFieldType withFieldIdentifier(MatcherRule value) {
         setFieldIdentifier(value);
         return this;
     }
 
+    /**
+     * Sets the value of the fieldMember property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link MatcherRule }
+     *
+     */
     public MatchersFieldType withFieldMember(MatcherRule value) {
         setFieldMember(value);
         return this;
     }
 
+    /**
+     * Sets the value of the fieldSetter property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link MatcherRule }
+     *
+     */
     public MatchersFieldType withFieldSetter(MatcherRule value) {
         setFieldSetter(value);
         return this;
     }
 
+    /**
+     * Sets the value of the fieldGetter property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link MatcherRule }
+     *
+     */
     public MatchersFieldType withFieldGetter(MatcherRule value) {
         setFieldGetter(value);
         return this;

@@ -75,6 +75,14 @@ public class RenderMapping
         this.schemata = schemata;
     }
 
+    /**
+     * Sets the value of the defaultSchema property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public RenderMapping withDefaultSchema(String value) {
         setDefaultSchema(value);
         return this;

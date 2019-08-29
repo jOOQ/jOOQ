@@ -160,26 +160,66 @@ public class CustomType implements Serializable, XMLAppendable
         this.binding = value;
     }
 
+    /**
+     * Sets the value of the name property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public CustomType withName(String value) {
         setName(value);
         return this;
     }
 
+    /**
+     * Sets the value of the type property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public CustomType withType(String value) {
         setType(value);
         return this;
     }
 
+    /**
+     * Sets the value of the converter property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public CustomType withConverter(String value) {
         setConverter(value);
         return this;
     }
 
+    /**
+     * Sets the value of the enumConverter property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public CustomType withEnumConverter(Boolean value) {
         setEnumConverter(value);
         return this;
     }
 
+    /**
+     * Sets the value of the binding property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public CustomType withBinding(String value) {
         setBinding(value);
         return this;

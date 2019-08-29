@@ -98,11 +98,27 @@ public class EnumType implements Serializable, XMLAppendable
         this.literals = value;
     }
 
+    /**
+     * Sets the value of the name property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public EnumType withName(String value) {
         setName(value);
         return this;
     }
 
+    /**
+     * Sets the value of the literals property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public EnumType withLiterals(String value) {
         setLiterals(value);
         return this;

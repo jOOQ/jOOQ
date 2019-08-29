@@ -266,41 +266,105 @@ public class TableConstraint implements Serializable, XMLAppendable
         this.comment = value;
     }
 
+    /**
+     * Sets the value of the constraintCatalog property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public TableConstraint withConstraintCatalog(String value) {
         setConstraintCatalog(value);
         return this;
     }
 
+    /**
+     * Sets the value of the constraintSchema property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public TableConstraint withConstraintSchema(String value) {
         setConstraintSchema(value);
         return this;
     }
 
+    /**
+     * Sets the value of the constraintName property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public TableConstraint withConstraintName(String value) {
         setConstraintName(value);
         return this;
     }
 
+    /**
+     * Sets the value of the constraintType property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link TableConstraintType }
+     *
+     */
     public TableConstraint withConstraintType(TableConstraintType value) {
         setConstraintType(value);
         return this;
     }
 
+    /**
+     * Sets the value of the tableCatalog property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public TableConstraint withTableCatalog(String value) {
         setTableCatalog(value);
         return this;
     }
 
+    /**
+     * Sets the value of the tableSchema property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public TableConstraint withTableSchema(String value) {
         setTableSchema(value);
         return this;
     }
 
+    /**
+     * Sets the value of the tableName property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public TableConstraint withTableName(String value) {
         setTableName(value);
         return this;
     }
 
+    /**
+     * Sets the value of the comment property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public TableConstraint withComment(String value) {
         setComment(value);
         return this;

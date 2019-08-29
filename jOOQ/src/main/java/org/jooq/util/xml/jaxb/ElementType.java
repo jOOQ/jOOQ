@@ -347,56 +347,144 @@ public class ElementType implements Serializable, XMLAppendable
         this.udtName = value;
     }
 
+    /**
+     * Sets the value of the objectCatalog property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public ElementType withObjectCatalog(String value) {
         setObjectCatalog(value);
         return this;
     }
 
+    /**
+     * Sets the value of the objectSchema property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public ElementType withObjectSchema(String value) {
         setObjectSchema(value);
         return this;
     }
 
+    /**
+     * Sets the value of the objectName property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public ElementType withObjectName(String value) {
         setObjectName(value);
         return this;
     }
 
+    /**
+     * Sets the value of the objectType property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public ElementType withObjectType(String value) {
         setObjectType(value);
         return this;
     }
 
+    /**
+     * Sets the value of the dataType property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public ElementType withDataType(String value) {
         setDataType(value);
         return this;
     }
 
+    /**
+     * Sets the value of the characterMaximumLength property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *
+     */
     public ElementType withCharacterMaximumLength(Integer value) {
         setCharacterMaximumLength(value);
         return this;
     }
 
+    /**
+     * Sets the value of the numericPrecision property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *
+     */
     public ElementType withNumericPrecision(Integer value) {
         setNumericPrecision(value);
         return this;
     }
 
+    /**
+     * Sets the value of the numericScale property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *
+     */
     public ElementType withNumericScale(Integer value) {
         setNumericScale(value);
         return this;
     }
 
+    /**
+     * Sets the value of the udtCatalog property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public ElementType withUdtCatalog(String value) {
         setUdtCatalog(value);
         return this;
     }
 
+    /**
+     * Sets the value of the udtSchema property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public ElementType withUdtSchema(String value) {
         setUdtSchema(value);
         return this;
     }
 
+    /**
+     * Sets the value of the udtName property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public ElementType withUdtName(String value) {
         setUdtName(value);
         return this;

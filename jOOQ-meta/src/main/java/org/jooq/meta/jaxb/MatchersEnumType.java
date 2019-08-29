@@ -106,16 +106,40 @@ public class MatchersEnumType implements Serializable, XMLAppendable
         this.enumImplements = value;
     }
 
+    /**
+     * Sets the value of the expression property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public MatchersEnumType withExpression(String value) {
         setExpression(value);
         return this;
     }
 
+    /**
+     * Sets the value of the enumClass property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link MatcherRule }
+     *
+     */
     public MatchersEnumType withEnumClass(MatcherRule value) {
         setEnumClass(value);
         return this;
     }
 
+    /**
+     * Sets the value of the enumImplements property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public MatchersEnumType withEnumImplements(String value) {
         setEnumImplements(value);
         return this;

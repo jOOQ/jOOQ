@@ -151,21 +151,53 @@ public class Configuration implements Serializable, XMLAppendable
         this.generator = value;
     }
 
+    /**
+     * Sets the value of the logging property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Logging }
+     *
+     */
     public Configuration withLogging(Logging value) {
         setLogging(value);
         return this;
     }
 
+    /**
+     * Sets the value of the onError property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link OnError }
+     *
+     */
     public Configuration withOnError(OnError value) {
         setOnError(value);
         return this;
     }
 
+    /**
+     * Sets the value of the jdbc property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Jdbc }
+     *
+     */
     public Configuration withJdbc(Jdbc value) {
         setJdbc(value);
         return this;
     }
 
+    /**
+     * Sets the value of the generator property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Generator }
+     *
+     */
     public Configuration withGenerator(Generator value) {
         setGenerator(value);
         return this;

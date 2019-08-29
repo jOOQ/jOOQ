@@ -97,11 +97,27 @@ public class EmbeddableField implements Serializable, XMLAppendable
         this.expression = value;
     }
 
+    /**
+     * Sets the value of the name property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public EmbeddableField withName(String value) {
         setName(value);
         return this;
     }
 
+    /**
+     * Sets the value of the expression property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public EmbeddableField withExpression(String value) {
         setExpression(value);
         return this;

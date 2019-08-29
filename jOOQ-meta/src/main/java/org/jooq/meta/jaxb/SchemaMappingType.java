@@ -109,16 +109,40 @@ public class SchemaMappingType implements Serializable, XMLAppendable
         this.outputSchemaToDefault = value;
     }
 
+    /**
+     * Sets the value of the inputSchema property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public SchemaMappingType withInputSchema(String value) {
         setInputSchema(value);
         return this;
     }
 
+    /**
+     * Sets the value of the outputSchema property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public SchemaMappingType withOutputSchema(String value) {
         setOutputSchema(value);
         return this;
     }
 
+    /**
+     * Sets the value of the outputSchemaToDefault property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
     public SchemaMappingType withOutputSchemaToDefault(Boolean value) {
         setOutputSchemaToDefault(value);
         return this;

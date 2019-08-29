@@ -210,31 +210,79 @@ public class ReferentialConstraint implements Serializable, XMLAppendable
         this.uniqueConstraintName = value;
     }
 
+    /**
+     * Sets the value of the constraintCatalog property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public ReferentialConstraint withConstraintCatalog(String value) {
         setConstraintCatalog(value);
         return this;
     }
 
+    /**
+     * Sets the value of the constraintSchema property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public ReferentialConstraint withConstraintSchema(String value) {
         setConstraintSchema(value);
         return this;
     }
 
+    /**
+     * Sets the value of the constraintName property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public ReferentialConstraint withConstraintName(String value) {
         setConstraintName(value);
         return this;
     }
 
+    /**
+     * Sets the value of the uniqueConstraintCatalog property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public ReferentialConstraint withUniqueConstraintCatalog(String value) {
         setUniqueConstraintCatalog(value);
         return this;
     }
 
+    /**
+     * Sets the value of the uniqueConstraintSchema property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public ReferentialConstraint withUniqueConstraintSchema(String value) {
         setUniqueConstraintSchema(value);
         return this;
     }
 
+    /**
+     * Sets the value of the uniqueConstraintName property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
     public ReferentialConstraint withUniqueConstraintName(String value) {
         setUniqueConstraintName(value);
         return this;

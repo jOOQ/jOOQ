@@ -13,25 +13,8 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 
 
 /**
- * <p>Java class for CustomType complex type.
+ * @deprecated Use ForcedType only
  *
- * <p>The following schema fragment specifies the expected content contained within this class.
- *
- * <pre>
- * &lt;complexType name="CustomType"&gt;
- *   &lt;complexContent&gt;
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
- *       &lt;all&gt;
- *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="type" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="converter" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="enumConverter" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="binding" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *       &lt;/all&gt;
- *     &lt;/restriction&gt;
- *   &lt;/complexContent&gt;
- * &lt;/complexType&gt;
- * </pre>
  *
  *
  */

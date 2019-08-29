@@ -882,9 +882,9 @@ for Oracle.]]></jxb:javadoc></jxb:property></appinfo></annotation>
   <complexType name="CustomType">
     <annotation>
       <appinfo>
-        <jxb:property>
+        <jxb:class>
           <jxb:javadoc><![CDATA[@deprecated Use ForcedType only]]></jxb:javadoc>
-        </jxb:property>
+        </jxb:class>
         <annox:annotate target="class">@java.lang.Deprecated</annox:annotate>
       </appinfo>
     </annotation>

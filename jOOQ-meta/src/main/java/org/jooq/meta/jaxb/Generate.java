@@ -297,6 +297,7 @@ public class Generate implements Serializable, XMLAppendable
      *     {@link Boolean }
      *
      */
+    @Deprecated
     public Boolean isInstanceFields() {
         return instanceFields;
     }
@@ -309,6 +310,7 @@ public class Generate implements Serializable, XMLAppendable
      *     {@link Boolean }
      *
      */
+    @Deprecated
     public void setInstanceFields(Boolean value) {
         this.instanceFields = value;
     }
@@ -1854,6 +1856,7 @@ public class Generate implements Serializable, XMLAppendable
      *     {@link Boolean }
      *
      */
+    @Deprecated
     public Generate withInstanceFields(Boolean value) {
         setInstanceFields(value);
         return this;

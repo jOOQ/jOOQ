@@ -16,22 +16,22 @@
     </jaxb:globalBindings>
 
     <!-- [#2928] Regular expressions -->
-    <jaxb:bindings schemaLocation="../../xsd/jooq-runtime-3.12.0.xsd" multiple="true" node="//xs:element[@name='inputExpression']">
+    <jaxb:bindings schemaLocation="../../xsd/jooq-runtime-3.13.0.xsd" multiple="true" node="//xs:element[@name='inputExpression']">
         <xjc:javaType name="java.util.regex.Pattern" adapter="org.jooq.conf.RegexAdapter"/>
     </jaxb:bindings>
 
     <!-- [#7153] Locales -->
-    <jaxb:bindings schemaLocation="../../xsd/jooq-runtime-3.12.0.xsd" multiple="true" node="//xs:element[@name='renderLocale']">
+    <jaxb:bindings schemaLocation="../../xsd/jooq-runtime-3.13.0.xsd" multiple="true" node="//xs:element[@name='renderLocale']">
         <xjc:javaType name="java.util.Locale" adapter="org.jooq.conf.LocaleAdapter"/>
     </jaxb:bindings>
 
     <!-- [#7337] SQLDialects -->
-    <jaxb:bindings schemaLocation="../../xsd/jooq-runtime-3.12.0.xsd" multiple="true" node="//xs:element[@name='parseDialect']">
+    <jaxb:bindings schemaLocation="../../xsd/jooq-runtime-3.13.0.xsd" multiple="true" node="//xs:element[@name='parseDialect']">
         <xjc:javaType name="org.jooq.SQLDialect" adapter="org.jooq.conf.SQLDialectAdapter"/>
     </jaxb:bindings>
 
     <!-- Annotate the following classes with @SuppressWarnings -->
-    <jaxb:bindings schemaLocation="../../xsd/jooq-runtime-3.12.0.xsd" multiple="true" node="//xs:complexType">
+    <jaxb:bindings schemaLocation="../../xsd/jooq-runtime-3.13.0.xsd" multiple="true" node="//xs:complexType">
         <inheritance:extends>org.jooq.conf.SettingsBase</inheritance:extends>
         <inheritance:implements>java.lang.Cloneable</inheritance:implements>
         <annox:annotate>

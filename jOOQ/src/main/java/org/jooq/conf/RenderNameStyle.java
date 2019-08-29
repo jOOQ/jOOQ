@@ -24,6 +24,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlType(name = "RenderNameStyle")
 @XmlEnum
+@Deprecated
 public enum RenderNameStyle {
 
     QUOTED,

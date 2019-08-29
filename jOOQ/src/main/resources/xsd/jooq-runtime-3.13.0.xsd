@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema
   xmlns="http://www.w3.org/2001/XMLSchema"
-  xmlns:jooq-runtime="http://www.jooq.org/xsd/jooq-runtime-3.12.0.xsd"
+  xmlns:jooq-runtime="http://www.jooq.org/xsd/jooq-runtime-3.13.0.xsd"
   xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
-  targetNamespace="http://www.jooq.org/xsd/jooq-runtime-3.12.0.xsd"
+  xmlns:annox="http://annox.dev.java.net"
+  targetNamespace="http://www.jooq.org/xsd/jooq-runtime-3.13.0.xsd"
   elementFormDefault="qualified"
+  jxb:extensionBindingPrefixes="annox"
   jxb:version="2.1">
 
   <element name="settings" type="jooq-runtime:Settings"/>
@@ -50,12 +52,20 @@ This setting does not affect any plain SQL usage.]]></jxb:javadoc></jxb:property
       </element>
 
       <element name="renderNameStyle" type="jooq-runtime:RenderNameStyle" minOccurs="0" maxOccurs="1" default="QUOTED">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether rendered schema, table, column names, etc should be quoted
+        <annotation>
+          <appinfo>
+            <jxb:property>
+              <jxb:javadoc><![CDATA[Whether rendered schema, table, column names, etc should be quoted
 in rendered SQL, or transformed in any other way.
 <p>
 This is set to "QUOTED" by default for backwards-compatibility.
 <p>
-@deprecated - 3.12.0 - [#5909] - Use {@link RenderQuotedNames} and {@link RenderNameCase} instead.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+@deprecated - 3.12.0 - [#5909] - Use {@link RenderQuotedNames} and {@link RenderNameCase} instead.]]></jxb:javadoc>
+            </jxb:property>
+            <annox:annotate target="getter">@java.lang.Deprecated</annox:annotate>
+            <annox:annotate target="setter">@java.lang.Deprecated</annox:annotate>
+          </appinfo>
+        </annotation>
       </element>
 
       <element name="renderNamedParamPrefix" type="string" minOccurs="0" maxOccurs="1" default=":">
@@ -75,9 +85,17 @@ providing a name to parameters, resulting in <code>:1</code> or <code>@1</code> 
       </element>
 
       <element name="renderKeywordStyle" type="jooq-runtime:RenderKeywordStyle" minOccurs="0" maxOccurs="1" default="AS_IS">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether the case of {@link org.jooq.Keyword} references should be modified in any way.
+        <annotation>
+          <appinfo>
+            <jxb:property>
+              <jxb:javadoc><![CDATA[Whether the case of {@link org.jooq.Keyword} references should be modified in any way.
 <p>
-@deprecated - 3.12.0 - [#5909] - Use {@link RenderQuotedNames} and {@link RenderNameCase} instead.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+@deprecated - 3.12.0 - [#5909] - Use {@link RenderQuotedNames} and {@link RenderNameCase} instead.]]></jxb:javadoc>
+            </jxb:property>
+            <annox:annotate target="getter">@java.lang.Deprecated</annox:annotate>
+            <annox:annotate target="setter">@java.lang.Deprecated</annox:annotate>
+          </appinfo>
+        </annotation>
       </element>
 
       <element name="renderLocale" type="string" minOccurs="0" maxOccurs="1">
@@ -550,6 +568,11 @@ Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided]]></jxb:javad
   </simpleType>
 
   <simpleType name="RenderNameStyle">
+    <annotation>
+      <appinfo>
+        <annox:annotateEnum>@java.lang.Deprecated</annox:annotateEnum>
+      </appinfo>
+    </annotation>
     <restriction base="string">
 
       <!-- Render object names quoted, as defined in the database. Use this
@@ -644,6 +667,11 @@ Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided]]></jxb:javad
   </simpleType>
 
   <simpleType name="RenderKeywordStyle">
+    <annotation>
+      <appinfo>
+        <annox:annotateEnum>@java.lang.Deprecated</annox:annotateEnum>
+      </appinfo>
+    </annotation>
     <restriction base="string">
 
       <!-- Keywords are rendered "as is", i.e. mostly in lower case. For instance:

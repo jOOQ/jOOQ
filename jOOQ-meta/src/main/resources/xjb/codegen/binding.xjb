@@ -19,7 +19,7 @@
 
 
     <!-- Annotate the following classes with @SuppressWarnings -->
-    <jaxb:bindings schemaLocation="../../xsd/jooq-codegen-3.12.0.xsd" multiple="true" node="//xs:complexType">
+    <jaxb:bindings schemaLocation="../../xsd/jooq-codegen-3.13.0.xsd" multiple="true" node="//xs:complexType">
         <annox:annotate>
         	<annox:annotate annox:class="java.lang.SuppressWarnings" value="all" />
         </annox:annotate>

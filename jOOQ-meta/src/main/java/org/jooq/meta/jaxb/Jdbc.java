@@ -107,6 +107,7 @@ public class Jdbc implements Serializable, XMLAppendable
      *     {@link String }
      *
      */
+    @Deprecated
     public String getSchema() {
         return schema;
     }
@@ -119,6 +120,7 @@ public class Jdbc implements Serializable, XMLAppendable
      *     {@link String }
      *
      */
+    @Deprecated
     public void setSchema(String value) {
         this.schema = value;
     }
@@ -264,6 +266,7 @@ public class Jdbc implements Serializable, XMLAppendable
      *     {@link String }
      *
      */
+    @Deprecated
     public Jdbc withSchema(String value) {
         setSchema(value);
         return this;

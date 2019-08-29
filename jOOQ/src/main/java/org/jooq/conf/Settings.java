@@ -347,6 +347,7 @@ public class Settings
      *     {@link RenderNameStyle }
      *
      */
+    @Deprecated
     public RenderNameStyle getRenderNameStyle() {
         return renderNameStyle;
     }
@@ -359,6 +360,7 @@ public class Settings
      *     {@link RenderNameStyle }
      *
      */
+    @Deprecated
     public void setRenderNameStyle(RenderNameStyle value) {
         this.renderNameStyle = value;
     }
@@ -429,6 +431,7 @@ public class Settings
      *     {@link RenderKeywordStyle }
      *
      */
+    @Deprecated
     public RenderKeywordStyle getRenderKeywordStyle() {
         return renderKeywordStyle;
     }
@@ -441,6 +444,7 @@ public class Settings
      *     {@link RenderKeywordStyle }
      *
      */
+    @Deprecated
     public void setRenderKeywordStyle(RenderKeywordStyle value) {
         this.renderKeywordStyle = value;
     }
@@ -1970,6 +1974,7 @@ public class Settings
      *     {@link RenderNameStyle }
      *
      */
+    @Deprecated
     public Settings withRenderNameStyle(RenderNameStyle value) {
         setRenderNameStyle(value);
         return this;
@@ -2009,6 +2014,7 @@ public class Settings
      *     {@link RenderKeywordStyle }
      *
      */
+    @Deprecated
     public Settings withRenderKeywordStyle(RenderKeywordStyle value) {
         setRenderKeywordStyle(value);
         return this;

@@ -963,6 +963,7 @@ public class Database implements Serializable, XMLAppendable
      *     {@link Boolean }
      *
      */
+    @Deprecated
     public Boolean isIgnoreProcedureReturnValues() {
         return ignoreProcedureReturnValues;
     }
@@ -975,6 +976,7 @@ public class Database implements Serializable, XMLAppendable
      *     {@link Boolean }
      *
      */
+    @Deprecated
     public void setIgnoreProcedureReturnValues(Boolean value) {
         this.ignoreProcedureReturnValues = value;
     }
@@ -1438,6 +1440,7 @@ public class Database implements Serializable, XMLAppendable
         this.embeddables = embeddables;
     }
 
+    @Deprecated
     public List<CustomType> getCustomTypes() {
         if (customTypes == null) {
             customTypes = new ArrayList<CustomType>();
@@ -1445,10 +1448,12 @@ public class Database implements Serializable, XMLAppendable
         return customTypes;
     }
 
+    @Deprecated
     public void setCustomTypes(List<CustomType> customTypes) {
         this.customTypes = customTypes;
     }
 
+    @Deprecated
     public List<EnumType> getEnumTypes() {
         if (enumTypes == null) {
             enumTypes = new ArrayList<EnumType>();
@@ -1456,6 +1461,7 @@ public class Database implements Serializable, XMLAppendable
         return enumTypes;
     }
 
+    @Deprecated
     public void setEnumTypes(List<EnumType> enumTypes) {
         this.enumTypes = enumTypes;
     }
@@ -1859,6 +1865,7 @@ public class Database implements Serializable, XMLAppendable
      *     {@link Boolean }
      *
      */
+    @Deprecated
     public Database withIgnoreProcedureReturnValues(Boolean value) {
         setIgnoreProcedureReturnValues(value);
         return this;
@@ -2159,6 +2166,7 @@ public class Database implements Serializable, XMLAppendable
         return this;
     }
 
+    @Deprecated
     public Database withCustomTypes(List<CustomType> customTypes) {
         setCustomTypes(customTypes);
         return this;
@@ -2180,6 +2188,7 @@ public class Database implements Serializable, XMLAppendable
         return this;
     }
 
+    @Deprecated
     public Database withEnumTypes(List<EnumType> enumTypes) {
         setEnumTypes(enumTypes);
         return this;

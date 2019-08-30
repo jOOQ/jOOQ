@@ -12,7 +12,6 @@
         <mkdir dir="${dir.release}/${dir.version}/jOOQ-lib" />
         <mkdir dir="${dir.release}/${dir.version}/jOOQ-pom"/>
         <mkdir dir="${dir.release}/${dir.version}/jOOQ-pom/jooq"/>
-        <mkdir dir="${dir.release}/${dir.version}/jOOQ-pom/jooq-extensions"/>
         <mkdir dir="${dir.release}/${dir.version}/jOOQ-pom/jooq-meta"/>
         <mkdir dir="${dir.release}/${dir.version}/jOOQ-pom/jooq-meta-extensions"/>
         <mkdir dir="${dir.release}/${dir.version}/jOOQ-pom/jooq-codegen"/>
@@ -27,7 +26,6 @@
         <mkdir dir="${dir.release}/${dir.version}/jOOQ-pom/jooq-scala_2.12"/>
 
         <copy todir="${dir.release}/${dir.version}/jOOQ-lib" file="${dir.workspace}/jOOQ/target/jooq-${version-prefix}.jar"/>
-        <copy todir="${dir.release}/${dir.version}/jOOQ-lib" file="${dir.workspace}/jOOQ-extensions/target/jooq-extensions-${version-prefix}.jar"/>
         <copy todir="${dir.release}/${dir.version}/jOOQ-lib" file="${dir.workspace}/jOOQ-meta/target/jooq-meta-${version-prefix}.jar"/>
         <copy todir="${dir.release}/${dir.version}/jOOQ-lib" file="${dir.workspace}/jOOQ-meta-extensions/target/jooq-meta-extensions-${version-prefix}.jar"/>
         <copy todir="${dir.release}/${dir.version}/jOOQ-lib" file="${dir.workspace}/jOOQ-codegen/target/jooq-codegen-${version-prefix}.jar"/>
@@ -42,7 +40,6 @@
         <copy todir="${dir.release}/${dir.version}/jOOQ-lib" file="${dir.workspace}/jOOQ-scala_2.12/target/jooq-scala_2.12-${version-prefix}.jar"/>
 
         <copy todir="${dir.release}/${dir.version}/jOOQ-javadoc" file="${dir.workspace}/jOOQ/target/jooq-${version-prefix}-javadoc.jar"/>
-        <copy todir="${dir.release}/${dir.version}/jOOQ-javadoc" file="${dir.workspace}/jOOQ-extensions/target/jooq-extensions-${version-prefix}-javadoc.jar"/>
         <copy todir="${dir.release}/${dir.version}/jOOQ-javadoc" file="${dir.workspace}/jOOQ-meta/target/jooq-meta-${version-prefix}-javadoc.jar"/>
         <copy todir="${dir.release}/${dir.version}/jOOQ-javadoc" file="${dir.workspace}/jOOQ-meta-extensions/target/jooq-meta-extensions-${version-prefix}-javadoc.jar"/>
         <copy todir="${dir.release}/${dir.version}/jOOQ-javadoc" file="${dir.workspace}/jOOQ-codegen/target/jooq-codegen-${version-prefix}-javadoc.jar"/>
@@ -58,7 +55,6 @@
 
         <copy todir="${dir.release}/${dir.version}/jOOQ-pom"                      file="${dir.workspace}/pom.xml"/>
         <copy todir="${dir.release}/${dir.version}/jOOQ-pom/jooq"                 file="${dir.workspace}/jOOQ/pom.xml"/>
-        <copy todir="${dir.release}/${dir.version}/jOOQ-pom/jooq-extensions"      file="${dir.workspace}/jOOQ-extensions/pom.xml"/>
         <copy todir="${dir.release}/${dir.version}/jOOQ-pom/jooq-meta"            file="${dir.workspace}/jOOQ-meta/pom.xml"/>
         <copy todir="${dir.release}/${dir.version}/jOOQ-pom/jooq-meta-extensions" file="${dir.workspace}/jOOQ-meta-extensions/pom.xml"/>
         <copy todir="${dir.release}/${dir.version}/jOOQ-pom/jooq-codegen"         file="${dir.workspace}/jOOQ-codegen/pom.xml"/>
@@ -78,7 +74,6 @@
         <mkdir dir="${dir.release}/${dir.version}/jOOQ-src" />
 
         <copy todir="${dir.release}/${dir.version}/jOOQ-src" file="${dir.workspace}/jOOQ/target/jooq-${version-prefix}-sources.jar"/>
-        <copy todir="${dir.release}/${dir.version}/jOOQ-src" file="${dir.workspace}/jOOQ-extensions/target/jooq-extensions-${version-prefix}-sources.jar"/>
         <copy todir="${dir.release}/${dir.version}/jOOQ-src" file="${dir.workspace}/jOOQ-meta/target/jooq-meta-${version-prefix}-sources.jar"/>
         <copy todir="${dir.release}/${dir.version}/jOOQ-src" file="${dir.workspace}/jOOQ-meta-extensions/target/jooq-meta-extensions-${version-prefix}-sources.jar"/>
         <copy todir="${dir.release}/${dir.version}/jOOQ-src" file="${dir.workspace}/jOOQ-codegen/target/jooq-codegen-${version-prefix}-sources.jar"/>
@@ -102,7 +97,6 @@
                 <exclude name="jOOQ-examples/Sakila/**"/>
 
                 <include name="jOOQ/**"/>
-                <include name="jOOQ-extensions/**"/>
                 <include name="jOOQ-codegen/**"/>
                 <include name="jOOQ-codegen-maven/**"/>
                 <include name="jOOQ-examples/**"/>

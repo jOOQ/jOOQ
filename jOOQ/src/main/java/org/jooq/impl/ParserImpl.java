@@ -8713,12 +8713,17 @@ final class ParserImpl implements Parser {
                 else
                     return count();
 
+            boolean parens = parseIf(ctx, '(');
+
             QualifiedAsterisk asterisk = parseQualifiedAsteriskIf(ctx);
             List<Field<?>> fields = (asterisk == null)
                 ? distinct
                     ? parseFields(ctx)
                     : Collections.<Field<?>>singletonList(parseField(ctx))
                 : null;
+
+            if (parens)
+                parse(ctx, ')');
             parse(ctx, ')');
 
             if (distinct)

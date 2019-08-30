@@ -95,13 +95,9 @@ final class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart imp
 
         ctx.visit(quantifier.toKeyword());
 
+        boolean extraParentheses = false;
 
-
-
-
-
-
-
+        ctx.sql(extraParentheses ? " ((" : " (");
 
         ctx.subquery(true)
            .formatIndentStart()
@@ -111,9 +107,7 @@ final class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart imp
            .formatNewLine()
            .subquery(false);
 
-
-
-
+        ctx.sql(extraParentheses ? "))" : ")");
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })

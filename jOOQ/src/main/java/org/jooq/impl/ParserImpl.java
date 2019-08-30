@@ -57,6 +57,7 @@ import static org.jooq.impl.DSL.arrayAgg;
 import static org.jooq.impl.DSL.arrayAggDistinct;
 import static org.jooq.impl.DSL.ascii;
 import static org.jooq.impl.DSL.asin;
+import static org.jooq.impl.DSL.asterisk;
 import static org.jooq.impl.DSL.atan;
 import static org.jooq.impl.DSL.atan2;
 import static org.jooq.impl.DSL.avg;
@@ -8708,7 +8709,7 @@ final class ParserImpl implements Parser {
 
             if (parseIf(ctx, '*') && parse(ctx, ')'))
                 if (distinct)
-                    return countDistinct();
+                    return countDistinct(asterisk());
                 else
                     return count();
 

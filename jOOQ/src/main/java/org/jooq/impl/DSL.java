@@ -17863,7 +17863,7 @@ public class DSL {
      * {@link SQLDialect#POSTGRES} supports this as
      * <code>COUNT(DISTINCT(expr1, expr2))</code>.
      */
-    @Support({ HSQLDB, MYSQL, POSTGRES })
+    @Support({ H2, HSQLDB, MYSQL, POSTGRES })
     public static AggregateFunction<Integer> countDistinct(Field<?>... fields) {
         return new org.jooq.impl.Function<>("count", true, SQLDataType.INTEGER, nullSafe(fields));
     }

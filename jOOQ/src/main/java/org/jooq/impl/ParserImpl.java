@@ -4918,6 +4918,10 @@ final class ParserImpl implements Parser {
         return parseTuple(ctx, degree, false);
     }
 
+    private static final RowN parseTupleIf(ParserContext ctx, Integer degree) {
+        return parseTupleIf(ctx, degree, false);
+    }
+
     private static final RowN parseTuple(ParserContext ctx, Integer degree, boolean allowDoubleParens) {
         parse(ctx, '(');
         List<? extends FieldOrRow> fieldsOrRows;
@@ -4943,6 +4947,13 @@ final class ParserImpl implements Parser {
 
         parse(ctx, ')');
         return row;
+    }
+
+    private static final RowN parseTupleIf(ParserContext ctx, Integer degree, boolean allowDoubleParens) {
+        if (peek(ctx, '('))
+            return parseTuple(ctx, degree, allowDoubleParens);
+
+        return null;
     }
 
     private static final Table<?> parseJoinedTable(ParserContext ctx) {
@@ -5147,6 +5158,10 @@ final class ParserImpl implements Parser {
         return parseRow(ctx, null);
     }
 
+    private static final RowN parseRowIf(ParserContext ctx) {
+        return parseRowIf(ctx, null);
+    }
+
     private static final List<RowN> parseRows(ParserContext ctx, Integer degree) {
         List<RowN> result = new ArrayList<>();
 
@@ -5161,6 +5176,12 @@ final class ParserImpl implements Parser {
     private static final RowN parseRow(ParserContext ctx, Integer degree) {
         parseFunctionNameIf(ctx, "ROW");
         RowN row = parseTuple(ctx, degree);
+        return row;
+    }
+
+    private static final RowN parseRowIf(ParserContext ctx, Integer degree) {
+        parseFunctionNameIf(ctx, "ROW");
+        RowN row = parseTupleIf(ctx, degree);
         return row;
     }
 
@@ -8713,30 +8734,29 @@ final class ParserImpl implements Parser {
                 else
                     return count();
 
-            boolean parens = parseIf(ctx, '(');
+            Field<?>[] fields = null;
+            QualifiedAsterisk asterisk = null;
+            RowN row = parseRowIf(ctx);
+            if (row != null)
+                fields = row.fields();
+            else if ((asterisk = parseQualifiedAsteriskIf(ctx)) == null)
+                fields = distinct
+                        ? parseFields(ctx).toArray(EMPTY_FIELD)
+                        : new Field[] { parseField(ctx) };
 
-            QualifiedAsterisk asterisk = parseQualifiedAsteriskIf(ctx);
-            List<Field<?>> fields = (asterisk == null)
-                ? distinct
-                    ? parseFields(ctx)
-                    : Collections.<Field<?>>singletonList(parseField(ctx))
-                : null;
-
-            if (parens)
-                parse(ctx, ')');
             parse(ctx, ')');
 
             if (distinct)
                 if (fields == null)
                     return countDistinct(asterisk);
-                else if (fields.size() > 0)
-                    return countDistinct(fields.toArray(EMPTY_FIELD));
+                else if (fields.length > 0)
+                    return countDistinct(fields);
                 else
-                    return countDistinct(fields.get(0));
+                    return countDistinct(fields[0]);
             else if (fields == null)
                 return count(asterisk);
             else
-                return count(fields.get(0));
+                return count(fields[0]);
         }
 
         return null;

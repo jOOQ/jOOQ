@@ -59,13 +59,6 @@ import org.jooq.UDT;
 import org.jooq.UDTRecord;
 import org.jooq.UniqueKey;
 import org.jooq.exception.DataAccessException;
-import org.jooq.impl.AbstractMeta;
-import org.jooq.impl.CatalogImpl;
-import org.jooq.impl.DSL;
-import org.jooq.impl.SchemaImpl;
-import org.jooq.impl.SequenceImpl;
-import org.jooq.impl.TableImpl;
-import org.jooq.impl.UDTImpl;
 
 /**
  * An implementation of {@code Meta} which can be used to create fully
@@ -325,7 +318,11 @@ final class DetachedMeta extends AbstractMeta {
         }
 
         static DetachedUDT<?> copyOf(UDT<?> udt, Schema owner) {
-            return new DetachedUDT<>(udt.getName(), owner, udt.getPackage(), udt.isSynthetic()).copy(udt);
+            Package package_ = null;
+
+
+
+            return new DetachedUDT<>(udt.getName(), owner, package_, udt.isSynthetic()).copy(udt);
         }
     }
 }

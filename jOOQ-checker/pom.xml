@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.jooq</groupId>
         <artifactId>jooq-parent</artifactId>
-        <version>3.12.0</version>
+        <version>3.12.1</version>
     </parent>
 
     <artifactId>jooq-checker</artifactId>
@@ -39,26 +39,6 @@
                             <Automatic-Module-Name>org.jooq.checker</Automatic-Module-Name>
                         </manifestEntries>
                     </archive>
-                </configuration>
-            </plugin>
-
-            <!-- [#9099] Workaround to prevent module path issues when building the Javadoc for this module -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.1.0</version>
-                <inherited>true</inherited>
-                <executions>
-                    <execution>
-                        <id>bundle-sources</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <skip>true</skip>
                 </configuration>
             </plugin>
         </plugins>

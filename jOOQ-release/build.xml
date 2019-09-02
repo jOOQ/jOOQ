@@ -3,7 +3,7 @@
     <property name="dir.workspace" value="${basedir}/.." />
     <property name="dir.target" value="${basedir}/target" />
     <property name="dir.release" value="${basedir}/release" />
-    <property name="version-prefix" value="3.12.0"/>
+    <property name="version-prefix" value="3.12.1"/>
 
     <!-- Run a full mvn clean package install deploy first before this -->
     <target name="copy-lib-javadoc">
@@ -45,9 +45,7 @@
         <copy todir="${dir.release}/${dir.version}/jOOQ-javadoc" file="${dir.workspace}/jOOQ-codegen/target/jooq-codegen-${version-prefix}-javadoc.jar"/>
         <copy todir="${dir.release}/${dir.version}/jOOQ-javadoc" file="${dir.workspace}/jOOQ-codegen-maven/target/jooq-codegen-maven-${version-prefix}-javadoc.jar"/>
 
-    	<!-- [#9099] Workaround to prevent module path issues when building the Javadoc for this module
         <copy todir="${dir.release}/${dir.version}/jOOQ-javadoc" file="${dir.workspace}/jOOQ-checker/target/jooq-checker-${version-prefix}-javadoc.jar"/>
-        -->
 
 
 

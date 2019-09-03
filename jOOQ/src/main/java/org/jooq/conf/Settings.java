@@ -257,21 +257,14 @@ public class Settings
      * Configure render mapping for runtime schema / table rewriting in
      * generated SQL.
      *
-     * @return
-     *     possible object is
-     *     {@link RenderMapping }
-     *
      */
     public RenderMapping getRenderMapping() {
         return renderMapping;
     }
 
     /**
-     * Sets the value of the renderMapping property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link RenderMapping }
+     * Configure render mapping for runtime schema / table rewriting in
+     * generated SQL.
      *
      */
     public void setRenderMapping(RenderMapping value) {
@@ -285,21 +278,17 @@ public class Settings
      * <p>
      * This setting does not affect any plain SQL usage.
      *
-     * @return
-     *     possible object is
-     *     {@link RenderQuotedNames }
-     *
      */
     public RenderQuotedNames getRenderQuotedNames() {
         return renderQuotedNames;
     }
 
     /**
-     * Sets the value of the renderQuotedNames property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link RenderQuotedNames }
+     * Whether rendered schema, table, column names, etc should be quoted.
+     * <p>
+     * This only affects names created through {@link org.jooq.impl.DSL#name(String)} methods (including those that are implicitly created through this method), not {@link org.jooq.impl.DSL#quotedName(String)} or {@link org.jooq.impl.DSL#unquotedName(String)}, whose behaviour cannot be overridden.
+     * <p>
+     * This setting does not affect any plain SQL usage.
      *
      */
     public void setRenderQuotedNames(RenderQuotedNames value) {
@@ -313,21 +302,17 @@ public class Settings
      * <p>
      * This setting does not affect any plain SQL usage.
      *
-     * @return
-     *     possible object is
-     *     {@link RenderNameCase }
-     *
      */
     public RenderNameCase getRenderNameCase() {
         return renderNameCase;
     }
 
     /**
-     * Sets the value of the renderNameCase property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link RenderNameCase }
+     * Whether the case of {@link org.jooq.Name} references should be modified in any way.
+     * <p>
+     * Names are modified irrespective of the {@link #getRenderQuotedNames()} setting.
+     * <p>
+     * This setting does not affect any plain SQL usage.
      *
      */
     public void setRenderNameCase(RenderNameCase value) {
@@ -342,10 +327,6 @@ public class Settings
      * <p>
      * @deprecated - 3.12.0 - [#5909] - Use {@link RenderQuotedNames} and {@link RenderNameCase} instead.
      *
-     * @return
-     *     possible object is
-     *     {@link RenderNameStyle }
-     *
      */
     @Deprecated
     public RenderNameStyle getRenderNameStyle() {
@@ -353,11 +334,12 @@ public class Settings
     }
 
     /**
-     * Sets the value of the renderNameStyle property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link RenderNameStyle }
+     * Whether rendered schema, table, column names, etc should be quoted
+     * in rendered SQL, or transformed in any other way.
+     * <p>
+     * This is set to "QUOTED" by default for backwards-compatibility.
+     * <p>
+     * @deprecated - 3.12.0 - [#5909] - Use {@link RenderQuotedNames} and {@link RenderNameCase} instead.
      *
      */
     @Deprecated
@@ -376,21 +358,21 @@ public class Settings
      * "Named indexed" parameters can be obtained in the same way by specifingy {@code ParamType#NAMED} and not
      * providing a name to parameters, resulting in <code>:1</code> or <code>@1</code> or <code>$1</code>, etc.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getRenderNamedParamPrefix() {
         return renderNamedParamPrefix;
     }
 
     /**
-     * Sets the value of the renderNamedParamPrefix property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * The prefix to use for named parameters.
+     * <p>
+     * Named parameter syntax defaults to <code>:name</code> (such as supported by Oracle, JPA, Spring), but
+     * vendor specific parameters may look differently. This flag can be used to determine the prefix to be
+     * used by named parameters, such as <code>@</code> for SQL Server's <code>@name</code> or <code>$</code>
+     * for PostgreSQL's <code>$name</code>.
+     * <p>
+     * "Named indexed" parameters can be obtained in the same way by specifingy {@code ParamType#NAMED} and not
+     * providing a name to parameters, resulting in <code>:1</code> or <code>@1</code> or <code>$1</code>, etc.
      *
      */
     public void setRenderNamedParamPrefix(String value) {
@@ -400,21 +382,13 @@ public class Settings
     /**
      * Whether the case of {@link org.jooq.Keyword} references should be modified in any way.
      *
-     * @return
-     *     possible object is
-     *     {@link RenderKeywordCase }
-     *
      */
     public RenderKeywordCase getRenderKeywordCase() {
         return renderKeywordCase;
     }
 
     /**
-     * Sets the value of the renderKeywordCase property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link RenderKeywordCase }
+     * Whether the case of {@link org.jooq.Keyword} references should be modified in any way.
      *
      */
     public void setRenderKeywordCase(RenderKeywordCase value) {
@@ -426,10 +400,6 @@ public class Settings
      * <p>
      * @deprecated - 3.12.0 - [#5909] - Use {@link RenderQuotedNames} and {@link RenderNameCase} instead.
      *
-     * @return
-     *     possible object is
-     *     {@link RenderKeywordStyle }
-     *
      */
     @Deprecated
     public RenderKeywordStyle getRenderKeywordStyle() {
@@ -437,11 +407,9 @@ public class Settings
     }
 
     /**
-     * Sets the value of the renderKeywordStyle property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link RenderKeywordStyle }
+     * Whether the case of {@link org.jooq.Keyword} references should be modified in any way.
+     * <p>
+     * @deprecated - 3.12.0 - [#5909] - Use {@link RenderQuotedNames} and {@link RenderNameCase} instead.
      *
      */
     @Deprecated
@@ -452,21 +420,13 @@ public class Settings
     /**
      * The Locale to be used with any locale dependent logic (as e.g. transforming names to lower / uppper case).
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public Locale getRenderLocale() {
         return renderLocale;
     }
 
     /**
-     * Sets the value of the renderLocale property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * The Locale to be used with any locale dependent logic (as e.g. transforming names to lower / uppper case).
      *
      */
     public void setRenderLocale(Locale value) {
@@ -500,21 +460,13 @@ public class Settings
     /**
      * All sorts of formatting flags / settings.
      *
-     * @return
-     *     possible object is
-     *     {@link RenderFormatting }
-     *
      */
     public RenderFormatting getRenderFormatting() {
         return renderFormatting;
     }
 
     /**
-     * Sets the value of the renderFormatting property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link RenderFormatting }
+     * All sorts of formatting flags / settings.
      *
      */
     public void setRenderFormatting(RenderFormatting value) {
@@ -684,21 +636,13 @@ public class Settings
     /**
      * Whether string literals should be escaped with backslash.
      *
-     * @return
-     *     possible object is
-     *     {@link BackslashEscaping }
-     *
      */
     public BackslashEscaping getBackslashEscaping() {
         return backslashEscaping;
     }
 
     /**
-     * Sets the value of the backslashEscaping property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link BackslashEscaping }
+     * Whether string literals should be escaped with backslash.
      *
      */
     public void setBackslashEscaping(BackslashEscaping value) {
@@ -718,21 +662,23 @@ public class Settings
      * This value is overridden by statementType == STATIC_STATEMENT, in
      * case of which, this defaults to INLINED
      *
-     * @return
-     *     possible object is
-     *     {@link ParamType }
-     *
      */
     public ParamType getParamType() {
         return paramType;
     }
 
     /**
-     * Sets the value of the paramType property.
+     * Specify how bind variables are to be rendered.
+     * <p>
+     * Possibilities include:
      *
-     * @param value
-     *     allowed object is
-     *     {@link ParamType }
+     * - question marks
+     * - named parameters
+     * - named or inlined parameters
+     * - inlined parameters
+     *
+     * This value is overridden by statementType == STATIC_STATEMENT, in
+     * case of which, this defaults to INLINED
      *
      */
     public void setParamType(ParamType value) {
@@ -742,21 +688,13 @@ public class Settings
     /**
      * Whether rendered bind values should be cast to their respective type.
      *
-     * @return
-     *     possible object is
-     *     {@link ParamCastMode }
-     *
      */
     public ParamCastMode getParamCastMode() {
         return paramCastMode;
     }
 
     /**
-     * Sets the value of the paramCastMode property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link ParamCastMode }
+     * Whether rendered bind values should be cast to their respective type.
      *
      */
     public void setParamCastMode(ParamCastMode value) {
@@ -766,21 +704,13 @@ public class Settings
     /**
      * The type of statement that is to be executed.
      *
-     * @return
-     *     possible object is
-     *     {@link StatementType }
-     *
      */
     public StatementType getStatementType() {
         return statementType;
     }
 
     /**
-     * Sets the value of the statementType property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link StatementType }
+     * The type of statement that is to be executed.
      *
      */
     public void setStatementType(StatementType value) {
@@ -798,21 +728,21 @@ public class Settings
      * <li>{@link org.jooq.SQLDialect#SQLSERVER} : 2100</li>
      * </ul>
      *
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *
      */
     public Integer getInlineThreshold() {
         return inlineThreshold;
     }
 
     /**
-     * Sets the value of the inlineThreshold property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
+     * The maximum number of allowed bind variables before inlining all values where <code>0</code> uses the dialect defaults: <ul>
+     * <li>{@link org.jooq.SQLDialect#ACCESS} : 768</li>
+     * <li>{@link org.jooq.SQLDialect#ASE} : 2000</li>
+     * <li>{@link org.jooq.SQLDialect#INGRES} : 1024</li>
+     * <li>{@link org.jooq.SQLDialect#ORACLE} : 32767</li>
+     * <li>{@link org.jooq.SQLDialect#POSTGRES} : 32767</li>
+     * <li>{@link org.jooq.SQLDialect#SQLITE} : 999</li>
+     * <li>{@link org.jooq.SQLDialect#SQLSERVER} : 2100</li>
+     * </ul>
      *
      */
     public void setInlineThreshold(Integer value) {
@@ -822,21 +752,13 @@ public class Settings
     /**
      * The order of invocation for [action]start() methods registered {@link org.jooq.TransactionListener}s.
      *
-     * @return
-     *     possible object is
-     *     {@link InvocationOrder }
-     *
      */
     public InvocationOrder getTransactionListenerStartInvocationOrder() {
         return transactionListenerStartInvocationOrder;
     }
 
     /**
-     * Sets the value of the transactionListenerStartInvocationOrder property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link InvocationOrder }
+     * The order of invocation for [action]start() methods registered {@link org.jooq.TransactionListener}s.
      *
      */
     public void setTransactionListenerStartInvocationOrder(InvocationOrder value) {
@@ -846,21 +768,13 @@ public class Settings
     /**
      * The order of invocation for [action]end() methods registered {@link org.jooq.TransactionListener}s.
      *
-     * @return
-     *     possible object is
-     *     {@link InvocationOrder }
-     *
      */
     public InvocationOrder getTransactionListenerEndInvocationOrder() {
         return transactionListenerEndInvocationOrder;
     }
 
     /**
-     * Sets the value of the transactionListenerEndInvocationOrder property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link InvocationOrder }
+     * The order of invocation for [action]end() methods registered {@link org.jooq.TransactionListener}s.
      *
      */
     public void setTransactionListenerEndInvocationOrder(InvocationOrder value) {
@@ -870,21 +784,13 @@ public class Settings
     /**
      * The order of invocation for [action]start() methods registered {@link org.jooq.VisitListener}s.
      *
-     * @return
-     *     possible object is
-     *     {@link InvocationOrder }
-     *
      */
     public InvocationOrder getVisitListenerStartInvocationOrder() {
         return visitListenerStartInvocationOrder;
     }
 
     /**
-     * Sets the value of the visitListenerStartInvocationOrder property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link InvocationOrder }
+     * The order of invocation for [action]start() methods registered {@link org.jooq.VisitListener}s.
      *
      */
     public void setVisitListenerStartInvocationOrder(InvocationOrder value) {
@@ -894,21 +800,13 @@ public class Settings
     /**
      * The order of invocation for [action]end() methods registered {@link org.jooq.VisitListener}s.
      *
-     * @return
-     *     possible object is
-     *     {@link InvocationOrder }
-     *
      */
     public InvocationOrder getVisitListenerEndInvocationOrder() {
         return visitListenerEndInvocationOrder;
     }
 
     /**
-     * Sets the value of the visitListenerEndInvocationOrder property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link InvocationOrder }
+     * The order of invocation for [action]end() methods registered {@link org.jooq.VisitListener}s.
      *
      */
     public void setVisitListenerEndInvocationOrder(InvocationOrder value) {
@@ -918,21 +816,13 @@ public class Settings
     /**
      * The order of invocation for [action]start() methods registered {@link org.jooq.RecordListener}s.
      *
-     * @return
-     *     possible object is
-     *     {@link InvocationOrder }
-     *
      */
     public InvocationOrder getRecordListenerStartInvocationOrder() {
         return recordListenerStartInvocationOrder;
     }
 
     /**
-     * Sets the value of the recordListenerStartInvocationOrder property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link InvocationOrder }
+     * The order of invocation for [action]start() methods registered {@link org.jooq.RecordListener}s.
      *
      */
     public void setRecordListenerStartInvocationOrder(InvocationOrder value) {
@@ -942,21 +832,13 @@ public class Settings
     /**
      * The order of invocation for [action]end() methods registered {@link org.jooq.RecordListener}s.
      *
-     * @return
-     *     possible object is
-     *     {@link InvocationOrder }
-     *
      */
     public InvocationOrder getRecordListenerEndInvocationOrder() {
         return recordListenerEndInvocationOrder;
     }
 
     /**
-     * Sets the value of the recordListenerEndInvocationOrder property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link InvocationOrder }
+     * The order of invocation for [action]end() methods registered {@link org.jooq.RecordListener}s.
      *
      */
     public void setRecordListenerEndInvocationOrder(InvocationOrder value) {
@@ -966,21 +848,13 @@ public class Settings
     /**
      * The order of invocation for [action]start() methods registered {@link org.jooq.ExecuteListener}s.
      *
-     * @return
-     *     possible object is
-     *     {@link InvocationOrder }
-     *
      */
     public InvocationOrder getExecuteListenerStartInvocationOrder() {
         return executeListenerStartInvocationOrder;
     }
 
     /**
-     * Sets the value of the executeListenerStartInvocationOrder property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link InvocationOrder }
+     * The order of invocation for [action]start() methods registered {@link org.jooq.ExecuteListener}s.
      *
      */
     public void setExecuteListenerStartInvocationOrder(InvocationOrder value) {
@@ -990,21 +864,13 @@ public class Settings
     /**
      * The order of invocation for [action]end() methods registered {@link org.jooq.ExecuteListener}s.
      *
-     * @return
-     *     possible object is
-     *     {@link InvocationOrder }
-     *
      */
     public InvocationOrder getExecuteListenerEndInvocationOrder() {
         return executeListenerEndInvocationOrder;
     }
 
     /**
-     * Sets the value of the executeListenerEndInvocationOrder property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link InvocationOrder }
+     * The order of invocation for [action]end() methods registered {@link org.jooq.ExecuteListener}s.
      *
      */
     public void setExecuteListenerEndInvocationOrder(InvocationOrder value) {
@@ -1236,21 +1102,13 @@ public class Settings
     /**
      * A strategy defining how exceptions from the database / JDBC driver should be propagated
      *
-     * @return
-     *     possible object is
-     *     {@link ThrowExceptions }
-     *
      */
     public ThrowExceptions getThrowExceptions() {
         return throwExceptions;
     }
 
     /**
-     * Sets the value of the throwExceptions property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link ThrowExceptions }
+     * A strategy defining how exceptions from the database / JDBC driver should be propagated
      *
      */
     public void setThrowExceptions(ThrowExceptions value) {
@@ -1284,21 +1142,13 @@ public class Settings
     /**
      * Whether server output should be fetched after each query execution.
      *
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *
      */
     public Integer getFetchServerOutputSize() {
         return fetchServerOutputSize;
     }
 
     /**
-     * Sets the value of the fetchServerOutputSize property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
+     * Whether server output should be fetched after each query execution.
      *
      */
     public void setFetchServerOutputSize(Integer value) {
@@ -1458,21 +1308,14 @@ public class Settings
      * The default JDBC poolable property that should be applied to all
      * jOOQ queries, for which no specific poolable flag was specified.
      *
-     * @return
-     *     possible object is
-     *     {@link QueryPoolable }
-     *
      */
     public QueryPoolable getQueryPoolable() {
         return queryPoolable;
     }
 
     /**
-     * Sets the value of the queryPoolable property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link QueryPoolable }
+     * The default JDBC poolable property that should be applied to all
+     * jOOQ queries, for which no specific poolable flag was specified.
      *
      */
     public void setQueryPoolable(QueryPoolable value) {
@@ -1483,21 +1326,14 @@ public class Settings
      * The default JDBC queryTimeout property that should be applied to all
      * jOOQ queries, for which no specific queryTimeout was specified.
      *
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *
      */
     public Integer getQueryTimeout() {
         return queryTimeout;
     }
 
     /**
-     * Sets the value of the queryTimeout property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
+     * The default JDBC queryTimeout property that should be applied to all
+     * jOOQ queries, for which no specific queryTimeout was specified.
      *
      */
     public void setQueryTimeout(Integer value) {
@@ -1508,21 +1344,14 @@ public class Settings
      * The default JDBC maxRows property that should be applied to all
      * jOOQ queries, for which no specific maxRows value was specified.
      *
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *
      */
     public Integer getMaxRows() {
         return maxRows;
     }
 
     /**
-     * Sets the value of the maxRows property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
+     * The default JDBC maxRows property that should be applied to all
+     * jOOQ queries, for which no specific maxRows value was specified.
      *
      */
     public void setMaxRows(Integer value) {
@@ -1533,21 +1362,14 @@ public class Settings
      * The default JDBC fetchSize property that should be applied to all
      * jOOQ queries, for which no specific fetchSize value was specified.
      *
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *
      */
     public Integer getFetchSize() {
         return fetchSize;
     }
 
     /**
-     * Sets the value of the fetchSize property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
+     * The default JDBC fetchSize property that should be applied to all
+     * jOOQ queries, for which no specific fetchSize value was specified.
      *
      */
     public void setFetchSize(Integer value) {
@@ -1605,21 +1427,13 @@ public class Settings
     /**
      * [#7095] The base to use to calculate the powers of when applying in list padding.
      *
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *
      */
     public Integer getInListPadBase() {
         return inListPadBase;
     }
 
     /**
-     * Sets the value of the inListPadBase property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
+     * [#7095] The base to use to calculate the powers of when applying in list padding.
      *
      */
     public void setInListPadBase(Integer value) {
@@ -1629,21 +1443,13 @@ public class Settings
     /**
      * [#5826] The delimiter character to be used to delimit statements in batches.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getDelimiter() {
         return delimiter;
     }
 
     /**
-     * Sets the value of the delimiter property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * [#5826] The delimiter character to be used to delimit statements in batches.
      *
      */
     public void setDelimiter(String value) {
@@ -1677,21 +1483,13 @@ public class Settings
     /**
      * [#6771] Specifies whether UPDATE statements are allowed to be executed lacking a WHERE clause. This has no effect on rendering the statements SQL string.
      *
-     * @return
-     *     possible object is
-     *     {@link ExecuteWithoutWhere }
-     *
      */
     public ExecuteWithoutWhere getExecuteUpdateWithoutWhere() {
         return executeUpdateWithoutWhere;
     }
 
     /**
-     * Sets the value of the executeUpdateWithoutWhere property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link ExecuteWithoutWhere }
+     * [#6771] Specifies whether UPDATE statements are allowed to be executed lacking a WHERE clause. This has no effect on rendering the statements SQL string.
      *
      */
     public void setExecuteUpdateWithoutWhere(ExecuteWithoutWhere value) {
@@ -1701,21 +1499,13 @@ public class Settings
     /**
      * [#6771] Specifies whether DELETE statements are allowed to be executed lacking a WHERE clause. This has no effect on rendering the statements SQL string.
      *
-     * @return
-     *     possible object is
-     *     {@link ExecuteWithoutWhere }
-     *
      */
     public ExecuteWithoutWhere getExecuteDeleteWithoutWhere() {
         return executeDeleteWithoutWhere;
     }
 
     /**
-     * Sets the value of the executeDeleteWithoutWhere property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link ExecuteWithoutWhere }
+     * [#6771] Specifies whether DELETE statements are allowed to be executed lacking a WHERE clause. This has no effect on rendering the statements SQL string.
      *
      */
     public void setExecuteDeleteWithoutWhere(ExecuteWithoutWhere value) {
@@ -1725,21 +1515,13 @@ public class Settings
     /**
      * [#7337] The input dialect that should be chosen to disambiguate ambiguous SQL syntax.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public SQLDialect getParseDialect() {
         return parseDialect;
     }
 
     /**
-     * Sets the value of the parseDialect property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * [#7337] The input dialect that should be chosen to disambiguate ambiguous SQL syntax.
      *
      */
     public void setParseDialect(SQLDialect value) {
@@ -1749,21 +1531,13 @@ public class Settings
     /**
      * [#7163] Whether the parser should perform meta lookups in the Configuration's MetaProvider.
      *
-     * @return
-     *     possible object is
-     *     {@link ParseWithMetaLookups }
-     *
      */
     public ParseWithMetaLookups getParseWithMetaLookups() {
         return parseWithMetaLookups;
     }
 
     /**
-     * Sets the value of the parseWithMetaLookups property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link ParseWithMetaLookups }
+     * [#7163] Whether the parser should perform meta lookups in the Configuration's MetaProvider.
      *
      */
     public void setParseWithMetaLookups(ParseWithMetaLookups value) {
@@ -1773,21 +1547,13 @@ public class Settings
     /**
      * [#5917] Whether the parser should accept unsupported (but known) syntax.
      *
-     * @return
-     *     possible object is
-     *     {@link ParseUnsupportedSyntax }
-     *
      */
     public ParseUnsupportedSyntax getParseUnsupportedSyntax() {
         return parseUnsupportedSyntax;
     }
 
     /**
-     * Sets the value of the parseUnsupportedSyntax property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link ParseUnsupportedSyntax }
+     * [#5917] Whether the parser should accept unsupported (but known) syntax.
      *
      */
     public void setParseUnsupportedSyntax(ParseUnsupportedSyntax value) {
@@ -1797,21 +1563,13 @@ public class Settings
     /**
      * [#7344] Whether the parser should accept unknown functions.
      *
-     * @return
-     *     possible object is
-     *     {@link ParseUnknownFunctions }
-     *
      */
     public ParseUnknownFunctions getParseUnknownFunctions() {
         return parseUnknownFunctions;
     }
 
     /**
-     * Sets the value of the parseUnknownFunctions property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link ParseUnknownFunctions }
+     * [#7344] Whether the parser should accept unknown functions.
      *
      */
     public void setParseUnknownFunctions(ParseUnknownFunctions value) {
@@ -1845,21 +1603,13 @@ public class Settings
     /**
      * [#8325] The ignore comment start token
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getParseIgnoreCommentStart() {
         return parseIgnoreCommentStart;
     }
 
     /**
-     * Sets the value of the parseIgnoreCommentStart property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * [#8325] The ignore comment start token
      *
      */
     public void setParseIgnoreCommentStart(String value) {
@@ -1869,21 +1619,13 @@ public class Settings
     /**
      * [#8325] The ignore comment stop token
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getParseIgnoreCommentStop() {
         return parseIgnoreCommentStop;
     }
 
     /**
-     * Sets the value of the parseIgnoreCommentStop property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * [#8325] The ignore comment stop token
      *
      */
     public void setParseIgnoreCommentStop(String value) {
@@ -1901,38 +1643,19 @@ public class Settings
         this.parseSearchPath = parseSearchPath;
     }
 
-    /**
-     * Sets the value of the renderCatalog property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *
-     */
     public Settings withRenderCatalog(Boolean value) {
         setRenderCatalog(value);
         return this;
     }
 
-    /**
-     * Sets the value of the renderSchema property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *
-     */
     public Settings withRenderSchema(Boolean value) {
         setRenderSchema(value);
         return this;
     }
 
     /**
-     * Sets the value of the renderMapping property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link RenderMapping }
+     * Configure render mapping for runtime schema / table rewriting in
+     * generated SQL.
      *
      */
     public Settings withRenderMapping(RenderMapping value) {
@@ -1941,11 +1664,11 @@ public class Settings
     }
 
     /**
-     * Sets the value of the renderQuotedNames property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link RenderQuotedNames }
+     * Whether rendered schema, table, column names, etc should be quoted.
+     * <p>
+     * This only affects names created through {@link org.jooq.impl.DSL#name(String)} methods (including those that are implicitly created through this method), not {@link org.jooq.impl.DSL#quotedName(String)} or {@link org.jooq.impl.DSL#unquotedName(String)}, whose behaviour cannot be overridden.
+     * <p>
+     * This setting does not affect any plain SQL usage.
      *
      */
     public Settings withRenderQuotedNames(RenderQuotedNames value) {
@@ -1954,11 +1677,11 @@ public class Settings
     }
 
     /**
-     * Sets the value of the renderNameCase property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link RenderNameCase }
+     * Whether the case of {@link org.jooq.Name} references should be modified in any way.
+     * <p>
+     * Names are modified irrespective of the {@link #getRenderQuotedNames()} setting.
+     * <p>
+     * This setting does not affect any plain SQL usage.
      *
      */
     public Settings withRenderNameCase(RenderNameCase value) {
@@ -1967,11 +1690,12 @@ public class Settings
     }
 
     /**
-     * Sets the value of the renderNameStyle property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link RenderNameStyle }
+     * Whether rendered schema, table, column names, etc should be quoted
+     * in rendered SQL, or transformed in any other way.
+     * <p>
+     * This is set to "QUOTED" by default for backwards-compatibility.
+     * <p>
+     * @deprecated - 3.12.0 - [#5909] - Use {@link RenderQuotedNames} and {@link RenderNameCase} instead.
      *
      */
     @Deprecated
@@ -1981,11 +1705,15 @@ public class Settings
     }
 
     /**
-     * Sets the value of the renderNamedParamPrefix property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * The prefix to use for named parameters.
+     * <p>
+     * Named parameter syntax defaults to <code>:name</code> (such as supported by Oracle, JPA, Spring), but
+     * vendor specific parameters may look differently. This flag can be used to determine the prefix to be
+     * used by named parameters, such as <code>@</code> for SQL Server's <code>@name</code> or <code>$</code>
+     * for PostgreSQL's <code>$name</code>.
+     * <p>
+     * "Named indexed" parameters can be obtained in the same way by specifingy {@code ParamType#NAMED} and not
+     * providing a name to parameters, resulting in <code>:1</code> or <code>@1</code> or <code>$1</code>, etc.
      *
      */
     public Settings withRenderNamedParamPrefix(String value) {
@@ -1994,11 +1722,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the renderKeywordCase property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link RenderKeywordCase }
+     * Whether the case of {@link org.jooq.Keyword} references should be modified in any way.
      *
      */
     public Settings withRenderKeywordCase(RenderKeywordCase value) {
@@ -2007,11 +1731,9 @@ public class Settings
     }
 
     /**
-     * Sets the value of the renderKeywordStyle property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link RenderKeywordStyle }
+     * Whether the case of {@link org.jooq.Keyword} references should be modified in any way.
+     * <p>
+     * @deprecated - 3.12.0 - [#5909] - Use {@link RenderQuotedNames} and {@link RenderNameCase} instead.
      *
      */
     @Deprecated
@@ -2021,11 +1743,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the renderLocale property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * The Locale to be used with any locale dependent logic (as e.g. transforming names to lower / uppper case).
      *
      */
     public Settings withRenderLocale(Locale value) {
@@ -2033,25 +1751,13 @@ public class Settings
         return this;
     }
 
-    /**
-     * Sets the value of the renderFormatted property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *
-     */
     public Settings withRenderFormatted(Boolean value) {
         setRenderFormatted(value);
         return this;
     }
 
     /**
-     * Sets the value of the renderFormatting property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link RenderFormatting }
+     * All sorts of formatting flags / settings.
      *
      */
     public Settings withRenderFormatting(RenderFormatting value) {
@@ -2059,77 +1765,33 @@ public class Settings
         return this;
     }
 
-    /**
-     * Sets the value of the renderScalarSubqueriesForStoredFunctions property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *
-     */
     public Settings withRenderScalarSubqueriesForStoredFunctions(Boolean value) {
         setRenderScalarSubqueriesForStoredFunctions(value);
         return this;
     }
 
-    /**
-     * Sets the value of the renderOrderByRownumberForEmulatedPagination property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *
-     */
     public Settings withRenderOrderByRownumberForEmulatedPagination(Boolean value) {
         setRenderOrderByRownumberForEmulatedPagination(value);
         return this;
     }
 
-    /**
-     * Sets the value of the renderOutputForSQLServerReturningClause property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *
-     */
     public Settings withRenderOutputForSQLServerReturningClause(Boolean value) {
         setRenderOutputForSQLServerReturningClause(value);
         return this;
     }
 
-    /**
-     * Sets the value of the fetchTriggerValuesAfterSQLServerOutput property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *
-     */
     public Settings withFetchTriggerValuesAfterSQLServerOutput(Boolean value) {
         setFetchTriggerValuesAfterSQLServerOutput(value);
         return this;
     }
 
-    /**
-     * Sets the value of the transformTableListsToAnsiJoin property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *
-     */
     public Settings withTransformTableListsToAnsiJoin(Boolean value) {
         setTransformTableListsToAnsiJoin(value);
         return this;
     }
 
     /**
-     * Sets the value of the backslashEscaping property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link BackslashEscaping }
+     * Whether string literals should be escaped with backslash.
      *
      */
     public Settings withBackslashEscaping(BackslashEscaping value) {
@@ -2138,11 +1800,17 @@ public class Settings
     }
 
     /**
-     * Sets the value of the paramType property.
+     * Specify how bind variables are to be rendered.
+     * <p>
+     * Possibilities include:
      *
-     * @param value
-     *     allowed object is
-     *     {@link ParamType }
+     * - question marks
+     * - named parameters
+     * - named or inlined parameters
+     * - inlined parameters
+     *
+     * This value is overridden by statementType == STATIC_STATEMENT, in
+     * case of which, this defaults to INLINED
      *
      */
     public Settings withParamType(ParamType value) {
@@ -2151,11 +1819,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the paramCastMode property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link ParamCastMode }
+     * Whether rendered bind values should be cast to their respective type.
      *
      */
     public Settings withParamCastMode(ParamCastMode value) {
@@ -2164,11 +1828,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the statementType property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link StatementType }
+     * The type of statement that is to be executed.
      *
      */
     public Settings withStatementType(StatementType value) {
@@ -2177,11 +1837,15 @@ public class Settings
     }
 
     /**
-     * Sets the value of the inlineThreshold property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
+     * The maximum number of allowed bind variables before inlining all values where <code>0</code> uses the dialect defaults: <ul>
+     * <li>{@link org.jooq.SQLDialect#ACCESS} : 768</li>
+     * <li>{@link org.jooq.SQLDialect#ASE} : 2000</li>
+     * <li>{@link org.jooq.SQLDialect#INGRES} : 1024</li>
+     * <li>{@link org.jooq.SQLDialect#ORACLE} : 32767</li>
+     * <li>{@link org.jooq.SQLDialect#POSTGRES} : 32767</li>
+     * <li>{@link org.jooq.SQLDialect#SQLITE} : 999</li>
+     * <li>{@link org.jooq.SQLDialect#SQLSERVER} : 2100</li>
+     * </ul>
      *
      */
     public Settings withInlineThreshold(Integer value) {
@@ -2190,11 +1854,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transactionListenerStartInvocationOrder property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link InvocationOrder }
+     * The order of invocation for [action]start() methods registered {@link org.jooq.TransactionListener}s.
      *
      */
     public Settings withTransactionListenerStartInvocationOrder(InvocationOrder value) {
@@ -2203,11 +1863,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transactionListenerEndInvocationOrder property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link InvocationOrder }
+     * The order of invocation for [action]end() methods registered {@link org.jooq.TransactionListener}s.
      *
      */
     public Settings withTransactionListenerEndInvocationOrder(InvocationOrder value) {
@@ -2216,11 +1872,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the visitListenerStartInvocationOrder property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link InvocationOrder }
+     * The order of invocation for [action]start() methods registered {@link org.jooq.VisitListener}s.
      *
      */
     public Settings withVisitListenerStartInvocationOrder(InvocationOrder value) {
@@ -2229,11 +1881,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the visitListenerEndInvocationOrder property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link InvocationOrder }
+     * The order of invocation for [action]end() methods registered {@link org.jooq.VisitListener}s.
      *
      */
     public Settings withVisitListenerEndInvocationOrder(InvocationOrder value) {
@@ -2242,11 +1890,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the recordListenerStartInvocationOrder property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link InvocationOrder }
+     * The order of invocation for [action]start() methods registered {@link org.jooq.RecordListener}s.
      *
      */
     public Settings withRecordListenerStartInvocationOrder(InvocationOrder value) {
@@ -2255,11 +1899,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the recordListenerEndInvocationOrder property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link InvocationOrder }
+     * The order of invocation for [action]end() methods registered {@link org.jooq.RecordListener}s.
      *
      */
     public Settings withRecordListenerEndInvocationOrder(InvocationOrder value) {
@@ -2268,11 +1908,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the executeListenerStartInvocationOrder property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link InvocationOrder }
+     * The order of invocation for [action]start() methods registered {@link org.jooq.ExecuteListener}s.
      *
      */
     public Settings withExecuteListenerStartInvocationOrder(InvocationOrder value) {
@@ -2281,11 +1917,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the executeListenerEndInvocationOrder property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link InvocationOrder }
+     * The order of invocation for [action]end() methods registered {@link org.jooq.ExecuteListener}s.
      *
      */
     public Settings withExecuteListenerEndInvocationOrder(InvocationOrder value) {
@@ -2293,129 +1925,53 @@ public class Settings
         return this;
     }
 
-    /**
-     * Sets the value of the executeLogging property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *
-     */
     public Settings withExecuteLogging(Boolean value) {
         setExecuteLogging(value);
         return this;
     }
 
-    /**
-     * Sets the value of the updateRecordVersion property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *
-     */
     public Settings withUpdateRecordVersion(Boolean value) {
         setUpdateRecordVersion(value);
         return this;
     }
 
-    /**
-     * Sets the value of the updateRecordTimestamp property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *
-     */
     public Settings withUpdateRecordTimestamp(Boolean value) {
         setUpdateRecordTimestamp(value);
         return this;
     }
 
-    /**
-     * Sets the value of the executeWithOptimisticLocking property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *
-     */
     public Settings withExecuteWithOptimisticLocking(Boolean value) {
         setExecuteWithOptimisticLocking(value);
         return this;
     }
 
-    /**
-     * Sets the value of the executeWithOptimisticLockingExcludeUnversioned property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *
-     */
     public Settings withExecuteWithOptimisticLockingExcludeUnversioned(Boolean value) {
         setExecuteWithOptimisticLockingExcludeUnversioned(value);
         return this;
     }
 
-    /**
-     * Sets the value of the attachRecords property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *
-     */
     public Settings withAttachRecords(Boolean value) {
         setAttachRecords(value);
         return this;
     }
 
-    /**
-     * Sets the value of the updatablePrimaryKeys property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *
-     */
     public Settings withUpdatablePrimaryKeys(Boolean value) {
         setUpdatablePrimaryKeys(value);
         return this;
     }
 
-    /**
-     * Sets the value of the reflectionCaching property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *
-     */
     public Settings withReflectionCaching(Boolean value) {
         setReflectionCaching(value);
         return this;
     }
 
-    /**
-     * Sets the value of the cacheRecordMappers property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *
-     */
     public Settings withCacheRecordMappers(Boolean value) {
         setCacheRecordMappers(value);
         return this;
     }
 
     /**
-     * Sets the value of the throwExceptions property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link ThrowExceptions }
+     * A strategy defining how exceptions from the database / JDBC driver should be propagated
      *
      */
     public Settings withThrowExceptions(ThrowExceptions value) {
@@ -2423,25 +1979,13 @@ public class Settings
         return this;
     }
 
-    /**
-     * Sets the value of the fetchWarnings property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *
-     */
     public Settings withFetchWarnings(Boolean value) {
         setFetchWarnings(value);
         return this;
     }
 
     /**
-     * Sets the value of the fetchServerOutputSize property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
+     * Whether server output should be fetched after each query execution.
      *
      */
     public Settings withFetchServerOutputSize(Integer value) {
@@ -2449,90 +1993,39 @@ public class Settings
         return this;
     }
 
-    /**
-     * Sets the value of the returnIdentityOnUpdatableRecord property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *
-     */
     public Settings withReturnIdentityOnUpdatableRecord(Boolean value) {
         setReturnIdentityOnUpdatableRecord(value);
         return this;
     }
 
-    /**
-     * Sets the value of the returnAllOnUpdatableRecord property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *
-     */
     public Settings withReturnAllOnUpdatableRecord(Boolean value) {
         setReturnAllOnUpdatableRecord(value);
         return this;
     }
 
-    /**
-     * Sets the value of the returnRecordToPojo property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *
-     */
     public Settings withReturnRecordToPojo(Boolean value) {
         setReturnRecordToPojo(value);
         return this;
     }
 
-    /**
-     * Sets the value of the mapJPAAnnotations property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *
-     */
     public Settings withMapJPAAnnotations(Boolean value) {
         setMapJPAAnnotations(value);
         return this;
     }
 
-    /**
-     * Sets the value of the mapConstructorParameterNames property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *
-     */
     public Settings withMapConstructorParameterNames(Boolean value) {
         setMapConstructorParameterNames(value);
         return this;
     }
 
-    /**
-     * Sets the value of the mapConstructorParameterNamesInKotlin property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *
-     */
     public Settings withMapConstructorParameterNamesInKotlin(Boolean value) {
         setMapConstructorParameterNamesInKotlin(value);
         return this;
     }
 
     /**
-     * Sets the value of the queryPoolable property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link QueryPoolable }
+     * The default JDBC poolable property that should be applied to all
+     * jOOQ queries, for which no specific poolable flag was specified.
      *
      */
     public Settings withQueryPoolable(QueryPoolable value) {
@@ -2541,11 +2034,8 @@ public class Settings
     }
 
     /**
-     * Sets the value of the queryTimeout property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
+     * The default JDBC queryTimeout property that should be applied to all
+     * jOOQ queries, for which no specific queryTimeout was specified.
      *
      */
     public Settings withQueryTimeout(Integer value) {
@@ -2554,11 +2044,8 @@ public class Settings
     }
 
     /**
-     * Sets the value of the maxRows property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
+     * The default JDBC maxRows property that should be applied to all
+     * jOOQ queries, for which no specific maxRows value was specified.
      *
      */
     public Settings withMaxRows(Integer value) {
@@ -2567,11 +2054,8 @@ public class Settings
     }
 
     /**
-     * Sets the value of the fetchSize property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
+     * The default JDBC fetchSize property that should be applied to all
+     * jOOQ queries, for which no specific fetchSize value was specified.
      *
      */
     public Settings withFetchSize(Integer value) {
@@ -2579,38 +2063,18 @@ public class Settings
         return this;
     }
 
-    /**
-     * Sets the value of the debugInfoOnStackTrace property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *
-     */
     public Settings withDebugInfoOnStackTrace(Boolean value) {
         setDebugInfoOnStackTrace(value);
         return this;
     }
 
-    /**
-     * Sets the value of the inListPadding property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *
-     */
     public Settings withInListPadding(Boolean value) {
         setInListPadding(value);
         return this;
     }
 
     /**
-     * Sets the value of the inListPadBase property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
+     * [#7095] The base to use to calculate the powers of when applying in list padding.
      *
      */
     public Settings withInListPadBase(Integer value) {
@@ -2619,11 +2083,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the delimiter property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * [#5826] The delimiter character to be used to delimit statements in batches.
      *
      */
     public Settings withDelimiter(String value) {
@@ -2631,25 +2091,13 @@ public class Settings
         return this;
     }
 
-    /**
-     * Sets the value of the emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *
-     */
     public Settings withEmulateOnDuplicateKeyUpdateOnPrimaryKeyOnly(Boolean value) {
         setEmulateOnDuplicateKeyUpdateOnPrimaryKeyOnly(value);
         return this;
     }
 
     /**
-     * Sets the value of the executeUpdateWithoutWhere property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link ExecuteWithoutWhere }
+     * [#6771] Specifies whether UPDATE statements are allowed to be executed lacking a WHERE clause. This has no effect on rendering the statements SQL string.
      *
      */
     public Settings withExecuteUpdateWithoutWhere(ExecuteWithoutWhere value) {
@@ -2658,11 +2106,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the executeDeleteWithoutWhere property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link ExecuteWithoutWhere }
+     * [#6771] Specifies whether DELETE statements are allowed to be executed lacking a WHERE clause. This has no effect on rendering the statements SQL string.
      *
      */
     public Settings withExecuteDeleteWithoutWhere(ExecuteWithoutWhere value) {
@@ -2671,11 +2115,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the parseDialect property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * [#7337] The input dialect that should be chosen to disambiguate ambiguous SQL syntax.
      *
      */
     public Settings withParseDialect(SQLDialect value) {
@@ -2684,11 +2124,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the parseWithMetaLookups property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link ParseWithMetaLookups }
+     * [#7163] Whether the parser should perform meta lookups in the Configuration's MetaProvider.
      *
      */
     public Settings withParseWithMetaLookups(ParseWithMetaLookups value) {
@@ -2697,11 +2133,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the parseUnsupportedSyntax property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link ParseUnsupportedSyntax }
+     * [#5917] Whether the parser should accept unsupported (but known) syntax.
      *
      */
     public Settings withParseUnsupportedSyntax(ParseUnsupportedSyntax value) {
@@ -2710,11 +2142,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the parseUnknownFunctions property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link ParseUnknownFunctions }
+     * [#7344] Whether the parser should accept unknown functions.
      *
      */
     public Settings withParseUnknownFunctions(ParseUnknownFunctions value) {
@@ -2722,25 +2150,13 @@ public class Settings
         return this;
     }
 
-    /**
-     * Sets the value of the parseIgnoreComments property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *
-     */
     public Settings withParseIgnoreComments(Boolean value) {
         setParseIgnoreComments(value);
         return this;
     }
 
     /**
-     * Sets the value of the parseIgnoreCommentStart property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * [#8325] The ignore comment start token
      *
      */
     public Settings withParseIgnoreCommentStart(String value) {
@@ -2749,11 +2165,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the parseIgnoreCommentStop property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * [#8325] The ignore comment stop token
      *
      */
     public Settings withParseIgnoreCommentStop(String value) {

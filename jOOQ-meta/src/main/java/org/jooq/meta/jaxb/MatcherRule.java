@@ -53,21 +53,13 @@ public class MatcherRule implements Serializable, XMLAppendable
     /**
      * A pre-defined transformation type that transforms this rule's output into a specific format.
      *
-     * @return
-     *     possible object is
-     *     {@link MatcherTransformType }
-     *
      */
     public MatcherTransformType getTransform() {
         return transform;
     }
 
     /**
-     * Sets the value of the transform property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link MatcherTransformType }
+     * A pre-defined transformation type that transforms this rule's output into a specific format.
      *
      */
     public void setTransform(MatcherTransformType value) {
@@ -77,21 +69,13 @@ public class MatcherRule implements Serializable, XMLAppendable
     /**
      * A replacement expression that transforms the matched expression in a new value.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getExpression() {
         return expression;
     }
 
     /**
-     * Sets the value of the expression property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * A replacement expression that transforms the matched expression in a new value.
      *
      */
     public void setExpression(String value) {
@@ -99,11 +83,7 @@ public class MatcherRule implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the transform property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link MatcherTransformType }
+     * A pre-defined transformation type that transforms this rule's output into a specific format.
      *
      */
     public MatcherRule withTransform(MatcherTransformType value) {
@@ -112,11 +92,7 @@ public class MatcherRule implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the expression property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * A replacement expression that transforms the matched expression in a new value.
      *
      */
     public MatcherRule withExpression(String value) {

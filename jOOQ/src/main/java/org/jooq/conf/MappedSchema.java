@@ -49,21 +49,15 @@ public class MappedSchema
      * <p>
      * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getInput() {
         return input;
     }
 
     /**
-     * Sets the value of the input property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * The input schema name as defined in {@link org.jooq.Schema#getName()}
+     * <p>
+     * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided
      *
      */
     public void setInput(String value) {
@@ -74,21 +68,14 @@ public class MappedSchema
      * A regular expression matching the input schema name as defined in {@link org.jooq.Schema#getName()}
      * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public Pattern getInputExpression() {
         return inputExpression;
     }
 
     /**
-     * Sets the value of the inputExpression property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * A regular expression matching the input schema name as defined in {@link org.jooq.Schema#getName()}
+     * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided
      *
      */
     public void setInputExpression(Pattern value) {
@@ -103,21 +90,18 @@ public class MappedSchema
      * <li>When &lt;inputExpression/&gt; is provided, &lt;output/&gt; is a replacement expression</li>
      * </ul>
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getOutput() {
         return output;
     }
 
     /**
-     * Sets the value of the output property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * The output schema as it will be rendered in SQL.
+     * <ul>
+     * <li>When this is omitted, you can still apply table mapping.</li>
+     * <li>When &lt;input/&gt; is provided, &lt;output/&gt; is a constant value.</li>
+     * <li>When &lt;inputExpression/&gt; is provided, &lt;output/&gt; is a replacement expression</li>
+     * </ul>
      *
      */
     public void setOutput(String value) {
@@ -136,11 +120,9 @@ public class MappedSchema
     }
 
     /**
-     * Sets the value of the input property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * The input schema name as defined in {@link org.jooq.Schema#getName()}
+     * <p>
+     * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided
      *
      */
     public MappedSchema withInput(String value) {
@@ -149,11 +131,8 @@ public class MappedSchema
     }
 
     /**
-     * Sets the value of the inputExpression property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * A regular expression matching the input schema name as defined in {@link org.jooq.Schema#getName()}
+     * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided
      *
      */
     public MappedSchema withInputExpression(Pattern value) {
@@ -162,11 +141,12 @@ public class MappedSchema
     }
 
     /**
-     * Sets the value of the output property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * The output schema as it will be rendered in SQL.
+     * <ul>
+     * <li>When this is omitted, you can still apply table mapping.</li>
+     * <li>When &lt;input/&gt; is provided, &lt;output/&gt; is a constant value.</li>
+     * <li>When &lt;inputExpression/&gt; is provided, &lt;output/&gt; is a replacement expression</li>
+     * </ul>
      *
      */
     public MappedSchema withOutput(String value) {

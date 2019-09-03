@@ -37,75 +37,27 @@ public class Property implements Serializable, XMLAppendable
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String value;
 
-    /**
-     * Gets the value of the key property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getKey() {
         return key;
     }
 
-    /**
-     * Sets the value of the key property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setKey(String value) {
         this.key = value;
     }
 
-    /**
-     * Gets the value of the value property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getValue() {
         return value;
     }
 
-    /**
-     * Sets the value of the value property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setValue(String value) {
         this.value = value;
     }
 
-    /**
-     * Sets the value of the key property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public Property withKey(String value) {
         setKey(value);
         return this;
     }
 
-    /**
-     * Sets the value of the value property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public Property withValue(String value) {
         setValue(value);
         return this;

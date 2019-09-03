@@ -52,21 +52,13 @@ public class MatchersTableType implements Serializable, XMLAppendable
     /**
      * This table matcher applies to all unqualified or qualified table names matched by this expression. If left empty, this matcher applies to all tables.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getExpression() {
         return expression;
     }
 
     /**
-     * Sets the value of the expression property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * This table matcher applies to all unqualified or qualified table names matched by this expression. If left empty, this matcher applies to all tables.
      *
      */
     public void setExpression(String value) {
@@ -76,21 +68,13 @@ public class MatchersTableType implements Serializable, XMLAppendable
     /**
      * This rule influences the naming of the generated {@link org.jooq.Table} object.
      *
-     * @return
-     *     possible object is
-     *     {@link MatcherRule }
-     *
      */
     public MatcherRule getTableClass() {
         return tableClass;
     }
 
     /**
-     * Sets the value of the tableClass property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link MatcherRule }
+     * This rule influences the naming of the generated {@link org.jooq.Table} object.
      *
      */
     public void setTableClass(MatcherRule value) {
@@ -100,21 +84,13 @@ public class MatchersTableType implements Serializable, XMLAppendable
     /**
      * This rule influences the naming of the generated {@link org.jooq.Table} identifier.
      *
-     * @return
-     *     possible object is
-     *     {@link MatcherRule }
-     *
      */
     public MatcherRule getTableIdentifier() {
         return tableIdentifier;
     }
 
     /**
-     * Sets the value of the tableIdentifier property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link MatcherRule }
+     * This rule influences the naming of the generated {@link org.jooq.Table} identifier.
      *
      */
     public void setTableIdentifier(MatcherRule value) {
@@ -124,21 +100,13 @@ public class MatchersTableType implements Serializable, XMLAppendable
     /**
      * This string provides additional interfaces that a generated {@link org.jooq.Table} should implement.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getTableImplements() {
         return tableImplements;
     }
 
     /**
-     * Sets the value of the tableImplements property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * This string provides additional interfaces that a generated {@link org.jooq.Table} should implement.
      *
      */
     public void setTableImplements(String value) {
@@ -148,21 +116,13 @@ public class MatchersTableType implements Serializable, XMLAppendable
     /**
      * This rule influences the naming of the generated {@link org.jooq.TableRecord} object.
      *
-     * @return
-     *     possible object is
-     *     {@link MatcherRule }
-     *
      */
     public MatcherRule getRecordClass() {
         return recordClass;
     }
 
     /**
-     * Sets the value of the recordClass property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link MatcherRule }
+     * This rule influences the naming of the generated {@link org.jooq.TableRecord} object.
      *
      */
     public void setRecordClass(MatcherRule value) {
@@ -172,21 +132,13 @@ public class MatchersTableType implements Serializable, XMLAppendable
     /**
      * This string provides additional interfaces that a generated {@link org.jooq.TableRecord} should implement.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getRecordImplements() {
         return recordImplements;
     }
 
     /**
-     * Sets the value of the recordImplements property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * This string provides additional interfaces that a generated {@link org.jooq.TableRecord} should implement.
      *
      */
     public void setRecordImplements(String value) {
@@ -196,21 +148,13 @@ public class MatchersTableType implements Serializable, XMLAppendable
     /**
      * This rule influences the naming of the generated interface implemented by the {@link org.jooq.TableRecord} and/or the POJO.
      *
-     * @return
-     *     possible object is
-     *     {@link MatcherRule }
-     *
      */
     public MatcherRule getInterfaceClass() {
         return interfaceClass;
     }
 
     /**
-     * Sets the value of the interfaceClass property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link MatcherRule }
+     * This rule influences the naming of the generated interface implemented by the {@link org.jooq.TableRecord} and/or the POJO.
      *
      */
     public void setInterfaceClass(MatcherRule value) {
@@ -220,21 +164,13 @@ public class MatchersTableType implements Serializable, XMLAppendable
     /**
      * This string provides additional interfaces that a generated interface (which is implemented by the {@link org.jooq.TableRecord} and/or POJO) should implement.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getInterfaceImplements() {
         return interfaceImplements;
     }
 
     /**
-     * Sets the value of the interfaceImplements property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * This string provides additional interfaces that a generated interface (which is implemented by the {@link org.jooq.TableRecord} and/or POJO) should implement.
      *
      */
     public void setInterfaceImplements(String value) {
@@ -244,21 +180,13 @@ public class MatchersTableType implements Serializable, XMLAppendable
     /**
      * This rule influences the naming of the generated {@link org.jooq.DAO} object.
      *
-     * @return
-     *     possible object is
-     *     {@link MatcherRule }
-     *
      */
     public MatcherRule getDaoClass() {
         return daoClass;
     }
 
     /**
-     * Sets the value of the daoClass property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link MatcherRule }
+     * This rule influences the naming of the generated {@link org.jooq.DAO} object.
      *
      */
     public void setDaoClass(MatcherRule value) {
@@ -268,21 +196,13 @@ public class MatchersTableType implements Serializable, XMLAppendable
     /**
      * This string provides additional interfaces that a generated {@link org.jooq.DAO} should implement.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getDaoImplements() {
         return daoImplements;
     }
 
     /**
-     * Sets the value of the daoImplements property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * This string provides additional interfaces that a generated {@link org.jooq.DAO} should implement.
      *
      */
     public void setDaoImplements(String value) {
@@ -292,21 +212,13 @@ public class MatchersTableType implements Serializable, XMLAppendable
     /**
      * This rule influences the naming of the generated POJOs object.
      *
-     * @return
-     *     possible object is
-     *     {@link MatcherRule }
-     *
      */
     public MatcherRule getPojoClass() {
         return pojoClass;
     }
 
     /**
-     * Sets the value of the pojoClass property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link MatcherRule }
+     * This rule influences the naming of the generated POJOs object.
      *
      */
     public void setPojoClass(MatcherRule value) {
@@ -316,21 +228,13 @@ public class MatchersTableType implements Serializable, XMLAppendable
     /**
      * This string provides a super class that a generated POJO should extend.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getPojoExtends() {
         return pojoExtends;
     }
 
     /**
-     * Sets the value of the pojoExtends property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * This string provides a super class that a generated POJO should extend.
      *
      */
     public void setPojoExtends(String value) {
@@ -340,21 +244,13 @@ public class MatchersTableType implements Serializable, XMLAppendable
     /**
      * This string provides additional interfaces that a generated POJO should implement.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getPojoImplements() {
         return pojoImplements;
     }
 
     /**
-     * Sets the value of the pojoImplements property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * This string provides additional interfaces that a generated POJO should implement.
      *
      */
     public void setPojoImplements(String value) {
@@ -362,11 +258,7 @@ public class MatchersTableType implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the expression property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * This table matcher applies to all unqualified or qualified table names matched by this expression. If left empty, this matcher applies to all tables.
      *
      */
     public MatchersTableType withExpression(String value) {
@@ -375,11 +267,7 @@ public class MatchersTableType implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the tableClass property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link MatcherRule }
+     * This rule influences the naming of the generated {@link org.jooq.Table} object.
      *
      */
     public MatchersTableType withTableClass(MatcherRule value) {
@@ -388,11 +276,7 @@ public class MatchersTableType implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the tableIdentifier property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link MatcherRule }
+     * This rule influences the naming of the generated {@link org.jooq.Table} identifier.
      *
      */
     public MatchersTableType withTableIdentifier(MatcherRule value) {
@@ -401,11 +285,7 @@ public class MatchersTableType implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the tableImplements property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * This string provides additional interfaces that a generated {@link org.jooq.Table} should implement.
      *
      */
     public MatchersTableType withTableImplements(String value) {
@@ -414,11 +294,7 @@ public class MatchersTableType implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the recordClass property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link MatcherRule }
+     * This rule influences the naming of the generated {@link org.jooq.TableRecord} object.
      *
      */
     public MatchersTableType withRecordClass(MatcherRule value) {
@@ -427,11 +303,7 @@ public class MatchersTableType implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the recordImplements property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * This string provides additional interfaces that a generated {@link org.jooq.TableRecord} should implement.
      *
      */
     public MatchersTableType withRecordImplements(String value) {
@@ -440,11 +312,7 @@ public class MatchersTableType implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the interfaceClass property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link MatcherRule }
+     * This rule influences the naming of the generated interface implemented by the {@link org.jooq.TableRecord} and/or the POJO.
      *
      */
     public MatchersTableType withInterfaceClass(MatcherRule value) {
@@ -453,11 +321,7 @@ public class MatchersTableType implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the interfaceImplements property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * This string provides additional interfaces that a generated interface (which is implemented by the {@link org.jooq.TableRecord} and/or POJO) should implement.
      *
      */
     public MatchersTableType withInterfaceImplements(String value) {
@@ -466,11 +330,7 @@ public class MatchersTableType implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the daoClass property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link MatcherRule }
+     * This rule influences the naming of the generated {@link org.jooq.DAO} object.
      *
      */
     public MatchersTableType withDaoClass(MatcherRule value) {
@@ -479,11 +339,7 @@ public class MatchersTableType implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the daoImplements property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * This string provides additional interfaces that a generated {@link org.jooq.DAO} should implement.
      *
      */
     public MatchersTableType withDaoImplements(String value) {
@@ -492,11 +348,7 @@ public class MatchersTableType implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the pojoClass property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link MatcherRule }
+     * This rule influences the naming of the generated POJOs object.
      *
      */
     public MatchersTableType withPojoClass(MatcherRule value) {
@@ -505,11 +357,7 @@ public class MatchersTableType implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the pojoExtends property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * This string provides a super class that a generated POJO should extend.
      *
      */
     public MatchersTableType withPojoExtends(String value) {
@@ -518,11 +366,7 @@ public class MatchersTableType implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the pojoImplements property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * This string provides additional interfaces that a generated POJO should implement.
      *
      */
     public MatchersTableType withPojoImplements(String value) {

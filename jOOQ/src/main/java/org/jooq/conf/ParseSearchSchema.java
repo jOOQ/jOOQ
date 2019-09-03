@@ -36,21 +36,13 @@ public class ParseSearchSchema
     /**
      * The catalog qualifier of the schema, if applicable.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getCatalog() {
         return catalog;
     }
 
     /**
-     * Sets the value of the catalog property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * The catalog qualifier of the schema, if applicable.
      *
      */
     public void setCatalog(String value) {
@@ -60,21 +52,13 @@ public class ParseSearchSchema
     /**
      * The schema qualifier whose elements can be found from the search path.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getSchema() {
         return schema;
     }
 
     /**
-     * Sets the value of the schema property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * The schema qualifier whose elements can be found from the search path.
      *
      */
     public void setSchema(String value) {
@@ -82,11 +66,7 @@ public class ParseSearchSchema
     }
 
     /**
-     * Sets the value of the catalog property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * The catalog qualifier of the schema, if applicable.
      *
      */
     public ParseSearchSchema withCatalog(String value) {
@@ -95,11 +75,7 @@ public class ParseSearchSchema
     }
 
     /**
-     * Sets the value of the schema property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * The schema qualifier whose elements can be found from the search path.
      *
      */
     public ParseSearchSchema withSchema(String value) {

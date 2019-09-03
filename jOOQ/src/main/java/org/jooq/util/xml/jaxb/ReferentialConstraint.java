@@ -66,223 +66,79 @@ public class ReferentialConstraint implements Serializable, XMLAppendable
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String uniqueConstraintName;
 
-    /**
-     * Gets the value of the constraintCatalog property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getConstraintCatalog() {
         return constraintCatalog;
     }
 
-    /**
-     * Sets the value of the constraintCatalog property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setConstraintCatalog(String value) {
         this.constraintCatalog = value;
     }
 
-    /**
-     * Gets the value of the constraintSchema property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getConstraintSchema() {
         return constraintSchema;
     }
 
-    /**
-     * Sets the value of the constraintSchema property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setConstraintSchema(String value) {
         this.constraintSchema = value;
     }
 
-    /**
-     * Gets the value of the constraintName property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getConstraintName() {
         return constraintName;
     }
 
-    /**
-     * Sets the value of the constraintName property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setConstraintName(String value) {
         this.constraintName = value;
     }
 
-    /**
-     * Gets the value of the uniqueConstraintCatalog property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getUniqueConstraintCatalog() {
         return uniqueConstraintCatalog;
     }
 
-    /**
-     * Sets the value of the uniqueConstraintCatalog property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setUniqueConstraintCatalog(String value) {
         this.uniqueConstraintCatalog = value;
     }
 
-    /**
-     * Gets the value of the uniqueConstraintSchema property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getUniqueConstraintSchema() {
         return uniqueConstraintSchema;
     }
 
-    /**
-     * Sets the value of the uniqueConstraintSchema property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setUniqueConstraintSchema(String value) {
         this.uniqueConstraintSchema = value;
     }
 
-    /**
-     * Gets the value of the uniqueConstraintName property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getUniqueConstraintName() {
         return uniqueConstraintName;
     }
 
-    /**
-     * Sets the value of the uniqueConstraintName property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setUniqueConstraintName(String value) {
         this.uniqueConstraintName = value;
     }
 
-    /**
-     * Sets the value of the constraintCatalog property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public ReferentialConstraint withConstraintCatalog(String value) {
         setConstraintCatalog(value);
         return this;
     }
 
-    /**
-     * Sets the value of the constraintSchema property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public ReferentialConstraint withConstraintSchema(String value) {
         setConstraintSchema(value);
         return this;
     }
 
-    /**
-     * Sets the value of the constraintName property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public ReferentialConstraint withConstraintName(String value) {
         setConstraintName(value);
         return this;
     }
 
-    /**
-     * Sets the value of the uniqueConstraintCatalog property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public ReferentialConstraint withUniqueConstraintCatalog(String value) {
         setUniqueConstraintCatalog(value);
         return this;
     }
 
-    /**
-     * Sets the value of the uniqueConstraintSchema property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public ReferentialConstraint withUniqueConstraintSchema(String value) {
         setUniqueConstraintSchema(value);
         return this;
     }
 
-    /**
-     * Sets the value of the uniqueConstraintName property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public ReferentialConstraint withUniqueConstraintName(String value) {
         setUniqueConstraintName(value);
         return this;

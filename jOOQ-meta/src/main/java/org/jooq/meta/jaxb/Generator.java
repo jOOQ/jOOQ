@@ -40,21 +40,13 @@ public class Generator implements Serializable, XMLAppendable
     /**
      * The class used to generate source code. This can be overridden with a custom code generator implementation.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getName() {
         return name;
     }
 
     /**
-     * Sets the value of the name property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * The class used to generate source code. This can be overridden with a custom code generator implementation.
      *
      */
     public void setName(String value) {
@@ -64,21 +56,13 @@ public class Generator implements Serializable, XMLAppendable
     /**
      * Definitions of custom naming strategies (declarative or programmatic) to define how generated Java objects should be named.
      *
-     * @return
-     *     possible object is
-     *     {@link Strategy }
-     *
      */
     public Strategy getStrategy() {
         return strategy;
     }
 
     /**
-     * Sets the value of the strategy property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Strategy }
+     * Definitions of custom naming strategies (declarative or programmatic) to define how generated Java objects should be named.
      *
      */
     public void setStrategy(Strategy value) {
@@ -88,21 +72,13 @@ public class Generator implements Serializable, XMLAppendable
     /**
      * Configuration of the database meta data source.
      *
-     * @return
-     *     possible object is
-     *     {@link Database }
-     *
      */
     public Database getDatabase() {
         return database;
     }
 
     /**
-     * Sets the value of the database property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Database }
+     * Configuration of the database meta data source.
      *
      */
     public void setDatabase(Database value) {
@@ -112,21 +88,13 @@ public class Generator implements Serializable, XMLAppendable
     /**
      * Options strictly related to generated code.
      *
-     * @return
-     *     possible object is
-     *     {@link Generate }
-     *
      */
     public Generate getGenerate() {
         return generate;
     }
 
     /**
-     * Sets the value of the generate property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Generate }
+     * Options strictly related to generated code.
      *
      */
     public void setGenerate(Generate value) {
@@ -136,21 +104,13 @@ public class Generator implements Serializable, XMLAppendable
     /**
      * Options to define where the generated code should be located.
      *
-     * @return
-     *     possible object is
-     *     {@link Target }
-     *
      */
     public Target getTarget() {
         return target;
     }
 
     /**
-     * Sets the value of the target property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Target }
+     * Options to define where the generated code should be located.
      *
      */
     public void setTarget(Target value) {
@@ -158,11 +118,7 @@ public class Generator implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the name property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * The class used to generate source code. This can be overridden with a custom code generator implementation.
      *
      */
     public Generator withName(String value) {
@@ -171,11 +127,7 @@ public class Generator implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the strategy property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Strategy }
+     * Definitions of custom naming strategies (declarative or programmatic) to define how generated Java objects should be named.
      *
      */
     public Generator withStrategy(Strategy value) {
@@ -184,11 +136,7 @@ public class Generator implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the database property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Database }
+     * Configuration of the database meta data source.
      *
      */
     public Generator withDatabase(Database value) {
@@ -197,11 +145,7 @@ public class Generator implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the generate property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Generate }
+     * Options strictly related to generated code.
      *
      */
     public Generator withGenerate(Generate value) {
@@ -210,11 +154,7 @@ public class Generator implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the target property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Target }
+     * Options to define where the generated code should be located.
      *
      */
     public Generator withTarget(Target value) {

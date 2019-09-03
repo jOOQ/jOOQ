@@ -44,10 +44,6 @@ public class CustomType implements Serializable, XMLAppendable
     /**
      * @deprecated Use ForcedType only
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     @Deprecated
     public String getName() {
@@ -55,11 +51,7 @@ public class CustomType implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the name property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * @deprecated Use ForcedType only
      *
      */
     @Deprecated
@@ -70,10 +62,6 @@ public class CustomType implements Serializable, XMLAppendable
     /**
      * @deprecated Use ForcedType only
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     @Deprecated
     public String getType() {
@@ -81,11 +69,7 @@ public class CustomType implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the type property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * @deprecated Use ForcedType only
      *
      */
     @Deprecated
@@ -96,10 +80,6 @@ public class CustomType implements Serializable, XMLAppendable
     /**
      * @deprecated Use ForcedType only
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     @Deprecated
     public String getConverter() {
@@ -107,11 +87,7 @@ public class CustomType implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the converter property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * @deprecated Use ForcedType only
      *
      */
     @Deprecated
@@ -148,10 +124,6 @@ public class CustomType implements Serializable, XMLAppendable
     /**
      * @deprecated Use ForcedType only
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     @Deprecated
     public String getBinding() {
@@ -159,11 +131,7 @@ public class CustomType implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the binding property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * @deprecated Use ForcedType only
      *
      */
     @Deprecated
@@ -172,11 +140,7 @@ public class CustomType implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the name property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * @deprecated Use ForcedType only
      *
      */
     @Deprecated
@@ -186,11 +150,7 @@ public class CustomType implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the type property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * @deprecated Use ForcedType only
      *
      */
     @Deprecated
@@ -200,11 +160,7 @@ public class CustomType implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the converter property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * @deprecated Use ForcedType only
      *
      */
     @Deprecated
@@ -213,26 +169,13 @@ public class CustomType implements Serializable, XMLAppendable
         return this;
     }
 
-    /**
-     * Sets the value of the enumConverter property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *
-     */
-    @Deprecated
     public CustomType withEnumConverter(Boolean value) {
         setEnumConverter(value);
         return this;
     }
 
     /**
-     * Sets the value of the binding property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * @deprecated Use ForcedType only
      *
      */
     @Deprecated

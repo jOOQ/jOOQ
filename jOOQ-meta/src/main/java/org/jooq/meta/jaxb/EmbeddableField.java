@@ -52,21 +52,13 @@ public class EmbeddableField implements Serializable, XMLAppendable
     /**
      * A name for the field in case the regex does not produce unique names for all matches.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getName() {
         return name;
     }
 
     /**
-     * Sets the value of the name property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * A name for the field in case the regex does not produce unique names for all matches.
      *
      */
     public void setName(String value) {
@@ -76,21 +68,13 @@ public class EmbeddableField implements Serializable, XMLAppendable
     /**
      * A regex matching all column names that are part of the embeddable type. The regex must match only one column per table.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getExpression() {
         return expression;
     }
 
     /**
-     * Sets the value of the expression property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * A regex matching all column names that are part of the embeddable type. The regex must match only one column per table.
      *
      */
     public void setExpression(String value) {
@@ -98,11 +82,7 @@ public class EmbeddableField implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the name property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * A name for the field in case the regex does not produce unique names for all matches.
      *
      */
     public EmbeddableField withName(String value) {
@@ -111,11 +91,7 @@ public class EmbeddableField implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the expression property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * A regex matching all column names that are part of the embeddable type. The regex must match only one column per table.
      *
      */
     public EmbeddableField withExpression(String value) {

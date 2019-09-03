@@ -58,21 +58,13 @@ public class Configuration implements Serializable, XMLAppendable
     /**
      * The logging configuration element specifies the code generation logging threshold.
      *
-     * @return
-     *     possible object is
-     *     {@link Logging }
-     *
      */
     public Logging getLogging() {
         return logging;
     }
 
     /**
-     * Sets the value of the logging property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Logging }
+     * The logging configuration element specifies the code generation logging threshold.
      *
      */
     public void setLogging(Logging value) {
@@ -82,21 +74,13 @@ public class Configuration implements Serializable, XMLAppendable
     /**
      * The action to be taken by the generator as the consequence of an encountered exception. Defaults to FAIL.
      *
-     * @return
-     *     possible object is
-     *     {@link OnError }
-     *
      */
     public OnError getOnError() {
         return onError;
     }
 
     /**
-     * Sets the value of the onError property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link OnError }
+     * The action to be taken by the generator as the consequence of an encountered exception. Defaults to FAIL.
      *
      */
     public void setOnError(OnError value) {
@@ -106,21 +90,13 @@ public class Configuration implements Serializable, XMLAppendable
     /**
      * The JDBC configuration element contains information about how to set up the database connection used for source code generation.
      *
-     * @return
-     *     possible object is
-     *     {@link Jdbc }
-     *
      */
     public Jdbc getJdbc() {
         return jdbc;
     }
 
     /**
-     * Sets the value of the jdbc property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Jdbc }
+     * The JDBC configuration element contains information about how to set up the database connection used for source code generation.
      *
      */
     public void setJdbc(Jdbc value) {
@@ -130,21 +106,13 @@ public class Configuration implements Serializable, XMLAppendable
     /**
      * The GENERATOR configuration element contains information about source code generation itself.
      *
-     * @return
-     *     possible object is
-     *     {@link Generator }
-     *
      */
     public Generator getGenerator() {
         return generator;
     }
 
     /**
-     * Sets the value of the generator property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Generator }
+     * The GENERATOR configuration element contains information about source code generation itself.
      *
      */
     public void setGenerator(Generator value) {
@@ -152,11 +120,7 @@ public class Configuration implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the logging property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Logging }
+     * The logging configuration element specifies the code generation logging threshold.
      *
      */
     public Configuration withLogging(Logging value) {
@@ -165,11 +129,7 @@ public class Configuration implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the onError property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link OnError }
+     * The action to be taken by the generator as the consequence of an encountered exception. Defaults to FAIL.
      *
      */
     public Configuration withOnError(OnError value) {
@@ -178,11 +138,7 @@ public class Configuration implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the jdbc property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Jdbc }
+     * The JDBC configuration element contains information about how to set up the database connection used for source code generation.
      *
      */
     public Configuration withJdbc(Jdbc value) {
@@ -191,11 +147,7 @@ public class Configuration implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the generator property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Generator }
+     * The GENERATOR configuration element contains information about source code generation itself.
      *
      */
     public Configuration withGenerator(Generator value) {

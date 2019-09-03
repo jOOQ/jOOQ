@@ -47,21 +47,13 @@ public class CatalogMappingType implements Serializable, XMLAppendable
     /**
      * See also {@link Database#getInputCatalog()}
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getInputCatalog() {
         return inputCatalog;
     }
 
     /**
-     * Sets the value of the inputCatalog property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * See also {@link Database#getInputCatalog()}
      *
      */
     public void setInputCatalog(String value) {
@@ -71,21 +63,13 @@ public class CatalogMappingType implements Serializable, XMLAppendable
     /**
      * See also {@link Database#getOutputCatalog()}
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getOutputCatalog() {
         return outputCatalog;
     }
 
     /**
-     * Sets the value of the outputCatalog property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * See also {@link Database#getOutputCatalog()}
      *
      */
     public void setOutputCatalog(String value) {
@@ -128,11 +112,7 @@ public class CatalogMappingType implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the inputCatalog property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * See also {@link Database#getInputCatalog()}
      *
      */
     public CatalogMappingType withInputCatalog(String value) {
@@ -141,11 +121,7 @@ public class CatalogMappingType implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the outputCatalog property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * See also {@link Database#getOutputCatalog()}
      *
      */
     public CatalogMappingType withOutputCatalog(String value) {
@@ -153,14 +129,6 @@ public class CatalogMappingType implements Serializable, XMLAppendable
         return this;
     }
 
-    /**
-     * Sets the value of the outputCatalogToDefault property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *
-     */
     public CatalogMappingType withOutputCatalogToDefault(Boolean value) {
         setOutputCatalogToDefault(value);
         return this;

@@ -71,6 +71,7 @@ public final class ParserCLI {
         if (a.interactive || args == null || args.length == 0) {
             interactiveMode(ctx, a);
         }
+        else if (a.done) {}
         else if (a.toDialect == null || a.sql == null) {
             System.out.println("Mandatory arguments: -t and -s. Use -h for help");
             throw new RuntimeException();
@@ -332,7 +333,7 @@ public final class ParserCLI {
             }
             else if ("-h".equals(args[i]) || "--help".equals(args[i])) {
                 help();
-                throw new RuntimeException();
+                result.done = true;
             }
             else {
                 System.out.println("Unknown flag: " + args[i] + ". Use -h or --help");
@@ -388,5 +389,6 @@ public final class ParserCLI {
         SQLDialect        fromDialect = SQLDialect.DEFAULT;
         boolean           formatted;
         boolean           interactive;
+        boolean           done;
     }
 }

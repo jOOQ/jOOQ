@@ -63,9 +63,11 @@ import org.jooq.meta.CatalogDefinition;
 import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.Definition;
 import org.jooq.meta.ParameterDefinition;
+import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.TableDefinition;
 import org.jooq.meta.TypedElementDefinition;
+import org.jooq.meta.UDTDefinition;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -76,11 +78,11 @@ import org.jooq.tools.StringUtils;
  */
 class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
 
-    private final Map<Class<?>, Set<String>> reservedColumns = new HashMap<>();
+    private final Map<Class<?>, Map<Integer, Set<String>>> reservedColumns = new HashMap<>();
 
-    final Generator         generator;
-    final GeneratorStrategy delegate;
-    final Language          language;
+    final Generator                                        generator;
+    final GeneratorStrategy                                delegate;
+    final Language                                         language;
 
     GeneratorStrategyWrapper(Generator generator, GeneratorStrategy delegate, Language language) {
         this.generator = generator;
@@ -216,20 +218,30 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
         Set<String> reserved = null;
 
         if (definition instanceof AttributeDefinition) {
-            reserved = reservedColumns(UDTRecordImpl.class);
+            reserved = reservedColumns(UDTRecordImpl.class, 0);
         }
         else if (definition instanceof ColumnDefinition) {
             if (((ColumnDefinition) definition).getContainer().getPrimaryKey() != null) {
-                reserved = reservedColumns(UpdatableRecordImpl.class);
+                reserved = reservedColumns(UpdatableRecordImpl.class, 0);
             }
             else {
-                reserved = reservedColumns(TableRecordImpl.class);
+                reserved = reservedColumns(TableRecordImpl.class, 0);
             }
         }
 
         // [#1406] Disambiguate also procedure parameters
         else if (definition instanceof ParameterDefinition) {
-            reserved = reservedColumns(AbstractRoutine.class);
+            reserved = reservedColumns(AbstractRoutine.class, 0);
+        }
+
+        // [#9150] Member procedures and functions can collide with UDTRecord methods
+        else if (definition instanceof RoutineDefinition) {
+            RoutineDefinition routine = (RoutineDefinition) definition;
+
+            if (routine.getPackage() instanceof UDTDefinition
+                    && routine.getInParameters().size() > 0
+                    && "SELF".equalsIgnoreCase(routine.getInParameters().get(0).getName()))
+                reserved = reservedColumns(UDTRecordImpl.class, routine.getInParameters().size() - 1);
         }
 
         if (reserved != null) {
@@ -255,23 +267,28 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
      * [#182] Find all column names that are reserved because of the extended
      * class hierarchy of a generated class
      */
-    private Set<String> reservedColumns(Class<?> clazz) {
+    private Set<String> reservedColumns(Class<?> clazz, int length) {
         if (clazz == null)
             return Collections.emptySet();
 
-        Set<String> result = reservedColumns.get(clazz);
+        Map<Integer, Set<String>> map = reservedColumns.get(clazz);
+        if (map == null) {
+            map = new HashMap<>();
+            reservedColumns.put(clazz, map);
+        }
 
+        Set<String> result = map.get(length);
         if (result == null) {
             result = new HashSet<>();
-            reservedColumns.put(clazz, result);
+            map.put(length, result);
 
             // Recurse up in class hierarchy
-            result.addAll(reservedColumns(clazz.getSuperclass()));
+            result.addAll(reservedColumns(clazz.getSuperclass(), length));
             for (Class<?> c : clazz.getInterfaces())
-                result.addAll(reservedColumns(c));
+                result.addAll(reservedColumns(c, length));
 
             for (Method m : clazz.getDeclaredMethods())
-                if (m.getParameterTypes().length == 0)
+                if (m.getParameterTypes().length == length)
                     result.add(m.getName());
 
             // [#5457] In Scala, we must not "override" any inherited members, even if they're private

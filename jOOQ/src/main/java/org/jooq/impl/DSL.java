@@ -17865,7 +17865,8 @@ public class DSL {
      */
     @Support({ H2, HSQLDB, MYSQL, POSTGRES })
     public static AggregateFunction<Integer> countDistinct(Field<?>... fields) {
-        return new org.jooq.impl.Function<>("count", true, SQLDataType.INTEGER, nullSafe(fields));
+        fields = nullSafe(fields);
+        return fields.length == 0 ? countDistinct(asterisk()) : new org.jooq.impl.Function<>("count", true, SQLDataType.INTEGER, fields);
     }
 
     /**

@@ -60,6 +60,7 @@ import org.jooq.Name;
 import org.jooq.Name.Quoted;
 import org.jooq.Queries;
 import org.jooq.Query;
+import org.jooq.ResultQuery;
 import org.jooq.VisitContext;
 import org.jooq.conf.ParseUnknownFunctions;
 import org.jooq.conf.Settings;
@@ -192,8 +193,13 @@ public class DDLDatabase extends H2Database {
                 repeat:
                 for (;;) {
                     try {
-                        query.execute();
                         log.info(query);
+
+                        if (query instanceof ResultQuery)
+                            log.info("\n" + ((ResultQuery<?>) query).fetch());
+                        else
+                            log.info("Update count: " + query.execute());
+
                         break repeat;
                     }
                     catch (DataAccessException e) {

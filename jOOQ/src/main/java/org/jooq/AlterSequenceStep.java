@@ -75,26 +75,23 @@ import static org.jooq.SQLDialect.POSTGRES;
  *
  * @author Lukas Eder
  */
-public interface AlterSequenceStep<T extends Number> extends AlterSequenceRestartStep<T> {
+public interface AlterSequenceStep<T extends Number> {
 
     /**
      * Restart the sequence at its initial value.
      */
-    @Override
     @Support({ HSQLDB, POSTGRES })
     AlterSequenceFinalStep restart();
 
     /**
      * Restart the sequence at a given value.
      */
-    @Override
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     AlterSequenceFinalStep restartWith(T value);
 
     /**
      * Restart the sequence at a given value.
      */
-    @Override
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     AlterSequenceFinalStep restartWith(Field<? extends T> value);
 

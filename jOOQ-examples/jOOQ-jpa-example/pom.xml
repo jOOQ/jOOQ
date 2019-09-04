@@ -20,7 +20,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.jooq.version>${project.version}</org.jooq.version>
         <org.h2.version>1.4.199</org.h2.version>
-        <org.hibernate.version>5.4.2.Final</org.hibernate.version>
+        <org.hibernate.version>5.4.4.Final</org.hibernate.version>
         <org.springframework.version>5.0.7.RELEASE</org.springframework.version>
     </properties>
 

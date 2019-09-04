@@ -144,10 +144,19 @@ public class XMLDatabase extends AbstractDatabase {
 
     private InformationSchema info() {
         if (info == null) {
-            String xml = getProperties().getProperty(P_XML_FILE);
-            String xsl = getProperties().getProperty(P_XSL_FILE);
 
-            log.info("Using XML file", xml);
+            // [#8118] Regardless of failure, prevent NPEs from subsequent calls
+            info = new InformationSchema();
+
+            // [#8115] Support old property name style for backwards compatibility reasons
+            final String xml = getProperties().getProperty("xmlFiles",
+                getProperties().getProperty("xmlFile",
+                    getProperties().getProperty(P_XML_FILE)
+                )
+            );
+            final String xsl = getProperties().getProperty("xslFile",
+                getProperties().getProperty(P_XSL_FILE)
+            );
 
             try {
                 String content;

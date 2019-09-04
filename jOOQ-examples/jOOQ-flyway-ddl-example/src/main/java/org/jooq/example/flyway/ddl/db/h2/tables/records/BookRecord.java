@@ -27,7 +27,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class BookRecord extends UpdatableRecordImpl<BookRecord> implements Record3<Integer, Integer, String> {
 
-    private static final long serialVersionUID = 789103786;
+    private static final long serialVersionUID = 1683462763;
 
     /**
      * Setter for <code>FLYWAY_TEST.BOOK.ID</code>.

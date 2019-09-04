@@ -18,31 +18,31 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class LanguageRecord extends UpdatableRecordImpl<LanguageRecord> implements Record2<Integer, String> {
 
-    private static final long serialVersionUID = -850822280;
+    private static final long serialVersionUID = -1228948270;
 
     /**
-     * Setter for <code>PUBLIC.LANGUAGE.LANGUAGEID</code>.
+     * Setter for <code>LANGUAGE.LANGUAGEID</code>.
      */
     public void setLanguageid(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.LANGUAGE.LANGUAGEID</code>.
+     * Getter for <code>LANGUAGE.LANGUAGEID</code>.
      */
     public Integer getLanguageid() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>PUBLIC.LANGUAGE.NAME</code>.
+     * Setter for <code>LANGUAGE.NAME</code>.
      */
     public void setName(String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.LANGUAGE.NAME</code>.
+     * Getter for <code>LANGUAGE.NAME</code>.
      */
     public String getName() {
         return (String) get(1);

@@ -18,9 +18,9 @@ import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
+import org.jooq.example.jpa.jooq.DefaultSchema;
 import org.jooq.example.jpa.jooq.Indexes;
 import org.jooq.example.jpa.jooq.Keys;
-import org.jooq.example.jpa.jooq.Public;
 import org.jooq.example.jpa.jooq.tables.records.LanguageRecord;
 import org.jooq.impl.DSL;
 import org.jooq.impl.TableImpl;
@@ -32,10 +32,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Language extends TableImpl<LanguageRecord> {
 
-    private static final long serialVersionUID = 462156551;
+    private static final long serialVersionUID = -823519981;
 
     /**
-     * The reference instance of <code>PUBLIC.LANGUAGE</code>
+     * The reference instance of <code>LANGUAGE</code>
      */
     public static final Language LANGUAGE = new Language();
 
@@ -48,31 +48,31 @@ public class Language extends TableImpl<LanguageRecord> {
     }
 
     /**
-     * The column <code>PUBLIC.LANGUAGE.LANGUAGEID</code>.
+     * The column <code>LANGUAGE.LANGUAGEID</code>.
      */
     public final TableField<LanguageRecord, Integer> LANGUAGEID = createField(DSL.name("LANGUAGEID"), org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     /**
-     * The column <code>PUBLIC.LANGUAGE.NAME</code>.
+     * The column <code>LANGUAGE.NAME</code>.
      */
     public final TableField<LanguageRecord, String> NAME = createField(DSL.name("NAME"), org.jooq.impl.SQLDataType.VARCHAR(255), this, "");
 
     /**
-     * Create a <code>PUBLIC.LANGUAGE</code> table reference
+     * Create a <code>LANGUAGE</code> table reference
      */
     public Language() {
         this(DSL.name("LANGUAGE"), null);
     }
 
     /**
-     * Create an aliased <code>PUBLIC.LANGUAGE</code> table reference
+     * Create an aliased <code>LANGUAGE</code> table reference
      */
     public Language(String alias) {
         this(DSL.name(alias), LANGUAGE);
     }
 
     /**
-     * Create an aliased <code>PUBLIC.LANGUAGE</code> table reference
+     * Create an aliased <code>LANGUAGE</code> table reference
      */
     public Language(Name alias) {
         this(alias, LANGUAGE);
@@ -92,7 +92,7 @@ public class Language extends TableImpl<LanguageRecord> {
 
     @Override
     public Schema getSchema() {
-        return Public.PUBLIC;
+        return DefaultSchema.DEFAULT_SCHEMA;
     }
 
     @Override

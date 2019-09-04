@@ -31,7 +31,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FlywayTest extends SchemaImpl {
 
-    private static final long serialVersionUID = -520771476;
+    private static final long serialVersionUID = -464060435;
 
     /**
      * The reference instance of <code>FLYWAY_TEST</code>

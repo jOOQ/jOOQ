@@ -29,7 +29,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class AuthorRecord extends UpdatableRecordImpl<AuthorRecord> implements Record6<Integer, String, String, Date, Integer, String> {
 
-    private static final long serialVersionUID = -850705131;
+    private static final long serialVersionUID = 1547569460;
 
     /**
      * Setter for <code>FLYWAY_TEST.AUTHOR.ID</code>.

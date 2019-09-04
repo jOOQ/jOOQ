@@ -41,7 +41,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Author extends TableImpl<AuthorRecord> {
 
-    private static final long serialVersionUID = 1689383333;
+    private static final long serialVersionUID = 576523140;
 
     /**
      * The reference instance of <code>FLYWAY_TEST.AUTHOR</code>

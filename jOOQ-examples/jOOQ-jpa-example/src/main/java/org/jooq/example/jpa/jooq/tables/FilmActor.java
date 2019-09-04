@@ -17,9 +17,9 @@ import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
+import org.jooq.example.jpa.jooq.DefaultSchema;
 import org.jooq.example.jpa.jooq.Indexes;
 import org.jooq.example.jpa.jooq.Keys;
-import org.jooq.example.jpa.jooq.Public;
 import org.jooq.example.jpa.jooq.tables.records.FilmActorRecord;
 import org.jooq.impl.DSL;
 import org.jooq.impl.TableImpl;
@@ -31,10 +31,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FilmActor extends TableImpl<FilmActorRecord> {
 
-    private static final long serialVersionUID = -705857387;
+    private static final long serialVersionUID = -1106860955;
 
     /**
-     * The reference instance of <code>PUBLIC.FILM_ACTOR</code>
+     * The reference instance of <code>FILM_ACTOR</code>
      */
     public static final FilmActor FILM_ACTOR = new FilmActor();
 
@@ -47,31 +47,31 @@ public class FilmActor extends TableImpl<FilmActorRecord> {
     }
 
     /**
-     * The column <code>PUBLIC.FILM_ACTOR.FILMS_FILMID</code>.
+     * The column <code>FILM_ACTOR.FILMS_FILMID</code>.
      */
     public final TableField<FilmActorRecord, Integer> FILMS_FILMID = createField(DSL.name("FILMS_FILMID"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>PUBLIC.FILM_ACTOR.ACTORS_ACTORID</code>.
+     * The column <code>FILM_ACTOR.ACTORS_ACTORID</code>.
      */
     public final TableField<FilmActorRecord, Integer> ACTORS_ACTORID = createField(DSL.name("ACTORS_ACTORID"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * Create a <code>PUBLIC.FILM_ACTOR</code> table reference
+     * Create a <code>FILM_ACTOR</code> table reference
      */
     public FilmActor() {
         this(DSL.name("FILM_ACTOR"), null);
     }
 
     /**
-     * Create an aliased <code>PUBLIC.FILM_ACTOR</code> table reference
+     * Create an aliased <code>FILM_ACTOR</code> table reference
      */
     public FilmActor(String alias) {
         this(DSL.name(alias), FILM_ACTOR);
     }
 
     /**
-     * Create an aliased <code>PUBLIC.FILM_ACTOR</code> table reference
+     * Create an aliased <code>FILM_ACTOR</code> table reference
      */
     public FilmActor(Name alias) {
         this(alias, FILM_ACTOR);
@@ -91,7 +91,7 @@ public class FilmActor extends TableImpl<FilmActorRecord> {
 
     @Override
     public Schema getSchema() {
-        return Public.PUBLIC;
+        return DefaultSchema.DEFAULT_SCHEMA;
     }
 
     @Override

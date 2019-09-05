@@ -3159,7 +3159,7 @@ final class ParserImpl implements Parser {
                     constraints.add(parseCheckSpecification(ctx, constraint));
                     continue columnLoop;
                 }
-                else if (constraint == null && (parseKeywordIf(ctx, "KEY") || parseKeywordIf(ctx, "INDEX"))) {
+                else if (constraint == null && parseIndexOrKeyIf(ctx)) {
                     int p2 = ctx.position();
 
                     // [#7348] [#7651] Look ahead if the next tokens indicate a MySQL index definition
@@ -3855,14 +3855,7 @@ final class ParserImpl implements Parser {
     private static final DDLQuery parseAlterTableAdd(ParserContext ctx, AlterTableStep s1, Table<?> tableName) {
         List<FieldOrConstraint> list = new ArrayList<>();
 
-        if (((parseKeywordIf(ctx, "SPATIAL INDEX")
-            || parseKeywordIf(ctx, "SPATIAL KEY")
-            || parseKeywordIf(ctx, "FULLTEXT INDEX")
-            || parseKeywordIf(ctx, "FULLTEXT KEY"))
-            && ctx.requireUnsupportedSyntax())
-
-            || parseKeywordIf(ctx, "INDEX")
-            || parseKeywordIf(ctx, "KEY")) {
+        if (parseIndexOrKeyIf(ctx)) {
             Name name = parseIdentifierIf(ctx);
             parse(ctx, '(');
             List<SortField<?>> sort = parseSortSpecification(ctx);
@@ -3896,6 +3889,17 @@ final class ParserImpl implements Parser {
                 return s1.add((Field<?>) list.get(0));
         else
             return s1.add(list);
+    }
+
+    private static final boolean parseIndexOrKeyIf(ParserContext ctx) {
+        return ((parseKeywordIf(ctx, "SPATIAL INDEX")
+            || parseKeywordIf(ctx, "SPATIAL KEY")
+            || parseKeywordIf(ctx, "FULLTEXT INDEX")
+            || parseKeywordIf(ctx, "FULLTEXT KEY"))
+            && ctx.requireUnsupportedSyntax())
+
+            || parseKeywordIf(ctx, "INDEX")
+            || parseKeywordIf(ctx, "KEY");
     }
 
     private static final FieldOrConstraint parseAlterTableAddFieldOrConstraint(ParserContext ctx) {

@@ -59,31 +59,25 @@ public final class ParserCLI {
 
     private static final Pattern FLAG = Pattern.compile("^/([\\w\\-]+)\\s+(\\w+)\\s*$");
 
-    public static final void main(String[] args) {
+    public static final void main(String... args) throws Exception {
         Args a;
         Settings settings = new Settings();
         DSLContext ctx;
 
-        try {
-            a = parse(args);
-            settings(a, settings);
-            ctx = ctx(a, settings);
+        a = parse(args);
+        settings(a, settings);
+        ctx = ctx(a, settings);
 
-            if (a.interactive || args == null || args.length == 0) {
-                interactiveMode(ctx, a);
-            }
-            else if (a.toDialect == null || a.sql == null) {
-                System.out.println("Mandatory arguments: -t and -s. Use -h for help");
-                throw new RuntimeException();
-            }
-            else {
-                render(ctx, a);
-            }
+        if (a.interactive || args == null || args.length == 0) {
+            interactiveMode(ctx, a);
         }
-        catch (Exception e) {
-            e.printStackTrace(System.err);
-            System.exit(-1);
-            return;
+        else if (a.done) {}
+        else if (a.toDialect == null || a.sql == null) {
+            System.out.println("Mandatory arguments: -t and -s. Use -h for help");
+            throw new RuntimeException();
+        }
+        else {
+            render(ctx, a);
         }
     }
 
@@ -296,9 +290,9 @@ public final class ParserCLI {
                     throw e;
                 }
             }
-            else if ("-f".equals(args[i]) || "--from-dialect".equals(args[i].toUpperCase())) {
+            else if ("-f".equals(args[i]) || "--from-dialect".equals(args[i])) {
                 try {
-                    result.fromDialect = SQLDialect.valueOf(args[++i]);
+                    result.fromDialect = SQLDialect.valueOf(args[++i].toUpperCase());
                     continue argsLoop;
                 }
                 catch (IllegalArgumentException e) {
@@ -339,7 +333,7 @@ public final class ParserCLI {
             }
             else if ("-h".equals(args[i]) || "--help".equals(args[i])) {
                 help();
-                throw new RuntimeException();
+                result.done = true;
             }
             else {
                 System.out.println("Unknown flag: " + args[i] + ". Use -h or --help");
@@ -395,5 +389,6 @@ public final class ParserCLI {
         SQLDialect        fromDialect = SQLDialect.DEFAULT;
         boolean           formatted;
         boolean           interactive;
+        boolean           done;
     }
 }

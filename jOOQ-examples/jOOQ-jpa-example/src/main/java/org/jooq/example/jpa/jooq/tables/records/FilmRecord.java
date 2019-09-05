@@ -20,87 +20,87 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FilmRecord extends UpdatableRecordImpl<FilmRecord> implements Record6<Integer, Integer, Year, String, Integer, Integer> {
 
-    private static final long serialVersionUID = -1504094455;
+    private static final long serialVersionUID = 1764461771;
 
     /**
-     * Setter for <code>PUBLIC.FILM.FILMID</code>.
+     * Setter for <code>FILM.FILMID</code>.
      */
     public void setFilmid(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.FILM.FILMID</code>.
+     * Getter for <code>FILM.FILMID</code>.
      */
     public Integer getFilmid() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>PUBLIC.FILM.LENGTH</code>.
+     * Setter for <code>FILM.LENGTH</code>.
      */
     public void setLength(Integer value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.FILM.LENGTH</code>.
+     * Getter for <code>FILM.LENGTH</code>.
      */
     public Integer getLength() {
         return (Integer) get(1);
     }
 
     /**
-     * Setter for <code>PUBLIC.FILM.RELEASE_YEAR</code>.
+     * Setter for <code>FILM.RELEASE_YEAR</code>.
      */
     public void setReleaseYear(Year value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.FILM.RELEASE_YEAR</code>.
+     * Getter for <code>FILM.RELEASE_YEAR</code>.
      */
     public Year getReleaseYear() {
         return (Year) get(2);
     }
 
     /**
-     * Setter for <code>PUBLIC.FILM.TITLE</code>.
+     * Setter for <code>FILM.TITLE</code>.
      */
     public void setTitle(String value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.FILM.TITLE</code>.
+     * Getter for <code>FILM.TITLE</code>.
      */
     public String getTitle() {
         return (String) get(3);
     }
 
     /**
-     * Setter for <code>PUBLIC.FILM.LANGUAGE_LANGUAGEID</code>.
+     * Setter for <code>FILM.LANGUAGE_LANGUAGEID</code>.
      */
     public void setLanguageLanguageid(Integer value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.FILM.LANGUAGE_LANGUAGEID</code>.
+     * Getter for <code>FILM.LANGUAGE_LANGUAGEID</code>.
      */
     public Integer getLanguageLanguageid() {
         return (Integer) get(4);
     }
 
     /**
-     * Setter for <code>PUBLIC.FILM.ORIGINALLANGUAGE_LANGUAGEID</code>.
+     * Setter for <code>FILM.ORIGINALLANGUAGE_LANGUAGEID</code>.
      */
     public void setOriginallanguageLanguageid(Integer value) {
         set(5, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.FILM.ORIGINALLANGUAGE_LANGUAGEID</code>.
+     * Getter for <code>FILM.ORIGINALLANGUAGE_LANGUAGEID</code>.
      */
     public Integer getOriginallanguageLanguageid() {
         return (Integer) get(5);

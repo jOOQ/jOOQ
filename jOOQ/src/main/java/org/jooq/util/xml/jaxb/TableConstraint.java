@@ -74,194 +74,66 @@ public class TableConstraint implements Serializable, XMLAppendable
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String comment;
 
-    /**
-     * Gets the value of the constraintCatalog property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getConstraintCatalog() {
         return constraintCatalog;
     }
 
-    /**
-     * Sets the value of the constraintCatalog property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setConstraintCatalog(String value) {
         this.constraintCatalog = value;
     }
 
-    /**
-     * Gets the value of the constraintSchema property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getConstraintSchema() {
         return constraintSchema;
     }
 
-    /**
-     * Sets the value of the constraintSchema property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setConstraintSchema(String value) {
         this.constraintSchema = value;
     }
 
-    /**
-     * Gets the value of the constraintName property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getConstraintName() {
         return constraintName;
     }
 
-    /**
-     * Sets the value of the constraintName property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setConstraintName(String value) {
         this.constraintName = value;
     }
 
-    /**
-     * Gets the value of the constraintType property.
-     *
-     * @return
-     *     possible object is
-     *     {@link TableConstraintType }
-     *
-     */
     public TableConstraintType getConstraintType() {
         return constraintType;
     }
 
-    /**
-     * Sets the value of the constraintType property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link TableConstraintType }
-     *
-     */
     public void setConstraintType(TableConstraintType value) {
         this.constraintType = value;
     }
 
-    /**
-     * Gets the value of the tableCatalog property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getTableCatalog() {
         return tableCatalog;
     }
 
-    /**
-     * Sets the value of the tableCatalog property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setTableCatalog(String value) {
         this.tableCatalog = value;
     }
 
-    /**
-     * Gets the value of the tableSchema property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getTableSchema() {
         return tableSchema;
     }
 
-    /**
-     * Sets the value of the tableSchema property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setTableSchema(String value) {
         this.tableSchema = value;
     }
 
-    /**
-     * Gets the value of the tableName property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getTableName() {
         return tableName;
     }
 
-    /**
-     * Sets the value of the tableName property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setTableName(String value) {
         this.tableName = value;
     }
 
-    /**
-     * Gets the value of the comment property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getComment() {
         return comment;
     }
 
-    /**
-     * Sets the value of the comment property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setComment(String value) {
         this.comment = value;
     }

@@ -203,21 +203,55 @@ public class Database implements Serializable, XMLAppendable
      * You can also provide your own org.jooq.meta.Database implementation
      * here, if your database is currently not supported
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getName() {
         return name;
     }
 
     /**
-     * Sets the value of the name property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * The database dialect from jooq-meta.
+     * Available dialects are named <code>org.util.[database].[database]Database</code>.
+     * <p>
+     * Natively supported values are:
+     * <ul>
+     * <li>{@link org.jooq.meta.ase.ASEDatabase}</li>
+     * <li>{@link org.jooq.meta.cubrid.CUBRIDDatabase}</li>
+     * <li>{@link org.jooq.meta.db2.DB2Database}</li>
+     * <li>{@link org.jooq.meta.derby.DerbyDatabase}</li>
+     * <li>{@link org.jooq.meta.firebird.FirebirdDatabase}</li>
+     * <li>{@link org.jooq.meta.h2.H2Database}</li>
+     * <li>{@link org.jooq.meta.hana.HanaDatabase}</li>
+     * <li>{@link org.jooq.meta.hsqldb.HSQLDBDatabase}</li>
+     * <li>{@link org.jooq.meta.informix.InformixDatabase}</li>
+     * <li>{@link org.jooq.meta.ingres.IngresDatabase}</li>
+     * <li>{@link org.jooq.meta.mariadb.MariaDBDatabase}</li>
+     * <li>{@link org.jooq.meta.mysql.MySQLDatabase}</li>
+     * <li>{@link org.jooq.meta.oracle.OracleDatabase}</li>
+     * <li>{@link org.jooq.meta.postgres.PostgresDatabase}</li>
+     * <li>{@link org.jooq.meta.redshift.RedshiftDatabase}</li>
+     * <li>{@link org.jooq.meta.sqlite.SQLiteDatabase}</li>
+     * <li>{@link org.jooq.meta.sqlserver.SQLServerDatabase}</li>
+     * <li>{@link org.jooq.meta.sybase.SybaseDatabase}</li>
+     * <li>{@link org.jooq.meta.vertica.VerticaDatabase}</li>
+     * </ul>
+     * <p>
+     * This value can be used to reverse-engineer generic JDBC DatabaseMetaData (e.g. for MS Access).
+     * <ul>
+     * <li>{@link org.jooq.meta.jdbc.JDBCDatabase}</li>
+     * </ul>
+     * <p>
+     * This value can be used to reverse-engineer standard jOOQ-meta XML formats.
+     * <ul>
+     * <li>{@link org.jooq.meta.xml.XMLDatabase}</li>
+     * </ul>
+     * <p>
+     * This value can be used to reverse-engineer JPA annotated entities
+     * <ul>
+     * <li>{@link org.jooq.meta.extensions.jpa.JPADatabase}</li>
+     * </ul>
+     * <p>
+     * You can also provide your own org.jooq.meta.Database implementation
+     * here, if your database is currently not supported
      *
      */
     public void setName(String value) {
@@ -315,21 +349,22 @@ public class Database implements Serializable, XMLAppendable
      * <p>
      * Whitespace is ignored and comments are possible unless overridden in {@link #getRegexFlags()}.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getIncludes() {
         return includes;
     }
 
     /**
-     * Sets the value of the includes property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * All elements that are generated from your schema.
+     * <p>
+     * This is a Java regular expression. Use the pipe to separate several expressions.
+     * Watch out for case-sensitivity. Depending on your database, this might be
+     * important!
+     * <p>
+     * You can create case-insensitive regular expressions
+     * using this syntax: <code>(?i:expr)</code>
+     * <p>
+     * Whitespace is ignored and comments are possible unless overridden in {@link #getRegexFlags()}.
      *
      */
     public void setIncludes(String value) {
@@ -342,21 +377,16 @@ public class Database implements Serializable, XMLAppendable
      * This is a Java regular expression. Use the pipe to separate several expressions.
      * Excludes match before includes, i.e. excludes have a higher priority.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getExcludes() {
         return excludes;
     }
 
     /**
-     * Sets the value of the excludes property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * All elements that are excluded from your schema.
+     * <p>
+     * This is a Java regular expression. Use the pipe to separate several expressions.
+     * Excludes match before includes, i.e. excludes have a higher priority.
      *
      */
     public void setExcludes(String value) {
@@ -777,21 +807,16 @@ public class Database implements Serializable, XMLAppendable
      * This is a Java regular expression. Use the pipe to separate several expressions.
      * See {@link org.jooq.UpdatableRecord#store()} and {@link org.jooq.UpdatableRecord#delete()} for details about optimistic locking.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getRecordVersionFields() {
         return recordVersionFields;
     }
 
     /**
-     * Sets the value of the recordVersionFields property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * All table and view columns that are used as "version" fields for optimistic locking.
+     * <p>
+     * This is a Java regular expression. Use the pipe to separate several expressions.
+     * See {@link org.jooq.UpdatableRecord#store()} and {@link org.jooq.UpdatableRecord#delete()} for details about optimistic locking.
      *
      */
     public void setRecordVersionFields(String value) {
@@ -804,21 +829,16 @@ public class Database implements Serializable, XMLAppendable
      * This is a Java regular expression. Use the pipe to separate several expressions.
      * See {@link org.jooq.UpdatableRecord#store()} and {@link org.jooq.UpdatableRecord#delete()} for details about optimistic locking.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getRecordTimestampFields() {
         return recordTimestampFields;
     }
 
     /**
-     * Sets the value of the recordTimestampFields property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * All table and view columns that are used as "timestamp" fields for optimistic locking.
+     * <p>
+     * This is a Java regular expression. Use the pipe to separate several expressions.
+     * See {@link org.jooq.UpdatableRecord#store()} and {@link org.jooq.UpdatableRecord#delete()} for details about optimistic locking.
      *
      */
     public void setRecordTimestampFields(String value) {
@@ -830,21 +850,15 @@ public class Database implements Serializable, XMLAppendable
      * <p>
      * To be used if columns are not detected as automatically as identities.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getSyntheticIdentities() {
         return syntheticIdentities;
     }
 
     /**
-     * Sets the value of the syntheticIdentities property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * A regular expression matching all columns that represent identities.
+     * <p>
+     * To be used if columns are not detected as automatically as identities.
      *
      */
     public void setSyntheticIdentities(String value) {
@@ -865,21 +879,24 @@ public class Database implements Serializable, XMLAppendable
      * <p>
      * Synthetic primary keys will override existing primary keys.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getSyntheticPrimaryKeys() {
         return syntheticPrimaryKeys;
     }
 
     /**
-     * Sets the value of the syntheticPrimaryKeys property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * A regular expression matching all columns that participate in "synthetic" primary keys,
+     * which should be placed on generated {@link org.jooq.UpdatableRecord}
+     * <p>
+     * To be used with:
+     * <ul>
+     * <li>{@link org.jooq.UpdatableRecord#store()}</li>
+     * <li>{@link org.jooq.UpdatableRecord#update()}</li>
+     * <li>{@link org.jooq.UpdatableRecord#delete()}</li>
+     * <li>{@link org.jooq.UpdatableRecord#refresh()}</li>
+     * </ul>
+     * <p>
+     * Synthetic primary keys will override existing primary keys.
      *
      */
     public void setSyntheticPrimaryKeys(String value) {
@@ -902,21 +919,26 @@ public class Database implements Serializable, XMLAppendable
      * <p>
      * This flag will also replace synthetic primary keys, if it matches.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getOverridePrimaryKeys() {
         return overridePrimaryKeys;
     }
 
     /**
-     * Sets the value of the overridePrimaryKeys property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * All (UNIQUE) key names that should be used instead of primary keys on
+     * generated {@link org.jooq.UpdatableRecord}.
+     * <p>
+     * To be used with:
+     * <ul>
+     * <li>{@link org.jooq.UpdatableRecord#store()}</li>
+     * <li>{@link org.jooq.UpdatableRecord#update()}</li>
+     * <li>{@link org.jooq.UpdatableRecord#delete()}</li>
+     * <li>{@link org.jooq.UpdatableRecord#refresh()}</li>
+     * </ul>
+     * <p>
+     * If several keys match, a warning is emitted and the first one encountered will be used.
+     * <p>
+     * This flag will also replace synthetic primary keys, if it matches.
      *
      */
     public void setOverridePrimaryKeys(String value) {
@@ -963,6 +985,7 @@ public class Database implements Serializable, XMLAppendable
      *     {@link Boolean }
      *
      */
+    @Deprecated
     public Boolean isIgnoreProcedureReturnValues() {
         return ignoreProcedureReturnValues;
     }
@@ -975,6 +998,7 @@ public class Database implements Serializable, XMLAppendable
      *     {@link Boolean }
      *
      */
+    @Deprecated
     public void setIgnoreProcedureReturnValues(Boolean value) {
         this.ignoreProcedureReturnValues = value;
     }
@@ -1033,21 +1057,16 @@ public class Database implements Serializable, XMLAppendable
      * This cannot be combined with the {@link #getCatalogs()} configuration element.
      * If left empty (and without any {@link #getCatalogs()} configuration  element), jOOQ will generate all available catalogs.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getInputCatalog() {
         return inputCatalog;
     }
 
     /**
-     * Sets the value of the inputCatalog property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * The catalog that is used locally as a source for meta information.
+     * <p>
+     * This cannot be combined with the {@link #getCatalogs()} configuration element.
+     * If left empty (and without any {@link #getCatalogs()} configuration  element), jOOQ will generate all available catalogs.
      *
      */
     public void setInputCatalog(String value) {
@@ -1063,21 +1082,19 @@ public class Database implements Serializable, XMLAppendable
      * <p>
      * This will be ignored if {@link #isOutputCatalogToDefault()} is set to true
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getOutputCatalog() {
         return outputCatalog;
     }
 
     /**
-     * Sets the value of the outputCatalog property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * The catalog that is used in generated source code.
+     * <p>
+     * Use this to override your local development
+     * catalog name for source code generation. If not specified, this
+     * will be the same as {@link #getInputCatalog()}
+     * <p>
+     * This will be ignored if {@link #isOutputCatalogToDefault()} is set to true
      *
      */
     public void setOutputCatalog(String value) {
@@ -1115,21 +1132,16 @@ public class Database implements Serializable, XMLAppendable
      * This cannot be combined with the {@link #getSchemata()} configuration element.
      * If left empty (and without any {@link #getSchemata()} configuration element), jOOQ will generate all available schemata.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getInputSchema() {
         return inputSchema;
     }
 
     /**
-     * Sets the value of the inputSchema property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * The schema that is used locally as a source for meta information.
+     * <p>
+     * This cannot be combined with the {@link #getSchemata()} configuration element.
+     * If left empty (and without any {@link #getSchemata()} configuration element), jOOQ will generate all available schemata.
      *
      */
     public void setInputSchema(String value) {
@@ -1145,21 +1157,19 @@ public class Database implements Serializable, XMLAppendable
      *
      * This will be ignored if {@link #isOutputSchemaToDefault()} is set to true
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getOutputSchema() {
         return outputSchema;
     }
 
     /**
-     * Sets the value of the outputSchema property.
+     * The schema that is used in generated source code.
+     * <p>
+     * Use this to override your local development
+     * schema name for source code generation. If not specified, this
+     * will be the same as {@link #getInputSchema()}.
      *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * This will be ignored if {@link #isOutputSchemaToDefault()} is set to true
      *
      */
     public void setOutputSchema(String value) {
@@ -1207,21 +1217,26 @@ public class Database implements Serializable, XMLAppendable
      * Schema versions will be generated into the {@link javax.annotation.Generated} annotation on
      * generated artefacts.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getSchemaVersionProvider() {
         return schemaVersionProvider;
     }
 
     /**
-     * Sets the value of the schemaVersionProvider property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * A custom version number that, if available, will be used to assess whether the
+     * {@link #getInputSchema()} will need to be regenerated.
+     * <p>
+     * There are three operation modes for this element:
+     * <ul>
+     * <li>The value is a class that can be found on the classpath and that implements
+     *   {@link org.jooq.meta.SchemaVersionProvider}. Such classes must provide a default constructor</li>
+     * <li>The value is a SELECT statement that returns one record with one column. The
+     *   SELECT statement may contain a named variable called :schema_name</li>
+     * <li>The value is a constant, such as a Maven property</li>
+     * </ul>
+     * <p>
+     * Schema versions will be generated into the {@link javax.annotation.Generated} annotation on
+     * generated artefacts.
      *
      */
     public void setSchemaVersionProvider(String value) {
@@ -1243,21 +1258,25 @@ public class Database implements Serializable, XMLAppendable
      * Catalog versions will be generated into the {@link javax.annotation.Generated} annotation on
      * generated artefacts.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getCatalogVersionProvider() {
         return catalogVersionProvider;
     }
 
     /**
-     * Sets the value of the catalogVersionProvider property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * A custom version number that, if available, will be used to assess whether the
+     * {@link #getInputCatalog()} from a given catalog will need to be regenerated.
+     * <p>
+     * There are three operation modes for this element:
+     * <ul>
+     * <li>The value is a class that can be found on the classpath and that implements
+     *   {@link org.jooq.meta.CatalogVersionProvider}. Such classes must provide a default constructor</li>
+     * <li>The value is a SELECT statement that returns one record with one column. The
+     *   SELECT statement may contain a named variable called :catalog_name</li>
+     * <li>The value is a constant, such as a Maven property</li>
+     * <p>
+     * Catalog versions will be generated into the {@link javax.annotation.Generated} annotation on
+     * generated artefacts.
      *
      */
     public void setCatalogVersionProvider(String value) {
@@ -1269,21 +1288,15 @@ public class Database implements Serializable, XMLAppendable
      * <p>
      * This comparator can be used to influence the order of any object that is produced by jOOQ meta, and thus, indirectly, the order of declared objects in generated code.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getOrderProvider() {
         return orderProvider;
     }
 
     /**
-     * Sets the value of the orderProvider property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * A custom {@link java.util.Comparator} that can compare two {@link org.jooq.meta.Definition} objects to determine their order.
+     * <p>
+     * This comparator can be used to influence the order of any object that is produced by jOOQ meta, and thus, indirectly, the order of declared objects in generated code.
      *
      */
     public void setOrderProvider(String value) {
@@ -1349,21 +1362,13 @@ public class Database implements Serializable, XMLAppendable
     /**
      * The number of seconds that are considered "slow" before a query is logged to indicate a bug, 0 for not logging.
      *
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *
      */
     public Integer getLogSlowQueriesAfterSeconds() {
         return logSlowQueriesAfterSeconds;
     }
 
     /**
-     * Sets the value of the logSlowQueriesAfterSeconds property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
+     * The number of seconds that are considered "slow" before a query is logged to indicate a bug, 0 for not logging.
      *
      */
     public void setLogSlowQueriesAfterSeconds(Integer value) {
@@ -1373,21 +1378,13 @@ public class Database implements Serializable, XMLAppendable
     /**
      * The number of seconds that are considered "slow" before a result set is logged to indicate a bug, 0 for not logging.
      *
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *
      */
     public Integer getLogSlowResultsAfterSeconds() {
         return logSlowResultsAfterSeconds;
     }
 
     /**
-     * Sets the value of the logSlowResultsAfterSeconds property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
+     * The number of seconds that are considered "slow" before a result set is logged to indicate a bug, 0 for not logging.
      *
      */
     public void setLogSlowResultsAfterSeconds(Integer value) {
@@ -1438,6 +1435,7 @@ public class Database implements Serializable, XMLAppendable
         this.embeddables = embeddables;
     }
 
+    @Deprecated
     public List<CustomType> getCustomTypes() {
         if (customTypes == null) {
             customTypes = new ArrayList<CustomType>();
@@ -1445,10 +1443,12 @@ public class Database implements Serializable, XMLAppendable
         return customTypes;
     }
 
+    @Deprecated
     public void setCustomTypes(List<CustomType> customTypes) {
         this.customTypes = customTypes;
     }
 
+    @Deprecated
     public List<EnumType> getEnumTypes() {
         if (enumTypes == null) {
             enumTypes = new ArrayList<EnumType>();
@@ -1456,6 +1456,7 @@ public class Database implements Serializable, XMLAppendable
         return enumTypes;
     }
 
+    @Deprecated
     public void setEnumTypes(List<EnumType> enumTypes) {
         this.enumTypes = enumTypes;
     }
@@ -1471,11 +1472,81 @@ public class Database implements Serializable, XMLAppendable
         this.forcedTypes = forcedTypes;
     }
 
+    /**
+     * The database dialect from jooq-meta.
+     * Available dialects are named <code>org.util.[database].[database]Database</code>.
+     * <p>
+     * Natively supported values are:
+     * <ul>
+     * <li>{@link org.jooq.meta.ase.ASEDatabase}</li>
+     * <li>{@link org.jooq.meta.cubrid.CUBRIDDatabase}</li>
+     * <li>{@link org.jooq.meta.db2.DB2Database}</li>
+     * <li>{@link org.jooq.meta.derby.DerbyDatabase}</li>
+     * <li>{@link org.jooq.meta.firebird.FirebirdDatabase}</li>
+     * <li>{@link org.jooq.meta.h2.H2Database}</li>
+     * <li>{@link org.jooq.meta.hana.HanaDatabase}</li>
+     * <li>{@link org.jooq.meta.hsqldb.HSQLDBDatabase}</li>
+     * <li>{@link org.jooq.meta.informix.InformixDatabase}</li>
+     * <li>{@link org.jooq.meta.ingres.IngresDatabase}</li>
+     * <li>{@link org.jooq.meta.mariadb.MariaDBDatabase}</li>
+     * <li>{@link org.jooq.meta.mysql.MySQLDatabase}</li>
+     * <li>{@link org.jooq.meta.oracle.OracleDatabase}</li>
+     * <li>{@link org.jooq.meta.postgres.PostgresDatabase}</li>
+     * <li>{@link org.jooq.meta.redshift.RedshiftDatabase}</li>
+     * <li>{@link org.jooq.meta.sqlite.SQLiteDatabase}</li>
+     * <li>{@link org.jooq.meta.sqlserver.SQLServerDatabase}</li>
+     * <li>{@link org.jooq.meta.sybase.SybaseDatabase}</li>
+     * <li>{@link org.jooq.meta.vertica.VerticaDatabase}</li>
+     * </ul>
+     * <p>
+     * This value can be used to reverse-engineer generic JDBC DatabaseMetaData (e.g. for MS Access).
+     * <ul>
+     * <li>{@link org.jooq.meta.jdbc.JDBCDatabase}</li>
+     * </ul>
+     * <p>
+     * This value can be used to reverse-engineer standard jOOQ-meta XML formats.
+     * <ul>
+     * <li>{@link org.jooq.meta.xml.XMLDatabase}</li>
+     * </ul>
+     * <p>
+     * This value can be used to reverse-engineer JPA annotated entities
+     * <ul>
+     * <li>{@link org.jooq.meta.extensions.jpa.JPADatabase}</li>
+     * </ul>
+     * <p>
+     * You can also provide your own org.jooq.meta.Database implementation
+     * here, if your database is currently not supported
+     *
+     */
     public Database withName(String value) {
         setName(value);
         return this;
     }
 
+    /**
+     * The flags that will be applied to all regular expressions from this configuration by default.
+     * <p>
+     * The default value is "COMMENTS CASE_INSENSITIVE"Gets the value of the regexFlags property.
+     *
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the regexFlags property.
+     *
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getRegexFlags().add(newItem);
+     * </pre>
+     *
+     *
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link RegexFlag }
+     *
+     *
+     */
     public Database withRegexFlags(RegexFlag... values) {
         if (values!= null) {
             for (RegexFlag value: values) {
@@ -1485,6 +1556,30 @@ public class Database implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * The flags that will be applied to all regular expressions from this configuration by default.
+     * <p>
+     * The default value is "COMMENTS CASE_INSENSITIVE"Gets the value of the regexFlags property.
+     *
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the regexFlags property.
+     *
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getRegexFlags().add(newItem);
+     * </pre>
+     *
+     *
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link RegexFlag }
+     *
+     *
+     */
     public Database withRegexFlags(Collection<RegexFlag> values) {
         if (values!= null) {
             getRegexFlags().addAll(values);
@@ -1502,11 +1597,31 @@ public class Database implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * All elements that are generated from your schema.
+     * <p>
+     * This is a Java regular expression. Use the pipe to separate several expressions.
+     * Watch out for case-sensitivity. Depending on your database, this might be
+     * important!
+     * <p>
+     * You can create case-insensitive regular expressions
+     * using this syntax: <code>(?i:expr)</code>
+     * <p>
+     * Whitespace is ignored and comments are possible unless overridden in {@link #getRegexFlags()}.
+     *
+     */
     public Database withIncludes(String value) {
         setIncludes(value);
         return this;
     }
 
+    /**
+     * All elements that are excluded from your schema.
+     * <p>
+     * This is a Java regular expression. Use the pipe to separate several expressions.
+     * Excludes match before includes, i.e. excludes have a higher priority.
+     *
+     */
     public Database withExcludes(String value) {
         setExcludes(value);
         return this;
@@ -1597,26 +1712,78 @@ public class Database implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * All table and view columns that are used as "version" fields for optimistic locking.
+     * <p>
+     * This is a Java regular expression. Use the pipe to separate several expressions.
+     * See {@link org.jooq.UpdatableRecord#store()} and {@link org.jooq.UpdatableRecord#delete()} for details about optimistic locking.
+     *
+     */
     public Database withRecordVersionFields(String value) {
         setRecordVersionFields(value);
         return this;
     }
 
+    /**
+     * All table and view columns that are used as "timestamp" fields for optimistic locking.
+     * <p>
+     * This is a Java regular expression. Use the pipe to separate several expressions.
+     * See {@link org.jooq.UpdatableRecord#store()} and {@link org.jooq.UpdatableRecord#delete()} for details about optimistic locking.
+     *
+     */
     public Database withRecordTimestampFields(String value) {
         setRecordTimestampFields(value);
         return this;
     }
 
+    /**
+     * A regular expression matching all columns that represent identities.
+     * <p>
+     * To be used if columns are not detected as automatically as identities.
+     *
+     */
     public Database withSyntheticIdentities(String value) {
         setSyntheticIdentities(value);
         return this;
     }
 
+    /**
+     * A regular expression matching all columns that participate in "synthetic" primary keys,
+     * which should be placed on generated {@link org.jooq.UpdatableRecord}
+     * <p>
+     * To be used with:
+     * <ul>
+     * <li>{@link org.jooq.UpdatableRecord#store()}</li>
+     * <li>{@link org.jooq.UpdatableRecord#update()}</li>
+     * <li>{@link org.jooq.UpdatableRecord#delete()}</li>
+     * <li>{@link org.jooq.UpdatableRecord#refresh()}</li>
+     * </ul>
+     * <p>
+     * Synthetic primary keys will override existing primary keys.
+     *
+     */
     public Database withSyntheticPrimaryKeys(String value) {
         setSyntheticPrimaryKeys(value);
         return this;
     }
 
+    /**
+     * All (UNIQUE) key names that should be used instead of primary keys on
+     * generated {@link org.jooq.UpdatableRecord}.
+     * <p>
+     * To be used with:
+     * <ul>
+     * <li>{@link org.jooq.UpdatableRecord#store()}</li>
+     * <li>{@link org.jooq.UpdatableRecord#update()}</li>
+     * <li>{@link org.jooq.UpdatableRecord#delete()}</li>
+     * <li>{@link org.jooq.UpdatableRecord#refresh()}</li>
+     * </ul>
+     * <p>
+     * If several keys match, a warning is emitted and the first one encountered will be used.
+     * <p>
+     * This flag will also replace synthetic primary keys, if it matches.
+     *
+     */
     public Database withOverridePrimaryKeys(String value) {
         setOverridePrimaryKeys(value);
         return this;
@@ -1642,11 +1809,28 @@ public class Database implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * The catalog that is used locally as a source for meta information.
+     * <p>
+     * This cannot be combined with the {@link #getCatalogs()} configuration element.
+     * If left empty (and without any {@link #getCatalogs()} configuration  element), jOOQ will generate all available catalogs.
+     *
+     */
     public Database withInputCatalog(String value) {
         setInputCatalog(value);
         return this;
     }
 
+    /**
+     * The catalog that is used in generated source code.
+     * <p>
+     * Use this to override your local development
+     * catalog name for source code generation. If not specified, this
+     * will be the same as {@link #getInputCatalog()}
+     * <p>
+     * This will be ignored if {@link #isOutputCatalogToDefault()} is set to true
+     *
+     */
     public Database withOutputCatalog(String value) {
         setOutputCatalog(value);
         return this;
@@ -1657,11 +1841,28 @@ public class Database implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * The schema that is used locally as a source for meta information.
+     * <p>
+     * This cannot be combined with the {@link #getSchemata()} configuration element.
+     * If left empty (and without any {@link #getSchemata()} configuration element), jOOQ will generate all available schemata.
+     *
+     */
     public Database withInputSchema(String value) {
         setInputSchema(value);
         return this;
     }
 
+    /**
+     * The schema that is used in generated source code.
+     * <p>
+     * Use this to override your local development
+     * schema name for source code generation. If not specified, this
+     * will be the same as {@link #getInputSchema()}.
+     *
+     * This will be ignored if {@link #isOutputSchemaToDefault()} is set to true
+     *
+     */
     public Database withOutputSchema(String value) {
         setOutputSchema(value);
         return this;
@@ -1672,16 +1873,55 @@ public class Database implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * A custom version number that, if available, will be used to assess whether the
+     * {@link #getInputSchema()} will need to be regenerated.
+     * <p>
+     * There are three operation modes for this element:
+     * <ul>
+     * <li>The value is a class that can be found on the classpath and that implements
+     *   {@link org.jooq.meta.SchemaVersionProvider}. Such classes must provide a default constructor</li>
+     * <li>The value is a SELECT statement that returns one record with one column. The
+     *   SELECT statement may contain a named variable called :schema_name</li>
+     * <li>The value is a constant, such as a Maven property</li>
+     * </ul>
+     * <p>
+     * Schema versions will be generated into the {@link javax.annotation.Generated} annotation on
+     * generated artefacts.
+     *
+     */
     public Database withSchemaVersionProvider(String value) {
         setSchemaVersionProvider(value);
         return this;
     }
 
+    /**
+     * A custom version number that, if available, will be used to assess whether the
+     * {@link #getInputCatalog()} from a given catalog will need to be regenerated.
+     * <p>
+     * There are three operation modes for this element:
+     * <ul>
+     * <li>The value is a class that can be found on the classpath and that implements
+     *   {@link org.jooq.meta.CatalogVersionProvider}. Such classes must provide a default constructor</li>
+     * <li>The value is a SELECT statement that returns one record with one column. The
+     *   SELECT statement may contain a named variable called :catalog_name</li>
+     * <li>The value is a constant, such as a Maven property</li>
+     * <p>
+     * Catalog versions will be generated into the {@link javax.annotation.Generated} annotation on
+     * generated artefacts.
+     *
+     */
     public Database withCatalogVersionProvider(String value) {
         setCatalogVersionProvider(value);
         return this;
     }
 
+    /**
+     * A custom {@link java.util.Comparator} that can compare two {@link org.jooq.meta.Definition} objects to determine their order.
+     * <p>
+     * This comparator can be used to influence the order of any object that is produced by jOOQ meta, and thus, indirectly, the order of declared objects in generated code.
+     *
+     */
     public Database withOrderProvider(String value) {
         setOrderProvider(value);
         return this;
@@ -1697,11 +1937,19 @@ public class Database implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * The number of seconds that are considered "slow" before a query is logged to indicate a bug, 0 for not logging.
+     *
+     */
     public Database withLogSlowQueriesAfterSeconds(Integer value) {
         setLogSlowQueriesAfterSeconds(value);
         return this;
     }
 
+    /**
+     * The number of seconds that are considered "slow" before a result set is logged to indicate a bug, 0 for not logging.
+     *
+     */
     public Database withLogSlowResultsAfterSeconds(Integer value) {
         setLogSlowResultsAfterSeconds(value);
         return this;
@@ -1791,6 +2039,7 @@ public class Database implements Serializable, XMLAppendable
         return this;
     }
 
+    @Deprecated
     public Database withCustomTypes(CustomType... values) {
         if (values!= null) {
             for (CustomType value: values) {
@@ -1800,6 +2049,7 @@ public class Database implements Serializable, XMLAppendable
         return this;
     }
 
+    @Deprecated
     public Database withCustomTypes(Collection<CustomType> values) {
         if (values!= null) {
             getCustomTypes().addAll(values);
@@ -1807,11 +2057,13 @@ public class Database implements Serializable, XMLAppendable
         return this;
     }
 
+    @Deprecated
     public Database withCustomTypes(List<CustomType> customTypes) {
         setCustomTypes(customTypes);
         return this;
     }
 
+    @Deprecated
     public Database withEnumTypes(EnumType... values) {
         if (values!= null) {
             for (EnumType value: values) {
@@ -1821,6 +2073,7 @@ public class Database implements Serializable, XMLAppendable
         return this;
     }
 
+    @Deprecated
     public Database withEnumTypes(Collection<EnumType> values) {
         if (values!= null) {
             getEnumTypes().addAll(values);
@@ -1828,6 +2081,7 @@ public class Database implements Serializable, XMLAppendable
         return this;
     }
 
+    @Deprecated
     public Database withEnumTypes(List<EnumType> enumTypes) {
         setEnumTypes(enumTypes);
         return this;

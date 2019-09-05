@@ -22,6 +22,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 @XmlType(name = "CustomType", propOrder = {
 
 })
+@Deprecated
 @SuppressWarnings({
     "all"
 })
@@ -43,23 +44,17 @@ public class CustomType implements Serializable, XMLAppendable
     /**
      * @deprecated Use ForcedType only
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
+    @Deprecated
     public String getName() {
         return name;
     }
 
     /**
-     * Sets the value of the name property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * @deprecated Use ForcedType only
      *
      */
+    @Deprecated
     public void setName(String value) {
         this.name = value;
     }
@@ -67,23 +62,17 @@ public class CustomType implements Serializable, XMLAppendable
     /**
      * @deprecated Use ForcedType only
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
+    @Deprecated
     public String getType() {
         return type;
     }
 
     /**
-     * Sets the value of the type property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * @deprecated Use ForcedType only
      *
      */
+    @Deprecated
     public void setType(String value) {
         this.type = value;
     }
@@ -91,23 +80,17 @@ public class CustomType implements Serializable, XMLAppendable
     /**
      * @deprecated Use ForcedType only
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
+    @Deprecated
     public String getConverter() {
         return converter;
     }
 
     /**
-     * Sets the value of the converter property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * @deprecated Use ForcedType only
      *
      */
+    @Deprecated
     public void setConverter(String value) {
         this.converter = value;
     }
@@ -120,6 +103,7 @@ public class CustomType implements Serializable, XMLAppendable
      *     {@link Boolean }
      *
      */
+    @Deprecated
     public Boolean isEnumConverter() {
         return enumConverter;
     }
@@ -132,6 +116,7 @@ public class CustomType implements Serializable, XMLAppendable
      *     {@link Boolean }
      *
      */
+    @Deprecated
     public void setEnumConverter(Boolean value) {
         this.enumConverter = value;
     }
@@ -139,37 +124,46 @@ public class CustomType implements Serializable, XMLAppendable
     /**
      * @deprecated Use ForcedType only
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
+    @Deprecated
     public String getBinding() {
         return binding;
     }
 
     /**
-     * Sets the value of the binding property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * @deprecated Use ForcedType only
      *
      */
+    @Deprecated
     public void setBinding(String value) {
         this.binding = value;
     }
 
+    /**
+     * @deprecated Use ForcedType only
+     *
+     */
+    @Deprecated
     public CustomType withName(String value) {
         setName(value);
         return this;
     }
 
+    /**
+     * @deprecated Use ForcedType only
+     *
+     */
+    @Deprecated
     public CustomType withType(String value) {
         setType(value);
         return this;
     }
 
+    /**
+     * @deprecated Use ForcedType only
+     *
+     */
+    @Deprecated
     public CustomType withConverter(String value) {
         setConverter(value);
         return this;
@@ -180,6 +174,11 @@ public class CustomType implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * @deprecated Use ForcedType only
+     *
+     */
+    @Deprecated
     public CustomType withBinding(String value) {
         setBinding(value);
         return this;

@@ -43,21 +43,15 @@ public class RenderMapping
      * <p>
      * This schema will be omitted in rendered SQL.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getDefaultSchema() {
         return defaultSchema;
     }
 
     /**
-     * Sets the value of the defaultSchema property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * The default schema as defined in {@link org.jooq.Schema#getName()}.
+     * <p>
+     * This schema will be omitted in rendered SQL.
      *
      */
     public void setDefaultSchema(String value) {
@@ -75,6 +69,12 @@ public class RenderMapping
         this.schemata = schemata;
     }
 
+    /**
+     * The default schema as defined in {@link org.jooq.Schema#getName()}.
+     * <p>
+     * This schema will be omitted in rendered SQL.
+     *
+     */
     public RenderMapping withDefaultSchema(String value) {
         setDefaultSchema(value);
         return this;

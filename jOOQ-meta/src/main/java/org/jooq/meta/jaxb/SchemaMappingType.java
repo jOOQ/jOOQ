@@ -40,21 +40,13 @@ public class SchemaMappingType implements Serializable, XMLAppendable
     /**
      * See also {@link Database#getInputSchema()}
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getInputSchema() {
         return inputSchema;
     }
 
     /**
-     * Sets the value of the inputSchema property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * See also {@link Database#getInputSchema()}
      *
      */
     public void setInputSchema(String value) {
@@ -64,21 +56,13 @@ public class SchemaMappingType implements Serializable, XMLAppendable
     /**
      * See also {@link Database#getOutputSchema()}
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getOutputSchema() {
         return outputSchema;
     }
 
     /**
-     * Sets the value of the outputSchema property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * See also {@link Database#getOutputSchema()}
      *
      */
     public void setOutputSchema(String value) {
@@ -109,11 +93,19 @@ public class SchemaMappingType implements Serializable, XMLAppendable
         this.outputSchemaToDefault = value;
     }
 
+    /**
+     * See also {@link Database#getInputSchema()}
+     *
+     */
     public SchemaMappingType withInputSchema(String value) {
         setInputSchema(value);
         return this;
     }
 
+    /**
+     * See also {@link Database#getOutputSchema()}
+     *
+     */
     public SchemaMappingType withOutputSchema(String value) {
         setOutputSchema(value);
         return this;

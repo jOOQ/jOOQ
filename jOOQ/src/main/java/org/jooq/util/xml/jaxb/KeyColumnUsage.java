@@ -73,186 +73,66 @@ public class KeyColumnUsage implements Serializable, XMLAppendable
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String tableName;
 
-    /**
-     * Gets the value of the columnName property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getColumnName() {
         return columnName;
     }
 
-    /**
-     * Sets the value of the columnName property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setColumnName(String value) {
         this.columnName = value;
     }
 
-    /**
-     * Gets the value of the constraintCatalog property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getConstraintCatalog() {
         return constraintCatalog;
     }
 
-    /**
-     * Sets the value of the constraintCatalog property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setConstraintCatalog(String value) {
         this.constraintCatalog = value;
     }
 
-    /**
-     * Gets the value of the constraintSchema property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getConstraintSchema() {
         return constraintSchema;
     }
 
-    /**
-     * Sets the value of the constraintSchema property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setConstraintSchema(String value) {
         this.constraintSchema = value;
     }
 
-    /**
-     * Gets the value of the constraintName property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getConstraintName() {
         return constraintName;
     }
 
-    /**
-     * Sets the value of the constraintName property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setConstraintName(String value) {
         this.constraintName = value;
     }
 
-    /**
-     * Gets the value of the ordinalPosition property.
-     *
-     */
     public int getOrdinalPosition() {
         return ordinalPosition;
     }
 
-    /**
-     * Sets the value of the ordinalPosition property.
-     *
-     */
     public void setOrdinalPosition(int value) {
         this.ordinalPosition = value;
     }
 
-    /**
-     * Gets the value of the tableCatalog property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getTableCatalog() {
         return tableCatalog;
     }
 
-    /**
-     * Sets the value of the tableCatalog property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setTableCatalog(String value) {
         this.tableCatalog = value;
     }
 
-    /**
-     * Gets the value of the tableSchema property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getTableSchema() {
         return tableSchema;
     }
 
-    /**
-     * Sets the value of the tableSchema property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setTableSchema(String value) {
         this.tableSchema = value;
     }
 
-    /**
-     * Gets the value of the tableName property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getTableName() {
         return tableName;
     }
 
-    /**
-     * Sets the value of the tableName property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setTableName(String value) {
         this.tableName = value;
     }

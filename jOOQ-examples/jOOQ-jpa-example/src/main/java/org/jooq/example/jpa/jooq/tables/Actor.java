@@ -18,9 +18,9 @@ import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
+import org.jooq.example.jpa.jooq.DefaultSchema;
 import org.jooq.example.jpa.jooq.Indexes;
 import org.jooq.example.jpa.jooq.Keys;
-import org.jooq.example.jpa.jooq.Public;
 import org.jooq.example.jpa.jooq.tables.records.ActorRecord;
 import org.jooq.impl.DSL;
 import org.jooq.impl.TableImpl;
@@ -32,10 +32,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Actor extends TableImpl<ActorRecord> {
 
-    private static final long serialVersionUID = 14087797;
+    private static final long serialVersionUID = 99932436;
 
     /**
-     * The reference instance of <code>PUBLIC.ACTOR</code>
+     * The reference instance of <code>ACTOR</code>
      */
     public static final Actor ACTOR = new Actor();
 
@@ -48,36 +48,36 @@ public class Actor extends TableImpl<ActorRecord> {
     }
 
     /**
-     * The column <code>PUBLIC.ACTOR.ACTORID</code>.
+     * The column <code>ACTOR.ACTORID</code>.
      */
     public final TableField<ActorRecord, Integer> ACTORID = createField(DSL.name("ACTORID"), org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     /**
-     * The column <code>PUBLIC.ACTOR.FIRSTNAME</code>.
+     * The column <code>ACTOR.FIRSTNAME</code>.
      */
     public final TableField<ActorRecord, String> FIRSTNAME = createField(DSL.name("FIRSTNAME"), org.jooq.impl.SQLDataType.VARCHAR(255), this, "");
 
     /**
-     * The column <code>PUBLIC.ACTOR.LASTNAME</code>.
+     * The column <code>ACTOR.LASTNAME</code>.
      */
     public final TableField<ActorRecord, String> LASTNAME = createField(DSL.name("LASTNAME"), org.jooq.impl.SQLDataType.VARCHAR(255), this, "");
 
     /**
-     * Create a <code>PUBLIC.ACTOR</code> table reference
+     * Create a <code>ACTOR</code> table reference
      */
     public Actor() {
         this(DSL.name("ACTOR"), null);
     }
 
     /**
-     * Create an aliased <code>PUBLIC.ACTOR</code> table reference
+     * Create an aliased <code>ACTOR</code> table reference
      */
     public Actor(String alias) {
         this(DSL.name(alias), ACTOR);
     }
 
     /**
-     * Create an aliased <code>PUBLIC.ACTOR</code> table reference
+     * Create an aliased <code>ACTOR</code> table reference
      */
     public Actor(Name alias) {
         this(alias, ACTOR);
@@ -97,7 +97,7 @@ public class Actor extends TableImpl<ActorRecord> {
 
     @Override
     public Schema getSchema() {
-        return Public.PUBLIC;
+        return DefaultSchema.DEFAULT_SCHEMA;
     }
 
     @Override

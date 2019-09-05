@@ -237,6 +237,7 @@ import org.jooq.SelectQuery;
 import org.jooq.SelectSelectStep;
 import org.jooq.SelectWhereStep;
 import org.jooq.Sequence;
+import org.jooq.Source;
 import org.jooq.Statement;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -435,6 +436,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public Meta meta(InformationSchema schema) {
         return new InformationSchemaMetaImpl(configuration(), schema);
+    }
+
+    @Override
+    public Meta meta(Source... scripts) {
+        return new DDLMetaProvider(configuration(), scripts).provide();
     }
 
     @Override

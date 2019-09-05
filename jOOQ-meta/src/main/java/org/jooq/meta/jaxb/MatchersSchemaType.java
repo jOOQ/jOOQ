@@ -38,21 +38,13 @@ public class MatchersSchemaType implements Serializable, XMLAppendable
     /**
      * This schema matcher applies to all unqualified or qualified schema names matched by this expression. If left empty, this matcher applies to all schemas.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getExpression() {
         return expression;
     }
 
     /**
-     * Sets the value of the expression property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * This schema matcher applies to all unqualified or qualified schema names matched by this expression. If left empty, this matcher applies to all schemas.
      *
      */
     public void setExpression(String value) {
@@ -62,21 +54,13 @@ public class MatchersSchemaType implements Serializable, XMLAppendable
     /**
      * This rule influences the naming of the generated {@link org.jooq.Schema} object.
      *
-     * @return
-     *     possible object is
-     *     {@link MatcherRule }
-     *
      */
     public MatcherRule getSchemaClass() {
         return schemaClass;
     }
 
     /**
-     * Sets the value of the schemaClass property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link MatcherRule }
+     * This rule influences the naming of the generated {@link org.jooq.Schema} object.
      *
      */
     public void setSchemaClass(MatcherRule value) {
@@ -86,21 +70,13 @@ public class MatchersSchemaType implements Serializable, XMLAppendable
     /**
      * This rule influences the naming of the generated {@link org.jooq.Schema} identifier.
      *
-     * @return
-     *     possible object is
-     *     {@link MatcherRule }
-     *
      */
     public MatcherRule getSchemaIdentifier() {
         return schemaIdentifier;
     }
 
     /**
-     * Sets the value of the schemaIdentifier property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link MatcherRule }
+     * This rule influences the naming of the generated {@link org.jooq.Schema} identifier.
      *
      */
     public void setSchemaIdentifier(MatcherRule value) {
@@ -110,42 +86,50 @@ public class MatchersSchemaType implements Serializable, XMLAppendable
     /**
      * This string provides additional interfaces that a generated {@link org.jooq.Schema} should implement.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getSchemaImplements() {
         return schemaImplements;
     }
 
     /**
-     * Sets the value of the schemaImplements property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * This string provides additional interfaces that a generated {@link org.jooq.Schema} should implement.
      *
      */
     public void setSchemaImplements(String value) {
         this.schemaImplements = value;
     }
 
+    /**
+     * This schema matcher applies to all unqualified or qualified schema names matched by this expression. If left empty, this matcher applies to all schemas.
+     *
+     */
     public MatchersSchemaType withExpression(String value) {
         setExpression(value);
         return this;
     }
 
+    /**
+     * This rule influences the naming of the generated {@link org.jooq.Schema} object.
+     *
+     */
     public MatchersSchemaType withSchemaClass(MatcherRule value) {
         setSchemaClass(value);
         return this;
     }
 
+    /**
+     * This rule influences the naming of the generated {@link org.jooq.Schema} identifier.
+     *
+     */
     public MatchersSchemaType withSchemaIdentifier(MatcherRule value) {
         setSchemaIdentifier(value);
         return this;
     }
 
+    /**
+     * This string provides additional interfaces that a generated {@link org.jooq.Schema} should implement.
+     *
+     */
     public MatchersSchemaType withSchemaImplements(String value) {
         setSchemaImplements(value);
         return this;

@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.jooq</groupId>
         <artifactId>jooq-parent</artifactId>
-        <version>3.12.0-SNAPSHOT</version>
+        <version>3.13.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>jooq-checker</artifactId>
@@ -40,6 +40,13 @@
                         </manifestEntries>
                     </archive>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <!-- [#9099] later versions up to 3.1.1 don't appear to work (to be tested with 3.1.2) -->
+                <version>3.0.1</version>
             </plugin>
         </plugins>
     </build>

@@ -57,6 +57,7 @@ import static org.jooq.impl.DSL.arrayAgg;
 import static org.jooq.impl.DSL.arrayAggDistinct;
 import static org.jooq.impl.DSL.ascii;
 import static org.jooq.impl.DSL.asin;
+import static org.jooq.impl.DSL.asterisk;
 import static org.jooq.impl.DSL.atan;
 import static org.jooq.impl.DSL.atan2;
 import static org.jooq.impl.DSL.avg;
@@ -558,7 +559,7 @@ final class ParserImpl implements Parser {
         // [#8910] Some statements can be parsed differently when we know we're
         //         parsing them for the DDLDatabase. This method patches these
         //         statements.
-        if (TRUE.equals(ctx.configuration().data("org.jooq.extensions.ddl.parse-for-ddldatabase"))) {
+        if (TRUE.equals(ctx.configuration().data("org.jooq.ddl.parse-for-ddldatabase"))) {
             if (query instanceof Select) {
                 String sql =
                 ctx.configuration().derive(SettingsTools.clone(ctx.configuration().settings())
@@ -821,132 +822,138 @@ final class ParserImpl implements Parser {
         if (ctx.done())
             return null;
 
-        switch (ctx.character()) {
-            case 'a':
-            case 'A':
-                if (!parseResultQuery && peekKeyword(ctx, "ALTER"))
-                    return parseAlter(ctx);
+        boolean metaLookupsForceIgnore = ctx.metaLookupsForceIgnore();
+        try {
+            switch (ctx.character()) {
+                case 'a':
+                case 'A':
+                    if (!parseResultQuery && peekKeyword(ctx, "ALTER"))
+                        return parseAlter(ctx.metaLookupsForceIgnore(true));
 
-                break;
+                    break;
 
-            case 'b':
-            case 'B':
-                if (!parseResultQuery && peekKeyword(ctx, "BEGIN"))
-                    return parseBlock(ctx);
+                case 'b':
+                case 'B':
+                    if (!parseResultQuery && peekKeyword(ctx, "BEGIN"))
+                        return parseBlock(ctx);
 
-                break;
+                    break;
 
-            case 'c':
-            case 'C':
-                if (!parseResultQuery && peekKeyword(ctx, "CREATE"))
-                    return parseCreate(ctx);
-                else if (!parseResultQuery && peekKeyword(ctx, "COMMENT ON"))
-                    return parseCommentOn(ctx);
+                case 'c':
+                case 'C':
+                    if (!parseResultQuery && peekKeyword(ctx, "CREATE"))
+                        return parseCreate(ctx.metaLookupsForceIgnore(true));
+                    else if (!parseResultQuery && peekKeyword(ctx, "COMMENT ON"))
+                        return parseCommentOn(ctx.metaLookupsForceIgnore(true));
 
-                break;
+                    break;
 
-            case 'd':
-            case 'D':
-                if (!parseResultQuery && peekKeyword(ctx, "DECLARE") && ctx.requireProEdition())
-                    return parseBlock(ctx);
-                else if (!parseResultQuery && (peekKeyword(ctx, "DELETE") || peekKeyword(ctx, "DEL")))
-                    return parseDelete(ctx, null);
-                else if (!parseResultQuery && peekKeyword(ctx, "DROP"))
-                    return parseDrop(ctx);
-                else if (!parseResultQuery && peekKeyword(ctx, "DO"))
-                    return parseDo(ctx);
+                case 'd':
+                case 'D':
+                    if (!parseResultQuery && peekKeyword(ctx, "DECLARE") && ctx.requireProEdition())
+                        return parseBlock(ctx);
+                    else if (!parseResultQuery && (peekKeyword(ctx, "DELETE") || peekKeyword(ctx, "DEL")))
+                        return parseDelete(ctx, null);
+                    else if (!parseResultQuery && peekKeyword(ctx, "DROP"))
+                        return parseDrop(ctx.metaLookupsForceIgnore(true));
+                    else if (!parseResultQuery && peekKeyword(ctx, "DO"))
+                        return parseDo(ctx);
 
-                break;
+                    break;
 
-            case 'e':
-            case 'E':
-                if (!parseResultQuery && peekKeyword(ctx, "EXECUTE BLOCK AS BEGIN"))
-                    return parseBlock(ctx);
-                else if (!parseResultQuery && peekKeyword(ctx, "EXEC"))
-                    return parseExec(ctx);
+                case 'e':
+                case 'E':
+                    if (!parseResultQuery && peekKeyword(ctx, "EXECUTE BLOCK AS BEGIN"))
+                        return parseBlock(ctx);
+                    else if (!parseResultQuery && peekKeyword(ctx, "EXEC"))
+                        return parseExec(ctx);
 
-                break;
+                    break;
 
-            case 'g':
-            case 'G':
-                if (!parseResultQuery && peekKeyword(ctx, "GRANT"))
-                    return parseGrant(ctx);
+                case 'g':
+                case 'G':
+                    if (!parseResultQuery && peekKeyword(ctx, "GRANT"))
+                        return parseGrant(ctx.metaLookupsForceIgnore(true));
 
-                break;
+                    break;
 
-            case 'i':
-            case 'I':
-                if (!parseResultQuery && (peekKeyword(ctx, "INSERT") || peekKeyword(ctx, "INS")))
-                    return parseInsert(ctx, null);
+                case 'i':
+                case 'I':
+                    if (!parseResultQuery && (peekKeyword(ctx, "INSERT") || peekKeyword(ctx, "INS")))
+                        return parseInsert(ctx, null);
 
-                break;
+                    break;
 
-            case 'm':
-            case 'M':
-                if (!parseResultQuery && peekKeyword(ctx, "MERGE"))
-                    return parseMerge(ctx, null);
+                case 'm':
+                case 'M':
+                    if (!parseResultQuery && peekKeyword(ctx, "MERGE"))
+                        return parseMerge(ctx, null);
 
-                break;
+                    break;
 
-            case 'r':
-            case 'R':
-                if (!parseResultQuery && peekKeyword(ctx, "RENAME"))
-                    return parseRename(ctx);
-                else if (!parseResultQuery && peekKeyword(ctx, "REVOKE"))
-                    return parseRevoke(ctx);
+                case 'r':
+                case 'R':
+                    if (!parseResultQuery && peekKeyword(ctx, "RENAME"))
+                        return parseRename(ctx.metaLookupsForceIgnore(true));
+                    else if (!parseResultQuery && peekKeyword(ctx, "REVOKE"))
+                        return parseRevoke(ctx.metaLookupsForceIgnore(true));
 
-                break;
+                    break;
 
-            case 's':
-            case 'S':
-                if (peekKeyword(ctx, "SELECT") || peekKeyword(ctx, "SEL"))
-                    return parseSelect(ctx);
-                else if (!parseResultQuery && peekKeyword(ctx, "SET"))
-                    return parseSet(ctx);
+                case 's':
+                case 'S':
+                    if (peekKeyword(ctx, "SELECT") || peekKeyword(ctx, "SEL"))
+                        return parseSelect(ctx);
+                    else if (!parseResultQuery && peekKeyword(ctx, "SET"))
+                        return parseSet(ctx);
 
-                break;
+                    break;
 
-            case 't':
-            case 'T':
-                if (!parseResultQuery && peekKeyword(ctx, "TRUNCATE"))
-                    return parseTruncate(ctx);
+                case 't':
+                case 'T':
+                    if (!parseResultQuery && peekKeyword(ctx, "TRUNCATE"))
+                        return parseTruncate(ctx);
 
-                break;
+                    break;
 
-            case 'u':
-            case 'U':
-                if (!parseResultQuery && (peekKeyword(ctx, "UPDATE") || peekKeyword(ctx, "UPD")))
-                    return parseUpdate(ctx, null);
-                else if (!parseResultQuery && peekKeyword(ctx, "USE"))
-                    return parseUse(ctx);
+                case 'u':
+                case 'U':
+                    if (!parseResultQuery && (peekKeyword(ctx, "UPDATE") || peekKeyword(ctx, "UPD")))
+                        return parseUpdate(ctx, null);
+                    else if (!parseResultQuery && peekKeyword(ctx, "USE"))
+                        return parseUse(ctx);
 
-                break;
+                    break;
 
-            case 'v':
-            case 'V':
-                if (!parseSelect && peekKeyword(ctx, "VALUES"))
-                    return parseSelect(ctx);
+                case 'v':
+                case 'V':
+                    if (!parseSelect && peekKeyword(ctx, "VALUES"))
+                        return parseSelect(ctx);
 
-            case 'w':
-            case 'W':
-                if (peekKeyword(ctx, "WITH"))
-                    return parseWith(ctx, parseSelect);
+                case 'w':
+                case 'W':
+                    if (peekKeyword(ctx, "WITH"))
+                        return parseWith(ctx, parseSelect);
 
-                break;
+                    break;
 
-            case '(':
+                case '(':
 
-                // TODO are there other possible statement types?
-                if (peekKeyword(ctx, "WITH", false, true, false))
-                    return parseWith(ctx, true);
-                else
-                    return parseSelect(ctx);
+                    // TODO are there other possible statement types?
+                    if (peekKeyword(ctx, "WITH", false, true, false))
+                        return parseWith(ctx, true);
+                    else
+                        return parseSelect(ctx);
 
-            default:
-                break;
+                default:
+                    break;
+            }
+
+            throw ctx.exception("Unsupported query type");
         }
-
-        throw ctx.exception("Unsupported query type");
+        finally {
+            ctx.metaLookupsForceIgnore(metaLookupsForceIgnore);
+        }
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -3377,7 +3384,9 @@ final class ParserImpl implements Parser {
 
         if (TRUE.equals(ctas) && parseKeyword(ctx, "AS") ||
            !FALSE.equals(ctas) && parseKeywordIf(ctx, "AS")) {
-            CreateTableWithDataStep withDataStep = columnStep.as((Select<Record>) parseQuery(ctx, true, true));
+            boolean previousMetaLookupsForceIgnore = ctx.metaLookupsForceIgnore();
+            CreateTableWithDataStep withDataStep = columnStep.as((Select<Record>) parseQuery(ctx.metaLookupsForceIgnore(false), true, true));
+            ctx.metaLookupsForceIgnore(previousMetaLookupsForceIgnore);
             commentStep =
                   parseKeywordIf(ctx, "WITH DATA")
                 ? withDataStep.withData()
@@ -4909,6 +4918,10 @@ final class ParserImpl implements Parser {
         return parseTuple(ctx, degree, false);
     }
 
+    private static final RowN parseTupleIf(ParserContext ctx, Integer degree) {
+        return parseTupleIf(ctx, degree, false);
+    }
+
     private static final RowN parseTuple(ParserContext ctx, Integer degree, boolean allowDoubleParens) {
         parse(ctx, '(');
         List<? extends FieldOrRow> fieldsOrRows;
@@ -4934,6 +4947,13 @@ final class ParserImpl implements Parser {
 
         parse(ctx, ')');
         return row;
+    }
+
+    private static final RowN parseTupleIf(ParserContext ctx, Integer degree, boolean allowDoubleParens) {
+        if (peek(ctx, '('))
+            return parseTuple(ctx, degree, allowDoubleParens);
+
+        return null;
     }
 
     private static final Table<?> parseJoinedTable(ParserContext ctx) {
@@ -5138,6 +5158,10 @@ final class ParserImpl implements Parser {
         return parseRow(ctx, null);
     }
 
+    private static final RowN parseRowIf(ParserContext ctx) {
+        return parseRowIf(ctx, null);
+    }
+
     private static final List<RowN> parseRows(ParserContext ctx, Integer degree) {
         List<RowN> result = new ArrayList<>();
 
@@ -5152,6 +5176,12 @@ final class ParserImpl implements Parser {
     private static final RowN parseRow(ParserContext ctx, Integer degree) {
         parseFunctionNameIf(ctx, "ROW");
         RowN row = parseTuple(ctx, degree);
+        return row;
+    }
+
+    private static final RowN parseRowIf(ParserContext ctx, Integer degree) {
+        parseFunctionNameIf(ctx, "ROW");
+        RowN row = parseTupleIf(ctx, degree);
         return row;
     }
 
@@ -8700,29 +8730,33 @@ final class ParserImpl implements Parser {
 
             if (parseIf(ctx, '*') && parse(ctx, ')'))
                 if (distinct)
-                    return countDistinct();
+                    return countDistinct(asterisk());
                 else
                     return count();
 
-            QualifiedAsterisk asterisk = parseQualifiedAsteriskIf(ctx);
-            List<Field<?>> fields = (asterisk == null)
-                ? distinct
-                    ? parseFields(ctx)
-                    : Collections.<Field<?>>singletonList(parseField(ctx))
-                : null;
+            Field<?>[] fields = null;
+            QualifiedAsterisk asterisk = null;
+            RowN row = parseRowIf(ctx);
+            if (row != null)
+                fields = row.fields();
+            else if ((asterisk = parseQualifiedAsteriskIf(ctx)) == null)
+                fields = distinct
+                        ? parseFields(ctx).toArray(EMPTY_FIELD)
+                        : new Field[] { parseField(ctx) };
+
             parse(ctx, ')');
 
             if (distinct)
                 if (fields == null)
                     return countDistinct(asterisk);
-                else if (fields.size() > 0)
-                    return countDistinct(fields.toArray(EMPTY_FIELD));
+                else if (fields.length > 0)
+                    return countDistinct(fields);
                 else
-                    return countDistinct(fields.get(0));
+                    return countDistinct(fields[0]);
             else if (fields == null)
                 return count(asterisk);
             else
-                return count(fields.get(0));
+                return count(fields[0]);
         }
 
         return null;
@@ -10548,9 +10582,10 @@ final class ParserContext {
 
     final DSLContext                      dsl;
     final Meta                            meta;
-    final ParseWithMetaLookups            metaLookups;
     final String                          sqlString;
     final char[]                          sql;
+    private final ParseWithMetaLookups    metaLookups;
+    private boolean                       metaLookupsForceIgnore;
     private int                           position        = 0;
     private boolean                       ignoreHints     = true;
     private final Object[]                bindings;
@@ -10595,6 +10630,15 @@ final class ParserContext {
 
     SQLDialect family() {
         return dialect().family();
+    }
+
+    boolean metaLookupsForceIgnore() {
+        return this.metaLookupsForceIgnore;
+    }
+
+    ParserContext metaLookupsForceIgnore(boolean m) {
+        this.metaLookupsForceIgnore = m;
+        return this;
     }
 
     boolean requireProEdition() {
@@ -10797,7 +10841,7 @@ final class ParserContext {
                         return tables.get(0);
         }
 
-        if (metaLookups == THROW_ON_FAILURE)
+        if (!metaLookupsForceIgnore && metaLookups == THROW_ON_FAILURE)
             throw exception("Unknown table identifier");
 
         return table(name);
@@ -10815,7 +10859,7 @@ final class ParserContext {
             }
         }
 
-        if (metaLookups == THROW_ON_FAILURE)
+        if (!metaLookupsForceIgnore && metaLookups == THROW_ON_FAILURE)
             throw exception("Unknown field identifier");
 
         return field(name);

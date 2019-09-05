@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.jooq</groupId>
         <artifactId>jooq-parent</artifactId>
-        <version>3.12.0-SNAPSHOT</version>
+        <version>3.13.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>jooq-meta-extensions</artifactId>
@@ -47,10 +47,6 @@
         <dependency>
             <groupId>org.jooq</groupId>
             <artifactId>jooq-meta</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jooq</groupId>
-            <artifactId>jooq-extensions</artifactId>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>

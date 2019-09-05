@@ -37,21 +37,13 @@ public class MatchersEnumType implements Serializable, XMLAppendable
     /**
      * This enum matcher applies to all unqualified or qualified enum names matched by this expression. If left empty, this matcher applies to all enums.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getExpression() {
         return expression;
     }
 
     /**
-     * Sets the value of the expression property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * This enum matcher applies to all unqualified or qualified enum names matched by this expression. If left empty, this matcher applies to all enums.
      *
      */
     public void setExpression(String value) {
@@ -61,21 +53,13 @@ public class MatchersEnumType implements Serializable, XMLAppendable
     /**
      * This rule influences the naming of the generated {@link org.jooq.EnumType} object.
      *
-     * @return
-     *     possible object is
-     *     {@link MatcherRule }
-     *
      */
     public MatcherRule getEnumClass() {
         return enumClass;
     }
 
     /**
-     * Sets the value of the enumClass property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link MatcherRule }
+     * This rule influences the naming of the generated {@link org.jooq.EnumType} object.
      *
      */
     public void setEnumClass(MatcherRule value) {
@@ -85,37 +69,41 @@ public class MatchersEnumType implements Serializable, XMLAppendable
     /**
      * This string provides additional interfaces that a generated {@link org.jooq.EnumType} should implement.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getEnumImplements() {
         return enumImplements;
     }
 
     /**
-     * Sets the value of the enumImplements property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * This string provides additional interfaces that a generated {@link org.jooq.EnumType} should implement.
      *
      */
     public void setEnumImplements(String value) {
         this.enumImplements = value;
     }
 
+    /**
+     * This enum matcher applies to all unqualified or qualified enum names matched by this expression. If left empty, this matcher applies to all enums.
+     *
+     */
     public MatchersEnumType withExpression(String value) {
         setExpression(value);
         return this;
     }
 
+    /**
+     * This rule influences the naming of the generated {@link org.jooq.EnumType} object.
+     *
+     */
     public MatchersEnumType withEnumClass(MatcherRule value) {
         setEnumClass(value);
         return this;
     }
 
+    /**
+     * This string provides additional interfaces that a generated {@link org.jooq.EnumType} should implement.
+     *
+     */
     public MatchersEnumType withEnumImplements(String value) {
         setEnumImplements(value);
         return this;

@@ -107,410 +107,138 @@ public class Routine implements Serializable, XMLAppendable
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String comment;
 
-    /**
-     * Gets the value of the specificCatalog property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getSpecificCatalog() {
         return specificCatalog;
     }
 
-    /**
-     * Sets the value of the specificCatalog property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setSpecificCatalog(String value) {
         this.specificCatalog = value;
     }
 
-    /**
-     * Gets the value of the specificSchema property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getSpecificSchema() {
         return specificSchema;
     }
 
-    /**
-     * Sets the value of the specificSchema property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setSpecificSchema(String value) {
         this.specificSchema = value;
     }
 
-    /**
-     * Gets the value of the specificPackage property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getSpecificPackage() {
         return specificPackage;
     }
 
-    /**
-     * Sets the value of the specificPackage property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setSpecificPackage(String value) {
         this.specificPackage = value;
     }
 
-    /**
-     * Gets the value of the specificName property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getSpecificName() {
         return specificName;
     }
 
-    /**
-     * Sets the value of the specificName property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setSpecificName(String value) {
         this.specificName = value;
     }
 
-    /**
-     * Gets the value of the routineCatalog property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getRoutineCatalog() {
         return routineCatalog;
     }
 
-    /**
-     * Sets the value of the routineCatalog property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setRoutineCatalog(String value) {
         this.routineCatalog = value;
     }
 
-    /**
-     * Gets the value of the routineSchema property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getRoutineSchema() {
         return routineSchema;
     }
 
-    /**
-     * Sets the value of the routineSchema property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setRoutineSchema(String value) {
         this.routineSchema = value;
     }
 
-    /**
-     * Gets the value of the routinePackage property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getRoutinePackage() {
         return routinePackage;
     }
 
-    /**
-     * Sets the value of the routinePackage property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setRoutinePackage(String value) {
         this.routinePackage = value;
     }
 
-    /**
-     * Gets the value of the routineName property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getRoutineName() {
         return routineName;
     }
 
-    /**
-     * Sets the value of the routineName property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setRoutineName(String value) {
         this.routineName = value;
     }
 
-    /**
-     * Gets the value of the routineType property.
-     *
-     * @return
-     *     possible object is
-     *     {@link RoutineType }
-     *
-     */
     public RoutineType getRoutineType() {
         return routineType;
     }
 
-    /**
-     * Sets the value of the routineType property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link RoutineType }
-     *
-     */
     public void setRoutineType(RoutineType value) {
         this.routineType = value;
     }
 
-    /**
-     * Gets the value of the dataType property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getDataType() {
         return dataType;
     }
 
-    /**
-     * Sets the value of the dataType property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setDataType(String value) {
         this.dataType = value;
     }
 
-    /**
-     * Gets the value of the characterMaximumLength property.
-     *
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *
-     */
     public Integer getCharacterMaximumLength() {
         return characterMaximumLength;
     }
 
-    /**
-     * Sets the value of the characterMaximumLength property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *
-     */
     public void setCharacterMaximumLength(Integer value) {
         this.characterMaximumLength = value;
     }
 
-    /**
-     * Gets the value of the numericPrecision property.
-     *
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *
-     */
     public Integer getNumericPrecision() {
         return numericPrecision;
     }
 
-    /**
-     * Sets the value of the numericPrecision property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *
-     */
     public void setNumericPrecision(Integer value) {
         this.numericPrecision = value;
     }
 
-    /**
-     * Gets the value of the numericScale property.
-     *
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *
-     */
     public Integer getNumericScale() {
         return numericScale;
     }
 
-    /**
-     * Sets the value of the numericScale property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *
-     */
     public void setNumericScale(Integer value) {
         this.numericScale = value;
     }
 
-    /**
-     * Gets the value of the udtCatalog property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getUdtCatalog() {
         return udtCatalog;
     }
 
-    /**
-     * Sets the value of the udtCatalog property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setUdtCatalog(String value) {
         this.udtCatalog = value;
     }
 
-    /**
-     * Gets the value of the udtSchema property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getUdtSchema() {
         return udtSchema;
     }
 
-    /**
-     * Sets the value of the udtSchema property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setUdtSchema(String value) {
         this.udtSchema = value;
     }
 
-    /**
-     * Gets the value of the udtName property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getUdtName() {
         return udtName;
     }
 
-    /**
-     * Sets the value of the udtName property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setUdtName(String value) {
         this.udtName = value;
     }
 
-    /**
-     * Gets the value of the comment property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getComment() {
         return comment;
     }
 
-    /**
-     * Sets the value of the comment property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setComment(String value) {
         this.comment = value;
     }

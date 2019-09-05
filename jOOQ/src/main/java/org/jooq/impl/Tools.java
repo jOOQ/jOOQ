@@ -4777,11 +4777,11 @@ final class Tools {
         }
 
         // [#8041] Character sets are vendor-specific storage clauses, which we might need to ignore
-        if (type.characterSet() != null && ctx.configuration().data("org.jooq.extensions.ddl.ignore-storage-clauses") == null)
+        if (type.characterSet() != null && ctx.configuration().data("org.jooq.ddl.ignore-storage-clauses") == null)
             ctx.sql(' ').visit(K_CHARACTER_SET).sql(' ').visit(type.characterSet());
 
         // [#8011] Collations are vendor-specific storage clauses, which we might need to ignore
-        if (type.collation() != null && ctx.configuration().data("org.jooq.extensions.ddl.ignore-storage-clauses") == null)
+        if (type.collation() != null && ctx.configuration().data("org.jooq.ddl.ignore-storage-clauses") == null)
             ctx.sql(' ').visit(K_COLLATE).sql(' ').visit(type.collation());
     }
 

@@ -50,50 +50,18 @@ public class EnumType implements Serializable, XMLAppendable
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String literals;
 
-    /**
-     * Gets the value of the name property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * Sets the value of the name property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setName(String value) {
         this.name = value;
     }
 
-    /**
-     * Gets the value of the literals property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getLiterals() {
         return literals;
     }
 
-    /**
-     * Sets the value of the literals property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setLiterals(String value) {
         this.literals = value;
     }

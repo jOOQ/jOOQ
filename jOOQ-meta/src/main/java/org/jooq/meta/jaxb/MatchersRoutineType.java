@@ -38,21 +38,13 @@ public class MatchersRoutineType implements Serializable, XMLAppendable
     /**
      * This routine matcher applies to all unqualified or qualified routine names matched by this expression. If left empty, this matcher applies to all routines.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getExpression() {
         return expression;
     }
 
     /**
-     * Sets the value of the expression property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * This routine matcher applies to all unqualified or qualified routine names matched by this expression. If left empty, this matcher applies to all routines.
      *
      */
     public void setExpression(String value) {
@@ -62,21 +54,13 @@ public class MatchersRoutineType implements Serializable, XMLAppendable
     /**
      * This rule influences the naming of the generated {@link org.jooq.Routine} object.
      *
-     * @return
-     *     possible object is
-     *     {@link MatcherRule }
-     *
      */
     public MatcherRule getRoutineClass() {
         return routineClass;
     }
 
     /**
-     * Sets the value of the routineClass property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link MatcherRule }
+     * This rule influences the naming of the generated {@link org.jooq.Routine} object.
      *
      */
     public void setRoutineClass(MatcherRule value) {
@@ -86,21 +70,13 @@ public class MatchersRoutineType implements Serializable, XMLAppendable
     /**
      * This rule influences the naming of generated convenience methods used to call the {@link org.jooq.Routine}.
      *
-     * @return
-     *     possible object is
-     *     {@link MatcherRule }
-     *
      */
     public MatcherRule getRoutineMethod() {
         return routineMethod;
     }
 
     /**
-     * Sets the value of the routineMethod property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link MatcherRule }
+     * This rule influences the naming of generated convenience methods used to call the {@link org.jooq.Routine}.
      *
      */
     public void setRoutineMethod(MatcherRule value) {
@@ -110,42 +86,50 @@ public class MatchersRoutineType implements Serializable, XMLAppendable
     /**
      * This string provides additional interfaces that a generated {@link org.jooq.Routine} should implement.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getRoutineImplements() {
         return routineImplements;
     }
 
     /**
-     * Sets the value of the routineImplements property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * This string provides additional interfaces that a generated {@link org.jooq.Routine} should implement.
      *
      */
     public void setRoutineImplements(String value) {
         this.routineImplements = value;
     }
 
+    /**
+     * This routine matcher applies to all unqualified or qualified routine names matched by this expression. If left empty, this matcher applies to all routines.
+     *
+     */
     public MatchersRoutineType withExpression(String value) {
         setExpression(value);
         return this;
     }
 
+    /**
+     * This rule influences the naming of the generated {@link org.jooq.Routine} object.
+     *
+     */
     public MatchersRoutineType withRoutineClass(MatcherRule value) {
         setRoutineClass(value);
         return this;
     }
 
+    /**
+     * This rule influences the naming of generated convenience methods used to call the {@link org.jooq.Routine}.
+     *
+     */
     public MatchersRoutineType withRoutineMethod(MatcherRule value) {
         setRoutineMethod(value);
         return this;
     }
 
+    /**
+     * This string provides additional interfaces that a generated {@link org.jooq.Routine} should implement.
+     *
+     */
     public MatchersRoutineType withRoutineImplements(String value) {
         setRoutineImplements(value);
         return this;

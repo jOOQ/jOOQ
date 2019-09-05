@@ -47,6 +47,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Locale;
 
 import org.jooq.util.jaxb.tools.MiniJAXB;
@@ -294,6 +295,8 @@ public final class SettingsTools {
 
         if (result.renderFormatting != null)
             result.renderFormatting = (RenderFormatting) result.renderFormatting.clone();
+        if (result.parseSearchPath != null)
+            result.parseSearchPath = new ArrayList<>(result.parseSearchPath);
 
         return result;
     }

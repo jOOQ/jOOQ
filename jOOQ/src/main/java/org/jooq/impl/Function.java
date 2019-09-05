@@ -158,6 +158,7 @@ class Function<T> extends AbstractField<T> implements
     private static final EnumSet<SQLDialect> SUPPORT_STRING_AGG                 = EnumSet.of(POSTGRES);
     private static final EnumSet<SQLDialect> SUPPORT_NO_PARENS_WINDOW_REFERENCE = EnumSet.of(MYSQL, POSTGRES);
     private static final EnumSet<SQLDialect> SUPPORT_FILTER                     = EnumSet.of(H2, HSQLDB, POSTGRES);
+    private static final EnumSet<SQLDialect> SUPPORT_DISTINCT_RVE               = EnumSet.of(H2, POSTGRES);
 
     static final Field<Integer>              ASTERISK                           = DSL.field("*", Integer.class);
 
@@ -569,13 +570,11 @@ class Function<T> extends AbstractField<T> implements
 
     final void toSQLArguments1(Context<?> ctx, QueryPartList<QueryPart> args) {
         if (distinct) {
-            ctx.visit(K_DISTINCT);
+            ctx.visit(K_DISTINCT).sql(' ');
 
-            // [#2883] PostgreSQL can use the DISTINCT keyword with formal row value expressions.
-            if (( ctx.family() == POSTGRES) && args.size() > 1)
+            // [#2883][#9109] PostgreSQL and H2 can use the DISTINCT keyword with formal row value expressions.
+            if (args.size() > 1 && SUPPORT_DISTINCT_RVE.contains(ctx.family()))
                 ctx.sql('(');
-            else
-                ctx.sql(' ');
         }
 
         if (!args.isEmpty()) {
@@ -593,53 +592,39 @@ class Function<T> extends AbstractField<T> implements
         }
 
         if (distinct)
-            if (( ctx.family() == POSTGRES) && args.size() > 1)
+            if (args.size() > 1 && SUPPORT_DISTINCT_RVE.contains(ctx.family()))
                 ctx.sql(')');
-
-        if (ctx.family() != H2) {
-            if (TRUE.equals(fromLast))
-                ctx.sql(' ').visit(K_FROM).sql(' ').visit(K_LAST);
-            else if (FALSE.equals(fromLast))
-                ctx.sql(' ').visit(K_FROM).sql(' ').visit(K_FIRST);
-
-            if (TRUE.equals(ignoreNulls)) {
-                switch (ctx.family()) {
-
-
-
-
-
-                    default:
-                        ctx.sql(' ').visit(K_IGNORE_NULLS);
-                        break;
-                }
-            }
-            else if (FALSE.equals(ignoreNulls)) {
-                switch (ctx.family()) {
-
-
-
-
-
-                    default:
-                        ctx.sql(' ').visit(K_RESPECT_NULLS);
-                        break;
-                }
-            }
-        }
     }
 
     final void toSQLArguments2(Context<?> ctx) {
-        if (ctx.family() == H2) {
-            if (TRUE.equals(fromLast))
-                ctx.sql(' ').visit(K_FROM).sql(' ').visit(K_LAST);
-            else if (FALSE.equals(fromLast))
-                ctx.sql(' ').visit(K_FROM).sql(' ').visit(K_FIRST);
+        if (TRUE.equals(fromLast))
+            ctx.sql(' ').visit(K_FROM).sql(' ').visit(K_LAST);
+        else if (FALSE.equals(fromLast))
+            ctx.sql(' ').visit(K_FROM).sql(' ').visit(K_FIRST);
 
-            if (TRUE.equals(ignoreNulls))
-                ctx.sql(' ').visit(K_IGNORE_NULLS);
-            else if (FALSE.equals(ignoreNulls))
-                ctx.sql(' ').visit(K_RESPECT_NULLS);
+        if (TRUE.equals(ignoreNulls)) {
+            switch (ctx.family()) {
+
+
+
+
+
+                default:
+                    ctx.sql(' ').visit(K_IGNORE_NULLS);
+                    break;
+            }
+        }
+        else if (FALSE.equals(ignoreNulls)) {
+            switch (ctx.family()) {
+
+
+
+
+
+                default:
+                    ctx.sql(' ').visit(K_RESPECT_NULLS);
+                    break;
+            }
         }
     }
 

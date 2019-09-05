@@ -19,9 +19,9 @@ import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
+import org.jooq.example.jpa.jooq.DefaultSchema;
 import org.jooq.example.jpa.jooq.Indexes;
 import org.jooq.example.jpa.jooq.Keys;
-import org.jooq.example.jpa.jooq.Public;
 import org.jooq.example.jpa.jooq.tables.records.FilmRecord;
 import org.jooq.impl.DSL;
 import org.jooq.impl.TableImpl;
@@ -33,10 +33,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Film extends TableImpl<FilmRecord> {
 
-    private static final long serialVersionUID = -694610440;
+    private static final long serialVersionUID = -1815407288;
 
     /**
-     * The reference instance of <code>PUBLIC.FILM</code>
+     * The reference instance of <code>FILM</code>
      */
     public static final Film FILM = new Film();
 
@@ -49,51 +49,51 @@ public class Film extends TableImpl<FilmRecord> {
     }
 
     /**
-     * The column <code>PUBLIC.FILM.FILMID</code>.
+     * The column <code>FILM.FILMID</code>.
      */
     public final TableField<FilmRecord, Integer> FILMID = createField(DSL.name("FILMID"), org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     /**
-     * The column <code>PUBLIC.FILM.LENGTH</code>.
+     * The column <code>FILM.LENGTH</code>.
      */
     public final TableField<FilmRecord, Integer> LENGTH = createField(DSL.name("LENGTH"), org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
-     * The column <code>PUBLIC.FILM.RELEASE_YEAR</code>.
+     * The column <code>FILM.RELEASE_YEAR</code>.
      */
     public final TableField<FilmRecord, Year> RELEASE_YEAR = createField(DSL.name("RELEASE_YEAR"), org.jooq.impl.SQLDataType.INTEGER, this, "", new org.jooq.impl.JPAConverter(org.jooq.example.jpa.converters.YearConverter.class));
 
     /**
-     * The column <code>PUBLIC.FILM.TITLE</code>.
+     * The column <code>FILM.TITLE</code>.
      */
     public final TableField<FilmRecord, String> TITLE = createField(DSL.name("TITLE"), org.jooq.impl.SQLDataType.VARCHAR(255), this, "");
 
     /**
-     * The column <code>PUBLIC.FILM.LANGUAGE_LANGUAGEID</code>.
+     * The column <code>FILM.LANGUAGE_LANGUAGEID</code>.
      */
     public final TableField<FilmRecord, Integer> LANGUAGE_LANGUAGEID = createField(DSL.name("LANGUAGE_LANGUAGEID"), org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
-     * The column <code>PUBLIC.FILM.ORIGINALLANGUAGE_LANGUAGEID</code>.
+     * The column <code>FILM.ORIGINALLANGUAGE_LANGUAGEID</code>.
      */
     public final TableField<FilmRecord, Integer> ORIGINALLANGUAGE_LANGUAGEID = createField(DSL.name("ORIGINALLANGUAGE_LANGUAGEID"), org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
-     * Create a <code>PUBLIC.FILM</code> table reference
+     * Create a <code>FILM</code> table reference
      */
     public Film() {
         this(DSL.name("FILM"), null);
     }
 
     /**
-     * Create an aliased <code>PUBLIC.FILM</code> table reference
+     * Create an aliased <code>FILM</code> table reference
      */
     public Film(String alias) {
         this(DSL.name(alias), FILM);
     }
 
     /**
-     * Create an aliased <code>PUBLIC.FILM</code> table reference
+     * Create an aliased <code>FILM</code> table reference
      */
     public Film(Name alias) {
         this(alias, FILM);
@@ -113,7 +113,7 @@ public class Film extends TableImpl<FilmRecord> {
 
     @Override
     public Schema getSchema() {
-        return Public.PUBLIC;
+        return DefaultSchema.DEFAULT_SCHEMA;
     }
 
     @Override

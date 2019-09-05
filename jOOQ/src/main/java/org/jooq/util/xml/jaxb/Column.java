@@ -100,314 +100,106 @@ public class Column implements Serializable, XMLAppendable
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String comment;
 
-    /**
-     * Gets the value of the tableCatalog property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getTableCatalog() {
         return tableCatalog;
     }
 
-    /**
-     * Sets the value of the tableCatalog property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setTableCatalog(String value) {
         this.tableCatalog = value;
     }
 
-    /**
-     * Gets the value of the tableSchema property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getTableSchema() {
         return tableSchema;
     }
 
-    /**
-     * Sets the value of the tableSchema property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setTableSchema(String value) {
         this.tableSchema = value;
     }
 
-    /**
-     * Gets the value of the tableName property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getTableName() {
         return tableName;
     }
 
-    /**
-     * Sets the value of the tableName property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setTableName(String value) {
         this.tableName = value;
     }
 
-    /**
-     * Gets the value of the columnName property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getColumnName() {
         return columnName;
     }
 
-    /**
-     * Sets the value of the columnName property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setColumnName(String value) {
         this.columnName = value;
     }
 
-    /**
-     * Gets the value of the dataType property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getDataType() {
         return dataType;
     }
 
-    /**
-     * Sets the value of the dataType property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setDataType(String value) {
         this.dataType = value;
     }
 
-    /**
-     * Gets the value of the characterMaximumLength property.
-     *
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *
-     */
     public Integer getCharacterMaximumLength() {
         return characterMaximumLength;
     }
 
-    /**
-     * Sets the value of the characterMaximumLength property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *
-     */
     public void setCharacterMaximumLength(Integer value) {
         this.characterMaximumLength = value;
     }
 
-    /**
-     * Gets the value of the numericPrecision property.
-     *
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *
-     */
     public Integer getNumericPrecision() {
         return numericPrecision;
     }
 
-    /**
-     * Sets the value of the numericPrecision property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *
-     */
     public void setNumericPrecision(Integer value) {
         this.numericPrecision = value;
     }
 
-    /**
-     * Gets the value of the numericScale property.
-     *
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *
-     */
     public Integer getNumericScale() {
         return numericScale;
     }
 
-    /**
-     * Sets the value of the numericScale property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *
-     */
     public void setNumericScale(Integer value) {
         this.numericScale = value;
     }
 
-    /**
-     * Gets the value of the udtCatalog property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getUdtCatalog() {
         return udtCatalog;
     }
 
-    /**
-     * Sets the value of the udtCatalog property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setUdtCatalog(String value) {
         this.udtCatalog = value;
     }
 
-    /**
-     * Gets the value of the udtSchema property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getUdtSchema() {
         return udtSchema;
     }
 
-    /**
-     * Sets the value of the udtSchema property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setUdtSchema(String value) {
         this.udtSchema = value;
     }
 
-    /**
-     * Gets the value of the udtName property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getUdtName() {
         return udtName;
     }
 
-    /**
-     * Sets the value of the udtName property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setUdtName(String value) {
         this.udtName = value;
     }
 
-    /**
-     * Gets the value of the ordinalPosition property.
-     *
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *
-     */
     public Integer getOrdinalPosition() {
         return ordinalPosition;
     }
 
-    /**
-     * Sets the value of the ordinalPosition property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *
-     */
     public void setOrdinalPosition(Integer value) {
         this.ordinalPosition = value;
     }
 
-    /**
-     * Gets the value of the identityGeneration property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getIdentityGeneration() {
         return identityGeneration;
     }
 
-    /**
-     * Sets the value of the identityGeneration property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setIdentityGeneration(String value) {
         this.identityGeneration = value;
     }
@@ -436,50 +228,18 @@ public class Column implements Serializable, XMLAppendable
         this.isNullable = value;
     }
 
-    /**
-     * Gets the value of the columnDefault property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getColumnDefault() {
         return columnDefault;
     }
 
-    /**
-     * Sets the value of the columnDefault property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setColumnDefault(String value) {
         this.columnDefault = value;
     }
 
-    /**
-     * Gets the value of the comment property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getComment() {
         return comment;
     }
 
-    /**
-     * Sets the value of the comment property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setComment(String value) {
         this.comment = value;
     }

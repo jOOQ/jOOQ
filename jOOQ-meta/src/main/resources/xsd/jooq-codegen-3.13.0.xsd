@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
-  xmlns:tns="http://www.jooq.org/xsd/jooq-codegen-3.12.0.xsd"
+  xmlns:tns="http://www.jooq.org/xsd/jooq-codegen-3.13.0.xsd"
   xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
-  targetNamespace="http://www.jooq.org/xsd/jooq-codegen-3.12.0.xsd"
+  xmlns:annox="http://annox.dev.java.net"
+  targetNamespace="http://www.jooq.org/xsd/jooq-codegen-3.13.0.xsd"
   elementFormDefault="qualified"
+  jxb:extensionBindingPrefixes="annox"
   jxb:version="2.1">
 
   <element name="configuration">
@@ -59,7 +61,15 @@
       </element>
 
       <element name="schema" type="string" minOccurs="0" maxOccurs="1">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[@deprecated Use database schema configuration elements instead.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation>
+          <appinfo>
+            <jxb:property>
+              <jxb:javadoc><![CDATA[@deprecated Use database schema configuration elements instead.]]></jxb:javadoc>
+            </jxb:property>
+            <annox:annotate target="getter">@java.lang.Deprecated</annox:annotate>
+            <annox:annotate target="setter">@java.lang.Deprecated</annox:annotate>
+          </appinfo>
+        </annotation>
       </element>
 
       <element name="user" type="string" minOccurs="0" maxOccurs="1">
@@ -610,7 +620,10 @@ This flag will also replace synthetic primary keys, if it matches.]]></jxb:javad
       </element>
 
       <element name="ignoreProcedureReturnValues" type="boolean" default="false" minOccurs="0" maxOccurs="1">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Ignore procedure return values in Transact-SQL generated code.
+        <annotation>
+          <appinfo>
+            <jxb:property>
+              <jxb:javadoc><![CDATA[Ignore procedure return values in Transact-SQL generated code.
 <p>
 In jOOQ 3.6.0, #4106 was implemented to support Transact-SQL's
 optional return values from stored procedures. This turns all procedures
@@ -618,7 +631,12 @@ into Routine<Integer> (instead of Routine<Void>). For backwards-
 compatibility reasons, users can suppress this change in jOOQ 3.x
 <p>
 @deprecated This feature is deprecated as of jOOQ 3.6.0 and will be removed again in
-jOOQ 4.0.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+jOOQ 4.0.]]></jxb:javadoc>
+            </jxb:property>
+            <annox:annotate target="getter">@java.lang.Deprecated</annox:annotate>
+            <annox:annotate target="setter">@java.lang.Deprecated</annox:annotate>
+          </appinfo>
+        </annotation>
       </element>
 
       <element name="unsignedTypes" type="boolean" default="true" minOccurs="0" maxOccurs="1">
@@ -734,11 +752,27 @@ This comparator can be used to influence the order of any object that is produce
       </element>
 
       <element name="customTypes" type="tns:CustomTypes" minOccurs="0" maxOccurs="1">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[@deprecated Use {@link #getForcedTypes()} only]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation>
+          <appinfo>
+            <jxb:property>
+              <jxb:javadoc><![CDATA[@deprecated Use {@link #getForcedTypes()} only]]></jxb:javadoc>
+            </jxb:property>
+            <annox:annotate target="getter">@java.lang.Deprecated</annox:annotate>
+            <annox:annotate target="setter">@java.lang.Deprecated</annox:annotate>
+          </appinfo>
+        </annotation>
       </element>
 
       <element name="enumTypes" type="tns:EnumTypes" minOccurs="0" maxOccurs="1">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[@deprecated]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation>
+          <appinfo>
+            <jxb:property>
+              <jxb:javadoc><![CDATA[@deprecated]]></jxb:javadoc>
+            </jxb:property>
+            <annox:annotate target="getter">@java.lang.Deprecated</annox:annotate>
+            <annox:annotate target="setter">@java.lang.Deprecated</annox:annotate>
+          </appinfo>
+        </annotation>
       </element>
 
       <element name="forcedTypes" type="tns:ForcedTypes" minOccurs="0" maxOccurs="1">
@@ -846,26 +880,73 @@ for Oracle.]]></jxb:javadoc></jxb:property></appinfo></annotation>
   </complexType>
 
   <complexType name="CustomType">
-    <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[@deprecated Use ForcedType only]]></jxb:javadoc></jxb:class></appinfo></annotation>
+    <annotation>
+      <appinfo>
+        <jxb:class>
+          <jxb:javadoc><![CDATA[@deprecated Use ForcedType only]]></jxb:javadoc>
+        </jxb:class>
+        <annox:annotate target="class">@java.lang.Deprecated</annox:annotate>
+      </appinfo>
+    </annotation>
     <all>
       <element name="name" type="string" minOccurs="1" maxOccurs="1">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[@deprecated Use ForcedType only]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation>
+          <appinfo>
+            <jxb:property>
+              <jxb:javadoc><![CDATA[@deprecated Use ForcedType only]]></jxb:javadoc>
+            </jxb:property>
+            <annox:annotate target="getter">@java.lang.Deprecated</annox:annotate>
+            <annox:annotate target="setter">@java.lang.Deprecated</annox:annotate>
+          </appinfo>
+        </annotation>
       </element>
 
       <element name="type" type="string" minOccurs="0" maxOccurs="1">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[@deprecated Use ForcedType only]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation>
+          <appinfo>
+            <jxb:property>
+              <jxb:javadoc><![CDATA[@deprecated Use ForcedType only]]></jxb:javadoc>
+            </jxb:property>
+            <annox:annotate target="getter">@java.lang.Deprecated</annox:annotate>
+            <annox:annotate target="setter">@java.lang.Deprecated</annox:annotate>
+          </appinfo>
+        </annotation>
       </element>
 
       <element name="converter" type="string" minOccurs="0" maxOccurs="1">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[@deprecated Use ForcedType only]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation>
+          <appinfo>
+            <jxb:property>
+              <jxb:javadoc><![CDATA[@deprecated Use ForcedType only]]></jxb:javadoc>
+            </jxb:property>
+            <annox:annotate target="getter">@java.lang.Deprecated</annox:annotate>
+            <annox:annotate target="setter">@java.lang.Deprecated</annox:annotate>
+          </appinfo>
+        </annotation>
       </element>
 
       <element name="enumConverter" type="boolean" minOccurs="0" maxOccurs="1" fixed="true">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[@deprecated Use ForcedType only]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation>
+          <appinfo>
+            <jxb:property>
+              <jxb:javadoc><![CDATA[@deprecated Use ForcedType only]]></jxb:javadoc>
+            </jxb:property>
+            <annox:annotate target="getter">@java.lang.Deprecated</annox:annotate>
+            <annox:annotate target="setter">@java.lang.Deprecated</annox:annotate>
+          </appinfo>
+        </annotation>
       </element>
 
       <element name="binding" type="string" minOccurs="0" maxOccurs="1">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[@deprecated Use ForcedType only]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation>
+          <appinfo>
+            <jxb:property>
+              <jxb:javadoc><![CDATA[@deprecated Use ForcedType only]]></jxb:javadoc>
+            </jxb:property>
+            <annox:annotate target="getter">@java.lang.Deprecated</annox:annotate>
+            <annox:annotate target="setter">@java.lang.Deprecated</annox:annotate>
+          </appinfo>
+        </annotation>
       </element>
     </all>
   </complexType>
@@ -1022,7 +1103,15 @@ jOOQ API, without adding custom data type bindings to them.]]></jxb:javadoc></jx
       </element>
 
       <element name="instanceFields" type="boolean" default="true" minOccurs="0" maxOccurs="1">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[@deprecated]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation>
+          <appinfo>
+            <jxb:property>
+              <jxb:javadoc><![CDATA[@deprecated]]></jxb:javadoc>
+            </jxb:property>
+            <annox:annotate target="getter">@java.lang.Deprecated</annox:annotate>
+            <annox:annotate target="setter">@java.lang.Deprecated</annox:annotate>
+          </appinfo>
+        </annotation>
       </element>
 
       <element name="generatedAnnotation" type="boolean" default="true" minOccurs="0" maxOccurs="1">

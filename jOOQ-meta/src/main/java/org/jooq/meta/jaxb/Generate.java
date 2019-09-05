@@ -297,6 +297,7 @@ public class Generate implements Serializable, XMLAppendable
      *     {@link Boolean }
      *
      */
+    @Deprecated
     public Boolean isInstanceFields() {
         return instanceFields;
     }
@@ -309,6 +310,7 @@ public class Generate implements Serializable, XMLAppendable
      *     {@link Boolean }
      *
      */
+    @Deprecated
     public void setInstanceFields(Boolean value) {
         this.instanceFields = value;
     }
@@ -342,21 +344,14 @@ public class Generate implements Serializable, XMLAppendable
      * Generate the {@link javax.annotation.Generated} or {@link javax.annotation.processing.Generated} annotation to indicate
      * jOOQ version used for source code.
      *
-     * @return
-     *     possible object is
-     *     {@link GeneratedAnnotationType }
-     *
      */
     public GeneratedAnnotationType getGeneratedAnnotationType() {
         return generatedAnnotationType;
     }
 
     /**
-     * Sets the value of the generatedAnnotationType property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link GeneratedAnnotationType }
+     * Generate the {@link javax.annotation.Generated} or {@link javax.annotation.processing.Generated} annotation to indicate
+     * jOOQ version used for source code.
      *
      */
     public void setGeneratedAnnotationType(GeneratedAnnotationType value) {
@@ -846,21 +841,13 @@ public class Generate implements Serializable, XMLAppendable
     /**
      * Version of JPA specification is to be used to generate version-specific annotations. If it is omitted, the latest version is used by default.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getJpaVersion() {
         return jpaVersion;
     }
 
     /**
-     * Sets the value of the jpaVersion property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * Version of JPA specification is to be used to generate version-specific annotations. If it is omitted, the latest version is used by default.
      *
      */
     public void setJpaVersion(String value) {
@@ -1613,21 +1600,17 @@ public class Generate implements Serializable, XMLAppendable
      * class, and you want to avoid naming clashes with the java.lang package
      * by specifying <code>java\.lang\..*</code>
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getFullyQualifiedTypes() {
         return fullyQualifiedTypes;
     }
 
     /**
-     * Sets the value of the fullyQualifiedTypes property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * A regular expression matching all the types in generated code that should be fully qualified.
+     * <p>
+     * This can be useful if you have a database object that generates a String
+     * class, and you want to avoid naming clashes with the java.lang package
+     * by specifying <code>java\.lang\..*</code>
      *
      */
     public void setFullyQualifiedTypes(String value) {
@@ -1736,21 +1719,13 @@ public class Generate implements Serializable, XMLAppendable
     /**
      * The newline characters to be used in generated code. Whitespace characters can be used, e.g. \n, \r\n
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getNewline() {
         return newline;
     }
 
     /**
-     * Sets the value of the newline property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * The newline characters to be used in generated code. Whitespace characters can be used, e.g. \n, \r\n
      *
      */
     public void setNewline(String value) {
@@ -1760,21 +1735,13 @@ public class Generate implements Serializable, XMLAppendable
     /**
      * The indentation characters to be used in generated code. If unspecified, an idiomatic default indentation of the language will be used (4 spaces in Java, 2 spaces in Scala). Whitespace characters can be used, e.g. \t
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getIndentation() {
         return indentation;
     }
 
     /**
-     * Sets the value of the indentation property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * The indentation characters to be used in generated code. If unspecified, an idiomatic default indentation of the language will be used (4 spaces in Java, 2 spaces in Scala). Whitespace characters can be used, e.g. \t
      *
      */
     public void setIndentation(String value) {
@@ -1816,6 +1783,11 @@ public class Generate implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * Generate the {@link javax.annotation.Generated} or {@link javax.annotation.processing.Generated} annotation to indicate
+     * jOOQ version used for source code.
+     *
+     */
     public Generate withGeneratedAnnotationType(GeneratedAnnotationType value) {
         setGeneratedAnnotationType(value);
         return this;
@@ -1921,6 +1893,10 @@ public class Generate implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * Version of JPA specification is to be used to generate version-specific annotations. If it is omitted, the latest version is used by default.
+     *
+     */
     public Generate withJpaVersion(String value) {
         setJpaVersion(value);
         return this;
@@ -2076,6 +2052,14 @@ public class Generate implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * A regular expression matching all the types in generated code that should be fully qualified.
+     * <p>
+     * This can be useful if you have a database object that generates a String
+     * class, and you want to avoid naming clashes with the java.lang package
+     * by specifying <code>java\.lang\..*</code>
+     *
+     */
     public Generate withFullyQualifiedTypes(String value) {
         setFullyQualifiedTypes(value);
         return this;
@@ -2101,11 +2085,19 @@ public class Generate implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * The newline characters to be used in generated code. Whitespace characters can be used, e.g. \n, \r\n
+     *
+     */
     public Generate withNewline(String value) {
         setNewline(value);
         return this;
     }
 
+    /**
+     * The indentation characters to be used in generated code. If unspecified, an idiomatic default indentation of the language will be used (4 spaces in Java, 2 spaces in Scala). Whitespace characters can be used, e.g. \t
+     *
+     */
     public Generate withIndentation(String value) {
         setIndentation(value);
         return this;

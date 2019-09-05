@@ -38,21 +38,13 @@ public class Strategy implements Serializable, XMLAppendable
     /**
      * The class used to provide a naming strategy for generated source code. You may override this with your custom naming strategy. This cannot be combined with a matcher configuration.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getName() {
         return name;
     }
 
     /**
-     * Sets the value of the name property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * The class used to provide a naming strategy for generated source code. You may override this with your custom naming strategy. This cannot be combined with a matcher configuration.
      *
      */
     public void setName(String value) {
@@ -62,32 +54,32 @@ public class Strategy implements Serializable, XMLAppendable
     /**
      * The matcher strategy configuration used when applying an XML-based strategy. This cannot be combined with a named strategy configuration.
      *
-     * @return
-     *     possible object is
-     *     {@link Matchers }
-     *
      */
     public Matchers getMatchers() {
         return matchers;
     }
 
     /**
-     * Sets the value of the matchers property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Matchers }
+     * The matcher strategy configuration used when applying an XML-based strategy. This cannot be combined with a named strategy configuration.
      *
      */
     public void setMatchers(Matchers value) {
         this.matchers = value;
     }
 
+    /**
+     * The class used to provide a naming strategy for generated source code. You may override this with your custom naming strategy. This cannot be combined with a matcher configuration.
+     *
+     */
     public Strategy withName(String value) {
         setName(value);
         return this;
     }
 
+    /**
+     * The matcher strategy configuration used when applying an XML-based strategy. This cannot be combined with a named strategy configuration.
+     *
+     */
     public Strategy withMatchers(Matchers value) {
         setMatchers(value);
         return this;

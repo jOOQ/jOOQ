@@ -47,21 +47,16 @@ public class Target implements Serializable, XMLAppendable
      * jOOQ may append the schema name to this package if generating multiple schemas,
      * e.g. org.jooq.generated.schema1, org.jooq.generated.schema2
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getPackageName() {
         return packageName;
     }
 
     /**
-     * Sets the value of the packageName property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * The destination package of your generated classes (within the destination directory)
+     * <p>
+     * jOOQ may append the schema name to this package if generating multiple schemas,
+     * e.g. org.jooq.generated.schema1, org.jooq.generated.schema2
      *
      */
     public void setPackageName(String value) {
@@ -71,21 +66,13 @@ public class Target implements Serializable, XMLAppendable
     /**
      * The destination directory of your generated classes
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getDirectory() {
         return directory;
     }
 
     /**
-     * Sets the value of the directory property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * The destination directory of your generated classes
      *
      */
     public void setDirectory(String value) {
@@ -95,21 +82,13 @@ public class Target implements Serializable, XMLAppendable
     /**
      * The file encoding to be used with all output files.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getEncoding() {
         return encoding;
     }
 
     /**
-     * Sets the value of the encoding property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * The file encoding to be used with all output files.
      *
      */
     public void setEncoding(String value) {
@@ -140,16 +119,31 @@ public class Target implements Serializable, XMLAppendable
         this.clean = value;
     }
 
+    /**
+     * The destination package of your generated classes (within the destination directory)
+     * <p>
+     * jOOQ may append the schema name to this package if generating multiple schemas,
+     * e.g. org.jooq.generated.schema1, org.jooq.generated.schema2
+     *
+     */
     public Target withPackageName(String value) {
         setPackageName(value);
         return this;
     }
 
+    /**
+     * The destination directory of your generated classes
+     *
+     */
     public Target withDirectory(String value) {
         setDirectory(value);
         return this;
     }
 
+    /**
+     * The file encoding to be used with all output files.
+     *
+     */
     public Target withEncoding(String value) {
         setEncoding(value);
         return this;

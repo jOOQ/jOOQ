@@ -73,7 +73,7 @@ abstract class AbstractMeta implements Meta, Serializable {
     private Map<Name, List<Sequence<?>>> cachedUnqualifiedSequences;
     private List<UniqueKey<?>>           cachedPrimaryKeys;
 
-    AbstractMeta() {
+    protected AbstractMeta() {
         // [#9010] TODO: Allow for opting out of this cache
     }
 

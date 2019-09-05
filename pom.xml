@@ -12,7 +12,7 @@
 
     <groupId>org.jooq</groupId>
     <artifactId>jooq-parent</artifactId>
-    <version>3.12.0-SNAPSHOT</version>
+    <version>3.13.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>jOOQ Parent</name>
@@ -30,7 +30,7 @@
         <h2.version>1.4.199</h2.version>
 
         <!-- From JDK 11 onwards, we need to depend on the JAXB API explicitly -->
-        <jaxb.version>2.3.0</jaxb.version>
+        <jaxb.version>2.3.1</jaxb.version>
         <javax.activation.version>1.2.0</javax.activation.version>
 
         <!-- DefaultRecordMapper and jOOQ-meta-extensions can read JPA annotations -->
@@ -78,11 +78,6 @@
             <dependency>
                 <groupId>org.jooq</groupId>
                 <artifactId>jooq-codegen-maven</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jooq</groupId>
-                <artifactId>jooq-extensions</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -218,7 +213,7 @@
             <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-core</artifactId>
-                <version>5.4.2.Final</version>
+                <version>5.4.4.Final</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
@@ -236,19 +231,19 @@
             <dependency>
                 <groupId>com.google.errorprone</groupId>
                 <artifactId>error_prone_core</artifactId>
-                <version>2.3.2</version>
+                <version>2.3.3</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>com.google.errorprone</groupId>
                 <artifactId>error_prone_annotation</artifactId>
-                <version>2.3.2</version>
+                <version>2.3.3</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>com.google.auto.service</groupId>
                 <artifactId>auto-service</artifactId>
-                <version>1.0-rc4</version>
+                <version>1.0-rc6</version>
                 <optional>true</optional>
             </dependency>
         </dependencies>
@@ -292,7 +287,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>
-                    <version>3.0.1</version>
+                    <version>3.1.0</version>
                     <inherited>true</inherited>
                     <executions>
                         <execution>
@@ -311,7 +306,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>3.1.0</version>
+                    <version>3.1.1</version>
                     <inherited>true</inherited>
                     <executions>
                         <execution>
@@ -337,7 +332,7 @@
                 <plugin>
                     <groupId>org.apache.felix</groupId>
                     <artifactId>maven-bundle-plugin</artifactId>
-                    <version>4.2.0</version>
+                    <version>4.2.1</version>
                 </plugin>
 
                 <plugin>
@@ -408,7 +403,6 @@
 
         <module>jOOQ-checker</module>
 
-        <module>jOOQ-extensions</module>
         <module>jOOQ-meta</module>
         <module>jOOQ-meta-extensions</module>
         <module>jOOQ-codegen</module>

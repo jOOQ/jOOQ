@@ -220,10 +220,10 @@ final class RowSubqueryCondition extends AbstractCondition {
 
             if (rightQuantified == null) {
 
+                // Some databases need extra parentheses around the RHS
+                boolean extraParentheses = false;
 
-
-
-
+                ctx.sql(extraParentheses ? "((" : "(");
 
 
 
@@ -239,7 +239,7 @@ final class RowSubqueryCondition extends AbstractCondition {
 
 
 
-
+                ctx.sql(extraParentheses ? "))" : ")");
             }
 
             // [#2054] Quantified row value expression comparison predicates shouldn't have parentheses before ANY or ALL

@@ -35,21 +35,13 @@ public class MatchersSequenceType implements Serializable, XMLAppendable
     /**
      * This sequence matcher applies to all unqualified or qualified sequence names matched by this expression. If left empty, this matcher applies to all sequences.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getExpression() {
         return expression;
     }
 
     /**
-     * Sets the value of the expression property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * This sequence matcher applies to all unqualified or qualified sequence names matched by this expression. If left empty, this matcher applies to all sequences.
      *
      */
     public void setExpression(String value) {
@@ -59,32 +51,32 @@ public class MatchersSequenceType implements Serializable, XMLAppendable
     /**
      * This rule influences the naming of the generated {@link org.jooq.Sequence} identifier.
      *
-     * @return
-     *     possible object is
-     *     {@link MatcherRule }
-     *
      */
     public MatcherRule getSequenceIdentifier() {
         return sequenceIdentifier;
     }
 
     /**
-     * Sets the value of the sequenceIdentifier property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link MatcherRule }
+     * This rule influences the naming of the generated {@link org.jooq.Sequence} identifier.
      *
      */
     public void setSequenceIdentifier(MatcherRule value) {
         this.sequenceIdentifier = value;
     }
 
+    /**
+     * This sequence matcher applies to all unqualified or qualified sequence names matched by this expression. If left empty, this matcher applies to all sequences.
+     *
+     */
     public MatchersSequenceType withExpression(String value) {
         setExpression(value);
         return this;
     }
 
+    /**
+     * This rule influences the naming of the generated {@link org.jooq.Sequence} identifier.
+     *
+     */
     public MatchersSequenceType withSequenceIdentifier(MatcherRule value) {
         setSequenceIdentifier(value);
         return this;

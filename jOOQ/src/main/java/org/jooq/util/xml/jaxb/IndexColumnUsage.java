@@ -76,186 +76,66 @@ public class IndexColumnUsage implements Serializable, XMLAppendable
     @XmlElement(name = "is_descending")
     protected Boolean isDescending;
 
-    /**
-     * Gets the value of the indexCatalog property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getIndexCatalog() {
         return indexCatalog;
     }
 
-    /**
-     * Sets the value of the indexCatalog property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setIndexCatalog(String value) {
         this.indexCatalog = value;
     }
 
-    /**
-     * Gets the value of the indexSchema property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getIndexSchema() {
         return indexSchema;
     }
 
-    /**
-     * Sets the value of the indexSchema property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setIndexSchema(String value) {
         this.indexSchema = value;
     }
 
-    /**
-     * Gets the value of the indexName property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getIndexName() {
         return indexName;
     }
 
-    /**
-     * Sets the value of the indexName property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setIndexName(String value) {
         this.indexName = value;
     }
 
-    /**
-     * Gets the value of the tableCatalog property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getTableCatalog() {
         return tableCatalog;
     }
 
-    /**
-     * Sets the value of the tableCatalog property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setTableCatalog(String value) {
         this.tableCatalog = value;
     }
 
-    /**
-     * Gets the value of the tableSchema property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getTableSchema() {
         return tableSchema;
     }
 
-    /**
-     * Sets the value of the tableSchema property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setTableSchema(String value) {
         this.tableSchema = value;
     }
 
-    /**
-     * Gets the value of the tableName property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getTableName() {
         return tableName;
     }
 
-    /**
-     * Sets the value of the tableName property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setTableName(String value) {
         this.tableName = value;
     }
 
-    /**
-     * Gets the value of the columnName property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getColumnName() {
         return columnName;
     }
 
-    /**
-     * Sets the value of the columnName property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setColumnName(String value) {
         this.columnName = value;
     }
 
-    /**
-     * Gets the value of the ordinalPosition property.
-     *
-     */
     public int getOrdinalPosition() {
         return ordinalPosition;
     }
 
-    /**
-     * Sets the value of the ordinalPosition property.
-     *
-     */
     public void setOrdinalPosition(int value) {
         this.ordinalPosition = value;
     }

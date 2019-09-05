@@ -61,7 +61,8 @@ public class SingleConnectionDataSource implements DataSource {
 
     @Override
     public Logger getParentLogger() throws SQLFeatureNotSupportedException {
-        return Logger.getGlobal();
+        // Cannot use Logger.getGlobal() in JDK 6 yet
+        return Logger.getAnonymousLogger().getParent();
     }
 
     @SuppressWarnings("unchecked")

@@ -42,21 +42,14 @@ public class MappedTable
      * The input table as defined in {@link org.jooq.Table#getName()}
      * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getInput() {
         return input;
     }
 
     /**
-     * Sets the value of the input property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * The input table as defined in {@link org.jooq.Table#getName()}
+     * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided.
      *
      */
     public void setInput(String value) {
@@ -67,21 +60,14 @@ public class MappedTable
      * A regular expression matching the input table name as defined in {@link org.jooq.Table#getName()}
      * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public Pattern getInputExpression() {
         return inputExpression;
     }
 
     /**
-     * Sets the value of the inputExpression property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * A regular expression matching the input table name as defined in {@link org.jooq.Table#getName()}
+     * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided
      *
      */
     public void setInputExpression(Pattern value) {
@@ -95,37 +81,51 @@ public class MappedTable
      * <li>When &lt;inputExpression/&gt; is provided, &lt;output/&gt; is a replacement expression.</li>
      * </ul>
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getOutput() {
         return output;
     }
 
     /**
-     * Sets the value of the output property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * The output table as it will be rendered in SQL.
+     * <ul>
+     * <li>When &lt;input/&gt; is provided, &lt;output/&gt; is a constant value.</li>
+     * <li>When &lt;inputExpression/&gt; is provided, &lt;output/&gt; is a replacement expression.</li>
+     * </ul>
      *
      */
     public void setOutput(String value) {
         this.output = value;
     }
 
+    /**
+     * The input table as defined in {@link org.jooq.Table#getName()}
+     * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided.
+     *
+     */
     public MappedTable withInput(String value) {
         setInput(value);
         return this;
     }
 
+    /**
+     * A regular expression matching the input table name as defined in {@link org.jooq.Table#getName()}
+     * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided
+     *
+     */
     public MappedTable withInputExpression(Pattern value) {
         setInputExpression(value);
         return this;
     }
 
+    /**
+     * The output table as it will be rendered in SQL.
+     * <ul>
+     * <li>When &lt;input/&gt; is provided, &lt;output/&gt; is a constant value.</li>
+     * <li>When &lt;inputExpression/&gt; is provided, &lt;output/&gt; is a replacement expression.</li>
+     * </ul>
+     *
+     */
     public MappedTable withOutput(String value) {
         setOutput(value);
         return this;

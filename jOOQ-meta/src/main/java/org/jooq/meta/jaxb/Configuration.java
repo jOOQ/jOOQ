@@ -22,10 +22,10 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;all&gt;
- *         &lt;element name="logging" type="{http://www.jooq.org/xsd/jooq-codegen-3.12.0.xsd}Logging" minOccurs="0"/&gt;
- *         &lt;element name="onError" type="{http://www.jooq.org/xsd/jooq-codegen-3.12.0.xsd}OnError" minOccurs="0"/&gt;
- *         &lt;element name="jdbc" type="{http://www.jooq.org/xsd/jooq-codegen-3.12.0.xsd}Jdbc" minOccurs="0"/&gt;
- *         &lt;element name="generator" type="{http://www.jooq.org/xsd/jooq-codegen-3.12.0.xsd}Generator"/&gt;
+ *         &lt;element name="logging" type="{http://www.jooq.org/xsd/jooq-codegen-3.13.0.xsd}Logging" minOccurs="0"/&gt;
+ *         &lt;element name="onError" type="{http://www.jooq.org/xsd/jooq-codegen-3.13.0.xsd}OnError" minOccurs="0"/&gt;
+ *         &lt;element name="jdbc" type="{http://www.jooq.org/xsd/jooq-codegen-3.13.0.xsd}Jdbc" minOccurs="0"/&gt;
+ *         &lt;element name="generator" type="{http://www.jooq.org/xsd/jooq-codegen-3.13.0.xsd}Generator"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -58,21 +58,13 @@ public class Configuration implements Serializable, XMLAppendable
     /**
      * The logging configuration element specifies the code generation logging threshold.
      *
-     * @return
-     *     possible object is
-     *     {@link Logging }
-     *
      */
     public Logging getLogging() {
         return logging;
     }
 
     /**
-     * Sets the value of the logging property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Logging }
+     * The logging configuration element specifies the code generation logging threshold.
      *
      */
     public void setLogging(Logging value) {
@@ -82,21 +74,13 @@ public class Configuration implements Serializable, XMLAppendable
     /**
      * The action to be taken by the generator as the consequence of an encountered exception. Defaults to FAIL.
      *
-     * @return
-     *     possible object is
-     *     {@link OnError }
-     *
      */
     public OnError getOnError() {
         return onError;
     }
 
     /**
-     * Sets the value of the onError property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link OnError }
+     * The action to be taken by the generator as the consequence of an encountered exception. Defaults to FAIL.
      *
      */
     public void setOnError(OnError value) {
@@ -106,21 +90,13 @@ public class Configuration implements Serializable, XMLAppendable
     /**
      * The JDBC configuration element contains information about how to set up the database connection used for source code generation.
      *
-     * @return
-     *     possible object is
-     *     {@link Jdbc }
-     *
      */
     public Jdbc getJdbc() {
         return jdbc;
     }
 
     /**
-     * Sets the value of the jdbc property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Jdbc }
+     * The JDBC configuration element contains information about how to set up the database connection used for source code generation.
      *
      */
     public void setJdbc(Jdbc value) {
@@ -130,42 +106,50 @@ public class Configuration implements Serializable, XMLAppendable
     /**
      * The GENERATOR configuration element contains information about source code generation itself.
      *
-     * @return
-     *     possible object is
-     *     {@link Generator }
-     *
      */
     public Generator getGenerator() {
         return generator;
     }
 
     /**
-     * Sets the value of the generator property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Generator }
+     * The GENERATOR configuration element contains information about source code generation itself.
      *
      */
     public void setGenerator(Generator value) {
         this.generator = value;
     }
 
+    /**
+     * The logging configuration element specifies the code generation logging threshold.
+     *
+     */
     public Configuration withLogging(Logging value) {
         setLogging(value);
         return this;
     }
 
+    /**
+     * The action to be taken by the generator as the consequence of an encountered exception. Defaults to FAIL.
+     *
+     */
     public Configuration withOnError(OnError value) {
         setOnError(value);
         return this;
     }
 
+    /**
+     * The JDBC configuration element contains information about how to set up the database connection used for source code generation.
+     *
+     */
     public Configuration withJdbc(Jdbc value) {
         setJdbc(value);
         return this;
     }
 
+    /**
+     * The GENERATOR configuration element contains information about source code generation itself.
+     *
+     */
     public Configuration withGenerator(Generator value) {
         setGenerator(value);
         return this;

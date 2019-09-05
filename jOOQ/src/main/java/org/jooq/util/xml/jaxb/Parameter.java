@@ -102,378 +102,130 @@ public class Parameter implements Serializable, XMLAppendable
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String comment;
 
-    /**
-     * Gets the value of the specificCatalog property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getSpecificCatalog() {
         return specificCatalog;
     }
 
-    /**
-     * Sets the value of the specificCatalog property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setSpecificCatalog(String value) {
         this.specificCatalog = value;
     }
 
-    /**
-     * Gets the value of the specificSchema property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getSpecificSchema() {
         return specificSchema;
     }
 
-    /**
-     * Sets the value of the specificSchema property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setSpecificSchema(String value) {
         this.specificSchema = value;
     }
 
-    /**
-     * Gets the value of the specificPackage property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getSpecificPackage() {
         return specificPackage;
     }
 
-    /**
-     * Sets the value of the specificPackage property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setSpecificPackage(String value) {
         this.specificPackage = value;
     }
 
-    /**
-     * Gets the value of the specificName property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getSpecificName() {
         return specificName;
     }
 
-    /**
-     * Sets the value of the specificName property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setSpecificName(String value) {
         this.specificName = value;
     }
 
-    /**
-     * Gets the value of the ordinalPosition property.
-     *
-     */
     public int getOrdinalPosition() {
         return ordinalPosition;
     }
 
-    /**
-     * Sets the value of the ordinalPosition property.
-     *
-     */
     public void setOrdinalPosition(int value) {
         this.ordinalPosition = value;
     }
 
-    /**
-     * Gets the value of the parameterMode property.
-     *
-     * @return
-     *     possible object is
-     *     {@link ParameterMode }
-     *
-     */
     public ParameterMode getParameterMode() {
         return parameterMode;
     }
 
-    /**
-     * Sets the value of the parameterMode property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link ParameterMode }
-     *
-     */
     public void setParameterMode(ParameterMode value) {
         this.parameterMode = value;
     }
 
-    /**
-     * Gets the value of the parameterName property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getParameterName() {
         return parameterName;
     }
 
-    /**
-     * Sets the value of the parameterName property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setParameterName(String value) {
         this.parameterName = value;
     }
 
-    /**
-     * Gets the value of the dataType property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getDataType() {
         return dataType;
     }
 
-    /**
-     * Sets the value of the dataType property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setDataType(String value) {
         this.dataType = value;
     }
 
-    /**
-     * Gets the value of the characterMaximumLength property.
-     *
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *
-     */
     public Integer getCharacterMaximumLength() {
         return characterMaximumLength;
     }
 
-    /**
-     * Sets the value of the characterMaximumLength property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *
-     */
     public void setCharacterMaximumLength(Integer value) {
         this.characterMaximumLength = value;
     }
 
-    /**
-     * Gets the value of the numericPrecision property.
-     *
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *
-     */
     public Integer getNumericPrecision() {
         return numericPrecision;
     }
 
-    /**
-     * Sets the value of the numericPrecision property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *
-     */
     public void setNumericPrecision(Integer value) {
         this.numericPrecision = value;
     }
 
-    /**
-     * Gets the value of the numericScale property.
-     *
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *
-     */
     public Integer getNumericScale() {
         return numericScale;
     }
 
-    /**
-     * Sets the value of the numericScale property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *
-     */
     public void setNumericScale(Integer value) {
         this.numericScale = value;
     }
 
-    /**
-     * Gets the value of the udtCatalog property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getUdtCatalog() {
         return udtCatalog;
     }
 
-    /**
-     * Sets the value of the udtCatalog property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setUdtCatalog(String value) {
         this.udtCatalog = value;
     }
 
-    /**
-     * Gets the value of the udtSchema property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getUdtSchema() {
         return udtSchema;
     }
 
-    /**
-     * Sets the value of the udtSchema property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setUdtSchema(String value) {
         this.udtSchema = value;
     }
 
-    /**
-     * Gets the value of the udtName property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getUdtName() {
         return udtName;
     }
 
-    /**
-     * Sets the value of the udtName property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setUdtName(String value) {
         this.udtName = value;
     }
 
-    /**
-     * Gets the value of the parameterDefault property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getParameterDefault() {
         return parameterDefault;
     }
 
-    /**
-     * Sets the value of the parameterDefault property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setParameterDefault(String value) {
         this.parameterDefault = value;
     }
 
-    /**
-     * Gets the value of the comment property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
     public String getComment() {
         return comment;
     }
 
-    /**
-     * Sets the value of the comment property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
     public void setComment(String value) {
         this.comment = value;
     }

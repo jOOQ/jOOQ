@@ -42,21 +42,13 @@ public class Embeddable implements Serializable, XMLAppendable
     /**
      * The name of the embeddable type
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getName() {
         return name;
     }
 
     /**
-     * Sets the value of the name property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * The name of the embeddable type
      *
      */
     public void setName(String value) {
@@ -74,6 +66,10 @@ public class Embeddable implements Serializable, XMLAppendable
         this.fields = fields;
     }
 
+    /**
+     * The name of the embeddable type
+     *
+     */
     public Embeddable withName(String value) {
         setName(value);
         return this;

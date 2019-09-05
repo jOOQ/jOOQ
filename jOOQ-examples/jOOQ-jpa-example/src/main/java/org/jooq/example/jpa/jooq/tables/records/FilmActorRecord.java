@@ -17,31 +17,31 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FilmActorRecord extends UpdatableRecordImpl<FilmActorRecord> implements Record2<Integer, Integer> {
 
-    private static final long serialVersionUID = -674253481;
+    private static final long serialVersionUID = 146002269;
 
     /**
-     * Setter for <code>PUBLIC.FILM_ACTOR.FILMS_FILMID</code>.
+     * Setter for <code>FILM_ACTOR.FILMS_FILMID</code>.
      */
     public void setFilmsFilmid(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.FILM_ACTOR.FILMS_FILMID</code>.
+     * Getter for <code>FILM_ACTOR.FILMS_FILMID</code>.
      */
     public Integer getFilmsFilmid() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>PUBLIC.FILM_ACTOR.ACTORS_ACTORID</code>.
+     * Setter for <code>FILM_ACTOR.ACTORS_ACTORID</code>.
      */
     public void setActorsActorid(Integer value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.FILM_ACTOR.ACTORS_ACTORID</code>.
+     * Getter for <code>FILM_ACTOR.ACTORS_ACTORID</code>.
      */
     public Integer getActorsActorid() {
         return (Integer) get(1);

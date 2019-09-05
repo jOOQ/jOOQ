@@ -38,7 +38,6 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Keywords.K_CATALOG;
-import static org.jooq.impl.Keywords.K_DATABASE;
 import static org.jooq.impl.Keywords.K_SET;
 import static org.jooq.impl.Keywords.K_USE;
 
@@ -72,9 +71,17 @@ final class SetCatalog extends AbstractRowCountQuery {
 
 
 
+
+
+
+
+            case DERBY:
+            case H2:
+            case HSQLDB:
             case MARIADB:
             case MYSQL:
-                ctx.visit(K_USE).sql(' ').visit(catalog);
+            case POSTGRES:
+                ctx.visit(DSL.setSchema(catalog.getName()));
                 break;
 
             default:

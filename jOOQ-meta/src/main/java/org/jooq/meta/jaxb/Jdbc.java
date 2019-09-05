@@ -54,21 +54,13 @@ public class Jdbc implements Serializable, XMLAppendable
     /**
      * The JDBC driver class.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getDriver() {
         return driver;
     }
 
     /**
-     * Sets the value of the driver property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * The JDBC driver class.
      *
      */
     public void setDriver(String value) {
@@ -78,21 +70,13 @@ public class Jdbc implements Serializable, XMLAppendable
     /**
      * The JDBC connection URL.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getUrl() {
         return url;
     }
 
     /**
-     * Sets the value of the url property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * The JDBC connection URL.
      *
      */
     public void setUrl(String value) {
@@ -102,23 +86,17 @@ public class Jdbc implements Serializable, XMLAppendable
     /**
      * @deprecated Use database schema configuration elements instead.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
+    @Deprecated
     public String getSchema() {
         return schema;
     }
 
     /**
-     * Sets the value of the schema property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * @deprecated Use database schema configuration elements instead.
      *
      */
+    @Deprecated
     public void setSchema(String value) {
         this.schema = value;
     }
@@ -126,21 +104,13 @@ public class Jdbc implements Serializable, XMLAppendable
     /**
      * The JDBC connection user. Be sure this user has all required GRANTs to the dictionary views/tables to generate the desired artefacts
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getUser() {
         return user;
     }
 
     /**
-     * Sets the value of the user property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * The JDBC connection user. Be sure this user has all required GRANTs to the dictionary views/tables to generate the desired artefacts
      *
      */
     public void setUser(String value) {
@@ -150,21 +120,13 @@ public class Jdbc implements Serializable, XMLAppendable
     /**
      * Just a synonym for "user" to be compatible with other Maven plugins.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getUsername() {
         return username;
     }
 
     /**
-     * Sets the value of the username property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * Just a synonym for "user" to be compatible with other Maven plugins.
      *
      */
     public void setUsername(String value) {
@@ -174,21 +136,13 @@ public class Jdbc implements Serializable, XMLAppendable
     /**
      * The JDBC connection password.
      *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
      */
     public String getPassword() {
         return password;
     }
 
     /**
-     * Sets the value of the password property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
+     * The JDBC connection password.
      *
      */
     public void setPassword(String value) {
@@ -230,31 +184,56 @@ public class Jdbc implements Serializable, XMLAppendable
         this.properties = properties;
     }
 
+    /**
+     * The JDBC driver class.
+     *
+     */
     public Jdbc withDriver(String value) {
         setDriver(value);
         return this;
     }
 
+    /**
+     * The JDBC connection URL.
+     *
+     */
     public Jdbc withUrl(String value) {
         setUrl(value);
         return this;
     }
 
+    /**
+     * @deprecated Use database schema configuration elements instead.
+     *
+     */
+    @Deprecated
     public Jdbc withSchema(String value) {
         setSchema(value);
         return this;
     }
 
+    /**
+     * The JDBC connection user. Be sure this user has all required GRANTs to the dictionary views/tables to generate the desired artefacts
+     *
+     */
     public Jdbc withUser(String value) {
         setUser(value);
         return this;
     }
 
+    /**
+     * Just a synonym for "user" to be compatible with other Maven plugins.
+     *
+     */
     public Jdbc withUsername(String value) {
         setUsername(value);
         return this;
     }
 
+    /**
+     * The JDBC connection password.
+     *
+     */
     public Jdbc withPassword(String value) {
         setPassword(value);
         return this;

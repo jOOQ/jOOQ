@@ -3626,6 +3626,11 @@ final class ParserImpl implements Parser {
     }
 
     private static final Constraint parseForeignKeySpecification(ParserContext ctx, ConstraintTypeStep constraint) {
+        Name constraintName = null;
+        if ((constraintName = parseIdentifierIf(ctx)) != null)
+            if (constraint == null)
+                constraint = constraint(constraintName);
+
         parse(ctx, '(');
         Field<?>[] referencing = parseFieldNames(ctx).toArray(EMPTY_FIELD);
         parse(ctx, ')');

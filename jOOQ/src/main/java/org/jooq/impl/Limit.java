@@ -385,7 +385,7 @@ final class Limit extends AbstractQueryPart {
     final boolean limitOne() {
         return !limitZero()
             && !withTies()
-
+            && !percent()
             && numberOfRows instanceof Param
             && Long.valueOf(1L).equals(((Param<?>) numberOfRows).getValue());
     }

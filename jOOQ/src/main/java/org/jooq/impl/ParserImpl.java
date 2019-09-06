@@ -1109,11 +1109,8 @@ final class ParserImpl implements Parser {
             if (offsetPostgres) {
                 result.addLimit(limit);
 
-                if (parseKeywordIf(ctx, "PERCENT") && ctx.requireProEdition())
-
-
-
-                    ;
+                if (parseKeywordIf(ctx, "PERCENT"))
+                    result.setLimitPercent(true);
 
                 if (parseKeywordIf(ctx, "WITH TIES"))
                     result.setWithTies(true);
@@ -1122,11 +1119,8 @@ final class ParserImpl implements Parser {
                 result.addLimit(limit, parseParenthesisedUnsignedIntegerOrBindVariable(ctx));
             }
             else {
-                if (parseKeywordIf(ctx, "PERCENT") && ctx.requireProEdition())
-
-
-
-                    ;
+                if (parseKeywordIf(ctx, "PERCENT"))
+                    result.setLimitPercent(true);
 
                 if (parseKeywordIf(ctx, "WITH TIES"))
                     result.setWithTies(true);
@@ -1146,11 +1140,8 @@ final class ParserImpl implements Parser {
             else {
                 result.addLimit(parseParenthesisedUnsignedIntegerOrBindVariable(ctx));
 
-                if (parseKeywordIf(ctx, "PERCENT") && ctx.requireProEdition())
-
-
-
-                    ;
+                if (parseKeywordIf(ctx, "PERCENT"))
+                    result.setLimitPercent(true);
 
                 parseAndGetKeyword(ctx, "ROW", "ROWS");
             }

@@ -107,4 +107,3 @@ package org.jooq;
 
 
 
-            

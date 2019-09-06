@@ -72,4 +72,3 @@ package org.jooq;
 
 
 
-            

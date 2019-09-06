@@ -88,4 +88,3 @@ package org.jooq;
 
 
 
-            

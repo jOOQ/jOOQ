@@ -41,6 +41,7 @@ package org.jooq;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
+import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 
@@ -113,7 +114,7 @@ public interface DeleteReturningStep<R extends Record> extends DeleteFinalStep<R
      * @param fields Fields to be returned
      * @see DeleteResultStep
      */
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ MARIADB, FIREBIRD, POSTGRES })
     DeleteResultStep<R> returning(SelectFieldOrAsterisk... fields);
 
     /**

@@ -102,10 +102,12 @@ import org.jooq.Context;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.Delete;
+import org.jooq.DeleteQuery;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Field;
 import org.jooq.Identity;
+import org.jooq.InsertQuery;
 import org.jooq.Name;
 import org.jooq.Param;
 // ...
@@ -726,6 +728,11 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
 
 
+                case MARIADB:
+                    // MariaDB support RETURNING on INSERT and DELETE clauses
+                    if (!(this instanceof InsertQuery) && !(this instanceof DeleteQuery)) {
+                        break;
+                    }
                 case FIREBIRD:
                 case POSTGRES: {
                     boolean previous = ctx.declareFields();
@@ -954,9 +961,18 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
                 case DERBY:
                 case H2:
-                case MARIADB:
                 case MYSQL: {
                     return executeReturningGeneratedKeysFetchAdditionalRows(ctx, listener);
+                }
+
+                // MariaDB support RETURNING on INSERT and DELETE clauses
+                case MARIADB: {
+                    if (!(this instanceof InsertQuery) && !(this instanceof DeleteQuery)) {
+                        return executeReturningGeneratedKeysFetchAdditionalRows(ctx, listener);
+                    } else {
+                        rs = executeReturningQuery(ctx, listener);
+                    }
+                    break;
                 }
 
 

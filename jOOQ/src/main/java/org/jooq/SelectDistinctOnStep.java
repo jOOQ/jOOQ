@@ -38,6 +38,7 @@
 package org.jooq;
 
 // ...
+import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.POSTGRES;
 
 import java.util.Collection;
@@ -111,7 +112,7 @@ public interface SelectDistinctOnStep<R extends Record> extends SelectIntoStep<R
      * This implicitly enforces the <code>DISTINCT</code> clause, no matter if
      * it is added explicitly via the jOOQ API.
      */
-    @Support({ POSTGRES })
+    @Support({ H2, POSTGRES })
     SelectIntoStep<R> on(SelectFieldOrAsterisk... fields);
 
     /**
@@ -121,20 +122,20 @@ public interface SelectDistinctOnStep<R extends Record> extends SelectIntoStep<R
      * This implicitly enforces the <code>DISTINCT</code> clause, no matter if
      * it is added explicitly via the jOOQ API.
      */
-    @Support({ POSTGRES })
+    @Support({ H2, POSTGRES })
     SelectIntoStep<R> on(Collection<? extends SelectFieldOrAsterisk> fields);
 
     /**
      * Add the PostgreSQL-specific <code>ON(...)</code> clause to a
      * <code>SELECT DISTINCT ON (...)</code> statement.
      */
-    @Support({ POSTGRES })
+    @Support({ H2, POSTGRES })
     SelectIntoStep<R> distinctOn(SelectFieldOrAsterisk... fields);
 
     /**
      * Add the PostgreSQL-specific <code>ON(...)</code> clause to a
      * <code>SELECT DISTINCT ON (...)</code> statement.
      */
-    @Support({ POSTGRES })
+    @Support({ H2, POSTGRES })
     SelectIntoStep<R> distinctOn(Collection<? extends SelectFieldOrAsterisk> fields);
 }

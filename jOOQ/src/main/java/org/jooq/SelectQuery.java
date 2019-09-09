@@ -115,7 +115,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * <p>
      * This also sets the <code>distinct</code> flag to <code>true</code>
      */
-    @Support({ POSTGRES })
+    @Support({ H2, POSTGRES })
     void addDistinctOn(SelectFieldOrAsterisk... fields);
 
     /**
@@ -123,7 +123,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * <p>
      * This also sets the <code>distinct</code> flag to <code>true</code>
      */
-    @Support({ POSTGRES })
+    @Support({ H2, POSTGRES })
     void addDistinctOn(Collection<? extends SelectFieldOrAsterisk> fields);
 
     /**

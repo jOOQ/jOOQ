@@ -300,7 +300,7 @@ public interface AlterTableStep {
      * <p>
      * This is an alias for {@link #addColumnIfNotExists(Field)}.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MARIADB, POSTGRES })
     AlterTableFinalStep addIfNotExists(Field<?> field);
 
     /**
@@ -309,7 +309,7 @@ public interface AlterTableStep {
      * <p>
      * This is an alias for {@link #addColumnIfNotExists(Field, DataType)}.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MARIADB, POSTGRES })
     <T> AlterTableFinalStep addIfNotExists(Field<T> field, DataType<T> type);
 
     /**
@@ -318,7 +318,7 @@ public interface AlterTableStep {
      * <p>
      * This is an alias for {@link #addColumnIfNotExists(Name, DataType)}.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MARIADB, POSTGRES })
     AlterTableFinalStep addIfNotExists(Name field, DataType<?> type);
 
     /**
@@ -327,7 +327,7 @@ public interface AlterTableStep {
      * <p>
      * This is an alias for {@link #addColumnIfNotExists(String, DataType)}.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MARIADB, POSTGRES })
     AlterTableFinalStep addIfNotExists(String field, DataType<?> type);
 
     /**
@@ -362,28 +362,28 @@ public interface AlterTableStep {
      * Add an <code>ADD COLUMN IF NOT EXISTS</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MARIADB, POSTGRES })
     AlterTableFinalStep addColumnIfNotExists(Field<?> field);
 
     /**
      * Add an <code>ADD COLUMN IF NOT EXISTS</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MARIADB, POSTGRES })
     <T> AlterTableFinalStep addColumnIfNotExists(Field<T> field, DataType<T> type);
 
     /**
      * Add an <code>ADD COLUMN IF NOT EXISTS</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MARIADB, POSTGRES })
     AlterTableFinalStep addColumnIfNotExists(Name field, DataType<?> type);
 
     /**
      * Add an <code>ADD COLUMN IF NOT EXISTS</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MARIADB, POSTGRES })
     AlterTableFinalStep addColumnIfNotExists(String field, DataType<?> type);
 
     /**

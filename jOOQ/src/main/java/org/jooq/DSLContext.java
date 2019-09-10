@@ -372,7 +372,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * Run an <code>EXPLAIN</code> statement in the database to estimate the
      * cardinality of the query.
      */
-    @Support({ H2, HSQLDB, MYSQL, POSTGRES, SQLITE })
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Explain explain(Query query);
 
     // -------------------------------------------------------------------------
@@ -8562,7 +8562,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#commentOnColumn(Name)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     CommentOnIsStep commentOnColumn(Name columnName);
 
     /**
@@ -8570,7 +8570,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#commentOnColumn(Field)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     CommentOnIsStep commentOnColumn(Field<?> field);
 
     /**
@@ -8820,7 +8820,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createOrReplaceView(String, String...)
      */
-    @Support({ H2, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     CreateViewAsStep<Record> createOrReplaceView(String view, String... fields);
 
     /**
@@ -8828,7 +8828,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createOrReplaceView(Name, Name...)
      */
-    @Support({ H2, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     CreateViewAsStep<Record> createOrReplaceView(Name view, Name... fields);
 
     /**
@@ -8836,7 +8836,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createOrReplaceView(Table, Field...)
      */
-    @Support({ H2, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     CreateViewAsStep<Record> createOrReplaceView(Table<?> view, Field<?>... fields);
 
 
@@ -8849,7 +8849,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createOrReplaceView(String, String...)
      */
-    @Support({ H2, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     CreateViewAsStep<Record> createOrReplaceView(String view, Function<? super Field<?>, ? extends String> fieldNameFunction);
 
     /**
@@ -8861,7 +8861,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createOrReplaceView(String, String...)
      */
-    @Support({ H2, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     CreateViewAsStep<Record> createOrReplaceView(String view, BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction);
 
     /**
@@ -8873,7 +8873,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createOrReplaceView(String, String...)
      */
-    @Support({ H2, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     CreateViewAsStep<Record> createOrReplaceView(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction);
 
     /**
@@ -8885,7 +8885,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createOrReplaceView(String, String...)
      */
-    @Support({ H2, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     CreateViewAsStep<Record> createOrReplaceView(Name view, BiFunction<? super Field<?>, ? super Integer, ? extends Name> fieldNameFunction);
 
     /**
@@ -8897,7 +8897,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createOrReplaceView(String, String...)
      */
-    @Support({ H2, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     CreateViewAsStep<Record> createOrReplaceView(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction);
 
     /**
@@ -8909,7 +8909,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createOrReplaceView(String, String...)
      */
-    @Support({ H2, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     CreateViewAsStep<Record> createOrReplaceView(Table<?> view, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction);
 
 
@@ -9144,7 +9144,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createIndexIfNotExists(String)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
     CreateIndexStep createIndexIfNotExists(String index);
 
     /**
@@ -9152,7 +9152,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createIndexIfNotExists(Name)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
     CreateIndexStep createIndexIfNotExists(Name index);
 
     /**
@@ -9160,7 +9160,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createIndexIfNotExists(Index)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
     CreateIndexStep createIndexIfNotExists(Index index);
 
     /**

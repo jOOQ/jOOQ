@@ -5850,7 +5850,7 @@ public class DSL {
      *
      * @see DSLContext#commentOnColumn(Name)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static CommentOnIsStep commentOnColumn(Name columnName) {
         return dsl().commentOnColumn(columnName);
     }
@@ -5860,7 +5860,7 @@ public class DSL {
      *
      * @see DSLContext#commentOnColumn(Field)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static CommentOnIsStep commentOnColumn(Field<?> field) {
         return dsl().commentOnColumn(field);
     }
@@ -6829,7 +6829,7 @@ public class DSL {
      *
      * @see DSLContext#createOrReplaceView(String, String...)
      */
-    @Support({ H2, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static CreateViewAsStep createOrReplaceView(String view, String... fields) {
         return dsl().createOrReplaceView(view, fields);
     }
@@ -6839,7 +6839,7 @@ public class DSL {
      *
      * @see DSLContext#createOrReplaceView(Name, Name...)
      */
-    @Support({ H2, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static CreateViewAsStep createOrReplaceView(Name view, Name... fields) {
         return dsl().createOrReplaceView(view, fields);
     }
@@ -6849,7 +6849,7 @@ public class DSL {
      *
      * @see DSLContext#createOrReplaceView(Table, Field...)
      */
-    @Support({ H2, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static CreateViewAsStep createOrReplaceView(Table<?> view, Field<?>... fields) {
         return dsl().createOrReplaceView(view, fields);
     }
@@ -6864,7 +6864,7 @@ public class DSL {
      *
      * @see DSLContext#createOrReplaceView(String, String...)
      */
-    @Support({ H2, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static CreateViewAsStep createOrReplaceView(String view, Function<? super Field<?>, ? extends String> fieldNameFunction) {
         return dsl().createOrReplaceView(view, fieldNameFunction);
     }
@@ -6878,7 +6878,7 @@ public class DSL {
      *
      * @see DSLContext#createOrReplaceView(Name, Name...)
      */
-    @Support({ H2, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static CreateViewAsStep createOrReplaceView(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction) {
         return dsl().createOrReplaceView(view, fieldNameFunction);
     }
@@ -6892,7 +6892,7 @@ public class DSL {
      *
      * @see DSLContext#createOrReplaceView(Table, Field...)
      */
-    @Support({ H2, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static CreateViewAsStep createOrReplaceView(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction) {
         return dsl().createOrReplaceView(view, fieldNameFunction);
     }
@@ -7137,7 +7137,7 @@ public class DSL {
      *
      * @see DSLContext#createIndexIfNotExists(String)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
     public static CreateIndexStep createIndexIfNotExists(String index) {
         return dsl().createIndexIfNotExists(index);
     }
@@ -7147,7 +7147,7 @@ public class DSL {
      *
      * @see DSLContext#createIndexIfNotExists(Name)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
     public static CreateIndexStep createIndexIfNotExists(Name index) {
         return dsl().createIndexIfNotExists(index);
     }
@@ -7157,7 +7157,7 @@ public class DSL {
      *
      * @see DSLContext#createIndexIfNotExists(Index)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
     public static CreateIndexStep createIndexIfNotExists(Index index) {
         return dsl().createIndexIfNotExists(index);
     }
@@ -17754,7 +17754,7 @@ public class DSL {
     /**
      * The JSON array constructor.
      */
-    @Support({ MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     public static Field<JSON> jsonArray(Field<?>... fields) {
         return jsonArray(Arrays.asList(fields));
     }
@@ -17762,7 +17762,7 @@ public class DSL {
     /**
      * The JSON array constructor.
      */
-    @Support({ MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     public static Field<JSON> jsonArray(Collection<? extends Field<?>> fields) {
         return new JSONArray<>(JSON, fields);
     }
@@ -17770,7 +17770,7 @@ public class DSL {
     /**
      * The JSONB array constructor.
      */
-    @Support({ MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     public static Field<JSONB> jsonbArray(Field<?>... fields) {
         return jsonbArray(Arrays.asList(fields));
     }
@@ -17778,7 +17778,7 @@ public class DSL {
     /**
      * The JSONB array constructor.
      */
-    @Support({ MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     public static Field<JSONB> jsonbArray(Collection<? extends Field<?>> fields) {
         return new JSONArray<>(JSONB, fields);
     }
@@ -17786,7 +17786,7 @@ public class DSL {
     /**
      * A constructor for JSON entries to be used with {@link #jsonObject(JSONEntry...)}.
      */
-    @Support({ MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     public static <T> JSONEntry<T> jsonEntry(Field<String> key, Field<T> value) {
         return new JSONEntryImpl<>(key, value);
     }
@@ -17794,7 +17794,7 @@ public class DSL {
     /**
      * The JSON object constructor.
      */
-    @Support({ MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     public static Field<JSON> jsonObject(Field<String> key, Field<?> value) {
         return jsonObject(jsonEntry(key, value));
     }
@@ -17802,7 +17802,7 @@ public class DSL {
     /**
      * The JSON object constructor.
      */
-    @Support({ MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     public static Field<JSON> jsonObject(JSONEntry<?>... entries) {
         return jsonObject(Arrays.asList(entries));
     }
@@ -17810,7 +17810,7 @@ public class DSL {
     /**
      * The JSON object constructor.
      */
-    @Support({ MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     public static Field<JSON> jsonObject(Collection<? extends JSONEntry<?>> entries) {
         return new JSONObject<>(JSON, entries);
     }
@@ -17818,7 +17818,7 @@ public class DSL {
     /**
      * The JSONB object constructor.
      */
-    @Support({ MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     public static Field<JSONB> jsonbObject(JSONEntry<?>... entries) {
         return jsonbObject(Arrays.asList(entries));
     }
@@ -17826,7 +17826,7 @@ public class DSL {
     /**
      * The JSONB object constructor.
      */
-    @Support({ MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     public static Field<JSONB> jsonbObject(Collection<? extends JSONEntry<?>> entries) {
         return new JSONObject<>(JSONB, entries);
     }
@@ -17908,7 +17908,7 @@ public class DSL {
      * {@link SQLDialect#POSTGRES} supports this as
      * <code>COUNT(DISTINCT(expr1, expr2))</code>.
      */
-    @Support({ H2, HSQLDB, MYSQL, POSTGRES })
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static AggregateFunction<Integer> countDistinct(Field<?>... fields) {
         fields = nullSafe(fields);
         return fields.length == 0 ? countDistinct(asterisk()) : new org.jooq.impl.Function<>("count", true, SQLDataType.INTEGER, fields);

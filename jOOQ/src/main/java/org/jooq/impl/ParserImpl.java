@@ -10582,7 +10582,6 @@ final class ParserContext {
 
     final DSLContext                      dsl;
     final Meta                            meta;
-    final String                          sqlString;
     final char[]                          sql;
     private final ParseWithMetaLookups    metaLookups;
     private boolean                       metaLookupsForceIgnore;
@@ -10606,7 +10605,6 @@ final class ParserContext {
         this.dsl = dsl;
         this.meta = meta;
         this.metaLookups = metaLookups;
-        this.sqlString = sqlString;
         this.sql = sqlString.toCharArray();
         this.bindings = bindings;
     }
@@ -10817,10 +10815,10 @@ final class ParserContext {
         int[] line = line();
         return "[" + line[0] + ":" + line[1] + "] "
               + (position > 50 ? "..." : "")
-              + sqlString.substring(Math.max(0, position - 50), position)
+              + substring(Math.max(0, position - 50), position)
               + "[*]"
-              + sqlString.substring(position, Math.min(sqlString.length(), position + 80))
-              + (sqlString.length() > position + 80 ? "..." : "");
+              + substring(position, Math.min(sql.length, position + 80))
+              + (sql.length > position + 80 ? "..." : "");
     }
 
     Table<?> lookupTable(Name name) {

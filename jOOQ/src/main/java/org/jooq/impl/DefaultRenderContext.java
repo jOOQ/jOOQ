@@ -465,8 +465,13 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     public final RenderContext formatIndentStart(int i) {
-        if (cachedRenderFormatted)
+        if (cachedRenderFormatted) {
             indent += i;
+
+            // [#9193] If we've already generated the separator (and indentation)
+            if (newline)
+                sql.append(cachedIndentation);
+        }
 
         return this;
     }

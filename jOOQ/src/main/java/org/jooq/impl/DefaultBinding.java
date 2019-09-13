@@ -2119,6 +2119,29 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
+        void sqlInline0(BindingSQLContext<U> ctx, DayToSecond value) throws SQLException {
+            // [#566] Interval data types are best bound as Strings
+            if ( ctx.family() == POSTGRES) {
+                int sign = value.getSign();
+                int days = sign * value.getDays();
+                ctx.render().sql('\'')
+                    .sql(days >= 0 ? '+' : '-')
+                    .sql(Math.abs(days))
+                    .sql(' ')
+                    .sql(sign * value.getHours())
+                    .sql(':')
+                    .sql(sign * value.getMinutes())
+                    .sql(':')
+                    .sql(sign * value.getSeconds())
+                    .sql('.')
+                    .sql(StringUtils.leftPad(Integer.toString(value.getNano()), 9, '0'))
+                    .sql('\'');
+            }
+            else
+                ctx.render().sql('\'').sql(value.toString()).sql('\'');
+        }
+
+        @Override
         final void set0(BindingSetStatementContext<U> ctx, DayToSecond value) throws SQLException {
 
             // [#566] Interval data types are best bound as Strings

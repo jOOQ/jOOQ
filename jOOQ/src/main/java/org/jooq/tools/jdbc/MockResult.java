@@ -37,6 +37,7 @@
  */
 package org.jooq.tools.jdbc;
 
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.jooq.DSLContext;
@@ -72,7 +73,7 @@ public class MockResult {
      * <li>-1: the row count is not applicable</li>
      * </ul>
      */
-    public final int       rows;
+    public final int          rows;
 
     /**
      * The result data associated with this execution result.
@@ -88,7 +89,14 @@ public class MockResult {
      * Note, that this can also be used to provide a result for
      * {@link Statement#getGeneratedKeys()}
      */
-    public final Result<?> data;
+    public final Result<?>    data;
+
+    /**
+     * The exception associated with this execution result.
+     * <p>
+     * If present, the current result produces an exception.
+     */
+    public final SQLException exception;
 
     /**
      * Create a new <code>MockResult</code>.
@@ -144,10 +152,21 @@ public class MockResult {
     public MockResult(int rows, Result<?> data) {
         this.rows = rows;
         this.data = data;
+        this.exception = null;
+    }
+
+    public MockResult(SQLException exception) {
+        this.rows = -1;
+        this.data = null;
+        this.exception = exception;
     }
 
     @Override
     public String toString() {
-        return (data != null) ? data.toString() : ("" + rows);
+        return (exception != null)
+             ? "Exception : " + exception.getMessage()
+             : (data != null)
+             ? data.toString()
+             : ("" + rows);
     }
 }

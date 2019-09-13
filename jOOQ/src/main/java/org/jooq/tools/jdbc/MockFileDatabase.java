@@ -300,13 +300,19 @@ public class MockFileDatabase implements MockDataProvider {
 
             private MockResult parse(String rowString) {
                 int rows = 0;
+                SQLException exception = null;
+
                 if (rowString.startsWith("@ rows:"))
                     rows = Integer.parseInt(rowString.substring(7).trim());
+                if (rowString.startsWith("@ exception:"))
+                    exception = new SQLException(rowString.substring(12).trim());
 
                 String resultText = currentResult.toString();
                 String trimmed = resultText.trim();
                 MockResult result =
-                      resultText.isEmpty()
+                      exception != null
+                    ? new MockResult(exception)
+                    : resultText.isEmpty()
                     ? new MockResult(rows)
                     : trimmed.startsWith("<")
                     ? new MockResult(rows, create.fetchFromXML(resultText))

@@ -151,6 +151,13 @@ public class MockStatement extends JDBC41Statement implements CallableStatement 
             throw new SQLException("Connection is already closed");
     }
 
+    private boolean checkException() throws SQLException {
+        if (result[resultIndex].exception != null)
+            throw result[resultIndex].exception;
+        else
+            return true;
+    }
+
     @Override
     public Connection getConnection() throws SQLException {
         return connection;
@@ -184,6 +191,7 @@ public class MockStatement extends JDBC41Statement implements CallableStatement 
         result = data.execute(context);
         return result != null
             && result.length > 0
+            && checkException()
             && result[resultIndex].data != null
 
             // [#8113] The first result may be the generated keys
@@ -213,7 +221,7 @@ public class MockStatement extends JDBC41Statement implements CallableStatement 
 
     @Override
     public boolean getMoreResults(int current) throws SQLException {
-        return (result != null && ++resultIndex < result.length);
+        return (result != null && ++resultIndex < result.length) && checkException();
     }
 
     @Override

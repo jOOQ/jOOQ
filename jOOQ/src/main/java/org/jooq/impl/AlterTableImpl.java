@@ -261,6 +261,10 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
         this.ifExists = ifExists;
     }
 
+    final Table<?>          $table()         { return table; }
+    final Field<?>          $addColumn()     { return addColumn; }
+    final DataType<?>       $addColumnType() { return addColumnType; }
+
     // ------------------------------------------------------------------------
     // XXX: DSL API
     // ------------------------------------------------------------------------

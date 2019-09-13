@@ -98,39 +98,6 @@ final class DetachedMeta extends AbstractMeta {
         return result;
     }
 
-    @Override
-    protected final List<Schema> getSchemas0() throws DataAccessException {
-        List<Schema> result = new ArrayList<>();
-        for (Catalog catalog : getCatalogs())
-            result.addAll(catalog.getSchemas());
-        return result;
-    }
-
-    @Override
-    protected final List<Table<?>> getTables0() throws DataAccessException {
-        List<Table<?>> result = new ArrayList<>();
-        for (Schema schema : getSchemas())
-            result.addAll(schema.getTables());
-        return result;
-    }
-
-    @Override
-    protected final List<Sequence<?>> getSequences0() throws DataAccessException {
-        List<Sequence<?>> result = new ArrayList<>();
-        for (Schema schema : getSchemas())
-            result.addAll(schema.getSequences());
-        return result;
-    }
-
-    @Override
-    protected final List<UniqueKey<?>> getPrimaryKeys0() throws DataAccessException {
-        List<UniqueKey<?>> result = new ArrayList<>();
-        for (Table<?> table : getTables())
-            if (table.getPrimaryKey() != null)
-                result.add(table.getPrimaryKey());
-        return result;
-    }
-
     private static class DetachedCatalog extends CatalogImpl {
         private static final long serialVersionUID = 7979890261252183486L;
 

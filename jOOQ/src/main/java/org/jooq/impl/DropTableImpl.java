@@ -97,6 +97,8 @@ final class DropTableImpl extends AbstractRowCountQuery implements
         this.temporary = temporary;
     }
 
+    final Table<?>          $table()        { return table; }
+
     // ------------------------------------------------------------------------
     // XXX: DSL API
     // ------------------------------------------------------------------------

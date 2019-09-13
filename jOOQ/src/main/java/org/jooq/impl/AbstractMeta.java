@@ -139,7 +139,12 @@ abstract class AbstractMeta implements Meta, Serializable {
         }
     }
 
-    protected abstract List<Schema> getSchemas0() throws DataAccessException;
+    protected List<Schema> getSchemas0() throws DataAccessException {
+        List<Schema> result = new ArrayList<>();
+        for (Catalog catalog : getCatalogs())
+            result.addAll(catalog.getSchemas());
+        return result;
+    }
 
     @Override
     public final List<Table<?>> getTables(String name) {
@@ -176,7 +181,12 @@ abstract class AbstractMeta implements Meta, Serializable {
         }
     }
 
-    protected abstract List<Table<?>> getTables0() throws DataAccessException;
+    protected List<Table<?>> getTables0() throws DataAccessException {
+        List<Table<?>> result = new ArrayList<>();
+        for (Schema schema : getSchemas())
+            result.addAll(schema.getTables());
+        return result;
+    }
 
     @Override
     public final List<Sequence<?>> getSequences(String name) {
@@ -213,7 +223,12 @@ abstract class AbstractMeta implements Meta, Serializable {
         }
     }
 
-    protected abstract List<Sequence<?>> getSequences0() throws DataAccessException;
+    protected List<Sequence<?>> getSequences0() throws DataAccessException {
+        List<Sequence<?>> result = new ArrayList<>();
+        for (Schema schema : getSchemas())
+            result.addAll(schema.getSequences());
+        return result;
+    }
 
     @Override
     public final List<UniqueKey<?>> getPrimaryKeys() throws DataAccessException {
@@ -226,7 +241,13 @@ abstract class AbstractMeta implements Meta, Serializable {
             cachedPrimaryKeys = new ArrayList<>(getPrimaryKeys0());
     }
 
-    protected abstract List<UniqueKey<?>> getPrimaryKeys0() throws DataAccessException;
+    protected List<UniqueKey<?>> getPrimaryKeys0() throws DataAccessException {
+        List<UniqueKey<?>> result = new ArrayList<>();
+        for (Table<?> table : getTables())
+            if (table.getPrimaryKey() != null)
+                result.add(table.getPrimaryKey());
+        return result;
+    }
 
     private final <T extends Named> List<T> get(Name name, Iterable<T> i, Map<Name, T> qualified, Map<Name, List<T>> unqualified) {
         if (qualified.isEmpty()) {

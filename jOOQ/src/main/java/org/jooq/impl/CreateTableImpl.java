@@ -182,6 +182,12 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
         this.indexes = new ArrayList<>();
     }
 
+    final Table<?>          $table()        { return table; }
+    final Select<?>         $select()       { return select; }
+    final List<Field<?>>    $columnFields() { return columnFields; }
+    final List<DataType<?>> $columnTypes()  { return columnTypes; }
+    final List<Constraint>  $constraints()  { return constraints; }
+
     // ------------------------------------------------------------------------
     // XXX: DSL API
     // ------------------------------------------------------------------------

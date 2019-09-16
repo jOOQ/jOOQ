@@ -693,6 +693,12 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
+
+
+
+
+
                 case CUBRID:
                 case MARIADB:
                 case MYSQL:

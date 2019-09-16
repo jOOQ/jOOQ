@@ -218,8 +218,9 @@ final class DDLInterpreter {
         }
 
         @Override
+        @SuppressWarnings({ "unchecked", "rawtypes" })
         public List<Table<?>> getTables() {
-            return Collections.unmodifiableList(tables);
+            return Collections.unmodifiableList((List) tables);
         }
 
         public MutableTable getTable(Name name) {
@@ -252,6 +253,7 @@ final class DDLInterpreter {
             createField(normalize(name), dataType);
         }
 
+        @SuppressWarnings({ "unchecked", "rawtypes" })
         public void primaryKey(Field<?>[] primaryKeyFields) {
             if (primaryKeyFields != null)
                 this.primaryKey = new UniqueKeyImpl(this, copiedFields(primaryKeyFields));

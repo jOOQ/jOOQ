@@ -137,7 +137,7 @@ final class RowOverlapsCondition<T1, T2> extends AbstractCondition {
         }
 
         // These dialects seem to have trouble with INTERVAL OVERLAPS predicates
-        else if (intervalOverlaps && EMULATE_INTERVAL_OVERLAPS    .contains(configuration.dialect())) {
+        else if (intervalOverlaps && EMULATE_INTERVAL_OVERLAPS.contains(configuration.family())) {
                 return (QueryPartInternal)
                         right1.le(left1.add(left2)).and(
                         left1.le(right1.add(right2)));

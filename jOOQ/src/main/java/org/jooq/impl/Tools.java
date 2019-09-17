@@ -2201,8 +2201,7 @@ final class Tools {
         // [#1593] Create a dummy renderer if we're in bind mode
         if (render == null) render = new DefaultRenderContext(bind.configuration());
 
-        SQLDialect dialect = render.dialect();
-        SQLDialect family = dialect.family();
+        SQLDialect family = render.family();
         boolean mysql = SUPPORT_MYSQL_SYNTAX.contains(family);
         char[][][] quotes = QUOTES.get(family);
 

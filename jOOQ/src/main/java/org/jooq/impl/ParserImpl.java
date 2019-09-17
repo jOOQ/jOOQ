@@ -3133,6 +3133,9 @@ final class ParserImpl implements Parser {
                     if (!parseKeywordIf(ctx, "KEY"))
                         parseKeywordIf(ctx, "INDEX");
 
+                    // [#9132] Avoid parsing "using" as an identifier
+                    parseUsingBtreeOrHashIf(ctx);
+
                     // [#7268] MySQL has some legacy syntax where an index name
                     //         can override a constraint name
                     Name index = parseIdentifierIf(ctx);
@@ -3151,12 +3154,19 @@ final class ParserImpl implements Parser {
                     continue columnLoop;
                 }
                 else if (constraint == null && parseIndexOrKeyIf(ctx)) {
+                    parseUsingBtreeOrHashIf(ctx);
+
                     int p2 = ctx.position();
 
-                    // [#7348] [#7651] Look ahead if the next tokens indicate a MySQL index definition
-                    if (parseIf(ctx, '(') || (parseIdentifierIf(ctx) != null && parseIf(ctx, '('))) {
+                    // [#7348] [#7651] [#9132] Look ahead if the next tokens
+                    // indicate a MySQL index definition
+                    if (parseIf(ctx, '(') || (parseIdentifierIf(ctx) != null
+                                && parseUsingBtreeOrHashIf(ctx)
+                                && parseIf(ctx, '('))) {
                         ctx.position(p2);
                         indexes.add(parseIndexSpecification(ctx, tableName));
+
+                        parseUsingBtreeOrHashIf(ctx);
                         continue columnLoop;
                     }
                     else {
@@ -3566,6 +3576,7 @@ final class ParserImpl implements Parser {
 
     private static final Index parseIndexSpecification(ParserContext ctx, Table<?> table) {
         Name name = parseIdentifierIf(ctx);
+        parseUsingBtreeOrHashIf(ctx);
         parse(ctx, '(');
         SortField<?>[] fields = parseSortSpecification(ctx).toArray(EMPTY_SORTFIELD);
         parse(ctx, ')');
@@ -3578,6 +3589,8 @@ final class ParserImpl implements Parser {
     }
 
     private static final Constraint parsePrimaryKeySpecification(ParserContext ctx, ConstraintTypeStep constraint) {
+        parseUsingBtreeOrHashIf(ctx);
+
         parse(ctx, '(');
         Field<?>[] fieldNames = parseFieldNames(ctx).toArray(EMPTY_FIELD);
         parse(ctx, ')');
@@ -3586,11 +3599,14 @@ final class ParserImpl implements Parser {
             ? primaryKey(fieldNames)
             : constraint.primaryKey(fieldNames);
 
+        parseUsingBtreeOrHashIf(ctx);
         parseConstraintStateIf(ctx);
         return e;
     }
 
     private static final Constraint parseUniqueSpecification(ParserContext ctx, ConstraintTypeStep constraint) {
+        parseUsingBtreeOrHashIf(ctx);
+
         parse(ctx, '(');
         Field<?>[] fieldNames = parseFieldNames(ctx).toArray(EMPTY_FIELD);
         parse(ctx, ')');
@@ -3599,6 +3615,7 @@ final class ParserImpl implements Parser {
             ? unique(fieldNames)
             : constraint.unique(fieldNames);
 
+        parseUsingBtreeOrHashIf(ctx);
         parseConstraintStateIf(ctx);
         return e;
     }
@@ -4198,13 +4215,13 @@ final class ParserImpl implements Parser {
     private static final DDLQuery parseCreateIndex(ParserContext ctx, boolean unique) {
         boolean ifNotExists = parseKeywordIf(ctx, "IF NOT EXISTS");
         Name indexName = parseIndexNameIf(ctx);
+        parseUsingBtreeOrHashIf(ctx);
         parseKeyword(ctx, "ON");
         Table<?> tableName = parseTableName(ctx);
-        if (parseKeywordIf(ctx, "USING BTREE") || parseKeywordIf(ctx, "USING HASH"))
-            ;
         parse(ctx, '(');
         SortField<?>[] fields = parseSortSpecification(ctx).toArray(EMPTY_SORTFIELD);
         parse(ctx, ')');
+        parseUsingBtreeOrHashIf(ctx);
 
         Name[] include = null;
         if (parseKeywordIf(ctx, "INCLUDE")) {
@@ -4238,6 +4255,13 @@ final class ParserImpl implements Parser {
             : s3;
 
         return s4;
+    }
+
+    private static final boolean parseUsingBtreeOrHashIf(ParserContext ctx) {
+        if (parseKeywordIf(ctx, "USING BTREE") || parseKeywordIf(ctx, "USING HASH"))
+            ;
+
+        return true;
     }
 
     private static final DDLQuery parseAlterDomain(ParserContext ctx) {

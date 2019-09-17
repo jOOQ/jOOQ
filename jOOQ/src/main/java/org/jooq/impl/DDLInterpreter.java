@@ -60,14 +60,16 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.exception.DataAccessException;
+import org.jooq.tools.JooqLogger;
 
 final class DDLInterpreter {
 
-    private final Map<Name, MutableCatalog> catalogs = new LinkedHashMap<>();
+    private final Map<Name, MutableCatalog> catalogs       = new LinkedHashMap<>();
     private final Configuration             configuration;
     private final MutableCatalog            defaultCatalog;
     private final MutableSchema             defaultSchema;
     private MutableSchema                   currentSchema;
+    private JooqLogger                      log            = JooqLogger.getLogger(DDLInterpreter.class);
 
     DDLInterpreter(Configuration configuration) {
         this.configuration = configuration;
@@ -103,7 +105,14 @@ final class DDLInterpreter {
         Table<?> table = query.$table();
         MutableSchema schema = getSchema(table.getSchema(), true);
 
-        // TODO ifNotExists
+        if (schema.getTable(table.getUnqualifiedName()) != null) {
+            String message = "Table already exists: " + table.getQualifiedName();
+            if (!query.$ifNotExists())
+                throw new DataAccessException(message);
+            log.debug(message);
+            return;
+        }
+
         MutableTable t = new MutableTable(table.getUnqualifiedName(), schema);
         List<Field<?>> columns = query.$columnFields();
         if (!columns.isEmpty())
@@ -129,9 +138,17 @@ final class DDLInterpreter {
         Table<?> table = query.$table();
         MutableSchema schema = getSchema(table.getSchema(), false);
 
+        MutableTable existing = schema.getTable(table.getUnqualifiedName());
+        if (existing == null) {
+            String message = "Table does not exist: " + table.getQualifiedName();
+            if (!query.$ifExists())
+                throw new DataAccessException(message);
+            log.debug(message);
+            return;
+        }
+
         Field<?> addColumn = query.$addColumn();
         if (addColumn != null) {
-            MutableTable existing = schema.getTable(table.getUnqualifiedName());
             existing.addColumn(addColumn.getUnqualifiedName(), query.$addColumnType());
         }
     }
@@ -141,8 +158,14 @@ final class DDLInterpreter {
         MutableSchema schema = getSchema(table.getSchema(), false);
 
         // TODO schema == null
-        MutableTable oldTable = schema.dropTable(table.getUnqualifiedName());
-        // TODO oldTable == null
+        MutableTable existing = schema.dropTable(table.getUnqualifiedName());
+        if (existing == null) {
+            String message = "Table does not exist: " + table.getQualifiedName();
+            if (!query.$ifExists())
+                throw new DataAccessException(message);
+            log.debug(message);
+            return;
+        }
     }
 
     private final MutableSchema getSchema(Schema input, boolean create) {
@@ -231,6 +254,7 @@ final class DDLInterpreter {
         }
 
         MutableTable getTable(Name name) {
+            name = normalize(name);
             for (MutableTable table : tables)
                 if (table.getUnqualifiedName().equals(name))
                     return table;

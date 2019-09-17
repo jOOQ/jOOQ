@@ -98,6 +98,7 @@ final class DropTableImpl extends AbstractRowCountQuery implements
     }
 
     final Table<?>          $table()        { return table; }
+    final boolean           $ifExists()     { return ifExists; }
 
     // ------------------------------------------------------------------------
     // XXX: DSL API

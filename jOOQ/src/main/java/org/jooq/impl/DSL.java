@@ -15412,7 +15412,7 @@ public class DSL {
      * This is the same as calling {@link #extract(java.util.Date, DatePart)}
      * with {@link DatePart#WEEK}
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Integer> week(java.util.Date value) {
         return extract(value, DatePart.WEEK);
     }
@@ -15425,7 +15425,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Temporal, DatePart)}
      * with {@link DatePart#WEEK}
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Integer> week(Temporal value) {
         return extract(value, DatePart.WEEK);
     }
@@ -15708,7 +15708,7 @@ public class DSL {
      * This is the same as calling {@link #extract(java.util.Date, DatePart)}
      * with {@link DatePart#MILLISECOND}
      */
-    @Support
+    @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Integer> millisecond(java.util.Date value) {
         return extract(value, DatePart.MILLISECOND);
     }
@@ -15721,7 +15721,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Temporal, DatePart)}
      * with {@link DatePart#MILLISECOND}
      */
-    @Support
+    @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Integer> millisecond(Temporal value) {
         return extract(value, DatePart.MILLISECOND);
     }
@@ -15734,7 +15734,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#MILLISECOND}
      */
-    @Support
+    @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Integer> millisecond(Field<?> field) {
         return extract(field, DatePart.MILLISECOND);
     }
@@ -15745,7 +15745,7 @@ public class DSL {
      * This is the same as calling {@link #extract(java.util.Date, DatePart)}
      * with {@link DatePart#MICROSECOND}
      */
-    @Support
+    @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Integer> microsecond(java.util.Date value) {
         return extract(value, DatePart.MICROSECOND);
     }
@@ -15758,7 +15758,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Temporal, DatePart)}
      * with {@link DatePart#MICROSECOND}
      */
-    @Support
+    @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Integer> microsecond(Temporal value) {
         return extract(value, DatePart.MICROSECOND);
     }
@@ -15771,7 +15771,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#MICROSECOND}
      */
-    @Support
+    @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Integer> microsecond(Field<?> field) {
         return extract(field, DatePart.MICROSECOND);
     }
@@ -15782,7 +15782,7 @@ public class DSL {
      * This is the same as calling {@link #extract(java.util.Date, DatePart)}
      * with {@link DatePart#TIMEZONE}
      */
-    @Support
+    @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Integer> timezone(java.util.Date value) {
         return extract(value, DatePart.TIMEZONE);
     }
@@ -15795,7 +15795,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Temporal, DatePart)}
      * with {@link DatePart#TIMEZONE}
      */
-    @Support
+    @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Integer> timezone(Temporal value) {
         return extract(value, DatePart.TIMEZONE);
     }
@@ -15808,7 +15808,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#TIMEZONE}
      */
-    @Support
+    @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Integer> timezone(Field<?> field) {
         return extract(field, DatePart.TIMEZONE);
     }
@@ -15819,7 +15819,7 @@ public class DSL {
      * This is the same as calling {@link #extract(java.util.Date, DatePart)}
      * with {@link DatePart#TIMEZONE_HOUR}
      */
-    @Support
+    @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Integer> timezoneHour(java.util.Date value) {
         return extract(value, DatePart.TIMEZONE_HOUR);
     }
@@ -15832,7 +15832,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Temporal, DatePart)}
      * with {@link DatePart#TIMEZONE_HOUR}
      */
-    @Support
+    @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Integer> timezoneHour(Temporal value) {
         return extract(value, DatePart.TIMEZONE_HOUR);
     }
@@ -15845,7 +15845,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#TIMEZONE_HOUR}
      */
-    @Support
+    @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Integer> timezoneHour(Field<?> field) {
         return extract(field, DatePart.TIMEZONE_HOUR);
     }
@@ -15856,7 +15856,7 @@ public class DSL {
      * This is the same as calling {@link #extract(java.util.Date, DatePart)}
      * with {@link DatePart#TIMEZONE_MINUTE}
      */
-    @Support
+    @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Integer> timezoneMinute(java.util.Date value) {
         return extract(value, DatePart.TIMEZONE_MINUTE);
     }
@@ -15869,7 +15869,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Temporal, DatePart)}
      * with {@link DatePart#TIMEZONE_MINUTE}
      */
-    @Support
+    @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Integer> timezoneMinute(Temporal value) {
         return extract(value, DatePart.TIMEZONE_MINUTE);
     }
@@ -15882,7 +15882,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#TIMEZONE_MINUTE}
      */
-    @Support
+    @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Integer> timezoneMinute(Field<?> field) {
         return extract(field, DatePart.TIMEZONE_MINUTE);
     }

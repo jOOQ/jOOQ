@@ -113,13 +113,13 @@ public enum DatePart {
     /**
      * The millisecond.
      */
-    @Support({ H2, HSQLDB })
+    @Support({ H2, HSQLDB, POSTGRES })
     MILLISECOND("millisecond"),
 
     /**
      * The microsecond.
      */
-    @Support({ H2, HSQLDB })
+    @Support({ H2, HSQLDB, POSTGRES })
     MICROSECOND("microsecond"),
 
     /**

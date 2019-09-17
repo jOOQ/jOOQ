@@ -69,6 +69,7 @@ import java.sql.Timestamp;
 import org.jooq.Context;
 import org.jooq.DatePart;
 import org.jooq.Field;
+import org.jooq.Keyword;
 
 /**
  * @author Lukas Eder
@@ -318,13 +319,21 @@ final class Extract extends AbstractField<Integer> {
             case POSTGRES:
                 switch (datePart) {
                     case DAY_OF_WEEK:
-                        ctx.sql('(').visit(F_EXTRACT).sql('(').visit(keyword("dow")).sql(' ').visit(K_FROM).sql(' ').visit(field).sql(") + 1)");
+                        ctx.sql('(');
+                        acceptNativeFunction(ctx, keyword("dow"));
+                        ctx.sql(" + 1)");
                         return;
                     case DAY_OF_YEAR:
-                        ctx.visit(F_EXTRACT).sql('(').visit(keyword("doy")).sql(' ').visit(K_FROM).sql(' ').visit(field).sql(')');
+                        acceptNativeFunction(ctx, keyword("doy"));
                         return;
                     case ISO_DAY_OF_WEEK:
-                        ctx.visit(F_EXTRACT).sql('(').visit(keyword("isodow")).sql(' ').visit(K_FROM).sql(' ').visit(field).sql(')');
+                        acceptNativeFunction(ctx, keyword("isodow"));
+                        return;
+                    case MILLISECOND:
+                        acceptNativeFunction(ctx, keyword("milliseconds"));
+                        return;
+                    case MICROSECOND:
+                        acceptNativeFunction(ctx, keyword("microseconds"));
                         return;
                     case CENTURY:
                     case DECADE:
@@ -409,6 +418,10 @@ final class Extract extends AbstractField<Integer> {
     }
 
     private final void acceptNativeFunction(Context<?> ctx) {
-        ctx.visit(F_EXTRACT).sql('(').visit(datePart.toKeyword()).sql(' ').visit(K_FROM).sql(' ').visit(field).sql(')');
+        acceptNativeFunction(ctx, datePart.toKeyword());
+    }
+
+    private final void acceptNativeFunction(Context<?> ctx, Keyword keyword) {
+        ctx.visit(F_EXTRACT).sql('(').visit(keyword).sql(' ').visit(K_FROM).sql(' ').visit(field).sql(')');
     }
 }

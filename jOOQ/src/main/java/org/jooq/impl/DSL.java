@@ -15412,7 +15412,7 @@ public class DSL {
      * This is the same as calling {@link #extract(java.util.Date, DatePart)}
      * with {@link DatePart#WEEK}
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, MYSQL, POSTGRES })
     public static Field<Integer> week(java.util.Date value) {
         return extract(value, DatePart.WEEK);
     }
@@ -15425,7 +15425,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Temporal, DatePart)}
      * with {@link DatePart#WEEK}
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, MYSQL, POSTGRES })
     public static Field<Integer> week(Temporal value) {
         return extract(value, DatePart.WEEK);
     }
@@ -15438,7 +15438,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#WEEK}
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, MYSQL, POSTGRES })
     public static Field<Integer> week(Field<?> field) {
         return extract(field, DatePart.WEEK);
     }
@@ -15745,7 +15745,7 @@ public class DSL {
      * This is the same as calling {@link #extract(java.util.Date, DatePart)}
      * with {@link DatePart#MICROSECOND}
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, MYSQL, POSTGRES })
     public static Field<Integer> microsecond(java.util.Date value) {
         return extract(value, DatePart.MICROSECOND);
     }
@@ -15758,7 +15758,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Temporal, DatePart)}
      * with {@link DatePart#MICROSECOND}
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, MYSQL, POSTGRES })
     public static Field<Integer> microsecond(Temporal value) {
         return extract(value, DatePart.MICROSECOND);
     }
@@ -15771,7 +15771,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#MICROSECOND}
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, MYSQL, POSTGRES })
     public static Field<Integer> microsecond(Field<?> field) {
         return extract(field, DatePart.MICROSECOND);
     }

@@ -119,7 +119,7 @@ public enum DatePart {
     /**
      * The microsecond.
      */
-    @Support({ H2, HSQLDB, MYSQL, POSTGRES })
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     MICROSECOND("microsecond"),
 
     /**
@@ -163,7 +163,7 @@ public enum DatePart {
     /**
      * The week of the year.
      */
-    @Support({ H2, HSQLDB, MYSQL, POSTGRES })
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     WEEK("week"),
 
     /**

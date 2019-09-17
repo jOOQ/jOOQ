@@ -46,6 +46,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.jooq.Catalog;
+import org.jooq.Configuration;
 import org.jooq.Constraint;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -60,16 +61,16 @@ import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.exception.DataAccessException;
 
-@SuppressWarnings("serial")
 final class DDLInterpreter {
 
-    private final Map<Name, MutableCatalog>  catalogs = new LinkedHashMap<>();
+    private final Map<Name, MutableCatalog> catalogs = new LinkedHashMap<>();
+    private final Configuration             configuration;
+    private final MutableCatalog            defaultCatalog;
+    private final MutableSchema             defaultSchema;
+    private MutableSchema                   currentSchema;
 
-    private final MutableCatalog defaultCatalog;
-    private final MutableSchema defaultSchema;
-    private MutableSchema currentSchema;
-
-    DDLInterpreter() {
+    DDLInterpreter(Configuration configuration) {
+        this.configuration = configuration;
         defaultCatalog = new MutableCatalog(null);
         catalogs.put(defaultCatalog.getUnqualifiedName(), defaultCatalog);
         defaultSchema = new MutableSchema(null, defaultCatalog);
@@ -78,6 +79,8 @@ final class DDLInterpreter {
 
     Meta meta() {
         return new AbstractMeta() {
+            private static final long serialVersionUID = 2052806256506059701L;
+
             @Override
             protected List<Catalog> getCatalogs0() throws DataAccessException {
                 return new ArrayList<>(catalogs.values());
@@ -182,7 +185,9 @@ final class DDLInterpreter {
     }
 
     private static class MutableCatalog extends CatalogImpl {
-        private List<MutableSchema> schemas = new ArrayList<>();
+        private static final long   serialVersionUID = 9061637392590064527L;
+
+        private List<MutableSchema> schemas          = new ArrayList<>();
 
         MutableCatalog(Name name) {
             super(normalize(name));
@@ -203,8 +208,10 @@ final class DDLInterpreter {
     }
 
     private static class MutableSchema extends SchemaImpl {
+        private static final long        serialVersionUID = -6704449383643804804L;
+
         private final MutableCatalog     catalog;
-        private final List<MutableTable> tables = new ArrayList<>();
+        private final List<MutableTable> tables           = new ArrayList<>();
 
         MutableSchema(Name name, MutableCatalog catalog) {
             super(normalize(name), null);
@@ -223,14 +230,14 @@ final class DDLInterpreter {
             return Collections.unmodifiableList((List) tables);
         }
 
-        public MutableTable getTable(Name name) {
+        MutableTable getTable(Name name) {
             for (MutableTable table : tables)
                 if (table.getUnqualifiedName().equals(name))
                     return table;
             return null;
         }
 
-        public MutableTable dropTable(Name name) {
+        MutableTable dropTable(Name name) {
             name = normalize(name);
             for (int i = 0; i < tables.size(); i++)
                 if (tables.get(i).getUnqualifiedName().equals(name))
@@ -241,15 +248,16 @@ final class DDLInterpreter {
     }
 
     private static class MutableTable extends TableImpl<Record> {
+        private static final long serialVersionUID = -7474225786973716638L;
 
         private UniqueKey<Record> primaryKey;
 
-        public MutableTable(Name name, MutableSchema schema) {
+        MutableTable(Name name, MutableSchema schema) {
             super(normalize(name), schema);
             schema.tables.add(this);
         }
 
-        public void addColumn(Name name, DataType<?> dataType) {
+        void addColumn(Name name, DataType<?> dataType) {
             createField(normalize(name), dataType);
         }
 

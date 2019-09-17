@@ -331,7 +331,7 @@ final class Extract extends AbstractField<Integer> {
                     case MILLENNIUM:
                     case QUARTER:
                     case TIMEZONE:
-                        ctx.visit(F_EXTRACT).sql('(').visit(datePart.toKeyword()).sql(' ').visit(K_FROM).sql(' ').visit(field).sql(')');
+                        acceptNativeFunction(ctx);
                         return;
                 }
                 break;

@@ -71,7 +71,7 @@ final class Trim extends AbstractField<String> {
     @Override
     public final void accept(Context<?> ctx) {
         if (characters == null) {
-            switch (ctx.configuration().dialect()) {
+            switch (ctx.dialect()) {
 
 
 
@@ -93,7 +93,7 @@ final class Trim extends AbstractField<String> {
             }
         }
         else {
-            switch (ctx.configuration().dialect()) {
+            switch (ctx.dialect()) {
 
 
 

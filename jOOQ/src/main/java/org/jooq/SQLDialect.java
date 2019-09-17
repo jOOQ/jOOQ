@@ -836,6 +836,14 @@ public enum SQLDialect {
 
 
 
+
+
+
+
+
+
+
+
                 case MYSQL:         return "org.hibernate.dialect.MySQL5Dialect";
 
 

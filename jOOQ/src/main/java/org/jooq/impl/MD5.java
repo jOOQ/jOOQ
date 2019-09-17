@@ -79,7 +79,7 @@ final class MD5 extends AbstractField<String> {
 
     @Override
     public final void accept(Context<?> ctx) {
-        switch (ctx.configuration().dialect()) {
+        switch (ctx.dialect()) {
 
 
 

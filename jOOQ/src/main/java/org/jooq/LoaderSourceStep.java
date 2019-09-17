@@ -198,6 +198,12 @@ public interface LoaderSourceStep<R extends Record> {
     LoaderCSVStep<R> loadCSV(Reader reader);
 
     /**
+     * Load CSV data.
+     */
+    @Support
+    LoaderCSVStep<R> loadCSV(Source source);
+
+    /**
      * Load XML data.
      */
     @Support
@@ -264,6 +270,12 @@ public interface LoaderSourceStep<R extends Record> {
     LoaderXMLStep<R> loadXML(InputSource source);
 
     /**
+     * Load XML data.
+     */
+    @Support
+    LoaderXMLStep<R> loadXML(Source source);
+
+    /**
      * Load JSON data.
      */
     @Support
@@ -322,5 +334,11 @@ public interface LoaderSourceStep<R extends Record> {
      */
     @Support
     LoaderJSONStep<R> loadJSON(Reader reader);
+
+    /**
+     * Load JSON data.
+     */
+    @Support
+    LoaderJSONStep<R> loadJSON(Source source);
 
 }

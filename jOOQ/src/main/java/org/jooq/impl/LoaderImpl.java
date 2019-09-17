@@ -41,13 +41,9 @@ import static org.jooq.impl.Tools.EMPTY_FIELD;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.Reader;
-import java.io.StringReader;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.sql.Connection;
@@ -84,6 +80,7 @@ import org.jooq.LoaderXMLStep;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SelectQuery;
+import org.jooq.Source;
 import org.jooq.Table;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.LoaderConfigurationException;
@@ -149,7 +146,7 @@ final class LoaderImpl<R extends Record> implements
     private int                          bulk                    = BULK_NONE;
     private int                          bulkAfter               = 1;
     private int                          content                 = CONTENT_CSV;
-    private final InputDelay             data                    = new InputDelay();
+    private Source                       input;
     private Iterator<? extends Object[]> arrays;
 
     // CSV configuration data
@@ -344,115 +341,109 @@ final class LoaderImpl<R extends Record> implements
 
     @Override
     public final LoaderImpl<R> loadCSV(File file) {
-        content = CONTENT_CSV;
-        data.file = file;
-        return this;
+        return loadCSV(Source.of(file));
     }
 
     @Override
     public final LoaderImpl<R> loadCSV(File file, String charsetName) {
-        data.charsetName = charsetName;
-        return loadCSV(file);
+        return loadCSV(Source.of(file, charsetName));
     }
 
     @Override
     public final LoaderImpl<R> loadCSV(File file, Charset cs) {
-        data.cs = cs;
-        return loadCSV(file);
+        return loadCSV(Source.of(file, cs));
     }
 
     @Override
     public final LoaderImpl<R> loadCSV(File file, CharsetDecoder dec) {
-        data.dec = dec;
-        return loadCSV(file);
+        return loadCSV(Source.of(file, dec));
     }
 
     @Override
     public final LoaderImpl<R> loadCSV(String csv) {
-        return loadCSV(new StringReader(csv));
+        return loadCSV(Source.of(csv));
     }
 
     @Override
     public final LoaderImpl<R> loadCSV(InputStream stream) {
-        return loadCSV(new InputStreamReader(stream));
+        return loadCSV(Source.of(stream));
     }
 
     @Override
-    public final LoaderImpl<R> loadCSV(InputStream stream, String charsetName) throws UnsupportedEncodingException {
-        return loadCSV(new InputStreamReader(stream, charsetName));
+    public final LoaderImpl<R> loadCSV(InputStream stream, String charsetName) {
+        return loadCSV(Source.of(stream, charsetName));
     }
 
     @Override
     public final LoaderImpl<R> loadCSV(InputStream stream, Charset cs) {
-        return loadCSV(new InputStreamReader(stream, cs));
+        return loadCSV(Source.of(stream, cs));
     }
 
     @Override
     public final LoaderImpl<R> loadCSV(InputStream stream, CharsetDecoder dec) {
-        return loadCSV(new InputStreamReader(stream, dec));
+        return loadCSV(Source.of(stream, dec));
     }
 
     @Override
     public final LoaderImpl<R> loadCSV(Reader reader) {
+        return loadCSV(Source.of(reader));
+    }
+
+    @Override
+    public final LoaderImpl<R> loadCSV(Source s) {
         content = CONTENT_CSV;
-        data.reader = new BufferedReader(reader);
+        input = s;
         return this;
     }
 
     @Override
     public final LoaderImpl<R> loadXML(File file) {
-        content = CONTENT_XML;
-        data.file = file;
-        return this;
+        return loadXML(Source.of(file));
     }
 
     @Override
     public final LoaderImpl<R> loadXML(File file, String charsetName) {
-        data.charsetName = charsetName;
-        return loadXML(file);
+        return loadXML(Source.of(file, charsetName));
     }
 
     @Override
     public final LoaderImpl<R> loadXML(File file, Charset cs) {
-        data.cs = cs;
-        return loadXML(file);
+        return loadXML(Source.of(file, cs));
     }
 
     @Override
     public final LoaderImpl<R> loadXML(File file, CharsetDecoder dec) {
-        data.dec = dec;
-        return loadXML(file);
+        return loadXML(Source.of(file, dec));
     }
 
     @Override
     public final LoaderImpl<R> loadXML(String xml) {
-        return loadXML(new StringReader(xml));
+        return loadXML(Source.of(xml));
     }
 
     @Override
     public final LoaderImpl<R> loadXML(InputStream stream) {
-        return loadXML(new InputStreamReader(stream));
+        return loadXML(Source.of(stream));
     }
 
     @Override
-    public final LoaderImpl<R> loadXML(InputStream stream, String charsetName) throws UnsupportedEncodingException {
-        return loadXML(new InputStreamReader(stream, charsetName));
+    public final LoaderImpl<R> loadXML(InputStream stream, String charsetName) {
+        return loadXML(Source.of(stream, charsetName));
     }
 
     @Override
     public final LoaderImpl<R> loadXML(InputStream stream, Charset cs) {
-        return loadXML(new InputStreamReader(stream, cs));
+        return loadXML(Source.of(stream, cs));
     }
 
     @Override
     public final LoaderImpl<R> loadXML(InputStream stream, CharsetDecoder dec) {
-        return loadXML(new InputStreamReader(stream, dec));
+        return loadXML(Source.of(stream, dec));
     }
 
     @Override
     public final LoaderImpl<R> loadXML(Reader reader) {
-        content = CONTENT_XML;
-        throw new UnsupportedOperationException("This is not yet implemented");
+        return loadXML(Source.of(reader));
     }
 
     @Override
@@ -462,59 +453,66 @@ final class LoaderImpl<R extends Record> implements
     }
 
     @Override
+    public final LoaderImpl<R> loadXML(Source s) {
+        content = CONTENT_XML;
+        input = s;
+        throw new UnsupportedOperationException("This is not yet implemented");
+    }
+
+    @Override
     public final LoaderImpl<R> loadJSON(File file) {
-        content = CONTENT_JSON;
-        data.file = file;
-        return this;
+        return loadJSON(Source.of(file));
     }
 
     @Override
     public final LoaderImpl<R> loadJSON(File file, String charsetName) {
-        data.charsetName = charsetName;
-        return loadJSON(file);
+        return loadJSON(Source.of(file, charsetName));
     }
 
     @Override
     public final LoaderImpl<R> loadJSON(File file, Charset cs) {
-        data.cs = cs;
-        return loadJSON(file);
+        return loadJSON(Source.of(file, cs));
     }
 
     @Override
     public final LoaderImpl<R> loadJSON(File file, CharsetDecoder dec) {
-        data.dec = dec;
-        return loadJSON(file);
+        return loadJSON(Source.of(file, dec));
     }
 
     @Override
     public final LoaderImpl<R> loadJSON(String json) {
-        return loadJSON(new StringReader(json));
+        return loadJSON(Source.of(json));
     }
 
     @Override
     public final LoaderImpl<R> loadJSON(InputStream stream) {
-        return loadJSON(new InputStreamReader(stream));
+        return loadJSON(Source.of(stream));
     }
 
     @Override
-    public final LoaderImpl<R> loadJSON(InputStream stream, String charsetName) throws UnsupportedEncodingException {
-        return loadJSON(new InputStreamReader(stream, charsetName));
+    public final LoaderImpl<R> loadJSON(InputStream stream, String charsetName) {
+        return loadJSON(Source.of(stream, charsetName));
     }
 
     @Override
     public final LoaderImpl<R> loadJSON(InputStream stream, Charset cs) {
-        return loadJSON(new InputStreamReader(stream, cs));
+        return loadJSON(Source.of(stream, cs));
     }
 
     @Override
     public final LoaderImpl<R> loadJSON(InputStream stream, CharsetDecoder dec) {
-        return loadJSON(new InputStreamReader(stream, dec));
+        return loadJSON(Source.of(stream, dec));
     }
 
     @Override
     public final LoaderImpl<R> loadJSON(Reader reader) {
+        return loadJSON(Source.of(reader));
+    }
+
+    @Override
+    public final LoaderImpl<R> loadJSON(Source s) {
         content = CONTENT_JSON;
-        data.reader = new BufferedReader(reader);
+        input = s;
         return this;
     }
 
@@ -652,7 +650,7 @@ final class LoaderImpl<R extends Record> implements
         BufferedReader reader = null;
 
         try {
-            reader = data.reader();
+            reader = new BufferedReader(input.reader());
             Result<Record> r = new JSONReader(create).read(reader);
             source = r.fields();
 
@@ -678,11 +676,11 @@ final class LoaderImpl<R extends Record> implements
 
         try {
             if (ignoreRows == 1) {
-                reader = new CSVReader(data.reader(), separator, quote, 0);
+                reader = new CSVReader(input.reader(), separator, quote, 0);
                 source = Tools.fieldsByName(reader.next());
             }
             else {
-                reader = new CSVReader(data.reader(), separator, quote, ignoreRows);
+                reader = new CSVReader(input.reader(), separator, quote, ignoreRows);
             }
 
             executeSQL(reader);
@@ -993,50 +991,6 @@ final class LoaderImpl<R extends Record> implements
         @Override
         public final int stored() {
             return stored;
-        }
-    }
-
-    /**
-     * An "input delay" type.
-     * <p>
-     * [#4593] To make sure we do not spill file handles due to improper
-     * resource shutdown (e.g. when a loader is created but never executed),
-     * this type helps delaying creating resources from input until the input is
-     * really needed.
-     */
-    private class InputDelay {
-
-        // Either, we already have an external Reader resource, in case of which
-        // client code is responsible for resource management...
-        BufferedReader reader;
-
-        // ... or we create the resource explicitly as late as possible
-        File           file;
-        String         charsetName;
-        Charset        cs;
-        CharsetDecoder dec;
-
-        BufferedReader reader() throws IOException {
-            if (reader != null)
-                return reader;
-
-            if (file != null) {
-                try {
-                    if (charsetName != null)
-                        return new BufferedReader(new InputStreamReader(new FileInputStream(file), charsetName));
-                    else if (cs != null)
-                        return new BufferedReader(new InputStreamReader(new FileInputStream(file), cs));
-                    else if (dec != null)
-                        return new BufferedReader(new InputStreamReader(new FileInputStream(file), dec));
-                    else
-                        return new BufferedReader(new InputStreamReader(new FileInputStream(file)));
-                }
-                catch (Exception e) {
-                    throw new IOException(e);
-                }
-            }
-
-            return null;
         }
     }
 }

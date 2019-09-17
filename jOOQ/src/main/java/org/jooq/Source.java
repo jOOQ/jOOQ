@@ -46,11 +46,7 @@ import java.nio.charset.Charset;
 
 /**
  * A source of text data.
- * <p>
- * [#8986] As of jOOQ 3.12, this is INTERNAL API and should not be used by
- * users.
  */
-@Internal
 public final class Source {
 
     private final String      string;

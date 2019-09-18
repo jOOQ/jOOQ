@@ -95,6 +95,9 @@ class IndexImpl extends AbstractNamed implements Index {
         this.unique = unique;
     }
 
+    final SortField<?>[]    $fields()      { return fields; }
+    final boolean           $unique()      { return unique; }
+
     @Override
     public final void accept(Context<?> ctx) {
         if (NO_SUPPORT_INDEX_QUALIFICATION.contains(ctx.family()))

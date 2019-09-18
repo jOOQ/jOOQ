@@ -51,12 +51,14 @@ import org.jooq.Configuration;
 import org.jooq.Constraint;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Index;
 import org.jooq.Meta;
 import org.jooq.Name;
 import org.jooq.Name.Quoted;
 import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Schema;
+import org.jooq.SortField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
@@ -137,6 +139,11 @@ final class DDLInterpreter {
             else
                 // XXX log warning?
                 ;
+        for (Index index : query.$indexes())
+            if (index instanceof IndexImpl) {
+                IndexImpl impl = (IndexImpl) index;
+                t.index(impl.getUnqualifiedName(), impl.$fields(), impl.$unique());
+            }
     }
 
     private final void accept0(AlterTableImpl query) {
@@ -281,6 +288,7 @@ final class DDLInterpreter {
 
         private UniqueKey<Record>       primaryKey;
         private List<UniqueKey<Record>> keys;
+        private List<Index>             indexes;
 
         MutableTable(Name name, MutableSchema schema, Comment comment) {
             super(normalize(name), schema, null, null, comment);
@@ -304,6 +312,13 @@ final class DDLInterpreter {
                     keys = new ArrayList<>();
                 keys.add(new UniqueKeyImpl(this, normalize(name).first(), copiedFields(uniqueKeyFields)));
             }
+        }
+
+        void index(Name name, SortField<?>[] indexFields, boolean unique) {
+            // XXX copy fields?
+            if (indexes == null)
+                indexes = new ArrayList<>();
+            indexes.add(Internal.createIndex(normalize(name).first(), this, indexFields, unique));
         }
 
         private final TableField<?, ?>[] copiedFields(Field<?>[] input) {
@@ -330,6 +345,11 @@ final class DDLInterpreter {
             result.add(primaryKey);
             result.addAll(keys);
             return Collections.unmodifiableList(result);
+        }
+
+        @Override
+        public List<Index> getIndexes() {
+            return indexes == null ? Collections.emptyList() : Collections.unmodifiableList(indexes);
         }
     }
 

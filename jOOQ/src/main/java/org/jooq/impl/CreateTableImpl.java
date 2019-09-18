@@ -188,6 +188,7 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
     final List<DataType<?>> $columnTypes()  { return columnTypes; }
     final List<Constraint>  $constraints()  { return constraints; }
     final boolean           $ifNotExists()  { return ifNotExists; }
+    final Comment           $comment()      { return comment; }
 
     // ------------------------------------------------------------------------
     // XXX: DSL API

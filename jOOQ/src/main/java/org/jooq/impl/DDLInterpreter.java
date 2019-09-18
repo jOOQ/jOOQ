@@ -46,6 +46,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.jooq.Catalog;
+import org.jooq.Comment;
 import org.jooq.Configuration;
 import org.jooq.Constraint;
 import org.jooq.DataType;
@@ -113,7 +114,7 @@ final class DDLInterpreter {
             return;
         }
 
-        MutableTable t = new MutableTable(table.getUnqualifiedName(), schema);
+        MutableTable t = new MutableTable(table.getUnqualifiedName(), schema, query.$comment());
         List<Field<?>> columns = query.$columnFields();
         if (!columns.isEmpty())
             for (int i = 0; i < columns.size(); i++) {
@@ -281,8 +282,8 @@ final class DDLInterpreter {
         private UniqueKey<Record>       primaryKey;
         private List<UniqueKey<Record>> keys;
 
-        MutableTable(Name name, MutableSchema schema) {
-            super(normalize(name), schema);
+        MutableTable(Name name, MutableSchema schema, Comment comment) {
+            super(normalize(name), schema, null, null, comment);
             schema.tables.add(this);
         }
 

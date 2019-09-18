@@ -317,10 +317,11 @@ final class DDLInterpreter {
             return primaryKey;
         }
 
+        @SuppressWarnings({ "unchecked", "rawtypes" })
         @Override
         public List<UniqueKey<Record>> getKeys() {
             if (primaryKey == null)
-                return keys == null ? Collections.emptyList() : Collections.unmodifiableList(keys);
+                return keys == null ? Collections.emptyList() : Collections.unmodifiableList((List) keys);
             else if (keys == null)
                 return Collections.singletonList(primaryKey);
 

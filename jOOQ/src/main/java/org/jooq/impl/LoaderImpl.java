@@ -39,7 +39,6 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -647,10 +646,10 @@ final class LoaderImpl<R extends Record> implements
     }
 
     private void executeJSON() throws IOException {
-        BufferedReader reader = null;
+        Reader reader = null;
 
         try {
-            reader = new BufferedReader(input.reader());
+            reader = input.reader();
             Result<Record> r = new JSONReader(create).read(reader);
             source = r.fields();
 

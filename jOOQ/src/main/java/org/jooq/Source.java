@@ -37,6 +37,7 @@
  */
 package org.jooq;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -199,7 +200,7 @@ public final class Source {
             else if (inputStream != null)
                 return inputStreamReader(inputStream);
             else if (file != null)
-                return inputStreamReader(new FileInputStream(file));
+                return new BufferedReader(inputStreamReader(new FileInputStream(file)));
             else
                 throw new IllegalStateException("Could not produce a reader from this source");
         }

@@ -41,6 +41,14 @@ package org.jooq.impl;
 
 import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_BETWEEN;
+import static org.jooq.Comparator.LIKE;
+import static org.jooq.Comparator.LIKE_IGNORE_CASE;
+import static org.jooq.Comparator.NOT_LIKE;
+import static org.jooq.Comparator.NOT_LIKE_IGNORE_CASE;
+import static org.jooq.Comparator.NOT_SIMILAR_TO;
+import static org.jooq.Comparator.SIMILAR_TO;
+// ...
+import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.row;
@@ -64,6 +72,7 @@ import org.jooq.Operator;
 import org.jooq.Param;
 import org.jooq.QuantifiedSelect;
 import org.jooq.Record1;
+import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
 
@@ -72,17 +81,18 @@ import org.jooq.Table;
  */
 final class QuantifiedComparisonCondition extends AbstractCondition implements LikeEscapeStep {
 
-    private static final long                serialVersionUID    = -402776705884329740L;
-    private static final Clause[]            CLAUSES             = { CONDITION, CONDITION_BETWEEN };
-    private static final EnumSet<Comparator> SYNTHETIC_OPERATORS = EnumSet.of(Comparator.LIKE, Comparator.NOT_LIKE, Comparator.LIKE_IGNORE_CASE, Comparator.NOT_LIKE_IGNORE_CASE, Comparator.SIMILAR_TO, Comparator.NOT_SIMILAR_TO);
+    private static final long                serialVersionUID           = -402776705884329740L;
+    private static final Clause[]            CLAUSES                    = { CONDITION, CONDITION_BETWEEN };
+    private static final EnumSet<Comparator> SYNTHETIC_OPERATORS        = EnumSet.of(LIKE, NOT_LIKE, LIKE_IGNORE_CASE, NOT_LIKE_IGNORE_CASE, SIMILAR_TO, NOT_SIMILAR_TO);
+    private static final EnumSet<SQLDialect> SUPPORTS_QUANTIFIED_ARRAYS = EnumSet.of(POSTGRES);
 
-    private final QuantifiedSelect<?>        query;
+    private final QuantifiedSelectImpl<?>    query;
     private final Field<?>                   field;
     private final Comparator                 comparator;
     private Character                        escape;
 
     QuantifiedComparisonCondition(QuantifiedSelect<?> query, Field<?> field, Comparator comparator) {
-        this.query = query;
+        this.query = (QuantifiedSelectImpl<?>) query;
         this.field = field;
         this.comparator = comparator;
     }
@@ -101,26 +111,29 @@ final class QuantifiedComparisonCondition extends AbstractCondition implements L
             accept0(ctx);
     }
 
-    @SuppressWarnings({ "unchecked", "null" })
+    @SuppressWarnings({ "unchecked" })
     private final void accept0(Context<?> ctx) {
-        Field<? extends Object[]> array = ((QuantifiedSelectImpl<?>) query).array;
-        Field<String>[] values = (Field<String>[]) ((QuantifiedSelectImpl<?>) query).values;
-        Quantifier quantifier = ((QuantifiedSelectImpl<?>) query).quantifier;
-        Select<?> subquery = ((QuantifiedSelectImpl<?>) query).query;
+        boolean syntheticOperator = SYNTHETIC_OPERATORS.contains(comparator);
+        boolean quantifiedArray = query.array instanceof Param<?>;
 
-        if (values != null || array instanceof Param<?>) {
+        // [#9224] Special case when a SQL dialect actually supports quantified
+        //         arrays, such as x = any(?::int[]) in PostgreSQL
+        if (quantifiedArray && SUPPORTS_QUANTIFIED_ARRAYS.contains(ctx.family()) && !syntheticOperator) {
+            accept1(ctx);
+        }
+        else if (query.values != null || quantifiedArray) {
             List<Condition> conditions = new ArrayList<>();
-            if (values != null)
-                for (Field<String> value : values)
+
+            if (query.values != null)
+                for (Field<?> value : query.values)
                     conditions.add(comparisonCondition(comparator, value));
             else
-                for (Object value : ((Param<? extends Object[]>) array).getValue())
+                for (Object value : ((Param<? extends Object[]>) query.array).getValue())
                     conditions.add(value instanceof Field ? comparisonCondition(comparator, (Field<String>) value) : comparisonCondition(comparator, value));
 
-            Condition combinedCondition = CombinedCondition.of(quantifier == Quantifier.ALL ? Operator.AND : Operator.OR, conditions);
-            ctx.visit(combinedCondition);
+            ctx.visit(CombinedCondition.of(query.quantifier == Quantifier.ALL ? Operator.AND : Operator.OR, conditions));
         }
-        else if ((array != null || subquery != null) && SYNTHETIC_OPERATORS.contains(comparator)) {
+        else if ((query.array != null || query.query != null) && syntheticOperator) {
             Field<String> pattern = DSL.field(name("pattern"), VARCHAR);
             Condition cond;
             Field<Boolean> lhs;
@@ -141,9 +154,9 @@ final class QuantifiedComparisonCondition extends AbstractCondition implements L
                     throw new IllegalStateException();
             }
 
-            Table<?> t = (array != null ? new ArrayTable(array) : subquery).asTable("t", "pattern");
+            Table<?> t = (query.array != null ? new ArrayTable(query.array) : query.query).asTable("t", "pattern");
             Select<Record1<Boolean>> select = select(DSL.field(cond)).from(t);
-            ctx.visit(lhs.eq(quantifier.apply(select)));
+            ctx.visit(lhs.eq(query.quantifier.apply(select)));
         }
         else {
             accept1(ctx);

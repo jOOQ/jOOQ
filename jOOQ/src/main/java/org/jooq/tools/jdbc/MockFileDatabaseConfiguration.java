@@ -38,7 +38,6 @@
 package org.jooq.tools.jdbc;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.LineNumberReader;
 import java.io.Reader;
@@ -71,19 +70,19 @@ public final class MockFileDatabaseConfiguration {
         this.nullLiteral = nullLiteral;
     }
 
-    public final MockFileDatabaseConfiguration source(File file) throws IOException {
+    public final MockFileDatabaseConfiguration source(File file) {
         return source(Source.of(file, "UTF-8"));
     }
 
-    public final MockFileDatabaseConfiguration source(File file, String encoding) throws IOException {
+    public final MockFileDatabaseConfiguration source(File file, String encoding) {
         return source(Source.of(file, encoding));
     }
 
-    public final MockFileDatabaseConfiguration source(InputStream stream) throws IOException {
+    public final MockFileDatabaseConfiguration source(InputStream stream) {
         return source(Source.of(stream, "UTF-8"));
     }
 
-    public final MockFileDatabaseConfiguration source(InputStream stream, String encoding) throws IOException {
+    public final MockFileDatabaseConfiguration source(InputStream stream, String encoding) {
         return source(Source.of(stream, encoding));
     }
 

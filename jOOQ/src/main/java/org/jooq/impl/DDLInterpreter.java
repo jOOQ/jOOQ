@@ -127,7 +127,11 @@ final class DDLInterpreter {
         for (Constraint constraint : query.$constraints())
             if (constraint instanceof ConstraintImpl) {
                 ConstraintImpl impl = (ConstraintImpl) constraint;
-                t.primaryKey(impl.$primaryKey());
+                // XXX handle case that primary key already exists?
+                if (impl.$primaryKey() != null)
+                    t.primaryKey(impl.getUnqualifiedName(), impl.$primaryKey());
+                if (impl.$unique() != null)
+                    t.uniqueKey(impl.getUnqualifiedName(), impl.$unique());
             }
             else
                 // XXX log warning?
@@ -272,9 +276,10 @@ final class DDLInterpreter {
     }
 
     private static class MutableTable extends TableImpl<Record> {
-        private static final long serialVersionUID = -7474225786973716638L;
+        private static final long       serialVersionUID = -7474225786973716638L;
 
-        private UniqueKey<Record> primaryKey;
+        private UniqueKey<Record>       primaryKey;
+        private List<UniqueKey<Record>> keys;
 
         MutableTable(Name name, MutableSchema schema) {
             super(normalize(name), schema);
@@ -286,9 +291,18 @@ final class DDLInterpreter {
         }
 
         @SuppressWarnings({ "unchecked", "rawtypes" })
-        public void primaryKey(Field<?>[] primaryKeyFields) {
+        void primaryKey(Name name, Field<?>[] primaryKeyFields) {
             if (primaryKeyFields != null)
-                this.primaryKey = new UniqueKeyImpl(this, copiedFields(primaryKeyFields));
+                this.primaryKey = new UniqueKeyImpl(this, normalize(name).first(), copiedFields(primaryKeyFields));
+        }
+
+        @SuppressWarnings({ "rawtypes", "unchecked" })
+        void uniqueKey(Name name, Field<?>[] uniqueKeyFields) {
+            if (uniqueKeyFields != null) {
+                if (keys == null)
+                    keys = new ArrayList<>();
+                keys.add(new UniqueKeyImpl(this, normalize(name).first(), copiedFields(uniqueKeyFields)));
+            }
         }
 
         private final TableField<?, ?>[] copiedFields(Field<?>[] input) {
@@ -301,6 +315,19 @@ final class DDLInterpreter {
         @Override
         public UniqueKey<Record> getPrimaryKey() {
             return primaryKey;
+        }
+
+        @Override
+        public List<UniqueKey<Record>> getKeys() {
+            if (primaryKey == null)
+                return keys == null ? Collections.emptyList() : Collections.unmodifiableList(keys);
+            else if (keys == null)
+                return Collections.singletonList(primaryKey);
+
+            List<UniqueKey<Record>> result = new ArrayList<>();
+            result.add(primaryKey);
+            result.addAll(keys);
+            return Collections.unmodifiableList(result);
         }
     }
 

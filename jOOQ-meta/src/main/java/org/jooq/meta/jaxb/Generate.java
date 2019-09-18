@@ -147,8 +147,8 @@ public class Generate implements Serializable, XMLAppendable
     protected Boolean fluentSetters = false;
     @XmlElement(defaultValue = "false")
     protected Boolean javaBeansGettersAndSetters = false;
-    @XmlElement(defaultValue = "true")
-    protected Boolean varargSetters = true;
+    @XmlElement(defaultValue = "false")
+    protected Boolean varargSetters = false;
     @XmlElement(defaultValue = "")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String fullyQualifiedTypes = "";

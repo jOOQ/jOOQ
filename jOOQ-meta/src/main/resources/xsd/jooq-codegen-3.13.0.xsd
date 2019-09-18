@@ -1362,7 +1362,7 @@ If this flag is set to true, then:
 Custom GeneratorStrategy implementations are unaffected]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
-      <element name="varargSetters" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+      <element name="varargSetters" type="boolean" default="false" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate varargs setters for array types for convenience.
 <p>
 This may lead to compilation warnings in current Java versions.]]></jxb:javadoc></jxb:property></appinfo></annotation>

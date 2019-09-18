@@ -182,7 +182,7 @@ implements
     @Override
     public final void accept(Context<?> ctx) {
         if (TRUE.equals(ctx.data(DATA_CONSTRAINT_REFERENCE))) {
-            if (getQualifiedName() == AbstractName.NO_NAME)
+            if (getQualifiedName().equals(AbstractName.NO_NAME))
                 throw new DataAccessException("Cannot ALTER or DROP CONSTRAINT without name");
 
             ctx.visit(getQualifiedName());
@@ -190,7 +190,7 @@ implements
         else {
             boolean qualify = ctx.qualify();
 
-            if (getQualifiedName() != AbstractName.NO_NAME) {
+            if (!getQualifiedName().equals(AbstractName.NO_NAME)) {
                 ctx.visit(K_CONSTRAINT)
                    .sql(' ')
                    .visit(getUnqualifiedName())
@@ -272,7 +272,7 @@ implements
                    .sql(')');
             }
 
-            if (getQualifiedName() != AbstractName.NO_NAME) {
+            if (!getQualifiedName().equals(AbstractName.NO_NAME)) {
 
 
 

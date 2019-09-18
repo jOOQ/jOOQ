@@ -126,7 +126,7 @@ final class QuantifiedComparisonCondition extends AbstractCondition implements L
 
             if (query.values != null)
                 for (Field<?> value : query.values)
-                    conditions.add(comparisonCondition(comparator, value));
+                    conditions.add(comparisonCondition(comparator, (Field<String>) value));
             else
                 for (Object value : ((Param<? extends Object[]>) query.array).getValue())
                     conditions.add(value instanceof Field ? comparisonCondition(comparator, (Field<String>) value) : comparisonCondition(comparator, value));

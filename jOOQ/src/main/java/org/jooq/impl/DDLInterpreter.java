@@ -132,9 +132,9 @@ final class DDLInterpreter {
                 ConstraintImpl impl = (ConstraintImpl) constraint;
                 // XXX handle case that primary key already exists?
                 if (impl.$primaryKey() != null)
-                    t.primaryKey(impl.getUnqualifiedName(), impl.$primaryKey());
+                    t.addPrimaryKey(impl.getUnqualifiedName(), impl.$primaryKey());
                 if (impl.$unique() != null)
-                    t.uniqueKey(impl.getUnqualifiedName(), impl.$unique());
+                    t.addUniqueKey(impl.getUnqualifiedName(), impl.$unique());
             }
             else
                 // XXX log warning?
@@ -142,7 +142,7 @@ final class DDLInterpreter {
         for (Index index : query.$indexes())
             if (index instanceof IndexImpl) {
                 IndexImpl impl = (IndexImpl) index;
-                t.index(impl.getUnqualifiedName(), impl.$fields(), impl.$unique());
+                t.addIndex(impl.getUnqualifiedName(), impl.$fields(), impl.$unique());
             }
     }
 
@@ -300,13 +300,13 @@ final class DDLInterpreter {
         }
 
         @SuppressWarnings({ "unchecked", "rawtypes" })
-        void primaryKey(Name name, Field<?>[] primaryKeyFields) {
+        void addPrimaryKey(Name name, Field<?>[] primaryKeyFields) {
             if (primaryKeyFields != null)
                 this.primaryKey = new UniqueKeyImpl(this, normalize(name).first(), copiedFields(primaryKeyFields));
         }
 
         @SuppressWarnings({ "rawtypes", "unchecked" })
-        void uniqueKey(Name name, Field<?>[] uniqueKeyFields) {
+        void addUniqueKey(Name name, Field<?>[] uniqueKeyFields) {
             if (uniqueKeyFields != null) {
                 if (keys == null)
                     keys = new ArrayList<>();
@@ -314,7 +314,7 @@ final class DDLInterpreter {
             }
         }
 
-        void index(Name name, SortField<?>[] indexFields, boolean unique) {
+        void addIndex(Name name, SortField<?>[] indexFields, boolean unique) {
             // XXX copy fields?
             if (indexes == null)
                 indexes = new ArrayList<>();
@@ -347,9 +347,10 @@ final class DDLInterpreter {
             return Collections.unmodifiableList(result);
         }
 
+        @SuppressWarnings({ "unchecked", "rawtypes" })
         @Override
         public List<Index> getIndexes() {
-            return indexes == null ? Collections.emptyList() : Collections.unmodifiableList(indexes);
+            return indexes == null ? Collections.emptyList() : Collections.unmodifiableList((List) indexes);
         }
     }
 

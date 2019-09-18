@@ -127,6 +127,8 @@ abstract class AbstractKey<R extends Record> implements Key<R> {
         }
         else if (!table.equals(other.table))
             return false;
+        else if (!Arrays.equals(fields, other.fields))
+            return false;
         return true;
     }
 

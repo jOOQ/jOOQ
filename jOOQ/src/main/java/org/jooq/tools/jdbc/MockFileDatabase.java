@@ -55,6 +55,7 @@ import java.util.regex.PatternSyntaxException;
 
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
+import org.jooq.Source;
 import org.jooq.exception.MockFileDatabaseException;
 import org.jooq.impl.DSL;
 import org.jooq.tools.JooqLogger;
@@ -148,6 +149,10 @@ public class MockFileDatabase implements MockDataProvider {
 
     public MockFileDatabase(String string) throws IOException {
         this(new MockFileDatabaseConfiguration().source(string));
+    }
+
+    public MockFileDatabase(Source source) throws IOException {
+        this(new MockFileDatabaseConfiguration().source(source));
     }
 
     /**

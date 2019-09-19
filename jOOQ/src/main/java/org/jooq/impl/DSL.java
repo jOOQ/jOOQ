@@ -7756,7 +7756,7 @@ public class DSL {
      *
      * @see DSLContext#dropTemporaryTable(String)
      */
-    @Support
+    @Support({ MARIADB, MYSQL, POSTGRES })
     public static DropTableStep dropTemporaryTable(String table) {
         return dsl().dropTemporaryTable(table);
     }
@@ -7766,7 +7766,7 @@ public class DSL {
      *
      * @see DSLContext#dropTemporaryTable(Name)
      */
-    @Support
+    @Support({ MARIADB, MYSQL, POSTGRES })
     public static DropTableStep dropTemporaryTable(Name table) {
         return dsl().dropTemporaryTable(table);
     }
@@ -7776,7 +7776,7 @@ public class DSL {
      *
      * @see DSLContext#dropTemporaryTable(Table)
      */
-    @Support
+    @Support({ MARIADB, MYSQL, POSTGRES })
     public static DropTableStep dropTemporaryTable(Table<?> table) {
         return dsl().dropTemporaryTable(table);
     }

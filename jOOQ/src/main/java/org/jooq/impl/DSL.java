@@ -7782,6 +7782,36 @@ public class DSL {
     }
 
     /**
+     * Create a new DSL <code>DROP TEMPORARY TABLE IF EXISTS</code> statement.
+     *
+     * @see DSLContext#dropTemporaryTableIfExists(String)
+     */
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    public static DropTableStep dropTemporaryTableIfExists(String table) {
+        return dsl().dropTemporaryTableIfExists(table);
+    }
+
+    /**
+     * Create a new DSL <code>DROP TEMPORARY TABLE IF EXISTS</code> statement.
+     *
+     * @see DSLContext#dropTemporaryTableIfExists(Name)
+     */
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    public static DropTableStep dropTemporaryTableIfExists(Name table) {
+        return dsl().dropTemporaryTableIfExists(table);
+    }
+
+    /**
+     * Create a new DSL <code>DROP TEMPORARY TABLE IF EXISTS</code> statement.
+     *
+     * @see DSLContext#dropTemporaryTableIfExists(Table)
+     */
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    public static DropTableStep dropTemporaryTableIfExists(Table<?> table) {
+        return dsl().dropTemporaryTableIfExists(table);
+    }
+
+    /**
      * Create a new DSL <code>DROP TABLE IF EXISTS</code> statement.
      * <p>
      * If your database doesn't natively support <code>IF EXISTS</code>, this is

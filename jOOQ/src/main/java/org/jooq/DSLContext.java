@@ -9694,6 +9694,30 @@ public interface DSLContext extends Scope , AutoCloseable  {
     DropTableStep dropTemporaryTable(Table<?> table);
 
     /**
+     * Create a new DSL <code>DROP TEMPORARY TABLE IF EXISTS</code> statement.
+     *
+     * @see DSL#dropTemporaryTableIfExists(String)
+     */
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    DropTableStep dropTemporaryTableIfExists(String table);
+
+    /**
+     * Create a new DSL <code>DROP TEMPORARY TABLE IF EXISTS</code> statement.
+     *
+     * @see DSL#dropTemporaryTableIfExists(Name)
+     */
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    DropTableStep dropTemporaryTableIfExists(Name table);
+
+    /**
+     * Create a new DSL <code>DROP TEMPORARY TABLE IF EXISTS</code> statement.
+     *
+     * @see DSL#dropTemporaryTableIfExists(Table)
+     */
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    DropTableStep dropTemporaryTableIfExists(Table<?> table);
+
+    /**
      * Create a new DSL <code>DROP INDEX</code> statement.
      *
      * @see DSL#dropIndex(String)

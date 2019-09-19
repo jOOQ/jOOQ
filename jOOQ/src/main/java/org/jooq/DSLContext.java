@@ -9674,7 +9674,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropTemporaryTable(String)
      */
-    @Support
+    @Support({ MARIADB, MYSQL, POSTGRES })
     DropTableStep dropTemporaryTable(String table);
 
     /**
@@ -9682,7 +9682,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropTemporaryTable(Name)
      */
-    @Support
+    @Support({ MARIADB, MYSQL, POSTGRES })
     DropTableStep dropTemporaryTable(Name table);
 
     /**
@@ -9690,7 +9690,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropTemporaryTable(Table)
      */
-    @Support
+    @Support({ MARIADB, MYSQL, POSTGRES })
     DropTableStep dropTemporaryTable(Table<?> table);
 
     /**

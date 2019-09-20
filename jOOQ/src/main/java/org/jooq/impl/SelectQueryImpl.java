@@ -1591,8 +1591,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // [#6197] When emulating WITH TIES using RANK() in a subquery, we must avoid rendering the
         //         subquery's ORDER BY clause
         if (!getLimit().withTies()
-
-
+            // Dialects with native support
+            || SUPPORT_FULL_WITH_TIES.contains(ctx.dialect())
 
 
 

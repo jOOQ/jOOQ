@@ -41,6 +41,7 @@ import static org.jooq.Clause.SEQUENCE;
 import static org.jooq.Clause.SEQUENCE_REFERENCE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.impl.DSL.select;
@@ -157,7 +158,6 @@ public class SequenceImpl<T extends Number> extends AbstractNamed implements Seq
             SQLDialect family = configuration.family();
 
             switch (family) {
-                case H2:
 
 
 
@@ -179,11 +179,14 @@ public class SequenceImpl<T extends Number> extends AbstractNamed implements Seq
 
 
 
-                case FIREBIRD:
                 case DERBY:
+                case FIREBIRD:
+                case H2:
                 case HSQLDB: {
                     if (method == SequenceMethod.NEXTVAL)
                         ctx.visit(K_NEXT_VALUE_FOR).sql(' ').visit(SequenceImpl.this);
+                    else if (family == H2)
+                        ctx.visit(SequenceImpl.this).sql('.').visit(method.keyword);
                     else if (family == HSQLDB)
                         ctx.visit(K_CURRENT_VALUE_FOR).sql(' ').visit(SequenceImpl.this);
                     else if (family == FIREBIRD)

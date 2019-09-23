@@ -89,7 +89,6 @@ import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.selectOne;
-import static org.jooq.impl.Keywords.K_AND;
 import static org.jooq.impl.Keywords.K_CROSS_JOIN_LATERAL;
 import static org.jooq.impl.Keywords.K_INNER_JOIN;
 import static org.jooq.impl.Keywords.K_LEFT_OUTER_JOIN_LATERAL;
@@ -247,13 +246,14 @@ implements
                         ctx.data(DATA_COLLECTED_SEMI_ANTI_JOIN, semiAntiJoinPredicates);
                     }
 
+                    Condition c = !using.isEmpty() ? usingCondition() : condition;
                     switch (translatedType) {
                         case LEFT_SEMI_JOIN:
-                            semiAntiJoinPredicates.add(exists(selectOne().from(rhs).where(condition)));
+                            semiAntiJoinPredicates.add(exists(selectOne().from(rhs).where(c)));
                             break;
 
                         case LEFT_ANTI_JOIN:
-                            semiAntiJoinPredicates.add(notExists(selectOne().from(rhs).where(condition)));
+                            semiAntiJoinPredicates.add(notExists(selectOne().from(rhs).where(c)));
                             break;
                     }
 
@@ -403,27 +403,7 @@ implements
             // [#582] Some dialects don't explicitly support a JOIN .. USING
             // syntax. This can be emulated with JOIN .. ON
             if (EMULATE_JOIN_USING.contains(context.family())) {
-                boolean first = true;
-                for (Field<?> field : using) {
-                    context.formatSeparator();
-
-                    if (first) {
-                        first = false;
-
-                        context.start(TABLE_JOIN_ON)
-                               .visit(K_ON);
-                    }
-                    else {
-                        context.visit(K_AND);
-                    }
-
-                    context.sql(' ')
-                           .visit(Tools.qualify(lhs, field))
-                           .sql(" = ")
-                           .visit(Tools.qualify(rhs, field));
-                }
-
-                context.end(TABLE_JOIN_ON);
+                toSQLJoinCondition(context, usingCondition());
             }
 
             // Native supporters of JOIN .. USING
@@ -445,42 +425,46 @@ implements
                  emulateNaturalRightOuterJoin(context) ||
                  emulateNaturalFullOuterJoin(context)) {
 
-            boolean first = true;
-            for (Field<?> field : lhs.fields()) {
-                Field<?> other = rhs.field(field);
-
-                if (other != null) {
-                    context.formatSeparator();
-
-                    if (first) {
-                        first = false;
-
-                        context.start(TABLE_JOIN_ON)
-                               .visit(K_ON);
-                    }
-                    else {
-                        context.visit(K_AND);
-                    }
-
-                    context.sql(' ')
-                           .visit(field)
-                           .sql(" = ")
-                           .visit(other);
-                }
-            }
-
-            context.end(TABLE_JOIN_ON);
+            toSQLJoinCondition(context, naturalCondition());
         }
 
         // Regular JOIN condition
         else {
-            context.formatSeparator()
-                   .start(TABLE_JOIN_ON)
-                   .visit(K_ON)
-                   .sql(' ')
-                   .visit(condition)
-                   .end(TABLE_JOIN_ON);
+            toSQLJoinCondition(context, condition);
         }
+    }
+
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    private final Condition naturalCondition() {
+        List<Condition> conditions = new ArrayList<>(using.size());
+
+        for (Field<?> field : lhs.fields()) {
+            Field<?> other = rhs.field(field);
+
+            if (other != null)
+                conditions.add(field.eq((Field) other));
+        }
+
+        return DSL.and(conditions);
+    }
+
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    private final Condition usingCondition() {
+        List<Condition> conditions = new ArrayList<>(using.size());
+
+        for (Field<?> field : using)
+            conditions.add(Tools.qualify(lhs, field).eq((Field) Tools.qualify(rhs, field)));
+
+        return DSL.and(conditions);
+    }
+
+    private final void toSQLJoinCondition(Context<?> context, Condition c) {
+        context.formatSeparator()
+               .start(TABLE_JOIN_ON)
+               .visit(K_ON)
+               .sql(' ')
+               .visit(c)
+               .end(TABLE_JOIN_ON);
     }
 
     @Override

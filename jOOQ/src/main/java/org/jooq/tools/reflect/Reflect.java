@@ -25,6 +25,7 @@ import java.lang.reflect.Proxy;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * A wrapper for an {@link Object} or {@link Class} upon which reflective calls
@@ -295,10 +296,20 @@ public class Reflect {
 
 
         try {
-            result = MethodHandles.Lookup.class.getDeclaredConstructor(Class.class);
+            try {
+                Optional.class.getMethod("stream");
+                result = null;
+            }
 
-            if (!result.isAccessible())
-                result.setAccessible(true);
+            // [jOOQ/jOOR#57] [jOOQ/jOOQ#9157]
+            // A JDK 9 guard that prevents "Illegal reflective access operation"
+            // warnings when running the below on JDK 9+
+            catch (NoSuchMethodException e) {
+                result = MethodHandles.Lookup.class.getDeclaredConstructor(Class.class);
+
+                if (!result.isAccessible())
+                    result.setAccessible(true);
+            }
         }
 
         // Can no longer access the above in JDK 9
@@ -723,15 +734,15 @@ public class Reflect {
     }
 
     /**
-     * Create a proxy for the wrapped object allowing to typesafely invoke methods
-     * on it using a custom interface.
-     *
-     * @param proxyType            The interface type that is implemented by the
-     *                             proxy
-     * @param additionalInterfaces Additional interfaces that are implemented by the
-     *                             proxy
-     * @return A proxy for the wrapped object
-     */
+	 * Create a proxy for the wrapped object allowing to typesafely invoke methods
+	 * on it using a custom interface.
+	 *
+	 * @param proxyType            The interface type that is implemented by the
+	 *                             proxy
+	 * @param additionalInterfaces Additional interfaces that are implemented by the
+	 *                             proxy
+	 * @return A proxy for the wrapped object
+	 */
     @SuppressWarnings("unchecked")
     public <P> P as(final Class<P> proxyType, final Class<?>... additionalInterfaces) {
         final boolean isMap = (object instanceof Map);

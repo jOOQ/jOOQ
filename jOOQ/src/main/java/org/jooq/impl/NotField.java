@@ -42,6 +42,7 @@ import static org.jooq.Clause.CONDITION_NOT;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.not;
 import static org.jooq.impl.Keywords.K_NOT;
+import static org.jooq.impl.SQLDataType.BOOLEAN;
 
 import org.jooq.Clause;
 import org.jooq.Context;
@@ -55,7 +56,7 @@ final class NotField extends AbstractField<Boolean> {
     private final Field<Boolean>  field;
 
     NotField(Field<Boolean> field) {
-        super(DSL.name("not"), field.getDataType());
+        super(DSL.name("not"), BOOLEAN);
         this.field = field;
     }
 
@@ -78,7 +79,7 @@ final class NotField extends AbstractField<Boolean> {
 
 
 
-                ctx.visit(new ConditionAsField(not(condition(field)), field.getDataType()));
+                ctx.visit(DSL.field(not(condition(field))));
                 break;
 
 

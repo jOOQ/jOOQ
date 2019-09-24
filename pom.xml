@@ -92,9 +92,14 @@
             </dependency>
             <dependency>
                 <groupId>org.jooq</groupId>
-                <artifactId>jooq-scala_2.12</artifactId>
+                <artifactId>jooq-scala_2.13</artifactId>
                 <version>${project.version}</version>
             </dependency>
+
+
+
+
+
 
 
 
@@ -196,6 +201,12 @@
             <dependency>
                 <groupId>org.scalatest</groupId>
                 <artifactId>scalatest_2.12</artifactId>
+                <version>3.0.8</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.scalatest</groupId>
+                <artifactId>scalatest_2.13</artifactId>
                 <version>3.0.8</version>
                 <scope>test</scope>
             </dependency>
@@ -348,7 +359,7 @@
                 <plugin>
                     <groupId>net.alchim31.maven</groupId>
                     <artifactId>scala-maven-plugin</artifactId>
-                    <version>4.1.1</version>
+                    <version>4.2.0</version>
                 </plugin>
 
                 <plugin>
@@ -405,7 +416,8 @@
         <module>jOOQ-meta-extensions</module>
         <module>jOOQ-codegen</module>
         <module>jOOQ-codegen-maven</module>
-        <module>jOOQ-scala_2.12</module>
+        <module>jOOQ-scala_2.13</module>
+
 
 
 

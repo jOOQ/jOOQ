@@ -10,11 +10,11 @@
         <version>3.13.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>jooq-scala_2.12</artifactId>
-    <name>jOOQ Scala 2.12</name>
+    <artifactId>jooq-scala_2.13</artifactId>
+    <name>jOOQ Scala 2.13</name>
 
     <properties>
-        <scala.version>2.12.9</scala.version>
+        <scala.version>2.13.0</scala.version>
         <jdbc-url-postfix>default</jdbc-url-postfix>
     </properties>
 
@@ -157,7 +157,7 @@
                             <classesDirectory>${basedir}/javadoc</classesDirectory>
                             <archive>
                                 <manifestEntries>
-                                    <Automatic-Module-Name>org.jooq.scala_2_12</Automatic-Module-Name>
+                                    <Automatic-Module-Name>org.jooq.scala_2_13</Automatic-Module-Name>
                                 </manifestEntries>
                             </archive>
                         </configuration>

@@ -37,6 +37,7 @@
  */
 package org.jooq;
 
+import org.jooq.impl.IdentityConverter;
 import org.jooq.impl.SQLDataType;
 
 /**
@@ -61,38 +62,7 @@ public class Converters<T, U> implements Converter<T, U> {
      * Create an identity converter.
      */
     public static <T> Converter<T, T> identity(final Class<T> type) {
-        return new Converter<T, T>() {
-
-            /**
-             * Generated UID
-             */
-            private static final long serialVersionUID = -8331976721627671263L;
-
-            @Override
-            public final T from(T t) {
-                return t;
-            }
-
-            @Override
-            public final T to(T t) {
-                return t;
-            }
-
-            @Override
-            public final Class<T> fromType() {
-                return type;
-            }
-
-            @Override
-            public final Class<T> toType() {
-                return type;
-            }
-
-            @Override
-            public String toString() {
-                return "IdentityConverter [ " + fromType().getName() + " ]";
-            }
-        };
+        return new IdentityConverter<T>(type);
     }
 
     /**

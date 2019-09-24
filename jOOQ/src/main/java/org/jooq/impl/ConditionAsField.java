@@ -39,9 +39,11 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.not;
+import static org.jooq.impl.SQLDataType.BOOLEAN;
 
 import org.jooq.Condition;
 import org.jooq.Context;
+import org.jooq.DataType;
 
 /**
  * @author Lukas Eder
@@ -55,7 +57,11 @@ final class ConditionAsField extends AbstractField<Boolean> {
     final Condition           condition;
 
     ConditionAsField(Condition condition) {
-        super(DSL.name(condition.toString()), SQLDataType.BOOLEAN);
+        this(condition, BOOLEAN);
+    }
+
+    ConditionAsField(Condition condition, DataType<Boolean> dataType) {
+        super(DSL.name(condition.toString()), dataType);
 
         this.condition = condition;
     }
@@ -80,9 +86,9 @@ final class ConditionAsField extends AbstractField<Boolean> {
             case FIREBIRD:
 
                 // [#3206] Correct implementation of three-valued logic is important here
-                ctx.visit(DSL.when(condition, inline(true))
-                             .when(not(condition), inline(false))
-                             .otherwise(inline((Boolean) null)));
+                ctx.visit(DSL.when(condition, inline(true, getDataType()))
+                             .when(not(condition), inline(false, getDataType()))
+                             .otherwise(inline((Boolean) null, getDataType())));
                 break;
 
             // These databases can inline predicates in column expression contexts

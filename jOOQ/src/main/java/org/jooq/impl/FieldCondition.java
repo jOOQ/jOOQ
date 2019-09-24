@@ -78,7 +78,7 @@ final class FieldCondition extends AbstractCondition {
 
 
 
-                ctx.sql('(').visit(field).sql(" = ").visit(inline(true)).sql(')');
+                ctx.visit(field.eq(inline(true, field.getDataType())));
                 break;
 
 
@@ -97,7 +97,7 @@ final class FieldCondition extends AbstractCondition {
             case POSTGRES:
             case SQLITE:
             default:
-                ctx.visit(field);
+                ctx.visit(Tools.hasDefaultConverter(field) ? field : field.eq(inline(true, field.getDataType())));
                 break;
         }
     }

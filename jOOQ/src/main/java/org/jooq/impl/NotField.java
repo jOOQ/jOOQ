@@ -78,7 +78,7 @@ final class NotField extends AbstractField<Boolean> {
 
 
 
-                ctx.visit(DSL.field(not(condition(field))));
+                ctx.visit(new ConditionAsField(not(condition(field)), field.getDataType()));
                 break;
 
 
@@ -96,7 +96,10 @@ final class NotField extends AbstractField<Boolean> {
             case POSTGRES:
             case SQLITE:
             default:
-                ctx.visit(K_NOT).sql('(').visit(field).sql(')');
+                ctx.visit(K_NOT)
+                    .sql('(')
+                    .visit(Tools.hasDefaultConverter(field) ? field : condition(field))
+                    .sql(')');
                 break;
         }
     }

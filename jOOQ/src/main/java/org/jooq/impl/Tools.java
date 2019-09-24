@@ -2977,6 +2977,13 @@ final class Tools {
     }
 
     /**
+     * Utility method to check whether a field uses a default {@link Converter}
+     */
+    static final boolean hasDefaultConverter(Field<?> field) {
+        return field.getConverter() instanceof IdentityConverter;
+    }
+
+    /**
      * Utility method to extract a value from a field
      */
     static final <T> T extractVal(Field<T> field) {

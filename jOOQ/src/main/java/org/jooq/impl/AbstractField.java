@@ -712,7 +712,7 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
         else if (Number.class.isAssignableFrom(type))
             return ((Field<Number>) this).equal(inline((Number) getDataType().convert(1)));
         else if (Boolean.class.isAssignableFrom(type))
-            return ((Field<Boolean>) this).equal(inline(true));
+            return ((Field<Boolean>) this).equal(inline(true, (DataType<Boolean>) getDataType()));
         else
             return castIfNeeded(this, String.class).in(TRUE_VALUES);
     }
@@ -727,7 +727,7 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
         else if (Number.class.isAssignableFrom(type))
             return ((Field<Number>) this).equal(inline((Number) getDataType().convert(0)));
         else if (Boolean.class.isAssignableFrom(type))
-            return ((Field<Boolean>) this).equal(inline(false));
+            return ((Field<Boolean>) this).equal(inline(false, (DataType<Boolean>) getDataType()));
         else
             return castIfNeeded(this, String.class).in(Tools.inline(FALSE_VALUES.toArray(EMPTY_STRING)));
     }

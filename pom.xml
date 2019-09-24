@@ -416,8 +416,9 @@
         <module>jOOQ-meta-extensions</module>
         <module>jOOQ-codegen</module>
         <module>jOOQ-codegen-maven</module>
+        <!--
         <module>jOOQ-scala_2.13</module>
-
+          -->
 
 
 

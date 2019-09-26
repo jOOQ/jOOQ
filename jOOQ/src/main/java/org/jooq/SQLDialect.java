@@ -91,6 +91,8 @@ public enum SQLDialect {
 
     /**
      * The Firebird dialect family.
+     * <p>
+     * This family behaves like the versioned dialect {@link #FIREBIRD_3_0}.
      */
     FIREBIRD("Firebird", false, true),
 
@@ -124,6 +126,8 @@ public enum SQLDialect {
 
     /**
      * The MariaDB dialect family.
+     * <p>
+     * This family behaves like the versioned dialect {@link #MARIADB_10_5}.
      */
     MARIADB("MariaDB", false, true),
 
@@ -181,6 +185,8 @@ public enum SQLDialect {
 
     /**
      * The MySQL dialect family.
+     * <p>
+     * This family behaves like the versioned dialect {@link #MYSQL_8_0}.
      */
     MYSQL("MySQL", false, true),
 
@@ -204,6 +210,8 @@ public enum SQLDialect {
 
     /**
      * The PostgreSQL dialect family.
+     * <p>
+     * This family behaves like the versioned dialect {@link #POSTGRES_11}.
      * <p>
      * While this family (and its dialects) have been observed to work to some
      * extent on Amazon RedShift as well, we strongly suggest you use the
@@ -275,6 +283,8 @@ public enum SQLDialect {
 
     /**
      * The SQLite dialect family.
+     * <p>
+     * This family behaves like the versioned dialect {@link #SQLITE_3_28}.
      */
     SQLITE("SQLite", false, true),
 
@@ -300,6 +310,14 @@ public enum SQLDialect {
     // -------------------------------------------------------------------------
     // SQL dialects for commercial usage
     // -------------------------------------------------------------------------
+
+
+
+
+
+
+
+
 
 
 

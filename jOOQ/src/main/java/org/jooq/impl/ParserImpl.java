@@ -9428,25 +9428,34 @@ final class ParserImpl implements Parser {
 
         // [#7025] TODO, replace this by a dynamic enum data type encoding, once available
         String className = "GeneratedEnum" + (literals.hashCode() & 0x7FFFFFF);
-        return SQLDataType.VARCHAR(length)
 
-            .asEnumDataType(Reflect
-                .compile(
-                    "org.jooq.impl." + className,
+        StringBuilder content = new StringBuilder();
+        content.append(
                     "package org.jooq.impl;\n"
-                  + "enum " + className + " implements org.jooq.EnumType {\n"
-                  + "  " + String.join(", ", literals) + ";\n"
+                  + "enum ").append(className).append(" implements org.jooq.EnumType {\n");
+
+        for (int i = 0; i < literals.size(); i++) {
+            content.append("  E").append(i).append("(\"").append(literals.get(i).replace("\"", "\\\"")).append("\"),\n");
+        }
+
+        content.append(
+                    "  ;\n"
+                  + "  final String literal;\n"
+                  + "  private ").append(className).append("(String literal) { this.literal = literal; }\n"
                   + "  @Override\n"
                   + "  public String getName() {\n"
                   + "    return getClass().getName();\n"
                   + "  }\n"
                   + "  @Override\n"
                   + "  public String getLiteral() {\n"
-                  + "    return name();"
+                  + "    return literal;\n"
                   + "  }\n"
-                  + "}")
-                .get()
-            )
+                  + "}");
+
+
+        return SQLDataType.VARCHAR(length)
+
+            .asEnumDataType(Reflect.compile("org.jooq.impl." + className, content.toString()).get())
 
         ;
     }

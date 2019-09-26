@@ -108,6 +108,10 @@ public enum SQLDialect {
 
 
 
+
+
+
+
     /**
      * The H2 dialect family.
      */
@@ -168,10 +172,21 @@ public enum SQLDialect {
 
 
 
+
+
+
+
+
+
+
     /**
      * The MySQL dialect family.
      */
     MYSQL("MySQL", false, true),
+
+
+
+
 
 
 
@@ -248,6 +263,16 @@ public enum SQLDialect {
 
 
 
+
+
+
+
+
+
+
+
+
+
     /**
      * The SQLite dialect family.
      */
@@ -268,9 +293,21 @@ public enum SQLDialect {
 
 
 
+
+
+
+
     // -------------------------------------------------------------------------
     // SQL dialects for commercial usage
     // -------------------------------------------------------------------------
+
+
+
+
+
+
+
+
 
 
 

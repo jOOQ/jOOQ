@@ -207,11 +207,11 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
             String topLevelPackage = imp.split("\\.")[0];
 
             if (!topLevelPackage.equals(previous))
-                importString.append("\n");
+                importString.append(newlineString());
 
             importString.append("import ")
                         .append(imp)
-                        .append(isScala ? "\n" : ";\n");
+                        .append(isScala ? "" : ";").append(newlineString());
 
             previous = topLevelPackage;
         }

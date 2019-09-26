@@ -105,8 +105,16 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
         this.files.mkdirs(file.getParentFile());
     }
 
+    public String tabString() {
+        return tabString;
+    }
+
     public void tabString(String string) {
         this.tabString = string.replace("\\t", "\t");
+    }
+
+    public String newlineString() {
+        return newlineString;
     }
 
     public void newlineString(String string) {

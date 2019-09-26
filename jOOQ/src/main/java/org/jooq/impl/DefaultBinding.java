@@ -4204,17 +4204,20 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final JSON get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-            return JSON.valueOf(ctx.resultSet().getString(ctx.index()));
+            String string = ctx.resultSet().getString(ctx.index());
+            return string == null ? null : JSON.valueOf(string);
         }
 
         @Override
         final JSON get0(BindingGetStatementContext<U> ctx) throws SQLException {
-            return JSON.valueOf(ctx.statement().getString(ctx.index()));
+            String string = ctx.statement().getString(ctx.index());
+            return string == null ? null : JSON.valueOf(string);
         }
 
         @Override
         final JSON get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
-            return JSON.valueOf(ctx.input().readString());
+            String string = ctx.input().readString();
+            return string == null ? null : JSON.valueOf(string);
         }
 
         @Override
@@ -4296,7 +4299,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-            return JSONB.valueOf(ctx.resultSet().getString(ctx.index()));
+
+            String string = ctx.resultSet().getString(ctx.index());
+            return string == null ? null : JSONB.valueOf(string);
         }
 
         @Override
@@ -4306,7 +4311,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-            return JSONB.valueOf(ctx.statement().getString(ctx.index()));
+            String string = ctx.statement().getString(ctx.index());
+            return string == null ? null : JSONB.valueOf(string);
         }
 
         @Override
@@ -4316,7 +4322,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-            return JSONB.valueOf(ctx.input().readString());
+            String string = ctx.input().readString();
+            return string == null ? null : JSONB.valueOf(string);
         }
 
         @Override

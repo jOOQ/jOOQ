@@ -48,6 +48,10 @@ public final class JSONB {
         this.data = data;
     }
 
+    public final String data() {
+        return data;
+    }
+
     public static final JSONB valueOf(String data) {
         return new JSONB(data);
     }
@@ -80,6 +84,6 @@ public final class JSONB {
 
     @Override
     public String toString() {
-        return data;
+        return String.valueOf(data);
     }
 }

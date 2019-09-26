@@ -256,7 +256,7 @@ public class JPADatabase extends H2Database {
 
         // AttributeConverter is part of JPA 2.1. Older JPA providers may not have this type, yet
         catch (NoClassDefFoundError e) {
-            log.info("AttributeConverter", "Cannot load AttributeConverters: " + e.getMessage());
+            log.warn("AttributeConverter", "Cannot load AttributeConverters due to missing class: " + e.getMessage());
         }
     }
 

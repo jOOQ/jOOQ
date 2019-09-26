@@ -46,6 +46,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -102,8 +103,9 @@ public class JPADatabase extends H2Database {
     static final String     HIBERNATE_DIALECT = SQLDialect.H2.thirdParty().hibernateDialect();
     static final JooqLogger log               = JooqLogger.getLogger(JPADatabase.class);
 
-    private Connection      connection;
-    private boolean         publicIsDefault;
+    Connection              connection;
+    boolean                 publicIsDefault;
+    Map<String, Object>     userSettings      = new HashMap<>();
 
     @Override
     public void close() {
@@ -149,8 +151,9 @@ public class JPADatabase extends H2Database {
                     String key = "" + entry.getKey();
 
                     if (key.startsWith("hibernate.") || key.startsWith("javax.persistence."))
-                        settings.put(key, entry.getValue());
+                        userSettings.put(key, entry.getValue());
                 }
+                settings.putAll(userSettings);
 
                 StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder();
                 builder.applySettings(settings);

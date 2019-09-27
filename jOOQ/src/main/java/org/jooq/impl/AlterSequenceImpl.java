@@ -53,6 +53,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 // ...
 import static org.jooq.impl.Keywords.K_ALTER;
+import static org.jooq.impl.Keywords.K_ALTER_TABLE;
 import static org.jooq.impl.Keywords.K_IF_EXISTS;
 import static org.jooq.impl.Keywords.K_RENAME;
 import static org.jooq.impl.Keywords.K_RENAME_SEQUENCE;
@@ -184,10 +185,36 @@ final class AlterSequenceImpl<T extends Number> extends AbstractRowCountQuery im
 
 
 
+            case MARIADB:
+                if (renameTo != null)
+                    acceptRenameTable(ctx);
+                else
+                    accept1(ctx);
+
+                break;
+
             default:
                 accept1(ctx);
                 break;
         }
+    }
+
+    private final void acceptRenameTable(Context<?> ctx) {
+        boolean qualify = ctx.qualify();
+
+        ctx.start(ALTER_SEQUENCE_SEQUENCE)
+           .start(ALTER_SEQUENCE_RENAME)
+           .visit(K_ALTER_TABLE)
+           .sql(' ')
+           .visit(sequence)
+           .sql(' ')
+           .visit(K_RENAME_TO)
+           .sql(' ')
+           .qualify(false)
+           .visit(renameTo)
+           .qualify(qualify)
+           .end(ALTER_SEQUENCE_RENAME)
+           .end(ALTER_SEQUENCE_SEQUENCE);
     }
 
 

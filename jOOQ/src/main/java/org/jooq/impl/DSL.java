@@ -57,6 +57,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
 // ...
+// ...
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
@@ -7237,7 +7238,7 @@ public class DSL {
      *
      * @see DSLContext#createSequence(String)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static CreateSequenceFlagsStep createSequence(String sequence) {
         return dsl().createSequence(sequence);
     }
@@ -7247,7 +7248,7 @@ public class DSL {
      *
      * @see DSLContext#createSequence(Name)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static CreateSequenceFlagsStep createSequence(Name sequence) {
         return dsl().createSequence(sequence);
     }
@@ -7257,7 +7258,7 @@ public class DSL {
      *
      * @see DSLContext#createSequence(Sequence)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static CreateSequenceFlagsStep createSequence(Sequence<?> sequence) {
         return dsl().createSequence(sequence);
     }
@@ -7267,7 +7268,7 @@ public class DSL {
      *
      * @see DSLContext#createSequenceIfNotExists(String)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static CreateSequenceFlagsStep createSequenceIfNotExists(String sequence) {
         return dsl().createSequenceIfNotExists(sequence);
     }
@@ -7277,7 +7278,7 @@ public class DSL {
      *
      * @see DSLContext#createSequenceIfNotExists(Name)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static CreateSequenceFlagsStep createSequenceIfNotExists(Name sequence) {
         return dsl().createSequenceIfNotExists(sequence);
     }
@@ -7287,7 +7288,7 @@ public class DSL {
      *
      * @see DSLContext#createSequenceIfNotExists(Sequence)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static CreateSequenceFlagsStep createSequenceIfNotExists(Sequence<?> sequence) {
         return dsl().createSequenceIfNotExists(sequence);
     }
@@ -7297,7 +7298,7 @@ public class DSL {
      *
      * @see DSLContext#alterSequence(String)
      */
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static AlterSequenceStep<BigInteger> alterSequence(String sequence) {
         return dsl().alterSequence(sequence);
     }
@@ -7307,7 +7308,7 @@ public class DSL {
      *
      * @see DSLContext#alterSequence(Name)
      */
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static AlterSequenceStep<BigInteger> alterSequence(Name sequence) {
         return dsl().alterSequence(sequence);
     }
@@ -7317,7 +7318,7 @@ public class DSL {
      *
      * @see DSLContext#alterSequence(Sequence)
      */
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static <T extends Number> AlterSequenceStep<T> alterSequence(Sequence<T> sequence) {
         return dsl().alterSequence(sequence);
     }
@@ -7327,7 +7328,7 @@ public class DSL {
      *
      * @see DSLContext#alterSequenceIfExists(String)
      */
-    @Support({ POSTGRES })
+    @Support({ MARIADB, POSTGRES })
     public static AlterSequenceStep<BigInteger> alterSequenceIfExists(String sequence) {
         return dsl().alterSequenceIfExists(sequence);
     }
@@ -7337,7 +7338,7 @@ public class DSL {
      *
      * @see DSLContext#alterSequenceIfExists(Name)
      */
-    @Support({ POSTGRES })
+    @Support({ MARIADB, POSTGRES })
     public static AlterSequenceStep<BigInteger> alterSequenceIfExists(Name sequence) {
         return dsl().alterSequenceIfExists(sequence);
     }
@@ -7347,7 +7348,7 @@ public class DSL {
      *
      * @see DSLContext#alterSequenceIfExists(Sequence)
      */
-    @Support({ POSTGRES })
+    @Support({ MARIADB, POSTGRES })
     public static <T extends Number> AlterSequenceStep<T> alterSequenceIfExists(Sequence<T> sequence) {
         return dsl().alterSequenceIfExists(sequence);
     }
@@ -7924,7 +7925,7 @@ public class DSL {
      *
      * @see DSLContext#dropSequence(String)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static <T extends Number> DropSequenceFinalStep dropSequence(String sequence) {
         return dsl().dropSequence(sequence);
     }
@@ -7934,7 +7935,7 @@ public class DSL {
      *
      * @see DSLContext#dropSequence(Name)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static <T extends Number> DropSequenceFinalStep dropSequence(Name sequence) {
         return dsl().dropSequence(sequence);
     }
@@ -7944,7 +7945,7 @@ public class DSL {
      *
      * @see DSLContext#dropSequence(Sequence)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static <T extends Number> DropSequenceFinalStep dropSequence(Sequence<?> sequence) {
         return dsl().dropSequence(sequence);
     }
@@ -7957,7 +7958,7 @@ public class DSL {
      *
      * @see DSLContext#dropSequenceIfExists(String)
      */
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static <T extends Number> DropSequenceFinalStep dropSequenceIfExists(String sequence) {
         return dsl().dropSequenceIfExists(sequence);
     }
@@ -7970,7 +7971,7 @@ public class DSL {
      *
      * @see DSLContext#dropSequenceIfExists(Name)
      */
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static <T extends Number> DropSequenceFinalStep dropSequenceIfExists(Name sequence) {
         return dsl().dropSequenceIfExists(sequence);
     }
@@ -7983,7 +7984,7 @@ public class DSL {
      *
      * @see DSLContext#dropSequenceIfExists(Sequence)
      */
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static <T extends Number> DropSequenceFinalStep dropSequenceIfExists(Sequence<?> sequence) {
         return dsl().dropSequenceIfExists(sequence);
     }
@@ -9537,7 +9538,7 @@ public class DSL {
      * @deprecated - [#3843] - 3.6.0 - use {@link #sequence(Name)} instead
      */
     @Deprecated
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static Sequence<BigInteger> sequenceByName(String... qualifiedName) {
         return sequenceByName(BigInteger.class, qualifiedName);
     }
@@ -9562,7 +9563,7 @@ public class DSL {
      * @deprecated - [#3843] - 3.6.0 - use {@link #sequence(Name, Class)} instead
      */
     @Deprecated
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static <T extends Number> Sequence<T> sequenceByName(Class<T> type, String... qualifiedName) {
         return sequenceByName(getDataType(type), qualifiedName);
     }
@@ -9587,7 +9588,7 @@ public class DSL {
      * @deprecated - [#3843] - 3.6.0 - use {@link #sequence(Name, DataType)} instead
      */
     @Deprecated
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static <T extends Number> Sequence<T> sequenceByName(DataType<T> type, String... qualifiedName) {
         if (qualifiedName == null)
             throw new NullPointerException();
@@ -9614,7 +9615,7 @@ public class DSL {
      * [MY_SCHEMA].[MY_SEQUENCE]
      * </pre></code>
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static Sequence<BigInteger> sequence(Name name) {
         return sequence(name, BigInteger.class);
     }
@@ -9632,7 +9633,7 @@ public class DSL {
      * [MY_SCHEMA].[MY_SEQUENCE]
      * </pre></code>
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static <T extends Number> Sequence<T> sequence(Name name, Class<T> type) {
         return sequence(name, getDataType(type));
     }
@@ -9650,7 +9651,7 @@ public class DSL {
      * [MY_SCHEMA].[MY_SEQUENCE]
      * </pre></code>
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static <T extends Number> Sequence<T> sequence(Name name, DataType<T> type) {
         if (name == null)
             throw new NullPointerException();

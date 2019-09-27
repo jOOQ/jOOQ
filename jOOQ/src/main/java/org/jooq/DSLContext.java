@@ -9225,7 +9225,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createSequence(String)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     CreateSequenceFlagsStep createSequence(String sequence);
 
     /**
@@ -9233,7 +9233,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createSequence(Name)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     CreateSequenceFlagsStep createSequence(Name sequence);
 
     /**
@@ -9241,7 +9241,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createSequence(String)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     CreateSequenceFlagsStep createSequence(Sequence<?> sequence);
 
     /**
@@ -9249,7 +9249,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createSequenceIfNotExists(String)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     CreateSequenceFlagsStep createSequenceIfNotExists(String sequence);
 
     /**
@@ -9257,7 +9257,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createSequenceIfNotExists(Name)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     CreateSequenceFlagsStep createSequenceIfNotExists(Name sequence);
 
     /**
@@ -9265,7 +9265,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createSequenceIfNotExists(Sequence)
      */
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     CreateSequenceFlagsStep createSequenceIfNotExists(Sequence<?> sequence);
 
     /**
@@ -9273,7 +9273,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#alterSequence(String)
      */
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     AlterSequenceStep<BigInteger> alterSequence(String sequence);
 
     /**
@@ -9281,7 +9281,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#alterSequence(Name)
      */
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     AlterSequenceStep<BigInteger> alterSequence(Name sequence);
 
     /**
@@ -9289,7 +9289,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#alterSequence(Sequence)
      */
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     <T extends Number> AlterSequenceStep<T> alterSequence(Sequence<T> sequence);
 
     /**
@@ -9297,7 +9297,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#alterSequenceIfExists(String)
      */
-    @Support({ POSTGRES })
+    @Support({ MARIADB, POSTGRES })
     AlterSequenceStep<BigInteger> alterSequenceIfExists(String sequence);
 
     /**
@@ -9305,7 +9305,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#alterSequenceIfExists(Name)
      */
-    @Support({ POSTGRES })
+    @Support({ MARIADB, POSTGRES })
     AlterSequenceStep<BigInteger> alterSequenceIfExists(Name sequence);
 
     /**
@@ -9313,7 +9313,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#alterSequenceIfExists(Sequence)
      */
-    @Support({ POSTGRES })
+    @Support({ MARIADB, POSTGRES })
     <T extends Number> AlterSequenceStep<T> alterSequenceIfExists(Sequence<T> sequence);
 
     /**
@@ -9780,7 +9780,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropSequence(String)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     DropSequenceFinalStep dropSequence(String sequence);
 
     /**
@@ -9788,7 +9788,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropSequence(Name)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     DropSequenceFinalStep dropSequence(Name sequence);
 
     /**
@@ -9796,7 +9796,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropSequence(Sequence)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     DropSequenceFinalStep dropSequence(Sequence<?> sequence);
 
     /**
@@ -9807,7 +9807,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropSequenceIfExists(String)
      */
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     DropSequenceFinalStep dropSequenceIfExists(String sequence);
 
     /**
@@ -9818,7 +9818,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropSequenceIfExists(Name)
      */
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     DropSequenceFinalStep dropSequenceIfExists(Name sequence);
 
     /**
@@ -9829,7 +9829,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropSequenceIfExists(Sequence)
      */
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     DropSequenceFinalStep dropSequenceIfExists(Sequence<?> sequence);
 
     /**

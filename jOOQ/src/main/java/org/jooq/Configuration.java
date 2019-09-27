@@ -48,7 +48,9 @@ import java.util.concurrent.ForkJoinPool;
 import javax.sql.DataSource;
 
 import org.jooq.conf.Settings;
+import org.jooq.impl.DSL;
 import org.jooq.impl.DataSourceConnectionProvider;
+import org.jooq.impl.DefaultConfiguration;
 import org.jooq.impl.DefaultConnectionProvider;
 import org.jooq.impl.DefaultDiagnosticsListenerProvider;
 import org.jooq.impl.DefaultExecuteListenerProvider;
@@ -177,6 +179,10 @@ public interface Configuration extends Serializable {
      * Wrap this <code>Configuration</code> in a {@link DSLContext}, providing
      * access to the configuration-contextual DSL to construct executable
      * queries.
+     * <p>
+     * In the {@link DefaultConfiguration} implementation, this is just
+     * convenience for {@link DSL#using(Configuration)}. There's no functional
+     * difference between the two methods.
      */
     DSLContext dsl();
 

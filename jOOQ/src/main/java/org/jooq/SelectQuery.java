@@ -53,6 +53,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
 // ...
+// ...
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
@@ -990,27 +991,24 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MYSQL, POSTGRES })
     void setForUpdateOf(Table<?>... tables);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /**
+     * Some RDBMS allow for specifying the locking mode for the applied
+     * <code>FOR UPDATE</code> clause. In this case, the session will wait for
+     * some <code>seconds</code>, before aborting the lock acquirement if the
+     * lock is not available.
+     * <p>
+     * This automatically sets the {@link #setForUpdate(boolean)} flag, and
+     * unsets the {@link #setForShare(boolean)} flag, if it was previously set.
+     * <p>
+     * This has been observed to be supported by any of these dialects:
+     * <ul>
+     * <li>Oracle</li>
+     * </ul>
+     *
+     * @param seconds The number of seconds to wait for a lock
+     */
+    @Support({ MARIADB })
+    void setForUpdateWait(int seconds);
 
     /**
      * Some RDBMS allow for specifying the locking mode for the applied
@@ -1025,7 +1023,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * <li>Oracle</li>
      * </ul>
      */
-    @Support({ MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     void setForUpdateNoWait();
 
     /**

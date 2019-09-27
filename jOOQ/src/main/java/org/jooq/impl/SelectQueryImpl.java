@@ -1981,15 +1981,12 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         forUpdateOfTables = new TableList(Arrays.asList(tables));
     }
 
-
-
-
-
-
-
-
-
-
+    @Override
+    public final void setForUpdateWait(int seconds) {
+        setForUpdate(true);
+        forUpdateWaitMode = ForUpdateWaitMode.WAIT;
+        forUpdateWait = seconds;
+    }
 
     @Override
     public final void setForUpdateNoWait() {

@@ -38,6 +38,7 @@
 package org.jooq;
 
 // ...
+import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
@@ -105,19 +106,16 @@ import static org.jooq.SQLDialect.POSTGRES;
  */
 public interface SelectForUpdateWaitStep<R extends Record> extends SelectOptionStep<R> {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /**
+     * Add a <code>WAIT</code> clause to the <code>FOR UPDATE</code> clause at
+     * the end of the query.
+     * <p>
+     * Be careful not to confuse this with {@link Object#wait(long)} !
+     *
+     * @see SelectQuery#setForUpdateWait(int) see LockProvider for more details
+     */
+    @Support({ MARIADB })
+    SelectOptionStep<R> wait(int seconds);
 
     /**
      * Add a <code>NOWAIT</code> clause to the <code>FOR UPDATE</code> clause at
@@ -125,7 +123,7 @@ public interface SelectForUpdateWaitStep<R extends Record> extends SelectOptionS
      *
      * @see SelectQuery#setForUpdateNoWait() see LockProvider for more details
      */
-    @Support({ MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     SelectOptionStep<R> noWait();
 
     /**

@@ -3002,16 +3002,19 @@ final class ParserImpl implements Parser {
 
         for (;;) {
             if (parseKeywordIf(ctx, "START")) {
-                parseKeywordIf(ctx, "WITH");
+                if (!parseKeywordIf(ctx, "WITH"))
+                    parseIf(ctx, "=");
                 s = s.startWith(parseUnsignedIntegerOrBindVariable(ctx));
                 continue;
             }
             else if (parseKeywordIf(ctx, "INCREMENT")) {
-                parseKeywordIf(ctx, "BY");
+                if (!parseKeywordIf(ctx, "BY"))
+                    parseIf(ctx, "=");
                 s = s.incrementBy(parseUnsignedIntegerOrBindVariable(ctx));
                 continue;
             }
             else if (parseKeywordIf(ctx, "MINVALUE")) {
+                parseIf(ctx, "=");
                 s = s.minvalue(parseUnsignedIntegerOrBindVariable(ctx));
                 continue;
             }
@@ -3020,6 +3023,7 @@ final class ParserImpl implements Parser {
                 continue;
             }
             else if (parseKeywordIf(ctx, "MAXVALUE")) {
+                parseIf(ctx, "=");
                 s = s.maxvalue(parseUnsignedIntegerOrBindVariable(ctx));
                 continue;
             }
@@ -3036,6 +3040,7 @@ final class ParserImpl implements Parser {
                 continue;
             }
             else if (parseKeywordIf(ctx, "CACHE")) {
+                parseIf(ctx, "=");
                 s = s.cache(parseUnsignedIntegerOrBindVariable(ctx));
                 continue;
             }

@@ -38,10 +38,21 @@
 
 package org.jooq.meta.mariadb;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.jooq.DSLContext;
+import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
+import org.jooq.meta.DefaultDataTypeDefinition;
+import org.jooq.meta.DefaultSequenceDefinition;
+import org.jooq.meta.SchemaDefinition;
+import org.jooq.meta.SequenceDefinition;
 import org.jooq.meta.mysql.MySQLDatabase;
+import org.jooq.meta.mysql.information_schema.tables.Tables;
+import org.jooq.util.mariadb.MariaDBDataType;
 
 /**
  * @author Lukas Eder
@@ -51,5 +62,31 @@ public class MariaDBDatabase extends MySQLDatabase {
     @Override
     protected DSLContext create0() {
         return DSL.using(getConnection(), SQLDialect.MARIADB);
+    }
+
+    @Override
+    protected List<SequenceDefinition> getSequences0() throws SQLException {
+        List<SequenceDefinition> result = new ArrayList<>();
+
+        for (Record record : create()
+                .select(Tables.TABLE_SCHEMA, Tables.TABLE_NAME)
+                .from(Tables.TABLES)
+                .where(Tables.TABLE_TYPE.eq("SEQUENCE"))) {
+
+            SchemaDefinition schema = getSchema(record.get(Tables.TABLE_SCHEMA));
+            if (schema != null) {
+                String name = record.get(Tables.TABLE_NAME);
+
+                DefaultDataTypeDefinition type = new DefaultDataTypeDefinition(
+                    this,
+                    schema,
+                    MariaDBDataType.BIGINT.getTypeName()
+                );
+
+                result.add(new DefaultSequenceDefinition(schema, name, type));
+            }
+        }
+
+        return result;
     }
 }

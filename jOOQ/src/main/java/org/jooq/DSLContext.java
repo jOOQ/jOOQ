@@ -9297,7 +9297,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#alterSequenceIfExists(String)
      */
-    @Support({ POSTGRES })
+    @Support({ MARIADB, POSTGRES })
     AlterSequenceStep<BigInteger> alterSequenceIfExists(String sequence);
 
     /**
@@ -9305,7 +9305,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#alterSequenceIfExists(Name)
      */
-    @Support({ POSTGRES })
+    @Support({ MARIADB, POSTGRES })
     AlterSequenceStep<BigInteger> alterSequenceIfExists(Name sequence);
 
     /**
@@ -9313,7 +9313,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#alterSequenceIfExists(Sequence)
      */
-    @Support({ POSTGRES })
+    @Support({ MARIADB, POSTGRES })
     <T extends Number> AlterSequenceStep<T> alterSequenceIfExists(Sequence<T> sequence);
 
     /**

@@ -7328,7 +7328,7 @@ public class DSL {
      *
      * @see DSLContext#alterSequenceIfExists(String)
      */
-    @Support({ POSTGRES })
+    @Support({ MARIADB, POSTGRES })
     public static AlterSequenceStep<BigInteger> alterSequenceIfExists(String sequence) {
         return dsl().alterSequenceIfExists(sequence);
     }
@@ -7338,7 +7338,7 @@ public class DSL {
      *
      * @see DSLContext#alterSequenceIfExists(Name)
      */
-    @Support({ POSTGRES })
+    @Support({ MARIADB, POSTGRES })
     public static AlterSequenceStep<BigInteger> alterSequenceIfExists(Name sequence) {
         return dsl().alterSequenceIfExists(sequence);
     }
@@ -7348,7 +7348,7 @@ public class DSL {
      *
      * @see DSLContext#alterSequenceIfExists(Sequence)
      */
-    @Support({ POSTGRES })
+    @Support({ MARIADB, POSTGRES })
     public static <T extends Number> AlterSequenceStep<T> alterSequenceIfExists(Sequence<T> sequence) {
         return dsl().alterSequenceIfExists(sequence);
     }

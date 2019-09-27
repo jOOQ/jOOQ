@@ -43,6 +43,7 @@ import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.F_GEN_ID;
@@ -50,6 +51,7 @@ import static org.jooq.impl.Keywords.K_CURRENT_VALUE_FOR;
 import static org.jooq.impl.Keywords.K_CURRVAL;
 import static org.jooq.impl.Keywords.K_NEXTVAL;
 import static org.jooq.impl.Keywords.K_NEXT_VALUE_FOR;
+import static org.jooq.impl.Keywords.K_PREVIOUS_VALUE_FOR;
 
 import org.jooq.Catalog;
 import org.jooq.Clause;
@@ -182,13 +184,16 @@ public class SequenceImpl<T extends Number> extends AbstractNamed implements Seq
                 case DERBY:
                 case FIREBIRD:
                 case H2:
-                case HSQLDB: {
+                case HSQLDB:
+                case MARIADB: {
                     if (method == SequenceMethod.NEXTVAL)
                         ctx.visit(K_NEXT_VALUE_FOR).sql(' ').visit(SequenceImpl.this);
                     else if (family == H2)
                         ctx.visit(SequenceImpl.this).sql('.').visit(method.keyword);
                     else if (family == HSQLDB)
                         ctx.visit(K_CURRENT_VALUE_FOR).sql(' ').visit(SequenceImpl.this);
+                    else if (family == MARIADB)
+                        ctx.visit(K_PREVIOUS_VALUE_FOR).sql(' ').visit(SequenceImpl.this);
                     else if (family == FIREBIRD)
                         ctx.visit(F_GEN_ID).sql('(').visit(SequenceImpl.this).sql(", 0)");
 

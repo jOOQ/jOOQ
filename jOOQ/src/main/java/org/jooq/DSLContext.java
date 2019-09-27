@@ -53,6 +53,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
 // ...
+// ...
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
@@ -10074,7 +10075,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @throws DataAccessException if something went wrong executing the query
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     BigInteger nextval(String sequence) throws DataAccessException;
 
     /**
@@ -10083,7 +10084,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @throws DataAccessException if something went wrong executing the query
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     BigInteger nextval(Name sequence) throws DataAccessException;
 
     /**
@@ -10092,7 +10093,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @throws DataAccessException if something went wrong executing the query
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     <T extends Number> T nextval(Sequence<T> sequence) throws DataAccessException;
 
     /**
@@ -10101,7 +10102,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @throws DataAccessException if something went wrong executing the query
      */
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     BigInteger currval(String sequence) throws DataAccessException;
 
     /**
@@ -10110,7 +10111,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @throws DataAccessException if something went wrong executing the query
      */
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     BigInteger currval(Name sequence) throws DataAccessException;
 
     /**
@@ -10119,7 +10120,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @throws DataAccessException if something went wrong executing the query
      */
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     <T extends Number> T currval(Sequence<T> sequence) throws DataAccessException;
 
     // -------------------------------------------------------------------------

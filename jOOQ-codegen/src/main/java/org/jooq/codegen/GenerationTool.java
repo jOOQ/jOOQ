@@ -788,14 +788,18 @@ public class GenerationTool {
             strategy.setJavaBeansGettersAndSetters(generator.generateJavaBeansGettersAndSetters());
 
 
-            if (true)
-                ;
-            else
 
-                if (g.getGenerate().isJavaTimeTypes() != null) {
-                    log.warn("INVALID CONFIG", "The java.time API cannot be used in the Java 6 distribution of jOOQ 3.9+");
-                    generator.setGenerateJavaTimeTypes(false);
-                }
+
+
+
+
+
+
+
+
+
+
+
 
             generator.generate(database);
         }

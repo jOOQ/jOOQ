@@ -120,7 +120,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateJavaBeansGettersAndSetters = false;
     boolean                            generateVarargsSetters             = true;
     String                             generateFullyQualifiedTypes        = "";
-    boolean                            generateJavaTimeTypes              = false;
+    boolean                            generateJavaTimeTypes              = true;
     boolean                            generateTableValuedFunctions       = false;
     boolean                            generateEmptyCatalogs              = false;
     boolean                            generateEmptySchemas               = false;

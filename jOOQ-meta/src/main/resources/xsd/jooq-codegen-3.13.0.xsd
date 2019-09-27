@@ -1384,7 +1384,7 @@ by specifying <code>java\.lang\..*</code>]]></jxb:javadoc></jxb:property></appin
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether empty schemas (e.g. empty because of <excludes/> configurations) should still be generated.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
-      <element name="javaTimeTypes" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+      <element name="javaTimeTypes" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A flag indicating whether Java 8's java.time types should be used by the
 source code generator, rather than JDBC's java.sql types.
 <p>

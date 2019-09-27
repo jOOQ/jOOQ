@@ -156,8 +156,8 @@ public class Generate implements Serializable, XMLAppendable
     protected Boolean emptyCatalogs = false;
     @XmlElement(defaultValue = "false")
     protected Boolean emptySchemas = false;
-    @XmlElement(defaultValue = "false")
-    protected Boolean javaTimeTypes = false;
+    @XmlElement(defaultValue = "true")
+    protected Boolean javaTimeTypes = true;
     @XmlElement(defaultValue = "false")
     protected Boolean primaryKeyTypes = false;
     @XmlElement(defaultValue = "\\n")

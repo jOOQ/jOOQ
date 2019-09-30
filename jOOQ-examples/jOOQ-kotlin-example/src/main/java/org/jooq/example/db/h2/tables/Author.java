@@ -4,7 +4,7 @@
 package org.jooq.example.db.h2.tables;
 
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -33,7 +33,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Author extends TableImpl<AuthorRecord> {
 
-    private static final long serialVersionUID = -2056329379;
+    private static final long serialVersionUID = 43261682;
 
     /**
      * The reference instance of <code>PUBLIC.AUTHOR</code>
@@ -66,7 +66,7 @@ public class Author extends TableImpl<AuthorRecord> {
     /**
      * The column <code>PUBLIC.AUTHOR.DATE_OF_BIRTH</code>.
      */
-    public final TableField<AuthorRecord, Date> DATE_OF_BIRTH = createField(DSL.name("DATE_OF_BIRTH"), org.jooq.impl.SQLDataType.DATE, this, "");
+    public final TableField<AuthorRecord, LocalDate> DATE_OF_BIRTH = createField(DSL.name("DATE_OF_BIRTH"), org.jooq.impl.SQLDataType.LOCALDATE, this, "");
 
     /**
      * The column <code>PUBLIC.AUTHOR.YEAR_OF_BIRTH</code>.
@@ -167,7 +167,7 @@ public class Author extends TableImpl<AuthorRecord> {
     // -------------------------------------------------------------------------
 
     @Override
-    public Row6<Integer, String, String, Date, Integer, String> fieldsRow() {
+    public Row6<Integer, String, String, LocalDate, Integer, String> fieldsRow() {
         return (Row6) super.fieldsRow();
     }
 }

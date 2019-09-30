@@ -5,7 +5,7 @@ package org.jooq.example.db.h2.tables.pojos;
 
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.time.LocalDate;
 
 
 /**
@@ -14,14 +14,14 @@ import java.sql.Date;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Author implements Serializable {
 
-    private static final long serialVersionUID = -1428731841;
+    private static final long serialVersionUID = 1287432081;
 
-    private Integer id;
-    private String  firstName;
-    private String  lastName;
-    private Date    dateOfBirth;
-    private Integer yearOfBirth;
-    private String  address;
+    private Integer   id;
+    private String    firstName;
+    private String    lastName;
+    private LocalDate dateOfBirth;
+    private Integer   yearOfBirth;
+    private String    address;
 
     public Author() {}
 
@@ -35,12 +35,12 @@ public class Author implements Serializable {
     }
 
     public Author(
-        Integer id,
-        String  firstName,
-        String  lastName,
-        Date    dateOfBirth,
-        Integer yearOfBirth,
-        String  address
+        Integer   id,
+        String    firstName,
+        String    lastName,
+        LocalDate dateOfBirth,
+        Integer   yearOfBirth,
+        String    address
     ) {
         this.id = id;
         this.firstName = firstName;
@@ -74,11 +74,11 @@ public class Author implements Serializable {
         this.lastName = lastName;
     }
 
-    public Date getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return this.dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 

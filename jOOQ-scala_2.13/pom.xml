@@ -127,6 +127,7 @@
 
 
 
+
             <!-- The Scala compiler plugin -->
             <plugin>
                 <groupId>net.alchim31.maven</groupId>

@@ -5,7 +5,7 @@ package org.jooq.example.db.h2.tables.pojos;
 
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 
 /**
@@ -14,19 +14,19 @@ import java.sql.Timestamp;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Book implements Serializable {
 
-    private static final long serialVersionUID = 1601595464;
+    private static final long serialVersionUID = 610281033;
 
-    private Integer   id;
-    private Integer   authorId;
-    private Integer   coAuthorId;
-    private Integer   detailsId;
-    private String    title;
-    private Integer   publishedIn;
-    private Integer   languageId;
-    private String    contentText;
-    private byte[]    contentPdf;
-    private Integer   recVersion;
-    private Timestamp recTimestamp;
+    private Integer       id;
+    private Integer       authorId;
+    private Integer       coAuthorId;
+    private Integer       detailsId;
+    private String        title;
+    private Integer       publishedIn;
+    private Integer       languageId;
+    private String        contentText;
+    private byte[]        contentPdf;
+    private Integer       recVersion;
+    private LocalDateTime recTimestamp;
 
     public Book() {}
 
@@ -45,17 +45,17 @@ public class Book implements Serializable {
     }
 
     public Book(
-        Integer   id,
-        Integer   authorId,
-        Integer   coAuthorId,
-        Integer   detailsId,
-        String    title,
-        Integer   publishedIn,
-        Integer   languageId,
-        String    contentText,
-        byte[]    contentPdf,
-        Integer   recVersion,
-        Timestamp recTimestamp
+        Integer       id,
+        Integer       authorId,
+        Integer       coAuthorId,
+        Integer       detailsId,
+        String        title,
+        Integer       publishedIn,
+        Integer       languageId,
+        String        contentText,
+        byte[]        contentPdf,
+        Integer       recVersion,
+        LocalDateTime recTimestamp
     ) {
         this.id = id;
         this.authorId = authorId;
@@ -138,7 +138,7 @@ public class Book implements Serializable {
         return this.contentPdf;
     }
 
-    public void setContentPdf(byte... contentPdf) {
+    public void setContentPdf(byte[] contentPdf) {
         this.contentPdf = contentPdf;
     }
 
@@ -150,11 +150,11 @@ public class Book implements Serializable {
         this.recVersion = recVersion;
     }
 
-    public Timestamp getRecTimestamp() {
+    public LocalDateTime getRecTimestamp() {
         return this.recTimestamp;
     }
 
-    public void setRecTimestamp(Timestamp recTimestamp) {
+    public void setRecTimestamp(LocalDateTime recTimestamp) {
         this.recTimestamp = recTimestamp;
     }
 

@@ -339,6 +339,7 @@ import org.jooq.AlterSequenceStep;
 import org.jooq.AlterTableDropStep;
 import org.jooq.AlterTableFinalStep;
 import org.jooq.AlterTableStep;
+import org.jooq.AlterTypeStep;
 import org.jooq.ArrayAggOrderByStep;
 import org.jooq.Block;
 import org.jooq.CaseConditionStep;
@@ -2192,10 +2193,12 @@ final class ParserImpl implements Parser {
             return parseAlterSession(ctx);
         else if (parseKeywordIf(ctx, "TABLE"))
             return parseAlterTable(ctx);
+        else if (parseKeywordIf(ctx, "TYPE"))
+            return parseAlterType(ctx);
         else if (parseKeywordIf(ctx, "VIEW"))
             return parseAlterView(ctx);
         else
-            throw ctx.expected("DOMAIN", "INDEX", "SCHEMA", "SEQUENCE", "SESSION", "TABLE", "VIEW");
+            throw ctx.expected("DOMAIN", "INDEX", "SCHEMA", "SEQUENCE", "SESSION", "TABLE", "TYPE", "VIEW");
     }
 
     private static final DDLQuery parseDrop(ParserContext ctx) {
@@ -4041,6 +4044,23 @@ final class ParserImpl implements Parser {
             parse(ctx, ')');
 
         return s1.alter(field).set(type);
+    }
+
+    private static final DDLQuery parseAlterType(ParserContext ctx) {
+        AlterTypeStep s1 = ctx.dsl.alterType(parseName(ctx));
+
+
+        if (parseKeywordIf(ctx, "ADD VALUE"))
+            return s1.addValue(parseStringLiteral(ctx));
+        else if (parseKeywordIf(ctx, "RENAME TO"))
+            return s1.renameTo(parseIdentifier(ctx));
+        else if (parseKeywordIf(ctx, "RENAME VALUE"))
+            return s1.renameValue(parseStringLiteral(ctx)).to(parseKeyword(ctx, "TO") ? parseStringLiteral(ctx) : null);
+        else if (parseKeywordIf(ctx, "SET SCHEMA"))
+            return s1.setSchema(parseIdentifier(ctx));
+
+
+        throw ctx.expected("ADD VALUE", "RENAME TO", "RENAME VALUE", "SET SCHEMA");
     }
 
     private static final DDLQuery parseRename(ParserContext ctx) {

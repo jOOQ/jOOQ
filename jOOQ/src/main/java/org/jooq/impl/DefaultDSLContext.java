@@ -98,6 +98,7 @@ import org.jooq.AlterIndexStep;
 import org.jooq.AlterSchemaStep;
 import org.jooq.AlterSequenceStep;
 import org.jooq.AlterTableStep;
+import org.jooq.AlterTypeStep;
 import org.jooq.AlterViewStep;
 import org.jooq.Attachable;
 import org.jooq.Batch;
@@ -3149,6 +3150,16 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public CreateTypeStep createType(Name type) {
         return new CreateTypeImpl(configuration(), type);
+    }
+
+    @Override
+    public AlterTypeStep alterType(String type) {
+        return alterType(name(type));
+    }
+
+    @Override
+    public AlterTypeStep alterType(Name type) {
+        return new AlterTypeImpl(configuration(), type);
     }
 
     @Override

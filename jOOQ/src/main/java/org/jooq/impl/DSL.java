@@ -131,6 +131,7 @@ import org.jooq.AlterIndexStep;
 import org.jooq.AlterSchemaStep;
 import org.jooq.AlterSequenceStep;
 import org.jooq.AlterTableStep;
+import org.jooq.AlterTypeStep;
 import org.jooq.AlterViewStep;
 import org.jooq.ArrayAggOrderByStep;
 // ...
@@ -6991,6 +6992,26 @@ public class DSL {
     @Support({ H2, POSTGRES })
     public static CreateTypeStep createType(Name type) {
         return dsl().createType(type);
+    }
+
+    /**
+     * Create a new DSL <code>ALTER TYPE</code> statement.
+     *
+     * @see DSLContext#alterType(String)
+     */
+    @Support({ POSTGRES })
+    public static AlterTypeStep alterType(String type) {
+        return dsl().alterType(type);
+    }
+
+    /**
+     * Create a new DSL <code>ALTER TYPE</code> statement.
+     *
+     * @see DSLContext#alterType(Name)
+     */
+    @Support({ POSTGRES })
+    public static AlterTypeStep alterType(Name type) {
+        return dsl().alterType(type);
     }
 
     /**

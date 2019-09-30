@@ -9029,6 +9029,22 @@ public interface DSLContext extends Scope , AutoCloseable  {
     CreateTypeStep createType(Name type);
 
     /**
+     * Create a new DSL <code>ALTER TYPE</code> statement.
+     *
+     * @see DSL#alterType(String)
+     */
+    @Support({ POSTGRES })
+    AlterTypeStep alterType(String type);
+
+    /**
+     * Create a new DSL <code>ALTER TYPE</code> statement.
+     *
+     * @see DSL#alterType(Name)
+     */
+    @Support({ POSTGRES })
+    AlterTypeStep alterType(Name type);
+
+    /**
      * Create a new DSL <code>DROP TYPE</code> statement.
      *
      * @see DSL#dropType(String)

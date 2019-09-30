@@ -438,7 +438,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
     @Override
     public final Stream<R> fetchStream() {
-        return fetchLazy().stream();
+        return Stream.of(1).flatMap(i -> fetchLazy().stream());
     }
 
     @Override
@@ -453,7 +453,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
     @Override
     public final Stream<R> stream() {
-        return fetchLazy().stream();
+        return fetchStream();
     }
 
     @Override

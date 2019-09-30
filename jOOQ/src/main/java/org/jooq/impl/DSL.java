@@ -6693,7 +6693,7 @@ public class DSL {
     }
 
     /**
-     * Create a new DSL <code>CREATE GLOBAL TEMPORARY TABLE</code> statement.
+     * Create a new DSL <code>CREATE TEMPORARY TABLE</code> statement.
      *
      * @see DSLContext#createTemporaryTable(String)
      */
@@ -6703,7 +6703,7 @@ public class DSL {
     }
 
     /**
-     * Create a new DSL <code>CREATE GLOBAL TEMPORARY TABLE</code> statement.
+     * Create a new DSL <code>CREATE TEMPORARY TABLE</code> statement.
      *
      * @see DSLContext#createTemporaryTable(Name)
      */
@@ -6713,13 +6713,43 @@ public class DSL {
     }
 
     /**
-     * Create a new DSL <code>CREATE GLOBAL TEMPORARY TABLE</code> statement.
+     * Create a new DSL <code>CREATE TEMPORARY TABLE</code> statement.
      *
      * @see DSLContext#createTemporaryTable(Table)
      */
     @Support({ MARIADB, MYSQL, POSTGRES })
     public static CreateTableColumnStep createTemporaryTable(Table<?> table) {
         return dsl().createTemporaryTable(table);
+    }
+
+    /**
+     * Create a new DSL <code>CREATE TEMPORARY TABLE</code> statement.
+     *
+     * @see DSLContext#createTemporaryTableIfNotExists(String)
+     */
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    public static CreateTableColumnStep createTemporaryTableIfNotExists(String table) {
+        return dsl().createTemporaryTableIfNotExists(table);
+    }
+
+    /**
+     * Create a new DSL <code>CREATE TEMPORARY TABLE</code> statement.
+     *
+     * @see DSLContext#createTemporaryTableIfNotExists(Name)
+     */
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    public static CreateTableColumnStep createTemporaryTableIfNotExists(Name table) {
+        return dsl().createTemporaryTableIfNotExists(table);
+    }
+
+    /**
+     * Create a new DSL <code>CREATE TEMPORARY TABLE</code> statement.
+     *
+     * @see DSLContext#createTemporaryTableIfNotExists(Table)
+     */
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    public static CreateTableColumnStep createTemporaryTableIfNotExists(Table<?> table) {
+        return dsl().createTemporaryTableIfNotExists(table);
     }
 
     /**

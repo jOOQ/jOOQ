@@ -8695,6 +8695,30 @@ public interface DSLContext extends Scope , AutoCloseable  {
     CreateTableColumnStep createTemporaryTable(Table<?> table);
 
     /**
+     * Create a new DSL <code>CREATE TEMPORARY TABLE IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createTemporaryTableIfNotExists(String)
+     */
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    CreateTableColumnStep createTemporaryTableIfNotExists(String table);
+
+    /**
+     * Create a new DSL <code>CREATE TEMPORARY TABLE IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createTemporaryTableIfNotExists(Name)
+     */
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    CreateTableColumnStep createTemporaryTableIfNotExists(Name table);
+
+    /**
+     * Create a new DSL <code>CREATE TEMPORARY TABLE IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createTemporaryTableIfNotExists(Table)
+     */
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    CreateTableColumnStep createTemporaryTableIfNotExists(Table<?> table);
+
+    /**
      * Create a new DSL <code>CREATE GLOBAL TEMPORARY TABLE</code> statement.
      *
      * @see DSL#createGlobalTemporaryTable(String)

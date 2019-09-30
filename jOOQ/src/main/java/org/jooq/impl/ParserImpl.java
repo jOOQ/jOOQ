@@ -3103,7 +3103,7 @@ final class ParserImpl implements Parser {
     }
 
     private static final DDLQuery parseCreateTable(ParserContext ctx, boolean temporary) {
-        boolean ifNotExists = !temporary && parseKeywordIf(ctx, "IF NOT EXISTS");
+        boolean ifNotExists = parseKeywordIf(ctx, "IF NOT EXISTS");
         Table<?> tableName = DSL.table(parseTableName(ctx).getQualifiedName());
         CreateTableCommentStep commentStep;
         CreateTableStorageStep storageStep;
@@ -3383,7 +3383,9 @@ final class ParserImpl implements Parser {
             ctas = true;
 
         CreateTableColumnStep columnStep = ifNotExists
-            ? ctx.dsl.createTableIfNotExists(tableName)
+            ? temporary
+                ? ctx.dsl.createTemporaryTableIfNotExists(tableName)
+                : ctx.dsl.createTableIfNotExists(tableName)
             : temporary
                 ? ctx.dsl.createTemporaryTable(tableName)
                 : ctx.dsl.createTable(tableName);

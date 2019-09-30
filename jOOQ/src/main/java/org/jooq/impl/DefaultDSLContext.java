@@ -3128,6 +3128,21 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
+    public CreateTableColumnStep createTemporaryTableIfNotExists(String table) {
+        return createTemporaryTableIfNotExists(name(table));
+    }
+
+    @Override
+    public CreateTableColumnStep createTemporaryTableIfNotExists(Name table) {
+        return createTemporaryTableIfNotExists(table(table));
+    }
+
+    @Override
+    public CreateTableColumnStep createTemporaryTableIfNotExists(Table<?> table) {
+        return new CreateTableImpl(configuration(), table, true, true);
+    }
+
+    @Override
     public CreateTableColumnStep createGlobalTemporaryTable(String table) {
         return createGlobalTemporaryTable(name(table));
     }

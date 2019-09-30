@@ -54,7 +54,6 @@ import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.DateAsTimestampBinding;
 import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.EnumConverter;
-import org.jooq.impl.LocalDateAsLocalDateTimeBinding;
 import org.jooq.impl.SQLDataType;
 import org.jooq.meta.jaxb.CustomType;
 import org.jooq.meta.jaxb.ForcedType;
@@ -192,7 +191,7 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
 
 
                     if (db.javaTimeTypes())
-                        binding = LocalDateAsLocalDateTimeBinding.class.getName();
+                        binding = org.jooq.impl.LocalDateAsLocalDateTimeBinding.class.getName();
 
 
                     result = new DefaultDataTypeDefinition(

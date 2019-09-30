@@ -39,6 +39,8 @@ package org.jooq.tools.jdbc;
 
 import static org.jooq.impl.DSL.using;
 
+import java.sql.SQLException;
+
 import org.jooq.Record;
 import org.jooq.Result;
 
@@ -84,6 +86,14 @@ public final class Mock {
                 return result;
             }
         };
+    }
+
+    /**
+     * Create a new {@link MockDataProvider} that always throws the same
+     * exception for all queries.
+     */
+    public static final MockDataProvider of(SQLException exception) {
+        return of(new MockResult(exception));
     }
 
     /**

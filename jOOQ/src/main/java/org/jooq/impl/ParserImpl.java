@@ -2134,12 +2134,16 @@ final class ParserImpl implements Parser {
 
         if (parseKeywordIf(ctx, "TABLE"))
             return parseCreateTable(ctx, false);
+        else if (parseKeywordIf(ctx, "TEMP TABLE"))
+            return parseCreateTable(ctx, true);
         else if (parseKeywordIf(ctx, "TEMPORARY TABLE"))
             return parseCreateTable(ctx, true);
         else if (parseKeywordIf(ctx, "TYPE"))
             return parseCreateType(ctx);
         else if (parseKeywordIf(ctx, "GENERATOR"))
             return parseCreateSequence(ctx);
+        else if (parseKeywordIf(ctx, "GLOBAL TEMP TABLE"))
+            return parseCreateTable(ctx, true);
         else if (parseKeywordIf(ctx, "GLOBAL TEMPORARY TABLE"))
             return parseCreateTable(ctx, true);
         else if (parseKeywordIf(ctx, "INDEX"))

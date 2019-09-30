@@ -149,6 +149,7 @@ public abstract class AbstractDatabase implements Database {
     private boolean                                                          integerDisplayWidths;
     private boolean                                                          ignoreProcedureReturnValues;
     private boolean                                                          dateAsTimestamp;
+    private boolean                                                          javaTimeTypes                        = true;
     private List<CatalogMappingType>                                         configuredCatalogs                   = new ArrayList<>();
     private List<SchemaMappingType>                                          configuredSchemata                   = new ArrayList<>();
     private List<CustomType>                                                 configuredCustomTypes;
@@ -1362,6 +1363,16 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final boolean dateAsTimestamp() {
         return dateAsTimestamp;
+    }
+
+    @Override
+    public final void setJavaTimeTypes(boolean javaTimeTypes) {
+        this.javaTimeTypes = javaTimeTypes;
+    }
+
+    @Override
+    public final boolean javaTimeTypes() {
+        return javaTimeTypes;
     }
 
     @Override

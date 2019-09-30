@@ -602,6 +602,8 @@ public class GenerationTool {
 
             if (d.isDateAsTimestamp() != null)
                 database.setDateAsTimestamp(d.isDateAsTimestamp());
+            if (g.getGenerate().isJavaTimeTypes() != null)
+                database.setJavaTimeTypes(g.getGenerate().isJavaTimeTypes());
             if (d.isUnsignedTypes() != null)
                 database.setSupportsUnsignedTypes(d.isUnsignedTypes());
             if (d.isIntegerDisplayWidths() != null)

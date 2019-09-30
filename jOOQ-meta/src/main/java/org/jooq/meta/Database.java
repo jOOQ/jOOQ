@@ -885,6 +885,18 @@ public interface Database  extends AutoCloseable  {
     boolean dateAsTimestamp();
 
     /**
+     * Whether <code>java.time</code> types are used, as opposed to
+     * <code>java.sql</code> types.
+     */
+    void setJavaTimeTypes(boolean javaTimeTypes);
+
+    /**
+     * Whether <code>java.time</code> types are used, as opposed to
+     * <code>java.sql</code> types.
+     */
+    boolean javaTimeTypes();
+
+    /**
      * [#3559] Whether relations (i.e. constraints) should be included in this database.
      */
     void setIncludeRelations(boolean includeRelations);

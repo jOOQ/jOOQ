@@ -54,6 +54,7 @@ import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.DateAsTimestampBinding;
 import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.EnumConverter;
+import org.jooq.impl.LocalDateAsLocalDateTimeBinding;
 import org.jooq.impl.SQLDataType;
 import org.jooq.meta.jaxb.CustomType;
 import org.jooq.meta.jaxb.ForcedType;
@@ -187,7 +188,14 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
                 // [#5239] [#5762] [#6453] Don't rely on getSQLType()
                 if (SQLDataType.DATE.equals(dataType.getSQLDataType())) {
                     DataType<?> forcedDataType = getDataType(db, SQLDataType.TIMESTAMP.getTypeName(), 0, 0);
-                    result = new DefaultDataTypeDefinition(db, child.getSchema(), forcedDataType.getTypeName(), 0, 0, 0, result.isNullable(), result.getDefaultValue(), (Name) null, null, DateAsTimestampBinding.class.getName());
+                    result = new DefaultDataTypeDefinition(
+                        db,
+                        child.getSchema(),
+                        forcedDataType.getTypeName(),
+                        0, 0, 0,
+                        result.isNullable(), result.getDefaultValue(), (Name) null, null,
+                        db.javaTimeTypes() ? LocalDateAsLocalDateTimeBinding.class.getName() : DateAsTimestampBinding.class.getName()
+                    );
                 }
             }
         }

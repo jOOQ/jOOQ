@@ -161,7 +161,6 @@
                                     <name>org.jooq.meta.h2.H2Database</name>
                                     <includes>.*</includes>
                                     <excludes></excludes>
-                                    <dateAsTimestamp>true</dateAsTimestamp>
                                     <inputSchema>PUBLIC</inputSchema>
                                 </database>
                                 <generate>

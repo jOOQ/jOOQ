@@ -38,6 +38,7 @@
 package org.jooq;
 
 import static org.jooq.SQLDialect.POSTGRES;
+// ...
 
 /**
  * A {@link Query} that can alter types.

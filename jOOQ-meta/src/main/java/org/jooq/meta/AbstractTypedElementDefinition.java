@@ -188,13 +188,20 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
                 // [#5239] [#5762] [#6453] Don't rely on getSQLType()
                 if (SQLDataType.DATE.equals(dataType.getSQLDataType())) {
                     DataType<?> forcedDataType = getDataType(db, SQLDataType.TIMESTAMP.getTypeName(), 0, 0);
+                    String binding = DateAsTimestampBinding.class.getName();
+
+
+                    if (db.javaTimeTypes())
+                        binding = LocalDateAsLocalDateTimeBinding.class.getName();
+
+
                     result = new DefaultDataTypeDefinition(
                         db,
                         child.getSchema(),
                         forcedDataType.getTypeName(),
                         0, 0, 0,
                         result.isNullable(), result.getDefaultValue(), (Name) null, null,
-                        db.javaTimeTypes() ? LocalDateAsLocalDateTimeBinding.class.getName() : DateAsTimestampBinding.class.getName()
+                        binding
                     );
                 }
             }

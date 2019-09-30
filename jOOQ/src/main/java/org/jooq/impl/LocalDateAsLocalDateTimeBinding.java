@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+
+
 // ...
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.Keywords.K_AS;
@@ -137,3 +139,5 @@ public class LocalDateAsLocalDateTimeBinding implements Binding<LocalDateTime, L
         delegate.get(ctx);
     }
 }
+
+

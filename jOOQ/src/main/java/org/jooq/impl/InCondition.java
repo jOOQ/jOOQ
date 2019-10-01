@@ -84,8 +84,8 @@ import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.util.AbstractList;
 import java.util.Arrays;
-import java.util.EnumSet;
 import java.util.List;
+import java.util.Set;
 
 import org.jooq.Clause;
 import org.jooq.Comparator;
@@ -99,16 +99,16 @@ import org.jooq.SQLDialect;
  */
 final class InCondition<T> extends AbstractCondition {
 
-    private static final long                serialVersionUID       = -1653924248576930761L;
-    private static final int                 IN_LIMIT               = 1000;
-    private static final Clause[]            CLAUSES_IN             = { CONDITION, CONDITION_IN };
-    private static final Clause[]            CLAUSES_IN_NOT         = { CONDITION, CONDITION_NOT_IN };
-    private static final EnumSet<SQLDialect> REQUIRES_IN_LIMIT      = EnumSet.of(FIREBIRD);
-    private static final EnumSet<SQLDialect> NO_SUPPORT_EMPTY_LISTS = EnumSet.of(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES);
+    private static final long            serialVersionUID       = -1653924248576930761L;
+    private static final int             IN_LIMIT               = 1000;
+    private static final Clause[]        CLAUSES_IN             = { CONDITION, CONDITION_IN };
+    private static final Clause[]        CLAUSES_IN_NOT         = { CONDITION, CONDITION_NOT_IN };
+    private static final Set<SQLDialect> REQUIRES_IN_LIMIT      = SQLDialect.supported(FIREBIRD);
+    private static final Set<SQLDialect> NO_SUPPORT_EMPTY_LISTS = SQLDialect.supported(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES);
 
-    private final Field<T>                   field;
-    private final Field<?>[]                 values;
-    private final Comparator                 comparator;
+    private final Field<T>               field;
+    private final Field<?>[]             values;
+    private final Comparator             comparator;
 
     InCondition(Field<T> field, Field<?>[] values, Comparator comparator) {
         this.field = field;

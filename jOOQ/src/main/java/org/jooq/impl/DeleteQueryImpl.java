@@ -78,7 +78,7 @@ import static org.jooq.impl.Keywords.K_WHERE;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.EnumSet;
+import java.util.Set;
 
 import org.jooq.Clause;
 import org.jooq.Condition;
@@ -99,14 +99,14 @@ import org.jooq.Table;
  */
 final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implements DeleteQuery<R> {
 
-    private static final long                serialVersionUID         = -1943687511774150929L;
-    private static final Clause[]            CLAUSES                  = { DELETE };
-    private static final EnumSet<SQLDialect> SPECIAL_DELETE_AS_SYNTAX = EnumSet.of(MARIADB, MYSQL);
-    private static final EnumSet<SQLDialect> NO_SUPPORT_LIMIT         = EnumSet.of(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE);
+    private static final long            serialVersionUID         = -1943687511774150929L;
+    private static final Clause[]        CLAUSES                  = { DELETE };
+    private static final Set<SQLDialect> SPECIAL_DELETE_AS_SYNTAX = SQLDialect.supported(MARIADB, MYSQL);
+    private static final Set<SQLDialect> NO_SUPPORT_LIMIT         = SQLDialect.supported(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE);
 
-    private final ConditionProviderImpl      condition;
-    private final SortFieldList              orderBy;
-    private Param<? extends Number>          limit;
+    private final ConditionProviderImpl  condition;
+    private final SortFieldList          orderBy;
+    private Param<? extends Number>      limit;
 
     DeleteQueryImpl(Configuration configuration, WithImpl with, Table<R> table) {
         super(configuration, with, table);

@@ -59,8 +59,8 @@ import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.EnumSet;
 import java.util.LinkedHashSet;
+import java.util.Set;
 
 import org.jooq.Configuration;
 import org.jooq.Converter;
@@ -93,11 +93,11 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
     /**
      * Generated UID
      */
-    private static final long                serialVersionUID       = 3216746611562261641L;
-    private static final JooqLogger          log                    = JooqLogger.getLogger(TableRecordImpl.class);
-    private static final EnumSet<SQLDialect> REFRESH_GENERATED_KEYS = EnumSet.of(DERBY, H2, MARIADB, MYSQL);
+    private static final long            serialVersionUID       = 3216746611562261641L;
+    private static final JooqLogger      log                    = JooqLogger.getLogger(TableRecordImpl.class);
+    private static final Set<SQLDialect> REFRESH_GENERATED_KEYS = SQLDialect.supported(DERBY, H2, MARIADB, MYSQL);
 
-    private final Table<R>                   table;
+    private final Table<R>               table;
 
     public TableRecordImpl(Table<R> table) {
         super(table.fields());

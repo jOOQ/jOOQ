@@ -51,7 +51,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.impl.Keywords.K_DROP_VIEW;
 import static org.jooq.impl.Keywords.K_IF_EXISTS;
 
-import java.util.EnumSet;
+import java.util.Set;
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
@@ -72,12 +72,12 @@ final class DropViewImpl extends AbstractRowCountQuery implements
     /**
      * Generated UID
      */
-    private static final long                serialVersionUID     = 8904572826501186329L;
-    private static final Clause[]            CLAUSES              = { DROP_VIEW };
-    private static final EnumSet<SQLDialect> NO_SUPPORT_IF_EXISTS = EnumSet.of(DERBY, FIREBIRD);
+    private static final long            serialVersionUID     = 8904572826501186329L;
+    private static final Clause[]        CLAUSES              = { DROP_VIEW };
+    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS = SQLDialect.supported(DERBY, FIREBIRD);
 
-    private final Table<?>                   table;
-    private final boolean                    ifExists;
+    private final Table<?>               table;
+    private final boolean                ifExists;
 
     DropViewImpl(Configuration configuration, Table<?> table) {
         this(configuration, table, false);

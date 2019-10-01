@@ -64,8 +64,8 @@ import static org.jooq.impl.Keywords.K_IS_NOT_NULL;
 import static org.jooq.impl.Keywords.K_IS_NULL;
 
 import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.List;
+import java.util.Set;
 
 import org.jooq.Clause;
 import org.jooq.Condition;
@@ -84,15 +84,16 @@ final class RowIsNull extends AbstractCondition {
     /**
      * Generated UID
      */
-    private static final long                serialVersionUID = -1806139685201770706L;
-    private static final Clause[]            CLAUSES_NULL     = { CONDITION, CONDITION_IS_NULL };
-    private static final Clause[]            CLAUSES_NOT_NULL = { CONDITION, CONDITION_IS_NOT_NULL };
+    private static final long            serialVersionUID = -1806139685201770706L;
+    private static final Clause[]        CLAUSES_NULL     = { CONDITION, CONDITION_IS_NULL };
+    private static final Clause[]        CLAUSES_NOT_NULL = { CONDITION, CONDITION_IS_NOT_NULL };
 
-    // Currently not yet supported in SQLite: https://www.sqlite.org/rowvalue.html
-    private static final EnumSet<SQLDialect> EMULATE_NULL     = EnumSet.of(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, SQLITE);
+    // Currently not yet supported in SQLite:
+    // https://www.sqlite.org/rowvalue.html
+    private static final Set<SQLDialect> EMULATE_NULL     = SQLDialect.supported(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, SQLITE);
 
-    private final Row                        row;
-    private final boolean                    isNull;
+    private final Row                    row;
+    private final boolean                isNull;
 
     RowIsNull(Row row, boolean isNull) {
         this.row = row;

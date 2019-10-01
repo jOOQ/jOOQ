@@ -64,7 +64,7 @@ import static org.jooq.impl.Tools.castIfNeeded;
 import static org.jooq.impl.Tools.embeddedFields;
 import static org.jooq.impl.Tools.isEmbeddable;
 
-import java.util.EnumSet;
+import java.util.Set;
 
 import org.jooq.Clause;
 import org.jooq.Comparator;
@@ -82,7 +82,7 @@ final class CompareCondition extends AbstractCondition implements LikeEscapeStep
 
     private static final long                serialVersionUID      = -747240442279619486L;
     private static final Clause[]            CLAUSES               = { CONDITION, CONDITION_COMPARISON };
-    private static final EnumSet<SQLDialect> REQUIRES_CAST_ON_LIKE = EnumSet.of(DERBY, POSTGRES);
+    private static final Set<SQLDialect>     REQUIRES_CAST_ON_LIKE = SQLDialect.supported(DERBY, POSTGRES);
 
     private final Field<?>                   field1;
     private final Field<?>                   field2;

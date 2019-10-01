@@ -319,7 +319,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -506,9 +505,9 @@ final class ParserImpl implements Parser {
 
 
 
-    private final DSLContext                 dsl;
-    private final ParseWithMetaLookups       metaLookups;
-    private final Meta                       meta;
+    private final DSLContext             dsl;
+    private final ParseWithMetaLookups   metaLookups;
+    private final Meta                   meta;
 
     ParserImpl(Configuration configuration) {
         this.dsl = DSL.using(configuration);

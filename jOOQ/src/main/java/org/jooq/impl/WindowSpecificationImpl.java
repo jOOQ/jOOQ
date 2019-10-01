@@ -74,7 +74,7 @@ import static org.jooq.impl.WindowSpecificationImpl.FrameUnits.ROWS;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.EnumSet;
+import java.util.Set;
 
 import org.jooq.Context;
 import org.jooq.Field;
@@ -104,23 +104,23 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
     /**
      * Generated UID
      */
-    private static final long                serialVersionUID                = 2996016924769376361L;
-    private static final EnumSet<SQLDialect> OMIT_PARTITION_BY_ONE           = EnumSet.of(CUBRID, MYSQL, SQLITE);
-    private static final EnumSet<SQLDialect> REQUIRES_ORDER_BY_IN_RANKING    = EnumSet.of(H2);
+    private static final long             serialVersionUID                = 2996016924769376361L;
+    private static final Set<SQLDialect>  OMIT_PARTITION_BY_ONE           = SQLDialect.supported(CUBRID, MYSQL, SQLITE);
+    private static final Set<SQLDialect>  REQUIRES_ORDER_BY_IN_RANKING    = SQLDialect.supported(H2);
 
 
 
 
 
 
-    private final WindowDefinitionImpl       windowDefinition;
-    private final QueryPartList<Field<?>>    partitionBy;
-    private final SortFieldList              orderBy;
-    private Integer                          frameStart;
-    private Integer                          frameEnd;
-    private FrameUnits                       frameUnits;
-    private Exclude                          exclude;
-    private boolean                          partitionByOne;
+    private final WindowDefinitionImpl    windowDefinition;
+    private final QueryPartList<Field<?>> partitionBy;
+    private final SortFieldList           orderBy;
+    private Integer                       frameStart;
+    private Integer                       frameEnd;
+    private FrameUnits                    frameUnits;
+    private Exclude                       exclude;
+    private boolean                       partitionByOne;
 
     WindowSpecificationImpl() {
         this(null);

@@ -81,8 +81,8 @@ import static org.jooq.impl.Keywords.K_WHERE;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.EnumSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.jooq.Clause;
 import org.jooq.Condition;
@@ -151,23 +151,23 @@ import org.jooq.UpdateQuery;
  */
 final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements UpdateQuery<R> {
 
-    private static final long                serialVersionUID       = -660460731970074719L;
-    private static final Clause[]            CLAUSES                = { UPDATE };
+    private static final long            serialVersionUID       = -660460731970074719L;
+    private static final Clause[]        CLAUSES                = { UPDATE };
 
 
 
 
-    private static final EnumSet<SQLDialect> SUPPORT_RVE_SET        = EnumSet.of(H2, HSQLDB, POSTGRES);
-    private static final EnumSet<SQLDialect> NO_SUPPORT_LIMIT       = EnumSet.of(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE);
+    private static final Set<SQLDialect> SUPPORT_RVE_SET        = SQLDialect.supported(H2, HSQLDB, POSTGRES);
+    private static final Set<SQLDialect> NO_SUPPORT_LIMIT       = SQLDialect.supported(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE);
 
-    private final FieldMapForUpdate          updateMap;
-    private final TableList                  from;
-    private final ConditionProviderImpl      condition;
-    private Row                              multiRow;
-    private Row                              multiValue;
-    private Select<?>                        multiSelect;
-    private final SortFieldList              orderBy;
-    private Param<? extends Number>          limit;
+    private final FieldMapForUpdate      updateMap;
+    private final TableList              from;
+    private final ConditionProviderImpl  condition;
+    private Row                          multiRow;
+    private Row                          multiValue;
+    private Select<?>                    multiSelect;
+    private final SortFieldList          orderBy;
+    private Param<? extends Number>      limit;
 
     UpdateQueryImpl(Configuration configuration, WithImpl with, Table<R> table) {
         super(configuration, with, table);

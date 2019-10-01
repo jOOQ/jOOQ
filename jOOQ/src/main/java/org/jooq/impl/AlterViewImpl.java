@@ -63,7 +63,7 @@ import static org.jooq.impl.Keywords.K_VIEW;
 import static org.jooq.impl.Tools.beginTryCatch;
 import static org.jooq.impl.Tools.endTryCatch;
 
-import java.util.EnumSet;
+import java.util.Set;
 
 import org.jooq.AlterViewFinalStep;
 import org.jooq.AlterViewStep;
@@ -90,7 +90,7 @@ final class AlterViewImpl extends AbstractRowCountQuery implements
      */
     private static final long                serialVersionUID  = 8904572826501186329L;
     private static final Clause[]            CLAUSES           = { ALTER_VIEW };
-    private static final EnumSet<SQLDialect> SUPPORT_IF_EXISTS = EnumSet.of(CUBRID, DERBY, FIREBIRD);
+    private static final Set<SQLDialect>     SUPPORT_IF_EXISTS = SQLDialect.supported(CUBRID, DERBY, FIREBIRD);
 
     private final Table<?>                   view;
     private final boolean                    ifExists;

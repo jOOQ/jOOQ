@@ -67,7 +67,7 @@ import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Tools.embeddedFields;
 import static org.jooq.impl.Tools.isEmbeddable;
 
-import java.util.EnumSet;
+import java.util.Set;
 
 import org.jooq.Comparator;
 import org.jooq.Configuration;
@@ -85,17 +85,17 @@ final class IsDistinctFrom<T> extends AbstractCondition {
     /**
      * Generated UID
      */
-    private static final long                serialVersionUID            = 4568269684824736461L;
-    private static final EnumSet<SQLDialect> EMULATE_DISTINCT_PREDICATE  = EnumSet.of(CUBRID, DERBY);
-    private static final EnumSet<SQLDialect> SUPPORT_DISTINCT_WITH_ARROW = EnumSet.of(MARIADB, MYSQL);
+    private static final long            serialVersionUID            = 4568269684824736461L;
+    private static final Set<SQLDialect> EMULATE_DISTINCT_PREDICATE  = SQLDialect.supported(CUBRID, DERBY);
+    private static final Set<SQLDialect> SUPPORT_DISTINCT_WITH_ARROW = SQLDialect.supported(MARIADB, MYSQL);
 
-    private final Field<T>                   lhs;
-    private final Field<T>                   rhs;
-    private final Comparator                 comparator;
+    private final Field<T>               lhs;
+    private final Field<T>               rhs;
+    private final Comparator             comparator;
 
-    private transient QueryPartInternal      mySQLCondition;
-    private transient QueryPartInternal      sqliteCondition;
-    private transient QueryPartInternal      compareCondition;
+    private transient QueryPartInternal  mySQLCondition;
+    private transient QueryPartInternal  sqliteCondition;
+    private transient QueryPartInternal  compareCondition;
 
     IsDistinctFrom(Field<T> lhs, Field<T> rhs, Comparator comparator) {
         this.lhs = lhs;

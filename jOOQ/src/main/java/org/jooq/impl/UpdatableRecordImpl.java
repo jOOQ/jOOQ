@@ -52,8 +52,8 @@ import static org.jooq.impl.Tools.settings;
 import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.Collection;
-import java.util.EnumSet;
 import java.util.List;
+import java.util.Set;
 
 import org.jooq.Configuration;
 import org.jooq.DeleteQuery;
@@ -87,9 +87,9 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
     /**
      * Generated UID
      */
-    private static final long                serialVersionUID      = -1012420583600561579L;
-    private static final JooqLogger          log                   = JooqLogger.getLogger(UpdatableRecordImpl.class);
-    private static final EnumSet<SQLDialect> NO_SUPPORT_FOR_UPDATE = EnumSet.of(SQLITE);
+    private static final long            serialVersionUID      = -1012420583600561579L;
+    private static final JooqLogger      log                   = JooqLogger.getLogger(UpdatableRecordImpl.class);
+    private static final Set<SQLDialect> NO_SUPPORT_FOR_UPDATE = SQLDialect.supported(SQLITE);
 
     public UpdatableRecordImpl(Table<R> table) {
         super(table);

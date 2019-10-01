@@ -49,7 +49,7 @@ import static org.jooq.impl.Internal.createPathAlias;
 import static org.jooq.impl.Keywords.K_TABLE;
 
 import java.util.Arrays;
-import java.util.EnumSet;
+import java.util.Set;
 
 import org.jooq.Clause;
 import org.jooq.Comment;
@@ -74,17 +74,17 @@ import org.jooq.tools.StringUtils;
 @org.jooq.Internal
 public class TableImpl<R extends Record> extends AbstractTable<R> {
 
-    private static final long                serialVersionUID               = 261033315221985068L;
-    private static final Clause[]            CLAUSES_TABLE_REFERENCE        = { TABLE, TABLE_REFERENCE };
-    private static final Clause[]            CLAUSES_TABLE_ALIAS            = { TABLE, TABLE_ALIAS };
-    private static final EnumSet<SQLDialect> NO_SUPPORT_QUALIFIED_TVF_CALLS = EnumSet.of(POSTGRES);
+    private static final long            serialVersionUID               = 261033315221985068L;
+    private static final Clause[]        CLAUSES_TABLE_REFERENCE        = { TABLE, TABLE_REFERENCE };
+    private static final Clause[]        CLAUSES_TABLE_ALIAS            = { TABLE, TABLE_ALIAS };
+    private static final Set<SQLDialect> NO_SUPPORT_QUALIFIED_TVF_CALLS = SQLDialect.supported(POSTGRES);
 
-    final Fields<R>                          fields;
-    final Alias<Table<R>>                    alias;
+    final Fields<R>                      fields;
+    final Alias<Table<R>>                alias;
 
-    protected final Field<?>[]               parameters;
-    final Table<?>                           child;
-    final ForeignKey<?, R>                   childPath;
+    protected final Field<?>[]           parameters;
+    final Table<?>                       child;
+    final ForeignKey<?, R>               childPath;
 
     /**
      * @deprecated - 3.10 - [#5996] - Use {@link #TableImpl(Name)} instead (or

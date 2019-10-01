@@ -60,7 +60,7 @@ import static org.jooq.impl.Keywords.K_ON;
 import static org.jooq.impl.Tools.beginTryCatch;
 import static org.jooq.impl.Tools.endTryCatch;
 
-import java.util.EnumSet;
+import java.util.Set;
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
@@ -83,14 +83,14 @@ final class DropIndexImpl extends AbstractRowCountQuery implements
     /**
      * Generated UID
      */
-    private static final long                serialVersionUID     = 8904572826501186329L;
-    private static final Clause[]            CLAUSES              = { DROP_INDEX };
-    private static final EnumSet<SQLDialect> NO_SUPPORT_IF_EXISTS = EnumSet.of(CUBRID, DERBY, FIREBIRD);
-    private static final EnumSet<SQLDialect> REQUIRES_ON          = EnumSet.of(MARIADB, MYSQL);
+    private static final long            serialVersionUID     = 8904572826501186329L;
+    private static final Clause[]        CLAUSES              = { DROP_INDEX };
+    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS = SQLDialect.supported(CUBRID, DERBY, FIREBIRD);
+    private static final Set<SQLDialect> REQUIRES_ON          = SQLDialect.supported(MARIADB, MYSQL);
 
-    private final Index                      index;
-    private final boolean                    ifExists;
-    private Table<?>                         on;
+    private final Index                  index;
+    private final boolean                ifExists;
+    private Table<?>                     on;
 
     DropIndexImpl(Configuration configuration, Index index) {
         this(configuration, index, false);

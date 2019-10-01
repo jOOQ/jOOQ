@@ -752,14 +752,14 @@ final class Tools {
      * All hexadecimal digits accessible through array index, e.g.
      * <code>HEX_DIGITS[15] == 'f'</code>.
      */
-    private static final char[]   HEX_DIGITS                                   = "0123456789abcdef".toCharArray();
+    private static final char[]          HEX_DIGITS                     = "0123456789abcdef".toCharArray();
 
-    private static final EnumSet<SQLDialect> REQUIRES_BACKSLASH_ESCAPING       = EnumSet.of(MARIADB, MYSQL);
-    private static final EnumSet<SQLDialect> NO_SUPPORT_NULL                   = EnumSet.of(DERBY, FIREBIRD, HSQLDB);
-    private static final EnumSet<SQLDialect> NO_SUPPORT_BINARY_TYPE_LENGTH     = EnumSet.of(POSTGRES);
-    private static final EnumSet<SQLDialect> NO_SUPPORT_CAST_TYPE_IN_DDL       = EnumSet.of(MARIADB, MYSQL);
-    private static final EnumSet<SQLDialect> DEFAULT_BEFORE_NULL               = EnumSet.of(FIREBIRD, HSQLDB);
-    private static final EnumSet<SQLDialect> SUPPORT_MYSQL_SYNTAX              = EnumSet.of(MARIADB, MYSQL);
+    private static final Set<SQLDialect> REQUIRES_BACKSLASH_ESCAPING    = SQLDialect.supported(MARIADB, MYSQL);
+    private static final Set<SQLDialect> NO_SUPPORT_NULL                = SQLDialect.supported(DERBY, FIREBIRD, HSQLDB);
+    private static final Set<SQLDialect> NO_SUPPORT_BINARY_TYPE_LENGTH  = SQLDialect.supported(POSTGRES);
+    private static final Set<SQLDialect> NO_SUPPORT_CAST_TYPE_IN_DDL    = SQLDialect.supported(MARIADB, MYSQL);
+    private static final Set<SQLDialect> DEFAULT_BEFORE_NULL            = SQLDialect.supported(FIREBIRD, HSQLDB);
+    private static final Set<SQLDialect> SUPPORT_MYSQL_SYNTAX           = SQLDialect.supported(MARIADB, MYSQL);
 
     // ------------------------------------------------------------------------
     // XXX: Record constructors and related methods

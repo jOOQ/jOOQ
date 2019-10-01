@@ -47,8 +47,8 @@ import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.Tools.flattenEntrySet;
 import static org.jooq.impl.Tools.DataKey.DATA_ON_DUPLICATE_KEY_WHERE;
 
-import java.util.EnumSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.jooq.Clause;
 import org.jooq.Condition;
@@ -66,11 +66,11 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> {
     /**
      * Generated UID
      */
-    private static final long                serialVersionUID   = -6139709404698673799L;
-    private static final EnumSet<SQLDialect> NO_SUPPORT_QUALIFY = EnumSet.of(POSTGRES, SQLITE);
+    private static final long            serialVersionUID   = -6139709404698673799L;
+    private static final Set<SQLDialect> NO_SUPPORT_QUALIFY = SQLDialect.supported(POSTGRES, SQLITE);
 
-    private final Table<?>                   table;
-    private final Clause                     assignmentClause;
+    private final Table<?>               table;
+    private final Clause                 assignmentClause;
 
     FieldMapForUpdate(Table<?> table, Clause assignmentClause) {
         this.table = table;

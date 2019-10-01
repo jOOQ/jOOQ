@@ -101,8 +101,8 @@ import static org.jooq.impl.Tools.DataKey.DATA_COLLECTED_SEMI_ANTI_JOIN;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.EnumSet;
 import java.util.List;
+import java.util.Set;
 
 import org.jooq.Clause;
 import org.jooq.Condition;
@@ -143,25 +143,25 @@ implements
     /**
      * Generated UID
      */
-    private static final long                serialVersionUID           = 8377996833996498178L;
-    private static final Clause[]            CLAUSES                    = { TABLE, TABLE_JOIN };
-    private static final EnumSet<SQLDialect> EMULATE_NATURAL_JOIN       = EnumSet.of(CUBRID);
-    private static final EnumSet<SQLDialect> EMULATE_NATURAL_OUTER_JOIN = EnumSet.of(CUBRID, H2);
-    private static final EnumSet<SQLDialect> EMULATE_JOIN_USING         = EnumSet.of(CUBRID, H2);
-    private static final EnumSet<SQLDialect> EMULATE_APPLY              = EnumSet.of(POSTGRES);
+    private static final long             serialVersionUID           = 8377996833996498178L;
+    private static final Clause[]         CLAUSES                    = { TABLE, TABLE_JOIN };
+    private static final Set<SQLDialect>  EMULATE_NATURAL_JOIN       = SQLDialect.supported(CUBRID);
+    private static final Set<SQLDialect>  EMULATE_NATURAL_OUTER_JOIN = SQLDialect.supported(CUBRID, H2);
+    private static final Set<SQLDialect>  EMULATE_JOIN_USING         = SQLDialect.supported(CUBRID, H2);
+    private static final Set<SQLDialect>  EMULATE_APPLY              = SQLDialect.supported(POSTGRES);
 
-    final Table<?>                           lhs;
-    final Table<?>                           rhs;
-
-
+    final Table<?>                        lhs;
+    final Table<?>                        rhs;
 
 
 
 
 
-    private final JoinType                   type;
-    private final ConditionProviderImpl      condition;
-    private final QueryPartList<Field<?>>    using;
+
+
+    private final JoinType                type;
+    private final ConditionProviderImpl   condition;
+    private final QueryPartList<Field<?>> using;
 
     JoinTable(TableLike<?> lhs, TableLike<?> rhs, JoinType type) {
 

@@ -91,7 +91,7 @@ import static org.jooq.impl.Tools.castIfNeeded;
 
 import java.sql.Timestamp;
 import java.util.Arrays;
-import java.util.EnumSet;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import org.jooq.Context;
@@ -112,17 +112,17 @@ final class Expression<T> extends AbstractField<T> {
     /**
      * Generated UID
      */
-    private static final long                serialVersionUID    = -5522799070693019771L;
-    private static final EnumSet<SQLDialect> SUPPORT_BIT_AND     = EnumSet.of(H2, HSQLDB);
-    private static final EnumSet<SQLDialect> SUPPORT_BIT_OR_XOR  = EnumSet.of(H2, HSQLDB);
-    private static final EnumSet<SQLDialect> EMULATE_BIT_XOR     = EnumSet.of(SQLITE);
-    private static final EnumSet<SQLDialect> EMULATE_SHR_SHL     = EnumSet.of(H2, HSQLDB);
-    private static final EnumSet<SQLDialect> HASH_OP_FOR_BIT_XOR = EnumSet.of(POSTGRES);
+    private static final long             serialVersionUID    = -5522799070693019771L;
+    private static final Set<SQLDialect>  SUPPORT_BIT_AND     = SQLDialect.supported(H2, HSQLDB);
+    private static final Set<SQLDialect>  SUPPORT_BIT_OR_XOR  = SQLDialect.supported(H2, HSQLDB);
+    private static final Set<SQLDialect>  EMULATE_BIT_XOR     = SQLDialect.supported(SQLITE);
+    private static final Set<SQLDialect>  EMULATE_SHR_SHL     = SQLDialect.supported(H2, HSQLDB);
+    private static final Set<SQLDialect>  HASH_OP_FOR_BIT_XOR = SQLDialect.supported(POSTGRES);
 
-    private final Field<T>                   lhs;
-    private final QueryPartList<Field<?>>    rhs;
-    private final Field<?>[]                 arguments;
-    private final ExpressionOperator         operator;
+    private final Field<T>                lhs;
+    private final QueryPartList<Field<?>> rhs;
+    private final Field<?>[]              arguments;
+    private final ExpressionOperator      operator;
 
     Expression(ExpressionOperator operator, Field<T> lhs, Field<?>... rhs) {
         super(DSL.name(operator.toSQL()), lhs.getDataType());

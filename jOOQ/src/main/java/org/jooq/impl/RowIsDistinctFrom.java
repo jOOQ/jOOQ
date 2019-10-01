@@ -63,7 +63,7 @@ import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.select;
 
-import java.util.EnumSet;
+import java.util.Set;
 
 import org.jooq.Clause;
 import org.jooq.Comparator;
@@ -81,17 +81,17 @@ final class RowIsDistinctFrom<T> extends AbstractCondition {
     /**
      * Generated UID
      */
-    private static final long                serialVersionUID            = 4568269684824736461L;
-    private static final EnumSet<SQLDialect> EMULATE_DISTINCT_PREDICATE  = EnumSet.of(CUBRID, DERBY);
-    private static final EnumSet<SQLDialect> SUPPORT_DISTINCT_WITH_ARROW = EnumSet.of(MARIADB, MYSQL);
+    private static final long            serialVersionUID            = 4568269684824736461L;
+    private static final Set<SQLDialect> EMULATE_DISTINCT_PREDICATE  = SQLDialect.supported(CUBRID, DERBY);
+    private static final Set<SQLDialect> SUPPORT_DISTINCT_WITH_ARROW = SQLDialect.supported(MARIADB, MYSQL);
 
-    private final Row                        lhs;
-    private final Row                        rhs;
-    private final Comparator                 comparator;
+    private final Row                    lhs;
+    private final Row                    rhs;
+    private final Comparator             comparator;
 
-    private transient QueryPartInternal      mySQLCondition;
-    private transient QueryPartInternal      sqliteCondition;
-    private transient QueryPartInternal      compareCondition;
+    private transient QueryPartInternal  mySQLCondition;
+    private transient QueryPartInternal  sqliteCondition;
+    private transient QueryPartInternal  compareCondition;
 
     RowIsDistinctFrom(Row lhs, Row rhs, Comparator comparator) {
         this.lhs = lhs;

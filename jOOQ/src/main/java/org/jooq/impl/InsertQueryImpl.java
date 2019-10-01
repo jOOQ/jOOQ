@@ -85,9 +85,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.jooq.Clause;
 import org.jooq.Condition;
@@ -119,20 +119,20 @@ import org.jooq.tools.StringUtils;
  */
 final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements InsertQuery<R> {
 
-    private static final long                serialVersionUID      = 4466005417945353842L;
-    private static final Clause[]            CLAUSES               = { INSERT };
-    private static final EnumSet<SQLDialect> SUPPORT_INSERT_IGNORE = EnumSet.of(MARIADB, MYSQL);
+    private static final long            serialVersionUID      = 4466005417945353842L;
+    private static final Clause[]        CLAUSES               = { INSERT };
+    private static final Set<SQLDialect> SUPPORT_INSERT_IGNORE = SQLDialect.supported(MARIADB, MYSQL);
 
-    private final FieldMapForUpdate          updateMap;
-    private final FieldMapsForInsert         insertMaps;
-    private Select<?>                        select;
-    private boolean                          defaultValues;
-    private boolean                          onDuplicateKeyUpdate;
-    private boolean                          onDuplicateKeyIgnore;
-    private Constraint                       onConstraint;
-    private UniqueKey<R>                     onConstraintUniqueKey;
-    private QueryPartList<Field<?>>          onConflict;
-    private final ConditionProviderImpl      condition;
+    private final FieldMapForUpdate      updateMap;
+    private final FieldMapsForInsert     insertMaps;
+    private Select<?>                    select;
+    private boolean                      defaultValues;
+    private boolean                      onDuplicateKeyUpdate;
+    private boolean                      onDuplicateKeyIgnore;
+    private Constraint                   onConstraint;
+    private UniqueKey<R>                 onConstraintUniqueKey;
+    private QueryPartList<Field<?>>      onConflict;
+    private final ConditionProviderImpl  condition;
 
     InsertQueryImpl(Configuration configuration, WithImpl with, Table<R> into) {
         super(configuration, with, into);

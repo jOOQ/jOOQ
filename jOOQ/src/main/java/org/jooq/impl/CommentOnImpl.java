@@ -58,7 +58,7 @@ import static org.jooq.impl.Keywords.K_ON;
 import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.Keywords.K_VIEW;
 
-import java.util.EnumSet;
+import java.util.Set;
 
 import org.jooq.Comment;
 import org.jooq.CommentOnFinalStep;
@@ -83,7 +83,7 @@ implements
      * Generated UID
      */
     private static final long                serialVersionUID         = 2665659331902435568L;
-    private static final EnumSet<SQLDialect> SUPPORTS_COMMENT_ON_VIEW = EnumSet.of(POSTGRES);
+    private static final Set<SQLDialect>     SUPPORTS_COMMENT_ON_VIEW = SQLDialect.supported(POSTGRES);
 
     private final Table<?>                   table;
     private final boolean                    isView;

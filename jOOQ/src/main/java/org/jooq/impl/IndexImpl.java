@@ -53,6 +53,7 @@ import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Set;
 
 import org.jooq.Condition;
 import org.jooq.Context;
@@ -75,7 +76,7 @@ class IndexImpl extends AbstractNamed implements Index {
 
     // [#8723] TODO: Specify the dialects that require table qualification once they're known.
     private static final EnumSet<SQLDialect> REQUIRE_TABLE_QUALIFICATION    = EnumSet.noneOf(SQLDialect.class);
-    private static final EnumSet<SQLDialect> NO_SUPPORT_INDEX_QUALIFICATION = EnumSet.of(MARIADB, MYSQL, POSTGRES);
+    private static final Set<SQLDialect>     NO_SUPPORT_INDEX_QUALIFICATION = SQLDialect.supported(MARIADB, MYSQL, POSTGRES);
 
     private final Table<?>                   table;
     private final SortField<?>[]             fields;

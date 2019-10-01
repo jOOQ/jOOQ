@@ -56,7 +56,7 @@ import static org.jooq.impl.Keywords.K_IF_EXISTS;
 import static org.jooq.impl.Keywords.K_RESTRICT;
 import static org.jooq.impl.Keywords.K_SCHEMA;
 
-import java.util.EnumSet;
+import java.util.Set;
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
@@ -79,19 +79,19 @@ final class DropSchemaImpl extends AbstractRowCountQuery implements
     /**
      * Generated UID
      */
-    private static final long                serialVersionUID           = 8904572826501186329L;
-    private static final Clause[]            CLAUSES                    = { DROP_SCHEMA };
-    private static final EnumSet<SQLDialect> NO_SUPPORT_IF_EXISTS       = EnumSet.of(DERBY, FIREBIRD);
-    private static final EnumSet<SQLDialect> REQUIRES_RESTRICT          = EnumSet.of(DERBY);
+    private static final long            serialVersionUID           = 8904572826501186329L;
+    private static final Clause[]        CLAUSES                    = { DROP_SCHEMA };
+    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS       = SQLDialect.supported(DERBY, FIREBIRD);
+    private static final Set<SQLDialect> REQUIRES_RESTRICT          = SQLDialect.supported(DERBY);
 
 
 
 
 
 
-    private final Schema                     schema;
-    private final boolean                    ifExists;
-    private boolean                          cascade;
+    private final Schema                 schema;
+    private final boolean                ifExists;
+    private boolean                      cascade;
 
     DropSchemaImpl(Configuration configuration, Schema schema) {
         this(configuration, schema, false);

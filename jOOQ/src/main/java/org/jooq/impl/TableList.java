@@ -45,8 +45,8 @@ import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
 
-import java.util.EnumSet;
 import java.util.List;
+import java.util.Set;
 
 import org.jooq.Context;
 import org.jooq.Field;
@@ -58,8 +58,8 @@ import org.jooq.Table;
  */
 final class TableList extends QueryPartList<Table<?>> {
 
-    private static final long                serialVersionUID = -8545559185481762229L;
-    private static final EnumSet<SQLDialect> UNQUALIFY_FIELDS = EnumSet.of(DERBY, FIREBIRD, H2, HSQLDB);
+    private static final long            serialVersionUID = -8545559185481762229L;
+    private static final Set<SQLDialect> UNQUALIFY_FIELDS = SQLDialect.supported(DERBY, FIREBIRD, H2, HSQLDB);
 
     TableList() {
         super();

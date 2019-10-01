@@ -75,7 +75,7 @@ import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_UNALIAS_ALIASED_EXPRESSIONS;
 
-import java.util.EnumSet;
+import java.util.Set;
 
 import org.jooq.Clause;
 import org.jooq.Context;
@@ -92,20 +92,20 @@ import org.jooq.Table;
  */
 final class Alias<Q extends QueryPart> extends AbstractQueryPart {
 
-    private static final long                serialVersionUID                      = -2456848365524191614L;
-    private static final Clause[]            CLAUSES_TABLE_REFERENCE               = { TABLE, TABLE_REFERENCE };
-    private static final Clause[]            CLAUSES_TABLE_ALIAS                   = { TABLE, TABLE_ALIAS };
-    private static final Clause[]            CLAUSES_FIELD_REFERENCE               = { FIELD, FIELD_REFERENCE };
-    private static final Clause[]            CLAUSES_FIELD_ALIAS                   = { FIELD, FIELD_ALIAS };
-    private static final EnumSet<SQLDialect> SUPPORT_AS_REQUIRED                   = EnumSet.of(DERBY, HSQLDB, MARIADB, MYSQL, POSTGRES);
-    private static final EnumSet<SQLDialect> SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL1 = EnumSet.of(CUBRID, FIREBIRD);
-    private static final EnumSet<SQLDialect> SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL2 = EnumSet.of(H2, MARIADB, MYSQL, SQLITE);
+    private static final long            serialVersionUID                      = -2456848365524191614L;
+    private static final Clause[]        CLAUSES_TABLE_REFERENCE               = { TABLE, TABLE_REFERENCE };
+    private static final Clause[]        CLAUSES_TABLE_ALIAS                   = { TABLE, TABLE_ALIAS };
+    private static final Clause[]        CLAUSES_FIELD_REFERENCE               = { FIELD, FIELD_REFERENCE };
+    private static final Clause[]        CLAUSES_FIELD_ALIAS                   = { FIELD, FIELD_ALIAS };
+    private static final Set<SQLDialect> SUPPORT_AS_REQUIRED                   = SQLDialect.supported(DERBY, HSQLDB, MARIADB, MYSQL, POSTGRES);
+    private static final Set<SQLDialect> SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL1 = SQLDialect.supported(CUBRID, FIREBIRD, MYSQL);
+    private static final Set<SQLDialect> SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL2 = SQLDialect.supported(H2, MARIADB, MYSQL, SQLITE);
 
-    final Q                                  wrapped;
-    final Q                                  wrapping;
-    final Name                               alias;
-    final Name[]                             fieldAliases;
-    final boolean                            wrapInParentheses;
+    final Q                              wrapped;
+    final Q                              wrapping;
+    final Name                           alias;
+    final Name[]                         fieldAliases;
+    final boolean                        wrapInParentheses;
 
     Alias(Q wrapped, Q wrapping, Name alias) {
         this(wrapped, wrapping, alias, null, false);
@@ -149,6 +149,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
             if (wrapped instanceof TableImpl)
                 context.scopeMarkStart(wrapping);
 
+            SQLDialect dialect = context.dialect();
             SQLDialect family = context.family();
             boolean emulatedDerivedColumnList = false;
 
@@ -156,7 +157,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
             // "simple class specifications", or "common table expression references".
             // Hence, wrap the table reference in a subselect
             if (fieldAliases != null
-                    && (SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL1.contains(family))
+                    && SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL1.contains(dialect)
                     && (wrapped instanceof TableImpl || wrapped instanceof CommonTableExpressionImpl)) {
 
                 Select<Record> select =
@@ -280,9 +281,8 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
     }
 
     static void toSQLAs(Context<?> context) {
-        if (SUPPORT_AS_REQUIRED.contains(context.family())) {
+        if (SUPPORT_AS_REQUIRED.contains(context.family()))
             context.sql(' ').visit(K_AS);
-        }
     }
 
     private void toSQLWrapped(Context<?> context) {

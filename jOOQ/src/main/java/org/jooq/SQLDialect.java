@@ -601,6 +601,50 @@ public enum SQLDialect {
     private transient EnumSet<SQLDialect> predecessors;
     private final ThirdParty              thirdParty;
 
+    /**
+     * Get a list of all {@link SQLDialect#family()} values.
+     */
+    public static final SQLDialect[] families() {
+        return FAMILIES.clone();
+    }
+
+    /**
+     * Get a set of supported dialect versions given a dialect version.
+     * <p>
+     * The resulting set of dialects contain all the families and dialect
+     * versions that support the argument dialect.
+     */
+    public static final Set<SQLDialect> supported(SQLDialect dialect) {
+        EnumSet<SQLDialect> result = EnumSet.noneOf(SQLDialect.class);
+        addSupported(dialect, result);
+        return Collections.unmodifiableSet(result);
+    }
+
+    /**
+     * Get a set of supported dialect versions given a set of dialect versions.
+     * <p>
+     * The resulting set of dialects contain all the families and dialect
+     * versions that support the argument dialects.
+     */
+    public static final Set<SQLDialect> supported(SQLDialect... dialects) {
+        EnumSet<SQLDialect> result = EnumSet.noneOf(SQLDialect.class);
+
+        for (SQLDialect dialect : dialects)
+            addSupported(dialect, result);
+
+        return Collections.unmodifiableSet(result);
+    }
+
+    private static final void addSupported(SQLDialect dialect, EnumSet<SQLDialect> supported) {
+        supported.add(dialect);
+
+        if (dialect.isFamily())
+            supported.addAll(dialect.predecessors());
+        else
+            for (SQLDialect candidate = dialect.family(); candidate != dialect; candidate = candidate.predecessor())
+                supported.add(candidate);
+    }
+
     private SQLDialect(String name, boolean commercial, boolean supported) {
         this(name, commercial, supported, null, null);
     }
@@ -705,10 +749,6 @@ public enum SQLDialect {
         return Collections.unmodifiableSet(predecessors);
     }
 
-    public static void main(String[] args) {
-        System.out.println(SQLDialect.DB2.predecessors());
-    }
-
     /**
      * Whether this dialect precedes an other dialect from the same family.
      * <p>
@@ -809,13 +849,6 @@ public enum SQLDialect {
      */
     public final String getNameUC() {
         return name == null ? null : name.toUpperCase();
-    }
-
-    /**
-     * Get a list of all {@link SQLDialect#family()} values.
-     */
-    public static final SQLDialect[] families() {
-        return FAMILIES.clone();
     }
 
     /**

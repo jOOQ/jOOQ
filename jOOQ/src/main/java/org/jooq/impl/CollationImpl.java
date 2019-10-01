@@ -40,7 +40,7 @@ package org.jooq.impl;
 // ...
 // ...
 
-import java.util.EnumSet;
+import java.util.Set;
 
 import org.jooq.Collation;
 import org.jooq.Context;

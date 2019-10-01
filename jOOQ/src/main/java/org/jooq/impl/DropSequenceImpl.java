@@ -54,7 +54,7 @@ import static org.jooq.impl.Keywords.K_RESTRICT;
 import static org.jooq.impl.Keywords.K_SEQUENCE;
 import static org.jooq.impl.Keywords.K_SERIAL;
 
-import java.util.EnumSet;
+import java.util.Set;
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
@@ -74,12 +74,12 @@ final class DropSequenceImpl extends AbstractRowCountQuery implements
     /**
      * Generated UID
      */
-    private static final long                serialVersionUID     = 8904572826501186329L;
-    private static final Clause[]            CLAUSES              = { DROP_SEQUENCE };
-    private static final EnumSet<SQLDialect> NO_SUPPORT_IF_EXISTS = EnumSet.of(DERBY, FIREBIRD);
+    private static final long            serialVersionUID     = 8904572826501186329L;
+    private static final Clause[]        CLAUSES              = { DROP_SEQUENCE };
+    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS = SQLDialect.supported(DERBY, FIREBIRD);
 
-    private final Sequence<?>     sequence;
-    private final boolean         ifExists;
+    private final Sequence<?>            sequence;
+    private final boolean                ifExists;
 
     DropSequenceImpl(Configuration configuration, Sequence<?> sequence) {
         this(configuration, sequence, false);

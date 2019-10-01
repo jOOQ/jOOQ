@@ -65,7 +65,7 @@ import static org.jooq.impl.Keywords.K_SEQUENCE;
 import static org.jooq.impl.Keywords.K_SERIAL;
 import static org.jooq.impl.Keywords.K_START_WITH;
 
-import java.util.EnumSet;
+import java.util.Set;
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
@@ -88,11 +88,11 @@ final class CreateSequenceImpl extends AbstractRowCountQuery implements
      */
     private static final long                serialVersionUID         = 8904572826501186329L;
     private static final Clause[]            CLAUSES                  = { CREATE_SEQUENCE };
-    private static final EnumSet<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS = EnumSet.of(DERBY, FIREBIRD);
-    private static final EnumSet<SQLDialect> REQUIRES_START_WITH      = EnumSet.of(DERBY);
-    private static final EnumSet<SQLDialect> NO_SUPPORT_CACHE         = EnumSet.of(DERBY, HSQLDB);
-    private static final EnumSet<SQLDialect> NO_SEPARATOR             = EnumSet.of(MARIADB);
-    private static final EnumSet<SQLDialect> OMIT_NO_CACHE            = EnumSet.of(POSTGRES);
+    private static final Set<SQLDialect>     NO_SUPPORT_IF_NOT_EXISTS = SQLDialect.supported(DERBY, FIREBIRD);
+    private static final Set<SQLDialect>     REQUIRES_START_WITH      = SQLDialect.supported(DERBY);
+    private static final Set<SQLDialect>     NO_SUPPORT_CACHE         = SQLDialect.supported(DERBY, HSQLDB);
+    private static final Set<SQLDialect>     NO_SEPARATOR             = SQLDialect.supported(MARIADB);
+    private static final Set<SQLDialect>     OMIT_NO_CACHE            = SQLDialect.supported(POSTGRES);
 
     private final Sequence<?>                sequence;
     private final boolean                    ifNotExists;

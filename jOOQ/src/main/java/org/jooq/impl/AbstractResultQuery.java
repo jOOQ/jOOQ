@@ -60,7 +60,6 @@ import java.sql.SQLException;
 import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -131,7 +130,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
      */
     private static final long                serialVersionUID      = -5588344253566055707L;
     private static final JooqLogger          log                   = JooqLogger.getLogger(AbstractResultQuery.class);
-    private static final EnumSet<SQLDialect> NO_SUPPORT_FOR_UPDATE = EnumSet.of(CUBRID);
+    private static final Set<SQLDialect>     NO_SUPPORT_FOR_UPDATE = SQLDialect.supported(CUBRID);
 
     private int                              maxRows;
     private int                              fetchSize;

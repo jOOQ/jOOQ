@@ -67,7 +67,7 @@ import static org.jooq.impl.Keywords.K_TO;
 import static org.jooq.impl.Tools.beginTryCatch;
 import static org.jooq.impl.Tools.endTryCatch;
 
-import java.util.EnumSet;
+import java.util.Set;
 
 import org.jooq.AlterSequenceFinalStep;
 import org.jooq.AlterSequenceStep;
@@ -94,7 +94,7 @@ final class AlterSequenceImpl<T extends Number> extends AbstractRowCountQuery im
      */
     private static final long                serialVersionUID     = 8904572826501186329L;
     private static final Clause[]            CLAUSES              = { ALTER_SEQUENCE };
-    private static final EnumSet<SQLDialect> NO_SUPPORT_IF_EXISTS = EnumSet.of(CUBRID, DERBY, FIREBIRD);
+    private static final Set<SQLDialect>     NO_SUPPORT_IF_EXISTS = SQLDialect.supported(CUBRID, DERBY, FIREBIRD);
 
 
 

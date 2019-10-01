@@ -51,9 +51,6 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
-// ...
-// ...
-// ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.impl.DSL.choose;
@@ -100,7 +97,7 @@ import static org.jooq.impl.Tools.DataKey.DATA_WINDOW_DEFINITIONS;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.EnumSet;
+import java.util.Set;
 
 import org.jooq.AggregateFilterStep;
 import org.jooq.AggregateFunction;
@@ -152,33 +149,33 @@ class Function<T> extends AbstractField<T> implements
     {
 
 
-    private static final long                serialVersionUID                   = 347252741712134044L;
-    private static final EnumSet<SQLDialect> SUPPORT_ARRAY_AGG                  = EnumSet.of(HSQLDB, POSTGRES);
-    private static final EnumSet<SQLDialect> SUPPORT_GROUP_CONCAT               = EnumSet.of(CUBRID, H2, HSQLDB, MARIADB, MYSQL, SQLITE);
-    private static final EnumSet<SQLDialect> SUPPORT_STRING_AGG                 = EnumSet.of(POSTGRES);
-    private static final EnumSet<SQLDialect> SUPPORT_NO_PARENS_WINDOW_REFERENCE = EnumSet.of(MYSQL, POSTGRES);
-    private static final EnumSet<SQLDialect> SUPPORT_FILTER                     = EnumSet.of(H2, HSQLDB, POSTGRES);
-    private static final EnumSet<SQLDialect> SUPPORT_DISTINCT_RVE               = EnumSet.of(H2, POSTGRES);
+    private static final long              serialVersionUID                   = 347252741712134044L;
+    private static final Set<SQLDialect>   SUPPORT_ARRAY_AGG                  = SQLDialect.supported(HSQLDB, POSTGRES);
+    private static final Set<SQLDialect>   SUPPORT_GROUP_CONCAT               = SQLDialect.supported(CUBRID, H2, HSQLDB, MARIADB, MYSQL, SQLITE);
+    private static final Set<SQLDialect>   SUPPORT_STRING_AGG                 = SQLDialect.supported(POSTGRES);
+    private static final Set<SQLDialect>   SUPPORT_NO_PARENS_WINDOW_REFERENCE = SQLDialect.supported(MYSQL, POSTGRES);
+    private static final Set<SQLDialect>   SUPPORT_FILTER                     = SQLDialect.supported(H2, HSQLDB, POSTGRES);
+    private static final Set<SQLDialect>   SUPPORT_DISTINCT_RVE               = SQLDialect.supported(H2, POSTGRES);
 
-    static final Field<Integer>              ASTERISK                           = DSL.field("*", Integer.class);
+    static final Field<Integer>            ASTERISK                           = DSL.field("*", Integer.class);
 
     // Mutually exclusive attributes: super.getName(), this.name, this.term
-    private final Name                       name;
-    private final Term                       term;
+    private final Name                     name;
+    private final Term                     term;
 
     // Other attributes
-    private final QueryPartList<QueryPart>   arguments;
-    private final boolean                    distinct;
-    private SortFieldList                    withinGroupOrderBy;
-    private SortFieldList                    keepDenseRankOrderBy;
-    private Condition                        filter;
-    private WindowSpecificationImpl          windowSpecification;
-    private WindowDefinitionImpl             windowDefinition;
-    private Name                             windowName;
+    private final QueryPartList<QueryPart> arguments;
+    private final boolean                  distinct;
+    private SortFieldList                  withinGroupOrderBy;
+    private SortFieldList                  keepDenseRankOrderBy;
+    private Condition                      filter;
+    private WindowSpecificationImpl        windowSpecification;
+    private WindowDefinitionImpl           windowDefinition;
+    private Name                           windowName;
 
-    private boolean                          first;
-    private Boolean                          ignoreNulls;
-    private Boolean                          fromLast;
+    private boolean                        first;
+    private Boolean                        ignoreNulls;
+    private Boolean                        fromLast;
 
     // -------------------------------------------------------------------------
     // XXX Constructors

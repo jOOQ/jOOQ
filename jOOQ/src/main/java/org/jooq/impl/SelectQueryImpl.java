@@ -78,7 +78,6 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
-// ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
@@ -154,6 +153,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Stream;
@@ -206,17 +206,19 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     /**
      * Generated UID
      */
-    private static final long                    serialVersionUID                = 1646393178384872967L;
-    private static final Clause[]                CLAUSES                         = { SELECT };
-    private static final EnumSet<SQLDialect>     EMULATE_SELECT_INTO_AS_CTAS     = EnumSet.of(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE);
-    private static final EnumSet<SQLDialect>     NO_SUPPORT_FOR_UPDATE           = EnumSet.of(CUBRID);
-    private static final EnumSet<SQLDialect>     NO_SUPPORT_FOR_UPDATE_QUALIFIED = EnumSet.of(DERBY, FIREBIRD, H2, HSQLDB);
-    private static final EnumSet<SQLDialect>     SUPPORT_SELECT_INTO_TABLE       = EnumSet.of(HSQLDB, POSTGRES);
-    static final EnumSet<SQLDialect>             SUPPORT_WINDOW_CLAUSE           = EnumSet.of(H2 /* -- See [#8279] */, MYSQL, POSTGRES /*, SQLITE -- See [#8279] [#8548] */);
-    private static final EnumSet<SQLDialect>     REQUIRES_FROM_CLAUSE            = EnumSet.of(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL);
-    private static final EnumSet<SQLDialect>     REQUIRES_DERIVED_TABLE_DML      = EnumSet.of(MARIADB, MYSQL);
-    private static final EnumSet<SQLDialect>     EMULATE_EMPTY_GROUP_BY_OTHER    = EnumSet.of(FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE);
-    private static final EnumSet<SQLDialect>     SUPPORT_FULL_WITH_TIES          = EnumSet.of(H2);
+    private static final long            serialVersionUID                = 1646393178384872967L;
+    private static final Clause[]        CLAUSES                         = { SELECT };
+    private static final Set<SQLDialect> EMULATE_SELECT_INTO_AS_CTAS     = SQLDialect.supported(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE);
+    private static final Set<SQLDialect> NO_SUPPORT_FOR_UPDATE           = SQLDialect.supported(CUBRID);
+    private static final Set<SQLDialect> NO_SUPPORT_FOR_UPDATE_QUALIFIED = SQLDialect.supported(DERBY, FIREBIRD, H2, HSQLDB);
+    private static final Set<SQLDialect> SUPPORT_SELECT_INTO_TABLE       = SQLDialect.supported(HSQLDB, POSTGRES);
+    static final Set<SQLDialect>         SUPPORT_WINDOW_CLAUSE           = SQLDialect.supported(H2 /* -- See [#8279] */, MYSQL, POSTGRES /*, SQLITE -- See [#8279] [#8548] */);
+    private static final Set<SQLDialect> REQUIRES_FROM_CLAUSE            = SQLDialect.supported(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL);
+    private static final Set<SQLDialect> REQUIRES_DERIVED_TABLE_DML      = SQLDialect.supported(MARIADB, MYSQL);
+    private static final Set<SQLDialect> EMULATE_EMPTY_GROUP_BY_OTHER    = SQLDialect.supported(FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE);
+    private static final Set<SQLDialect> SUPPORT_FULL_WITH_TIES          = SQLDialect.supported(H2);
+
+
 
 
 
@@ -1743,9 +1745,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-    private static final EnumSet<SQLDialect> NO_SUPPORT_UNION_PARENTHESES        = EnumSet.of(SQLITE);
-    private static final EnumSet<SQLDialect> UNION_PARENTHESIS                   = EnumSet.of(DERBY, MARIADB, MYSQL);
-    private static final EnumSet<SQLDialect> UNION_PARENTHESIS_IN_DERIVED_TABLES = EnumSet.of(DERBY);
+    private static final Set<SQLDialect> NO_SUPPORT_UNION_PARENTHESES = SQLDialect.supported(SQLITE);
+    private static final Set<SQLDialect> UNION_PARENTHESIS = SQLDialect.supported(DERBY, MARIADB, MYSQL);
+    private static final Set<SQLDialect> UNION_PARENTHESIS_IN_DERIVED_TABLES = SQLDialect.supported(DERBY);
 
     private final boolean unionOpNesting() {
         if (unionOp.size() > 1)

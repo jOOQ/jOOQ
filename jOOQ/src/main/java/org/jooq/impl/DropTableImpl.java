@@ -56,7 +56,7 @@ import static org.jooq.impl.Keywords.K_IF_EXISTS;
 import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.Keywords.K_TEMPORARY;
 
-import java.util.EnumSet;
+import java.util.Set;
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
@@ -77,15 +77,15 @@ final class DropTableImpl extends AbstractRowCountQuery implements
     /**
      * Generated UID
      */
-    private static final long                serialVersionUID     = 8904572826501186329L;
-    private static final Clause[]            CLAUSES              = { DROP_TABLE };
-    private static final EnumSet<SQLDialect> NO_SUPPORT_IF_EXISTS = EnumSet.of(DERBY, FIREBIRD);
-    private static final EnumSet<SQLDialect> TEMPORARY_SEMANTIC   = EnumSet.of(MYSQL);
+    private static final long            serialVersionUID     = 8904572826501186329L;
+    private static final Clause[]        CLAUSES              = { DROP_TABLE };
+    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS = SQLDialect.supported(DERBY, FIREBIRD);
+    private static final Set<SQLDialect> TEMPORARY_SEMANTIC   = SQLDialect.supported(MYSQL);
 
-    private final Table<?>                   table;
-    private final boolean                    temporary;
-    private final boolean                    ifExists;
-    private boolean                          cascade;
+    private final Table<?>               table;
+    private final boolean                temporary;
+    private final boolean                ifExists;
+    private boolean                      cascade;
 
     DropTableImpl(Configuration configuration, Table<?> table) {
         this(configuration, table, false, false);

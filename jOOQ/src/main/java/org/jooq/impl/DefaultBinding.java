@@ -130,11 +130,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.TimeZone;
 import java.util.UUID;
 
@@ -195,19 +195,19 @@ import org.jooq.util.postgres.PostgresUtils;
  */
 public class DefaultBinding<T, U> implements Binding<T, U> {
 
-    static final JooqLogger                  log                       = JooqLogger.getLogger(DefaultBinding.class);
+    static final JooqLogger              log                       = JooqLogger.getLogger(DefaultBinding.class);
 
     /**
      * Generated UID
      */
-    private static final long                serialVersionUID          = -198499389344950496L;
-    private static final EnumSet<SQLDialect> REQUIRE_JDBC_DATE_LITERAL = EnumSet.of(MYSQL);
+    private static final long            serialVersionUID          = -198499389344950496L;
+    private static final Set<SQLDialect> REQUIRE_JDBC_DATE_LITERAL = SQLDialect.supported(MYSQL);
 
-    // Taken from org.postgresql.PGStatement                             9223372036825200000
-    private static final long                PG_DATE_POSITIVE_INFINITY = 9223372036825200000L;
-    private static final long                PG_DATE_NEGATIVE_INFINITY = -9223372036832400000L;
+    // Taken from org.postgresql.PGStatement 9223372036825200000
+    private static final long            PG_DATE_POSITIVE_INFINITY = 9223372036825200000L;
+    private static final long            PG_DATE_NEGATIVE_INFINITY = -9223372036832400000L;
 
-    final AbstractBinding<T, U>              delegate;
+    final AbstractBinding<T, U>          delegate;
 
     public final static <T, U> Binding<T, U> binding(Converter<T, U> converter) {
         return binding(converter, false);
@@ -535,7 +535,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          * Generated UID
          */
         private static final long                serialVersionUID                    = -7965247586545864991L;
-        private static final EnumSet<SQLDialect> NEEDS_PRECISION_SCALE_ON_BIGDECIMAL = EnumSet.of(CUBRID, DERBY, FIREBIRD, HSQLDB);
+        private static final Set<SQLDialect> NEEDS_PRECISION_SCALE_ON_BIGDECIMAL = SQLDialect.supported(CUBRID, DERBY, FIREBIRD, HSQLDB);
 
 
 
@@ -1400,7 +1400,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          * Generated UID
          */
         private static final long                serialVersionUID = -8912971184035434281L;
-        private static final EnumSet<SQLDialect> BIND_AS_STRING   = EnumSet.of(SQLITE);
+        private static final Set<SQLDialect> BIND_AS_STRING = SQLDialect.supported(SQLITE);
 
         DefaultBigDecimalBinding(Converter<BigDecimal, U> converter, boolean isLob) {
             super(converter, isLob);
@@ -1455,8 +1455,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         /**
          * Generated UID
          */
-        private static final long                serialVersionUID = -3857031689661809421L;
-        private static final EnumSet<SQLDialect> BIND_AS_STRING   = EnumSet.of(SQLITE);
+        private static final long            serialVersionUID = -3857031689661809421L;
+        private static final Set<SQLDialect> BIND_AS_STRING   = SQLDialect.supported(SQLITE);
 
         DefaultBigIntegerBinding(Converter<BigInteger, U> converter, boolean isLob) {
             super(converter, isLob);
@@ -1572,8 +1572,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         /**
          * Generated UID
          */
-        private static final long                serialVersionUID   = -533762957890251203L;
-        private static final EnumSet<SQLDialect> BIND_AS_1_0        = EnumSet.of(FIREBIRD, SQLITE);
+        private static final long            serialVersionUID   = -533762957890251203L;
+        private static final Set<SQLDialect> BIND_AS_1_0        = SQLDialect.supported(FIREBIRD, SQLITE);
 
 
 
@@ -1739,8 +1739,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         /**
          * Generated UID
          */
-        private static final long                serialVersionUID = -727202499908007757L;
-        private static final EnumSet<SQLDialect> INLINE_AS_X_APOS = EnumSet.of(DERBY, H2, HSQLDB, MARIADB, MYSQL, SQLITE);
+        private static final long            serialVersionUID = -727202499908007757L;
+        private static final Set<SQLDialect> INLINE_AS_X_APOS = SQLDialect.supported(DERBY, H2, HSQLDB, MARIADB, MYSQL, SQLITE);
 
 
 
@@ -1933,8 +1933,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         /**
          * Generated UID
          */
-        private static final long                serialVersionUID         = -4797649501187223237L;
-        private static final EnumSet<SQLDialect> INLINE_AS_STRING_LITERAL = EnumSet.of(SQLITE);
+        private static final long            serialVersionUID         = -4797649501187223237L;
+        private static final Set<SQLDialect> INLINE_AS_STRING_LITERAL = SQLDialect.supported(SQLITE);
 
         DefaultDateBinding(Converter<Date, U> converter, boolean isLob) {
             super(converter, isLob);
@@ -3673,8 +3673,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         /**
          * Generated UID
          */
-        private static final long                serialVersionUID         = -2563220967846617288L;
-        private static final EnumSet<SQLDialect> INLINE_AS_STRING_LITERAL = EnumSet.of(SQLITE);
+        private static final long            serialVersionUID         = -2563220967846617288L;
+        private static final Set<SQLDialect> INLINE_AS_STRING_LITERAL = SQLDialect.supported(SQLITE);
 
         DefaultTimeBinding(Converter<Time, U> converter, boolean isLob) {
             super(converter, isLob);
@@ -3767,8 +3767,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         /**
          * Generated UID
          */
-        private static final long                serialVersionUID         = 289387167549159015L;
-        private static final EnumSet<SQLDialect> INLINE_AS_STRING_LITERAL = EnumSet.of(SQLITE);
+        private static final long            serialVersionUID         = 289387167549159015L;
+        private static final Set<SQLDialect> INLINE_AS_STRING_LITERAL = SQLDialect.supported(SQLITE);
 
         DefaultTimestampBinding(Converter<Timestamp, U> converter, boolean isLob) {
             super(converter, isLob);

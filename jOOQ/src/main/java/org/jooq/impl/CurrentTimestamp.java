@@ -55,7 +55,7 @@ import static org.jooq.impl.Keywords.F_NOW;
 import static org.jooq.impl.Keywords.K_CURRENT;
 import static org.jooq.impl.Keywords.K_TIMESTAMP;
 
-import java.util.EnumSet;
+import java.util.Set;
 
 import org.jooq.Context;
 import org.jooq.DataType;
@@ -70,10 +70,10 @@ final class CurrentTimestamp<T> extends AbstractField<T> {
     /**
      * Generated UID
      */
-    private static final long                serialVersionUID = -7273879239726265322L;
-    private static final EnumSet<SQLDialect> NO_SUPPORT_PRECISION = EnumSet.of(CUBRID, DERBY, SQLITE);
+    private static final long            serialVersionUID     = -7273879239726265322L;
+    private static final Set<SQLDialect> NO_SUPPORT_PRECISION = SQLDialect.supported(CUBRID, DERBY, SQLITE);
 
-    private final Field<Integer>             precision;
+    private final Field<Integer>         precision;
 
     CurrentTimestamp(DataType<T> type) {
         this(type, null);

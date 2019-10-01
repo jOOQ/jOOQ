@@ -47,7 +47,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.impl.ExpressionOperator.BIT_NOT;
 
-import java.util.EnumSet;
+import java.util.Set;
 
 import org.jooq.Context;
 import org.jooq.Field;
@@ -63,15 +63,15 @@ final class Neg<T> extends AbstractField<T> {
     /**
      * Generated UID
      */
-    private static final long                serialVersionUID = 7624782102883057433L;
-    private static final EnumSet<SQLDialect> EMULATE_BIT_NOT  = EnumSet.of(H2, HSQLDB);
+    private static final long            serialVersionUID = 7624782102883057433L;
+    private static final Set<SQLDialect> EMULATE_BIT_NOT  = SQLDialect.supported(H2, HSQLDB);
 
 
 
 
 
-    private final ExpressionOperator         operator;
-    private final Field<T>                   field;
+    private final ExpressionOperator     operator;
+    private final Field<T>               field;
 
     Neg(Field<T> field, ExpressionOperator operator) {
         super(operator.toName(), field.getDataType());

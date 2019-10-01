@@ -74,7 +74,7 @@ import static org.jooq.impl.Keywords.K_SYMMETRIC;
 import static org.jooq.impl.Tools.embeddedFields;
 import static org.jooq.impl.Tools.isEmbeddable;
 
-import java.util.EnumSet;
+import java.util.Set;
 
 import org.jooq.BetweenAndStep;
 import org.jooq.Clause;
@@ -96,7 +96,7 @@ final class BetweenCondition<T> extends AbstractCondition implements BetweenAndS
     private static final Clause[]            CLAUSES_BETWEEN_SYMMETRIC     = { CONDITION, CONDITION_BETWEEN_SYMMETRIC };
     private static final Clause[]            CLAUSES_NOT_BETWEEN           = { CONDITION, CONDITION_NOT_BETWEEN };
     private static final Clause[]            CLAUSES_NOT_BETWEEN_SYMMETRIC = { CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC };
-    private static final EnumSet<SQLDialect> NO_SUPPORT_SYMMETRIC          = EnumSet.of(CUBRID, DERBY, FIREBIRD, H2, MARIADB, MYSQL, SQLITE);
+    private static final Set<SQLDialect>     NO_SUPPORT_SYMMETRIC          = SQLDialect.supported(CUBRID, DERBY, FIREBIRD, H2, MARIADB, MYSQL, SQLITE);
 
     private final boolean                    symmetric;
     private final boolean                    not;

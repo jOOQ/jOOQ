@@ -60,7 +60,7 @@ import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 
-import java.util.EnumSet;
+import java.util.Set;
 
 import org.jooq.Clause;
 import org.jooq.Comparator;
@@ -87,18 +87,18 @@ final class RowSubqueryCondition extends AbstractCondition {
     /**
      * Generated UID
      */
-    private static final long                serialVersionUID         = -1806139685201770706L;
-    private static final Clause[]            CLAUSES                  = { CONDITION, CONDITION_COMPARISON };
-    private static final EnumSet<SQLDialect> SUPPORT_NATIVE           = EnumSet.of(H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE);
+    private static final long            serialVersionUID         = -1806139685201770706L;
+    private static final Clause[]        CLAUSES                  = { CONDITION, CONDITION_COMPARISON };
+    private static final Set<SQLDialect> SUPPORT_NATIVE           = SQLDialect.supported(H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE);
 
 
 
 
 
-    private final Row                        left;
-    private final Select<?>                  right;
-    private final QuantifiedSelect<?>        rightQuantified;
-    private final Comparator                 comparator;
+    private final Row                    left;
+    private final Select<?>              right;
+    private final QuantifiedSelect<?>    rightQuantified;
+    private final Comparator             comparator;
 
     RowSubqueryCondition(Row left, Select<?> right, Comparator comparator) {
         this.left = left;

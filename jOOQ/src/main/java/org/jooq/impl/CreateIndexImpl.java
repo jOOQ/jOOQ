@@ -69,7 +69,7 @@ import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 import static org.jooq.impl.Tools.EMPTY_STRING;
 
 import java.util.Collection;
-import java.util.EnumSet;
+import java.util.Set;
 
 import org.jooq.Clause;
 import org.jooq.Condition;
@@ -101,8 +101,8 @@ final class CreateIndexImpl extends AbstractRowCountQuery implements
      */
     private static final long                serialVersionUID         = 8904572826501186329L;
     private static final Clause[]            CLAUSES                  = { CREATE_INDEX };
-    private static final EnumSet<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS = EnumSet.of(DERBY, FIREBIRD);
-    private static final EnumSet<SQLDialect> SUPPORT_UNNAMED_INDEX    = EnumSet.of(POSTGRES);
+    private static final Set<SQLDialect>     NO_SUPPORT_IF_NOT_EXISTS = SQLDialect.supported(DERBY, FIREBIRD);
+    private static final Set<SQLDialect>     SUPPORT_UNNAMED_INDEX    = SQLDialect.supported(POSTGRES);
 
     private final Index                      index;
     private final boolean                    unique;

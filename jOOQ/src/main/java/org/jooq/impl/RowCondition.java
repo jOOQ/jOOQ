@@ -64,8 +64,8 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.impl.Keywords.K_NOT;
 
 import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.List;
+import java.util.Set;
 
 import org.jooq.Clause;
 import org.jooq.Comparator;
@@ -86,14 +86,14 @@ final class RowCondition extends AbstractCondition {
     /**
      * Generated UID
      */
-    private static final long                serialVersionUID  = -1806139685201770706L;
-    private static final Clause[]            CLAUSES           = { CONDITION, CONDITION_COMPARISON };
-    private static final EnumSet<SQLDialect> EMULATE_EQ_AND_NE = EnumSet.of(DERBY, FIREBIRD);
-    private static final EnumSet<SQLDialect> EMULATE_RANGES    = EnumSet.of(DERBY, CUBRID, FIREBIRD);
+    private static final long            serialVersionUID  = -1806139685201770706L;
+    private static final Clause[]        CLAUSES           = { CONDITION, CONDITION_COMPARISON };
+    private static final Set<SQLDialect> EMULATE_EQ_AND_NE = SQLDialect.supported(DERBY, FIREBIRD);
+    private static final Set<SQLDialect> EMULATE_RANGES    = SQLDialect.supported(DERBY, CUBRID, FIREBIRD);
 
-    private final Row                        left;
-    private final Row                        right;
-    private final Comparator                 comparator;
+    private final Row                    left;
+    private final Row                    right;
+    private final Comparator             comparator;
 
     RowCondition(Row left, Row right, Comparator comparator) {
         this.left = left;

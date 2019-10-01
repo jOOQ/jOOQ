@@ -61,7 +61,7 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.Keywords.K_OVERLAPS;
 import static org.jooq.impl.Tools.castIfNeeded;
 
-import java.util.EnumSet;
+import java.util.Set;
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
@@ -80,13 +80,13 @@ final class RowOverlapsCondition<T1, T2> extends AbstractCondition {
     /**
      * Generated UID
      */
-    private static final long                serialVersionUID              = 85887551884667824L;
-    private static final Clause[]            CLAUSES                       = { CONDITION, CONDITION_OVERLAPS };
-    private static final EnumSet<SQLDialect> EMULATE_NON_STANDARD_OVERLAPS = EnumSet.of(CUBRID, DERBY, FIREBIRD, H2, MARIADB, MYSQL, SQLITE);
-    private static final EnumSet<SQLDialect> EMULATE_INTERVAL_OVERLAPS     = EnumSet.of(HSQLDB);
+    private static final long            serialVersionUID              = 85887551884667824L;
+    private static final Clause[]        CLAUSES                       = { CONDITION, CONDITION_OVERLAPS };
+    private static final Set<SQLDialect> EMULATE_NON_STANDARD_OVERLAPS = SQLDialect.supported(CUBRID, DERBY, FIREBIRD, H2, MARIADB, MYSQL, SQLITE);
+    private static final Set<SQLDialect> EMULATE_INTERVAL_OVERLAPS     = SQLDialect.supported(HSQLDB);
 
-    private final Row2<T1, T2>               left;
-    private final Row2<T1, T2>               right;
+    private final Row2<T1, T2>           left;
+    private final Row2<T1, T2>           right;
 
     RowOverlapsCondition(Row2<T1, T2> left, Row2<T1, T2> right) {
         this.left = left;

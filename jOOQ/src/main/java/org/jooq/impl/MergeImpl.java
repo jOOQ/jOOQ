@@ -83,7 +83,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -238,33 +237,33 @@ implements
     /**
      * Generated UID
      */
-    private static final long                serialVersionUID = -8835479296876774391L;
-    private static final Clause[]            CLAUSES          = { MERGE };
-    private static final EnumSet<SQLDialect> NO_SUPPORT_WHERE = EnumSet.of(DERBY);
+    private static final long            serialVersionUID = -8835479296876774391L;
+    private static final Clause[]        CLAUSES          = { MERGE };
+    private static final Set<SQLDialect> NO_SUPPORT_WHERE = SQLDialect.supported(DERBY);
 
-    private final WithImpl                   with;
-    private final Table<R>                   table;
-    private final ConditionProviderImpl      on;
-    private TableLike<?>                     using;
-    private boolean                          usingDual;
+    private final WithImpl               with;
+    private final Table<R>               table;
+    private final ConditionProviderImpl  on;
+    private TableLike<?>                 using;
+    private boolean                      usingDual;
 
     // [#998] Oracle extensions to the MERGE statement
-    private Condition                        matchedWhere;
-    private Condition                        matchedDeleteWhere;
-    private Condition                        notMatchedWhere;
+    private Condition                    matchedWhere;
+    private Condition                    matchedDeleteWhere;
+    private Condition                    notMatchedWhere;
 
     // Flags to keep track of DSL object creation state
-    private boolean                          matchedClause;
-    private FieldMapForUpdate                matchedUpdate;
-    private boolean                          notMatchedClause;
-    private FieldMapsForInsert               notMatchedInsert;
+    private boolean                      matchedClause;
+    private FieldMapForUpdate            matchedUpdate;
+    private boolean                      notMatchedClause;
+    private FieldMapsForInsert           notMatchedInsert;
 
     // Objects for the UPSERT syntax (including H2 MERGE, HANA UPSERT, etc.)
-    private boolean                          upsertStyle;
-    private QueryPartList<Field<?>>          upsertFields;
-    private QueryPartList<Field<?>>          upsertKeys;
-    private QueryPartList<Field<?>>          upsertValues;
-    private Select<?>                        upsertSelect;
+    private boolean                      upsertStyle;
+    private QueryPartList<Field<?>>      upsertFields;
+    private QueryPartList<Field<?>>      upsertKeys;
+    private QueryPartList<Field<?>>      upsertValues;
+    private Select<?>                    upsertSelect;
 
     MergeImpl(Configuration configuration, WithImpl with, Table<R> table) {
         this(configuration, with, table, null);

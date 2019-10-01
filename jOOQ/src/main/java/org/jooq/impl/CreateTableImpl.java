@@ -105,8 +105,8 @@ import static org.jooq.impl.Tools.DataKey.DATA_SELECT_INTO_TABLE;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.EnumSet;
 import java.util.List;
+import java.util.Set;
 
 import org.jooq.Comment;
 import org.jooq.Configuration;
@@ -140,16 +140,16 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
      * Generated UID
      */
     private static final long                serialVersionUID                   = 8904572826501186329L;
-    private static final EnumSet<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS           = EnumSet.of(DERBY, FIREBIRD);
-    private static final EnumSet<SQLDialect> NO_SUPPORT_WITH_DATA               = EnumSet.of(H2, MARIADB, MYSQL, SQLITE);
-    private static final EnumSet<SQLDialect> NO_SUPPORT_CTAS_COLUMN_NAMES       = EnumSet.of(H2);
-    private static final EnumSet<SQLDialect> EMULATE_INDEXES_IN_BLOCK           = EnumSet.of(POSTGRES);
-    private static final EnumSet<SQLDialect> EMULATE_SOME_ENUM_TYPES_AS_CHECK   = EnumSet.of(CUBRID, DERBY, FIREBIRD, HSQLDB, POSTGRES, SQLITE);
-    private static final EnumSet<SQLDialect> EMULATE_STORED_ENUM_TYPES_AS_CHECK = EnumSet.of(CUBRID, DERBY, FIREBIRD, HSQLDB, SQLITE);
-    private static final EnumSet<SQLDialect> REQUIRES_WITH_DATA                 = EnumSet.of(HSQLDB);
-    private static final EnumSet<SQLDialect> WRAP_SELECT_IN_PARENS              = EnumSet.of(HSQLDB);
-    private static final EnumSet<SQLDialect> SUPPORT_TEMPORARY                  = EnumSet.of(MARIADB, MYSQL, POSTGRES);
-    private static final EnumSet<SQLDialect> EMULATE_COMMENT_IN_BLOCK           = EnumSet.of(POSTGRES);
+    private static final Set<SQLDialect>     NO_SUPPORT_IF_NOT_EXISTS           = SQLDialect.supported(DERBY, FIREBIRD);
+    private static final Set<SQLDialect>     NO_SUPPORT_WITH_DATA               = SQLDialect.supported(H2, MARIADB, MYSQL, SQLITE);
+    private static final Set<SQLDialect>     NO_SUPPORT_CTAS_COLUMN_NAMES       = SQLDialect.supported(H2);
+    private static final Set<SQLDialect>     EMULATE_INDEXES_IN_BLOCK           = SQLDialect.supported(POSTGRES);
+    private static final Set<SQLDialect>     EMULATE_SOME_ENUM_TYPES_AS_CHECK   = SQLDialect.supported(CUBRID, DERBY, FIREBIRD, HSQLDB, POSTGRES, SQLITE);
+    private static final Set<SQLDialect>     EMULATE_STORED_ENUM_TYPES_AS_CHECK = SQLDialect.supported(CUBRID, DERBY, FIREBIRD, HSQLDB, SQLITE);
+    private static final Set<SQLDialect>     REQUIRES_WITH_DATA                 = SQLDialect.supported(HSQLDB);
+    private static final Set<SQLDialect>     WRAP_SELECT_IN_PARENS              = SQLDialect.supported(HSQLDB);
+    private static final Set<SQLDialect>     SUPPORT_TEMPORARY                  = SQLDialect.supported(MARIADB, MYSQL, POSTGRES);
+    private static final Set<SQLDialect>     EMULATE_COMMENT_IN_BLOCK           = SQLDialect.supported(POSTGRES);
 
 
 

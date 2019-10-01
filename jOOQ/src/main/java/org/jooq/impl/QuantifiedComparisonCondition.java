@@ -61,6 +61,7 @@ import static org.jooq.tools.Convert.convert;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Set;
 
 import org.jooq.Clause;
 import org.jooq.Comparator;
@@ -84,7 +85,7 @@ final class QuantifiedComparisonCondition extends AbstractCondition implements L
     private static final long                serialVersionUID           = -402776705884329740L;
     private static final Clause[]            CLAUSES                    = { CONDITION, CONDITION_BETWEEN };
     private static final EnumSet<Comparator> SYNTHETIC_OPERATORS        = EnumSet.of(LIKE, NOT_LIKE, LIKE_IGNORE_CASE, NOT_LIKE_IGNORE_CASE, SIMILAR_TO, NOT_SIMILAR_TO);
-    private static final EnumSet<SQLDialect> SUPPORTS_QUANTIFIED_ARRAYS = EnumSet.of(POSTGRES);
+    private static final Set<SQLDialect>     SUPPORTS_QUANTIFIED_ARRAYS = SQLDialect.supported(POSTGRES);
 
     private final QuantifiedSelectImpl<?>    query;
     private final Field<?>                   field;

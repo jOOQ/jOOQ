@@ -95,13 +95,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.jooq.Catalog;
 import org.jooq.Condition;
@@ -141,20 +141,20 @@ import org.jooq.tools.StringUtils;
  */
 final class MetaImpl extends AbstractMeta {
 
-    private static final long                serialVersionUID                 = 3582980783173033809L;
-    private static final JooqLogger          log                              = JooqLogger.getLogger(MetaImpl.class);
-    private static final EnumSet<SQLDialect> INVERSE_SCHEMA_CATALOG           = EnumSet.of(MARIADB, MYSQL);
-    private static final EnumSet<SQLDialect> CURRENT_TIMESTAMP_COLUMN_DEFAULT = EnumSet.of(MARIADB, MYSQL);
-    private static final EnumSet<SQLDialect> EXPRESSION_COLUMN_DEFAULT        = EnumSet.of(H2);
+    private static final long            serialVersionUID                 = 3582980783173033809L;
+    private static final JooqLogger      log                              = JooqLogger.getLogger(MetaImpl.class);
+    private static final Set<SQLDialect> INVERSE_SCHEMA_CATALOG           = SQLDialect.supported(MARIADB, MYSQL);
+    private static final Set<SQLDialect> CURRENT_TIMESTAMP_COLUMN_DEFAULT = SQLDialect.supported(MARIADB, MYSQL);
+    private static final Set<SQLDialect> EXPRESSION_COLUMN_DEFAULT        = SQLDialect.supported(H2);
 
 
 
 
 
-    private final DSLContext                 ctx;
-    private final Configuration              configuration;
-    private final DatabaseMetaData           databaseMetaData;
-    private final boolean                    inverseSchemaCatalog;
+    private final DSLContext             ctx;
+    private final Configuration          configuration;
+    private final DatabaseMetaData       databaseMetaData;
+    private final boolean                inverseSchemaCatalog;
 
     MetaImpl(Configuration configuration, DatabaseMetaData databaseMetaData) {
         this.ctx = DSL.using(configuration);

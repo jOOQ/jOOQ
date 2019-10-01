@@ -39,6 +39,7 @@
 package org.jooq;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.EnumSet;
 import java.util.Set;
 
@@ -592,12 +593,13 @@ public enum SQLDialect {
         FAMILIES = set.toArray(new SQLDialect[0]);
     }
 
-    private final String     name;
-    private final boolean    commercial;
-    private final boolean    supported;
-    private final SQLDialect family;
-    private SQLDialect       predecessor;
-    private final ThirdParty thirdParty;
+    private final String                  name;
+    private final boolean                 commercial;
+    private final boolean                 supported;
+    private final SQLDialect              family;
+    private SQLDialect                    predecessor;
+    private transient EnumSet<SQLDialect> predecessors;
+    private final ThirdParty              thirdParty;
 
     private SQLDialect(String name, boolean commercial, boolean supported) {
         this(name, commercial, supported, null, null);
@@ -677,6 +679,37 @@ public enum SQLDialect {
     }
 
     /**
+     * The predecessor dialects.
+     * <p>
+     * Recursively calls {@link #predecessor()} and finds all the preceding
+     * dialects to this one, including this one.
+     */
+    public final Set<SQLDialect> predecessors() {
+        if (predecessors == null) {
+            SQLDialect curr = this;
+
+            EnumSet<SQLDialect> result = EnumSet.of(curr);
+            for (;;) {
+                SQLDialect pred = curr.predecessor();
+                result.add(pred);
+
+                if (curr == pred)
+                    break;
+
+                curr = pred;
+            }
+
+            predecessors = result;
+        }
+
+        return Collections.unmodifiableSet(predecessors);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(SQLDialect.DB2.predecessors());
+    }
+
+    /**
      * Whether this dialect precedes an other dialect from the same family.
      * <p>
      * This returns:
@@ -710,18 +743,7 @@ public enum SQLDialect {
         if (family != other.family)
             return false;
 
-        SQLDialect candidate = other;
-        while (candidate != null) {
-            if (this == candidate)
-                return true;
-
-            if (candidate == candidate.predecessor())
-                return false;
-
-            candidate = candidate.predecessor();
-        }
-
-        return false;
+        return other.predecessors().contains(this);
     }
 
     /**

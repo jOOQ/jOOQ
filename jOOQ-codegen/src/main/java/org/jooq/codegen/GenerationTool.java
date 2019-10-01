@@ -287,7 +287,9 @@ public class GenerationTool {
         if (g == null)
             throw new GeneratorException("The <generator/> tag is mandatory. For details, see " + Constants.NS_CODEGEN);
 
-        // Some default values for optional elements to avoid NPE's
+        // [#1394] The <generate/> element and some others should be optional
+        if (g.getGenerate() == null)
+            g.setGenerate(new Generate());
         if (g.getStrategy() == null)
             g.setStrategy(new Strategy());
         if (g.getTarget() == null)
@@ -628,9 +630,6 @@ public class GenerationTool {
             if (g.getTarget().isClean() != null)
                 generator.setTargetClean(g.getTarget().isClean());
 
-            // [#1394] The <generate/> element should be optional
-            if (g.getGenerate() == null)
-                g.setGenerate(new Generate());
             if (g.getGenerate().isIndexes() != null)
                 generator.setGenerateIndexes(g.getGenerate().isIndexes());
             if (g.getGenerate().isRelations() != null)

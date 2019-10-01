@@ -61,6 +61,7 @@ import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
 // ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.SQLDialect.SQLITE;
@@ -155,7 +156,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
             // "simple class specifications", or "common table expression references".
             // Hence, wrap the table reference in a subselect
             if (fieldAliases != null
-                    && SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL1.contains(family)
+                    && (SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL1.contains(family))
                     && (wrapped instanceof TableImpl || wrapped instanceof CommonTableExpressionImpl)) {
 
                 Select<Record> select =

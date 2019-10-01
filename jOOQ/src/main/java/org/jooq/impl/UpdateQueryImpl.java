@@ -159,6 +159,7 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
     private static final Set<SQLDialect> SUPPORT_RVE_SET        = SQLDialect.supported(H2, HSQLDB, POSTGRES);
     private static final Set<SQLDialect> NO_SUPPORT_LIMIT       = SQLDialect.supported(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE);
+    private static final Set<SQLDialect> REQUIRE_RVE_ROW_CLAUSE = SQLDialect.supported(POSTGRES);
 
     private final FieldMapForUpdate      updateMap;
     private final TableList              from;
@@ -585,7 +586,7 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
                     // [#6763] Incompatible change in PostgreSQL 10 requires ROW() constructor for
                     //         single-degree rows. Let's just always render it, here.
-                    if (ctx.family() == POSTGRES)
+                    if (REQUIRE_RVE_ROW_CLAUSE.contains(ctx.dialect()))
                         ctx.visit(K_ROW).sql(" ");
 
                     ctx.visit(multiValue);

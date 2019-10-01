@@ -173,7 +173,7 @@ final class Limit extends AbstractQueryPart {
 
                 // [#8415] For backwards compatibility reasons, we generate standard
                 //         OFFSET .. FETCH syntax on H2 only when strictly needed
-                if (ctx.dialect() == H2 && !withTies() && !percent())
+                if (ctx.family() == H2 && !withTies() && !percent())
                     acceptDefault(ctx, castMode);
                 else
                     acceptStandard(ctx, castMode);

@@ -103,6 +103,7 @@ final class CreateIndexImpl extends AbstractRowCountQuery implements
     private static final Clause[]            CLAUSES                  = { CREATE_INDEX };
     private static final Set<SQLDialect>     NO_SUPPORT_IF_NOT_EXISTS = SQLDialect.supported(DERBY, FIREBIRD);
     private static final Set<SQLDialect>     SUPPORT_UNNAMED_INDEX    = SQLDialect.supported(POSTGRES);
+    private static final Set<SQLDialect>     SUPPORT_INCLUDE          = SQLDialect.supported(POSTGRES);
 
     private final Index                      index;
     private final boolean                    unique;
@@ -270,12 +271,7 @@ final class CreateIndexImpl extends AbstractRowCountQuery implements
             ctx.visit(generatedName())
                .sql(' ');
 
-        boolean supportsInclude = ctx.dialect() == POSTGRES
-
-
-
-
-            ;
+        boolean supportsInclude = SUPPORT_INCLUDE.contains(ctx.dialect());
         boolean supportsFieldsBeforeTable = false;
 
         QueryPartList<QueryPart> list = new QueryPartList<>();

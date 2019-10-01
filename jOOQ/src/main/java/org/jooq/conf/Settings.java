@@ -65,6 +65,12 @@ public class Settings
     @XmlElement(defaultValue = "false")
     protected Boolean renderFormatted = false;
     protected RenderFormatting renderFormatting;
+    @XmlElement(defaultValue = "DEFAULT")
+    @XmlSchemaType(name = "string")
+    protected RenderOptionalKeyword renderOptionalInnerKeyword = RenderOptionalKeyword.DEFAULT;
+    @XmlElement(defaultValue = "DEFAULT")
+    @XmlSchemaType(name = "string")
+    protected RenderOptionalKeyword renderOptionalOuterKeyword = RenderOptionalKeyword.DEFAULT;
     @XmlElement(defaultValue = "false")
     protected Boolean renderScalarSubqueriesForStoredFunctions = false;
     @XmlElement(defaultValue = "true")
@@ -471,6 +477,38 @@ public class Settings
      */
     public void setRenderFormatting(RenderFormatting value) {
         this.renderFormatting = value;
+    }
+
+    /**
+     * Whether to render the optional <code>INNER</code> keyword in <code>INNER JOIN</code>, if it is optional in the output dialect.
+     *
+     */
+    public RenderOptionalKeyword getRenderOptionalInnerKeyword() {
+        return renderOptionalInnerKeyword;
+    }
+
+    /**
+     * Whether to render the optional <code>INNER</code> keyword in <code>INNER JOIN</code>, if it is optional in the output dialect.
+     *
+     */
+    public void setRenderOptionalInnerKeyword(RenderOptionalKeyword value) {
+        this.renderOptionalInnerKeyword = value;
+    }
+
+    /**
+     * Whether to render the optional <code>OUTER</code> keyword in <code>OUTER JOIN</code>, if it is optional in the output dialect.
+     *
+     */
+    public RenderOptionalKeyword getRenderOptionalOuterKeyword() {
+        return renderOptionalOuterKeyword;
+    }
+
+    /**
+     * Whether to render the optional <code>OUTER</code> keyword in <code>OUTER JOIN</code>, if it is optional in the output dialect.
+     *
+     */
+    public void setRenderOptionalOuterKeyword(RenderOptionalKeyword value) {
+        this.renderOptionalOuterKeyword = value;
     }
 
     /**
@@ -1765,6 +1803,24 @@ public class Settings
         return this;
     }
 
+    /**
+     * Whether to render the optional <code>INNER</code> keyword in <code>INNER JOIN</code>, if it is optional in the output dialect.
+     *
+     */
+    public Settings withRenderOptionalInnerKeyword(RenderOptionalKeyword value) {
+        setRenderOptionalInnerKeyword(value);
+        return this;
+    }
+
+    /**
+     * Whether to render the optional <code>OUTER</code> keyword in <code>OUTER JOIN</code>, if it is optional in the output dialect.
+     *
+     */
+    public Settings withRenderOptionalOuterKeyword(RenderOptionalKeyword value) {
+        setRenderOptionalOuterKeyword(value);
+        return this;
+    }
+
     public Settings withRenderScalarSubqueriesForStoredFunctions(Boolean value) {
         setRenderScalarSubqueriesForStoredFunctions(value);
         return this;
@@ -2208,6 +2264,8 @@ public class Settings
         builder.append("renderLocale", renderLocale);
         builder.append("renderFormatted", renderFormatted);
         builder.append("renderFormatting", renderFormatting);
+        builder.append("renderOptionalInnerKeyword", renderOptionalInnerKeyword);
+        builder.append("renderOptionalOuterKeyword", renderOptionalOuterKeyword);
         builder.append("renderScalarSubqueriesForStoredFunctions", renderScalarSubqueriesForStoredFunctions);
         builder.append("renderOrderByRownumberForEmulatedPagination", renderOrderByRownumberForEmulatedPagination);
         builder.append("renderOutputForSQLServerReturningClause", renderOutputForSQLServerReturningClause);
@@ -2389,6 +2447,24 @@ public class Settings
             }
         } else {
             if (!renderFormatting.equals(other.renderFormatting)) {
+                return false;
+            }
+        }
+        if (renderOptionalInnerKeyword == null) {
+            if (other.renderOptionalInnerKeyword!= null) {
+                return false;
+            }
+        } else {
+            if (!renderOptionalInnerKeyword.equals(other.renderOptionalInnerKeyword)) {
+                return false;
+            }
+        }
+        if (renderOptionalOuterKeyword == null) {
+            if (other.renderOptionalOuterKeyword!= null) {
+                return false;
+            }
+        } else {
+            if (!renderOptionalOuterKeyword.equals(other.renderOptionalOuterKeyword)) {
                 return false;
             }
         }
@@ -2906,6 +2982,8 @@ public class Settings
         result = ((prime*result)+((renderLocale == null)? 0 :renderLocale.hashCode()));
         result = ((prime*result)+((renderFormatted == null)? 0 :renderFormatted.hashCode()));
         result = ((prime*result)+((renderFormatting == null)? 0 :renderFormatting.hashCode()));
+        result = ((prime*result)+((renderOptionalInnerKeyword == null)? 0 :renderOptionalInnerKeyword.hashCode()));
+        result = ((prime*result)+((renderOptionalOuterKeyword == null)? 0 :renderOptionalOuterKeyword.hashCode()));
         result = ((prime*result)+((renderScalarSubqueriesForStoredFunctions == null)? 0 :renderScalarSubqueriesForStoredFunctions.hashCode()));
         result = ((prime*result)+((renderOrderByRownumberForEmulatedPagination == null)? 0 :renderOrderByRownumberForEmulatedPagination.hashCode()));
         result = ((prime*result)+((renderOutputForSQLServerReturningClause == null)? 0 :renderOutputForSQLServerReturningClause.hashCode()));

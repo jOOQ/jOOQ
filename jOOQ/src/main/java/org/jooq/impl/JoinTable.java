@@ -90,7 +90,7 @@ import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.Keywords.K_CROSS_JOIN_LATERAL;
-import static org.jooq.impl.Keywords.K_INNER_JOIN;
+import static org.jooq.impl.Keywords.K_LEFT_JOIN_LATERAL;
 import static org.jooq.impl.Keywords.K_LEFT_OUTER_JOIN_LATERAL;
 import static org.jooq.impl.Keywords.K_ON;
 import static org.jooq.impl.Keywords.K_PARTITION_BY;
@@ -126,6 +126,7 @@ import org.jooq.TableOnConditionStep;
 import org.jooq.TableOptionalOnStep;
 import org.jooq.TableOuterJoinStep;
 import org.jooq.TablePartitionByStep;
+import org.jooq.conf.RenderOptionalKeyword;
 import org.jooq.exception.DataAccessException;
 
 /**
@@ -205,19 +206,7 @@ implements
     public final void accept(Context<?> ctx) {
         JoinType translatedType = translateType(ctx);
         Clause translatedClause = translateClause(translatedType);
-
-        Keyword keyword = translatedType.toKeyword();
-
-        if (translatedType == CROSS_APPLY && EMULATE_APPLY.contains(ctx.family()))
-            keyword = K_CROSS_JOIN_LATERAL;
-        else if (translatedType == OUTER_APPLY && EMULATE_APPLY.contains(ctx.family()))
-            keyword = K_LEFT_OUTER_JOIN_LATERAL;
-
-
-
-
-
-
+        Keyword keyword = translateKeyword(ctx, translatedType);
 
         toSQLTable(ctx, lhs);
 
@@ -306,6 +295,63 @@ implements
 
         ctx.end(translatedClause)
            .formatIndentEnd();
+    }
+
+    private final Keyword translateKeyword(Context<?> ctx, JoinType translatedType) {
+        Keyword keyword;
+
+        switch (translatedType) {
+            case JOIN:
+            case NATURAL_JOIN:
+                if (ctx.settings().getRenderOptionalInnerKeyword() == RenderOptionalKeyword.ON)
+                    keyword = translatedType.toKeyword(true);
+
+
+
+
+
+
+
+                else
+                    keyword = translatedType.toKeyword();
+
+                break;
+
+            case LEFT_OUTER_JOIN:
+            case NATURAL_LEFT_OUTER_JOIN:
+            case RIGHT_OUTER_JOIN:
+            case NATURAL_RIGHT_OUTER_JOIN:
+            case FULL_OUTER_JOIN:
+            case NATURAL_FULL_OUTER_JOIN:
+                if (ctx.settings().getRenderOptionalOuterKeyword() == RenderOptionalKeyword.OFF)
+                    keyword = translatedType.toKeyword(false);
+
+
+
+
+
+
+
+                else
+                    keyword = translatedType.toKeyword();
+
+                break;
+
+            default:
+                keyword = translatedType.toKeyword();
+                break;
+        }
+
+        if (translatedType == CROSS_APPLY && EMULATE_APPLY.contains(ctx.family()))
+            keyword = K_CROSS_JOIN_LATERAL;
+        else if (translatedType == OUTER_APPLY && EMULATE_APPLY.contains(ctx.family()))
+            if (ctx.settings().getRenderOptionalOuterKeyword() == RenderOptionalKeyword.OFF)
+                keyword = K_LEFT_JOIN_LATERAL;
+            else
+                keyword = K_LEFT_OUTER_JOIN_LATERAL;
+
+
+        return keyword;
     }
 
     private void toSQLTable(Context<?> ctx, Table<?> table) {

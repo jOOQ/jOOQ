@@ -205,6 +205,7 @@ final class Keywords {
     static final Keyword K_LATERAL                          = keyword("lateral");
     static final Keyword K_LEADING                          = keyword("leading");
     static final Keyword K_LEAVE                            = keyword("leave");
+    static final Keyword K_LEFT_JOIN_LATERAL                = keyword("left join lateral");
     static final Keyword K_LEFT_OUTER_JOIN_LATERAL          = keyword("left outer join lateral");
     static final Keyword K_LIKE                             = keyword("like");
     static final Keyword K_LIKE_REGEX                       = keyword("like_regex");

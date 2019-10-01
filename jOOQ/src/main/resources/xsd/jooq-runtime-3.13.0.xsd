@@ -110,6 +110,14 @@ providing a name to parameters, resulting in <code>:1</code> or <code>@1</code> 
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[All sorts of formatting flags / settings.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="renderOptionalInnerKeyword" type="jooq-runtime:RenderOptionalKeyword" minOccurs="0" maxOccurs="1" default="DEFAULT">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to render the optional <code>INNER</code> keyword in <code>INNER JOIN</code>, if it is optional in the output dialect.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="renderOptionalOuterKeyword" type="jooq-runtime:RenderOptionalKeyword" minOccurs="0" maxOccurs="1" default="DEFAULT">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to render the optional <code>OUTER</code> keyword in <code>OUTER JOIN</code>, if it is optional in the output dialect.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="renderScalarSubqueriesForStoredFunctions" type="boolean" minOccurs="0" maxOccurs="1" default="false">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether stored function calls should be wrapped in scalar subqueries.
 <p>
@@ -762,6 +770,20 @@ Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided]]></jxb:javad
 
       <!-- UPDATE and DELETE statements are not allowed to lack a WHERE clause -->
       <enumeration value="THROW"/>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="RenderOptionalKeyword">
+    <restriction base="string">
+
+      <!-- Optional keywords will never be generated (does not affect mandatory keywords). -->
+      <enumeration value="OFF"/>
+
+      <!-- Optional keywords will always be generated (does not affect mandatory keywords). -->
+      <enumeration value="ON"/>
+
+      <!-- The default applies for optional keywords. -->
+      <enumeration value="DEFAULT"/>
     </restriction>
   </simpleType>
 

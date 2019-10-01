@@ -96,6 +96,9 @@ final class CreateSchemaImpl extends AbstractRowCountQuery implements
         this.ifNotExists = ifNotExists;
     }
 
+    final Schema  $schema()      { return schema; }
+    final boolean $ifNotExists() { return ifNotExists; }
+
     // ------------------------------------------------------------------------
     // XXX: DSL API
     // ------------------------------------------------------------------------

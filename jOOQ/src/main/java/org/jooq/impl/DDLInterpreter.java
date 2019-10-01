@@ -94,7 +94,11 @@ final class DDLInterpreter {
     }
 
     final void accept(Query query) {
-        if (query instanceof CreateTableImpl)
+        if (query instanceof CreateSchemaImpl)
+            accept0((CreateSchemaImpl) query);
+        else if (query instanceof DropSchemaImpl)
+            accept0((DropSchemaImpl) query);
+        else if (query instanceof CreateTableImpl)
             accept0((CreateTableImpl) query);
         else if (query instanceof AlterTableImpl)
             accept0((AlterTableImpl) query);
@@ -102,6 +106,42 @@ final class DDLInterpreter {
             accept0((DropTableImpl) query);
         else
             throw new UnsupportedOperationException(query.getSQL());
+    }
+
+    private final void accept0(CreateSchemaImpl query) {
+        Schema schema = query.$schema();
+
+        if (getSchema(schema, false) != null) {
+            String message = "Schema already exists: " + schema.getQualifiedName();
+            if (!query.$ifNotExists())
+                throw new DataAccessException(message);
+            log.debug(message);
+            return;
+        }
+
+        getSchema(schema, true);
+    }
+
+    private final void accept0(DropSchemaImpl query) {
+        Schema schema = query.$schema();
+        MutableSchema mutableSchema = getSchema(schema, false);
+
+        if (mutableSchema == null) {
+            String message = "Schema does not exist: " + schema.getQualifiedName();
+            if (!query.$ifExists())
+                throw new DataAccessException(message);
+            log.debug(message);
+            return;
+        }
+
+        if (mutableSchema.isEmpty() || query.$cascade())
+            mutableSchema.catalog.schemas.remove(mutableSchema);
+        else
+            throw new DataAccessException("Schema is not empty: " + schema.getQualifiedName());
+
+        // TODO: Is this needed?
+        if (mutableSchema.equals(currentSchema))
+            currentSchema = null;
     }
 
     private final void accept0(CreateTableImpl query) {
@@ -263,6 +303,10 @@ final class DDLInterpreter {
         @SuppressWarnings({ "unchecked", "rawtypes" })
         public List<Table<?>> getTables() {
             return Collections.unmodifiableList((List) tables);
+        }
+
+        boolean isEmpty() {
+            return tables.isEmpty();
         }
 
         MutableTable getTable(Name name) {

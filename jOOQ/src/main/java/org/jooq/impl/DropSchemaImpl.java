@@ -104,6 +104,10 @@ final class DropSchemaImpl extends AbstractRowCountQuery implements
         this.ifExists = ifExists;
     }
 
+    final Schema  $schema()      { return schema; }
+    final boolean $ifExists()    { return ifExists; }
+    final boolean $cascade()     { return cascade; }
+
     // ------------------------------------------------------------------------
     // XXX: DSL API
     // ------------------------------------------------------------------------

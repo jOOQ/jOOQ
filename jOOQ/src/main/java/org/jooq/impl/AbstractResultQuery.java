@@ -39,7 +39,6 @@ package org.jooq.impl;
 
 import static java.sql.ResultSet.CONCUR_UPDATABLE;
 import static java.sql.ResultSet.TYPE_SCROLL_SENSITIVE;
-import static java.util.Arrays.asList;
 import static java.util.concurrent.Executors.newSingleThreadExecutor;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
@@ -128,9 +127,11 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     /**
      * Generated UID
      */
-    private static final long                serialVersionUID      = -5588344253566055707L;
-    private static final JooqLogger          log                   = JooqLogger.getLogger(AbstractResultQuery.class);
-    private static final Set<SQLDialect>     NO_SUPPORT_FOR_UPDATE = SQLDialect.supported(CUBRID);
+    private static final long                serialVersionUID                  = -5588344253566055707L;
+    private static final JooqLogger          log                               = JooqLogger.getLogger(AbstractResultQuery.class);
+
+    private static final Set<SQLDialect>     NO_SUPPORT_FOR_UPDATE             = SQLDialect.supported(CUBRID);
+    private static final Set<SQLDialect>     REPORT_FETCH_SIZE_WITH_AUTOCOMMIT = SQLDialect.supported(POSTGRES);
 
     private int                              maxRows;
     private int                              fetchSize;
@@ -287,7 +288,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
         // [#4511] [#4753] PostgreSQL doesn't like fetchSize with autoCommit == true
         int f = SettingsTools.getFetchSize(fetchSize, ctx.settings());
-        if (asList(POSTGRES).contains(ctx.family()) && f != 0 && ctx.connection().getAutoCommit())
+        if (REPORT_FETCH_SIZE_WITH_AUTOCOMMIT.contains(ctx.dialect()) && f != 0 && ctx.connection().getAutoCommit())
             log.info("Fetch Size", "A fetch size of " + f + " was set on a auto-commit PostgreSQL connection, which is not recommended. See http://jdbc.postgresql.org/documentation/head/query.html#query-with-cursor");
 
         SQLException e = executeStatementAndGetFirstResultSet(ctx, rendered.skipUpdateCounts);

@@ -141,7 +141,7 @@ public enum JoinType {
     /**
      * <code>STRAIGHT_JOIN</code> two tables.
      */
-    @Support({ MYSQL })
+    @Support({ MARIADB, MYSQL })
     STRAIGHT_JOIN("straight_join", true),
 
     /**

@@ -146,6 +146,10 @@ implements
      */
     private static final long             serialVersionUID           = 8377996833996498178L;
     private static final Clause[]         CLAUSES                    = { TABLE, TABLE_JOIN };
+
+
+
+
     private static final Set<SQLDialect>  EMULATE_NATURAL_JOIN       = SQLDialect.supported(CUBRID);
     private static final Set<SQLDialect>  EMULATE_NATURAL_OUTER_JOIN = SQLDialect.supported(CUBRID, H2);
     private static final Set<SQLDialect>  EMULATE_JOIN_USING         = SQLDialect.supported(CUBRID, H2);

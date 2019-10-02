@@ -62,6 +62,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
+// ...
 
 import org.jooq.impl.DSL;
 
@@ -129,13 +130,13 @@ public enum JoinType {
     /**
      * <code>CROSS APPLY</code> two tables.
      */
-    @Support({})
+    @Support({ POSTGRES })
     CROSS_APPLY("cross apply", false),
 
     /**
      * <code>OUTER APPLY</code> two tables.
      */
-    @Support({})
+    @Support({ POSTGRES })
     OUTER_APPLY("outer apply", false),
 
     /**

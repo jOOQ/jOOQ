@@ -129,10 +129,10 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
         this.stmt = stmt;
 
         VisitListenerProvider[] providers = configuration.visitListenerProviders();
+
+        // [#2080] [#3935] Currently, the InternalVisitListener is not used everywhere
         boolean useInternalVisitListener =
             false
-
-
 
 
 

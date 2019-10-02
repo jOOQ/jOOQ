@@ -609,6 +609,21 @@ public enum SQLDialect {
     }
 
     /**
+     * Get a set of dialects preceding a given set of dialects.
+     * <p>
+     * The resulting set of dialects contain all the families and dialect
+     * versions that precede the argument dialects.
+     */
+    public static final Set<SQLDialect> predecessors(SQLDialect... dialects) {
+        EnumSet<SQLDialect> result = EnumSet.noneOf(SQLDialect.class);
+
+        for (SQLDialect dialect : dialects)
+            result.addAll(dialect.predecessors());
+
+        return Collections.unmodifiableSet(result);
+    }
+
+    /**
      * Get a set of supported dialect versions given a dialect version.
      * <p>
      * The resulting set of dialects contain all the families and dialect

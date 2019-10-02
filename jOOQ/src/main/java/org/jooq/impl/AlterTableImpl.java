@@ -87,10 +87,12 @@ import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.sql;
 // ...
 import static org.jooq.impl.Keywords.K_ADD;
+import static org.jooq.impl.Keywords.K_AFTER;
 import static org.jooq.impl.Keywords.K_ALTER;
 import static org.jooq.impl.Keywords.K_ALTER_COLUMN;
 import static org.jooq.impl.Keywords.K_ALTER_CONSTRAINT;
 import static org.jooq.impl.Keywords.K_ALTER_TABLE;
+import static org.jooq.impl.Keywords.K_BEFORE;
 import static org.jooq.impl.Keywords.K_CASCADE;
 import static org.jooq.impl.Keywords.K_CHANGE;
 import static org.jooq.impl.Keywords.K_CHANGE_COLUMN;
@@ -105,6 +107,7 @@ import static org.jooq.impl.Keywords.K_ELSE;
 import static org.jooq.impl.Keywords.K_END_IF;
 import static org.jooq.impl.Keywords.K_EXCEPTION;
 import static org.jooq.impl.Keywords.K_EXEC;
+import static org.jooq.impl.Keywords.K_FIRST;
 import static org.jooq.impl.Keywords.K_FOREIGN_KEY;
 import static org.jooq.impl.Keywords.K_IF;
 import static org.jooq.impl.Keywords.K_IF_EXISTS;
@@ -151,6 +154,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 
+import org.jooq.AlterTableAddStep;
 import org.jooq.AlterTableAlterStep;
 import org.jooq.AlterTableDropStep;
 import org.jooq.AlterTableFinalStep;
@@ -187,6 +191,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
     // Cascading interface implementations for ALTER TABLE behaviour
     AlterTableStep,
+    AlterTableAddStep,
     AlterTableDropStep,
     AlterTableAlterStep,
     AlterTableUsingIndexStep,
@@ -237,6 +242,9 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
     private Field<?>                         addColumn;
     private DataType<?>                      addColumnType;
     private Constraint                       addConstraint;
+    private boolean                          addFirst;
+    private Field<?>                         addBefore;
+    private Field<?>                         addAfter;
 
 
 
@@ -265,6 +273,9 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
     final boolean           $ifExists()      { return ifExists; }
     final Field<?>          $addColumn()     { return addColumn; }
     final DataType<?>       $addColumnType() { return addColumnType; }
+    final boolean           $addFirst()      { return addFirst; }
+    final Field<?>          $addBefore()     { return addBefore; }
+    final Field<?>          $addAfter()      { return addAfter; }
 
     // ------------------------------------------------------------------------
     // XXX: DSL API
@@ -490,6 +501,44 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
     @Override
     public final AlterTableImpl add(Constraint constraint) {
         addConstraint = constraint;
+        return this;
+    }
+
+    @Override
+    public final AlterTableImpl first() {
+        addFirst = true;
+        return this;
+    }
+
+    @Override
+    public final AlterTableImpl before(String columnName) {
+        return before(name(columnName));
+    }
+
+    @Override
+    public final AlterTableImpl before(Name columnName) {
+        return before(field(columnName));
+    }
+
+    @Override
+    public final AlterTableImpl before(Field<?> columnName) {
+        addBefore = columnName;
+        return this;
+    }
+
+    @Override
+    public final AlterTableImpl after(String columnName) {
+        return after(name(columnName));
+    }
+
+    @Override
+    public final AlterTableImpl after(Name columnName) {
+        return after(field(columnName));
+    }
+
+    @Override
+    public final AlterTableImpl after(Field<?> columnName) {
+        addAfter = columnName;
         return this;
     }
 
@@ -1097,6 +1146,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
             if (parens)
                 ctx.sql(')');
 
+            acceptFirstBeforeAfter(ctx);
             ctx.end(ALTER_TABLE_ADD);
         }
         else if (addColumn != null) {
@@ -1143,6 +1193,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
 
 
+            acceptFirstBeforeAfter(ctx);
             ctx.end(ALTER_TABLE_ADD);
         }
         else if (addConstraint != null) {
@@ -1375,6 +1426,17 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
         if (!omitAlterTable)
             ctx.formatIndentEnd();
+    }
+
+    private final void acceptFirstBeforeAfter(Context<?> ctx) {
+        boolean previous = ctx.qualify();
+
+        if (addFirst)
+            ctx.sql(' ').visit(K_FIRST);
+        else if (addBefore != null)
+            ctx.sql(' ').visit(K_BEFORE).sql(' ').qualify(false).visit(addBefore).qualify(previous);
+        else if (addAfter != null)
+            ctx.sql(' ').visit(K_AFTER).sql(' ').qualify(false).visit(addAfter).qualify(previous);
     }
 
     private final void acceptDropColumn(Context<?> ctx) {

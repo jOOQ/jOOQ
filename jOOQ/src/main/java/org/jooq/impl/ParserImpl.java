@@ -335,6 +335,7 @@ import org.jooq.AlterIndexStep;
 import org.jooq.AlterSchemaFinalStep;
 import org.jooq.AlterSchemaStep;
 import org.jooq.AlterSequenceStep;
+import org.jooq.AlterTableAddStep;
 import org.jooq.AlterTableDropStep;
 import org.jooq.AlterTableFinalStep;
 import org.jooq.AlterTableStep;
@@ -3902,7 +3903,7 @@ final class ParserImpl implements Parser {
         }
         else if (parseKeywordIf(ctx, "COLUMN IF NOT EXISTS")
               || parseKeywordIf(ctx, "IF NOT EXISTS")) {
-            return s1.addColumnIfNotExists(parseAlterTableAddField(ctx));
+            return parseAlterTableAddFieldFirstBeforeLast(ctx, s1.addColumnIfNotExists(parseAlterTableAddField(ctx)));
         }
         else {
             list.add(parseAlterTableAddFieldOrConstraint(ctx));
@@ -3912,9 +3913,20 @@ final class ParserImpl implements Parser {
             if (list.get(0) instanceof Constraint)
                 return s1.add((Constraint) list.get(0));
             else
-                return s1.add((Field<?>) list.get(0));
+                return parseAlterTableAddFieldFirstBeforeLast(ctx, s1.add((Field<?>) list.get(0)));
         else
-            return s1.add(list);
+            return parseAlterTableAddFieldFirstBeforeLast(ctx, s1.add(list));
+    }
+
+    private static final DDLQuery parseAlterTableAddFieldFirstBeforeLast(ParserContext ctx, AlterTableAddStep step) {
+        if (parseKeywordIf(ctx, "FIRST"))
+            return step.first();
+        else if (parseKeywordIf(ctx, "BEFORE"))
+            return step.before(parseFieldName(ctx));
+        else if (parseKeywordIf(ctx, "AFTER"))
+            return step.after(parseFieldName(ctx));
+        else
+            return step;
     }
 
     private static final boolean parseIndexOrKeyIf(ParserContext ctx) {

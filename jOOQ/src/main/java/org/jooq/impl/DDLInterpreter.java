@@ -45,10 +45,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jooq.Binding;
 import org.jooq.Catalog;
 import org.jooq.Comment;
 import org.jooq.Configuration;
 import org.jooq.Constraint;
+import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Index;
@@ -201,8 +203,24 @@ final class DDLInterpreter {
 
         Field<?> addColumn = query.$addColumn();
         if (addColumn != null) {
-            existing.addColumn(addColumn.getUnqualifiedName(), query.$addColumnType());
+            if (query.$addFirst())
+                existing.addColumn(addColumn.getUnqualifiedName(), query.$addColumnType(), 0);
+            else if (query.$addBefore() != null)
+                existing.addColumn(addColumn.getUnqualifiedName(), query.$addColumnType(), indexOrFail(existing, query.$addBefore()));
+            else if (query.$addAfter() != null)
+                existing.addColumn(addColumn.getUnqualifiedName(), query.$addColumnType(), indexOrFail(existing, query.$addAfter()) + 1);
+            else
+                existing.addColumn(addColumn.getUnqualifiedName(), query.$addColumnType());
         }
+    }
+
+    private int indexOrFail(MutableTable existing, Field<?> field) {
+        int result = existing.indexOf(field);
+
+        if (result == -1)
+            throw new DataAccessException("Field does not exist: " + field.getQualifiedName());
+
+        return result;
     }
 
     private final void accept0(DropTableImpl query) {
@@ -341,6 +359,30 @@ final class DDLInterpreter {
 
         void addColumn(Name name, DataType<?> dataType) {
             createField(normalize(name), dataType);
+        }
+
+        void addColumn(Name name, DataType<?> dataType, int position) {
+            createField(normalize(name), dataType, this, null, null, null, position);
+        }
+
+        // TODO Remove this implementation copy from AbstractTable again, replace by new
+        // mutable meta model, see https://github.com/jOOQ/jOOQ/issues/8528#issuecomment-530238124
+        protected static final <R extends Record, T, X, U> TableField<R, U> createField(Name name, DataType<T> type, Table<R> table, String comment, Converter<X, U> converter, Binding<T, X> binding, int position) {
+            final Binding<T, U> actualBinding = DefaultBinding.newBinding(converter, type, binding);
+            final DataType<U> actualType =
+                converter == null && binding == null
+              ? (DataType<U>) type
+              : type.asConvertedDataType(actualBinding);
+
+            // [#5999] TODO: Allow for user-defined Names
+            final TableFieldImpl<R, U> tableField = new TableFieldImpl<>(name, actualType, table, DSL.comment(comment), actualBinding);
+
+            // [#1199] The public API of Table returns immutable field lists
+            if (table instanceof TableImpl) {
+                ((TableImpl<?>) table).fields0().add(position, tableField);
+            }
+
+            return tableField;
         }
 
         @SuppressWarnings({ "unchecked", "rawtypes" })

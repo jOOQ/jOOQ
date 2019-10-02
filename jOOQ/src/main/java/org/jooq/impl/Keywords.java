@@ -49,6 +49,7 @@ import org.jooq.Keyword;
 final class Keywords {
 
     static final Keyword K_ADD                              = keyword("add");
+    static final Keyword K_AFTER                            = keyword("after");
     static final Keyword K_ALIAS                            = keyword("alias");
     static final Keyword K_ALTER                            = keyword("alter");
     static final Keyword K_ALTER_COLUMN                     = keyword("alter column");
@@ -64,6 +65,7 @@ final class Keywords {
     static final Keyword K_AUTO                             = keyword("auto");
     static final Keyword K_AUTO_INCREMENT                   = keyword("auto_increment");
     static final Keyword K_AUTOINCREMENT                    = keyword("autoincrement");
+    static final Keyword K_BEFORE                           = keyword("before");
     static final Keyword K_BEGIN                            = keyword("begin");
     static final Keyword K_BEGIN_CATCH                      = keyword("begin catch");
     static final Keyword K_BEGIN_TRY                        = keyword("begin try");

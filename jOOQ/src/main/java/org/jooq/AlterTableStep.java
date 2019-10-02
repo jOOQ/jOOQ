@@ -251,21 +251,21 @@ public interface AlterTableStep {
      * This is an alias for {@link #addColumn(Field)}.
      */
     @Support
-    AlterTableFinalStep add(Field<?> field);
+    AlterTableAddStep add(Field<?> field);
 
     /**
      * Add an <code>ADD</code> clause with multiple columns or constraints to
      * the <code>ALTER TABLE</code> statement.
      */
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
-    AlterTableFinalStep add(FieldOrConstraint... fields);
+    AlterTableAddStep add(FieldOrConstraint... fields);
 
     /**
      * Add an <code>ADD</code> clause with multiple columns or constraints to
      * the <code>ALTER TABLE</code> statement.
      */
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
-    AlterTableFinalStep add(Collection<? extends FieldOrConstraint> fields);
+    AlterTableAddStep add(Collection<? extends FieldOrConstraint> fields);
 
     /**
      * Add an <code>ADD COLUMN</code> clause to the <code>ALTER TABLE</code>
@@ -274,7 +274,7 @@ public interface AlterTableStep {
      * This is an alias for {@link #addColumn(Field, DataType)}.
      */
     @Support
-    <T> AlterTableFinalStep add(Field<T> field, DataType<T> type);
+    <T> AlterTableAddStep add(Field<T> field, DataType<T> type);
 
     /**
      * Add an <code>ADD COLUMN</code> clause to the <code>ALTER TABLE</code>
@@ -283,7 +283,7 @@ public interface AlterTableStep {
      * This is an alias for {@link #addColumn(Name, DataType)}.
      */
     @Support
-    AlterTableFinalStep add(Name field, DataType<?> type);
+    AlterTableAddStep add(Name field, DataType<?> type);
 
     /**
      * Add an <code>ADD COLUMN</code> clause to the <code>ALTER TABLE</code>
@@ -292,7 +292,7 @@ public interface AlterTableStep {
      * This is an alias for {@link #addColumn(String, DataType)}.
      */
     @Support
-    AlterTableFinalStep add(String field, DataType<?> type);
+    AlterTableAddStep add(String field, DataType<?> type);
 
     /**
      * Add an <code>ADD COLUMN IF NOT EXISTS</code> clause to the <code>ALTER TABLE</code>
@@ -301,7 +301,7 @@ public interface AlterTableStep {
      * This is an alias for {@link #addColumnIfNotExists(Field)}.
      */
     @Support({ H2, MARIADB, POSTGRES })
-    AlterTableFinalStep addIfNotExists(Field<?> field);
+    AlterTableAddStep addIfNotExists(Field<?> field);
 
     /**
      * Add an <code>ADD COLUMN IF NOT EXISTS</code> clause to the <code>ALTER TABLE</code>
@@ -310,7 +310,7 @@ public interface AlterTableStep {
      * This is an alias for {@link #addColumnIfNotExists(Field, DataType)}.
      */
     @Support({ H2, MARIADB, POSTGRES })
-    <T> AlterTableFinalStep addIfNotExists(Field<T> field, DataType<T> type);
+    <T> AlterTableAddStep addIfNotExists(Field<T> field, DataType<T> type);
 
     /**
      * Add an <code>ADD COLUMN IF NOT EXISTS</code> clause to the <code>ALTER TABLE</code>
@@ -319,7 +319,7 @@ public interface AlterTableStep {
      * This is an alias for {@link #addColumnIfNotExists(Name, DataType)}.
      */
     @Support({ H2, MARIADB, POSTGRES })
-    AlterTableFinalStep addIfNotExists(Name field, DataType<?> type);
+    AlterTableAddStep addIfNotExists(Name field, DataType<?> type);
 
     /**
      * Add an <code>ADD COLUMN IF NOT EXISTS</code> clause to the <code>ALTER TABLE</code>
@@ -328,63 +328,63 @@ public interface AlterTableStep {
      * This is an alias for {@link #addColumnIfNotExists(String, DataType)}.
      */
     @Support({ H2, MARIADB, POSTGRES })
-    AlterTableFinalStep addIfNotExists(String field, DataType<?> type);
+    AlterTableAddStep addIfNotExists(String field, DataType<?> type);
 
     /**
      * Add an <code>ADD COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
     @Support
-    AlterTableFinalStep addColumn(Field<?> field);
+    AlterTableAddStep addColumn(Field<?> field);
 
     /**
      * Add an <code>ADD COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
     @Support
-    <T> AlterTableFinalStep addColumn(Field<T> field, DataType<T> type);
+    <T> AlterTableAddStep addColumn(Field<T> field, DataType<T> type);
 
     /**
      * Add an <code>ADD COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
     @Support
-    AlterTableFinalStep addColumn(Name field, DataType<?> type);
+    AlterTableAddStep addColumn(Name field, DataType<?> type);
 
     /**
      * Add an <code>ADD COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
     @Support
-    AlterTableFinalStep addColumn(String field, DataType<?> type);
+    AlterTableAddStep addColumn(String field, DataType<?> type);
 
     /**
      * Add an <code>ADD COLUMN IF NOT EXISTS</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
     @Support({ H2, MARIADB, POSTGRES })
-    AlterTableFinalStep addColumnIfNotExists(Field<?> field);
+    AlterTableAddStep addColumnIfNotExists(Field<?> field);
 
     /**
      * Add an <code>ADD COLUMN IF NOT EXISTS</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
     @Support({ H2, MARIADB, POSTGRES })
-    <T> AlterTableFinalStep addColumnIfNotExists(Field<T> field, DataType<T> type);
+    <T> AlterTableAddStep addColumnIfNotExists(Field<T> field, DataType<T> type);
 
     /**
      * Add an <code>ADD COLUMN IF NOT EXISTS</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
     @Support({ H2, MARIADB, POSTGRES })
-    AlterTableFinalStep addColumnIfNotExists(Name field, DataType<?> type);
+    AlterTableAddStep addColumnIfNotExists(Name field, DataType<?> type);
 
     /**
      * Add an <code>ADD COLUMN IF NOT EXISTS</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
     @Support({ H2, MARIADB, POSTGRES })
-    AlterTableFinalStep addColumnIfNotExists(String field, DataType<?> type);
+    AlterTableAddStep addColumnIfNotExists(String field, DataType<?> type);
 
     /**
      * Add an <code>ADD CONSTRAINT</code> clause to the <code>ALTER TABLE</code>

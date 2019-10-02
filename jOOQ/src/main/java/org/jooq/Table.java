@@ -2177,7 +2177,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
     /**
      * <code>STRAIGHT_JOIN</code> a table to this table.
      */
-    @Support({ MYSQL })
+    @Support({ MARIADB, MYSQL })
     TableOnStep<Record> straightJoin(TableLike<?> table);
 
     /**
@@ -2191,7 +2191,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#table(SQL)
      * @see SQL
      */
-    @Support({ MYSQL })
+    @Support({ MARIADB, MYSQL })
     @PlainSQL
     TableOnStep<Record> straightJoin(SQL sql);
 
@@ -2206,7 +2206,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#table(String)
      * @see SQL
      */
-    @Support({ MYSQL })
+    @Support({ MARIADB, MYSQL })
     @PlainSQL
     TableOnStep<Record> straightJoin(String sql);
 
@@ -2222,7 +2222,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
-    @Support({ MYSQL })
+    @Support({ MARIADB, MYSQL })
     @PlainSQL
     TableOnStep<Record> straightJoin(String sql, Object... bindings);
 
@@ -2238,7 +2238,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
-    @Support({ MYSQL })
+    @Support({ MARIADB, MYSQL })
     @PlainSQL
     TableOnStep<Record> straightJoin(String sql, QueryPart... parts);
 
@@ -2247,7 +2247,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      *
      * @see DSL#table(Name)
      */
-    @Support({ MYSQL })
+    @Support({ MARIADB, MYSQL })
     @PlainSQL
     TableOnStep<Record> straightJoin(Name name);
 

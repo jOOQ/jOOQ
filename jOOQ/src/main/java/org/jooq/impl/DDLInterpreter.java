@@ -115,10 +115,9 @@ final class DDLInterpreter {
         Schema schema = query.$schema();
 
         if (getSchema(schema, false) != null) {
-            String message = "Schema already exists: " + schema.getQualifiedName();
             if (!query.$ifNotExists())
-                throw new DataDefinitionException(message);
-            log.debug(message);
+                throw new DataDefinitionException("Schema already exists: " + schema.getQualifiedName());
+
             return;
         }
 
@@ -130,10 +129,9 @@ final class DDLInterpreter {
         MutableSchema mutableSchema = getSchema(schema, false);
 
         if (mutableSchema == null) {
-            String message = "Schema does not exist: " + schema.getQualifiedName();
             if (!query.$ifExists())
-                throw new DataDefinitionException(message);
-            log.debug(message);
+                throw new DataDefinitionException("Schema does not exist: " + schema.getQualifiedName());
+
             return;
         }
 
@@ -152,10 +150,9 @@ final class DDLInterpreter {
         MutableSchema schema = getSchema(table.getSchema(), true);
 
         if (schema.getTable(table.getUnqualifiedName()) != null) {
-            String message = "Table already exists: " + table.getQualifiedName();
             if (!query.$ifNotExists())
-                throw new DataDefinitionException(message);
-            log.debug(message);
+                throw new DataDefinitionException("Table already exists: " + table.getQualifiedName());
+
             return;
         }
 
@@ -195,10 +192,9 @@ final class DDLInterpreter {
 
         MutableTable existing = schema.getTable(table.getUnqualifiedName());
         if (existing == null) {
-            String message = "Table does not exist: " + table.getQualifiedName();
             if (!query.$ifExists())
-                throw new DataDefinitionException(message);
-            log.debug(message);
+                throw new DataDefinitionException("Table does not exist: " + table.getQualifiedName());
+
             return;
         }
 
@@ -231,10 +227,9 @@ final class DDLInterpreter {
         // TODO schema == null
         MutableTable existing = schema.dropTable(table.getUnqualifiedName());
         if (existing == null) {
-            String message = "Table does not exist: " + table.getQualifiedName();
             if (!query.$ifExists())
-                throw new DataDefinitionException(message);
-            log.debug(message);
+                throw new DataDefinitionException("Table does not exist: " + table.getQualifiedName());
+
             return;
         }
     }

@@ -55,10 +55,10 @@ import java.sql.PreparedStatement;
 import java.util.ArrayDeque;
 import java.util.BitSet;
 import java.util.Deque;
-import java.util.EnumSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.jooq.BindContext;
 import org.jooq.Clause;

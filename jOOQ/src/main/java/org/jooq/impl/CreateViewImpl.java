@@ -67,8 +67,8 @@ import static org.jooq.impl.Keywords.K_REPLACE;
 import static org.jooq.impl.Keywords.K_VIEW;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 
-import java.util.EnumSet;
 import java.util.List;
+import java.util.Set;
 import java.util.function.BiFunction;
 
 import org.jooq.Clause;
@@ -102,7 +102,7 @@ final class CreateViewImpl<R extends Record> extends AbstractRowCountQuery imple
      */
     private static final long                                                       serialVersionUID         = 8904572826501186329L;
     private static final Clause[]                                                   CLAUSES                  = { CREATE_VIEW };
-    private static final EnumSet<SQLDialect>                                        NO_SUPPORT_IF_NOT_EXISTS = EnumSet.of(DERBY, FIREBIRD, POSTGRES);
+    private static final Set<SQLDialect>                                            NO_SUPPORT_IF_NOT_EXISTS = SQLDialect.supported(DERBY, FIREBIRD, POSTGRES);
 
     private final boolean                                                           ifNotExists;
     private final boolean                                                           orReplace;

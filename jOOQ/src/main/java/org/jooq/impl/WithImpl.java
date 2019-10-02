@@ -51,7 +51,7 @@ import static org.jooq.impl.Keywords.K_WITH;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.EnumSet;
+import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 

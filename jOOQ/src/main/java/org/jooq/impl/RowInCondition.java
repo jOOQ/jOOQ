@@ -61,8 +61,8 @@ import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.InCondition.padded;
 
 import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.List;
+import java.util.Set;
 
 import org.jooq.Clause;
 import org.jooq.Comparator;
@@ -85,8 +85,9 @@ final class RowInCondition extends AbstractCondition {
     private static final Clause[]              CLAUSES_IN       = { CONDITION, CONDITION_IN };
     private static final Clause[]              CLAUSES_IN_NOT   = { CONDITION, CONDITION_NOT_IN };
 
-    // Currently not yet supported in SQLite: https://www.sqlite.org/rowvalue.html
-    private static final EnumSet<SQLDialect>   EMULATE_IN       = EnumSet.of(DERBY, FIREBIRD, SQLITE);
+    // Currently not yet supported in SQLite:
+    // https://www.sqlite.org/rowvalue.html
+    private static final Set<SQLDialect>       EMULATE_IN       = SQLDialect.supported(DERBY, FIREBIRD, SQLITE);
 
     private final Row                          left;
     private final QueryPartList<? extends Row> right;

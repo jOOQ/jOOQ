@@ -54,7 +54,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -108,7 +107,7 @@ import org.jooq.tools.csv.CSVReader;
 public abstract class AbstractDatabase implements Database {
 
     private static final JooqLogger                                          log                                  = JooqLogger.getLogger(AbstractDatabase.class);
-    private static final EnumSet<SQLDialect>                                 NO_SUPPORT_SCHEMATA                  = EnumSet.of(CUBRID, FIREBIRD, SQLITE);
+    private static final Set<SQLDialect>                                     NO_SUPPORT_SCHEMATA                  = SQLDialect.supported(CUBRID, FIREBIRD, SQLITE);
 
     // -------------------------------------------------------------------------
     // Configuration elements

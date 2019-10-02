@@ -65,6 +65,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.exception.DataAccessException;
+import org.jooq.exception.DataDefinitionException;
 import org.jooq.tools.JooqLogger;
 
 final class DDLInterpreter {
@@ -116,7 +117,7 @@ final class DDLInterpreter {
         if (getSchema(schema, false) != null) {
             String message = "Schema already exists: " + schema.getQualifiedName();
             if (!query.$ifNotExists())
-                throw new DataAccessException(message);
+                throw new DataDefinitionException(message);
             log.debug(message);
             return;
         }
@@ -131,7 +132,7 @@ final class DDLInterpreter {
         if (mutableSchema == null) {
             String message = "Schema does not exist: " + schema.getQualifiedName();
             if (!query.$ifExists())
-                throw new DataAccessException(message);
+                throw new DataDefinitionException(message);
             log.debug(message);
             return;
         }
@@ -139,7 +140,7 @@ final class DDLInterpreter {
         if (mutableSchema.isEmpty() || query.$cascade())
             mutableSchema.catalog.schemas.remove(mutableSchema);
         else
-            throw new DataAccessException("Schema is not empty: " + schema.getQualifiedName());
+            throw new DataDefinitionException("Schema is not empty: " + schema.getQualifiedName());
 
         // TODO: Is this needed?
         if (mutableSchema.equals(currentSchema))
@@ -153,7 +154,7 @@ final class DDLInterpreter {
         if (schema.getTable(table.getUnqualifiedName()) != null) {
             String message = "Table already exists: " + table.getQualifiedName();
             if (!query.$ifNotExists())
-                throw new DataAccessException(message);
+                throw new DataDefinitionException(message);
             log.debug(message);
             return;
         }
@@ -196,7 +197,7 @@ final class DDLInterpreter {
         if (existing == null) {
             String message = "Table does not exist: " + table.getQualifiedName();
             if (!query.$ifExists())
-                throw new DataAccessException(message);
+                throw new DataDefinitionException(message);
             log.debug(message);
             return;
         }
@@ -218,7 +219,7 @@ final class DDLInterpreter {
         int result = existing.indexOf(field);
 
         if (result == -1)
-            throw new DataAccessException("Field does not exist: " + field.getQualifiedName());
+            throw new DataDefinitionException("Field does not exist: " + field.getQualifiedName());
 
         return result;
     }
@@ -232,7 +233,7 @@ final class DDLInterpreter {
         if (existing == null) {
             String message = "Table does not exist: " + table.getQualifiedName();
             if (!query.$ifExists())
-                throw new DataAccessException(message);
+                throw new DataDefinitionException(message);
             log.debug(message);
             return;
         }

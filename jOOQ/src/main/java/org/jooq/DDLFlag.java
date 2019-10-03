@@ -68,6 +68,11 @@ public enum DDLFlag {
     FOREIGN_KEY,
 
     /**
+     * Whether <code>SEQUENCE</code> statements should be generated.
+     */
+    SEQUENCE,
+
+    /**
      * Whether <code>COMMENT</code> statements should be generated.
      */
     COMMENT,

@@ -53,6 +53,7 @@ public final class DDLExportConfiguration {
 
     private final boolean          createSchemaIfNotExists;
     private final boolean          createTableIfNotExists;
+    private final boolean          createSequenceIfNotExists;
     private final EnumSet<DDLFlag> flags;
 
     /**
@@ -62,6 +63,7 @@ public final class DDLExportConfiguration {
         this(
             EnumSet.allOf(DDLFlag.class),
             false,
+            false,
             false
         );
     }
@@ -69,11 +71,13 @@ public final class DDLExportConfiguration {
     private DDLExportConfiguration(
         Collection<DDLFlag> flags,
         boolean createSchemaIfNotExists,
-        boolean createTableIfNotExists
+        boolean createTableIfNotExists,
+        boolean createSequenceIfNotExists
     ) {
         this.flags = EnumSet.copyOf(flags);
         this.createSchemaIfNotExists = createSchemaIfNotExists;
         this.createTableIfNotExists = createTableIfNotExists;
+        this.createSequenceIfNotExists = createSequenceIfNotExists;
     }
 
     /**
@@ -94,7 +98,7 @@ public final class DDLExportConfiguration {
      * The {@link DDLFlag} that are enabled on this configuration.
      */
     public final DDLExportConfiguration flags(Collection<DDLFlag> newFlags) {
-        return new DDLExportConfiguration(newFlags, createSchemaIfNotExists, createTableIfNotExists);
+        return new DDLExportConfiguration(newFlags, createSchemaIfNotExists, createTableIfNotExists, createSequenceIfNotExists);
     }
 
     /**
@@ -112,7 +116,7 @@ public final class DDLExportConfiguration {
      * Whether to generate <code>CREATE SCHEMA IF NOT EXISTS</code> statements.
      */
     public final DDLExportConfiguration createSchemaIfNotExists(boolean newCreateSchemaIfNotExists) {
-        return new DDLExportConfiguration(flags, newCreateSchemaIfNotExists, createTableIfNotExists);
+        return new DDLExportConfiguration(flags, newCreateSchemaIfNotExists, createTableIfNotExists, createSequenceIfNotExists);
     }
 
     /**
@@ -130,6 +134,24 @@ public final class DDLExportConfiguration {
      * Whether to generate <code>CREATE TABLE IF NOT EXISTS</code> statements.
      */
     public final DDLExportConfiguration createTableIfNotExists(boolean newCreateTableIfNotExists) {
-        return new DDLExportConfiguration(flags, createSchemaIfNotExists, newCreateTableIfNotExists);
+        return new DDLExportConfiguration(flags, createSchemaIfNotExists, newCreateTableIfNotExists, createSequenceIfNotExists);
+    }
+
+    /**
+     * Whether to generate <code>CREATE SEQUENCE IF NOT EXISTS</code> statements.
+     * <p>
+     * Not all RDBMS support this flag. Check
+     * {@link DSLContext#createSequenceIfNotExists(Sequence)} to see if your
+     * {@link SQLDialect} supports the clause.
+     */
+    public final boolean createSequenceIfNotExists() {
+        return createSequenceIfNotExists;
+    }
+
+    /**
+     * Whether to generate <code>CREATE SEQUENCE IF NOT EXISTS</code> statements.
+     */
+    public final DDLExportConfiguration createSequenceIfNotExists(boolean newCreateSequenceIfNotExists) {
+        return new DDLExportConfiguration(flags, createSchemaIfNotExists, createTableIfNotExists, newCreateSequenceIfNotExists);
     }
 }

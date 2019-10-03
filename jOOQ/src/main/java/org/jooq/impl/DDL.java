@@ -41,6 +41,7 @@ import static org.jooq.DDLFlag.COMMENT;
 import static org.jooq.DDLFlag.FOREIGN_KEY;
 import static org.jooq.DDLFlag.PRIMARY_KEY;
 import static org.jooq.DDLFlag.SCHEMA;
+import static org.jooq.DDLFlag.SEQUENCE;
 import static org.jooq.DDLFlag.TABLE;
 import static org.jooq.DDLFlag.UNIQUE;
 import static org.jooq.impl.DSL.constraint;
@@ -58,6 +59,7 @@ import org.jooq.ForeignKey;
 import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.Schema;
+import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.UniqueKey;
 import org.jooq.tools.StringUtils;
@@ -81,6 +83,12 @@ final class DDL {
                     : ctx.createTable(table))
                   .columns(table.fields())
                   .constraints(constraints);
+    }
+
+    private final Query createSequence(Sequence<?> sequence) {
+        return configuration.createSequenceIfNotExists()
+                    ? ctx.createSequenceIfNotExists(sequence)
+                    : ctx.createSequence(sequence);
     }
 
     private final Query createTable(Table<?> table) {
@@ -215,6 +223,11 @@ final class DDL {
                 for (Table<?> table : schema.getTables())
                     for (Constraint constraint : foreignKeys(table))
                         queries.add(ctx.alterTable(table).add(constraint));
+
+        if (configuration.flags().contains(SEQUENCE))
+            for (Schema schema : schemas)
+                for (Sequence<?> sequence : schema.getSequences())
+                    queries.add(createSequence(sequence));
 
         if (configuration.flags().contains(COMMENT))
             for (Schema schema : schemas)

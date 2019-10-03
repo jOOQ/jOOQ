@@ -179,6 +179,15 @@ final class QualifiedName extends AbstractName {
     }
 
     @Override
+    public final boolean empty() {
+        for (UnqualifiedName n : qualifiedName)
+            if (!n.empty())
+                return false;
+
+        return true;
+    }
+
+    @Override
     public final boolean qualified() {
         return qualifiedName.length > 1;
     }

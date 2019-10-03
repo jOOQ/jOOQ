@@ -139,6 +139,15 @@ public interface Name extends QueryPart {
     String last();
 
     /**
+     * Whether this is the empty name.
+     * <p>
+     * An unnamed object will have an <code>""</code> empty string as its name.
+     * If a table has no explicit schema, it will be located in the default
+     * schema whose name is <code>""</code>.
+     */
+    boolean empty();
+
+    /**
      * Whether this is a qualified name.
      * <p>
      * This is <code>true</code> as soon as {@link #getName()} has a length of more than <code>1</code>.

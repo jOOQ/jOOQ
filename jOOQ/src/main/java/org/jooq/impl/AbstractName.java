@@ -59,8 +59,8 @@ abstract class AbstractName extends AbstractQueryPart implements Name {
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = 8562325639223483938L;
-    static final Name         NO_NAME          = DSL.name("");
+    private static final long    serialVersionUID = 8562325639223483938L;
+    static final UnqualifiedName NO_NAME          = new UnqualifiedName("");
 
     @Override
     public final Name append(String name) {

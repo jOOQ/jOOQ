@@ -45,6 +45,7 @@ import org.jooq.Context;
 import org.jooq.Name;
 import org.jooq.conf.RenderQuotedNames;
 import org.jooq.conf.SettingsTools;
+import org.jooq.tools.StringUtils;
 
 /**
  * The default implementation for an unqualified SQL identifier.
@@ -93,6 +94,11 @@ final class UnqualifiedName extends AbstractName {
     @Override
     public final String last() {
         return name;
+    }
+
+    @Override
+    public final boolean empty() {
+        return StringUtils.isEmpty(name);
     }
 
     @Override

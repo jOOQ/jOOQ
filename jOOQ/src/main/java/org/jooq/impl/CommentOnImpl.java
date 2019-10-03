@@ -106,6 +106,11 @@ implements
         this.field = field;
     }
 
+    final Table<?> $table()   { return table; }
+    final boolean  $isView()  { return isView; }
+    final Field<?> $field()   { return field; }
+    final Comment  $comment() { return comment; }
+
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {

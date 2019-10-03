@@ -96,6 +96,10 @@ final class DDLInterpreter {
         };
     }
 
+    // -------------------------------------------------------------------------
+    // Interpretation logic
+    // -------------------------------------------------------------------------
+
     final void accept(Query query) {
         if (query instanceof CreateSchemaImpl)
             accept0((CreateSchemaImpl) query);
@@ -109,8 +113,10 @@ final class DDLInterpreter {
             accept0((AlterTableImpl) query);
         else if (query instanceof DropTableImpl)
             accept0((DropTableImpl) query);
+        else if (query instanceof CommentOnImpl)
+            accept0((CommentOnImpl) query);
         else
-            throw new UnsupportedOperationException(query.getSQL());
+            throw unsupportedQuery(query);
     }
 
     private final void accept0(CreateSchemaImpl query) {
@@ -118,7 +124,7 @@ final class DDLInterpreter {
 
         if (getSchema(schema, false) != null) {
             if (!query.$ifNotExists())
-                throw new DataDefinitionException("Schema already exists: " + schema.getQualifiedName());
+                throw schemaAlreadyExists(schema);
 
             return;
         }
@@ -130,17 +136,17 @@ final class DDLInterpreter {
         Schema schema = query.$schema();
         Schema renameTo = query.$renameTo();
 
-        MutableSchema oldSchema = getSchema(schema, false);
+        MutableSchema oldSchema = getSchema(schema);
         if (oldSchema == null) {
             if (!query.$ifExists())
-                throw new DataDefinitionException("Schema does not exist: " + schema.getQualifiedName());
+                throw schemaNotExists(schema);
 
             return;
         }
 
         if (renameTo != null) {
             if (getSchema(renameTo, false) != null)
-                throw new DataDefinitionException("Schema already exists: " + renameTo.getQualifiedName());
+                throw schemaAlreadyExists(renameTo);
 
             oldSchema.name = (UnqualifiedName) renameTo.getUnqualifiedName();
             return;
@@ -151,11 +157,11 @@ final class DDLInterpreter {
 
     private final void accept0(DropSchemaImpl query) {
         Schema schema = query.$schema();
-        MutableSchema mutableSchema = getSchema(schema, false);
+        MutableSchema mutableSchema = getSchema(schema);
 
         if (mutableSchema == null) {
             if (!query.$ifExists())
-                throw new DataDefinitionException("Schema does not exist: " + schema.getQualifiedName());
+                throw schemaNotExists(schema);
 
             return;
         }
@@ -163,7 +169,7 @@ final class DDLInterpreter {
         if (mutableSchema.isEmpty() || query.$cascade())
             mutableSchema.catalog.schemas.remove(mutableSchema);
         else
-            throw new DataDefinitionException("Schema is not empty: " + schema.getQualifiedName());
+            throw schemaNotEmpty(schema);
 
         // TODO: Is this needed?
         if (mutableSchema.equals(currentSchema))
@@ -174,9 +180,9 @@ final class DDLInterpreter {
         Table<?> table = query.$table();
         MutableSchema schema = getSchema(table.getSchema(), true);
 
-        if (schema.getTable((UnqualifiedName) table.getUnqualifiedName()) != null) {
+        if (schema.table(table) != null) {
             if (!query.$ifNotExists())
-                throw new DataDefinitionException("Table already exists: " + table.getQualifiedName());
+                throw tableAlreadyExists(table);
 
             return;
         }
@@ -213,12 +219,12 @@ final class DDLInterpreter {
 
     private final void accept0(AlterTableImpl query) {
         Table<?> table = query.$table();
-        MutableSchema schema = getSchema(table.getSchema(), false);
+        MutableSchema schema = getSchema(table.getSchema());
 
-        MutableTable existing = schema.getTable((UnqualifiedName) table.getUnqualifiedName());
+        MutableTable existing = schema.table(table);
         if (existing == null) {
             if (!query.$ifExists())
-                throw new DataDefinitionException("Table does not exist: " + table.getQualifiedName());
+                throw tableNotExists(table);
 
             return;
         }
@@ -247,23 +253,76 @@ final class DDLInterpreter {
         }
 
         if (result == -1)
-            throw new DataDefinitionException("Field does not exist: " + field.getQualifiedName());
+            throw fieldNotExists(field);
 
         return result;
     }
 
     private final void accept0(DropTableImpl query) {
         Table<?> table = query.$table();
-        MutableSchema schema = getSchema(table.getSchema(), false);
+        MutableSchema schema = getSchema(table.getSchema());
 
         // TODO schema == null
         MutableTable existing = schema.dropTable((UnqualifiedName) table.getUnqualifiedName());
         if (existing == null) {
             if (!query.$ifExists())
-                throw new DataDefinitionException("Table does not exist: " + table.getQualifiedName());
+                throw tableNotExists(table);
 
             return;
         }
+    }
+
+    private final void accept0(CommentOnImpl query) {
+        Table<?> table = query.$table();
+        Field<?> field = query.$field();
+
+        if (table != null)
+            table(table).comment = query.$comment();
+        else if (field != null)
+            field(field).comment = query.$comment();
+        else
+            throw unsupportedQuery(query);
+    }
+
+
+    // -------------------------------------------------------------------------
+    // Exceptions
+    // -------------------------------------------------------------------------
+
+    private static final DataDefinitionException unsupportedQuery(Query query) {
+        return new DataDefinitionException("Unsupported query: " + query.getSQL());
+    }
+
+    private static final DataDefinitionException schemaNotExists(Schema schema) {
+        return new DataDefinitionException("Schema does not exist: " + schema.getQualifiedName());
+    }
+
+    private static final DataDefinitionException schemaAlreadyExists(Schema renameTo) {
+        return new DataDefinitionException("Schema already exists: " + renameTo.getQualifiedName());
+    }
+
+    private static final DataDefinitionException schemaNotEmpty(Schema schema) {
+        return new DataDefinitionException("Schema is not empty: " + schema.getQualifiedName());
+    }
+
+    private static final DataDefinitionException tableNotExists(Table<?> table) {
+        return new DataDefinitionException("Table does not exist: " + table.getQualifiedName());
+    }
+
+    private static final DataDefinitionException tableAlreadyExists(Table<?> table) {
+        return new DataDefinitionException("Table already exists: " + table.getQualifiedName());
+    }
+
+    private static final DataDefinitionException fieldNotExists(Field<?> field) {
+        return new DataDefinitionException("Field does not exist: " + field.getQualifiedName());
+    }
+
+    // -------------------------------------------------------------------------
+    // Auxiliary methods
+    // -------------------------------------------------------------------------
+
+    private final MutableSchema getSchema(Schema input) {
+        return getSchema(input, false);
     }
 
     private final MutableSchema getSchema(Schema input, boolean create) {
@@ -289,6 +348,39 @@ final class DDLInterpreter {
         return schema;
     }
 
+    private final MutableTable table(Table<?> table) {
+        return table(table, true);
+    }
+
+    private final MutableTable table(Table<?> table, boolean throwIfNotExists) {
+
+        // TODO: Can schema be null?
+        MutableTable result = getSchema(table.getSchema()).table(table);
+
+        if (result == null && throwIfNotExists)
+            throw tableNotExists(table);
+
+        return result;
+    }
+
+    private final MutableField field(Field<?> field) {
+        return field(field, true);
+    }
+
+    private final MutableField field(Field<?> field, boolean throwIfNotExists) {
+        MutableTable table = table(DSL.table(field.getQualifiedName().qualifier()), throwIfNotExists);
+
+        if (table == null)
+            return null;
+
+        MutableField result = table.field(field);
+
+        if (result == null && throwIfNotExists)
+            throw fieldNotExists(field);
+
+        return result;
+    }
+
     private static UnqualifiedName normalize(UnqualifiedName name) {
         if (name == null)
             return null;
@@ -299,6 +391,10 @@ final class DDLInterpreter {
         String lowerCase = name.first().toLowerCase();
         return (UnqualifiedName) (name.first() == lowerCase ? name : unquotedName(lowerCase));
     }
+
+    // -------------------------------------------------------------------------
+    // Data model
+    // -------------------------------------------------------------------------
 
     private static abstract class MutableNamed {
         UnqualifiedName name;
@@ -366,11 +462,13 @@ final class DDLInterpreter {
             return tables.isEmpty();
         }
 
-        final MutableTable getTable(UnqualifiedName n) {
-            n = normalize(n);
+        final MutableTable table(Table<?> t) {
+            UnqualifiedName n = normalize((UnqualifiedName) t.getUnqualifiedName());
+
             for (MutableTable table : tables)
                 if (table.name.equals(n))
                     return table;
+
             return null;
         }
 
@@ -459,7 +557,7 @@ final class DDLInterpreter {
                 super(MutableTable.this.name, schema, null, null, MutableTable.this.comment);
 
                 for (MutableField field : MutableTable.this.fields)
-                    createField(field.name, field.type);
+                    createField(field.name, field.type, field.comment != null ? field.comment.getComment() : null);
             }
 
             @Override

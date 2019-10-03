@@ -108,6 +108,10 @@ final class AlterViewImpl extends AbstractRowCountQuery implements
         this.ifExists = ifExists;
     }
 
+    final Table<?> $view()     { return view; }
+    final boolean  $ifExists() { return ifExists; }
+    final Table<?> $renameTo() { return renameTo; }
+
     // ------------------------------------------------------------------------
     // XXX: DSL API
     // ------------------------------------------------------------------------

@@ -138,6 +138,12 @@ final class CreateViewImpl<R extends Record> extends AbstractRowCountQuery imple
     }
 
 
+    final boolean    $ifNotExists() { return ifNotExists; }
+    final boolean    $orReplace()   { return orReplace; }
+    final Table<?>   $view()        { return view; }
+    final Field<?>[] $fields()      { return fields; }
+    final Select<?>  $select()      { return parsed(); }
+
     // ------------------------------------------------------------------------
     // XXX: DSL API
     // ------------------------------------------------------------------------

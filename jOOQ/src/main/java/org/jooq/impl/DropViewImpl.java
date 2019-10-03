@@ -76,19 +76,22 @@ final class DropViewImpl extends AbstractRowCountQuery implements
     private static final Clause[]        CLAUSES              = { DROP_VIEW };
     private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS = SQLDialect.supported(DERBY, FIREBIRD);
 
-    private final Table<?>               table;
+    private final Table<?>               view;
     private final boolean                ifExists;
 
-    DropViewImpl(Configuration configuration, Table<?> table) {
-        this(configuration, table, false);
+    DropViewImpl(Configuration configuration, Table<?> view) {
+        this(configuration, view, false);
     }
 
-    DropViewImpl(Configuration configuration, Table<?> table, boolean ifExists) {
+    DropViewImpl(Configuration configuration, Table<?> view, boolean ifExists) {
         super(configuration);
 
-        this.table = table;
+        this.view = view;
         this.ifExists = ifExists;
     }
+
+    final Table<?> $view()     { return view; }
+    final boolean  $ifExists() { return ifExists; }
 
     // ------------------------------------------------------------------------
     // XXX: QueryPart API
@@ -117,7 +120,7 @@ final class DropViewImpl extends AbstractRowCountQuery implements
         if (ifExists && supportsIfExists(ctx))
             ctx.visit(K_IF_EXISTS).sql(' ');
 
-        ctx.visit(table);
+        ctx.visit(view);
 
         ctx.end(DROP_VIEW_TABLE);
     }

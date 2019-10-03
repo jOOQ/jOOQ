@@ -69,6 +69,11 @@ abstract class AbstractName extends AbstractQueryPart implements Name {
 
     @Override
     public final Name append(Name name) {
+        if (empty())
+            return name;
+        else if (name.empty())
+            return this;
+
         Name[] p1 = parts();
         Name[] p2 = name.parts();
         Name[] array = new Name[p1.length + p2.length];

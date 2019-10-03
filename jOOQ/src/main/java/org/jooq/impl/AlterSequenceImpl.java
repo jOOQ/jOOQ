@@ -116,6 +116,10 @@ final class AlterSequenceImpl<T extends Number> extends AbstractRowCountQuery im
         this.ifExists = ifExists;
     }
 
+    final Sequence<?> $sequence() { return sequence; }
+    final boolean     $ifExists() { return ifExists; }
+    final Sequence<?> $renameTo() { return renameTo; }
+
     // ------------------------------------------------------------------------
     // XXX: DSL API
     // ------------------------------------------------------------------------

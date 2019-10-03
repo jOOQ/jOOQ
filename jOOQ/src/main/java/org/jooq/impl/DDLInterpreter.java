@@ -39,6 +39,8 @@ package org.jooq.impl;
 
 import static org.jooq.impl.AbstractName.NO_NAME;
 import static org.jooq.impl.DSL.unquotedName;
+import static org.jooq.impl.SQLDataType.BIGINT;
+import static org.jooq.impl.Tools.EMPTY_FIELD;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -60,6 +62,7 @@ import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Select;
+import org.jooq.Sequence;
 import org.jooq.SortField;
 import org.jooq.SortOrder;
 import org.jooq.Table;
@@ -110,20 +113,31 @@ final class DDLInterpreter {
             accept0((AlterSchemaImpl) query);
         else if (query instanceof DropSchemaImpl)
             accept0((DropSchemaImpl) query);
+
         else if (query instanceof CreateTableImpl)
             accept0((CreateTableImpl) query);
         else if (query instanceof AlterTableImpl)
             accept0((AlterTableImpl) query);
         else if (query instanceof DropTableImpl)
             accept0((DropTableImpl) query);
+
         else if (query instanceof CreateViewImpl)
             accept0((CreateViewImpl<?>) query);
         else if (query instanceof AlterViewImpl)
             accept0((AlterViewImpl) query);
         else if (query instanceof DropViewImpl)
             accept0((DropViewImpl) query);
+
+        else if (query instanceof CreateSequenceImpl)
+            accept0((CreateSequenceImpl) query);
+        else if (query instanceof AlterSequenceImpl)
+            accept0((AlterSequenceImpl<?>) query);
+        else if (query instanceof DropSequenceImpl)
+            accept0((DropSequenceImpl) query);
+
         else if (query instanceof CommentOnImpl)
             accept0((CommentOnImpl) query);
+
         else
             throw unsupportedQuery(query);
     }
@@ -189,9 +203,10 @@ final class DDLInterpreter {
         Table<?> table = query.$table();
         MutableSchema schema = getSchema(table.getSchema(), true);
 
-        if (schema.table(table) != null) {
+        MutableTable existing = schema.table(table);
+        if (existing != null) {
             if (!query.$ifNotExists())
-                throw tableAlreadyExists(table);
+                throw alreadyExists(table, existing);
 
             return;
         }
@@ -203,10 +218,10 @@ final class DDLInterpreter {
 
             // XXX handle case that primary key already exists?
             if (impl.$primaryKey() != null)
-                t.primaryKey = new MutableUniqueKey((UnqualifiedName) impl.getUnqualifiedName(), t, t.fields(impl.$primaryKey()));
+                t.primaryKey = new MutableUniqueKey((UnqualifiedName) impl.getUnqualifiedName(), t, t.fields(impl.$primaryKey(), true));
 
             else if (impl.$unique() != null)
-                t.uniqueKeys.add(new MutableUniqueKey((UnqualifiedName) impl.getUnqualifiedName(), t, t.fields(impl.$unique())));
+                t.uniqueKeys.add(new MutableUniqueKey((UnqualifiedName) impl.getUnqualifiedName(), t, t.fields(impl.$unique(), true)));
         }
 
         for (Index index : query.$indexes()) {
@@ -226,8 +241,15 @@ final class DDLInterpreter {
 
             return;
         }
+        else if (existing.view)
+            throw objectNotTable(table);
 
         Field<?> addColumn = query.$addColumn();
+        Table<?> renameTo = query.$renameTo();
+        Field<?> renameColumn = query.$renameColumn();
+        Field<?> renameColumnTo = query.$renameColumnTo();
+        List<Field<?>> $dropColumns = query.$dropColumns();
+
         if (addColumn != null) {
             if (query.$addFirst())
                 existing.fields.add(0, new MutableField((UnqualifiedName) addColumn.getUnqualifiedName(), existing, query.$addColumnType()));
@@ -238,6 +260,29 @@ final class DDLInterpreter {
             else
                 existing.fields.add(new MutableField((UnqualifiedName) addColumn.getUnqualifiedName(), existing, query.$addColumnType()));
         }
+        else if (renameTo != null && checkNotExists(schema, renameTo)) {
+            existing.name = (UnqualifiedName) renameTo.getUnqualifiedName();
+        }
+        else if (renameColumn != null) {
+            if (existing.field(renameColumn) == null)
+                throw fieldNotExists(renameColumn);
+            else if (existing.field(renameColumnTo) != null)
+                throw fieldAlreadyExists(renameColumnTo);
+            else
+                existing.field(renameColumn).name = (UnqualifiedName) renameColumnTo.getUnqualifiedName();
+        }
+        else if ($dropColumns != null) {
+            // TODO Implement cascade
+            // TODO check if any constraints or indexes reference this column.
+            List<MutableField> fields = existing.fields($dropColumns.toArray(EMPTY_FIELD), false);
+
+            if (fields.size() < $dropColumns.size() && !query.$ifExistsColumn())
+                existing.fields($dropColumns.toArray(EMPTY_FIELD), true);
+
+            existing.fields.removeAll(fields);
+        }
+        else
+            throw unsupportedQuery(query);
     }
 
     private final int indexOrFail(MutableTable existing, Field<?> field) {
@@ -261,13 +306,17 @@ final class DDLInterpreter {
         MutableSchema schema = getSchema(table.getSchema());
 
         // TODO schema == null
-        MutableTable existing = schema.drop(table);
+        MutableTable existing = schema.table(table);
         if (existing == null) {
             if (!query.$ifExists())
                 throw tableNotExists(table);
 
             return;
         }
+        else if (existing.view)
+            throw objectNotTable(table);
+
+        schema.drop(table);
     }
 
     private final void accept0(CreateViewImpl<?> query) {
@@ -307,8 +356,9 @@ final class DDLInterpreter {
         else if (!existing.view)
             throw objectNotView(table);
 
-        if (query.$renameTo() != null)
-            existing.name = (UnqualifiedName) query.$renameTo().getUnqualifiedName();
+        Table<?> renameTo = query.$renameTo();
+        if (renameTo != null && checkNotExists(schema, renameTo))
+            existing.name = (UnqualifiedName) renameTo.getUnqualifiedName();
         else
             throw unsupportedQuery(query);
     }
@@ -328,6 +378,59 @@ final class DDLInterpreter {
             throw objectNotView(table);
 
         schema.drop(table);
+    }
+
+    private final void accept0(CreateSequenceImpl query) {
+        Sequence<?> sequence = query.$sequence();
+        MutableSchema schema = getSchema(sequence.getSchema());
+
+        MutableSequence existing = schema.sequence(sequence);
+        if (existing != null) {
+            if (!query.$ifNotExists())
+                throw sequenceAlreadyExists(sequence);
+
+            return;
+        }
+
+        MutableSequence ms = new MutableSequence((UnqualifiedName) sequence.getUnqualifiedName(), schema);
+
+        ms.startWith = query.$startWith();
+        ms.incrementBy = query.$incrementBy();
+        ms.minValue = query.$minvalue();
+        ms.noMinvalue = query.$noMinvalue();
+        ms.maxValue = query.$maxvalue();
+        ms.noMaxvalue = query.$noMaxvalue();
+        ms.cycle = query.$cycle();
+        ms.noCache = query.$noCycle();
+        ms.cache = query.$cache();
+        ms.noCache = query.$noCache();
+    }
+
+    private final void accept0(AlterSequenceImpl<?> query) {
+        Sequence<?> sequence = query.$sequence();
+        MutableSchema schema = getSchema(sequence.getSchema());
+
+        MutableSequence existing = schema.sequence(sequence);
+        if (existing == null) {
+            if (!query.$ifExists())
+                throw sequenceNotExists(sequence);
+
+            return;
+        }
+
+        Sequence<?> renameTo = query.$renameTo();
+        if (renameTo != null) {
+            if (schema.sequence(renameTo) != null)
+                throw sequenceAlreadyExists(renameTo);
+
+            existing.name = (UnqualifiedName) renameTo.getUnqualifiedName();
+        }
+        else
+            throw unsupportedQuery(query);
+    }
+
+    private final void accept0(DropSequenceImpl query) {
+
     }
 
     private final void accept0(CommentOnImpl query) {
@@ -354,8 +457,8 @@ final class DDLInterpreter {
         return new DataDefinitionException("Schema does not exist: " + schema.getQualifiedName());
     }
 
-    private static final DataDefinitionException schemaAlreadyExists(Schema renameTo) {
-        return new DataDefinitionException("Schema already exists: " + renameTo.getQualifiedName());
+    private static final DataDefinitionException schemaAlreadyExists(Schema schema) {
+        return new DataDefinitionException("Schema already exists: " + schema.getQualifiedName());
     }
 
     private static final DataDefinitionException schemaNotEmpty(Schema schema) {
@@ -378,15 +481,27 @@ final class DDLInterpreter {
         return new DataDefinitionException("Table already exists: " + table.getQualifiedName());
     }
 
-    private static final DataDefinitionException viewNotExists(Table<?> table) {
-        return new DataDefinitionException("View does not exist: " + table.getQualifiedName());
+    private static final DataDefinitionException viewNotExists(Table<?> view) {
+        return new DataDefinitionException("View does not exist: " + view.getQualifiedName());
     }
 
-    private static final DataDefinitionException viewAlreadyExists(Table<?> table) {
-        return new DataDefinitionException("View already exists: " + table.getQualifiedName());
+    private static final DataDefinitionException viewAlreadyExists(Table<?> view) {
+        return new DataDefinitionException("View already exists: " + view.getQualifiedName());
+    }
+
+    private static final DataDefinitionException sequenceNotExists(Sequence<?> sequence) {
+        return new DataDefinitionException("Sequence does not exist: " + sequence.getQualifiedName());
+    }
+
+    private static final DataDefinitionException sequenceAlreadyExists(Sequence<?> sequence) {
+        return new DataDefinitionException("Sequence already exists: " + sequence.getQualifiedName());
     }
 
     private static final DataDefinitionException fieldNotExists(Field<?> field) {
+        return new DataDefinitionException("Field does not exist: " + field.getQualifiedName());
+    }
+
+    private static final DataDefinitionException fieldAlreadyExists(Field<?> field) {
         return new DataDefinitionException("Field does not exist: " + field.getQualifiedName());
     }
 
@@ -459,6 +574,22 @@ final class DDLInterpreter {
             throw tableNotExists(table);
 
         return result;
+    }
+
+    private static final boolean checkNotExists(MutableSchema schema, Table<?> table) {
+        MutableTable mt = schema.table(table);
+
+        if (mt != null)
+            throw alreadyExists(table, mt);
+
+        return true;
+    }
+
+    private static final DataDefinitionException alreadyExists(Table<?> t, MutableTable mt) {
+        if (mt.view)
+            return viewAlreadyExists(t);
+        else
+            return tableAlreadyExists(t);
     }
 
     private final MutableField field(Field<?> field) {
@@ -550,8 +681,9 @@ final class DDLInterpreter {
     }
 
     private static final class MutableSchema extends MutableNamed  {
-        MutableCatalog     catalog;
-        List<MutableTable> tables = new ArrayList<>();
+        MutableCatalog        catalog;
+        List<MutableTable>    tables    = new ArrayList<>();
+        List<MutableSequence> sequences = new ArrayList<>();
 
         MutableSchema(UnqualifiedName name, MutableCatalog catalog) {
             super(name);
@@ -565,23 +697,32 @@ final class DDLInterpreter {
         }
 
         final MutableTable table(Table<?> t) {
-            UnqualifiedName n = normalize(t);
+            return find(tables, t);
+        }
 
-            for (MutableTable table : tables)
-                if (table.name.equals(n))
-                    return table;
+        final MutableSequence sequence(Sequence<?> s) {
+            return find(sequences, s);
+        }
+
+        final <M extends MutableNamed> M find(List<? extends M> list, Named named) {
+            UnqualifiedName n = normalize(named);
+
+            for (M m : list)
+                if (m.name.equals(n))
+                    return m;
 
             return null;
         }
 
-        final MutableTable drop(Table<?> t) {
+        final void drop(Table<?> t) {
             UnqualifiedName n = normalize(t);
 
-            for (int i = 0; i < tables.size(); i++)
-                if (tables.get(i).name.equals(n))
-                    return tables.remove(i);
-
-            return null;
+            for (int i = 0; i < tables.size(); i++) {
+                if (tables.get(i).name.equals(n)) {
+                    tables.remove(i);
+                    break;
+                }
+            }
         }
 
         private final class InterpretedSchema extends SchemaImpl {
@@ -595,6 +736,16 @@ final class DDLInterpreter {
 
                 for (MutableTable table : tables)
                     result.add(table.new InterpretedTable(this));
+
+                return result;
+            }
+
+            @Override
+            public final List<Sequence<?>> getSequences() {
+                List<Sequence<?>> result = new ArrayList<>(sequences.size());
+
+                for (MutableSequence sequence : sequences)
+                    result.add(sequence.new InterpretedSequence(this));
 
                 return result;
             }
@@ -627,22 +778,22 @@ final class DDLInterpreter {
             return null;
         }
 
-        final List<MutableField> fields(Field<?>... fs) {
+        final List<MutableField> fields(Field<?>[] fs, boolean failIfNotFound) {
             List<MutableField> result = new ArrayList<>();
 
             for (Field<?> f : fs) {
                 MutableField mf = field(f);
 
-                if (mf == null)
+                if (mf != null)
+                    result.add(mf);
+                else if (failIfNotFound)
                     throw new DataDefinitionException("Field does not exist in table: " + f.getQualifiedName());
-
-                result.add(mf);
             }
 
             return result;
         }
 
-        final List<MutableSortField> sortFields(SortField<?>... sfs) {
+        final List<MutableSortField> sortFields(SortField<?>[] sfs) {
             List<MutableSortField> result = new ArrayList<>();
 
             for (SortField<?> sf : sfs) {
@@ -720,6 +871,37 @@ final class DDLInterpreter {
                 }
 
                 return new IndexImpl(idx.name, this, f, null, idx.unique);
+            }
+        }
+    }
+
+    @SuppressWarnings("unused")
+    private static final class MutableSequence extends MutableNamed {
+        MutableSchema schema;
+        Field<?>      startWith;
+        Field<?>      incrementBy;
+        boolean       noMinvalue;
+        Field<?>      minValue;
+        boolean       noMaxvalue;
+        Field<?>      maxValue;
+        boolean       noCycle;
+        boolean       cycle;
+        boolean       noCache;
+        Field<?>      cache;
+
+        MutableSequence(UnqualifiedName name, MutableSchema schema) {
+            super(name);
+
+            this.schema = schema;
+            schema.sequences.add(this);
+        }
+
+        private final class InterpretedSequence extends SequenceImpl<Long> {
+            InterpretedSequence(Schema schema) {
+                super(MutableSequence.this.name, schema, BIGINT, false);
+
+                // [#7752] TODO: Pass additional flags like START WITH to
+                //         SequenceImpl when this is ready.
             }
         }
     }

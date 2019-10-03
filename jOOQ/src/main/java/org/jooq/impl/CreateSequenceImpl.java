@@ -114,6 +114,19 @@ final class CreateSequenceImpl extends AbstractRowCountQuery implements
         this.ifNotExists = ifNotExists;
     }
 
+    final Sequence<?> $sequence()    { return sequence; }
+    final boolean     $ifNotExists() { return ifNotExists; }
+    final Field<?>    $startWith()   { return startWith; }
+    final Field<?>    $incrementBy() { return incrementBy; }
+    final Field<?>    $minvalue()    { return minvalue; }
+    final boolean     $noMinvalue()  { return noMinvalue; }
+    final Field<?>    $maxvalue()    { return maxvalue; }
+    final boolean     $noMaxvalue()  { return noMaxvalue; }
+    final boolean     $cycle()       { return cycle; }
+    final boolean     $noCycle()     { return noCycle; }
+    final Field<?>    $cache()       { return cache; }
+    final boolean     $noCache()     { return noCache; }
+
     // ------------------------------------------------------------------------
     // XXX: Sequence API
     // ------------------------------------------------------------------------

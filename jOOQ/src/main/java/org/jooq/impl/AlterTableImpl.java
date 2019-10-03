@@ -152,6 +152,7 @@ import static org.jooq.impl.Tools.BooleanDataKey.DATA_CONSTRAINT_REFERENCE;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 import org.jooq.AlterTableAddStep;
@@ -269,13 +270,21 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
         this.ifExists = ifExists;
     }
 
-    final Table<?>          $table()         { return table; }
-    final boolean           $ifExists()      { return ifExists; }
-    final Field<?>          $addColumn()     { return addColumn; }
-    final DataType<?>       $addColumnType() { return addColumnType; }
-    final boolean           $addFirst()      { return addFirst; }
-    final Field<?>          $addBefore()     { return addBefore; }
-    final Field<?>          $addAfter()      { return addAfter; }
+    final Table<?>          $table()              { return table; }
+    final boolean           $ifExists()           { return ifExists; }
+    final boolean           $ifExistsColumn()     { return ifExistsColumn; }
+    final boolean           $ifNotExistsColumn()  { return ifNotExistsColumn; }
+    final Field<?>          $addColumn()          { return addColumn; }
+    final DataType<?>       $addColumnType()      { return addColumnType; }
+    final boolean           $addFirst()           { return addFirst; }
+    final Field<?>          $addBefore()          { return addBefore; }
+    final Field<?>          $addAfter()           { return addAfter; }
+    final Table<?>          $renameTo()           { return renameTo; }
+    final Field<?>          $renameColumn()       { return renameColumn; }
+    final Field<?>          $renameColumnTo()     { return renameColumnTo; }
+    final List<Field<?>>    $dropColumns()        { return dropColumns; };
+    final Constraint        $dropConstraint()     { return dropConstraint; }
+    final ConstraintType    $dropConstraintType() { return dropConstraintType; }
 
     // ------------------------------------------------------------------------
     // XXX: DSL API

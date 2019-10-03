@@ -61,11 +61,10 @@ import org.jooq.tools.JooqLogger;
  */
 final class DDLInterpreterMetaProvider implements MetaProvider {
 
-    private static final JooqLogger log    = JooqLogger.getLogger(DDLInterpreterMetaProvider.class);
+    private static final JooqLogger log = JooqLogger.getLogger(DDLInterpreterMetaProvider.class);
 
-    // FIXME this exception is obviously a hack we need to remove again...
-    private final Configuration configuration;
-    private final Source[] scripts;
+    private final Configuration     configuration;
+    private final Source[]          scripts;
 
     public DDLInterpreterMetaProvider(Configuration configuration, Source... scripts) {
         this.configuration = configuration == null ? new DefaultConfiguration() : configuration;
@@ -74,7 +73,7 @@ final class DDLInterpreterMetaProvider implements MetaProvider {
 
     @Override
     public Meta provide() {
-        final DDLInterpreter interpreter = new DDLInterpreter(configuration);
+        final DDLInterpreter interpreter = new DDLInterpreter();
         Configuration localConfiguration = configuration.derive();
         DSLContext ctx = DSL.using(localConfiguration);
         for (Source script : scripts)

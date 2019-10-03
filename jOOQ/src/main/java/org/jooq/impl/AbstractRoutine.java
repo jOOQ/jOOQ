@@ -133,6 +133,7 @@ import org.jooq.UDT;
 import org.jooq.UDTField;
 import org.jooq.UDTRecord;
 import org.jooq.XMLFormat;
+import org.jooq.conf.SettingsTools;
 import org.jooq.exception.ControlFlowSignal;
 import org.jooq.exception.MappingException;
 import org.jooq.impl.ResultsImpl.ResultOrRowsImpl;
@@ -491,6 +492,11 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
             Tools.setFetchSize(ctx, 0);
             // [#1856] TODO: Add Statement flags like timeout here
             listener.prepareEnd(ctx);
+
+            // [#9295] use query timeout from settings
+            int t = SettingsTools.getQueryTimeout(0, ctx.settings());
+            if (t != 0)
+                ctx.statement().setQueryTimeout(t);
 
             listener.bindStart(ctx);
             using(configuration).bindContext(ctx.statement()).visit(this);

@@ -60,6 +60,7 @@ import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Param;
 import org.jooq.Query;
+import org.jooq.conf.SettingsTools;
 import org.jooq.exception.ControlFlowSignal;
 import org.jooq.tools.JooqLogger;
 
@@ -212,6 +213,11 @@ final class BatchSingle implements BatchBindStep {
             listener.prepareStart(ctx);
             ctx.statement(connection.prepareStatement(ctx.sql()));
             listener.prepareEnd(ctx);
+
+            // [#9295] use query timeout from settings
+            int t = SettingsTools.getQueryTimeout(0, ctx.settings());
+            if (t != 0)
+                ctx.statement().setQueryTimeout(t);
 
             for (Object[] bindValues : allBindValues) {
                 listener.bindStart(ctx);

@@ -45,6 +45,7 @@ import org.jooq.Configuration;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Query;
+import org.jooq.conf.SettingsTools;
 import org.jooq.exception.ControlFlowSignal;
 
 /**
@@ -98,6 +99,11 @@ final class BatchMultiple implements Batch {
                 ctx.statement().addBatch(batchSQL[i]);
                 listener.prepareEnd(ctx);
             }
+
+            // [#9295] use query timeout from settings
+            int t = SettingsTools.getQueryTimeout(0, ctx.settings());
+            if (t != 0)
+                ctx.statement().setQueryTimeout(t);
 
             listener.executeStart(ctx);
 

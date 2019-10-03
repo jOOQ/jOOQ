@@ -37,20 +37,17 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.AbstractName.NO_NAME;
 import static org.jooq.impl.DSL.unquotedName;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.jooq.Binding;
 import org.jooq.Catalog;
 import org.jooq.Comment;
-import org.jooq.Configuration;
 import org.jooq.Constraint;
-import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Index;
@@ -61,37 +58,40 @@ import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.SortField;
+import org.jooq.SortOrder;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataDefinitionException;
-import org.jooq.tools.JooqLogger;
 
+@SuppressWarnings("serial")
 final class DDLInterpreter {
 
-    private final Map<Name, MutableCatalog> catalogs       = new LinkedHashMap<>();
-    private final Configuration             configuration;
+    private final Map<Name, MutableCatalog> catalogs = new LinkedHashMap<>();
     private final MutableCatalog            defaultCatalog;
     private final MutableSchema             defaultSchema;
     private MutableSchema                   currentSchema;
-    private JooqLogger                      log            = JooqLogger.getLogger(DDLInterpreter.class);
 
-    DDLInterpreter(Configuration configuration) {
-        this.configuration = configuration;
-        defaultCatalog = new MutableCatalog(null);
-        catalogs.put(defaultCatalog.getUnqualifiedName(), defaultCatalog);
-        defaultSchema = new MutableSchema(null, defaultCatalog);
+    DDLInterpreter() {
+        defaultCatalog = new MutableCatalog(NO_NAME);
+        catalogs.put(defaultCatalog.name, defaultCatalog);
+        defaultSchema = new MutableSchema(NO_NAME, defaultCatalog);
         currentSchema = defaultSchema;
     }
 
-    Meta meta() {
+    final Meta meta() {
         return new AbstractMeta() {
             private static final long serialVersionUID = 2052806256506059701L;
 
             @Override
             protected List<Catalog> getCatalogs0() throws DataAccessException {
-                return new ArrayList<>(catalogs.values());
+                List<Catalog> result = new ArrayList<>();
+
+                for (MutableCatalog catalog : catalogs.values())
+                    result.add(catalog.new InterpretedCatalog());
+
+                return result;
             }
         };
     }
@@ -99,6 +99,8 @@ final class DDLInterpreter {
     final void accept(Query query) {
         if (query instanceof CreateSchemaImpl)
             accept0((CreateSchemaImpl) query);
+        else if (query instanceof AlterSchemaImpl)
+            accept0((AlterSchemaImpl) query);
         else if (query instanceof DropSchemaImpl)
             accept0((DropSchemaImpl) query);
         else if (query instanceof CreateTableImpl)
@@ -122,6 +124,29 @@ final class DDLInterpreter {
         }
 
         getSchema(schema, true);
+    }
+
+    private final void accept0(AlterSchemaImpl query) {
+        Schema schema = query.$schema();
+        Schema renameTo = query.$renameTo();
+
+        MutableSchema oldSchema = getSchema(schema, false);
+        if (oldSchema == null) {
+            if (!query.$ifExists())
+                throw new DataDefinitionException("Schema does not exist: " + schema.getQualifiedName());
+
+            return;
+        }
+
+        if (renameTo != null) {
+            if (getSchema(renameTo, false) != null)
+                throw new DataDefinitionException("Schema already exists: " + renameTo.getQualifiedName());
+
+            oldSchema.name = (UnqualifiedName) renameTo.getUnqualifiedName();
+            return;
+        }
+        else
+            throw new UnsupportedOperationException(query.getSQL());
     }
 
     private final void accept0(DropSchemaImpl query) {
@@ -149,48 +174,48 @@ final class DDLInterpreter {
         Table<?> table = query.$table();
         MutableSchema schema = getSchema(table.getSchema(), true);
 
-        if (schema.getTable(table.getUnqualifiedName()) != null) {
+        if (schema.getTable((UnqualifiedName) table.getUnqualifiedName()) != null) {
             if (!query.$ifNotExists())
                 throw new DataDefinitionException("Table already exists: " + table.getQualifiedName());
 
             return;
         }
 
-        MutableTable t = new MutableTable(table.getUnqualifiedName(), schema, query.$comment());
+        MutableTable t = new MutableTable((UnqualifiedName) table.getUnqualifiedName(), schema, query.$comment());
         List<Field<?>> columns = query.$columnFields();
-        if (!columns.isEmpty())
+        if (!columns.isEmpty()) {
             for (int i = 0; i < columns.size(); i++) {
                 Field<?> column = columns.get(i);
-                t.addColumn(column.getUnqualifiedName(), query.$columnTypes().get(i));
+                t.fields.add(new MutableField((UnqualifiedName) column.getUnqualifiedName(), t, query.$columnTypes().get(i)));
             }
-        else if (query.$select() != null)
+        }
+        else if (query.$select() != null) {
             for (Field<?> column : query.$select().fields())
-                t.addColumn(column.getUnqualifiedName(), column.getDataType());
+                t.fields.add(new MutableField((UnqualifiedName) column.getUnqualifiedName(), t, column.getDataType()));
+        }
 
-        for (Constraint constraint : query.$constraints())
-            if (constraint instanceof ConstraintImpl) {
-                ConstraintImpl impl = (ConstraintImpl) constraint;
-                // XXX handle case that primary key already exists?
-                if (impl.$primaryKey() != null)
-                    t.addPrimaryKey(impl.getUnqualifiedName(), impl.$primaryKey());
-                if (impl.$unique() != null)
-                    t.addUniqueKey(impl.getUnqualifiedName(), impl.$unique());
-            }
-            else
-                // XXX log warning?
-                ;
-        for (Index index : query.$indexes())
-            if (index instanceof IndexImpl) {
-                IndexImpl impl = (IndexImpl) index;
-                t.addIndex(impl.getUnqualifiedName(), impl.$fields(), impl.$unique());
-            }
+        for (Constraint constraint : query.$constraints()) {
+            ConstraintImpl impl = (ConstraintImpl) constraint;
+
+            // XXX handle case that primary key already exists?
+            if (impl.$primaryKey() != null)
+                t.primaryKey = new MutableUniqueKey((UnqualifiedName) impl.getUnqualifiedName(), t, t.fields(impl.$primaryKey()));
+
+            else if (impl.$unique() != null)
+                t.uniqueKeys.add(new MutableUniqueKey((UnqualifiedName) impl.getUnqualifiedName(), t, t.fields(impl.$unique())));
+        }
+
+        for (Index index : query.$indexes()) {
+            IndexImpl impl = (IndexImpl) index;
+            t.indexes.add(new MutableIndex((UnqualifiedName) impl.getUnqualifiedName(), t, t.sortFields(impl.$fields()), impl.$unique()));
+        }
     }
 
     private final void accept0(AlterTableImpl query) {
         Table<?> table = query.$table();
         MutableSchema schema = getSchema(table.getSchema(), false);
 
-        MutableTable existing = schema.getTable(table.getUnqualifiedName());
+        MutableTable existing = schema.getTable((UnqualifiedName) table.getUnqualifiedName());
         if (existing == null) {
             if (!query.$ifExists())
                 throw new DataDefinitionException("Table does not exist: " + table.getQualifiedName());
@@ -201,18 +226,25 @@ final class DDLInterpreter {
         Field<?> addColumn = query.$addColumn();
         if (addColumn != null) {
             if (query.$addFirst())
-                existing.addColumn(addColumn.getUnqualifiedName(), query.$addColumnType(), 0);
+                existing.fields.add(0, new MutableField((UnqualifiedName) addColumn.getUnqualifiedName(), existing, query.$addColumnType()));
             else if (query.$addBefore() != null)
-                existing.addColumn(addColumn.getUnqualifiedName(), query.$addColumnType(), indexOrFail(existing, query.$addBefore()));
+                existing.fields.add(indexOrFail(existing, query.$addBefore()), new MutableField((UnqualifiedName) addColumn.getUnqualifiedName(), existing, query.$addColumnType()));
             else if (query.$addAfter() != null)
-                existing.addColumn(addColumn.getUnqualifiedName(), query.$addColumnType(), indexOrFail(existing, query.$addAfter()) + 1);
+                existing.fields.add(indexOrFail(existing, query.$addAfter()) + 1, new MutableField((UnqualifiedName) addColumn.getUnqualifiedName(), existing, query.$addColumnType()));
             else
-                existing.addColumn(addColumn.getUnqualifiedName(), query.$addColumnType());
+                existing.fields.add(new MutableField((UnqualifiedName) addColumn.getUnqualifiedName(), existing, query.$addColumnType()));
         }
     }
 
-    private int indexOrFail(MutableTable existing, Field<?> field) {
-        int result = existing.indexOf(field);
+    private final int indexOrFail(MutableTable existing, Field<?> field) {
+        int result = -1;
+
+        for (int i = 0; i < existing.fields.size(); i++) {
+            if (existing.fields.get(i).name.equals(field.getUnqualifiedName())) {
+                result = i;
+                break;
+            }
+        }
 
         if (result == -1)
             throw new DataDefinitionException("Field does not exist: " + field.getQualifiedName());
@@ -225,7 +257,7 @@ final class DDLInterpreter {
         MutableSchema schema = getSchema(table.getSchema(), false);
 
         // TODO schema == null
-        MutableTable existing = schema.dropTable(table.getUnqualifiedName());
+        MutableTable existing = schema.dropTable((UnqualifiedName) table.getUnqualifiedName());
         if (existing == null) {
             if (!query.$ifExists())
                 throw new DataDefinitionException("Table does not exist: " + table.getQualifiedName());
@@ -242,14 +274,14 @@ final class DDLInterpreter {
         if (input.getCatalog() != null) {
             Name catalogName = input.getCatalog().getUnqualifiedName();
             if ((catalog = catalogs.get(catalogName)) == null && create)
-                catalogs.put(catalogName, catalog = new MutableCatalog(catalogName));
+                catalogs.put(catalogName, catalog = new MutableCatalog((UnqualifiedName) catalogName));
         }
 
         if (catalog == null)
             return null;
 
         MutableSchema schema = defaultSchema;
-        Name schemaName = input.getUnqualifiedName();
+        UnqualifiedName schemaName = (UnqualifiedName) input.getUnqualifiedName();
         if ((schema = catalog.getSchema(schemaName)) == null && create)
             // TODO createSchemaIfNotExists should probably be configurable
             schema = new MutableSchema(schemaName, catalog);
@@ -257,183 +289,290 @@ final class DDLInterpreter {
         return schema;
     }
 
-    private static Name normalize(Name name) {
+    private static UnqualifiedName normalize(UnqualifiedName name) {
         if (name == null)
             return null;
-        if (name instanceof UnqualifiedName) {
-            if (name.quoted() == Quoted.QUOTED)
-                return name;
-            String lowerCase = name.first().toLowerCase();
-            return name.first() == lowerCase ? name : unquotedName(lowerCase);
-        }
 
-        Name[] parts = name.parts();
-        for (int i = 0; i < parts.length; i++)
-            parts[i] = normalize(parts[i]);
-        return DSL.name(parts);
+        if (name.quoted() == Quoted.QUOTED)
+            return name;
+
+        String lowerCase = name.first().toLowerCase();
+        return (UnqualifiedName) (name.first() == lowerCase ? name : unquotedName(lowerCase));
     }
 
-    private static class MutableCatalog extends CatalogImpl {
-        private static final long   serialVersionUID = 9061637392590064527L;
+    private static abstract class MutableNamed {
+        UnqualifiedName name;
+        Comment         comment;
 
-        private List<MutableSchema> schemas          = new ArrayList<>();
-
-        MutableCatalog(Name name) {
-            super(normalize(name));
+        MutableNamed(UnqualifiedName name) {
+            this(name, null);
         }
 
-        @SuppressWarnings("unchecked")
+        MutableNamed(UnqualifiedName name, Comment comment) {
+            this.name = normalize(name);
+            this.comment = comment;
+        }
+
         @Override
-        public List<Schema> getSchemas() {
-            return Collections.unmodifiableList((List<Schema>) (List<?>) schemas);
+        public String toString() {
+            return name.toString();
+        }
+    }
+
+    private static final class MutableCatalog extends MutableNamed {
+        List<MutableSchema> schemas = new ArrayList<>();
+
+        MutableCatalog(UnqualifiedName name) {
+            super(name, null);
         }
 
-        MutableSchema getSchema(Name name) {
+        final MutableSchema getSchema(UnqualifiedName n) {
             for (MutableSchema schema : schemas)
-                if (schema.getUnqualifiedName().equals(name))
+                if (schema.name.equals(n))
                     return schema;
+
             return null;
         }
+
+        private final class InterpretedCatalog extends CatalogImpl {
+            InterpretedCatalog() {
+                super(MutableCatalog.this.name, MutableCatalog.this.comment);
+            }
+
+            @Override
+            public final List<Schema> getSchemas() {
+                List<Schema> result = new ArrayList<>(schemas.size());
+
+                for (MutableSchema schema : schemas)
+                    result.add(schema.new InterpretedSchema(this));
+
+                return result;
+            }
+        }
     }
 
-    private static class MutableSchema extends SchemaImpl {
-        private static final long        serialVersionUID = -6704449383643804804L;
+    private static final class MutableSchema extends MutableNamed  {
+        MutableCatalog     catalog;
+        List<MutableTable> tables = new ArrayList<>();
 
-        private final MutableCatalog     catalog;
-        private final List<MutableTable> tables           = new ArrayList<>();
+        MutableSchema(UnqualifiedName name, MutableCatalog catalog) {
+            super(name);
 
-        MutableSchema(Name name, MutableCatalog catalog) {
-            super(normalize(name), null);
             this.catalog = catalog;
             catalog.schemas.add(this);
         }
 
-        @Override
-        public Catalog getCatalog() {
-            return catalog;
-        }
-
-        @Override
-        @SuppressWarnings({ "unchecked", "rawtypes" })
-        public List<Table<?>> getTables() {
-            return Collections.unmodifiableList((List) tables);
-        }
-
-        boolean isEmpty() {
+        final boolean isEmpty() {
             return tables.isEmpty();
         }
 
-        MutableTable getTable(Name name) {
-            name = normalize(name);
+        final MutableTable getTable(UnqualifiedName n) {
+            n = normalize(n);
             for (MutableTable table : tables)
-                if (table.getUnqualifiedName().equals(name))
+                if (table.name.equals(n))
                     return table;
             return null;
         }
 
-        MutableTable dropTable(Name name) {
-            name = normalize(name);
+        final MutableTable dropTable(UnqualifiedName n) {
+            n = normalize(n);
             for (int i = 0; i < tables.size(); i++)
-                if (tables.get(i).getUnqualifiedName().equals(name))
+                if (tables.get(i).name.equals(n))
                     return tables.remove(i);
             return null;
         }
 
+        private final class InterpretedSchema extends SchemaImpl {
+            InterpretedSchema(MutableCatalog.InterpretedCatalog catalog) {
+                super(MutableSchema.this.name, catalog, MutableSchema.this.comment);
+            }
+
+            @Override
+            public final List<Table<?>> getTables() {
+                List<Table<?>> result = new ArrayList<>(tables.size());
+
+                for (MutableTable table : tables)
+                    result.add(table.new InterpretedTable(this));
+
+                return result;
+            }
+        }
     }
 
-    private static class MutableTable extends TableImpl<Record> {
-        private static final long       serialVersionUID = -7474225786973716638L;
+    private static final class MutableTable extends MutableNamed  {
+        MutableSchema          schema;
+        List<MutableField>     fields     = new ArrayList<>();
+        MutableUniqueKey       primaryKey;
+        List<MutableUniqueKey> uniqueKeys = new ArrayList<>();
+        List<MutableIndex>     indexes    = new ArrayList<>();
 
-        private UniqueKey<Record>       primaryKey;
-        private List<UniqueKey<Record>> keys;
-        private List<Index>             indexes;
+        MutableTable(UnqualifiedName name, MutableSchema schema, Comment comment) {
+            super(name, comment);
 
-        MutableTable(Name name, MutableSchema schema, Comment comment) {
-            super(normalize(name), schema, null, null, comment);
+            this.schema = schema;
             schema.tables.add(this);
         }
 
-        void addColumn(Name name, DataType<?> dataType) {
-            createField(normalize(name), dataType);
+        final MutableField field(Field<?> f) {
+            Name n = f.getUnqualifiedName();
+
+            for (MutableField mf : fields)
+                if (mf.name.equals(n))
+                    return mf;
+
+            return null;
         }
 
-        void addColumn(Name name, DataType<?> dataType, int position) {
-            createField(normalize(name), dataType, this, null, null, null, position);
-        }
+        final List<MutableField> fields(Field<?>... fs) {
+            List<MutableField> result = new ArrayList<>();
 
-        // TODO Remove this implementation copy from AbstractTable again, replace by new
-        // mutable meta model, see https://github.com/jOOQ/jOOQ/issues/8528#issuecomment-530238124
-        protected static final <R extends Record, T, X, U> TableField<R, U> createField(Name name, DataType<T> type, Table<R> table, String comment, Converter<X, U> converter, Binding<T, X> binding, int position) {
-            final Binding<T, U> actualBinding = DefaultBinding.newBinding(converter, type, binding);
-            final DataType<U> actualType =
-                converter == null && binding == null
-              ? (DataType<U>) type
-              : type.asConvertedDataType(actualBinding);
+            for (Field<?> f : fs) {
+                MutableField mf = field(f);
 
-            // [#5999] TODO: Allow for user-defined Names
-            final TableFieldImpl<R, U> tableField = new TableFieldImpl<>(name, actualType, table, DSL.comment(comment), actualBinding);
+                if (mf == null)
+                    throw new DataDefinitionException("Field does not exist in table: " + f.getQualifiedName());
 
-            // [#1199] The public API of Table returns immutable field lists
-            if (table instanceof TableImpl) {
-                ((TableImpl<?>) table).fields0().add(position, tableField);
+                result.add(mf);
             }
 
-            return tableField;
-        }
-
-        @SuppressWarnings({ "unchecked", "rawtypes" })
-        void addPrimaryKey(Name name, Field<?>[] primaryKeyFields) {
-            if (primaryKeyFields != null)
-                this.primaryKey = new UniqueKeyImpl(this, normalize(name).first(), copiedFields(primaryKeyFields));
-        }
-
-        @SuppressWarnings({ "rawtypes", "unchecked" })
-        void addUniqueKey(Name name, Field<?>[] uniqueKeyFields) {
-            if (uniqueKeyFields != null) {
-                if (keys == null)
-                    keys = new ArrayList<>();
-                keys.add(new UniqueKeyImpl(this, normalize(name).first(), copiedFields(uniqueKeyFields)));
-            }
-        }
-
-        void addIndex(Name name, SortField<?>[] indexFields, boolean unique) {
-            // XXX copy fields?
-            if (indexes == null)
-                indexes = new ArrayList<>();
-            indexes.add(Internal.createIndex(normalize(name).first(), this, indexFields, unique));
-        }
-
-        private final TableField<?, ?>[] copiedFields(Field<?>[] input) {
-            TableField<?, ?>[] result = new TableField[input.length];
-            for (int i = 0; i < input.length; i++)
-                result[i] = (TableField<?, ?>) field(normalize(input[i].getUnqualifiedName()));
             return result;
         }
 
-        @Override
-        public UniqueKey<Record> getPrimaryKey() {
-            return primaryKey;
+        final List<MutableSortField> sortFields(SortField<?>... sfs) {
+            List<MutableSortField> result = new ArrayList<>();
+
+            for (SortField<?> sf : sfs) {
+                Field<?> f = ((SortFieldImpl<?>) sf).getField();
+                MutableField mf = field(f);
+
+                if (mf == null)
+                    throw new DataDefinitionException("Field does not exist in table: " + f.getQualifiedName());
+
+                result.add(new MutableSortField(mf, sf.getOrder()));
+            }
+
+            return result;
         }
 
-        @SuppressWarnings({ "unchecked", "rawtypes" })
-        @Override
-        public List<UniqueKey<Record>> getKeys() {
-            if (primaryKey == null)
-                return keys == null ? Collections.emptyList() : Collections.unmodifiableList((List) keys);
-            else if (keys == null)
-                return Collections.singletonList(primaryKey);
+        private final class InterpretedTable extends TableImpl<Record> {
+            InterpretedTable(MutableSchema.InterpretedSchema schema) {
+                super(MutableTable.this.name, schema, null, null, MutableTable.this.comment);
 
-            List<UniqueKey<Record>> result = new ArrayList<>();
-            result.add(primaryKey);
-            result.addAll(keys);
-            return Collections.unmodifiableList(result);
-        }
+                for (MutableField field : MutableTable.this.fields)
+                    createField(field.name, field.type);
+            }
 
-        @SuppressWarnings({ "unchecked", "rawtypes" })
-        @Override
-        public List<Index> getIndexes() {
-            return indexes == null ? Collections.emptyList() : Collections.unmodifiableList((List) indexes);
+            @Override
+            public final UniqueKey<Record> getPrimaryKey() {
+                return interpretedKey(MutableTable.this.primaryKey);
+            }
+
+            @Override
+            public final List<UniqueKey<Record>> getKeys() {
+                List<UniqueKey<Record>> result = new ArrayList<>();
+                UniqueKey<Record> pk = getPrimaryKey();
+
+                if (pk != null)
+                    result.add(pk);
+
+                for (MutableUniqueKey uk : MutableTable.this.uniqueKeys)
+                    result.add(interpretedKey(uk));
+
+                return result;
+            }
+
+            @Override
+            public final List<Index> getIndexes() {
+                List<Index> result = new ArrayList<>();
+
+                for (MutableIndex i : MutableTable.this.indexes)
+                    result.add(interpretedIndex(i));
+
+                return result;
+            }
+
+            @SuppressWarnings("unchecked")
+            private final UniqueKey<Record> interpretedKey(MutableUniqueKey key) {
+                if (key == null)
+                    return null;
+
+                TableField<Record, ?>[] f = new TableField[key.fields.size()];
+
+                for (int i = 0; i < f.length; i++)
+                    f[i] = (TableField<Record, ?>) field(key.fields.get(i).name);
+
+                return new UniqueKeyImpl<Record>(this, key.name.last(), f);
+            }
+
+            private final Index interpretedIndex(MutableIndex idx) {
+                if (idx == null)
+                    return null;
+
+                SortField<?>[] f = new SortField[idx.fields.size()];
+
+                for (int i = 0; i < f.length; i++) {
+                    MutableSortField msf = idx.fields.get(i);
+                    f[i] = field(msf.name).sort(msf.sort);
+                }
+
+                return new IndexImpl(idx.name, this, f, null, idx.unique);
+            }
         }
     }
 
+    private static abstract class MutableKey extends MutableNamed {
+        MutableTable       table;
+        List<MutableField> fields;
+
+        MutableKey(UnqualifiedName name, MutableTable table, List<MutableField> fields) {
+            super(name);
+
+            this.table = table;
+            this.fields = fields;
+        }
+    }
+
+    private static final class MutableUniqueKey extends MutableKey {
+        MutableUniqueKey(UnqualifiedName name, MutableTable table, List<MutableField> fields) {
+            super(name, table, fields);
+        }
+    }
+
+    private static final class MutableIndex extends MutableNamed {
+        MutableTable           table;
+        List<MutableSortField> fields;
+        boolean                unique;
+
+        MutableIndex(UnqualifiedName name, MutableTable table, List<MutableSortField> fields, boolean unique) {
+            super(name);
+
+            this.table = table;
+            this.fields = fields;
+            this.unique = unique;
+        }
+    }
+
+    private static final class MutableField extends MutableNamed {
+        MutableTable table;
+        DataType<?> type;
+
+        MutableField(UnqualifiedName name, MutableTable table, DataType<?> type) {
+            super(name);
+
+            this.table = table;
+            this.type = type;
+        }
+    }
+
+    private static final class MutableSortField extends MutableNamed {
+        MutableField field;
+        SortOrder sort;
+
+        MutableSortField(MutableField field, SortOrder sort) {
+            super(field.name);
+
+            this.field = field;
+            this.sort = sort;
+        }
+    }
 }

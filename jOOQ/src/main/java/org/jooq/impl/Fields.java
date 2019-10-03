@@ -407,17 +407,6 @@ final class Fields<R extends Record> extends AbstractQueryPart implements Record
         fields = result;
     }
 
-    // TODO: Remove this method again when no longer needed by DDLInterpreter
-    final void add(int i, Field<?> f) {
-        Field<?>[] result = new Field[fields.length + 1];
-
-        System.arraycopy(fields, 0, result, 0, i);
-        System.arraycopy(fields, i, result, i + 1, fields.length - i);
-        result[i] = f;
-
-        fields = result;
-    }
-
     // -------------------------------------------------------------------------
     // XXX: [#8040] An abstraction over two possible return types.
     // -------------------------------------------------------------------------

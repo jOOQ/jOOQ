@@ -83,6 +83,10 @@ final class AlterSchemaImpl extends AbstractRowCountQuery implements
         this.ifExists = ifExists;
     }
 
+    final Schema  $schema()   { return schema; }
+    final boolean $ifExists() { return ifExists; }
+    final Schema  $renameTo() { return renameTo; }
+
     // ------------------------------------------------------------------------
     // XXX: DSL API
     // ------------------------------------------------------------------------

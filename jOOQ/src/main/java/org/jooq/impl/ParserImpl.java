@@ -10486,7 +10486,7 @@ final class ParserImpl implements Parser {
                                 switch (ctx.sql[i]) {
                                     case '\r':
                                     case '\n':
-                                        position = i;
+                                        position = i + 1;
                                         continue loop;
                                 }
                             }

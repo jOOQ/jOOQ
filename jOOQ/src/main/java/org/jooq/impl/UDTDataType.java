@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import org.jooq.Name;
 import org.jooq.SQLDialect;
 import org.jooq.UDT;
 import org.jooq.UDTRecord;
@@ -56,14 +57,17 @@ final class UDTDataType<R extends UDTRecord<R>> extends DefaultDataType<R> {
     }
 
     private static String getQualifiedName(UDT<?> udt) {
+        Name name = udt.getQualifiedName();
+        if (!name.qualified())
+            return name.first();
+
         StringBuilder sb = new StringBuilder();
-
-        if (udt.getSchema() != null) {
-            sb.append(udt.getSchema().getName());
-            sb.append(".");
+        Name[] parts = name.parts();
+        for (int i = 0; i < parts.length; i++) {
+            sb.append(parts[i].first());
+            if (i < parts.length - 1)
+                sb.append('.');
         }
-
-        sb.append(udt.getName());
         return sb.toString();
     }
 }

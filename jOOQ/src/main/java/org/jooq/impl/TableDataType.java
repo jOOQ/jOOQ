@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
@@ -57,14 +58,17 @@ final class TableDataType<R extends Record> extends DefaultDataType<R> {
     }
 
     private static String getQualifiedName(Table<?> table) {
+        Name name = table.getQualifiedName();
+        if (!name.qualified())
+            return name.first();
+
         StringBuilder sb = new StringBuilder();
-
-        if (table.getSchema() != null) {
-            sb.append(table.getSchema().getName());
-            sb.append(".");
+        Name[] parts = name.parts();
+        for (int i = 0; i < parts.length; i++) {
+            sb.append(parts[i].first());
+            if (i < parts.length - 1)
+                sb.append('.');
         }
-
-        sb.append(table.getName());
         return sb.toString();
     }
 }

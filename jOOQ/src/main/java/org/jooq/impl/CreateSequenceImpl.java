@@ -91,7 +91,7 @@ final class CreateSequenceImpl extends AbstractRowCountQuery implements
     private static final Set<SQLDialect>     NO_SUPPORT_IF_NOT_EXISTS = SQLDialect.supported(DERBY, FIREBIRD);
     private static final Set<SQLDialect>     REQUIRES_START_WITH      = SQLDialect.supported(DERBY);
     private static final Set<SQLDialect>     NO_SUPPORT_CACHE         = SQLDialect.supported(DERBY, HSQLDB);
-    private static final Set<SQLDialect>     NO_SEPARATOR             = SQLDialect.supported(MARIADB);
+    private static final Set<SQLDialect>     NO_SEPARATOR             = SQLDialect.supported(CUBRID, MARIADB);
     private static final Set<SQLDialect>     OMIT_NO_CACHE            = SQLDialect.supported(POSTGRES);
 
     private final Sequence<?>                sequence;

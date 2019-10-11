@@ -249,6 +249,7 @@ final class DDLInterpreter {
         Field<?> addColumn = query.$addColumn();
         Field<?> alterColumn = query.$alterColumn();
         Field<?> alterColumnDefault = query.$alterColumnDefault();
+        boolean alterColumnDropDefault = query.$alterColumnDropDefault();
         Nullability alterColumnNullability = query.$alterColumnNullability();
         DataType<?> alterColumnType = query.$alterColumnType();
         boolean ifExistsColumn = query.$ifExistsColumn();
@@ -284,6 +285,8 @@ final class DDLInterpreter {
                 existingField.type = alterColumnType;
             else if (alterColumnDefault != null)
                 existingField.type = existingField.type.default_((Field) alterColumnDefault);
+            else if (alterColumnDropDefault)
+                existingField.type = existingField.type.default_((Field) null);
             else
                 throw unsupportedQuery(query);
         }

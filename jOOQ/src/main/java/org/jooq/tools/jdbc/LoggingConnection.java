@@ -41,6 +41,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import org.jooq.tools.JooqLogger;
 
@@ -53,6 +54,21 @@ public class LoggingConnection extends DefaultConnection {
 
     public LoggingConnection(Connection delegate) {
         super(delegate);
+    }
+
+    @Override
+    public Statement createStatement() throws SQLException {
+        return new LoggingStatement(super.createStatement());
+    }
+
+    @Override
+    public Statement createStatement(int resultSetType, int resultSetConcurrency) throws SQLException {
+        return new LoggingStatement(super.createStatement(resultSetType, resultSetConcurrency));
+    }
+
+    @Override
+    public Statement createStatement(int resultSetType, int resultSetConcurrency, int resultSetHoldability) throws SQLException {
+        return new LoggingStatement(super.createStatement(resultSetType, resultSetConcurrency, resultSetHoldability));
     }
 
     @Override

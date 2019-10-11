@@ -279,6 +279,8 @@ final class DDLInterpreter {
 
             if (alterColumnNullability != null)
                 existingField.type = existingField.type.nullability(alterColumnNullability);
+            else if (alterColumnType != null)
+                existingField.type = alterColumnType;
             else
                 throw unsupportedQuery(query);
         }

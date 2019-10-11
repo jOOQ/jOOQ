@@ -231,6 +231,7 @@ final class DDLInterpreter {
         }
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     private final void accept0(AlterTableImpl query) {
         Table<?> table = query.$table();
         MutableSchema schema = getSchema(table.getSchema());
@@ -281,6 +282,8 @@ final class DDLInterpreter {
                 existingField.type = existingField.type.nullability(alterColumnNullability);
             else if (alterColumnType != null)
                 existingField.type = alterColumnType;
+            else if (alterColumnDefault != null)
+                existingField.type = existingField.type.default_((Field) alterColumnDefault);
             else
                 throw unsupportedQuery(query);
         }

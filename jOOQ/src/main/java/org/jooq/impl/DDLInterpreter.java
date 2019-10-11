@@ -58,6 +58,7 @@ import org.jooq.Meta;
 import org.jooq.Name;
 import org.jooq.Name.Quoted;
 import org.jooq.Named;
+import org.jooq.Nullability;
 import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Schema;
@@ -245,6 +246,12 @@ final class DDLInterpreter {
             throw objectNotTable(table);
 
         Field<?> addColumn = query.$addColumn();
+        Field<?> alterColumn = query.$alterColumn();
+        Field<?> alterColumnDefault = query.$alterColumnDefault();
+        Nullability alterColumnNullability = query.$alterColumnNullability();
+        DataType<?> alterColumnType = query.$alterColumnType();
+        boolean ifExistsColumn = query.$ifExistsColumn();
+        boolean ifNotExistsColumn = query.$ifNotExistsColumn();
         Table<?> renameTo = query.$renameTo();
         Field<?> renameColumn = query.$renameColumn();
         Field<?> renameColumnTo = query.$renameColumnTo();
@@ -259,6 +266,21 @@ final class DDLInterpreter {
                 existing.fields.add(indexOrFail(existing, query.$addAfter()) + 1, new MutableField((UnqualifiedName) addColumn.getUnqualifiedName(), existing, query.$addColumnType()));
             else
                 existing.fields.add(new MutableField((UnqualifiedName) addColumn.getUnqualifiedName(), existing, query.$addColumnType()));
+        }
+        else if (alterColumn != null) {
+            MutableField existingField = existing.field(alterColumn);
+
+            if (existingField == null) {
+                if (!ifExistsColumn)
+                    throw columnNotExists(alterColumn);
+
+                return;
+            }
+
+            if (alterColumnNullability != null)
+                existingField.type = existingField.type.nullability(alterColumnNullability);
+            else
+                throw unsupportedQuery(query);
         }
         else if (renameTo != null && checkNotExists(schema, renameTo)) {
             existing.name = (UnqualifiedName) renameTo.getUnqualifiedName();
@@ -430,7 +452,18 @@ final class DDLInterpreter {
     }
 
     private final void accept0(DropSequenceImpl query) {
+        Sequence<?> sequence = query.$sequence();
+        MutableSchema schema = getSchema(sequence.getSchema());
 
+        MutableSequence existing = schema.sequence(sequence);
+        if (existing == null) {
+            if (!query.$ifExists())
+                throw sequenceNotExists(sequence);
+
+            return;
+        }
+
+        schema.sequences.remove(existing);
     }
 
     private final void accept0(CommentOnImpl query) {
@@ -487,6 +520,14 @@ final class DDLInterpreter {
 
     private static final DataDefinitionException viewAlreadyExists(Table<?> view) {
         return new DataDefinitionException("View already exists: " + view.getQualifiedName());
+    }
+
+    private static final DataDefinitionException columnNotExists(Field<?> field) {
+        return new DataDefinitionException("Column does not exist: " + field.getQualifiedName());
+    }
+
+    private static final DataDefinitionException columnAlreadyExists(Field<?> field) {
+        return new DataDefinitionException("Column already exists: " + field.getQualifiedName());
     }
 
     private static final DataDefinitionException sequenceNotExists(Sequence<?> sequence) {

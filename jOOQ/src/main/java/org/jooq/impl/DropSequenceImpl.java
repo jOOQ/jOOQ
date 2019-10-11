@@ -92,6 +92,9 @@ final class DropSequenceImpl extends AbstractRowCountQuery implements
         this.ifExists = ifExists;
     }
 
+    final Sequence<?> $sequence() { return sequence; }
+    final boolean     $ifExists() { return ifExists; }
+
     // ------------------------------------------------------------------------
     // XXX: QueryPart API
     // ------------------------------------------------------------------------

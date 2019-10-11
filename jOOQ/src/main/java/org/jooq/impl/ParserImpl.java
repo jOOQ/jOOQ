@@ -4043,6 +4043,8 @@ final class ParserImpl implements Parser {
         if (!paren)
             if (parseKeywordIf(ctx, "DROP NOT NULL") || parseKeywordIf(ctx, "NULL"))
                 return s1.alter(field).dropNotNull();
+            else if (parseKeywordIf(ctx, "DROP DEFAULT"))
+                return s1.alter(field).dropDefault();
             else if (parseKeywordIf(ctx, "SET NOT NULL") || parseKeywordIf(ctx, "NOT NULL"))
                 return s1.alter(field).setNotNull();
             else if (parseKeywordIf(ctx, "SET DEFAULT"))

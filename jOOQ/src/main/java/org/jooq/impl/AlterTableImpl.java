@@ -102,6 +102,7 @@ import static org.jooq.impl.Keywords.K_DEFAULT;
 import static org.jooq.impl.Keywords.K_DROP;
 import static org.jooq.impl.Keywords.K_DROP_COLUMN;
 import static org.jooq.impl.Keywords.K_DROP_CONSTRAINT;
+import static org.jooq.impl.Keywords.K_DROP_DEFAULT;
 import static org.jooq.impl.Keywords.K_DROP_NOT_NULL;
 import static org.jooq.impl.Keywords.K_ELSE;
 import static org.jooq.impl.Keywords.K_END_IF;
@@ -254,6 +255,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
     private Nullability                      alterColumnNullability;
     private DataType<?>                      alterColumnType;
     private Field<?>                         alterColumnDefault;
+    private boolean                          alterColumnDropDefault;
     private QueryPartList<Field<?>>          dropColumns;
     private boolean                          dropColumnCascade;
     private Constraint                       dropConstraint;
@@ -283,6 +285,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
     final Nullability    $alterColumnNullability() { return alterColumnNullability; }
     final DataType<?>    $alterColumnType()        { return alterColumnType; }
     final Field<?>       $alterColumnDefault()     { return alterColumnDefault; }
+    final boolean        $alterColumnDropDefault() { return alterColumnDropDefault; }
     final Table<?>       $renameTo()               { return renameTo; }
     final Field<?>       $renameColumn()           { return renameColumn; }
     final Field<?>       $renameColumnTo()         { return renameColumnTo; }
@@ -627,22 +630,38 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
     @Override
     public final AlterTableImpl defaultValue(Object literal) {
-        return default_(literal);
+        return setDefault(literal);
     }
 
     @Override
     public final AlterTableImpl defaultValue(Field expression) {
-        return default_(expression);
+        return setDefault(expression);
     }
 
     @Override
     public final AlterTableImpl default_(Object literal) {
-        return default_(Tools.field(literal));
+        return setDefault(literal);
     }
 
     @Override
     public final AlterTableImpl default_(Field expression) {
+        return setDefault(expression);
+    }
+
+    @Override
+    public final AlterTableImpl setDefault(Object literal) {
+        return default_(Tools.field(literal));
+    }
+
+    @Override
+    public final AlterTableImpl setDefault(Field expression) {
         alterColumnDefault = expression;
+        return this;
+    }
+
+    @Override
+    public final AlterTableImpl dropDefault() {
+        alterColumnDropDefault = true;
         return this;
     }
 
@@ -1266,7 +1285,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
                 case MYSQL: {
 
                     // MySQL's CHANGE COLUMN clause has a mandatory RENAMING syntax...
-                    if (alterColumnDefault == null)
+                    if (alterColumnDefault == null && !alterColumnDropDefault)
                         ctx.visit(K_CHANGE_COLUMN)
                            .sql(' ').qualify(false).visit(alterColumn).qualify(true);
                     else
@@ -1344,6 +1363,27 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
                 ctx.sql(' ').visit(alterColumnDefault)
                    .end(ALTER_TABLE_ALTER_DEFAULT);
+            }
+            else if (alterColumnDropDefault) {
+                ctx.start(ALTER_TABLE_ALTER_DEFAULT);
+
+                switch (family) {
+
+
+
+
+
+
+
+
+                    // [#9354] TODO: Research the syntax in the various dialects
+                    //         and add integration tests.
+                    default:
+                        ctx.sql(' ').visit(K_DROP_DEFAULT);
+                        break;
+                }
+
+                ctx.end(ALTER_TABLE_ALTER_DEFAULT);
             }
             else if (alterColumnNullability != null) {
                 ctx.start(ALTER_TABLE_ALTER_NULL)

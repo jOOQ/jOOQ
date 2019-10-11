@@ -114,6 +114,24 @@ public interface AlterTableAlterStep<T> {
     AlterTableFinalStep default_(Field<T> expression);
 
     /**
+     * Specify a new column <code>DEFAULT</code>.
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    AlterTableFinalStep setDefault(T literal);
+
+    /**
+     * Specify a new column <code>DEFAULT</code>.
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    AlterTableFinalStep setDefault(Field<T> expression);
+
+    /**
+     * Drop the column <code>DEFAULT</code>.
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    AlterTableFinalStep dropDefault();
+
+    /**
      * Specify a new column data type.
      * <p>
      * This adds or removes <code>NOT NULL</code> constraints on the column if

@@ -43,15 +43,9 @@ import static org.jooq.tools.StringUtils.isBlank;
 
 import java.io.File;
 import java.io.InputStream;
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Properties;
 import java.util.Scanner;
-import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -68,12 +62,10 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultVisitListener;
 import org.jooq.impl.ParserException;
-import org.jooq.meta.SchemaDefinition;
-import org.jooq.meta.h2.H2Database;
+import org.jooq.meta.extensions.AbstractInterpretingDatabase;
 import org.jooq.meta.tools.FilePattern;
 import org.jooq.meta.tools.FilePattern.Loader;
 import org.jooq.tools.JooqLogger;
-import org.jooq.tools.jdbc.JDBCUtils;
 
 import org.h2.api.ErrorCode;
 
@@ -89,101 +81,83 @@ import org.h2.api.ErrorCode;
  *
  * @author Lukas Eder
  */
-public class DDLDatabase extends H2Database {
+public class DDLDatabase extends AbstractInterpretingDatabase {
 
     private static final JooqLogger log    = JooqLogger.getLogger(DDLDatabase.class);
     private static final Pattern    P_NAME = Pattern.compile("(?s:.*?\"([^\"]*)\".*)");
 
-    private Connection              connection;
-    private DSLContext              ctx;
-    private boolean                 publicIsDefault;
-
     @Override
-    protected DSLContext create0() {
-        if (connection == null) {
-            Settings defaultSettings = new Settings();
+    protected void export() throws Exception {
+        Settings defaultSettings = new Settings();
+        String scripts = getProperties().getProperty("scripts");
+        String encoding = getProperties().getProperty("encoding", "UTF-8");
+        String sort = getProperties().getProperty("sort", "semantic").toLowerCase();
+        final String defaultNameCase = getProperties().getProperty("defaultNameCase", "as_is").toUpperCase();
+        boolean parseIgnoreComments = !"false".equalsIgnoreCase(getProperties().getProperty("parseIgnoreComments"));
+        String parseIgnoreCommentStart = getProperties().getProperty("parseIgnoreCommentStart", defaultSettings.getParseIgnoreCommentStart());
+        String parseIgnoreCommentStop = getProperties().getProperty("parseIgnoreCommentStop", defaultSettings.getParseIgnoreCommentStop());
 
-            String scripts = getProperties().getProperty("scripts");
-            String encoding = getProperties().getProperty("encoding", "UTF-8");
-            String sort = getProperties().getProperty("sort", "semantic").toLowerCase();
-            String unqualifiedSchema = getProperties().getProperty("unqualifiedSchema", "none").toLowerCase();
-            final String defaultNameCase = getProperties().getProperty("defaultNameCase", "as_is").toUpperCase();
-            boolean parseIgnoreComments = !"false".equalsIgnoreCase(getProperties().getProperty("parseIgnoreComments"));
-            String parseIgnoreCommentStart = getProperties().getProperty("parseIgnoreCommentStart", defaultSettings.getParseIgnoreCommentStart());
-            String parseIgnoreCommentStop = getProperties().getProperty("parseIgnoreCommentStop", defaultSettings.getParseIgnoreCommentStop());
+        Comparator<File> fileComparator = FilePattern.fileComparator(sort);
 
-            publicIsDefault = "none".equals(unqualifiedSchema);
-            Comparator<File> fileComparator = FilePattern.fileComparator(sort);
+        if (isBlank(scripts)) {
+            scripts = "";
+            log.warn("No scripts defined", "It is recommended that you provide an explicit script directory to scan");
+        }
 
-            if (isBlank(scripts)) {
-                scripts = "";
-                log.warn("No scripts defined", "It is recommended that you provide an explicit script directory to scan");
-            }
+        try {
+            final DSLContext ctx = DSL.using(connection(), new Settings()
+                .withParseIgnoreComments(parseIgnoreComments)
+                .withParseIgnoreCommentStart(parseIgnoreCommentStart)
+                .withParseIgnoreCommentStop(parseIgnoreCommentStop)
+                .withParseUnknownFunctions(ParseUnknownFunctions.IGNORE)
+            );
 
-            try {
-                Properties info = new Properties();
-                info.put("user", "sa");
-                info.put("password", "");
-                connection = new org.h2.Driver().connect("jdbc:h2:mem:jooq-meta-extensions-" + UUID.randomUUID(), info);
-                ctx = DSL.using(connection, new Settings()
-                    .withParseIgnoreComments(parseIgnoreComments)
-                    .withParseIgnoreCommentStart(parseIgnoreCommentStart)
-                    .withParseIgnoreCommentStop(parseIgnoreCommentStop)
-                    .withParseUnknownFunctions(ParseUnknownFunctions.IGNORE)
-                );
+            // [#7771] [#8011] Ignore all parsed storage clauses when executing the statements
+            ctx.data("org.jooq.ddl.ignore-storage-clauses", true);
 
-                // [#7771] [#8011] Ignore all parsed storage clauses when executing the statements
-                ctx.data("org.jooq.ddl.ignore-storage-clauses", true);
+            // [#8910] Parse things a bit differently for use with the DDLDatabase
+            ctx.data("org.jooq.ddl.parse-for-ddldatabase", true);
 
-                // [#8910] Parse things a bit differently for use with the DDLDatabase
-                ctx.data("org.jooq.ddl.parse-for-ddldatabase", true);
-
-                if (!"AS_IS".equals(defaultNameCase)) {
-                    ctx.configuration().set(new DefaultVisitListener() {
-                        @Override
-                        public void visitStart(VisitContext c) {
-                            if (c.queryPart() instanceof Name) {
-                                Name[] parts = ((Name) c.queryPart()).parts();
-                                boolean changed = false;
-
-                                for (int i = 0; i < parts.length; i++) {
-                                    if (parts[i].quoted() == Quoted.UNQUOTED) {
-                                        parts[i] = DSL.quotedName(
-                                            "UPPER".equals(defaultNameCase)
-                                          ? parts[i].first().toUpperCase(renderLocale(ctx.settings()))
-                                          : parts[i].first().toLowerCase(renderLocale(ctx.settings()))
-                                        );
-                                        changed = true;
-                                    }
-                                }
-
-                                if (changed)
-                                    c.queryPart(DSL.name(parts));
-                            }
-                        }
-                    });
-                }
-
-                FilePattern.load(encoding, scripts, fileComparator, new Loader() {
+            if (!"AS_IS".equals(defaultNameCase)) {
+                ctx.configuration().set(new DefaultVisitListener() {
                     @Override
-                    public void load(String e, InputStream in) {
-                        DDLDatabase.this.load(e, in);
+                    public void visitStart(VisitContext vc) {
+                        if (vc.queryPart() instanceof Name) {
+                            Name[] parts = ((Name) vc.queryPart()).parts();
+                            boolean changed = false;
+
+                            for (int i = 0; i < parts.length; i++) {
+                                if (parts[i].quoted() == Quoted.UNQUOTED) {
+                                    parts[i] = DSL.quotedName(
+                                        "UPPER".equals(defaultNameCase)
+                                      ? parts[i].first().toUpperCase(renderLocale(ctx.settings()))
+                                      : parts[i].first().toLowerCase(renderLocale(ctx.settings()))
+                                    );
+                                    changed = true;
+                                }
+                            }
+
+                            if (changed)
+                                vc.queryPart(DSL.name(parts));
+                        }
                     }
                 });
             }
-            catch (ParserException e) {
-                log.error("An exception occurred while parsing script source : " + scripts + ". Please report this error to https://github.com/jOOQ/jOOQ/issues/new", e);
-                throw e;
-            }
-            catch (Exception e) {
-                throw new DataAccessException("Error while exporting schema", e);
-            }
-        }
 
-        return DSL.using(connection);
+            FilePattern.load(encoding, scripts, fileComparator, new Loader() {
+                @Override
+                public void load(String e, InputStream in) {
+                    DDLDatabase.this.load(ctx, e, in);
+                }
+            });
+        }
+        catch (ParserException e) {
+            log.error("An exception occurred while parsing script source : " + scripts + ". Please report this error to https://github.com/jOOQ/jOOQ/issues/new", e);
+            throw e;
+        }
     }
 
-    private void load(String encoding, InputStream in) {
+    private void load(DSLContext ctx, String encoding, InputStream in) {
         try {
             Scanner s = new Scanner(in, encoding).useDelimiter("\\A");
             Queries queries = ctx.parser().parse(s.hasNext() ? s.next() : "");
@@ -246,48 +220,5 @@ public class DDLDatabase extends H2Database {
                 }
                 catch (Exception ignore) {}
         }
-    }
-
-    @Override
-    public void close() {
-        JDBCUtils.safeClose(connection);
-        connection = null;
-        ctx = null;
-        super.close();
-    }
-
-    @Override
-    protected List<SchemaDefinition> getSchemata0() throws SQLException {
-        List<SchemaDefinition> result = new ArrayList<>(super.getSchemata0());
-
-        // [#5608] The H2-specific INFORMATION_SCHEMA is undesired in the DDLDatabase's output
-        //         we're explicitly omitting it here for user convenience.
-        Iterator<SchemaDefinition> it = result.iterator();
-        while (it.hasNext())
-            if ("INFORMATION_SCHEMA".equals(it.next().getName()))
-                it.remove();
-
-        return result;
-    }
-
-    @Override
-    @Deprecated
-    public String getOutputSchema(String inputSchema) {
-        String outputSchema = super.getOutputSchema(inputSchema);
-
-        if (publicIsDefault && "PUBLIC".equals(outputSchema))
-            return "";
-
-        return outputSchema;
-    }
-
-    @Override
-    public String getOutputSchema(String inputCatalog, String inputSchema) {
-        String outputSchema = super.getOutputSchema(inputCatalog, inputSchema);
-
-        if (publicIsDefault && "PUBLIC".equals(outputSchema))
-            return "";
-
-        return outputSchema;
     }
 }

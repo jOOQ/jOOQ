@@ -42,33 +42,23 @@ import static org.jooq.tools.StringUtils.isBlank;
 
 import java.lang.reflect.Method;
 import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EnumSet;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Properties;
-import java.util.UUID;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Entity;
 
-import org.jooq.DSLContext;
 import org.jooq.Name;
 import org.jooq.SQLDialect;
-import org.jooq.exception.DataAccessException;
-import org.jooq.impl.DSL;
 import org.jooq.impl.JPAConverter;
-import org.jooq.meta.SchemaDefinition;
+import org.jooq.meta.extensions.AbstractInterpretingDatabase;
 import org.jooq.meta.h2.H2Database;
 import org.jooq.meta.jaxb.ForcedType;
 import org.jooq.tools.JooqLogger;
-import org.jooq.tools.jdbc.JDBCUtils;
 
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -98,98 +88,75 @@ import org.springframework.core.type.filter.AnnotationTypeFilter;
  *
  * @author Lukas Eder
  */
-public class JPADatabase extends H2Database {
+public class JPADatabase extends AbstractInterpretingDatabase {
 
     static final String     HIBERNATE_DIALECT = SQLDialect.H2.thirdParty().hibernateDialect();
     static final JooqLogger log               = JooqLogger.getLogger(JPADatabase.class);
 
-    Connection              connection;
-    boolean                 publicIsDefault;
     Map<String, Object>     userSettings      = new HashMap<>();
 
     @Override
-    public void close() {
-        JDBCUtils.safeClose(connection);
-        super.close();
-    }
+    protected void export() throws Exception {
+        String packages = getProperties().getProperty("packages");
 
-    @Override
-    protected DSLContext create0() {
-        if (connection == null) {
-            String packages = getProperties().getProperty("packages");
-
-            if (isBlank(packages)) {
-                packages = "";
-                log.warn("No packages defined", "It is highly recommended that you provide explicit packages to scan");
-            }
-
-            // [#9058] Properties use camelCase notation.
-            boolean useAttributeConverters = Boolean.valueOf(
-                getProperties().getProperty("useAttributeConverters",
-                    getProperties().getProperty("use-attribute-converters", "true")
-                )
-            );
-            String unqualifiedSchema = getProperties().getProperty("unqualifiedSchema", "none").toLowerCase();
-            publicIsDefault = "none".equals(unqualifiedSchema);
-
-            try {
-                Properties info = new Properties();
-                info.put("user", "sa");
-                info.put("password", "");
-                connection = new org.h2.Driver().connect("jdbc:h2:mem:jooq-meta-extensions-" + UUID.randomUUID(), info);
-
-                // [#6709] Apply default settings first, then allow custom overrides
-                Map<String, Object> settings = new LinkedHashMap<>();
-                settings.put("hibernate.dialect", HIBERNATE_DIALECT);
-                settings.put("javax.persistence.schema-generation-connection", connection);
-                settings.put("javax.persistence.create-database-schemas", true);
-
-                // [#5607] JPADatabase causes warnings - This prevents them
-                settings.put(AvailableSettings.CONNECTION_PROVIDER, connectionProvider());
-
-                for (Entry<Object, Object> entry : getProperties().entrySet()) {
-                    String key = "" + entry.getKey();
-
-                    if (key.startsWith("hibernate.") || key.startsWith("javax.persistence."))
-                        userSettings.put(key, entry.getValue());
-                }
-                settings.putAll(userSettings);
-
-                StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder();
-                builder.applySettings(settings);
-
-                MetadataSources metadata = new MetadataSources(builder.applySettings(settings).build());
-
-                ClassPathScanningCandidateComponentProvider scanner =
-                    new ClassPathScanningCandidateComponentProvider(true);
-
-                scanner.addIncludeFilter(new AnnotationTypeFilter(Entity.class));
-
-                // [#5845] Use the correct ClassLoader to load the jpa entity classes defined in the user project
-                ClassLoader cl = Thread.currentThread().getContextClassLoader();
-
-                for (String pkg : packages.split(","))
-                    for (BeanDefinition def : scanner.findCandidateComponents(defaultIfBlank(pkg, "").trim()))
-                        metadata.addAnnotatedClass(Class.forName(def.getBeanClassName(), true, cl));
-
-                // This seems to be the way to do this in idiomatic Hibernate 5.0 API
-                // See also: http://stackoverflow.com/q/32178041/521799
-                // SchemaExport export = new SchemaExport((MetadataImplementor) metadata.buildMetadata(), connection);
-                // export.create(true, true);
-
-                // Hibernate 5.2 broke 5.0 API again. Here's how to do this now:
-                SchemaExport export = new SchemaExport();
-                export.create(EnumSet.of(TargetType.DATABASE), metadata.buildMetadata());
-
-                if (useAttributeConverters)
-                    loadAttributeConverters(metadata.getAnnotatedClasses());
-            }
-            catch (Exception e) {
-                throw new DataAccessException("Error while exporting schema", e);
-            }
+        if (isBlank(packages)) {
+            packages = "";
+            log.warn("No packages defined", "It is highly recommended that you provide explicit packages to scan");
         }
 
-        return DSL.using(connection);
+        // [#9058] Properties use camelCase notation.
+        boolean useAttributeConverters = Boolean.valueOf(
+            getProperties().getProperty("useAttributeConverters",
+                getProperties().getProperty("use-attribute-converters", "true")
+            )
+        );
+
+
+        // [#6709] Apply default settings first, then allow custom overrides
+        Map<String, Object> settings = new LinkedHashMap<>();
+        settings.put("hibernate.dialect", HIBERNATE_DIALECT);
+        settings.put("javax.persistence.schema-generation-connection", connection());
+        settings.put("javax.persistence.create-database-schemas", true);
+
+        // [#5607] JPADatabase causes warnings - This prevents them
+        settings.put(AvailableSettings.CONNECTION_PROVIDER, connectionProvider());
+
+        for (Entry<Object, Object> entry : getProperties().entrySet()) {
+            String key = "" + entry.getKey();
+
+            if (key.startsWith("hibernate.") || key.startsWith("javax.persistence."))
+                userSettings.put(key, entry.getValue());
+        }
+        settings.putAll(userSettings);
+
+        StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder();
+        builder.applySettings(settings);
+
+        MetadataSources metadata = new MetadataSources(builder.applySettings(settings).build());
+
+        ClassPathScanningCandidateComponentProvider scanner =
+            new ClassPathScanningCandidateComponentProvider(true);
+
+        scanner.addIncludeFilter(new AnnotationTypeFilter(Entity.class));
+
+        // [#5845] Use the correct ClassLoader to load the jpa entity classes defined in the user project
+        ClassLoader cl = Thread.currentThread().getContextClassLoader();
+
+        for (String pkg : packages.split(","))
+            for (BeanDefinition def : scanner.findCandidateComponents(defaultIfBlank(pkg, "").trim()))
+                metadata.addAnnotatedClass(Class.forName(def.getBeanClassName(), true, cl));
+
+        // This seems to be the way to do this in idiomatic Hibernate 5.0 API
+        // See also: http://stackoverflow.com/q/32178041/521799
+        // SchemaExport export = new SchemaExport((MetadataImplementor) metadata.buildMetadata(), connection);
+        // export.create(true, true);
+
+        // Hibernate 5.2 broke 5.0 API again. Here's how to do this now:
+        SchemaExport export = new SchemaExport();
+        export.create(EnumSet.of(TargetType.DATABASE), metadata.buildMetadata());
+
+        if (useAttributeConverters)
+            loadAttributeConverters(metadata.getAnnotatedClasses());
     }
 
     @SuppressWarnings("serial")
@@ -206,7 +173,7 @@ public class JPADatabase extends H2Database {
             }
             @Override
             public Connection getConnection() {
-                return connection;
+                return JPADatabase.this.connection();
             }
             @Override
             public void closeConnection(Connection conn) {}
@@ -258,40 +225,5 @@ public class JPADatabase extends H2Database {
         catch (NoClassDefFoundError e) {
             log.warn("AttributeConverter", "Cannot load AttributeConverters due to missing class: " + e.getMessage());
         }
-    }
-
-    @Override
-    protected List<SchemaDefinition> getSchemata0() throws SQLException {
-        List<SchemaDefinition> result = new ArrayList<>(super.getSchemata0());
-
-        // [#5608] The H2-specific INFORMATION_SCHEMA is undesired in the JPADatabase's output
-        //         we're explicitly omitting it here for user convenience.
-        Iterator<SchemaDefinition> it = result.iterator();
-        while (it.hasNext())
-            if ("INFORMATION_SCHEMA".equals(it.next().getName()))
-                it.remove();
-
-        return result;
-    }
-
-    @Override
-    @Deprecated
-    public String getOutputSchema(String inputSchema) {
-        String outputSchema = super.getOutputSchema(inputSchema);
-
-        if (publicIsDefault && "PUBLIC".equals(outputSchema))
-            return "";
-
-        return outputSchema;
-    }
-
-    @Override
-    public String getOutputSchema(String inputCatalog, String inputSchema) {
-        String outputSchema = super.getOutputSchema(inputCatalog, inputSchema);
-
-        if (publicIsDefault && "PUBLIC".equals(outputSchema))
-            return "";
-
-        return outputSchema;
     }
 }

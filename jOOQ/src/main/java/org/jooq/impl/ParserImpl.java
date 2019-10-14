@@ -5985,6 +5985,8 @@ final class ParserImpl implements Parser {
                         return field;
                     else if ((field = parseFieldReplaceIf(ctx)) != null)
                         return field;
+                    else if (parseFunctionNameIf(ctx, "SCHEMA") && parseIf(ctx, '(') && parse(ctx, ')'))
+                        return currentSchema();
 
                 if (N.is(type))
                     if ((field = parseFieldSecondIf(ctx)) != null)

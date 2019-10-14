@@ -6004,14 +6004,8 @@ final class ParserImpl implements Parser {
                     else if ((field = parseFieldShrIf(ctx)) != null)
                         return field;
 
-                if (parseFunctionNameIf(ctx, "SYS_CONNECT_BY_PATH")) {
-                    parse(ctx, '(');
-                    Field<?> x = parseField(ctx);
-                    parse(ctx, ',');
-                    String y = parseStringLiteral(ctx);
-                    parse(ctx, ')');
-                    return sysConnectByPath(x, y);
-                }
+                if ((field = parseFieldSysConnectByPathIf(ctx)) != null)
+                    return field;
 
                 break;
 
@@ -6235,6 +6229,19 @@ final class ParserImpl implements Parser {
             parse(ctx, ')');
 
             return shr((Field) x, (Field) y);
+        }
+
+        return null;
+    }
+
+    private static final Field<?> parseFieldSysConnectByPathIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "SYS_CONNECT_BY_PATH")) {
+            parse(ctx, '(');
+            Field<?> x = parseField(ctx);
+            parse(ctx, ',');
+            String y = parseStringLiteral(ctx);
+            parse(ctx, ')');
+            return sysConnectByPath(x, y);
         }
 
         return null;

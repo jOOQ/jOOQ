@@ -229,43 +229,43 @@ final class DDLInterpreter {
         for (Constraint constraint : query.$constraints()) {
             ConstraintImpl impl = (ConstraintImpl) constraint;
 
-            if (impl.$primaryKey() != null) {
+            if (impl.$primaryKey() != null)
                 mt.primaryKey = new MutableUniqueKey((UnqualifiedName) impl.getUnqualifiedName(), mt, mt.fields(impl.$primaryKey(), true));
-            }
-            else if (impl.$unique() != null) {
+            else if (impl.$unique() != null)
                 mt.uniqueKeys.add(new MutableUniqueKey((UnqualifiedName) impl.getUnqualifiedName(), mt, mt.fields(impl.$unique(), true)));
-            }
-            else if (impl.$foreignKey() != null) {
-                MutableTable mrf = schema.table(impl.$referencesTable());
-                MutableUniqueKey mu = null;
-
-                if (mrf == null)
-                    throw tableNotExists(impl.$referencesTable());
-
-                List<MutableField> mfs = mt.fields(impl.$foreignKey(), true);
-                List<MutableField> mrfs = mrf.fields(impl.$references(), true);
-
-                if (!mrfs.isEmpty())
-                    mu = mrf.uniqueKey(mrfs);
-                else if (mrf.primaryKey != null && mrf.primaryKey.keyFields.size() == mfs.size())
-                    mu = mrf.primaryKey;
-
-                if (mu == null)
-                    throw primaryKeyNotExists();
-
-                mt.foreignkeys.add(new MutableForeignKey(
-                    (UnqualifiedName) impl.getUnqualifiedName(), mt, mfs, mu, impl.$onDelete(), impl.$onUpdate()
-                ));
-            }
-            else {
+            else if (impl.$foreignKey() != null)
+                addForeignKey(schema, mt, impl);
+            else
                 throw unsupportedQuery(query);
-            }
         }
 
         for (Index index : query.$indexes()) {
             IndexImpl impl = (IndexImpl) index;
             mt.indexes.add(new MutableIndex((UnqualifiedName) impl.getUnqualifiedName(), mt, mt.sortFields(impl.$fields()), impl.$unique()));
         }
+    }
+
+    private final void addForeignKey(MutableSchema schema, MutableTable mt, ConstraintImpl impl) {
+        MutableTable mrf = schema.table(impl.$referencesTable());
+        MutableUniqueKey mu = null;
+
+        if (mrf == null)
+            throw tableNotExists(impl.$referencesTable());
+
+        List<MutableField> mfs = mt.fields(impl.$foreignKey(), true);
+        List<MutableField> mrfs = mrf.fields(impl.$references(), true);
+
+        if (!mrfs.isEmpty())
+            mu = mrf.uniqueKey(mrfs);
+        else if (mrf.primaryKey != null && mrf.primaryKey.keyFields.size() == mfs.size())
+            mu = mrf.primaryKey;
+
+        if (mu == null)
+            throw primaryKeyNotExists();
+
+        mt.foreignkeys.add(new MutableForeignKey(
+            (UnqualifiedName) impl.getUnqualifiedName(), mt, mfs, mu, impl.$onDelete(), impl.$onUpdate()
+        ));
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -325,6 +325,8 @@ final class DDLInterpreter {
                     existing.primaryKey = new MutableUniqueKey((UnqualifiedName) impl.getUnqualifiedName(), existing, existing.fields(impl.$primaryKey(), true));
             else if (impl.$unique() != null)
                 existing.uniqueKeys.add(new MutableUniqueKey((UnqualifiedName) impl.getUnqualifiedName(), existing, existing.fields(impl.$unique(), true)));
+            else if (impl.$foreignKey() != null)
+                addForeignKey(schema, existing, impl);
             else
                 throw unsupportedQuery(query);
         }

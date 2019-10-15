@@ -86,6 +86,7 @@ final class CurrentTime<T> extends AbstractField<T> {
 
             case DERBY:
             case FIREBIRD:
+            case H2:
             case HSQLDB:
             case POSTGRES:
             case SQLITE:

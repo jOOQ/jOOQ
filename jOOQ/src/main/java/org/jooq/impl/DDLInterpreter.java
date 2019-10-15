@@ -295,6 +295,8 @@ final class DDLInterpreter {
         Table<?> renameTo = query.$renameTo();
         Field<?> renameColumn = query.$renameColumn();
         Field<?> renameColumnTo = query.$renameColumnTo();
+        Constraint renameConstraint = query.$renameConstraint();
+        Constraint renameConstraintTo = query.$renameConstraintTo();
         List<Field<?>> dropColumns = query.$dropColumns();
         Constraint dropConstraint = query.$dropConstraint();
         ConstraintType dropConstraintType = query.$dropConstraintType();
@@ -355,12 +357,24 @@ final class DDLInterpreter {
             existing.name = (UnqualifiedName) renameTo.getUnqualifiedName();
         }
         else if (renameColumn != null) {
-            if (existing.field(renameColumn) == null)
+            MutableField mf = existing.field(renameColumn);
+
+            if (mf == null)
                 throw fieldNotExists(renameColumn);
             else if (existing.field(renameColumnTo) != null)
                 throw fieldAlreadyExists(renameColumnTo);
             else
-                existing.field(renameColumn).name = (UnqualifiedName) renameColumnTo.getUnqualifiedName();
+                mf.name = (UnqualifiedName) renameColumnTo.getUnqualifiedName();
+        }
+        else if (renameConstraint != null) {
+            MutableKey mk = existing.constraint(renameConstraint);
+
+            if (mk == null)
+                throw constraintNotExists(renameConstraint);
+            else if (existing.constraint(renameConstraintTo) != null)
+                throw constraintAlreadyExists(renameConstraintTo);
+            else
+                mk.name = (UnqualifiedName) renameConstraintTo.getUnqualifiedName();
         }
         else if (dropColumns != null) {
             // TODO Implement cascade

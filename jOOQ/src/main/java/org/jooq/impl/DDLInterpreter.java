@@ -598,11 +598,14 @@ final class DDLInterpreter {
     private final void accept0(AlterIndexImpl query) {
         Index index = query.$index();
         Table<?> table = query.$on() != null ? query.$on() : index.getTable();
-        MutableIndex existing = index(index, table, query.$ifExists());
+        MutableIndex existing = index(index, table, query.$ifExists(), true);
 
         if (existing != null) {
             if (query.$renameTo() != null)
-                existing.name = (UnqualifiedName) query.$renameTo().getUnqualifiedName();
+                if (index(query.$renameTo(), table, false, false) == null)
+                    existing.name = (UnqualifiedName) query.$renameTo().getUnqualifiedName();
+                else
+                    throw indexAlreadyExists(query.$renameTo());
             else
                 throw unsupportedQuery(query);
         }
@@ -611,7 +614,7 @@ final class DDLInterpreter {
     private final void accept0(DropIndexImpl query) {
         Index index = query.$index();
         Table<?> table = query.$on() != null ? query.$on() : index.getTable();
-        MutableIndex existing = index(index, table, query.$ifExists());
+        MutableIndex existing = index(index, table, query.$ifExists(), true);
 
         if (existing != null)
             existing.table.indexes.remove(existing);
@@ -800,7 +803,7 @@ final class DDLInterpreter {
         return result;
     }
 
-    private final MutableIndex index(Index index, Table<?> table, boolean ifExists) {
+    private final MutableIndex index(Index index, Table<?> table, boolean ifExists, boolean throwIfNotExists) {
         MutableSchema ms;
         MutableTable mt = null;
         MutableIndex mi = null;
@@ -821,10 +824,10 @@ final class DDLInterpreter {
 
         if (mt != null)
             mi = mt.index(index);
-        else if (table != null)
+        else if (table != null && throwIfNotExists)
             throw tableNotExists(table);
 
-        if (mi == null && !ifExists)
+        if (mi == null && !ifExists && throwIfNotExists)
             throw indexNotExists(index);
 
         return mi;

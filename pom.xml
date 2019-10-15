@@ -27,7 +27,7 @@
     <properties>
 
         <!-- H2 is used by jOOQ-meta-extensions and a variety of integration tests -->
-        <h2.version>1.4.199</h2.version>
+        <h2.version>1.4.200</h2.version>
 
         <!-- From JDK 11 onwards, we need to depend on the JAXB API explicitly -->
         <jaxb.version>2.3.1</jaxb.version>

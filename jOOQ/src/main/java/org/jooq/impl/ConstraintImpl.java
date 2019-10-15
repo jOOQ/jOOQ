@@ -168,8 +168,13 @@ implements
         super(name, null);
     }
 
-    final Field<?>[]  $unique()      { return unique; }
-    final Field<?>[]  $primaryKey()  { return primaryKey; }
+    final Field<?>[]  $unique()          { return unique; }
+    final Field<?>[]  $primaryKey()      { return primaryKey; }
+    final Field<?>[]  $foreignKey()      { return foreignKey; }
+    final Table<?>    $referencesTable() { return referencesTable; }
+    final Field<?>[]  $references()      { return references; }
+    final Action      $onDelete()        { return onDelete; }
+    final Action      $onUpdate()        { return onUpdate; }
 
     // ------------------------------------------------------------------------
     // XXX: QueryPart API

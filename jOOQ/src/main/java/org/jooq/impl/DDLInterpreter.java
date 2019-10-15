@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.AbstractName.NO_NAME;
+import static org.jooq.impl.ConstraintType.FOREIGN_KEY;
 import static org.jooq.impl.ConstraintType.PRIMARY_KEY;
 import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.SQLDataType.BIGINT;
@@ -45,6 +46,7 @@ import static org.jooq.impl.Tools.EMPTY_FIELD;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,6 +56,7 @@ import org.jooq.Comment;
 import org.jooq.Constraint;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Index;
 import org.jooq.Meta;
 import org.jooq.Name;
@@ -72,6 +75,7 @@ import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataDefinitionException;
+import org.jooq.impl.ConstraintImpl.Action;
 
 @SuppressWarnings("serial")
 final class DDLInterpreter {
@@ -220,21 +224,47 @@ final class DDLInterpreter {
             return;
         }
 
-        MutableTable t = newTable(table, schema, query.$columnFields(), query.$columnTypes(), query.$select(), query.$comment(), false);
+        MutableTable mt = newTable(table, schema, query.$columnFields(), query.$columnTypes(), query.$select(), query.$comment(), false);
 
         for (Constraint constraint : query.$constraints()) {
             ConstraintImpl impl = (ConstraintImpl) constraint;
 
-            if (impl.$primaryKey() != null)
-                t.primaryKey = new MutableUniqueKey((UnqualifiedName) impl.getUnqualifiedName(), t, t.fields(impl.$primaryKey(), true));
+            if (impl.$primaryKey() != null) {
+                mt.primaryKey = new MutableUniqueKey((UnqualifiedName) impl.getUnqualifiedName(), mt, mt.fields(impl.$primaryKey(), true));
+            }
+            else if (impl.$unique() != null) {
+                mt.uniqueKeys.add(new MutableUniqueKey((UnqualifiedName) impl.getUnqualifiedName(), mt, mt.fields(impl.$unique(), true)));
+            }
+            else if (impl.$foreignKey() != null) {
+                MutableTable mrf = schema.table(impl.$referencesTable());
+                MutableUniqueKey mu = null;
 
-            else if (impl.$unique() != null)
-                t.uniqueKeys.add(new MutableUniqueKey((UnqualifiedName) impl.getUnqualifiedName(), t, t.fields(impl.$unique(), true)));
+                if (mrf == null)
+                    throw tableNotExists(impl.$referencesTable());
+
+                List<MutableField> mfs = mt.fields(impl.$foreignKey(), true);
+                List<MutableField> mrfs = mrf.fields(impl.$references(), true);
+
+                if (!mrfs.isEmpty())
+                    mu = mrf.uniqueKey(mrfs);
+                else if (mrf.primaryKey != null && mrf.primaryKey.keyFields.size() == mfs.size())
+                    mu = mrf.primaryKey;
+
+                if (mu == null)
+                    throw primaryKeyNotExists();
+
+                mt.foreignkeys.add(new MutableForeignKey(
+                    (UnqualifiedName) impl.getUnqualifiedName(), mt, mfs, mu, impl.$onDelete(), impl.$onUpdate()
+                ));
+            }
+            else {
+                throw unsupportedQuery(query);
+            }
         }
 
         for (Index index : query.$indexes()) {
             IndexImpl impl = (IndexImpl) index;
-            t.indexes.add(new MutableIndex((UnqualifiedName) impl.getUnqualifiedName(), t, t.sortFields(impl.$fields()), impl.$unique()));
+            mt.indexes.add(new MutableIndex((UnqualifiedName) impl.getUnqualifiedName(), mt, mt.sortFields(impl.$fields()), impl.$unique()));
         }
     }
 
@@ -265,6 +295,7 @@ final class DDLInterpreter {
         Field<?> renameColumn = query.$renameColumn();
         Field<?> renameColumnTo = query.$renameColumnTo();
         List<Field<?>> dropColumns = query.$dropColumns();
+        Constraint dropConstraint = query.$dropConstraint();
         ConstraintType dropConstraintType = query.$dropConstraintType();
 
         if (addColumn != null) {
@@ -318,6 +349,38 @@ final class DDLInterpreter {
                 existing.fields(dropColumns.toArray(EMPTY_FIELD), true);
 
             existing.fields.removeAll(fields);
+        }
+        else if (dropConstraint != null) {
+            ConstraintImpl impl = (ConstraintImpl) dropConstraint;
+
+            removal: {
+                Iterator<MutableForeignKey> fks = existing.foreignkeys.iterator();
+                while (fks.hasNext()) {
+                    if (fks.next().name.equals(impl.getUnqualifiedName())) {
+                        fks.remove();
+                        break removal;
+                    }
+                }
+
+                if (dropConstraintType != FOREIGN_KEY) {
+                    Iterator<MutableUniqueKey> uks = existing.uniqueKeys.iterator();
+                    while (uks.hasNext()) {
+                        if (uks.next().name.equals(impl.getUnqualifiedName())) {
+                            uks.remove();
+                            break removal;
+                        }
+                    }
+
+                    if (existing.primaryKey != null) {
+                        if (existing.primaryKey.name.equals(impl.getUnqualifiedName())) {
+                            existing.primaryKey = null;
+                            break removal;
+                        }
+                    }
+                }
+
+                throw constraintNotExists(dropConstraint);
+            }
         }
         else if (dropConstraintType == PRIMARY_KEY) {
             if (existing.primaryKey != null)
@@ -627,6 +690,10 @@ final class DDLInterpreter {
         return new DataDefinitionException("Primary key does not exist");
     }
 
+    private static final DataDefinitionException constraintNotExists(Constraint constraint) {
+        return new DataDefinitionException("Constraint does not exist: " + constraint.getQualifiedName());
+    }
+
     private static final DataDefinitionException indexNotExists(Index index) {
         return new DataDefinitionException("Index does not exist: " + index.getQualifiedName());
     }
@@ -903,12 +970,13 @@ final class DDLInterpreter {
     }
 
     private static final class MutableTable extends MutableNamed  {
-        MutableSchema          schema;
-        List<MutableField>     fields     = new ArrayList<>();
-        MutableUniqueKey       primaryKey;
-        List<MutableUniqueKey> uniqueKeys = new ArrayList<>();
-        List<MutableIndex>     indexes    = new ArrayList<>();
-        boolean                view;
+        MutableSchema           schema;
+        List<MutableField>      fields      = new ArrayList<>();
+        MutableUniqueKey        primaryKey;
+        List<MutableUniqueKey>  uniqueKeys  = new ArrayList<>();
+        List<MutableForeignKey> foreignkeys = new ArrayList<>();
+        List<MutableIndex>      indexes     = new ArrayList<>();
+        boolean                 view;
 
         MutableTable(UnqualifiedName name, MutableSchema schema, Comment comment, boolean view) {
             super(name, comment);
@@ -969,6 +1037,18 @@ final class DDLInterpreter {
             return null;
         }
 
+        MutableUniqueKey uniqueKey(List<MutableField> mrfs) {
+            if (primaryKey != null)
+                if (primaryKey.keyFields.equals(mrfs))
+                    return primaryKey;
+
+            for (MutableUniqueKey mu : uniqueKeys)
+                if (mu.keyFields.equals(mrfs))
+                    return mu;
+
+            return null;
+        }
+
         private final class InterpretedTable extends TableImpl<Record> {
             InterpretedTable(MutableSchema.InterpretedSchema schema) {
                 super(MutableTable.this.name, schema, null, null, MutableTable.this.comment);
@@ -997,6 +1077,16 @@ final class DDLInterpreter {
             }
 
             @Override
+            public List<ForeignKey<Record, ?>> getReferences() {
+                List<ForeignKey<Record, ?>> result = new ArrayList<>();
+
+                for (MutableForeignKey fk : MutableTable.this.foreignkeys)
+                    result.add(interpretedKey(fk));
+
+                return result;
+            }
+
+            @Override
             public final List<Index> getIndexes() {
                 List<Index> result = new ArrayList<>();
 
@@ -1011,12 +1101,27 @@ final class DDLInterpreter {
                 if (key == null)
                     return null;
 
-                TableField<Record, ?>[] f = new TableField[key.fields.size()];
+                TableField<Record, ?>[] f = new TableField[key.keyFields.size()];
 
                 for (int i = 0; i < f.length; i++)
-                    f[i] = (TableField<Record, ?>) field(key.fields.get(i).name);
+                    f[i] = (TableField<Record, ?>) field(key.keyFields.get(i).name);
 
+                // TODO: Cache these?
                 return new UniqueKeyImpl<Record>(this, key.name.last(), f);
+            }
+
+            @SuppressWarnings("unchecked")
+            private final ForeignKey<Record, ?> interpretedKey(MutableForeignKey key) {
+                if (key == null)
+                    return null;
+
+                TableField<Record, ?>[] f = new TableField[key.keyFields.size()];
+
+                for (int i = 0; i < f.length; i++)
+                    f[i] = (TableField<Record, ?>) field(key.keyFields.get(i).name);
+
+                // TODO: Cache these?
+                return new ReferenceImpl<>(key.referencedKey.keyTable.new InterpretedTable((MutableSchema.InterpretedSchema) getSchema()).interpretedKey(key.referencedKey), this, key.name.last(), f);
             }
 
             private final Index interpretedIndex(MutableIndex idx) {
@@ -1067,20 +1172,41 @@ final class DDLInterpreter {
     }
 
     private static abstract class MutableKey extends MutableNamed {
-        MutableTable       table;
-        List<MutableField> fields;
+        MutableTable       keyTable;
+        List<MutableField> keyFields;
 
         MutableKey(UnqualifiedName name, MutableTable table, List<MutableField> fields) {
             super(name);
 
-            this.table = table;
-            this.fields = fields;
+            this.keyTable = table;
+            this.keyFields = fields;
         }
     }
 
     private static final class MutableUniqueKey extends MutableKey {
-        MutableUniqueKey(UnqualifiedName name, MutableTable table, List<MutableField> fields) {
-            super(name, table, fields);
+        MutableUniqueKey(UnqualifiedName name, MutableTable keyTable, List<MutableField> keyFields) {
+            super(name, keyTable, keyFields);
+        }
+    }
+
+    private static final class MutableForeignKey extends MutableKey {
+        MutableUniqueKey referencedKey;
+        Action onDelete;
+        Action onUpdate;
+
+        MutableForeignKey(
+            UnqualifiedName name,
+            MutableTable keyTable,
+            List<MutableField> keyFields,
+            MutableUniqueKey referencedKey,
+            Action onDelete,
+            Action onUpdate
+        ) {
+            super(name, keyTable, keyFields);
+
+            this.referencedKey = referencedKey;
+            this.onDelete = onDelete;
+            this.onUpdate = onUpdate;
         }
     }
 

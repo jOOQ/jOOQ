@@ -109,9 +109,8 @@ final class CreateIndexImpl extends AbstractRowCountQuery implements
     private final boolean                    unique;
     private final boolean                    ifNotExists;
     private Table<?>                         table;
-    private Field<?>[]                       fields;
-    private Field<?>[]                       include;
     private SortField<?>[]                   sortFields;
+    private Field<?>[]                       include;
     private Condition                        where;
 
     CreateIndexImpl(Configuration configuration, Index index, boolean unique, boolean ifNotExists) {
@@ -127,6 +126,13 @@ final class CreateIndexImpl extends AbstractRowCountQuery implements
             this.where = index.getWhere();
         }
     }
+
+    final Index          $index()       { return index; }
+    final boolean        $unique()      { return unique; }
+    final boolean        $ifNotExists() { return ifNotExists; }
+    final Table<?>       $table()       { return table; }
+    final SortField<?>[] $sortFields()  { return sortFields; }
+    final Field<?>[]     $include()     { return include; }
 
     // ------------------------------------------------------------------------
     // XXX: DSL API
@@ -275,10 +281,7 @@ final class CreateIndexImpl extends AbstractRowCountQuery implements
         boolean supportsFieldsBeforeTable = false;
 
         QueryPartList<QueryPart> list = new QueryPartList<>();
-        if (fields != null)
-            list.addAll(asList(fields));
-        else
-            list.addAll(asList(sortFields));
+        list.addAll(asList(sortFields));
 
         if (!supportsInclude && include != null)
             list.addAll(asList(include));

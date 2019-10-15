@@ -136,6 +136,13 @@ final class DDLInterpreter {
         else if (query instanceof DropSequenceImpl)
             accept0((DropSequenceImpl) query);
 
+        else if (query instanceof CreateIndexImpl)
+            accept0((CreateIndexImpl) query);
+        else if (query instanceof AlterIndexImpl)
+            accept0((AlterIndexImpl) query);
+        else if (query instanceof DropIndexImpl)
+            accept0((DropIndexImpl) query);
+
         else if (query instanceof CommentOnImpl)
             accept0((CommentOnImpl) query);
 
@@ -473,6 +480,36 @@ final class DDLInterpreter {
         schema.sequences.remove(existing);
     }
 
+    private final void accept0(CreateIndexImpl query) {
+        Index index = query.$index();
+        Table<?> table = query.$table();
+        MutableSchema schema = getSchema(table.getSchema());
+        MutableTable mt = schema.table(table);
+
+        if (mt == null)
+            throw tableNotExists(table);
+
+        MutableIndex existing = mt.index(index);
+        List<MutableSortField> mtf = mt.sortFields(query.$sortFields());
+
+        if (existing != null) {
+            if (!query.$ifNotExists())
+                throw indexAlreadyExists(index);
+
+            return;
+        }
+
+        mt.indexes.add(new MutableIndex((UnqualifiedName) index.getUnqualifiedName(), mt, mtf, query.$unique()));
+    }
+
+    private final void accept0(AlterIndexImpl query) {
+
+    }
+
+    private final void accept0(DropIndexImpl query) {
+
+    }
+
     private final void accept0(CommentOnImpl query) {
         Table<?> table = query.$table();
         Field<?> field = query.$field();
@@ -543,6 +580,14 @@ final class DDLInterpreter {
 
     private static final DataDefinitionException sequenceAlreadyExists(Sequence<?> sequence) {
         return new DataDefinitionException("Sequence already exists: " + sequence.getQualifiedName());
+    }
+
+    private static final DataDefinitionException indexNotExists(Index index) {
+        return new DataDefinitionException("Sequence does not exist: " + index.getQualifiedName());
+    }
+
+    private static final DataDefinitionException indexAlreadyExists(Index index) {
+        return new DataDefinitionException("Sequence already exists: " + index.getQualifiedName());
     }
 
     private static final DataDefinitionException fieldNotExists(Field<?> field) {
@@ -855,6 +900,16 @@ final class DDLInterpreter {
             }
 
             return result;
+        }
+
+        final MutableIndex index(Index i) {
+            Name n = i.getUnqualifiedName();
+
+            for (MutableIndex mi : indexes)
+                if (mi.name.equals(n))
+                    return mi;
+
+            return null;
         }
 
         private final class InterpretedTable extends TableImpl<Record> {

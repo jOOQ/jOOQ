@@ -38,13 +38,13 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.function;
-import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.Tools.castIfNeeded;
 
 import java.math.BigDecimal;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
+import org.jooq.Param;
 
 /**
  * @author Lukas Eder
@@ -54,16 +54,16 @@ final class Round<T extends Number> extends AbstractFunction<T> {
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -7273879239726265322L;
+    private static final long    serialVersionUID = -7273879239726265322L;
 
-    private final Field<T>    argument;
-    private final int         decimals;
+    private final Field<T>       argument;
+    private final Field<Integer> decimals;
 
     Round(Field<T> argument) {
-        this(argument, 0);
+        this(argument, null);
     }
 
-    Round(Field<T> argument, int decimals) {
+    Round(Field<T> argument, Field<Integer> decimals) {
         super("round", argument.getDataType(), argument);
 
         this.argument = argument;
@@ -77,14 +77,15 @@ final class Round<T extends Number> extends AbstractFunction<T> {
 
             // evaluate "round" if unavailable
             case DERBY: {
-                if (decimals == 0) {
+                if (decimals == null) {
                     return DSL
                         .when(argument.sub(DSL.floor(argument))
                         .lessThan((T) Double.valueOf(0.5)), DSL.floor(argument))
                         .otherwise(DSL.ceil(argument));
                 }
-                else {
-                    Field<BigDecimal> factor = DSL.val(BigDecimal.ONE.movePointRight(decimals));
+                else if (decimals instanceof Param) {
+                    Integer decimalsValue = ((Param<Integer>) decimals).getValue();
+                    Field<BigDecimal> factor = DSL.val(BigDecimal.ONE.movePointRight(decimalsValue));
                     Field<T> mul = argument.mul(factor);
 
                     return DSL
@@ -92,6 +93,7 @@ final class Round<T extends Number> extends AbstractFunction<T> {
                         .lessThan((T) Double.valueOf(0.5)), DSL.floor(mul).div(factor))
                         .otherwise(DSL.ceil(mul).div(factor));
                 }
+                // fall-through
             }
 
 
@@ -108,18 +110,18 @@ final class Round<T extends Number> extends AbstractFunction<T> {
 
             // There's no function round(double precision, integer) in Postgres
             case POSTGRES: {
-                if (decimals == 0)
+                if (decimals == null)
                     return function("round", getDataType(), argument);
                 else
-                    return function("round", getDataType(), castIfNeeded(argument, BigDecimal.class), val(decimals));
+                    return function("round", getDataType(), castIfNeeded(argument, BigDecimal.class), decimals);
             }
 
             // This is the optimal implementation by most RDBMS
             default: {
-                if (decimals == 0)
+                if (decimals == null)
                     return function("round", getDataType(), argument);
                 else
-                    return function("round", getDataType(), argument, val(decimals));
+                    return function("round", getDataType(), argument, decimals);
             }
         }
     }

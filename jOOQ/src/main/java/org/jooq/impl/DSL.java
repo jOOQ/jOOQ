@@ -17277,6 +17277,18 @@ public class DSL {
      */
     @Support
     public static <T extends Number> Field<T> round(Field<T> field, int decimals) {
+        return new Round<>(nullSafe(field), Tools.field(decimals));
+    }
+
+    /**
+     * Get rounded value of a numeric field: round(field, decimals).
+     * <p>
+     * This renders the round function where available:
+     * <code><pre>round([field], [decimals])</pre></code>
+     * ... or emulates it elsewhere using floor and ceil
+     */
+    @Support
+    public static <T extends Number> Field<T> round(Field<T> field, Field<Integer> decimals) {
         return new Round<>(nullSafe(field), decimals);
     }
 

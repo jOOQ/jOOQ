@@ -6523,12 +6523,12 @@ final class ParserImpl implements Parser {
     private static final Field<?> parseFieldRoundIf(ParserContext ctx) {
         if (parseFunctionNameIf(ctx, "ROUND")) {
             Field arg1 = null;
-            Integer arg2 = null;
+            Field arg2 = null;
 
             parse(ctx, '(');
             arg1 = toField(ctx, parseNumericOp(ctx, N));
             if (parseIf(ctx, ','))
-                arg2 = (int) (long) parseUnsignedInteger(ctx);
+                arg2 = toField(ctx, parseNumericOp(ctx, N));
 
             parse(ctx, ')');
             return arg2 == null ? round(arg1) : round(arg1, arg2);

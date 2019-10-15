@@ -323,6 +323,8 @@ final class DDLInterpreter {
                     throw constraintAlreadyExists(impl);
                 else
                     existing.primaryKey = new MutableUniqueKey((UnqualifiedName) impl.getUnqualifiedName(), existing, existing.fields(impl.$primaryKey(), true));
+            else if (impl.$unique() != null)
+                existing.uniqueKeys.add(new MutableUniqueKey((UnqualifiedName) impl.getUnqualifiedName(), existing, existing.fields(impl.$unique(), true)));
             else
                 throw unsupportedQuery(query);
         }

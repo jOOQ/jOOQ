@@ -507,7 +507,40 @@ final class DDLInterpreter {
     }
 
     private final void accept0(DropIndexImpl query) {
+        Index index = query.$index();
+        Table<?> table = query.$on() != null ? query.$on() : index.getTable();
+        MutableSchema schema;
+        MutableIndex existing = null;
+        MutableTable mt = null;
 
+        if (table != null) {
+            schema = getSchema(table.getSchema());
+            mt = schema.table(table);
+        }
+        else {
+            for (MutableTable mt1 : tables()) {
+                if ((existing = mt1.index(index)) != null) {
+                    mt = mt1;
+                    schema = mt1.schema;
+                    break;
+                }
+            }
+        }
+
+        if (mt != null)
+            existing = mt.index(index);
+        else if (table != null)
+            throw tableNotExists(table);
+
+        if (existing == null) {
+            if (!query.$ifExists())
+                throw indexNotExists(index);
+
+            return;
+        }
+
+        if (mt != null)
+            mt.indexes.remove(existing);
     }
 
     private final void accept0(CommentOnImpl query) {
@@ -583,11 +616,11 @@ final class DDLInterpreter {
     }
 
     private static final DataDefinitionException indexNotExists(Index index) {
-        return new DataDefinitionException("Sequence does not exist: " + index.getQualifiedName());
+        return new DataDefinitionException("Index does not exist: " + index.getQualifiedName());
     }
 
     private static final DataDefinitionException indexAlreadyExists(Index index) {
-        return new DataDefinitionException("Sequence already exists: " + index.getQualifiedName());
+        return new DataDefinitionException("Index already exists: " + index.getQualifiedName());
     }
 
     private static final DataDefinitionException fieldNotExists(Field<?> field) {
@@ -601,6 +634,18 @@ final class DDLInterpreter {
     // -------------------------------------------------------------------------
     // Auxiliary methods
     // -------------------------------------------------------------------------
+
+    private final Iterable<MutableTable> tables() {
+        // TODO: Make this lazy
+        List<MutableTable> result = new ArrayList<>();
+
+        for (MutableCatalog catalog : catalogs.values())
+            for (MutableSchema schema : catalog.schemas)
+                for (MutableTable table : schema.tables)
+                    result.add(table);
+
+        return result;
+    }
 
     private final MutableSchema getSchema(Schema input) {
         return getSchema(input, false);

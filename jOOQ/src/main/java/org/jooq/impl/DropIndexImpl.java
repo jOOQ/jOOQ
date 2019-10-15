@@ -104,6 +104,10 @@ final class DropIndexImpl extends AbstractRowCountQuery implements
         this.on = index.getTable();
     }
 
+    final Index    $index()    { return index; }
+    final boolean  $ifExists() { return ifExists; }
+    final Table<?> $on()       { return on; }
+
     // ------------------------------------------------------------------------
     // XXX: DropIndex API
     // ------------------------------------------------------------------------

@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.AbstractName.NO_NAME;
+import static org.jooq.impl.ConstraintType.PRIMARY_KEY;
 import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
@@ -263,7 +264,8 @@ final class DDLInterpreter {
         Table<?> renameTo = query.$renameTo();
         Field<?> renameColumn = query.$renameColumn();
         Field<?> renameColumnTo = query.$renameColumnTo();
-        List<Field<?>> $dropColumns = query.$dropColumns();
+        List<Field<?>> dropColumns = query.$dropColumns();
+        ConstraintType dropConstraintType = query.$dropConstraintType();
 
         if (addColumn != null) {
             if (query.$addFirst())
@@ -307,15 +309,21 @@ final class DDLInterpreter {
             else
                 existing.field(renameColumn).name = (UnqualifiedName) renameColumnTo.getUnqualifiedName();
         }
-        else if ($dropColumns != null) {
+        else if (dropColumns != null) {
             // TODO Implement cascade
             // TODO check if any constraints or indexes reference this column.
-            List<MutableField> fields = existing.fields($dropColumns.toArray(EMPTY_FIELD), false);
+            List<MutableField> fields = existing.fields(dropColumns.toArray(EMPTY_FIELD), false);
 
-            if (fields.size() < $dropColumns.size() && !query.$ifExistsColumn())
-                existing.fields($dropColumns.toArray(EMPTY_FIELD), true);
+            if (fields.size() < dropColumns.size() && !query.$ifExistsColumn())
+                existing.fields(dropColumns.toArray(EMPTY_FIELD), true);
 
             existing.fields.removeAll(fields);
+        }
+        else if (dropConstraintType == PRIMARY_KEY) {
+            if (existing.primaryKey != null)
+                existing.primaryKey = null;
+            else
+                throw primaryKeyNotExists();
         }
         else
             throw unsupportedQuery(query);
@@ -613,6 +621,10 @@ final class DDLInterpreter {
 
     private static final DataDefinitionException sequenceAlreadyExists(Sequence<?> sequence) {
         return new DataDefinitionException("Sequence already exists: " + sequence.getQualifiedName());
+    }
+
+    private static final DataDefinitionException primaryKeyNotExists() {
+        return new DataDefinitionException("Primary key does not exist");
     }
 
     private static final DataDefinitionException indexNotExists(Index index) {

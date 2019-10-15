@@ -1376,8 +1376,6 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
 
 
-                    // [#9354] TODO: Research the syntax in the various dialects
-                    //         and add integration tests.
                     default:
                         ctx.sql(' ').visit(K_DROP_DEFAULT);
                         break;

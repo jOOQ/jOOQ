@@ -5268,4 +5268,18 @@ final class Tools {
             throw new UnsupportedOperationException("remove");
         }
     }
+
+    static final String asString(Name name) {
+        if (!name.qualified())
+            return name.first();
+
+        StringBuilder sb = new StringBuilder();
+        Name[] parts = name.parts();
+        for (int i = 0; i < parts.length; i++) {
+            sb.append(parts[i].first());
+            if (i < parts.length - 1)
+                sb.append('.');
+        }
+        return sb.toString();
+    }
 }

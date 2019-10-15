@@ -99,20 +99,20 @@ public interface AlterViewStep {
      * Add a <code>RENAME TO</code> clause to the <code>ALTER VIEW</code>
      * statement.
      */
-    @Support({ HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     AlterViewFinalStep renameTo(Table<?> newName);
 
     /**
      * Add a <code>RENAME TO</code> clause to the <code>ALTER VIEW</code>
      * statement.
      */
-    @Support({ HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     AlterViewFinalStep renameTo(Name newName);
 
     /**
      * Add a <code>RENAME TO</code> clause to the <code>ALTER VIEW</code>
      * statement.
      */
-    @Support({ HSQLDB, POSTGRES })
+    @Support({ H2, HSQLDB, POSTGRES })
     AlterViewFinalStep renameTo(String newName);
 }

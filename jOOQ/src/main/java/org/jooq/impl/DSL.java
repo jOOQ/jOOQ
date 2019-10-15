@@ -7559,7 +7559,7 @@ public class DSL {
      *
      * @see DSLContext#alterViewIfExists(String)
      */
-    @Support({ POSTGRES })
+    @Support({ H2, POSTGRES })
     public static AlterViewStep alterViewIfExists(String view) {
         return dsl().alterViewIfExists(view);
     }
@@ -7569,7 +7569,7 @@ public class DSL {
      *
      * @see DSLContext#alterViewIfExists(Name)
      */
-    @Support({ POSTGRES })
+    @Support({ H2, POSTGRES })
     public static AlterViewStep alterViewIfExists(Name view) {
         return dsl().alterViewIfExists(view);
     }
@@ -7579,7 +7579,7 @@ public class DSL {
      *
      * @see DSLContext#alterViewIfExists(Table)
      */
-    @Support({ POSTGRES })
+    @Support({ H2, POSTGRES })
     public static AlterViewStep alterViewIfExists(Table<?> view) {
         return dsl().alterViewIfExists(view);
     }

@@ -9481,7 +9481,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#alterViewIfExists(String)
      */
-    @Support({ POSTGRES })
+    @Support({ H2, POSTGRES })
     AlterViewStep alterViewIfExists(String view);
 
     /**
@@ -9489,7 +9489,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#alterViewIfExists(Name)
      */
-    @Support({ POSTGRES })
+    @Support({ H2, POSTGRES })
     AlterViewStep alterViewIfExists(Name view);
 
     /**
@@ -9497,7 +9497,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#alterViewIfExists(Table)
      */
-    @Support({ POSTGRES })
+    @Support({ H2, POSTGRES })
     AlterViewStep alterViewIfExists(Table<?> view);
 
     /**

@@ -284,6 +284,7 @@ final class DDLInterpreter {
             throw objectNotTable(table);
 
         Field<?> addColumn = query.$addColumn();
+        Constraint addConstraint = query.$addConstraint();
         Field<?> alterColumn = query.$alterColumn();
         Field<?> alterColumnDefault = query.$alterColumnDefault();
         boolean alterColumnDropDefault = query.$alterColumnDropDefault();
@@ -298,6 +299,8 @@ final class DDLInterpreter {
         Constraint dropConstraint = query.$dropConstraint();
         ConstraintType dropConstraintType = query.$dropConstraintType();
 
+        // TODO: Multi-add statements
+
         if (addColumn != null) {
             if (query.$addFirst())
                 existing.fields.add(0, new MutableField((UnqualifiedName) addColumn.getUnqualifiedName(), existing, query.$addColumnType()));
@@ -307,6 +310,21 @@ final class DDLInterpreter {
                 existing.fields.add(indexOrFail(existing, query.$addAfter()) + 1, new MutableField((UnqualifiedName) addColumn.getUnqualifiedName(), existing, query.$addColumnType()));
             else
                 existing.fields.add(new MutableField((UnqualifiedName) addColumn.getUnqualifiedName(), existing, query.$addColumnType()));
+        }
+        else if (addConstraint != null) {
+            ConstraintImpl impl = (ConstraintImpl) addConstraint;
+
+            if (existing.constraint(impl) != null)
+                throw constraintAlreadyExists(impl);
+            else if (impl.$primaryKey() != null)
+
+                // TODO: More nuanced error messages would be good, in general.
+                if (existing.primaryKey != null)
+                    throw constraintAlreadyExists(impl);
+                else
+                    existing.primaryKey = new MutableUniqueKey((UnqualifiedName) impl.getUnqualifiedName(), existing, existing.fields(impl.$primaryKey(), true));
+            else
+                throw unsupportedQuery(query);
         }
         else if (alterColumn != null) {
             MutableField existingField = existing.field(alterColumn);
@@ -690,6 +708,10 @@ final class DDLInterpreter {
         return new DataDefinitionException("Primary key does not exist");
     }
 
+    private static final DataDefinitionException constraintAlreadyExists(Constraint constraint) {
+        return new DataDefinitionException("Constraint already exists: " + constraint.getQualifiedName());
+    }
+
     private static final DataDefinitionException constraintNotExists(Constraint constraint) {
         return new DataDefinitionException("Constraint does not exist: " + constraint.getQualifiedName());
     }
@@ -984,6 +1006,21 @@ final class DDLInterpreter {
             this.schema = schema;
             this.view = view;
             schema.tables.add(this);
+        }
+
+        public MutableKey constraint(Constraint addConstraint) {
+            for (MutableForeignKey mfk : foreignkeys)
+                if (mfk.name.equals(addConstraint.getUnqualifiedName()))
+                    return mfk;
+
+            for (MutableUniqueKey muk : uniqueKeys)
+                if (muk.name.equals(addConstraint.getUnqualifiedName()))
+                    return muk;
+
+            if (primaryKey != null && primaryKey.name.equals(addConstraint.getUnqualifiedName()))
+                return primaryKey;
+            else
+                return null;
         }
 
         final MutableField field(Field<?> f) {

@@ -278,6 +278,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
     final boolean        $ifNotExistsColumn()      { return ifNotExistsColumn; }
     final Field<?>       $addColumn()              { return addColumn; }
     final DataType<?>    $addColumnType()          { return addColumnType; }
+    final Constraint     $addConstraint()          { return addConstraint; }
     final boolean        $addFirst()               { return addFirst; }
     final Field<?>       $addBefore()              { return addBefore; }
     final Field<?>       $addAfter()               { return addAfter; }

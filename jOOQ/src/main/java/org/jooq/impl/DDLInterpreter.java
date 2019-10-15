@@ -596,44 +596,25 @@ final class DDLInterpreter {
     }
 
     private final void accept0(AlterIndexImpl query) {
+        Index index = query.$index();
+        Table<?> table = query.$on() != null ? query.$on() : index.getTable();
+        MutableIndex existing = index(index, table, query.$ifExists());
 
+        if (existing != null) {
+            if (query.$renameTo() != null)
+                existing.name = (UnqualifiedName) query.$renameTo().getUnqualifiedName();
+            else
+                throw unsupportedQuery(query);
+        }
     }
 
     private final void accept0(DropIndexImpl query) {
         Index index = query.$index();
         Table<?> table = query.$on() != null ? query.$on() : index.getTable();
-        MutableSchema schema;
-        MutableIndex existing = null;
-        MutableTable mt = null;
+        MutableIndex existing = index(index, table, query.$ifExists());
 
-        if (table != null) {
-            schema = getSchema(table.getSchema());
-            mt = schema.table(table);
-        }
-        else {
-            for (MutableTable mt1 : tables()) {
-                if ((existing = mt1.index(index)) != null) {
-                    mt = mt1;
-                    schema = mt1.schema;
-                    break;
-                }
-            }
-        }
-
-        if (mt != null)
-            existing = mt.index(index);
-        else if (table != null)
-            throw tableNotExists(table);
-
-        if (existing == null) {
-            if (!query.$ifExists())
-                throw indexNotExists(index);
-
-            return;
-        }
-
-        if (mt != null)
-            mt.indexes.remove(existing);
+        if (existing != null)
+            existing.table.indexes.remove(existing);
     }
 
     private final void accept0(CommentOnImpl query) {
@@ -817,6 +798,36 @@ final class DDLInterpreter {
             throw tableNotExists(table);
 
         return result;
+    }
+
+    private final MutableIndex index(Index index, Table<?> table, boolean ifExists) {
+        MutableSchema ms;
+        MutableTable mt = null;
+        MutableIndex mi = null;
+
+        if (table != null) {
+            ms = getSchema(table.getSchema());
+            mt = ms.table(table);
+        }
+        else {
+            for (MutableTable mt1 : tables()) {
+                if ((mi = mt1.index(index)) != null) {
+                    mt = mt1;
+                    ms = mt1.schema;
+                    break;
+                }
+            }
+        }
+
+        if (mt != null)
+            mi = mt.index(index);
+        else if (table != null)
+            throw tableNotExists(table);
+
+        if (mi == null && !ifExists)
+            throw indexNotExists(index);
+
+        return mi;
     }
 
     private static final boolean checkNotExists(MutableSchema schema, Table<?> table) {

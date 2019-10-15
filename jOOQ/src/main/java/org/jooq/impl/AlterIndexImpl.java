@@ -109,6 +109,11 @@ final class AlterIndexImpl extends AbstractRowCountQuery implements
         this.ifExists = ifExists;
     }
 
+    final Index    $index()    { return index; }
+    final boolean  $ifExists() { return ifExists; }
+    final Table<?> $on()       { return on; }
+    final Index    $renameTo() { return renameTo; }
+
     // ------------------------------------------------------------------------
     // XXX: DSL API
     // ------------------------------------------------------------------------

@@ -217,7 +217,6 @@ final class DDLInterpreter {
         for (Constraint constraint : query.$constraints()) {
             ConstraintImpl impl = (ConstraintImpl) constraint;
 
-            // XXX handle case that primary key already exists?
             if (impl.$primaryKey() != null)
                 t.primaryKey = new MutableUniqueKey((UnqualifiedName) impl.getUnqualifiedName(), t, t.fields(impl.$primaryKey(), true));
 

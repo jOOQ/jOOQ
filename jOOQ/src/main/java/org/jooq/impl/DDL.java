@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.DDLFlag.COMMENT;
 import static org.jooq.DDLFlag.FOREIGN_KEY;
+import static org.jooq.DDLFlag.INDEX;
 import static org.jooq.DDLFlag.PRIMARY_KEY;
 import static org.jooq.DDLFlag.SCHEMA;
 import static org.jooq.DDLFlag.SEQUENCE;
@@ -53,9 +54,11 @@ import java.util.List;
 import org.jooq.Catalog;
 import org.jooq.Constraint;
 import org.jooq.DDLExportConfiguration;
+import org.jooq.DDLFlag;
 import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Index;
 import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.Schema;
@@ -93,6 +96,25 @@ final class DDL {
 
     private final Query createTable(Table<?> table) {
         return createTable(table, constraints(table));
+    }
+
+    private final List<Query> createIndex(Table<?> table) {
+        List<Query> result = new ArrayList<>();
+
+        if (configuration.flags().contains(DDLFlag.INDEX))
+            for (Index i : table.getIndexes())
+                result.add(
+                    (configuration.createIndexIfNotExists()
+                        ? i.getUnique()
+                            ? ctx.createUniqueIndexIfNotExists(i)
+                            : ctx.createIndexIfNotExists(i)
+                        : i.getUnique()
+                            ? ctx.createUniqueIndex(i)
+                            : ctx.createIndex(i))
+                    .on(i.getTable(), i.getFields())
+                );
+
+        return result;
     }
 
     private final List<Query> alterTableAddConstraints(Table<?> table) {
@@ -156,6 +178,7 @@ final class DDL {
             else
                 queries.addAll(alterTableAddConstraints(table));
 
+            queries.addAll(createIndex(table));
             queries.addAll(commentOn(table));
         }
 
@@ -233,6 +256,11 @@ final class DDL {
             for (Schema schema : schemas)
                 for (Table<?> table : schema.getTables())
                     queries.addAll(commentOn(table));
+
+        if (configuration.flags().contains(INDEX))
+            for (Schema schema : schemas)
+                for (Table<?> table : schema.getTables())
+                    queries.addAll(createIndex(table));
 
         return ctx.queries(queries);
     }

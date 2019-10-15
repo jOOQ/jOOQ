@@ -13,10 +13,6 @@
     <artifactId>jooq</artifactId>
     <name>jOOQ</name>
 
-    <properties>
-        <log4j.version>2.11.2</log4j.version>
-    </properties>
-
     <licenses>
         <license>
             <name>Apache License, Version 2.0</name>
@@ -103,12 +99,6 @@
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
         </dependency>
-
-
-
-
-
-
 
 
 

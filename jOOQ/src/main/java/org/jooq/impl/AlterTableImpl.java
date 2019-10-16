@@ -292,7 +292,8 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
     final Field<?>       $renameColumnTo()         { return renameColumnTo; }
     final Constraint     $renameConstraint()       { return renameConstraint; }
     final Constraint     $renameConstraintTo()     { return renameConstraintTo; }
-    final List<Field<?>> $dropColumns()            { return dropColumns; };
+    final List<Field<?>> $dropColumns()            { return dropColumns; }
+    final boolean        $dropColumnsCascade()     { return dropColumnCascade; }
     final Constraint     $dropConstraint()         { return dropConstraint; }
     final ConstraintType $dropConstraintType()     { return dropConstraintType; }
 

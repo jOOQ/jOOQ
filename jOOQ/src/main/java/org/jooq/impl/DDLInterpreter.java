@@ -269,8 +269,23 @@ final class DDLInterpreter {
         ));
     }
 
-    private final void dropColumns(MutableTable table, List<MutableField> fields) {
+    private final void dropColumns(MutableTable table, List<MutableField> fields, boolean cascade) {
         Iterator<MutableIndex> it1 = table.indexes.iterator();
+
+        for (boolean check : cascade ? new boolean [] { false } : new boolean [] { true, false }) {
+            if (table.primaryKey != null) {
+                if (intersect(table.primaryKey.keyFields, fields)) {
+                    cascade(table.primaryKey, fields, !check);
+
+                    if (!check)
+                        table.primaryKey = null;
+                }
+            }
+
+            dropColumnsCascadeLocalConstraints(table.uniqueKeys, fields, check);
+        }
+
+        dropColumnsCascadeLocalConstraints(table.foreignkeys, fields, false);
 
         indexLoop:
         while (it1.hasNext()) {
@@ -282,31 +297,43 @@ final class DDLInterpreter {
             }
         }
 
-        if (table.primaryKey != null)
-            if (intersect(table.primaryKey.keyFields, fields))
-                table.primaryKey = null;
-
-        Iterator<MutableUniqueKey> it2 = table.uniqueKeys.iterator();
-
-        ukLoop:
-        while (it2.hasNext()) {
-            if (intersect(it2.next().keyFields, fields)) {
-                it2.remove();
-                continue ukLoop;
-            }
-        }
-
-        Iterator<MutableForeignKey> it3 = table.foreignkeys.iterator();
-
-        fkLoop:
-        while (it3.hasNext()) {
-            if (intersect(it3.next().keyFields, fields)) {
-                it3.remove();
-                continue fkLoop;
-            }
-        }
-
+        // Actual removal
         table.fields.removeAll(fields);
+    }
+
+    private final void dropColumnsCascadeLocalConstraints(List<? extends MutableKey> keys, List<MutableField> fields, boolean check) {
+        Iterator<? extends MutableKey> it2 = keys.iterator();
+
+        while (it2.hasNext()) {
+            MutableKey key = it2.next();
+
+            if (intersect(key.keyFields, fields)) {
+                if (key instanceof MutableUniqueKey)
+                    cascade((MutableUniqueKey) key, fields, !check);
+
+                if (!check)
+                    it2.remove();
+            }
+        }
+    }
+
+    private final void cascade(MutableUniqueKey key, List<MutableField> fields, boolean cascade) {
+        for (MutableTable mt : tables()) {
+            Iterator<MutableForeignKey> it = mt.foreignkeys.iterator();
+
+            while (it.hasNext()) {
+                MutableForeignKey mfk = it.next();
+
+                if (mfk.referencedKey.equals(key)) {
+                    if (cascade)
+                        it.remove();
+                    else if (fields.size() == 1)
+                        throw new DataDefinitionException("Cannot drop column " + fields.get(0) + " because other objects depend on it");
+                    else
+                        throw new DataDefinitionException("Cannot drop columns " + fields + " because other objects depend on them");
+                }
+            }
+        }
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -423,7 +450,7 @@ final class DDLInterpreter {
             if (fields.size() < dropColumns.size() && !query.$ifExistsColumn())
                 existing.fields(dropColumns.toArray(EMPTY_FIELD), true);
 
-            dropColumns(existing, fields);
+            dropColumns(existing, fields, query.$dropColumnsCascade());
         }
         else if (dropConstraint != null) {
             ConstraintImpl impl = (ConstraintImpl) dropConstraint;

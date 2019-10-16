@@ -117,7 +117,7 @@ public class SchemaImpl extends AbstractNamed implements Schema {
             }
         }
 
-        ctx.visit(getUnqualifiedName());
+        ctx.visit(Tools.getMappedSchema(ctx.configuration(), this).getUnqualifiedName());
     }
 
     @Override

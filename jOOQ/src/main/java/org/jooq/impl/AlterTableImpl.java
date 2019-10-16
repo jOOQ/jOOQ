@@ -1453,9 +1453,9 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
 
 
-
-                acceptCascade(ctx);
             }
+
+            acceptCascade(ctx);
 
 
 
@@ -1499,6 +1499,8 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
             case H2:
                 // H2 defaults to CASCADE but doesn't support the keywords
                 break;
+
+
 
 
 

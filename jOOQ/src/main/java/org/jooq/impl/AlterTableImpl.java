@@ -71,6 +71,8 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
+import static org.jooq.impl.Cascade.CASCADE;
+import static org.jooq.impl.Cascade.RESTRICT;
 import static org.jooq.impl.ConstraintType.FOREIGN_KEY;
 import static org.jooq.impl.ConstraintType.PRIMARY_KEY;
 import static org.jooq.impl.DSL.begin;
@@ -98,6 +100,7 @@ import static org.jooq.impl.Keywords.K_CHANGE;
 import static org.jooq.impl.Keywords.K_CHANGE_COLUMN;
 import static org.jooq.impl.Keywords.K_COMMENT;
 import static org.jooq.impl.Keywords.K_CONSTRAINT;
+import static org.jooq.impl.Keywords.K_CONSTRAINTS;
 import static org.jooq.impl.Keywords.K_DEFAULT;
 import static org.jooq.impl.Keywords.K_DROP;
 import static org.jooq.impl.Keywords.K_DROP_COLUMN;
@@ -127,6 +130,7 @@ import static org.jooq.impl.Keywords.K_RENAME_OBJECT;
 import static org.jooq.impl.Keywords.K_RENAME_TABLE;
 import static org.jooq.impl.Keywords.K_RENAME_TO;
 import static org.jooq.impl.Keywords.K_REPLACE;
+import static org.jooq.impl.Keywords.K_RESTRICT;
 import static org.jooq.impl.Keywords.K_SET_DATA_TYPE;
 import static org.jooq.impl.Keywords.K_SET_DEFAULT;
 import static org.jooq.impl.Keywords.K_SET_NOT_NULL;
@@ -259,7 +263,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
     private QueryPartList<Field<?>>          dropColumns;
     private Constraint                       dropConstraint;
     private ConstraintType                   dropConstraintType;
-    private boolean                          dropCascade;
+    private Cascade                          dropCascade;
 
     AlterTableImpl(Configuration configuration, Table<?> table) {
         this(configuration, table, false);
@@ -293,7 +297,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
     final Constraint     $renameConstraint()       { return renameConstraint; }
     final Constraint     $renameConstraintTo()     { return renameConstraintTo; }
     final List<Field<?>> $dropColumns()            { return dropColumns; }
-    final boolean        $dropCascade()            { return dropCascade; }
+    final Cascade        $dropCascade()            { return dropCascade; }
     final Constraint     $dropConstraint()         { return dropConstraint; }
     final ConstraintType $dropConstraintType()     { return dropConstraintType; }
 
@@ -839,13 +843,13 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
     @Override
     public final AlterTableFinalStep cascade() {
-        dropCascade = true;
+        dropCascade = CASCADE;
         return this;
     }
 
     @Override
     public final AlterTableFinalStep restrict() {
-        dropCascade = false;
+        dropCascade = RESTRICT;
         return this;
     }
 
@@ -1450,8 +1454,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
 
 
-                if (dropCascade)
-                    ctx.sql(' ').visit(K_CASCADE);
+                acceptCascade(ctx);
             }
 
 
@@ -1476,6 +1479,8 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
                    .sql(' ')
                    .visit(dropConstraint);
 
+            acceptCascade(ctx);
+
             ctx.data().remove(DATA_CONSTRAINT_REFERENCE);
             ctx.end(ALTER_TABLE_DROP);
         }
@@ -1487,6 +1492,35 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
         if (!omitAlterTable)
             ctx.formatIndentEnd();
+    }
+
+    private final void acceptCascade(Context<?> ctx) {
+        switch (ctx.family()) {
+            case H2:
+                // H2 defaults to CASCADE but doesn't support the keywords
+                break;
+
+
+
+
+
+
+
+
+
+
+
+
+            case HSQLDB:
+            case POSTGRES:
+            default:
+                if (dropCascade == CASCADE)
+                    ctx.sql(' ').visit(K_CASCADE);
+                else if (dropCascade == RESTRICT)
+                    ctx.sql(' ').visit(K_RESTRICT);
+
+                break;
+        }
     }
 
     private final void acceptFirstBeforeAfter(Context<?> ctx) {

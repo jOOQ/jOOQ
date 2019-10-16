@@ -38,6 +38,8 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.AbstractName.NO_NAME;
+import static org.jooq.impl.Cascade.CASCADE;
+import static org.jooq.impl.Cascade.RESTRICT;
 import static org.jooq.impl.ConstraintType.FOREIGN_KEY;
 import static org.jooq.impl.ConstraintType.PRIMARY_KEY;
 import static org.jooq.impl.DSL.unquotedName;
@@ -268,13 +270,13 @@ final class DDLInterpreter {
         ));
     }
 
-    private final void dropColumns(MutableTable table, List<MutableField> fields, boolean cascade) {
+    private final void dropColumns(MutableTable table, List<MutableField> fields, Cascade cascade) {
         Iterator<MutableIndex> it1 = table.indexes.iterator();
 
-        for (boolean check : cascade ? new boolean [] { false } : new boolean [] { true, false }) {
+        for (boolean check : cascade == CASCADE ? new boolean [] { false } : new boolean [] { true, false }) {
             if (table.primaryKey != null) {
                 if (intersect(table.primaryKey.keyFields, fields)) {
-                    cascade(table.primaryKey, fields, !check);
+                    cascade(table.primaryKey, fields, check ? RESTRICT : CASCADE);
 
                     if (!check)
                         table.primaryKey = null;
@@ -308,7 +310,7 @@ final class DDLInterpreter {
 
             if (fields == null || intersect(key.keyFields, fields)) {
                 if (key instanceof MutableUniqueKey)
-                    cascade((MutableUniqueKey) key, fields, !check);
+                    cascade((MutableUniqueKey) key, fields, check ? RESTRICT : CASCADE);
 
                 if (!check)
                     it2.remove();
@@ -316,7 +318,7 @@ final class DDLInterpreter {
         }
     }
 
-    private final void cascade(MutableUniqueKey key, List<MutableField> fields, boolean cascade) {
+    private final void cascade(MutableUniqueKey key, List<MutableField> fields, Cascade cascade) {
         for (MutableTable mt : tables()) {
             Iterator<MutableForeignKey> it = mt.foreignkeys.iterator();
 
@@ -324,7 +326,7 @@ final class DDLInterpreter {
                 MutableForeignKey mfk = it.next();
 
                 if (mfk.referencedKey.equals(key)) {
-                    if (cascade)
+                    if (cascade == CASCADE)
                         it.remove();
                     else if (fields == null)
                         throw new DataDefinitionException("Cannot drop constraint " + key + " because other objects depend on it");

@@ -1106,7 +1106,7 @@ final class DDLInterpreter {
             schema.tables.add(this);
         }
 
-        public MutableKey constraint(Constraint addConstraint) {
+        final MutableKey constraint(Constraint addConstraint) {
             for (MutableForeignKey mfk : foreignkeys)
                 if (mfk.name.equals(addConstraint.getUnqualifiedName()))
                     return mfk;
@@ -1172,7 +1172,7 @@ final class DDLInterpreter {
             return null;
         }
 
-        MutableUniqueKey uniqueKey(List<MutableField> mrfs) {
+        final MutableUniqueKey uniqueKey(List<MutableField> mrfs) {
             if (primaryKey != null)
                 if (primaryKey.keyFields.equals(mrfs))
                     return primaryKey;

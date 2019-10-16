@@ -270,6 +270,24 @@ final class DDLInterpreter {
         ));
     }
 
+    private final void drop(List<MutableTable> tables, MutableTable table, Cascade cascade) {
+        for (boolean check : cascade == CASCADE ? new boolean [] { false } : new boolean [] { true, false }) {
+            if (table.primaryKey != null)
+                cascade(table.primaryKey, null, check ? RESTRICT : CASCADE);
+
+            cascade(table.uniqueKeys, null, check);
+        }
+
+        Iterator<MutableTable> it = tables.iterator();
+
+        while (it.hasNext()) {
+            if (it.next().name.equals(table.name)) {
+                it.remove();
+                break;
+            }
+        }
+    }
+
     private final void dropColumns(MutableTable table, List<MutableField> fields, Cascade cascade) {
         Iterator<MutableIndex> it1 = table.indexes.iterator();
 
@@ -515,7 +533,7 @@ final class DDLInterpreter {
         else if (existing.view)
             throw objectNotTable(table);
 
-        schema.drop(table);
+        drop(schema.tables, existing, query.$cascade());
     }
 
     private final void accept0(CreateViewImpl<?> query) {
@@ -527,7 +545,7 @@ final class DDLInterpreter {
             if (!existing.view)
                 throw objectNotView(table);
             else if (query.$orReplace())
-                schema.drop(table);
+                drop(schema.tables, existing, RESTRICT);
             else if (!query.$ifNotExists())
                 throw viewAlreadyExists(table);
             else
@@ -576,7 +594,7 @@ final class DDLInterpreter {
         else if (!existing.view)
             throw objectNotView(table);
 
-        schema.drop(table);
+        drop(schema.tables, existing, RESTRICT);
     }
 
     private final void accept0(CreateSequenceImpl query) {
@@ -1039,17 +1057,6 @@ final class DDLInterpreter {
                     return m;
 
             return null;
-        }
-
-        final void drop(Table<?> t) {
-            UnqualifiedName n = normalize(t);
-
-            for (int i = 0; i < tables.size(); i++) {
-                if (tables.get(i).name.equals(n)) {
-                    tables.remove(i);
-                    break;
-                }
-            }
         }
 
         private final class InterpretedSchema extends SchemaImpl {

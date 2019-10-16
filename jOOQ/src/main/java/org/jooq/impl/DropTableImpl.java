@@ -49,10 +49,13 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
 // ...
+import static org.jooq.impl.Cascade.CASCADE;
+import static org.jooq.impl.Cascade.RESTRICT;
 import static org.jooq.impl.Keywords.K_CASCADE;
 import static org.jooq.impl.Keywords.K_DROP;
 import static org.jooq.impl.Keywords.K_DROP_TABLE;
 import static org.jooq.impl.Keywords.K_IF_EXISTS;
+import static org.jooq.impl.Keywords.K_RESTRICT;
 import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.Keywords.K_TEMPORARY;
 
@@ -85,7 +88,7 @@ final class DropTableImpl extends AbstractRowCountQuery implements
     private final Table<?>               table;
     private final boolean                temporary;
     private final boolean                ifExists;
-    private boolean                      cascade;
+    private Cascade                      cascade;
 
     DropTableImpl(Configuration configuration, Table<?> table) {
         this(configuration, table, false, false);
@@ -103,8 +106,9 @@ final class DropTableImpl extends AbstractRowCountQuery implements
         this.temporary = temporary;
     }
 
-    final Table<?>          $table()        { return table; }
-    final boolean           $ifExists()     { return ifExists; }
+    final Table<?> $table()    { return table; }
+    final boolean  $ifExists() { return ifExists; }
+    final Cascade  $cascade()  { return cascade; }
 
     // ------------------------------------------------------------------------
     // XXX: DSL API
@@ -112,13 +116,13 @@ final class DropTableImpl extends AbstractRowCountQuery implements
 
     @Override
     public final DropTableImpl cascade() {
-        cascade = true;
+        cascade = CASCADE;
         return this;
     }
 
     @Override
     public final DropTableImpl restrict() {
-        cascade = false;
+        cascade = RESTRICT;
         return this;
     }
 
@@ -159,8 +163,10 @@ final class DropTableImpl extends AbstractRowCountQuery implements
 
         ctx.visit(table);
 
-        if (cascade)
+        if (cascade == CASCADE)
             ctx.sql(' ').visit(K_CASCADE);
+        else if (cascade == RESTRICT)
+            ctx.sql(' ').visit(K_RESTRICT);
 
         ctx.end(DROP_TABLE_TABLE);
     }

@@ -63,7 +63,6 @@ import org.jooq.Meta;
 import org.jooq.Name;
 import org.jooq.Name.Quoted;
 import org.jooq.Named;
-import org.jooq.Nullability;
 import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Schema;
@@ -351,38 +350,20 @@ final class DDLInterpreter {
         else if (existing.view)
             throw objectNotTable(table);
 
-        Field<?> addColumn = query.$addColumn();
-        Constraint addConstraint = query.$addConstraint();
-        Field<?> alterColumn = query.$alterColumn();
-        Field<?> alterColumnDefault = query.$alterColumnDefault();
-        boolean alterColumnDropDefault = query.$alterColumnDropDefault();
-        Nullability alterColumnNullability = query.$alterColumnNullability();
-        DataType<?> alterColumnType = query.$alterColumnType();
-        boolean ifExistsColumn = query.$ifExistsColumn();
-        boolean ifNotExistsColumn = query.$ifNotExistsColumn();
-        Table<?> renameTo = query.$renameTo();
-        Field<?> renameColumn = query.$renameColumn();
-        Field<?> renameColumnTo = query.$renameColumnTo();
-        Constraint renameConstraint = query.$renameConstraint();
-        Constraint renameConstraintTo = query.$renameConstraintTo();
-        List<Field<?>> dropColumns = query.$dropColumns();
-        Constraint dropConstraint = query.$dropConstraint();
-        ConstraintType dropConstraintType = query.$dropConstraintType();
-
         // TODO: Multi-add statements
 
-        if (addColumn != null) {
+        if (query.$addColumn() != null) {
             if (query.$addFirst())
-                existing.fields.add(0, new MutableField((UnqualifiedName) addColumn.getUnqualifiedName(), existing, query.$addColumnType()));
+                existing.fields.add(0, new MutableField((UnqualifiedName) query.$addColumn().getUnqualifiedName(), existing, query.$addColumnType()));
             else if (query.$addBefore() != null)
-                existing.fields.add(indexOrFail(existing, query.$addBefore()), new MutableField((UnqualifiedName) addColumn.getUnqualifiedName(), existing, query.$addColumnType()));
+                existing.fields.add(indexOrFail(existing, query.$addBefore()), new MutableField((UnqualifiedName) query.$addColumn().getUnqualifiedName(), existing, query.$addColumnType()));
             else if (query.$addAfter() != null)
-                existing.fields.add(indexOrFail(existing, query.$addAfter()) + 1, new MutableField((UnqualifiedName) addColumn.getUnqualifiedName(), existing, query.$addColumnType()));
+                existing.fields.add(indexOrFail(existing, query.$addAfter()) + 1, new MutableField((UnqualifiedName) query.$addColumn().getUnqualifiedName(), existing, query.$addColumnType()));
             else
-                existing.fields.add(new MutableField((UnqualifiedName) addColumn.getUnqualifiedName(), existing, query.$addColumnType()));
+                existing.fields.add(new MutableField((UnqualifiedName) query.$addColumn().getUnqualifiedName(), existing, query.$addColumnType()));
         }
-        else if (addConstraint != null) {
-            ConstraintImpl impl = (ConstraintImpl) addConstraint;
+        else if (query.$addConstraint() != null) {
+            ConstraintImpl impl = (ConstraintImpl) query.$addConstraint();
 
             if (existing.constraint(impl) != null)
                 throw constraintAlreadyExists(impl);
@@ -400,60 +381,60 @@ final class DDLInterpreter {
             else
                 throw unsupportedQuery(query);
         }
-        else if (alterColumn != null) {
-            MutableField existingField = existing.field(alterColumn);
+        else if (query.$alterColumn() != null) {
+            MutableField existingField = existing.field(query.$alterColumn());
 
             if (existingField == null) {
-                if (!ifExistsColumn)
-                    throw columnNotExists(alterColumn);
+                if (!query.$ifExistsColumn())
+                    throw columnNotExists(query.$alterColumn());
 
                 return;
             }
 
-            if (alterColumnNullability != null)
-                existingField.type = existingField.type.nullability(alterColumnNullability);
-            else if (alterColumnType != null)
-                existingField.type = alterColumnType;
-            else if (alterColumnDefault != null)
-                existingField.type = existingField.type.default_((Field) alterColumnDefault);
-            else if (alterColumnDropDefault)
+            if (query.$alterColumnNullability() != null)
+                existingField.type = existingField.type.nullability(query.$alterColumnNullability());
+            else if (query.$alterColumnType() != null)
+                existingField.type = query.$alterColumnType();
+            else if (query.$alterColumnDefault() != null)
+                existingField.type = existingField.type.default_((Field) query.$alterColumnDefault());
+            else if (query.$alterColumnDropDefault())
                 existingField.type = existingField.type.default_((Field) null);
             else
                 throw unsupportedQuery(query);
         }
-        else if (renameTo != null && checkNotExists(schema, renameTo)) {
-            existing.name = (UnqualifiedName) renameTo.getUnqualifiedName();
+        else if (query.$renameTo() != null && checkNotExists(schema, query.$renameTo())) {
+            existing.name = (UnqualifiedName) query.$renameTo().getUnqualifiedName();
         }
-        else if (renameColumn != null) {
-            MutableField mf = existing.field(renameColumn);
+        else if (query.$renameColumn() != null) {
+            MutableField mf = existing.field(query.$renameColumn());
 
             if (mf == null)
-                throw fieldNotExists(renameColumn);
-            else if (existing.field(renameColumnTo) != null)
-                throw fieldAlreadyExists(renameColumnTo);
+                throw fieldNotExists(query.$renameColumn());
+            else if (existing.field(query.$renameColumnTo()) != null)
+                throw fieldAlreadyExists(query.$renameColumnTo());
             else
-                mf.name = (UnqualifiedName) renameColumnTo.getUnqualifiedName();
+                mf.name = (UnqualifiedName) query.$renameColumnTo().getUnqualifiedName();
         }
-        else if (renameConstraint != null) {
-            MutableKey mk = existing.constraint(renameConstraint);
+        else if (query.$renameConstraint() != null) {
+            MutableKey mk = existing.constraint(query.$renameConstraint());
 
             if (mk == null)
-                throw constraintNotExists(renameConstraint);
-            else if (existing.constraint(renameConstraintTo) != null)
-                throw constraintAlreadyExists(renameConstraintTo);
+                throw constraintNotExists(query.$renameConstraint());
+            else if (existing.constraint(query.$renameConstraintTo()) != null)
+                throw constraintAlreadyExists(query.$renameConstraintTo());
             else
-                mk.name = (UnqualifiedName) renameConstraintTo.getUnqualifiedName();
+                mk.name = (UnqualifiedName) query.$renameConstraintTo().getUnqualifiedName();
         }
-        else if (dropColumns != null) {
-            List<MutableField> fields = existing.fields(dropColumns.toArray(EMPTY_FIELD), false);
+        else if (query.$dropColumns() != null) {
+            List<MutableField> fields = existing.fields(query.$dropColumns().toArray(EMPTY_FIELD), false);
 
-            if (fields.size() < dropColumns.size() && !query.$ifExistsColumn())
-                existing.fields(dropColumns.toArray(EMPTY_FIELD), true);
+            if (fields.size() < query.$dropColumns().size() && !query.$ifExistsColumn())
+                existing.fields(query.$dropColumns().toArray(EMPTY_FIELD), true);
 
             dropColumns(existing, fields, query.$dropColumnsCascade());
         }
-        else if (dropConstraint != null) {
-            ConstraintImpl impl = (ConstraintImpl) dropConstraint;
+        else if (query.$dropConstraint() != null) {
+            ConstraintImpl impl = (ConstraintImpl) query.$dropConstraint();
 
             removal: {
                 Iterator<MutableForeignKey> fks = existing.foreignkeys.iterator();
@@ -464,7 +445,7 @@ final class DDLInterpreter {
                     }
                 }
 
-                if (dropConstraintType != FOREIGN_KEY) {
+                if (query.$dropConstraintType() != FOREIGN_KEY) {
                     Iterator<MutableUniqueKey> uks = existing.uniqueKeys.iterator();
                     while (uks.hasNext()) {
                         if (uks.next().name.equals(impl.getUnqualifiedName())) {
@@ -481,10 +462,10 @@ final class DDLInterpreter {
                     }
                 }
 
-                throw constraintNotExists(dropConstraint);
+                throw constraintNotExists(query.$dropConstraint());
             }
         }
-        else if (dropConstraintType == PRIMARY_KEY) {
+        else if (query.$dropConstraintType() == PRIMARY_KEY) {
             if (existing.primaryKey != null)
                 existing.primaryKey = null;
             else
@@ -1106,16 +1087,16 @@ final class DDLInterpreter {
             schema.tables.add(this);
         }
 
-        final MutableKey constraint(Constraint addConstraint) {
+        final MutableKey constraint(Constraint constraint) {
             for (MutableForeignKey mfk : foreignkeys)
-                if (mfk.name.equals(addConstraint.getUnqualifiedName()))
+                if (mfk.name.equals(constraint.getUnqualifiedName()))
                     return mfk;
 
             for (MutableUniqueKey muk : uniqueKeys)
-                if (muk.name.equals(addConstraint.getUnqualifiedName()))
+                if (muk.name.equals(constraint.getUnqualifiedName()))
                     return muk;
 
-            if (primaryKey != null && primaryKey.name.equals(addConstraint.getUnqualifiedName()))
+            if (primaryKey != null && primaryKey.name.equals(constraint.getUnqualifiedName()))
                 return primaryKey;
             else
                 return null;

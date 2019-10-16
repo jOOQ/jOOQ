@@ -281,10 +281,10 @@ final class DDLInterpreter {
                 }
             }
 
-            dropColumnsCascadeLocalConstraints(table.uniqueKeys, fields, check);
+            cascade(table.uniqueKeys, fields, check);
         }
 
-        dropColumnsCascadeLocalConstraints(table.foreignkeys, fields, false);
+        cascade(table.foreignkeys, fields, false);
 
         indexLoop:
         while (it1.hasNext()) {
@@ -300,13 +300,13 @@ final class DDLInterpreter {
         table.fields.removeAll(fields);
     }
 
-    private final void dropColumnsCascadeLocalConstraints(List<? extends MutableKey> keys, List<MutableField> fields, boolean check) {
+    private final void cascade(List<? extends MutableKey> keys, List<MutableField> fields, boolean check) {
         Iterator<? extends MutableKey> it2 = keys.iterator();
 
         while (it2.hasNext()) {
             MutableKey key = it2.next();
 
-            if (intersect(key.keyFields, fields)) {
+            if (fields == null || intersect(key.keyFields, fields)) {
                 if (key instanceof MutableUniqueKey)
                     cascade((MutableUniqueKey) key, fields, !check);
 
@@ -326,6 +326,8 @@ final class DDLInterpreter {
                 if (mfk.referencedKey.equals(key)) {
                     if (cascade)
                         it.remove();
+                    else if (fields == null)
+                        throw new DataDefinitionException("Cannot drop constraint " + key + " because other objects depend on it");
                     else if (fields.size() == 1)
                         throw new DataDefinitionException("Cannot drop column " + fields.get(0) + " because other objects depend on it");
                     else
@@ -447,8 +449,12 @@ final class DDLInterpreter {
 
                 if (query.$dropConstraintType() != FOREIGN_KEY) {
                     Iterator<MutableUniqueKey> uks = existing.uniqueKeys.iterator();
+
                     while (uks.hasNext()) {
-                        if (uks.next().name.equals(impl.getUnqualifiedName())) {
+                        MutableUniqueKey key = uks.next();
+
+                        if (key.name.equals(impl.getUnqualifiedName())) {
+                            cascade(key, null, false);
                             uks.remove();
                             break removal;
                         }
@@ -456,6 +462,7 @@ final class DDLInterpreter {
 
                     if (existing.primaryKey != null) {
                         if (existing.primaryKey.name.equals(impl.getUnqualifiedName())) {
+                            cascade(existing.primaryKey, null, false);
                             existing.primaryKey = null;
                             break removal;
                         }

@@ -3774,11 +3774,11 @@ final class ParserImpl implements Parser {
             case 'D':
                 if (parseKeywordIf(ctx, "DROP")) {
                     if (parseKeywordIf(ctx, "CONSTRAINT")) {
-                        return s1.dropConstraint(parseIdentifier(ctx));
+                        return parseCascadeRestrictIf(ctx, s1.dropConstraint(parseIdentifier(ctx)));
                     }
                     else if (parseKeywordIf(ctx, "PRIMARY KEY")) {
                         Name identifier = parseIdentifierIf(ctx);
-                        return identifier == null ? s1.dropPrimaryKey() : s1.dropPrimaryKey(identifier);
+                        return parseCascadeRestrictIf(ctx, identifier == null ? s1.dropPrimaryKey() : s1.dropPrimaryKey(identifier));
                     }
                     else if (parseKeywordIf(ctx, "FOREIGN KEY")) {
                         return s1.dropForeignKey(parseIdentifier(ctx));
@@ -3809,24 +3809,12 @@ final class ParserImpl implements Parser {
                         if (parens)
                             parse(ctx, ')');
 
-                        boolean cascade = parseKeywordIf(ctx, "CASCADE");
-                        boolean restrict = !cascade && parseKeywordIf(ctx, "RESTRICT");
-
-                        AlterTableDropStep s2 =
-                              fields == null
+                        return parseCascadeRestrictIf(ctx, fields == null
                             ? ifColumnExists
                                 ? s1.dropColumnIfExists(field)
                                 : s1.dropColumn(field)
-                            : s1.dropColumns(fields);
-
-                        AlterTableFinalStep s3 =
-                              cascade
-                            ? s2.cascade()
-                            : restrict
-                            ? s2.restrict()
-                            : s2;
-
-                        return s3;
+                            : s1.dropColumns(fields)
+                        );
                     }
                 }
 
@@ -3877,6 +3865,17 @@ final class ParserImpl implements Parser {
         }
 
         throw ctx.expected("ADD", "ALTER", "COMMENT", "DROP", "MODIFY", "RENAME");
+    }
+
+    private static final AlterTableFinalStep parseCascadeRestrictIf(ParserContext ctx, AlterTableDropStep step) {
+        boolean cascade = parseKeywordIf(ctx, "CASCADE");
+        boolean restrict = !cascade && parseKeywordIf(ctx, "RESTRICT");
+
+        return cascade
+            ? step.cascade()
+            : restrict
+            ? step.restrict()
+            : step;
     }
 
     private static final DDLQuery parseAlterTableAdd(ParserContext ctx, AlterTableStep s1, Table<?> tableName) {

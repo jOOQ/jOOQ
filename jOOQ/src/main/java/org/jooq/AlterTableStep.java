@@ -558,7 +558,7 @@ public interface AlterTableStep {
      * statement.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    AlterTableFinalStep drop(Constraint constraint);
+    AlterTableDropStep drop(Constraint constraint);
 
     /**
      * Add a <code>DROP CONSTRAINT</code> clause to the <code>ALTER TABLE</code>
@@ -567,7 +567,7 @@ public interface AlterTableStep {
      * @see DSL#constraint(String)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    AlterTableFinalStep dropConstraint(Constraint constraint);
+    AlterTableDropStep dropConstraint(Constraint constraint);
 
     /**
      * Add a <code>DROP CONSTRAINT</code> clause to the <code>ALTER TABLE</code>
@@ -576,7 +576,7 @@ public interface AlterTableStep {
      * @see DSL#constraint(String)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    AlterTableFinalStep dropConstraint(Name constraint);
+    AlterTableDropStep dropConstraint(Name constraint);
 
     /**
      * Add a <code>DROP CONSTRAINT</code> clause to the <code>ALTER TABLE</code>
@@ -585,14 +585,14 @@ public interface AlterTableStep {
      * @see DSL#constraint(String)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    AlterTableFinalStep dropConstraint(String constraint);
+    AlterTableDropStep dropConstraint(String constraint);
 
     /**
      * Add a <code>DROP PRIMARY KEY</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL })
-    AlterTableFinalStep dropPrimaryKey();
+    AlterTableDropStep dropPrimaryKey();
 
     /**
      * Add a <code>DROP PRIMARY KEY</code> clause to the
@@ -605,7 +605,7 @@ public interface AlterTableStep {
      * {@link #dropConstraint(Constraint)}.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    AlterTableFinalStep dropPrimaryKey(Constraint constraint);
+    AlterTableDropStep dropPrimaryKey(Constraint constraint);
 
     /**
      * Add a <code>DROP PRIMARY KEY</code> clause to the <code>ALTER TABLE</code>
@@ -620,7 +620,7 @@ public interface AlterTableStep {
      * @see DSL#constraint(Name)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    AlterTableFinalStep dropPrimaryKey(Name constraint);
+    AlterTableDropStep dropPrimaryKey(Name constraint);
 
     /**
      * Add a <code>DROP PRIMARY KEY</code> clause to the <code>ALTER TABLE</code>
@@ -635,14 +635,14 @@ public interface AlterTableStep {
      * @see DSL#constraint(String)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    AlterTableFinalStep dropPrimaryKey(String constraint);
+    AlterTableDropStep dropPrimaryKey(String constraint);
 
     /**
      * Add a <code>DROP FOREIGN KEY</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    AlterTableFinalStep dropForeignKey(Constraint constraint);
+    AlterTableDropStep dropForeignKey(Constraint constraint);
 
     /**
      * Add a <code>DROP FOREIGN KEY</code> clause to the <code>ALTER TABLE</code>
@@ -651,7 +651,7 @@ public interface AlterTableStep {
      * @see DSL#constraint(Name)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    AlterTableFinalStep dropForeignKey(Name constraint);
+    AlterTableDropStep dropForeignKey(Name constraint);
 
     /**
      * Add a <code>DROP FOREIGN KEY</code> clause to the <code>ALTER TABLE</code>
@@ -660,5 +660,5 @@ public interface AlterTableStep {
      * @see DSL#constraint(String)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    AlterTableFinalStep dropForeignKey(String constraint);
+    AlterTableDropStep dropForeignKey(String constraint);
 }

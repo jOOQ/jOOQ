@@ -257,9 +257,9 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
     private Field<?>                         alterColumnDefault;
     private boolean                          alterColumnDropDefault;
     private QueryPartList<Field<?>>          dropColumns;
-    private boolean                          dropColumnCascade;
     private Constraint                       dropConstraint;
     private ConstraintType                   dropConstraintType;
+    private boolean                          dropCascade;
 
     AlterTableImpl(Configuration configuration, Table<?> table) {
         this(configuration, table, false);
@@ -293,7 +293,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
     final Constraint     $renameConstraint()       { return renameConstraint; }
     final Constraint     $renameConstraintTo()     { return renameConstraintTo; }
     final List<Field<?>> $dropColumns()            { return dropColumns; }
-    final boolean        $dropColumnsCascade()     { return dropColumnCascade; }
+    final boolean        $dropCascade()            { return dropCascade; }
     final Constraint     $dropConstraint()         { return dropConstraint; }
     final ConstraintType $dropConstraintType()     { return dropConstraintType; }
 
@@ -839,13 +839,13 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
     @Override
     public final AlterTableFinalStep cascade() {
-        dropColumnCascade = true;
+        dropCascade = true;
         return this;
     }
 
     @Override
     public final AlterTableFinalStep restrict() {
-        dropColumnCascade = false;
+        dropCascade = false;
         return this;
     }
 
@@ -1450,7 +1450,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
 
 
-                if (dropColumnCascade)
+                if (dropCascade)
                     ctx.sql(' ').visit(K_CASCADE);
             }
 

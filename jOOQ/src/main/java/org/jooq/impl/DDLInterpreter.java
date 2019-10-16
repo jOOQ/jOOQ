@@ -433,7 +433,7 @@ final class DDLInterpreter {
             if (fields.size() < query.$dropColumns().size() && !query.$ifExistsColumn())
                 existing.fields(query.$dropColumns().toArray(EMPTY_FIELD), true);
 
-            dropColumns(existing, fields, query.$dropColumnsCascade());
+            dropColumns(existing, fields, query.$dropCascade());
         }
         else if (query.$dropConstraint() != null) {
             ConstraintImpl impl = (ConstraintImpl) query.$dropConstraint();
@@ -454,7 +454,7 @@ final class DDLInterpreter {
                         MutableUniqueKey key = uks.next();
 
                         if (key.name.equals(impl.getUnqualifiedName())) {
-                            cascade(key, null, false);
+                            cascade(key, null, query.$dropCascade());
                             uks.remove();
                             break removal;
                         }
@@ -462,7 +462,7 @@ final class DDLInterpreter {
 
                     if (existing.primaryKey != null) {
                         if (existing.primaryKey.name.equals(impl.getUnqualifiedName())) {
-                            cascade(existing.primaryKey, null, false);
+                            cascade(existing.primaryKey, null, query.$dropCascade());
                             existing.primaryKey = null;
                             break removal;
                         }

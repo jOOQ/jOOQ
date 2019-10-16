@@ -758,7 +758,7 @@ final class MetaImpl extends AbstractMeta {
                     );
 
                     String filter = record.get(12, String.class); // FILTER_CONDITION
-                    where = filter != null ? condition(filter) : null;
+                    where = !StringUtils.isBlank(filter) ? condition(filter) : null;
                     unique = !record.get(3, boolean.class); // NON_UNIQUE
                 }
 

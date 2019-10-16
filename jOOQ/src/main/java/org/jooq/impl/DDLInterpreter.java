@@ -43,6 +43,7 @@ import static org.jooq.impl.ConstraintType.PRIMARY_KEY;
 import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.impl.Tools.intersect;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -268,6 +269,46 @@ final class DDLInterpreter {
         ));
     }
 
+    private final void dropColumns(MutableTable table, List<MutableField> fields) {
+        Iterator<MutableIndex> it1 = table.indexes.iterator();
+
+        indexLoop:
+        while (it1.hasNext()) {
+            for (MutableSortField msf : it1.next().fields) {
+                if (fields.contains(msf.field)) {
+                    it1.remove();
+                    continue indexLoop;
+                }
+            }
+        }
+
+        if (table.primaryKey != null)
+            if (intersect(table.primaryKey.keyFields, fields))
+                table.primaryKey = null;
+
+        Iterator<MutableUniqueKey> it2 = table.uniqueKeys.iterator();
+
+        ukLoop:
+        while (it2.hasNext()) {
+            if (intersect(it2.next().keyFields, fields)) {
+                it2.remove();
+                continue ukLoop;
+            }
+        }
+
+        Iterator<MutableForeignKey> it3 = table.foreignkeys.iterator();
+
+        fkLoop:
+        while (it3.hasNext()) {
+            if (intersect(it3.next().keyFields, fields)) {
+                it3.remove();
+                continue fkLoop;
+            }
+        }
+
+        table.fields.removeAll(fields);
+    }
+
     @SuppressWarnings({ "rawtypes", "unchecked" })
     private final void accept0(AlterTableImpl query) {
         Table<?> table = query.$table();
@@ -377,14 +418,12 @@ final class DDLInterpreter {
                 mk.name = (UnqualifiedName) renameConstraintTo.getUnqualifiedName();
         }
         else if (dropColumns != null) {
-            // TODO Implement cascade
-            // TODO check if any constraints or indexes reference this column.
             List<MutableField> fields = existing.fields(dropColumns.toArray(EMPTY_FIELD), false);
 
             if (fields.size() < dropColumns.size() && !query.$ifExistsColumn())
                 existing.fields(dropColumns.toArray(EMPTY_FIELD), true);
 
-            existing.fields.removeAll(fields);
+            dropColumns(existing, fields);
         }
         else if (dropConstraint != null) {
             ConstraintImpl impl = (ConstraintImpl) dropConstraint;

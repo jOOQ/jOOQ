@@ -5282,4 +5282,15 @@ final class Tools {
         }
         return sb.toString();
     }
+
+    /**
+     * Whether the intersection of two collection is non-empty.
+     */
+    static final <T> boolean intersect(Collection<T> c1, Collection<T> c2) {
+        for (T t1 : c1)
+            if (c2.contains(t1))
+                return true;
+
+        return false;
+    }
 }

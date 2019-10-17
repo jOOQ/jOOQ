@@ -30,7 +30,7 @@
         <h2.version>1.4.200</h2.version>
 
         <!-- From JDK 11 onwards, we need to depend on the JAXB API explicitly -->
-        <jaxb.version>2.3.1</jaxb.version>
+        <jaxb.version>2.2.12</jaxb.version>
         <javax.activation.version>1.2.0</javax.activation.version>
 
         <!-- DefaultRecordMapper and jOOQ-meta-extensions can read JPA annotations -->
@@ -247,13 +247,13 @@
             <dependency>
                 <groupId>com.google.errorprone</groupId>
                 <artifactId>error_prone_core</artifactId>
-                <version>2.3.3</version>
+                <version>2.2.12</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>com.google.errorprone</groupId>
                 <artifactId>error_prone_annotation</artifactId>
-                <version>2.3.3</version>
+                <version>2.2.12</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>

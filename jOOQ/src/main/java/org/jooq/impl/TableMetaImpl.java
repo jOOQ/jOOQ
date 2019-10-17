@@ -46,10 +46,13 @@ import java.util.Set;
 
 import org.jooq.Catalog;
 import org.jooq.Configuration;
+import org.jooq.DDLExportConfiguration;
+import org.jooq.Queries;
 import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.UniqueKey;
+import org.jooq.exception.DataAccessException;
 
 /**
  * @author Lukas Eder
@@ -107,5 +110,10 @@ final class TableMetaImpl extends AbstractMeta {
                 result.add(table.getPrimaryKey());
 
         return result;
+    }
+
+    @Override
+    public Queries ddl(DDLExportConfiguration exportConfiguration) throws DataAccessException {
+        return new DDL(this, exportConfiguration).queries(tables);
     }
 }

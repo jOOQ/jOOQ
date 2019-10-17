@@ -288,8 +288,10 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
         return ddl(new DDLExportConfiguration());
     }
 
+    // [#9396] TODO Fix this. Subclasses should not need to override this to get
+    //         correct results
     @Override
-    public final Queries ddl(DDLExportConfiguration exportConfiguration) throws DataAccessException {
+    public /* non-final */ Queries ddl(DDLExportConfiguration exportConfiguration) throws DataAccessException {
         return new DDL(this, exportConfiguration).queries();
     }
 }

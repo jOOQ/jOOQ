@@ -59,6 +59,7 @@ import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.UniqueKey;
 import org.jooq.exception.DataAccessException;
+import org.jooq.util.xml.jaxb.InformationSchema;
 
 /**
  * @author Lukas Eder
@@ -293,5 +294,12 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     @Override
     public /* non-final */ Queries ddl(DDLExportConfiguration exportConfiguration) throws DataAccessException {
         return new DDL(this, exportConfiguration).queries();
+    }
+
+    // [#9396] TODO Fix this. Subclasses should not need to override this to get
+    //         correct results
+    @Override
+    public /* non-final */ InformationSchema informationSchema() throws DataAccessException {
+        return InformationSchemaExport.exportCatalogs(configuration(), getCatalogs());
     }
 }

@@ -218,4 +218,12 @@ public interface Meta extends Scope {
      *             objects
      */
     Queries ddl(DDLExportConfiguration configuration) throws DataAccessException;
+
+    /**
+     * Export to the {@link InformationSchema} format.
+     * <p>
+     * This allows for serialising schema meta information as XML using JAXB.
+     * See also {@link Constants#XSD_META} for details.
+     */
+    InformationSchema informationSchema() throws DataAccessException;
 }

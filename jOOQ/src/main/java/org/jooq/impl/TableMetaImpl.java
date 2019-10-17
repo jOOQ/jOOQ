@@ -53,6 +53,7 @@ import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.UniqueKey;
 import org.jooq.exception.DataAccessException;
+import org.jooq.util.xml.jaxb.InformationSchema;
 
 /**
  * @author Lukas Eder
@@ -115,5 +116,10 @@ final class TableMetaImpl extends AbstractMeta {
     @Override
     public Queries ddl(DDLExportConfiguration exportConfiguration) throws DataAccessException {
         return new DDL(this, exportConfiguration).queries(tables);
+    }
+
+    @Override
+    public InformationSchema informationSchema() throws DataAccessException {
+        return InformationSchemaExport.exportTables(configuration(), getTables());
     }
 }

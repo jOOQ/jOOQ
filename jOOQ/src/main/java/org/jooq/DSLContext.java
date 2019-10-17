@@ -312,56 +312,50 @@ public interface DSLContext extends Scope , AutoCloseable  {
     Meta meta(Source... scripts);
 
     /**
-     * Export a catalog to the {@link InformationSchema} format.
-     * <p>
-     * This allows for serialising schema meta information as XML using JAXB.
-     * See also {@link Constants#XSD_META} for details.
+     * Convenience method for {@link Meta#informationSchema()}.
+     *
+     * @see #meta(Catalog...)
+     * @see Meta#informationSchema()
      */
     InformationSchema informationSchema(Catalog catalog);
 
     /**
-     * Export a set of catalogs to the {@link InformationSchema} format.
-     * <p>
-     * This allows for serialising schema meta information as XML using JAXB.
-     * See also {@link Constants#XSD_META} for details.
+     * Convenience method for {@link Meta#informationSchema()}.
+     *
+     * @see #meta(Catalog...)
+     * @see Meta#informationSchema()
      */
     InformationSchema informationSchema(Catalog... catalogs);
 
     /**
-     * Export a schema to the {@link InformationSchema} format.
-     * <p>
-     * This allows for serialising schema meta information as XML using JAXB.
-     * See also {@link Constants#XSD_META} for details.
+     * Convenience method for {@link Meta#informationSchema()}.
+     *
+     * @see #meta(Schema...)
+     * @see Meta#informationSchema()
      */
     InformationSchema informationSchema(Schema schema);
 
     /**
-     * Export a set of schemas to the {@link InformationSchema} format.
-     * <p>
-     * This allows for serialising schema meta information as XML using JAXB.
-     * See also {@link Constants#XSD_META} for details.
+     * Convenience method for {@link Meta#informationSchema()}.
+     *
+     * @see #meta(Schema...)
+     * @see Meta#informationSchema()
      */
     InformationSchema informationSchema(Schema... schemas);
 
     /**
-     * Export a table to the {@link InformationSchema} format.
-     * <p>
-     * Exporting a single table will not include any foreign key definitions in
-     * the exported data.
-     * <p>
-     * This allows for serialising schema meta information as XML using JAXB.
-     * See also {@link Constants#XSD_META} for details.
+     * Convenience method for {@link Meta#informationSchema()}.
+     *
+     * @see #meta(Table...)
+     * @see Meta#informationSchema()
      */
     InformationSchema informationSchema(Table<?> table);
 
     /**
-     * Export a set of tables to the {@link InformationSchema} format.
-     * <p>
-     * Only those foreign keys whose referenced table is also included in the
-     * export will be exported.
-     * <p>
-     * This allows for serialising schema meta information as XML using JAXB.
-     * See also {@link Constants#XSD_META} for details.
+     * Convenience method for {@link Meta#informationSchema()}.
+     *
+     * @see #meta(Table...)
+     * @see Meta#informationSchema()
      */
     InformationSchema informationSchema(Table<?>... table);
 

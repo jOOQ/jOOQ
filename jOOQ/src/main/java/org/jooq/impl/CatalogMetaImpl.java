@@ -53,14 +53,12 @@ import org.jooq.UniqueKey;
  */
 final class CatalogMetaImpl extends AbstractMeta {
 
-    private static final long   serialVersionUID = 7582210274970452691L;
-
-    @SuppressWarnings("unused")
-    private final Configuration configuration;
-    private final Catalog[]     catalogs;
+    private static final long serialVersionUID = 7582210274970452691L;
+    private final Catalog[]   catalogs;
 
     CatalogMetaImpl(Configuration configuration, Catalog[] catalogs) {
-        this.configuration = configuration;
+        super(configuration);
+
         this.catalogs = catalogs;
     }
 

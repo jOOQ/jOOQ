@@ -73,7 +73,7 @@ final class DDLInterpreterMetaProvider implements MetaProvider {
 
     @Override
     public Meta provide() {
-        final DDLInterpreter interpreter = new DDLInterpreter();
+        final DDLInterpreter interpreter = new DDLInterpreter(configuration);
         Configuration localConfiguration = configuration.derive();
         DSLContext ctx = DSL.using(localConfiguration);
         for (Source script : scripts)

@@ -108,7 +108,6 @@ import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.ConnectionCallable;
 import org.jooq.Constraint;
-import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -151,14 +150,12 @@ final class MetaImpl extends AbstractMeta {
 
 
 
-    private final DSLContext             ctx;
-    private final Configuration          configuration;
     private final DatabaseMetaData       databaseMetaData;
     private final boolean                inverseSchemaCatalog;
 
     MetaImpl(Configuration configuration, DatabaseMetaData databaseMetaData) {
-        this.ctx = DSL.using(configuration);
-        this.configuration = configuration;
+        super(configuration);
+
         this.databaseMetaData = databaseMetaData;
         this.inverseSchemaCatalog = INVERSE_SCHEMA_CATALOG.contains(configuration.family());
     }
@@ -169,7 +166,7 @@ final class MetaImpl extends AbstractMeta {
 
     private final Result<Record> meta(final MetaFunction consumer) {
         if (databaseMetaData == null)
-            return ctx.connectionResult(new ConnectionCallable<Result<Record>>() {
+            return dsl().connectionResult(new ConnectionCallable<Result<Record>>() {
                 @Override
                 public Result<Record> run(Connection connection) throws SQLException {
                     return consumer.run(connection.getMetaData());
@@ -290,7 +287,7 @@ final class MetaImpl extends AbstractMeta {
                 Result<Record> schemas = meta(new MetaFunction() {
                     @Override
                     public Result<Record> run(DatabaseMetaData meta) throws SQLException {
-                        return ctx.fetch(
+                        return dsl().fetch(
                             meta.getSchemas(),
 
                             // [#2681] Work around a flaw in the MySQL JDBC driver
@@ -308,7 +305,7 @@ final class MetaImpl extends AbstractMeta {
                 Result<Record> schemas = meta(new MetaFunction() {
                     @Override
                     public Result<Record> run(DatabaseMetaData meta) throws SQLException {
-                        return ctx.fetch(
+                        return dsl().fetch(
                             meta.getCatalogs(),
                             SQLDataType.VARCHAR  // TABLE_CATALOG
                         );
@@ -390,7 +387,7 @@ final class MetaImpl extends AbstractMeta {
                     else
                         rs = meta.getTables(getName(), null, "%", types);
 
-                    return ctx.fetch(
+                    return dsl().fetch(
                         rs,
 
                         // [#2681] Work around a flaw in the MySQL JDBC driver
@@ -470,7 +467,7 @@ final class MetaImpl extends AbstractMeta {
                     else
                         rs = meta.getColumns(schema, null, table, "%");
 
-                    return ctx.fetch(
+                    return dsl().fetch(
                         rs,
 
                         // Work around a bug in the SQL Server JDBC driver by
@@ -527,8 +524,7 @@ final class MetaImpl extends AbstractMeta {
                     else
                         rs = meta.getIndexInfo(schema, null, getName(), false, true);
 
-                    return
-                    ctx.fetch(
+                    return dsl().fetch(
                         rs,
                         String.class,  // TABLE_CAT
                         String.class,  // TABLE_SCHEM
@@ -580,8 +576,7 @@ final class MetaImpl extends AbstractMeta {
                     else
                         rs = meta.getPrimaryKeys(schema, null, getName());
 
-                    return
-                    ctx.fetch(
+                    return dsl().fetch(
                         rs,
                         String.class, // TABLE_CAT
                         String.class, // TABLE_SCHEM
@@ -605,8 +600,7 @@ final class MetaImpl extends AbstractMeta {
                 @Override
                 public Result<Record> run(DatabaseMetaData meta) throws SQLException {
                     ResultSet rs = meta.getImportedKeys(null, getSchema().getName(), getName());
-                    return
-                    ctx.fetch(
+                    return dsl().fetch(
                         rs,
                         String.class,  // PKTABLE_CAT
                         String.class,  // PKTABLE_SCHEM
@@ -881,7 +875,7 @@ final class MetaImpl extends AbstractMeta {
                 public Result<Record> run(DatabaseMetaData meta) throws SQLException {
                     ResultSet rs = meta.getExportedKeys(null, pkTable.getSchema().getName(), pkTable.getName());
 
-                    return ctx.fetch(
+                    return dsl().fetch(
                         rs,
                         String.class,  // PKTABLE_CAT
                         String.class,  // PKTABLE_SCHEM

@@ -56,6 +56,7 @@ import java.util.Map;
 
 import org.jooq.Catalog;
 import org.jooq.Comment;
+import org.jooq.Configuration;
 import org.jooq.Constraint;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -82,20 +83,22 @@ import org.jooq.impl.ConstraintImpl.Action;
 @SuppressWarnings("serial")
 final class DDLInterpreter {
 
+    private final Configuration             configuration;
     private final Map<Name, MutableCatalog> catalogs = new LinkedHashMap<>();
     private final MutableCatalog            defaultCatalog;
     private final MutableSchema             defaultSchema;
     private MutableSchema                   currentSchema;
 
-    DDLInterpreter() {
-        defaultCatalog = new MutableCatalog(NO_NAME);
-        catalogs.put(defaultCatalog.name, defaultCatalog);
-        defaultSchema = new MutableSchema(NO_NAME, defaultCatalog);
-        currentSchema = defaultSchema;
+    DDLInterpreter(Configuration configuration) {
+        this.configuration = configuration;
+        this.defaultCatalog = new MutableCatalog(NO_NAME);
+        this.catalogs.put(defaultCatalog.name, defaultCatalog);
+        this.defaultSchema = new MutableSchema(NO_NAME, defaultCatalog);
+        this.currentSchema = defaultSchema;
     }
 
     final Meta meta() {
-        return new AbstractMeta() {
+        return new AbstractMeta(configuration) {
             private static final long serialVersionUID = 2052806256506059701L;
 
             @Override

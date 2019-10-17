@@ -48,9 +48,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.jooq.Catalog;
+import org.jooq.Configuration;
+import org.jooq.DDLExportConfiguration;
 import org.jooq.Meta;
 import org.jooq.Name;
 import org.jooq.Named;
+import org.jooq.Queries;
 import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.Table;
@@ -60,10 +63,11 @@ import org.jooq.exception.DataAccessException;
 /**
  * @author Lukas Eder
  */
-abstract class AbstractMeta implements Meta, Serializable {
+abstract class AbstractMeta extends AbstractScope implements Meta, Serializable {
 
-    private static final long                  serialVersionUID = 910484713008245977L;
+    private static final long            serialVersionUID = 910484713008245977L;
 
+    // [#9010] TODO: Allow for opting out of this cache
     private Map<Name, Catalog>           cachedCatalogs;
     private Map<Name, Schema>            cachedQualifiedSchemas;
     private Map<Name, Table<?>>          cachedQualifiedTables;
@@ -73,8 +77,9 @@ abstract class AbstractMeta implements Meta, Serializable {
     private Map<Name, List<Sequence<?>>> cachedUnqualifiedSequences;
     private List<UniqueKey<?>>           cachedPrimaryKeys;
 
-    protected AbstractMeta() {
-        // [#9010] TODO: Allow for opting out of this cache
+
+    protected AbstractMeta(Configuration configuration) {
+        super(configuration);
     }
 
     @Override
@@ -276,5 +281,15 @@ abstract class AbstractMeta implements Meta, Serializable {
             return Collections.emptyList();
         else
             return Collections.unmodifiableList(list);
+    }
+
+    @Override
+    public final Queries ddl() throws DataAccessException {
+        return ddl(new DDLExportConfiguration());
+    }
+
+    @Override
+    public final Queries ddl(DDLExportConfiguration exportConfiguration) throws DataAccessException {
+        return new DDL(this, exportConfiguration).queries();
     }
 }

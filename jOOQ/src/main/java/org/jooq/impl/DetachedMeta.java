@@ -42,6 +42,7 @@ import java.util.List;
 
 import org.jooq.Catalog;
 import org.jooq.Comment;
+import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -71,7 +72,9 @@ final class DetachedMeta extends AbstractMeta {
     private static final long serialVersionUID = 5561057000510740144L;
     private Meta delegate;
 
-    private DetachedMeta() {}
+    private DetachedMeta(Configuration configuration) {
+        super(configuration);
+    }
 
     private final DetachedMeta copy(Meta meta) {
         delegate = meta;
@@ -87,7 +90,7 @@ final class DetachedMeta extends AbstractMeta {
     }
 
     static Meta copyOf(Meta meta) {
-        return new DetachedMeta().copy(meta);
+        return new DetachedMeta(meta.configuration()).copy(meta);
     }
 
     @Override

@@ -8280,171 +8280,122 @@ public interface DSLContext extends Scope , AutoCloseable  {
     // -------------------------------------------------------------------------
 
     /**
-     * Generate the complete creation script for the entire catalog.
+     * Convenience method for {@link Meta#ddl()}.
      *
-     * @see #ddl(Catalog, DDLExportConfiguration)
+     * @see #meta(Catalog...)
+     * @see Meta#ddl()
      */
     Queries ddl(Catalog catalog);
 
     /**
-     * Generate a partial creation script for the entire catalog.
-     * <p>
-     * The following {@link DDLFlag} can be set:
-     * <ul>
-     * <li>{@link DDLFlag#SCHEMA}: If set, the catalog's <code>SCHEMA</code>
-     * specification will be generated.</li>
-     * <li>{@link DDLFlag#TABLE}: If set, the schema's <code>TABLE</code>
-     * specification will be generated.</li>
-     * <li>{@link DDLFlag#PRIMARY_KEY}: If set, a potential
-     * <code>PRIMARY KEY</code> constraint is specified inline with the table.
-     * </li>
-     * <li>{@link DDLFlag#UNIQUE}: If set, any potential <code>UNIQUE</code>
-     * constraint is specified inline with the table.</li>
-     * <li>{@link DDLFlag#FOREIGN_KEY}: If set, any potential
-     * <code>FOREIGN KEY</code> constraint is specified after all the tables, as
-     * a separate <code>ALTER TABLE .. ADD CONSTRAINT</code> statement.</li>
-     * </ul>
+     * Convenience method for {@link Meta#ddl(DDLExportConfiguration)}.
+     *
+     * @see #meta(Catalog...)
+     * @see Meta#ddl(DDLExportConfiguration)
      */
     Queries ddl(Catalog schema, DDLExportConfiguration configuration);
 
     /**
-     * Generate a partial creation script for the entire catalog.
+     * Convenience method for {@link Meta#ddl(DDLExportConfiguration)}.
      *
-     * @see #ddl(Catalog, DDLExportConfiguration)
+     * @see #meta(Catalog...)
+     * @see Meta#ddl(DDLExportConfiguration)
      */
     Queries ddl(Catalog schema, DDLFlag... flags);
 
     /**
-     * Generate the complete creation script for the entire schema.
+     * Convenience method for {@link Meta#ddl()}.
      *
-     * @see #ddl(Schema, DDLExportConfiguration)
+     * @see #meta(Schema...)
+     * @see Meta#ddl()
      */
     Queries ddl(Schema schema);
 
     /**
-     * Generate a partial creation script for the entire schema.
-     * <p>
-     * The following {@link DDLFlag} can be set:
-     * <ul>
-     * <li>{@link DDLFlag#TABLE}: If set, the schema's <code>TABLE</code>
-     * specification will be generated.</li>
-     * <li>{@link DDLFlag#PRIMARY_KEY}: If set, a potential
-     * <code>PRIMARY KEY</code> constraint is specified inline with the table.
-     * </li>
-     * <li>{@link DDLFlag#UNIQUE}: If set, any potential <code>UNIQUE</code>
-     * constraint is specified inline with the table.</li>
-     * <li>{@link DDLFlag#FOREIGN_KEY}: If set, any potential
-     * <code>FOREIGN KEY</code> constraint is specified after all the tables, as
-     * a separate <code>ALTER TABLE .. ADD CONSTRAINT</code> statement.</li>
-     * </ul>
+     * Convenience method for {@link Meta#ddl(DDLExportConfiguration)}.
+     *
+     * @see #meta(Schema...)
+     * @see Meta#ddl(DDLExportConfiguration)
      */
     Queries ddl(Schema schema, DDLExportConfiguration configuration);
 
     /**
-     * Generate a partial creation script for the entire schema.
+     * Convenience method for {@link Meta#ddl(DDLExportConfiguration)}.
      *
-     * @see #ddl(Schema, DDLExportConfiguration)
+     * @see #meta(Schema...)
+     * @see Meta#ddl(DDLExportConfiguration)
      */
     Queries ddl(Schema schema, DDLFlag... flags);
 
     /**
-     * Generate the complete creation script for a table.
+     * Convenience method for {@link Meta#ddl()}.
      *
-     * @see #ddl(Table, DDLExportConfiguration)
+     * @see #meta(Table...)
+     * @see Meta#ddl()
      */
     Queries ddl(Table<?> table);
 
     /**
-     * Generate a partial creation script for a table.
-     * <p>
-     * The following {@link DDLFlag} can be set:
-     * <ul>
-     * <li>{@link DDLFlag#TABLE}: If not set, this will generate nothing at all.
-     * </li>
-     * <li>{@link DDLFlag#PRIMARY_KEY}: If set, a potential
-     * <code>PRIMARY KEY</code> constraint is specified inline with the table.
-     * </li>
-     * <li>{@link DDLFlag#UNIQUE}: If set, any potential <code>UNIQUE</code>
-     * constraint is specified inline with the table.</li>
-     * <li>{@link DDLFlag#FOREIGN_KEY}: If set, any potential
-     * <code>FOREIGN KEY</code> constraint is specified inline with the table.
-     * </li>
-     * </ul>
+     * Convenience method for {@link Meta#ddl(DDLExportConfiguration)}.
+     *
+     * @see #meta(Table...)
+     * @see Meta#ddl(DDLExportConfiguration)
      */
     Queries ddl(Table<?> table, DDLExportConfiguration configuration);
 
     /**
-     * Generate a partial creation script for a table.
+     * Convenience method for {@link Meta#ddl(DDLExportConfiguration)}.
      *
-     * @see #ddl(Table, DDLExportConfiguration)
+     * @see #meta(Table...)
+     * @see Meta#ddl(DDLExportConfiguration)
      */
     Queries ddl(Table<?> table, DDLFlag... flags);
 
     /**
-     * Generate the complete creation script for tables.
+     * Convenience method for {@link Meta#ddl()}.
      *
-     * @see #ddl(Table[], DDLExportConfiguration)
+     * @see #meta(Table...)
+     * @see Meta#ddl()
      */
     Queries ddl(Table<?>... tables);
 
     /**
-     * Generate the complete creation script for tables.
-     * <p>
-     * The following {@link DDLFlag} can be set:
-     * <ul>
-     * <li>{@link DDLFlag#TABLE}: If not set, this will generate nothing at all.
-     * </li>
-     * <li>{@link DDLFlag#PRIMARY_KEY}: If set, a potential
-     * <code>PRIMARY KEY</code> constraint is specified inline with the table.
-     * </li>
-     * <li>{@link DDLFlag#UNIQUE}: If set, any potential <code>UNIQUE</code>
-     * constraint is specified inline with the table.</li>
-     * <li>{@link DDLFlag#FOREIGN_KEY}: If set, any potential
-     * <code>FOREIGN KEY</code> constraint is specified inline with the table.
-     * </li>
-     * </ul>
-     * </p>
+     * Convenience method for {@link Meta#ddl(DDLExportConfiguration)}.
+     *
+     * @see #meta(Table...)
+     * @see Meta#ddl(DDLExportConfiguration)
      */
     Queries ddl(Table<?>[] tables, DDLExportConfiguration configuration);
 
     /**
-     * Generate the complete creation script for tables.
+     * Convenience method for {@link Meta#ddl(DDLExportConfiguration)}.
      *
-     * @see #ddl(Table[], DDLExportConfiguration)
+     * @see #meta(Table...)
+     * @see Meta#ddl(DDLExportConfiguration)
      */
     Queries ddl(Table<?>[] tables, DDLFlag... flags);
 
     /**
-     * Generate the complete creation script for tables.
+     * Convenience method for {@link Meta#ddl()}.
      *
-     * @see #ddl(Collection, DDLExportConfiguration)
+     * @see #meta(Table...)
+     * @see Meta#ddl()
      */
     Queries ddl(Collection<? extends Table<?>> tables);
 
     /**
-     * Generate the complete creation script for tables.
-     * <p>
-     * The following {@link DDLFlag} can be set:
-     * <ul>
-     * <li>{@link DDLFlag#TABLE}: If not set, this will generate nothing at all.
-     * </li>
-     * <li>{@link DDLFlag#PRIMARY_KEY}: If set, a potential
-     * <code>PRIMARY KEY</code> constraint is specified inline with the table.
-     * </li>
-     * <li>{@link DDLFlag#UNIQUE}: If set, any potential <code>UNIQUE</code>
-     * constraint is specified inline with the table.</li>
-     * <li>{@link DDLFlag#FOREIGN_KEY}: If set, any potential
-     * <code>FOREIGN KEY</code> constraint is specified inline with the table.
-     * </li>
-     * </ul>
-     * </p>
+     * Convenience method for {@link Meta#ddl(DDLExportConfiguration)}.
+     *
+     * @see #meta(Table...)
+     * @see Meta#ddl(DDLExportConfiguration)
      */
     Queries ddl(Collection<? extends Table<?>> tables, DDLFlag... flags);
 
     /**
-     * Generate the complete creation script for tables.
+     * Convenience method for {@link Meta#ddl(DDLExportConfiguration)}.
      *
-     * @see #ddl(Collection, DDLExportConfiguration)
+     * @see #meta(Table...)
+     * @see Meta#ddl(DDLExportConfiguration)
      */
     Queries ddl(Collection<? extends Table<?>> tables, DDLExportConfiguration configuration);
 

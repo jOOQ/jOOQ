@@ -2774,7 +2774,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public Queries ddl(Catalog catalog, DDLExportConfiguration exportConfiguration) {
-        return new DDL(this, exportConfiguration).queries(catalog);
+        return meta(catalog).ddl(exportConfiguration);
     }
 
     @Override
@@ -2789,7 +2789,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public Queries ddl(Schema schema, DDLExportConfiguration exportConfiguration) {
-        return new DDL(this, exportConfiguration).queries(schema);
+        return meta(schema).ddl(exportConfiguration);
     }
 
     @Override
@@ -2819,7 +2819,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public Queries ddl(Table[] tables, DDLExportConfiguration exportConfiguration) {
-        return new DDL(this, exportConfiguration).queries(tables);
+        return meta(tables).ddl(exportConfiguration);
     }
 
     @Override

@@ -56,14 +56,12 @@ import org.jooq.UniqueKey;
  */
 final class SchemaMetaImpl extends AbstractMeta {
 
-    private static final long   serialVersionUID = -505810795492145873L;
-
-    @SuppressWarnings("unused")
-    private final Configuration configuration;
-    private final Schema[]      schemas;
+    private static final long serialVersionUID = -505810795492145873L;
+    private final Schema[]    schemas;
 
     SchemaMetaImpl(Configuration configuration, Schema[] schemas) {
-        this.configuration = configuration;
+        super(configuration);
+
         this.schemas = schemas;
     }
 

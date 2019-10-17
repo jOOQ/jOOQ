@@ -51,7 +51,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.jooq.Catalog;
 import org.jooq.Constraint;
 import org.jooq.DDLExportConfiguration;
 import org.jooq.DDLFlag;
@@ -59,6 +58,7 @@ import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Index;
+import org.jooq.Meta;
 import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.Schema;
@@ -72,11 +72,13 @@ import org.jooq.tools.StringUtils;
  */
 final class DDL {
 
+    private final Meta                   meta;
     private final DSLContext             ctx;
     private final DDLExportConfiguration configuration;
 
-    DDL(DSLContext ctx, DDLExportConfiguration configuration) {
-        this.ctx = ctx;
+    DDL(Meta meta, DDLExportConfiguration configuration) {
+        this.meta = meta;
+        this.ctx = meta.dsl();
         this.configuration = configuration;
     }
 
@@ -205,8 +207,9 @@ final class DDL {
         return result;
     }
 
-    final Queries queries(Schema... schemas) {
+    final Queries queries() {
         List<Query> queries = new ArrayList<>();
+        List<Schema> schemas = meta.getSchemas();
 
         for (Schema schema : schemas)
             if (configuration.flags().contains(SCHEMA) && !StringUtils.isBlank(schema.getName()))
@@ -263,9 +266,5 @@ final class DDL {
                     queries.addAll(createIndex(table));
 
         return ctx.queries(queries);
-    }
-
-    final Queries queries(Catalog catalog) {
-        return queries(catalog.getSchemas().toArray(Tools.EMPTY_SCHEMA));
     }
 }

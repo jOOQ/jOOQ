@@ -56,14 +56,12 @@ import org.jooq.UniqueKey;
  */
 final class TableMetaImpl extends AbstractMeta {
 
-    private static final long   serialVersionUID = 2910000827304539796L;
-
-    @SuppressWarnings("unused")
-    private final Configuration configuration;
-    private final Table<?>[]    tables;
+    private static final long serialVersionUID = 2910000827304539796L;
+    private final Table<?>[]  tables;
 
     TableMetaImpl(Configuration configuration, Table<?>[] tables) {
-        this.configuration = configuration;
+        super(configuration);
+
         this.tables = tables;
     }
 

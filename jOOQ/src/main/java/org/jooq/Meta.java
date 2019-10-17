@@ -78,7 +78,7 @@ import org.jooq.util.xml.jaxb.InformationSchema;
  *
  * @author Lukas Eder
  */
-public interface Meta {
+public interface Meta extends Scope {
 
     /**
      * Get all catalog objects from the underlying meta data source.
@@ -202,4 +202,20 @@ public interface Meta {
      */
     @Support
     List<UniqueKey<?>> getPrimaryKeys() throws DataAccessException;
+
+    /**
+     * Generate a creation script for the entire meta data.
+     *
+     * @throws DataAccessException If something went wrong fetching the meta
+     *             objects
+     */
+    Queries ddl() throws DataAccessException;
+
+    /**
+     * Generate a creation script for the entire meta data.
+     *
+     * @throws DataAccessException If something went wrong fetching the meta
+     *             objects
+     */
+    Queries ddl(DDLExportConfiguration configuration) throws DataAccessException;
 }

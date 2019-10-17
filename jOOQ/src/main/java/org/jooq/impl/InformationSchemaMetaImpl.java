@@ -77,7 +77,6 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
 
     private static final long                               serialVersionUID = -1623783405104005307L;
 
-    private final Configuration                             configuration;
     private final InformationSchema                         source;
 
     private final List<Catalog>                             catalogs;
@@ -96,7 +95,8 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
     private final Map<Name, IndexImpl>                      indexesByName;
 
     InformationSchemaMetaImpl(Configuration configuration, InformationSchema source) {
-        this.configuration = configuration;
+        super(configuration);
+
         this.source = source;
         this.catalogs = new ArrayList<>();
         this.catalogsByName = new HashMap<>();

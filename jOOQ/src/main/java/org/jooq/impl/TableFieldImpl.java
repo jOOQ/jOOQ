@@ -89,7 +89,10 @@ final class TableFieldImpl<R extends Record, T> extends AbstractField<T> impleme
     public final void accept(Context<?> ctx) {
         ctx.data(DATA_OMIT_CLAUSE_EVENT_EMISSION, true);
 
-        if (ctx.qualify()) {
+        if (ctx.qualify()
+            // [#9055] should NO table qualify if NO table alias
+            && (ctx.settings().isRenderTable() || table instanceof TableImpl && ((TableImpl) table).alias != null)
+        ) {
             ctx.visit(table);
             ctx.sql('.');
         }

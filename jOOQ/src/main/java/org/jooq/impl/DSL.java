@@ -6697,7 +6697,7 @@ public class DSL {
      *
      * @see DSLContext#createTemporaryTable(String)
      */
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     public static CreateTableColumnStep createTemporaryTable(String table) {
         return dsl().createTemporaryTable(table);
     }
@@ -6707,7 +6707,7 @@ public class DSL {
      *
      * @see DSLContext#createTemporaryTable(Name)
      */
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     public static CreateTableColumnStep createTemporaryTable(Name table) {
         return dsl().createTemporaryTable(table);
     }
@@ -6717,7 +6717,7 @@ public class DSL {
      *
      * @see DSLContext#createTemporaryTable(Table)
      */
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     public static CreateTableColumnStep createTemporaryTable(Table<?> table) {
         return dsl().createTemporaryTable(table);
     }
@@ -6727,7 +6727,7 @@ public class DSL {
      *
      * @see DSLContext#createTemporaryTableIfNotExists(String)
      */
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     public static CreateTableColumnStep createTemporaryTableIfNotExists(String table) {
         return dsl().createTemporaryTableIfNotExists(table);
     }
@@ -6737,7 +6737,7 @@ public class DSL {
      *
      * @see DSLContext#createTemporaryTableIfNotExists(Name)
      */
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     public static CreateTableColumnStep createTemporaryTableIfNotExists(Name table) {
         return dsl().createTemporaryTableIfNotExists(table);
     }
@@ -6747,7 +6747,7 @@ public class DSL {
      *
      * @see DSLContext#createTemporaryTableIfNotExists(Table)
      */
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     public static CreateTableColumnStep createTemporaryTableIfNotExists(Table<?> table) {
         return dsl().createTemporaryTableIfNotExists(table);
     }
@@ -6757,7 +6757,7 @@ public class DSL {
      *
      * @see DSLContext#createGlobalTemporaryTable(String)
      */
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     public static CreateTableColumnStep createGlobalTemporaryTable(String table) {
         return dsl().createGlobalTemporaryTable(table);
     }
@@ -6767,7 +6767,7 @@ public class DSL {
      *
      * @see DSLContext#createGlobalTemporaryTable(Name)
      */
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     public static CreateTableColumnStep createGlobalTemporaryTable(Name table) {
         return dsl().createGlobalTemporaryTable(table);
     }
@@ -6777,7 +6777,7 @@ public class DSL {
      *
      * @see DSLContext#createGlobalTemporaryTable(Table)
      */
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     public static CreateTableColumnStep createGlobalTemporaryTable(Table<?> table) {
         return dsl().createGlobalTemporaryTable(table);
     }
@@ -7808,7 +7808,7 @@ public class DSL {
      *
      * @see DSLContext#dropTemporaryTable(String)
      */
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     public static DropTableStep dropTemporaryTable(String table) {
         return dsl().dropTemporaryTable(table);
     }
@@ -7818,7 +7818,7 @@ public class DSL {
      *
      * @see DSLContext#dropTemporaryTable(Name)
      */
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     public static DropTableStep dropTemporaryTable(Name table) {
         return dsl().dropTemporaryTable(table);
     }
@@ -7828,7 +7828,7 @@ public class DSL {
      *
      * @see DSLContext#dropTemporaryTable(Table)
      */
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     public static DropTableStep dropTemporaryTable(Table<?> table) {
         return dsl().dropTemporaryTable(table);
     }
@@ -7838,7 +7838,7 @@ public class DSL {
      *
      * @see DSLContext#dropTemporaryTableIfExists(String)
      */
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     public static DropTableStep dropTemporaryTableIfExists(String table) {
         return dsl().dropTemporaryTableIfExists(table);
     }
@@ -7848,7 +7848,7 @@ public class DSL {
      *
      * @see DSLContext#dropTemporaryTableIfExists(Name)
      */
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     public static DropTableStep dropTemporaryTableIfExists(Name table) {
         return dsl().dropTemporaryTableIfExists(table);
     }
@@ -7858,7 +7858,7 @@ public class DSL {
      *
      * @see DSLContext#dropTemporaryTableIfExists(Table)
      */
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     public static DropTableStep dropTemporaryTableIfExists(Table<?> table) {
         return dsl().dropTemporaryTableIfExists(table);
     }

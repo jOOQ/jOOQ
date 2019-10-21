@@ -8620,7 +8620,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createTemporaryTable(String)
      */
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     CreateTableColumnStep createTemporaryTable(String table);
 
     /**
@@ -8628,7 +8628,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createTemporaryTable(Name)
      */
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     CreateTableColumnStep createTemporaryTable(Name table);
 
     /**
@@ -8636,7 +8636,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createTemporaryTable(Table)
      */
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     CreateTableColumnStep createTemporaryTable(Table<?> table);
 
     /**
@@ -8644,7 +8644,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createTemporaryTableIfNotExists(String)
      */
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     CreateTableColumnStep createTemporaryTableIfNotExists(String table);
 
     /**
@@ -8652,7 +8652,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createTemporaryTableIfNotExists(Name)
      */
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     CreateTableColumnStep createTemporaryTableIfNotExists(Name table);
 
     /**
@@ -8660,7 +8660,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createTemporaryTableIfNotExists(Table)
      */
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     CreateTableColumnStep createTemporaryTableIfNotExists(Table<?> table);
 
     /**
@@ -8668,7 +8668,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createGlobalTemporaryTable(String)
      */
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     CreateTableColumnStep createGlobalTemporaryTable(String table);
 
     /**
@@ -8676,7 +8676,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createGlobalTemporaryTable(Name)
      */
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     CreateTableColumnStep createGlobalTemporaryTable(Name table);
 
     /**
@@ -8684,7 +8684,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createGlobalTemporaryTable(Table)
      */
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     CreateTableColumnStep createGlobalTemporaryTable(Table<?> table);
 
     /**
@@ -9660,7 +9660,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropTemporaryTable(String)
      */
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     DropTableStep dropTemporaryTable(String table);
 
     /**
@@ -9668,7 +9668,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropTemporaryTable(Name)
      */
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     DropTableStep dropTemporaryTable(Name table);
 
     /**
@@ -9676,7 +9676,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropTemporaryTable(Table)
      */
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     DropTableStep dropTemporaryTable(Table<?> table);
 
     /**
@@ -9684,7 +9684,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropTemporaryTableIfExists(String)
      */
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     DropTableStep dropTemporaryTableIfExists(String table);
 
     /**
@@ -9692,7 +9692,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropTemporaryTableIfExists(Name)
      */
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     DropTableStep dropTemporaryTableIfExists(Name table);
 
     /**
@@ -9700,7 +9700,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#dropTemporaryTableIfExists(Table)
      */
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     DropTableStep dropTemporaryTableIfExists(Table<?> table);
 
     /**

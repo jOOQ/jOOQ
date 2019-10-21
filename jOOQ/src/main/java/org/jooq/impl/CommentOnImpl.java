@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 // ...
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
@@ -83,7 +84,7 @@ implements
      * Generated UID
      */
     private static final long                serialVersionUID         = 2665659331902435568L;
-    private static final Set<SQLDialect>     SUPPORTS_COMMENT_ON_VIEW = SQLDialect.supported(POSTGRES);
+    private static final Set<SQLDialect>     SUPPORTS_COMMENT_ON_VIEW = SQLDialect.supported(FIREBIRD, POSTGRES);
 
     private final Table<?>                   table;
     private final boolean                    isView;

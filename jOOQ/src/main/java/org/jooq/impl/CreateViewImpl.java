@@ -246,8 +246,9 @@ final class CreateViewImpl<R extends Record> extends AbstractRowCountQuery imple
 
 
 
-
-
+                case FIREBIRD:
+                    ctx.sql(' ').visit(K_ALTER);
+                    break;
 
                 default:
                     ctx.sql(' ').visit(K_REPLACE);

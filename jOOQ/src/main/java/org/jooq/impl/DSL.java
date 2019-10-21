@@ -6861,7 +6861,7 @@ public class DSL {
      *
      * @see DSLContext#createOrReplaceView(String, String...)
      */
-    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     public static CreateViewAsStep createOrReplaceView(String view, String... fields) {
         return dsl().createOrReplaceView(view, fields);
     }
@@ -6871,7 +6871,7 @@ public class DSL {
      *
      * @see DSLContext#createOrReplaceView(Name, Name...)
      */
-    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     public static CreateViewAsStep createOrReplaceView(Name view, Name... fields) {
         return dsl().createOrReplaceView(view, fields);
     }
@@ -6881,7 +6881,7 @@ public class DSL {
      *
      * @see DSLContext#createOrReplaceView(Table, Field...)
      */
-    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     public static CreateViewAsStep createOrReplaceView(Table<?> view, Field<?>... fields) {
         return dsl().createOrReplaceView(view, fields);
     }
@@ -6896,7 +6896,7 @@ public class DSL {
      *
      * @see DSLContext#createOrReplaceView(String, String...)
      */
-    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     public static CreateViewAsStep createOrReplaceView(String view, Function<? super Field<?>, ? extends String> fieldNameFunction) {
         return dsl().createOrReplaceView(view, fieldNameFunction);
     }
@@ -6910,7 +6910,7 @@ public class DSL {
      *
      * @see DSLContext#createOrReplaceView(Name, Name...)
      */
-    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     public static CreateViewAsStep createOrReplaceView(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction) {
         return dsl().createOrReplaceView(view, fieldNameFunction);
     }
@@ -6924,7 +6924,7 @@ public class DSL {
      *
      * @see DSLContext#createOrReplaceView(Table, Field...)
      */
-    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     public static CreateViewAsStep createOrReplaceView(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction) {
         return dsl().createOrReplaceView(view, fieldNameFunction);
     }

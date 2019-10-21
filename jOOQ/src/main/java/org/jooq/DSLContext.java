@@ -8790,7 +8790,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createOrReplaceView(String, String...)
      */
-    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     CreateViewAsStep<Record> createOrReplaceView(String view, String... fields);
 
     /**
@@ -8798,7 +8798,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createOrReplaceView(Name, Name...)
      */
-    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     CreateViewAsStep<Record> createOrReplaceView(Name view, Name... fields);
 
     /**
@@ -8806,7 +8806,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createOrReplaceView(Table, Field...)
      */
-    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     CreateViewAsStep<Record> createOrReplaceView(Table<?> view, Field<?>... fields);
 
 
@@ -8819,7 +8819,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createOrReplaceView(String, String...)
      */
-    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     CreateViewAsStep<Record> createOrReplaceView(String view, Function<? super Field<?>, ? extends String> fieldNameFunction);
 
     /**
@@ -8831,7 +8831,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createOrReplaceView(String, String...)
      */
-    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     CreateViewAsStep<Record> createOrReplaceView(String view, BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction);
 
     /**
@@ -8843,7 +8843,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createOrReplaceView(String, String...)
      */
-    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     CreateViewAsStep<Record> createOrReplaceView(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction);
 
     /**
@@ -8855,7 +8855,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createOrReplaceView(String, String...)
      */
-    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     CreateViewAsStep<Record> createOrReplaceView(Name view, BiFunction<? super Field<?>, ? super Integer, ? extends Name> fieldNameFunction);
 
     /**
@@ -8867,7 +8867,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createOrReplaceView(String, String...)
      */
-    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     CreateViewAsStep<Record> createOrReplaceView(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction);
 
     /**
@@ -8879,7 +8879,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#createOrReplaceView(String, String...)
      */
-    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     CreateViewAsStep<Record> createOrReplaceView(Table<?> view, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction);
 
 

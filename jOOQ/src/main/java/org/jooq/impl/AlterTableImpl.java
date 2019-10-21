@@ -120,6 +120,7 @@ import static org.jooq.impl.Keywords.K_LIKE;
 import static org.jooq.impl.Keywords.K_MODIFY;
 import static org.jooq.impl.Keywords.K_NOT_NULL;
 import static org.jooq.impl.Keywords.K_NULL;
+import static org.jooq.impl.Keywords.K_POSITION;
 import static org.jooq.impl.Keywords.K_PRIMARY_KEY;
 import static org.jooq.impl.Keywords.K_RAISE;
 import static org.jooq.impl.Keywords.K_RENAME;
@@ -896,6 +897,23 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
             }
         }
 
+        if (family == FIREBIRD) {
+            if (addFirst) {
+                begin(ctx);
+                beginExecuteImmediate(ctx);
+                accept1(ctx);
+                endExecuteImmediate(ctx);
+
+                ctx.formatSeparator();
+
+                beginExecuteImmediate(ctx);
+                ctx.visit(K_ALTER_TABLE).sql(' ').visit(table).sql(' ').visit(K_ALTER).sql(' ').visit(addColumn).sql(' ').visit(K_POSITION).sql(" 1");
+                endExecuteImmediate(ctx);
+                end(ctx);
+                return;
+            }
+        }
+
 
 
 
@@ -1528,7 +1546,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
     private final void acceptFirstBeforeAfter(Context<?> ctx) {
         boolean previous = ctx.qualify();
 
-        if (addFirst)
+        if (addFirst && ctx.family() != FIREBIRD)
             ctx.sql(' ').visit(K_FIRST);
         else if (addBefore != null)
             ctx.sql(' ').visit(K_BEFORE).sql(' ').qualify(false).visit(addBefore).qualify(previous);

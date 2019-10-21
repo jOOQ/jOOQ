@@ -266,6 +266,7 @@ final class Keywords {
     static final Keyword K_PASSING                          = keyword("passing");
     static final Keyword K_PERCENT                          = keyword("percent");
     static final Keyword K_PIVOT                            = keyword("pivot");
+    static final Keyword K_POSITION                         = keyword("position");
     static final Keyword K_PRECEDING                        = keyword("preceding");
     static final Keyword K_PREVIOUS_VALUE_FOR               = keyword("previous value for");
     static final Keyword K_PRIMARY_KEY                      = keyword("primary key");

@@ -221,6 +221,7 @@ final class DDLInterpreter {
         Table<?> table = query.$table();
         MutableSchema schema = getSchema(table.getSchema(), true);
 
+        // TODO We're doing this all the time. Can this be factored out without adding too much abstraction?
         MutableTable existing = schema.table(table);
         if (existing != null) {
             if (!query.$ifNotExists())
@@ -727,6 +728,7 @@ final class DDLInterpreter {
     // Exceptions
     // -------------------------------------------------------------------------
 
+    // TODO: Surely, these exception utilities can be refactored / improved?
     private static final DataDefinitionException unsupportedQuery(Query query) {
         return new DataDefinitionException("Unsupported query: " + query.getSQL());
     }
@@ -958,6 +960,8 @@ final class DDLInterpreter {
         return result;
     }
 
+    // TODO We shouldn't need this "normalize" method, but instead, work out how
+    //      we can implement equivalent logic using configuration.
     private static final UnqualifiedName normalize(Named named) {
         return normalize((UnqualifiedName) named.getUnqualifiedName());
     }
@@ -1037,6 +1041,10 @@ final class DDLInterpreter {
             super(name);
 
             this.catalog = catalog;
+
+            // TODO: I'm not sure we should let the constructor add "this" to
+            //       someone else's collection. We're probably reusing code, but
+            //       it seems surprising and is already inconsistent
             catalog.schemas.add(this);
         }
 

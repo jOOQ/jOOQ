@@ -3244,7 +3244,9 @@ extends
      * equivalent methods from {@link DSLContext}
      *
      * @see DSL#upper(Field)
+     * @deprecated - 3.13 - [#9407] - Use {@link DSL#upper(Field)} instead.
      */
+    @Deprecated
     @Support
     Field<String> upper();
 
@@ -3254,7 +3256,9 @@ extends
      * equivalent methods from {@link DSLContext}
      *
      * @see DSL#lower(Field)
+     * @deprecated - 3.13 - [#9407] - Use {@link DSL#lower(Field)} instead.
      */
+    @Deprecated
     @Support
     Field<String> lower();
 
@@ -3264,7 +3268,9 @@ extends
      * equivalent methods from {@link DSLContext}
      *
      * @see DSL#trim(Field)
+     * @deprecated - 3.13 - [#9407] - Use {@link DSL#trim(Field)} instead.
      */
+    @Deprecated
     @Support
     Field<String> trim();
 
@@ -3274,7 +3280,9 @@ extends
      * equivalent methods from {@link DSLContext}
      *
      * @see DSL#rtrim(Field)
+     * @deprecated - 3.13 - [#9407] - Use {@link DSL#rtrim(Field)} instead.
      */
+    @Deprecated
     @Support
     Field<String> rtrim();
 
@@ -3284,7 +3292,9 @@ extends
      * equivalent methods from {@link DSLContext}
      *
      * @see DSL#ltrim(Field)
+     * @deprecated - 3.13 - [#9407] - Use {@link DSL#ltrim(Field)} instead.
      */
+    @Deprecated
     @Support
     Field<String> ltrim();
 
@@ -3294,7 +3304,9 @@ extends
      * equivalent methods from {@link DSLContext}
      *
      * @see DSL#rpad(Field, Field)
+     * @deprecated - 3.13 - [#9407] - Use {@link DSL#rpad(Field, Field)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<String> rpad(Field<? extends Number> length);
 
@@ -3304,7 +3316,9 @@ extends
      * equivalent methods from {@link DSLContext}
      *
      * @see DSL#rpad(Field, int)
+     * @deprecated - 3.13 - [#9407] - Use {@link DSL#rpad(Field, int)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<String> rpad(int length);
 
@@ -3314,7 +3328,9 @@ extends
      * equivalent methods from {@link DSLContext}
      *
      * @see DSL#rpad(Field, Field, Field)
+     * @deprecated - 3.13 - [#9407] - Use {@link DSL#rpad(Field, Field, Field)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<String> rpad(Field<? extends Number> length, Field<String> character);
 
@@ -3324,7 +3340,9 @@ extends
      * equivalent methods from {@link DSLContext}
      *
      * @see DSL#rpad(Field, int, char)
+     * @deprecated - 3.13 - [#9407] - Use {@link DSL#rpad(Field, int, char)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<String> rpad(int length, char character);
 
@@ -3334,7 +3352,9 @@ extends
      * equivalent methods from {@link DSLContext}
      *
      * @see DSL#lpad(Field, Field)
+     * @deprecated - 3.13 - [#9407] - Use {@link DSL#lpad(Field, Field)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<String> lpad(Field<? extends Number> length);
 
@@ -3344,7 +3364,9 @@ extends
      * equivalent methods from {@link DSLContext}
      *
      * @see DSL#lpad(Field, int)
+     * @deprecated - 3.13 - [#9407] - Use {@link DSL#lpad(Field, int)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<String> lpad(int length);
 
@@ -3354,7 +3376,9 @@ extends
      * equivalent methods from {@link DSLContext}
      *
      * @see DSL#lpad(Field, Field, Field)
+     * @deprecated - 3.13 - [#9407] - Use {@link DSL#lpad(Field, Field, Field)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<String> lpad(Field<? extends Number> length, Field<String> character);
 
@@ -3364,7 +3388,9 @@ extends
      * equivalent methods from {@link DSLContext}
      *
      * @see DSL#lpad(Field, int, char)
+     * @deprecated - 3.13 - [#9407] - Use {@link DSL#lpad(Field, int, char)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<String> lpad(int length, char character);
 
@@ -3374,7 +3400,9 @@ extends
      * equivalent methods from {@link DSLContext}
      *
      * @see DSL#repeat(Field, int)
+     * @deprecated - 3.13 - [#9407] - Use {@link DSL#repeat(Field, int)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<String> repeat(Number count);
 
@@ -3384,7 +3412,9 @@ extends
      * equivalent methods from {@link DSLContext}
      *
      * @see DSL#repeat(Field, Field)
+     * @deprecated - 3.13 - [#9407] - Use {@link DSL#repeat(Field, Field)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<String> repeat(Field<? extends Number> count);
 
@@ -3394,7 +3424,9 @@ extends
      * equivalent methods from {@link DSLContext}
      *
      * @see DSL#replace(Field, Field)
+     * @deprecated - 3.13 - [#9407] - Use {@link DSL#replace(Field, Field)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Field<String> replace(Field<String> search);
 
@@ -3404,7 +3436,9 @@ extends
      * equivalent methods from {@link DSLContext}
      *
      * @see DSL#replace(Field, String)
+     * @deprecated - 3.13 - [#9407] - Use {@link DSL#replace(Field, String)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Field<String> replace(String search);
 
@@ -3414,7 +3448,9 @@ extends
      * equivalent methods from {@link DSLContext}
      *
      * @see DSL#replace(Field, Field, Field)
+     * @deprecated - 3.13 - [#9407] - Use {@link DSL#replace(Field, Field, Field)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Field<String> replace(Field<String> search, Field<String> replace);
 
@@ -3424,7 +3460,9 @@ extends
      * equivalent methods from {@link DSLContext}
      *
      * @see DSL#replace(Field, String, String)
+     * @deprecated - 3.13 - [#9407] - Use {@link DSL#replace(Field, String, String)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Field<String> replace(String search, String replace);
 
@@ -3434,7 +3472,9 @@ extends
      * equivalent methods from {@link DSLContext}
      *
      * @see DSL#position(Field, String)
+     * @deprecated - 3.13 - [#9407] - Use {@link DSL#position(Field, String)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<Integer> position(String search);
 
@@ -3444,7 +3484,9 @@ extends
      * equivalent methods from {@link DSLContext}
      *
      * @see DSL#position(Field, Field)
+     * @deprecated - 3.13 - [#9407] - Use {@link DSL#position(Field, Field)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<Integer> position(Field<String> search);
 
@@ -3454,7 +3496,9 @@ extends
      * equivalent methods from {@link DSLContext}
      *
      * @see DSL#ascii(Field)
+     * @deprecated - 3.13 - [#9407] - Use {@link DSL#ascii(Field)} instead.
      */
+    @Deprecated
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<Integer> ascii();
 
@@ -3516,7 +3560,9 @@ extends
      * equivalent methods from {@link DSLContext}
      *
      * @see DSL#substring(Field, int)
+     * @deprecated - 3.13 - [#9407] - Use {@link DSL#substring(Field, int)} instead.
      */
+    @Deprecated
     @Support
     Field<String> substring(int startingPosition);
 
@@ -3526,7 +3572,9 @@ extends
      * equivalent methods from {@link DSLContext}
      *
      * @see DSL#substring(Field, Field)
+     * @deprecated - 3.13 - [#9407] - Use {@link DSL#substring(Field, Field)} instead.
      */
+    @Deprecated
     @Support
     Field<String> substring(Field<? extends Number> startingPosition);
 
@@ -3536,7 +3584,9 @@ extends
      * equivalent methods from {@link DSLContext}
      *
      * @see DSL#substring(Field, int, int)
+     * @deprecated - 3.13 - [#9407] - Use {@link DSL#substring(Field, int, int)} instead.
      */
+    @Deprecated
     @Support
     Field<String> substring(int startingPosition, int length);
 
@@ -3546,7 +3596,9 @@ extends
      * equivalent methods from {@link DSLContext}
      *
      * @see DSL#substring(Field, Field, Field)
+     * @deprecated - 3.13 - [#9407] - Use {@link DSL#substring(Field, Field, Field)} instead.
      */
+    @Deprecated
     @Support
     Field<String> substring(Field<? extends Number> startingPosition, Field<? extends Number> length);
 
@@ -3556,7 +3608,9 @@ extends
      * equivalent methods from {@link DSLContext}
      *
      * @see DSL#length(Field)
+     * @deprecated - 3.13 - [#9407] - Use {@link DSL#length(Field)} instead.
      */
+    @Deprecated
     @Support
     Field<Integer> length();
 
@@ -3566,7 +3620,9 @@ extends
      * equivalent methods from {@link DSLContext}
      *
      * @see DSL#charLength(Field)
+     * @deprecated - 3.13 - [#9407] - Use {@link DSL#charLength(Field)} instead.
      */
+    @Deprecated
     @Support
     Field<Integer> charLength();
 
@@ -3576,7 +3632,9 @@ extends
      * equivalent methods from {@link DSLContext}
      *
      * @see DSL#bitLength(Field)
+     * @deprecated - 3.13 - [#9407] - Use {@link DSL#bitLength(Field)} instead.
      */
+    @Deprecated
     @Support
     Field<Integer> bitLength();
 
@@ -3586,7 +3644,9 @@ extends
      * equivalent methods from {@link DSLContext}
      *
      * @see DSL#octetLength(Field)
+     * @deprecated - 3.13 - [#9407] - Use {@link DSL#octetLength(Field)} instead.
      */
+    @Deprecated
     @Support
     Field<Integer> octetLength();
 
@@ -3636,7 +3696,9 @@ extends
      * equivalent methods from {@link DSLContext}
      *
      * @see DSL#nvl(Field, Object)
+     * @deprecated - 3.13 - [#9407] - Use {@link DSL#nvl(Field, Object)} instead.
      */
+    @Deprecated
     @Support
     Field<T> nvl(T defaultValue);
 
@@ -3646,7 +3708,9 @@ extends
      * equivalent methods from {@link DSLContext}
      *
      * @see DSL#nvl(Field, Field)
+     * @deprecated - 3.13 - [#9407] - Use {@link DSL#nvl(Field, Field)} instead.
      */
+    @Deprecated
     @Support
     Field<T> nvl(Field<T> defaultValue);
 
@@ -3656,7 +3720,9 @@ extends
      * equivalent methods from {@link DSLContext}
      *
      * @see DSL#nvl2(Field, Object, Object)
+     * @deprecated - 3.13 - [#9407] - Use {@link DSL#nvl2(Field, Object, Object)} instead.
      */
+    @Deprecated
     @Support
     <Z> Field<Z> nvl2(Z valueIfNotNull, Z valueIfNull);
 
@@ -3666,7 +3732,9 @@ extends
      * equivalent methods from {@link DSLContext}
      *
      * @see DSL#nvl2(Field, Field, Field)
+     * @deprecated - 3.13 - [#9407] - Use {@link DSL#nvl2(Field, Field, Field)} instead.
      */
+    @Deprecated
     @Support
     <Z> Field<Z> nvl2(Field<Z> valueIfNotNull, Field<Z> valueIfNull);
 
@@ -3676,7 +3744,9 @@ extends
      * equivalent methods from {@link DSLContext}
      *
      * @see DSL#nullif(Field, Object)
+     * @deprecated - 3.13 - [#9407] - Use {@link DSL#nullif(Field, Object)} instead.
      */
+    @Deprecated
     @Support
     Field<T> nullif(T other);
 
@@ -3686,7 +3756,9 @@ extends
      * equivalent methods from {@link DSLContext}
      *
      * @see DSL#nullif(Field, Field)
+     * @deprecated - 3.13 - [#9407] - Use {@link DSL#nullif(Field, Field)} instead.
      */
+    @Deprecated
     @Support
     Field<T> nullif(Field<T> other);
 
@@ -3696,7 +3768,9 @@ extends
      * equivalent methods from {@link DSLContext}
      *
      * @see DSL#decode(Object, Object, Object)
+     * @deprecated - 3.13 - [#9407] - Use {@link DSL#decode(Object, Object, Object)} instead.
      */
+    @Deprecated
     @Support
     <Z> Field<Z> decode(T search, Z result);
 
@@ -3706,7 +3780,9 @@ extends
      * equivalent methods from {@link DSLContext}
      *
      * @see DSL#decode(Object, Object, Object, Object...)
+     * @deprecated - 3.13 - [#9407] - Use {@link DSL#decode(Object, Object, Object, Object...)} instead.
      */
+    @Deprecated
     @Support
     <Z> Field<Z> decode(T search, Z result, Object... more);
 
@@ -3716,7 +3792,9 @@ extends
      * equivalent methods from {@link DSLContext}
      *
      * @see DSL#decode(Field, Field, Field)
+     * @deprecated - 3.13 - [#9407] - Use {@link DSL#decode(Field, Field, Field)} instead.
      */
+    @Deprecated
     @Support
     <Z> Field<Z> decode(Field<T> search, Field<Z> result);
 
@@ -3726,7 +3804,9 @@ extends
      * equivalent methods from {@link DSLContext}
      *
      * @see DSL#decode(Field, Field, Field, Field...)
+     * @deprecated - 3.13 - [#9407] - Use {@link DSL#decode(Field, Field, Field, Field...)} instead.
      */
+    @Deprecated
     @Support
     <Z> Field<Z> decode(Field<T> search, Field<Z> result, Field<?>... more);
 
@@ -3736,7 +3816,9 @@ extends
      * equivalent methods from {@link DSLContext}
      *
      * @see DSL#coalesce(Object, Object...)
+     * @deprecated - 3.13 - [#9407] - Use {@link DSL#coalesce(Object, Object...)} instead.
      */
+    @Deprecated
     @Support
     Field<T> coalesce(T option, T... options);
 
@@ -3746,7 +3828,9 @@ extends
      * equivalent methods from {@link DSLContext}
      *
      * @see DSL#coalesce(Field, Field...)
+     * @deprecated - 3.13 - [#9407] - Use {@link DSL#coalesce(Field, Field...)} instead.
      */
+    @Deprecated
     @Support
     Field<T> coalesce(Field<T> option, Field<?>... options);
 

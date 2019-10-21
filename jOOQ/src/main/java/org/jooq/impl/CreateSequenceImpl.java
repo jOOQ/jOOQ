@@ -90,9 +90,14 @@ final class CreateSequenceImpl extends AbstractRowCountQuery implements
     private static final Clause[]            CLAUSES                  = { CREATE_SEQUENCE };
     private static final Set<SQLDialect>     NO_SUPPORT_IF_NOT_EXISTS = SQLDialect.supported(DERBY, FIREBIRD);
     private static final Set<SQLDialect>     REQUIRES_START_WITH      = SQLDialect.supported(DERBY);
-    private static final Set<SQLDialect>     NO_SUPPORT_CACHE         = SQLDialect.supported(DERBY, HSQLDB);
+    private static final Set<SQLDialect>     NO_SUPPORT_CACHE         = SQLDialect.supported(DERBY, FIREBIRD, HSQLDB);
+    private static final Set<SQLDialect>     NO_SUPPORT_CYCLE         = SQLDialect.supported(FIREBIRD);
+    private static final Set<SQLDialect>     NO_SUPPORT_INCREMENT_BY  = SQLDialect.supported(FIREBIRD);
+    private static final Set<SQLDialect>     NO_SUPPORT_MINVALUE      = SQLDialect.supported(FIREBIRD);
+    private static final Set<SQLDialect>     NO_SUPPORT_MAXVALUE      = SQLDialect.supported(FIREBIRD);
+    private static final Set<SQLDialect>     NO_SUPPORT_START_WITH    = SQLDialect.supported(FIREBIRD);
     private static final Set<SQLDialect>     NO_SEPARATOR             = SQLDialect.supported(CUBRID, MARIADB);
-    private static final Set<SQLDialect>     OMIT_NO_CACHE            = SQLDialect.supported(POSTGRES);
+    private static final Set<SQLDialect>     OMIT_NO_CACHE            = SQLDialect.supported(FIREBIRD, POSTGRES);
 
     private final Sequence<?>                sequence;
     private final boolean                    ifNotExists;
@@ -252,29 +257,35 @@ final class CreateSequenceImpl extends AbstractRowCountQuery implements
         ctx.visit(sequence);
         String noSeparator = NO_SEPARATOR.contains(family) ? "" : " ";
 
-        // Some databases default to sequences starting with MIN_VALUE
-        if (startWith == null && REQUIRES_START_WITH.contains(family))
-            ctx.sql(' ').visit(K_START_WITH).sql(" 1");
-        else if (startWith != null)
-            ctx.sql(' ').visit(K_START_WITH).sql(' ').visit(startWith);
+        if (!NO_SUPPORT_START_WITH.contains(family))
 
-        if (incrementBy != null)
-            ctx.sql(' ').visit(K_INCREMENT_BY).sql(' ').visit(incrementBy);
+            // Some databases default to sequences starting with MIN_VALUE
+            if (startWith == null && REQUIRES_START_WITH.contains(family))
+                ctx.sql(' ').visit(K_START_WITH).sql(" 1");
+            else if (startWith != null)
+                ctx.sql(' ').visit(K_START_WITH).sql(' ').visit(startWith);
 
-        if (minvalue != null)
-            ctx.sql(' ').visit(K_MINVALUE).sql(' ').visit(minvalue);
-        else if (noMinvalue)
-            ctx.sql(' ').visit(K_NO).sql(noSeparator).visit(K_MINVALUE);
+        if (!NO_SUPPORT_INCREMENT_BY.contains(family))
+            if (incrementBy != null)
+                ctx.sql(' ').visit(K_INCREMENT_BY).sql(' ').visit(incrementBy);
 
-        if (maxvalue != null)
-            ctx.sql(' ').visit(K_MAXVALUE).sql(' ').visit(maxvalue);
-        else if (noMaxvalue)
-            ctx.sql(' ').visit(K_NO).sql(noSeparator).visit(K_MAXVALUE);
+        if (!NO_SUPPORT_MINVALUE.contains(family))
+            if (minvalue != null)
+                ctx.sql(' ').visit(K_MINVALUE).sql(' ').visit(minvalue);
+            else if (noMinvalue)
+                ctx.sql(' ').visit(K_NO).sql(noSeparator).visit(K_MINVALUE);
 
-        if (cycle)
-            ctx.sql(' ').visit(K_CYCLE);
-        else if (noCycle)
-            ctx.sql(' ').visit(K_NO).sql(noSeparator).visit(K_CYCLE);
+        if (!NO_SUPPORT_MAXVALUE.contains(family))
+            if (maxvalue != null)
+                ctx.sql(' ').visit(K_MAXVALUE).sql(' ').visit(maxvalue);
+            else if (noMaxvalue)
+                ctx.sql(' ').visit(K_NO).sql(noSeparator).visit(K_MAXVALUE);
+
+        if (!NO_SUPPORT_CYCLE.contains(family))
+            if (cycle)
+                ctx.sql(' ').visit(K_CYCLE);
+            else if (noCycle)
+                ctx.sql(' ').visit(K_NO).sql(noSeparator).visit(K_CYCLE);
 
         if (!NO_SUPPORT_CACHE.contains(family))
             if (cache != null)

@@ -92,7 +92,8 @@ public class FirebirdTableDefinition extends AbstractTableDefinition {
                     f.RDB$FIELD_PRECISION,
                     FIELD_SCALE(f).as("FIELD_SCALE"),
                     FIELD_TYPE(f).as("FIELD_TYPE"),
-                    f.RDB$FIELD_SUB_TYPE)
+                    f.RDB$FIELD_SUB_TYPE,
+                    r.RDB$DESCRIPTION)
                 .from(r)
                 .leftOuterJoin(f).on(r.RDB$FIELD_SOURCE.eq(f.RDB$FIELD_NAME))
                 .where(r.RDB$RELATION_NAME.eq(getName()))
@@ -122,7 +123,7 @@ public class FirebirdTableDefinition extends AbstractTableDefinition {
                     record.get(r.RDB$FIELD_POSITION),
                     type,
                     false,
-                    null
+                    record.get(r.RDB$DESCRIPTION)
             );
 
             result.add(column);

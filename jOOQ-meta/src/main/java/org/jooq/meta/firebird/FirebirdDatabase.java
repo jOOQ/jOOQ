@@ -57,7 +57,6 @@ import java.util.List;
 import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Record;
-import org.jooq.Record2;
 import org.jooq.Record3;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
@@ -235,15 +234,17 @@ public class FirebirdDatabase extends AbstractDatabase {
     protected List<TableDefinition> getTables0() throws SQLException {
         List<TableDefinition> result = new ArrayList<>();
 
-        for (Record2<String, Boolean> record : create()
+        for (Record3<String, Boolean, String> record : create()
                 .select(
                     RDB$RELATIONS.RDB$RELATION_NAME.trim(),
-                    inline(false).as("table_valued_function"))
+                    inline(false).as("table_valued_function"),
+                    RDB$RELATIONS.RDB$DESCRIPTION.trim())
                 .from(RDB$RELATIONS)
                 .unionAll(
                      select(
                          RDB$PROCEDURES.RDB$PROCEDURE_NAME.trim(),
-                         inline(true).as("table_valued_function"))
+                         inline(true).as("table_valued_function"),
+                         inline(""))
                     .from(RDB$PROCEDURES)
 
                     // "selectable" procedures
@@ -254,12 +255,10 @@ public class FirebirdDatabase extends AbstractDatabase {
                 )
                 .orderBy(1)) {
 
-            if (record.value2()) {
+            if (record.value2())
                 result.add(new FirebirdTableValuedFunction(getSchemata().get(0), record.value1(), ""));
-            }
-            else {
-                result.add(new FirebirdTableDefinition(getSchemata().get(0), record.value1(), ""));
-            }
+            else
+                result.add(new FirebirdTableDefinition(getSchemata().get(0), record.value1(), record.value3()));
         }
 
         return result;

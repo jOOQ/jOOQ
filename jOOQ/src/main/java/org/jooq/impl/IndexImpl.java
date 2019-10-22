@@ -88,7 +88,7 @@ class IndexImpl extends AbstractNamed implements Index {
     }
 
     IndexImpl(Name name, Table<?> table, OrderField<?>[] fields, Condition where, boolean unique) {
-        super(qualify(table, name), CommentImpl.NO_COMMENT);
+        super(name.empty() ? name : qualify(table, name), CommentImpl.NO_COMMENT);
 
         this.table = table;
         this.fields = Tools.sortFields(fields);

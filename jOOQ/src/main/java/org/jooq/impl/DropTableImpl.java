@@ -42,14 +42,19 @@ import static org.jooq.Clause.DROP_TABLE_TABLE;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
 // ...
 import static org.jooq.impl.Keywords.K_CASCADE;
+import static org.jooq.impl.Keywords.K_DROP;
 import static org.jooq.impl.Keywords.K_DROP_TABLE;
 import static org.jooq.impl.Keywords.K_IF_EXISTS;
+import static org.jooq.impl.Keywords.K_TABLE;
+import static org.jooq.impl.Keywords.K_TEMPORARY;
 
 import java.util.EnumSet;
 
@@ -75,6 +80,7 @@ final class DropTableImpl extends AbstractRowCountQuery implements
     private static final long                serialVersionUID     = 8904572826501186329L;
     private static final Clause[]            CLAUSES              = { DROP_TABLE };
     private static final EnumSet<SQLDialect> NO_SUPPORT_IF_EXISTS = EnumSet.of(DERBY, FIREBIRD);
+    private static final EnumSet<SQLDialect> TEMPORARY_SEMANTIC   = EnumSet.of(MYSQL);
 
     private final Table<?>                   table;
     private final boolean                    temporary;
@@ -134,12 +140,16 @@ final class DropTableImpl extends AbstractRowCountQuery implements
     }
 
     private void accept0(Context<?> ctx) {
-        ctx.start(DROP_TABLE_TABLE)
-           .visit(K_DROP_TABLE).sql(' ');
+        ctx.start(DROP_TABLE_TABLE);
 
-        // [#6371] The keyword isn't strictly required in any dialect we've seen so far.
-        if (temporary)
-            ;
+        // [#6371] [#9019] While many dialects do not require this keyword, in
+        //                 some dialects (e.g. MySQL), there is a semantic
+        //                 difference, e.g. with respect to transactions.
+        if (temporary && TEMPORARY_SEMANTIC.contains(ctx.family()))
+            ctx.visit(K_DROP).sql(' ').visit(K_TEMPORARY).sql(' ').visit(K_TABLE).sql(' ');
+        else
+            ctx.visit(K_DROP_TABLE).sql(' ');
+
 
         if (ifExists && supportsIfExists(ctx))
             ctx.visit(K_IF_EXISTS).sql(' ');

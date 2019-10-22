@@ -53,18 +53,6 @@ final class TableDataType<R extends Record> extends DefaultDataType<R> {
 
     @SuppressWarnings("unchecked")
     TableDataType(Table<R> table) {
-        super(SQLDialect.DEFAULT, (Class<R>) table.getRecordType(), getQualifiedName(table));
-    }
-
-    private static String getQualifiedName(Table<?> table) {
-        StringBuilder sb = new StringBuilder();
-
-        if (table.getSchema() != null) {
-            sb.append(table.getSchema().getName());
-            sb.append(".");
-        }
-
-        sb.append(table.getName());
-        return sb.toString();
+        super(SQLDialect.DEFAULT, (Class<R>) table.getRecordType(), Tools.asString(table.getQualifiedName()));
     }
 }

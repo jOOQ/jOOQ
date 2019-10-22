@@ -86,6 +86,7 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
+import static org.jooq.tools.StringUtils.defaultString;
 
 import java.io.Serializable;
 import java.sql.Connection;
@@ -641,7 +642,9 @@ final class MetaImpl extends AbstractMeta {
 
             List<ForeignKey<Record, ?>> references = new ArrayList<>(groups.size());
             for (Entry<Record, Result<Record>> entry : groups.entrySet()) {
-                Schema schema = schemas.get(entry.getKey().get(1));
+
+                // [#7377] The schema may be null instead of "" in some dialects
+                Schema schema = schemas.get(defaultString(entry.getKey().get(1, String.class)));
 
                 String fkName = entry.getKey().get(3, String.class);
                 String pkName = entry.getKey().get(4, String.class);
@@ -758,7 +761,7 @@ final class MetaImpl extends AbstractMeta {
                     );
 
                     String filter = record.get(12, String.class); // FILTER_CONDITION
-                    where = filter != null ? condition(filter) : null;
+                    where = !StringUtils.isBlank(filter) ? condition(filter) : null;
                     unique = !record.get(3, boolean.class); // NON_UNIQUE
                 }
 
@@ -919,7 +922,8 @@ final class MetaImpl extends AbstractMeta {
                 Record key = entry.getKey();
                 Result<Record> value = entry.getValue();
 
-                Schema schema = schemas.get(key.get(1));
+                // [#7377] The schema may be null instead of "" in some dialects
+                Schema schema = schemas.get(defaultString(key.get(1, String.class)));
 
                 Table<Record> fkTable = (Table<Record>) schema.getTable(key.get(2, String.class));
                 String fkName = key.get(3, String.class);

@@ -2687,6 +2687,13 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      *     SELECT 1 FROM B WHERE A.ID = B.ID
      * )
      * </pre></code>
+     * <p>
+     * Notice that according to
+     * <a href="https://en.wikipedia.org/wiki/Relational_algebra">Relational
+     * algebra's</a> understanding of left semi join, the right hand side of the
+     * left semi join operator is not projected, i.e. it cannot be accessed from
+     * <code>WHERE</code> or <code>SELECT</code> or any other clause than
+     * <code>ON</code>.
      */
     @Support
     TableOnStep<R> leftSemiJoin(TableLike<?> table);
@@ -2708,6 +2715,13 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      *     SELECT 1 FROM B WHERE A.ID = B.ID
      * )
      * </pre></code>
+     * <p>
+     * Notice that according to
+     * <a href="https://en.wikipedia.org/wiki/Relational_algebra">Relational
+     * algebra's</a> understanding of left anti join, the right hand side of the
+     * left anti join operator is not projected, i.e. it cannot be accessed from
+     * <code>WHERE</code> or <code>SELECT</code> or any other clause than
+     * <code>ON</code>.
      */
     @Support
     TableOnStep<R> leftAntiJoin(TableLike<?> table);

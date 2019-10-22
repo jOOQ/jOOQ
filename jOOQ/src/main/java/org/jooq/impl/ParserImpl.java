@@ -1108,11 +1108,8 @@ final class ParserImpl implements Parser {
             if (offsetPostgres) {
                 result.addLimit(limit);
 
-                if (parseKeywordIf(ctx, "PERCENT") && ctx.requireProEdition())
-
-
-
-                    ;
+                if (parseKeywordIf(ctx, "PERCENT"))
+                    result.setLimitPercent(true);
 
                 if (parseKeywordIf(ctx, "WITH TIES"))
                     result.setWithTies(true);
@@ -1121,11 +1118,8 @@ final class ParserImpl implements Parser {
                 result.addLimit(limit, parseParenthesisedUnsignedIntegerOrBindVariable(ctx));
             }
             else {
-                if (parseKeywordIf(ctx, "PERCENT") && ctx.requireProEdition())
-
-
-
-                    ;
+                if (parseKeywordIf(ctx, "PERCENT"))
+                    result.setLimitPercent(true);
 
                 if (parseKeywordIf(ctx, "WITH TIES"))
                     result.setWithTies(true);
@@ -1145,11 +1139,8 @@ final class ParserImpl implements Parser {
             else {
                 result.addLimit(parseParenthesisedUnsignedIntegerOrBindVariable(ctx));
 
-                if (parseKeywordIf(ctx, "PERCENT") && ctx.requireProEdition())
-
-
-
-                    ;
+                if (parseKeywordIf(ctx, "PERCENT"))
+                    result.setLimitPercent(true);
 
                 parseAndGetKeyword(ctx, "ROW", "ROWS");
             }
@@ -2141,12 +2132,16 @@ final class ParserImpl implements Parser {
 
         if (parseKeywordIf(ctx, "TABLE"))
             return parseCreateTable(ctx, false);
+        else if (parseKeywordIf(ctx, "TEMP TABLE"))
+            return parseCreateTable(ctx, true);
         else if (parseKeywordIf(ctx, "TEMPORARY TABLE"))
             return parseCreateTable(ctx, true);
         else if (parseKeywordIf(ctx, "TYPE"))
             return parseCreateType(ctx);
         else if (parseKeywordIf(ctx, "GENERATOR"))
             return parseCreateSequence(ctx);
+        else if (parseKeywordIf(ctx, "GLOBAL TEMP TABLE"))
+            return parseCreateTable(ctx, true);
         else if (parseKeywordIf(ctx, "GLOBAL TEMPORARY TABLE"))
             return parseCreateTable(ctx, true);
         else if (parseKeywordIf(ctx, "INDEX"))
@@ -3158,7 +3153,7 @@ final class ParserImpl implements Parser {
                     constraints.add(parseCheckSpecification(ctx, constraint));
                     continue columnLoop;
                 }
-                else if (constraint == null && (parseKeywordIf(ctx, "KEY") || parseKeywordIf(ctx, "INDEX"))) {
+                else if (constraint == null && parseIndexOrKeyIf(ctx)) {
                     int p2 = ctx.position();
 
                     // [#7348] [#7651] Look ahead if the next tokens indicate a MySQL index definition
@@ -3854,14 +3849,7 @@ final class ParserImpl implements Parser {
     private static final DDLQuery parseAlterTableAdd(ParserContext ctx, AlterTableStep s1, Table<?> tableName) {
         List<FieldOrConstraint> list = new ArrayList<>();
 
-        if (((parseKeywordIf(ctx, "SPATIAL INDEX")
-            || parseKeywordIf(ctx, "SPATIAL KEY")
-            || parseKeywordIf(ctx, "FULLTEXT INDEX")
-            || parseKeywordIf(ctx, "FULLTEXT KEY"))
-            && ctx.requireUnsupportedSyntax())
-
-            || parseKeywordIf(ctx, "INDEX")
-            || parseKeywordIf(ctx, "KEY")) {
+        if (parseIndexOrKeyIf(ctx)) {
             Name name = parseIdentifierIf(ctx);
             parse(ctx, '(');
             List<SortField<?>> sort = parseSortSpecification(ctx);
@@ -3895,6 +3883,17 @@ final class ParserImpl implements Parser {
                 return s1.add((Field<?>) list.get(0));
         else
             return s1.add(list);
+    }
+
+    private static final boolean parseIndexOrKeyIf(ParserContext ctx) {
+        return ((parseKeywordIf(ctx, "SPATIAL INDEX")
+            || parseKeywordIf(ctx, "SPATIAL KEY")
+            || parseKeywordIf(ctx, "FULLTEXT INDEX")
+            || parseKeywordIf(ctx, "FULLTEXT KEY"))
+            && ctx.requireUnsupportedSyntax())
+
+            || parseKeywordIf(ctx, "INDEX")
+            || parseKeywordIf(ctx, "KEY");
     }
 
     private static final FieldOrConstraint parseAlterTableAddFieldOrConstraint(ParserContext ctx) {
@@ -9377,25 +9376,34 @@ final class ParserImpl implements Parser {
 
         // [#7025] TODO, replace this by a dynamic enum data type encoding, once available
         String className = "GeneratedEnum" + (literals.hashCode() & 0x7FFFFFF);
-        return SQLDataType.VARCHAR(length)
 
-            .asEnumDataType(Reflect
-                .compile(
-                    "org.jooq.impl." + className,
+        StringBuilder content = new StringBuilder();
+        content.append(
                     "package org.jooq.impl;\n"
-                  + "enum " + className + " implements org.jooq.EnumType {\n"
-                  + "  " + String.join(", ", literals) + ";\n"
+                  + "enum ").append(className).append(" implements org.jooq.EnumType {\n");
+
+        for (int i = 0; i < literals.size(); i++) {
+            content.append("  E").append(i).append("(\"").append(literals.get(i).replace("\"", "\\\"")).append("\"),\n");
+        }
+
+        content.append(
+                    "  ;\n"
+                  + "  final String literal;\n"
+                  + "  private ").append(className).append("(String literal) { this.literal = literal; }\n"
                   + "  @Override\n"
                   + "  public String getName() {\n"
                   + "    return getClass().getName();\n"
                   + "  }\n"
                   + "  @Override\n"
                   + "  public String getLiteral() {\n"
-                  + "    return name();"
+                  + "    return literal;\n"
                   + "  }\n"
-                  + "}")
-                .get()
-            )
+                  + "}");
+
+
+        return SQLDataType.VARCHAR(length)
+
+            .asEnumDataType(Reflect.compile("org.jooq.impl." + className, content.toString()).get())
 
         ;
     }
@@ -10384,7 +10392,7 @@ final class ParserImpl implements Parser {
                                 switch (ctx.sql[i]) {
                                     case '\r':
                                     case '\n':
-                                        position = i;
+                                        position = i + 1;
                                         continue loop;
                                 }
                             }

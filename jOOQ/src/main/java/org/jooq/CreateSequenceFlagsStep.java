@@ -42,6 +42,7 @@ import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
+// ...
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
@@ -81,37 +82,37 @@ public interface CreateSequenceFlagsStep extends CreateSequenceFinalStep {
     /**
      * Add a <code>START WITH</code> clause to the sequence definition.
      */
-    @Support({ DERBY, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     CreateSequenceFlagsStep startWith(Number constant);
 
     /**
      * Add a <code>START WITH</code> clause to the sequence definition.
      */
-    @Support({ DERBY, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     CreateSequenceFlagsStep startWith(Field<? extends Number> constant);
 
     /**
      * Add a <code>INCREMENT BY</code> clause to the sequence definition.
      */
-    @Support({ DERBY, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     CreateSequenceFlagsStep incrementBy(Number constant);
 
     /**
      * Add a <code>INCREMENT BY</code> clause to the sequence definition.
      */
-    @Support({ DERBY, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     CreateSequenceFlagsStep incrementBy(Field<? extends Number> constant);
 
     /**
      * Add a <code>MINVALUE</code> clause to the sequence definition.
      */
-    @Support({ DERBY, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, H2, HSQLDB, POSTGRES })
     CreateSequenceFlagsStep minvalue(Number constant);
 
     /**
      * Add a <code>MINVALUE</code> clause to the sequence definition.
      */
-    @Support({ DERBY, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, H2, HSQLDB, POSTGRES })
     CreateSequenceFlagsStep minvalue(Field<? extends Number> constant);
 
     /**
@@ -123,13 +124,13 @@ public interface CreateSequenceFlagsStep extends CreateSequenceFinalStep {
     /**
      * Add a <code>MINVALUE</code> clause to the sequence definition.
      */
-    @Support({ DERBY, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, H2, HSQLDB, POSTGRES })
     CreateSequenceFlagsStep maxvalue(Number constant);
 
     /**
      * Add a <code>MINVALUE</code> clause to the sequence definition.
      */
-    @Support({ DERBY, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, H2, HSQLDB, POSTGRES })
     CreateSequenceFlagsStep maxvalue(Field<? extends Number> constant);
 
     /**
@@ -141,7 +142,7 @@ public interface CreateSequenceFlagsStep extends CreateSequenceFinalStep {
     /**
      * Add a <code>CYCLE</code> clause to the sequence definition.
      */
-    @Support({ DERBY, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, H2, HSQLDB, POSTGRES })
     CreateSequenceFlagsStep cycle();
 
     /**
@@ -153,13 +154,13 @@ public interface CreateSequenceFlagsStep extends CreateSequenceFinalStep {
     /**
      * Add a <code>CACHE</code> clause to the sequence definition.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ CUBRID, H2, POSTGRES })
     CreateSequenceFlagsStep cache(Number constant);
 
     /**
      * Add a <code>CACHE</code> clause to the sequence definition.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ CUBRID, H2, POSTGRES })
     CreateSequenceFlagsStep cache(Field<? extends Number> constant);
 
     /**

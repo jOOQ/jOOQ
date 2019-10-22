@@ -55,6 +55,7 @@ import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.rowNumber;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.when;
+import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.meta.postgres.information_schema.Tables.ATTRIBUTES;
 import static org.jooq.meta.postgres.information_schema.Tables.CHECK_CONSTRAINTS;
 import static org.jooq.meta.postgres.information_schema.Tables.COLUMNS;
@@ -631,6 +632,7 @@ public class PostgresDatabase extends AbstractDatabase {
             PgType b = PG_TYPE.as("b");
 
             Field<String[]> src = field(name("domains", "src"), String[].class);
+            Field<String> constraintDef = field("pg_get_constraintdef({0})", VARCHAR, oid(c));
 
             for (Record record : create()
                     .withRecursive("domains",
@@ -644,7 +646,7 @@ public class PostgresDatabase extends AbstractDatabase {
                              oid(d),
                              oid(d),
                              d.TYPBASETYPE,
-                             array(c.CONSRC)
+                             array(constraintDef)
                          )
                         .from(d)
                         .join(n)
@@ -659,8 +661,8 @@ public class PostgresDatabase extends AbstractDatabase {
                              oid(d),
                              d.TYPBASETYPE,
                              decode()
-                                 .when(c.CONSRC.isNull(), src)
-                                 .otherwise(arrayAppend(src, c.CONSRC))
+                                 .when(c.CONBIN.isNull(), src)
+                                 .otherwise(arrayAppend(src, constraintDef))
                          )
                         .from(name("domains"))
                         .join(d)
@@ -865,7 +867,6 @@ public class PostgresDatabase extends AbstractDatabase {
 
         return is11;
     }
-
 
     @Override
     protected boolean exists0(TableField<?, ?> field) {

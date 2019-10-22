@@ -1584,6 +1584,13 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      *     SELECT 1 FROM B WHERE A.ID = B.ID
      * )
      * </pre></code>
+     * <p>
+     * Notice that according to
+     * <a href="https://en.wikipedia.org/wiki/Relational_algebra">Relational
+     * algebra's</a> understanding of left semi join, the right hand side of the
+     * left semi join operator is not projected, i.e. it cannot be accessed from
+     * <code>WHERE</code> or <code>SELECT</code> or any other clause than
+     * <code>ON</code>.
      *
      * @see Table#leftSemiJoin(TableLike)
      */
@@ -1607,6 +1614,13 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      *     SELECT 1 FROM B WHERE A.ID = B.ID
      * )
      * </pre></code>
+     * <p>
+     * Notice that according to
+     * <a href="https://en.wikipedia.org/wiki/Relational_algebra">Relational
+     * algebra's</a> understanding of left semi join, the right hand side of the
+     * left semi join operator is not projected, i.e. it cannot be accessed from
+     * <code>WHERE</code> or <code>SELECT</code> or any other clause than
+     * <code>ON</code>.
      *
      * @see Table#leftAntiJoin(TableLike)
      */

@@ -88,7 +88,7 @@ final class Substring extends AbstractField<String> {
                 if (length == null)
                     ctx.visit(F_SUBSTRING).sql('(').visit(field).sql(' ').visit(K_FROM).sql(' ').visit(startingPosition).sql(')');
                 else
-                    ctx.visit(F_SUBSTRING).sql('(').visit(field).sql(' ').visit(K_FROM).sql(' ').visit(startingPosition).sql(' ').visit(K_FOR).visit(length).sql(')');
+                    ctx.visit(F_SUBSTRING).sql('(').visit(field).sql(' ').visit(K_FROM).sql(' ').visit(startingPosition).sql(' ').visit(K_FOR).sql(' ').visit(length).sql(')');
                 return;
             }
 

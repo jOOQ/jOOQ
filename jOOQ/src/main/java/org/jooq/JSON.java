@@ -48,6 +48,10 @@ public final class JSON {
         this.data = data;
     }
 
+    public final String data() {
+        return data;
+    }
+
     public static final JSON valueOf(String data) {
         return new JSON(data);
     }
@@ -80,6 +84,6 @@ public final class JSON {
 
     @Override
     public String toString() {
-        return data;
+        return String.valueOf(data);
     }
 }

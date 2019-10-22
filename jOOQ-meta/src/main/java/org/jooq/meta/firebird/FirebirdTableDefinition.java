@@ -46,6 +46,7 @@ import static org.jooq.meta.firebird.rdb.Tables.RDB$RELATION_FIELDS;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.jooq.Record;
 import org.jooq.impl.DSL;
@@ -61,6 +62,8 @@ import org.jooq.meta.firebird.rdb.tables.Rdb$relationFields;
  * @author Sugiharto Lim - Initial contribution
  */
 public class FirebirdTableDefinition extends AbstractTableDefinition {
+
+    private static final Pattern P_DEFAULT = Pattern.compile("DEFAULT\\s+");
 
     public FirebirdTableDefinition(SchemaDefinition schema, String name, String comment) {
         super(schema, name, comment);
@@ -96,6 +99,12 @@ public class FirebirdTableDefinition extends AbstractTableDefinition {
                 .orderBy(r.RDB$FIELD_POSITION)
                 .fetch()) {
 
+            // [#9411] Firebird reports the DEFAULT keyword in this column, which
+            //         we do not want to reproduce in generated code.
+            String defaultValue = record.get(r.RDB$DEFAULT_SOURCE);
+            if (defaultValue != null)
+                defaultValue = P_DEFAULT.matcher(defaultValue).replaceFirst("");
+
             DefaultDataTypeDefinition type = new DefaultDataTypeDefinition(
                     getDatabase(),
                     getSchema(),
@@ -104,7 +113,7 @@ public class FirebirdTableDefinition extends AbstractTableDefinition {
                     record.get(f.RDB$FIELD_PRECISION),
                     record.get("FIELD_SCALE", Integer.class),
                     record.get(r.RDB$NULL_FLAG) == 0,
-                    record.get(r.RDB$DEFAULT_SOURCE)
+                    defaultValue
             );
 
             ColumnDefinition column = new DefaultColumnDefinition(

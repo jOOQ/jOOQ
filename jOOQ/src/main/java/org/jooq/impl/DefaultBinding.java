@@ -2119,6 +2119,29 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
+        void sqlInline0(BindingSQLContext<U> ctx, DayToSecond value) throws SQLException {
+            // [#566] Interval data types are best bound as Strings
+            if ( ctx.family() == POSTGRES) {
+                int sign = value.getSign();
+                int days = sign * value.getDays();
+                ctx.render().sql('\'')
+                    .sql(days >= 0 ? '+' : '-')
+                    .sql(Math.abs(days))
+                    .sql(' ')
+                    .sql(sign * value.getHours())
+                    .sql(':')
+                    .sql(sign * value.getMinutes())
+                    .sql(':')
+                    .sql(sign * value.getSeconds())
+                    .sql('.')
+                    .sql(StringUtils.leftPad(Integer.toString(value.getNano()), 9, '0'))
+                    .sql('\'');
+            }
+            else
+                ctx.render().sql('\'').sql(value.toString()).sql('\'');
+        }
+
+        @Override
         final void set0(BindingSetStatementContext<U> ctx, DayToSecond value) throws SQLException {
 
             // [#566] Interval data types are best bound as Strings
@@ -4181,17 +4204,20 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final JSON get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-            return JSON.valueOf(ctx.resultSet().getString(ctx.index()));
+            String string = ctx.resultSet().getString(ctx.index());
+            return string == null ? null : JSON.valueOf(string);
         }
 
         @Override
         final JSON get0(BindingGetStatementContext<U> ctx) throws SQLException {
-            return JSON.valueOf(ctx.statement().getString(ctx.index()));
+            String string = ctx.statement().getString(ctx.index());
+            return string == null ? null : JSON.valueOf(string);
         }
 
         @Override
         final JSON get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
-            return JSON.valueOf(ctx.input().readString());
+            String string = ctx.input().readString();
+            return string == null ? null : JSON.valueOf(string);
         }
 
         @Override
@@ -4273,7 +4299,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-            return JSONB.valueOf(ctx.resultSet().getString(ctx.index()));
+
+            String string = ctx.resultSet().getString(ctx.index());
+            return string == null ? null : JSONB.valueOf(string);
         }
 
         @Override
@@ -4283,7 +4311,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-            return JSONB.valueOf(ctx.statement().getString(ctx.index()));
+            String string = ctx.statement().getString(ctx.index());
+            return string == null ? null : JSONB.valueOf(string);
         }
 
         @Override
@@ -4293,7 +4322,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-            return JSONB.valueOf(ctx.input().readString());
+            String string = ctx.input().readString();
+            return string == null ? null : JSONB.valueOf(string);
         }
 
         @Override

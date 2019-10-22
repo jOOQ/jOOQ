@@ -607,7 +607,7 @@ public class DefaultDataType<T> implements DataType<T> {
 
         // If this is another dialect's specific data type, recurse
         else {
-            getSQLDataType().getDataType(configuration);
+            return getSQLDataType().getDataType(configuration);
         }
 
         return this;

@@ -352,15 +352,18 @@ public class MySQLDatabase extends AbstractDatabase {
                 Tables.TABLE_NAME,
                 Tables.TABLE_COMMENT)
             .from(TABLES)
+
             // [#5213] Duplicate schema value to work around MySQL issue https://bugs.mysql.com/bug.php?id=86022
             .where(Tables.TABLE_SCHEMA.in(getInputSchemata()).or(
                   getInputSchemata().size() == 1
                 ? Tables.TABLE_SCHEMA.in(getInputSchemata())
                 : falseCondition()))
+
+            // [#9291] MariaDB treats sequences as tables
+            .and(Tables.TABLE_TYPE.ne(inline("SEQUENCE")))
             .orderBy(
                 Tables.TABLE_SCHEMA,
-                Tables.TABLE_NAME)
-            .fetch()) {
+                Tables.TABLE_NAME)) {
 
             SchemaDefinition schema = getSchema(record.get(Tables.TABLE_SCHEMA));
             String name = record.get(Tables.TABLE_NAME);

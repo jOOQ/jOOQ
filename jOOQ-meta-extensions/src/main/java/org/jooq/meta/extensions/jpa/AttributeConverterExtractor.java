@@ -165,6 +165,7 @@ final class AttributeConverterExtractor implements Integrator {
         Properties properties = new Properties();
         properties.put("hibernate.dialect", JPADatabase.HIBERNATE_DIALECT);
         properties.put("hibernate.hbm2ddl.auto", "create-drop");
+        properties.putAll(database.userSettings);
         return properties;
     }
 

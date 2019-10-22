@@ -135,7 +135,7 @@ final class Expression<T> extends AbstractField<T> {
 
     @Override
     public final Field<T> add(Field<?> value) {
-        if (operator == ExpressionOperator.ADD) {
+        if (operator == ExpressionOperator.ADD && getDataType().isNumeric()) {
             rhs.add(value);
             return this;
         }
@@ -145,7 +145,7 @@ final class Expression<T> extends AbstractField<T> {
 
     @Override
     public final Field<T> mul(Field<? extends Number> value) {
-        if (operator == ExpressionOperator.MULTIPLY) {
+        if (operator == ExpressionOperator.MULTIPLY && getDataType().isNumeric()) {
             rhs.add(value);
             return this;
         }

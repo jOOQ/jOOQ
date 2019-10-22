@@ -76,7 +76,12 @@ final class QualifiedField<T> extends AbstractField<T> implements TableField<Rec
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(getQualifiedName());
+        if (ctx.qualify() && getTable() != null) {
+            ctx.visit(getTable());
+            ctx.sql('.');
+        }
+
+        ctx.visit(getUnqualifiedName());
     }
 
     @Override

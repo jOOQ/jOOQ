@@ -40,6 +40,7 @@ package org.jooq;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
@@ -75,13 +76,13 @@ public interface CreateTableCommentStep extends CreateTableStorageStep {
     /**
      * Add a comment to the table.
      */
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     CreateTableStorageStep comment(String comment);
 
     /**
      * Add a comment to the table.
      */
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     CreateTableStorageStep comment(Comment comment);
 
 }

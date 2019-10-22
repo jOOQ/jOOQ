@@ -4,13 +4,18 @@
 package org.jooq.meta.firebird.rdb.tables;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
+import org.jooq.impl.Internal;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.firebird.rdb.DefaultSchema;
 
@@ -21,7 +26,7 @@ import org.jooq.meta.firebird.rdb.DefaultSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Rdb$fields extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 93953863;
+    private static final long serialVersionUID = 1100491303;
 
     /**
      * The reference instance of <code>RDB$FIELDS</code>
@@ -39,152 +44,152 @@ public class Rdb$fields extends TableImpl<Record> {
     /**
      * The column <code>RDB$FIELDS.RDB$FIELD_NAME</code>.
      */
-    public final TableField<Record, String> RDB$FIELD_NAME = createField("RDB$FIELD_NAME", org.jooq.impl.SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$FIELD_NAME = createField(DSL.name("RDB$FIELD_NAME"), org.jooq.impl.SQLDataType.CHAR(31), this, "");
 
     /**
      * The column <code>RDB$FIELDS.RDB$QUERY_NAME</code>.
      */
-    public final TableField<Record, String> RDB$QUERY_NAME = createField("RDB$QUERY_NAME", org.jooq.impl.SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$QUERY_NAME = createField(DSL.name("RDB$QUERY_NAME"), org.jooq.impl.SQLDataType.CHAR(31), this, "");
 
     /**
      * The column <code>RDB$FIELDS.RDB$VALIDATION_BLR</code>.
      */
-    public final TableField<Record, byte[]> RDB$VALIDATION_BLR = createField("RDB$VALIDATION_BLR", org.jooq.impl.SQLDataType.BLOB, this, "");
+    public final TableField<Record, byte[]> RDB$VALIDATION_BLR = createField(DSL.name("RDB$VALIDATION_BLR"), org.jooq.impl.SQLDataType.BLOB, this, "");
 
     /**
      * The column <code>RDB$FIELDS.RDB$VALIDATION_SOURCE</code>.
      */
-    public final TableField<Record, String> RDB$VALIDATION_SOURCE = createField("RDB$VALIDATION_SOURCE", org.jooq.impl.SQLDataType.CLOB, this, "");
+    public final TableField<Record, String> RDB$VALIDATION_SOURCE = createField(DSL.name("RDB$VALIDATION_SOURCE"), org.jooq.impl.SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>RDB$FIELDS.RDB$COMPUTED_BLR</code>.
      */
-    public final TableField<Record, byte[]> RDB$COMPUTED_BLR = createField("RDB$COMPUTED_BLR", org.jooq.impl.SQLDataType.BLOB, this, "");
+    public final TableField<Record, byte[]> RDB$COMPUTED_BLR = createField(DSL.name("RDB$COMPUTED_BLR"), org.jooq.impl.SQLDataType.BLOB, this, "");
 
     /**
      * The column <code>RDB$FIELDS.RDB$COMPUTED_SOURCE</code>.
      */
-    public final TableField<Record, String> RDB$COMPUTED_SOURCE = createField("RDB$COMPUTED_SOURCE", org.jooq.impl.SQLDataType.CLOB, this, "");
+    public final TableField<Record, String> RDB$COMPUTED_SOURCE = createField(DSL.name("RDB$COMPUTED_SOURCE"), org.jooq.impl.SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>RDB$FIELDS.RDB$DEFAULT_VALUE</code>.
      */
-    public final TableField<Record, byte[]> RDB$DEFAULT_VALUE = createField("RDB$DEFAULT_VALUE", org.jooq.impl.SQLDataType.BLOB, this, "");
+    public final TableField<Record, byte[]> RDB$DEFAULT_VALUE = createField(DSL.name("RDB$DEFAULT_VALUE"), org.jooq.impl.SQLDataType.BLOB, this, "");
 
     /**
      * The column <code>RDB$FIELDS.RDB$DEFAULT_SOURCE</code>.
      */
-    public final TableField<Record, String> RDB$DEFAULT_SOURCE = createField("RDB$DEFAULT_SOURCE", org.jooq.impl.SQLDataType.CLOB, this, "");
+    public final TableField<Record, String> RDB$DEFAULT_SOURCE = createField(DSL.name("RDB$DEFAULT_SOURCE"), org.jooq.impl.SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>RDB$FIELDS.RDB$FIELD_LENGTH</code>.
      */
-    public final TableField<Record, Short> RDB$FIELD_LENGTH = createField("RDB$FIELD_LENGTH", org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> RDB$FIELD_LENGTH = createField(DSL.name("RDB$FIELD_LENGTH"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>RDB$FIELDS.RDB$FIELD_SCALE</code>.
      */
-    public final TableField<Record, Short> RDB$FIELD_SCALE = createField("RDB$FIELD_SCALE", org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> RDB$FIELD_SCALE = createField(DSL.name("RDB$FIELD_SCALE"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>RDB$FIELDS.RDB$FIELD_TYPE</code>.
      */
-    public final TableField<Record, Short> RDB$FIELD_TYPE = createField("RDB$FIELD_TYPE", org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> RDB$FIELD_TYPE = createField(DSL.name("RDB$FIELD_TYPE"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>RDB$FIELDS.RDB$FIELD_SUB_TYPE</code>.
      */
-    public final TableField<Record, Short> RDB$FIELD_SUB_TYPE = createField("RDB$FIELD_SUB_TYPE", org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> RDB$FIELD_SUB_TYPE = createField(DSL.name("RDB$FIELD_SUB_TYPE"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>RDB$FIELDS.RDB$MISSING_VALUE</code>.
      */
-    public final TableField<Record, byte[]> RDB$MISSING_VALUE = createField("RDB$MISSING_VALUE", org.jooq.impl.SQLDataType.BLOB, this, "");
+    public final TableField<Record, byte[]> RDB$MISSING_VALUE = createField(DSL.name("RDB$MISSING_VALUE"), org.jooq.impl.SQLDataType.BLOB, this, "");
 
     /**
      * The column <code>RDB$FIELDS.RDB$MISSING_SOURCE</code>.
      */
-    public final TableField<Record, String> RDB$MISSING_SOURCE = createField("RDB$MISSING_SOURCE", org.jooq.impl.SQLDataType.CLOB, this, "");
+    public final TableField<Record, String> RDB$MISSING_SOURCE = createField(DSL.name("RDB$MISSING_SOURCE"), org.jooq.impl.SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>RDB$FIELDS.RDB$DESCRIPTION</code>.
      */
-    public final TableField<Record, String> RDB$DESCRIPTION = createField("RDB$DESCRIPTION", org.jooq.impl.SQLDataType.CLOB, this, "");
+    public final TableField<Record, String> RDB$DESCRIPTION = createField(DSL.name("RDB$DESCRIPTION"), org.jooq.impl.SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>RDB$FIELDS.RDB$SYSTEM_FLAG</code>.
      */
-    public final TableField<Record, Short> RDB$SYSTEM_FLAG = createField("RDB$SYSTEM_FLAG", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+    public final TableField<Record, Short> RDB$SYSTEM_FLAG = createField(DSL.name("RDB$SYSTEM_FLAG"), org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
      * The column <code>RDB$FIELDS.RDB$QUERY_HEADER</code>.
      */
-    public final TableField<Record, String> RDB$QUERY_HEADER = createField("RDB$QUERY_HEADER", org.jooq.impl.SQLDataType.CLOB, this, "");
+    public final TableField<Record, String> RDB$QUERY_HEADER = createField(DSL.name("RDB$QUERY_HEADER"), org.jooq.impl.SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>RDB$FIELDS.RDB$SEGMENT_LENGTH</code>.
      */
-    public final TableField<Record, Short> RDB$SEGMENT_LENGTH = createField("RDB$SEGMENT_LENGTH", org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> RDB$SEGMENT_LENGTH = createField(DSL.name("RDB$SEGMENT_LENGTH"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>RDB$FIELDS.RDB$EDIT_STRING</code>.
      */
-    public final TableField<Record, String> RDB$EDIT_STRING = createField("RDB$EDIT_STRING", org.jooq.impl.SQLDataType.VARCHAR, this, "");
+    public final TableField<Record, String> RDB$EDIT_STRING = createField(DSL.name("RDB$EDIT_STRING"), org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>RDB$FIELDS.RDB$EXTERNAL_LENGTH</code>.
      */
-    public final TableField<Record, Short> RDB$EXTERNAL_LENGTH = createField("RDB$EXTERNAL_LENGTH", org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> RDB$EXTERNAL_LENGTH = createField(DSL.name("RDB$EXTERNAL_LENGTH"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>RDB$FIELDS.RDB$EXTERNAL_SCALE</code>.
      */
-    public final TableField<Record, Short> RDB$EXTERNAL_SCALE = createField("RDB$EXTERNAL_SCALE", org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> RDB$EXTERNAL_SCALE = createField(DSL.name("RDB$EXTERNAL_SCALE"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>RDB$FIELDS.RDB$EXTERNAL_TYPE</code>.
      */
-    public final TableField<Record, Short> RDB$EXTERNAL_TYPE = createField("RDB$EXTERNAL_TYPE", org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> RDB$EXTERNAL_TYPE = createField(DSL.name("RDB$EXTERNAL_TYPE"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>RDB$FIELDS.RDB$DIMENSIONS</code>.
      */
-    public final TableField<Record, Short> RDB$DIMENSIONS = createField("RDB$DIMENSIONS", org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> RDB$DIMENSIONS = createField(DSL.name("RDB$DIMENSIONS"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>RDB$FIELDS.RDB$NULL_FLAG</code>.
      */
-    public final TableField<Record, Short> RDB$NULL_FLAG = createField("RDB$NULL_FLAG", org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> RDB$NULL_FLAG = createField(DSL.name("RDB$NULL_FLAG"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>RDB$FIELDS.RDB$CHARACTER_LENGTH</code>.
      */
-    public final TableField<Record, Short> RDB$CHARACTER_LENGTH = createField("RDB$CHARACTER_LENGTH", org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> RDB$CHARACTER_LENGTH = createField(DSL.name("RDB$CHARACTER_LENGTH"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>RDB$FIELDS.RDB$COLLATION_ID</code>.
      */
-    public final TableField<Record, Short> RDB$COLLATION_ID = createField("RDB$COLLATION_ID", org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> RDB$COLLATION_ID = createField(DSL.name("RDB$COLLATION_ID"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>RDB$FIELDS.RDB$CHARACTER_SET_ID</code>.
      */
-    public final TableField<Record, Short> RDB$CHARACTER_SET_ID = createField("RDB$CHARACTER_SET_ID", org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> RDB$CHARACTER_SET_ID = createField(DSL.name("RDB$CHARACTER_SET_ID"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>RDB$FIELDS.RDB$FIELD_PRECISION</code>.
      */
-    public final TableField<Record, Short> RDB$FIELD_PRECISION = createField("RDB$FIELD_PRECISION", org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> RDB$FIELD_PRECISION = createField(DSL.name("RDB$FIELD_PRECISION"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>RDB$FIELDS.RDB$SECURITY_CLASS</code>.
      */
-    public final TableField<Record, String> RDB$SECURITY_CLASS = createField("RDB$SECURITY_CLASS", org.jooq.impl.SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$SECURITY_CLASS = createField(DSL.name("RDB$SECURITY_CLASS"), org.jooq.impl.SQLDataType.CHAR(31), this, "");
 
     /**
      * The column <code>RDB$FIELDS.RDB$OWNER_NAME</code>.
      */
-    public final TableField<Record, String> RDB$OWNER_NAME = createField("RDB$OWNER_NAME", org.jooq.impl.SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$OWNER_NAME = createField(DSL.name("RDB$OWNER_NAME"), org.jooq.impl.SQLDataType.CHAR(31), this, "");
 
     /**
      * Create a <code>RDB$FIELDS</code> table reference
@@ -212,28 +217,26 @@ public class Rdb$fields extends TableImpl<Record> {
     }
 
     private Rdb$fields(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, "");
+        super(alias, null, aliased, parameters, DSL.comment(""));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Schema getSchema() {
         return DefaultSchema.DEFAULT_SCHEMA;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
+    public List<UniqueKey<Record>> getKeys() {
+        return Arrays.<UniqueKey<Record>>asList(
+              Internal.createUniqueKey(org.jooq.meta.firebird.rdb.tables.Rdb$fields.RDB$FIELDS, "RDB$INDEX_2", org.jooq.meta.firebird.rdb.tables.Rdb$fields.RDB$FIELDS.RDB$FIELD_NAME)
+        );
+    }
+
     @Override
     public Rdb$fields as(String alias) {
         return new Rdb$fields(DSL.name(alias), this);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Rdb$fields as(Name alias) {
         return new Rdb$fields(alias, this);

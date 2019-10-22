@@ -4,13 +4,18 @@
 package org.jooq.meta.firebird.rdb.tables;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
+import org.jooq.impl.Internal;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.firebird.rdb.DefaultSchema;
 
@@ -21,7 +26,7 @@ import org.jooq.meta.firebird.rdb.DefaultSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Rdb$generators extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -1247535669;
+    private static final long serialVersionUID = 224652420;
 
     /**
      * The reference instance of <code>RDB$GENERATORS</code>
@@ -39,42 +44,42 @@ public class Rdb$generators extends TableImpl<Record> {
     /**
      * The column <code>RDB$GENERATORS.RDB$GENERATOR_NAME</code>.
      */
-    public final TableField<Record, String> RDB$GENERATOR_NAME = createField("RDB$GENERATOR_NAME", org.jooq.impl.SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$GENERATOR_NAME = createField(DSL.name("RDB$GENERATOR_NAME"), org.jooq.impl.SQLDataType.CHAR(31), this, "");
 
     /**
      * The column <code>RDB$GENERATORS.RDB$GENERATOR_ID</code>.
      */
-    public final TableField<Record, Short> RDB$GENERATOR_ID = createField("RDB$GENERATOR_ID", org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> RDB$GENERATOR_ID = createField(DSL.name("RDB$GENERATOR_ID"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>RDB$GENERATORS.RDB$SYSTEM_FLAG</code>.
      */
-    public final TableField<Record, Short> RDB$SYSTEM_FLAG = createField("RDB$SYSTEM_FLAG", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+    public final TableField<Record, Short> RDB$SYSTEM_FLAG = createField(DSL.name("RDB$SYSTEM_FLAG"), org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
      * The column <code>RDB$GENERATORS.RDB$DESCRIPTION</code>.
      */
-    public final TableField<Record, String> RDB$DESCRIPTION = createField("RDB$DESCRIPTION", org.jooq.impl.SQLDataType.CLOB, this, "");
+    public final TableField<Record, String> RDB$DESCRIPTION = createField(DSL.name("RDB$DESCRIPTION"), org.jooq.impl.SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>RDB$GENERATORS.RDB$SECURITY_CLASS</code>.
      */
-    public final TableField<Record, String> RDB$SECURITY_CLASS = createField("RDB$SECURITY_CLASS", org.jooq.impl.SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$SECURITY_CLASS = createField(DSL.name("RDB$SECURITY_CLASS"), org.jooq.impl.SQLDataType.CHAR(31), this, "");
 
     /**
      * The column <code>RDB$GENERATORS.RDB$OWNER_NAME</code>.
      */
-    public final TableField<Record, String> RDB$OWNER_NAME = createField("RDB$OWNER_NAME", org.jooq.impl.SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$OWNER_NAME = createField(DSL.name("RDB$OWNER_NAME"), org.jooq.impl.SQLDataType.CHAR(31), this, "");
 
     /**
      * The column <code>RDB$GENERATORS.RDB$INITIAL_VALUE</code>.
      */
-    public final TableField<Record, Long> RDB$INITIAL_VALUE = createField("RDB$INITIAL_VALUE", org.jooq.impl.SQLDataType.BIGINT, this, "");
+    public final TableField<Record, Long> RDB$INITIAL_VALUE = createField(DSL.name("RDB$INITIAL_VALUE"), org.jooq.impl.SQLDataType.BIGINT, this, "");
 
     /**
      * The column <code>RDB$GENERATORS.RDB$GENERATOR_INCREMENT</code>.
      */
-    public final TableField<Record, Integer> RDB$GENERATOR_INCREMENT = createField("RDB$GENERATOR_INCREMENT", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<Record, Integer> RDB$GENERATOR_INCREMENT = createField(DSL.name("RDB$GENERATOR_INCREMENT"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * Create a <code>RDB$GENERATORS</code> table reference
@@ -102,28 +107,27 @@ public class Rdb$generators extends TableImpl<Record> {
     }
 
     private Rdb$generators(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, "");
+        super(alias, null, aliased, parameters, DSL.comment(""));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Schema getSchema() {
         return DefaultSchema.DEFAULT_SCHEMA;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
+    public List<UniqueKey<Record>> getKeys() {
+        return Arrays.<UniqueKey<Record>>asList(
+              Internal.createUniqueKey(org.jooq.meta.firebird.rdb.tables.Rdb$generators.RDB$GENERATORS, "RDB$INDEX_11", org.jooq.meta.firebird.rdb.tables.Rdb$generators.RDB$GENERATORS.RDB$GENERATOR_NAME)
+            , Internal.createUniqueKey(org.jooq.meta.firebird.rdb.tables.Rdb$generators.RDB$GENERATORS, "RDB$INDEX_46", org.jooq.meta.firebird.rdb.tables.Rdb$generators.RDB$GENERATORS.RDB$GENERATOR_ID)
+        );
+    }
+
     @Override
     public Rdb$generators as(String alias) {
         return new Rdb$generators(DSL.name(alias), this);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Rdb$generators as(Name alias) {
         return new Rdb$generators(alias, this);

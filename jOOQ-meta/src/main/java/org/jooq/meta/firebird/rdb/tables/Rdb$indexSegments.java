@@ -21,7 +21,7 @@ import org.jooq.meta.firebird.rdb.DefaultSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Rdb$indexSegments extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 1383194947;
+    private static final long serialVersionUID = -131224289;
 
     /**
      * The reference instance of <code>RDB$INDEX_SEGMENTS</code>
@@ -39,22 +39,22 @@ public class Rdb$indexSegments extends TableImpl<Record> {
     /**
      * The column <code>RDB$INDEX_SEGMENTS.RDB$INDEX_NAME</code>.
      */
-    public final TableField<Record, String> RDB$INDEX_NAME = createField("RDB$INDEX_NAME", org.jooq.impl.SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$INDEX_NAME = createField(DSL.name("RDB$INDEX_NAME"), org.jooq.impl.SQLDataType.CHAR(31), this, "");
 
     /**
      * The column <code>RDB$INDEX_SEGMENTS.RDB$FIELD_NAME</code>.
      */
-    public final TableField<Record, String> RDB$FIELD_NAME = createField("RDB$FIELD_NAME", org.jooq.impl.SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$FIELD_NAME = createField(DSL.name("RDB$FIELD_NAME"), org.jooq.impl.SQLDataType.CHAR(31), this, "");
 
     /**
      * The column <code>RDB$INDEX_SEGMENTS.RDB$FIELD_POSITION</code>.
      */
-    public final TableField<Record, Short> RDB$FIELD_POSITION = createField("RDB$FIELD_POSITION", org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<Record, Short> RDB$FIELD_POSITION = createField(DSL.name("RDB$FIELD_POSITION"), org.jooq.impl.SQLDataType.SMALLINT, this, "");
 
     /**
      * The column <code>RDB$INDEX_SEGMENTS.RDB$STATISTICS</code>.
      */
-    public final TableField<Record, Double> RDB$STATISTICS = createField("RDB$STATISTICS", org.jooq.impl.SQLDataType.DOUBLE, this, "");
+    public final TableField<Record, Double> RDB$STATISTICS = createField(DSL.name("RDB$STATISTICS"), org.jooq.impl.SQLDataType.DOUBLE, this, "");
 
     /**
      * Create a <code>RDB$INDEX_SEGMENTS</code> table reference
@@ -82,28 +82,19 @@ public class Rdb$indexSegments extends TableImpl<Record> {
     }
 
     private Rdb$indexSegments(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, "");
+        super(alias, null, aliased, parameters, DSL.comment(""));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Schema getSchema() {
         return DefaultSchema.DEFAULT_SCHEMA;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Rdb$indexSegments as(String alias) {
         return new Rdb$indexSegments(DSL.name(alias), this);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Rdb$indexSegments as(Name alias) {
         return new Rdb$indexSegments(alias, this);

@@ -45,6 +45,7 @@ import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$GENERATORS;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$INDEX_SEGMENTS;
+import static org.jooq.meta.firebird.rdb.Tables.RDB$INDICES;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$PROCEDURES;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$REF_CONSTRAINTS;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$RELATIONS;
@@ -53,6 +54,8 @@ import static org.jooq.meta.firebird.rdb.Tables.RDB$RELATION_CONSTRAINTS;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.jooq.DSLContext;
 import org.jooq.Field;
@@ -60,16 +63,21 @@ import org.jooq.Record;
 import org.jooq.Record3;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
+import org.jooq.SortOrder;
 import org.jooq.impl.DSL;
 import org.jooq.meta.AbstractDatabase;
+import org.jooq.meta.AbstractIndexDefinition;
 import org.jooq.meta.ArrayDefinition;
 import org.jooq.meta.CatalogDefinition;
 import org.jooq.meta.DataTypeDefinition;
 import org.jooq.meta.DefaultDataTypeDefinition;
+import org.jooq.meta.DefaultIndexColumnDefinition;
 import org.jooq.meta.DefaultRelations;
 import org.jooq.meta.DefaultSequenceDefinition;
 import org.jooq.meta.DomainDefinition;
 import org.jooq.meta.EnumDefinition;
+import org.jooq.meta.IndexColumnDefinition;
+import org.jooq.meta.IndexDefinition;
 import org.jooq.meta.PackageDefinition;
 import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SchemaDefinition;
@@ -78,6 +86,7 @@ import org.jooq.meta.TableDefinition;
 import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.firebird.rdb.tables.Rdb$fields;
 import org.jooq.meta.firebird.rdb.tables.Rdb$indexSegments;
+import org.jooq.meta.firebird.rdb.tables.Rdb$indices;
 import org.jooq.meta.firebird.rdb.tables.Rdb$refConstraints;
 import org.jooq.meta.firebird.rdb.tables.Rdb$relationConstraints;
 import org.jooq.meta.jaxb.SchemaMappingType;
@@ -193,6 +202,83 @@ public class FirebirdDatabase extends AbstractDatabase {
     @Override
     protected void loadCheckConstraints(DefaultRelations r) throws SQLException {
         // Currently not supported
+    }
+
+    @Override
+    protected List<IndexDefinition> getIndexes0() throws SQLException {
+        List<IndexDefinition> result = new ArrayList<>();
+
+        Rdb$relationConstraints c = RDB$RELATION_CONSTRAINTS.as("c");
+        Rdb$indices i = RDB$INDICES.as("i");
+        Rdb$indexSegments s = RDB$INDEX_SEGMENTS.as("s");
+
+        Map<Record, Result<Record>> indexes = create()
+            .select(
+                i.RDB$RELATION_NAME.trim().as(i.RDB$RELATION_NAME),
+                i.RDB$INDEX_NAME.trim().as(i.RDB$INDEX_NAME),
+                i.RDB$UNIQUE_FLAG,
+                s.RDB$FIELD_NAME.trim().as(s.RDB$FIELD_NAME),
+                s.RDB$FIELD_POSITION
+                )
+            .from(i)
+            .join(s).on(i.RDB$INDEX_NAME.eq(s.RDB$INDEX_NAME))
+            .where(i.RDB$INDEX_NAME.notIn(select(c.RDB$CONSTRAINT_NAME).from(c)))
+            .orderBy(
+                i.RDB$RELATION_NAME,
+                i.RDB$INDEX_NAME,
+                s.RDB$FIELD_POSITION)
+            .fetchGroups(
+                new Field[] {
+                    i.RDB$RELATION_NAME,
+                    i.RDB$INDEX_NAME,
+                    i.RDB$UNIQUE_FLAG
+                },
+                new Field[] {
+                    s.RDB$FIELD_NAME,
+                    s.RDB$FIELD_POSITION
+                });
+
+        indexLoop:
+        for (Entry<Record, Result<Record>> entry : indexes.entrySet()) {
+            final Record index = entry.getKey();
+            final Result<Record> columns = entry.getValue();
+            final SchemaDefinition schema = getSchemata().get(0);
+
+            final String indexName = index.get(i.RDB$INDEX_NAME);
+            final String tableName = index.get(i.RDB$RELATION_NAME);
+            final TableDefinition table = getTable(schema, tableName);
+            if (table == null)
+                continue indexLoop;
+
+            final boolean unique = index.get(i.RDB$UNIQUE_FLAG, boolean.class);
+
+            // [#6310] [#6620] Function-based indexes are not yet supported
+            for (Record column : columns)
+                if (table.getColumn(column.get(s.RDB$FIELD_NAME)) == null)
+                    continue indexLoop;
+
+            result.add(new AbstractIndexDefinition(schema, indexName, table, unique) {
+                List<IndexColumnDefinition> indexColumns = new ArrayList<>();
+
+                {
+                    for (Record column : columns) {
+                        indexColumns.add(new DefaultIndexColumnDefinition(
+                            this,
+                            table.getColumn(column.get(s.RDB$FIELD_NAME)),
+                            SortOrder.ASC,
+                            column.get(s.RDB$FIELD_POSITION, int.class)
+                        ));
+                    }
+                }
+
+                @Override
+                protected List<IndexColumnDefinition> getIndexColumns0() {
+                    return indexColumns;
+                }
+            });
+        }
+
+        return result;
     }
 
     @Override

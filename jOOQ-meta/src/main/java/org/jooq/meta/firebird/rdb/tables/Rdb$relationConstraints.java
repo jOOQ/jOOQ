@@ -4,13 +4,18 @@
 package org.jooq.meta.firebird.rdb.tables;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
+import org.jooq.impl.Internal;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.firebird.rdb.DefaultSchema;
 
@@ -21,7 +26,7 @@ import org.jooq.meta.firebird.rdb.DefaultSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Rdb$relationConstraints extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -1964086691;
+    private static final long serialVersionUID = 573885063;
 
     /**
      * The reference instance of <code>RDB$RELATION_CONSTRAINTS</code>
@@ -39,32 +44,32 @@ public class Rdb$relationConstraints extends TableImpl<Record> {
     /**
      * The column <code>RDB$RELATION_CONSTRAINTS.RDB$CONSTRAINT_NAME</code>.
      */
-    public final TableField<Record, String> RDB$CONSTRAINT_NAME = createField("RDB$CONSTRAINT_NAME", org.jooq.impl.SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$CONSTRAINT_NAME = createField(DSL.name("RDB$CONSTRAINT_NAME"), org.jooq.impl.SQLDataType.CHAR(31), this, "");
 
     /**
      * The column <code>RDB$RELATION_CONSTRAINTS.RDB$CONSTRAINT_TYPE</code>.
      */
-    public final TableField<Record, String> RDB$CONSTRAINT_TYPE = createField("RDB$CONSTRAINT_TYPE", org.jooq.impl.SQLDataType.CHAR, this, "");
+    public final TableField<Record, String> RDB$CONSTRAINT_TYPE = createField(DSL.name("RDB$CONSTRAINT_TYPE"), org.jooq.impl.SQLDataType.CHAR, this, "");
 
     /**
      * The column <code>RDB$RELATION_CONSTRAINTS.RDB$RELATION_NAME</code>.
      */
-    public final TableField<Record, String> RDB$RELATION_NAME = createField("RDB$RELATION_NAME", org.jooq.impl.SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$RELATION_NAME = createField(DSL.name("RDB$RELATION_NAME"), org.jooq.impl.SQLDataType.CHAR(31), this, "");
 
     /**
      * The column <code>RDB$RELATION_CONSTRAINTS.RDB$DEFERRABLE</code>.
      */
-    public final TableField<Record, String> RDB$DEFERRABLE = createField("RDB$DEFERRABLE", org.jooq.impl.SQLDataType.CHAR, this, "");
+    public final TableField<Record, String> RDB$DEFERRABLE = createField(DSL.name("RDB$DEFERRABLE"), org.jooq.impl.SQLDataType.CHAR, this, "");
 
     /**
      * The column <code>RDB$RELATION_CONSTRAINTS.RDB$INITIALLY_DEFERRED</code>.
      */
-    public final TableField<Record, String> RDB$INITIALLY_DEFERRED = createField("RDB$INITIALLY_DEFERRED", org.jooq.impl.SQLDataType.CHAR, this, "");
+    public final TableField<Record, String> RDB$INITIALLY_DEFERRED = createField(DSL.name("RDB$INITIALLY_DEFERRED"), org.jooq.impl.SQLDataType.CHAR, this, "");
 
     /**
      * The column <code>RDB$RELATION_CONSTRAINTS.RDB$INDEX_NAME</code>.
      */
-    public final TableField<Record, String> RDB$INDEX_NAME = createField("RDB$INDEX_NAME", org.jooq.impl.SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$INDEX_NAME = createField(DSL.name("RDB$INDEX_NAME"), org.jooq.impl.SQLDataType.CHAR(31), this, "");
 
     /**
      * Create a <code>RDB$RELATION_CONSTRAINTS</code> table reference
@@ -92,28 +97,26 @@ public class Rdb$relationConstraints extends TableImpl<Record> {
     }
 
     private Rdb$relationConstraints(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, "");
+        super(alias, null, aliased, parameters, DSL.comment(""));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Schema getSchema() {
         return DefaultSchema.DEFAULT_SCHEMA;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
+    public List<UniqueKey<Record>> getKeys() {
+        return Arrays.<UniqueKey<Record>>asList(
+              Internal.createUniqueKey(org.jooq.meta.firebird.rdb.tables.Rdb$relationConstraints.RDB$RELATION_CONSTRAINTS, "RDB$INDEX_12", org.jooq.meta.firebird.rdb.tables.Rdb$relationConstraints.RDB$RELATION_CONSTRAINTS.RDB$CONSTRAINT_NAME)
+        );
+    }
+
     @Override
     public Rdb$relationConstraints as(String alias) {
         return new Rdb$relationConstraints(DSL.name(alias), this);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Rdb$relationConstraints as(Name alias) {
         return new Rdb$relationConstraints(alias, this);

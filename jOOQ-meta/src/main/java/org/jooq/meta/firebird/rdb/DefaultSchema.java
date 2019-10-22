@@ -14,6 +14,7 @@ import org.jooq.impl.SchemaImpl;
 import org.jooq.meta.firebird.rdb.tables.Rdb$fields;
 import org.jooq.meta.firebird.rdb.tables.Rdb$generators;
 import org.jooq.meta.firebird.rdb.tables.Rdb$indexSegments;
+import org.jooq.meta.firebird.rdb.tables.Rdb$indices;
 import org.jooq.meta.firebird.rdb.tables.Rdb$procedureParameters;
 import org.jooq.meta.firebird.rdb.tables.Rdb$procedures;
 import org.jooq.meta.firebird.rdb.tables.Rdb$refConstraints;
@@ -28,7 +29,7 @@ import org.jooq.meta.firebird.rdb.tables.Rdb$relations;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DefaultSchema extends SchemaImpl {
 
-    private static final long serialVersionUID = 451583036;
+    private static final long serialVersionUID = 167286145;
 
     /**
      * The reference instance of <code></code>
@@ -49,6 +50,11 @@ public class DefaultSchema extends SchemaImpl {
      * The table <code>RDB$INDEX_SEGMENTS</code>.
      */
     public final Rdb$indexSegments RDB$INDEX_SEGMENTS = org.jooq.meta.firebird.rdb.tables.Rdb$indexSegments.RDB$INDEX_SEGMENTS;
+
+    /**
+     * The table <code>RDB$INDICES</code>.
+     */
+    public final Rdb$indices RDB$INDICES = org.jooq.meta.firebird.rdb.tables.Rdb$indices.RDB$INDICES;
 
     /**
      * The table <code>RDB$PROCEDURES</code>.
@@ -88,9 +94,6 @@ public class DefaultSchema extends SchemaImpl {
     }
 
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Catalog getCatalog() {
         return DefaultCatalog.DEFAULT_CATALOG;
@@ -108,6 +111,7 @@ public class DefaultSchema extends SchemaImpl {
             Rdb$fields.RDB$FIELDS,
             Rdb$generators.RDB$GENERATORS,
             Rdb$indexSegments.RDB$INDEX_SEGMENTS,
+            Rdb$indices.RDB$INDICES,
             Rdb$procedures.RDB$PROCEDURES,
             Rdb$procedureParameters.RDB$PROCEDURE_PARAMETERS,
             Rdb$refConstraints.RDB$REF_CONSTRAINTS,

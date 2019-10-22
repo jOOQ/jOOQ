@@ -206,11 +206,11 @@ public class FirebirdDatabase extends AbstractDatabase {
 
     @Override
     protected List<IndexDefinition> getIndexes0() throws SQLException {
-        List<IndexDefinition> result = new ArrayList<>();
+        final List<IndexDefinition> result = new ArrayList<>();
 
-        Rdb$relationConstraints c = RDB$RELATION_CONSTRAINTS.as("c");
-        Rdb$indices i = RDB$INDICES.as("i");
-        Rdb$indexSegments s = RDB$INDEX_SEGMENTS.as("s");
+        final Rdb$relationConstraints c = RDB$RELATION_CONSTRAINTS.as("c");
+        final Rdb$indices i = RDB$INDICES.as("i");
+        final Rdb$indexSegments s = RDB$INDEX_SEGMENTS.as("s");
 
         Map<Record, Result<Record>> indexes = create()
             .select(

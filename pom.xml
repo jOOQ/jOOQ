@@ -30,8 +30,7 @@
         <h2.version>1.4.200</h2.version>
 
         <!-- From JDK 11 onwards, we need to depend on the JAXB API explicitly -->
-        <!-- [#9401] We cannot depend on 2.3.0+ yet, as that crashes on JDK 8 or less -->
-        <jaxb.version>2.2.10</jaxb.version>
+        <jaxb.version>2.3.1</jaxb.version>
         <javax.activation.version>1.2.0</javax.activation.version>
 
         <!-- DefaultRecordMapper and jOOQ-meta-extensions can read JPA annotations -->

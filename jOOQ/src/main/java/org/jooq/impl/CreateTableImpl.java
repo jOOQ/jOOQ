@@ -143,15 +143,14 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
     private static final Set<SQLDialect>     NO_SUPPORT_IF_NOT_EXISTS           = SQLDialect.supported(DERBY, FIREBIRD);
     private static final Set<SQLDialect>     NO_SUPPORT_WITH_DATA               = SQLDialect.supported(H2, MARIADB, MYSQL, SQLITE);
     private static final Set<SQLDialect>     NO_SUPPORT_CTAS_COLUMN_NAMES       = SQLDialect.supported(H2);
-    private static final Set<SQLDialect>     EMULATE_INDEXES_IN_BLOCK           = SQLDialect.supported(POSTGRES);
+    private static final Set<SQLDialect>     EMULATE_INDEXES_IN_BLOCK           = SQLDialect.supported(FIREBIRD, POSTGRES);
     private static final Set<SQLDialect>     EMULATE_SOME_ENUM_TYPES_AS_CHECK   = SQLDialect.supported(CUBRID, DERBY, FIREBIRD, HSQLDB, POSTGRES, SQLITE);
     private static final Set<SQLDialect>     EMULATE_STORED_ENUM_TYPES_AS_CHECK = SQLDialect.supported(CUBRID, DERBY, FIREBIRD, HSQLDB, SQLITE);
     private static final Set<SQLDialect>     REQUIRES_WITH_DATA                 = SQLDialect.supported(HSQLDB);
     private static final Set<SQLDialect>     WRAP_SELECT_IN_PARENS              = SQLDialect.supported(HSQLDB);
     private static final Set<SQLDialect>     SUPPORT_TEMPORARY                  = SQLDialect.supported(MARIADB, MYSQL, POSTGRES);
-    private static final Set<SQLDialect>     EMULATE_COMMENT_IN_BLOCK           = SQLDialect.supported(POSTGRES);
-
-
+    private static final Set<SQLDialect>     EMULATE_COMMENT_IN_BLOCK           = SQLDialect.supported(FIREBIRD, POSTGRES);
+    private static final Set<SQLDialect>     REQUIRE_EXECUTE_IMMEDIATE          = SQLDialect.supported(FIREBIRD);
 
 
 
@@ -370,58 +369,46 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
         if (c || i) {
             begin(ctx);
 
-
-
-
-
+            if (REQUIRE_EXECUTE_IMMEDIATE.contains(ctx.family()))
+                beginExecuteImmediate(ctx);
 
             accept1(ctx);
 
-
-
-
-
-
-            ctx.sql(';');
+            if (REQUIRE_EXECUTE_IMMEDIATE.contains(ctx.family()))
+                endExecuteImmediate(ctx);
+            else
+                ctx.sql(';');
 
             if (c) {
                 ctx.formatSeparator();
 
-
-
-
-
+                if (REQUIRE_EXECUTE_IMMEDIATE.contains(ctx.family()))
+                    beginExecuteImmediate(ctx);
 
                 ctx.visit(commentOnTable(table).is(comment));
 
-
-
-
-
-
-                ctx.sql(';');
+                if (REQUIRE_EXECUTE_IMMEDIATE.contains(ctx.family()))
+                    endExecuteImmediate(ctx);
+                else
+                    ctx.sql(';');
             }
 
             if (i) {
                 for (Index index : indexes) {
                     ctx.formatSeparator();
 
-
-
-
-
+                    if (REQUIRE_EXECUTE_IMMEDIATE.contains(ctx.family()))
+                        beginExecuteImmediate(ctx);
 
                     if ("".equals(index.getName()))
                         ctx.visit(createIndex().on(index.getTable(), index.getFields()));
                     else
                         ctx.visit(createIndex(index.getUnqualifiedName()).on(index.getTable(), index.getFields()));
 
-
-
-
-
-
-                    ctx.sql(';');
+                    if (REQUIRE_EXECUTE_IMMEDIATE.contains(ctx.family()))
+                        endExecuteImmediate(ctx);
+                    else
+                        ctx.sql(';');
                 }
             }
 

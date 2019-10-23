@@ -140,8 +140,18 @@ final class Diff {
 
     private final List<Query> appendColumns(final List<Query> queries, final Table<?> t1, final Table<?> t2, final Iterator<Field<?>> i1, final Iterator<Field<?>> i2) {
         return append(queries, i1, i2,
-            (q, f) -> q.add(ctx.alterTable(t1).add(f)),
-            (q, f) -> q.add(ctx.alterTable(t1).drop(f)),
+            new Create<Field<?>>() {
+                @Override
+                public void create(List<Query> q, Field<?> f) {
+                    q.add(ctx.alterTable(t1).add(f));
+                }
+            },
+            new Drop<Field<?>>() {
+                @Override
+                public void drop(List<Query> q, Field<?> f) {
+                    q.add(ctx.alterTable(t1).drop(f));
+                }
+            },
             null
         );
     }

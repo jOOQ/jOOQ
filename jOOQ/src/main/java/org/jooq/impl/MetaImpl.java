@@ -940,4 +940,10 @@ final class MetaImpl extends AbstractMeta {
                 return DSL.constraint(getName()).unique(getFieldsArray());
         }
     }
+
+    @Override
+    public String toString() {
+        // [#9428] Prevent long running toString() calls
+        return "MetaImpl";
+    }
 }

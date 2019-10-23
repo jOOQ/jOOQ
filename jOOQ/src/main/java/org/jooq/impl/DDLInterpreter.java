@@ -79,9 +79,12 @@ import org.jooq.UniqueKey;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataDefinitionException;
 import org.jooq.impl.ConstraintImpl.Action;
+import org.jooq.tools.JooqLogger;
 
 @SuppressWarnings("serial")
 final class DDLInterpreter {
+
+    private static final JooqLogger         log      = JooqLogger.getLogger(DDLInterpreter.class);
 
     private final Configuration             configuration;
     private final Map<Name, MutableCatalog> catalogs = new LinkedHashMap<>();
@@ -118,6 +121,8 @@ final class DDLInterpreter {
     // -------------------------------------------------------------------------
 
     final void accept(Query query) {
+        log.info(query);
+
         if (query instanceof CreateSchemaImpl)
             accept0((CreateSchemaImpl) query);
         else if (query instanceof AlterSchemaImpl)

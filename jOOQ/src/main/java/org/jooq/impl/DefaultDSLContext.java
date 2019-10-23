@@ -445,6 +445,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
+    public Meta meta(Query... queries) {
+        return new DDLInterpreterMetaProvider(configuration(), queries).provide();
+    }
+
+    @Override
     public InformationSchema informationSchema(Catalog catalog) {
         return InformationSchemaExport.exportCatalogs(configuration(), Arrays.asList(catalog));
     }

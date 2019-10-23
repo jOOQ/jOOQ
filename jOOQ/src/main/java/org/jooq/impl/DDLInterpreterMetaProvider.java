@@ -44,7 +44,6 @@ import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.Meta;
 import org.jooq.MetaProvider;
-import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.Source;
 import org.jooq.tools.JooqLogger;
@@ -65,10 +64,18 @@ final class DDLInterpreterMetaProvider implements MetaProvider {
 
     private final Configuration     configuration;
     private final Source[]          scripts;
+    private final Query[]           queries;
 
     public DDLInterpreterMetaProvider(Configuration configuration, Source... scripts) {
         this.configuration = configuration == null ? new DefaultConfiguration() : configuration;
         this.scripts = scripts;
+        this.queries = null;
+    }
+
+    public DDLInterpreterMetaProvider(Configuration configuration, Query... queries) {
+        this.configuration = configuration == null ? new DefaultConfiguration() : configuration;
+        this.scripts = null;
+        this.queries = queries;
     }
 
     @Override
@@ -76,8 +83,13 @@ final class DDLInterpreterMetaProvider implements MetaProvider {
         final DDLInterpreter interpreter = new DDLInterpreter(configuration);
         Configuration localConfiguration = configuration.derive();
         DSLContext ctx = DSL.using(localConfiguration);
-        for (Source script : scripts)
-            loadScript(ctx,  script, interpreter);
+
+        if (scripts != null)
+            for (Source script : scripts)
+                loadScript(ctx, script, interpreter);
+        else
+            for (Query query : queries)
+                interpreter.accept(query);
 
         return interpreter.meta();
     }
@@ -86,12 +98,9 @@ final class DDLInterpreterMetaProvider implements MetaProvider {
         Reader reader = source.reader();
         try {
             Scanner s = new Scanner(reader).useDelimiter("\\A");
-            Queries queries = ctx.parser().parse(s.hasNext() ? s.next() : "");
 
-            for (Query query : queries) {
+            for (Query query : ctx.parser().parse(s.hasNext() ? s.next() : ""))
                 interpreter.accept(query);
-                log.info(query);
-            }
         }
         catch (ParserException e) {
             log.error("An exception occurred while parsing a DDL script: " + e.getMessage()

@@ -315,6 +315,14 @@ public interface DSLContext extends Scope , AutoCloseable  {
     Meta meta(Source... sources);
 
     /**
+     * Create meta data from a set of DDL queries.
+     * <p>
+     * This works the same way as {@link #meta(Source...)}, without the need of
+     * parsing the DDL scripts.
+     */
+    Meta meta(Query... queries);
+
+    /**
      * Convenience method for {@link Meta#informationSchema()}.
      *
      * @see #meta(Catalog...)

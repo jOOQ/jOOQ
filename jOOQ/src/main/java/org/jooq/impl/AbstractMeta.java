@@ -295,10 +295,14 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
         return new DDL(this, exportConfiguration).queries();
     }
 
-    @Override
-    public final Queries diff(Meta other) {
-        return new Diff(configuration(), this, other).queries();
-    }
+
+
+
+
+
+
+
+
 
     // [#9396] TODO Fix this. Subclasses should not need to override this to get
     //         correct results

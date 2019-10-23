@@ -308,6 +308,19 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     }
 
     @Override
+    public int hashCode() {
+        return ddl().hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Meta)
+            return ddl().equals(((Meta) obj).ddl());
+
+        return false;
+    }
+
+    @Override
     public String toString() {
         return ddl().toString();
     }

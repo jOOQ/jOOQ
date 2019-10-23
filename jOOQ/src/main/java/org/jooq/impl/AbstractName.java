@@ -395,4 +395,9 @@ abstract class AbstractName extends AbstractQueryPart implements Name {
 
         return true;
     }
+
+    @Override
+    public int compareTo(Name o) {
+        return unquotedName().toString().compareTo(o.unquotedName().toString());
+    }
 }

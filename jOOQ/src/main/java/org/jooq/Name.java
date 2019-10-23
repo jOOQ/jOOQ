@@ -90,7 +90,7 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
-public interface Name extends QueryPart {
+public interface Name extends QueryPart, Comparable<Name> {
 
     /**
      * A flag indicating whether the name is quoted or not.
@@ -780,4 +780,12 @@ public interface Name extends QueryPart {
      * Compare this name with another one ignoring case.
      */
     boolean equalsIgnoreCase(Name other);
+
+    /**
+     * Compare two {@link #unquotedName()} by their qualified string versions.
+     * <p>
+     * {@inheritDoc}
+     */
+    @Override
+    int compareTo(Name o);
 }

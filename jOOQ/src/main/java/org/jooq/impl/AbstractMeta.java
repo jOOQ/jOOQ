@@ -58,6 +58,7 @@ import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.UniqueKey;
+import org.jooq.exception.DataAccessException;
 import org.jooq.util.xml.jaxb.InformationSchema;
 
 /**
@@ -293,6 +294,11 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     public /* non-final */ Queries ddl(DDLExportConfiguration exportConfiguration) {
         return new DDL(this, exportConfiguration).queries();
     }
+
+
+
+
+
 
 
 

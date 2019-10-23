@@ -77,7 +77,6 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     private Map<Name, List<Sequence<?>>> cachedUnqualifiedSequences;
     private List<UniqueKey<?>>           cachedPrimaryKeys;
 
-
     protected AbstractMeta(Configuration configuration) {
         super(configuration);
     }

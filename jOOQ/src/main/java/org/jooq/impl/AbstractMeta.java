@@ -58,7 +58,6 @@ import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.UniqueKey;
-import org.jooq.exception.DataAccessException;
 import org.jooq.util.xml.jaxb.InformationSchema;
 
 /**
@@ -95,7 +94,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     }
 
     @Override
-    public final List<Catalog> getCatalogs() throws DataAccessException {
+    public final List<Catalog> getCatalogs() {
         initCatalogs();
         return Collections.unmodifiableList(new ArrayList<>(cachedCatalogs.values()));
     }
@@ -108,7 +107,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
         }
     }
 
-    protected abstract List<Catalog> getCatalogs0() throws DataAccessException;
+    protected abstract List<Catalog> getCatalogs0();
 
     @Override
     public final List<Schema> getSchemas(String name) {
@@ -127,7 +126,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     }
 
     @Override
-    public final List<Schema> getSchemas() throws DataAccessException {
+    public final List<Schema> getSchemas() {
         initSchemas();
         return Collections.unmodifiableList(new ArrayList<>(cachedQualifiedSchemas.values()));
     }
@@ -145,7 +144,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
         }
     }
 
-    protected List<Schema> getSchemas0() throws DataAccessException {
+    protected List<Schema> getSchemas0() {
         List<Schema> result = new ArrayList<>();
         for (Catalog catalog : getCatalogs())
             result.addAll(catalog.getSchemas());
@@ -169,7 +168,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     }
 
     @Override
-    public final List<Table<?>> getTables() throws DataAccessException {
+    public final List<Table<?>> getTables() {
         initTables();
         return Collections.unmodifiableList(new ArrayList<>(cachedQualifiedTables.values()));
     }
@@ -187,7 +186,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
         }
     }
 
-    protected List<Table<?>> getTables0() throws DataAccessException {
+    protected List<Table<?>> getTables0() {
         List<Table<?>> result = new ArrayList<>();
         for (Schema schema : getSchemas())
             result.addAll(schema.getTables());
@@ -211,7 +210,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     }
 
     @Override
-    public final List<Sequence<?>> getSequences() throws DataAccessException {
+    public final List<Sequence<?>> getSequences() {
         initSequences();
         return Collections.unmodifiableList(new ArrayList<>(cachedQualifiedSequences.values()));
     }
@@ -229,7 +228,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
         }
     }
 
-    protected List<Sequence<?>> getSequences0() throws DataAccessException {
+    protected List<Sequence<?>> getSequences0() {
         List<Sequence<?>> result = new ArrayList<>();
         for (Schema schema : getSchemas())
             result.addAll(schema.getSequences());
@@ -237,7 +236,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     }
 
     @Override
-    public final List<UniqueKey<?>> getPrimaryKeys() throws DataAccessException {
+    public final List<UniqueKey<?>> getPrimaryKeys() {
         initPrimaryKeys();
         return Collections.unmodifiableList(cachedPrimaryKeys);
     }
@@ -247,7 +246,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
             cachedPrimaryKeys = new ArrayList<>(getPrimaryKeys0());
     }
 
-    protected List<UniqueKey<?>> getPrimaryKeys0() throws DataAccessException {
+    protected List<UniqueKey<?>> getPrimaryKeys0() {
         List<UniqueKey<?>> result = new ArrayList<>();
         for (Table<?> table : getTables())
             if (table.getPrimaryKey() != null)
@@ -285,21 +284,26 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     }
 
     @Override
-    public final Queries ddl() throws DataAccessException {
+    public final Queries ddl() {
         return ddl(new DDLExportConfiguration());
     }
 
     // [#9396] TODO Fix this. Subclasses should not need to override this to get
     //         correct results
     @Override
-    public /* non-final */ Queries ddl(DDLExportConfiguration exportConfiguration) throws DataAccessException {
+    public /* non-final */ Queries ddl(DDLExportConfiguration exportConfiguration) {
         return new DDL(this, exportConfiguration).queries();
+    }
+
+    @Override
+    public final Queries diff(Meta other) {
+        return new Diff(configuration(), this, other).queries();
     }
 
     // [#9396] TODO Fix this. Subclasses should not need to override this to get
     //         correct results
     @Override
-    public /* non-final */ InformationSchema informationSchema() throws DataAccessException {
+    public /* non-final */ InformationSchema informationSchema() {
         return InformationSchemaExport.exportCatalogs(configuration(), getCatalogs());
     }
 }

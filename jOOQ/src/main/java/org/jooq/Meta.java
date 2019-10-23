@@ -220,6 +220,14 @@ public interface Meta extends Scope {
     Queries ddl(DDLExportConfiguration configuration) throws DataAccessException;
 
     /**
+     * Generate a migration script to get from this meta data to another one.
+     *
+     * @throws DataAccessException If something went wrong fetching the meta
+     *             objects
+     */
+    Queries diff(Meta other) throws DataAccessException;
+
+    /**
      * Export to the {@link InformationSchema} format.
      * <p>
      * This allows for serialising schema meta information as XML using JAXB.

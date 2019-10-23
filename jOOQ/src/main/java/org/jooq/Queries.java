@@ -57,6 +57,11 @@ public interface Queries extends QueryPart, Attachable, Iterable<Query> {
     // ------------------------------------------------------------------------
 
     /**
+     * Return a new instance combining both sets of queries.
+     */
+    Queries concat(Queries other);
+
+    /**
      * The wrapped collection of queries.
      */
     Query[] queries();

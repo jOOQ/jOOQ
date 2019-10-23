@@ -39,8 +39,11 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Tools.EMPTY_QUERY;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.stream.Stream;
 
 import org.jooq.Block;
@@ -74,6 +77,15 @@ final class QueriesImpl extends AbstractQueryPart implements Queries {
     // ------------------------------------------------------------------------
     // Access API
     // ------------------------------------------------------------------------
+
+    @Override
+    public final Queries concat(Queries other) {
+        Query[] array = other.queries();
+        List<Query> list = new ArrayList<>(queries.size() + array.length);
+        list.addAll(queries);
+        list.addAll(Arrays.asList(array));
+        return new QueriesImpl(configuration, list);
+    }
 
     @Override
     public final Query[] queries() {

@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.tools.jdbc.JDBCUtils.safeClose;
+
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringWriter;
@@ -67,9 +69,10 @@ final class SourceMetaProvider implements MetaProvider {
     public final Meta provide() {
         if (sources.length > 0) {
             StringWriter w = new StringWriter();
+            Reader r = null;
 
             try {
-                Reader r = sources[0].reader();
+                r = sources[0].reader();
                 char[] buffer = new char[8192];
                 int nRead;
                 while ((nRead = r.read(buffer, 0, 8192)) >= 0) {
@@ -78,6 +81,9 @@ final class SourceMetaProvider implements MetaProvider {
             }
             catch (IOException e) {
                 throw new org.jooq.exception.IOException("Could not read source", e);
+            }
+            finally {
+                safeClose(r);
             }
 
             String s = w.toString();

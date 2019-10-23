@@ -109,6 +109,7 @@ import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.ConnectionCallable;
 import org.jooq.Constraint;
+import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -828,26 +829,21 @@ final class MetaImpl extends AbstractMeta {
         }
     }
 
-    private final class MetaPrimaryKey implements UniqueKey<Record> {
+    private final class MetaPrimaryKey extends AbstractNamed implements UniqueKey<Record> {
 
         /**
          * Generated UID
          */
         private static final long             serialVersionUID = 6997258619475953490L;
 
-        private final String                  pkName;
         private final Table<Record>           pkTable;
         private final TableField<Record, ?>[] pkFields;
 
         MetaPrimaryKey(Table<Record> table, String pkName, TableField<Record, ?>[] fields) {
-            this.pkName = pkName;
+            super(pkName == null ? null : DSL.name(pkName), null);
+
             this.pkTable = table;
             this.pkFields = fields;
-        }
-
-        @Override
-        public final String getName() {
-            return pkName;
         }
 
         @Override
@@ -938,6 +934,11 @@ final class MetaImpl extends AbstractMeta {
                 return DSL.constraint(getName()).primaryKey(getFieldsArray());
             else
                 return DSL.constraint(getName()).unique(getFieldsArray());
+        }
+
+        @Override
+        public final void accept(Context<?> ctx) {
+            ctx.visit(getUnqualifiedName());
         }
     }
 

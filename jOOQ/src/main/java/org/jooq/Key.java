@@ -37,7 +37,6 @@
  */
 package org.jooq;
 
-import java.io.Serializable;
 import java.util.List;
 
 
@@ -51,12 +50,7 @@ import java.util.List;
  * @param <R> The <code>KEY</code>'s owner table record
  * @author Lukas Eder
  */
-public interface Key<R extends Record> extends Serializable {
-
-    /**
-     * The <code>Key</code>'s name.
-     */
-    String getName();
+public interface Key<R extends Record> extends Named {
 
     /**
      * The <code>Key</code>'s owner table

@@ -51,7 +51,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import org.jooq.Constraint;
@@ -61,7 +60,6 @@ import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Index;
-import org.jooq.Key;
 import org.jooq.Meta;
 import org.jooq.Named;
 import org.jooq.Queries;
@@ -159,7 +157,7 @@ final class DDL {
         List<Constraint> result = new ArrayList<>();
 
         if (configuration.flags().contains(UNIQUE))
-            for (UniqueKey<?> key : sortKeysIf(table.getKeys(), !configuration.respectConstraintOrder()))
+            for (UniqueKey<?> key : sortIf(table.getKeys(), !configuration.respectConstraintOrder()))
                 if (!key.isPrimary())
                     result.add(constraint(key.getName()).unique(key.getFieldsArray()));
 
@@ -170,7 +168,7 @@ final class DDL {
         List<Constraint> result = new ArrayList<>();
 
         if (configuration.flags().contains(FOREIGN_KEY))
-            for (ForeignKey<?, ?> key : sortKeysIf(table.getReferences(), !configuration.respectConstraintOrder()))
+            for (ForeignKey<?, ?> key : sortIf(table.getReferences(), !configuration.respectConstraintOrder()))
                 result.add(constraint(key.getName()).foreignKey(key.getFieldsArray()).references(key.getKey().getTable(), key.getKey().getFieldsArray()));
 
         return result;
@@ -271,22 +269,6 @@ final class DDL {
                     queries.addAll(createIndex(table));
 
         return ctx.queries(queries);
-    }
-
-    // [#9435] TODO: Remove this again when Key extends Named
-    private final <N extends Key<?>> List<N> sortKeysIf(List<N> input, boolean sort) {
-        if (sort) {
-            List<N> result = new ArrayList<>(input);
-            Collections.sort(result, new Comparator<Key<?>>() {
-                @Override
-                public int compare(Key<?> o1, Key<?> o2) {
-                    return o1.getName().compareTo(o2.getName());
-                }
-            });
-            return result;
-        }
-
-        return input;
     }
 
     private final <N extends Named> List<N> sortIf(List<N> input, boolean sort) {

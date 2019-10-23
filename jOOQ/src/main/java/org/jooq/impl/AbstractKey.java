@@ -40,6 +40,7 @@ package org.jooq.impl;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jooq.Context;
 import org.jooq.Key;
 import org.jooq.Record;
 import org.jooq.Table;
@@ -50,14 +51,13 @@ import org.jooq.TableField;
  *
  * @author Lukas Eder
  */
-abstract class AbstractKey<R extends Record> implements Key<R> {
+abstract class AbstractKey<R extends Record> extends AbstractNamed implements Key<R> {
 
     /**
      * Generated UID
      */
     private static final long        serialVersionUID = 8176874459141379340L;
 
-    private final String             name;
     private final Table<R>           table;
     private final TableField<R, ?>[] fields;
 
@@ -72,14 +72,10 @@ abstract class AbstractKey<R extends Record> implements Key<R> {
     @SafeVarargs
 
     AbstractKey(Table<R> table, String name, TableField<R, ?>... fields) {
-        this.table = table;
-        this.name = name;
-        this.fields = fields;
-    }
+        super(name == null ? null : DSL.name(name), null);
 
-    @Override
-    public final String getName() {
-        return name;
+        this.table = table;
+        this.fields = fields;
     }
 
     @Override
@@ -98,10 +94,15 @@ abstract class AbstractKey<R extends Record> implements Key<R> {
     }
 
     @Override
+    public final void accept(Context<?> ctx) {
+        ctx.visit(getUnqualifiedName());
+    }
+
+    @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        result = prime * result + getQualifiedName().hashCode();
         result = prime * result + ((table == null) ? 0 : table.hashCode());
         return result;
     }
@@ -115,11 +116,7 @@ abstract class AbstractKey<R extends Record> implements Key<R> {
         if (getClass() != obj.getClass())
             return false;
         AbstractKey<?> other = (AbstractKey<?>) obj;
-        if (name == null) {
-            if (other.name != null)
-                return false;
-        }
-        else if (!name.equals(other.name))
+        if (!getQualifiedName().equals(other.getQualifiedName()))
             return false;
         if (table == null) {
             if (other.table != null)

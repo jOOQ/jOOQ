@@ -297,19 +297,22 @@ public interface DSLContext extends Scope , AutoCloseable  {
      */
     Meta meta(InformationSchema schema);
 
-    /***
-     * Access the database meta data for a database represented by a list of DDL
-     * scripts. The DDL scripts will be parsed using {@link #parser()}, which in
-     * turn uses the relevant {@link #settings() settings} (e.g.
-     * {@link Settings#getParseDialect()}) of this object.
+    /**
+     * Create meta data from a set of sources.
+     * <p>
+     * This method creates a {@link Meta} representation from a set of source
+     * content, which can be any of:
+     * <ul>
+     * <li>A set of DDL scripts, which will be parsed using
+     * {@link #parser()}.</li>
+     * <li>A set of XML files, which will be unmarshalled into
+     * {@link InformationSchema} objects.</li>
+     * </ul>
      * <p>
      * This will not connect to your database to get live meta information,
      * unlike {@link #meta()} and {@link #meta(DatabaseMetaData)}.
-     * <p>
-     * This method is for internal only. Do not reference directly.
      */
-    @Internal
-    Meta meta(Source... scripts);
+    Meta meta(Source... sources);
 
     /**
      * Convenience method for {@link Meta#informationSchema()}.

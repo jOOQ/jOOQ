@@ -40,6 +40,8 @@ package org.jooq.impl;
 import org.jooq.Configuration;
 import org.jooq.Meta;
 import org.jooq.MetaProvider;
+import org.jooq.Source;
+import org.jooq.util.jaxb.tools.MiniJAXB;
 import org.jooq.util.xml.jaxb.InformationSchema;
 
 /**
@@ -50,16 +52,33 @@ import org.jooq.util.xml.jaxb.InformationSchema;
  */
 public class InformationSchemaMetaProvider implements MetaProvider {
 
-    private final Configuration configuration;
+    private final Configuration     configuration;
     private final InformationSchema schema;
+    private final Source[]          sources;
+
+    public InformationSchemaMetaProvider(Configuration configuration, Source... sources) {
+        this.configuration = configuration;
+        this.schema = null;
+        this.sources = sources;
+    }
 
     public InformationSchemaMetaProvider(Configuration configuration, InformationSchema schema) {
         this.configuration = configuration;
         this.schema = schema;
+        this.sources = null;
     }
 
     @Override
     public Meta provide() {
-        return new InformationSchemaMetaImpl(configuration, schema);
+        InformationSchema s = schema;
+
+        if (s == null) {
+            s = new InformationSchema();
+
+            for (Source source : sources)
+                MiniJAXB.append(s, MiniJAXB.unmarshal(source.reader(), InformationSchema.class));
+        }
+
+        return new InformationSchemaMetaImpl(configuration, s);
     }
 }

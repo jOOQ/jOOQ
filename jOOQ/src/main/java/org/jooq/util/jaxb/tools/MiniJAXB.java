@@ -147,6 +147,10 @@ public final class MiniJAXB {
         }
     }
 
+    public static <T extends XMLAppendable> T unmarshal(Reader reader, Class<T> type) {
+        return unmarshal0(new InputSource(reader), type);
+    }
+
     public static <T extends XMLAppendable> T unmarshal(InputStream in, Class<T> type) {
         return unmarshal0(new InputSource(in), type);
     }

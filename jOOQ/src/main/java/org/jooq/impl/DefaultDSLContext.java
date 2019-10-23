@@ -440,8 +440,8 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public Meta meta(Source... scripts) {
-        return new DDLMetaProvider(configuration(), scripts).provide();
+    public Meta meta(Source... sources) {
+        return new SourceMetaProvider(configuration(), sources).provide();
     }
 
     @Override

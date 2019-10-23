@@ -58,7 +58,6 @@ import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.UniqueKey;
-import org.jooq.exception.DataAccessException;
 import org.jooq.util.xml.jaxb.InformationSchema;
 
 /**

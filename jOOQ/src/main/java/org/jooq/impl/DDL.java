@@ -48,7 +48,10 @@ import static org.jooq.DDLFlag.UNIQUE;
 import static org.jooq.impl.DSL.constraint;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.jooq.Constraint;
@@ -58,7 +61,9 @@ import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Index;
+import org.jooq.Key;
 import org.jooq.Meta;
+import org.jooq.Named;
 import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.Schema;
@@ -86,7 +91,7 @@ final class DDL {
         return (configuration.createTableIfNotExists()
                     ? ctx.createTableIfNotExists(table)
                     : ctx.createTable(table))
-                  .columns(table.fields())
+                  .columns(sortIf(Arrays.asList(table.fields()), !configuration.respectColumnOrder()))
                   .constraints(constraints);
     }
 
@@ -104,7 +109,7 @@ final class DDL {
         List<Query> result = new ArrayList<>();
 
         if (configuration.flags().contains(DDLFlag.INDEX))
-            for (Index i : table.getIndexes())
+            for (Index i : sortIf(table.getIndexes(), !configuration.respectIndexOrder()))
                 result.add(
                     (configuration.createIndexIfNotExists()
                         ? i.getUnique()
@@ -154,7 +159,7 @@ final class DDL {
         List<Constraint> result = new ArrayList<>();
 
         if (configuration.flags().contains(UNIQUE))
-            for (UniqueKey<?> key : table.getKeys())
+            for (UniqueKey<?> key : sortKeysIf(table.getKeys(), !configuration.respectConstraintOrder()))
                 if (!key.isPrimary())
                     result.add(constraint(key.getName()).unique(key.getFieldsArray()));
 
@@ -165,7 +170,7 @@ final class DDL {
         List<Constraint> result = new ArrayList<>();
 
         if (configuration.flags().contains(FOREIGN_KEY))
-            for (ForeignKey<?, ?> key : table.getReferences())
+            for (ForeignKey<?, ?> key : sortKeysIf(table.getReferences(), !configuration.respectConstraintOrder()))
                 result.add(constraint(key.getName()).foreignKey(key.getFieldsArray()).references(key.getKey().getTable(), key.getKey().getFieldsArray()));
 
         return result;
@@ -196,7 +201,7 @@ final class DDL {
             if (!StringUtils.isEmpty(tComment))
                 result.add(ctx.commentOnTable(table).is(tComment));
 
-            for (Field<?> field : table.fields()) {
+            for (Field<?> field : sortIf(Arrays.asList(table.fields()), !configuration.respectColumnOrder())) {
                 String fComment = field.getComment();
 
                 if (!StringUtils.isEmpty(fComment))
@@ -209,7 +214,7 @@ final class DDL {
 
     final Queries queries() {
         List<Query> queries = new ArrayList<>();
-        List<Schema> schemas = meta.getSchemas();
+        List<Schema> schemas = sortIf(meta.getSchemas(), !configuration.respectSchemaOrder());
 
         for (Schema schema : schemas)
             if (configuration.flags().contains(SCHEMA) && !StringUtils.isBlank(schema.getName()))
@@ -220,7 +225,7 @@ final class DDL {
 
         if (configuration.flags().contains(TABLE)) {
             for (Schema schema : schemas) {
-                for (Table<?> table : schema.getTables()) {
+                for (Table<?> table : sortIf(schema.getTables(), !configuration.respectTableOrder())) {
                     List<Constraint> constraints = new ArrayList<>();
 
                     constraints.addAll(primaryKeys(table));
@@ -233,38 +238,64 @@ final class DDL {
         else {
             for (Schema schema : schemas) {
                 if (configuration.flags().contains(PRIMARY_KEY))
-                    for (Table<?> table : schema.getTables())
-                        for (Constraint constraint : primaryKeys(table))
+                    for (Table<?> table : sortIf(schema.getTables(), !configuration.respectTableOrder()))
+                        for (Constraint constraint : sortIf(primaryKeys(table), !configuration.respectConstraintOrder()))
                             queries.add(ctx.alterTable(table).add(constraint));
 
                 if (configuration.flags().contains(UNIQUE))
-                    for (Table<?> table : schema.getTables())
-                        for (Constraint constraint : uniqueKeys(table))
+                    for (Table<?> table : sortIf(schema.getTables(), !configuration.respectTableOrder()))
+                        for (Constraint constraint : sortIf(uniqueKeys(table), !configuration.respectConstraintOrder()))
                             queries.add(ctx.alterTable(table).add(constraint));
             }
         }
 
         if (configuration.flags().contains(FOREIGN_KEY))
             for (Schema schema : schemas)
-                for (Table<?> table : schema.getTables())
+                for (Table<?> table : sortIf(schema.getTables(), !configuration.respectTableOrder()))
                     for (Constraint constraint : foreignKeys(table))
                         queries.add(ctx.alterTable(table).add(constraint));
 
         if (configuration.flags().contains(SEQUENCE))
             for (Schema schema : schemas)
-                for (Sequence<?> sequence : schema.getSequences())
+                for (Sequence<?> sequence : sortIf(schema.getSequences(), !configuration.respectSequenceOrder()))
                     queries.add(createSequence(sequence));
 
         if (configuration.flags().contains(COMMENT))
             for (Schema schema : schemas)
-                for (Table<?> table : schema.getTables())
+                for (Table<?> table : sortIf(schema.getTables(), !configuration.respectTableOrder()))
                     queries.addAll(commentOn(table));
 
         if (configuration.flags().contains(INDEX))
             for (Schema schema : schemas)
-                for (Table<?> table : schema.getTables())
+                for (Table<?> table : sortIf(schema.getTables(), !configuration.respectTableOrder()))
                     queries.addAll(createIndex(table));
 
         return ctx.queries(queries);
+    }
+
+    // [#9435] TODO: Remove this again when Key extends Named
+    private final <N extends Key<?>> List<N> sortKeysIf(List<N> input, boolean sort) {
+        if (sort) {
+            List<N> result = new ArrayList<>(input);
+            Collections.sort(result, new Comparator<Key<?>>() {
+                @Override
+                public int compare(Key<?> o1, Key<?> o2) {
+                    return o1.getName().compareTo(o2.getName());
+                }
+            });
+            return result;
+        }
+
+        return input;
+    }
+
+    private final <N extends Named> List<N> sortIf(List<N> input, boolean sort) {
+        if (sort) {
+            List<N> result = new ArrayList<>(input);
+            Collections.sort(result, NamedComparator.INSTANCE);
+            return result;
+        }
+
+        return input;
     }
 }

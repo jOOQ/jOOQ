@@ -56,6 +56,13 @@ public final class DDLExportConfiguration {
     private final boolean          createIndexIfNotExists;
     private final boolean          createSequenceIfNotExists;
     private final EnumSet<DDLFlag> flags;
+    private final boolean          respectCatalogOrder;
+    private final boolean          respectSchemaOrder;
+    private final boolean          respectTableOrder;
+    private final boolean          respectColumnOrder;
+    private final boolean          respectConstraintOrder;
+    private final boolean          respectIndexOrder;
+    private final boolean          respectSequenceOrder;
 
     /**
      * Create a new default export configuration instance.
@@ -63,7 +70,16 @@ public final class DDLExportConfiguration {
     public DDLExportConfiguration() {
         this(
             EnumSet.allOf(DDLFlag.class),
+
             false,
+            false,
+            false,
+            false,
+
+            false,
+            false,
+            false,
+            true,
             false,
             false,
             false
@@ -75,13 +91,29 @@ public final class DDLExportConfiguration {
         boolean createSchemaIfNotExists,
         boolean createTableIfNotExists,
         boolean createIndexIfNotExists,
-        boolean createSequenceIfNotExists
+        boolean createSequenceIfNotExists,
+        boolean respectCatalogOrder,
+        boolean respectSchemaOrder,
+        boolean respectTableOrder,
+        boolean respectColumnOrder,
+        boolean respectConstraintOrder,
+        boolean respectIndexOrder,
+        boolean respectSequenceOrder
     ) {
         this.flags = EnumSet.copyOf(flags);
+
         this.createSchemaIfNotExists = createSchemaIfNotExists;
         this.createTableIfNotExists = createTableIfNotExists;
         this.createIndexIfNotExists = createIndexIfNotExists;
         this.createSequenceIfNotExists = createSequenceIfNotExists;
+
+        this.respectCatalogOrder = respectCatalogOrder;
+        this.respectSchemaOrder = respectSchemaOrder;
+        this.respectTableOrder = respectTableOrder;
+        this.respectColumnOrder = respectColumnOrder;
+        this.respectConstraintOrder = respectConstraintOrder;
+        this.respectIndexOrder = respectIndexOrder;
+        this.respectSequenceOrder = respectSequenceOrder;
     }
 
     /**
@@ -102,7 +134,20 @@ public final class DDLExportConfiguration {
      * The {@link DDLFlag} that are enabled on this configuration.
      */
     public final DDLExportConfiguration flags(Collection<DDLFlag> newFlags) {
-        return new DDLExportConfiguration(newFlags, createSchemaIfNotExists, createTableIfNotExists, createIndexIfNotExists, createSequenceIfNotExists);
+        return new DDLExportConfiguration(
+            newFlags,
+            createSchemaIfNotExists,
+            createTableIfNotExists,
+            createIndexIfNotExists,
+            createSequenceIfNotExists,
+            respectCatalogOrder,
+            respectSchemaOrder,
+            respectTableOrder,
+            respectColumnOrder,
+            respectConstraintOrder,
+            respectIndexOrder,
+            respectSequenceOrder
+        );
     }
 
     /**
@@ -120,7 +165,20 @@ public final class DDLExportConfiguration {
      * Whether to generate <code>CREATE SCHEMA IF NOT EXISTS</code> statements.
      */
     public final DDLExportConfiguration createSchemaIfNotExists(boolean newCreateSchemaIfNotExists) {
-        return new DDLExportConfiguration(flags, newCreateSchemaIfNotExists, createTableIfNotExists, createIndexIfNotExists, createSequenceIfNotExists);
+        return new DDLExportConfiguration(
+            flags,
+            newCreateSchemaIfNotExists,
+            createTableIfNotExists,
+            createIndexIfNotExists,
+            createSequenceIfNotExists,
+            respectCatalogOrder,
+            respectSchemaOrder,
+            respectTableOrder,
+            respectColumnOrder,
+            respectConstraintOrder,
+            respectIndexOrder,
+            respectSequenceOrder
+        );
     }
 
     /**
@@ -138,7 +196,20 @@ public final class DDLExportConfiguration {
      * Whether to generate <code>CREATE TABLE IF NOT EXISTS</code> statements.
      */
     public final DDLExportConfiguration createTableIfNotExists(boolean newCreateTableIfNotExists) {
-        return new DDLExportConfiguration(flags, createSchemaIfNotExists, newCreateTableIfNotExists, createIndexIfNotExists, createSequenceIfNotExists);
+        return new DDLExportConfiguration(
+            flags,
+            createSchemaIfNotExists,
+            newCreateTableIfNotExists,
+            createIndexIfNotExists,
+            createSequenceIfNotExists,
+            respectCatalogOrder,
+            respectSchemaOrder,
+            respectTableOrder,
+            respectColumnOrder,
+            respectConstraintOrder,
+            respectIndexOrder,
+            respectSequenceOrder
+        );
     }
 
     /**
@@ -156,7 +227,20 @@ public final class DDLExportConfiguration {
      * Whether to generate <code>CREATE INDEX IF NOT EXISTS</code> statements.
      */
     public final DDLExportConfiguration createIndexIfNotExists(boolean newCreateIndexIfNotExists) {
-        return new DDLExportConfiguration(flags, createSchemaIfNotExists, createTableIfNotExists, newCreateIndexIfNotExists, createSequenceIfNotExists);
+        return new DDLExportConfiguration(
+            flags,
+            createSchemaIfNotExists,
+            createTableIfNotExists,
+            newCreateIndexIfNotExists,
+            createSequenceIfNotExists,
+            respectCatalogOrder,
+            respectSchemaOrder,
+            respectTableOrder,
+            respectColumnOrder,
+            respectConstraintOrder,
+            respectIndexOrder,
+            respectSequenceOrder
+        );
     }
 
     /**
@@ -174,6 +258,222 @@ public final class DDLExportConfiguration {
      * Whether to generate <code>CREATE SEQUENCE IF NOT EXISTS</code> statements.
      */
     public final DDLExportConfiguration createSequenceIfNotExists(boolean newCreateSequenceIfNotExists) {
-        return new DDLExportConfiguration(flags, createSchemaIfNotExists, createTableIfNotExists, createIndexIfNotExists, newCreateSequenceIfNotExists);
+        return new DDLExportConfiguration(
+            flags,
+            createSchemaIfNotExists,
+            createTableIfNotExists,
+            createIndexIfNotExists,
+            newCreateSequenceIfNotExists,
+            respectCatalogOrder,
+            respectSchemaOrder,
+            respectTableOrder,
+            respectColumnOrder,
+            respectConstraintOrder,
+            respectIndexOrder,
+            respectSequenceOrder
+        );
+    }
+
+    /**
+     * Whether to respect the catalog order produced by the {@link Meta} source
+     * when generated catalog DDL.
+     */
+    public final boolean respectCatalogOrder() {
+        return respectCatalogOrder;
+    }
+
+    /**
+     * Whether to respect the catalog order produced by the {@link Meta} source
+     * when generated catalog DDL.
+     */
+    public final DDLExportConfiguration respectCatalogOrder(boolean newRespectCatalogOrder) {
+        return new DDLExportConfiguration(
+            flags,
+            createSchemaIfNotExists,
+            createTableIfNotExists,
+            createIndexIfNotExists,
+            createSequenceIfNotExists,
+            newRespectCatalogOrder,
+            respectSchemaOrder,
+            respectTableOrder,
+            respectColumnOrder,
+            respectConstraintOrder,
+            respectIndexOrder,
+            respectSequenceOrder
+        );
+    }
+
+    /**
+     * Whether to respect the schema order produced by the {@link Meta} source
+     * when generated schema DDL.
+     */
+    public final boolean respectSchemaOrder() {
+        return respectSchemaOrder;
+    }
+
+    /**
+     * Whether to respect the schema order produced by the {@link Meta} source
+     * when generated schema DDL.
+     */
+    public final DDLExportConfiguration respectSchemaOrder(boolean newRespectSchemaOrder) {
+        return new DDLExportConfiguration(
+            flags,
+            createSchemaIfNotExists,
+            createTableIfNotExists,
+            createIndexIfNotExists,
+            createSequenceIfNotExists,
+            respectCatalogOrder,
+            newRespectSchemaOrder,
+            respectTableOrder,
+            respectColumnOrder,
+            respectConstraintOrder,
+            respectIndexOrder,
+            respectSequenceOrder
+        );
+    }
+
+    /**
+     * Whether to respect the table order produced by the {@link Meta} source
+     * when generated table DDL.
+     */
+    public final boolean respectTableOrder() {
+        return respectTableOrder;
+    }
+
+    /**
+     * Whether to respect the table order produced by the {@link Meta} source
+     * when generated table DDL.
+     */
+    public final DDLExportConfiguration respectTableOrder(boolean newRespectTableOrder) {
+        return new DDLExportConfiguration(
+            flags,
+            createSchemaIfNotExists,
+            createTableIfNotExists,
+            createIndexIfNotExists,
+            createSequenceIfNotExists,
+            respectCatalogOrder,
+            respectSchemaOrder,
+            newRespectTableOrder,
+            respectColumnOrder,
+            respectConstraintOrder,
+            respectIndexOrder,
+            respectSequenceOrder
+        );
+    }
+
+    /**
+     * Whether to respect the column order produced by the {@link Meta} source
+     * when generated column DDL.
+     */
+    public final boolean respectColumnOrder() {
+        return respectColumnOrder;
+    }
+
+    /**
+     * Whether to respect the column order produced by the {@link Meta} source
+     * when generated column DDL.
+     */
+    public final DDLExportConfiguration respectColumnOrder(boolean newRespectColumnOrder) {
+        return new DDLExportConfiguration(
+            flags,
+            createSchemaIfNotExists,
+            createTableIfNotExists,
+            createIndexIfNotExists,
+            createSequenceIfNotExists,
+            respectCatalogOrder,
+            respectSchemaOrder,
+            respectTableOrder,
+            newRespectColumnOrder,
+            respectConstraintOrder,
+            respectIndexOrder,
+            respectSequenceOrder
+        );
+    }
+
+    /**
+     * Whether to respect the constraint order produced by the {@link Meta} source
+     * when generated constraint DDL.
+     */
+    public final boolean respectConstraintOrder() {
+        return respectConstraintOrder;
+    }
+
+    /**
+     * Whether to respect the constraint order produced by the {@link Meta} source
+     * when generated constraint DDL.
+     */
+    public final DDLExportConfiguration respectConstraintOrder(boolean newRespectConstraintOrder) {
+        return new DDLExportConfiguration(
+            flags,
+            createSchemaIfNotExists,
+            createTableIfNotExists,
+            createIndexIfNotExists,
+            createSequenceIfNotExists,
+            respectCatalogOrder,
+            respectSchemaOrder,
+            respectTableOrder,
+            respectColumnOrder,
+            newRespectConstraintOrder,
+            respectIndexOrder,
+            respectSequenceOrder
+        );
+    }
+
+    /**
+     * Whether to respect the index order produced by the {@link Meta} source
+     * when generated index DDL.
+     */
+    public final boolean respectIndexOrder() {
+        return respectIndexOrder;
+    }
+
+    /**
+     * Whether to respect the index order produced by the {@link Meta} source
+     * when generated index DDL.
+     */
+    public final DDLExportConfiguration respectIndexOrder(boolean newRespectIndexOrder) {
+        return new DDLExportConfiguration(
+            flags,
+            createSchemaIfNotExists,
+            createTableIfNotExists,
+            createIndexIfNotExists,
+            createSequenceIfNotExists,
+            respectCatalogOrder,
+            respectSchemaOrder,
+            respectTableOrder,
+            respectColumnOrder,
+            respectConstraintOrder,
+            newRespectIndexOrder,
+            respectSequenceOrder
+        );
+    }
+
+    /**
+     * Whether to respect the sequence order produced by the {@link Meta} source
+     * when generated sequence DDL.
+     */
+    public final boolean respectSequenceOrder() {
+        return respectSequenceOrder;
+    }
+
+    /**
+     * Whether to respect the sequence order produced by the {@link Meta} source
+     * when generated sequence DDL.
+     */
+    public final DDLExportConfiguration respectSequenceOrder(boolean newRespectSequenceOrder) {
+        return new DDLExportConfiguration(
+            flags,
+            createSchemaIfNotExists,
+            createTableIfNotExists,
+            createIndexIfNotExists,
+            createSequenceIfNotExists,
+            respectCatalogOrder,
+            respectSchemaOrder,
+            respectTableOrder,
+            respectColumnOrder,
+            respectConstraintOrder,
+            respectIndexOrder,
+            newRespectSequenceOrder
+        );
     }
 }

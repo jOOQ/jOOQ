@@ -81,6 +81,36 @@ public interface Sequence<T extends Number> extends Named {
     DataType<T> getDataType();
 
     /**
+     * Get the start value for this sequence
+     */
+    Field<T> getStartWith();
+
+    /**
+     * Get the increment for this sequence
+     */
+    Field<T> getIncrementBy();
+
+    /**
+     * Get the minimum value for this sequence
+     */
+    Field<T> getMinValue();
+
+    /**
+     * Get the maximum value for this sequence
+     */
+    Field<T> getMaxValue();
+
+    /**
+     * Returns {@code true} if this sequence cycles when it reaches {@link #getMaxValue()}
+     */
+    boolean getCycle();
+
+    /**
+     * Get the number of sequence values to cache for this sequence
+     */
+    Field<T> getCache();
+
+    /**
      * Get the current value of this sequence
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })

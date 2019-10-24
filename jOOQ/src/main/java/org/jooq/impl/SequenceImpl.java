@@ -82,9 +82,15 @@ public class SequenceImpl<T extends Number> extends AbstractNamed implements Seq
     private static final long     serialVersionUID = 6224349401603636427L;
     private static final Clause[] CLAUSES          = { SEQUENCE, SEQUENCE_REFERENCE };
 
-    final boolean                 nameIsPlainSQL;
-    final Schema                  schema;
-    final DataType<T>             type;
+    private final boolean         nameIsPlainSQL;
+    private final Schema          schema;
+    private final DataType<T>     type;
+    private final Field<T>        startWith;
+    private final Field<T>        incrementBy;
+    private final Field<T>        minValue;
+    private final Field<T>        maxValue;
+    private final boolean         cycle;
+    private final Field<T>        cache;
 
     public SequenceImpl(String name, Schema schema, DataType<T> type) {
         this(name, schema, type, false);
@@ -95,11 +101,23 @@ public class SequenceImpl<T extends Number> extends AbstractNamed implements Seq
     }
 
     SequenceImpl(Name name, Schema schema, DataType<T> type, boolean nameIsPlainSQL) {
+        this(name, schema, type, nameIsPlainSQL, null, null, null, null, false, null);
+    }
+
+    SequenceImpl(Name name, Schema schema, DataType<T> type, boolean nameIsPlainSQL,
+        Field<T> startWith, Field<T> incrementBy, Field<T> minValue, Field<T> maxValue, boolean cycle, Field<T> cache) {
         super(qualify(schema, name), CommentImpl.NO_COMMENT);
 
         this.schema = schema;
         this.type = type;
         this.nameIsPlainSQL = nameIsPlainSQL;
+
+        this.startWith = startWith;
+        this.incrementBy = incrementBy;
+        this.minValue = minValue;
+        this.maxValue = maxValue;
+        this.cycle = cycle;
+        this.cache = cache;
     }
 
     @Override
@@ -115,6 +133,36 @@ public class SequenceImpl<T extends Number> extends AbstractNamed implements Seq
     @Override
     public final DataType<T> getDataType() {
         return type;
+    }
+
+    @Override
+    public final Field<T> getStartWith() {
+        return startWith;
+    }
+
+    @Override
+    public final Field<T> getIncrementBy() {
+        return incrementBy;
+    }
+
+    @Override
+    public final Field<T> getMinValue() {
+        return minValue;
+    }
+
+    @Override
+    public final Field<T> getMaxValue() {
+        return maxValue;
+    }
+
+    @Override
+    public final boolean getCycle() {
+        return cycle;
+    }
+
+    @Override
+    public final Field<T> getCache() {
+        return cache;
     }
 
     @Override

@@ -54,6 +54,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.jooq.Constraint;
+import org.jooq.CreateSequenceFlagsStep;
 import org.jooq.DDLExportConfiguration;
 import org.jooq.DDLFlag;
 import org.jooq.DSLContext;
@@ -94,9 +95,22 @@ final class DDL {
     }
 
     private final Query createSequence(Sequence<?> sequence) {
-        return configuration.createSequenceIfNotExists()
+        CreateSequenceFlagsStep result = configuration.createSequenceIfNotExists()
                     ? ctx.createSequenceIfNotExists(sequence)
                     : ctx.createSequence(sequence);
+        if (sequence.getStartWith() != null)
+            result = result.startWith(sequence.getStartWith());
+        if (sequence.getIncrementBy() != null)
+            result = result.incrementBy(sequence.getIncrementBy());
+        if (sequence.getMinValue() != null)
+            result = result.minvalue(sequence.getMinValue());
+        if (sequence.getMaxValue() != null)
+            result = result.maxvalue(sequence.getMaxValue());
+        if (sequence.getCycle())
+            result = result.cycle();
+        if (sequence.getCache() != null)
+            result = result.cache(sequence.getCache());
+        return result;
     }
 
     private final Query createTable(Table<?> table) {

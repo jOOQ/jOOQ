@@ -622,14 +622,10 @@ final class DDLInterpreter {
 
         ms.startWith = query.$startWith();
         ms.incrementBy = query.$incrementBy();
-        ms.minValue = query.$minvalue();
-        ms.noMinvalue = query.$noMinvalue();
-        ms.maxValue = query.$maxvalue();
-        ms.noMaxvalue = query.$noMaxvalue();
+        ms.minValue = query.$noMinvalue() ? null : query.$minvalue();
+        ms.maxValue = query.$noMaxvalue() ? null : query.$maxvalue();
         ms.cycle = query.$cycle();
-        ms.noCache = query.$noCycle();
-        ms.cache = query.$cache();
-        ms.noCache = query.$noCache();
+        ms.cache = query.$noCache() ? null : query.$cache();
     }
 
     private final void accept0(AlterSequenceImpl<?> query) {
@@ -1293,13 +1289,9 @@ final class DDLInterpreter {
         MutableSchema schema;
         Field<?>      startWith;
         Field<?>      incrementBy;
-        boolean       noMinvalue;
         Field<?>      minValue;
-        boolean       noMaxvalue;
         Field<?>      maxValue;
-        boolean       noCycle;
         boolean       cycle;
-        boolean       noCache;
         Field<?>      cache;
 
         MutableSequence(UnqualifiedName name, MutableSchema schema) {
@@ -1310,8 +1302,10 @@ final class DDLInterpreter {
         }
 
         private final class InterpretedSequence extends SequenceImpl<Long> {
+            @SuppressWarnings("unchecked")
             InterpretedSequence(Schema schema) {
-                super(MutableSequence.this.name, schema, BIGINT, false);
+                super(MutableSequence.this.name, schema, BIGINT, false,
+                    (Field<Long>) startWith, (Field<Long>) incrementBy, (Field<Long>) minValue, (Field<Long>) maxValue, cycle, (Field<Long>) cache);
 
                 // [#7752] TODO: Pass additional flags like START WITH to
                 //         SequenceImpl when this is ready.

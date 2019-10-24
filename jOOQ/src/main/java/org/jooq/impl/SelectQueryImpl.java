@@ -696,7 +696,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-
                 case CUBRID:
                 case MARIADB:
                 case MYSQL:
@@ -709,7 +708,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                     break;
                 }
 
-                /* [/pro] */
                 // By default, render the dialect's limit clause
                 default: {
                     toSQLReferenceLimitDefault(context);
@@ -1779,7 +1777,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
             // [#7222] [#7711] Workaround for https://issues.apache.org/jira/browse/DERBY-6984
             || (ctx.subquery() && UNION_PARENTHESIS_IN_DERIVED_TABLES.contains(ctx.family()))
-            /* [/pro] */
             ;
 
         if (')' == parenthesis) {

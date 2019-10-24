@@ -50,7 +50,9 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
  */
 public class LocaleAdapter extends XmlAdapter<String, Locale> {
 
-    private static final Pattern SIMPLE_LANGUAGE_TAG = Pattern.compile("(\\w+)(?:-(\\w+)(?:-(\\w+))?)?");
+
+
+
 
     @Override
     public Locale unmarshal(String v) throws Exception {

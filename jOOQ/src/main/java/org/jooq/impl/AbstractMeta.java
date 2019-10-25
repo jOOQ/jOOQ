@@ -57,7 +57,6 @@ import org.jooq.Named;
 // ...
 import org.jooq.Queries;
 import org.jooq.Query;
-import org.jooq.SQL;
 import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.Table;
@@ -297,22 +296,6 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     public /* non-final */ Queries ddl(DDLExportConfiguration exportConfiguration) {
         return new DDL(dsl(), exportConfiguration).queries(this);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

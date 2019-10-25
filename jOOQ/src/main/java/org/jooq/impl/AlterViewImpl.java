@@ -187,6 +187,7 @@ final class AlterViewImpl extends AbstractRowCountQuery implements
 
 
 
+
         accept1(ctx);
     }
 

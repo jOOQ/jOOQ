@@ -291,7 +291,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     //         correct results
     @Override
     public /* non-final */ Queries ddl(DDLExportConfiguration exportConfiguration) {
-        return new DDL(this, exportConfiguration).queries();
+        return new DDL(dsl(), exportConfiguration).queries(this);
     }
 
 

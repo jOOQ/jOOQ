@@ -76,13 +76,11 @@ import org.jooq.tools.StringUtils;
  */
 final class DDL {
 
-    private final Meta                   meta;
     private final DSLContext             ctx;
     private final DDLExportConfiguration configuration;
 
-    DDL(Meta meta, DDLExportConfiguration configuration) {
-        this.meta = meta;
-        this.ctx = meta.dsl();
+    DDL(DSLContext ctx, DDLExportConfiguration configuration) {
+        this.ctx = ctx;
         this.configuration = configuration;
     }
 
@@ -94,7 +92,7 @@ final class DDL {
                   .constraints(constraints);
     }
 
-    private final Query createSequence(Sequence<?> sequence) {
+    final Query createSequence(Sequence<?> sequence) {
         CreateSequenceFlagsStep result = configuration.createSequenceIfNotExists()
                     ? ctx.createSequenceIfNotExists(sequence)
                     : ctx.createSequence(sequence);
@@ -224,7 +222,7 @@ final class DDL {
         return result;
     }
 
-    final Queries queries() {
+    final Queries queries(Meta meta) {
         List<Query> queries = new ArrayList<>();
         List<Schema> schemas = sortIf(meta.getSchemas(), !configuration.respectSchemaOrder());
 

@@ -115,7 +115,7 @@ final class TableMetaImpl extends AbstractMeta {
 
     @Override
     public Queries ddl(DDLExportConfiguration exportConfiguration) throws DataAccessException {
-        return new DDL(this, exportConfiguration).queries(tables);
+        return new DDL(dsl(), exportConfiguration).queries(tables);
     }
 
     @Override

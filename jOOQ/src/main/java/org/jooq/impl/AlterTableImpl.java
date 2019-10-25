@@ -936,6 +936,13 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
 
 
+
+
+
+
+
+
+
         if (renameIndexTo != null) {
             switch (family) {
 
@@ -1625,6 +1632,20 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
             }
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

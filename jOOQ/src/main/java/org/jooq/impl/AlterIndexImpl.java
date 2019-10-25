@@ -222,8 +222,6 @@ final class AlterIndexImpl extends AbstractRowCountQuery implements
 
 
 
-
-
             default: {
                 ctx.start(ALTER_INDEX_INDEX)
                    .visit(renameIndex ? K_RENAME_INDEX : K_ALTER_INDEX);

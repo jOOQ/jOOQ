@@ -59,6 +59,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.jooq.exception.DataAccessException;
+import org.jooq.impl.DSL;
 import org.jooq.util.xml.jaxb.InformationSchema;
 
 /**
@@ -219,6 +220,40 @@ public interface Meta extends Scope {
      *             objects
      */
     Queries ddl(DDLExportConfiguration configuration) throws DataAccessException;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

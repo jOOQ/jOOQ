@@ -71,42 +71,48 @@ public interface Sequence<T extends Number> extends Named {
     Catalog getCatalog();
 
     /**
-     * Get the sequence schema
+     * Get the sequence schema.
      */
     Schema getSchema();
 
     /**
-     * Get the sequence data type
+     * Get the sequence data type.
      */
     DataType<T> getDataType();
 
     /**
-     * Get the start value for this sequence
+     * Get the start value for this sequence or <code>null</code>, if no such
+     * value is specified.
      */
     Field<T> getStartWith();
 
     /**
-     * Get the increment for this sequence
+     * Get the increment for this sequence or <code>null</code>, if no such
+     * value is specified.
      */
     Field<T> getIncrementBy();
 
     /**
-     * Get the minimum value for this sequence
+     * Get the minimum value for this sequence or <code>null</code>, if no such
+     * value is specified.
      */
     Field<T> getMinValue();
 
     /**
-     * Get the maximum value for this sequence
+     * Get the maximum value for this sequence or <code>null</code>, if no such
+     * value is specified.
      */
     Field<T> getMaxValue();
 
     /**
-     * Returns {@code true} if this sequence cycles when it reaches {@link #getMaxValue()}
+     * Returns {@code true} if this sequence cycles to {@link #getMinValue()}
+     * when it reaches {@link #getMaxValue()}.
      */
     boolean getCycle();
 
     /**
-     * Get the number of sequence values to cache for this sequence
+     * Get the number of sequence values to cache for this sequence or
+     * <code>null</code>, if no such value is specified.
      */
     Field<T> getCache();
 

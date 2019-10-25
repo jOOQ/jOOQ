@@ -1722,6 +1722,8 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
 
 
+
+
     private final void alterColumnTypeAndNullabilityInBlock(Context<?> ctx) {
         begin(ctx);
 

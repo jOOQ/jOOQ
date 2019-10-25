@@ -946,6 +946,12 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
 
 
+
+
+
+
+
+
                 case MYSQL:
                     break;
 

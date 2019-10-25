@@ -300,6 +300,15 @@ public interface DSLContext extends Scope , AutoCloseable  {
     /**
      * Create meta data from a set of sources.
      * <p>
+     * This is convenience for wrapping all argument {@link String}s in
+     * {@link Source}. The same set of content types are supported as in
+     * {@link #meta(Source...)}.
+     */
+    Meta meta(String... sources);
+
+    /**
+     * Create meta data from a set of sources.
+     * <p>
      * This method creates a {@link Meta} representation from a set of source
      * content, which can be any of:
      * <ul>

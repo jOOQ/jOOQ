@@ -440,6 +440,16 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
+    public Meta meta(String... sources) {
+        Source[] s = new Source[sources.length];
+
+        for (int i = 0; i < s.length; i++)
+            s[i] = Source.of(sources[i]);
+
+        return new SourceMetaProvider(configuration(), s).provide();
+    }
+
+    @Override
     public Meta meta(Source... sources) {
         return new SourceMetaProvider(configuration(), sources).provide();
     }

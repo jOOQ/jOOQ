@@ -55,6 +55,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.List;
 
 import org.jooq.exception.DataAccessException;
@@ -218,6 +219,24 @@ public interface Meta extends Scope {
      *             objects
      */
     Queries ddl(DDLExportConfiguration configuration) throws DataAccessException;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

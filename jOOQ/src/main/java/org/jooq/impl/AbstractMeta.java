@@ -41,6 +41,7 @@ import static org.jooq.impl.DSL.name;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -54,6 +55,7 @@ import org.jooq.Meta;
 import org.jooq.Name;
 import org.jooq.Named;
 import org.jooq.Queries;
+import org.jooq.Query;
 import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.Table;
@@ -293,6 +295,16 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     public /* non-final */ Queries ddl(DDLExportConfiguration exportConfiguration) {
         return new DDL(dsl(), exportConfiguration).queries(this);
     }
+
+
+
+
+
+
+
+
+
+
 
 
 

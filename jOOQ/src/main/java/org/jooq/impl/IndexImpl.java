@@ -51,7 +51,6 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 
 import java.util.Arrays;
-import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 
@@ -73,9 +72,6 @@ class IndexImpl extends AbstractNamed implements Index {
      * Generated UID
      */
     private static final long                serialVersionUID               = -5253463940194393996L;
-
-    // [#8723] TODO: Specify the dialects that require table qualification once they're known.
-    private static final EnumSet<SQLDialect> REQUIRE_TABLE_QUALIFICATION    = EnumSet.noneOf(SQLDialect.class);
     private static final Set<SQLDialect>     NO_SUPPORT_INDEX_QUALIFICATION = SQLDialect.supported(MARIADB, MYSQL, POSTGRES);
 
     private final Table<?>                   table;
@@ -103,10 +99,8 @@ class IndexImpl extends AbstractNamed implements Index {
     public final void accept(Context<?> ctx) {
         if (NO_SUPPORT_INDEX_QUALIFICATION.contains(ctx.family()))
             ctx.visit(getUnqualifiedName());
-        else if (REQUIRE_TABLE_QUALIFICATION.contains(ctx.family()))
-            ctx.visit(getQualifiedName());
         else if (getTable() == null)
-            ctx.visit(getUnqualifiedName());
+            ctx.visit(getQualifiedName());
         else
             ctx.visit(name(getTable().getQualifiedName().qualifier(), getUnqualifiedName()));
     }

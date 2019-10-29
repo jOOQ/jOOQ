@@ -105,6 +105,12 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractNamed implements UD
         return schema;
     }
 
+    @Override
+    public /* non-final */ Name getQualifiedName() {
+        Schema s = getSchema();
+        return s == null ? super.getQualifiedName() : s.getQualifiedName().append(getUnqualifiedName());
+    }
+
 
 
 

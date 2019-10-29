@@ -222,6 +222,9 @@ final class DetachedMeta extends AbstractMeta {
         }
 
         final void resolveReferences(Meta meta) {
+
+            // TODO: Is there a better way than temporarily keeping the wrong
+            //       ReferenceImpl in this list until we "know better"?
             for (int i = 0; i < references.size(); i++) {
                 ForeignKey<R, ?> ref = references.get(i);
                 Name name = ref.getKey().getTable().getQualifiedName();

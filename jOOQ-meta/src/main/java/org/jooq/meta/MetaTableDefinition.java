@@ -36,7 +36,7 @@
  *
  */
 
-package org.jooq.meta.jdbc;
+package org.jooq.meta;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -45,21 +45,15 @@ import java.util.List;
 import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Table;
-import org.jooq.meta.AbstractTableDefinition;
-import org.jooq.meta.ColumnDefinition;
-import org.jooq.meta.DataTypeDefinition;
-import org.jooq.meta.DefaultColumnDefinition;
-import org.jooq.meta.DefaultDataTypeDefinition;
-import org.jooq.meta.SchemaDefinition;
 
 /**
  * @author Lukas Eder
  */
-public class JDBCTableDefinition extends AbstractTableDefinition {
+public class MetaTableDefinition extends AbstractTableDefinition {
 
 	private final Table<?> table;
 
-    public JDBCTableDefinition(SchemaDefinition schema, Table<?> table) {
+    public MetaTableDefinition(SchemaDefinition schema, Table<?> table) {
 		super(schema, table.getName(), "");
 
 		this.table = table;

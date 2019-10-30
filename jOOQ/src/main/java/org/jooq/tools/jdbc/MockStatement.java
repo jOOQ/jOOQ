@@ -844,18 +844,26 @@ public class MockStatement extends JDBC41Statement implements CallableStatement 
     }
 
     // -------------------------------------------------------------------------
-    // XXX: Unsupported operations
+    // XXX: Unwrapping
     // -------------------------------------------------------------------------
 
+    @SuppressWarnings("unchecked")
     @Override
     public <T> T unwrap(Class<T> iface) throws SQLException {
-        throw new SQLFeatureNotSupportedException("Unsupported Operation");
+        if (isWrapperFor(iface))
+            return (T) this;
+        else
+            throw new SQLException("MockStatement does not implement " + iface);
     }
 
     @Override
     public boolean isWrapperFor(Class<?> iface) throws SQLException {
-        throw new SQLFeatureNotSupportedException("Unsupported Operation");
+        return iface.isInstance(this);
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: Unsupported operations
+    // -------------------------------------------------------------------------
 
     @Override
     public ParameterMetaData getParameterMetaData() throws SQLException {

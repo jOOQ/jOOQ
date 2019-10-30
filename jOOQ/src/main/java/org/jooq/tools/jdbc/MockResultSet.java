@@ -98,17 +98,21 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
     }
 
     // -------------------------------------------------------------------------
-    // XXX: Unsupported implementations
+    // XXX: Unwrapping
     // -------------------------------------------------------------------------
 
+    @SuppressWarnings("unchecked")
     @Override
     public <T> T unwrap(Class<T> iface) throws SQLException {
-        return null;
+        if (isWrapperFor(iface))
+            return (T) this;
+        else
+            throw new SQLException("MockResultSet does not implement " + iface);
     }
 
     @Override
     public boolean isWrapperFor(Class<?> iface) throws SQLException {
-        return false;
+        return iface.isInstance(this);
     }
 
     // -------------------------------------------------------------------------

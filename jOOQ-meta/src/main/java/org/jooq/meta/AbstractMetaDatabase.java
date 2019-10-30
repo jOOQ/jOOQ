@@ -48,7 +48,6 @@ import org.jooq.Catalog;
 import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Meta;
-import org.jooq.MetaProvider;
 import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.Table;
@@ -67,15 +66,7 @@ public abstract class AbstractMetaDatabase extends AbstractDatabase {
 
     @Override
     protected DSLContext create0() {
-        DSLContext ctx = DSL.using(getConnection());
-        ctx.configuration().set(new MetaProvider() {
-            @Override
-            public Meta provide() {
-                return AbstractMetaDatabase.this.getMeta0();
-            }
-        });
-
-        return ctx;
+        return DSL.using(getConnection());
     }
 
     abstract protected Meta getMeta0();

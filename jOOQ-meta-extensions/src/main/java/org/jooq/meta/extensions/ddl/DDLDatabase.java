@@ -42,7 +42,7 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.tools.StringUtils.isBlank;
 
 import java.io.File;
-import java.io.InputStream;
+import java.io.Reader;
 import java.sql.SQLException;
 import java.util.Comparator;
 import java.util.Scanner;
@@ -55,6 +55,7 @@ import org.jooq.Name.Quoted;
 import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.ResultQuery;
+import org.jooq.Source;
 import org.jooq.VisitContext;
 import org.jooq.conf.ParseUnknownFunctions;
 import org.jooq.conf.Settings;
@@ -66,6 +67,7 @@ import org.jooq.meta.extensions.AbstractInterpretingDatabase;
 import org.jooq.meta.tools.FilePattern;
 import org.jooq.meta.tools.FilePattern.Loader;
 import org.jooq.tools.JooqLogger;
+import org.jooq.tools.jdbc.JDBCUtils;
 
 import org.h2.api.ErrorCode;
 
@@ -146,8 +148,8 @@ public class DDLDatabase extends AbstractInterpretingDatabase {
 
             FilePattern.load(encoding, scripts, fileComparator, new Loader() {
                 @Override
-                public void load(String e, InputStream in) {
-                    DDLDatabase.this.load(ctx, e, in);
+                public void load(Source source) {
+                    DDLDatabase.this.load(ctx, source);
                 }
             });
         }
@@ -157,9 +159,11 @@ public class DDLDatabase extends AbstractInterpretingDatabase {
         }
     }
 
-    private void load(DSLContext ctx, String encoding, InputStream in) {
+    private void load(DSLContext ctx, Source source) {
+        Reader r = null;
+
         try {
-            Scanner s = new Scanner(in, encoding).useDelimiter("\\A");
+            Scanner s = new Scanner(r = source.reader()).useDelimiter("\\A");
             Queries queries = ctx.parser().parse(s.hasNext() ? s.next() : "");
 
             for (Query query : queries) {
@@ -214,11 +218,7 @@ public class DDLDatabase extends AbstractInterpretingDatabase {
             throw e;
         }
         finally {
-            if (in != null)
-                try {
-                    in.close();
-                }
-                catch (Exception ignore) {}
+            JDBCUtils.safeClose(r);
         }
     }
 }

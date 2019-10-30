@@ -45,10 +45,10 @@ import static org.jooq.tools.StringUtils.isBlank;
 import static org.jooq.util.xml.jaxb.TableConstraintType.PRIMARY_KEY;
 import static org.jooq.util.xml.jaxb.TableConstraintType.UNIQUE;
 
-import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
@@ -78,6 +78,7 @@ import org.jooq.DSLContext;
 import org.jooq.Name;
 import org.jooq.SQLDialect;
 import org.jooq.SortOrder;
+import org.jooq.Source;
 import org.jooq.impl.DSL;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
@@ -103,6 +104,7 @@ import org.jooq.meta.tools.FilePattern;
 import org.jooq.meta.tools.FilePattern.Loader;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
+import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.util.jaxb.tools.MiniJAXB;
 import org.jooq.util.xml.jaxb.Index;
 import org.jooq.util.xml.jaxb.IndexColumnUsage;
@@ -150,60 +152,60 @@ public class XMLDatabase extends AbstractDatabase {
             try {
                 FilePattern.load("UTF-8", xml, FilePattern.fileComparator(sort), new Loader() {
                     @Override
-                    public void load(String enc, InputStream in) throws Exception {
+                    public void load(Source source) throws Exception {
                         String content;
+                        Reader reader = null;
 
-                        if (StringUtils.isBlank(xsl)) {
-                            byte[] bytes = bytes(in);
+                        try {
+                            if (StringUtils.isBlank(xsl)) {
 
-                            // [#7414] Default to reading UTF-8
-                            content = new String(bytes, "UTF-8");
+                                // [#7414] Default to reading UTF-8
+                                content = string(reader = source.reader());
 
-                            // [#7414] Alternatively, read the encoding from the XML file
-                            try {
-                                XMLStreamReader reader = XMLInputFactory.newInstance().createXMLStreamReader(new StringReader(content));
-                                String encoding = reader.getCharacterEncodingScheme();
+                                // [#7414] Alternatively, read the encoding from the XML file
+                                try {
+                                    XMLStreamReader xmlReader = XMLInputFactory.newInstance().createXMLStreamReader(new StringReader(content));
+                                    String encoding = xmlReader.getCharacterEncodingScheme();
 
-                                // Returned encoding can be null in the presence of a BOM
-                                // See https://stackoverflow.com/a/27147259/521799
-                                if (encoding != null && !"UTF-8".equals(encoding))
-                                    content = new String(bytes, encoding);
-                            }
-                            catch (XMLStreamException e) {
-                                log.warn("Could not open XML Stream: " + e.getMessage());
-                            }
-                            catch (UnsupportedEncodingException e) {
-                                log.warn("Unsupported encoding: " + e.getMessage());
-                            }
-                        }
-                        else {
-                            InputStream xslIs = null;
-
-                            try {
-                                log.info("Using XSL file", xsl);
-
-                                xslIs = XMLDatabase.class.getResourceAsStream(xsl);
-                                if (xslIs == null)
-                                    xslIs = new FileInputStream(xsl);
-
-                                StringWriter writer = new StringWriter();
-                                TransformerFactory factory = TransformerFactory.newInstance();
-                                Transformer transformer = factory.newTransformer(new StreamSource(xslIs));
-
-                                transformer.transform(new StreamSource(in), new StreamResult(writer));
-                                content = writer.getBuffer().toString();
-                            }
-                            catch (TransformerException e) {
-                                throw new RuntimeException("Error while transforming XML file " + xml + " with XSL file " + xsl, e);
-                            }
-                            finally {
-                                if (xslIs != null) {
-                                    try {
-                                        xslIs.close();
-                                    }
-                                    catch (Exception ignore) {}
+                                    // Returned encoding can be null in the presence of a BOM
+                                    // See https://stackoverflow.com/a/27147259/521799
+                                    if (encoding != null && !"UTF-8".equals(encoding))
+                                        content = new String(content.getBytes("UTF-8"), encoding);
+                                }
+                                catch (XMLStreamException e) {
+                                    log.warn("Could not open XML Stream: " + e.getMessage());
+                                }
+                                catch (UnsupportedEncodingException e) {
+                                    log.warn("Unsupported encoding: " + e.getMessage());
                                 }
                             }
+                            else {
+                                InputStream xslIs = null;
+
+                                try {
+                                    log.info("Using XSL file", xsl);
+
+                                    xslIs = XMLDatabase.class.getResourceAsStream(xsl);
+                                    if (xslIs == null)
+                                        xslIs = new FileInputStream(xsl);
+
+                                    StringWriter writer = new StringWriter();
+                                    TransformerFactory factory = TransformerFactory.newInstance();
+                                    Transformer transformer = factory.newTransformer(new StreamSource(xslIs));
+
+                                    transformer.transform(new StreamSource(reader), new StreamResult(writer));
+                                    content = writer.getBuffer().toString();
+                                }
+                                catch (TransformerException e) {
+                                    throw new RuntimeException("Error while transforming XML file " + xml + " with XSL file " + xsl, e);
+                                }
+                                finally {
+                                    JDBCUtils.safeClose(xslIs);
+                                }
+                            }
+                        }
+                        finally {
+                            JDBCUtils.safeClose(reader);
                         }
 
                         // TODO [#1201] Add better error handling here
@@ -218,15 +220,15 @@ public class XMLDatabase extends AbstractDatabase {
                         info = MiniJAXB.append(info, MiniJAXB.unmarshal(content, InformationSchema.class));
                     }
 
-                    private byte[] bytes(InputStream in) throws IOException {
-                        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                    private String string(Reader reader) throws IOException {
+                        StringWriter writer = new StringWriter();
                         int read;
-                        byte[] buffer = new byte[16384];
+                        char[] buffer = new char[16384];
 
-                        while ((read = in.read(buffer, 0, buffer.length)) != -1)
-                            bos.write(buffer, 0, read);
+                        while ((read = reader.read(buffer, 0, buffer.length)) != -1)
+                            writer.write(buffer, 0, read);
 
-                        return bos.toByteArray();
+                        return writer.toString();
                     }
                 });
             }

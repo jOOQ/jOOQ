@@ -183,7 +183,7 @@ public abstract class AbstractMetaDatabase extends AbstractDatabase {
 
             if (sd != null)
                 for (Table<?> table : schema.getTables())
-                    result.add(new MetaTableDefinition(sd, table));
+                    result.add(new DefaultMetaTableDefinition(sd, table));
         }
 
         return result;

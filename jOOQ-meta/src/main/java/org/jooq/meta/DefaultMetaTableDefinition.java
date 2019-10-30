@@ -49,21 +49,21 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-public class MetaTableDefinition extends AbstractTableDefinition {
+public class DefaultMetaTableDefinition extends AbstractTableDefinition {
 
-	private final Table<?> table;
+    private final Table<?> table;
 
-    public MetaTableDefinition(SchemaDefinition schema, Table<?> table) {
-		super(schema, table.getName(), "");
+    public DefaultMetaTableDefinition(SchemaDefinition schema, Table<?> table) {
+        super(schema, table.getName(), "");
 
-		this.table = table;
-	}
+        this.table = table;
+    }
 
-	@Override
-	public List<ColumnDefinition> getElements0() throws SQLException {
-		List<ColumnDefinition> result = new ArrayList<>();
+    @Override
+    public List<ColumnDefinition> getElements0() throws SQLException {
+        List<ColumnDefinition> result = new ArrayList<>();
 
-		int ordinal = 0;
+        int ordinal = 0;
         for (Field<?> field : table.fields()) {
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
@@ -77,20 +77,20 @@ public class MetaTableDefinition extends AbstractTableDefinition {
                 (Name) null
             );
 
-			ColumnDefinition column = new DefaultColumnDefinition(
-			    getDatabase().getTable(getSchema(), getName()),
-			    field.getName(),
-			    ordinal,
-			    type,
-			    false,
-			    null
-		    );
+            ColumnDefinition column = new DefaultColumnDefinition(
+                getDatabase().getTable(getSchema(), getName()),
+                field.getName(),
+                ordinal,
+                type,
+                false,
+                null
+            );
 
-			result.add(column);
+            result.add(column);
 
-			ordinal++;
-		}
+            ordinal++;
+        }
 
-		return result;
-	}
+        return result;
+    }
 }

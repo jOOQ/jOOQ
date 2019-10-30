@@ -60,6 +60,7 @@ import org.jooq.Name;
 import org.jooq.Name.Quoted;
 import org.jooq.Queries;
 import org.jooq.Query;
+import org.jooq.ResultQuery;
 import org.jooq.Source;
 import org.jooq.VisitContext;
 import org.jooq.conf.RenderNameCase;
@@ -189,9 +190,10 @@ final class DDLMetaProvider implements MetaProvider {
          * @see Settings#getParseIgnoreCommentStop()
          */
         private final void loadScript(Source source) {
-            Reader reader = source.reader();
+            Reader r = null;
+
             try {
-                Scanner s = new Scanner(reader).useDelimiter("\\A");
+                Scanner s = new Scanner(r = source.reader()).useDelimiter("\\A");
                 Queries queries = ctx.parser().parse(s.hasNext() ? s.next() : "");
 
                 for (Query query : queries) {
@@ -199,8 +201,13 @@ final class DDLMetaProvider implements MetaProvider {
                     repeat:
                     for (;;) {
                         try {
-                            query.execute();
                             log.info(query);
+
+                            if (query instanceof ResultQuery)
+                                log.info("\n" + ((ResultQuery<?>) query).fetch());
+                            else
+                                log.info("Update count: " + query.execute());
+
                             break repeat;
                         }
                         catch (DataAccessException e) {
@@ -226,17 +233,22 @@ final class DDLMetaProvider implements MetaProvider {
                     }
                 }
             }
-            catch (ParserException e) {
-                log.error("An exception occurred while parsing a DDL script: " + e.getMessage()
-                    + ". Please report this error to https://github.com/jOOQ/jOOQ/issues/new", e);
+            catch (DataAccessException e) {
+
+                // [#9138] Make users aware of the new parse ignore comment syntax
+                log.error("DDL interpretation", "Your SQL string could not be parsed or interpreted. This may have a variety of reasons, including:\n"
+                    + "- The jOOQ parser doesn't understand your SQL\n"
+                    + "- The jOOQ DDL interpretation logic (translating to H2) cannot simulate your SQL\n"
+                    + "\n"
+                    + "If you think this is a bug or a feature worth requesting, please report it here: https://github.com/jOOQ/jOOQ/issues/new/choose\n"
+                    + "\n"
+                    + "As a workaround, you can use the Settings.parseIgnoreComments syntax documented here:\n"
+                    + "https://www.jooq.org/doc/latest/manual/sql-building/dsl-context/custom-settings/settings-parser/");
+
                 throw e;
             }
             finally {
-                if (reader != null)
-                    try {
-                        reader.close();
-                    }
-                    catch (Exception ignore) {}
+                JDBCUtils.safeClose(r);
             }
         }
     }

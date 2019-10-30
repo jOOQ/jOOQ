@@ -68,6 +68,7 @@ public interface LoaderSourceStep<R extends Record> {
      * {@link DataType} via {@link DataType#convert(Object)}. The matching is
      * similar to that of {@link Record#fromArray(Object[], Field...)}.
      */
+    @Support
     LoaderRowsStep<R> loadArrays(Object[]... arrays);
 
     /**
@@ -79,6 +80,7 @@ public interface LoaderSourceStep<R extends Record> {
      * @see #loadArrays(Object[][])
      * @see Record#fromArray(Object[], Field...)
      */
+    @Support
     LoaderRowsStep<R> loadArrays(Iterable<? extends Object[]> arrays);
 
     /**
@@ -90,6 +92,7 @@ public interface LoaderSourceStep<R extends Record> {
      * @see #loadArrays(Object[][])
      * @see Record#fromArray(Object[], Field...)
      */
+    @Support
     LoaderRowsStep<R> loadArrays(Iterator<? extends Object[]> arrays);
 
 
@@ -103,6 +106,7 @@ public interface LoaderSourceStep<R extends Record> {
      * @see #loadArrays(Object[][])
      * @see Record#fromArray(Object[], Field...)
      */
+    @Support
     LoaderRowsStep<R> loadArrays(Stream<? extends Object[]> arrays);
 
 
@@ -110,6 +114,7 @@ public interface LoaderSourceStep<R extends Record> {
     /**
      * Load in-memory data.
      */
+    @Support
     LoaderRowsStep<R> loadRecords(Record... records);
 
     /**
@@ -117,6 +122,7 @@ public interface LoaderSourceStep<R extends Record> {
      *
      * @see #loadRecords(Record...)
      */
+    @Support
     LoaderRowsStep<R> loadRecords(Iterable<? extends Record> records);
 
     /**
@@ -124,6 +130,7 @@ public interface LoaderSourceStep<R extends Record> {
      *
      * @see #loadRecords(Record...)
      */
+    @Support
     LoaderRowsStep<R> loadRecords(Iterator<? extends Record> records);
 
 
@@ -133,6 +140,7 @@ public interface LoaderSourceStep<R extends Record> {
      *
      * @see #loadRecords(Record...)
      */
+    @Support
     LoaderRowsStep<R> loadRecords(Stream<? extends Record> records);
 
 

@@ -8017,6 +8017,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see java.sql.Statement#executeBatch()
      */
     @Support
+    @PlainSQL
     Batch batch(String... queries);
 
     /**
@@ -8084,6 +8085,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see java.sql.Statement#executeBatch()
      */
     @Support
+    @PlainSQL
     BatchBindStep batch(String sql);
 
     /**
@@ -8115,6 +8117,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * @see java.sql.Statement#executeBatch()
      */
     @Support
+    @PlainSQL
     Batch batch(String sql, Object[]... bindings);
 
     /**

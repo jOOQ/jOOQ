@@ -2185,7 +2185,9 @@ final class ParserImpl implements Parser {
     private static final Query parseAlter(ParserContext ctx) {
         parseKeyword(ctx, "ALTER");
 
-        if (parseKeywordIf(ctx, "DOMAIN"))
+        if (parseKeywordIf(ctx, "DATABASE"))
+            return parseAlterDatabase(ctx);
+        else if (parseKeywordIf(ctx, "DOMAIN"))
             return parseAlterDomain(ctx);
         else if (parseKeywordIf(ctx, "INDEX"))
             return parseAlterIndex(ctx);
@@ -4213,6 +4215,33 @@ final class ParserImpl implements Parser {
             : ctx.dsl.createSchema(schemaName);
     }
 
+    private static final DDLQuery parseAlterDatabase(ParserContext ctx) {
+        parseSchemaName(ctx);
+        parseAlterDatabaseFlags(ctx, true);
+        return IGNORE;
+    }
+
+    private static final boolean parseAlterDatabaseFlags(ParserContext ctx, boolean throwOnFail) {
+        parseKeywordIf(ctx, "DEFAULT");
+
+        if (parseCharacterSetSpecificationIf(ctx) != null)
+            return true;
+
+        if (parseCollateSpecificationIf(ctx) != null)
+            return true;
+
+        if (parseKeywordIf(ctx, "ENCRYPTION")) {
+            parseIf(ctx, '=');
+            parseStringLiteral(ctx);
+            return true;
+        }
+
+        if (throwOnFail)
+            throw ctx.expected("CHARACTER SET", "COLLATE", "DEFAULT ENCRYPTION");
+        else
+            return false;
+    }
+
     private static final DDLQuery parseAlterSchema(ParserContext ctx) {
         boolean ifExists = parseKeywordIf(ctx, "IF EXISTS");
         Schema schemaName = parseSchemaName(ctx);
@@ -4231,6 +4260,8 @@ final class ParserImpl implements Parser {
             parseUser(ctx);
             return IGNORE;
         }
+        else if (parseAlterDatabaseFlags(ctx, false))
+            return IGNORE;
         else
             throw ctx.expected("OWNER TO", "RENAME TO");
     }
@@ -9405,13 +9436,33 @@ final class ParserImpl implements Parser {
     }
 
     private static final DataType<?> parseDataTypeCollation(ParserContext ctx, DataType<?> result) {
-        if (parseKeywordIf(ctx, "CHARACTER SET") || parseKeywordIf(ctx, "CHARSET"))
-            result = result.characterSet(parseCharacterSet(ctx));
+        CharacterSet cs = parseCharacterSetSpecificationIf(ctx);
+        if (cs != null)
+            result = result.characterSet(cs);
 
-        if (parseKeywordIf(ctx, "COLLATE"))
-            result = result.collation(parseCollation(ctx));
+        Collation col = parseCollateSpecificationIf(ctx);
+        if (col != null)
+            result = result.collation(col);
 
         return result;
+    }
+
+    private static final CharacterSet parseCharacterSetSpecificationIf(ParserContext ctx) {
+        if (parseKeywordIf(ctx, "CHARACTER SET") || parseKeywordIf(ctx, "CHARSET")) {
+            parseIf(ctx, '=');
+            return parseCharacterSet(ctx);
+        }
+
+        return null;
+    }
+
+    private static final Collation parseCollateSpecificationIf(ParserContext ctx) {
+        if (parseKeywordIf(ctx, "COLLATE")) {
+            parseIf(ctx, '=');
+            return parseCollation(ctx);
+        }
+
+        return null;
     }
 
     private static final DataType<?> parseAndIgnoreDataTypePrecisionScale(ParserContext ctx, DataType<?> result) {

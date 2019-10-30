@@ -37,18 +37,15 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.SQLDialect.H2;
 import static org.jooq.conf.SettingsTools.renderLocale;
 import static org.jooq.impl.DSL.name;
 
+import java.io.Closeable;
 import java.io.Reader;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Locale;
-import java.util.Properties;
 import java.util.Scanner;
-import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -91,35 +88,33 @@ final class DDLMetaProvider implements MetaProvider {
 
     @Override
     public Meta provide() {
-        Connection connection = null;
+        DDLDatabaseInitializer initializer = null;
 
         try {
-            DDLDatabaseInitializer initializer = new DDLDatabaseInitializer(configuration.settings());
+            initializer = new DDLDatabaseInitializer();
 
             for (Source script : scripts)
                 initializer.loadScript(script);
 
             return DetachedMeta.detach(new DefaultMetaProvider(
-                configuration.derive().set(initializer.connection).set(H2)
+                configuration.derive().set(initializer.connection).set(configuration.settings().getInterpreterDialect())
             ));
         }
         finally {
-            JDBCUtils.safeClose(connection);
+            JDBCUtils.safeClose(initializer);
         }
     }
 
-    static final class DDLDatabaseInitializer {
+    final class DDLDatabaseInitializer implements Closeable {
+        private Connection connection;
+        private DSLContext ctx;
 
-        private Connection           connection;
-        private DSLContext           ctx;
-
-        private DDLDatabaseInitializer(final Settings settings) {
+        private DDLDatabaseInitializer() {
             try {
-                Properties info = new Properties();
-                info.put("user", "sa");
-                info.put("password", "");
-                connection = DriverManager.getConnection("jdbc:h2:mem:jooq-extensions-" + UUID.randomUUID(), info);
-                ctx = DSL.using(connection, settings);
+                Settings settings = configuration.settings();
+
+                connection = configuration.interpreterConnectionProvider().acquire();
+                ctx = DSL.using(connection, settings.getInterpreterDialect(), settings);
 
                 // [#7771] [#8011] Ignore all parsed storage clauses when executing the statements
                 ctx.data("org.jooq.ddl.ignore-storage-clauses", true);
@@ -167,11 +162,6 @@ final class DDLMetaProvider implements MetaProvider {
                         }
                     });
                 }
-            }
-            catch (SQLException e) {
-                if ("08001".equals(e.getSQLState()))
-                    throw new DataAccessException("The h2.jar was not found on the classpath, which is required for this internal feature", e);
-                throw new DataAccessException("Error while exporting schema", e);
             }
             catch (Exception e) {
                 throw new DataAccessException("Error while exporting schema", e);
@@ -250,6 +240,11 @@ final class DDLMetaProvider implements MetaProvider {
             finally {
                 JDBCUtils.safeClose(r);
             }
+        }
+
+        @Override
+        public void close() {
+            configuration.interpreterConnectionProvider().release(connection);
         }
     }
 }

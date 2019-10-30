@@ -261,6 +261,14 @@ public interface Configuration extends Serializable {
     ConnectionProvider connectionProvider();
 
     /**
+     * Get this configuration's underlying interpreter connection provider,
+     * which provides connections for DDL interpretation.
+     *
+     * @see DSLContext#meta(Source...)
+     */
+    ConnectionProvider interpreterConnectionProvider();
+
+    /**
      * Get this configuration's underlying meta provider.
      */
     MetaProvider metaProvider();

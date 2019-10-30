@@ -109,6 +109,7 @@ public class DefaultConfiguration implements Configuration {
 
     // These objects may be user defined and thus not necessarily serialisable
     private transient ConnectionProvider                connectionProvider;
+    private transient ConnectionProvider                interpreterConnectionProvider;
     private transient MetaProvider                      metaProvider;
     private transient ExecutorProvider                  executorProvider;
     private transient TransactionProvider               transactionProvider;
@@ -189,6 +190,7 @@ public class DefaultConfiguration implements Configuration {
     DefaultConfiguration(DefaultConfiguration configuration) {
         this(
             configuration.connectionProvider,
+            configuration.interpreterConnectionProvider,
             configuration.metaProvider,
             configuration.executorProvider,
             configuration.transactionProvider,
@@ -650,7 +652,6 @@ public class DefaultConfiguration implements Configuration {
         );
     }
 
-
     /**
      * Create the actual configuration object.
      * <p>
@@ -658,7 +659,14 @@ public class DefaultConfiguration implements Configuration {
      * configuration properties in the future, without breaking client code.
      * Consider creating a configuration by chaining calls to various
      * <code>derive()</code> methods.
+     *
+     * @deprecated Use
+     *             {@link #DefaultConfiguration(ConnectionProvider, ConnectionProvider, ExecutorProvider, TransactionProvider, RecordMapperProvider, RecordUnmapperProvider, RecordListenerProvider[], ExecuteListenerProvider[], VisitListenerProvider[], TransactionListenerProvider[], DiagnosticsListenerProvider[], UnwrapperProvider, ConverterProvider, SQLDialect, Settings, Map)}
+     *             instead. This constructor is maintained to provide jOOQ 3.2,
+     *             3.3, 3.7, 3.8, 3.9, 3.10, 3.11, 3.12 backwards-compatibility if
+     *             called with reflection from Spring configurations.
      */
+    @Deprecated
     DefaultConfiguration(
         ConnectionProvider connectionProvider,
         MetaProvider metaProvider,
@@ -680,7 +688,62 @@ public class DefaultConfiguration implements Configuration {
         Settings settings,
         Map<Object, Object> data)
     {
+        this(
+            connectionProvider,
+            null,
+            metaProvider,
+            executorProvider,
+            transactionProvider,
+            recordMapperProvider,
+            recordUnmapperProvider,
+            recordListenerProviders,
+            executeListenerProviders,
+            visitListenerProviders,
+            transactionListenerProviders,
+            diagnosticsListenerProviders,
+            unwrapperProvider,
+            converterProvider,
+
+            clock,
+
+            dialect,
+            settings,
+            data
+        );
+    }
+
+    /**
+     * Create the actual configuration object.
+     * <p>
+     * This constructor has been made package-private to allow for adding new
+     * configuration properties in the future, without breaking client code.
+     * Consider creating a configuration by chaining calls to various
+     * <code>derive()</code> methods.
+     */
+    DefaultConfiguration(
+        ConnectionProvider connectionProvider,
+        ConnectionProvider interpreterConnectionProvider,
+        MetaProvider metaProvider,
+        ExecutorProvider executorProvider,
+        TransactionProvider transactionProvider,
+        RecordMapperProvider recordMapperProvider,
+        RecordUnmapperProvider recordUnmapperProvider,
+        RecordListenerProvider[] recordListenerProviders,
+        ExecuteListenerProvider[] executeListenerProviders,
+        VisitListenerProvider[] visitListenerProviders,
+        TransactionListenerProvider[] transactionListenerProviders,
+        DiagnosticsListenerProvider[] diagnosticsListenerProviders,
+        UnwrapperProvider unwrapperProvider,
+        ConverterProvider converterProvider,
+
+        Clock clock,
+
+        SQLDialect dialect,
+        Settings settings,
+        Map<Object, Object> data)
+    {
         set(connectionProvider);
+        setInterpreterConnectionProvider(interpreterConnectionProvider);
         set(metaProvider);
         set(executorProvider);
         set(transactionProvider);
@@ -736,6 +799,7 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration derive(ConnectionProvider newConnectionProvider) {
         return new DefaultConfiguration(
             newConnectionProvider,
+            interpreterConnectionProvider,
             metaProvider,
             executorProvider,
             transactionProvider,
@@ -761,6 +825,7 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration derive(MetaProvider newMetaProvider) {
         return new DefaultConfiguration(
             connectionProvider,
+            interpreterConnectionProvider,
             newMetaProvider,
             executorProvider,
             transactionProvider,
@@ -791,6 +856,7 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration derive(ExecutorProvider newExecutorProvider) {
         return new DefaultConfiguration(
             connectionProvider,
+            interpreterConnectionProvider,
             metaProvider,
             newExecutorProvider,
             transactionProvider,
@@ -816,6 +882,7 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration derive(TransactionProvider newTransactionProvider) {
         return new DefaultConfiguration(
             connectionProvider,
+            interpreterConnectionProvider,
             metaProvider,
             executorProvider,
             newTransactionProvider,
@@ -846,6 +913,7 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration derive(RecordMapperProvider newRecordMapperProvider) {
         return new DefaultConfiguration(
             connectionProvider,
+            interpreterConnectionProvider,
             metaProvider,
             executorProvider,
             transactionProvider,
@@ -876,6 +944,7 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration derive(RecordUnmapperProvider newRecordUnmapperProvider) {
         return new DefaultConfiguration(
             connectionProvider,
+            interpreterConnectionProvider,
             metaProvider,
             executorProvider,
             transactionProvider,
@@ -906,6 +975,7 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration derive(RecordListenerProvider... newRecordListenerProviders) {
         return new DefaultConfiguration(
             connectionProvider,
+            interpreterConnectionProvider,
             metaProvider,
             executorProvider,
             transactionProvider,
@@ -936,6 +1006,7 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration derive(ExecuteListenerProvider... newExecuteListenerProviders) {
         return new DefaultConfiguration(
             connectionProvider,
+            interpreterConnectionProvider,
             metaProvider,
             executorProvider,
             transactionProvider,
@@ -966,6 +1037,7 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration derive(VisitListenerProvider... newVisitListenerProviders) {
         return new DefaultConfiguration(
             connectionProvider,
+            interpreterConnectionProvider,
             metaProvider,
             executorProvider,
             transactionProvider,
@@ -996,6 +1068,7 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration derive(TransactionListenerProvider... newTransactionListenerProviders) {
         return new DefaultConfiguration(
             connectionProvider,
+            interpreterConnectionProvider,
             metaProvider,
             executorProvider,
             transactionProvider,
@@ -1026,6 +1099,7 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration derive(DiagnosticsListenerProvider... newDiagnosticsListenerProviders) {
         return new DefaultConfiguration(
             connectionProvider,
+            interpreterConnectionProvider,
             metaProvider,
             executorProvider,
             transactionProvider,
@@ -1056,6 +1130,7 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration derive(UnwrapperProvider newUnwrapperProvider) {
         return new DefaultConfiguration(
             connectionProvider,
+            interpreterConnectionProvider,
             metaProvider,
             executorProvider,
             transactionProvider,
@@ -1081,6 +1156,7 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration derive(ConverterProvider newConverterProvider) {
         return new DefaultConfiguration(
             connectionProvider,
+            interpreterConnectionProvider,
             metaProvider,
             executorProvider,
             transactionProvider,
@@ -1107,6 +1183,7 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration derive(Clock newClock) {
         return new DefaultConfiguration(
             connectionProvider,
+            interpreterConnectionProvider,
             metaProvider,
             executorProvider,
             transactionProvider,
@@ -1131,6 +1208,7 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration derive(SQLDialect newDialect) {
         return new DefaultConfiguration(
             connectionProvider,
+            interpreterConnectionProvider,
             metaProvider,
             executorProvider,
             transactionProvider,
@@ -1156,6 +1234,7 @@ public class DefaultConfiguration implements Configuration {
     public final Configuration derive(Settings newSettings) {
         return new DefaultConfiguration(
             connectionProvider,
+            interpreterConnectionProvider,
             metaProvider,
             executorProvider,
             transactionProvider,
@@ -1409,6 +1488,15 @@ public class DefaultConfiguration implements Configuration {
     }
 
     /**
+     * @see #set(ConnectionProvider)
+     */
+    public final void setInterpreterConnectionProvider(ConnectionProvider newInterpreterConnectionProvider) {
+        // TODO: [#9460] Should we have setters in the Configuration API as well?
+        //       See https://github.com/jOOQ/jOOQ/issues/9460#issuecomment-547973317
+        this.interpreterConnectionProvider = newInterpreterConnectionProvider;
+    }
+
+    /**
      * @see #set(MetaProvider)
      */
     public final void setMetaProvider(MetaProvider newMetaProvider) {
@@ -1589,6 +1677,13 @@ public class DefaultConfiguration implements Configuration {
     }
 
     @Override
+    public final ConnectionProvider interpreterConnectionProvider() {
+        return interpreterConnectionProvider != null
+             ? interpreterConnectionProvider
+             : new DefaultInterpreterConnectionProvider(this);
+    }
+
+    @Override
     public final MetaProvider metaProvider() {
         return metaProvider != null
              ? metaProvider
@@ -1736,6 +1831,9 @@ public class DefaultConfiguration implements Configuration {
         oos.writeObject(connectionProvider instanceof Serializable
             ? connectionProvider
             : null);
+        oos.writeObject(interpreterConnectionProvider instanceof Serializable
+            ? interpreterConnectionProvider
+            : null);
         oos.writeObject(metaProvider instanceof Serializable
             ? metaProvider
             : null);
@@ -1794,6 +1892,7 @@ public class DefaultConfiguration implements Configuration {
         ois.defaultReadObject();
 
         connectionProvider = (ConnectionProvider) ois.readObject();
+        interpreterConnectionProvider = (ConnectionProvider) ois.readObject();
         metaProvider = (MetaProvider) ois.readObject();
         transactionProvider = (TransactionProvider) ois.readObject();
         recordMapperProvider = (RecordMapperProvider) ois.readObject();

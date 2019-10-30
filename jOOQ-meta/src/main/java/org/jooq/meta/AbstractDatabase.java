@@ -575,11 +575,9 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public final CatalogDefinition getCatalog(String inputName) {
-        for (CatalogDefinition catalog : getCatalogs()) {
-            if (catalog.getName().equals(inputName)) {
+        for (CatalogDefinition catalog : getCatalogs())
+            if (catalog.getName().equals(inputName))
                 return catalog;
-            }
-        }
 
         return null;
     }
@@ -674,7 +672,7 @@ public abstract class AbstractDatabase implements Database {
             inputSchemata = new ArrayList<>();
             inputSchemataPerCatalog = new LinkedHashMap<>();
 
-            // [#1312] Allow for ommitting inputSchema configuration. Generate all schemata instead.
+            // [#1312] Allow for omitting inputSchema configuration. Generate all schemata instead.
             if (configuredSchemata.size() == 1 && StringUtils.isBlank(configuredSchemata.get(0).getInputSchema())) {
                 initAllSchemata();
             }

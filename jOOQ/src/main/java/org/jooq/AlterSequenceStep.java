@@ -38,19 +38,10 @@
 package org.jooq;
 
 // ...
-import static org.jooq.SQLDialect.CUBRID;
-// ...
-import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.H2;
-// ...
 import static org.jooq.SQLDialect.HSQLDB;
-// ...
-// ...
 import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
-// ...
-// ...
 // ...
 
 /**
@@ -76,25 +67,7 @@ import static org.jooq.SQLDialect.POSTGRES;
  *
  * @author Lukas Eder
  */
-public interface AlterSequenceStep<T extends Number> {
-
-    /**
-     * Restart the sequence at its initial value.
-     */
-    @Support({ HSQLDB, MARIADB, POSTGRES })
-    AlterSequenceFinalStep restart();
-
-    /**
-     * Restart the sequence at a given value.
-     */
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    AlterSequenceFinalStep restartWith(T value);
-
-    /**
-     * Restart the sequence at a given value.
-     */
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    AlterSequenceFinalStep restartWith(Field<? extends T> value);
+public interface AlterSequenceStep<T extends Number> extends AlterSequenceFlagsStep<T> {
 
     /**
      * Add a <code>RENAME TO</code> clause to the <code>ALTER SEQUENCE</code>

@@ -40,12 +40,15 @@ package org.jooq.meta;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.jooq.Catalog;
 import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Meta;
+import org.jooq.MetaProvider;
 import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.Table;
@@ -64,7 +67,15 @@ public abstract class AbstractMetaDatabase extends AbstractDatabase {
 
     @Override
     protected DSLContext create0() {
-        return DSL.using(getConnection());
+        DSLContext ctx = DSL.using(getConnection());
+        ctx.configuration().set(new MetaProvider() {
+            @Override
+            public Meta provide() {
+                return AbstractMetaDatabase.this.getMeta0();
+            }
+        });
+
+        return ctx;
     }
 
     abstract protected Meta getMeta0();
@@ -109,6 +120,7 @@ public abstract class AbstractMetaDatabase extends AbstractDatabase {
         for (Catalog catalog : getCatalogsFromMeta())
             result.add(new CatalogDefinition(this, catalog.getName(), ""));
 
+        Collections.sort(result, COMP);
         return result;
     }
 
@@ -116,7 +128,7 @@ public abstract class AbstractMetaDatabase extends AbstractDatabase {
         if (catalogs == null) {
             catalogs = new ArrayList<>();
 
-            for (Catalog catalog : create().meta().getCatalogs())
+            for (Catalog catalog : getMeta0().getCatalogs())
                 catalogs.add(catalog);
         }
 
@@ -129,15 +141,16 @@ public abstract class AbstractMetaDatabase extends AbstractDatabase {
 
         for (Schema schema : getSchemasFromMeta()) {
             if (schema.getCatalog() != null) {
-                if (getCatalog(schema.getCatalog().getName()) != null) {
-                    result.add(new SchemaDefinition(this, schema.getName(), "", getCatalog(schema.getCatalog().getName())));
-                }
+                CatalogDefinition catalog = getCatalog(schema.getCatalog().getName());
+
+                if (catalog != null)
+                    result.add(new SchemaDefinition(this, schema.getName(), "", catalog));
             }
             else
                 result.add(new SchemaDefinition(this, schema.getName(), ""));
         }
 
-
+        Collections.sort(result, COMP);
         return result;
     }
 
@@ -145,7 +158,7 @@ public abstract class AbstractMetaDatabase extends AbstractDatabase {
         if (schemas == null) {
             schemas = new ArrayList<>();
 
-            for (Schema schema : create().meta().getSchemas())
+            for (Schema schema : getMeta0().getSchemas())
                 schemas.add(schema);
         }
 
@@ -171,6 +184,7 @@ public abstract class AbstractMetaDatabase extends AbstractDatabase {
             }
         }
 
+        Collections.sort(result, COMP);
         return result;
     }
 
@@ -186,6 +200,7 @@ public abstract class AbstractMetaDatabase extends AbstractDatabase {
                     result.add(new DefaultMetaTableDefinition(sd, table));
         }
 
+        Collections.sort(result, COMP);
         return result;
     }
 
@@ -224,4 +239,11 @@ public abstract class AbstractMetaDatabase extends AbstractDatabase {
         List<PackageDefinition> result = new ArrayList<>();
         return result;
     }
+
+    private static final Comparator<Definition> COMP = new Comparator<Definition>() {
+        @Override
+        public int compare(Definition o1, Definition o2) {
+            return o1.getQualifiedInputName().compareTo(o2.getQualifiedInputName());
+        }
+    };
 }

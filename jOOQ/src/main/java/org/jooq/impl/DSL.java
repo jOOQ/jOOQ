@@ -7439,7 +7439,7 @@ public class DSL {
      *
      * @see DSLContext#alterTableIfExists(String)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MARIADB, POSTGRES })
     public static AlterTableStep alterTableIfExists(String table) {
         return dsl().alterTableIfExists(table);
     }
@@ -7449,7 +7449,7 @@ public class DSL {
      *
      * @see DSLContext#alterTableIfExists(Name)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MARIADB, POSTGRES })
     public static AlterTableStep alterTableIfExists(Name table) {
         return dsl().alterTableIfExists(table);
     }
@@ -7459,7 +7459,7 @@ public class DSL {
      *
      * @see DSLContext#alterTableIfExists(Table)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MARIADB, POSTGRES })
     public static AlterTableStep alterTableIfExists(Table<?> table) {
         return dsl().alterTableIfExists(table);
     }

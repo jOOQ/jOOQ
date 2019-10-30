@@ -9353,7 +9353,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#alterTableIfExists(String)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MARIADB, POSTGRES })
     AlterTableStep alterTableIfExists(String table);
 
     /**
@@ -9361,7 +9361,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#alterTableIfExists(Name)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MARIADB, POSTGRES })
     AlterTableStep alterTableIfExists(Name table);
 
     /**
@@ -9369,7 +9369,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      *
      * @see DSL#alterTableIfExists(Table)
      */
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MARIADB, POSTGRES })
     AlterTableStep alterTableIfExists(Table<?> table);
 
     /**

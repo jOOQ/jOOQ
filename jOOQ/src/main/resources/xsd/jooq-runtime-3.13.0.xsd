@@ -379,6 +379,10 @@ jOOQ queries, for which no specific fetchSize value was specified.]]></jxb:javad
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#6771] Specifies whether DELETE statements are allowed to be executed lacking a WHERE clause. This has no effect on rendering the statements SQL string.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="interpreterDialect" type="string" minOccurs="0" maxOccurs="1" default="DEFAULT">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#7337] The dialect that should be used to interpret SQL DDL statements. {@link SQLDialect#DEFAULT} means that jOOQ interprets the SQL itself. Any other dialect (if supported) will be interpreted on an actual JDBC connection.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="parseDialect" type="string" minOccurs="0" maxOccurs="1" default="DEFAULT">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#7337] The input dialect that should be chosen to disambiguate ambiguous SQL syntax.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

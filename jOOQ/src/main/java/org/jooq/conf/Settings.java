@@ -183,6 +183,9 @@ public class Settings
     protected ExecuteWithoutWhere executeDeleteWithoutWhere = ExecuteWithoutWhere.LOG_DEBUG;
     @XmlElement(type = String.class, defaultValue = "DEFAULT")
     @XmlJavaTypeAdapter(SQLDialectAdapter.class)
+    protected SQLDialect interpreterDialect;
+    @XmlElement(type = String.class, defaultValue = "DEFAULT")
+    @XmlJavaTypeAdapter(SQLDialectAdapter.class)
     protected SQLDialect parseDialect;
     @XmlElement(defaultValue = "OFF")
     @XmlSchemaType(name = "string")
@@ -1551,6 +1554,22 @@ public class Settings
     }
 
     /**
+     * [#7337] The dialect that should be used to interpret SQL DDL statements. {@link SQLDialect#DEFAULT} means that jOOQ interprets the SQL itself. Any other dialect (if supported) will be interpreted on an actual JDBC connection.
+     *
+     */
+    public SQLDialect getInterpreterDialect() {
+        return interpreterDialect;
+    }
+
+    /**
+     * [#7337] The dialect that should be used to interpret SQL DDL statements. {@link SQLDialect#DEFAULT} means that jOOQ interprets the SQL itself. Any other dialect (if supported) will be interpreted on an actual JDBC connection.
+     *
+     */
+    public void setInterpreterDialect(SQLDialect value) {
+        this.interpreterDialect = value;
+    }
+
+    /**
      * [#7337] The input dialect that should be chosen to disambiguate ambiguous SQL syntax.
      *
      */
@@ -2171,6 +2190,15 @@ public class Settings
     }
 
     /**
+     * [#7337] The dialect that should be used to interpret SQL DDL statements. {@link SQLDialect#DEFAULT} means that jOOQ interprets the SQL itself. Any other dialect (if supported) will be interpreted on an actual JDBC connection.
+     *
+     */
+    public Settings withInterpreterDialect(SQLDialect value) {
+        setInterpreterDialect(value);
+        return this;
+    }
+
+    /**
      * [#7337] The input dialect that should be chosen to disambiguate ambiguous SQL syntax.
      *
      */
@@ -2313,6 +2341,7 @@ public class Settings
         builder.append("emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly", emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly);
         builder.append("executeUpdateWithoutWhere", executeUpdateWithoutWhere);
         builder.append("executeDeleteWithoutWhere", executeDeleteWithoutWhere);
+        builder.append("interpreterDialect", interpreterDialect);
         builder.append("parseDialect", parseDialect);
         builder.append("parseWithMetaLookups", parseWithMetaLookups);
         builder.append("parseUnsupportedSyntax", parseUnsupportedSyntax);
@@ -2891,6 +2920,15 @@ public class Settings
                 return false;
             }
         }
+        if (interpreterDialect == null) {
+            if (other.interpreterDialect!= null) {
+                return false;
+            }
+        } else {
+            if (!interpreterDialect.equals(other.interpreterDialect)) {
+                return false;
+            }
+        }
         if (parseDialect == null) {
             if (other.parseDialect!= null) {
                 return false;
@@ -3031,6 +3069,7 @@ public class Settings
         result = ((prime*result)+((emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly == null)? 0 :emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly.hashCode()));
         result = ((prime*result)+((executeUpdateWithoutWhere == null)? 0 :executeUpdateWithoutWhere.hashCode()));
         result = ((prime*result)+((executeDeleteWithoutWhere == null)? 0 :executeDeleteWithoutWhere.hashCode()));
+        result = ((prime*result)+((interpreterDialect == null)? 0 :interpreterDialect.hashCode()));
         result = ((prime*result)+((parseDialect == null)? 0 :parseDialect.hashCode()));
         result = ((prime*result)+((parseWithMetaLookups == null)? 0 :parseWithMetaLookups.hashCode()));
         result = ((prime*result)+((parseUnsupportedSyntax == null)? 0 :parseUnsupportedSyntax.hashCode()));

@@ -25,8 +25,8 @@
         <xjc:javaType name="java.util.Locale" adapter="org.jooq.conf.LocaleAdapter"/>
     </jaxb:bindings>
 
-    <!-- [#7337] SQLDialects -->
-    <jaxb:bindings schemaLocation="../../xsd/jooq-runtime-3.13.0.xsd" multiple="true" node="//xs:element[@name='parseDialect']">
+    <!-- [#7337] [#9362] SQLDialects -->
+    <jaxb:bindings schemaLocation="../../xsd/jooq-runtime-3.13.0.xsd" multiple="true" node="//xs:element[@name='parseDialect' or @name='interpreterDialect']">
         <xjc:javaType name="org.jooq.SQLDialect" adapter="org.jooq.conf.SQLDialectAdapter"/>
     </jaxb:bindings>
 

@@ -63,18 +63,18 @@ final class DDLInterpreterMetaProvider implements MetaProvider {
     private static final JooqLogger log = JooqLogger.getLogger(DDLInterpreterMetaProvider.class);
 
     private final Configuration     configuration;
-    private final Source[]          scripts;
+    private final Source[]          sources;
     private final Query[]           queries;
 
-    public DDLInterpreterMetaProvider(Configuration configuration, Source... scripts) {
+    public DDLInterpreterMetaProvider(Configuration configuration, Source... sources) {
         this.configuration = configuration == null ? new DefaultConfiguration() : configuration;
-        this.scripts = scripts;
+        this.sources = sources;
         this.queries = null;
     }
 
     public DDLInterpreterMetaProvider(Configuration configuration, Query... queries) {
         this.configuration = configuration == null ? new DefaultConfiguration() : configuration;
-        this.scripts = null;
+        this.sources = null;
         this.queries = queries;
     }
 
@@ -84,9 +84,9 @@ final class DDLInterpreterMetaProvider implements MetaProvider {
         Configuration localConfiguration = configuration.derive();
         DSLContext ctx = DSL.using(localConfiguration);
 
-        if (scripts != null)
-            for (Source script : scripts)
-                loadScript(ctx, script, interpreter);
+        if (sources != null)
+            for (Source source : sources)
+                loadSource(ctx, source, interpreter);
         else
             for (Query query : queries)
                 interpreter.accept(query);
@@ -94,7 +94,7 @@ final class DDLInterpreterMetaProvider implements MetaProvider {
         return interpreter.meta();
     }
 
-    private final void loadScript(DSLContext ctx, Source source, DDLInterpreter interpreter) {
+    private final void loadSource(DSLContext ctx, Source source, DDLInterpreter interpreter) {
         Reader reader = source.reader();
         try {
             Scanner s = new Scanner(reader).useDelimiter("\\A");

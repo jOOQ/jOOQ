@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.SQLDialect.DEFAULT;
+import static org.jooq.tools.StringUtils.defaultIfNull;
 import static org.jooq.tools.jdbc.JDBCUtils.safeClose;
 
 import java.io.IOException;
@@ -46,6 +48,7 @@ import java.io.StringWriter;
 import org.jooq.Configuration;
 import org.jooq.Meta;
 import org.jooq.MetaProvider;
+import org.jooq.SQLDialect;
 import org.jooq.Source;
 
 
@@ -94,6 +97,16 @@ final class SourceMetaProvider implements MetaProvider {
                 return new InformationSchemaMetaProvider(configuration, sources).provide();
         }
 
-        return new DDLMetaProvider(configuration, sources).provide();
+        SQLDialect dialect = configuration.settings().getInterpreterDialect();
+        switch (defaultIfNull(dialect, DEFAULT)) {
+            case DEFAULT:
+                return new DDLInterpreterMetaProvider(configuration, sources).provide();
+
+            case H2:
+                return new DDLMetaProvider(configuration, sources).provide();
+
+            default:
+                throw new UnsupportedOperationException("Interpreter dialect not yet supported: " + dialect);
+        }
     }
 }

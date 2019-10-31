@@ -136,7 +136,7 @@ final class CreateSequenceImpl extends AbstractRowCountQuery implements
 
     @Override
     public final CreateSequenceImpl startWith(Number value) {
-        return startWith(DSL.val(value));
+        return startWith(Tools.field(value, sequence.getDataType()));
     }
 
     @Override
@@ -147,7 +147,7 @@ final class CreateSequenceImpl extends AbstractRowCountQuery implements
 
     @Override
     public final CreateSequenceImpl incrementBy(Number value) {
-        return incrementBy(DSL.val(value));
+        return incrementBy(Tools.field(value, sequence.getDataType()));
     }
 
     @Override
@@ -158,7 +158,7 @@ final class CreateSequenceImpl extends AbstractRowCountQuery implements
 
     @Override
     public final CreateSequenceImpl minvalue(Number value) {
-        return minvalue(DSL.val(value));
+        return minvalue(Tools.field(value, sequence.getDataType()));
     }
 
     @Override
@@ -175,7 +175,7 @@ final class CreateSequenceImpl extends AbstractRowCountQuery implements
 
     @Override
     public final CreateSequenceImpl maxvalue(Number value) {
-        return maxvalue(DSL.val(value));
+        return maxvalue(Tools.field(value, sequence.getDataType()));
     }
 
     @Override
@@ -204,7 +204,7 @@ final class CreateSequenceImpl extends AbstractRowCountQuery implements
 
     @Override
     public final CreateSequenceImpl cache(Number value) {
-        return cache(DSL.val(value));
+        return cache(Tools.field(value, sequence.getDataType()));
     }
 
     @Override

@@ -74,14 +74,22 @@ public class MockResultSetMetaData implements ResultSetMetaData, Serializable {
         this.rs = rs;
     }
 
+    // -------------------------------------------------------------------------
+    // XXX: Unwrapping
+    // -------------------------------------------------------------------------
+
+    @SuppressWarnings("unchecked")
     @Override
     public <T> T unwrap(Class<T> iface) throws SQLException {
-        return null;
+        if (isWrapperFor(iface))
+            return (T) this;
+        else
+            throw new SQLException("MockResultSetMetaData does not implement " + iface);
     }
 
     @Override
     public boolean isWrapperFor(Class<?> iface) throws SQLException {
-        return false;
+        return iface.isInstance(this);
     }
 
     @Override

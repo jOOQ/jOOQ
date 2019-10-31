@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.jooq</groupId>
         <artifactId>jooq-examples</artifactId>
-        <version>3.12.2</version>
+        <version>3.12.3</version>
     </parent>
 
     <artifactId>jooq-flyway-example</artifactId>

@@ -849,68 +849,68 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
 
 
+        /*
+         * So, you've found the piece of logic that displays our beautifully-crafted ASCII-art logo that
+         * we display in the log files to our jOOQ Open Source Edition and jOOQ Free Trial Edition users
+         *
+         * You probably came here to see if you can somehow turn it off, e.g. because you found this
+         * page here:
+         *
+         *   http://stackoverflow.com/q/28272284/521799
+         *
+         * And yes! You can:
+         *
+         *   a) turn off your logger for org.jooq.Constants
+         *   b) set the -Dorg.jooq.no-logo=true property
+         *   c) simply patch this file in your sources and rebuild jOOQ
+         *   d) buy a commercial license
+         *
+         * Hint: While a) - c) work, d) is the right answer :-)
+         *
+         * But before you do any of a) - c), consider this. We give away this awesome software for free,
+         * and we'd love to continue giving it away for free, so all we would like to ask you is to
+         * continue to show your love and our brand to everyone involved in your software simply in the
+         * log files when you load jOOQ. Please don't remove our logo.
+         *
+         * Thank you very much! If you absolutely must remove this logo, and can live with the guilt
+         * and shame, below is the system property that deactivates it.
+         *
+         * Cheers from the jOOQ Team.
+         *
+         * --------------------------------------------------
+         * DEAR USER, PLEASE READ THE ABOVE BEFORE PROCEEDING
+         */
+        if (!Boolean.getBoolean("org.jooq.no-logo")) {
+            JooqLogger l = JooqLogger.getLogger(Constants.class);
+            String message;
+
+            message = "Thank you for using jOOQ " + Constants.FULL_VERSION;
 
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            l.info("\n                                      " +
+                   "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" +
+                   "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" +
+                   "\n@@@@@@@@@@@@@@@@  @@        @@@@@@@@@@" +
+                   "\n@@@@@@@@@@@@@@@@@@@@        @@@@@@@@@@" +
+                   "\n@@@@@@@@@@@@@@@@  @@  @@    @@@@@@@@@@" +
+                   "\n@@@@@@@@@@  @@@@  @@  @@    @@@@@@@@@@" +
+                   "\n@@@@@@@@@@        @@        @@@@@@@@@@" +
+                   "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" +
+                   "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" +
+                   "\n@@@@@@@@@@        @@        @@@@@@@@@@" +
+                   "\n@@@@@@@@@@    @@  @@  @@@@  @@@@@@@@@@" +
+                   "\n@@@@@@@@@@    @@  @@  @@@@  @@@@@@@@@@" +
+                   "\n@@@@@@@@@@        @@  @  @  @@@@@@@@@@" +
+                   "\n@@@@@@@@@@        @@        @@@@@@@@@@" +
+                   "\n@@@@@@@@@@@@@@@@@@@@@@@  @@@@@@@@@@@@@" +
+                   "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" +
+                   "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  " + message +
+                   "\n                                      ");
+        }
 
     }
 

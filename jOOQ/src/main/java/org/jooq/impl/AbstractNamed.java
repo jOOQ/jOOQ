@@ -63,11 +63,12 @@ abstract class AbstractNamed extends AbstractQueryPart implements Named {
 
     @Override
     public final String getName() {
-        return StringUtils.defaultIfNull(name.last(), "");
+        return StringUtils.defaultIfNull(getQualifiedName().last(), "");
     }
 
+    /* [#7172] For lazy initialisation reasons, some subtypes need to override this method */
     @Override
-    public final Name getQualifiedName() {
+    public /* non-final */ Name getQualifiedName() {
         return name;
     }
 
@@ -90,7 +91,7 @@ abstract class AbstractNamed extends AbstractQueryPart implements Named {
 
         // [#1938] This is a much more efficient hashCode() implementation
         // compared to that of standard QueryParts
-        return name == null ? 0 : name.hashCode();
+        return getQualifiedName() == null ? 0 : getQualifiedName().hashCode();
     }
 
     @Override
@@ -103,7 +104,7 @@ abstract class AbstractNamed extends AbstractQueryPart implements Named {
         // [#2144] Non-equality can be decided early, without executing the
         // rather expensive implementation of AbstractQueryPart.equals()
         if (that instanceof AbstractNamed)
-            if (!name.equals(((AbstractNamed) that).name))
+            if (!getQualifiedName().equals(((AbstractNamed) that).getQualifiedName()))
                 return false;
 
         return super.equals(that);

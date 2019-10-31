@@ -19,7 +19,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.springframework.version>4.2.4.RELEASE</org.springframework.version>
-        <org.jooq.version>3.12.2</org.jooq.version>
+        <org.jooq.version>3.12.3</org.jooq.version>
         <org.h2.version>1.4.199</org.h2.version>
     </properties>
 

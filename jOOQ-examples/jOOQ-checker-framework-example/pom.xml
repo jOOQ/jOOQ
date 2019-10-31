@@ -5,7 +5,7 @@
 
     <groupId>org.jooq</groupId>
     <artifactId>jooq-checker-framework-example</artifactId>
-    <version>3.12.2</version>
+    <version>3.12.3</version>
     <name>jOOQ Checker Framework Example</name>
 
     <licenses>
@@ -18,7 +18,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <org.jooq.version>3.12.2</org.jooq.version>
+        <org.jooq.version>3.12.3</org.jooq.version>
         <maven.compiler.target>11</maven.compiler.target>
         <maven.compiler.source>11</maven.compiler.source>
     </properties>
@@ -92,7 +92,7 @@
                                 <path>
                                     <groupId>org.jooq</groupId>
                                     <artifactId>jooq-checker</artifactId>
-                                    <version>3.12.2</version>
+                                    <version>3.12.3</version>
                                 </path>
                             </annotationProcessorPaths>
                             <compilerArgs>

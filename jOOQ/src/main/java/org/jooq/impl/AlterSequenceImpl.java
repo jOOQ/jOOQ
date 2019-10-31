@@ -114,14 +114,14 @@ final class AlterSequenceImpl<T extends Number> extends AbstractRowCountQuery im
     private Sequence<?>                  renameTo;
     private boolean                      restart;
     private Field<?>                     restartWith;
-    private Field<? extends Number>      startWith;
-    private Field<? extends Number>      incrementBy;
-    private Field<? extends Number>      minvalue;
+    private Field<? extends T>           startWith;
+    private Field<? extends T>           incrementBy;
+    private Field<? extends T>           minvalue;
     private boolean                      noMinvalue;
-    private Field<? extends Number>      maxvalue;
+    private Field<? extends T>           maxvalue;
     private boolean                      noMaxvalue;
     private Boolean                      cycle;
-    private Field<? extends Number>      cache;
+    private Field<? extends T>           cache;
     private boolean                      noCache;
 
     AlterSequenceImpl(Configuration configuration, Sequence<T> sequence) {
@@ -179,35 +179,35 @@ final class AlterSequenceImpl<T extends Number> extends AbstractRowCountQuery im
     }
 
     @Override
-    public AlterSequenceStep<T> startWith(Number constant) {
-        return startWith(Tools.field(constant, sequence.getDataType()));
+    public AlterSequenceStep<T> startWith(T value) {
+        return startWith(Tools.field(value, sequence.getDataType()));
     }
 
     @Override
-    public AlterSequenceStep<T> startWith(Field<? extends Number> constant) {
-        startWith = constant;
+    public AlterSequenceStep<T> startWith(Field<? extends T> value) {
+        startWith = value;
         return this;
     }
 
     @Override
-    public AlterSequenceStep<T> incrementBy(Number constant) {
-        return incrementBy(Tools.field(constant, sequence.getDataType()));
+    public AlterSequenceStep<T> incrementBy(T value) {
+        return incrementBy(Tools.field(value, sequence.getDataType()));
     }
 
     @Override
-    public AlterSequenceStep<T> incrementBy(Field<? extends Number> constant) {
-        incrementBy = constant;
+    public AlterSequenceStep<T> incrementBy(Field<? extends T> value) {
+        incrementBy = value;
         return this;
     }
 
     @Override
-    public AlterSequenceStep<T> minvalue(Number constant) {
-        return minvalue(Tools.field(constant, sequence.getDataType()));
+    public AlterSequenceStep<T> minvalue(T value) {
+        return minvalue(Tools.field(value, sequence.getDataType()));
     }
 
     @Override
-    public AlterSequenceStep<T> minvalue(Field<? extends Number> constant) {
-        minvalue = constant;
+    public AlterSequenceStep<T> minvalue(Field<? extends T> value) {
+        minvalue = value;
         noMinvalue = false;
         return this;
     }
@@ -220,13 +220,13 @@ final class AlterSequenceImpl<T extends Number> extends AbstractRowCountQuery im
     }
 
     @Override
-    public AlterSequenceStep<T> maxvalue(Number constant) {
-        return maxvalue(Tools.field(constant, sequence.getDataType()));
+    public AlterSequenceStep<T> maxvalue(T value) {
+        return maxvalue(Tools.field(value, sequence.getDataType()));
     }
 
     @Override
-    public AlterSequenceStep<T> maxvalue(Field<? extends Number> constant) {
-        maxvalue = constant;
+    public AlterSequenceStep<T> maxvalue(Field<? extends T> value) {
+        maxvalue = value;
         noMaxvalue = false;
         return this;
     }
@@ -251,13 +251,13 @@ final class AlterSequenceImpl<T extends Number> extends AbstractRowCountQuery im
     }
 
     @Override
-    public AlterSequenceStep<T> cache(Number constant) {
-        return cache(Tools.field(constant, sequence.getDataType()));
+    public AlterSequenceStep<T> cache(T value) {
+        return cache(Tools.field(value, sequence.getDataType()));
     }
 
     @Override
-    public AlterSequenceStep<T> cache(Field<? extends Number> constant) {
-        cache = constant;
+    public AlterSequenceStep<T> cache(Field<? extends T> value) {
+        cache = value;
         noCache = false;
         return this;
     }

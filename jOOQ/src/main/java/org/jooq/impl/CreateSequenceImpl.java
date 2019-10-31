@@ -135,35 +135,35 @@ final class CreateSequenceImpl extends AbstractRowCountQuery implements
     // ------------------------------------------------------------------------
 
     @Override
-    public final CreateSequenceImpl startWith(Number constant) {
-        return startWith(DSL.val(constant));
+    public final CreateSequenceImpl startWith(Number value) {
+        return startWith(DSL.val(value));
     }
 
     @Override
-    public final CreateSequenceImpl startWith(Field<? extends Number> constant) {
-        this.startWith = constant;
+    public final CreateSequenceImpl startWith(Field<? extends Number> value) {
+        this.startWith = value;
         return this;
     }
 
     @Override
-    public final CreateSequenceImpl incrementBy(Number constant) {
-        return incrementBy(DSL.val(constant));
+    public final CreateSequenceImpl incrementBy(Number value) {
+        return incrementBy(DSL.val(value));
     }
 
     @Override
-    public final CreateSequenceImpl incrementBy(Field<? extends Number> constant) {
-        this.incrementBy = constant;
+    public final CreateSequenceImpl incrementBy(Field<? extends Number> value) {
+        this.incrementBy = value;
         return this;
     }
 
     @Override
-    public final CreateSequenceImpl minvalue(Number constant) {
-        return minvalue(DSL.val(constant));
+    public final CreateSequenceImpl minvalue(Number value) {
+        return minvalue(DSL.val(value));
     }
 
     @Override
-    public final CreateSequenceImpl minvalue(Field<? extends Number> constant) {
-        this.minvalue = constant;
+    public final CreateSequenceImpl minvalue(Field<? extends Number> value) {
+        this.minvalue = value;
         return this;
     }
 
@@ -174,13 +174,13 @@ final class CreateSequenceImpl extends AbstractRowCountQuery implements
     }
 
     @Override
-    public final CreateSequenceImpl maxvalue(Number constant) {
-        return maxvalue(DSL.val(constant));
+    public final CreateSequenceImpl maxvalue(Number value) {
+        return maxvalue(DSL.val(value));
     }
 
     @Override
-    public final CreateSequenceImpl maxvalue(Field<? extends Number> constant) {
-        this.maxvalue = constant;
+    public final CreateSequenceImpl maxvalue(Field<? extends Number> value) {
+        this.maxvalue = value;
         return this;
     }
 
@@ -203,13 +203,13 @@ final class CreateSequenceImpl extends AbstractRowCountQuery implements
     }
 
     @Override
-    public final CreateSequenceImpl cache(Number constant) {
-        return cache(DSL.val(constant));
+    public final CreateSequenceImpl cache(Number value) {
+        return cache(DSL.val(value));
     }
 
     @Override
-    public final CreateSequenceImpl cache(Field<? extends Number> constant) {
-        this.cache = constant;
+    public final CreateSequenceImpl cache(Field<? extends Number> value) {
+        this.cache = value;
         return this;
     }
 

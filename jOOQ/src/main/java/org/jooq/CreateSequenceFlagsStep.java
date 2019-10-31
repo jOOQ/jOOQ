@@ -84,37 +84,37 @@ public interface CreateSequenceFlagsStep extends CreateSequenceFinalStep {
      * Add a <code>START WITH</code> clause to the sequence definition.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    CreateSequenceFlagsStep startWith(Number constant);
+    CreateSequenceFlagsStep startWith(Number value);
 
     /**
      * Add a <code>START WITH</code> clause to the sequence definition.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    CreateSequenceFlagsStep startWith(Field<? extends Number> constant);
+    CreateSequenceFlagsStep startWith(Field<? extends Number> value);
 
     /**
      * Add a <code>INCREMENT BY</code> clause to the sequence definition.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    CreateSequenceFlagsStep incrementBy(Number constant);
+    CreateSequenceFlagsStep incrementBy(Number value);
 
     /**
      * Add a <code>INCREMENT BY</code> clause to the sequence definition.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    CreateSequenceFlagsStep incrementBy(Field<? extends Number> constant);
+    CreateSequenceFlagsStep incrementBy(Field<? extends Number> value);
 
     /**
      * Add a <code>MINVALUE</code> clause to the sequence definition.
      */
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, POSTGRES })
-    CreateSequenceFlagsStep minvalue(Number constant);
+    CreateSequenceFlagsStep minvalue(Number value);
 
     /**
      * Add a <code>MINVALUE</code> clause to the sequence definition.
      */
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, POSTGRES })
-    CreateSequenceFlagsStep minvalue(Field<? extends Number> constant);
+    CreateSequenceFlagsStep minvalue(Field<? extends Number> value);
 
     /**
      * Add a <code>NO MINVALUE</code> clause to the sequence definition.
@@ -126,13 +126,13 @@ public interface CreateSequenceFlagsStep extends CreateSequenceFinalStep {
      * Add a <code>MINVALUE</code> clause to the sequence definition.
      */
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, POSTGRES })
-    CreateSequenceFlagsStep maxvalue(Number constant);
+    CreateSequenceFlagsStep maxvalue(Number value);
 
     /**
      * Add a <code>MINVALUE</code> clause to the sequence definition.
      */
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, POSTGRES })
-    CreateSequenceFlagsStep maxvalue(Field<? extends Number> constant);
+    CreateSequenceFlagsStep maxvalue(Field<? extends Number> value);
 
     /**
      * Add a <code>NO MINVALUE</code> clause to the sequence definition.
@@ -156,13 +156,13 @@ public interface CreateSequenceFlagsStep extends CreateSequenceFinalStep {
      * Add a <code>CACHE</code> clause to the sequence definition.
      */
     @Support({ CUBRID, H2, MARIADB, POSTGRES })
-    CreateSequenceFlagsStep cache(Number constant);
+    CreateSequenceFlagsStep cache(Number value);
 
     /**
      * Add a <code>CACHE</code> clause to the sequence definition.
      */
     @Support({ CUBRID, H2, MARIADB, POSTGRES })
-    CreateSequenceFlagsStep cache(Field<? extends Number> constant);
+    CreateSequenceFlagsStep cache(Field<? extends Number> value);
 
     /**
      * Add a <code>NO CACHE</code> clause to the sequence definition.

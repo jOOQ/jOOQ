@@ -105,6 +105,7 @@ import org.jooq.TableOnStep;
 import org.jooq.TableOptionalOnStep;
 import org.jooq.TableOuterJoinStep;
 import org.jooq.TablePartitionByStep;
+import org.jooq.TableType;
 import org.jooq.UniqueKey;
 // ...
 // ...
@@ -411,6 +412,11 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
     // ------------------------------------------------------------------------
     // XXX: Table API
     // ------------------------------------------------------------------------
+
+    @Override
+    public final TableType getType() {
+        return TableType.UNKNOWN;
+    }
 
     @Override
     public final Catalog getCatalog() {

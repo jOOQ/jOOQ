@@ -125,6 +125,11 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
     Schema getSchema();
 
     /**
+     * Get the table type.
+     */
+    TableType getType();
+
+    /**
      * The comment given to the table.
      * <p>
      * If this <code>Table</code> is a generated table from your database, it

@@ -102,7 +102,10 @@ final class SourceMetaProvider implements MetaProvider {
             case DEFAULT:
                 return new DDLInterpreterMetaProvider(configuration, sources).provide();
 
+            case DERBY:
             case H2:
+            case HSQLDB:
+            case SQLITE:
                 return new DDLMetaProvider(configuration, sources).provide();
 
             default:

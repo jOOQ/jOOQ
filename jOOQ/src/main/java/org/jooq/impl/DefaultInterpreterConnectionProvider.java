@@ -43,7 +43,6 @@ import static org.jooq.tools.StringUtils.defaultIfNull;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Properties;
 import java.util.UUID;
 
 import org.jooq.Configuration;
@@ -69,12 +68,19 @@ final class DefaultInterpreterConnectionProvider implements ConnectionProvider {
 
         try {
             switch (dialect) {
+                case DERBY:
+                    return DriverManager.getConnection("jdbc:derby:memory:db;create=true");
+
                 case H2:
                 case DEFAULT:
-                    Properties info = new Properties();
-                    info.put("user", "sa");
-                    info.put("password", "");
-                    return DriverManager.getConnection("jdbc:h2:mem:jooq-ddl-interpretation-" + UUID.randomUUID(), info);
+                    return DriverManager.getConnection("jdbc:h2:mem:jooq-ddl-interpretation-" + UUID.randomUUID(), "sa", "");
+
+                case HSQLDB:
+                    // The newer form jdbc:hsqldb:mem:. is not necessarily supported by the driver version yet
+                    return DriverManager.getConnection("jdbc:hsqldb:.");
+
+                case SQLITE:
+                    return DriverManager.getConnection("jdbc:sqlite::memory:");
 
                 default:
                     throw new DataAccessException("Unsupported interpretation dialect: " + dialect);

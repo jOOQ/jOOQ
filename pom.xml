@@ -26,8 +26,11 @@
 
     <properties>
 
-        <!-- H2 is used by jOOQ-meta-extensions and a variety of integration tests -->
+        <!-- These in-memory DBs are used by jOOQ-meta-extensions and a variety of integration tests -->
         <h2.version>1.4.200</h2.version>
+        <sqlite.version>3.25.2</sqlite.version>
+        <derby.version>10.14.2.0</derby.version>
+        <hsqldb.version>2.4.0</hsqldb.version>
 
         <!-- From JDK 11 onwards, we need to depend on the JAXB API explicitly -->
         <jaxb.version>2.3.1</jaxb.version>
@@ -216,6 +219,21 @@
                 <groupId>com.h2database</groupId>
                 <artifactId>h2</artifactId>
                 <version>${h2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.xerial</groupId>
+                <artifactId>sqlite-jdbc</artifactId>
+                <version>${sqlite.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.derby</groupId>
+                <artifactId>derby</artifactId>
+                <version>${derby.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hsqldb</groupId>
+                <artifactId>hsqldb</artifactId>
+                <version>${hsqldb.version}</version>
             </dependency>
 
             <!-- jooq-meta-extensions and integration tests have this dependency -->

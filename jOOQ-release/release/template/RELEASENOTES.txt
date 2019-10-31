@@ -11,6 +11,26 @@ For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
 
+Version 3.12.3 - October 31, 2019
+================================================================================
+
+This is a 3.12 patch release with bug fixes
+
+Features and Improvements
+-------------------------
+#9452 - Add reactive streams in published ZIP file as a dependency, for convenience
+
+
+Bug Fixes
+---------
+#9444 - Regression in Sybase ASE source code generation
+#9455 - Unable to create index with qualified index name on Oracle dialect
+#9458 - UDT.getQualifiedName() doesn't return schema qualification for generated tables
+#9469 - SQLDialect.ASE cannot be used with a MockConnection
+#9477 - Creating tables using DSLContext.ddl() converts VARBINARY columns to TEXT in MySQL
+#9481 - CREATE SEQUENCE implementation should reuse Sequence.getDataType() in various flags
+
+
 Version 3.12.2 - October 22, 2019
 ================================================================================
 

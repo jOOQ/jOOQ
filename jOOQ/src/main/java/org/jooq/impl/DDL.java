@@ -70,7 +70,7 @@ import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.TableOptions.OnCommit;
-import org.jooq.TableType;
+import org.jooq.TableOptions.TableType;
 import org.jooq.UniqueKey;
 import org.jooq.tools.StringUtils;
 

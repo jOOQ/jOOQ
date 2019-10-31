@@ -106,7 +106,7 @@ import org.jooq.TableOptionalOnStep;
 import org.jooq.TableOptions;
 import org.jooq.TableOuterJoinStep;
 import org.jooq.TablePartitionByStep;
-import org.jooq.TableType;
+import org.jooq.TableOptions.TableType;
 import org.jooq.UniqueKey;
 // ...
 // ...

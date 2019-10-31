@@ -73,6 +73,7 @@ import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
+import org.jooq.TableOptions.TableType;
 import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
 

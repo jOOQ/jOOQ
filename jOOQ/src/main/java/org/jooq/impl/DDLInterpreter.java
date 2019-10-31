@@ -76,7 +76,7 @@ import org.jooq.SortOrder;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
-import org.jooq.TableType;
+import org.jooq.TableOptions.TableType;
 import org.jooq.UniqueKey;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataDefinitionException;

@@ -152,6 +152,53 @@ public final class TableOptions implements Serializable {
         return select;
     }
 
+    /**
+     * A description of the type of a {@link Table}.
+     */
+    public enum TableType {
+
+        /**
+         * An ordinary table that is stored in the schema.
+         */
+        TABLE,
+
+        /**
+         * A global temporary table that is stored in the schema and visible to
+         * everyone.
+         */
+        TEMPORARY,
+
+        /**
+         * A view that is defined by a {@link Select} statement.
+         */
+        VIEW,
+
+        /**
+         * A materialised view that is defined by a {@link Select} statement, and
+         * whose data is materialised in the schema.
+         */
+        MATERIALIZED_VIEW,
+
+        /**
+         * A table valued function that is defined by a {@link Routine}.
+         */
+        FUNCTION,
+
+        /**
+         * A table expression, such as a derived table, a joined table, a common
+         * table expression, etc.
+         */
+        EXPRESSION,
+
+        /**
+         * A table type that is unknown to jOOQ.
+         */
+        UNKNOWN
+    }
+
+    /**
+     * The <code>ON COMMIT</code> flag for {@link TableType#TEMPORARY} tables.
+     */
     public enum OnCommit {
 
         @Support({ POSTGRES })

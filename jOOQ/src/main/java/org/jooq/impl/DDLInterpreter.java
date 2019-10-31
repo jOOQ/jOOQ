@@ -1205,7 +1205,6 @@ final class DDLInterpreter {
 
         private final class InterpretedTable extends TableImpl<Record> {
             InterpretedTable(MutableSchema.InterpretedSchema schema) {
-                // public TableImpl(Name name, Schema schema, Table<?> child, ForeignKey<?, R> path, Table<R> aliased, Field<?>[] parameters, Comment comment, TableType type) {
                 super(MutableTable.this.name, schema, null, null, null, null, MutableTable.this.comment, MutableTable.this.type);
 
                 for (MutableField field : MutableTable.this.fields)

@@ -106,9 +106,10 @@ final class DropTableImpl extends AbstractRowCountQuery implements
         this.temporary = temporary;
     }
 
-    final Table<?> $table()    { return table; }
-    final boolean  $ifExists() { return ifExists; }
-    final Cascade  $cascade()  { return cascade; }
+    final Table<?> $table()     { return table; }
+    final boolean  $temporary() { return temporary; }
+    final boolean  $ifExists()  { return ifExists; }
+    final Cascade  $cascade()   { return cascade; }
 
     // ------------------------------------------------------------------------
     // XXX: DSL API

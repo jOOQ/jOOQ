@@ -531,6 +531,7 @@ final class DDLInterpreter {
 
     private final void accept0(DropTableImpl query) {
         Table<?> table = query.$table();
+
         MutableSchema schema = getSchema(table.getSchema());
 
         // TODO schema == null
@@ -543,6 +544,8 @@ final class DDLInterpreter {
         }
         else if (!table(existing.type))
             throw objectNotTable(table);
+        else if (query.$temporary() && existing.type != TableType.TEMPORARY)
+            throw objectNotTemporaryTable(table);
 
         drop(schema.tables, existing, query.$cascade());
     }
@@ -754,6 +757,10 @@ final class DDLInterpreter {
 
     private static final DataDefinitionException objectNotTable(Table<?> table) {
         return new DataDefinitionException("Object is not a table: " + table.getQualifiedName());
+    }
+
+    private static final DataDefinitionException objectNotTemporaryTable(Table<?> table) {
+        return new DataDefinitionException("Object is not a temporary table: " + table.getQualifiedName());
     }
 
     private static final DataDefinitionException objectNotView(Table<?> table) {

@@ -4042,7 +4042,7 @@ final class ParserImpl implements Parser {
         TableField<?, ?> field = parseFieldName(ctx);
 
         if (!paren)
-            if (parseKeywordIf(ctx, "DROP NOT NULL") || parseKeywordIf(ctx, "NULL"))
+            if (parseKeywordIf(ctx, "DROP NOT NULL") || parseKeywordIf(ctx, "SET NULL") || parseKeywordIf(ctx, "NULL"))
                 return s1.alter(field).dropNotNull();
             else if (parseKeywordIf(ctx, "DROP DEFAULT"))
                 return s1.alter(field).dropDefault();

@@ -89,17 +89,25 @@ final class DDL {
 
     private final Query createTable(Table<?> table, Collection<? extends Constraint> constraints) {
         boolean temporary = table.getType() == TableType.TEMPORARY;
+        boolean view = table.getType().isView();
         OnCommit onCommit = table.getOptions().onCommit();
 
-        CreateTableOnCommitStep s0 = (configuration.createTableIfNotExists()
-                    ? temporary
-                        ? ctx.createTemporaryTableIfNotExists(table)
-                        : ctx.createTableIfNotExists(table)
-                    : temporary
-                        ? ctx.createTemporaryTable(table)
-                        : ctx.createTable(table))
-            .columns(sortIf(Arrays.asList(table.fields()), !configuration.respectColumnOrder()))
-            .constraints(constraints);
+        if (view)
+            return (configuration.createTableIfNotExists()
+                        ? ctx.createViewIfNotExists(table, table.fields())
+                        : ctx.createView(table, table.fields()))
+                    .as(table.getOptions().select());
+
+        CreateTableOnCommitStep s0 =
+            (configuration.createTableIfNotExists()
+                        ? temporary
+                            ? ctx.createTemporaryTableIfNotExists(table)
+                            : ctx.createTableIfNotExists(table)
+                        : temporary
+                            ? ctx.createTemporaryTable(table)
+                            : ctx.createTable(table))
+                .columns(sortIf(Arrays.asList(table.fields()), !configuration.respectColumnOrder()))
+                .constraints(constraints);
 
         if (temporary && onCommit != null) {
             switch (table.getOptions().onCommit()) {

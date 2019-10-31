@@ -193,7 +193,21 @@ public final class TableOptions implements Serializable {
         /**
          * A table type that is unknown to jOOQ.
          */
-        UNKNOWN
+        UNKNOWN;
+
+        /**
+         * Whether the type is a view.
+         */
+        public final boolean isView() {
+            return this == VIEW || this == MATERIALIZED_VIEW;
+        }
+
+        /**
+         * Whether the type is a view.
+         */
+        public final boolean isTable() {
+            return this == TABLE || this == TEMPORARY;
+        }
     }
 
     /**

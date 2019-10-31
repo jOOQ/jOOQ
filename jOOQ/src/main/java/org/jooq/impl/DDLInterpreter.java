@@ -380,7 +380,7 @@ final class DDLInterpreter {
 
             return;
         }
-        else if (!table(existing))
+        else if (!existing.options.type().isTable())
             throw objectNotTable(table);
 
         // TODO: Multi-add statements
@@ -542,7 +542,7 @@ final class DDLInterpreter {
 
             return;
         }
-        else if (!table(existing))
+        else if (!existing.options.type().isTable())
             throw objectNotTable(table);
         else if (query.$temporary() && existing.options.type() != TableType.TEMPORARY)
             throw objectNotTemporaryTable(table);
@@ -556,7 +556,7 @@ final class DDLInterpreter {
 
         MutableTable existing = schema.table(table);
         if (existing != null) {
-            if (!view(existing))
+            if (!existing.options.type().isView())
                 throw objectNotView(table);
             else if (query.$orReplace())
                 drop(schema.tables, existing, RESTRICT);
@@ -584,7 +584,7 @@ final class DDLInterpreter {
 
             return;
         }
-        else if (!view(existing))
+        else if (!existing.options.type().isView())
             throw objectNotView(table);
 
         Table<?> renameTo = query.$renameTo();
@@ -605,7 +605,7 @@ final class DDLInterpreter {
 
             return;
         }
-        else if (!view(existing))
+        else if (!existing.options.type().isView())
             throw objectNotView(table);
 
         drop(schema.tables, existing, RESTRICT);
@@ -827,16 +827,6 @@ final class DDLInterpreter {
     // Auxiliary methods
     // -------------------------------------------------------------------------
 
-    private static final boolean view(MutableTable mt) {
-        TableType type = mt.options.type();
-        return type == TableType.VIEW || type == TableType.MATERIALIZED_VIEW;
-    }
-
-    private static final boolean table(MutableTable mt) {
-        TableType type = mt.options.type();
-        return type == TableType.TABLE || type == TableType.TEMPORARY;
-    }
-
     private final Iterable<MutableTable> tables() {
         // TODO: Make this lazy
         List<MutableTable> result = new ArrayList<>();
@@ -956,7 +946,7 @@ final class DDLInterpreter {
     }
 
     private static final DataDefinitionException alreadyExists(Table<?> t, MutableTable mt) {
-        if (view(mt))
+        if (mt.options.type().isView())
             return viewAlreadyExists(t);
         else
             return tableAlreadyExists(t);

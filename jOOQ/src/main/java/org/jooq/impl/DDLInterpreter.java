@@ -75,6 +75,7 @@ import org.jooq.SortField;
 import org.jooq.SortOrder;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableType;
 import org.jooq.UniqueKey;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataDefinitionException;
@@ -224,6 +225,7 @@ final class DDLInterpreter {
 
     private final void accept0(CreateTableImpl query) {
         Table<?> table = query.$table();
+        boolean temporary = query.$temporary();
         MutableSchema schema = getSchema(table.getSchema(), true);
 
         // TODO We're doing this all the time. Can this be factored out without adding too much abstraction?
@@ -235,7 +237,7 @@ final class DDLInterpreter {
             return;
         }
 
-        MutableTable mt = newTable(table, schema, query.$columnFields(), query.$columnTypes(), query.$select(), query.$comment(), false);
+        MutableTable mt = newTable(table, schema, query.$columnFields(), query.$columnTypes(), query.$select(), query.$comment(), temporary ? TableType.TEMPORARY : TableType.TABLE);
 
         for (Constraint constraint : query.$constraints()) {
             ConstraintImpl impl = (ConstraintImpl) constraint;
@@ -378,7 +380,7 @@ final class DDLInterpreter {
 
             return;
         }
-        else if (existing.view)
+        else if (!table(existing.type))
             throw objectNotTable(table);
 
         // TODO: Multi-add statements
@@ -539,7 +541,7 @@ final class DDLInterpreter {
 
             return;
         }
-        else if (existing.view)
+        else if (!table(existing.type))
             throw objectNotTable(table);
 
         drop(schema.tables, existing, query.$cascade());
@@ -551,7 +553,7 @@ final class DDLInterpreter {
 
         MutableTable existing = schema.table(table);
         if (existing != null) {
-            if (!existing.view)
+            if (!view(existing.type))
                 throw objectNotView(table);
             else if (query.$orReplace())
                 drop(schema.tables, existing, RESTRICT);
@@ -565,7 +567,7 @@ final class DDLInterpreter {
         for (Field<?> f : query.$select().getSelect())
             columnTypes.add(f.getDataType());
 
-        newTable(table, schema, Arrays.asList(query.$fields()), columnTypes, query.$select(), null, true);
+        newTable(table, schema, Arrays.asList(query.$fields()), columnTypes, query.$select(), null, TableType.VIEW);
     }
 
     private final void accept0(AlterViewImpl query) {
@@ -579,7 +581,7 @@ final class DDLInterpreter {
 
             return;
         }
-        else if (!existing.view)
+        else if (!view(existing.type))
             throw objectNotView(table);
 
         Table<?> renameTo = query.$renameTo();
@@ -600,7 +602,7 @@ final class DDLInterpreter {
 
             return;
         }
-        else if (!existing.view)
+        else if (!view(existing.type))
             throw objectNotView(table);
 
         drop(schema.tables, existing, RESTRICT);
@@ -818,6 +820,14 @@ final class DDLInterpreter {
     // Auxiliary methods
     // -------------------------------------------------------------------------
 
+    private static final boolean view(TableType type) {
+        return type == TableType.VIEW || type == TableType.MATERIALIZED_VIEW;
+    }
+
+    private static final boolean table(TableType type) {
+        return type == TableType.TABLE || type == TableType.TEMPORARY;
+    }
+
     private final Iterable<MutableTable> tables() {
         // TODO: Make this lazy
         List<MutableTable> result = new ArrayList<>();
@@ -864,9 +874,9 @@ final class DDLInterpreter {
         List<DataType<?>> columnTypes,
         Select<?> select,
         Comment comment,
-        boolean view
+        TableType type
     ) {
-        MutableTable t = new MutableTable((UnqualifiedName) table.getUnqualifiedName(), schema, comment, view);
+        MutableTable t = new MutableTable((UnqualifiedName) table.getUnqualifiedName(), schema, comment, type);
 
         if (!columns.isEmpty()) {
             for (int i = 0; i < columns.size(); i++) {
@@ -937,7 +947,7 @@ final class DDLInterpreter {
     }
 
     private static final DataDefinitionException alreadyExists(Table<?> t, MutableTable mt) {
-        if (mt.view)
+        if (view(mt.type))
             return viewAlreadyExists(t);
         else
             return tableAlreadyExists(t);
@@ -1105,13 +1115,13 @@ final class DDLInterpreter {
         List<MutableUniqueKey>  uniqueKeys  = new ArrayList<>();
         List<MutableForeignKey> foreignkeys = new ArrayList<>();
         List<MutableIndex>      indexes     = new ArrayList<>();
-        boolean                 view;
+        TableType               type;
 
-        MutableTable(UnqualifiedName name, MutableSchema schema, Comment comment, boolean view) {
+        MutableTable(UnqualifiedName name, MutableSchema schema, Comment comment, TableType type) {
             super(name, comment);
 
             this.schema = schema;
-            this.view = view;
+            this.type = type;
             schema.tables.add(this);
         }
 
@@ -1195,7 +1205,8 @@ final class DDLInterpreter {
 
         private final class InterpretedTable extends TableImpl<Record> {
             InterpretedTable(MutableSchema.InterpretedSchema schema) {
-                super(MutableTable.this.name, schema, null, null, MutableTable.this.comment);
+                // public TableImpl(Name name, Schema schema, Table<?> child, ForeignKey<?, R> path, Table<R> aliased, Field<?>[] parameters, Comment comment, TableType type) {
+                super(MutableTable.this.name, schema, null, null, null, null, MutableTable.this.comment, MutableTable.this.type);
 
                 for (MutableField field : MutableTable.this.fields)
                     createField(field.name, field.type, field.comment != null ? field.comment.getComment() : null);

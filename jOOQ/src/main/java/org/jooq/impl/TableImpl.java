@@ -165,7 +165,11 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
     }
 
     public TableImpl(Name name, Schema schema, Table<?> child, ForeignKey<?, R> path, Table<R> aliased, Field<?>[] parameters, Comment comment) {
-        super(TableType.TABLE, name, schema, comment);
+        this(name, schema, child, path, aliased, parameters, comment, TableType.TABLE);
+    }
+
+    public TableImpl(Name name, Schema schema, Table<?> child, ForeignKey<?, R> path, Table<R> aliased, Field<?>[] parameters, Comment comment, TableType type) {
+        super(type, name, schema, comment);
 
         this.fields = new Fields<>();
         this.child = child;

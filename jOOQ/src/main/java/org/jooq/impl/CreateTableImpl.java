@@ -182,6 +182,7 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
     }
 
     final Table<?>          $table()        { return table; }
+    final boolean           $temporary()    { return temporary; }
     final Select<?>         $select()       { return select; }
     final List<Field<?>>    $columnFields() { return columnFields; }
     final List<DataType<?>> $columnTypes()  { return columnTypes; }

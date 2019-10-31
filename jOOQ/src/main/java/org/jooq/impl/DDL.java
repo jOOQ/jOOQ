@@ -68,6 +68,7 @@ import org.jooq.Query;
 import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.Table;
+import org.jooq.TableType;
 import org.jooq.UniqueKey;
 import org.jooq.tools.StringUtils;
 
@@ -86,8 +87,12 @@ final class DDL {
 
     private final Query createTable(Table<?> table, Collection<? extends Constraint> constraints) {
         return (configuration.createTableIfNotExists()
-                    ? ctx.createTableIfNotExists(table)
-                    : ctx.createTable(table))
+                    ? table.getType() == TableType.TEMPORARY
+                        ? ctx.createTemporaryTableIfNotExists(table)
+                        : ctx.createTableIfNotExists(table)
+                    : table.getType() == TableType.TEMPORARY
+                        ? ctx.createTemporaryTable(table)
+                        : ctx.createTable(table))
                   .columns(sortIf(Arrays.asList(table.fields()), !configuration.respectColumnOrder()))
                   .constraints(constraints);
     }
@@ -96,6 +101,7 @@ final class DDL {
         CreateSequenceFlagsStep result = configuration.createSequenceIfNotExists()
                     ? ctx.createSequenceIfNotExists(sequence)
                     : ctx.createSequence(sequence);
+
         if (sequence.getStartWith() != null)
             result = result.startWith(sequence.getStartWith());
         if (sequence.getIncrementBy() != null)
@@ -108,6 +114,7 @@ final class DDL {
             result = result.cycle();
         if (sequence.getCache() != null)
             result = result.cache(sequence.getCache());
+
         return result;
     }
 

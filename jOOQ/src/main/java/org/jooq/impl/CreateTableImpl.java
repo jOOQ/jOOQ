@@ -126,6 +126,7 @@ import org.jooq.SQL;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
+import org.jooq.TableOptions.OnCommit;
 
 /**
  * @author Lukas Eder
@@ -183,6 +184,7 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
 
     final Table<?>          $table()        { return table; }
     final boolean           $temporary()    { return temporary; }
+    final OnCommit          $onCommit()     { return onCommit; }
     final Select<?>         $select()       { return select; }
     final List<Field<?>>    $columnFields() { return columnFields; }
     final List<DataType<?>> $columnTypes()  { return columnTypes; }
@@ -690,10 +692,4 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
 
 
 
-
-    private enum OnCommit {
-        DELETE_ROWS,
-        PRESERVE_ROWS,
-        DROP;
-    }
 }

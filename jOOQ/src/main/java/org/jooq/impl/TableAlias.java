@@ -76,7 +76,7 @@ final class TableAlias<R extends Record> extends AbstractTable<R> {
     }
 
     TableAlias(Table<R> table, Name alias, Name[] fieldAliases, boolean wrapInParentheses) {
-        super(table.getType(), alias, table.getSchema());
+        super(table.getOptions(), alias, table.getSchema());
 
         this.alias = new Alias<>(table, this, alias, fieldAliases, wrapInParentheses);
         this.aliasedFields = init(fieldAliases);

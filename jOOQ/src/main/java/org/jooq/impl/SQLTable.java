@@ -42,7 +42,7 @@ import org.jooq.Name;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Table;
-import org.jooq.TableType;
+import org.jooq.TableOptions;
 
 /**
  * @author Lukas Eder
@@ -54,7 +54,7 @@ final class SQLTable extends AbstractTable<Record> {
     private final QueryPart   delegate;
 
     SQLTable(QueryPart delegate) {
-        super(TableType.EXPRESSION, DSL.name(delegate.toString()));
+        super(TableOptions.expression(), DSL.name(delegate.toString()));
 
         this.delegate = delegate;
     }

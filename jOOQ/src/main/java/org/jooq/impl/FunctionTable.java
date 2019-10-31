@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.TableType.FUNCTION;
 import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.Names.N_FUNCTION;
 
@@ -46,6 +45,7 @@ import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Table;
+import org.jooq.TableOptions;
 import org.jooq.exception.SQLDialectNotSupportedException;
 
 /**
@@ -61,7 +61,7 @@ final class FunctionTable<R extends Record> extends AbstractTable<R> {
     private final Field<?>       function;
 
     FunctionTable(Field<?> function) {
-        super(FUNCTION, N_FUNCTION);
+        super(TableOptions.function(), N_FUNCTION);
 
         this.function = function;
     }

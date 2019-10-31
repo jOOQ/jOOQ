@@ -55,6 +55,7 @@ import java.util.List;
 
 import org.jooq.Constraint;
 import org.jooq.CreateSequenceFlagsStep;
+import org.jooq.CreateTableOnCommitStep;
 import org.jooq.DDLExportConfiguration;
 import org.jooq.DDLFlag;
 import org.jooq.DSLContext;
@@ -68,6 +69,7 @@ import org.jooq.Query;
 import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.Table;
+import org.jooq.TableOptions.OnCommit;
 import org.jooq.TableType;
 import org.jooq.UniqueKey;
 import org.jooq.tools.StringUtils;
@@ -86,15 +88,33 @@ final class DDL {
     }
 
     private final Query createTable(Table<?> table, Collection<? extends Constraint> constraints) {
-        return (configuration.createTableIfNotExists()
-                    ? table.getType() == TableType.TEMPORARY
+        boolean temporary = table.getType() == TableType.TEMPORARY;
+        OnCommit onCommit = table.getOptions().onCommit();
+
+        CreateTableOnCommitStep s0 = (configuration.createTableIfNotExists()
+                    ? temporary
                         ? ctx.createTemporaryTableIfNotExists(table)
                         : ctx.createTableIfNotExists(table)
-                    : table.getType() == TableType.TEMPORARY
+                    : temporary
                         ? ctx.createTemporaryTable(table)
                         : ctx.createTable(table))
-                  .columns(sortIf(Arrays.asList(table.fields()), !configuration.respectColumnOrder()))
-                  .constraints(constraints);
+            .columns(sortIf(Arrays.asList(table.fields()), !configuration.respectColumnOrder()))
+            .constraints(constraints);
+
+        if (temporary && onCommit != null) {
+            switch (table.getOptions().onCommit()) {
+                case DELETE_ROWS:
+                    return s0.onCommitDeleteRows();
+                case PRESERVE_ROWS:
+                    return s0.onCommitPreserveRows();
+                case DROP:
+                    return s0.onCommitDrop();
+                default:
+                    throw new IllegalStateException("Unsupported flag: " + onCommit);
+            }
+        }
+
+        return s0;
     }
 
     final Query createSequence(Sequence<?> sequence) {

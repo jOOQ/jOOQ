@@ -103,6 +103,7 @@ import org.jooq.TableField;
 import org.jooq.TableLike;
 import org.jooq.TableOnStep;
 import org.jooq.TableOptionalOnStep;
+import org.jooq.TableOptions;
 import org.jooq.TableOuterJoinStep;
 import org.jooq.TablePartitionByStep;
 import org.jooq.TableType;
@@ -121,22 +122,22 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
     private static final long     serialVersionUID = 3155496238969274871L;
     private static final Clause[] CLAUSES          = { TABLE };
 
-    private final TableType       type;
+    private final TableOptions    options;
     private Schema                tableschema;
     private transient DataType<R> tabletype;
 
-    AbstractTable(TableType type, Name name) {
-        this(type, name, null, null);
+    AbstractTable(TableOptions options, Name name) {
+        this(options, name, null, null);
     }
 
-    AbstractTable(TableType type, Name name, Schema schema) {
-        this(type, name, schema, null);
+    AbstractTable(TableOptions options, Name name, Schema schema) {
+        this(options, name, schema, null);
     }
 
-    AbstractTable(TableType type, Name name, Schema schema, Comment comment) {
+    AbstractTable(TableOptions options, Name name, Schema schema, Comment comment) {
         super(qualify(schema, name), comment);
 
-        this.type = type;
+        this.options = options;
         this.tableschema = schema;
     }
 
@@ -393,7 +394,12 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
 
     @Override
     public final TableType getType() {
-        return type;
+        return options.type();
+    }
+
+    @Override
+    public final TableOptions getOptions() {
+        return options;
     }
 
     @Override

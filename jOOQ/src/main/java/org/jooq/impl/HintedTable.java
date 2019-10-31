@@ -70,7 +70,7 @@ final class HintedTable<R extends Record> extends AbstractTable<R> {
     }
 
     HintedTable(AbstractTable<R> delegate, Keyword keywords, QueryPartList<Name> arguments) {
-        super(delegate.getType(), delegate.getQualifiedName(), delegate.getSchema());
+        super(delegate.getOptions(), delegate.getQualifiedName(), delegate.getSchema());
 
         this.delegate = delegate;
         this.keywords = keywords;

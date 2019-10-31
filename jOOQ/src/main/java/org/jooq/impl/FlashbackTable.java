@@ -79,7 +79,7 @@ implements VersionsBetweenAndStep<R, T> {
     private QueryPart           maxvalue;
 
     FlashbackTable(Table<R> table, Field<?> asOf, QueryPart minvalue, FlashbackType type) {
-        super(table.getType(), N_FLASHBACK);
+        super(table.getOptions(), N_FLASHBACK);
 
         this.table = table;
         this.asOf = asOf;

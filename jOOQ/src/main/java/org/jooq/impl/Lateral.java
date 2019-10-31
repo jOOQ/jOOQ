@@ -43,7 +43,7 @@ import org.jooq.Context;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Table;
-import org.jooq.TableType;
+import org.jooq.TableOptions;
 
 /**
  * @author Lukas Eder
@@ -57,7 +57,7 @@ final class Lateral<R extends Record> extends AbstractTable<R> {
     private final Table<R>    table;
 
     Lateral(Table<R> table) {
-        super(TableType.EXPRESSION, table.getQualifiedName(), table.getSchema());
+        super(TableOptions.expression(), table.getQualifiedName(), table.getSchema());
 
         this.table = table;
     }

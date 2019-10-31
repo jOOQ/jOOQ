@@ -85,7 +85,6 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
-import static org.jooq.TableType.EXPRESSION;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.notExists;
@@ -126,6 +125,7 @@ import org.jooq.TableField;
 import org.jooq.TableLike;
 import org.jooq.TableOnConditionStep;
 import org.jooq.TableOptionalOnStep;
+import org.jooq.TableOptions;
 import org.jooq.TableOuterJoinStep;
 import org.jooq.TablePartitionByStep;
 import org.jooq.conf.RenderOptionalKeyword;
@@ -177,7 +177,7 @@ implements
 
 
 
-        super(EXPRESSION, N_JOIN);
+        super(TableOptions.expression(), N_JOIN);
 
         this.lhs = lhs.asTable();
         this.rhs = rhs.asTable();

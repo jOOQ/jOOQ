@@ -130,6 +130,11 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
     TableType getType();
 
     /**
+     * Get the table options.
+     */
+    TableOptions getOptions();
+
+    /**
      * The comment given to the table.
      * <p>
      * If this <code>Table</code> is a generated table from your database, it

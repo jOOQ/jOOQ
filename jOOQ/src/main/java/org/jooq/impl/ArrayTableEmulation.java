@@ -51,7 +51,7 @@ import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Select;
 import org.jooq.Table;
-import org.jooq.TableType;
+import org.jooq.TableOptions;
 
 /**
  * Essentially, this is the same as <code>ArrayTable</code>, except that it simulates
@@ -82,7 +82,7 @@ final class ArrayTableEmulation extends AbstractTable<Record> {
     }
 
     ArrayTableEmulation(Object[] array, Name alias, Name fieldAlias) {
-        super(TableType.EXPRESSION, alias);
+        super(TableOptions.expression(), alias);
 
         this.array = array;
         this.alias = alias;

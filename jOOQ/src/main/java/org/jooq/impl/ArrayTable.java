@@ -55,7 +55,7 @@ import org.jooq.Param;
 // ...
 import org.jooq.Record;
 import org.jooq.Table;
-import org.jooq.TableType;
+import org.jooq.TableOptions;
 import org.jooq.UDTRecord;
 import org.jooq.exception.DataTypeException;
 import org.jooq.util.h2.H2DataType;
@@ -87,7 +87,7 @@ final class ArrayTable extends AbstractTable<Record> {
 
     @SuppressWarnings({ "unchecked" })
     ArrayTable(Field<?> array, Name alias, Name[] fieldAliases) {
-        super(TableType.EXPRESSION, alias);
+        super(TableOptions.expression(), alias);
 
         Class<?> arrayType;
 
@@ -274,7 +274,7 @@ final class ArrayTable extends AbstractTable<Record> {
         private static final long serialVersionUID = 2662639259338694177L;
 
         DialectArrayTable() {
-            super(TableType.EXPRESSION, alias);
+            super(TableOptions.expression(), alias);
         }
 
         @Override

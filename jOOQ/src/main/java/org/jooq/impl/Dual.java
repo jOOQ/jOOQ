@@ -38,7 +38,6 @@
 
 package org.jooq.impl;
 
-import static org.jooq.TableType.EXPRESSION;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Names.N_DUAL;
@@ -50,6 +49,7 @@ import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
+import org.jooq.TableOptions;
 
 /**
  * @author Lukas Eder
@@ -85,7 +85,7 @@ final class Dual extends AbstractTable<Record> {
     }
 
     Dual(boolean force) {
-        super(EXPRESSION, N_DUAL, (Schema) null);
+        super(TableOptions.expression(), N_DUAL, (Schema) null);
 
         this.force = force;
     }

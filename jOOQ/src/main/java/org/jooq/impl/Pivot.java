@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.TableType.EXPRESSION;
 
 
 

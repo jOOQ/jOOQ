@@ -75,6 +75,7 @@ import org.jooq.SortField;
 import org.jooq.SortOrder;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.TableType;
 import org.jooq.UniqueKey;
 import org.jooq.exception.DataAccessException;
@@ -225,7 +226,6 @@ final class DDLInterpreter {
 
     private final void accept0(CreateTableImpl query) {
         Table<?> table = query.$table();
-        boolean temporary = query.$temporary();
         MutableSchema schema = getSchema(table.getSchema(), true);
 
         // TODO We're doing this all the time. Can this be factored out without adding too much abstraction?
@@ -237,7 +237,7 @@ final class DDLInterpreter {
             return;
         }
 
-        MutableTable mt = newTable(table, schema, query.$columnFields(), query.$columnTypes(), query.$select(), query.$comment(), temporary ? TableType.TEMPORARY : TableType.TABLE);
+        MutableTable mt = newTable(table, schema, query.$columnFields(), query.$columnTypes(), query.$select(), query.$comment(), query.$temporary() ? TableOptions.temporaryTable(query.$onCommit()) : TableOptions.table());
 
         for (Constraint constraint : query.$constraints()) {
             ConstraintImpl impl = (ConstraintImpl) constraint;
@@ -380,7 +380,7 @@ final class DDLInterpreter {
 
             return;
         }
-        else if (!table(existing.type))
+        else if (!table(existing))
             throw objectNotTable(table);
 
         // TODO: Multi-add statements
@@ -542,9 +542,9 @@ final class DDLInterpreter {
 
             return;
         }
-        else if (!table(existing.type))
+        else if (!table(existing))
             throw objectNotTable(table);
-        else if (query.$temporary() && existing.type != TableType.TEMPORARY)
+        else if (query.$temporary() && existing.options.type() != TableType.TEMPORARY)
             throw objectNotTemporaryTable(table);
 
         drop(schema.tables, existing, query.$cascade());
@@ -556,7 +556,7 @@ final class DDLInterpreter {
 
         MutableTable existing = schema.table(table);
         if (existing != null) {
-            if (!view(existing.type))
+            if (!view(existing))
                 throw objectNotView(table);
             else if (query.$orReplace())
                 drop(schema.tables, existing, RESTRICT);
@@ -570,7 +570,7 @@ final class DDLInterpreter {
         for (Field<?> f : query.$select().getSelect())
             columnTypes.add(f.getDataType());
 
-        newTable(table, schema, Arrays.asList(query.$fields()), columnTypes, query.$select(), null, TableType.VIEW);
+        newTable(table, schema, Arrays.asList(query.$fields()), columnTypes, query.$select(), null, TableOptions.view(query.$select()));
     }
 
     private final void accept0(AlterViewImpl query) {
@@ -584,7 +584,7 @@ final class DDLInterpreter {
 
             return;
         }
-        else if (!view(existing.type))
+        else if (!view(existing))
             throw objectNotView(table);
 
         Table<?> renameTo = query.$renameTo();
@@ -605,7 +605,7 @@ final class DDLInterpreter {
 
             return;
         }
-        else if (!view(existing.type))
+        else if (!view(existing))
             throw objectNotView(table);
 
         drop(schema.tables, existing, RESTRICT);
@@ -827,11 +827,13 @@ final class DDLInterpreter {
     // Auxiliary methods
     // -------------------------------------------------------------------------
 
-    private static final boolean view(TableType type) {
+    private static final boolean view(MutableTable mt) {
+        TableType type = mt.options.type();
         return type == TableType.VIEW || type == TableType.MATERIALIZED_VIEW;
     }
 
-    private static final boolean table(TableType type) {
+    private static final boolean table(MutableTable mt) {
+        TableType type = mt.options.type();
         return type == TableType.TABLE || type == TableType.TEMPORARY;
     }
 
@@ -881,9 +883,9 @@ final class DDLInterpreter {
         List<DataType<?>> columnTypes,
         Select<?> select,
         Comment comment,
-        TableType type
+        TableOptions options
     ) {
-        MutableTable t = new MutableTable((UnqualifiedName) table.getUnqualifiedName(), schema, comment, type);
+        MutableTable t = new MutableTable((UnqualifiedName) table.getUnqualifiedName(), schema, comment, options);
 
         if (!columns.isEmpty()) {
             for (int i = 0; i < columns.size(); i++) {
@@ -954,7 +956,7 @@ final class DDLInterpreter {
     }
 
     private static final DataDefinitionException alreadyExists(Table<?> t, MutableTable mt) {
-        if (view(mt.type))
+        if (view(mt))
             return viewAlreadyExists(t);
         else
             return tableAlreadyExists(t);
@@ -1122,13 +1124,13 @@ final class DDLInterpreter {
         List<MutableUniqueKey>  uniqueKeys  = new ArrayList<>();
         List<MutableForeignKey> foreignkeys = new ArrayList<>();
         List<MutableIndex>      indexes     = new ArrayList<>();
-        TableType               type;
+        TableOptions            options;
 
-        MutableTable(UnqualifiedName name, MutableSchema schema, Comment comment, TableType type) {
+        MutableTable(UnqualifiedName name, MutableSchema schema, Comment comment, TableOptions options) {
             super(name, comment);
 
             this.schema = schema;
-            this.type = type;
+            this.options = options;
             schema.tables.add(this);
         }
 
@@ -1212,7 +1214,7 @@ final class DDLInterpreter {
 
         private final class InterpretedTable extends TableImpl<Record> {
             InterpretedTable(MutableSchema.InterpretedSchema schema) {
-                super(MutableTable.this.name, schema, null, null, null, null, MutableTable.this.comment, MutableTable.this.type);
+                super(MutableTable.this.name, schema, null, null, null, null, MutableTable.this.comment, MutableTable.this.options);
 
                 for (MutableField field : MutableTable.this.fields)
                     createField(field.name, field.type, field.comment != null ? field.comment.getComment() : null);

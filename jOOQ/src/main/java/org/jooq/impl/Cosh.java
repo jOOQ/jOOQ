@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.two;
 import static org.jooq.impl.Keywords.F_COSH;
+import static org.jooq.impl.Names.N_COSH;
 
 import java.math.BigDecimal;
 
@@ -59,7 +60,7 @@ final class Cosh extends AbstractField<BigDecimal> {
     private final Field<? extends Number> argument;
 
     Cosh(Field<? extends Number> argument) {
-        super(DSL.name("cosh"), SQLDataType.NUMERIC);
+        super(N_COSH, SQLDataType.NUMERIC);
 
         this.argument = argument;
     }

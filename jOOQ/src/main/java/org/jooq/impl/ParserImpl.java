@@ -50,6 +50,7 @@ import static org.jooq.JoinType.JOIN;
 // ...
 import static org.jooq.conf.ParseWithMetaLookups.IGNORE_ON_FAILURE;
 import static org.jooq.conf.ParseWithMetaLookups.THROW_ON_FAILURE;
+import static org.jooq.impl.AbstractName.NO_NAME;
 import static org.jooq.impl.DSL.abs;
 import static org.jooq.impl.DSL.acos;
 import static org.jooq.impl.DSL.all;
@@ -3597,7 +3598,7 @@ final class ParserImpl implements Parser {
         parse(ctx, '(');
         SortField<?>[] fields = parseSortSpecification(ctx).toArray(EMPTY_SORTFIELD);
         parse(ctx, ')');
-        return Internal.createIndex(name == null ? DSL.name("") : name, table, fields, false);
+        return Internal.createIndex(name == null ? NO_NAME : name, table, fields, false);
     }
 
     private static final boolean parseConstraintStateIf(ParserContext ctx) {

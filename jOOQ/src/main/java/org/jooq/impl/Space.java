@@ -38,6 +38,8 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Keywords.F_SPACE;
+import static org.jooq.impl.Names.N_SPACE;
+import static org.jooq.impl.SQLDataType.VARCHAR;
 
 import org.jooq.Context;
 import org.jooq.Field;
@@ -52,7 +54,7 @@ final class Space extends AbstractField<String> {
     private final Field<Integer> count;
 
     Space(Field<Integer> count) {
-        super(DSL.name("space"), SQLDataType.VARCHAR);
+        super(N_SPACE, VARCHAR);
 
         this.count = count;
     }

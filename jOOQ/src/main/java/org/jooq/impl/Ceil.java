@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Keywords.F_CEIL;
 import static org.jooq.impl.Keywords.F_CEILING;
+import static org.jooq.impl.Names.N_CEIL;
 
 import org.jooq.Context;
 import org.jooq.Field;
@@ -56,7 +57,7 @@ final class Ceil<T extends Number> extends AbstractField<T> {
     private final Field<T>    argument;
 
     Ceil(Field<T> argument) {
-        super(DSL.name("ceil"), argument.getDataType());
+        super(N_CEIL, argument.getDataType());
 
         this.argument = argument;
     }

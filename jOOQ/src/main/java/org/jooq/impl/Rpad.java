@@ -49,6 +49,8 @@ import static org.jooq.impl.Keywords.F_ZEROBLOB;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_CAST;
 import static org.jooq.impl.Keywords.K_VARCHAR;
+import static org.jooq.impl.Names.N_RPAD;
+import static org.jooq.impl.SQLDataType.VARCHAR;
 
 import org.jooq.Context;
 import org.jooq.Field;
@@ -72,7 +74,7 @@ final class Rpad extends AbstractField<String> {
     }
 
     Rpad(Field<String> field, Field<? extends Number> length, Field<String> character) {
-        super(DSL.name("rpad"), SQLDataType.VARCHAR);
+        super(N_RPAD, VARCHAR);
 
         this.field = field;
         this.length = length;

@@ -44,6 +44,8 @@ import static org.jooq.impl.Keywords.F_INSTR;
 import static org.jooq.impl.Keywords.F_LOCATE;
 import static org.jooq.impl.Keywords.F_POSITION;
 import static org.jooq.impl.Keywords.K_IN;
+import static org.jooq.impl.Names.N_POSITION;
+import static org.jooq.impl.SQLDataType.INTEGER;
 
 import org.jooq.Context;
 import org.jooq.Field;
@@ -64,7 +66,7 @@ final class Position extends AbstractField<Integer> {
     }
 
     Position(Field<String> search, Field<String> in, Field<? extends Number> startIndex) {
-        super(DSL.name("position"), SQLDataType.INTEGER);
+        super(N_POSITION, INTEGER);
 
         this.search = search;
         this.in = in;

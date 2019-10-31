@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Keywords.F_FLOOR;
+import static org.jooq.impl.Names.N_FLOOR;
 
 import org.jooq.Context;
 import org.jooq.Field;
@@ -55,7 +56,7 @@ final class Floor<T extends Number> extends AbstractField<T> {
     private final Field<T>    argument;
 
     Floor(Field<T> argument) {
-        super(DSL.name("floor"), argument.getDataType());
+        super(N_FLOOR, argument.getDataType());
 
         this.argument = argument;
     }

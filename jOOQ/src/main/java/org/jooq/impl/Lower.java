@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Keywords.F_LCASE;
 import static org.jooq.impl.Keywords.F_LOWER;
+import static org.jooq.impl.Names.N_LOWER;
 
 import org.jooq.Context;
 import org.jooq.Field;
@@ -55,7 +56,7 @@ final class Lower extends AbstractField<String> {
     private final Field<String> field;
 
     Lower(Field<String> field) {
-        super(DSL.name("lower"), field.getDataType());
+        super(N_LOWER, field.getDataType());
 
         this.field = field;
     }

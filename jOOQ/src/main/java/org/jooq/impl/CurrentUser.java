@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static org.jooq.impl.Keywords.F_CURRENTUSER;
 import static org.jooq.impl.Keywords.F_CURRENT_USER;
 import static org.jooq.impl.Keywords.F_USER;
+import static org.jooq.impl.Names.N_CURRENT_USER;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 
 import org.jooq.Context;
@@ -55,7 +56,7 @@ final class CurrentUser extends AbstractField<String> {
     private static final long serialVersionUID = -7273879239726265322L;
 
     CurrentUser() {
-        super(DSL.name("current_user"), VARCHAR);
+        super(N_CURRENT_USER, VARCHAR);
     }
 
     @Override

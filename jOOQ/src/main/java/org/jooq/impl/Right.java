@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.Keywords.F_RIGHT;
+import static org.jooq.impl.Names.N_RIGHT;
 
 import org.jooq.Context;
 import org.jooq.Field;
@@ -57,7 +58,7 @@ final class Right extends AbstractField<String> {
     private Field<? extends Number> length;
 
     Right(Field<String> field, Field<? extends Number> length) {
-        super(DSL.name("right"), field.getDataType());
+        super(N_RIGHT, field.getDataType());
 
         this.field = field;
         this.length = length;

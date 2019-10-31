@@ -45,6 +45,7 @@ import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_CAST;
 import static org.jooq.impl.Keywords.K_DECIMAL;
 import static org.jooq.impl.Keywords.K_TRIM;
+import static org.jooq.impl.Names.N_CAST;
 import static org.jooq.impl.SQLDataType.BOOLEAN;
 import static org.jooq.impl.SQLDataType.DOUBLE;
 import static org.jooq.impl.SQLDataType.FLOAT;
@@ -74,7 +75,7 @@ final class Cast<T> extends AbstractField<T> {
     private final Field<?>    field;
 
     public Cast(Field<?> field, DataType<T> type) {
-        super(DSL.name("cast"), type);
+        super(N_CAST, type);
 
         this.field = field;
     }

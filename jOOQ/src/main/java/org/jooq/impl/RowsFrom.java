@@ -37,7 +37,9 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.TableType.EXPRESSION;
 import static org.jooq.impl.Keywords.K_ROWS_FROM;
+import static org.jooq.impl.Names.N_ROWSFROM;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,7 +50,6 @@ import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Table;
-import org.jooq.TableType;
 
 /**
  * @author Lukas Eder
@@ -63,7 +64,7 @@ final class RowsFrom extends AbstractTable<Record> {
     private final TableList tables;
 
     RowsFrom(Table<?>... tables) {
-        super(TableType.EXPRESSION, DSL.name("rowsfrom"));
+        super(EXPRESSION, N_ROWSFROM);
 
         this.tables = new TableList(Arrays.asList(tables));
     }

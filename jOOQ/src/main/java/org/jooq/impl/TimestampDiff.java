@@ -43,7 +43,9 @@ import static org.jooq.impl.Keywords.F_DATEDIFF;
 import static org.jooq.impl.Keywords.F_STRFTIME;
 import static org.jooq.impl.Keywords.F_TIMESTAMPDIFF;
 import static org.jooq.impl.Keywords.K_MILLISECOND;
+import static org.jooq.impl.Names.N_TIMESTAMPDIFF;
 import static org.jooq.impl.SQLDataType.INTEGER;
+import static org.jooq.impl.SQLDataType.INTERVALDAYTOSECOND;
 import static org.jooq.impl.Tools.castIfNeeded;
 
 import org.jooq.Context;
@@ -64,7 +66,7 @@ final class TimestampDiff extends AbstractField<DayToSecond> {
     private final Field<?>    timestamp2;
 
     TimestampDiff(Field<?> timestamp1, Field<?> timestamp2) {
-        super(DSL.name("timestampdiff"), SQLDataType.INTERVALDAYTOSECOND);
+        super(N_TIMESTAMPDIFF, INTERVALDAYTOSECOND);
 
         this.timestamp1 = timestamp1;
         this.timestamp2 = timestamp2;

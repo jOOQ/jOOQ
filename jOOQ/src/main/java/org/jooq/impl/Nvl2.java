@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Keywords.F_NVL2;
+import static org.jooq.impl.Names.N_NVL2;
 
 import org.jooq.Context;
 import org.jooq.Field;
@@ -57,7 +58,7 @@ final class Nvl2<T> extends AbstractField<T> {
     private final Field<T>    arg3;
 
     Nvl2(Field<?> arg1, Field<T> arg2, Field<T> arg3) {
-        super(DSL.name("nvl2"), arg2.getDataType());
+        super(N_NVL2, arg2.getDataType());
 
         this.arg1 = arg1;
         this.arg2 = arg2;

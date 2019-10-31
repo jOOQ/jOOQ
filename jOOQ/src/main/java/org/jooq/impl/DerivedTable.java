@@ -38,13 +38,15 @@
 
 package org.jooq.impl;
 
+import static org.jooq.TableType.EXPRESSION;
+import static org.jooq.impl.Names.N_SELECT;
+
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Select;
 import org.jooq.Table;
-import org.jooq.TableType;
 
 /**
  * @author Lukas Eder
@@ -56,7 +58,7 @@ final class DerivedTable<R extends Record> extends AbstractTable<R> {
     private final Select<R>   query;
 
     DerivedTable(Select<R> query) {
-        super(TableType.EXPRESSION, DSL.name("select"));
+        super(EXPRESSION, N_SELECT);
 
         this.query = query;
     }

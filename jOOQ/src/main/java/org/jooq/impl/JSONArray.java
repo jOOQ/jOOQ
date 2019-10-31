@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.Keywords.K_JSON_ARRAY;
+import static org.jooq.impl.Names.N_JSON_ARRAY;
 
 import java.util.Collection;
 
@@ -61,7 +62,7 @@ final class JSONArray<J> extends AbstractField<J> {
     private final QueryPartList<Field<?>> args;
 
     JSONArray(DataType<J> type, Collection<? extends Field<?>> args) {
-        super(DSL.name("json_array"), type);
+        super(N_JSON_ARRAY, type);
 
         this.args = new QueryPartList<>(args);
     }

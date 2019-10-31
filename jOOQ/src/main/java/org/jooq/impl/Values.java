@@ -39,9 +39,11 @@ package org.jooq.impl;
 
 import static org.jooq.Clause.TABLE_VALUES;
 // ...
+import static org.jooq.TableType.EXPRESSION;
 import static org.jooq.impl.Keywords.K_MULTISET;
 import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.Keywords.K_VALUES;
+import static org.jooq.impl.Names.N_VALUES;
 
 import org.jooq.Context;
 import org.jooq.Name;
@@ -49,7 +51,6 @@ import org.jooq.Record;
 import org.jooq.Row;
 import org.jooq.Select;
 import org.jooq.Table;
-import org.jooq.TableType;
 
 /**
  * An implementation for the <code>VALUES(...)</code> table constructor
@@ -66,7 +67,7 @@ final class Values<R extends Record> extends AbstractTable<R> {
     private final Row[]       rows;
 
     Values(Row[] rows) {
-        super(TableType.EXPRESSION, DSL.name("values"));
+        super(EXPRESSION, N_VALUES);
 
         this.rows = assertNotEmpty(rows);
     }

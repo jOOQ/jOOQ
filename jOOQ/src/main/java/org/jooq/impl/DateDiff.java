@@ -44,6 +44,7 @@ import static org.jooq.impl.Keywords.F_DAYS_BETWEEN;
 import static org.jooq.impl.Keywords.F_STRFTIME;
 import static org.jooq.impl.Keywords.F_TIMESTAMPDIFF;
 import static org.jooq.impl.Keywords.K_DAY;
+import static org.jooq.impl.Names.N_DATEDIFF;
 import static org.jooq.impl.Tools.castIfNeeded;
 
 import org.jooq.Context;
@@ -63,7 +64,7 @@ final class DateDiff<T> extends AbstractField<Integer> {
     private final Field<T>    date2;
 
     DateDiff(Field<T> date1, Field<T> date2) {
-        super(DSL.name("datediff"), SQLDataType.INTEGER);
+        super(N_DATEDIFF, SQLDataType.INTEGER);
 
         this.date1 = date1;
         this.date2 = date2;

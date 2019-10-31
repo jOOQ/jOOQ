@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Keywords.F_IIF;
+import static org.jooq.impl.Names.N_IIF;
 
 import org.jooq.Condition;
 import org.jooq.Context;
@@ -58,7 +59,7 @@ final class Iif<T> extends AbstractField<T> {
     private final Field<T>    ifFalse;
 
     Iif(Condition condition, Field<T> ifTrue, Field<T> ifFalse) {
-        super(DSL.name("iif"), ifTrue.getDataType());
+        super(N_IIF, ifTrue.getDataType());
 
         this.condition = condition;
         this.ifTrue = ifTrue;

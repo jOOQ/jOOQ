@@ -59,6 +59,7 @@ import static org.jooq.impl.Keywords.K_MINUTE;
 import static org.jooq.impl.Keywords.K_MONTH;
 import static org.jooq.impl.Keywords.K_SECOND;
 import static org.jooq.impl.Keywords.K_YEAR;
+import static org.jooq.impl.Names.N_EXTRACT;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.castIfNeeded;
@@ -82,7 +83,7 @@ final class Extract extends AbstractField<Integer> {
     private final DatePart    datePart;
 
     Extract(Field<?> field, DatePart datePart) {
-        super(DSL.name("extract"), INTEGER);
+        super(N_EXTRACT, INTEGER);
 
         this.field = field;
         this.datePart = datePart;

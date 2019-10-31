@@ -41,6 +41,7 @@ import static org.jooq.impl.DSL.choose;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.unquotedName;
+import static org.jooq.impl.Names.N_CHOOSE;
 
 import org.jooq.CaseValueStep;
 import org.jooq.CaseWhenStep;
@@ -58,7 +59,7 @@ final class Choose<T> extends AbstractField<T> {
     private Field<T>[]        values;
 
     Choose(Field<Integer> index, Field<T>[] values) {
-        super(DSL.name("choose"), dataType(values));
+        super(N_CHOOSE, dataType(values));
 
         this.index = index;
         this.values = values;

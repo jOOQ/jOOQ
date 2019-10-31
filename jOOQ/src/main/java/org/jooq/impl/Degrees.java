@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.pi;
 import static org.jooq.impl.Keywords.F_DEGREES;
+import static org.jooq.impl.Names.N_DEGREES;
 import static org.jooq.impl.Tools.castIfNeeded;
 
 import java.math.BigDecimal;
@@ -60,7 +61,7 @@ final class Degrees extends AbstractField<BigDecimal> {
     private final Field<?>    argument;
 
     Degrees(Field<?> argument) {
-        super(DSL.name("degrees"), SQLDataType.NUMERIC);
+        super(N_DEGREES, SQLDataType.NUMERIC);
 
         this.argument = argument;
     }

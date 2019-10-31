@@ -40,6 +40,8 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.Keywords.K_UNNEST;
+import static org.jooq.impl.Names.N_ARRAY_TABLE;
+import static org.jooq.impl.Names.N_COLUMN_VALUE;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,11 +78,11 @@ final class ArrayTable extends AbstractTable<Record> {
     private final Name[]         fieldAliases;
 
     ArrayTable(Field<?> array) {
-        this(array, DSL.name("array_table"));
+        this(array, N_ARRAY_TABLE);
     }
 
     ArrayTable(Field<?> array, Name alias) {
-        this(array, alias, new Name[] { DSL.name("COLUMN_VALUE") });
+        this(array, alias, new Name[] { N_COLUMN_VALUE });
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -234,7 +236,7 @@ final class ArrayTable extends AbstractTable<Record> {
         public final void accept(Context<?> ctx) {
             ctx.visit(K_TABLE)
                .sql('(')
-               .visit(fieldAliases == null || fieldAliases.length == 0 ? DSL.name("COLUMN_VALUE") : fieldAliases[0])
+               .visit(fieldAliases == null || fieldAliases.length == 0 ? N_COLUMN_VALUE : fieldAliases[0])
                .sql(' ');
 
             // If the array type is unknown (e.g. because it's returned from

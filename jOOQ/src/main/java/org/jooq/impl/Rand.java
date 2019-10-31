@@ -43,6 +43,8 @@ import static org.jooq.impl.Keywords.F_RND;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_CAST;
 import static org.jooq.impl.Keywords.K_NUMERIC;
+import static org.jooq.impl.Names.N_RANDOM;
+import static org.jooq.impl.SQLDataType.NUMERIC;
 
 import java.math.BigDecimal;
 
@@ -66,7 +68,7 @@ final class Rand extends AbstractField<BigDecimal> {
 
 
     Rand() {
-        super(DSL.name("rand"), SQLDataType.NUMERIC);
+        super(N_RANDOM, NUMERIC);
     }
 
     @Override

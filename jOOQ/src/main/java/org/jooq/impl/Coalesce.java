@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Names.N_COALESCE;
+
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -54,7 +56,7 @@ final class Coalesce<T> extends AbstractField<T> {
 
     @SuppressWarnings("unchecked")
     Coalesce(DataType<T> dataType, Field<?>[] fields) {
-        super(DSL.name("coalesce"), dataType);
+        super(N_COALESCE, dataType);
 
         this.fields = (Field[]) fields;
     }

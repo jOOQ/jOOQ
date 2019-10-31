@@ -54,6 +54,7 @@ import static org.jooq.impl.Keywords.F_CURRENT_TIMESTAMP;
 import static org.jooq.impl.Keywords.F_NOW;
 import static org.jooq.impl.Keywords.K_CURRENT;
 import static org.jooq.impl.Keywords.K_TIMESTAMP;
+import static org.jooq.impl.Names.N_CURRENT_TIMESTAMP;
 
 import java.util.Set;
 
@@ -80,7 +81,8 @@ final class CurrentTimestamp<T> extends AbstractField<T> {
     }
 
     CurrentTimestamp(DataType<T> type, Field<Integer> precision) {
-        super(DSL.name("current_timestamp"), type);
+        super(N_CURRENT_TIMESTAMP, type);
+
         this.precision = precision;
     }
 

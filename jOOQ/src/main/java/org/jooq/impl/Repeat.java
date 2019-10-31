@@ -42,6 +42,8 @@ import static org.jooq.impl.Keywords.F_REPEAT;
 import static org.jooq.impl.Keywords.F_REPLACE;
 import static org.jooq.impl.Keywords.F_REPLICATE;
 import static org.jooq.impl.Keywords.F_ZEROBLOB;
+import static org.jooq.impl.Names.N_RPAD;
+import static org.jooq.impl.SQLDataType.VARCHAR;
 
 import org.jooq.Context;
 import org.jooq.Field;
@@ -60,7 +62,7 @@ final class Repeat extends AbstractField<String> {
     private final Field<? extends Number> count;
 
     Repeat(Field<String> string, Field<? extends Number> count) {
-        super(DSL.name("rpad"), SQLDataType.VARCHAR);
+        super(N_RPAD, VARCHAR);
 
         this.string = string;
         this.count = count;

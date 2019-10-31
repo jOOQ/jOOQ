@@ -45,6 +45,7 @@ import static org.jooq.impl.Keywords.F_TRUNC;
 import static org.jooq.impl.Keywords.K_CURRENT;
 import static org.jooq.impl.Keywords.K_DATE;
 import static org.jooq.impl.Keywords.K_YEAR_TO_DAY;
+import static org.jooq.impl.Names.N_CURRENT_DATE;
 
 import org.jooq.Context;
 import org.jooq.DataType;
@@ -60,7 +61,7 @@ final class CurrentDate<T> extends AbstractField<T> {
     private static final long serialVersionUID = -7273879239726265322L;
 
     CurrentDate(DataType<T> type) {
-        super(DSL.name("current_date"), type);
+        super(N_CURRENT_DATE, type);
     }
 
     @Override

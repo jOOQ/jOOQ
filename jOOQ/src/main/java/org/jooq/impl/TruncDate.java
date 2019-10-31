@@ -41,6 +41,7 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.Keywords.F_DATE_TRUNC;
 import static org.jooq.impl.Keywords.F_TRUNC;
 import static org.jooq.impl.Keywords.K_CAST;
+import static org.jooq.impl.Names.N_TRUNC;
 import static org.jooq.impl.Tools.castIfNeeded;
 
 import java.sql.Date;
@@ -63,7 +64,7 @@ final class TruncDate<T> extends AbstractField<T> {
     private final DatePart    part;
 
     TruncDate(Field<T> date, DatePart part) {
-        super(DSL.name("trunc"), date.getDataType());
+        super(N_TRUNC, date.getDataType());
 
         this.date = date;
         this.part = part;

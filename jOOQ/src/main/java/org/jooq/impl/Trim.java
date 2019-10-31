@@ -40,6 +40,8 @@ package org.jooq.impl;
 import static org.jooq.impl.Keywords.F_TRIM;
 import static org.jooq.impl.Keywords.K_BOTH;
 import static org.jooq.impl.Keywords.K_FROM;
+import static org.jooq.impl.Names.N_TRIM;
+import static org.jooq.impl.SQLDataType.VARCHAR;
 
 import org.jooq.Context;
 import org.jooq.Field;
@@ -62,7 +64,7 @@ final class Trim extends AbstractField<String> {
     }
 
     Trim(Field<String> argument, Field<String> characters) {
-        super(DSL.name("trim"), SQLDataType.VARCHAR);
+        super(N_TRIM, VARCHAR);
 
         this.argument = argument;
         this.characters = characters;

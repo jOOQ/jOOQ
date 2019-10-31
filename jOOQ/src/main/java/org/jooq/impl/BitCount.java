@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.Keywords.F_BIT_COUNT;
 import static org.jooq.impl.Keywords.F_COUNTSET;
+import static org.jooq.impl.Names.N_BIT_COUNT;
 
 import org.jooq.Context;
 import org.jooq.Field;
@@ -56,7 +57,8 @@ final class BitCount extends AbstractField<Integer> {
     private final        Field<?>         field;
 
     BitCount(Field<?> field) {
-        super(DSL.name("bit_count"), SQLDataType.INTEGER);
+        super(N_BIT_COUNT, SQLDataType.INTEGER);
+
         this.field = field;
     }
 

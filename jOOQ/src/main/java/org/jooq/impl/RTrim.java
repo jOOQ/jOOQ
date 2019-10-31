@@ -41,6 +41,8 @@ import static org.jooq.impl.Keywords.F_RTRIM;
 import static org.jooq.impl.Keywords.F_TRIM;
 import static org.jooq.impl.Keywords.K_FROM;
 import static org.jooq.impl.Keywords.K_TRAILING;
+import static org.jooq.impl.Names.N_RTRIM;
+import static org.jooq.impl.SQLDataType.VARCHAR;
 
 import org.jooq.Context;
 import org.jooq.Field;
@@ -63,7 +65,7 @@ final class RTrim extends AbstractField<String> {
     }
 
     RTrim(Field<String> argument, Field<String> characters) {
-        super(DSL.name("rtrim"), SQLDataType.VARCHAR);
+        super(N_RTRIM, VARCHAR);
 
         this.argument = argument;
         this.characters = characters;

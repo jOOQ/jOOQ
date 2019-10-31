@@ -42,7 +42,7 @@ import static org.jooq.impl.DSL.keyword;
 import org.jooq.Keyword;
 
 /**
- * An internal keyword cache.
+ * An internal {@link Keyword} cache.
  *
  * @author Lukas Eder
  */

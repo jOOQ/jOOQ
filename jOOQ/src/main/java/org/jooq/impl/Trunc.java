@@ -45,6 +45,7 @@ import static org.jooq.impl.Keywords.F_ROUND_DOWN;
 import static org.jooq.impl.Keywords.F_TRUNC;
 import static org.jooq.impl.Keywords.F_TRUNCATE;
 import static org.jooq.impl.Keywords.F_TRUNCNUM;
+import static org.jooq.impl.Names.N_TRUNC;
 import static org.jooq.impl.Tools.castIfNeeded;
 import static org.jooq.impl.Tools.extractVal;
 
@@ -68,7 +69,7 @@ final class Trunc<T> extends AbstractField<T> {
     private final Field<Integer> decimals;
 
     Trunc(Field<T> field, Field<Integer> decimals) {
-        super(DSL.name("trunc"), field.getDataType());
+        super(N_TRUNC, field.getDataType());
 
         this.field = field;
         this.decimals = decimals;

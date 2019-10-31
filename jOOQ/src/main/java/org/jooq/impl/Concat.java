@@ -41,6 +41,7 @@ import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.ExpressionOperator.ADD;
 import static org.jooq.impl.ExpressionOperator.BIT_AND;
 import static org.jooq.impl.ExpressionOperator.CONCAT;
+import static org.jooq.impl.Names.N_CONCAT;
 import static org.jooq.impl.Tools.castAllIfNeeded;
 
 import org.jooq.Context;
@@ -59,7 +60,7 @@ final class Concat extends AbstractField<String> {
     private final        Field<?>[] arguments;
 
     Concat(Field<?>... arguments) {
-        super(DSL.name("concat"), SQLDataType.VARCHAR);
+        super(N_CONCAT, SQLDataType.VARCHAR);
 
         this.arguments = arguments;
     }

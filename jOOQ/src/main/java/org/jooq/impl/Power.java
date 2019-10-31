@@ -38,6 +38,8 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Keywords.F_POWER;
+import static org.jooq.impl.Names.N_POWER;
+import static org.jooq.impl.SQLDataType.NUMERIC;
 
 import java.math.BigDecimal;
 
@@ -58,7 +60,7 @@ final class Power extends AbstractField<BigDecimal> {
     private final Field<? extends Number> arg2;
 
     Power(Field<? extends Number> arg1, Field<? extends Number> arg2) {
-        super(DSL.name("power"), SQLDataType.NUMERIC);
+        super(N_POWER, NUMERIC);
 
         this.arg1 = arg1;
         this.arg2 = arg2;

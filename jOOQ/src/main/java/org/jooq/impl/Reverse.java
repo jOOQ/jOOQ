@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Keywords.F_REVERSE;
 import static org.jooq.impl.Keywords.F_STRREVERSE;
+import static org.jooq.impl.Names.N_REVERSE;
 
 import org.jooq.Context;
 import org.jooq.Field;
@@ -55,7 +56,7 @@ final class Reverse extends AbstractField<String> {
     private final Field<String> field;
 
     Reverse(Field<String> field) {
-        super(DSL.name("reverse"), field.getDataType());
+        super(N_REVERSE, field.getDataType());
 
         this.field = field;
     }

@@ -43,6 +43,8 @@ import static org.jooq.impl.Keywords.F_SUBSTR;
 import static org.jooq.impl.Keywords.F_SUBSTRING;
 import static org.jooq.impl.Keywords.K_FOR;
 import static org.jooq.impl.Keywords.K_FROM;
+import static org.jooq.impl.Names.N_SUBSTRING;
+import static org.jooq.impl.SQLDataType.VARCHAR;
 
 import org.jooq.Context;
 import org.jooq.Field;
@@ -67,7 +69,7 @@ final class Substring extends AbstractField<String> {
     }
 
     Substring(Field<String> field, Field<? extends Number> startingPosition, Field<? extends Number> length) {
-        super(DSL.name("substring"), SQLDataType.VARCHAR);
+        super(N_SUBSTRING, VARCHAR);
 
         this.field = field;
         this.startingPosition = startingPosition;

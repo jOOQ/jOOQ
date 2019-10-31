@@ -41,6 +41,7 @@ package org.jooq.impl;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.Keywords.K_ARRAY;
 import static org.jooq.impl.Keywords.K_INT;
+import static org.jooq.impl.Names.N_ARRAY;
 
 import java.util.Collection;
 
@@ -62,7 +63,7 @@ final class Array<T> extends AbstractField<T[]> {
     private final Fields<Record> fields;
 
     Array(Collection<? extends Field<T>> fields) {
-        super(DSL.name("array"), type(fields));
+        super(N_ARRAY, type(fields));
 
         this.fields = new Fields<>(fields);
     }

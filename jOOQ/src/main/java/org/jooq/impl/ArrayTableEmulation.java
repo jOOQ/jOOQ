@@ -41,6 +41,8 @@ import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.using;
+import static org.jooq.impl.Names.N_ARRAY_TABLE;
+import static org.jooq.impl.Names.N_COLUMN_VALUE;
 
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -49,7 +51,6 @@ import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Select;
 import org.jooq.Table;
-import org.jooq.TableType;
 import org.jooq.TableType;
 
 /**
@@ -73,7 +74,7 @@ final class ArrayTableEmulation extends AbstractTable<Record> {
     private transient Table<Record> table;
 
     ArrayTableEmulation(Object[] array) {
-        this(array, DSL.name("array_table"), null);
+        this(array, N_ARRAY_TABLE, null);
     }
 
     ArrayTableEmulation(Object[] array, Name alias) {
@@ -85,7 +86,7 @@ final class ArrayTableEmulation extends AbstractTable<Record> {
 
         this.array = array;
         this.alias = alias;
-        this.fieldAlias = fieldAlias == null ? DSL.name("COLUMN_VALUE") : fieldAlias;
+        this.fieldAlias = fieldAlias == null ? N_COLUMN_VALUE : fieldAlias;
         this.field = new Fields<>(DSL.field(name(alias.last(), this.fieldAlias.last()), DSL.getDataType(array.getClass().getComponentType())));
     }
 

@@ -42,6 +42,7 @@ import static org.jooq.impl.Keywords.F_IIF;
 import static org.jooq.impl.Keywords.F_NVL;
 import static org.jooq.impl.Keywords.K_COALESCE;
 import static org.jooq.impl.Keywords.K_IS_NULL;
+import static org.jooq.impl.Names.N_NVL;
 
 import org.jooq.Context;
 import org.jooq.Field;
@@ -60,7 +61,7 @@ final class Nvl<T> extends AbstractField<T> {
     private final Field<T>    arg2;
 
     Nvl(Field<T> arg1, Field<T> arg2) {
-        super(DSL.name("nvl"), arg1.getDataType());
+        super(N_NVL, arg1.getDataType());
 
         this.arg1 = arg1;
         this.arg2 = arg2;

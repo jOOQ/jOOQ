@@ -53,6 +53,7 @@ import static org.jooq.impl.Keywords.K_MINUTE;
 import static org.jooq.impl.Keywords.K_MONTH;
 import static org.jooq.impl.Keywords.K_SECOND;
 import static org.jooq.impl.Keywords.K_YEAR;
+import static org.jooq.impl.Names.N_DATEADD;
 
 import org.jooq.Context;
 import org.jooq.DatePart;
@@ -74,7 +75,7 @@ final class DateAdd<T> extends AbstractField<T> {
     private final DatePart                datePart;
 
     DateAdd(Field<T> date, Field<? extends Number> interval, DatePart datePart) {
-        super(DSL.name("dateadd"), date.getDataType());
+        super(N_DATEADD, date.getDataType());
 
         this.date = date;
         this.interval = interval;

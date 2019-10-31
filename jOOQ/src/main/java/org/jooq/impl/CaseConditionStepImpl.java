@@ -44,6 +44,7 @@ import static org.jooq.impl.Keywords.K_SWITCH;
 import static org.jooq.impl.Keywords.K_THEN;
 import static org.jooq.impl.Keywords.K_TRUE;
 import static org.jooq.impl.Keywords.K_WHEN;
+import static org.jooq.impl.Names.N_CASE;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +72,7 @@ final class CaseConditionStepImpl<T> extends AbstractField<T> implements CaseCon
     private Field<T>              else_;
 
     CaseConditionStepImpl(Condition condition, Field<T> result) {
-        super(DSL.name("case"), result.getDataType());
+        super(N_CASE, result.getDataType());
 
         this.conditions = new ArrayList<>();
         this.results = new ArrayList<>();

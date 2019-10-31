@@ -39,6 +39,8 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Keywords.F_ROLLUP;
 import static org.jooq.impl.Keywords.K_WITH_ROLLUP;
+import static org.jooq.impl.Names.N_ROLLUP;
+import static org.jooq.impl.SQLDataType.OTHER;
 
 import org.jooq.Context;
 import org.jooq.FieldOrRow;
@@ -55,7 +57,7 @@ final class Rollup extends AbstractField<Object> {
     private QueryPartList<FieldOrRow> arguments;
 
     Rollup(FieldOrRow... arguments) {
-        super(DSL.name("rollup"), SQLDataType.OTHER);
+        super(N_ROLLUP, OTHER);
 
         this.arguments = new QueryPartList<>(arguments);
     }

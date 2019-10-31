@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static org.jooq.impl.Keywords.F_IIF;
 import static org.jooq.impl.Keywords.F_NULLIF;
 import static org.jooq.impl.Keywords.K_NULL;
+import static org.jooq.impl.Names.N_NULLIF;
 
 import org.jooq.Context;
 import org.jooq.Field;
@@ -58,7 +59,7 @@ final class NullIf<T> extends AbstractField<T> {
     private final Field<T>    arg2;
 
     NullIf(Field<T> arg1, Field<T> arg2) {
-        super(DSL.name("nullif"), arg1.getDataType());
+        super(N_NULLIF, arg1.getDataType());
 
         this.arg1 = arg1;
         this.arg2 = arg2;

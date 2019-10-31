@@ -41,6 +41,8 @@ import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.zero;
 import static org.jooq.impl.Keywords.F_SGN;
 import static org.jooq.impl.Keywords.F_SIGN;
+import static org.jooq.impl.Names.N_SIGN;
+import static org.jooq.impl.SQLDataType.INTEGER;
 
 import org.jooq.Context;
 import org.jooq.Field;
@@ -58,7 +60,7 @@ final class Sign extends AbstractField<Integer> {
     private final Field<?>    argument;
 
     Sign(Field<?> argument) {
-        super(DSL.name("sign"), SQLDataType.INTEGER);
+        super(N_SIGN, INTEGER);
 
         this.argument = argument;
     }

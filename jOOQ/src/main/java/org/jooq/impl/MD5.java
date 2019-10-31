@@ -44,6 +44,7 @@ import static org.jooq.impl.Keywords.F_MD5;
 import static org.jooq.impl.Keywords.F_RAWTOHEX;
 import static org.jooq.impl.Keywords.F_STANDARD_HASH;
 import static org.jooq.impl.Keywords.K_VARCHAR;
+import static org.jooq.impl.Names.N_MD5;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 
 import org.jooq.Context;
@@ -72,7 +73,7 @@ final class MD5 extends AbstractField<String> {
     private final Field<String> argument;
 
     MD5(Field<String> argument) {
-        super(DSL.name("md5"), VARCHAR);
+        super(N_MD5, VARCHAR);
 
         this.argument = argument;
     }

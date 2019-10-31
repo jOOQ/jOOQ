@@ -41,6 +41,8 @@ import static org.jooq.impl.Keywords.F_LTRIM;
 import static org.jooq.impl.Keywords.F_TRIM;
 import static org.jooq.impl.Keywords.K_FROM;
 import static org.jooq.impl.Keywords.K_LEADING;
+import static org.jooq.impl.Names.N_LTRIM;
+import static org.jooq.impl.SQLDataType.VARCHAR;
 
 import org.jooq.Context;
 import org.jooq.Field;
@@ -63,7 +65,7 @@ final class LTrim extends AbstractField<String> {
     }
 
     LTrim(Field<String> argument, Field<String> characters) {
-        super(DSL.name("ltrim"), SQLDataType.VARCHAR);
+        super(N_LTRIM, VARCHAR);
 
         this.argument = argument;
         this.characters = characters;

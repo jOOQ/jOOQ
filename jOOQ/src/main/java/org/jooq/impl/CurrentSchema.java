@@ -44,6 +44,7 @@ import static org.jooq.impl.Keywords.K_CURRENT;
 import static org.jooq.impl.Keywords.K_CURRENT_SCHEMA;
 import static org.jooq.impl.Keywords.K_DATABASE;
 import static org.jooq.impl.Keywords.K_SCHEMA;
+import static org.jooq.impl.Names.N_CURRENT_SCHEMA;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 
 import org.jooq.Context;
@@ -59,7 +60,7 @@ final class CurrentSchema extends AbstractField<String> {
     private static final long serialVersionUID = -7273879239726265322L;
 
     CurrentSchema() {
-        super(DSL.name("current_schema"), VARCHAR);
+        super(N_CURRENT_SCHEMA, VARCHAR);
     }
 
     @Override

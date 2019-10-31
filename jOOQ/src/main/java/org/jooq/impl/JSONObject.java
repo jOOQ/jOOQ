@@ -48,6 +48,8 @@ import static org.jooq.impl.Keywords.K_FOR;
 import static org.jooq.impl.Keywords.K_JSON;
 import static org.jooq.impl.Keywords.K_JSON_OBJECT;
 import static org.jooq.impl.Keywords.K_WITHOUT_ARRAY_WRAPPER;
+import static org.jooq.impl.Names.N_JSON_OBJECT;
+import static org.jooq.impl.Names.N_T;
 
 import java.util.Collection;
 
@@ -72,7 +74,7 @@ final class JSONObject<J> extends AbstractField<J> {
     private final QueryPartList<JSONEntry<?>> args;
 
     JSONObject(DataType<J> type, Collection<? extends JSONEntry<?>> args) {
-        super(DSL.name("json_array"), type);
+        super(N_JSON_OBJECT, type);
 
         this.args = new QueryPartList<>(args);
     }

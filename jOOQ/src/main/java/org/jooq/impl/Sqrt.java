@@ -39,6 +39,8 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Keywords.F_SQR;
 import static org.jooq.impl.Keywords.F_SQRT;
+import static org.jooq.impl.Names.N_SQRT;
+import static org.jooq.impl.SQLDataType.NUMERIC;
 
 import java.math.BigDecimal;
 
@@ -58,7 +60,7 @@ final class Sqrt extends AbstractField<BigDecimal> {
     private final Field<? extends Number> argument;
 
     Sqrt(Field<? extends Number> argument) {
-        super(DSL.name("sqrt"), SQLDataType.NUMERIC);
+        super(N_SQRT, NUMERIC);
 
         this.argument = argument;
     }

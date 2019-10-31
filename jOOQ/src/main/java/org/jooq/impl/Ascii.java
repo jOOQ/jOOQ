@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static org.jooq.impl.Keywords.F_ASC;
 import static org.jooq.impl.Keywords.F_ASCII;
 import static org.jooq.impl.Keywords.F_ASCII_VAL;
+import static org.jooq.impl.Names.N_ASCII;
 
 import org.jooq.Context;
 import org.jooq.Field;
@@ -57,7 +58,7 @@ final class Ascii extends AbstractField<Integer> {
     private final Field<?>                string;
 
     Ascii(Field<?> string) {
-        super(DSL.name("ascii"), SQLDataType.INTEGER);
+        super(N_ASCII, SQLDataType.INTEGER);
 
         this.string = string;
     }

@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Keywords.F_UCASE;
 import static org.jooq.impl.Keywords.F_UPPER;
+import static org.jooq.impl.Names.N_UPPER;
 
 import org.jooq.Context;
 import org.jooq.Field;
@@ -55,7 +56,7 @@ final class Upper extends AbstractField<String> {
     private final Field<String> field;
 
     Upper(Field<String> field) {
-        super(DSL.name("upper"), field.getDataType());
+        super(N_UPPER, field.getDataType());
 
         this.field = field;
     }

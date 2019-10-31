@@ -52,6 +52,8 @@ import static org.jooq.impl.Keywords.K_CURRVAL;
 import static org.jooq.impl.Keywords.K_NEXTVAL;
 import static org.jooq.impl.Keywords.K_NEXT_VALUE_FOR;
 import static org.jooq.impl.Keywords.K_PREVIOUS_VALUE_FOR;
+import static org.jooq.impl.Names.N_CURRVAL;
+import static org.jooq.impl.Names.N_NEXTVAL;
 
 import org.jooq.Catalog;
 import org.jooq.Clause;
@@ -176,8 +178,8 @@ public class SequenceImpl<T extends Number> extends AbstractNamed implements Seq
     }
 
     private enum SequenceMethod {
-        CURRVAL(K_CURRVAL, DSL.name("currval")),
-        NEXTVAL(K_NEXTVAL, DSL.name("nextval"));
+        CURRVAL(K_CURRVAL, N_CURRVAL),
+        NEXTVAL(K_NEXTVAL, N_NEXTVAL);
 
         final Keyword keyword;
         final Name name;

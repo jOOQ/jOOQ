@@ -40,6 +40,8 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.two;
 import static org.jooq.impl.Keywords.F_SINH;
+import static org.jooq.impl.Names.N_SINH;
+import static org.jooq.impl.SQLDataType.NUMERIC;
 
 import java.math.BigDecimal;
 
@@ -59,7 +61,7 @@ final class Sinh extends AbstractField<BigDecimal> {
     private final Field<? extends Number> argument;
 
     Sinh(Field<? extends Number> argument) {
-        super(DSL.name("sinh"), SQLDataType.NUMERIC);
+        super(N_SINH, NUMERIC);
 
         this.argument = argument;
     }

@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Keywords.F_ATAN;
 import static org.jooq.impl.Keywords.F_ATN;
+import static org.jooq.impl.Names.N_ATAN;
 
 import java.math.BigDecimal;
 
@@ -57,7 +58,7 @@ final class Atan extends AbstractField<BigDecimal> {
     private final Field<? extends Number> arg;
 
     Atan(Field<? extends Number> arg) {
-        super(DSL.name("atan"), SQLDataType.NUMERIC);
+        super(N_ATAN, SQLDataType.NUMERIC);
 
         this.arg = arg;
     }

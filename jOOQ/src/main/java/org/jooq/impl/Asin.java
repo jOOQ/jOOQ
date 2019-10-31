@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.Keywords.F_ASIN;
+import static org.jooq.impl.Names.N_ASIN;
 
 import java.math.BigDecimal;
 
@@ -57,7 +58,7 @@ final class Asin extends AbstractField<BigDecimal> {
     private final Field<? extends Number> arg;
 
     Asin(Field<? extends Number> arg) {
-        super(DSL.name("asin"), SQLDataType.NUMERIC);
+        super(N_ASIN, SQLDataType.NUMERIC);
 
         this.arg = arg;
     }

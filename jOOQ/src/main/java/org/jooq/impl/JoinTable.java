@@ -85,6 +85,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
+import static org.jooq.TableType.EXPRESSION;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.notExists;
@@ -95,6 +96,7 @@ import static org.jooq.impl.Keywords.K_LEFT_OUTER_JOIN_LATERAL;
 import static org.jooq.impl.Keywords.K_ON;
 import static org.jooq.impl.Keywords.K_PARTITION_BY;
 import static org.jooq.impl.Keywords.K_USING;
+import static org.jooq.impl.Names.N_JOIN;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_COLLECT_SEMI_ANTI_JOIN;
 import static org.jooq.impl.Tools.DataKey.DATA_COLLECTED_SEMI_ANTI_JOIN;
 
@@ -126,7 +128,6 @@ import org.jooq.TableOnConditionStep;
 import org.jooq.TableOptionalOnStep;
 import org.jooq.TableOuterJoinStep;
 import org.jooq.TablePartitionByStep;
-import org.jooq.TableType;
 import org.jooq.conf.RenderOptionalKeyword;
 import org.jooq.exception.DataAccessException;
 
@@ -176,7 +177,7 @@ implements
 
 
 
-        super(TableType.EXPRESSION, DSL.name("join"));
+        super(EXPRESSION, N_JOIN);
 
         this.lhs = lhs.asTable();
         this.rhs = rhs.asTable();

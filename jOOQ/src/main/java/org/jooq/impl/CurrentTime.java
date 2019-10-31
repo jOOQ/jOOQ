@@ -43,6 +43,7 @@ import static org.jooq.impl.Keywords.F_CURRENT_TIMESTAMP;
 import static org.jooq.impl.Keywords.K_CURRENT;
 import static org.jooq.impl.Keywords.K_HOUR_TO_SECOND;
 import static org.jooq.impl.Keywords.K_TIME;
+import static org.jooq.impl.Names.N_CURRENT_TIME;
 
 import org.jooq.Context;
 import org.jooq.DataType;
@@ -58,7 +59,7 @@ final class CurrentTime<T> extends AbstractField<T> {
     private static final long serialVersionUID = -7273879239726265322L;
 
     CurrentTime(DataType<T> type) {
-        super(DSL.name("current_time"), type);
+        super(N_CURRENT_TIME, type);
     }
 
     @Override

@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.two;
 import static org.jooq.impl.Keywords.F_ACOS;
+import static org.jooq.impl.Names.N_ACOS;
 
 import java.math.BigDecimal;
 
@@ -58,7 +59,7 @@ final class Acos extends AbstractField<BigDecimal> {
     private final Field<? extends Number> arg;
 
     Acos(Field<? extends Number> arg) {
-        super(DSL.name("acos"), SQLDataType.NUMERIC);
+        super(N_ACOS, SQLDataType.NUMERIC);
 
         this.arg = arg;
     }

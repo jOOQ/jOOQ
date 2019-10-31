@@ -269,6 +269,17 @@ public interface Configuration extends Serializable {
     ConnectionProvider interpreterConnectionProvider();
 
     /**
+     * Get this configuration's underlying system connection provider, which
+     * provides connections for system tasks.
+     * <p>
+     * System tasks may include the generation of auxiliary data types or stored
+     * procedures, which users may want to generate using a different data
+     * source or transaction. By default, this connection provider is the same
+     * as {@link #connectionProvider()}.
+     */
+    ConnectionProvider systemConnectionProvider();
+
+    /**
      * Get this configuration's underlying meta provider.
      */
     MetaProvider metaProvider();

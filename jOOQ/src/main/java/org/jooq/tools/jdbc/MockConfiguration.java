@@ -133,6 +133,11 @@ public class MockConfiguration implements Configuration {
     }
 
     @Override
+    public ConnectionProvider systemConnectionProvider() {
+        return new MockConnectionProvider(delegate.systemConnectionProvider(), provider);
+    }
+
+    @Override
     public MetaProvider metaProvider() {
         return delegate.metaProvider();
     }

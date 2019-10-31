@@ -110,6 +110,7 @@ public class DefaultConfiguration implements Configuration {
     // These objects may be user defined and thus not necessarily serialisable
     private transient ConnectionProvider                connectionProvider;
     private transient ConnectionProvider                interpreterConnectionProvider;
+    private transient ConnectionProvider                systemConnectionProvider;
     private transient MetaProvider                      metaProvider;
     private transient ExecutorProvider                  executorProvider;
     private transient TransactionProvider               transactionProvider;
@@ -191,6 +192,7 @@ public class DefaultConfiguration implements Configuration {
         this(
             configuration.connectionProvider,
             configuration.interpreterConnectionProvider,
+            configuration.systemConnectionProvider,
             configuration.metaProvider,
             configuration.executorProvider,
             configuration.transactionProvider,
@@ -691,6 +693,7 @@ public class DefaultConfiguration implements Configuration {
         this(
             connectionProvider,
             null,
+            null,
             metaProvider,
             executorProvider,
             transactionProvider,
@@ -723,6 +726,7 @@ public class DefaultConfiguration implements Configuration {
     DefaultConfiguration(
         ConnectionProvider connectionProvider,
         ConnectionProvider interpreterConnectionProvider,
+        ConnectionProvider systemConnectionProvider,
         MetaProvider metaProvider,
         ExecutorProvider executorProvider,
         TransactionProvider transactionProvider,
@@ -744,6 +748,7 @@ public class DefaultConfiguration implements Configuration {
     {
         set(connectionProvider);
         setInterpreterConnectionProvider(interpreterConnectionProvider);
+        setSystemConnectionProvider(systemConnectionProvider);
         set(metaProvider);
         set(executorProvider);
         set(transactionProvider);
@@ -800,6 +805,7 @@ public class DefaultConfiguration implements Configuration {
         return new DefaultConfiguration(
             newConnectionProvider,
             interpreterConnectionProvider,
+            systemConnectionProvider,
             metaProvider,
             executorProvider,
             transactionProvider,
@@ -826,6 +832,7 @@ public class DefaultConfiguration implements Configuration {
         return new DefaultConfiguration(
             connectionProvider,
             interpreterConnectionProvider,
+            systemConnectionProvider,
             newMetaProvider,
             executorProvider,
             transactionProvider,
@@ -857,6 +864,7 @@ public class DefaultConfiguration implements Configuration {
         return new DefaultConfiguration(
             connectionProvider,
             interpreterConnectionProvider,
+            systemConnectionProvider,
             metaProvider,
             newExecutorProvider,
             transactionProvider,
@@ -883,6 +891,7 @@ public class DefaultConfiguration implements Configuration {
         return new DefaultConfiguration(
             connectionProvider,
             interpreterConnectionProvider,
+            systemConnectionProvider,
             metaProvider,
             executorProvider,
             newTransactionProvider,
@@ -914,6 +923,7 @@ public class DefaultConfiguration implements Configuration {
         return new DefaultConfiguration(
             connectionProvider,
             interpreterConnectionProvider,
+            systemConnectionProvider,
             metaProvider,
             executorProvider,
             transactionProvider,
@@ -945,6 +955,7 @@ public class DefaultConfiguration implements Configuration {
         return new DefaultConfiguration(
             connectionProvider,
             interpreterConnectionProvider,
+            systemConnectionProvider,
             metaProvider,
             executorProvider,
             transactionProvider,
@@ -976,6 +987,7 @@ public class DefaultConfiguration implements Configuration {
         return new DefaultConfiguration(
             connectionProvider,
             interpreterConnectionProvider,
+            systemConnectionProvider,
             metaProvider,
             executorProvider,
             transactionProvider,
@@ -1007,6 +1019,7 @@ public class DefaultConfiguration implements Configuration {
         return new DefaultConfiguration(
             connectionProvider,
             interpreterConnectionProvider,
+            systemConnectionProvider,
             metaProvider,
             executorProvider,
             transactionProvider,
@@ -1038,6 +1051,7 @@ public class DefaultConfiguration implements Configuration {
         return new DefaultConfiguration(
             connectionProvider,
             interpreterConnectionProvider,
+            systemConnectionProvider,
             metaProvider,
             executorProvider,
             transactionProvider,
@@ -1069,6 +1083,7 @@ public class DefaultConfiguration implements Configuration {
         return new DefaultConfiguration(
             connectionProvider,
             interpreterConnectionProvider,
+            systemConnectionProvider,
             metaProvider,
             executorProvider,
             transactionProvider,
@@ -1100,6 +1115,7 @@ public class DefaultConfiguration implements Configuration {
         return new DefaultConfiguration(
             connectionProvider,
             interpreterConnectionProvider,
+            systemConnectionProvider,
             metaProvider,
             executorProvider,
             transactionProvider,
@@ -1131,6 +1147,7 @@ public class DefaultConfiguration implements Configuration {
         return new DefaultConfiguration(
             connectionProvider,
             interpreterConnectionProvider,
+            systemConnectionProvider,
             metaProvider,
             executorProvider,
             transactionProvider,
@@ -1157,6 +1174,7 @@ public class DefaultConfiguration implements Configuration {
         return new DefaultConfiguration(
             connectionProvider,
             interpreterConnectionProvider,
+            systemConnectionProvider,
             metaProvider,
             executorProvider,
             transactionProvider,
@@ -1184,6 +1202,7 @@ public class DefaultConfiguration implements Configuration {
         return new DefaultConfiguration(
             connectionProvider,
             interpreterConnectionProvider,
+            systemConnectionProvider,
             metaProvider,
             executorProvider,
             transactionProvider,
@@ -1209,6 +1228,7 @@ public class DefaultConfiguration implements Configuration {
         return new DefaultConfiguration(
             connectionProvider,
             interpreterConnectionProvider,
+            systemConnectionProvider,
             metaProvider,
             executorProvider,
             transactionProvider,
@@ -1235,6 +1255,7 @@ public class DefaultConfiguration implements Configuration {
         return new DefaultConfiguration(
             connectionProvider,
             interpreterConnectionProvider,
+            systemConnectionProvider,
             metaProvider,
             executorProvider,
             transactionProvider,
@@ -1497,6 +1518,15 @@ public class DefaultConfiguration implements Configuration {
     }
 
     /**
+     * @see #set(ConnectionProvider)
+     */
+    public final void setSystemConnectionProvider(ConnectionProvider newSystemConnectionProvider) {
+        // TODO: [#9460] Should we have setters in the Configuration API as well?
+        //       See https://github.com/jOOQ/jOOQ/issues/9460#issuecomment-547973317
+        this.systemConnectionProvider = newSystemConnectionProvider;
+    }
+
+    /**
      * @see #set(MetaProvider)
      */
     public final void setMetaProvider(MetaProvider newMetaProvider) {
@@ -1684,6 +1714,13 @@ public class DefaultConfiguration implements Configuration {
     }
 
     @Override
+    public final ConnectionProvider systemConnectionProvider() {
+        return systemConnectionProvider != null
+             ? systemConnectionProvider
+             : connectionProvider();
+    }
+
+    @Override
     public final MetaProvider metaProvider() {
         return metaProvider != null
              ? metaProvider
@@ -1834,6 +1871,9 @@ public class DefaultConfiguration implements Configuration {
         oos.writeObject(interpreterConnectionProvider instanceof Serializable
             ? interpreterConnectionProvider
             : null);
+        oos.writeObject(systemConnectionProvider instanceof Serializable
+            ? systemConnectionProvider
+            : null);
         oos.writeObject(metaProvider instanceof Serializable
             ? metaProvider
             : null);
@@ -1893,6 +1933,7 @@ public class DefaultConfiguration implements Configuration {
 
         connectionProvider = (ConnectionProvider) ois.readObject();
         interpreterConnectionProvider = (ConnectionProvider) ois.readObject();
+        systemConnectionProvider = (ConnectionProvider) ois.readObject();
         metaProvider = (MetaProvider) ois.readObject();
         transactionProvider = (TransactionProvider) ois.readObject();
         recordMapperProvider = (RecordMapperProvider) ois.readObject();

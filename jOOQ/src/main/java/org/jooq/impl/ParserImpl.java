@@ -41,6 +41,7 @@ import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
+import static org.jooq.JoinType.JOIN;
 // ...
 // ...
 // ...
@@ -5107,10 +5108,16 @@ final class ParserImpl implements Parser {
                     return s2.on(parseCondition(ctx));
                 else if (parseKeywordIf(ctx, "USING"))
                     return parseJoinUsing(ctx, s2);
+
+                // [#9476] MySQL treats INNER JOIN and CROSS JOIN as the same
+                else if (joinType == JOIN)
+                    return s0;
                 else
                     throw ctx.expected("ON", "USING");
 
             case CROSS_JOIN:
+
+                // [#9476] MySQL treats INNER JOIN and CROSS JOIN as the same
                 if (parseKeywordIf(ctx, "ON"))
                     return left.join(right).on(parseCondition(ctx));
                 else if (parseKeywordIf(ctx, "USING"))

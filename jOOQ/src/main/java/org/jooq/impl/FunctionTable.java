@@ -44,6 +44,7 @@ import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Table;
+import org.jooq.TableType;
 import org.jooq.exception.SQLDialectNotSupportedException;
 
 /**
@@ -59,7 +60,7 @@ final class FunctionTable<R extends Record> extends AbstractTable<R> {
     private final Field<?>       function;
 
     FunctionTable(Field<?> function) {
-        super("function_table");
+        super(TableType.FUNCTION, DSL.name("function_table"));
 
         this.function = function;
     }

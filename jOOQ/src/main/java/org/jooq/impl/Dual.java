@@ -48,6 +48,7 @@ import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
+import org.jooq.TableType;
 
 /**
  * @author Lukas Eder
@@ -83,7 +84,7 @@ final class Dual extends AbstractTable<Record> {
     }
 
     Dual(boolean force) {
-        super(DSL.name("dual"), (Schema) null);
+        super(TableType.EXPRESSION, DSL.name("dual"), (Schema) null);
 
         this.force = force;
     }

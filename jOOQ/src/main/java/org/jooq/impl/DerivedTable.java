@@ -44,6 +44,7 @@ import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Select;
 import org.jooq.Table;
+import org.jooq.TableType;
 
 /**
  * @author Lukas Eder
@@ -55,7 +56,7 @@ final class DerivedTable<R extends Record> extends AbstractTable<R> {
     private final Select<R>   query;
 
     DerivedTable(Select<R> query) {
-        super("select");
+        super(TableType.EXPRESSION, DSL.name("select"));
 
         this.query = query;
     }

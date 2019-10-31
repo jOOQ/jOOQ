@@ -121,44 +121,22 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
     private static final long     serialVersionUID = 3155496238969274871L;
     private static final Clause[] CLAUSES          = { TABLE };
 
+    private final TableType       type;
     private Schema                tableschema;
     private transient DataType<R> tabletype;
 
-    /**
-     * @deprecated - 3.10.0 - [#6068] - Use {@link #AbstractTable(Name)} instead.
-     */
-    @Deprecated
-    AbstractTable(String name) {
-        this(name, null, null);
+    AbstractTable(TableType type, Name name) {
+        this(type, name, null, null);
     }
 
-    /**
-     * @deprecated - 3.10.0 - [#6068] - Use {@link #AbstractTable(Name, Schema)} instead.
-     */
-    @Deprecated
-    AbstractTable(String name, Schema schema) {
-        this(name, schema, null);
+    AbstractTable(TableType type, Name name, Schema schema) {
+        this(type, name, schema, null);
     }
 
-    /**
-     * @deprecated - 3.10.0 - [#6068] - Use {@link #AbstractTable(Name, Schema, String)} instead.
-     */
-    @Deprecated
-    AbstractTable(String name, Schema schema, String comment) {
-        this(DSL.name(name), schema, DSL.comment(comment));
-    }
-
-    AbstractTable(Name name) {
-        this(name, null, null);
-    }
-
-    AbstractTable(Name name, Schema schema) {
-        this(name, schema, null);
-    }
-
-    AbstractTable(Name name, Schema schema, Comment comment) {
+    AbstractTable(TableType type, Name name, Schema schema, Comment comment) {
         super(qualify(schema, name), comment);
 
+        this.type = type;
         this.tableschema = schema;
     }
 
@@ -415,7 +393,7 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
 
     @Override
     public final TableType getType() {
-        return TableType.UNKNOWN;
+        return type;
     }
 
     @Override

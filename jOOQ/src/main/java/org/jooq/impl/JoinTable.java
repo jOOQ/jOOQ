@@ -126,6 +126,7 @@ import org.jooq.TableOnConditionStep;
 import org.jooq.TableOptionalOnStep;
 import org.jooq.TableOuterJoinStep;
 import org.jooq.TablePartitionByStep;
+import org.jooq.TableType;
 import org.jooq.conf.RenderOptionalKeyword;
 import org.jooq.exception.DataAccessException;
 
@@ -175,7 +176,7 @@ implements
 
 
 
-        super("join");
+        super(TableType.EXPRESSION, DSL.name("join"));
 
         this.lhs = lhs.asTable();
         this.rhs = rhs.asTable();

@@ -48,6 +48,7 @@ import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Table;
+import org.jooq.TableType;
 
 /**
  * @author Lukas Eder
@@ -62,7 +63,7 @@ final class RowsFrom extends AbstractTable<Record> {
     private final TableList tables;
 
     RowsFrom(Table<?>... tables) {
-        super("rows from");
+        super(TableType.EXPRESSION, DSL.name("rowsfrom"));
 
         this.tables = new TableList(Arrays.asList(tables));
     }

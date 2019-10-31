@@ -72,6 +72,12 @@ public enum TableType {
     FUNCTION,
 
     /**
+     * A table expression, such as a derived table, a joined table, a common
+     * table expression, etc.
+     */
+    EXPRESSION,
+
+    /**
      * A table type that is unknown to jOOQ.
      */
     UNKNOWN

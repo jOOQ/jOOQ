@@ -48,6 +48,7 @@ import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Select;
 import org.jooq.Table;
+import org.jooq.TableType;
 
 /**
  * @author Lukas Eder
@@ -64,7 +65,7 @@ final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R>
     private final Fields<R>             fields;
 
     CommonTableExpressionImpl(DerivedColumnListImpl name, Select<R> select) {
-        super(name.name);
+        super(TableType.EXPRESSION, name.name);
 
         this.name = name;
         this.select = select;

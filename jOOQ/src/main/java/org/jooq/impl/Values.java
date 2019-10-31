@@ -49,6 +49,7 @@ import org.jooq.Record;
 import org.jooq.Row;
 import org.jooq.Select;
 import org.jooq.Table;
+import org.jooq.TableType;
 
 /**
  * An implementation for the <code>VALUES(...)</code> table constructor
@@ -65,7 +66,7 @@ final class Values<R extends Record> extends AbstractTable<R> {
     private final Row[]       rows;
 
     Values(Row[] rows) {
-        super("values");
+        super(TableType.EXPRESSION, DSL.name("values"));
 
         this.rows = assertNotEmpty(rows);
     }

@@ -58,7 +58,7 @@ final class WithTable<R extends Record> extends AbstractTable<R> {
     private final String           hint;
 
     WithTable(AbstractTable<R> delegate, String hint) {
-        super(delegate.getName(), delegate.getSchema());
+        super(delegate.getType(), delegate.getQualifiedName(), delegate.getSchema());
 
         this.delegate = delegate;
         this.hint = hint;

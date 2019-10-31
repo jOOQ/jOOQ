@@ -62,6 +62,7 @@ import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Table;
+import org.jooq.TableType;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -164,7 +165,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
     }
 
     public TableImpl(Name name, Schema schema, Table<?> child, ForeignKey<?, R> path, Table<R> aliased, Field<?>[] parameters, Comment comment) {
-        super(name, schema, comment);
+        super(TableType.TABLE, name, schema, comment);
 
         this.fields = new Fields<>();
         this.child = child;

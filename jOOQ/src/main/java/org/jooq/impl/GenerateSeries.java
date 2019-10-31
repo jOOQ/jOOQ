@@ -50,6 +50,7 @@ import org.jooq.Name;
 import org.jooq.QueryPart;
 import org.jooq.Record1;
 import org.jooq.Table;
+import org.jooq.TableType;
 
 /**
  * @author Lukas Eder
@@ -70,7 +71,7 @@ final class GenerateSeries extends AbstractTable<Record1<Integer>> {
     }
 
     GenerateSeries(Field<Integer> from, Field<Integer> to, Field<Integer> step) {
-        super("generate_series");
+        super(TableType.EXPRESSION, DSL.name("generate_series"));
 
         this.from = from;
         this.to = to;

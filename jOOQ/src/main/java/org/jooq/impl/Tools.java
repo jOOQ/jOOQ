@@ -4753,9 +4753,12 @@ final class Tools {
             else if (type.length() > 0)
                 ctx.sql(typeName).sql('(').sql(type.length()).sql(')');
 
-            // [#6745] The DataType.getCastTypeName() cannot be used in some dialects, for DDL
+            // [#6745] [#9473] The DataType.getCastTypeName() cannot be used in some dialects, for DDL
             else if (NO_SUPPORT_CAST_TYPE_IN_DDL.contains(ctx.family()))
-                ctx.sql(SQLDataType.CLOB.getTypeName(ctx.configuration()));
+                if (type.isBinary())
+                    ctx.sql(SQLDataType.BLOB.getTypeName(ctx.configuration()));
+                else
+                    ctx.sql(SQLDataType.CLOB.getTypeName(ctx.configuration()));
 
             // Some databases don't allow for length-less VARCHAR, VARBINARY types
             else {

@@ -244,7 +244,10 @@ final class DDL {
             String tComment = table.getComment();
 
             if (!StringUtils.isEmpty(tComment))
-                result.add(ctx.commentOnTable(table).is(tComment));
+                if (table.getType().isView())
+                    result.add(ctx.commentOnView(table).is(tComment));
+                else
+                    result.add(ctx.commentOnTable(table).is(tComment));
 
             for (Field<?> field : sortIf(Arrays.asList(table.fields()), !configuration.respectColumnOrder())) {
                 String fComment = field.getComment();

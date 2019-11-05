@@ -93,8 +93,10 @@ final class DDL {
         OnCommit onCommit = table.getOptions().onCommit();
 
         if (view)
-            return (configuration.createTableIfNotExists()
+            return (configuration.createViewIfNotExists()
                         ? ctx.createViewIfNotExists(table, table.fields())
+                        : configuration.createOrReplaceView()
+                        ? ctx.createOrReplaceView(table, table.fields())
                         : ctx.createView(table, table.fields()))
                     .as(table.getOptions().select());
 

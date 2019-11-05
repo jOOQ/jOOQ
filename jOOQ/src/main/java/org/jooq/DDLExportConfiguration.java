@@ -55,6 +55,8 @@ public final class DDLExportConfiguration {
     private final boolean          createTableIfNotExists;
     private final boolean          createIndexIfNotExists;
     private final boolean          createSequenceIfNotExists;
+    private final boolean          createViewIfNotExists;
+    private final boolean          createOrReplaceView;
     private final EnumSet<DDLFlag> flags;
     private final boolean          respectCatalogOrder;
     private final boolean          respectSchemaOrder;
@@ -71,6 +73,8 @@ public final class DDLExportConfiguration {
         this(
             EnumSet.allOf(DDLFlag.class),
 
+            false,
+            false,
             false,
             false,
             false,
@@ -92,6 +96,8 @@ public final class DDLExportConfiguration {
         boolean createTableIfNotExists,
         boolean createIndexIfNotExists,
         boolean createSequenceIfNotExists,
+        boolean createViewIfNotExists,
+        boolean createOrreplaceView,
         boolean respectCatalogOrder,
         boolean respectSchemaOrder,
         boolean respectTableOrder,
@@ -106,6 +112,8 @@ public final class DDLExportConfiguration {
         this.createTableIfNotExists = createTableIfNotExists;
         this.createIndexIfNotExists = createIndexIfNotExists;
         this.createSequenceIfNotExists = createSequenceIfNotExists;
+        this.createViewIfNotExists = createViewIfNotExists;
+        this.createOrReplaceView = createOrreplaceView;
 
         this.respectCatalogOrder = respectCatalogOrder;
         this.respectSchemaOrder = respectSchemaOrder;
@@ -140,6 +148,8 @@ public final class DDLExportConfiguration {
             createTableIfNotExists,
             createIndexIfNotExists,
             createSequenceIfNotExists,
+            createViewIfNotExists,
+            createOrReplaceView,
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -171,6 +181,8 @@ public final class DDLExportConfiguration {
             createTableIfNotExists,
             createIndexIfNotExists,
             createSequenceIfNotExists,
+            createViewIfNotExists,
+            createOrReplaceView,
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -202,6 +214,8 @@ public final class DDLExportConfiguration {
             newCreateTableIfNotExists,
             createIndexIfNotExists,
             createSequenceIfNotExists,
+            createViewIfNotExists,
+            createOrReplaceView,
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -233,6 +247,8 @@ public final class DDLExportConfiguration {
             createTableIfNotExists,
             newCreateIndexIfNotExists,
             createSequenceIfNotExists,
+            createViewIfNotExists,
+            createOrReplaceView,
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -264,6 +280,74 @@ public final class DDLExportConfiguration {
             createTableIfNotExists,
             createIndexIfNotExists,
             newCreateSequenceIfNotExists,
+            createViewIfNotExists,
+            createOrReplaceView,
+            respectCatalogOrder,
+            respectSchemaOrder,
+            respectTableOrder,
+            respectColumnOrder,
+            respectConstraintOrder,
+            respectIndexOrder,
+            respectSequenceOrder
+        );
+    }
+
+    /**
+     * Whether to generate <code>CREATE VIEW IF NOT EXISTS</code> statements.
+     * <p>
+     * Not all RDBMS support this flag. Check
+     * {@link DSLContext#createViewIfNotExists(Table, Field...)} to see if your
+     * {@link SQLDialect} supports the clause.
+     */
+    public final boolean createViewIfNotExists() {
+        return createViewIfNotExists;
+    }
+
+    /**
+     * Whether to generate <code>CREATE VIEW IF NOT EXISTS</code> statements.
+     */
+    public final DDLExportConfiguration createViewIfNotExists(boolean newCreateViewIfNotExists) {
+        return new DDLExportConfiguration(
+            flags,
+            createSchemaIfNotExists,
+            createTableIfNotExists,
+            createIndexIfNotExists,
+            createSequenceIfNotExists,
+            newCreateViewIfNotExists,
+            createOrReplaceView,
+            respectCatalogOrder,
+            respectSchemaOrder,
+            respectTableOrder,
+            respectColumnOrder,
+            respectConstraintOrder,
+            respectIndexOrder,
+            respectSequenceOrder
+        );
+    }
+
+    /**
+     * Whether to generate <code>CREATE OR REPLACE VIEW</code> statements.
+     * <p>
+     * Not all RDBMS support this flag. Check
+     * {@link DSLContext#createOrReplaceView(Table, Field...)} to see if your
+     * {@link SQLDialect} supports the clause.
+     */
+    public final boolean createOrReplaceView() {
+        return createOrReplaceView;
+    }
+
+    /**
+     * Whether to generate <code>CREATE OR REPLACE VIEW</code> statements.
+     */
+    public final DDLExportConfiguration createOrReplaceView(boolean newCreateOrReplaceView) {
+        return new DDLExportConfiguration(
+            flags,
+            createSchemaIfNotExists,
+            createTableIfNotExists,
+            createIndexIfNotExists,
+            createSequenceIfNotExists,
+            createViewIfNotExists,
+            newCreateOrReplaceView,
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -293,6 +377,8 @@ public final class DDLExportConfiguration {
             createTableIfNotExists,
             createIndexIfNotExists,
             createSequenceIfNotExists,
+            createViewIfNotExists,
+            createOrReplaceView,
             newRespectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -322,6 +408,8 @@ public final class DDLExportConfiguration {
             createTableIfNotExists,
             createIndexIfNotExists,
             createSequenceIfNotExists,
+            createViewIfNotExists,
+            createOrReplaceView,
             respectCatalogOrder,
             newRespectSchemaOrder,
             respectTableOrder,
@@ -351,6 +439,8 @@ public final class DDLExportConfiguration {
             createTableIfNotExists,
             createIndexIfNotExists,
             createSequenceIfNotExists,
+            createViewIfNotExists,
+            createOrReplaceView,
             respectCatalogOrder,
             respectSchemaOrder,
             newRespectTableOrder,
@@ -380,6 +470,8 @@ public final class DDLExportConfiguration {
             createTableIfNotExists,
             createIndexIfNotExists,
             createSequenceIfNotExists,
+            createViewIfNotExists,
+            createOrReplaceView,
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -409,6 +501,8 @@ public final class DDLExportConfiguration {
             createTableIfNotExists,
             createIndexIfNotExists,
             createSequenceIfNotExists,
+            createViewIfNotExists,
+            createOrReplaceView,
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -438,6 +532,8 @@ public final class DDLExportConfiguration {
             createTableIfNotExists,
             createIndexIfNotExists,
             createSequenceIfNotExists,
+            createViewIfNotExists,
+            createOrReplaceView,
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -467,6 +563,8 @@ public final class DDLExportConfiguration {
             createTableIfNotExists,
             createIndexIfNotExists,
             createSequenceIfNotExists,
+            createViewIfNotExists,
+            createOrReplaceView,
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,

@@ -97,7 +97,7 @@ public final class DDLExportConfiguration {
         boolean createIndexIfNotExists,
         boolean createSequenceIfNotExists,
         boolean createViewIfNotExists,
-        boolean createOrreplaceView,
+        boolean createOrReplaceView,
         boolean respectCatalogOrder,
         boolean respectSchemaOrder,
         boolean respectTableOrder,
@@ -113,7 +113,7 @@ public final class DDLExportConfiguration {
         this.createIndexIfNotExists = createIndexIfNotExists;
         this.createSequenceIfNotExists = createSequenceIfNotExists;
         this.createViewIfNotExists = createViewIfNotExists;
-        this.createOrReplaceView = createOrreplaceView;
+        this.createOrReplaceView = createOrReplaceView;
 
         this.respectCatalogOrder = respectCatalogOrder;
         this.respectSchemaOrder = respectSchemaOrder;
@@ -234,7 +234,7 @@ public final class DDLExportConfiguration {
      * {@link SQLDialect} supports the clause.
      */
     public final boolean createIndexIfNotExists() {
-        return createTableIfNotExists;
+        return createIndexIfNotExists;
     }
 
     /**

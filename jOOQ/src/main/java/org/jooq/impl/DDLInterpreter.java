@@ -247,7 +247,7 @@ final class DDLInterpreter {
             else if (impl.$unique() != null)
                 mt.uniqueKeys.add(new MutableUniqueKey((UnqualifiedName) impl.getUnqualifiedName(), mt, mt.fields(impl.$unique(), true)));
             else if (impl.$foreignKey() != null)
-                addForeignKey(schema, mt, impl);
+                addForeignKey(getSchema(impl.$referencesTable().getSchema(), false), mt, impl);
             else
                 throw unsupportedQuery(query);
         }
@@ -844,6 +844,8 @@ final class DDLInterpreter {
     }
 
     private final MutableSchema getSchema(Schema input, boolean create) {
+
+        // TODO It does not appear we should auto-create schema in the interpreter. Why is this being done?
         if (input == null)
             return currentSchema;
 
@@ -1256,11 +1258,14 @@ final class DDLInterpreter {
 
                 TableField<Record, ?>[] f = new TableField[key.keyFields.size()];
 
+                // TODO: Refactor these constructor calls
+                InterpretedTable t = key.keyTable.new InterpretedTable(key.keyTable.schema.new InterpretedSchema(key.keyTable.schema.catalog.new InterpretedCatalog()));
+
                 for (int i = 0; i < f.length; i++)
-                    f[i] = (TableField<Record, ?>) field(key.keyFields.get(i).name);
+                    f[i] = (TableField<Record, ?>) t.field(key.keyFields.get(i).name);
 
                 // TODO: Cache these?
-                return new UniqueKeyImpl<Record>(this, key.name.last(), f);
+                return new UniqueKeyImpl<Record>(t, key.name.last(), f);
             }
 
             @SuppressWarnings("unchecked")
@@ -1273,6 +1278,7 @@ final class DDLInterpreter {
                 for (int i = 0; i < f.length; i++)
                     f[i] = (TableField<Record, ?>) field(key.keyFields.get(i).name);
 
+                // TODO: Refactor these constructor calls
                 // TODO: Cache these?
                 return new ReferenceImpl<>(key.referencedKey.keyTable.new InterpretedTable((MutableSchema.InterpretedSchema) getSchema()).interpretedKey(key.referencedKey), this, key.name.last(), f);
             }

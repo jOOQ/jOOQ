@@ -83,7 +83,7 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
-public interface MergeMatchedWhereStep<R extends Record> extends MergeNotMatchedStep<R> {
+public interface MergeMatchedWhereStep<R extends Record> extends MergeMatchedDeleteStep<R> {
 
     /**
      * Add an additional <code>WHERE</code> clause to the preceding

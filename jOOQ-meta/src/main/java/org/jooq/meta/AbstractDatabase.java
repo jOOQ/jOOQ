@@ -55,6 +55,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -154,6 +155,7 @@ public abstract class AbstractDatabase implements Database {
     private List<CustomType>                                                 configuredCustomTypes;
     private List<EnumType>                                                   configuredEnumTypes;
     private List<ForcedType>                                                 configuredForcedTypes;
+    private Set<ForcedType>                                                  unusedForcedTypes;
     private List<Embeddable>                                                 configuredEmbeddables;
     private SchemaVersionProvider                                            schemaVersionProvider;
     private CatalogVersionProvider                                           catalogVersionProvider;
@@ -223,6 +225,7 @@ public abstract class AbstractDatabase implements Database {
         all = new ArrayList<>();
         included = new ArrayList<>();
         excluded = new ArrayList<>();
+        unusedForcedTypes = new HashSet<>();
     }
 
     @Override
@@ -1256,12 +1259,23 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
+    public void markUsed(ForcedType forcedType) {
+        unusedForcedTypes.remove(forcedType);
+    }
+
+    @Override
+    public List<ForcedType> getUnusedForcedTypes() {
+        return new ArrayList<>(unusedForcedTypes);
+    }
+
+    @Override
     public final void setConfiguredForcedTypes(List<ForcedType> configuredForcedTypes) {
 
         // [#8512] Some implementation of this database may have already configured
         //         a forced type programmatically, so we must not set the list but
         //         append it.
         getConfiguredForcedTypes().addAll(configuredForcedTypes);
+        unusedForcedTypes.addAll(configuredForcedTypes);
     }
 
     @Override

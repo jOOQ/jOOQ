@@ -69,6 +69,7 @@ import org.jooq.meta.Definition;
 import org.jooq.meta.SchemaVersionProvider;
 import org.jooq.meta.jaxb.CatalogMappingType;
 import org.jooq.meta.jaxb.Configuration;
+import org.jooq.meta.jaxb.ForcedType;
 import org.jooq.meta.jaxb.Generate;
 import org.jooq.meta.jaxb.Jdbc;
 import org.jooq.meta.jaxb.Logging;
@@ -803,6 +804,13 @@ public class GenerationTool {
 
 
             generator.generate(database);
+
+            if (!database.getUnusedForcedTypes().isEmpty()) {
+                log.info("Unused ForcedTypes", "There are unused forced types, which have not been used by this generation run. This can be because of misconfigurations (e.g. bad regular expressions, which do not take into account case sensitivity or object qualification) or because the forced type is obsolete.");
+
+                for (ForcedType f : database.getUnusedForcedTypes())
+                    log.info("Unused ForcedType", f);
+            }
         }
         finally {
             if (database != null)

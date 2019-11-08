@@ -246,6 +246,7 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
             }
 
             if (uType != null) {
+                db.markUsed(forcedType);
                 log.info("Forcing type", child + " to " + forcedType);
 
                 DataType<?> forcedDataType = null;

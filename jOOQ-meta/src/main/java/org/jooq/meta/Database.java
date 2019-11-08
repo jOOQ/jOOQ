@@ -799,6 +799,16 @@ public interface Database  extends AutoCloseable  {
     void setOrderProvider(Comparator<Definition> provider);
 
     /**
+     * Mark a forced type as used.
+     */
+    void markUsed(ForcedType forcedType);
+
+    /**
+     * Retrieve the not-yet used forced types.
+     */
+    List<ForcedType> getUnusedForcedTypes();
+
+    /**
      * Database objects matching any of these field names will be generated as
      * forced types.
      */

@@ -863,8 +863,15 @@ public class DefaultDataType<T> implements DataType<T> {
                     result = getDataType(dialect, normalised.substring(1)).getArrayDataType();
 
                 // [#6466] HSQLDB reports array types as XYZARRAY
-                if (result == null && family == HSQLDB && upper.endsWith(" ARRAY"))
+                else if (result == null && family == HSQLDB && upper.endsWith(" ARRAY"))
                     result = getDataType(dialect, typeName.substring(0, typeName.length() - 6)).getArrayDataType();
+
+
+
+
+
+
+
 
                 // [#366] Don't log a warning here. The warning is logged when
                 // catching the exception in jOOQ-codegen

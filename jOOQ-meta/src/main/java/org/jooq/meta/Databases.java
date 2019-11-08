@@ -40,6 +40,7 @@ package org.jooq.meta;
 import org.jooq.SQLDialect;
 // ...
 // ...
+// ...
 import org.jooq.meta.cubrid.CUBRIDDatabase;
 // ...
 import org.jooq.meta.derby.DerbyDatabase;
@@ -79,6 +80,7 @@ public class Databases {
         Class<? extends Database> result = JDBCDatabase.class;
 
         switch (dialect.family()) {
+
 
 
 

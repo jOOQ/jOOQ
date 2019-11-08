@@ -54,6 +54,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.meta.AbstractTableDefinition;
 import org.jooq.meta.ColumnDefinition;
@@ -75,10 +76,16 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
     public List<ColumnDefinition> getElements0() throws SQLException {
         List<ColumnDefinition> result = new ArrayList<>();
 
+        Field<String> dataType = COLUMNS.DATA_TYPE;
+
+
+
+
+
         for (Record record : create().select(
                 COLUMNS.COLUMN_NAME,
                 COLUMNS.ORDINAL_POSITION,
-                COLUMNS.DATA_TYPE,
+                dataType,
 
                 // [#8067] A more robust / sophisticated decoding might be available
                 nvl(
@@ -105,6 +112,9 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
                 .and(PG_DESCRIPTION.OBJSUBID.eq(COLUMNS.ORDINAL_POSITION))
             .where(COLUMNS.TABLE_SCHEMA.equal(getSchema().getName()))
             .and(COLUMNS.TABLE_NAME.equal(getName()))
+
+
+
             .orderBy(COLUMNS.ORDINAL_POSITION)
             .fetch()) {
 
@@ -117,7 +127,7 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
                 typeSchema,
-                record.get(COLUMNS.DATA_TYPE),
+                record.get(dataType),
                 record.get(COLUMNS.CHARACTER_MAXIMUM_LENGTH),
                 record.get(COLUMNS.NUMERIC_PRECISION),
                 record.get(COLUMNS.NUMERIC_SCALE),

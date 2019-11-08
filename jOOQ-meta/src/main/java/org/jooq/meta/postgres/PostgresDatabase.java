@@ -84,9 +84,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jooq.Condition;
 import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Name;
+// ...
 import org.jooq.Record;
 import org.jooq.Record2;
 import org.jooq.Record4;
@@ -877,6 +879,22 @@ public class PostgresDatabase extends AbstractDatabase {
     protected boolean exists0(Table<?> table) {
         return exists1(table, TABLES, TABLES.TABLE_SCHEMA, TABLES.TABLE_NAME);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     boolean canCombineArrays() {
         if (canCombineArrays == null) {

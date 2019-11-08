@@ -367,6 +367,12 @@ class GenerationUtil {
 
 
 
+
+
+
+
+
+
             case POSTGRES: {
 
                 // The convention is to prepend a "_" to a type to get an array type
@@ -393,14 +399,12 @@ class GenerationUtil {
 
                 // In HSQLDB 2.2.5, there has been an incompatible INFORMATION_SCHEMA change around the
                 // ELEMENT_TYPES view. Arrays are now described much more explicitly
-                if ("ARRAY".equalsIgnoreCase(t)) {
+                if ("ARRAY".equalsIgnoreCase(t))
                     return name("OTHER");
-                }
 
                 // This is for backwards compatibility
-                else {
+                else
                     return name(t.replace(" ARRAY", ""));
-                }
             }
         }
 

@@ -165,6 +165,7 @@ public class Database implements Serializable, XMLAppendable
      * Natively supported values are:
      * <ul>
      * <li>{@link org.jooq.meta.ase.ASEDatabase}</li>
+     * <li>{@link org.jooq.meta.cockroachdb.CockroachDBDatabase}</li>
      * <li>{@link org.jooq.meta.db2.DB2Database}</li>
      * <li>{@link org.jooq.meta.derby.DerbyDatabase}</li>
      * <li>{@link org.jooq.meta.firebird.FirebirdDatabase}</li>
@@ -214,6 +215,7 @@ public class Database implements Serializable, XMLAppendable
      * Natively supported values are:
      * <ul>
      * <li>{@link org.jooq.meta.ase.ASEDatabase}</li>
+     * <li>{@link org.jooq.meta.cockroachdb.CockroachDBDatabase}</li>
      * <li>{@link org.jooq.meta.db2.DB2Database}</li>
      * <li>{@link org.jooq.meta.derby.DerbyDatabase}</li>
      * <li>{@link org.jooq.meta.firebird.FirebirdDatabase}</li>
@@ -1477,6 +1479,7 @@ public class Database implements Serializable, XMLAppendable
      * Natively supported values are:
      * <ul>
      * <li>{@link org.jooq.meta.ase.ASEDatabase}</li>
+     * <li>{@link org.jooq.meta.cockroachdb.CockroachDBDatabase}</li>
      * <li>{@link org.jooq.meta.db2.DB2Database}</li>
      * <li>{@link org.jooq.meta.derby.DerbyDatabase}</li>
      * <li>{@link org.jooq.meta.firebird.FirebirdDatabase}</li>

@@ -90,6 +90,7 @@ final class Replace extends AbstractFunction<String> {
 
 
 
+
             case FIREBIRD:
             case HSQLDB:
             case MARIADB:

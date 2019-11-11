@@ -93,6 +93,7 @@ final class Rand extends AbstractField<BigDecimal> {
 
 
 
+
             case DERBY:
             case POSTGRES:
             case SQLITE:

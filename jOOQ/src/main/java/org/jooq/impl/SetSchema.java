@@ -89,6 +89,7 @@ final class SetSchema extends AbstractRowCountQuery {
 
 
 
+
             case POSTGRES:
                 ctx.visit(K_SET).sql(' ').visit(K_SEARCH_PATH).sql(" = ").visit(schema);
                 break;

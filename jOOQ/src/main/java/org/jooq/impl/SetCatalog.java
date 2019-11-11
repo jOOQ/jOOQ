@@ -75,6 +75,7 @@ final class SetCatalog extends AbstractRowCountQuery {
 
 
 
+
             case DERBY:
             case H2:
             case HSQLDB:

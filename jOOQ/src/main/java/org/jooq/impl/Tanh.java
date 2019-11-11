@@ -82,6 +82,7 @@ final class Tanh extends AbstractField<BigDecimal> {
 
 
 
+
             case CUBRID:
             case HSQLDB:
             case MARIADB:

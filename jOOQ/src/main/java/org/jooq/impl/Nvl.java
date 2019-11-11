@@ -88,6 +88,7 @@ final class Nvl<T> extends AbstractField<T> {
 
 
 
+
             case DERBY:
             case POSTGRES:
                 ctx.visit(K_COALESCE).sql('(').visit(arg1).sql(", ").visit(arg2).sql(')');

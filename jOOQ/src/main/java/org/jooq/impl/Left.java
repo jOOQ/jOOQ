@@ -85,6 +85,7 @@ final class Left extends AbstractField<String> {
 
 
 
+
             case CUBRID:
             case FIREBIRD:
             case H2:

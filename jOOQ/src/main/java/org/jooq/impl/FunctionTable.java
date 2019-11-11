@@ -95,6 +95,7 @@ final class FunctionTable<R extends Record> extends AbstractTable<R> {
 
 
 
+
             case POSTGRES: {
                 ctx.visit(function);
                 break;

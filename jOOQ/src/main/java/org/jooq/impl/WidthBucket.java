@@ -80,6 +80,7 @@ final class WidthBucket<T extends Number> extends AbstractField<T> {
 
 
 
+
             case POSTGRES:
                 ctx.visit(keyword("width_bucket")).sql('(').visit(field).sql(", ").visit(low).sql(", ").visit(high).sql(", ").visit(buckets).sql(')');
                 break;

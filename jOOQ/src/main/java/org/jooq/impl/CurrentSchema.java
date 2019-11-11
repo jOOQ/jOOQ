@@ -112,6 +112,7 @@ final class CurrentSchema extends AbstractField<String> {
 
 
 
+
             case HSQLDB:
             case POSTGRES:
                 ctx.visit(K_CURRENT_SCHEMA);

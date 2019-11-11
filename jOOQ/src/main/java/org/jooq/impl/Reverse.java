@@ -78,6 +78,7 @@ final class Reverse extends AbstractField<String> {
 
 
 
+
             case CUBRID:
             case HSQLDB:
             case POSTGRES:

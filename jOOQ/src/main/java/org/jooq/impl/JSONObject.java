@@ -82,6 +82,11 @@ final class JSONObject<J> extends AbstractField<J> {
     @Override
     public void accept(Context<?> ctx) {
         switch (ctx.family()) {
+
+
+
+
+
             case POSTGRES:
                 ctx.visit(unquotedName("json_build_object")).sql('(').visit(args).sql(')');
                 break;

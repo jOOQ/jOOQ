@@ -70,6 +70,11 @@ final class JSONArray<J> extends AbstractField<J> {
     @Override
     public void accept(Context<?> ctx) {
         switch (ctx.family()) {
+
+
+
+
+
             case POSTGRES:
                 ctx.visit(unquotedName("json_build_array")).sql('(').visit(args).sql(')');
                 break;

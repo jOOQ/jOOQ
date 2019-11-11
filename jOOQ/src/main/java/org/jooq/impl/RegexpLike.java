@@ -102,6 +102,7 @@ final class RegexpLike extends AbstractCondition {
 
 
 
+
             case POSTGRES: {
 
                 ctx.sql('(').visit(search).sql(" ~ ").visit(pattern).sql(')');

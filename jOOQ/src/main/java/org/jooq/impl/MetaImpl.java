@@ -351,6 +351,7 @@ final class MetaImpl extends AbstractMeta {
 
 
 
+
                         case POSTGRES:
                             types = new String[] { "TABLE", "VIEW", "SYSTEM_TABLE", "SYSTEM_VIEW", "MATERIALIZED VIEW" };
                             break;

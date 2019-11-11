@@ -132,6 +132,7 @@ final class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart imp
 
 
 
+
                 case POSTGRES: {
                     return array;
                 }

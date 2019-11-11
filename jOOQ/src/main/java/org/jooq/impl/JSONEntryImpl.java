@@ -77,6 +77,11 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T> {
     @Override
     public void accept(Context<?> ctx) {
         switch (ctx.family()) {
+
+
+
+
+
             case MARIADB:
             case MYSQL:
             case POSTGRES:

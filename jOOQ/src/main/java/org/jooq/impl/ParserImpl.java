@@ -4302,7 +4302,7 @@ final class ParserImpl implements Parser {
         parseUsingBtreeOrHashIf(ctx);
 
         Name[] include = null;
-        if (parseKeywordIf(ctx, "INCLUDE")) {
+        if (parseKeywordIf(ctx, "INCLUDE") || parseKeywordIf(ctx, "COVERING") || parseKeywordIf(ctx, "STORING")) {
             parse(ctx, '(');
             include = parseIdentifiers(ctx).toArray(EMPTY_NAME);
             parse(ctx, ')');

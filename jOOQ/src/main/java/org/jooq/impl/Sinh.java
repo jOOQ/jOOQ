@@ -82,6 +82,7 @@ final class Sinh extends AbstractField<BigDecimal> {
 
 
 
+
             case CUBRID:
             case HSQLDB:
             case MARIADB:

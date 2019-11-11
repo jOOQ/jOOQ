@@ -45,6 +45,7 @@ import static java.util.Collections.singletonList;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
@@ -134,6 +135,7 @@ import static org.jooq.impl.Keywords.K_PRIMARY_KEY;
 import static org.jooq.impl.Keywords.K_RAISE;
 import static org.jooq.impl.Keywords.K_RAISERROR;
 import static org.jooq.impl.Keywords.K_SERIAL;
+import static org.jooq.impl.Keywords.K_SERIAL4;
 import static org.jooq.impl.Keywords.K_SERIAL8;
 import static org.jooq.impl.Keywords.K_SQLSTATE;
 import static org.jooq.impl.Keywords.K_START_WITH;
@@ -4684,7 +4686,8 @@ final class Tools {
 
 
 
-                case POSTGRES: ctx.visit(type.getType() == Long.class ? K_SERIAL8 : K_SERIAL); return;
+
+                case POSTGRES: ctx.visit(type.getType() == Long.class ? K_SERIAL8 : K_SERIAL4); return;
             }
         }
 
@@ -4716,6 +4719,7 @@ final class Tools {
                 }
 
                 // [#7597] In PostgreSQL, the enum type reference should be used
+
 
 
 

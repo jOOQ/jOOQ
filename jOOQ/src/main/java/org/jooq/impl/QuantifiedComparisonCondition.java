@@ -48,6 +48,7 @@ import static org.jooq.Comparator.NOT_LIKE_IGNORE_CASE;
 import static org.jooq.Comparator.NOT_SIMILAR_TO;
 import static org.jooq.Comparator.SIMILAR_TO;
 // ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;

@@ -109,6 +109,7 @@ final class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
 
 
 
+
             // Due to lack of UDT support in the Postgres JDBC drivers, all UDT's
             // have to be inlined
             case POSTGRES: {
@@ -128,6 +129,7 @@ final class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
 
     private final void toSQLInline(RenderContext ctx) {
         switch (ctx.family()) {
+
 
 
 
@@ -165,6 +167,7 @@ final class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
 
 
 
+
             case POSTGRES:
                 return "ROW";
 
@@ -181,6 +184,7 @@ final class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
 
     final void bind0(BindContext ctx) {
         switch (ctx.family()) {
+
 
 
 

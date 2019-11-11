@@ -70,6 +70,7 @@ final class BoolOr extends Function<Boolean> {
 
 
 
+
             case POSTGRES:
                 super.accept(ctx);
                 break;

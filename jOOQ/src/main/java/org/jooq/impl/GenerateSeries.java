@@ -115,6 +115,7 @@ final class GenerateSeries extends AbstractTable<Record1<Integer>> {
 
 
 
+
             case POSTGRES:
             default:
                 if (step == null)

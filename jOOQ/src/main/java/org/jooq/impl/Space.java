@@ -73,6 +73,7 @@ final class Space extends AbstractField<String> {
 
 
 
+
             case DERBY:
             case FIREBIRD:
             case HSQLDB:

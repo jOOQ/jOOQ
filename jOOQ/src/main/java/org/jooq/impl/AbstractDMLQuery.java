@@ -726,6 +726,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
 
 
+
                 case FIREBIRD:
                 case POSTGRES: {
                     boolean previous = ctx.declareFields();
@@ -783,6 +784,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
         // Values should be returned from the INSERT
         else {
             switch (ctx.family()) {
+
 
 
 
@@ -958,6 +960,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                 case MYSQL: {
                     return executeReturningGeneratedKeysFetchAdditionalRows(ctx, listener);
                 }
+
 
 
 

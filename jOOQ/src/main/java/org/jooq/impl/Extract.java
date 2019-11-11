@@ -317,6 +317,7 @@ final class Extract extends AbstractField<Integer> {
 
 
 
+
             case POSTGRES:
                 switch (datePart) {
                     case DAY_OF_WEEK:

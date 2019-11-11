@@ -43,6 +43,7 @@ import static java.lang.Boolean.TRUE;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
@@ -535,7 +536,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          * Generated UID
          */
         private static final long                serialVersionUID                    = -7965247586545864991L;
-        private static final Set<SQLDialect> NEEDS_PRECISION_SCALE_ON_BIGDECIMAL = SQLDialect.supported(CUBRID, DERBY, FIREBIRD, HSQLDB);
+        private static final Set<SQLDialect>     NEEDS_PRECISION_SCALE_ON_BIGDECIMAL = SQLDialect.supported(CUBRID, DERBY, FIREBIRD, HSQLDB);
+        private static final Set<SQLDialect>     REQUIRES_JSON_CAST                  = SQLDialect.supported(POSTGRES);
+        private static final Set<SQLDialect>     NO_SUPPORT_ENUM_CAST                = SQLDialect.supported(POSTGRES);
 
 
 
@@ -593,6 +596,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+
                         case POSTGRES: {
                             return true;
                         }
@@ -609,6 +613,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+
                     case POSTGRES:
                         return true;
                 }
@@ -617,6 +622,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             // [#7242] Other vendor specific types also need a lot of casting
             if (type == JSON.class || type == JSONB.class) {
                 switch (ctx.family()) {
+
 
 
 
@@ -680,7 +686,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             // [#1130] TODO type can be null for ARRAY types, etc.
             // [#7351] UUID data types need to be cast too
             // [#7242] JSON(B) data types need to be cast too
-            else if (( POSTGRES == family) &&
+            else if (REQUIRES_JSON_CAST.contains(family) &&
                     (sqlDataType == null ||
                     (!sqlDataType.isTemporal()
                         && sqlDataType != SQLDataType.UUID
@@ -700,7 +706,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
             // [#7379] Most databases cannot cast a bind variable to an enum type
-            else if ( POSTGRES != family && EnumType.class.isAssignableFrom(type))
+            else if (!NO_SUPPORT_ENUM_CAST.contains(family) && EnumType.class.isAssignableFrom(type))
                 sqlCast(ctx, converted, Tools.emulateEnumType((DataType<EnumType>) dataType), dataType.length(), dataType.precision(), dataType.scale());
 
             // In all other cases, the bind variable can be cast normally
@@ -709,9 +715,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         private static final int getValueLength(String string) {
-            if (string == null) {
+            if (string == null)
                 return 1;
-            }
 
             else {
                 int length = string.length();
@@ -719,11 +724,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 // If non 7-bit ASCII characters are present, multiply the length by
                 // 4 to be sure that even UTF-32 collations will fit. But don't use
                 // larger numbers than Derby's upper limit 32672
-                for (int i = 0; i < length; i++) {
-                    if (string.charAt(i) > 127) {
+                for (int i = 0; i < length; i++)
+                    if (string.charAt(i) > 127)
                         return Math.min(32672, 4 * length);
-                    }
-                }
 
                 return Math.min(32672, length);
             }
@@ -963,7 +966,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         /**
          * Generated UID
          */
-        private static final long serialVersionUID = 6875984626674331432L;
+        private static final long            serialVersionUID    = 6875984626674331432L;
+        private static final Set<SQLDialect> REQUIRES_ARRAY_CAST = SQLDialect.supported(POSTGRES);
 
         DefaultArrayBinding(Converter<Object[], U> converter, boolean isLob) {
             super(converter, isLob);
@@ -987,7 +991,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 ctx.render().sql(')');
             }
 
-            else if ( ctx.family() == POSTGRES) {
+            else if (REQUIRES_ARRAY_CAST.contains(ctx.family())) {
 
                 // [#8933] In some cases, we cannot derive the cast type from
                 //         array type directly
@@ -1013,7 +1017,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 ctx.render().sql(']');
 
                 // [#3214] Some PostgreSQL array type literals need explicit casting
-                if (( ctx.family() == POSTGRES) && EnumType.class.isAssignableFrom(type.getComponentType()))
+                // TODO: This seems mutually exclusive with the previous branch. Still needed?
+                if ((REQUIRES_ARRAY_CAST.contains(ctx.family())) && EnumType.class.isAssignableFrom(type.getComponentType()))
                     DefaultEnumTypeBinding.pgRenderEnumCast(ctx.render(), type);
             }
         }
@@ -1037,6 +1042,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+
                 case POSTGRES:
 
                     // Postgres needs explicit casting for enum (array) types
@@ -1054,6 +1060,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final void set0(BindingSetStatementContext<U> ctx, Object[] value) throws SQLException {
             switch (ctx.family()) {
+
 
 
 
@@ -1096,6 +1103,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+
                 case POSTGRES:
                     return pgGetArray(ctx, ctx.resultSet(), type, ctx.index());
 
@@ -1133,9 +1141,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             try {
 
                 array = rs.getArray(index);
-                if (array == null) {
+                if (array == null)
                     return null;
-                }
 
                 // Try fetching a Java Object[]. That's gonna work for non-UDT types
                 try {
@@ -1559,6 +1566,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+
                     return Types.BINARY;
 
                 default:
@@ -1739,8 +1747,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         /**
          * Generated UID
          */
-        private static final long            serialVersionUID = -727202499908007757L;
-        private static final Set<SQLDialect> INLINE_AS_X_APOS = SQLDialect.supported(DERBY, H2, HSQLDB, MARIADB, MYSQL, SQLITE);
+        private static final long            serialVersionUID   = -727202499908007757L;
+        private static final Set<SQLDialect> INLINE_AS_X_APOS   = SQLDialect.supported(DERBY, H2, HSQLDB, MARIADB, MYSQL, SQLITE);
+        private static final Set<SQLDialect> REQUIRE_BYTEA_CAST = SQLDialect.supported(POSTGRES);
 
 
 
@@ -1783,7 +1792,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-            else if ( ctx.family() == POSTGRES)
+            else if (REQUIRE_BYTEA_CAST.contains(ctx.family()))
                 ctx.render()
                    .sql("E'")
                    .sql(PostgresUtils.toPGString(value))
@@ -1872,6 +1881,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 // Same logic in DefaultBlobBinding
 
                 case POSTGRES:
+
 
 
 
@@ -1975,6 +1985,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         private final String format(Date value, RenderContext render) {
+
+
+
             if (render.family() == POSTGRES)
                 if (value.getTime() == PG_DATE_POSITIVE_INFINITY)
                     return "infinity";
@@ -2112,7 +2125,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         /**
          * Generated UID
          */
-        private static final long serialVersionUID = 4378118707359663541L;
+        private static final long            serialVersionUID           = 4378118707359663541L;
+        private static final Set<SQLDialect> REQUIRE_PG_INTERVAL_SYNTAX = SQLDialect.supported(POSTGRES);
 
         DefaultDayToSecondBinding(Converter<DayToSecond, U> converter, boolean isLob) {
             super(converter, isLob);
@@ -2121,7 +2135,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         void sqlInline0(BindingSQLContext<U> ctx, DayToSecond value) throws SQLException {
             // [#566] Interval data types are best bound as Strings
-            if ( ctx.family() == POSTGRES) {
+            if (REQUIRE_PG_INTERVAL_SYNTAX.contains(ctx.family())) {
                 int sign = value.getSign();
                 int days = sign * value.getDays();
                 ctx.render().sql('\'')
@@ -2145,7 +2159,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         final void set0(BindingSetStatementContext<U> ctx, DayToSecond value) throws SQLException {
 
             // [#566] Interval data types are best bound as Strings
-            if ( ctx.family() == POSTGRES)
+            if (REQUIRE_PG_INTERVAL_SYNTAX.contains(ctx.family()))
                 ctx.statement().setObject(ctx.index(), toPGInterval(value));
             else
                 ctx.statement().setString(ctx.index(), value.toString());
@@ -2158,7 +2172,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final DayToSecond get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-            if ( ctx.family() == POSTGRES) {
+            if (REQUIRE_PG_INTERVAL_SYNTAX.contains(ctx.family())) {
                 Object object = ctx.resultSet().getObject(ctx.index());
                 return object == null ? null : PostgresUtils.toDayToSecond(object);
             }
@@ -2170,7 +2184,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final DayToSecond get0(BindingGetStatementContext<U> ctx) throws SQLException {
-            if ( ctx.family() == POSTGRES) {
+            if (REQUIRE_PG_INTERVAL_SYNTAX.contains(ctx.family())) {
                 Object object = ctx.statement().getObject(ctx.index());
                 return object == null ? null : PostgresUtils.toDayToSecond(object);
             }
@@ -2197,7 +2211,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         /**
          * Generated UID
          */
-        private static final long serialVersionUID = -615723070592774059L;
+        private static final long            serialVersionUID = -615723070592774059L;
+        private static final Set<SQLDialect> REQUIRE_NAN_CAST = SQLDialect.supported(POSTGRES);
 
         DefaultDoubleBinding(Converter<Double, U> converter, boolean isLob) {
             super(converter, isLob);
@@ -2208,7 +2223,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // [#5249] [#6912] [#8063] Special inlining of special floating point values
             if (value.isNaN())
-                if ( ctx.family() == POSTGRES)
+                if (REQUIRE_NAN_CAST.contains(ctx.family()))
                     ctx.render().visit(inline("NaN")).sql("::float8");
                 else if (ctx.family() == HSQLDB)
                     ctx.render().visit(sqrt(inline(-1)));
@@ -2264,7 +2279,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         /**
          * Generated UID
          */
-        private static final long serialVersionUID = -5858761464381778695L;
+        private static final long            serialVersionUID  = -5858761464381778695L;
+        private static final Set<SQLDialect> REQUIRE_ENUM_CAST = SQLDialect.supported(POSTGRES);
 
         DefaultEnumTypeBinding(Converter<EnumType, U> converter, boolean isLob) {
             super(converter, isLob);
@@ -2285,7 +2301,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             super.sqlBind0(ctx, value);
 
             // Postgres needs explicit casting for enum (array) types
-            if ( ctx.family() == POSTGRES)
+            if (REQUIRE_ENUM_CAST.contains(ctx.family()))
                 pgRenderEnumCast(ctx.render(), type);
         }
 
@@ -2370,7 +2386,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         /**
          * Generated UID
          */
-        private static final long serialVersionUID = -2468794191255859536L;
+        private static final long            serialVersionUID = -2468794191255859536L;
+        private static final Set<SQLDialect> REQUIRE_NAN_CAST = SQLDialect.supported(POSTGRES);
 
         DefaultFloatBinding(Converter<Float, U> converter, boolean isLob) {
             super(converter, isLob);
@@ -2381,7 +2398,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // [#5249] [#6912] [#8063] Special inlining of special floating point values
             if (value.isNaN())
-                if ( ctx.family() == POSTGRES)
+                if (REQUIRE_NAN_CAST.contains(ctx.family()))
                     ctx.render().visit(inline("NaN")).sql("::float4");
                 else if (ctx.family() == HSQLDB)
                     ctx.render().visit(sqrt(inline(-1)));
@@ -3184,7 +3201,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         /**
          * Generated UID
          */
-        private static final long serialVersionUID = 2547994476924120818L;
+        private static final long            serialVersionUID    = 2547994476924120818L;
+        private static final Set<SQLDialect> REQUIRE_RECORD_CAST = SQLDialect.supported(POSTGRES);
 
         DefaultRecordBinding(Converter<Record, U> converter, boolean isLob) {
             super(converter, isLob);
@@ -3194,13 +3212,13 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         void sqlBind0(BindingSQLContext<U> ctx, Record value) throws SQLException {
             super.sqlBind0(ctx, value);
 
-            if (( ctx.family() == POSTGRES) && value != null)
+            if (REQUIRE_RECORD_CAST.contains(ctx.family()) && value != null)
                 pgRenderRecordCast(ctx.render(), value);
         }
 
         @Override
         final void sqlInline0(BindingSQLContext<U> ctx, Record value) throws SQLException {
-            if ( ctx.family() == POSTGRES) {
+            if (REQUIRE_RECORD_CAST.contains(ctx.family())) {
                 ctx.render().visit(inline(PostgresUtils.toPGString(value)));
                 pgRenderRecordCast(ctx.render(), value);
             }
@@ -3223,7 +3241,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final void set0(BindingSetStatementContext<U> ctx, Record value) throws SQLException {
-            if (( ctx.family() == POSTGRES) && value != null)
+            if (REQUIRE_RECORD_CAST.contains(ctx.family()) && value != null)
                 ctx.statement().setString(ctx.index(), PostgresUtils.toPGString(value));
             else
                 ctx.statement().setObject(ctx.index(), value);
@@ -3257,6 +3275,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+
                 case POSTGRES:
                     return pgNewRecord(type, null, ctx.resultSet().getObject(ctx.index()));
 
@@ -3268,6 +3287,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final Record get0(BindingGetStatementContext<U> ctx) throws SQLException {
             switch (ctx.family()) {
+
 
 
 
@@ -3522,6 +3542,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 case H2:
                     return -10; // OracleTypes.CURSOR;
+
+
+
+
 
                 case POSTGRES:
                 default:
@@ -4087,6 +4111,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 // [#1624] Some JDBC drivers natively support the
                 // java.util.UUID data type
+
+
+
+
+
+
                 case H2:
                 case POSTGRES: {
                     ctx.statement().setObject(ctx.index(), value);
@@ -4121,6 +4151,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 // [#1624] Some JDBC drivers natively support the
                 // java.util.UUID data type
+
+
+
+
+
+
                 case H2:
                 case POSTGRES:
                     return Convert.convert(ctx.resultSet().getObject(ctx.index()), UUID.class);
@@ -4146,6 +4182,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 // [#1624] Some JDBC drivers natively support the
                 // java.util.UUID data type
+
+
+
+
+
+
                 case H2:
                 case POSTGRES:
                     return (UUID) ctx.statement().getObject(ctx.index());
@@ -4173,8 +4215,14 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final int sqltype(Statement statement, Configuration configuration) {
             switch (configuration.family()) {
+
+
+
+
+
                 case POSTGRES:
                     return Types.OTHER;
+
                 default:
                     return Types.VARCHAR;
             }
@@ -4342,7 +4390,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         /**
          * Generated UID
          */
-        private static final long serialVersionUID = 6417965474063152673L;
+        private static final long            serialVersionUID    = 6417965474063152673L;
+        private static final Set<SQLDialect> REQUIRE_PG_INTERVAL = SQLDialect.supported(POSTGRES);
 
         DefaultYearToSecondBinding(Converter<YearToSecond, U> converter, boolean isLob) {
             super(converter, isLob);
@@ -4352,7 +4401,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         final void set0(BindingSetStatementContext<U> ctx, YearToSecond value) throws SQLException {
 
             // [#566] Interval data types are best bound as Strings
-            if (ctx.family() == POSTGRES)
+            if (REQUIRE_PG_INTERVAL.contains(ctx.family()))
                 ctx.statement().setObject(ctx.index(), toPGInterval(value));
             else
                 ctx.statement().setString(ctx.index(), value.toString());
@@ -4365,7 +4414,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final YearToSecond get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-            if (ctx.family() == POSTGRES) {
+            if (REQUIRE_PG_INTERVAL.contains(ctx.family())) {
                 Object object = ctx.resultSet().getObject(ctx.index());
                 return object == null ? null : PostgresUtils.toYearToSecond(object);
             }
@@ -4377,7 +4426,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final YearToSecond get0(BindingGetStatementContext<U> ctx) throws SQLException {
-            if (ctx.family() == POSTGRES) {
+            if (REQUIRE_PG_INTERVAL.contains(ctx.family())) {
                 Object object = ctx.statement().getObject(ctx.index());
                 return object == null ? null : PostgresUtils.toYearToSecond(object);
             }
@@ -4404,7 +4453,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         /**
          * Generated UID
          */
-        private static final long serialVersionUID = 6417965474063152673L;
+        private static final long            serialVersionUID    = 6417965474063152673L;
+        private static final Set<SQLDialect> REQUIRE_PG_INTERVAL = SQLDialect.supported(POSTGRES);
 
         DefaultYearToMonthBinding(Converter<YearToMonth, U> converter, boolean isLob) {
             super(converter, isLob);
@@ -4414,7 +4464,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         final void set0(BindingSetStatementContext<U> ctx, YearToMonth value) throws SQLException {
 
             // [#566] Interval data types are best bound as Strings
-            if (ctx.family() == POSTGRES)
+            if (REQUIRE_PG_INTERVAL.contains(ctx.family()))
                 ctx.statement().setObject(ctx.index(), toPGInterval(value));
             else
                 ctx.statement().setString(ctx.index(), value.toString());
@@ -4427,7 +4477,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final YearToMonth get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-            if (ctx.family() == POSTGRES) {
+            if (REQUIRE_PG_INTERVAL.contains(ctx.family())) {
                 Object object = ctx.resultSet().getObject(ctx.index());
                 return object == null ? null : PostgresUtils.toYearToMonth(object);
             }
@@ -4439,7 +4489,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final YearToMonth get0(BindingGetStatementContext<U> ctx) throws SQLException {
-            if (ctx.family() == POSTGRES) {
+            if (REQUIRE_PG_INTERVAL.contains(ctx.family())) {
                 Object object = ctx.statement().getObject(ctx.index());
                 return object == null ? null : PostgresUtils.toYearToMonth(object);
             }

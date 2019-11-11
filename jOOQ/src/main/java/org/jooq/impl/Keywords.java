@@ -313,6 +313,7 @@ final class Keywords {
     static final Keyword K_SEPARATOR                        = keyword("separator");
     static final Keyword K_SEQUENCE                         = keyword("sequence");
     static final Keyword K_SERIAL                           = keyword("serial");
+    static final Keyword K_SERIAL4                          = keyword("serial4");
     static final Keyword K_SERIAL8                          = keyword("serial8");
     static final Keyword K_SESSION                          = keyword("session");
     static final Keyword K_SET                              = keyword("set");
@@ -325,6 +326,7 @@ final class Keywords {
     static final Keyword K_SQLSTATE                         = keyword("sqlstate");
     static final Keyword K_START_AT                         = keyword("start at");
     static final Keyword K_START_WITH                       = keyword("start with");
+    static final Keyword K_STORING                          = keyword("storing");
     static final Keyword K_SWITCH                           = keyword("switch");
     static final Keyword K_SYMMETRIC                        = keyword("symmetric");
     static final Keyword K_TABLE                            = keyword("table");

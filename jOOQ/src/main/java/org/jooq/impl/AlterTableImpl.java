@@ -56,6 +56,7 @@ import static org.jooq.Nullability.NULL;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
@@ -978,6 +979,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
 
 
+
                 case POSTGRES:
                     alterColumnTypeAndNullabilityInBlock(ctx);
                     return;
@@ -1239,6 +1241,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
 
 
+
                     case H2:
                     case MARIADB:
                     case POSTGRES:
@@ -1353,6 +1356,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
                     case DERBY:
                         ctx.sql(' ').visit(K_SET_DATA_TYPE);
                         break;
+
 
 
 
@@ -1558,6 +1562,8 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
 
 
+
+
             case HSQLDB:
             case POSTGRES:
             default:
@@ -1612,6 +1618,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
     private final void acceptIfExistsColumn(Context<?> ctx) {
         if (ifExistsColumn) {
             switch (ctx.family()) {
+
 
 
 

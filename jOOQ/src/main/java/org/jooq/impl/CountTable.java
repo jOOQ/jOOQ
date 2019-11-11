@@ -68,6 +68,7 @@ final class CountTable extends Function<Integer> {
 
 
 
+
             case POSTGRES: {
                 super.accept(ctx);
                 break;

@@ -49,6 +49,7 @@ import static org.jooq.Clause.TABLE_REFERENCE;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
@@ -247,6 +248,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
 
                 // TODO: Is this still needed?
                 switch (family) {
+
 
 
 

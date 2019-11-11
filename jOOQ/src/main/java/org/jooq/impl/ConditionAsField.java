@@ -100,6 +100,7 @@ final class ConditionAsField extends AbstractField<Boolean> {
 
 
 
+
             // The default, for new dialects
             default:
                 ctx.sql('(').visit(condition).sql(')');

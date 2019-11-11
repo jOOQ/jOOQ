@@ -43,6 +43,7 @@ import static org.jooq.Clause.CREATE_INDEX;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
@@ -60,6 +61,7 @@ import static org.jooq.impl.Keywords.K_IF_NOT_EXISTS;
 import static org.jooq.impl.Keywords.K_INCLUDE;
 import static org.jooq.impl.Keywords.K_INDEX;
 import static org.jooq.impl.Keywords.K_ON;
+import static org.jooq.impl.Keywords.K_STORING;
 import static org.jooq.impl.Keywords.K_UNIQUE;
 import static org.jooq.impl.Keywords.K_WHERE;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
@@ -79,6 +81,7 @@ import org.jooq.CreateIndexIncludeStep;
 import org.jooq.CreateIndexStep;
 import org.jooq.Field;
 import org.jooq.Index;
+import org.jooq.Keyword;
 import org.jooq.Name;
 import org.jooq.OrderField;
 import org.jooq.QueryPart;
@@ -308,14 +311,22 @@ final class CreateIndexImpl extends AbstractRowCountQuery implements
                .qualify(true)
                .sql(')');
 
-        if (supportsInclude && include != null)
+        if (supportsInclude && include != null) {
+            Keyword keyword = K_INCLUDE;
+
+
+
+
+
+
             ctx.formatSeparator()
-               .visit(K_INCLUDE)
+               .visit(keyword)
                .sql(" (")
                .qualify(false)
                .visit(new QueryPartList<>(include))
                .qualify(true)
                .sql(')');
+        }
 
         if (where != null && ctx.configuration().data("org.jooq.ddl.ignore-storage-clauses") == null)
             ctx.formatSeparator()

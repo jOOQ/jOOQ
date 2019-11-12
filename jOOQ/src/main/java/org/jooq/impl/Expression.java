@@ -41,6 +41,7 @@ import static org.jooq.DatePart.MONTH;
 import static org.jooq.DatePart.SECOND;
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
@@ -565,6 +566,7 @@ final class Expression<T> extends AbstractField<T> {
 
 
 
+
                 case POSTGRES:
                 default:
                     ctx.visit(new DefaultExpression<>(lhs, operator, new QueryPartList<>(Arrays.asList(rhs))));
@@ -650,6 +652,7 @@ final class Expression<T> extends AbstractField<T> {
                         ctx.visit(F_DATE_ADD).sql('(').visit(lhs).sql(", ").visit(K_INTERVAL).sql(' ').visit(rhsAsNumber().neg()).sql(' ').visit(K_DAY).sql(')');
                     break;
                 }
+
 
 
 

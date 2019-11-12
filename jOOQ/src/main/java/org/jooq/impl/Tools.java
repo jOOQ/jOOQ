@@ -763,6 +763,7 @@ final class Tools {
     private static final Set<SQLDialect> NO_SUPPORT_CAST_TYPE_IN_DDL    = SQLDialect.supported(MARIADB, MYSQL);
     private static final Set<SQLDialect> DEFAULT_BEFORE_NULL            = SQLDialect.supported(FIREBIRD, HSQLDB);
     private static final Set<SQLDialect> SUPPORT_MYSQL_SYNTAX           = SQLDialect.supported(MARIADB, MYSQL);
+    private static final Set<SQLDialect> SUPPORT_POSTGRES_SYNTAX        = SQLDialect.supported(POSTGRES);
 
     // ------------------------------------------------------------------------
     // XXX: Record constructors and related methods

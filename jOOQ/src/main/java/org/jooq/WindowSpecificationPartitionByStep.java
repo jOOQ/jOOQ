@@ -108,9 +108,6 @@ public interface WindowSpecificationPartitionByStep extends WindowSpecificationO
     /**
      * Add a <code>PARTITION BY 1</code> clause to the window specification,
      * where such a clause is required by the syntax of an RDBMS.
-     * <p>
-     * This clause is not supported as such in the CUBRID and Sybase dialects.
-     * If you use it, jOOQ will simply ignore it.
      *
      * @deprecated - 3.10 - [#6427] - This synthetic clause is no longer
      *             supported, use {@link #partitionBy(Field...)} instead, or

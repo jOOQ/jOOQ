@@ -1272,14 +1272,6 @@ extends
      * <td>-</td>
      * </tr>
      * <tr>
-     * <td>{@link SQLDialect#CUBRID}</td>
-     * <td><code>[search] REGEXP [pattern]</code></td>
-     * <td>POSIX</td>
-     * <td><a href=
-     * "http://www.cubrid.org/manual/841/en/REGEXP%20Conditional%20Expression"
-     * >http://www.cubrid.org/manual/841/en/REGEXP Conditional Expression</a></td>
-     * </tr>
-     * <tr>
      * <td>{@link SQLDialect#DB2}</td>
      * <td>-</td>
      * <td>-</td>

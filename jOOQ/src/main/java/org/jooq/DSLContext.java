@@ -7597,7 +7597,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * </pre></code>
      * <p>
      * Note that some databases support table expressions more complex than
-     * simple table references. In CUBRID and MySQL, for instance, you can write
+     * simple table references. In MySQL, for instance, you can write
      * <code><pre>
      * create.update(t1.join(t2).on(t1.id.eq(t2.id)))
      *       .set(t1.value, value1)
@@ -7620,13 +7620,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * <th>support type</th>
      * <th>documentation</th>
      * </tr>
-     * <tr>
-     * <td>CUBRID</td>
-     * <td>SQL:2008 standard and some enhancements</td>
-     * <td><a href="http://www.cubrid.org/manual/90/en/MERGE"
-     * >http://www.cubrid.org/manual/90/en/MERGE</a></td>
-     * </tr>
-     * <tr>
      * <tr>
      * <td>DB2</td>
      * <td>SQL:2008 standard and major enhancements</td>
@@ -10055,7 +10048,6 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * <ul>
      * <li>{@link SQLDialect#ACCESS}: Using <code>@@identity</code></li>
      * <li>{@link SQLDialect#ASE}: Using <code>@@identity</code></li>
-     * <li>{@link SQLDialect#CUBRID}: Using <code>last_insert_id()</code></li>
      * <li>{@link SQLDialect#DERBY}: Using <code>identity_val_local()</code></li>
      * <li>{@link SQLDialect#H2}: Using <code>identity()</code></li>
      * <li>{@link SQLDialect#HSQLDB}: Using <code>identity()</code></li>

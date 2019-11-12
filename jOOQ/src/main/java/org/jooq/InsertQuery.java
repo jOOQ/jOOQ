@@ -191,12 +191,6 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      * <td><code><pre>INSERT INTO .. ON CONFLICT DO NOTHING</pre></code></td>
      * </tr>
      * <tr>
-     * <td>{@link SQLDialect#CUBRID}</td>
-     * <td>
-     * <code><pre>INSERT INTO .. ON DUPLICATE KEY UPDATE [any-field] = [any-field]</pre></code>
-     * </td>
-     * </tr>
-     * <tr>
      * <td>{@link SQLDialect#DB2}<br/>
      * {@link SQLDialect#HSQLDB}<br/>
      * {@link SQLDialect#ORACLE}<br/>

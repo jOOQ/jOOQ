@@ -152,7 +152,7 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertReturning
      * matches the value being inserted, then the <code>UPDATE</code> clause is
      * executed instead.
      * <p>
-     * MySQL and CUBRID natively implements this type of clause. jOOQ can
+     * MySQL natively implements this type of clause. jOOQ can
      * emulate this clause using a <code>MERGE</code> statement on some other
      * databases. The conditions for a RDBMS to emulate this clause are:
      * <ul>
@@ -189,12 +189,6 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertReturning
      * <tr>
      * <td>{@link SQLDialect#POSTGRES_9_5} and {@link SQLDialect#SQLITE}</td>
      * <td><code><pre>INSERT INTO .. ON CONFLICT DO NOTHING</pre></code></td>
-     * </tr>
-     * <tr>
-     * <td>{@link SQLDialect#CUBRID}</td>
-     * <td>
-     * <code><pre>INSERT INTO .. ON DUPLICATE KEY UPDATE [any-field] = [any-field]</pre></code>
-     * </td>
      * </tr>
      * <tr>
      * <td>{@link SQLDialect#DB2}<br/>

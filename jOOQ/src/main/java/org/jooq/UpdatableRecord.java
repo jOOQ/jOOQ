@@ -176,7 +176,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * the <code>FOR UPDATE</code> clause natively. Namely, the following
      * databases will show slightly different behaviour:
      * <ul>
-     * <li> {@link SQLDialect#CUBRID} and {@link SQLDialect#SQLSERVER}: jOOQ will
+     * <li> {@link SQLDialect#SQLSERVER}: jOOQ will
      * try to lock the database record using JDBC's
      * {@link ResultSet#TYPE_SCROLL_SENSITIVE} and
      * {@link ResultSet#CONCUR_UPDATABLE}.</li>
@@ -374,7 +374,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * the <code>FOR UPDATE</code> clause natively. Namely, the following
      * databases will show slightly different behaviour:
      * <ul>
-     * <li> {@link SQLDialect#CUBRID} and {@link SQLDialect#SQLSERVER}: jOOQ will
+     * <li> {@link SQLDialect#SQLSERVER}: jOOQ will
      * try to lock the database record using JDBC's
      * {@link ResultSet#TYPE_SCROLL_SENSITIVE} and
      * {@link ResultSet#CONCUR_UPDATABLE}.</li>

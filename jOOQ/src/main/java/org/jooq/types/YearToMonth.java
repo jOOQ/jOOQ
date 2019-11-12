@@ -66,7 +66,6 @@ import org.jooq.SQLDialect;
  * data types in date time arithmetic functions, such as
  * <code>TIMESTAMPADD</code>, and <code>TIMESTAMPDIFF</code>:
  * <ul>
- * <li> {@link SQLDialect#CUBRID}</li>
  * <li> {@link SQLDialect#MARIADB}</li>
  * <li> {@link SQLDialect#MYSQL}</li>
  * </ul>

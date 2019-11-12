@@ -386,7 +386,7 @@ class Function<T> extends AbstractField<T> implements
     }
 
     /**
-     * [#1273] <code>LIST_AGG</code> emulation for MySQL and CUBRID
+     * [#1273] <code>LIST_AGG</code> emulation for MySQL
      */
     final void toSQLGroupConcat(Context<?> ctx) {
         toSQLFunctionName(ctx);

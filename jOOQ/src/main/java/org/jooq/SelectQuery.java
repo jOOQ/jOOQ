@@ -895,7 +895,6 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * <code>FOR UPDATE</code> clause using <code>CONCUR_UPDATABLE</code> for
      * these dialects:
      * <ul>
-     * <li> {@link SQLDialect#CUBRID}</li>
      * <li> {@link SQLDialect#SQLSERVER}</li>
      * </ul>
      * <p>

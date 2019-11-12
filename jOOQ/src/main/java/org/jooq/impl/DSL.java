@@ -5341,7 +5341,7 @@ public class DSL {
      * </pre></code>
      * <p>
      * Note that some databases support table expressions more complex than
-     * simple table references. In CUBRID and MySQL, for instance, you can write
+     * simple table references. In MySQL, for instance, you can write
      * <code><pre>
      * update(t1.join(t2).on(t1.id.eq(t2.id)))
      *   .set(t1.value, value1)
@@ -5369,13 +5369,6 @@ public class DSL {
      * <th>support type</th>
      * <th>documentation</th>
      * </tr>
-     * <tr>
-     * <td>CUBRID</td>
-     * <td>SQL:2008 standard and some enhancements</td>
-     * <td><a href="http://www.cubrid.org/manual/90/en/MERGE"
-     * >http://www.cubrid.org/manual/90/en/MERGE</a></td>
-     * </tr>
-     * <tr>
      * <tr>
      * <td>DB2</td>
      * <td>SQL:2008 standard and major enhancements</td>
@@ -16441,7 +16434,6 @@ public class DSL {
      * <p>
      * This has been observed to work with the following databases:
      * <ul>
-     * <li>CUBRID (emulated using the GROUP BY .. WITH ROLLUP clause)</li>
      * <li>DB2</li>
      * <li>MySQL (emulated using the GROUP BY .. WITH ROLLUP clause)</li>
      * <li>Oracle</li>
@@ -18636,7 +18628,6 @@ public class DSL {
      * emulated by the following dialects:
      * <ul>
      * <li> {@link SQLDialect#AURORA_MYSQL}: Using <code>GROUP_CONCAT</code></li>
-     * <li> {@link SQLDialect#CUBRID}: Using <code>GROUP_CONCAT()</code></li>
      * <li> {@link SQLDialect#DB2}: Using <code>XMLAGG()</code></li>
      * <li> {@link SQLDialect#H2}: Using <code>GROUP_CONCAT()</code></li>
      * <li> {@link SQLDialect#HSQLDB}: Using <code>GROUP_CONCAT()</code></li>
@@ -18659,7 +18650,6 @@ public class DSL {
      * emulated by the following dialects:
      * <ul>
      * <li> {@link SQLDialect#AURORA_MYSQL}: Using <code>GROUP_CONCAT</code></li>
-     * <li> {@link SQLDialect#CUBRID}: Using <code>GROUP_CONCAT</code></li>
      * <li> {@link SQLDialect#DB2}: Using <code>XMLAGG()</code></li>
      * <li> {@link SQLDialect#H2}: Using <code>GROUP_CONCAT</code></li>
      * <li> {@link SQLDialect#HSQLDB}: Using <code>GROUP_CONCAT</code></li>
@@ -18681,7 +18671,6 @@ public class DSL {
      * This is natively supported by
      * <ul>
      * <li> {@link SQLDialect#AURORA_MYSQL}</li>
-     * <li> {@link SQLDialect#CUBRID}</li>
      * <li> {@link SQLDialect#H2}</li>
      * <li> {@link SQLDialect#HSQLDB}</li>
      * <li> {@link SQLDialect#MEMSQL} (but without <code>ORDER BY</code>)</li>
@@ -18710,7 +18699,6 @@ public class DSL {
      * This is natively supported by
      * <ul>
      * <li>{@link SQLDialect#AURORA_MYSQL}</li>
-     * <li>{@link SQLDialect#CUBRID}</li>
      * <li>{@link SQLDialect#H2}</li>
      * <li>{@link SQLDialect#HSQLDB}</li>
      * <li>{@link SQLDialect#MEMSQL}</li>
@@ -18742,7 +18730,6 @@ public class DSL {
      * This is natively supported by
      * <ul>
      * <li> {@link SQLDialect#AURORA_MYSQL}</li>
-     * <li> {@link SQLDialect#CUBRID}</li>
      * <li> {@link SQLDialect#H2}</li>
      * <li> {@link SQLDialect#HSQLDB}</li>
      * <li> {@link SQLDialect#MYSQL}</li>

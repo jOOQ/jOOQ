@@ -50,6 +50,7 @@ public interface ConstraintForeignKeyReferencesStep21<T1, T2, T3, T4, T5, T6, T7
      * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>,
      * implicitly referencing the primary key.
      */
+    @Support
     ConstraintForeignKeyOnStep references(String table);
 
     /**
@@ -63,6 +64,7 @@ public interface ConstraintForeignKeyReferencesStep21<T1, T2, T3, T4, T5, T6, T7
      * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>,
      * implicitly referencing the primary key.
      */
+    @Support
     ConstraintForeignKeyOnStep references(Name table);
 
     /**
@@ -76,6 +78,7 @@ public interface ConstraintForeignKeyReferencesStep21<T1, T2, T3, T4, T5, T6, T7
      * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>,
      * implicitly referencing the primary key.
      */
+    @Support
     ConstraintForeignKeyOnStep references(Table<?> table);
 
     /**

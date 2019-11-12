@@ -54,9 +54,11 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.table;
+import static org.jooq.impl.Keywords.K_CASCADE;
 import static org.jooq.impl.Keywords.K_DROP_INDEX;
 import static org.jooq.impl.Keywords.K_IF_EXISTS;
 import static org.jooq.impl.Keywords.K_ON;
+import static org.jooq.impl.Keywords.K_RESTRICT;
 import static org.jooq.impl.Tools.beginTryCatch;
 import static org.jooq.impl.Tools.endTryCatch;
 
@@ -65,7 +67,6 @@ import java.util.Set;
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
-import org.jooq.DropIndexFinalStep;
 import org.jooq.DropIndexOnStep;
 import org.jooq.Index;
 import org.jooq.Name;
@@ -91,6 +92,7 @@ final class DropIndexImpl extends AbstractRowCountQuery implements
     private final Index                  index;
     private final boolean                ifExists;
     private Table<?>                     on;
+    private Boolean                      cascade;
 
     DropIndexImpl(Configuration configuration, Index index) {
         this(configuration, index, false);
@@ -113,19 +115,31 @@ final class DropIndexImpl extends AbstractRowCountQuery implements
     // ------------------------------------------------------------------------
 
     @Override
-    public final DropIndexFinalStep on(Table<?> table) {
+    public final DropIndexImpl on(Table<?> table) {
         this.on = table;
         return this;
     }
 
     @Override
-    public final DropIndexFinalStep on(String tableName) {
+    public final DropIndexImpl on(String tableName) {
         return on(name(tableName));
     }
 
     @Override
-    public final DropIndexFinalStep on(Name tableName) {
+    public final DropIndexImpl on(Name tableName) {
         return on(table(tableName));
+    }
+
+    @Override
+    public final DropIndexImpl cascade() {
+        cascade = true;
+        return this;
+    }
+
+    @Override
+    public final DropIndexImpl restrict() {
+        cascade = false;
+        return this;
     }
 
     // ------------------------------------------------------------------------
@@ -163,6 +177,9 @@ final class DropIndexImpl extends AbstractRowCountQuery implements
 
         if (on != null && REQUIRES_ON.contains(ctx.family()))
             ctx.sql(' ').visit(K_ON).sql(' ').visit(on);
+
+        if (cascade != null)
+            ctx.visit(cascade ? K_CASCADE : K_RESTRICT);
     }
 
     @Override

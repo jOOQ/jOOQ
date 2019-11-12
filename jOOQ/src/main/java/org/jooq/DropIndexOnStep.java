@@ -85,7 +85,7 @@ import static org.jooq.SQLDialect.SQLITE;
  *
  * @author Lukas Eder
  */
-public interface DropIndexOnStep extends DropIndexFinalStep {
+public interface DropIndexOnStep extends DropIndexCascadeStep {
 
     /**
      * Specify the table expression on which to drop an index.
@@ -98,7 +98,7 @@ public interface DropIndexOnStep extends DropIndexFinalStep {
      * ignored for compatibility reasons.
      */
     @Support
-    DropIndexFinalStep on(Table<?> table);
+    DropIndexCascadeStep on(Table<?> table);
 
     /**
      * Specify the table expression on which to drop an index.
@@ -111,7 +111,7 @@ public interface DropIndexOnStep extends DropIndexFinalStep {
      * ignored for compatibility reasons.
      */
     @Support
-    DropIndexFinalStep on(String tableName);
+    DropIndexCascadeStep on(String tableName);
 
     /**
      * Specify the table expression on which to drop an index.
@@ -124,5 +124,5 @@ public interface DropIndexOnStep extends DropIndexFinalStep {
      * ignored for compatibility reasons.
      */
     @Support
-    DropIndexFinalStep on(Name tableName);
+    DropIndexCascadeStep on(Name tableName);
 }

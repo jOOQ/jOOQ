@@ -87,6 +87,7 @@ import org.jooq.types.Interval;
 import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
+import org.jooq.types.UNumber;
 import org.jooq.types.UShort;
 
 /**
@@ -960,6 +961,16 @@ public class DefaultDataType<T> implements DataType<T> {
     @Override
     public final boolean isNumeric() {
         return Number.class.isAssignableFrom(tType) && !isInterval();
+    }
+
+    @Override
+    public final boolean isInteger() {
+        return UNumber.class.isAssignableFrom(tType)
+            || Byte.class == tType
+            || Short.class == tType
+            || Integer.class == tType
+            || Long.class == tType
+        ;
     }
 
     @Override

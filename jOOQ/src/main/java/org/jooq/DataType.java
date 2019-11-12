@@ -508,8 +508,23 @@ public interface DataType<T> extends Serializable {
      * <li> {@link SQLDataType#DECIMAL_INTEGER}</li>
      * <li> {@link SQLDataType#NUMERIC}</li>
      * </ul>
+     *
+     * @see #isNumeric()
      */
     boolean isNumeric();
+
+    /**
+     * Whether this data type is any integer data type.
+     * <p>
+     * This applies to any of these types:
+     * <ul>
+     * <li> {@link SQLDataType#TINYINT}</li>
+     * <li> {@link SQLDataType#SMALLINT}</li>
+     * <li> {@link SQLDataType#INTEGER}</li>
+     * <li> {@link SQLDataType#BIGINT}</li>
+     * </ul>
+     */
+    boolean isInteger();
 
     /**
      * Whether this data type is any character data type.

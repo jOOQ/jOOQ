@@ -381,6 +381,7 @@ import org.jooq.DeleteOrderByStep;
 import org.jooq.DeleteReturningStep;
 import org.jooq.DeleteWhereStep;
 import org.jooq.DerivedColumnList;
+import org.jooq.DropIndexCascadeStep;
 import org.jooq.DropIndexFinalStep;
 import org.jooq.DropIndexOnStep;
 import org.jooq.DropSchemaFinalStep;
@@ -4410,7 +4411,8 @@ final class ParserImpl implements Parser {
         Table<?> onTable = on ? parseTableName(ctx) : null;
 
         DropIndexOnStep s1;
-        DropIndexFinalStep s2;
+        DropIndexCascadeStep s2;
+        DropIndexFinalStep s3;
 
         s1 = ifExists
             ? ctx.dsl.dropIndexIfExists(indexName)
@@ -4420,7 +4422,13 @@ final class ParserImpl implements Parser {
             ? s1.on(onTable)
             : s1;
 
-        return s2;
+        s3 = parseKeywordIf(ctx, "CASCADE")
+            ? s2.cascade()
+            : parseKeywordIf(ctx, "RESTRICT")
+            ? s2.restrict()
+            : s2;
+
+        return s3;
     }
 
     // -----------------------------------------------------------------------------------------------------------------

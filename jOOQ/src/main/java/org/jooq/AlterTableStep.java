@@ -639,6 +639,46 @@ public interface AlterTableStep {
     AlterTableDropStep dropPrimaryKey(String constraint);
 
     /**
+     * Add a <code>DROP UNIQUE</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     * <p>
+     * Some dialects (e.g. {@link SQLDialect#COCKROACHDB}) may not be able to
+     * drop constraints by name. If users specify the constraint type
+     * <em>and</em> the name, however, then the syntax can be emulated, e.g.
+     * using <code>DROP INDEX .. CASCADE</code>.
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    AlterTableDropStep dropUnique(Constraint constraint);
+
+    /**
+     * Add a <code>DROP UNIQUE</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     * <p>
+     * Some dialects (e.g. {@link SQLDialect#COCKROACHDB}) may not be able to
+     * drop constraints by name. If users specify the constraint type
+     * <em>and</em> the name, however, then the syntax can be emulated, e.g.
+     * using <code>DROP INDEX .. CASCADE</code>.
+     *
+     * @see DSL#constraint(Name)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    AlterTableDropStep dropUnique(Name constraint);
+
+    /**
+     * Add a <code>DROP UNIQUE</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     * <p>
+     * Some dialects (e.g. {@link SQLDialect#COCKROACHDB}) may not be able to
+     * drop constraints by name. If users specify the constraint type
+     * <em>and</em> the name, however, then the syntax can be emulated, e.g.
+     * using <code>DROP INDEX .. CASCADE</code>.
+     *
+     * @see DSL#constraint(String)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    AlterTableDropStep dropUnique(String constraint);
+
+    /**
      * Add a <code>DROP FOREIGN KEY</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */

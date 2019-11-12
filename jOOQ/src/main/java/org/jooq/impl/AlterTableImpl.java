@@ -76,6 +76,7 @@ import static org.jooq.impl.Cascade.CASCADE;
 import static org.jooq.impl.Cascade.RESTRICT;
 import static org.jooq.impl.ConstraintType.FOREIGN_KEY;
 import static org.jooq.impl.ConstraintType.PRIMARY_KEY;
+import static org.jooq.impl.ConstraintType.UNIQUE;
 import static org.jooq.impl.DSL.begin;
 import static org.jooq.impl.DSL.commentOnTable;
 import static org.jooq.impl.DSL.condition;
@@ -827,6 +828,23 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
     }
 
     @Override
+    public final AlterTableImpl dropUnique(Constraint constraint) {
+        dropConstraint = constraint;
+        dropConstraintType = UNIQUE;
+        return this;
+    }
+
+    @Override
+    public final AlterTableImpl dropUnique(Name constraint) {
+        return dropUnique(constraint(constraint));
+    }
+
+    @Override
+    public final AlterTableImpl dropUnique(String constraint) {
+        return dropUnique(constraint(constraint));
+    }
+
+    @Override
     public final AlterTableImpl dropForeignKey(Constraint constraint) {
         dropConstraint = constraint;
         dropConstraintType = FOREIGN_KEY;
@@ -985,6 +1003,13 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
                     return;
             }
         }
+
+
+
+
+
+
+
 
 
 

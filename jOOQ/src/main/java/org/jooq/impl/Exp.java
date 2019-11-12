@@ -48,7 +48,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-final class Ln extends AbstractFunction<BigDecimal> {
+final class Exp extends AbstractFunction<BigDecimal> {
 
     /**
      * Generated UID
@@ -56,23 +56,16 @@ final class Ln extends AbstractFunction<BigDecimal> {
     private static final long             serialVersionUID = -7273879239726265322L;
 
     private final Field<? extends Number> argument;
-    private final Field<? extends Number> base;
 
-    Ln(Field<? extends Number> argument) {
-        this(argument, null);
-    }
-
-    Ln(Field<? extends Number> argument, Field<? extends Number> base) {
-        super("ln", SQLDataType.NUMERIC, argument);
+    Exp(Field<? extends Number> argument) {
+        super("exp", NUMERIC, argument);
 
         this.argument = argument;
-        this.base = base;
     }
 
     @Override
     final Field<BigDecimal> getFunction0(Configuration configuration) {
-        if (base == null) {
-            switch (configuration.family()) {
+        switch (configuration.family()) {
 
 
 
@@ -82,54 +75,8 @@ final class Ln extends AbstractFunction<BigDecimal> {
 
 
 
-
-
-
-
-
-
-
-
-
-                default:
-                    return function("ln", SQLDataType.NUMERIC, argument);
-            }
-        }
-        else {
-            switch (configuration.family()) {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                case DERBY:
-                case HSQLDB:
-                    return DSL.ln(argument).div(DSL.ln(base));
-
-                default:
-                    return function("log", SQLDataType.NUMERIC, base, argument);
-            }
+            default:
+                return function("exp", NUMERIC, argument);
         }
     }
 }

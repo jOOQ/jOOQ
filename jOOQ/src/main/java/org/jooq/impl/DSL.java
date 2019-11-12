@@ -17461,7 +17461,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> exp(Field<? extends Number> field) {
-        return function("exp", SQLDataType.NUMERIC, field);
+        return new Exp(nullSafe(field));
     }
 
     /**

@@ -74,6 +74,15 @@ final class Sqrt extends AbstractField<BigDecimal> {
 
 
 
+
+
+
+
+
+
+
+
+
             case SQLITE:
                 ctx.visit(DSL.power(argument, 0.5));
                 break;

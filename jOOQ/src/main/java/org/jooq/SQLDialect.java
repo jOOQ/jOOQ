@@ -712,7 +712,7 @@ public enum SQLDialect {
      * <li>{@link #POSTGRESPLUS}: A not yet supported dialect.</li>
      * </ul>
      */
-    public final boolean isSupported() {
+    public final boolean supported() {
         return supported;
     }
 

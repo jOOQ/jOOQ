@@ -102,8 +102,8 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
 
     private static final long            serialVersionUID         = -1943687511774150929L;
     private static final Clause[]        CLAUSES                  = { DELETE };
-    private static final Set<SQLDialect> SPECIAL_DELETE_AS_SYNTAX = SQLDialect.supported(MARIADB, MYSQL);
-    private static final Set<SQLDialect> NO_SUPPORT_LIMIT         = SQLDialect.supported(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE);
+    private static final Set<SQLDialect> SPECIAL_DELETE_AS_SYNTAX = SQLDialect.supportedBy(MARIADB, MYSQL);
+    private static final Set<SQLDialect> NO_SUPPORT_LIMIT         = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE);
 
     private final ConditionProviderImpl  condition;
     private final SortFieldList          orderBy;

@@ -202,7 +202,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
      * Generated UID
      */
     private static final long            serialVersionUID          = -198499389344950496L;
-    private static final Set<SQLDialect> REQUIRE_JDBC_DATE_LITERAL = SQLDialect.supported(MYSQL);
+    private static final Set<SQLDialect> REQUIRE_JDBC_DATE_LITERAL = SQLDialect.supportedBy(MYSQL);
 
     // Taken from org.postgresql.PGStatement 9223372036825200000
     private static final long            PG_DATE_POSITIVE_INFINITY = 9223372036825200000L;
@@ -536,9 +536,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          * Generated UID
          */
         private static final long                serialVersionUID                    = -7965247586545864991L;
-        private static final Set<SQLDialect>     NEEDS_PRECISION_SCALE_ON_BIGDECIMAL = SQLDialect.supported(CUBRID, DERBY, FIREBIRD, HSQLDB);
-        private static final Set<SQLDialect>     REQUIRES_JSON_CAST                  = SQLDialect.supported(POSTGRES);
-        private static final Set<SQLDialect>     NO_SUPPORT_ENUM_CAST                = SQLDialect.supported(POSTGRES);
+        private static final Set<SQLDialect>     NEEDS_PRECISION_SCALE_ON_BIGDECIMAL = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB);
+        private static final Set<SQLDialect>     REQUIRES_JSON_CAST                  = SQLDialect.supportedBy(POSTGRES);
+        private static final Set<SQLDialect>     NO_SUPPORT_ENUM_CAST                = SQLDialect.supportedBy(POSTGRES);
 
 
 
@@ -967,7 +967,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          * Generated UID
          */
         private static final long            serialVersionUID    = 6875984626674331432L;
-        private static final Set<SQLDialect> REQUIRES_ARRAY_CAST = SQLDialect.supported(POSTGRES);
+        private static final Set<SQLDialect> REQUIRES_ARRAY_CAST = SQLDialect.supportedBy(POSTGRES);
 
         DefaultArrayBinding(Converter<Object[], U> converter, boolean isLob) {
             super(converter, isLob);
@@ -1407,7 +1407,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          * Generated UID
          */
         private static final long                serialVersionUID = -8912971184035434281L;
-        private static final Set<SQLDialect> BIND_AS_STRING = SQLDialect.supported(SQLITE);
+        private static final Set<SQLDialect> BIND_AS_STRING = SQLDialect.supportedBy(SQLITE);
 
         DefaultBigDecimalBinding(Converter<BigDecimal, U> converter, boolean isLob) {
             super(converter, isLob);
@@ -1463,7 +1463,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          * Generated UID
          */
         private static final long            serialVersionUID = -3857031689661809421L;
-        private static final Set<SQLDialect> BIND_AS_STRING   = SQLDialect.supported(SQLITE);
+        private static final Set<SQLDialect> BIND_AS_STRING   = SQLDialect.supportedBy(SQLITE);
 
         DefaultBigIntegerBinding(Converter<BigInteger, U> converter, boolean isLob) {
             super(converter, isLob);
@@ -1581,7 +1581,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          * Generated UID
          */
         private static final long            serialVersionUID   = -533762957890251203L;
-        private static final Set<SQLDialect> BIND_AS_1_0        = SQLDialect.supported(FIREBIRD, SQLITE);
+        private static final Set<SQLDialect> BIND_AS_1_0        = SQLDialect.supportedBy(FIREBIRD, SQLITE);
 
 
 
@@ -1748,8 +1748,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          * Generated UID
          */
         private static final long            serialVersionUID   = -727202499908007757L;
-        private static final Set<SQLDialect> INLINE_AS_X_APOS   = SQLDialect.supported(DERBY, H2, HSQLDB, MARIADB, MYSQL, SQLITE);
-        private static final Set<SQLDialect> REQUIRE_BYTEA_CAST = SQLDialect.supported(POSTGRES);
+        private static final Set<SQLDialect> INLINE_AS_X_APOS   = SQLDialect.supportedBy(DERBY, H2, HSQLDB, MARIADB, MYSQL, SQLITE);
+        private static final Set<SQLDialect> REQUIRE_BYTEA_CAST = SQLDialect.supportedBy(POSTGRES);
 
 
 
@@ -1944,7 +1944,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          * Generated UID
          */
         private static final long            serialVersionUID         = -4797649501187223237L;
-        private static final Set<SQLDialect> INLINE_AS_STRING_LITERAL = SQLDialect.supported(SQLITE);
+        private static final Set<SQLDialect> INLINE_AS_STRING_LITERAL = SQLDialect.supportedBy(SQLITE);
 
         DefaultDateBinding(Converter<Date, U> converter, boolean isLob) {
             super(converter, isLob);
@@ -2126,7 +2126,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          * Generated UID
          */
         private static final long            serialVersionUID           = 4378118707359663541L;
-        private static final Set<SQLDialect> REQUIRE_PG_INTERVAL_SYNTAX = SQLDialect.supported(POSTGRES);
+        private static final Set<SQLDialect> REQUIRE_PG_INTERVAL_SYNTAX = SQLDialect.supportedBy(POSTGRES);
 
         DefaultDayToSecondBinding(Converter<DayToSecond, U> converter, boolean isLob) {
             super(converter, isLob);
@@ -2212,7 +2212,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          * Generated UID
          */
         private static final long            serialVersionUID = -615723070592774059L;
-        private static final Set<SQLDialect> REQUIRE_NAN_CAST = SQLDialect.supported(POSTGRES);
+        private static final Set<SQLDialect> REQUIRE_NAN_CAST = SQLDialect.supportedBy(POSTGRES);
 
         DefaultDoubleBinding(Converter<Double, U> converter, boolean isLob) {
             super(converter, isLob);
@@ -2280,7 +2280,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          * Generated UID
          */
         private static final long            serialVersionUID  = -5858761464381778695L;
-        private static final Set<SQLDialect> REQUIRE_ENUM_CAST = SQLDialect.supported(POSTGRES);
+        private static final Set<SQLDialect> REQUIRE_ENUM_CAST = SQLDialect.supportedBy(POSTGRES);
 
         DefaultEnumTypeBinding(Converter<EnumType, U> converter, boolean isLob) {
             super(converter, isLob);
@@ -2387,7 +2387,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          * Generated UID
          */
         private static final long            serialVersionUID = -2468794191255859536L;
-        private static final Set<SQLDialect> REQUIRE_NAN_CAST = SQLDialect.supported(POSTGRES);
+        private static final Set<SQLDialect> REQUIRE_NAN_CAST = SQLDialect.supportedBy(POSTGRES);
 
         DefaultFloatBinding(Converter<Float, U> converter, boolean isLob) {
             super(converter, isLob);
@@ -3202,7 +3202,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          * Generated UID
          */
         private static final long            serialVersionUID    = 2547994476924120818L;
-        private static final Set<SQLDialect> REQUIRE_RECORD_CAST = SQLDialect.supported(POSTGRES);
+        private static final Set<SQLDialect> REQUIRE_RECORD_CAST = SQLDialect.supportedBy(POSTGRES);
 
         DefaultRecordBinding(Converter<Record, U> converter, boolean isLob) {
             super(converter, isLob);
@@ -3698,7 +3698,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          * Generated UID
          */
         private static final long            serialVersionUID         = -2563220967846617288L;
-        private static final Set<SQLDialect> INLINE_AS_STRING_LITERAL = SQLDialect.supported(SQLITE);
+        private static final Set<SQLDialect> INLINE_AS_STRING_LITERAL = SQLDialect.supportedBy(SQLITE);
 
         DefaultTimeBinding(Converter<Time, U> converter, boolean isLob) {
             super(converter, isLob);
@@ -3792,7 +3792,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          * Generated UID
          */
         private static final long            serialVersionUID         = 289387167549159015L;
-        private static final Set<SQLDialect> INLINE_AS_STRING_LITERAL = SQLDialect.supported(SQLITE);
+        private static final Set<SQLDialect> INLINE_AS_STRING_LITERAL = SQLDialect.supportedBy(SQLITE);
 
         DefaultTimestampBinding(Converter<Timestamp, U> converter, boolean isLob) {
             super(converter, isLob);
@@ -4391,7 +4391,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          * Generated UID
          */
         private static final long            serialVersionUID    = 6417965474063152673L;
-        private static final Set<SQLDialect> REQUIRE_PG_INTERVAL = SQLDialect.supported(POSTGRES);
+        private static final Set<SQLDialect> REQUIRE_PG_INTERVAL = SQLDialect.supportedBy(POSTGRES);
 
         DefaultYearToSecondBinding(Converter<YearToSecond, U> converter, boolean isLob) {
             super(converter, isLob);
@@ -4454,7 +4454,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          * Generated UID
          */
         private static final long            serialVersionUID    = 6417965474063152673L;
-        private static final Set<SQLDialect> REQUIRE_PG_INTERVAL = SQLDialect.supported(POSTGRES);
+        private static final Set<SQLDialect> REQUIRE_PG_INTERVAL = SQLDialect.supportedBy(POSTGRES);
 
         DefaultYearToMonthBinding(Converter<YearToMonth, U> converter, boolean isLob) {
             super(converter, isLob);

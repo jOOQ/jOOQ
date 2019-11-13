@@ -82,8 +82,8 @@ final class RowOverlapsCondition<T1, T2> extends AbstractCondition {
      */
     private static final long            serialVersionUID              = 85887551884667824L;
     private static final Clause[]        CLAUSES                       = { CONDITION, CONDITION_OVERLAPS };
-    private static final Set<SQLDialect> EMULATE_NON_STANDARD_OVERLAPS = SQLDialect.supported(CUBRID, DERBY, FIREBIRD, H2, MARIADB, MYSQL, SQLITE);
-    private static final Set<SQLDialect> EMULATE_INTERVAL_OVERLAPS     = SQLDialect.supported(HSQLDB);
+    private static final Set<SQLDialect> EMULATE_NON_STANDARD_OVERLAPS = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, MARIADB, MYSQL, SQLITE);
+    private static final Set<SQLDialect> EMULATE_INTERVAL_OVERLAPS     = SQLDialect.supportedBy(HSQLDB);
 
     private final Row2<T1, T2>           left;
     private final Row2<T1, T2>           right;

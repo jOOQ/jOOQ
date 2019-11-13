@@ -158,9 +158,9 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
 
 
-    private static final Set<SQLDialect> SUPPORT_RVE_SET        = SQLDialect.supported(H2, HSQLDB, POSTGRES);
-    private static final Set<SQLDialect> NO_SUPPORT_LIMIT       = SQLDialect.supported(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE);
-    private static final Set<SQLDialect> REQUIRE_RVE_ROW_CLAUSE = SQLDialect.supported(POSTGRES);
+    private static final Set<SQLDialect> SUPPORT_RVE_SET        = SQLDialect.supportedBy(H2, HSQLDB, POSTGRES);
+    private static final Set<SQLDialect> NO_SUPPORT_LIMIT       = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE);
+    private static final Set<SQLDialect> REQUIRE_RVE_ROW_CLAUSE = SQLDialect.supportedBy(POSTGRES);
 
     private final FieldMapForUpdate      updateMap;
     private final TableList              from;

@@ -82,8 +82,8 @@ final class DropTableImpl extends AbstractRowCountQuery implements
      */
     private static final long            serialVersionUID     = 8904572826501186329L;
     private static final Clause[]        CLAUSES              = { DROP_TABLE };
-    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS = SQLDialect.supported(DERBY, FIREBIRD);
-    private static final Set<SQLDialect> TEMPORARY_SEMANTIC   = SQLDialect.supported(MYSQL);
+    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS = SQLDialect.supportedBy(DERBY, FIREBIRD);
+    private static final Set<SQLDialect> TEMPORARY_SEMANTIC   = SQLDialect.supportedBy(MYSQL);
 
     private final Table<?>               table;
     private final boolean                temporary;

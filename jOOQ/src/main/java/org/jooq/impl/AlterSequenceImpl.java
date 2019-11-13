@@ -101,9 +101,9 @@ final class AlterSequenceImpl<T extends Number> extends AbstractRowCountQuery im
      */
     private static final long            serialVersionUID     = 8904572826501186329L;
     private static final Clause[]        CLAUSES              = { ALTER_SEQUENCE };
-    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS = SQLDialect.supported(CUBRID, DERBY, FIREBIRD);
-    private static final Set<SQLDialect> NO_SEPARATOR         = SQLDialect.supported(CUBRID, MARIADB);
-    private static final Set<SQLDialect> NO_SUPPORT_CACHE     = SQLDialect.supported(DERBY, FIREBIRD, HSQLDB);
+    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
+    private static final Set<SQLDialect> NO_SEPARATOR         = SQLDialect.supportedBy(CUBRID, MARIADB);
+    private static final Set<SQLDialect> NO_SUPPORT_CACHE     = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB);
 
 
 

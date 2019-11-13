@@ -121,7 +121,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
     private static final long            serialVersionUID      = 4466005417945353842L;
     private static final Clause[]        CLAUSES               = { INSERT };
-    private static final Set<SQLDialect> SUPPORT_INSERT_IGNORE = SQLDialect.supported(MARIADB, MYSQL);
+    private static final Set<SQLDialect> SUPPORT_INSERT_IGNORE = SQLDialect.supportedBy(MARIADB, MYSQL);
 
     private final FieldMapForUpdate      updateMap;
     private final FieldMapsForInsert     insertMaps;

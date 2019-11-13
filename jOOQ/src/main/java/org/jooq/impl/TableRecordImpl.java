@@ -95,7 +95,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
      */
     private static final long            serialVersionUID       = 3216746611562261641L;
     private static final JooqLogger      log                    = JooqLogger.getLogger(TableRecordImpl.class);
-    private static final Set<SQLDialect> REFRESH_GENERATED_KEYS = SQLDialect.supported(DERBY, H2, MARIADB, MYSQL);
+    private static final Set<SQLDialect> REFRESH_GENERATED_KEYS = SQLDialect.supportedBy(DERBY, H2, MARIADB, MYSQL);
 
     private final Table<R>               table;
 

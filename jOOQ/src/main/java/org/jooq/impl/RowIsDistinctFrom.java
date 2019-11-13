@@ -82,8 +82,8 @@ final class RowIsDistinctFrom<T> extends AbstractCondition {
      * Generated UID
      */
     private static final long            serialVersionUID            = 4568269684824736461L;
-    private static final Set<SQLDialect> EMULATE_DISTINCT_PREDICATE  = SQLDialect.supported(CUBRID, DERBY);
-    private static final Set<SQLDialect> SUPPORT_DISTINCT_WITH_ARROW = SQLDialect.supported(MARIADB, MYSQL);
+    private static final Set<SQLDialect> EMULATE_DISTINCT_PREDICATE  = SQLDialect.supportedBy(CUBRID, DERBY);
+    private static final Set<SQLDialect> SUPPORT_DISTINCT_WITH_ARROW = SQLDialect.supportedBy(MARIADB, MYSQL);
 
     private final Row                    lhs;
     private final Row                    rhs;

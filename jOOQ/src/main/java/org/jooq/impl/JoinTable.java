@@ -153,10 +153,10 @@ implements
 
 
 
-    private static final Set<SQLDialect>  EMULATE_NATURAL_JOIN       = SQLDialect.supported(CUBRID);
-    private static final Set<SQLDialect>  EMULATE_NATURAL_OUTER_JOIN = SQLDialect.supported(CUBRID, H2);
-    private static final Set<SQLDialect>  EMULATE_JOIN_USING         = SQLDialect.supported(CUBRID, H2);
-    private static final Set<SQLDialect>  EMULATE_APPLY              = SQLDialect.supported(POSTGRES);
+    private static final Set<SQLDialect>  EMULATE_NATURAL_JOIN       = SQLDialect.supportedBy(CUBRID);
+    private static final Set<SQLDialect>  EMULATE_NATURAL_OUTER_JOIN = SQLDialect.supportedBy(CUBRID, H2);
+    private static final Set<SQLDialect>  EMULATE_JOIN_USING         = SQLDialect.supportedBy(CUBRID, H2);
+    private static final Set<SQLDialect>  EMULATE_APPLY              = SQLDialect.supportedBy(POSTGRES);
 
     final Table<?>                        lhs;
     final Table<?>                        rhs;

@@ -59,7 +59,7 @@ import org.jooq.Table;
 final class TableList extends QueryPartList<Table<?>> {
 
     private static final long            serialVersionUID = -8545559185481762229L;
-    private static final Set<SQLDialect> UNQUALIFY_FIELDS = SQLDialect.supported(DERBY, FIREBIRD, H2, HSQLDB);
+    private static final Set<SQLDialect> UNQUALIFY_FIELDS = SQLDialect.supportedBy(DERBY, FIREBIRD, H2, HSQLDB);
 
     TableList() {
         super();

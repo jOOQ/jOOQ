@@ -239,7 +239,7 @@ implements
      */
     private static final long            serialVersionUID = -8835479296876774391L;
     private static final Clause[]        CLAUSES          = { MERGE };
-    private static final Set<SQLDialect> NO_SUPPORT_WHERE = SQLDialect.supported(DERBY);
+    private static final Set<SQLDialect> NO_SUPPORT_WHERE = SQLDialect.supportedBy(DERBY);
 
     private final WithImpl               with;
     private final Table<R>               table;

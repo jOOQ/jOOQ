@@ -87,7 +87,7 @@ final class RowInCondition extends AbstractCondition {
 
     // Currently not yet supported in SQLite:
     // https://www.sqlite.org/rowvalue.html
-    private static final Set<SQLDialect>       EMULATE_IN       = SQLDialect.supported(DERBY, FIREBIRD, SQLITE);
+    private static final Set<SQLDialect>       EMULATE_IN       = SQLDialect.supportedBy(DERBY, FIREBIRD, SQLITE);
 
     private final Row                          left;
     private final QueryPartList<? extends Row> right;

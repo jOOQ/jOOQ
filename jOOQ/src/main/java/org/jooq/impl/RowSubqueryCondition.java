@@ -90,7 +90,7 @@ final class RowSubqueryCondition extends AbstractCondition {
      */
     private static final long            serialVersionUID         = -1806139685201770706L;
     private static final Clause[]        CLAUSES                  = { CONDITION, CONDITION_COMPARISON };
-    private static final Set<SQLDialect> SUPPORT_NATIVE           = SQLDialect.supported(H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE);
+    private static final Set<SQLDialect> SUPPORT_NATIVE           = SQLDialect.supportedBy(H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE);
 
 
 

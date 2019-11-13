@@ -757,13 +757,13 @@ final class Tools {
      */
     private static final char[]          HEX_DIGITS                     = "0123456789abcdef".toCharArray();
 
-    private static final Set<SQLDialect> REQUIRES_BACKSLASH_ESCAPING    = SQLDialect.supported(MARIADB, MYSQL);
-    private static final Set<SQLDialect> NO_SUPPORT_NULL                = SQLDialect.supported(DERBY, FIREBIRD, HSQLDB);
-    private static final Set<SQLDialect> NO_SUPPORT_BINARY_TYPE_LENGTH  = SQLDialect.supported(POSTGRES);
-    private static final Set<SQLDialect> NO_SUPPORT_CAST_TYPE_IN_DDL    = SQLDialect.supported(MARIADB, MYSQL);
-    private static final Set<SQLDialect> DEFAULT_BEFORE_NULL            = SQLDialect.supported(FIREBIRD, HSQLDB);
-    private static final Set<SQLDialect> SUPPORT_MYSQL_SYNTAX           = SQLDialect.supported(MARIADB, MYSQL);
-    private static final Set<SQLDialect> SUPPORT_POSTGRES_SYNTAX        = SQLDialect.supported(POSTGRES);
+    private static final Set<SQLDialect> REQUIRES_BACKSLASH_ESCAPING    = SQLDialect.supportedBy(MARIADB, MYSQL);
+    private static final Set<SQLDialect> NO_SUPPORT_NULL                = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB);
+    private static final Set<SQLDialect> NO_SUPPORT_BINARY_TYPE_LENGTH  = SQLDialect.supportedBy(POSTGRES);
+    private static final Set<SQLDialect> NO_SUPPORT_CAST_TYPE_IN_DDL    = SQLDialect.supportedBy(MARIADB, MYSQL);
+    private static final Set<SQLDialect> DEFAULT_BEFORE_NULL            = SQLDialect.supportedBy(FIREBIRD, HSQLDB);
+    private static final Set<SQLDialect> SUPPORT_MYSQL_SYNTAX           = SQLDialect.supportedBy(MARIADB, MYSQL);
+    private static final Set<SQLDialect> SUPPORT_POSTGRES_SYNTAX        = SQLDialect.supportedBy(POSTGRES);
 
     // ------------------------------------------------------------------------
     // XXX: Record constructors and related methods

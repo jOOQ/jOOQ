@@ -105,8 +105,8 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
      * Generated UID
      */
     private static final long             serialVersionUID                = 2996016924769376361L;
-    private static final Set<SQLDialect>  OMIT_PARTITION_BY_ONE           = SQLDialect.supported(CUBRID, MYSQL, SQLITE);
-    private static final Set<SQLDialect>  REQUIRES_ORDER_BY_IN_RANKING    = SQLDialect.supported(H2);
+    private static final Set<SQLDialect>  OMIT_PARTITION_BY_ONE           = SQLDialect.supportedBy(CUBRID, MYSQL, SQLITE);
+    private static final Set<SQLDialect>  REQUIRES_ORDER_BY_IN_RANKING    = SQLDialect.supportedBy(H2);
 
 
 

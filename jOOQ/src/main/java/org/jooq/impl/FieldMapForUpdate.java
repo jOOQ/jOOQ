@@ -68,7 +68,7 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> {
      * Generated UID
      */
     private static final long            serialVersionUID   = -6139709404698673799L;
-    private static final Set<SQLDialect> NO_SUPPORT_QUALIFY = SQLDialect.supported(POSTGRES, SQLITE);
+    private static final Set<SQLDialect> NO_SUPPORT_QUALIFY = SQLDialect.supportedBy(POSTGRES, SQLITE);
 
     private final Table<?>               table;
     private final Clause                 assignmentClause;

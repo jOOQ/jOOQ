@@ -205,15 +205,15 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
      */
     private static final long            serialVersionUID                = 1646393178384872967L;
     private static final Clause[]        CLAUSES                         = { SELECT };
-    private static final Set<SQLDialect> EMULATE_SELECT_INTO_AS_CTAS     = SQLDialect.supported(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE);
-    private static final Set<SQLDialect> NO_SUPPORT_FOR_UPDATE           = SQLDialect.supported(CUBRID);
-    private static final Set<SQLDialect> NO_SUPPORT_FOR_UPDATE_QUALIFIED = SQLDialect.supported(DERBY, FIREBIRD, H2, HSQLDB);
-    private static final Set<SQLDialect> SUPPORT_SELECT_INTO_TABLE       = SQLDialect.supported(HSQLDB, POSTGRES);
-    static final Set<SQLDialect>         SUPPORT_WINDOW_CLAUSE           = SQLDialect.supported(H2 /* -- See [#8279] */, MYSQL, POSTGRES /*, SQLITE -- See [#8279] [#8548] */);
-    private static final Set<SQLDialect> REQUIRES_FROM_CLAUSE            = SQLDialect.supported(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL);
-    private static final Set<SQLDialect> REQUIRES_DERIVED_TABLE_DML      = SQLDialect.supported(MARIADB, MYSQL);
-    private static final Set<SQLDialect> EMULATE_EMPTY_GROUP_BY_OTHER    = SQLDialect.supported(FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE);
-    private static final Set<SQLDialect> SUPPORT_FULL_WITH_TIES          = SQLDialect.supported(H2);
+    private static final Set<SQLDialect> EMULATE_SELECT_INTO_AS_CTAS     = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE);
+    private static final Set<SQLDialect> NO_SUPPORT_FOR_UPDATE           = SQLDialect.supportedBy(CUBRID);
+    private static final Set<SQLDialect> NO_SUPPORT_FOR_UPDATE_QUALIFIED = SQLDialect.supportedBy(DERBY, FIREBIRD, H2, HSQLDB);
+    private static final Set<SQLDialect> SUPPORT_SELECT_INTO_TABLE       = SQLDialect.supportedBy(HSQLDB, POSTGRES);
+    static final Set<SQLDialect>         SUPPORT_WINDOW_CLAUSE           = SQLDialect.supportedBy(H2 /* -- See [#8279] */, MYSQL, POSTGRES /*, SQLITE -- See [#8279] [#8548] */);
+    private static final Set<SQLDialect> REQUIRES_FROM_CLAUSE            = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL);
+    private static final Set<SQLDialect> REQUIRES_DERIVED_TABLE_DML      = SQLDialect.supportedBy(MARIADB, MYSQL);
+    private static final Set<SQLDialect> EMULATE_EMPTY_GROUP_BY_OTHER    = SQLDialect.supportedBy(FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE);
+    private static final Set<SQLDialect> SUPPORT_FULL_WITH_TIES          = SQLDialect.supportedBy(H2);
 
 
 
@@ -1741,9 +1741,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-    private static final Set<SQLDialect> NO_SUPPORT_UNION_PARENTHESES = SQLDialect.supported(SQLITE);
-    private static final Set<SQLDialect> UNION_PARENTHESIS = SQLDialect.supported(DERBY, MARIADB, MYSQL);
-    private static final Set<SQLDialect> UNION_PARENTHESIS_IN_DERIVED_TABLES = SQLDialect.supported(DERBY);
+    private static final Set<SQLDialect> NO_SUPPORT_UNION_PARENTHESES = SQLDialect.supportedBy(SQLITE);
+    private static final Set<SQLDialect> UNION_PARENTHESIS = SQLDialect.supportedBy(DERBY, MARIADB, MYSQL);
+    private static final Set<SQLDialect> UNION_PARENTHESIS_IN_DERIVED_TABLES = SQLDialect.supportedBy(DERBY);
 
     private final boolean unionOpNesting() {
         if (unionOp.size() > 1)

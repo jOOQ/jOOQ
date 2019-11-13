@@ -104,9 +104,9 @@ final class CreateIndexImpl extends AbstractRowCountQuery implements
      */
     private static final long                serialVersionUID         = 8904572826501186329L;
     private static final Clause[]            CLAUSES                  = { CREATE_INDEX };
-    private static final Set<SQLDialect>     NO_SUPPORT_IF_NOT_EXISTS = SQLDialect.supported(DERBY, FIREBIRD);
-    private static final Set<SQLDialect>     SUPPORT_UNNAMED_INDEX    = SQLDialect.supported(POSTGRES);
-    private static final Set<SQLDialect>     SUPPORT_INCLUDE          = SQLDialect.supported(POSTGRES);
+    private static final Set<SQLDialect>     NO_SUPPORT_IF_NOT_EXISTS = SQLDialect.supportedBy(DERBY, FIREBIRD);
+    private static final Set<SQLDialect>     SUPPORT_UNNAMED_INDEX    = SQLDialect.supportedBy(POSTGRES);
+    private static final Set<SQLDialect>     SUPPORT_INCLUDE          = SQLDialect.supportedBy(POSTGRES);
 
     private final Index                      index;
     private final boolean                    unique;

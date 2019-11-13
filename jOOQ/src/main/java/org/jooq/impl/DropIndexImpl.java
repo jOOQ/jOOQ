@@ -86,8 +86,8 @@ final class DropIndexImpl extends AbstractRowCountQuery implements
      */
     private static final long            serialVersionUID     = 8904572826501186329L;
     private static final Clause[]        CLAUSES              = { DROP_INDEX };
-    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS = SQLDialect.supported(CUBRID, DERBY, FIREBIRD);
-    private static final Set<SQLDialect> REQUIRES_ON          = SQLDialect.supported(MARIADB, MYSQL);
+    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
+    private static final Set<SQLDialect> REQUIRES_ON          = SQLDialect.supportedBy(MARIADB, MYSQL);
 
     private final Index                  index;
     private final boolean                ifExists;

@@ -131,8 +131,8 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     private static final long                serialVersionUID                  = -5588344253566055707L;
     private static final JooqLogger          log                               = JooqLogger.getLogger(AbstractResultQuery.class);
 
-    private static final Set<SQLDialect>     NO_SUPPORT_FOR_UPDATE             = SQLDialect.supported(CUBRID);
-    private static final Set<SQLDialect>     REPORT_FETCH_SIZE_WITH_AUTOCOMMIT = SQLDialect.supported(POSTGRES);
+    private static final Set<SQLDialect>     NO_SUPPORT_FOR_UPDATE             = SQLDialect.supportedBy(CUBRID);
+    private static final Set<SQLDialect>     REPORT_FETCH_SIZE_WITH_AUTOCOMMIT = SQLDialect.supportedBy(POSTGRES);
 
     private int                              maxRows;
     private int                              fetchSize;

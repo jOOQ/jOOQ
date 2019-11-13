@@ -79,7 +79,7 @@ final class CreateSchemaImpl extends AbstractRowCountQuery implements
      */
     private static final long                serialVersionUID           = 8904572826501186329L;
     private static final Clause[]            CLAUSES                    = { CREATE_SCHEMA };
-    private static final Set<SQLDialect>     NO_SUPPORT_IF_NOT_EXISTS   = SQLDialect.supported(DERBY, FIREBIRD);
+    private static final Set<SQLDialect>     NO_SUPPORT_IF_NOT_EXISTS   = SQLDialect.supportedBy(DERBY, FIREBIRD);
 
 
 

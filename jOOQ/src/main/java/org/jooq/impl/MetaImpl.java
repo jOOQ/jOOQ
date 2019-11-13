@@ -144,9 +144,9 @@ final class MetaImpl extends AbstractMeta {
 
     private static final long            serialVersionUID                 = 3582980783173033809L;
     private static final JooqLogger      log                              = JooqLogger.getLogger(MetaImpl.class);
-    private static final Set<SQLDialect> INVERSE_SCHEMA_CATALOG           = SQLDialect.supported(MARIADB, MYSQL);
-    private static final Set<SQLDialect> CURRENT_TIMESTAMP_COLUMN_DEFAULT = SQLDialect.supported(MARIADB, MYSQL);
-    private static final Set<SQLDialect> EXPRESSION_COLUMN_DEFAULT        = SQLDialect.supported(H2);
+    private static final Set<SQLDialect> INVERSE_SCHEMA_CATALOG           = SQLDialect.supportedBy(MARIADB, MYSQL);
+    private static final Set<SQLDialect> CURRENT_TIMESTAMP_COLUMN_DEFAULT = SQLDialect.supportedBy(MARIADB, MYSQL);
+    private static final Set<SQLDialect> EXPRESSION_COLUMN_DEFAULT        = SQLDialect.supportedBy(H2);
 
 
 

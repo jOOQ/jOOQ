@@ -114,11 +114,11 @@ final class Expression<T> extends AbstractField<T> {
      * Generated UID
      */
     private static final long             serialVersionUID    = -5522799070693019771L;
-    private static final Set<SQLDialect>  SUPPORT_BIT_AND     = SQLDialect.supported(H2, HSQLDB);
-    private static final Set<SQLDialect>  SUPPORT_BIT_OR_XOR  = SQLDialect.supported(H2, HSQLDB);
-    private static final Set<SQLDialect>  EMULATE_BIT_XOR     = SQLDialect.supported(SQLITE);
-    private static final Set<SQLDialect>  EMULATE_SHR_SHL     = SQLDialect.supported(H2, HSQLDB);
-    private static final Set<SQLDialect>  HASH_OP_FOR_BIT_XOR = SQLDialect.supported(POSTGRES);
+    private static final Set<SQLDialect>  SUPPORT_BIT_AND     = SQLDialect.supportedBy(H2, HSQLDB);
+    private static final Set<SQLDialect>  SUPPORT_BIT_OR_XOR  = SQLDialect.supportedBy(H2, HSQLDB);
+    private static final Set<SQLDialect>  EMULATE_BIT_XOR     = SQLDialect.supportedBy(SQLITE);
+    private static final Set<SQLDialect>  EMULATE_SHR_SHL     = SQLDialect.supportedBy(H2, HSQLDB);
+    private static final Set<SQLDialect>  HASH_OP_FOR_BIT_XOR = SQLDialect.supportedBy(POSTGRES);
 
     private final Field<T>                lhs;
     private final QueryPartList<Field<?>> rhs;

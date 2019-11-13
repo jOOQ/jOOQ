@@ -73,7 +73,7 @@ class IndexImpl extends AbstractNamed implements Index {
      * Generated UID
      */
     private static final long                serialVersionUID               = -5253463940194393996L;
-    private static final Set<SQLDialect>     NO_SUPPORT_INDEX_QUALIFICATION = SQLDialect.supported(MARIADB, MYSQL, POSTGRES);
+    private static final Set<SQLDialect>     NO_SUPPORT_INDEX_QUALIFICATION = SQLDialect.supportedBy(MARIADB, MYSQL, POSTGRES);
 
     private final Table<?>                   table;
     private final SortField<?>[]             fields;

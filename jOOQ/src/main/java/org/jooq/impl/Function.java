@@ -151,12 +151,12 @@ class Function<T> extends AbstractField<T> implements
 
 
     private static final long              serialVersionUID                   = 347252741712134044L;
-    private static final Set<SQLDialect>   SUPPORT_ARRAY_AGG                  = SQLDialect.supported(HSQLDB, POSTGRES);
-    private static final Set<SQLDialect>   SUPPORT_GROUP_CONCAT               = SQLDialect.supported(CUBRID, H2, HSQLDB, MARIADB, MYSQL, SQLITE);
-    private static final Set<SQLDialect>   SUPPORT_STRING_AGG                 = SQLDialect.supported(POSTGRES);
-    private static final Set<SQLDialect>   SUPPORT_NO_PARENS_WINDOW_REFERENCE = SQLDialect.supported(MYSQL, POSTGRES);
-    private static final Set<SQLDialect>   SUPPORT_FILTER                     = SQLDialect.supported(H2, HSQLDB, POSTGRES);
-    private static final Set<SQLDialect>   SUPPORT_DISTINCT_RVE               = SQLDialect.supported(H2, POSTGRES);
+    private static final Set<SQLDialect>   SUPPORT_ARRAY_AGG                  = SQLDialect.supportedBy(HSQLDB, POSTGRES);
+    private static final Set<SQLDialect>   SUPPORT_GROUP_CONCAT               = SQLDialect.supportedBy(CUBRID, H2, HSQLDB, MARIADB, MYSQL, SQLITE);
+    private static final Set<SQLDialect>   SUPPORT_STRING_AGG                 = SQLDialect.supportedBy(POSTGRES);
+    private static final Set<SQLDialect>   SUPPORT_NO_PARENS_WINDOW_REFERENCE = SQLDialect.supportedBy(MYSQL, POSTGRES);
+    private static final Set<SQLDialect>   SUPPORT_FILTER                     = SQLDialect.supportedBy(H2, HSQLDB, POSTGRES);
+    private static final Set<SQLDialect>   SUPPORT_DISTINCT_RVE               = SQLDialect.supportedBy(H2, POSTGRES);
 
     static final Field<Integer>            ASTERISK                           = DSL.field("*", Integer.class);
 

@@ -89,14 +89,14 @@ final class CreateSequenceImpl extends AbstractRowCountQuery implements
      */
     private static final long                serialVersionUID         = 8904572826501186329L;
     private static final Clause[]            CLAUSES                  = { CREATE_SEQUENCE };
-    private static final Set<SQLDialect>     NO_SUPPORT_IF_NOT_EXISTS = SQLDialect.supported(DERBY, FIREBIRD);
-    private static final Set<SQLDialect>     REQUIRES_START_WITH      = SQLDialect.supported(DERBY);
-    private static final Set<SQLDialect>     NO_SUPPORT_CACHE         = SQLDialect.supported(DERBY, FIREBIRD, HSQLDB);
-    private static final Set<SQLDialect>     NO_SEPARATOR             = SQLDialect.supported(CUBRID, MARIADB);
-    private static final Set<SQLDialect>     OMIT_NO_CACHE            = SQLDialect.supported(FIREBIRD, POSTGRES);
-    private static final Set<SQLDialect>     OMIT_NO_CYCLE            = SQLDialect.supported(FIREBIRD);
-    private static final Set<SQLDialect>     OMIT_NO_MINVALUE         = SQLDialect.supported(FIREBIRD);
-    private static final Set<SQLDialect>     OMIT_NO_MAXVALUE         = SQLDialect.supported(FIREBIRD);
+    private static final Set<SQLDialect>     NO_SUPPORT_IF_NOT_EXISTS = SQLDialect.supportedBy(DERBY, FIREBIRD);
+    private static final Set<SQLDialect>     REQUIRES_START_WITH      = SQLDialect.supportedBy(DERBY);
+    private static final Set<SQLDialect>     NO_SUPPORT_CACHE         = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB);
+    private static final Set<SQLDialect>     NO_SEPARATOR             = SQLDialect.supportedBy(CUBRID, MARIADB);
+    private static final Set<SQLDialect>     OMIT_NO_CACHE            = SQLDialect.supportedBy(FIREBIRD, POSTGRES);
+    private static final Set<SQLDialect>     OMIT_NO_CYCLE            = SQLDialect.supportedBy(FIREBIRD);
+    private static final Set<SQLDialect>     OMIT_NO_MINVALUE         = SQLDialect.supportedBy(FIREBIRD);
+    private static final Set<SQLDialect>     OMIT_NO_MAXVALUE         = SQLDialect.supportedBy(FIREBIRD);
 
     private final Sequence<?>                sequence;
     private final boolean                    ifNotExists;

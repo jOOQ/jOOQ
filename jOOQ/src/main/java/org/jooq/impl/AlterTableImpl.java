@@ -213,15 +213,15 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
      */
     private static final long                serialVersionUID                      = 8904572826501186329L;
     private static final Clause[]            CLAUSES                               = { ALTER_TABLE };
-    private static final Set<SQLDialect>     NO_SUPPORT_IF_EXISTS                  = SQLDialect.supported(CUBRID, DERBY, FIREBIRD, MARIADB);
-    private static final Set<SQLDialect>     NO_SUPPORT_IF_EXISTS_COLUMN           = SQLDialect.supported(CUBRID, DERBY, FIREBIRD);
-    private static final Set<SQLDialect>     SUPPORT_RENAME_COLUMN                 = SQLDialect.supported(DERBY);
-    private static final Set<SQLDialect>     SUPPORT_RENAME_TABLE                  = SQLDialect.supported(DERBY);
-    private static final Set<SQLDialect>     NO_SUPPORT_RENAME_QUALIFIED_TABLE     = SQLDialect.supported(POSTGRES);
-    private static final Set<SQLDialect>     NO_SUPPORT_ALTER_TYPE_AND_NULL        = SQLDialect.supported(POSTGRES);
-    private static final Set<SQLDialect>     NO_SUPPORT_DROP_CONSTRAINT            = SQLDialect.supported(MARIADB, MYSQL);
-    private static final Set<SQLDialect>     REQUIRE_REPEAT_ADD_ON_MULTI_ALTER     = SQLDialect.supported(FIREBIRD, MARIADB, MYSQL, POSTGRES);
-    private static final Set<SQLDialect>     REQUIRE_REPEAT_DROP_ON_MULTI_ALTER    = SQLDialect.supported(FIREBIRD, MARIADB, MYSQL, POSTGRES);
+    private static final Set<SQLDialect>     NO_SUPPORT_IF_EXISTS                  = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, MARIADB);
+    private static final Set<SQLDialect>     NO_SUPPORT_IF_EXISTS_COLUMN           = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
+    private static final Set<SQLDialect>     SUPPORT_RENAME_COLUMN                 = SQLDialect.supportedBy(DERBY);
+    private static final Set<SQLDialect>     SUPPORT_RENAME_TABLE                  = SQLDialect.supportedBy(DERBY);
+    private static final Set<SQLDialect>     NO_SUPPORT_RENAME_QUALIFIED_TABLE     = SQLDialect.supportedBy(POSTGRES);
+    private static final Set<SQLDialect>     NO_SUPPORT_ALTER_TYPE_AND_NULL        = SQLDialect.supportedBy(POSTGRES);
+    private static final Set<SQLDialect>     NO_SUPPORT_DROP_CONSTRAINT            = SQLDialect.supportedBy(MARIADB, MYSQL);
+    private static final Set<SQLDialect>     REQUIRE_REPEAT_ADD_ON_MULTI_ALTER     = SQLDialect.supportedBy(FIREBIRD, MARIADB, MYSQL, POSTGRES);
+    private static final Set<SQLDialect>     REQUIRE_REPEAT_DROP_ON_MULTI_ALTER    = SQLDialect.supportedBy(FIREBIRD, MARIADB, MYSQL, POSTGRES);
 
 
 

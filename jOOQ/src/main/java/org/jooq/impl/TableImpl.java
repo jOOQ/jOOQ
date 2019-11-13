@@ -79,7 +79,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
     private static final long            serialVersionUID               = 261033315221985068L;
     private static final Clause[]        CLAUSES_TABLE_REFERENCE        = { TABLE, TABLE_REFERENCE };
     private static final Clause[]        CLAUSES_TABLE_ALIAS            = { TABLE, TABLE_ALIAS };
-    private static final Set<SQLDialect> NO_SUPPORT_QUALIFIED_TVF_CALLS = SQLDialect.supported(POSTGRES);
+    private static final Set<SQLDialect> NO_SUPPORT_QUALIFIED_TVF_CALLS = SQLDialect.supportedBy(POSTGRES);
 
     final Fields<R>                      fields;
     final Alias<Table<R>>                alias;

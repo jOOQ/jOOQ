@@ -90,7 +90,7 @@ final class AlterViewImpl extends AbstractRowCountQuery implements
      */
     private static final long                serialVersionUID  = 8904572826501186329L;
     private static final Clause[]            CLAUSES           = { ALTER_VIEW };
-    private static final Set<SQLDialect>     SUPPORT_IF_EXISTS = SQLDialect.supported(CUBRID, DERBY, FIREBIRD);
+    private static final Set<SQLDialect>     SUPPORT_IF_EXISTS = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
 
     private final Table<?>                   view;
     private final boolean                    ifExists;

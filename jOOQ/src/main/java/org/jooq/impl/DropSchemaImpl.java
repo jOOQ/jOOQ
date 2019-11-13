@@ -81,8 +81,8 @@ final class DropSchemaImpl extends AbstractRowCountQuery implements
      */
     private static final long            serialVersionUID           = 8904572826501186329L;
     private static final Clause[]        CLAUSES                    = { DROP_SCHEMA };
-    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS       = SQLDialect.supported(DERBY, FIREBIRD);
-    private static final Set<SQLDialect> REQUIRES_RESTRICT          = SQLDialect.supported(DERBY);
+    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS       = SQLDialect.supportedBy(DERBY, FIREBIRD);
+    private static final Set<SQLDialect> REQUIRES_RESTRICT          = SQLDialect.supportedBy(DERBY);
 
 
 

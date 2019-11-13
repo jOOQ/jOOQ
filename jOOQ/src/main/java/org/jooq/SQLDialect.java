@@ -642,7 +642,7 @@ public enum SQLDialect {
      * The resulting set of dialects contain all the families and dialect
      * versions that support the argument dialect.
      */
-    public static final Set<SQLDialect> supported(SQLDialect dialect) {
+    public static final Set<SQLDialect> supportedBy(SQLDialect dialect) {
         EnumSet<SQLDialect> result = EnumSet.noneOf(SQLDialect.class);
         addSupported(dialect, result);
         return Collections.unmodifiableSet(result);
@@ -654,7 +654,7 @@ public enum SQLDialect {
      * The resulting set of dialects contain all the families and dialect
      * versions that support the argument dialects.
      */
-    public static final Set<SQLDialect> supported(SQLDialect... dialects) {
+    public static final Set<SQLDialect> supportedBy(SQLDialect... dialects) {
         EnumSet<SQLDialect> result = EnumSet.noneOf(SQLDialect.class);
 
         for (SQLDialect dialect : dialects)
@@ -712,7 +712,7 @@ public enum SQLDialect {
      * <li>{@link #POSTGRESPLUS}: A not yet supported dialect.</li>
      * </ul>
      */
-    public final boolean supported() {
+    public final boolean isSupported() {
         return supported;
     }
 

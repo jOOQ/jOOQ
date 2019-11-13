@@ -4,14 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.6.RELEASE</version>
+        <groupId>org.jooq</groupId>
+        <artifactId>jooq-examples</artifactId>
+        <version>3.13.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>org.jooq</groupId>
     <artifactId>jooq-spring-boot-example</artifactId>
-    <version>${jooq.version}</version>
     <packaging>jar</packaging>
     <name>jOOQ Spring Boot Example</name>
 
@@ -26,14 +24,22 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <start-class>org.jooq.example.spring.Application</start-class>
-        <jooq.version>3.13.0-SNAPSHOT</jooq.version>
         <java.version>1.8</java.version>
+        <spring-boot.version>2.1.6.RELEASE</spring-boot.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-dependencies</artifactId>
+            <version>${spring-boot.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jooq</artifactId>
+            <version>${spring-boot.version}</version>
 
             <!-- Exclude the default jOOQ dependency if
 
@@ -52,7 +58,7 @@
         <dependency>
             <groupId>org.jooq</groupId>
             <artifactId>jooq</artifactId>
-            <version>${jooq.version}</version>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
@@ -63,6 +69,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <version>${spring-boot.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -140,7 +147,7 @@
             <plugin>
                 <groupId>org.jooq</groupId>
                 <artifactId>jooq-codegen-maven</artifactId>
-                <version>${jooq.version}</version>
+                <version>${project.version}</version>
 
                 <executions>
                     <execution>

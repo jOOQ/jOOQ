@@ -3,9 +3,13 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.jooq</groupId>
+    <parent>
+        <groupId>org.jooq</groupId>
+        <artifactId>jooq-examples</artifactId>
+        <version>3.13.0-SNAPSHOT</version>
+    </parent>
+
     <artifactId>jooq-spring-guice-example</artifactId>
-    <version>3.13.0-SNAPSHOT</version>
     <name>jOOQ Spring Guice Example</name>
 
     <licenses>

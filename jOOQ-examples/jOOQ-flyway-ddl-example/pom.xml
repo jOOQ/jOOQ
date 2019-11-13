@@ -9,7 +9,6 @@
         <version>3.13.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>org.jooq</groupId>
     <artifactId>jooq-flyway-ddl-example</artifactId>
     <name>jOOQ Flyway DDL Example</name>
 
@@ -24,7 +23,6 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.springframework.version>3.2.6.RELEASE</org.springframework.version>
-        <org.jooq.version>3.13.0-SNAPSHOT</org.jooq.version>
     </properties>
 
     <dependencies>

@@ -15,13 +15,22 @@
 
     <properties>
         <scala.version>2.13.0</scala.version>
-        <jdbc-url-postfix>default</jdbc-url-postfix>
+        <jooq-testdata-dir>${project.basedir}/../.data</jooq-testdata-dir>
     </properties>
 
     <build>
         <sourceDirectory>src/main/scala</sourceDirectory>
         <testSourceDirectory>src/test/scala</testSourceDirectory>
         <plugins>
+
+
+
+
+
+
+
+
+
 
 
 

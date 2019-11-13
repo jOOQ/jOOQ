@@ -6,7 +6,7 @@
 
     <groupId>org.jooq</groupId>
     <artifactId>jooq-kotlin-example</artifactId>
-    <version>${org.jooq.version}</version>
+    <version>3.13.0-SNAPSHOT</version>
     <name>jOOQ Kotlin Example</name>
 
     <licenses>
@@ -20,7 +20,6 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kotlin.version>1.2.30</kotlin.version>
-        <org.jooq.version>3.13.0-SNAPSHOT</org.jooq.version>
         <org.h2.version>1.4.199</org.h2.version>
     </properties>
 
@@ -30,7 +29,7 @@
         <dependency>
             <groupId>org.jooq</groupId>
             <artifactId>jooq</artifactId>
-            <version>${org.jooq.version}</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
@@ -142,7 +141,7 @@
             <plugin>
                 <groupId>org.jooq</groupId>
                 <artifactId>jooq-codegen-maven</artifactId>
-                <version>${org.jooq.version}</version>
+                <version>${project.version}</version>
 
                 <executions>
                     <execution>

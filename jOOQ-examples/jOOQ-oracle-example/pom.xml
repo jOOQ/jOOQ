@@ -5,7 +5,7 @@
 
     <groupId>org.jooq</groupId>
     <artifactId>jooq-oracle-example</artifactId>
-    <version>1.0</version>
+    <version>3.13.0-SNAPSHOT</version>
     <name>jOOQ Oracle Example</name>
 
     <licenses>
@@ -18,7 +18,6 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <org.jooq.version>3.13.0-SNAPSHOT</org.jooq.version>
         <db.oracle.version>19.3.0.0</db.oracle.version>
     </properties>
 
@@ -28,7 +27,7 @@
         <dependency>
             <groupId>org.jooq</groupId>
             <artifactId>jooq</artifactId>
-            <version>${org.jooq.version}</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.oracle.ojdbc</groupId>
@@ -146,7 +145,7 @@
             <plugin>
                 <groupId>org.jooq</groupId>
                 <artifactId>jooq-codegen-maven</artifactId>
-                <version>${org.jooq.version}</version>
+                <version>${project.version}</version>
 
                 <executions>
                     <execution>

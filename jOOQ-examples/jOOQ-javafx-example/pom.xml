@@ -5,7 +5,7 @@
 
     <groupId>org.jooq</groupId>
     <artifactId>jooq-javafx-example</artifactId>
-    <version>1.0</version>
+    <version>3.13.0-SNAPSHOT</version>
     <name>jOOQ JavaFX Example</name>
 
     <licenses>
@@ -19,7 +19,6 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.springframework.version>3.2.6.RELEASE</org.springframework.version>
-        <org.jooq.version>3.13.0-SNAPSHOT</org.jooq.version>
         <org.h2.version>1.4.199</org.h2.version>
     </properties>
 
@@ -29,7 +28,7 @@
         <dependency>
             <groupId>org.jooq</groupId>
             <artifactId>jooq</artifactId>
-            <version>${org.jooq.version}</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
@@ -181,7 +180,7 @@
             <plugin>
                 <groupId>org.jooq</groupId>
                 <artifactId>jooq-codegen-maven</artifactId>
-                <version>${org.jooq.version}</version>
+                <version>${project.version}</version>
 
                 <executions>
                     <execution>

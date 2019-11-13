@@ -18,7 +18,6 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <org.jooq.version>${project.version}</org.jooq.version>
         <maven.compiler.target>11</maven.compiler.target>
         <maven.compiler.source>11</maven.compiler.source>
     </properties>
@@ -29,12 +28,12 @@
         <dependency>
             <groupId>org.jooq</groupId>
             <artifactId>jooq</artifactId>
-            <version>${org.jooq.version}</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.jooq</groupId>
             <artifactId>jooq-checker</artifactId>
-            <version>${org.jooq.version}</version>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 
@@ -114,12 +113,12 @@
                             <dependency>
                                 <groupId>org.jooq</groupId>
                                 <artifactId>jooq</artifactId>
-                                <version>${org.jooq.version}</version>
+                                <version>${project.version}</version>
                             </dependency>
                             <dependency>
                                 <groupId>org.jooq</groupId>
                                 <artifactId>jooq-checker</artifactId>
-                                <version>${org.jooq.version}</version>
+                                <version>${project.version}</version>
                             </dependency>
                         </dependencies>
                     </plugin>

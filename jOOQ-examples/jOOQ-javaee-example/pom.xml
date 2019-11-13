@@ -5,7 +5,7 @@
 
     <groupId>org.jooq</groupId>
     <artifactId>jooq-javaee-example</artifactId>
-    <version>${org.jooq.version}</version>
+    <version>3.13.0-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>jOOQ JavaEE Example</name>
 
@@ -19,7 +19,6 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <org.jooq.version>3.13.0-SNAPSHOT</org.jooq.version>
         <org.h2.version>1.4.199</org.h2.version>
         <java.version>1.8</java.version>
 
@@ -66,7 +65,7 @@
         <dependency>
             <groupId>org.jooq</groupId>
             <artifactId>jooq</artifactId>
-            <version>${org.jooq.version}</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
@@ -203,7 +202,7 @@
             <plugin>
                 <groupId>org.jooq</groupId>
                 <artifactId>jooq-codegen-maven</artifactId>
-                <version>${org.jooq.version}</version>
+                <version>${project.version}</version>
 
                 <executions>
                     <execution>

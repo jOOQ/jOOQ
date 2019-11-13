@@ -165,7 +165,7 @@ class Function<T> extends AbstractField<T> implements
     private final Term                     term;
 
     // Other attributes
-    private final QueryPartList<QueryPart> arguments;
+    private final QueryPartList<Field<?>>  arguments;
     private final boolean                  distinct;
     private SortFieldList                  withinGroupOrderBy;
     private SortFieldList                  keepDenseRankOrderBy;
@@ -182,19 +182,19 @@ class Function<T> extends AbstractField<T> implements
     // XXX Constructors
     // -------------------------------------------------------------------------
 
-    Function(String name, DataType<T> type, QueryPart... arguments) {
+    Function(String name, DataType<T> type, Field<?>... arguments) {
         this(name, false, type, arguments);
     }
 
-    Function(Term term, DataType<T> type, QueryPart... arguments) {
+    Function(Term term, DataType<T> type, Field<?>... arguments) {
         this(term, false, type, arguments);
     }
 
-    Function(Name name, DataType<T> type, QueryPart... arguments) {
+    Function(Name name, DataType<T> type, Field<?>... arguments) {
         this(name, false, type, arguments);
     }
 
-    Function(String name, boolean distinct, DataType<T> type, QueryPart... arguments) {
+    Function(String name, boolean distinct, DataType<T> type, Field<?>... arguments) {
         super(DSL.name(name), type);
 
         this.term = null;
@@ -203,7 +203,7 @@ class Function<T> extends AbstractField<T> implements
         this.arguments = new QueryPartList<>(arguments);
     }
 
-    Function(Term term, boolean distinct, DataType<T> type, QueryPart... arguments) {
+    Function(Term term, boolean distinct, DataType<T> type, Field<?>... arguments) {
         super(term.toName(), type);
 
         this.term = term;
@@ -212,7 +212,7 @@ class Function<T> extends AbstractField<T> implements
         this.arguments = new QueryPartList<>(arguments);
     }
 
-    Function(Name name, boolean distinct, DataType<T> type, QueryPart... arguments) {
+    Function(Name name, boolean distinct, DataType<T> type, Field<?>... arguments) {
         super(name, type);
 
         this.term = null;
@@ -257,7 +257,7 @@ class Function<T> extends AbstractField<T> implements
         }
         else if (term == PRODUCT) {
             @SuppressWarnings({ "unchecked", "rawtypes" })
-            final Field<Integer> f = (Field) DSL.field("{0}", arguments.get(0));
+            final Field<Integer> f = (Field) DSL.field("{0}", arguments.get(0).getDataType(), arguments.get(0));
             final Field<Integer> negatives = DSL.when(f.lt(zero()), inline(-1));
 
             @SuppressWarnings("serial")
@@ -566,7 +566,7 @@ class Function<T> extends AbstractField<T> implements
         toSQLArguments1(ctx, arguments);
     }
 
-    final void toSQLArguments1(Context<?> ctx, QueryPartList<QueryPart> args) {
+    final void toSQLArguments1(Context<?> ctx, QueryPartList<Field<?>> args) {
         if (distinct) {
             ctx.visit(K_DISTINCT).sql(' ');
 
@@ -582,7 +582,7 @@ class Function<T> extends AbstractField<T> implements
             else {
                 QueryPartList<Field<?>> expressions = new QueryPartList<>();
 
-                for (QueryPart argument : args)
+                for (Field<?> argument : args)
                     expressions.add(DSL.when(filter, argument == ASTERISK ? one() : argument));
 
                 ctx.visit(expressions);
@@ -639,7 +639,7 @@ class Function<T> extends AbstractField<T> implements
     // XXX aggregate and window function fluent API methods
     // -------------------------------------------------------------------------
 
-    final QueryPartList<QueryPart> getArguments() {
+    final QueryPartList<Field<?>> getArguments() {
         return arguments;
     }
 

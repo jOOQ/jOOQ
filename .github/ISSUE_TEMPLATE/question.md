@@ -7,6 +7,8 @@
 
 ### Your question:
 
+Before asking your question, please check out the FAQ too: https://www.jooq.org/faq
+
 ### Versions:
 
 - jOOQ:

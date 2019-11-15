@@ -38,14 +38,17 @@
 package org.jooq.meta.postgres;
 
 
+import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.partitionBy;
 import static org.jooq.meta.postgres.information_schema.Tables.PARAMETERS;
 import static org.jooq.meta.postgres.information_schema.Tables.ROUTINES;
 
 import java.sql.SQLException;
 import java.util.Arrays;
 
+import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.meta.AbstractRoutineDefinition;
 import org.jooq.meta.DataTypeDefinition;
@@ -55,6 +58,8 @@ import org.jooq.meta.DefaultParameterDefinition;
 import org.jooq.meta.InOutDefinition;
 import org.jooq.meta.ParameterDefinition;
 import org.jooq.meta.SchemaDefinition;
+import org.jooq.meta.postgres.information_schema.tables.Parameters;
+import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -64,7 +69,8 @@ import org.jooq.tools.StringUtils;
  */
 public class PostgresRoutineDefinition extends AbstractRoutineDefinition {
 
-    private final String   specificName;
+    private static final JooqLogger log = JooqLogger.getLogger(PostgresRoutineDefinition.class);
+    private final String            specificName;
 
     public PostgresRoutineDefinition(Database database, Record record) {
         super(database.getSchema(record.get(ROUTINES.ROUTINE_SCHEMA)),
@@ -113,54 +119,64 @@ public class PostgresRoutineDefinition extends AbstractRoutineDefinition {
 
     @Override
     protected void init0() throws SQLException {
-        for (Record record : create().select(
-                PARAMETERS.PARAMETER_NAME,
-                PARAMETERS.DATA_TYPE,
-                PARAMETERS.CHARACTER_MAXIMUM_LENGTH,
-                PARAMETERS.NUMERIC_PRECISION,
-                PARAMETERS.NUMERIC_SCALE,
-                PARAMETERS.UDT_SCHEMA,
-                PARAMETERS.UDT_NAME,
-                PARAMETERS.ORDINAL_POSITION,
-                PARAMETERS.PARAMETER_MODE,
-                ((PostgresDatabase) getDatabase()).is94()
-                    ? PARAMETERS.PARAMETER_DEFAULT
-                    : inline((String) null).as(PARAMETERS.PARAMETER_DEFAULT))
-            .from(PARAMETERS)
-            .where(PARAMETERS.SPECIFIC_SCHEMA.equal(getSchema().getName()))
-            .and(PARAMETERS.SPECIFIC_NAME.equal(specificName))
-            .orderBy(PARAMETERS.ORDINAL_POSITION.asc())
-            .fetch()) {
+        Parameters p = PARAMETERS;
+        Field<Integer> count = count()
+            .filterWhere(p.PARAMETER_NAME.ne(inline("")))
+            .over(partitionBy(p.SPECIFIC_NAME, p.PARAMETER_NAME));
+        Field<Integer> c = count.as("c");
 
-            String inOut = record.get(PARAMETERS.PARAMETER_MODE);
+        for (Record record : create().select(
+                p.PARAMETER_NAME,
+                p.DATA_TYPE,
+                p.CHARACTER_MAXIMUM_LENGTH,
+                p.NUMERIC_PRECISION,
+                p.NUMERIC_SCALE,
+                p.UDT_SCHEMA,
+                p.UDT_NAME,
+                p.ORDINAL_POSITION,
+                p.PARAMETER_MODE,
+                ((PostgresDatabase) getDatabase()).is94()
+                    ? p.PARAMETER_DEFAULT
+                    : inline((String) null).as(p.PARAMETER_DEFAULT),
+                c
+            )
+            .from(p)
+            .where(p.SPECIFIC_SCHEMA.equal(getSchema().getName()))
+            .and(p.SPECIFIC_NAME.equal(specificName))
+            .orderBy(p.ORDINAL_POSITION.asc())) {
+
+            String parameterName = record.get(p.PARAMETER_NAME);
+            String inOut = record.get(p.PARAMETER_MODE);
             SchemaDefinition typeSchema = null;
 
-            String schemaName = record.get(PARAMETERS.UDT_SCHEMA);
+            String schemaName = record.get(p.UDT_SCHEMA);
             if (schemaName != null)
                 typeSchema = getDatabase().getSchema(schemaName);
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
                 typeSchema,
-                record.get(PARAMETERS.DATA_TYPE),
-                record.get(PARAMETERS.CHARACTER_MAXIMUM_LENGTH),
-                record.get(PARAMETERS.NUMERIC_PRECISION),
-                record.get(PARAMETERS.NUMERIC_SCALE),
+                record.get(p.DATA_TYPE),
+                record.get(p.CHARACTER_MAXIMUM_LENGTH),
+                record.get(p.NUMERIC_PRECISION),
+                record.get(p.NUMERIC_SCALE),
                 null,
-                record.get(PARAMETERS.PARAMETER_DEFAULT),
+                record.get(p.PARAMETER_DEFAULT),
                 name(
-                    record.get(PARAMETERS.UDT_SCHEMA),
-                    record.get(PARAMETERS.UDT_NAME)
+                    record.get(p.UDT_SCHEMA),
+                    record.get(p.UDT_NAME)
                 )
             );
 
             ParameterDefinition parameter = new DefaultParameterDefinition(
                 this,
-                record.get(PARAMETERS.PARAMETER_NAME),
-                record.get(PARAMETERS.ORDINAL_POSITION),
+                parameterName,
+                record.get(p.ORDINAL_POSITION),
                 type,
-                record.get(PARAMETERS.PARAMETER_DEFAULT) != null,
-                StringUtils.isBlank(record.get(PARAMETERS.PARAMETER_NAME))
+                record.get(p.PARAMETER_DEFAULT) != null,
+                StringUtils.isBlank(parameterName),
+                "",
+                record.get(c) > 1 ? record.get(p.ORDINAL_POSITION, String.class) : null
             );
 
             addParameter(InOutDefinition.getFromString(inOut), parameter);

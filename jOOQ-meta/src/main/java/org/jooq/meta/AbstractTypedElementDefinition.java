@@ -73,10 +73,15 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
     private transient DataTypeDefinition resolvedType;
 
     public AbstractTypedElementDefinition(T container, String name, int position, DataTypeDefinition definedType, String comment) {
+        this(container, name, position, definedType, comment, null);
+    }
+
+    public AbstractTypedElementDefinition(T container, String name, int position, DataTypeDefinition definedType, String comment, String overload) {
         super(container.getDatabase(),
               container.getSchema(),
               protectName(container, name, position),
-              comment);
+              comment,
+              overload);
 
         this.container = container;
         this.definedType = definedType;

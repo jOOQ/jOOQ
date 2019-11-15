@@ -173,26 +173,26 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
                 return identifier + "_";
         }
 
+        identifier = overload(definition, Mode.DEFAULT, identifier);
         return identifier;
     }
 
     @Override
     public String getJavaSetterName(Definition definition, Mode mode) {
-        return disambiguateMethod(definition,
-            convertToIdentifier(delegate.getJavaSetterName(definition, mode), language));
+        return fixMethodName(definition, mode, delegate.getJavaSetterName(definition, mode));
     }
 
     @Override
     public String getJavaGetterName(Definition definition, Mode mode) {
-        return disambiguateMethod(definition,
-            convertToIdentifier(delegate.getJavaGetterName(definition, mode), language));
+        return fixMethodName(definition, mode, delegate.getJavaGetterName(definition, mode));
     }
 
     @Override
     public String getJavaMethodName(Definition definition, Mode mode) {
-        String methodName;
+        return fixMethodName(definition, mode, delegate.getJavaMethodName(definition, mode));
+    }
 
-        methodName = delegate.getJavaMethodName(definition, mode);
+    private String fixMethodName(Definition definition, Mode mode, String methodName) {
         methodName = overload(definition, mode, methodName);
         methodName = convertToIdentifier(methodName, language);
 
@@ -203,9 +203,8 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
      * [#1358] Add an overload suffix if needed
      */
     private String overload(Definition definition, Mode mode, String identifier) {
-        if (!StringUtils.isBlank(definition.getOverload())) {
+        if (!StringUtils.isBlank(definition.getOverload()))
             identifier += getOverloadSuffix(definition, mode, definition.getOverload());
-        }
 
         return identifier;
     }

@@ -3,13 +3,9 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.jooq</groupId>
-        <artifactId>jooq-examples</artifactId>
-        <version>3.13.0-SNAPSHOT</version>
-    </parent>
-
+    <groupId>org.jooq</groupId>
     <artifactId>jooq-jpa-example</artifactId>
+    <version>3.13.0-SNAPSHOT</version>
     <name>jOOQ JPA Example</name>
 
     <licenses>
@@ -22,7 +18,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <org.h2.version>1.4.199</org.h2.version>
+        <org.h2.version>1.4.200</org.h2.version>
         <org.hibernate.version>5.4.4.Final</org.hibernate.version>
         <org.springframework.version>5.0.7.RELEASE</org.springframework.version>
     </properties>

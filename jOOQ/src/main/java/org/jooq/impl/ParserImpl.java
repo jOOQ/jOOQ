@@ -3150,7 +3150,7 @@ final class ParserImpl implements Parser {
                 if (parseKeywordIf(ctx, "CONSTRAINT"))
                     constraint = constraint(parseIdentifier(ctx));
 
-                if (parseKeywordIf(ctx, "PRIMARY KEY")) {
+                if (parsePrimaryKeyClusteredNonClusteredKeywordIf(ctx)) {
                     if (primary)
                         throw ctx.exception("Duplicate primary key specification");
 
@@ -3336,7 +3336,10 @@ final class ParserImpl implements Parser {
                         inlineConstraint = constraint(parseIdentifier(ctx));
 
                     if (!unique) {
-                        if (parseKeywordIf(ctx, "PRIMARY KEY")) {
+                        if (parsePrimaryKeyClusteredNonClusteredKeywordIf(ctx)) {
+                            if (!parseKeywordIf(ctx, "CLUSTERED"))
+                                parseKeywordIf(ctx, "NONCLUSTERED");
+
                             constraints.add(inlineConstraint == null
                                 ? primaryKey(fieldName)
                                 : inlineConstraint.primaryKey(fieldName));
@@ -3586,6 +3589,16 @@ final class ParserImpl implements Parser {
             return storageStep.storage(new SQLConcatenationImpl(storage.toArray(EMPTY_QUERYPART)));
         else
             return storageStep;
+    }
+
+    private static boolean parsePrimaryKeyClusteredNonClusteredKeywordIf(ParserContext ctx) {
+        if (!parseKeywordIf(ctx, "PRIMARY KEY"))
+            return false;
+
+        if (!parseKeywordIf(ctx, "CLUSTERED"))
+            parseKeywordIf(ctx, "NONCLUSTERED");
+
+        return true;
     }
 
     private static final DDLQuery parseCreateType(ParserContext ctx) {
@@ -3966,7 +3979,7 @@ final class ParserImpl implements Parser {
         if (parseKeywordIf(ctx, "CONSTRAINT"))
             constraint = constraint(parseIdentifier(ctx));
 
-        if (parseKeywordIf(ctx, "PRIMARY KEY"))
+        if (parsePrimaryKeyClusteredNonClusteredKeywordIf(ctx))
             return parsePrimaryKeySpecification(ctx, constraint);
         else if (parseKeywordIf(ctx, "UNIQUE")) {
             if (!parseKeywordIf(ctx, "KEY"))

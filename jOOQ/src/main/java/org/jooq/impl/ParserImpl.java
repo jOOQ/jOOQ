@@ -451,6 +451,7 @@ import org.jooq.Select;
 import org.jooq.SelectFieldOrAsterisk;
 import org.jooq.Sequence;
 import org.jooq.SortField;
+import org.jooq.SortOrder;
 import org.jooq.Statement;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -3634,10 +3635,7 @@ final class ParserImpl implements Parser {
 
     private static final Constraint parsePrimaryKeySpecification(ParserContext ctx, ConstraintTypeStep constraint) {
         parseUsingBtreeOrHashIf(ctx);
-
-        parse(ctx, '(');
-        Field<?>[] fieldNames = parseFieldNames(ctx).toArray(EMPTY_FIELD);
-        parse(ctx, ')');
+        Field<?>[] fieldNames = parseKeyColumnList(ctx);
 
         Constraint e = constraint == null
             ? primaryKey(fieldNames)
@@ -3650,10 +3648,7 @@ final class ParserImpl implements Parser {
 
     private static final Constraint parseUniqueSpecification(ParserContext ctx, ConstraintTypeStep constraint) {
         parseUsingBtreeOrHashIf(ctx);
-
-        parse(ctx, '(');
-        Field<?>[] fieldNames = parseFieldNames(ctx).toArray(EMPTY_FIELD);
-        parse(ctx, ')');
+        Field<?>[] fieldNames = parseKeyColumnList(ctx);
 
         Constraint e = constraint == null
             ? unique(fieldNames)
@@ -3662,6 +3657,24 @@ final class ParserImpl implements Parser {
         parseUsingBtreeOrHashIf(ctx);
         parseConstraintStateIf(ctx);
         return e;
+    }
+
+    private static Field<?>[] parseKeyColumnList(ParserContext ctx) {
+        parse(ctx, '(');
+        SortField<?>[] fieldExpressions = parseSortSpecification(ctx).toArray(EMPTY_SORTFIELD);
+        parse(ctx, ')');
+
+        Field<?>[] fieldNames = new Field[fieldExpressions.length];
+
+        for (int i = 0; i < fieldExpressions.length; i++)
+            if (fieldExpressions[i].getOrder() != SortOrder.DESC)
+                fieldNames[i] = ((SortFieldImpl<?>) fieldExpressions[i]).getField();
+
+            // [#7899] TODO: Support this in jOOQ
+            else
+                throw ctx.notImplemented("DESC sorting in constraints");
+
+        return fieldNames;
     }
 
     private static final Constraint parseCheckSpecification(ParserContext ctx, ConstraintTypeStep constraint) {

@@ -3791,7 +3791,9 @@ final class ParserImpl implements Parser {
             case 'D':
                 if (parseKeywordIf(ctx, "DROP")) {
                     if (parseKeywordIf(ctx, "CONSTRAINT")) {
-                        return parseCascadeRestrictIf(ctx, s1.dropConstraint(parseIdentifier(ctx)));
+                        return parseCascadeRestrictIf(ctx, parseKeywordIf(ctx, "IF EXISTS")
+                            ? s1.dropConstraintIfExists(parseIdentifier(ctx))
+                            : s1.dropConstraint(parseIdentifier(ctx)));
                     }
                     else if (parseKeywordIf(ctx, "UNIQUE")) {
                         return parseCascadeRestrictIf(ctx, s1.dropUnique(parseIdentifier(ctx)));
@@ -3805,8 +3807,7 @@ final class ParserImpl implements Parser {
                     }
                     else if (parseKeywordIf(ctx, "INDEX")
                           || parseKeywordIf(ctx, "KEY")) {
-                        Name index = parseIdentifier(ctx);
-                        return ctx.dsl.dropIndex(index).on(tableName);
+                        return ctx.dsl.dropIndex(parseIdentifier(ctx)).on(tableName);
                     }
                     else {
                         parseKeywordIf(ctx, "COLUMN");

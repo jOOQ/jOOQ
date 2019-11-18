@@ -500,7 +500,8 @@ final class DDLInterpreter {
                     }
                 }
 
-                throw constraintNotExists(query.$dropConstraint());
+                if (!query.$ifExistsConstraint())
+                    throw constraintNotExists(query.$dropConstraint());
             }
         }
         else if (query.$dropConstraintType() == PRIMARY_KEY) {

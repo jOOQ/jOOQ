@@ -589,6 +589,40 @@ public interface AlterTableStep {
     AlterTableDropStep dropConstraint(String constraint);
 
     /**
+     * Add a <code>DROP CONSTRAINT IF EXISTS</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     */
+    @Support({ H2, POSTGRES })
+    AlterTableDropStep dropIfExists(Constraint constraint);
+
+    /**
+     * Add a <code>DROP CONSTRAINT IF EXISTS</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     *
+     * @see DSL#constraint(String)
+     */
+    @Support({ H2, POSTGRES })
+    AlterTableDropStep dropConstraintIfExists(Constraint constraint);
+
+    /**
+     * Add a <code>DROP CONSTRAINT IF EXISTS</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     *
+     * @see DSL#constraint(String)
+     */
+    @Support({ H2, POSTGRES })
+    AlterTableDropStep dropConstraintIfExists(Name constraint);
+
+    /**
+     * Add a <code>DROP CONSTRAINT IF EXISTS</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     *
+     * @see DSL#constraint(String)
+     */
+    @Support({ H2, POSTGRES })
+    AlterTableDropStep dropConstraintIfExists(String constraint);
+
+    /**
      * Add a <code>DROP PRIMARY KEY</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */

@@ -238,6 +238,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
     private final Table<?>                   table;
     private final boolean                    ifExists;
     private boolean                          ifExistsColumn;
+    private boolean                          ifExistsConstraint;
     private boolean                          ifNotExistsColumn;
     private Comment                          comment;
     private Table<?>                         renameTo;
@@ -282,6 +283,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
     final Table<?>       $table()                  { return table; }
     final boolean        $ifExists()               { return ifExists; }
     final boolean        $ifExistsColumn()         { return ifExistsColumn; }
+    final boolean        $ifExistsConstraint()     { return ifExistsConstraint; }
     final boolean        $ifNotExistsColumn()      { return ifNotExistsColumn; }
     final Field<?>       $addColumn()              { return addColumn; }
     final DataType<?>    $addColumnType()          { return addColumnType; }
@@ -802,6 +804,27 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
     @Override
     public final AlterTableImpl dropConstraint(String constraint) {
         return dropConstraint(DSL.constraint(constraint));
+    }
+
+    @Override
+    public final AlterTableImpl dropIfExists(Constraint constraint) {
+        ifExistsConstraint = true;
+        return drop(constraint);
+    }
+
+    @Override
+    public final AlterTableImpl dropConstraintIfExists(Constraint constraint) {
+        return dropIfExists(constraint);
+    }
+
+    @Override
+    public final AlterTableImpl dropConstraintIfExists(Name constraint) {
+        return dropIfExists(constraint(constraint));
+    }
+
+    @Override
+    public final AlterTableImpl dropConstraintIfExists(String constraint) {
+        return dropIfExists(constraint(constraint));
     }
 
     @Override
@@ -1542,16 +1565,22 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
             ctx.start(ALTER_TABLE_DROP);
             ctx.data(DATA_CONSTRAINT_REFERENCE, true);
 
-            if (dropConstraintType == FOREIGN_KEY && NO_SUPPORT_DROP_CONSTRAINT.contains(family))
+            if (dropConstraintType == FOREIGN_KEY && NO_SUPPORT_DROP_CONSTRAINT.contains(family)) {
                 ctx.visit(K_DROP).sql(' ').visit(K_FOREIGN_KEY)
                    .sql(' ')
                    .visit(dropConstraint);
-            else if (dropConstraintType == PRIMARY_KEY && NO_SUPPORT_DROP_CONSTRAINT.contains(family))
+            }
+            else if (dropConstraintType == PRIMARY_KEY && NO_SUPPORT_DROP_CONSTRAINT.contains(family)) {
                 ctx.visit(K_DROP).sql(' ').visit(K_PRIMARY_KEY);
-            else
-                ctx.visit(K_DROP_CONSTRAINT)
-                   .sql(' ')
-                   .visit(dropConstraint);
+            }
+            else {
+                ctx.visit(K_DROP_CONSTRAINT).sql(' ');
+
+                if (ifExistsConstraint)
+                    ctx.visit(K_IF_EXISTS).sql(' ');
+
+                ctx.visit(dropConstraint);
+            }
 
             acceptCascade(ctx);
 

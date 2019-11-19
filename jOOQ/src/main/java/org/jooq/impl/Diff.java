@@ -608,10 +608,3 @@ package org.jooq.impl;
 
 
 
-
-
-
-
-
-
-

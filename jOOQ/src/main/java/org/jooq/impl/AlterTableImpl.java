@@ -446,6 +446,17 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
     @Override
     public final AlterTableImpl add(Collection<? extends FieldOrConstraint> fields) {
+
+        // [#9570] Better portability of single item ADD statements
+        if (fields.size() == 1) {
+            FieldOrConstraint first = fields.iterator().next();
+
+            if (first instanceof Field)
+                return add((Field<?>) first);
+            else if (first instanceof Constraint)
+                return add((Constraint) first);
+        }
+
         add = new QueryPartList<>(fields);
         return this;
     }

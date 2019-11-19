@@ -644,9 +644,4 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
     private static final <T> List<T> unmodifiableList(List<? extends T> list) {
         return list == null ? Collections.emptyList() : Collections.unmodifiableList(list);
     }
-
-    @Override
-    public String toString() {
-        return "" + source;
-    }
 }

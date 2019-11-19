@@ -279,6 +279,7 @@ final class InformationSchemaExport {
 
         c.setConstraintName(chk.getName());
         c.setCheckClause(configuration.dsl().render(chk.condition()));
+        result.getCheckConstraints().add(c);
     }
 
     private static final void exportIndex0(InformationSchema result, Table<?> t, Index index) {

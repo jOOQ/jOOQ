@@ -66,6 +66,7 @@ import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 import org.jooq.util.jaxb.tools.MiniJAXB;
 import org.jooq.util.xml.jaxb.Catalog;
+import org.jooq.util.xml.jaxb.CheckConstraint;
 import org.jooq.util.xml.jaxb.Column;
 import org.jooq.util.xml.jaxb.Index;
 import org.jooq.util.xml.jaxb.IndexColumnUsage;
@@ -305,20 +306,28 @@ public class XMLGenerator extends AbstractGenerator {
                     String constraintName = ch.getOutputName();
                     TableDefinition table = ch.getTable();
 
-                    TableConstraint constraint = new TableConstraint();
-                    constraint.setConstraintCatalog(catalogName);
-                    constraint.setConstraintSchema(schemaName);
-                    constraint.setConstraintName(constraintName);
-                    constraint.setConstraintType(CHECK);
+                    TableConstraint tc = new TableConstraint();
+                    tc.setConstraintCatalog(catalogName);
+                    tc.setConstraintSchema(schemaName);
+                    tc.setConstraintName(constraintName);
+                    tc.setConstraintType(CHECK);
 
                     if (generateCommentsOnKeys())
-                        constraint.setComment(ch.getComment());
+                        tc.setComment(ch.getComment());
 
-                    constraint.setTableCatalog(table.getCatalog().getOutputName());
-                    constraint.setTableSchema(table.getSchema().getOutputName());
-                    constraint.setTableName(table.getOutputName());
+                    tc.setTableCatalog(table.getCatalog().getOutputName());
+                    tc.setTableSchema(table.getSchema().getOutputName());
+                    tc.setTableName(table.getOutputName());
 
-                    is.getTableConstraints().add(constraint);
+                    is.getTableConstraints().add(tc);
+
+                    CheckConstraint cc = new CheckConstraint();
+                    cc.setConstraintCatalog(catalogName);
+                    cc.setConstraintSchema(schemaName);
+                    cc.setConstraintName(constraintName);
+                    cc.setCheckClause(ch.getCheckClause());
+
+                    is.getCheckConstraints().add(cc);
                 }
 
                 for (SequenceDefinition se : db.getSequences(s)) {

@@ -80,6 +80,7 @@ import javax.xml.bind.DatatypeConverter;
 
 import org.jooq.AggregateFunction;
 import org.jooq.Catalog;
+import org.jooq.Check;
 import org.jooq.Configuration;
 import org.jooq.Constants;
 import org.jooq.DataType;
@@ -127,6 +128,7 @@ import org.jooq.meta.AbstractTypedElementDefinition;
 import org.jooq.meta.ArrayDefinition;
 import org.jooq.meta.AttributeDefinition;
 import org.jooq.meta.CatalogDefinition;
+import org.jooq.meta.CheckConstraintDefinition;
 import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.DataTypeDefinition;
 import org.jooq.meta.Database;
@@ -4228,6 +4230,30 @@ public class JavaGenerator extends AbstractGenerator {
                     }
                 }
             }
+        }
+
+        List<CheckConstraintDefinition> cc = table.getCheckConstraints();
+
+        if (!cc.isEmpty()) {
+            if (scala) {
+                out.println();
+                out.tab(1).println("override def getChecks : %s[ %s[%s] ] = {", List.class, Check.class, recordType);
+                out.tab(2).println("return %s.asList[ %s[%s] ](", Arrays.class, Check.class, recordType);
+            }
+            else {
+                out.tab(1).overrideInherit();
+                out.tab(1).println("public %s<%s<%s>> getChecks() {", List.class, Check.class, recordType);
+                out.tab(2).println("return %s.<%s<%s>>asList(", Arrays.class, Check.class, recordType);
+            }
+
+            String separator = "  ";
+            for (CheckConstraintDefinition c : cc) {
+                out.tab(3).println("%s%s.createCheck(this, %s.name(\"%s\"), \"%s\")", separator, Internal.class, DSL.class, c.getName(), c.getCheckClause().replace("\"", "\\\""));
+                separator = ", ";
+            }
+
+            out.tab(2).println(");");
+            out.tab(1).println("}");
         }
 
         // [#1596] Updatable tables can provide fields for optimistic locking if properly configured.

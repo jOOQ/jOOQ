@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import org.jooq.Binding;
+import org.jooq.Check;
 import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.ForeignKey;
@@ -133,6 +134,13 @@ public final class Internal {
             ((UniqueKeyImpl<U>) key).references.add(result);
 
         return result;
+    }
+
+    /**
+     * Factory method for check constraints.
+     */
+    public static final <R extends Record> Check<R> createCheck(Table<R> table, Name name, String condition) {
+        return new CheckImpl<>(table, name, DSL.condition(condition));
     }
 
     /**

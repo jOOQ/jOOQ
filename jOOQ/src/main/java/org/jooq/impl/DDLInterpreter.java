@@ -389,20 +389,19 @@ final class DDLInterpreter {
             throw objectNotTable(table);
 
         if (query.$add() != null) {
-            // TODO: FIRST, BEFORE, AFTER
+            for (FieldOrConstraint fc : query.$add())
+                if (fc instanceof Field && existing.field((Field<?>) fc) != null)
+                    throw fieldAlreadyExists((Field<?>) fc);
+                else if (fc instanceof Constraint && existing.constraint((Constraint) fc) != null)
+                    throw constraintAlreadyExists((Constraint) fc);
 
             for (FieldOrConstraint fc : query.$add())
                 if (fc instanceof Field)
-                    if (existing.field((Field<?>) fc) != null)
-                        throw fieldAlreadyExists((Field<?>) fc);
 
-            for (FieldOrConstraint fc : query.$add())
-                if (fc instanceof Field)
+                    // TODO: FIRST, BEFORE, AFTER
                     existing.fields.add(new MutableField((UnqualifiedName) fc.getUnqualifiedName(), existing, ((Field<?>) fc).getDataType()));
-
-            // TODO: Implement this
-//              else if (fc instanceof Constraint)
-//                  ;
+                else if (fc instanceof Constraint)
+                    addConstraint(query, (ConstraintImpl) fc, schema, existing);
                 else
                     throw unsupportedQuery(query);
         }
@@ -423,25 +422,7 @@ final class DDLInterpreter {
                 existing.fields.add(new MutableField((UnqualifiedName) query.$addColumn().getUnqualifiedName(), existing, query.$addColumnType()));
         }
         else if (query.$addConstraint() != null) {
-            ConstraintImpl impl = (ConstraintImpl) query.$addConstraint();
-
-            if (existing.constraint(impl) != null)
-                throw constraintAlreadyExists(impl);
-            else if (impl.$primaryKey() != null)
-
-                // TODO: More nuanced error messages would be good, in general.
-                if (existing.primaryKey != null)
-                    throw constraintAlreadyExists(impl);
-                else
-                    existing.primaryKey = new MutableUniqueKey((UnqualifiedName) impl.getUnqualifiedName(), existing, existing.fields(impl.$primaryKey(), true));
-            else if (impl.$unique() != null)
-                existing.uniqueKeys.add(new MutableUniqueKey((UnqualifiedName) impl.getUnqualifiedName(), existing, existing.fields(impl.$unique(), true)));
-            else if (impl.$foreignKey() != null)
-                addForeignKey(schema, existing, impl);
-            else if (impl.$check() != null)
-                existing.checks.add(new MutableCheck((UnqualifiedName) impl.getUnqualifiedName(), existing, impl.$check()));
-            else
-                throw unsupportedQuery(query);
+            addConstraint(query, (ConstraintImpl) query.$addConstraint(), schema, existing);
         }
         else if (query.$alterColumn() != null) {
             MutableField existingField = existing.field(query.$alterColumn());
@@ -549,6 +530,26 @@ final class DDLInterpreter {
             else
                 throw primaryKeyNotExists();
         }
+        else
+            throw unsupportedQuery(query);
+    }
+
+    private final void addConstraint(Query query, ConstraintImpl impl, MutableSchema schema, MutableTable existing) {
+        if (existing.constraint(impl) != null)
+            throw constraintAlreadyExists(impl);
+        else if (impl.$primaryKey() != null)
+
+            // TODO: More nuanced error messages would be good, in general.
+            if (existing.primaryKey != null)
+                throw constraintAlreadyExists(impl);
+            else
+                existing.primaryKey = new MutableUniqueKey((UnqualifiedName) impl.getUnqualifiedName(), existing, existing.fields(impl.$primaryKey(), true));
+        else if (impl.$unique() != null)
+            existing.uniqueKeys.add(new MutableUniqueKey((UnqualifiedName) impl.getUnqualifiedName(), existing, existing.fields(impl.$unique(), true)));
+        else if (impl.$foreignKey() != null)
+            addForeignKey(schema, existing, impl);
+        else if (impl.$check() != null)
+            existing.checks.add(new MutableCheck((UnqualifiedName) impl.getUnqualifiedName(), existing, impl.$check()));
         else
             throw unsupportedQuery(query);
     }

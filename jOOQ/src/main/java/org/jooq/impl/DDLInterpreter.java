@@ -403,6 +403,11 @@ final class DDLInterpreter {
                     throw unsupportedQuery(query);
         }
         else if (query.$addColumn() != null) {
+            if (existing.field(query.$addColumn()) != null)
+                if (!query.$ifNotExistsColumn())
+                    throw fieldAlreadyExists(query.$addColumn());
+                else
+                    return;
 
             // TODO: Check if we already have the column
             if (query.$addFirst())
@@ -438,12 +443,11 @@ final class DDLInterpreter {
         else if (query.$alterColumn() != null) {
             MutableField existingField = existing.field(query.$alterColumn());
 
-            if (existingField == null) {
+            if (existingField == null)
                 if (!query.$ifExistsColumn())
                     throw columnNotExists(query.$alterColumn());
-
-                return;
-            }
+                else
+                    return;
 
             if (query.$alterColumnNullability() != null)
                 existingField.type = existingField.type.nullability(query.$alterColumnNullability());
@@ -853,7 +857,7 @@ final class DDLInterpreter {
     }
 
     private static final DataDefinitionException fieldAlreadyExists(Field<?> field) {
-        return new DataDefinitionException("Field does not exist: " + field.getQualifiedName());
+        return new DataDefinitionException("Field already exists: " + field.getQualifiedName());
     }
 
     // -------------------------------------------------------------------------

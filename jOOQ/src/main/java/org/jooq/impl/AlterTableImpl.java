@@ -1227,6 +1227,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
             ctx.end(ALTER_TABLE_RENAME_CONSTRAINT);
         }
         else if (add != null) {
+            boolean qualify = ctx.qualify();
             boolean multiAdd = REQUIRE_REPEAT_ADD_ON_MULTI_ALTER.contains(ctx.family());
             boolean parens = !multiAdd;
             boolean comma = true;
@@ -1252,7 +1253,9 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
                         ctx.sql(comma ? "," : "").formatSeparator();
 
                 FieldOrConstraint part = add.get(i);
-                ctx.visit(part);
+                ctx.qualify(false)
+                   .visit(part)
+                   .qualify(qualify);
 
                 if (part instanceof Field) {
                     ctx.sql(' ');

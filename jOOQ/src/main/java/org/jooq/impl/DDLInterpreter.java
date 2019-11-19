@@ -62,6 +62,7 @@ import org.jooq.Configuration;
 import org.jooq.Constraint;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.FieldOrConstraint;
 import org.jooq.ForeignKey;
 import org.jooq.Index;
 import org.jooq.Meta;
@@ -387,9 +388,23 @@ final class DDLInterpreter {
         else if (!existing.options.type().isTable())
             throw objectNotTable(table);
 
-        // TODO: Multi-add statements
+        if (query.$add() != null) {
+            // TODO: FIRST, BEFORE, AFTER
 
-        if (query.$addColumn() != null) {
+            // TODO: Check if we already have the column
+            for (FieldOrConstraint fc : query.$add())
+                if (fc instanceof Field)
+                    existing.fields.add(new MutableField((UnqualifiedName) fc.getUnqualifiedName(), existing, ((Field<?>) fc).getDataType()));
+
+            // TODO: Implement this
+//              else if (fc instanceof Constraint)
+//                  ;
+                else
+                    throw unsupportedQuery(query);
+        }
+        else if (query.$addColumn() != null) {
+
+            // TODO: Check if we already have the column
             if (query.$addFirst())
                 existing.fields.add(0, new MutableField((UnqualifiedName) query.$addColumn().getUnqualifiedName(), existing, query.$addColumnType()));
             else if (query.$addBefore() != null)

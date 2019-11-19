@@ -391,7 +391,11 @@ final class DDLInterpreter {
         if (query.$add() != null) {
             // TODO: FIRST, BEFORE, AFTER
 
-            // TODO: Check if we already have the column
+            for (FieldOrConstraint fc : query.$add())
+                if (fc instanceof Field)
+                    if (existing.field((Field<?>) fc) != null)
+                        throw fieldAlreadyExists((Field<?>) fc);
+
             for (FieldOrConstraint fc : query.$add())
                 if (fc instanceof Field)
                     existing.fields.add(new MutableField((UnqualifiedName) fc.getUnqualifiedName(), existing, ((Field<?>) fc).getDataType()));
@@ -409,7 +413,6 @@ final class DDLInterpreter {
                 else
                     return;
 
-            // TODO: Check if we already have the column
             if (query.$addFirst())
                 existing.fields.add(0, new MutableField((UnqualifiedName) query.$addColumn().getUnqualifiedName(), existing, query.$addColumnType()));
             else if (query.$addBefore() != null)

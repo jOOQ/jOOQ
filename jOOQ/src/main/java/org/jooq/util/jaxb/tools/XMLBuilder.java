@@ -58,26 +58,21 @@ import org.jooq.Internal;
 public final class XMLBuilder {
 
     private final StringBuilder builder = new StringBuilder();
-    private final boolean       format;
-    private final boolean       nullIsEmpty;
-    private int                 indentLevel;
-    private boolean             onNewLine;
 
-    private XMLBuilder(boolean format, boolean nullIsEmpty) {
+    private final boolean format;
+    private int indentLevel;
+    private boolean onNewLine;
+
+    private XMLBuilder(boolean format) {
         this.format = format;
-        this.nullIsEmpty = nullIsEmpty;
     }
 
     public static XMLBuilder formatting() {
-        return new XMLBuilder(true, false);
+        return new XMLBuilder(true);
     }
 
     public static XMLBuilder nonFormatting() {
-        return new XMLBuilder(false, false);
-    }
-
-    public static XMLBuilder nullIsEmpty() {
-        return new XMLBuilder(false, true);
+        return new XMLBuilder(false);
     }
 
     public XMLBuilder append(XMLAppendable appendable) {
@@ -87,32 +82,25 @@ public final class XMLBuilder {
     }
 
     public XMLBuilder append(String elementName, XMLAppendable appendable) {
-        if (appendable != null || nullIsEmpty) {
+        if (appendable != null) {
             openTag(elementName).newLine().indent();
-
-            if (appendable != null)
-                appendable.appendTo(this);
-
+            appendable.appendTo(this);
             unindent().closeTag(elementName).newLine();
         }
-
         return this;
     }
 
     public XMLBuilder append(String wrappingElementName, String elementName, List<?> list) {
-        if (list != null || nullIsEmpty) {
+        if (list != null) {
             openTag(wrappingElementName).newLine().indent();
-
-            if (list != null)
-                for (Object o : list)
-                    if (o instanceof XMLAppendable)
-                        append(elementName, (XMLAppendable) o);
-                    else
-                        append(elementName, o);
-
+            for (Object o : list) {
+                if (o instanceof XMLAppendable)
+                    append(elementName, (XMLAppendable) o);
+                else
+                    append(elementName, o);
+            }
             unindent().closeTag(wrappingElementName).newLine();
         }
-
         return this;
     }
 
@@ -166,41 +154,29 @@ public final class XMLBuilder {
     }
 
     public XMLBuilder append(String elementName, String s) {
-        if (s != null || nullIsEmpty) {
+        if (s != null) {
             openTag(elementName);
-
-            if (s != null)
-                builder.append(s);
-
+            builder.append(s);
             closeTag(elementName).newLine();
         }
-
         return this;
     }
 
     public XMLBuilder append(String elementName, Pattern p) {
-        if (p != null || nullIsEmpty) {
+        if (p != null) {
             openTag(elementName);
-
-            if (p != null)
-                builder.append(p.pattern());
-
+            builder.append(p.pattern());
             closeTag(elementName).newLine();
         }
-
         return this;
     }
 
     public XMLBuilder append(String elementName, Object o) {
-        if (o != null || nullIsEmpty) {
+        if (o != null) {
             openTag(elementName);
-
-            if (o != null)
-                builder.append(o);
-
+            builder.append(o);
             closeTag(elementName).newLine();
         }
-
         return this;
     }
 
@@ -212,4 +188,5 @@ public final class XMLBuilder {
     public void appendTo(Appendable a) throws IOException {
         a.append(builder);
     }
+
 }

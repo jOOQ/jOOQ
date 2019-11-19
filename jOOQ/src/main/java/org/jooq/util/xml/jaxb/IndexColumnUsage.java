@@ -49,7 +49,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class IndexColumnUsage implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31200L;
+    private final static long serialVersionUID = 31300L;
     @XmlElement(name = "index_catalog")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String indexCatalog;

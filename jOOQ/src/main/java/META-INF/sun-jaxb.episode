@@ -65,6 +65,12 @@
 
         </bindings>
 
+        <bindings if-exists="true" scd="~tns:CheckConstraints">
+
+            <class ref="org.jooq.util.xml.jaxb.CheckConstraints"/>
+
+        </bindings>
+
         <bindings if-exists="true" scd="~tns:Indexes">
 
             <class ref="org.jooq.util.xml.jaxb.Indexes"/>
@@ -140,6 +146,12 @@
         <bindings if-exists="true" scd="~tns:ReferentialConstraint">
 
             <class ref="org.jooq.util.xml.jaxb.ReferentialConstraint"/>
+
+        </bindings>
+
+        <bindings if-exists="true" scd="~tns:CheckConstraint">
+
+            <class ref="org.jooq.util.xml.jaxb.CheckConstraint"/>
 
         </bindings>
 

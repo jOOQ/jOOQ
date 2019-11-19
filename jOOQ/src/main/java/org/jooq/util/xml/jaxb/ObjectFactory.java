@@ -102,6 +102,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link CheckConstraint }
+     *
+     */
+    public CheckConstraint createCheckConstraint() {
+        return new CheckConstraint();
+    }
+
+    /**
      * Create an instance of {@link Index }
      *
      */

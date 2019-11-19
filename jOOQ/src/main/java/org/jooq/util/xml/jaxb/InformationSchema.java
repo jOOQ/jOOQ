@@ -33,6 +33,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *         &lt;element name="table_constraints" type="{http://www.jooq.org/xsd/jooq-meta-3.12.0.xsd}TableConstraints" minOccurs="0"/&gt;
  *         &lt;element name="key_column_usages" type="{http://www.jooq.org/xsd/jooq-meta-3.12.0.xsd}KeyColumnUsages" minOccurs="0"/&gt;
  *         &lt;element name="referential_constraints" type="{http://www.jooq.org/xsd/jooq-meta-3.12.0.xsd}ReferentialConstraints" minOccurs="0"/&gt;
+ *         &lt;element name="check_constraints" type="{http://www.jooq.org/xsd/jooq-meta-3.12.0.xsd}CheckConstraints" minOccurs="0"/&gt;
  *         &lt;element name="indexes" type="{http://www.jooq.org/xsd/jooq-meta-3.12.0.xsd}Indexes" minOccurs="0"/&gt;
  *         &lt;element name="index_column_usages" type="{http://www.jooq.org/xsd/jooq-meta-3.12.0.xsd}IndexColumnUsages" minOccurs="0"/&gt;
  *         &lt;element name="routines" type="{http://www.jooq.org/xsd/jooq-meta-3.12.0.xsd}Routines" minOccurs="0"/&gt;
@@ -57,7 +58,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class InformationSchema implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31200L;
+    private final static long serialVersionUID = 31300L;
     @XmlElementWrapper(name = "catalogs")
     @XmlElement(name = "catalog")
     protected List<Catalog> catalogs;
@@ -82,6 +83,9 @@ public class InformationSchema implements Serializable, XMLAppendable
     @XmlElementWrapper(name = "referential_constraints")
     @XmlElement(name = "referential_constraint")
     protected List<ReferentialConstraint> referentialConstraints;
+    @XmlElementWrapper(name = "check_constraints")
+    @XmlElement(name = "check_constraint")
+    protected List<CheckConstraint> checkConstraints;
     @XmlElementWrapper(name = "indexes")
     @XmlElement(name = "index")
     protected List<Index> indexes;
@@ -184,6 +188,17 @@ public class InformationSchema implements Serializable, XMLAppendable
 
     public void setReferentialConstraints(List<ReferentialConstraint> referentialConstraints) {
         this.referentialConstraints = referentialConstraints;
+    }
+
+    public List<CheckConstraint> getCheckConstraints() {
+        if (checkConstraints == null) {
+            checkConstraints = new ArrayList<CheckConstraint>();
+        }
+        return checkConstraints;
+    }
+
+    public void setCheckConstraints(List<CheckConstraint> checkConstraints) {
+        this.checkConstraints = checkConstraints;
     }
 
     public List<Index> getIndexes() {
@@ -409,6 +424,27 @@ public class InformationSchema implements Serializable, XMLAppendable
         return this;
     }
 
+    public InformationSchema withCheckConstraints(CheckConstraint... values) {
+        if (values!= null) {
+            for (CheckConstraint value: values) {
+                getCheckConstraints().add(value);
+            }
+        }
+        return this;
+    }
+
+    public InformationSchema withCheckConstraints(Collection<CheckConstraint> values) {
+        if (values!= null) {
+            getCheckConstraints().addAll(values);
+        }
+        return this;
+    }
+
+    public InformationSchema withCheckConstraints(List<CheckConstraint> checkConstraints) {
+        setCheckConstraints(checkConstraints);
+        return this;
+    }
+
     public InformationSchema withIndexes(Index... values) {
         if (values!= null) {
             for (Index value: values) {
@@ -524,6 +560,7 @@ public class InformationSchema implements Serializable, XMLAppendable
         builder.append("table_constraints", "table_constraint", tableConstraints);
         builder.append("key_column_usages", "key_column_usage", keyColumnUsages);
         builder.append("referential_constraints", "referential_constraint", referentialConstraints);
+        builder.append("check_constraints", "check_constraint", checkConstraints);
         builder.append("indexes", "index", indexes);
         builder.append("index_column_usages", "index_column_usage", indexColumnUsages);
         builder.append("routines", "routine", routines);
@@ -622,6 +659,15 @@ public class InformationSchema implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (checkConstraints == null) {
+            if (other.checkConstraints!= null) {
+                return false;
+            }
+        } else {
+            if (!checkConstraints.equals(other.checkConstraints)) {
+                return false;
+            }
+        }
         if (indexes == null) {
             if (other.indexes!= null) {
                 return false;
@@ -682,6 +728,7 @@ public class InformationSchema implements Serializable, XMLAppendable
         result = ((prime*result)+((tableConstraints == null)? 0 :tableConstraints.hashCode()));
         result = ((prime*result)+((keyColumnUsages == null)? 0 :keyColumnUsages.hashCode()));
         result = ((prime*result)+((referentialConstraints == null)? 0 :referentialConstraints.hashCode()));
+        result = ((prime*result)+((checkConstraints == null)? 0 :checkConstraints.hashCode()));
         result = ((prime*result)+((indexes == null)? 0 :indexes.hashCode()));
         result = ((prime*result)+((indexColumnUsages == null)? 0 :indexColumnUsages.hashCode()));
         result = ((prime*result)+((routines == null)? 0 :routines.hashCode()));

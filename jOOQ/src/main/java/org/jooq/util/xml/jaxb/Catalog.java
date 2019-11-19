@@ -42,7 +42,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class Catalog implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31200L;
+    private final static long serialVersionUID = 31300L;
     @XmlElement(name = "catalog_name")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String catalogName;

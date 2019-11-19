@@ -15,6 +15,7 @@
                 <element name="table_constraints" type="tns:TableConstraints" minOccurs="0" maxOccurs="1" />
                 <element name="key_column_usages" type="tns:KeyColumnUsages" minOccurs="0" maxOccurs="1" />
                 <element name="referential_constraints" type="tns:ReferentialConstraints" minOccurs="0" maxOccurs="1" />
+                <element name="check_constraints" type="tns:CheckConstraints" minOccurs="0" maxOccurs="1" />
                 <element name="indexes" type="tns:Indexes" minOccurs="0" maxOccurs="1" />
                 <element name="index_column_usages" type="tns:IndexColumnUsages" minOccurs="0" maxOccurs="1" />
                 <element name="routines" type="tns:Routines" minOccurs="0" maxOccurs="1" />
@@ -173,6 +174,21 @@
             <element name="unique_constraint_catalog" type="string" minOccurs="0" maxOccurs="1" />
             <element name="unique_constraint_schema" type="string" minOccurs="0" maxOccurs="1" />
             <element name="unique_constraint_name" type="string" minOccurs="1" maxOccurs="1" />
+        </all>
+    </complexType>
+
+    <complexType name="CheckConstraints">
+        <sequence>
+            <element name="check_constraint" type="tns:CheckConstraint" minOccurs="0" maxOccurs="unbounded" />
+        </sequence>
+    </complexType>
+
+    <complexType name="CheckConstraint">
+        <all>
+            <element name="constraint_catalog" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="constraint_schema" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="constraint_name" type="string" minOccurs="1" maxOccurs="1" />
+            <element name="check_clause" type="string" minOccurs="1" maxOccurs="1" />
         </all>
     </complexType>
 

@@ -39,14 +39,19 @@ package org.jooq.meta.extensions.liquibase;
 
 import static org.jooq.tools.StringUtils.isBlank;
 
+import java.lang.reflect.Method;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.jooq.meta.TableDefinition;
 import org.jooq.meta.extensions.AbstractInterpretingDatabase;
+import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
 
 import liquibase.Liquibase;
@@ -69,8 +74,25 @@ import liquibase.resource.FileSystemResourceAccessor;
  */
 public class LiquibaseDatabase extends AbstractInterpretingDatabase {
 
-    private static final JooqLogger log = JooqLogger.getLogger(LiquibaseDatabase.class);
-    private boolean                 includeLiquibaseTables;
+    private static final JooqLogger          log = JooqLogger.getLogger(LiquibaseDatabase.class);
+    private static final Map<String, Method> SETTERS;
+    private boolean                          includeLiquibaseTables;
+
+    static {
+        SETTERS = new HashMap<>();
+
+        try {
+            for (Method method : Database.class.getMethods()) {
+                String name = method.getName();
+
+                if (name.startsWith("set") && method.getParameterCount() == 1)
+                    SETTERS.put(name, method);
+            }
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     @Override
     protected void export() throws Exception {
@@ -83,6 +105,26 @@ public class LiquibaseDatabase extends AbstractInterpretingDatabase {
         }
 
         Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(connection()));
+
+        // [#9514] Forward all database.xyz properties to matching Liquibase
+        //         Database.setXyz() configuration setter calls
+        for (Entry<Object, Object> entry : getProperties().entrySet()) {
+            String key = "" + entry.getKey();
+
+            if (key.startsWith("database.")) {
+                String property = key.substring("database.".length());
+                Method setter = SETTERS.get("set" + Character.toUpperCase(property.charAt(0)) + property.substring(1));
+
+                try {
+                    if (setter != null)
+                        setter.invoke(database, Convert.convert(entry.getValue(), setter.getParameterTypes()[0]));
+                }
+                catch (Exception e) {
+                    log.warn("Configuration error", e.getMessage(), e);
+                }
+            }
+        }
+
         Liquibase liquibase = new Liquibase(scripts, new FileSystemResourceAccessor(), database);
         liquibase.update("");
     }

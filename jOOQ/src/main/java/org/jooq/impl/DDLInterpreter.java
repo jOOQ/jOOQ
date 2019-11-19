@@ -1472,4 +1472,9 @@ final class DDLInterpreter {
             this.sort = sort;
         }
     }
+
+    @Override
+    public String toString() {
+        return meta().toString();
+    }
 }

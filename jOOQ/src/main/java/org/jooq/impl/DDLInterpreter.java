@@ -392,7 +392,7 @@ final class DDLInterpreter {
             for (FieldOrConstraint fc : query.$add())
                 if (fc instanceof Field && existing.field((Field<?>) fc) != null)
                     throw fieldAlreadyExists((Field<?>) fc);
-                else if (fc instanceof Constraint && existing.constraint((Constraint) fc) != null)
+                else if (fc instanceof Constraint && !fc.getUnqualifiedName().empty() && existing.constraint((Constraint) fc) != null)
                     throw constraintAlreadyExists((Constraint) fc);
 
             for (FieldOrConstraint fc : query.$add())
@@ -535,7 +535,7 @@ final class DDLInterpreter {
     }
 
     private final void addConstraint(Query query, ConstraintImpl impl, MutableSchema schema, MutableTable existing) {
-        if (existing.constraint(impl) != null)
+        if (!impl.getUnqualifiedName().empty() && existing.constraint(impl) != null)
             throw constraintAlreadyExists(impl);
         else if (impl.$primaryKey() != null)
 

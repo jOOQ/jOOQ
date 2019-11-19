@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import static java.util.Collections.unmodifiableList;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 import static org.jooq.util.xml.jaxb.TableConstraintType.PRIMARY_KEY;
@@ -50,6 +49,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.jooq.Catalog;
+import org.jooq.Check;
 import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.ForeignKey;
@@ -63,6 +63,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.exception.SQLDialectNotSupportedException;
+import org.jooq.util.xml.jaxb.CheckConstraint;
 import org.jooq.util.xml.jaxb.Column;
 import org.jooq.util.xml.jaxb.IndexColumnUsage;
 import org.jooq.util.xml.jaxb.InformationSchema;
@@ -404,6 +405,32 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
             }
         }
 
+        tableConstraintLoop:
+        for (TableConstraint xc : meta.getTableConstraints()) {
+            switch (xc.getConstraintType()) {
+                case CHECK: {
+                    Name tableName = name(xc.getTableCatalog(), xc.getTableSchema(), xc.getTableName());
+                    Name constraintName = name(xc.getConstraintCatalog(), xc.getConstraintSchema(), xc.getConstraintName());
+                    InformationSchemaTable table = tablesByName.get(tableName);
+
+                    if (table == null) {
+                        errors.add(String.format("Table " + tableName + " not defined for constraint " + constraintName));
+                        continue tableConstraintLoop;
+                    }
+
+                    for (CheckConstraint cc : meta.getCheckConstraints()) {
+                        if (constraintName.equals(name(cc.getConstraintCatalog(), cc.getConstraintSchema(), cc.getConstraintName()))) {
+                            table.checks.add(new CheckImpl<>(table, constraintName, DSL.condition(cc.getCheckClause())));
+                            continue tableConstraintLoop;
+                        }
+                    }
+
+                    errors.add(String.format("No check clause found for check constraint " + constraintName));
+                    continue tableConstraintLoop;
+                }
+            }
+        }
+
         // Sequences
         // -------------------------------------------------------------------------------------------------------------
         sequenceLoop:
@@ -533,7 +560,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
 
         @Override
         public final List<Schema> getSchemas() {
-            return unmodifiableList(schemasPerCatalog.get(this));
+            return InformationSchemaMetaImpl.unmodifiableList(schemasPerCatalog.get(this));
         }
     }
 
@@ -550,12 +577,12 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
 
         @Override
         public final List<Table<?>> getTables() {
-            return Collections.<Table<?>>unmodifiableList(tablesPerSchema.get(this));
+            return InformationSchemaMetaImpl.<Table<?>>unmodifiableList(tablesPerSchema.get(this));
         }
 
         @Override
         public final List<Sequence<?>> getSequences() {
-            return Collections.<Sequence<?>>unmodifiableList(sequencesPerSchema.get(this));
+            return InformationSchemaMetaImpl.<Sequence<?>>unmodifiableList(sequencesPerSchema.get(this));
         }
     }
 
@@ -569,6 +596,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
         UniqueKey<Record>                      primaryKey;
         final List<UniqueKey<Record>>          uniqueKeys       = new ArrayList<>();
         final List<ForeignKey<Record, Record>> foreignKeys      = new ArrayList<>();
+        final List<Check<Record>>              checks           = new ArrayList<>();
         final List<Index>                      indexes          = new ArrayList<>();
 
         public InformationSchemaTable(String name, Schema schema, String comment) {
@@ -577,7 +605,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
 
         @Override
         public List<Index> getIndexes() {
-            return Collections.unmodifiableList(indexes);
+            return InformationSchemaMetaImpl.unmodifiableList(indexes);
         }
 
         @Override
@@ -587,12 +615,17 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
 
         @Override
         public List<UniqueKey<Record>> getKeys() {
-            return Collections.<UniqueKey<Record>>unmodifiableList(uniqueKeys);
+            return InformationSchemaMetaImpl.<UniqueKey<Record>>unmodifiableList(uniqueKeys);
         }
 
         @Override
         public List<ForeignKey<Record, ?>> getReferences() {
-            return Collections.<ForeignKey<Record, ?>>unmodifiableList(foreignKeys);
+            return InformationSchemaMetaImpl.<ForeignKey<Record, ?>>unmodifiableList(foreignKeys);
+        }
+
+        @Override
+        public List<Check<Record>> getChecks() {
+            return InformationSchemaMetaImpl.unmodifiableList(checks);
         }
     }
 
@@ -606,6 +639,10 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
         InformationSchemaSequence(String name, Schema schema, DataType<N> type) {
             super(name, schema, type);
         }
+    }
+
+    private static final <T> List<T> unmodifiableList(List<? extends T> list) {
+        return list == null ? Collections.emptyList() : Collections.unmodifiableList(list);
     }
 
     @Override

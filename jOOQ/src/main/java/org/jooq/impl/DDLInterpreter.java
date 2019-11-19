@@ -55,7 +55,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.jooq.Catalog;
+import org.jooq.Check;
 import org.jooq.Comment;
+import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Constraint;
 import org.jooq.DataType;
@@ -248,6 +250,8 @@ final class DDLInterpreter {
                 mt.uniqueKeys.add(new MutableUniqueKey((UnqualifiedName) impl.getUnqualifiedName(), mt, mt.fields(impl.$unique(), true)));
             else if (impl.$foreignKey() != null)
                 addForeignKey(getSchema(impl.$referencesTable().getSchema(), false), mt, impl);
+            else if (impl.$check() != null)
+                mt.checks.add(new MutableCheck((UnqualifiedName) impl.getUnqualifiedName(), mt, impl.$check()));
             else
                 throw unsupportedQuery(query);
         }
@@ -411,6 +415,8 @@ final class DDLInterpreter {
                 existing.uniqueKeys.add(new MutableUniqueKey((UnqualifiedName) impl.getUnqualifiedName(), existing, existing.fields(impl.$unique(), true)));
             else if (impl.$foreignKey() != null)
                 addForeignKey(schema, existing, impl);
+            else if (impl.$check() != null)
+                existing.checks.add(new MutableCheck((UnqualifiedName) impl.getUnqualifiedName(), existing, impl.$check()));
             else
                 throw unsupportedQuery(query);
         }
@@ -449,7 +455,7 @@ final class DDLInterpreter {
                 mf.name = (UnqualifiedName) query.$renameColumnTo().getUnqualifiedName();
         }
         else if (query.$renameConstraint() != null) {
-            MutableKey mk = existing.constraint(query.$renameConstraint());
+            MutableNamed mk = existing.constraint(query.$renameConstraint());
 
             if (mk == null)
                 throw constraintNotExists(query.$renameConstraint());
@@ -487,6 +493,17 @@ final class DDLInterpreter {
                         if (key.name.equals(impl.getUnqualifiedName())) {
                             cascade(key, null, query.$dropCascade());
                             uks.remove();
+                            break removal;
+                        }
+                    }
+
+                    Iterator<MutableCheck> chks = existing.checks.iterator();
+
+                    while (chks.hasNext()) {
+                        MutableCheck check = chks.next();
+
+                        if (check.name.equals(impl.getUnqualifiedName())) {
+                            chks.remove();
                             break removal;
                         }
                     }
@@ -1116,6 +1133,7 @@ final class DDLInterpreter {
         MutableUniqueKey        primaryKey;
         List<MutableUniqueKey>  uniqueKeys  = new ArrayList<>();
         List<MutableForeignKey> foreignkeys = new ArrayList<>();
+        List<MutableCheck>      checks      = new ArrayList<>();
         List<MutableIndex>      indexes     = new ArrayList<>();
         TableOptions            options;
 
@@ -1127,7 +1145,7 @@ final class DDLInterpreter {
             schema.tables.add(this);
         }
 
-        final MutableKey constraint(Constraint constraint) {
+        final MutableNamed constraint(Constraint constraint) {
             for (MutableForeignKey mfk : foreignkeys)
                 if (mfk.name.equals(constraint.getUnqualifiedName()))
                     return mfk;
@@ -1135,6 +1153,10 @@ final class DDLInterpreter {
             for (MutableUniqueKey muk : uniqueKeys)
                 if (muk.name.equals(constraint.getUnqualifiedName()))
                     return muk;
+
+            for (MutableCheck chk : checks)
+                if (chk.name.equals(constraint.getUnqualifiedName()))
+                    return chk;
 
             if (primaryKey != null && primaryKey.name.equals(constraint.getUnqualifiedName()))
                 return primaryKey;
@@ -1243,6 +1265,16 @@ final class DDLInterpreter {
             }
 
             @Override
+            public List<Check<Record>> getChecks() {
+                List<Check<Record>> result = new ArrayList<>();
+
+                for (MutableCheck c : MutableTable.this.checks)
+                    result.add(new CheckImpl<>(this, c.name, c.condition));
+
+                return result;
+            }
+
+            @Override
             public final List<Index> getIndexes() {
                 List<Index> result = new ArrayList<>();
 
@@ -1338,6 +1370,18 @@ final class DDLInterpreter {
 
             this.keyTable = table;
             this.keyFields = fields;
+        }
+    }
+
+    private static final class MutableCheck extends MutableNamed {
+        MutableTable table;
+        Condition    condition;
+
+        MutableCheck(UnqualifiedName name, MutableTable table, Condition condition) {
+            super(name);
+
+            this.table = table;
+            this.condition = condition;
         }
     }
 

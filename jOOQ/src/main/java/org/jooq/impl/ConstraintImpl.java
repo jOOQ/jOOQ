@@ -175,6 +175,7 @@ implements
     final Field<?>[]  $references()      { return references; }
     final Action      $onDelete()        { return onDelete; }
     final Action      $onUpdate()        { return onUpdate; }
+    final Condition   $check()           { return check; }
 
     // ------------------------------------------------------------------------
     // XXX: QueryPart API

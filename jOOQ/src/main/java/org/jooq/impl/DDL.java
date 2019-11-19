@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.DDLFlag.CHECK;
 import static org.jooq.DDLFlag.COMMENT;
 import static org.jooq.DDLFlag.FOREIGN_KEY;
 import static org.jooq.DDLFlag.INDEX;
@@ -53,6 +54,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import org.jooq.Check;
 import org.jooq.Constraint;
 import org.jooq.CreateSequenceFlagsStep;
 import org.jooq.CreateTableOnCommitStep;
@@ -187,6 +189,7 @@ final class DDL {
         result.addAll(primaryKeys(table));
         result.addAll(uniqueKeys(table));
         result.addAll(foreignKeys(table));
+        result.addAll(checks(table));
 
         return result;
     }
@@ -219,6 +222,16 @@ final class DDL {
         if (configuration.flags().contains(FOREIGN_KEY))
             for (ForeignKey<?, ?> key : sortIf(table.getReferences(), !configuration.respectConstraintOrder()))
                 result.add(constraint(key.getName()).foreignKey(key.getFieldsArray()).references(key.getKey().getTable(), key.getKey().getFieldsArray()));
+
+        return result;
+    }
+
+    private final List<Constraint> checks(Table<?> table) {
+        List<Constraint> result = new ArrayList<>();
+
+        if (configuration.flags().contains(CHECK))
+            for (Check<?> check : sortIf(table.getChecks(), !configuration.respectConstraintOrder()))
+                result.add(constraint(check.getName()).check(check.condition()));
 
         return result;
     }
@@ -280,6 +293,7 @@ final class DDL {
 
                     constraints.addAll(primaryKeys(table));
                     constraints.addAll(uniqueKeys(table));
+                    constraints.addAll(checks(table));
 
                     queries.add(createTable(table, constraints));
                 }
@@ -295,6 +309,11 @@ final class DDL {
                 if (configuration.flags().contains(UNIQUE))
                     for (Table<?> table : sortIf(schema.getTables(), !configuration.respectTableOrder()))
                         for (Constraint constraint : sortIf(uniqueKeys(table), !configuration.respectConstraintOrder()))
+                            queries.add(ctx.alterTable(table).add(constraint));
+
+                if (configuration.flags().contains(CHECK))
+                    for (Table<?> table : sortIf(schema.getTables(), !configuration.respectTableOrder()))
+                        for (Constraint constraint : sortIf(checks(table), !configuration.respectConstraintOrder()))
                             queries.add(ctx.alterTable(table).add(constraint));
             }
         }

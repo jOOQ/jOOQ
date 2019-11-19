@@ -72,6 +72,7 @@ import java.util.stream.Stream;
 
 import org.jooq.Binding;
 import org.jooq.Catalog;
+import org.jooq.Check;
 import org.jooq.Clause;
 import org.jooq.Comment;
 import org.jooq.Comparator;
@@ -104,9 +105,9 @@ import org.jooq.TableLike;
 import org.jooq.TableOnStep;
 import org.jooq.TableOptionalOnStep;
 import org.jooq.TableOptions;
+import org.jooq.TableOptions.TableType;
 import org.jooq.TableOuterJoinStep;
 import org.jooq.TablePartitionByStep;
-import org.jooq.TableOptions.TableType;
 import org.jooq.UniqueKey;
 // ...
 // ...
@@ -513,6 +514,15 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
         }
 
         return Collections.unmodifiableList(result);
+    }
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Subclasses should override this method
+     */
+    @Override
+    public List<Check<R>> getChecks() {
+        return Collections.emptyList();
     }
 
     /**

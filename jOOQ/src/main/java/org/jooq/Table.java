@@ -296,6 +296,11 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      */
     <O extends Record> List<ForeignKey<R, O>> getReferencesTo(Table<O> other);
 
+    /**
+     * Get a list of <code>CHECK</code> constraints of this table.
+     */
+    List<Check<R>> getChecks();
+
 
 
 

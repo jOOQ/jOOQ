@@ -68,6 +68,11 @@ public enum DDLFlag {
     FOREIGN_KEY,
 
     /**
+     * Whether <code>CHECK</code> constraints should be generated.
+     */
+    CHECK,
+
+    /**
      * Whether <code>INDEX</code> definitions should be generated.
      */
     INDEX,

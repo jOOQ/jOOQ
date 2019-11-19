@@ -86,6 +86,7 @@ import org.jooq.meta.ArrayDefinition;
 import org.jooq.meta.CatalogDefinition;
 import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.DataTypeDefinition;
+import org.jooq.meta.DefaultCheckConstraintDefinition;
 import org.jooq.meta.DefaultDataTypeDefinition;
 import org.jooq.meta.DefaultIndexColumnDefinition;
 import org.jooq.meta.DefaultRelations;
@@ -106,6 +107,7 @@ import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.util.jaxb.tools.MiniJAXB;
+import org.jooq.util.xml.jaxb.CheckConstraint;
 import org.jooq.util.xml.jaxb.Index;
 import org.jooq.util.xml.jaxb.IndexColumnUsage;
 import org.jooq.util.xml.jaxb.InformationSchema;
@@ -424,36 +426,59 @@ public class XMLDatabase extends AbstractDatabase {
                         String foreignKeyTableName = usage.getTableName();
                         String foreignKeyColumn = usage.getColumnName();
                         String uniqueKey = fk.getUniqueConstraintName();
-                        String uniqueKeyTableName = null;
+                        TableConstraint uk = tableConstraint(fk.getUniqueConstraintCatalog(), fk.getUniqueConstraintSchema(), fk.getUniqueConstraintName());
 
-                        for (TableConstraint uk : info().getTableConstraints()) {
-                            if (    StringUtils.equals(defaultIfNull(fk.getUniqueConstraintCatalog(), ""), defaultIfNull(uk.getConstraintCatalog(), ""))
-                                 && StringUtils.equals(defaultIfNull(fk.getUniqueConstraintSchema(), ""), defaultIfNull(uk.getConstraintSchema(), ""))
-                                 && StringUtils.equals(defaultIfNull(fk.getUniqueConstraintName(), ""), defaultIfNull(uk.getConstraintName(), ""))) {
-                                uniqueKeyTableName = uk.getTableName();
-                                break;
-                            }
+                        if (uk != null) {
+                            TableDefinition foreignKeyTable = getTable(foreignKeySchema, foreignKeyTableName);
+                            TableDefinition uniqueKeyTable = getTable(uniqueKeySchema, uk.getTableName());
+
+                            if (foreignKeyTable != null && uniqueKeyTable != null)
+                                relations.addForeignKey(
+                                    foreignKey,
+                                    foreignKeyTable,
+                                    foreignKeyTable.getColumn(foreignKeyColumn),
+                                    uniqueKey,
+                                    uniqueKeyTable
+                                );
                         }
-
-                        TableDefinition foreignKeyTable = getTable(foreignKeySchema, foreignKeyTableName);
-                        TableDefinition uniqueKeyTable = getTable(uniqueKeySchema, uniqueKeyTableName);
-
-                        if (foreignKeyTable != null && uniqueKeyTable != null)
-                            relations.addForeignKey(
-                                foreignKey,
-                                foreignKeyTable,
-                                foreignKeyTable.getColumn(foreignKeyColumn),
-                                uniqueKey,
-                                uniqueKeyTable
-                            );
                     }
                 }
             }
         }
     }
 
+    private TableConstraint tableConstraint(String constraintCatalog, String constraintSchema, String constraintName) {
+        for (TableConstraint uk : info().getTableConstraints())
+            if (    StringUtils.equals(defaultIfNull(constraintCatalog, ""), defaultIfNull(uk.getConstraintCatalog(), ""))
+                 && StringUtils.equals(defaultIfNull(constraintSchema, ""), defaultIfNull(uk.getConstraintSchema(), ""))
+                 && StringUtils.equals(defaultIfNull(constraintName, ""), defaultIfNull(uk.getConstraintName(), "")))
+                return uk;
+
+        return null;
+    }
+
     @Override
     protected void loadCheckConstraints(DefaultRelations r) {
+
+        constraintLoop:
+        for (CheckConstraint check : info().getCheckConstraints()) {
+            if (!getInputSchemata().contains(check.getConstraintSchema()))
+                continue constraintLoop;
+
+            SchemaDefinition schema = getSchema(check.getConstraintSchema());
+            if (schema == null)
+                continue constraintLoop;
+
+            TableConstraint tc = tableConstraint(check.getConstraintCatalog(), check.getConstraintSchema(), check.getConstraintName());
+            if (tc == null)
+                continue constraintLoop;
+
+            TableDefinition table = getTable(schema, tc.getTableName());
+            if (table == null)
+                continue constraintLoop;
+
+            r.addCheckConstraint(table, new DefaultCheckConstraintDefinition(schema, table, check.getConstraintName(), check.getCheckClause()));
+        }
     }
 
     @Override

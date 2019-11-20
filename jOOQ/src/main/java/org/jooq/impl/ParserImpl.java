@@ -336,6 +336,7 @@ import org.jooq.AlterIndexFinalStep;
 import org.jooq.AlterIndexStep;
 import org.jooq.AlterSchemaFinalStep;
 import org.jooq.AlterSchemaStep;
+import org.jooq.AlterSequenceFlagsStep;
 import org.jooq.AlterSequenceStep;
 import org.jooq.AlterTableAddStep;
 import org.jooq.AlterTableDropStep;
@@ -3084,23 +3085,70 @@ final class ParserImpl implements Parser {
         boolean ifExists = parseKeywordIf(ctx, "IF EXISTS");
         Sequence<?> sequenceName = parseSequenceName(ctx);
 
-        AlterSequenceStep s1 = ifExists
+        AlterSequenceStep s = ifExists
             ? ctx.dsl.alterSequenceIfExists(sequenceName)
             : ctx.dsl.alterSequence(sequenceName);
 
         if (parseKeywordIf(ctx, "RENAME")) {
             if (!parseKeywordIf(ctx, "AS"))
                 parseKeyword(ctx, "TO");
-            return s1.renameTo(parseSequenceName(ctx));
+            return s.renameTo(parseSequenceName(ctx));
         }
-        else if (parseKeywordIf(ctx, "RESTART")) {
-            if (parseKeywordIf(ctx, "WITH"))
-                return s1.restartWith(parseUnsignedIntegerOrBindVariable(ctx));
-            else
-                return s1.restart();
+        else {
+            boolean found = false;
+            AlterSequenceFlagsStep s1 = s;
+            while (true) {
+                if (parseKeywordIf(ctx, "START")) {
+                    if (!parseKeywordIf(ctx, "WITH"))
+                        parseIf(ctx, "=");
+                    s1 = s1.startWith(parseUnsignedIntegerOrBindVariable(ctx));
+                }
+                else if (parseKeywordIf(ctx, "INCREMENT")) {
+                    if (!parseKeywordIf(ctx, "BY"))
+                        parseIf(ctx, "=");
+                    s1 = s1.incrementBy(parseUnsignedIntegerOrBindVariable(ctx));
+                }
+                else if (parseKeywordIf(ctx, "MINVALUE")) {
+                    parseIf(ctx, "=");
+                    s1 = s1.minvalue(parseUnsignedIntegerOrBindVariable(ctx));
+                }
+                else if (parseKeywordIf(ctx, "NO MINVALUE") || parseKeywordIf(ctx, "NOMINVALUE")) {
+                    s1 = s1.noMinvalue();
+                }
+                else if (parseKeywordIf(ctx, "MAXVALUE")) {
+                    parseIf(ctx, "=");
+                    s1 = s1.maxvalue(parseUnsignedIntegerOrBindVariable(ctx));
+                }
+                else if (parseKeywordIf(ctx, "NO MAXVALUE") || parseKeywordIf(ctx, "NOMAXVALUE")) {
+                    s1 = s1.noMaxvalue();
+                }
+                else if (parseKeywordIf(ctx, "CYCLE")) {
+                    s1 = s1.cycle();
+                }
+                else if (parseKeywordIf(ctx, "NO CYCLE") || parseKeywordIf(ctx, "NOCYCLE")) {
+                    s1 = s1.noCycle();
+                }
+                else if (parseKeywordIf(ctx, "CACHE")) {
+                    parseIf(ctx, "=");
+                    s1 = s1.cache(parseUnsignedIntegerOrBindVariable(ctx));
+                }
+                else if (parseKeywordIf(ctx, "NO CACHE") || parseKeywordIf(ctx, "NOCACHE")) {
+                    s1 = s1.noCache();
+                }
+                else if (parseKeywordIf(ctx, "RESTART")) {
+                    if (parseKeywordIf(ctx, "WITH"))
+                        s1 = s1.restartWith(parseUnsignedIntegerOrBindVariable(ctx));
+                    else
+                        s1 = s1.restart();
+                }
+                else
+                    break;
+                found = true;
+            }
+            if (!found)
+                throw ctx.expected("CACHE", "CYCLE", "INCREMENT BY", "MAXVALUE", "MINVALUE", "NO CACHE", "NO CYCLE", "NO MAXVALUE", "NO MINVALUE", "RENAME TO", "RESTART", "START WITH");
+            return s1;
         }
-        else
-            throw ctx.expected("RENAME TO", "RESTART");
     }
 
     private static final Query parseAlterSession(ParserContext ctx) {

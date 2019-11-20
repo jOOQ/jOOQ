@@ -43,6 +43,8 @@ import static org.jooq.Clause.ALTER_SEQUENCE_RESTART;
 import static org.jooq.Clause.ALTER_SEQUENCE_SEQUENCE;
 // ...
 // ...
+// ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
@@ -52,6 +54,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
 // ...
+import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 import static org.jooq.impl.Keywords.K_ALTER;
@@ -105,6 +108,7 @@ final class AlterSequenceImpl<T extends Number> extends AbstractRowCountQuery im
     private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
     private static final Set<SQLDialect> NO_SEPARATOR         = SQLDialect.supportedBy(CUBRID, MARIADB);
     private static final Set<SQLDialect> NO_SUPPORT_CACHE     = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB);
+    private static final Set<SQLDialect> EMULATE_NO_CACHE  = SQLDialect.supportedBy(POSTGRES);
 
 
 
@@ -275,7 +279,7 @@ final class AlterSequenceImpl<T extends Number> extends AbstractRowCountQuery im
     // ------------------------------------------------------------------------
 
     private final boolean supportsIfExists(Context<?> ctx) {
-        return !NO_SUPPORT_IF_EXISTS.contains(ctx.family());
+        return !NO_SUPPORT_IF_EXISTS.contains(ctx.dialect());
     }
 
     @Override
@@ -400,7 +404,7 @@ final class AlterSequenceImpl<T extends Number> extends AbstractRowCountQuery im
         else {
             ctx.start(ALTER_SEQUENCE_RESTART);
 
-            String noSeparator = NO_SEPARATOR.contains(ctx.family()) ? "" : " ";
+            String noSeparator = NO_SEPARATOR.contains(ctx.dialect()) ? "" : " ";
 
             if (incrementBy != null) {
                 ctx.sql(' ').visit(K_INCREMENT_BY)
@@ -439,12 +443,14 @@ final class AlterSequenceImpl<T extends Number> extends AbstractRowCountQuery im
                        .sql(' ').visit(restartWith);
             }
 
-            if (!NO_SUPPORT_CACHE.contains(ctx.family()))
+            if (!NO_SUPPORT_CACHE.contains(ctx.dialect()))
                 if (cache != null)
                     ctx.sql(' ').visit(K_CACHE).sql(' ').visit(cache);
                 else if (noCache)
-                    // TODO: Postgres requires CACHE 1 here
-                    ctx.sql(' ').visit(K_NO).sql(noSeparator).visit(K_CACHE);
+                    if (EMULATE_NO_CACHE.contains(ctx.dialect()))
+                        ctx.sql(' ').visit(K_CACHE).sql(' ').sql(1);
+                    else
+                        ctx.sql(' ').visit(K_NO).sql(noSeparator).visit(K_CACHE);
 
             if (Boolean.TRUE.equals(cycle))
                 ctx.sql(' ').visit(K_CYCLE);

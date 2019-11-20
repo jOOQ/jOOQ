@@ -3027,55 +3027,32 @@ final class ParserImpl implements Parser {
             : ctx.dsl.createSequence(schemaName);
 
         for (;;) {
-            if (parseKeywordIf(ctx, "START")) {
-                if (!parseKeywordIf(ctx, "WITH"))
-                    parseIf(ctx, "=");
-                s = s.startWith(parseUnsignedIntegerOrBindVariable(ctx));
-                continue;
-            }
-            else if (parseKeywordIf(ctx, "INCREMENT")) {
-                if (!parseKeywordIf(ctx, "BY"))
-                    parseIf(ctx, "=");
-                s = s.incrementBy(parseUnsignedIntegerOrBindVariable(ctx));
-                continue;
-            }
-            else if (parseKeywordIf(ctx, "MINVALUE")) {
-                parseIf(ctx, "=");
-                s = s.minvalue(parseUnsignedIntegerOrBindVariable(ctx));
-                continue;
-            }
-            else if (parseKeywordIf(ctx, "NO MINVALUE") || parseKeywordIf(ctx, "NOMINVALUE")) {
+            Param<Long> param;
+
+            if ((param = parseSequenceStartWithIf(ctx)) != null)
+                s = s.startWith(param);
+            else if ((param = parseSequenceIncrementByIf(ctx)) != null)
+                s = s.incrementBy(param);
+            else if ((param = parseSequenceMinvalueIf(ctx)) != null)
+                s = s.minvalue(param);
+            else if (parseSequenceNoMinvalueIf(ctx))
                 s = s.noMinvalue();
-                continue;
-            }
-            else if (parseKeywordIf(ctx, "MAXVALUE")) {
-                parseIf(ctx, "=");
-                s = s.maxvalue(parseUnsignedIntegerOrBindVariable(ctx));
-                continue;
-            }
-            else if (parseKeywordIf(ctx, "NO MAXVALUE") || parseKeywordIf(ctx, "NOMAXVALUE")) {
+            else if ((param = parseSequenceMaxvalueIf(ctx)) != null)
+                s = s.maxvalue(param);
+            else if (parseSequenceNoMaxvalueIf(ctx))
                 s = s.noMaxvalue();
-                continue;
-            }
-            else if (parseKeywordIf(ctx, "CYCLE")) {
+            else if (parseKeywordIf(ctx, "CYCLE"))
                 s = s.cycle();
-                continue;
-            }
-            else if (parseKeywordIf(ctx, "NO CYCLE") || parseKeywordIf(ctx, "NOCYCLE")) {
+            else if (parseSequenceNoCycleIf(ctx))
                 s = s.noCycle();
-                continue;
-            }
-            else if (parseKeywordIf(ctx, "CACHE")) {
-                parseIf(ctx, "=");
-                s = s.cache(parseUnsignedIntegerOrBindVariable(ctx));
-                continue;
-            }
-            else if (parseKeywordIf(ctx, "NO CACHE") || parseKeywordIf(ctx, "NOCACHE")) {
+            else if ((param = parseSequenceCacheIf(ctx)) != null)
+                s = s.cache(param);
+            else if (parseSequenceNoCacheIf(ctx)) {
                 s = s.noCache();
                 continue;
             }
-
-            break;
+            else
+                break;
         }
 
         return s;
@@ -3098,43 +3075,28 @@ final class ParserImpl implements Parser {
             boolean found = false;
             AlterSequenceFlagsStep s1 = s;
             while (true) {
-                if (parseKeywordIf(ctx, "START")) {
-                    if (!parseKeywordIf(ctx, "WITH"))
-                        parseIf(ctx, "=");
-                    s1 = s1.startWith(parseUnsignedIntegerOrBindVariable(ctx));
-                }
-                else if (parseKeywordIf(ctx, "INCREMENT")) {
-                    if (!parseKeywordIf(ctx, "BY"))
-                        parseIf(ctx, "=");
-                    s1 = s1.incrementBy(parseUnsignedIntegerOrBindVariable(ctx));
-                }
-                else if (parseKeywordIf(ctx, "MINVALUE")) {
-                    parseIf(ctx, "=");
-                    s1 = s1.minvalue(parseUnsignedIntegerOrBindVariable(ctx));
-                }
-                else if (parseKeywordIf(ctx, "NO MINVALUE") || parseKeywordIf(ctx, "NOMINVALUE")) {
+                Param<Long> param;
+
+                if ((param = parseSequenceStartWithIf(ctx)) != null)
+                    s1 = s1.startWith(param);
+                else if ((param = parseSequenceIncrementByIf(ctx)) != null)
+                    s1 = s1.incrementBy(param);
+                else if ((param = parseSequenceMinvalueIf(ctx)) != null)
+                    s1 = s1.minvalue(param);
+                else if (parseSequenceNoMinvalueIf(ctx))
                     s1 = s1.noMinvalue();
-                }
-                else if (parseKeywordIf(ctx, "MAXVALUE")) {
-                    parseIf(ctx, "=");
-                    s1 = s1.maxvalue(parseUnsignedIntegerOrBindVariable(ctx));
-                }
-                else if (parseKeywordIf(ctx, "NO MAXVALUE") || parseKeywordIf(ctx, "NOMAXVALUE")) {
+                else if ((param = parseSequenceMaxvalueIf(ctx)) != null)
+                    s1 = s1.maxvalue(param);
+                else if (parseSequenceNoMaxvalueIf(ctx))
                     s1 = s1.noMaxvalue();
-                }
-                else if (parseKeywordIf(ctx, "CYCLE")) {
+                else if (parseKeywordIf(ctx, "CYCLE"))
                     s1 = s1.cycle();
-                }
-                else if (parseKeywordIf(ctx, "NO CYCLE") || parseKeywordIf(ctx, "NOCYCLE")) {
+                else if (parseSequenceNoCycleIf(ctx))
                     s1 = s1.noCycle();
-                }
-                else if (parseKeywordIf(ctx, "CACHE")) {
-                    parseIf(ctx, "=");
-                    s1 = s1.cache(parseUnsignedIntegerOrBindVariable(ctx));
-                }
-                else if (parseKeywordIf(ctx, "NO CACHE") || parseKeywordIf(ctx, "NOCACHE")) {
+                else if ((param = parseSequenceCacheIf(ctx)) != null)
+                    s1 = s1.cache(param);
+                else if (parseSequenceNoCacheIf(ctx))
                     s1 = s1.noCache();
-                }
                 else if (parseKeywordIf(ctx, "RESTART")) {
                     if (parseKeywordIf(ctx, "WITH"))
                         s1 = s1.restartWith(parseUnsignedIntegerOrBindVariable(ctx));
@@ -3149,6 +3111,42 @@ final class ParserImpl implements Parser {
                 throw ctx.expected("CACHE", "CYCLE", "INCREMENT BY", "MAXVALUE", "MINVALUE", "NO CACHE", "NO CYCLE", "NO MAXVALUE", "NO MINVALUE", "RENAME TO", "RESTART", "START WITH");
             return s1;
         }
+    }
+
+    private static final boolean parseSequenceNoCacheIf(ParserContext ctx) {
+        return parseKeywordIf(ctx, "NO CACHE") || parseKeywordIf(ctx, "NOCACHE");
+    }
+
+    private static final Param<Long> parseSequenceCacheIf(ParserContext ctx) {
+        return parseKeywordIf(ctx, "CACHE") && (parseIf(ctx, "=") || true) ? parseUnsignedIntegerOrBindVariable(ctx) : null;
+    }
+
+    private static final boolean parseSequenceNoCycleIf(ParserContext ctx) {
+        return parseKeywordIf(ctx, "NO CYCLE") || parseKeywordIf(ctx, "NOCYCLE");
+    }
+
+    private static final boolean parseSequenceNoMaxvalueIf(ParserContext ctx) {
+        return parseKeywordIf(ctx, "NO MAXVALUE") || parseKeywordIf(ctx, "NOMAXVALUE");
+    }
+
+    private static final Param<Long> parseSequenceMaxvalueIf(ParserContext ctx) {
+        return parseKeywordIf(ctx, "MAXVALUE") && (parseIf(ctx, "=") || true) ? parseUnsignedIntegerOrBindVariable(ctx) : null;
+    }
+
+    private static final boolean parseSequenceNoMinvalueIf(ParserContext ctx) {
+        return parseKeywordIf(ctx, "NO MINVALUE") || parseKeywordIf(ctx, "NOMINVALUE");
+    }
+
+    private static final Param<Long> parseSequenceMinvalueIf(ParserContext ctx) {
+        return parseKeywordIf(ctx, "MINVALUE") && (parseIf(ctx, "=") || true) ? parseUnsignedIntegerOrBindVariable(ctx) : null;
+    }
+
+    private static final Param<Long> parseSequenceIncrementByIf(ParserContext ctx) {
+        return parseKeywordIf(ctx, "INCREMENT") && (parseKeywordIf(ctx, "BY") || parseIf(ctx, "=") || true) ? parseUnsignedIntegerOrBindVariable(ctx) : null;
+    }
+
+    private static final Param<Long> parseSequenceStartWithIf(ParserContext ctx) {
+        return parseKeywordIf(ctx, "START") && (parseKeywordIf(ctx, "WITH") || parseIf(ctx, "=") || true) ? parseUnsignedIntegerOrBindVariable(ctx) : null;
     }
 
     private static final Query parseAlterSession(ParserContext ctx) {

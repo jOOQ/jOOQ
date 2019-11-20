@@ -61,10 +61,13 @@ import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Constraint;
 import org.jooq.DataType;
+import org.jooq.Delete;
 import org.jooq.Field;
 import org.jooq.FieldOrConstraint;
 import org.jooq.ForeignKey;
 import org.jooq.Index;
+import org.jooq.Insert;
+import org.jooq.Merge;
 import org.jooq.Meta;
 import org.jooq.Name;
 import org.jooq.Name.Quoted;
@@ -81,6 +84,7 @@ import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.TableOptions.TableType;
 import org.jooq.UniqueKey;
+import org.jooq.Update;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataDefinitionException;
 import org.jooq.impl.ConstraintImpl.Action;
@@ -126,7 +130,8 @@ final class DDLInterpreter {
     // -------------------------------------------------------------------------
 
     final void accept(Query query) {
-        log.info(query);
+        if (log.isDebugEnabled())
+            log.debug(query);
 
         if (query instanceof CreateSchemaImpl)
             accept0((CreateSchemaImpl) query);
@@ -167,6 +172,18 @@ final class DDLInterpreter {
 
         else if (query instanceof CommentOnImpl)
             accept0((CommentOnImpl) query);
+
+        // The interpreter cannot handle DML statements. We're ignoring these for now.
+        else if (query instanceof Select)
+            ;
+        else if (query instanceof Update)
+            ;
+        else if (query instanceof Insert)
+            ;
+        else if (query instanceof Delete)
+            ;
+        else if (query instanceof Merge)
+            ;
 
         else
             throw unsupportedQuery(query);

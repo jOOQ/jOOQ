@@ -222,7 +222,7 @@ final class DDLInterpreter {
             return;
         }
         else
-            throw new UnsupportedOperationException(query.getSQL());
+            throw unsupportedQuery(query);
     }
 
     private final void accept0(DropSchemaImpl query) {
@@ -1433,14 +1433,15 @@ final class DDLInterpreter {
         }
 
         private final class InterpretedSequence extends SequenceImpl<Long> {
+            @SuppressWarnings("unchecked")
             InterpretedSequence(Schema schema) {
                 super(MutableSequence.this.name, schema, BIGINT, false,
-                    startWith != null ? startWith.coerce(Long.class) : null,
-                    incrementBy != null ? incrementBy.coerce(Long.class) : null,
-                    minValue != null ? minValue.coerce(Long.class) : null,
-                    maxValue != null ? maxValue.coerce(Long.class) : null,
+                    (Field<Long>) startWith,
+                    (Field<Long>) incrementBy,
+                    (Field<Long>) minValue,
+                    (Field<Long>) maxValue,
                     cycle,
-                    cache != null ? cache.coerce(Long.class) : null);
+                    (Field<Long>) cache);
             }
         }
     }

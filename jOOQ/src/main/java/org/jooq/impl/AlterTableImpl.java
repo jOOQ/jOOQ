@@ -1482,8 +1482,11 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
 
 
+
                     // MySQL supports DROP DEFAULT, but it does not work correctly:
                     // https://bugs.mysql.com/bug.php?id=81010
+                    // Same for MariaDB
+                    case MARIADB:
                     case MYSQL:
                         ctx.sql(' ').visit(K_SET_DEFAULT).sql(' ').visit(K_NULL);
                         break;

@@ -724,8 +724,37 @@ final class DDLInterpreter {
 
             existing.name = (UnqualifiedName) renameTo.getUnqualifiedName();
         }
-        else
-            throw unsupportedQuery(query);
+        else {
+            Field<? extends Number> startWith = query.$startWith();
+            if (startWith != null)
+                existing.startWith = startWith;
+
+            Field<? extends Number> incrementBy = query.$incrementBy();
+            if (incrementBy != null)
+                existing.incrementBy = incrementBy;
+
+            Field<? extends Number> minvalue = query.$minvalue();
+            if (minvalue != null)
+                existing.minValue = minvalue;
+            else if (query.$noMinvalue())
+                existing.minValue = null;
+
+            Field<? extends Number> maxvalue = query.$maxvalue();
+            if (maxvalue != null)
+                existing.maxValue = maxvalue;
+            else if (query.$noMaxvalue())
+                existing.maxValue = null;
+
+            Boolean cycle = query.$cycle();
+            if (cycle != null)
+                existing.cycle = cycle;
+
+            Field<? extends Number> cache = query.$cache();
+            if (cache != null)
+                existing.cache = cache;
+            else if (query.$noCache())
+                existing.cache = null;
+        }
     }
 
     private final void accept0(DropSequenceImpl query) {
@@ -1388,13 +1417,13 @@ final class DDLInterpreter {
 
     @SuppressWarnings("unused")
     private static final class MutableSequence extends MutableNamed {
-        MutableSchema schema;
-        Field<?>      startWith;
-        Field<?>      incrementBy;
-        Field<?>      minValue;
-        Field<?>      maxValue;
-        boolean       cycle;
-        Field<?>      cache;
+        MutableSchema           schema;
+        Field<? extends Number> startWith;
+        Field<? extends Number> incrementBy;
+        Field<? extends Number> minValue;
+        Field<? extends Number> maxValue;
+        boolean                 cycle;
+        Field<? extends Number> cache;
 
         MutableSequence(UnqualifiedName name, MutableSchema schema) {
             super(name);
@@ -1404,13 +1433,14 @@ final class DDLInterpreter {
         }
 
         private final class InterpretedSequence extends SequenceImpl<Long> {
-            @SuppressWarnings("unchecked")
             InterpretedSequence(Schema schema) {
                 super(MutableSequence.this.name, schema, BIGINT, false,
-                    (Field<Long>) startWith, (Field<Long>) incrementBy, (Field<Long>) minValue, (Field<Long>) maxValue, cycle, (Field<Long>) cache);
-
-                // [#7752] TODO: Pass additional flags like START WITH to
-                //         SequenceImpl when this is ready.
+                    startWith != null ? startWith.coerce(Long.class) : null,
+                    incrementBy != null ? incrementBy.coerce(Long.class) : null,
+                    minValue != null ? minValue.coerce(Long.class) : null,
+                    maxValue != null ? maxValue.coerce(Long.class) : null,
+                    cycle,
+                    cache != null ? cache.coerce(Long.class) : null);
             }
         }
     }

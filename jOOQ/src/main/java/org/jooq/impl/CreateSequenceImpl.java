@@ -98,18 +98,18 @@ final class CreateSequenceImpl extends AbstractRowCountQuery implements
     private static final Set<SQLDialect>     OMIT_NO_MINVALUE         = SQLDialect.supportedBy(FIREBIRD);
     private static final Set<SQLDialect>     OMIT_NO_MAXVALUE         = SQLDialect.supportedBy(FIREBIRD);
 
-    private final Sequence<?>                sequence;
-    private final boolean                    ifNotExists;
-    private Field<?>                         startWith;
-    private Field<?>                         incrementBy;
-    private Field<?>                         minvalue;
-    private boolean                          noMinvalue;
-    private Field<?>                         maxvalue;
-    private boolean                          noMaxvalue;
-    private boolean                          cycle;
-    private boolean                          noCycle;
-    private Field<?>                         cache;
-    private boolean                          noCache;
+    private final Sequence<?>            sequence;
+    private final boolean                ifNotExists;
+    private Field<? extends Number>      startWith;
+    private Field<? extends Number>      incrementBy;
+    private Field<? extends Number>      minvalue;
+    private boolean                      noMinvalue;
+    private Field<? extends Number>      maxvalue;
+    private boolean                      noMaxvalue;
+    private boolean                      cycle;
+    private boolean                      noCycle;
+    private Field<? extends Number>      cache;
+    private boolean                      noCache;
 
     CreateSequenceImpl(Configuration configuration, Sequence<?> sequence, boolean ifNotExists) {
         super(configuration);
@@ -118,18 +118,18 @@ final class CreateSequenceImpl extends AbstractRowCountQuery implements
         this.ifNotExists = ifNotExists;
     }
 
-    final Sequence<?> $sequence()    { return sequence; }
-    final boolean     $ifNotExists() { return ifNotExists; }
-    final Field<?>    $startWith()   { return startWith; }
-    final Field<?>    $incrementBy() { return incrementBy; }
-    final Field<?>    $minvalue()    { return minvalue; }
-    final boolean     $noMinvalue()  { return noMinvalue; }
-    final Field<?>    $maxvalue()    { return maxvalue; }
-    final boolean     $noMaxvalue()  { return noMaxvalue; }
-    final boolean     $cycle()       { return cycle; }
-    final boolean     $noCycle()     { return noCycle; }
-    final Field<?>    $cache()       { return cache; }
-    final boolean     $noCache()     { return noCache; }
+    final Sequence<?>             $sequence()    { return sequence; }
+    final boolean                 $ifNotExists() { return ifNotExists; }
+    final Field<? extends Number> $startWith()   { return startWith; }
+    final Field<? extends Number> $incrementBy() { return incrementBy; }
+    final Field<? extends Number> $minvalue()    { return minvalue; }
+    final boolean                 $noMinvalue()  { return noMinvalue; }
+    final Field<? extends Number> $maxvalue()    { return maxvalue; }
+    final boolean                 $noMaxvalue()  { return noMaxvalue; }
+    final boolean                 $cycle()       { return cycle; }
+    final boolean                 $noCycle()     { return noCycle; }
+    final Field<? extends Number> $cache()       { return cache; }
+    final boolean                 $noCache()     { return noCache; }
 
     // ------------------------------------------------------------------------
     // XXX: Sequence API

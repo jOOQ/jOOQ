@@ -144,7 +144,7 @@ final class VersionImpl implements Version {
                 if (list == null)
                     list = new ArrayList<>();
 
-                list.add(new Parent(new VersionImpl(ctx, parent.version.id, parent.version.meta, Collections.emptyList()), parent.queries));
+                list.add(new Parent(new VersionImpl(ctx, parent.version.id, parent.version.meta, Collections.<Parent>emptyList()), parent.queries));
             }
             else {
                 VersionImpl p = parent.version.subgraphTo(ancestor);

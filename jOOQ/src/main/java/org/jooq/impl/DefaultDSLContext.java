@@ -412,7 +412,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public Version version(String id) {
-        return new VersionImpl(this, id, null);
+        return new VersionImpl(this, id, null, new Version[0]);
     }
 
     @Override

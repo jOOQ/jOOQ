@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -45,6 +46,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.jooq.DDLQuery;
 import org.jooq.DSLContext;
 import org.jooq.Internal;
 import org.jooq.Meta;
@@ -59,16 +61,33 @@ import org.jooq.Version;
 @Internal
 final class VersionImpl implements Version {
 
-    private final DSLContext    ctx;
-    private final String        id;
-    private final Meta          meta;
-    private final List<Version> parents;
+    private final DSLContext   ctx;
+    private final String       id;
+    private final Meta         meta;
+    private final List<Parent> parents;
 
-    VersionImpl(DSLContext ctx, String id, Meta meta, Version... parents) {
+    private VersionImpl(DSLContext ctx, String id, Meta meta, List<Parent> parents) {
         this.ctx = ctx;
         this.id = id;
         this.meta = meta != null ? meta : ctx.meta("");
-        this.parents = Arrays.asList(parents);
+        this.parents = parents;
+    }
+
+    VersionImpl(DSLContext ctx, String id, Meta meta, Version parent, Queries queries) {
+        this(ctx, id, meta, Arrays.asList(new Parent((VersionImpl) parent, queries)));
+    }
+
+    VersionImpl(DSLContext ctx, String id, Meta meta, Version[] parents) {
+        this(ctx, id, meta, wrap(parents));
+    }
+
+    private static List<Parent> wrap(Version[] parents) {
+        List<Parent> result = new ArrayList<>(parents.length);
+
+        for (Version parent : parents)
+            result.add(new Parent((VersionImpl) parent, null));
+
+        return result;
     }
 
     @Override
@@ -79,11 +98,6 @@ final class VersionImpl implements Version {
     @Override
     public final Meta meta() {
         return meta;
-    }
-
-    @Override
-    public final List<Version> parents() {
-        return Collections.unmodifiableList(parents);
     }
 
     @Override
@@ -103,20 +117,89 @@ final class VersionImpl implements Version {
 
     @Override
     public final Version apply(String newId, Queries diff) {
-        return new VersionImpl(ctx, newId, meta().apply(diff), new Version[] { this });
+        return new VersionImpl(ctx, newId, meta().apply(diff), this, diff);
     }
 
     @Override
     public final Queries migrateFrom(Version version) {
-        Queries result = null;
+        VersionImpl subgraph = subgraphTo((VersionImpl) version);
 
 
 
 
 
-        // TODO: Provide OSS edition solution here
+
+
+
+
+
+        return subgraph.migrateFrom((VersionImpl) version, ctx.queries());
+    }
+
+    private final VersionImpl subgraphTo(VersionImpl ancestor) {
+        List<Parent> list = null;
+
+        for (Parent parent : parents) {
+            if (parent.version.equals(ancestor)) {
+                if (list == null)
+                    list = new ArrayList<>();
+
+                list.add(new Parent(new VersionImpl(ctx, parent.version.id, parent.version.meta, Collections.emptyList()), parent.queries));
+            }
+            else {
+                VersionImpl p = parent.version.subgraphTo(ancestor);
+
+                if (p != null) {
+                    if (list == null)
+                        list = new ArrayList<>();
+
+                    list.add(new Parent(p, parent.queries));
+                }
+            }
+        }
+
+        return list == null ? null : new VersionImpl(ctx, id, meta, list);
+    }
+
+    private final Queries migrateFrom(VersionImpl ancestor, Queries result) {
+
+
+
+
+
+
+        for (Parent parent : parents) {
+            result = parent.version.migrateFrom(ancestor, result);
+
+
+
+
+
+
+                result = result.concat(parent.queries);
+        }
+
         return result;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -217,5 +300,20 @@ final class VersionImpl implements Version {
     @Override
     public String toString() {
         return "-- Version: " + id() + "\n" + meta();
+    }
+
+    private static final class Parent {
+        final VersionImpl version;
+        final Queries     queries;
+
+        Parent(VersionImpl version, Queries queries) {
+            this.version = version;
+            this.queries = queries;
+        }
+
+        @Override
+        public String toString() {
+            return version.toString();
+        }
     }
 }

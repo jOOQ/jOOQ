@@ -38,7 +38,6 @@
 package org.jooq;
 
 import java.util.Collection;
-import java.util.List;
 
 /**
  * A version ID attached to a {@link Meta} description of a database.
@@ -56,11 +55,6 @@ public interface Version {
      * The version's {@link Meta} representation of the database.
      */
     Meta meta();
-
-    /**
-     * The parents of this version.
-     */
-    List<Version> parents();
 
     /**
      * Produce a migration from a previous version.

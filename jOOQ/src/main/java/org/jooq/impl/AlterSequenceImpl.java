@@ -78,6 +78,7 @@ import static org.jooq.impl.Tools.endTryCatch;
 import java.util.Set;
 
 import org.jooq.AlterSequenceFinalStep;
+import org.jooq.AlterSequenceFlagsStep;
 import org.jooq.AlterSequenceStep;
 import org.jooq.Clause;
 import org.jooq.Configuration;
@@ -114,14 +115,14 @@ final class AlterSequenceImpl<T extends Number> extends AbstractRowCountQuery im
     private Sequence<?>                  renameTo;
     private boolean                      restart;
     private Field<?>                     restartWith;
-    private Field<? extends T>           startWith;
-    private Field<? extends T>           incrementBy;
-    private Field<? extends T>           minvalue;
+    private Field<? extends Number>      startWith;
+    private Field<? extends Number>      incrementBy;
+    private Field<? extends Number>      minvalue;
     private boolean                      noMinvalue;
-    private Field<? extends T>           maxvalue;
+    private Field<? extends Number>      maxvalue;
     private boolean                      noMaxvalue;
     private Boolean                      cycle;
-    private Field<? extends T>           cache;
+    private Field<? extends Number>      cache;
     private boolean                      noCache;
 
     AlterSequenceImpl(Configuration configuration, Sequence<T> sequence) {
@@ -144,19 +145,19 @@ final class AlterSequenceImpl<T extends Number> extends AbstractRowCountQuery im
     // ------------------------------------------------------------------------
 
     @Override
-    public final AlterSequenceStep<T> restart() {
+    public final AlterSequenceFlagsStep restart() {
         restart = true;
         restartWith = null;
         return this;
     }
 
     @Override
-    public final AlterSequenceStep<T> restartWith(T value) {
+    public final AlterSequenceFlagsStep restartWith(Number value) {
         return restartWith(Tools.field(value, sequence.getDataType()));
     }
 
     @Override
-    public final AlterSequenceStep<T> restartWith(Field<? extends T> value) {
+    public final AlterSequenceFlagsStep restartWith(Field<? extends Number> value) {
         restart = false;
         restartWith = value;
         return this;
@@ -179,91 +180,91 @@ final class AlterSequenceImpl<T extends Number> extends AbstractRowCountQuery im
     }
 
     @Override
-    public AlterSequenceStep<T> startWith(T value) {
+    public AlterSequenceFlagsStep startWith(Number value) {
         return startWith(Tools.field(value, sequence.getDataType()));
     }
 
     @Override
-    public AlterSequenceStep<T> startWith(Field<? extends T> value) {
+    public AlterSequenceFlagsStep startWith(Field<? extends Number> value) {
         startWith = value;
         return this;
     }
 
     @Override
-    public AlterSequenceStep<T> incrementBy(T value) {
+    public AlterSequenceFlagsStep incrementBy(Number value) {
         return incrementBy(Tools.field(value, sequence.getDataType()));
     }
 
     @Override
-    public AlterSequenceStep<T> incrementBy(Field<? extends T> value) {
+    public AlterSequenceFlagsStep incrementBy(Field<? extends Number> value) {
         incrementBy = value;
         return this;
     }
 
     @Override
-    public AlterSequenceStep<T> minvalue(T value) {
+    public AlterSequenceFlagsStep minvalue(Number value) {
         return minvalue(Tools.field(value, sequence.getDataType()));
     }
 
     @Override
-    public AlterSequenceStep<T> minvalue(Field<? extends T> value) {
+    public AlterSequenceFlagsStep minvalue(Field<? extends Number> value) {
         minvalue = value;
         noMinvalue = false;
         return this;
     }
 
     @Override
-    public AlterSequenceStep<T> noMinvalue() {
+    public AlterSequenceFlagsStep noMinvalue() {
         minvalue = null;
         noMinvalue = true;
         return this;
     }
 
     @Override
-    public AlterSequenceStep<T> maxvalue(T value) {
+    public AlterSequenceFlagsStep maxvalue(Number value) {
         return maxvalue(Tools.field(value, sequence.getDataType()));
     }
 
     @Override
-    public AlterSequenceStep<T> maxvalue(Field<? extends T> value) {
+    public AlterSequenceFlagsStep maxvalue(Field<? extends Number> value) {
         maxvalue = value;
         noMaxvalue = false;
         return this;
     }
 
     @Override
-    public AlterSequenceStep<T> noMaxvalue() {
+    public AlterSequenceFlagsStep noMaxvalue() {
         maxvalue = null;
         noMaxvalue = true;
         return this;
     }
 
     @Override
-    public AlterSequenceStep<T> cycle() {
+    public AlterSequenceFlagsStep cycle() {
         cycle = true;
         return this;
     }
 
     @Override
-    public AlterSequenceStep<T> noCycle() {
+    public AlterSequenceFlagsStep noCycle() {
         cycle = false;
         return this;
     }
 
     @Override
-    public AlterSequenceStep<T> cache(T value) {
+    public AlterSequenceFlagsStep cache(Number value) {
         return cache(Tools.field(value, sequence.getDataType()));
     }
 
     @Override
-    public AlterSequenceStep<T> cache(Field<? extends T> value) {
+    public AlterSequenceFlagsStep cache(Field<? extends Number> value) {
         cache = value;
         noCache = false;
         return this;
     }
 
     @Override
-    public AlterSequenceStep<T> noCache() {
+    public AlterSequenceFlagsStep noCache() {
         cache = null;
         noCache = true;
         return this;

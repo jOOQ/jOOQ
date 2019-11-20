@@ -67,7 +67,7 @@ import static org.jooq.SQLDialect.POSTGRES;
  *
  * @author Lukas Eder
  */
-public interface AlterSequenceStep<T extends Number> extends AlterSequenceFlagsStep<T> {
+public interface AlterSequenceStep<T extends Number> extends AlterSequenceFlagsStep {
 
     /**
      * Add a <code>RENAME TO</code> clause to the <code>ALTER SEQUENCE</code>

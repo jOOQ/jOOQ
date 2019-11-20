@@ -82,6 +82,12 @@ final class TruncateImpl<R extends Record> extends AbstractRowCountQuery impleme
         this.table = table;
     }
 
+    final Table<?> $table() { return table; }
+
+    // ------------------------------------------------------------------------
+    // XXX: DSL API
+    // ------------------------------------------------------------------------
+
     @Override
     public final TruncateFinalStep<R> cascade() {
         cascade = true;
@@ -105,6 +111,10 @@ final class TruncateImpl<R extends Record> extends AbstractRowCountQuery impleme
         restartIdentity = false;
         return this;
     }
+
+    // ------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // ------------------------------------------------------------------------
 
     @Override
     public final void accept(Context<?> ctx) {

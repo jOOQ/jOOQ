@@ -141,6 +141,8 @@ final class DDLInterpreter {
             accept0((AlterTableImpl) query);
         else if (query instanceof DropTableImpl)
             accept0((DropTableImpl) query);
+        else if (query instanceof TruncateImpl)
+            accept0((TruncateImpl<?>) query);
 
         else if (query instanceof CreateViewImpl)
             accept0((CreateViewImpl<?>) query);
@@ -589,6 +591,18 @@ final class DDLInterpreter {
             throw objectNotTemporaryTable(table);
 
         drop(schema.tables, existing, query.$cascade());
+    }
+
+    private final void accept0(TruncateImpl<?> query) {
+        Table<?> table = query.$table();
+
+        MutableSchema schema = getSchema(table.getSchema());
+        MutableTable existing = schema.table(table);
+
+        if (existing == null)
+            throw tableNotExists(table);
+        else if (!existing.options.type().isTable())
+            throw objectNotTable(table);
     }
 
     private final void accept0(CreateViewImpl<?> query) {

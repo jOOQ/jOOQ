@@ -140,9 +140,18 @@ final class AlterSequenceImpl<T extends Number> extends AbstractRowCountQuery im
         this.ifExists = ifExists;
     }
 
-    final Sequence<?> $sequence() { return sequence; }
-    final boolean     $ifExists() { return ifExists; }
-    final Sequence<?> $renameTo() { return renameTo; }
+    final Sequence<?>             $sequence()    { return sequence; }
+    final boolean                 $ifExists()    { return ifExists; }
+    final Sequence<?>             $renameTo()    { return renameTo; }
+    final Field<? extends Number> $startWith()   { return startWith; }
+    final Field<? extends Number> $incrementBy() { return incrementBy; }
+    final Field<? extends Number> $minvalue()    { return minvalue; }
+    final boolean                 $noMinvalue()  { return noMinvalue; }
+    final Field<? extends Number> $maxvalue()    { return maxvalue; }
+    final boolean                 $noMaxvalue()  { return noMaxvalue; }
+    final Boolean                 $cycle()       { return cycle; }
+    final Field<? extends Number> $cache()       { return cache; }
+    final boolean                 $noCache()     { return noCache; }
 
     // ------------------------------------------------------------------------
     // XXX: DSL API

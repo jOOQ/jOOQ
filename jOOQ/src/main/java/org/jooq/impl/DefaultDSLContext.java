@@ -253,6 +253,7 @@ import org.jooq.UDTRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.UpdateQuery;
 import org.jooq.UpdateSetFirstStep;
+import org.jooq.Version;
 import org.jooq.WithAsStep;
 import org.jooq.WithAsStep1;
 import org.jooq.WithAsStep10;
@@ -407,6 +408,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public DataSource diagnosticsDataSource() {
         return new DiagnosticsDataSource(configuration());
+    }
+
+    @Override
+    public Version version(String id) {
+        return new VersionImpl(this, id, null);
     }
 
     @Override

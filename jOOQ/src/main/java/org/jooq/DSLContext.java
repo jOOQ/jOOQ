@@ -249,6 +249,11 @@ public interface DSLContext extends Scope , AutoCloseable  {
     DataSource diagnosticsDataSource();
 
     /**
+     * Initialise a {@link Version}.
+     */
+    Version version(String id);
+
+    /**
      * Access the database meta data.
      * <p>
      * This method returns meta information provided by

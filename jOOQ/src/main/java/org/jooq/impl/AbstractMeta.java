@@ -297,29 +297,25 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
         return new DDL(dsl(), exportConfiguration).queries(this);
     }
 
+    @Override
+    public final Meta apply(String diff) {
+        return apply(dsl().parser().parse(diff));
+    }
 
+    @Override
+    public final Meta apply(Query... diff) {
+        return apply(dsl().queries(diff));
+    }
 
+    @Override
+    public final Meta apply(Collection<? extends Query> diff) {
+        return apply(dsl().queries(diff));
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    @Override
+    public final Meta apply(Queries diff) {
+        return dsl().meta(ddl().concat(diff).queries());
+    }
 
 
 

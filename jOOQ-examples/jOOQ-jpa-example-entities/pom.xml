@@ -22,7 +22,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <org.hibernate.version>5.4.4.Final</org.hibernate.version>
+        <org.hibernate.version>5.4.9.Final</org.hibernate.version>
     </properties>
 
     <dependencies>

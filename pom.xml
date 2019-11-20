@@ -240,7 +240,7 @@
             <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-core</artifactId>
-                <version>5.4.4.Final</version>
+                <version>5.4.9.Final</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>

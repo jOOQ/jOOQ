@@ -443,6 +443,11 @@ final class AlterSequenceImpl<T extends Number> extends AbstractRowCountQuery im
 
 
 
+
+
+
+
+
                     ctx.sql(' ').visit(K_RESTART);
             }
             else if (restartWith != null) {

@@ -37,6 +37,8 @@
  */
 package org.jooq;
 
+import static org.jooq.tools.jdbc.JDBCUtils.safeClose;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -45,6 +47,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
@@ -207,6 +210,33 @@ public final class Source {
         catch (java.io.IOException e) {
             throw new IOException(e.getMessage(), e);
         }
+    }
+
+    /**
+     * Read the entire {@link #reader()} into a String, for convenience.
+     *
+     * @throws IOException When something goes wrong creating a reader from this
+     *             source.
+     */
+    public final String readString() throws IOException {
+        StringWriter w = new StringWriter();
+        Reader r = null;
+
+        try {
+            r = reader();
+            char[] buffer = new char[8192];
+            int read;
+            while ((read = r.read(buffer, 0, 8192)) >= 0)
+                w.write(buffer, 0, read);
+        }
+        catch (java.io.IOException e) {
+            throw new IOException("Could not read source", e);
+        }
+        finally {
+            safeClose(r);
+        }
+
+        return w.toString();
     }
 
     private final Reader inputStreamReader(InputStream is) throws UnsupportedEncodingException {

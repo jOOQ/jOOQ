@@ -39,11 +39,6 @@ package org.jooq.impl;
 
 import static org.jooq.SQLDialect.DEFAULT;
 import static org.jooq.tools.StringUtils.defaultIfNull;
-import static org.jooq.tools.jdbc.JDBCUtils.safeClose;
-
-import java.io.IOException;
-import java.io.Reader;
-import java.io.StringWriter;
 
 import org.jooq.Configuration;
 import org.jooq.Meta;
@@ -71,26 +66,8 @@ final class SourceMetaProvider implements MetaProvider {
     @Override
     public final Meta provide() {
         if (sources.length > 0) {
-            StringWriter w = new StringWriter();
-            Reader r = null;
-
-            try {
-                r = sources[0].reader();
-                char[] buffer = new char[8192];
-                int nRead;
-                while ((nRead = r.read(buffer, 0, 8192)) >= 0) {
-                    w.write(buffer, 0, nRead);
-                }
-            }
-            catch (IOException e) {
-                throw new org.jooq.exception.IOException("Could not read source", e);
-            }
-            finally {
-                safeClose(r);
-            }
-
-            String s = w.toString();
-            sources[0] = Source.of(w.toString());
+            String s = sources[0].readString();
+            sources[0] = Source.of(s);
 
             // TODO: Implement more thorough and reusable "isXML()" check in MiniJAXB
             if (s.startsWith("<?xml") || s.startsWith("<information_schema") || s.startsWith("<!--"))

@@ -726,34 +726,42 @@ final class DDLInterpreter {
         }
         else {
             Field<? extends Number> startWith = query.$startWith();
-            if (startWith != null)
+            boolean seen = false;
+            if (startWith != null && (seen |= true))
                 existing.startWith = startWith;
 
             Field<? extends Number> incrementBy = query.$incrementBy();
-            if (incrementBy != null)
+            if (incrementBy != null && (seen |= true))
                 existing.incrementBy = incrementBy;
 
             Field<? extends Number> minvalue = query.$minvalue();
-            if (minvalue != null)
+            if (minvalue != null && (seen |= true))
                 existing.minValue = minvalue;
-            else if (query.$noMinvalue())
+            else if (query.$noMinvalue() && (seen |= true))
                 existing.minValue = null;
 
             Field<? extends Number> maxvalue = query.$maxvalue();
-            if (maxvalue != null)
+            if (maxvalue != null && (seen |= true))
                 existing.maxValue = maxvalue;
-            else if (query.$noMaxvalue())
+            else if (query.$noMaxvalue() && (seen |= true))
                 existing.maxValue = null;
 
             Boolean cycle = query.$cycle();
-            if (cycle != null)
+            if (cycle != null && (seen |= true))
                 existing.cycle = cycle;
 
             Field<? extends Number> cache = query.$cache();
-            if (cache != null)
+            if (cache != null && (seen |= true))
                 existing.cache = cache;
-            else if (query.$noCache())
+            else if (query.$noCache() && (seen |= true))
                 existing.cache = null;
+
+            if ((query.$restart() || query.$restartWith() != null) && (seen |= true))
+                // ignored
+                ;
+
+            if (!seen)
+                throw unsupportedQuery(query);
         }
     }
 
@@ -1436,12 +1444,12 @@ final class DDLInterpreter {
             @SuppressWarnings("unchecked")
             InterpretedSequence(Schema schema) {
                 super(MutableSequence.this.name, schema, BIGINT, false,
-                    (Field<Long>) startWith,
-                    (Field<Long>) incrementBy,
-                    (Field<Long>) minValue,
-                    (Field<Long>) maxValue,
-                    cycle,
-                    (Field<Long>) cache);
+                    (Field<Long>) MutableSequence.this.startWith,
+                    (Field<Long>) MutableSequence.this.incrementBy,
+                    (Field<Long>) MutableSequence.this.minValue,
+                    (Field<Long>) MutableSequence.this.maxValue,
+                    MutableSequence.this.cycle,
+                    (Field<Long>) MutableSequence.this.cache);
             }
         }
     }

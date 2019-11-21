@@ -143,6 +143,8 @@ final class AlterSequenceImpl<T extends Number> extends AbstractRowCountQuery im
     final Sequence<?>             $sequence()    { return sequence; }
     final boolean                 $ifExists()    { return ifExists; }
     final Sequence<?>             $renameTo()    { return renameTo; }
+    final boolean                 $restart()     { return restart; }
+    final Field<?>                $restartWith() { return restartWith; }
     final Field<? extends Number> $startWith()   { return startWith; }
     final Field<? extends Number> $incrementBy() { return incrementBy; }
     final Field<? extends Number> $minvalue()    { return minvalue; }

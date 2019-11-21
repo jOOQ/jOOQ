@@ -48,7 +48,6 @@ import java.util.Map.Entry;
 
 import org.jooq.DDLQuery;
 import org.jooq.DSLContext;
-import org.jooq.Internal;
 import org.jooq.Meta;
 import org.jooq.Queries;
 import org.jooq.Query;
@@ -58,7 +57,6 @@ import org.jooq.Version;
 /**
  * @author Lukas Eder
  */
-@Internal
 final class VersionImpl implements Version {
 
     private final DSLContext   ctx;

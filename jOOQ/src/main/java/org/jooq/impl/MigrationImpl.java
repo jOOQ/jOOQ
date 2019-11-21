@@ -137,6 +137,14 @@ final class MigrationImpl extends AbstractScope implements Migration {
                     return MIGRATION_RESULT;
                 }
 
+                // TODO: Implement preconditions
+                // TODO: Implement a listener with a variety of pro / oss features
+                // TODO: Implement additional out-of-the-box sanity checks
+                // TODO: Allow undo migrations only if enabled explicitly
+                // TODO: Add number of statements to CHANGELOG
+                // TODO: Add option to log the entire changeset in CHANGELOG
+                // TODO: Add a migration state to the CHANGELOG: SUCCESS, PENDING, FAILURE
+
                 log.info("jOOQ Migrations", "Version " + from().id() + " is migrated to " + to().id());
 
                 StopWatch watch = new StopWatch();
@@ -146,17 +154,22 @@ final class MigrationImpl extends AbstractScope implements Migration {
                     for (Query query : queries())
                         log.debug("jOOQ Migrations", dsl().renderInlined(query));
 
-                // TODO: Make batching an option
-                queries().executeBatch();
-
                 JooqMigrationsChangelogRecord newRecord = dsl().newRecord(CHANGELOG);
+
                 newRecord
                     .setJooqVersion(Constants.VERSION)
                     .setMigratedAt(new Timestamp(System.currentTimeMillis()))
                     .setMigratedFrom(from().id())
                     .setMigratedTo(to().id())
+                    .setMigrationTime(0L)
+                    .insert();
+
+                // TODO: Make batching an option
+                queries().executeBatch();
+
+                newRecord
                     .setMigrationTime(watch.split() / 1000000L)
-                    .store();
+                    .update();
 
                 return MIGRATION_RESULT;
             }

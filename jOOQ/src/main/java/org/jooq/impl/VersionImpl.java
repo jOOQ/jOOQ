@@ -100,6 +100,16 @@ final class VersionImpl implements Version {
     }
 
     @Override
+    public final Version root() {
+        VersionImpl result = this;
+
+        while (result.parents.size() > 0)
+            result = result.parents.get(0).version;
+
+        return result;
+    }
+
+    @Override
     public final Version apply(String newId, Query... diff) {
         return apply(newId, ctx.queries(diff));
     }
@@ -180,9 +190,6 @@ final class VersionImpl implements Version {
 
         return result;
     }
-
-
-
 
 
 

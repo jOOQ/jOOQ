@@ -61,6 +61,11 @@ public interface Version {
      */
     Queries migrateFrom(Version version);
 
+    /**
+     * Get the root version of this graph.
+     */
+    Version root();
+
 
 
 

@@ -85,7 +85,7 @@ public class LiquibaseDatabase extends AbstractInterpretingDatabase {
             for (Method method : Database.class.getMethods()) {
                 String name = method.getName();
 
-                if (name.startsWith("set") && method.getParameterCount() == 1)
+                if (name.startsWith("set") && method.getParameterTypes().length == 1)
                     SETTERS.put(name, method);
             }
         }

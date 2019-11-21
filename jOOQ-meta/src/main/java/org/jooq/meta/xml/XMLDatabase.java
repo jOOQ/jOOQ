@@ -46,7 +46,6 @@ import static org.jooq.util.xml.jaxb.TableConstraintType.PRIMARY_KEY;
 import static org.jooq.util.xml.jaxb.TableConstraintType.UNIQUE;
 
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.io.StringReader;
@@ -162,7 +161,7 @@ public class XMLDatabase extends AbstractDatabase {
                             if (StringUtils.isBlank(xsl)) {
 
                                 // [#7414] Default to reading UTF-8
-                                content = string(reader = source.reader());
+                                content = source.readString();
 
                                 // [#7414] Alternatively, read the encoding from the XML file
                                 try {
@@ -220,17 +219,6 @@ public class XMLDatabase extends AbstractDatabase {
                             "<information_schema xmlns=\"" + Constants.NS_META + "\">");
 
                         info = MiniJAXB.append(info, MiniJAXB.unmarshal(content, InformationSchema.class));
-                    }
-
-                    private String string(Reader reader) throws IOException {
-                        StringWriter writer = new StringWriter();
-                        int read;
-                        char[] buffer = new char[16384];
-
-                        while ((read = reader.read(buffer, 0, buffer.length)) != -1)
-                            writer.write(buffer, 0, read);
-
-                        return writer.toString();
                     }
                 });
             }

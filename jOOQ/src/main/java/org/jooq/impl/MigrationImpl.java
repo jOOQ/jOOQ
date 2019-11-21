@@ -129,6 +129,9 @@ final class MigrationImpl extends AbstractScope implements Migration {
 
     @Override
     public final MigrationResult migrate() throws DataDefinitionException {
+
+        // TODO: Transactions don't really make sense in most dialects. In some, they do
+        //       e.g. PostgreSQL supports transactional DDL. Check if we're getting this right.
         return run(new ContextTransactionalCallable<MigrationResult>() {
             @Override
             public MigrationResult run() {
@@ -142,8 +145,9 @@ final class MigrationImpl extends AbstractScope implements Migration {
                 // TODO: Implement additional out-of-the-box sanity checks
                 // TODO: Allow undo migrations only if enabled explicitly
                 // TODO: Add number of statements to CHANGELOG
-                // TODO: Add option to log the entire changeset in CHANGELOG
-                // TODO: Add a migration state to the CHANGELOG: SUCCESS, PENDING, FAILURE
+                // TODO: Add some migration settings, e.g. whether CHANGELOG.SQL should be filled
+                // TODO: Migrate the CHANGELOG table with the Migration API
+                // TODO: Create an Enum for CHANGELOG.STATUS
 
                 log.info("jOOQ Migrations", "Version " + from().id() + " is migrated to " + to().id());
 
@@ -162,14 +166,30 @@ final class MigrationImpl extends AbstractScope implements Migration {
                     .setMigratedFrom(from().id())
                     .setMigratedTo(to().id())
                     .setMigrationTime(0L)
+                    .setSql(queries().toString())
+                    .setStatus("PENDING")
                     .insert();
 
                 // TODO: Make batching an option
-                queries().executeBatch();
+                try {
+                    queries().executeBatch();
 
-                newRecord
-                    .setMigrationTime(watch.split() / 1000000L)
-                    .update();
+                    newRecord
+                        .setMigrationTime(watch.split() / 1000000L)
+                        .setStatus("SUCCESS")
+                        .update();
+                }
+                catch (DataAccessException e) {
+
+                    // TODO: Make sure this is committed, given that we're re-throwing the exception.
+                    // TODO: How can we recover from failure?
+                    newRecord
+                        .setMigrationTime(watch.split() / 1000000L)
+                        .setStatus("FAILURE")
+                        .update();
+
+                    throw e;
+                }
 
                 return MIGRATION_RESULT;
             }
@@ -210,9 +230,11 @@ final class MigrationImpl extends AbstractScope implements Migration {
     // XXX: Generated code
     // -------------------------------------------------------------------------
 
-    // These classes have been generated and copied here. It would be desirable:
+    // TODO These classes have been generated and copied here. It would be desirable:
     // - [#6948] To be able to generate package private classes directly inside of other classes
     // - [#7444] Alternatively, have a simple public API replacing TableImpl
+    // -         If the above cannot be implemented, generate these in the org.jooq.impl package
+    //           and make them package private or @Internal
 
     /**
      * The migration log of jOOQ Migrations.
@@ -264,6 +286,16 @@ final class MigrationImpl extends AbstractScope implements Migration {
          * The column <code>JOOQ_MIGRATIONS_CHANGELOG.JOOQ_VERSION</code>. The jOOQ version used to migrate to this database version.
          */
         public final TableField<JooqMigrationsChangelogRecord, String> JOOQ_VERSION = createField(DSL.name("JOOQ_VERSION"), org.jooq.impl.SQLDataType.VARCHAR(50).nullable(false), this, "The jOOQ version used to migrate to this database version.");
+
+        /**
+         * The column <code>JOOQ_MIGRATIONS_CHANGELOG.SQL</code>. The jOOQ version used to migrate to this database version.
+         */
+        public final TableField<JooqMigrationsChangelogRecord, String> SQL = createField(DSL.name("SQL"), org.jooq.impl.SQLDataType.CLOB, this, "The SQL statements that were run to install this database version.");
+
+        /**
+         * The column <code>JOOQ_MIGRATIONS_CHANGELOG.JOOQ_VERSION</code>. The jOOQ version used to migrate to this database version.
+         */
+        public final TableField<JooqMigrationsChangelogRecord, String> STATUS = createField(DSL.name("STATUS"), org.jooq.impl.SQLDataType.VARCHAR(10).nullable(false), this, "The database version installation status.");
 
         /**
          * Create a <code>JOOQ_MIGRATIONS_CHANGELOG</code> table reference
@@ -415,6 +447,36 @@ final class MigrationImpl extends AbstractScope implements Migration {
             return (String) get(5);
         }
 
+        /**
+         * Setter for <code>JOOQ_MIGRATIONS_CHANGELOG.SQL</code>. The SQL statements that were run to install this database version.
+         */
+        public JooqMigrationsChangelogRecord setSql(String value) {
+            set(6, value);
+            return this;
+        }
+
+        /**
+         * Getter for <code>JOOQ_MIGRATIONS_CHANGELOG.SQL</code>. The SQL statements that were run to install this database version.
+         */
+        public String getSql() {
+            return (String) get(6);
+        }
+
+        /**
+         * Setter for <code>JOOQ_MIGRATIONS_CHANGELOG.STATUS</code>. The database version installation status.
+         */
+        public JooqMigrationsChangelogRecord setStatus(String value) {
+            set(7, value);
+            return this;
+        }
+
+        /**
+         * Getter for <code>JOOQ_MIGRATIONS_CHANGELOG.STATUS</code>. The database version installation status.
+         */
+        public String getStatus() {
+            return (String) get(7);
+        }
+
         // -------------------------------------------------------------------------
         // Primary key information
         // -------------------------------------------------------------------------
@@ -438,7 +500,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
         /**
          * Create a detached, initialised JooqMigrationsChangelogRecord
          */
-        public JooqMigrationsChangelogRecord(Long id, String migratedFrom, String migratedTo, Timestamp migratedAt, Long migrationTime, String jooqVersion) {
+        public JooqMigrationsChangelogRecord(Long id, String migratedFrom, String migratedTo, Timestamp migratedAt, Long migrationTime, String jooqVersion, String sql, String status) {
             super(JooqMigrationsChangelog.JOOQ_MIGRATIONS_CHANGELOG);
 
             set(0, id);
@@ -447,6 +509,8 @@ final class MigrationImpl extends AbstractScope implements Migration {
             set(3, migratedAt);
             set(4, migrationTime);
             set(5, jooqVersion);
+            set(6, sql);
+            set(7, status);
         }
     }
 }

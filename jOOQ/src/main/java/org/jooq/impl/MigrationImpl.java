@@ -144,7 +144,6 @@ final class MigrationImpl extends AbstractScope implements Migration {
                 // TODO: Implement a listener with a variety of pro / oss features
                 // TODO: Implement additional out-of-the-box sanity checks
                 // TODO: Allow undo migrations only if enabled explicitly
-                // TODO: Add number of statements to CHANGELOG
                 // TODO: Add some migration settings, e.g. whether CHANGELOG.SQL should be filled
                 // TODO: Migrate the CHANGELOG table with the Migration API
                 // TODO: Create an Enum for CHANGELOG.STATUS
@@ -167,6 +166,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
                     .setMigratedTo(to().id())
                     .setMigrationTime(0L)
                     .setSql(queries().toString())
+                    .setSqlCount(queries().queries().length)
                     .setStatus("PENDING")
                     .insert();
 
@@ -291,6 +291,11 @@ final class MigrationImpl extends AbstractScope implements Migration {
          * The column <code>JOOQ_MIGRATIONS_CHANGELOG.SQL</code>. The jOOQ version used to migrate to this database version.
          */
         public final TableField<JooqMigrationsChangelogRecord, String> SQL = createField(DSL.name("SQL"), org.jooq.impl.SQLDataType.CLOB, this, "The SQL statements that were run to install this database version.");
+
+        /**
+         * The column <code>JOOQ_MIGRATIONS_CHANGELOG.SQL_COUNT</code>. The number of SQL statements that were run to install this database version.
+         */
+        public final TableField<JooqMigrationsChangelogRecord, Integer> SQL_COUNT = createField(DSL.name("SQL_COUNT"), org.jooq.impl.SQLDataType.INTEGER, this, "The number of SQL statements that were run to install this database version.");
 
         /**
          * The column <code>JOOQ_MIGRATIONS_CHANGELOG.JOOQ_VERSION</code>. The jOOQ version used to migrate to this database version.
@@ -463,10 +468,25 @@ final class MigrationImpl extends AbstractScope implements Migration {
         }
 
         /**
+         * Setter for <code>JOOQ_MIGRATIONS_CHANGELOG.SQL_COUNT</code>. The number of SQL statements that were run to install this database version.
+         */
+        public JooqMigrationsChangelogRecord setSqlCount(Integer value) {
+            set(7, value);
+            return this;
+        }
+
+        /**
+         * Getter for <code>JOOQ_MIGRATIONS_CHANGELOG.SQL_COUNT</code>. The number of SQL statements that were run to install this database version.
+         */
+        public Integer getSqlCount() {
+            return (Integer) get(7);
+        }
+
+        /**
          * Setter for <code>JOOQ_MIGRATIONS_CHANGELOG.STATUS</code>. The database version installation status.
          */
         public JooqMigrationsChangelogRecord setStatus(String value) {
-            set(7, value);
+            set(8, value);
             return this;
         }
 
@@ -474,7 +494,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
          * Getter for <code>JOOQ_MIGRATIONS_CHANGELOG.STATUS</code>. The database version installation status.
          */
         public String getStatus() {
-            return (String) get(7);
+            return (String) get(8);
         }
 
         // -------------------------------------------------------------------------

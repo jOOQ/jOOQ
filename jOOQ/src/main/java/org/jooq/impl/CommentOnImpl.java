@@ -112,6 +112,25 @@ implements
     final Field<?> $field()   { return field; }
     final Comment  $comment() { return comment; }
 
+    // ------------------------------------------------------------------------
+    // XXX: DSL API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final CommentOnImpl is(String c) {
+        return is(comment(c));
+    }
+
+    @Override
+    public final CommentOnImpl is(Comment c) {
+        this.comment = c;
+        return this;
+    }
+
+    // ------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // ------------------------------------------------------------------------
+
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
@@ -203,16 +222,5 @@ implements
             throw new IllegalStateException();
 
         ctx.sql(' ').visit(K_IS).sql(' ').visit(comment);
-    }
-
-    @Override
-    public final CommentOnImpl is(String c) {
-        return is(comment(c));
-    }
-
-    @Override
-    public final CommentOnImpl is(Comment c) {
-        this.comment = c;
-        return this;
     }
 }

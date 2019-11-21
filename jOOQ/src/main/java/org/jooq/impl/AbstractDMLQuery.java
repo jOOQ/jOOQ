@@ -163,6 +163,10 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
         this.returningResolvedAsterisks = new ArrayList<>();
     }
 
+    // ------------------------------------------------------------------------
+    // XXX: DSL API
+    // ------------------------------------------------------------------------
+
     // @Override
     public final void setReturning() {
         setReturning(table.fields());
@@ -252,6 +256,10 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
         return returnedResult;
     }
+
+    // ------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // ------------------------------------------------------------------------
 
     @Override
     public final void accept(Context<?> ctx) {

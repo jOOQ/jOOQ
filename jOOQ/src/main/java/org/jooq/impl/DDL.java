@@ -136,16 +136,33 @@ final class DDL {
 
         if (sequence.getStartWith() != null)
             result = result.startWith(sequence.getStartWith());
+        else if (configuration.defaultSequenceFlags())
+            result = result.startWith(1);
+
         if (sequence.getIncrementBy() != null)
             result = result.incrementBy(sequence.getIncrementBy());
+        else if (configuration.defaultSequenceFlags())
+            result = result.incrementBy(1);
+
         if (sequence.getMinValue() != null)
             result = result.minvalue(sequence.getMinValue());
+        else if (configuration.defaultSequenceFlags())
+            result = result.noMinvalue();
+
         if (sequence.getMaxValue() != null)
             result = result.maxvalue(sequence.getMaxValue());
+        else if (configuration.defaultSequenceFlags())
+            result = result.noMaxvalue();
+
         if (sequence.getCycle())
             result = result.cycle();
+        else if (configuration.defaultSequenceFlags())
+            result = result.noCycle();
+
         if (sequence.getCache() != null)
             result = result.cache(sequence.getCache());
+        else if (configuration.defaultSequenceFlags())
+            result = result.noCache();
 
         return result;
     }

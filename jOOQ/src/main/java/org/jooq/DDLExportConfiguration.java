@@ -51,13 +51,15 @@ import java.util.Set;
  */
 public final class DDLExportConfiguration {
 
+    private final EnumSet<DDLFlag> flags;
+
     private final boolean          createSchemaIfNotExists;
     private final boolean          createTableIfNotExists;
     private final boolean          createIndexIfNotExists;
     private final boolean          createSequenceIfNotExists;
     private final boolean          createViewIfNotExists;
     private final boolean          createOrReplaceView;
-    private final EnumSet<DDLFlag> flags;
+
     private final boolean          respectCatalogOrder;
     private final boolean          respectSchemaOrder;
     private final boolean          respectTableOrder;
@@ -65,6 +67,8 @@ public final class DDLExportConfiguration {
     private final boolean          respectConstraintOrder;
     private final boolean          respectIndexOrder;
     private final boolean          respectSequenceOrder;
+
+    private final boolean          defaultSequenceFlags;
 
     /**
      * Create a new default export configuration instance.
@@ -86,25 +90,31 @@ public final class DDLExportConfiguration {
             true,
             false,
             false,
+            false,
+
             false
         );
     }
 
     private DDLExportConfiguration(
         Collection<DDLFlag> flags,
+
         boolean createSchemaIfNotExists,
         boolean createTableIfNotExists,
         boolean createIndexIfNotExists,
         boolean createSequenceIfNotExists,
         boolean createViewIfNotExists,
         boolean createOrReplaceView,
+
         boolean respectCatalogOrder,
         boolean respectSchemaOrder,
         boolean respectTableOrder,
         boolean respectColumnOrder,
         boolean respectConstraintOrder,
         boolean respectIndexOrder,
-        boolean respectSequenceOrder
+        boolean respectSequenceOrder,
+
+        boolean defaultSequenceFlags
     ) {
         this.flags = EnumSet.copyOf(flags);
 
@@ -122,6 +132,7 @@ public final class DDLExportConfiguration {
         this.respectConstraintOrder = respectConstraintOrder;
         this.respectIndexOrder = respectIndexOrder;
         this.respectSequenceOrder = respectSequenceOrder;
+        this.defaultSequenceFlags = defaultSequenceFlags;
     }
 
     /**
@@ -156,7 +167,8 @@ public final class DDLExportConfiguration {
             respectColumnOrder,
             respectConstraintOrder,
             respectIndexOrder,
-            respectSequenceOrder
+            respectSequenceOrder,
+            defaultSequenceFlags
         );
     }
 
@@ -189,7 +201,8 @@ public final class DDLExportConfiguration {
             respectColumnOrder,
             respectConstraintOrder,
             respectIndexOrder,
-            respectSequenceOrder
+            respectSequenceOrder,
+            defaultSequenceFlags
         );
     }
 
@@ -222,7 +235,8 @@ public final class DDLExportConfiguration {
             respectColumnOrder,
             respectConstraintOrder,
             respectIndexOrder,
-            respectSequenceOrder
+            respectSequenceOrder,
+            defaultSequenceFlags
         );
     }
 
@@ -255,7 +269,8 @@ public final class DDLExportConfiguration {
             respectColumnOrder,
             respectConstraintOrder,
             respectIndexOrder,
-            respectSequenceOrder
+            respectSequenceOrder,
+            defaultSequenceFlags
         );
     }
 
@@ -288,7 +303,8 @@ public final class DDLExportConfiguration {
             respectColumnOrder,
             respectConstraintOrder,
             respectIndexOrder,
-            respectSequenceOrder
+            respectSequenceOrder,
+            defaultSequenceFlags
         );
     }
 
@@ -321,7 +337,8 @@ public final class DDLExportConfiguration {
             respectColumnOrder,
             respectConstraintOrder,
             respectIndexOrder,
-            respectSequenceOrder
+            respectSequenceOrder,
+            defaultSequenceFlags
         );
     }
 
@@ -354,7 +371,8 @@ public final class DDLExportConfiguration {
             respectColumnOrder,
             respectConstraintOrder,
             respectIndexOrder,
-            respectSequenceOrder
+            respectSequenceOrder,
+            defaultSequenceFlags
         );
     }
 
@@ -385,7 +403,8 @@ public final class DDLExportConfiguration {
             respectColumnOrder,
             respectConstraintOrder,
             respectIndexOrder,
-            respectSequenceOrder
+            respectSequenceOrder,
+            defaultSequenceFlags
         );
     }
 
@@ -416,7 +435,8 @@ public final class DDLExportConfiguration {
             respectColumnOrder,
             respectConstraintOrder,
             respectIndexOrder,
-            respectSequenceOrder
+            respectSequenceOrder,
+            defaultSequenceFlags
         );
     }
 
@@ -447,7 +467,8 @@ public final class DDLExportConfiguration {
             respectColumnOrder,
             respectConstraintOrder,
             respectIndexOrder,
-            respectSequenceOrder
+            respectSequenceOrder,
+            defaultSequenceFlags
         );
     }
 
@@ -478,7 +499,8 @@ public final class DDLExportConfiguration {
             newRespectColumnOrder,
             respectConstraintOrder,
             respectIndexOrder,
-            respectSequenceOrder
+            respectSequenceOrder,
+            defaultSequenceFlags
         );
     }
 
@@ -509,7 +531,8 @@ public final class DDLExportConfiguration {
             respectColumnOrder,
             newRespectConstraintOrder,
             respectIndexOrder,
-            respectSequenceOrder
+            respectSequenceOrder,
+            defaultSequenceFlags
         );
     }
 
@@ -540,7 +563,8 @@ public final class DDLExportConfiguration {
             respectColumnOrder,
             respectConstraintOrder,
             newRespectIndexOrder,
-            respectSequenceOrder
+            respectSequenceOrder,
+            defaultSequenceFlags
         );
     }
 
@@ -571,7 +595,40 @@ public final class DDLExportConfiguration {
             respectColumnOrder,
             respectConstraintOrder,
             respectIndexOrder,
-            newRespectSequenceOrder
+            newRespectSequenceOrder,
+            defaultSequenceFlags
+        );
+    }
+
+    /**
+     * Whether to explicitly produce defaults for all sequence flags, when
+     * they're not defined explicitly.
+     */
+    public final boolean defaultSequenceFlags() {
+        return defaultSequenceFlags;
+    }
+
+    /**
+     * Whether to explicitly produce defaults for all sequence flags, when
+     * they're not defined explicitly.
+     */
+    public final DDLExportConfiguration defaultSequenceFlags(boolean newDefaultSequenceFlags) {
+        return new DDLExportConfiguration(
+            flags,
+            createSchemaIfNotExists,
+            createTableIfNotExists,
+            createIndexIfNotExists,
+            createSequenceIfNotExists,
+            createViewIfNotExists,
+            createOrReplaceView,
+            respectCatalogOrder,
+            respectSchemaOrder,
+            respectTableOrder,
+            respectColumnOrder,
+            respectConstraintOrder,
+            respectIndexOrder,
+            respectSequenceOrder,
+            newDefaultSequenceFlags
         );
     }
 }

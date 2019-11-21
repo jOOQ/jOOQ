@@ -53,6 +53,7 @@ import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.Source;
 import org.jooq.Version;
+import org.jooq.exception.DataDefinitionException;
 
 /**
  * @author Lukas Eder
@@ -179,6 +180,8 @@ final class VersionImpl implements Version {
 
         return result;
     }
+
+
 
 
 

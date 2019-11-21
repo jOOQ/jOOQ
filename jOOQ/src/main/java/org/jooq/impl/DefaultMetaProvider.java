@@ -44,7 +44,7 @@ import org.jooq.Meta;
 import org.jooq.MetaProvider;
 
 /**
- * A default implementation of the {@link MetaProvider}, which provides meta
+ * A default implementation of the {@link MetaProvider} SPI, which provides meta
  * data information based on the JDBC {@link DatabaseMetaData} API.
  *
  * @author Lukas Eder

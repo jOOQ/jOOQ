@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.tools.jdbc.JDBCUtils.safeClose;
+
 import java.io.Reader;
 import java.util.Scanner;
 
@@ -95,9 +97,10 @@ final class DDLInterpreterMetaProvider implements MetaProvider {
     }
 
     private final void loadSource(DSLContext ctx, Source source, DDLInterpreter interpreter) {
-        Reader reader = source.reader();
+        Reader reader = null;
+
         try {
-            Scanner s = new Scanner(reader).useDelimiter("\\A");
+            Scanner s = new Scanner(reader = source.reader()).useDelimiter("\\A");
 
             for (Query query : ctx.parser().parse(s.hasNext() ? s.next() : ""))
                 interpreter.accept(query);
@@ -108,12 +111,7 @@ final class DDLInterpreterMetaProvider implements MetaProvider {
             throw e;
         }
         finally {
-            if (reader != null)
-                try {
-                    reader.close();
-                }
-                catch (Exception ignore) {}
+            safeClose(reader);
         }
     }
-
 }

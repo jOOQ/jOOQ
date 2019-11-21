@@ -63,6 +63,8 @@ import org.jooq.ExecuteListener;
 import org.jooq.ExecuteListenerProvider;
 import org.jooq.ExecutorProvider;
 import org.jooq.MetaProvider;
+import org.jooq.MigrationListener;
+import org.jooq.MigrationListenerProvider;
 import org.jooq.Record;
 import org.jooq.RecordListener;
 import org.jooq.RecordListenerProvider;
@@ -120,6 +122,7 @@ public class DefaultConfiguration implements Configuration {
     private transient RecordUnmapperProvider            recordUnmapperProvider;
     private transient RecordListenerProvider[]          recordListenerProviders;
     private transient ExecuteListenerProvider[]         executeListenerProviders;
+    private transient MigrationListenerProvider[]       migrationListenerProviders;
     private transient VisitListenerProvider[]           visitListenerProviders;
     private transient TransactionListenerProvider[]     transactionListenerProviders;
     private transient DiagnosticsListenerProvider[]     diagnosticsListenerProviders;
@@ -177,6 +180,7 @@ public class DefaultConfiguration implements Configuration {
             null,
             null,
             null,
+            null,
 
             null,
 
@@ -207,6 +211,7 @@ public class DefaultConfiguration implements Configuration {
             configuration.recordUnmapperProvider,
             configuration.recordListenerProviders,
             configuration.executeListenerProviders,
+            configuration.migrationListenerProviders,
             configuration.visitListenerProviders,
             configuration.transactionListenerProviders,
             configuration.diagnosticsListenerProviders,
@@ -241,6 +246,7 @@ public class DefaultConfiguration implements Configuration {
         RecordUnmapperProvider recordUnmapperProvider,
         RecordListenerProvider[] recordListenerProviders,
         ExecuteListenerProvider[] executeListenerProviders,
+        MigrationListenerProvider[] migrationListenerProviders,
         VisitListenerProvider[] visitListenerProviders,
         TransactionListenerProvider[] transactionListenerProviders,
         DiagnosticsListenerProvider[] diagnosticsListenerProviders,
@@ -264,6 +270,7 @@ public class DefaultConfiguration implements Configuration {
         set(recordUnmapperProvider);
         set(recordListenerProviders);
         set(executeListenerProviders);
+        set(migrationListenerProviders);
         set(visitListenerProviders);
         set(transactionListenerProviders);
         set(diagnosticsListenerProviders);
@@ -322,6 +329,7 @@ public class DefaultConfiguration implements Configuration {
             recordUnmapperProvider,
             recordListenerProviders,
             executeListenerProviders,
+            migrationListenerProviders,
             visitListenerProviders,
             transactionListenerProviders,
             diagnosticsListenerProviders,
@@ -350,6 +358,7 @@ public class DefaultConfiguration implements Configuration {
             recordUnmapperProvider,
             recordListenerProviders,
             executeListenerProviders,
+            migrationListenerProviders,
             visitListenerProviders,
             transactionListenerProviders,
             diagnosticsListenerProviders,
@@ -378,6 +387,7 @@ public class DefaultConfiguration implements Configuration {
             recordUnmapperProvider,
             recordListenerProviders,
             executeListenerProviders,
+            migrationListenerProviders,
             visitListenerProviders,
             transactionListenerProviders,
             diagnosticsListenerProviders,
@@ -411,6 +421,7 @@ public class DefaultConfiguration implements Configuration {
             recordUnmapperProvider,
             recordListenerProviders,
             executeListenerProviders,
+            migrationListenerProviders,
             visitListenerProviders,
             transactionListenerProviders,
             diagnosticsListenerProviders,
@@ -439,6 +450,7 @@ public class DefaultConfiguration implements Configuration {
             recordUnmapperProvider,
             recordListenerProviders,
             executeListenerProviders,
+            migrationListenerProviders,
             visitListenerProviders,
             transactionListenerProviders,
             diagnosticsListenerProviders,
@@ -472,6 +484,7 @@ public class DefaultConfiguration implements Configuration {
             recordUnmapperProvider,
             recordListenerProviders,
             executeListenerProviders,
+            migrationListenerProviders,
             visitListenerProviders,
             transactionListenerProviders,
             diagnosticsListenerProviders,
@@ -505,6 +518,7 @@ public class DefaultConfiguration implements Configuration {
             newRecordUnmapperProvider,
             recordListenerProviders,
             executeListenerProviders,
+            migrationListenerProviders,
             visitListenerProviders,
             transactionListenerProviders,
             diagnosticsListenerProviders,
@@ -538,6 +552,7 @@ public class DefaultConfiguration implements Configuration {
             recordUnmapperProvider,
             newRecordListenerProviders,
             executeListenerProviders,
+            migrationListenerProviders,
             visitListenerProviders,
             transactionListenerProviders,
             diagnosticsListenerProviders,
@@ -571,6 +586,41 @@ public class DefaultConfiguration implements Configuration {
             recordUnmapperProvider,
             recordListenerProviders,
             newExecuteListenerProviders,
+            migrationListenerProviders,
+            visitListenerProviders,
+            transactionListenerProviders,
+            diagnosticsListenerProviders,
+            unwrapperProvider,
+            converterProvider,
+
+            clock,
+
+            dialect,
+            settings,
+            data
+        );
+    }
+
+    @Override
+    public final Configuration derive(MigrationListener... newMigrationListeners) {
+        return derive(DefaultMigrationListenerProvider.providers(newMigrationListeners));
+    }
+
+    @Override
+    public final Configuration derive(MigrationListenerProvider... newMigrationListenerProviders) {
+        return new DefaultConfiguration(
+            connectionProvider,
+            interpreterConnectionProvider,
+            systemConnectionProvider,
+            metaProvider,
+            versionProvider,
+            executorProvider,
+            transactionProvider,
+            recordMapperProvider,
+            recordUnmapperProvider,
+            recordListenerProviders,
+            executeListenerProviders,
+            newMigrationListenerProviders,
             visitListenerProviders,
             transactionListenerProviders,
             diagnosticsListenerProviders,
@@ -604,6 +654,7 @@ public class DefaultConfiguration implements Configuration {
             recordUnmapperProvider,
             recordListenerProviders,
             executeListenerProviders,
+            migrationListenerProviders,
             newVisitListenerProviders,
             transactionListenerProviders,
             diagnosticsListenerProviders,
@@ -637,6 +688,7 @@ public class DefaultConfiguration implements Configuration {
             recordUnmapperProvider,
             recordListenerProviders,
             executeListenerProviders,
+            migrationListenerProviders,
             visitListenerProviders,
             newTransactionListenerProviders,
             diagnosticsListenerProviders,
@@ -670,6 +722,7 @@ public class DefaultConfiguration implements Configuration {
             recordUnmapperProvider,
             recordListenerProviders,
             executeListenerProviders,
+            migrationListenerProviders,
             visitListenerProviders,
             transactionListenerProviders,
             newDiagnosticsListenerProviders,
@@ -703,6 +756,7 @@ public class DefaultConfiguration implements Configuration {
             recordUnmapperProvider,
             recordListenerProviders,
             executeListenerProviders,
+            migrationListenerProviders,
             visitListenerProviders,
             transactionListenerProviders,
             diagnosticsListenerProviders,
@@ -731,6 +785,7 @@ public class DefaultConfiguration implements Configuration {
             recordUnmapperProvider,
             recordListenerProviders,
             executeListenerProviders,
+            migrationListenerProviders,
             visitListenerProviders,
             transactionListenerProviders,
             diagnosticsListenerProviders,
@@ -760,6 +815,7 @@ public class DefaultConfiguration implements Configuration {
             recordUnmapperProvider,
             recordListenerProviders,
             executeListenerProviders,
+            migrationListenerProviders,
             visitListenerProviders,
             transactionListenerProviders,
             diagnosticsListenerProviders,
@@ -787,6 +843,7 @@ public class DefaultConfiguration implements Configuration {
             recordUnmapperProvider,
             recordListenerProviders,
             executeListenerProviders,
+            migrationListenerProviders,
             visitListenerProviders,
             transactionListenerProviders,
             diagnosticsListenerProviders,
@@ -815,6 +872,7 @@ public class DefaultConfiguration implements Configuration {
             recordUnmapperProvider,
             recordListenerProviders,
             executeListenerProviders,
+            migrationListenerProviders,
             visitListenerProviders,
             transactionListenerProviders,
             diagnosticsListenerProviders,
@@ -945,6 +1003,20 @@ public class DefaultConfiguration implements Configuration {
         this.executeListenerProviders = newExecuteListenerProviders != null
             ? newExecuteListenerProviders
             : new ExecuteListenerProvider[0];
+
+        return this;
+    }
+
+    @Override
+    public final Configuration set(MigrationListener... newMigrationListeners) {
+        return set(DefaultMigrationListenerProvider.providers(newMigrationListeners));
+    }
+
+    @Override
+    public final Configuration set(MigrationListenerProvider... newMigrationListenerProviders) {
+        this.migrationListenerProviders = newMigrationListenerProviders != null
+            ? newMigrationListenerProviders
+            : new MigrationListenerProvider[0];
 
         return this;
     }
@@ -1346,6 +1418,11 @@ public class DefaultConfiguration implements Configuration {
     @Override
     public final ExecuteListenerProvider[] executeListenerProviders() {
         return executeListenerProviders;
+    }
+
+    @Override
+    public final MigrationListenerProvider[] migrationListenerProviders() {
+        return migrationListenerProviders;
     }
 
     @Override

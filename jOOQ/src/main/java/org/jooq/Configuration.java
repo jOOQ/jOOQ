@@ -55,6 +55,7 @@ import org.jooq.impl.DefaultConnectionProvider;
 import org.jooq.impl.DefaultDiagnosticsListenerProvider;
 import org.jooq.impl.DefaultExecuteListenerProvider;
 import org.jooq.impl.DefaultExecutorProvider;
+import org.jooq.impl.DefaultMigrationListenerProvider;
 import org.jooq.impl.DefaultRecordListenerProvider;
 import org.jooq.impl.DefaultRecordMapper;
 import org.jooq.impl.DefaultRecordMapperProvider;
@@ -406,6 +407,31 @@ public interface Configuration extends Serializable {
     ExecuteListenerProvider[] executeListenerProviders();
 
     /**
+     * Get the configured <code>MigrationListenerProvider</code>s from this
+     * configuration.
+     * <p>
+     * This method allows for retrieving the configured
+     * <code>MigrationListenerProvider</code> from this configuration. The
+     * providers will provide jOOQ with {@link MigrationListener} instances.
+     * These instances receive migration lifecycle notification events every
+     * time jOOQ executes migrations. jOOQ makes no assumptions about the
+     * internal state of these listeners, i.e. listener instances may
+     * <ul>
+     * <li>share this <code>Configuration</code>'s lifecycle (i.e. that of a
+     * JDBC <code>Connection</code>, or that of a transaction)</li>
+     * <li>share the lifecycle of an <code>MigrationContext</code> (i.e. that of a
+     * single query execution)</li>
+     * <li>follow an entirely different lifecycle.</li>
+     * </ul>
+     *
+     * @return The configured set of migration listeners.
+     * @see MigrationListenerProvider
+     * @see MigrationListener
+     * @see MigrationContext
+     */
+    MigrationListenerProvider[] migrationListenerProviders();
+
+    /**
      * Get the configured <code>VisitListenerProvider</code> instances from this
      * configuration.
      * <p>
@@ -688,6 +714,33 @@ public interface Configuration extends Serializable {
      * @return The changed configuration.
      */
     Configuration set(ExecuteListenerProvider... newExecuteListenerProviders);
+
+    /**
+     * Change this configuration to hold a new migration listeners.
+     * <p>
+     * This will wrap the argument {@link MigrationListener} in a
+     * {@link DefaultMigrationListenerProvider} for convenience.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newMigrationListeners The new migration listeners to be contained
+     *            in the changed configuration.
+     * @return The changed configuration.
+     */
+    Configuration set(MigrationListener... newMigrationListeners);
+
+    /**
+     * Change this configuration to hold a new migration listener providers.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newMigrationListenerProviders The new migration listener providers to
+     *            be contained in the changed configuration.
+     * @return The changed configuration.
+     */
+    Configuration set(MigrationListenerProvider... newMigrationListenerProviders);
 
     /**
      * Change this configuration to hold a new visit listeners.
@@ -1022,6 +1075,28 @@ public interface Configuration extends Serializable {
      * @return The derived configuration.
      */
     Configuration derive(ExecuteListenerProvider... newExecuteListenerProviders);
+
+    /**
+     * Create a derived configuration from this one, with new migration listeners.
+     * <p>
+     * This will wrap the argument {@link MigrationListener} in a
+     * {@link DefaultMigrationListenerProvider} for convenience.
+     *
+     * @param newMigrationListeners The new migration listener to be contained in
+     *            the derived configuration.
+     * @return The derived configuration.
+     */
+    Configuration derive(MigrationListener... newMigrationListeners);
+
+    /**
+     * Create a derived configuration from this one, with new migration listener
+     * providers.
+     *
+     * @param newMigrationListenerProviders The new migration listener providers to
+     *            be contained in the derived configuration.
+     * @return The derived configuration.
+     */
+    Configuration derive(MigrationListenerProvider... newMigrationListenerProviders);
 
     /**
      * Create a derived configuration from this one, with new visit listeners.

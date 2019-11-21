@@ -49,6 +49,7 @@ import org.jooq.ContextTransactionalCallable;
 import org.jooq.Field;
 import org.jooq.Identity;
 import org.jooq.Migration;
+import org.jooq.MigrationListener;
 import org.jooq.MigrationResult;
 import org.jooq.Name;
 import org.jooq.Queries;
@@ -135,63 +136,86 @@ final class MigrationImpl extends AbstractScope implements Migration {
         return run(new ContextTransactionalCallable<MigrationResult>() {
             @Override
             public MigrationResult run() {
-                if (from().equals(to())) {
-                    log.info("jOOQ Migrations", "Version " + to().id() + " is already installed as the current version.");
+                DefaultMigrationContext ctx = new DefaultMigrationContext(configuration(), from(), to(), queries());
+                MigrationListener listener = new MigrationListeners(configuration);
+
+                try {
+                    listener.migrationStart(ctx);
+
+                    if (from().equals(to())) {
+                        log.info("jOOQ Migrations", "Version " + to().id() + " is already installed as the current version.");
+                        return MIGRATION_RESULT;
+                    }
+
+                    // TODO: Implement preconditions
+                    // TODO: Implement a listener with a variety of pro / oss features
+                    // TODO: Implement additional out-of-the-box sanity checks
+                    // TODO: Allow undo migrations only if enabled explicitly
+                    // TODO: Add some migration settings, e.g. whether CHANGELOG.SQL should be filled
+                    // TODO: Migrate the CHANGELOG table with the Migration API
+                    // TODO: Create an Enum for CHANGELOG.STATUS
+
+                    log.info("jOOQ Migrations", "Version " + from().id() + " is migrated to " + to().id());
+
+                    StopWatch watch = new StopWatch();
+
+                    // TODO: Make logging configurable
+                    if (log.isDebugEnabled())
+                        for (Query query : queries())
+                            log.debug("jOOQ Migrations", dsl().renderInlined(query));
+
+                    JooqMigrationsChangelogRecord newRecord = dsl().newRecord(CHANGELOG);
+
+                    newRecord
+                        .setJooqVersion(Constants.VERSION)
+                        .setMigratedAt(new Timestamp(System.currentTimeMillis()))
+                        .setMigratedFrom(from().id())
+                        .setMigratedTo(to().id())
+                        .setMigrationTime(0L)
+                        .setSql(queries().toString())
+                        .setSqlCount(queries().queries().length)
+                        .setStatus("PENDING")
+                        .insert();
+
+                    try {
+
+                        // TODO: Can we access the individual Queries from Version, if applicable?
+                        // TODO: Set the ctx.queriesFrom(), ctx.queriesTo(), and ctx.queries() values
+                        listener.queriesStart(ctx);
+
+                        // TODO: Make batching an option: queries().executeBatch();
+                        for (Query query : queries().queries()) {
+                            ctx.query(query);
+                            listener.queryStart(ctx);
+                            query.execute();
+                            listener.queryEnd(ctx);
+                            ctx.query(null);
+                        }
+
+                        listener.queriesEnd(ctx);
+
+                        newRecord
+                            .setMigrationTime(watch.split() / 1000000L)
+                            .setStatus("SUCCESS")
+                            .update();
+                    }
+                    catch (DataAccessException e) {
+
+                        // TODO: Make sure this is committed, given that we're re-throwing the exception.
+                        // TODO: How can we recover from failure?
+                        newRecord
+                            .setMigrationTime(watch.split() / 1000000L)
+                            .setStatus("FAILURE")
+                            .update();
+
+                        throw e;
+                    }
+
                     return MIGRATION_RESULT;
                 }
-
-                // TODO: Implement preconditions
-                // TODO: Implement a listener with a variety of pro / oss features
-                // TODO: Implement additional out-of-the-box sanity checks
-                // TODO: Allow undo migrations only if enabled explicitly
-                // TODO: Add some migration settings, e.g. whether CHANGELOG.SQL should be filled
-                // TODO: Migrate the CHANGELOG table with the Migration API
-                // TODO: Create an Enum for CHANGELOG.STATUS
-
-                log.info("jOOQ Migrations", "Version " + from().id() + " is migrated to " + to().id());
-
-                StopWatch watch = new StopWatch();
-
-                // TODO: Make logging configurable
-                if (log.isDebugEnabled())
-                    for (Query query : queries())
-                        log.debug("jOOQ Migrations", dsl().renderInlined(query));
-
-                JooqMigrationsChangelogRecord newRecord = dsl().newRecord(CHANGELOG);
-
-                newRecord
-                    .setJooqVersion(Constants.VERSION)
-                    .setMigratedAt(new Timestamp(System.currentTimeMillis()))
-                    .setMigratedFrom(from().id())
-                    .setMigratedTo(to().id())
-                    .setMigrationTime(0L)
-                    .setSql(queries().toString())
-                    .setSqlCount(queries().queries().length)
-                    .setStatus("PENDING")
-                    .insert();
-
-                // TODO: Make batching an option
-                try {
-                    queries().executeBatch();
-
-                    newRecord
-                        .setMigrationTime(watch.split() / 1000000L)
-                        .setStatus("SUCCESS")
-                        .update();
+                finally {
+                    listener.migrationEnd(ctx);
                 }
-                catch (DataAccessException e) {
-
-                    // TODO: Make sure this is committed, given that we're re-throwing the exception.
-                    // TODO: How can we recover from failure?
-                    newRecord
-                        .setMigrationTime(watch.split() / 1000000L)
-                        .setStatus("FAILURE")
-                        .update();
-
-                    throw e;
-                }
-
-                return MIGRATION_RESULT;
             }
         });
     }

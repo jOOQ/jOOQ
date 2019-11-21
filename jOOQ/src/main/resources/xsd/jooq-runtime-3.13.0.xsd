@@ -224,6 +224,14 @@ case of which, this defaults to INLINED]]></jxb:javadoc></jxb:property></appinfo
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The order of invocation for [action]end() methods registered {@link org.jooq.TransactionListener}s.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="migrationListenerStartInvocationOrder" type="jooq-runtime:InvocationOrder" minOccurs="0" maxOccurs="1" default="DEFAULT">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The order of invocation for [action]start() methods registered {@link org.jooq.MigrationListener}s.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="migrationListenerEndInvocationOrder" type="jooq-runtime:InvocationOrder" minOccurs="0" maxOccurs="1" default="DEFAULT">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The order of invocation for [action]end() methods registered {@link org.jooq.MigrationListener}s.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="visitListenerStartInvocationOrder" type="jooq-runtime:InvocationOrder" minOccurs="0" maxOccurs="1" default="DEFAULT">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The order of invocation for [action]start() methods registered {@link org.jooq.VisitListener}s.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

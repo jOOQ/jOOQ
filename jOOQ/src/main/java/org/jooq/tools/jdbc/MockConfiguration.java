@@ -54,6 +54,8 @@ import org.jooq.ExecuteListener;
 import org.jooq.ExecuteListenerProvider;
 import org.jooq.ExecutorProvider;
 import org.jooq.MetaProvider;
+import org.jooq.MigrationListener;
+import org.jooq.MigrationListenerProvider;
 import org.jooq.RecordListener;
 import org.jooq.RecordListenerProvider;
 import org.jooq.RecordMapper;
@@ -176,6 +178,11 @@ public class MockConfiguration implements Configuration {
     @Override
     public ExecuteListenerProvider[] executeListenerProviders() {
         return delegate.executeListenerProviders();
+    }
+
+    @Override
+    public MigrationListenerProvider[] migrationListenerProviders() {
+        return delegate.migrationListenerProviders();
     }
 
     @Override
@@ -308,6 +315,16 @@ public class MockConfiguration implements Configuration {
     @Override
     public Configuration set(ExecuteListenerProvider... newExecuteListenerProviders) {
         return delegate.set(newExecuteListenerProviders);
+    }
+
+    @Override
+    public Configuration set(MigrationListener... newMigrationListeners) {
+        return delegate.set(newMigrationListeners);
+    }
+
+    @Override
+    public Configuration set(MigrationListenerProvider... newMigrationListenerProviders) {
+        return delegate.set(newMigrationListenerProviders);
     }
 
     @Override
@@ -455,6 +472,16 @@ public class MockConfiguration implements Configuration {
     @Override
     public Configuration derive(ExecuteListenerProvider... newExecuteListenerProviders) {
         return delegate.derive(newExecuteListenerProviders);
+    }
+
+    @Override
+    public Configuration derive(MigrationListener... newMigrationListeners) {
+        return delegate.derive(newMigrationListeners);
+    }
+
+    @Override
+    public Configuration derive(MigrationListenerProvider... newMigrationListenerProviders) {
+        return delegate.derive(newMigrationListenerProviders);
     }
 
     @Override

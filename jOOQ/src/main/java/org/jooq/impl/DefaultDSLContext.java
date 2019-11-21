@@ -191,6 +191,7 @@ import org.jooq.MergeKeyStep9;
 import org.jooq.MergeKeyStepN;
 import org.jooq.MergeUsingStep;
 import org.jooq.Meta;
+import org.jooq.Migration;
 import org.jooq.Name;
 import org.jooq.Param;
 import org.jooq.Parser;
@@ -413,6 +414,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public Version version(String id) {
         return new VersionImpl(this, id, null, new Version[0]);
+    }
+
+    @Override
+    public Migration migration(Version to) {
+        return new MigrationImpl(configuration, to);
     }
 
     @Override

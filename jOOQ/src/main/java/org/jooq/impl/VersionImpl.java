@@ -142,6 +142,7 @@ final class VersionImpl implements Version {
 
 
 
+
         return subgraph.migrateFrom((VersionImpl) version, ctx.queries());
     }
 

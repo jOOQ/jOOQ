@@ -66,6 +66,7 @@ import org.jooq.TransactionListenerProvider;
 import org.jooq.TransactionProvider;
 import org.jooq.Unwrapper;
 import org.jooq.UnwrapperProvider;
+import org.jooq.VersionProvider;
 import org.jooq.VisitListener;
 import org.jooq.VisitListenerProvider;
 import org.jooq.conf.Settings;
@@ -140,6 +141,11 @@ public class MockConfiguration implements Configuration {
     @Override
     public MetaProvider metaProvider() {
         return delegate.metaProvider();
+    }
+
+    @Override
+    public VersionProvider versionProvider() {
+        return delegate.versionProvider();
     }
 
     @Override
@@ -232,6 +238,11 @@ public class MockConfiguration implements Configuration {
     @Override
     public Configuration set(MetaProvider newMetaProvider) {
         return delegate.set(newMetaProvider);
+    }
+
+    @Override
+    public Configuration set(VersionProvider newVersionProvider) {
+        return delegate.set(newVersionProvider);
     }
 
     @Override
@@ -384,6 +395,11 @@ public class MockConfiguration implements Configuration {
     @Override
     public Configuration derive(MetaProvider newMetaProvider) {
         return delegate.derive(newMetaProvider);
+    }
+
+    @Override
+    public Configuration derive(VersionProvider newVersionProvider) {
+        return delegate.derive(newVersionProvider);
     }
 
     @Override

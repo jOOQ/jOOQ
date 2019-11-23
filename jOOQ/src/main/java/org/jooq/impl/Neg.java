@@ -51,7 +51,6 @@ import java.util.Set;
 
 import org.jooq.Context;
 import org.jooq.Field;
-// ...
 import org.jooq.SQLDialect;
 
 /**
@@ -64,11 +63,8 @@ final class Neg<T> extends AbstractField<T> {
      * Generated UID
      */
     private static final long            serialVersionUID = 7624782102883057433L;
-    private static final Set<SQLDialect> EMULATE_BIT_NOT  = SQLDialect.supportedBy(H2, HSQLDB);
-
-
-
-
+    private static final Set<SQLDialect> EMULATE_BIT_NOT  = SQLDialect.supportedBy(HSQLDB);
+    private static final Set<SQLDialect> SUPPORT_BIT_NOT  = SQLDialect.supportedBy(H2);
 
     private final ExpressionOperator     operator;
     private final Field<T>               field;
@@ -88,12 +84,10 @@ final class Neg<T> extends AbstractField<T> {
             ctx.sql("(0 - ")
                .visit(field)
                .sql(" - 1)");
-
-
-
-
-
-
+        else if (operator == BIT_NOT && SUPPORT_BIT_NOT.contains(family))
+            ctx.sql("bitnot(")
+               .visit(field)
+               .sql(')');
         else if (operator == BIT_NOT && family == FIREBIRD)
             ctx.sql("bin_not(")
                .visit(field)

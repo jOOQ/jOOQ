@@ -117,7 +117,7 @@ final class Expression<T> extends AbstractField<T> {
     private static final Set<SQLDialect>  SUPPORT_BIT_AND     = SQLDialect.supportedBy(H2, HSQLDB);
     private static final Set<SQLDialect>  SUPPORT_BIT_OR_XOR  = SQLDialect.supportedBy(H2, HSQLDB);
     private static final Set<SQLDialect>  EMULATE_BIT_XOR     = SQLDialect.supportedBy(SQLITE);
-    private static final Set<SQLDialect>  EMULATE_SHR_SHL     = SQLDialect.supportedBy(H2, HSQLDB);
+    private static final Set<SQLDialect>  EMULATE_SHR_SHL     = SQLDialect.supportedBy(HSQLDB);
     private static final Set<SQLDialect>  HASH_OP_FOR_BIT_XOR = SQLDialect.supportedBy(POSTGRES);
 
     private final Field<T>                lhs;
@@ -189,27 +189,28 @@ final class Expression<T> extends AbstractField<T> {
                 DSL.bitNot(DSL.bitAnd(lhsAsNumber(), rhsAsNumber())),
                 DSL.bitOr(lhsAsNumber(), rhsAsNumber())));
 
+        else if (operator == SHL || operator == SHR) {
+            if (family == H2)
+                ctx.visit(DSL.function(SHL == operator ? "lshift" : "rshift", getDataType(), arguments));
 
 
 
 
 
 
+            // Some dialects support shifts as functions
+            else if (FIREBIRD == family)
+                ctx.visit(function(SHL == operator ? "bin_shl" : "bin_shr", getDataType(), arguments));
 
-        // Many dialects don't support shifts. Use multiplication/division instead
-        else if (SHL == operator && EMULATE_SHR_SHL.contains(family))
-            ctx.visit(lhs.mul((Field<? extends Number>) castIfNeeded(DSL.power(two(), rhsAsNumber()), lhs)));
+            // Many dialects don't support shifts. Use multiplication/division instead
+            else if (SHL == operator && EMULATE_SHR_SHL.contains(family))
+                ctx.visit(lhs.mul((Field<? extends Number>) castIfNeeded(DSL.power(two(), rhsAsNumber()), lhs)));
 
-        // [#3962] This emulation is expensive. If this is emulated, BitCount should
-        // use division instead of SHR directly
-        else if (SHR == operator && EMULATE_SHR_SHL.contains(family))
-            ctx.visit(lhs.div((Field<? extends Number>) castIfNeeded(DSL.power(two(), rhsAsNumber()), lhs)));
-
-        // Some dialects support shifts as functions
-        else if (SHL == operator && FIREBIRD == family)
-            ctx.visit(function("bin_shl", getDataType(), arguments));
-        else if (SHR == operator && FIREBIRD == family)
-            ctx.visit(function("bin_shr", getDataType(), arguments));
+            // [#3962] This emulation is expensive. If this is emulated, BitCount should
+            // use division instead of SHR directly
+            else if (SHR == operator && EMULATE_SHR_SHL.contains(family))
+                ctx.visit(lhs.div((Field<? extends Number>) castIfNeeded(DSL.power(two(), rhsAsNumber()), lhs)));
+        }
 
         // These operators are not supported in any dialect
         else if (BIT_NAND == operator)

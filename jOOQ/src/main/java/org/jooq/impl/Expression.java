@@ -191,7 +191,7 @@ final class Expression<T> extends AbstractField<T> {
 
         else if (operator == SHL || operator == SHR) {
             if (family == H2)
-                ctx.visit(DSL.function(SHL == operator ? "lshift" : "rshift", getDataType(), arguments));
+                ctx.visit(function(SHL == operator ? "lshift" : "rshift", getDataType(), arguments));
 
 
 
@@ -210,6 +210,10 @@ final class Expression<T> extends AbstractField<T> {
             // use division instead of SHR directly
             else if (SHR == operator && EMULATE_SHR_SHL.contains(family))
                 ctx.visit(lhs.div((Field<? extends Number>) castIfNeeded(DSL.power(two(), rhsAsNumber()), lhs)));
+
+            // Use the default operator expression for all other cases
+            else
+                ctx.visit(new DefaultExpression<>(lhs, operator, rhs));
         }
 
         // These operators are not supported in any dialect

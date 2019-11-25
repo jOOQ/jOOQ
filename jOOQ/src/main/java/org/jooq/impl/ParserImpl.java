@@ -5972,6 +5972,8 @@ final class ParserImpl implements Parser {
                         return field;
                     else if (parseKeywordIf(ctx, "LEVEL"))
                         return level();
+                    else if ((field = parseFieldShlIf(ctx)) != null)
+                        return field;
 
                 if ((field = parseFieldLeastIf(ctx)) != null)
                     return field;
@@ -6103,6 +6105,8 @@ final class ParserImpl implements Parser {
                     else if ((field = parseFieldRandIf(ctx)) != null)
                         return field;
                     else if ((field = parseFieldRatioToReportIf(ctx)) != null)
+                        return field;
+                    else if ((field = parseFieldShrIf(ctx)) != null)
                         return field;
 
                 if (parseFunctionNameIf(ctx, "ROW"))
@@ -6341,7 +6345,7 @@ final class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldShlIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "SHL") || parseKeywordIf(ctx, "SHIFTLEFT")) {
+        if (parseKeywordIf(ctx, "SHL") || parseKeywordIf(ctx, "SHIFTLEFT") || parseKeywordIf(ctx, "LSHIFT")) {
             parse(ctx, '(');
             Field<?> x = toField(ctx, parseNumericOp(ctx, N));
             parse(ctx, ',');
@@ -6355,7 +6359,7 @@ final class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldShrIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "SHR") || parseKeywordIf(ctx, "SHIFTRIGHT")) {
+        if (parseKeywordIf(ctx, "SHR") || parseKeywordIf(ctx, "SHIFTRIGHT") || parseKeywordIf(ctx, "RSHIFT")) {
             parse(ctx, '(');
             Field<?> x = toField(ctx, parseNumericOp(ctx, N));
             parse(ctx, ',');

@@ -38,76 +38,30 @@
 package org.jooq.impl;
 
 import java.util.Arrays;
-import java.util.Map;
 
 import org.jooq.Configuration;
-import org.jooq.DSLContext;
 import org.jooq.ExecuteType;
 import org.jooq.Record;
 import org.jooq.RecordContext;
 import org.jooq.RecordType;
 import org.jooq.Result;
-import org.jooq.SQLDialect;
-import org.jooq.conf.Settings;
 
 /**
  * A default implementation for {@link RecordContext}.
  *
  * @author Lukas Eder
  */
-class DefaultRecordContext implements RecordContext {
+class DefaultRecordContext extends AbstractScope implements RecordContext {
 
-    private final Configuration       configuration;
-    private final Map<Object, Object> data;
     private final ExecuteType         type;
     private final Record[]            records;
     Exception                         exception;
 
     DefaultRecordContext(Configuration configuration, ExecuteType type, Record... records) {
-        this.configuration = configuration;
+        super(configuration);
+
         this.type = type;
-        this.data = new DataMap();
         this.records = records;
-    }
-
-    @Override
-    public final Map<Object, Object> data() {
-        return data;
-    }
-
-    @Override
-    public final Object data(Object key) {
-        return data.get(key);
-    }
-
-    @Override
-    public final Object data(Object key, Object value) {
-        return data.put(key, value);
-    }
-
-    @Override
-    public final Configuration configuration() {
-        return configuration;
-    }
-
-    @Override
-    public final DSLContext dsl() {
-        return configuration.dsl();
-    }
-
-    @Override
-    public final Settings settings() {
-        return Tools.settings(configuration());
-    }
-
-    @Override
-    public final SQLDialect dialect() {
-        return Tools.configuration(configuration()).dialect();
-    }
-
-    @Override
-    public final SQLDialect family() {
-        return dialect().family();
     }
 
     @Override

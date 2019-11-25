@@ -193,6 +193,9 @@ public class Settings
     @XmlElement(type = String.class, defaultValue = "DEFAULT")
     @XmlJavaTypeAdapter(SQLDialectAdapter.class)
     protected SQLDialect parseDialect;
+    @XmlElement(defaultValue = "DEFAULT")
+    @XmlSchemaType(name = "string")
+    protected ParseNameCase parseNameCase = ParseNameCase.DEFAULT;
     @XmlElement(defaultValue = "OFF")
     @XmlSchemaType(name = "string")
     protected ParseWithMetaLookups parseWithMetaLookups = ParseWithMetaLookups.OFF;
@@ -1624,6 +1627,22 @@ public class Settings
     }
 
     /**
+     * [#7337] The default name case for parsed identifiers.
+     *
+     */
+    public ParseNameCase getParseNameCase() {
+        return parseNameCase;
+    }
+
+    /**
+     * [#7337] The default name case for parsed identifiers.
+     *
+     */
+    public void setParseNameCase(ParseNameCase value) {
+        this.parseNameCase = value;
+    }
+
+    /**
      * [#7163] Whether the parser should perform meta lookups in the Configuration's MetaProvider.
      *
      */
@@ -2264,6 +2283,15 @@ public class Settings
     }
 
     /**
+     * [#7337] The default name case for parsed identifiers.
+     *
+     */
+    public Settings withParseNameCase(ParseNameCase value) {
+        setParseNameCase(value);
+        return this;
+    }
+
+    /**
      * [#7163] Whether the parser should perform meta lookups in the Configuration's MetaProvider.
      *
      */
@@ -2401,6 +2429,7 @@ public class Settings
         builder.append("executeDeleteWithoutWhere", executeDeleteWithoutWhere);
         builder.append("interpreterDialect", interpreterDialect);
         builder.append("parseDialect", parseDialect);
+        builder.append("parseNameCase", parseNameCase);
         builder.append("parseWithMetaLookups", parseWithMetaLookups);
         builder.append("parseUnsupportedSyntax", parseUnsupportedSyntax);
         builder.append("parseUnknownFunctions", parseUnknownFunctions);
@@ -3014,6 +3043,15 @@ public class Settings
                 return false;
             }
         }
+        if (parseNameCase == null) {
+            if (other.parseNameCase!= null) {
+                return false;
+            }
+        } else {
+            if (!parseNameCase.equals(other.parseNameCase)) {
+                return false;
+            }
+        }
         if (parseWithMetaLookups == null) {
             if (other.parseWithMetaLookups!= null) {
                 return false;
@@ -3149,6 +3187,7 @@ public class Settings
         result = ((prime*result)+((executeDeleteWithoutWhere == null)? 0 :executeDeleteWithoutWhere.hashCode()));
         result = ((prime*result)+((interpreterDialect == null)? 0 :interpreterDialect.hashCode()));
         result = ((prime*result)+((parseDialect == null)? 0 :parseDialect.hashCode()));
+        result = ((prime*result)+((parseNameCase == null)? 0 :parseNameCase.hashCode()));
         result = ((prime*result)+((parseWithMetaLookups == null)? 0 :parseWithMetaLookups.hashCode()));
         result = ((prime*result)+((parseUnsupportedSyntax == null)? 0 :parseUnsupportedSyntax.hashCode()));
         result = ((prime*result)+((parseUnknownFunctions == null)? 0 :parseUnknownFunctions.hashCode()));

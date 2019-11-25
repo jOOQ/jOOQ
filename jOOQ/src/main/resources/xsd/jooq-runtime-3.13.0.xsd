@@ -395,6 +395,10 @@ jOOQ queries, for which no specific fetchSize value was specified.]]></jxb:javad
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#7337] The input dialect that should be chosen to disambiguate ambiguous SQL syntax.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="parseNameCase" type="jooq-runtime:ParseNameCase" minOccurs="0" maxOccurs="1" default="DEFAULT">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#7337] The default name case for parsed identifiers.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="parseWithMetaLookups" type="jooq-runtime:ParseWithMetaLookups" minOccurs="0" maxOccurs="1" default="OFF">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#7163] Whether the parser should perform meta lookups in the Configuration's MetaProvider.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -796,6 +800,29 @@ Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided]]></jxb:javad
 
       <!-- The default applies for optional keywords. -->
       <enumeration value="DEFAULT"/>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="ParseNameCase">
+    <restriction base="string">
+
+      <!-- Parse object names, as defined in the database. For instance: schema.TABLE -->
+      <enumeration value="AS_IS"/>
+
+      <!-- Force parsing object names in lower case. For instance: schema."table" -->
+      <enumeration value="LOWER"/>
+
+      <!-- Force parsing object names in lower case, if unquoted. For instance schema."TABLE" -->
+      <enumeration value="LOWER_IF_UNQUOTED"/>
+
+      <!-- Force parsing object names in upper case. For instance: SCHEMA."TABLE" -->
+      <enumeration value="UPPER"/>
+
+      <!-- Force parsing object names in upper case, if unquoted. For instance SCHEMA."table" -->
+      <enumeration value="UPPER_IF_UNQUOTED"/>
+
+      <!-- Apply the parse dialect specific default behaviour -->
+      <enumeration value="DEFAULT"></enumeration>
     </restriction>
   </simpleType>
 

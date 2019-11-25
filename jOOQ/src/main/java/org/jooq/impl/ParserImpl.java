@@ -50,6 +50,7 @@ import static org.jooq.JoinType.JOIN;
 // ...
 import static org.jooq.conf.ParseWithMetaLookups.IGNORE_ON_FAILURE;
 import static org.jooq.conf.ParseWithMetaLookups.THROW_ON_FAILURE;
+import static org.jooq.conf.SettingsTools.renderLocale;
 import static org.jooq.impl.AbstractName.NO_NAME;
 import static org.jooq.impl.DSL.abs;
 import static org.jooq.impl.DSL.acos;
@@ -310,6 +311,7 @@ import static org.jooq.impl.Tools.EMPTY_NAME;
 import static org.jooq.impl.Tools.EMPTY_QUERYPART;
 import static org.jooq.impl.Tools.EMPTY_ROWN;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
+import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.io.ByteArrayOutputStream;
 import java.math.BigDecimal;
@@ -484,6 +486,7 @@ import org.jooq.WindowSpecificationExcludeStep;
 import org.jooq.WindowSpecificationOrderByStep;
 import org.jooq.WindowSpecificationRowsAndStep;
 import org.jooq.WindowSpecificationRowsStep;
+import org.jooq.conf.ParseNameCase;
 import org.jooq.conf.ParseSearchSchema;
 import org.jooq.conf.ParseUnknownFunctions;
 import org.jooq.conf.ParseUnsupportedSyntax;
@@ -9200,6 +9203,33 @@ final class ParserImpl implements Parser {
             return null;
 
         String result = ctx.substring(start, ctx.position());
+
+        switch (defaultIfNull(ctx.settings().getParseNameCase(), ParseNameCase.DEFAULT)) {
+            case LOWER_IF_UNQUOTED:
+                if (quoteEnd != 0)
+                    break;
+
+                // no-break
+
+            case LOWER:
+                result = result.toLowerCase(renderLocale(ctx.settings()));
+                break;
+
+            case UPPER_IF_UNQUOTED:
+                if (quoteEnd != 0)
+                    break;
+
+                // no-break
+            case UPPER:
+                result = result.toUpperCase(renderLocale(ctx.settings()));
+                break;
+
+            case AS_IS:
+            case DEFAULT:
+            default:
+                // Keep result
+                break;
+        }
 
         if (quoteEnd != 0) {
             if (ctx.character() != quoteEnd)

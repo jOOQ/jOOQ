@@ -9204,7 +9204,7 @@ final class ParserImpl implements Parser {
 
         String result = ctx.substring(start, ctx.position());
 
-        switch (defaultIfNull(ctx.settings().getParseNameCase(), ParseNameCase.DEFAULT)) {
+        switch (parseNameCase(ctx)) {
             case LOWER_IF_UNQUOTED:
                 if (quoteEnd != 0)
                     break;
@@ -9243,6 +9243,55 @@ final class ParserImpl implements Parser {
             parseWhitespaceIf(ctx);
             return DSL.unquotedName(result);
         }
+    }
+
+    private static final ParseNameCase parseNameCase(ParserContext ctx) {
+        ParseNameCase result = defaultIfNull(ctx.settings().getParseNameCase(), ParseNameCase.DEFAULT);
+
+        if (result == ParseNameCase.DEFAULT) {
+            switch (defaultIfNull(ctx.settings().getParseDialect(), ctx.family()).family()) {
+
+
+
+
+
+
+
+                case POSTGRES:
+                    return ParseNameCase.LOWER_IF_UNQUOTED;
+
+
+
+
+
+
+
+
+                case DERBY:
+                case FIREBIRD:
+                case H2:
+                case HSQLDB:
+                    return ParseNameCase.UPPER_IF_UNQUOTED;
+
+
+
+
+
+
+
+
+
+                case MYSQL:
+                case SQLITE:
+                    return ParseNameCase.AS_IS;
+
+                case DEFAULT:
+                default:
+                    // Keep default if we don't know the case
+            }
+        }
+
+        return result;
     }
 
     private static final char parseQuote(ParserContext ctx, boolean allowAposQuotes) {

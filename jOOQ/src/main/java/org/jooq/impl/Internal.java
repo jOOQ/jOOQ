@@ -48,6 +48,8 @@ import org.jooq.Name;
 import org.jooq.OrderField;
 import org.jooq.Parameter;
 import org.jooq.Record;
+import org.jooq.Schema;
+import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
@@ -134,6 +136,13 @@ public final class Internal {
             ((UniqueKeyImpl<U>) key).references.add(result);
 
         return result;
+    }
+
+    /**
+     * Factory method for sequences.
+     */
+    public static final <T extends Number> Sequence<T> createSequence(String name, Schema schema, DataType<T> type) {
+        return new SequenceImpl<>(name, schema, type, false);
     }
 
     /**

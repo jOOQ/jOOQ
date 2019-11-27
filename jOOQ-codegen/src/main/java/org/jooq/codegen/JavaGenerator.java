@@ -4627,7 +4627,16 @@ public class JavaGenerator extends AbstractGenerator {
             if (scala)
                 out.tab(1).println("val %s : %s[%s] = new %s[%s](\"%s\", %s, %s)", seqId, Sequence.class, seqType, SequenceImpl.class, seqType, seqName, schemaId, typeRef);
             else
-                out.tab(1).println("public static final %s<%s> %s = new %s<%s>(\"%s\", %s, %s);", Sequence.class, seqType, seqId, SequenceImpl.class, seqType, seqName, schemaId, typeRef);
+                out.tab(1).println("public static final %s<%s> %s = %s.<%s> createSequence(\"%s\", %s, %s);",
+                    Sequence.class,
+                    seqType,
+                    seqId,
+                    Internal.class,
+                    seqType,
+                    seqName,
+                    schemaId,
+                    typeRef
+                );
         }
 
         out.println("}");

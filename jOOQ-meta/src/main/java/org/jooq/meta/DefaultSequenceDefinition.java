@@ -44,11 +44,59 @@ public class DefaultSequenceDefinition
     extends AbstractTypedElementDefinition<SchemaDefinition>
     implements SequenceDefinition {
 
+    private Long startWith;
+    private Long incrementBy;
+    private Long minValue;
+    private Long maxValue;
+    private boolean cycle;
+    private Long cache;
+
     public DefaultSequenceDefinition(SchemaDefinition schema, String name, DataTypeDefinition type) {
         this(schema, name, type, null);
     }
 
     public DefaultSequenceDefinition(SchemaDefinition schema, String name, DataTypeDefinition type, String comment) {
+        this(schema, name, type, comment, null, null, null, null, false, null);
+    }
+
+    public DefaultSequenceDefinition(SchemaDefinition schema, String name, DataTypeDefinition type, String comment, Long startWith, Long incrementBy, Long minValue, Long maxValue, boolean cycle, Long cache) {
         super(schema, name, -1, type, comment);
+
+        this.startWith = startWith;
+        this.incrementBy = incrementBy;
+        this.minValue = minValue;
+        this.maxValue = maxValue;
+        this.cycle = cycle;
+        this.cache = cache;
+    }
+
+    @Override
+    public Long getStartWith() {
+        return startWith;
+    }
+
+    @Override
+    public Long getIncrementBy() {
+        return incrementBy;
+    }
+
+    @Override
+    public Long getMinValue() {
+        return minValue;
+    }
+
+    @Override
+    public Long getMaxValue() {
+        return maxValue;
+    }
+
+    @Override
+    public boolean getCycle() {
+        return cycle;
+    }
+
+    @Override
+    public Long getCache() {
+        return cache;
     }
 }

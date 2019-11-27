@@ -146,6 +146,13 @@ public final class Internal {
     }
 
     /**
+     * Factory method for sequences.
+     */
+    public static final <T extends Number> Sequence<T> createSequence(String name, Schema schema, DataType<T> type, Long startWith, Long incrementBy, Long minValue, Long maxValue, boolean cycle, Long cache) {
+        return new SequenceImpl<>(DSL.name(name), schema, type, false, Tools.field(startWith, type), Tools.field(incrementBy, type), Tools.field(minValue, type), Tools.field(maxValue, type), cycle, Tools.field(cache, type));
+    }
+
+    /**
      * Factory method for check constraints.
      */
     public static final <R extends Record> Check<R> createCheck(Table<R> table, Name name, String condition) {

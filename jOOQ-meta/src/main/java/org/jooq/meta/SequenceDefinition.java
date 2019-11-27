@@ -44,4 +44,40 @@ package org.jooq.meta;
  */
 public interface SequenceDefinition extends TypedElementDefinition<SchemaDefinition> {
 
+    /**
+     * Get the start value for this sequence or <code>null</code>, if no such
+     * value is specified.
+     */
+    Long getStartWith();
+
+    /**
+     * Get the increment for this sequence or <code>null</code>, if no such
+     * value is specified.
+     */
+    Long getIncrementBy();
+
+    /**
+     * Get the minimum value for this sequence or <code>null</code>, if no such
+     * value is specified.
+     */
+    Long getMinValue();
+
+    /**
+     * Get the maximum value for this sequence or <code>null</code>, if no such
+     * value is specified.
+     */
+    Long getMaxValue();
+
+    /**
+     * Returns {@code true} if this sequence cycles to {@link #getMinValue()}
+     * when it reaches {@link #getMaxValue()}.
+     */
+    boolean getCycle();
+
+    /**
+     * Get the number of sequence values to cache for this sequence or
+     * <code>null</code>, if no such value is specified.
+     */
+    Long getCache();
+
 }

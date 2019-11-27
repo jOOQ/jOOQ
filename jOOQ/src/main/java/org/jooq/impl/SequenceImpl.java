@@ -94,6 +94,7 @@ public class SequenceImpl<T extends Number> extends AbstractNamed implements Seq
     private final boolean         cycle;
     private final Field<T>        cache;
 
+    @Deprecated
     public SequenceImpl(String name, Schema schema, DataType<T> type) {
         this(name, schema, type, false);
     }

@@ -252,7 +252,7 @@ public class MySQLDatabase extends AbstractDatabase {
                            : falseCondition()))
                        .and(primary
                            ? Statistics.INDEX_NAME.eq(inline("PRIMARY"))
-                           : Statistics.INDEX_NAME.ne(inline("PRIMARY")).and(Statistics.NON_UNIQUE.eq(inline("0"))))
+                           : Statistics.INDEX_NAME.ne(inline("PRIMARY")).and(Statistics.NON_UNIQUE.eq(inline(0))))
                        .orderBy(
                            Statistics.TABLE_SCHEMA,
                            Statistics.TABLE_NAME,

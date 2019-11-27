@@ -419,7 +419,7 @@ public class H2Database extends AbstractDatabase {
                     name,
                     type,
                     null,
-                    record.get(Sequences.MIN_VALUE),
+                    null, // H2 doesn't support Postgres-style START WITH
                     record.get(Sequences.INCREMENT),
                     record.get(Sequences.MIN_VALUE),
                     record.get(Sequences.MAX_VALUE),

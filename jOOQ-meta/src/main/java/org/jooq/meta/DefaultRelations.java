@@ -323,15 +323,15 @@ public class DefaultRelations implements Relations {
         if (checkConstraintsByTable == null) {
             checkConstraintsByTable = new LinkedHashMap<>();
 
-            for (CheckConstraintDefinition constraint : checkConstraints.values()) {
-                List<CheckConstraintDefinition> list = checkConstraintsByTable.get(table);
+            for (Map.Entry<Key, CheckConstraintDefinition> entry : checkConstraints.entrySet()) {
+                List<CheckConstraintDefinition> list = checkConstraintsByTable.get(entry.getKey().table);
 
                 if (list == null) {
                     list = new ArrayList<>();
-                    checkConstraintsByTable.put(table, list);
+                    checkConstraintsByTable.put(entry.getKey().table, list);
                 }
 
-                list.add(constraint);
+                list.add(entry.getValue());
             }
         }
 

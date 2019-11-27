@@ -22,7 +22,7 @@ import org.jooq.meta.hsqldb.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Columns extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 1438987942;
+    private static final long serialVersionUID = -1569988446;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA.COLUMNS</code>
@@ -251,6 +251,21 @@ public class Columns extends TableImpl<Record> {
      * The column <code>INFORMATION_SCHEMA.COLUMNS.GENERATION_EXPRESSION</code>.
      */
     public final TableField<Record, String> GENERATION_EXPRESSION = createField(DSL.name("GENERATION_EXPRESSION"), org.jooq.impl.SQLDataType.VARCHAR(65536), this, "");
+
+    /**
+     * The column <code>INFORMATION_SCHEMA.COLUMNS.IS_SYSTEM_TIME_PERIOD_START</code>.
+     */
+    public final TableField<Record, String> IS_SYSTEM_TIME_PERIOD_START = createField(DSL.name("IS_SYSTEM_TIME_PERIOD_START"), org.jooq.impl.SQLDataType.VARCHAR(3), this, "");
+
+    /**
+     * The column <code>INFORMATION_SCHEMA.COLUMNS.IS_SYSTEM_TIME_PERIOD_END</code>.
+     */
+    public final TableField<Record, String> IS_SYSTEM_TIME_PERIOD_END = createField(DSL.name("IS_SYSTEM_TIME_PERIOD_END"), org.jooq.impl.SQLDataType.VARCHAR(3), this, "");
+
+    /**
+     * The column <code>INFORMATION_SCHEMA.COLUMNS.SYSTEM_TIME_PERIOD_TIMESTAMP_GENERATION</code>.
+     */
+    public final TableField<Record, String> SYSTEM_TIME_PERIOD_TIMESTAMP_GENERATION = createField(DSL.name("SYSTEM_TIME_PERIOD_TIMESTAMP_GENERATION"), org.jooq.impl.SQLDataType.VARCHAR(65536), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.COLUMNS.IS_UPDATABLE</code>.

@@ -28,62 +28,62 @@ public class Tables {
     /**
      * one row for each domain constraint, table check constraint, and assertion.
      */
-    public static final CheckConstraints CHECK_CONSTRAINTS = org.jooq.meta.hsqldb.information_schema.tables.CheckConstraints.CHECK_CONSTRAINTS;
+    public static final CheckConstraints CHECK_CONSTRAINTS = CheckConstraints.CHECK_CONSTRAINTS;
 
     /**
      * one row for each column of table of view
      */
-    public static final Columns COLUMNS = org.jooq.meta.hsqldb.information_schema.tables.Columns.COLUMNS;
+    public static final Columns COLUMNS = Columns.COLUMNS;
 
     /**
      * The table <code>INFORMATION_SCHEMA.ELEMENT_TYPES</code>.
      */
-    public static final ElementTypes ELEMENT_TYPES = org.jooq.meta.hsqldb.information_schema.tables.ElementTypes.ELEMENT_TYPES;
+    public static final ElementTypes ELEMENT_TYPES = ElementTypes.ELEMENT_TYPES;
 
     /**
      * one row for each column used in s primary key or unique constraint
      */
-    public static final KeyColumnUsage KEY_COLUMN_USAGE = org.jooq.meta.hsqldb.information_schema.tables.KeyColumnUsage.KEY_COLUMN_USAGE;
+    public static final KeyColumnUsage KEY_COLUMN_USAGE = KeyColumnUsage.KEY_COLUMN_USAGE;
 
     /**
      * one row for each routine parameter
      */
-    public static final Parameters PARAMETERS = org.jooq.meta.hsqldb.information_schema.tables.Parameters.PARAMETERS;
+    public static final Parameters PARAMETERS = Parameters.PARAMETERS;
 
     /**
      * one row for each foreign key constraint
      */
-    public static final ReferentialConstraints REFERENTIAL_CONSTRAINTS = org.jooq.meta.hsqldb.information_schema.tables.ReferentialConstraints.REFERENTIAL_CONSTRAINTS;
+    public static final ReferentialConstraints REFERENTIAL_CONSTRAINTS = ReferentialConstraints.REFERENTIAL_CONSTRAINTS;
 
     /**
      * one row for each routine
      */
-    public static final Routines ROUTINES = org.jooq.meta.hsqldb.information_schema.tables.Routines.ROUTINES;
+    public static final Routines ROUTINES = Routines.ROUTINES;
 
     /**
      * one row for each schema
      */
-    public static final Schemata SCHEMATA = org.jooq.meta.hsqldb.information_schema.tables.Schemata.SCHEMATA;
+    public static final Schemata SCHEMATA = Schemata.SCHEMATA;
 
     /**
      * one row for each external sequence generator
      */
-    public static final Sequences SEQUENCES = org.jooq.meta.hsqldb.information_schema.tables.Sequences.SEQUENCES;
+    public static final Sequences SEQUENCES = Sequences.SEQUENCES;
 
     /**
      * the visible columns of each accessible table defined within this database
      */
-    public static final SystemColumns SYSTEM_COLUMNS = org.jooq.meta.hsqldb.information_schema.tables.SystemColumns.SYSTEM_COLUMNS;
+    public static final SystemColumns SYSTEM_COLUMNS = SystemColumns.SYSTEM_COLUMNS;
 
     /**
      * information about the indices of each accessible table defined within this database
      */
-    public static final SystemIndexinfo SYSTEM_INDEXINFO = org.jooq.meta.hsqldb.information_schema.tables.SystemIndexinfo.SYSTEM_INDEXINFO;
+    public static final SystemIndexinfo SYSTEM_INDEXINFO = SystemIndexinfo.SYSTEM_INDEXINFO;
 
     /**
      * the accessible tables defined within this database
      */
-    public static final SystemTables SYSTEM_TABLES = org.jooq.meta.hsqldb.information_schema.tables.SystemTables.SYSTEM_TABLES;
+    public static final SystemTables SYSTEM_TABLES = SystemTables.SYSTEM_TABLES;
 
     /**
      * one row for each table or view
@@ -93,5 +93,5 @@ public class Tables {
     /**
      * one row for each table constraint associated with a table
      */
-    public static final TableConstraints TABLE_CONSTRAINTS = org.jooq.meta.hsqldb.information_schema.tables.TableConstraints.TABLE_CONSTRAINTS;
+    public static final TableConstraints TABLE_CONSTRAINTS = TableConstraints.TABLE_CONSTRAINTS;
 }

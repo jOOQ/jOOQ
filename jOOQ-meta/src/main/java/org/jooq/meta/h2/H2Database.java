@@ -54,7 +54,6 @@ import static org.jooq.meta.h2.information_schema.tables.Tables.TABLES;
 import static org.jooq.meta.h2.information_schema.tables.TypeInfo.TYPE_INFO;
 
 import java.io.StringReader;
-import java.math.BigInteger;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -112,7 +111,7 @@ import org.jooq.util.h2.H2DataType;
  */
 public class H2Database extends AbstractDatabase {
 
-    private static final BigInteger DEFAULT_SEQUENCE_MAXVALUE = new BigInteger("9223372036854775807");
+    private static final long DEFAULT_SEQUENCE_MAXVALUE = Long.MAX_VALUE;
 
     @Override
     protected DSLContext create0() {

@@ -22,7 +22,7 @@ import org.jooq.meta.h2.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Constraints extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -815790932;
+    private static final long serialVersionUID = -797856784;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA.CONSTRAINTS</code>
@@ -40,67 +40,67 @@ public class Constraints extends TableImpl<Record> {
     /**
      * The column <code>INFORMATION_SCHEMA.CONSTRAINTS.CONSTRAINT_CATALOG</code>.
      */
-    public static final TableField<Record, String> CONSTRAINT_CATALOG = createField("CONSTRAINT_CATALOG", org.jooq.impl.SQLDataType.VARCHAR(2147483647), CONSTRAINTS, "");
+    public static final TableField<Record, String> CONSTRAINT_CATALOG = createField(DSL.name("CONSTRAINT_CATALOG"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), CONSTRAINTS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.CONSTRAINTS.CONSTRAINT_SCHEMA</code>.
      */
-    public static final TableField<Record, String> CONSTRAINT_SCHEMA = createField("CONSTRAINT_SCHEMA", org.jooq.impl.SQLDataType.VARCHAR(2147483647), CONSTRAINTS, "");
+    public static final TableField<Record, String> CONSTRAINT_SCHEMA = createField(DSL.name("CONSTRAINT_SCHEMA"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), CONSTRAINTS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.CONSTRAINTS.CONSTRAINT_NAME</code>.
      */
-    public static final TableField<Record, String> CONSTRAINT_NAME = createField("CONSTRAINT_NAME", org.jooq.impl.SQLDataType.VARCHAR(2147483647), CONSTRAINTS, "");
+    public static final TableField<Record, String> CONSTRAINT_NAME = createField(DSL.name("CONSTRAINT_NAME"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), CONSTRAINTS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.CONSTRAINTS.CONSTRAINT_TYPE</code>.
      */
-    public static final TableField<Record, String> CONSTRAINT_TYPE = createField("CONSTRAINT_TYPE", org.jooq.impl.SQLDataType.VARCHAR(2147483647), CONSTRAINTS, "");
+    public static final TableField<Record, String> CONSTRAINT_TYPE = createField(DSL.name("CONSTRAINT_TYPE"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), CONSTRAINTS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.CONSTRAINTS.TABLE_CATALOG</code>.
      */
-    public static final TableField<Record, String> TABLE_CATALOG = createField("TABLE_CATALOG", org.jooq.impl.SQLDataType.VARCHAR(2147483647), CONSTRAINTS, "");
+    public static final TableField<Record, String> TABLE_CATALOG = createField(DSL.name("TABLE_CATALOG"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), CONSTRAINTS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.CONSTRAINTS.TABLE_SCHEMA</code>.
      */
-    public static final TableField<Record, String> TABLE_SCHEMA = createField("TABLE_SCHEMA", org.jooq.impl.SQLDataType.VARCHAR(2147483647), CONSTRAINTS, "");
+    public static final TableField<Record, String> TABLE_SCHEMA = createField(DSL.name("TABLE_SCHEMA"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), CONSTRAINTS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.CONSTRAINTS.TABLE_NAME</code>.
      */
-    public static final TableField<Record, String> TABLE_NAME = createField("TABLE_NAME", org.jooq.impl.SQLDataType.VARCHAR(2147483647), CONSTRAINTS, "");
+    public static final TableField<Record, String> TABLE_NAME = createField(DSL.name("TABLE_NAME"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), CONSTRAINTS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.CONSTRAINTS.UNIQUE_INDEX_NAME</code>.
      */
-    public static final TableField<Record, String> UNIQUE_INDEX_NAME = createField("UNIQUE_INDEX_NAME", org.jooq.impl.SQLDataType.VARCHAR(2147483647), CONSTRAINTS, "");
+    public static final TableField<Record, String> UNIQUE_INDEX_NAME = createField(DSL.name("UNIQUE_INDEX_NAME"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), CONSTRAINTS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.CONSTRAINTS.CHECK_EXPRESSION</code>.
      */
-    public static final TableField<Record, String> CHECK_EXPRESSION = createField("CHECK_EXPRESSION", org.jooq.impl.SQLDataType.VARCHAR(2147483647), CONSTRAINTS, "");
+    public static final TableField<Record, String> CHECK_EXPRESSION = createField(DSL.name("CHECK_EXPRESSION"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), CONSTRAINTS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.CONSTRAINTS.COLUMN_LIST</code>.
      */
-    public static final TableField<Record, String> COLUMN_LIST = createField("COLUMN_LIST", org.jooq.impl.SQLDataType.VARCHAR(2147483647), CONSTRAINTS, "");
+    public static final TableField<Record, String> COLUMN_LIST = createField(DSL.name("COLUMN_LIST"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), CONSTRAINTS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.CONSTRAINTS.REMARKS</code>.
      */
-    public static final TableField<Record, String> REMARKS = createField("REMARKS", org.jooq.impl.SQLDataType.VARCHAR(2147483647), CONSTRAINTS, "");
+    public static final TableField<Record, String> REMARKS = createField(DSL.name("REMARKS"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), CONSTRAINTS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.CONSTRAINTS.SQL</code>.
      */
-    public static final TableField<Record, String> SQL = createField("SQL", org.jooq.impl.SQLDataType.VARCHAR(2147483647), CONSTRAINTS, "");
+    public static final TableField<Record, String> SQL = createField(DSL.name("SQL"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), CONSTRAINTS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.CONSTRAINTS.ID</code>.
      */
-    public static final TableField<Record, Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, CONSTRAINTS, "");
+    public static final TableField<Record, Integer> ID = createField(DSL.name("ID"), org.jooq.impl.SQLDataType.INTEGER, CONSTRAINTS, "");
 
     /**
      * No further instances allowed
@@ -121,9 +121,6 @@ public class Constraints extends TableImpl<Record> {
         super(child, key, CONSTRAINTS);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Schema getSchema() {
         return InformationSchema.INFORMATION_SCHEMA;

@@ -22,7 +22,7 @@ import org.jooq.meta.h2.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Indexes extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -1466822713;
+    private static final long serialVersionUID = -883357454;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA.INDEXES</code>
@@ -40,112 +40,112 @@ public class Indexes extends TableImpl<Record> {
     /**
      * The column <code>INFORMATION_SCHEMA.INDEXES.TABLE_CATALOG</code>.
      */
-    public static final TableField<Record, String> TABLE_CATALOG = createField("TABLE_CATALOG", org.jooq.impl.SQLDataType.VARCHAR(2147483647), INDEXES, "");
+    public static final TableField<Record, String> TABLE_CATALOG = createField(DSL.name("TABLE_CATALOG"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), INDEXES, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.INDEXES.TABLE_SCHEMA</code>.
      */
-    public static final TableField<Record, String> TABLE_SCHEMA = createField("TABLE_SCHEMA", org.jooq.impl.SQLDataType.VARCHAR(2147483647), INDEXES, "");
+    public static final TableField<Record, String> TABLE_SCHEMA = createField(DSL.name("TABLE_SCHEMA"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), INDEXES, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.INDEXES.TABLE_NAME</code>.
      */
-    public static final TableField<Record, String> TABLE_NAME = createField("TABLE_NAME", org.jooq.impl.SQLDataType.VARCHAR(2147483647), INDEXES, "");
+    public static final TableField<Record, String> TABLE_NAME = createField(DSL.name("TABLE_NAME"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), INDEXES, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.INDEXES.NON_UNIQUE</code>.
      */
-    public static final TableField<Record, Boolean> NON_UNIQUE = createField("NON_UNIQUE", org.jooq.impl.SQLDataType.BOOLEAN, INDEXES, "");
+    public static final TableField<Record, Boolean> NON_UNIQUE = createField(DSL.name("NON_UNIQUE"), org.jooq.impl.SQLDataType.BOOLEAN, INDEXES, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.INDEXES.INDEX_NAME</code>.
      */
-    public static final TableField<Record, String> INDEX_NAME = createField("INDEX_NAME", org.jooq.impl.SQLDataType.VARCHAR(2147483647), INDEXES, "");
+    public static final TableField<Record, String> INDEX_NAME = createField(DSL.name("INDEX_NAME"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), INDEXES, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.INDEXES.ORDINAL_POSITION</code>.
      */
-    public static final TableField<Record, Short> ORDINAL_POSITION = createField("ORDINAL_POSITION", org.jooq.impl.SQLDataType.SMALLINT, INDEXES, "");
+    public static final TableField<Record, Short> ORDINAL_POSITION = createField(DSL.name("ORDINAL_POSITION"), org.jooq.impl.SQLDataType.SMALLINT, INDEXES, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.INDEXES.COLUMN_NAME</code>.
      */
-    public static final TableField<Record, String> COLUMN_NAME = createField("COLUMN_NAME", org.jooq.impl.SQLDataType.VARCHAR(2147483647), INDEXES, "");
+    public static final TableField<Record, String> COLUMN_NAME = createField(DSL.name("COLUMN_NAME"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), INDEXES, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.INDEXES.CARDINALITY</code>.
      */
-    public static final TableField<Record, Integer> CARDINALITY = createField("CARDINALITY", org.jooq.impl.SQLDataType.INTEGER, INDEXES, "");
+    public static final TableField<Record, Integer> CARDINALITY = createField(DSL.name("CARDINALITY"), org.jooq.impl.SQLDataType.INTEGER, INDEXES, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.INDEXES.PRIMARY_KEY</code>.
      */
-    public static final TableField<Record, Boolean> PRIMARY_KEY = createField("PRIMARY_KEY", org.jooq.impl.SQLDataType.BOOLEAN, INDEXES, "");
+    public static final TableField<Record, Boolean> PRIMARY_KEY = createField(DSL.name("PRIMARY_KEY"), org.jooq.impl.SQLDataType.BOOLEAN, INDEXES, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.INDEXES.INDEX_TYPE_NAME</code>.
      */
-    public static final TableField<Record, String> INDEX_TYPE_NAME = createField("INDEX_TYPE_NAME", org.jooq.impl.SQLDataType.VARCHAR(2147483647), INDEXES, "");
+    public static final TableField<Record, String> INDEX_TYPE_NAME = createField(DSL.name("INDEX_TYPE_NAME"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), INDEXES, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.INDEXES.IS_GENERATED</code>.
      */
-    public static final TableField<Record, Boolean> IS_GENERATED = createField("IS_GENERATED", org.jooq.impl.SQLDataType.BOOLEAN, INDEXES, "");
+    public static final TableField<Record, Boolean> IS_GENERATED = createField(DSL.name("IS_GENERATED"), org.jooq.impl.SQLDataType.BOOLEAN, INDEXES, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.INDEXES.INDEX_TYPE</code>.
      */
-    public static final TableField<Record, Short> INDEX_TYPE = createField("INDEX_TYPE", org.jooq.impl.SQLDataType.SMALLINT, INDEXES, "");
+    public static final TableField<Record, Short> INDEX_TYPE = createField(DSL.name("INDEX_TYPE"), org.jooq.impl.SQLDataType.SMALLINT, INDEXES, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.INDEXES.ASC_OR_DESC</code>.
      */
-    public static final TableField<Record, String> ASC_OR_DESC = createField("ASC_OR_DESC", org.jooq.impl.SQLDataType.VARCHAR(2147483647), INDEXES, "");
+    public static final TableField<Record, String> ASC_OR_DESC = createField(DSL.name("ASC_OR_DESC"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), INDEXES, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.INDEXES.PAGES</code>.
      */
-    public static final TableField<Record, Integer> PAGES = createField("PAGES", org.jooq.impl.SQLDataType.INTEGER, INDEXES, "");
+    public static final TableField<Record, Integer> PAGES = createField(DSL.name("PAGES"), org.jooq.impl.SQLDataType.INTEGER, INDEXES, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.INDEXES.FILTER_CONDITION</code>.
      */
-    public static final TableField<Record, String> FILTER_CONDITION = createField("FILTER_CONDITION", org.jooq.impl.SQLDataType.VARCHAR(2147483647), INDEXES, "");
+    public static final TableField<Record, String> FILTER_CONDITION = createField(DSL.name("FILTER_CONDITION"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), INDEXES, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.INDEXES.REMARKS</code>.
      */
-    public static final TableField<Record, String> REMARKS = createField("REMARKS", org.jooq.impl.SQLDataType.VARCHAR(2147483647), INDEXES, "");
+    public static final TableField<Record, String> REMARKS = createField(DSL.name("REMARKS"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), INDEXES, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.INDEXES.SQL</code>.
      */
-    public static final TableField<Record, String> SQL = createField("SQL", org.jooq.impl.SQLDataType.VARCHAR(2147483647), INDEXES, "");
+    public static final TableField<Record, String> SQL = createField(DSL.name("SQL"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), INDEXES, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.INDEXES.ID</code>.
      */
-    public static final TableField<Record, Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, INDEXES, "");
+    public static final TableField<Record, Integer> ID = createField(DSL.name("ID"), org.jooq.impl.SQLDataType.INTEGER, INDEXES, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.INDEXES.SORT_TYPE</code>.
      */
-    public static final TableField<Record, Integer> SORT_TYPE = createField("SORT_TYPE", org.jooq.impl.SQLDataType.INTEGER, INDEXES, "");
+    public static final TableField<Record, Integer> SORT_TYPE = createField(DSL.name("SORT_TYPE"), org.jooq.impl.SQLDataType.INTEGER, INDEXES, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.INDEXES.CONSTRAINT_NAME</code>.
      */
-    public static final TableField<Record, String> CONSTRAINT_NAME = createField("CONSTRAINT_NAME", org.jooq.impl.SQLDataType.VARCHAR(2147483647), INDEXES, "");
+    public static final TableField<Record, String> CONSTRAINT_NAME = createField(DSL.name("CONSTRAINT_NAME"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), INDEXES, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.INDEXES.INDEX_CLASS</code>.
      */
-    public static final TableField<Record, String> INDEX_CLASS = createField("INDEX_CLASS", org.jooq.impl.SQLDataType.VARCHAR(2147483647), INDEXES, "");
+    public static final TableField<Record, String> INDEX_CLASS = createField(DSL.name("INDEX_CLASS"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), INDEXES, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.INDEXES.AFFINITY</code>.
      */
-    public static final TableField<Record, Boolean> AFFINITY = createField("AFFINITY", org.jooq.impl.SQLDataType.BOOLEAN, INDEXES, "");
+    public static final TableField<Record, Boolean> AFFINITY = createField(DSL.name("AFFINITY"), org.jooq.impl.SQLDataType.BOOLEAN, INDEXES, "");
 
     /**
      * No further instances allowed
@@ -166,9 +166,6 @@ public class Indexes extends TableImpl<Record> {
         super(child, key, INDEXES);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Schema getSchema() {
         return InformationSchema.INFORMATION_SCHEMA;

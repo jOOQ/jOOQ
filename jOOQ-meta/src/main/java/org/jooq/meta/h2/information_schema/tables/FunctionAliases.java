@@ -22,7 +22,7 @@ import org.jooq.meta.h2.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FunctionAliases extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -819150211;
+    private static final long serialVersionUID = 1945723460;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA.FUNCTION_ALIASES</code>
@@ -40,62 +40,62 @@ public class FunctionAliases extends TableImpl<Record> {
     /**
      * The column <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.ALIAS_CATALOG</code>.
      */
-    public static final TableField<Record, String> ALIAS_CATALOG = createField("ALIAS_CATALOG", org.jooq.impl.SQLDataType.VARCHAR(2147483647), FUNCTION_ALIASES, "");
+    public static final TableField<Record, String> ALIAS_CATALOG = createField(DSL.name("ALIAS_CATALOG"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), FUNCTION_ALIASES, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.ALIAS_SCHEMA</code>.
      */
-    public static final TableField<Record, String> ALIAS_SCHEMA = createField("ALIAS_SCHEMA", org.jooq.impl.SQLDataType.VARCHAR(2147483647), FUNCTION_ALIASES, "");
+    public static final TableField<Record, String> ALIAS_SCHEMA = createField(DSL.name("ALIAS_SCHEMA"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), FUNCTION_ALIASES, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.ALIAS_NAME</code>.
      */
-    public static final TableField<Record, String> ALIAS_NAME = createField("ALIAS_NAME", org.jooq.impl.SQLDataType.VARCHAR(2147483647), FUNCTION_ALIASES, "");
+    public static final TableField<Record, String> ALIAS_NAME = createField(DSL.name("ALIAS_NAME"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), FUNCTION_ALIASES, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.JAVA_CLASS</code>.
      */
-    public static final TableField<Record, String> JAVA_CLASS = createField("JAVA_CLASS", org.jooq.impl.SQLDataType.VARCHAR(2147483647), FUNCTION_ALIASES, "");
+    public static final TableField<Record, String> JAVA_CLASS = createField(DSL.name("JAVA_CLASS"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), FUNCTION_ALIASES, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.JAVA_METHOD</code>.
      */
-    public static final TableField<Record, String> JAVA_METHOD = createField("JAVA_METHOD", org.jooq.impl.SQLDataType.VARCHAR(2147483647), FUNCTION_ALIASES, "");
+    public static final TableField<Record, String> JAVA_METHOD = createField(DSL.name("JAVA_METHOD"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), FUNCTION_ALIASES, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.DATA_TYPE</code>.
      */
-    public static final TableField<Record, Integer> DATA_TYPE = createField("DATA_TYPE", org.jooq.impl.SQLDataType.INTEGER, FUNCTION_ALIASES, "");
+    public static final TableField<Record, Integer> DATA_TYPE = createField(DSL.name("DATA_TYPE"), org.jooq.impl.SQLDataType.INTEGER, FUNCTION_ALIASES, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.TYPE_NAME</code>.
      */
-    public static final TableField<Record, String> TYPE_NAME = createField("TYPE_NAME", org.jooq.impl.SQLDataType.VARCHAR(2147483647), FUNCTION_ALIASES, "");
+    public static final TableField<Record, String> TYPE_NAME = createField(DSL.name("TYPE_NAME"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), FUNCTION_ALIASES, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.COLUMN_COUNT</code>.
      */
-    public static final TableField<Record, Integer> COLUMN_COUNT = createField("COLUMN_COUNT", org.jooq.impl.SQLDataType.INTEGER, FUNCTION_ALIASES, "");
+    public static final TableField<Record, Integer> COLUMN_COUNT = createField(DSL.name("COLUMN_COUNT"), org.jooq.impl.SQLDataType.INTEGER, FUNCTION_ALIASES, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.RETURNS_RESULT</code>.
      */
-    public static final TableField<Record, Short> RETURNS_RESULT = createField("RETURNS_RESULT", org.jooq.impl.SQLDataType.SMALLINT, FUNCTION_ALIASES, "");
+    public static final TableField<Record, Short> RETURNS_RESULT = createField(DSL.name("RETURNS_RESULT"), org.jooq.impl.SQLDataType.SMALLINT, FUNCTION_ALIASES, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.REMARKS</code>.
      */
-    public static final TableField<Record, String> REMARKS = createField("REMARKS", org.jooq.impl.SQLDataType.VARCHAR(2147483647), FUNCTION_ALIASES, "");
+    public static final TableField<Record, String> REMARKS = createField(DSL.name("REMARKS"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), FUNCTION_ALIASES, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.ID</code>.
      */
-    public static final TableField<Record, Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, FUNCTION_ALIASES, "");
+    public static final TableField<Record, Integer> ID = createField(DSL.name("ID"), org.jooq.impl.SQLDataType.INTEGER, FUNCTION_ALIASES, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.FUNCTION_ALIASES.SOURCE</code>.
      */
-    public static final TableField<Record, String> SOURCE = createField("SOURCE", org.jooq.impl.SQLDataType.VARCHAR(2147483647), FUNCTION_ALIASES, "");
+    public static final TableField<Record, String> SOURCE = createField(DSL.name("SOURCE"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), FUNCTION_ALIASES, "");
 
     /**
      * No further instances allowed
@@ -116,9 +116,6 @@ public class FunctionAliases extends TableImpl<Record> {
         super(child, key, FUNCTION_ALIASES);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Schema getSchema() {
         return InformationSchema.INFORMATION_SCHEMA;

@@ -25,47 +25,47 @@ public class Tables {
     /**
      * The table <code>INFORMATION_SCHEMA.COLUMNS</code>.
      */
-    public static final Columns COLUMNS = org.jooq.meta.h2.information_schema.tables.Columns.COLUMNS;
+    public static final Columns COLUMNS = Columns.COLUMNS;
 
     /**
      * The table <code>INFORMATION_SCHEMA.CONSTRAINTS</code>.
      */
-    public static final Constraints CONSTRAINTS = org.jooq.meta.h2.information_schema.tables.Constraints.CONSTRAINTS;
+    public static final Constraints CONSTRAINTS = Constraints.CONSTRAINTS;
 
     /**
      * The table <code>INFORMATION_SCHEMA.CROSS_REFERENCES</code>.
      */
-    public static final CrossReferences CROSS_REFERENCES = org.jooq.meta.h2.information_schema.tables.CrossReferences.CROSS_REFERENCES;
+    public static final CrossReferences CROSS_REFERENCES = CrossReferences.CROSS_REFERENCES;
 
     /**
      * The table <code>INFORMATION_SCHEMA.DOMAINS</code>.
      */
-    public static final Domains DOMAINS = org.jooq.meta.h2.information_schema.tables.Domains.DOMAINS;
+    public static final Domains DOMAINS = Domains.DOMAINS;
 
     /**
      * The table <code>INFORMATION_SCHEMA.FUNCTION_ALIASES</code>.
      */
-    public static final FunctionAliases FUNCTION_ALIASES = org.jooq.meta.h2.information_schema.tables.FunctionAliases.FUNCTION_ALIASES;
+    public static final FunctionAliases FUNCTION_ALIASES = FunctionAliases.FUNCTION_ALIASES;
 
     /**
      * The table <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS</code>.
      */
-    public static final FunctionColumns FUNCTION_COLUMNS = org.jooq.meta.h2.information_schema.tables.FunctionColumns.FUNCTION_COLUMNS;
+    public static final FunctionColumns FUNCTION_COLUMNS = FunctionColumns.FUNCTION_COLUMNS;
 
     /**
      * The table <code>INFORMATION_SCHEMA.INDEXES</code>.
      */
-    public static final Indexes INDEXES = org.jooq.meta.h2.information_schema.tables.Indexes.INDEXES;
+    public static final Indexes INDEXES = Indexes.INDEXES;
 
     /**
      * The table <code>INFORMATION_SCHEMA.SCHEMATA</code>.
      */
-    public static final Schemata SCHEMATA = org.jooq.meta.h2.information_schema.tables.Schemata.SCHEMATA;
+    public static final Schemata SCHEMATA = Schemata.SCHEMATA;
 
     /**
      * The table <code>INFORMATION_SCHEMA.SEQUENCES</code>.
      */
-    public static final Sequences SEQUENCES = org.jooq.meta.h2.information_schema.tables.Sequences.SEQUENCES;
+    public static final Sequences SEQUENCES = Sequences.SEQUENCES;
 
     /**
      * The table <code>INFORMATION_SCHEMA.TABLES</code>.
@@ -75,5 +75,5 @@ public class Tables {
     /**
      * The table <code>INFORMATION_SCHEMA.TYPE_INFO</code>.
      */
-    public static final TypeInfo TYPE_INFO = org.jooq.meta.h2.information_schema.tables.TypeInfo.TYPE_INFO;
+    public static final TypeInfo TYPE_INFO = TypeInfo.TYPE_INFO;
 }

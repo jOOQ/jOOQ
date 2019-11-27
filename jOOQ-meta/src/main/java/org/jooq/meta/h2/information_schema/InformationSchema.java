@@ -30,7 +30,7 @@ import org.jooq.meta.h2.information_schema.tables.TypeInfo;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class InformationSchema extends SchemaImpl {
 
-    private static final long serialVersionUID = 200165715;
+    private static final long serialVersionUID = 1869673880;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA</code>
@@ -100,9 +100,6 @@ public class InformationSchema extends SchemaImpl {
     }
 
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Catalog getCatalog() {
         return DefaultCatalog.DEFAULT_CATALOG;

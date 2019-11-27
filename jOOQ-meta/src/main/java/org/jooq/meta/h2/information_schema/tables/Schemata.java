@@ -22,7 +22,7 @@ import org.jooq.meta.h2.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Schemata extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -1587750899;
+    private static final long serialVersionUID = -244368344;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA.SCHEMATA</code>
@@ -40,42 +40,42 @@ public class Schemata extends TableImpl<Record> {
     /**
      * The column <code>INFORMATION_SCHEMA.SCHEMATA.CATALOG_NAME</code>.
      */
-    public static final TableField<Record, String> CATALOG_NAME = createField("CATALOG_NAME", org.jooq.impl.SQLDataType.VARCHAR(2147483647), SCHEMATA, "");
+    public static final TableField<Record, String> CATALOG_NAME = createField(DSL.name("CATALOG_NAME"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), SCHEMATA, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.SCHEMATA.SCHEMA_NAME</code>.
      */
-    public static final TableField<Record, String> SCHEMA_NAME = createField("SCHEMA_NAME", org.jooq.impl.SQLDataType.VARCHAR(2147483647), SCHEMATA, "");
+    public static final TableField<Record, String> SCHEMA_NAME = createField(DSL.name("SCHEMA_NAME"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), SCHEMATA, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.SCHEMATA.SCHEMA_OWNER</code>.
      */
-    public static final TableField<Record, String> SCHEMA_OWNER = createField("SCHEMA_OWNER", org.jooq.impl.SQLDataType.VARCHAR(2147483647), SCHEMATA, "");
+    public static final TableField<Record, String> SCHEMA_OWNER = createField(DSL.name("SCHEMA_OWNER"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), SCHEMATA, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.SCHEMATA.DEFAULT_CHARACTER_SET_NAME</code>.
      */
-    public static final TableField<Record, String> DEFAULT_CHARACTER_SET_NAME = createField("DEFAULT_CHARACTER_SET_NAME", org.jooq.impl.SQLDataType.VARCHAR(2147483647), SCHEMATA, "");
+    public static final TableField<Record, String> DEFAULT_CHARACTER_SET_NAME = createField(DSL.name("DEFAULT_CHARACTER_SET_NAME"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), SCHEMATA, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.SCHEMATA.DEFAULT_COLLATION_NAME</code>.
      */
-    public static final TableField<Record, String> DEFAULT_COLLATION_NAME = createField("DEFAULT_COLLATION_NAME", org.jooq.impl.SQLDataType.VARCHAR(2147483647), SCHEMATA, "");
+    public static final TableField<Record, String> DEFAULT_COLLATION_NAME = createField(DSL.name("DEFAULT_COLLATION_NAME"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), SCHEMATA, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.SCHEMATA.IS_DEFAULT</code>.
      */
-    public static final TableField<Record, Boolean> IS_DEFAULT = createField("IS_DEFAULT", org.jooq.impl.SQLDataType.BOOLEAN, SCHEMATA, "");
+    public static final TableField<Record, Boolean> IS_DEFAULT = createField(DSL.name("IS_DEFAULT"), org.jooq.impl.SQLDataType.BOOLEAN, SCHEMATA, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.SCHEMATA.REMARKS</code>.
      */
-    public static final TableField<Record, String> REMARKS = createField("REMARKS", org.jooq.impl.SQLDataType.VARCHAR(2147483647), SCHEMATA, "");
+    public static final TableField<Record, String> REMARKS = createField(DSL.name("REMARKS"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), SCHEMATA, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.SCHEMATA.ID</code>.
      */
-    public static final TableField<Record, Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, SCHEMATA, "");
+    public static final TableField<Record, Integer> ID = createField(DSL.name("ID"), org.jooq.impl.SQLDataType.INTEGER, SCHEMATA, "");
 
     /**
      * No further instances allowed
@@ -96,9 +96,6 @@ public class Schemata extends TableImpl<Record> {
         super(child, key, SCHEMATA);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Schema getSchema() {
         return InformationSchema.INFORMATION_SCHEMA;

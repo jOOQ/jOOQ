@@ -22,7 +22,7 @@ import org.jooq.meta.h2.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Columns extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -1247184254;
+    private static final long serialVersionUID = -665127674;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA.COLUMNS</code>
@@ -40,147 +40,162 @@ public class Columns extends TableImpl<Record> {
     /**
      * The column <code>INFORMATION_SCHEMA.COLUMNS.TABLE_CATALOG</code>.
      */
-    public static final TableField<Record, String> TABLE_CATALOG = createField("TABLE_CATALOG", org.jooq.impl.SQLDataType.VARCHAR(2147483647), COLUMNS, "");
+    public static final TableField<Record, String> TABLE_CATALOG = createField(DSL.name("TABLE_CATALOG"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), COLUMNS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.COLUMNS.TABLE_SCHEMA</code>.
      */
-    public static final TableField<Record, String> TABLE_SCHEMA = createField("TABLE_SCHEMA", org.jooq.impl.SQLDataType.VARCHAR(2147483647), COLUMNS, "");
+    public static final TableField<Record, String> TABLE_SCHEMA = createField(DSL.name("TABLE_SCHEMA"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), COLUMNS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.COLUMNS.TABLE_NAME</code>.
      */
-    public static final TableField<Record, String> TABLE_NAME = createField("TABLE_NAME", org.jooq.impl.SQLDataType.VARCHAR(2147483647), COLUMNS, "");
+    public static final TableField<Record, String> TABLE_NAME = createField(DSL.name("TABLE_NAME"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), COLUMNS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.COLUMNS.COLUMN_NAME</code>.
      */
-    public static final TableField<Record, String> COLUMN_NAME = createField("COLUMN_NAME", org.jooq.impl.SQLDataType.VARCHAR(2147483647), COLUMNS, "");
+    public static final TableField<Record, String> COLUMN_NAME = createField(DSL.name("COLUMN_NAME"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), COLUMNS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.COLUMNS.ORDINAL_POSITION</code>.
      */
-    public static final TableField<Record, Integer> ORDINAL_POSITION = createField("ORDINAL_POSITION", org.jooq.impl.SQLDataType.INTEGER, COLUMNS, "");
+    public static final TableField<Record, Integer> ORDINAL_POSITION = createField(DSL.name("ORDINAL_POSITION"), org.jooq.impl.SQLDataType.INTEGER, COLUMNS, "");
+
+    /**
+     * The column <code>INFORMATION_SCHEMA.COLUMNS.DOMAIN_CATALOG</code>.
+     */
+    public static final TableField<Record, String> DOMAIN_CATALOG = createField(DSL.name("DOMAIN_CATALOG"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), COLUMNS, "");
+
+    /**
+     * The column <code>INFORMATION_SCHEMA.COLUMNS.DOMAIN_SCHEMA</code>.
+     */
+    public static final TableField<Record, String> DOMAIN_SCHEMA = createField(DSL.name("DOMAIN_SCHEMA"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), COLUMNS, "");
+
+    /**
+     * The column <code>INFORMATION_SCHEMA.COLUMNS.DOMAIN_NAME</code>.
+     */
+    public static final TableField<Record, String> DOMAIN_NAME = createField(DSL.name("DOMAIN_NAME"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), COLUMNS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.COLUMNS.COLUMN_DEFAULT</code>.
      */
-    public static final TableField<Record, String> COLUMN_DEFAULT = createField("COLUMN_DEFAULT", org.jooq.impl.SQLDataType.VARCHAR(2147483647), COLUMNS, "");
+    public static final TableField<Record, String> COLUMN_DEFAULT = createField(DSL.name("COLUMN_DEFAULT"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), COLUMNS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.COLUMNS.IS_NULLABLE</code>.
      */
-    public static final TableField<Record, String> IS_NULLABLE = createField("IS_NULLABLE", org.jooq.impl.SQLDataType.VARCHAR(2147483647), COLUMNS, "");
+    public static final TableField<Record, String> IS_NULLABLE = createField(DSL.name("IS_NULLABLE"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), COLUMNS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.COLUMNS.DATA_TYPE</code>.
      */
-    public static final TableField<Record, Integer> DATA_TYPE = createField("DATA_TYPE", org.jooq.impl.SQLDataType.INTEGER, COLUMNS, "");
+    public static final TableField<Record, Integer> DATA_TYPE = createField(DSL.name("DATA_TYPE"), org.jooq.impl.SQLDataType.INTEGER, COLUMNS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.COLUMNS.CHARACTER_MAXIMUM_LENGTH</code>.
      */
-    public static final TableField<Record, Integer> CHARACTER_MAXIMUM_LENGTH = createField("CHARACTER_MAXIMUM_LENGTH", org.jooq.impl.SQLDataType.INTEGER, COLUMNS, "");
+    public static final TableField<Record, Integer> CHARACTER_MAXIMUM_LENGTH = createField(DSL.name("CHARACTER_MAXIMUM_LENGTH"), org.jooq.impl.SQLDataType.INTEGER, COLUMNS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.COLUMNS.CHARACTER_OCTET_LENGTH</code>.
      */
-    public static final TableField<Record, Integer> CHARACTER_OCTET_LENGTH = createField("CHARACTER_OCTET_LENGTH", org.jooq.impl.SQLDataType.INTEGER, COLUMNS, "");
+    public static final TableField<Record, Integer> CHARACTER_OCTET_LENGTH = createField(DSL.name("CHARACTER_OCTET_LENGTH"), org.jooq.impl.SQLDataType.INTEGER, COLUMNS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.COLUMNS.NUMERIC_PRECISION</code>.
      */
-    public static final TableField<Record, Integer> NUMERIC_PRECISION = createField("NUMERIC_PRECISION", org.jooq.impl.SQLDataType.INTEGER, COLUMNS, "");
+    public static final TableField<Record, Integer> NUMERIC_PRECISION = createField(DSL.name("NUMERIC_PRECISION"), org.jooq.impl.SQLDataType.INTEGER, COLUMNS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.COLUMNS.NUMERIC_PRECISION_RADIX</code>.
      */
-    public static final TableField<Record, Integer> NUMERIC_PRECISION_RADIX = createField("NUMERIC_PRECISION_RADIX", org.jooq.impl.SQLDataType.INTEGER, COLUMNS, "");
+    public static final TableField<Record, Integer> NUMERIC_PRECISION_RADIX = createField(DSL.name("NUMERIC_PRECISION_RADIX"), org.jooq.impl.SQLDataType.INTEGER, COLUMNS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.COLUMNS.NUMERIC_SCALE</code>.
      */
-    public static final TableField<Record, Integer> NUMERIC_SCALE = createField("NUMERIC_SCALE", org.jooq.impl.SQLDataType.INTEGER, COLUMNS, "");
+    public static final TableField<Record, Integer> NUMERIC_SCALE = createField(DSL.name("NUMERIC_SCALE"), org.jooq.impl.SQLDataType.INTEGER, COLUMNS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.COLUMNS.DATETIME_PRECISION</code>.
      */
-    public static final TableField<Record, Integer> DATETIME_PRECISION = createField("DATETIME_PRECISION", org.jooq.impl.SQLDataType.INTEGER, COLUMNS, "");
+    public static final TableField<Record, Integer> DATETIME_PRECISION = createField(DSL.name("DATETIME_PRECISION"), org.jooq.impl.SQLDataType.INTEGER, COLUMNS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.COLUMNS.INTERVAL_TYPE</code>.
      */
-    public static final TableField<Record, String> INTERVAL_TYPE = createField("INTERVAL_TYPE", org.jooq.impl.SQLDataType.VARCHAR(2147483647), COLUMNS, "");
+    public static final TableField<Record, String> INTERVAL_TYPE = createField(DSL.name("INTERVAL_TYPE"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), COLUMNS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.COLUMNS.INTERVAL_PRECISION</code>.
      */
-    public static final TableField<Record, Integer> INTERVAL_PRECISION = createField("INTERVAL_PRECISION", org.jooq.impl.SQLDataType.INTEGER, COLUMNS, "");
+    public static final TableField<Record, Integer> INTERVAL_PRECISION = createField(DSL.name("INTERVAL_PRECISION"), org.jooq.impl.SQLDataType.INTEGER, COLUMNS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.COLUMNS.CHARACTER_SET_NAME</code>.
      */
-    public static final TableField<Record, String> CHARACTER_SET_NAME = createField("CHARACTER_SET_NAME", org.jooq.impl.SQLDataType.VARCHAR(2147483647), COLUMNS, "");
+    public static final TableField<Record, String> CHARACTER_SET_NAME = createField(DSL.name("CHARACTER_SET_NAME"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), COLUMNS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.COLUMNS.COLLATION_NAME</code>.
      */
-    public static final TableField<Record, String> COLLATION_NAME = createField("COLLATION_NAME", org.jooq.impl.SQLDataType.VARCHAR(2147483647), COLUMNS, "");
+    public static final TableField<Record, String> COLLATION_NAME = createField(DSL.name("COLLATION_NAME"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), COLUMNS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.COLUMNS.TYPE_NAME</code>.
      */
-    public static final TableField<Record, String> TYPE_NAME = createField("TYPE_NAME", org.jooq.impl.SQLDataType.VARCHAR(2147483647), COLUMNS, "");
+    public static final TableField<Record, String> TYPE_NAME = createField(DSL.name("TYPE_NAME"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), COLUMNS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.COLUMNS.NULLABLE</code>.
      */
-    public static final TableField<Record, Integer> NULLABLE = createField("NULLABLE", org.jooq.impl.SQLDataType.INTEGER, COLUMNS, "");
+    public static final TableField<Record, Integer> NULLABLE = createField(DSL.name("NULLABLE"), org.jooq.impl.SQLDataType.INTEGER, COLUMNS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.COLUMNS.IS_COMPUTED</code>.
      */
-    public static final TableField<Record, Boolean> IS_COMPUTED = createField("IS_COMPUTED", org.jooq.impl.SQLDataType.BOOLEAN, COLUMNS, "");
+    public static final TableField<Record, Boolean> IS_COMPUTED = createField(DSL.name("IS_COMPUTED"), org.jooq.impl.SQLDataType.BOOLEAN, COLUMNS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.COLUMNS.SELECTIVITY</code>.
      */
-    public static final TableField<Record, Integer> SELECTIVITY = createField("SELECTIVITY", org.jooq.impl.SQLDataType.INTEGER, COLUMNS, "");
+    public static final TableField<Record, Integer> SELECTIVITY = createField(DSL.name("SELECTIVITY"), org.jooq.impl.SQLDataType.INTEGER, COLUMNS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.COLUMNS.CHECK_CONSTRAINT</code>.
      */
-    public static final TableField<Record, String> CHECK_CONSTRAINT = createField("CHECK_CONSTRAINT", org.jooq.impl.SQLDataType.VARCHAR(2147483647), COLUMNS, "");
+    public static final TableField<Record, String> CHECK_CONSTRAINT = createField(DSL.name("CHECK_CONSTRAINT"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), COLUMNS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.COLUMNS.SEQUENCE_NAME</code>.
      */
-    public static final TableField<Record, String> SEQUENCE_NAME = createField("SEQUENCE_NAME", org.jooq.impl.SQLDataType.VARCHAR(2147483647), COLUMNS, "");
+    public static final TableField<Record, String> SEQUENCE_NAME = createField(DSL.name("SEQUENCE_NAME"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), COLUMNS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.COLUMNS.REMARKS</code>.
      */
-    public static final TableField<Record, String> REMARKS = createField("REMARKS", org.jooq.impl.SQLDataType.VARCHAR(2147483647), COLUMNS, "");
+    public static final TableField<Record, String> REMARKS = createField(DSL.name("REMARKS"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), COLUMNS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.COLUMNS.SOURCE_DATA_TYPE</code>.
      */
-    public static final TableField<Record, Short> SOURCE_DATA_TYPE = createField("SOURCE_DATA_TYPE", org.jooq.impl.SQLDataType.SMALLINT, COLUMNS, "");
+    public static final TableField<Record, Short> SOURCE_DATA_TYPE = createField(DSL.name("SOURCE_DATA_TYPE"), org.jooq.impl.SQLDataType.SMALLINT, COLUMNS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.COLUMNS.COLUMN_TYPE</code>.
      */
-    public static final TableField<Record, String> COLUMN_TYPE = createField("COLUMN_TYPE", org.jooq.impl.SQLDataType.VARCHAR(2147483647), COLUMNS, "");
+    public static final TableField<Record, String> COLUMN_TYPE = createField(DSL.name("COLUMN_TYPE"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), COLUMNS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.COLUMNS.COLUMN_ON_UPDATE</code>.
      */
-    public static final TableField<Record, String> COLUMN_ON_UPDATE = createField("COLUMN_ON_UPDATE", org.jooq.impl.SQLDataType.VARCHAR(2147483647), COLUMNS, "");
+    public static final TableField<Record, String> COLUMN_ON_UPDATE = createField(DSL.name("COLUMN_ON_UPDATE"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), COLUMNS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.COLUMNS.IS_VISIBLE</code>.
      */
-    public static final TableField<Record, String> IS_VISIBLE = createField("IS_VISIBLE", org.jooq.impl.SQLDataType.VARCHAR(2147483647), COLUMNS, "");
+    public static final TableField<Record, String> IS_VISIBLE = createField(DSL.name("IS_VISIBLE"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), COLUMNS, "");
 
     /**
      * No further instances allowed
@@ -201,9 +216,6 @@ public class Columns extends TableImpl<Record> {
         super(child, key, COLUMNS);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Schema getSchema() {
         return InformationSchema.INFORMATION_SCHEMA;

@@ -22,7 +22,7 @@ import org.jooq.meta.h2.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class CrossReferences extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -1128530622;
+    private static final long serialVersionUID = -270623613;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA.CROSS_REFERENCES</code>
@@ -40,72 +40,72 @@ public class CrossReferences extends TableImpl<Record> {
     /**
      * The column <code>INFORMATION_SCHEMA.CROSS_REFERENCES.PKTABLE_CATALOG</code>.
      */
-    public static final TableField<Record, String> PKTABLE_CATALOG = createField("PKTABLE_CATALOG", org.jooq.impl.SQLDataType.VARCHAR(2147483647), CROSS_REFERENCES, "");
+    public static final TableField<Record, String> PKTABLE_CATALOG = createField(DSL.name("PKTABLE_CATALOG"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), CROSS_REFERENCES, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.CROSS_REFERENCES.PKTABLE_SCHEMA</code>.
      */
-    public static final TableField<Record, String> PKTABLE_SCHEMA = createField("PKTABLE_SCHEMA", org.jooq.impl.SQLDataType.VARCHAR(2147483647), CROSS_REFERENCES, "");
+    public static final TableField<Record, String> PKTABLE_SCHEMA = createField(DSL.name("PKTABLE_SCHEMA"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), CROSS_REFERENCES, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.CROSS_REFERENCES.PKTABLE_NAME</code>.
      */
-    public static final TableField<Record, String> PKTABLE_NAME = createField("PKTABLE_NAME", org.jooq.impl.SQLDataType.VARCHAR(2147483647), CROSS_REFERENCES, "");
+    public static final TableField<Record, String> PKTABLE_NAME = createField(DSL.name("PKTABLE_NAME"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), CROSS_REFERENCES, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.CROSS_REFERENCES.PKCOLUMN_NAME</code>.
      */
-    public static final TableField<Record, String> PKCOLUMN_NAME = createField("PKCOLUMN_NAME", org.jooq.impl.SQLDataType.VARCHAR(2147483647), CROSS_REFERENCES, "");
+    public static final TableField<Record, String> PKCOLUMN_NAME = createField(DSL.name("PKCOLUMN_NAME"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), CROSS_REFERENCES, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.CROSS_REFERENCES.FKTABLE_CATALOG</code>.
      */
-    public static final TableField<Record, String> FKTABLE_CATALOG = createField("FKTABLE_CATALOG", org.jooq.impl.SQLDataType.VARCHAR(2147483647), CROSS_REFERENCES, "");
+    public static final TableField<Record, String> FKTABLE_CATALOG = createField(DSL.name("FKTABLE_CATALOG"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), CROSS_REFERENCES, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.CROSS_REFERENCES.FKTABLE_SCHEMA</code>.
      */
-    public static final TableField<Record, String> FKTABLE_SCHEMA = createField("FKTABLE_SCHEMA", org.jooq.impl.SQLDataType.VARCHAR(2147483647), CROSS_REFERENCES, "");
+    public static final TableField<Record, String> FKTABLE_SCHEMA = createField(DSL.name("FKTABLE_SCHEMA"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), CROSS_REFERENCES, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.CROSS_REFERENCES.FKTABLE_NAME</code>.
      */
-    public static final TableField<Record, String> FKTABLE_NAME = createField("FKTABLE_NAME", org.jooq.impl.SQLDataType.VARCHAR(2147483647), CROSS_REFERENCES, "");
+    public static final TableField<Record, String> FKTABLE_NAME = createField(DSL.name("FKTABLE_NAME"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), CROSS_REFERENCES, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.CROSS_REFERENCES.FKCOLUMN_NAME</code>.
      */
-    public static final TableField<Record, String> FKCOLUMN_NAME = createField("FKCOLUMN_NAME", org.jooq.impl.SQLDataType.VARCHAR(2147483647), CROSS_REFERENCES, "");
+    public static final TableField<Record, String> FKCOLUMN_NAME = createField(DSL.name("FKCOLUMN_NAME"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), CROSS_REFERENCES, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.CROSS_REFERENCES.ORDINAL_POSITION</code>.
      */
-    public static final TableField<Record, Short> ORDINAL_POSITION = createField("ORDINAL_POSITION", org.jooq.impl.SQLDataType.SMALLINT, CROSS_REFERENCES, "");
+    public static final TableField<Record, Short> ORDINAL_POSITION = createField(DSL.name("ORDINAL_POSITION"), org.jooq.impl.SQLDataType.SMALLINT, CROSS_REFERENCES, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.CROSS_REFERENCES.UPDATE_RULE</code>.
      */
-    public static final TableField<Record, Short> UPDATE_RULE = createField("UPDATE_RULE", org.jooq.impl.SQLDataType.SMALLINT, CROSS_REFERENCES, "");
+    public static final TableField<Record, Short> UPDATE_RULE = createField(DSL.name("UPDATE_RULE"), org.jooq.impl.SQLDataType.SMALLINT, CROSS_REFERENCES, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.CROSS_REFERENCES.DELETE_RULE</code>.
      */
-    public static final TableField<Record, Short> DELETE_RULE = createField("DELETE_RULE", org.jooq.impl.SQLDataType.SMALLINT, CROSS_REFERENCES, "");
+    public static final TableField<Record, Short> DELETE_RULE = createField(DSL.name("DELETE_RULE"), org.jooq.impl.SQLDataType.SMALLINT, CROSS_REFERENCES, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.CROSS_REFERENCES.FK_NAME</code>.
      */
-    public static final TableField<Record, String> FK_NAME = createField("FK_NAME", org.jooq.impl.SQLDataType.VARCHAR(2147483647), CROSS_REFERENCES, "");
+    public static final TableField<Record, String> FK_NAME = createField(DSL.name("FK_NAME"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), CROSS_REFERENCES, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.CROSS_REFERENCES.PK_NAME</code>.
      */
-    public static final TableField<Record, String> PK_NAME = createField("PK_NAME", org.jooq.impl.SQLDataType.VARCHAR(2147483647), CROSS_REFERENCES, "");
+    public static final TableField<Record, String> PK_NAME = createField(DSL.name("PK_NAME"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), CROSS_REFERENCES, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.CROSS_REFERENCES.DEFERRABILITY</code>.
      */
-    public static final TableField<Record, Short> DEFERRABILITY = createField("DEFERRABILITY", org.jooq.impl.SQLDataType.SMALLINT, CROSS_REFERENCES, "");
+    public static final TableField<Record, Short> DEFERRABILITY = createField(DSL.name("DEFERRABILITY"), org.jooq.impl.SQLDataType.SMALLINT, CROSS_REFERENCES, "");
 
     /**
      * No further instances allowed
@@ -126,9 +126,6 @@ public class CrossReferences extends TableImpl<Record> {
         super(child, key, CROSS_REFERENCES);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Schema getSchema() {
         return InformationSchema.INFORMATION_SCHEMA;

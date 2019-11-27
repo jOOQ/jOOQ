@@ -22,7 +22,7 @@ import org.jooq.meta.h2.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Domains extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -1042876127;
+    private static final long serialVersionUID = 131513594;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA.DOMAINS</code>
@@ -40,72 +40,72 @@ public class Domains extends TableImpl<Record> {
     /**
      * The column <code>INFORMATION_SCHEMA.DOMAINS.DOMAIN_CATALOG</code>.
      */
-    public static final TableField<Record, String> DOMAIN_CATALOG = createField("DOMAIN_CATALOG", org.jooq.impl.SQLDataType.VARCHAR(2147483647), DOMAINS, "");
+    public static final TableField<Record, String> DOMAIN_CATALOG = createField(DSL.name("DOMAIN_CATALOG"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), DOMAINS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.DOMAINS.DOMAIN_SCHEMA</code>.
      */
-    public static final TableField<Record, String> DOMAIN_SCHEMA = createField("DOMAIN_SCHEMA", org.jooq.impl.SQLDataType.VARCHAR(2147483647), DOMAINS, "");
+    public static final TableField<Record, String> DOMAIN_SCHEMA = createField(DSL.name("DOMAIN_SCHEMA"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), DOMAINS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.DOMAINS.DOMAIN_NAME</code>.
      */
-    public static final TableField<Record, String> DOMAIN_NAME = createField("DOMAIN_NAME", org.jooq.impl.SQLDataType.VARCHAR(2147483647), DOMAINS, "");
+    public static final TableField<Record, String> DOMAIN_NAME = createField(DSL.name("DOMAIN_NAME"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), DOMAINS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.DOMAINS.COLUMN_DEFAULT</code>.
      */
-    public static final TableField<Record, String> COLUMN_DEFAULT = createField("COLUMN_DEFAULT", org.jooq.impl.SQLDataType.VARCHAR(2147483647), DOMAINS, "");
+    public static final TableField<Record, String> COLUMN_DEFAULT = createField(DSL.name("COLUMN_DEFAULT"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), DOMAINS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.DOMAINS.IS_NULLABLE</code>.
      */
-    public static final TableField<Record, String> IS_NULLABLE = createField("IS_NULLABLE", org.jooq.impl.SQLDataType.VARCHAR(2147483647), DOMAINS, "");
+    public static final TableField<Record, String> IS_NULLABLE = createField(DSL.name("IS_NULLABLE"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), DOMAINS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.DOMAINS.DATA_TYPE</code>.
      */
-    public static final TableField<Record, Integer> DATA_TYPE = createField("DATA_TYPE", org.jooq.impl.SQLDataType.INTEGER, DOMAINS, "");
+    public static final TableField<Record, Integer> DATA_TYPE = createField(DSL.name("DATA_TYPE"), org.jooq.impl.SQLDataType.INTEGER, DOMAINS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.DOMAINS.PRECISION</code>.
      */
-    public static final TableField<Record, Integer> PRECISION = createField("PRECISION", org.jooq.impl.SQLDataType.INTEGER, DOMAINS, "");
+    public static final TableField<Record, Integer> PRECISION = createField(DSL.name("PRECISION"), org.jooq.impl.SQLDataType.INTEGER, DOMAINS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.DOMAINS.SCALE</code>.
      */
-    public static final TableField<Record, Integer> SCALE = createField("SCALE", org.jooq.impl.SQLDataType.INTEGER, DOMAINS, "");
+    public static final TableField<Record, Integer> SCALE = createField(DSL.name("SCALE"), org.jooq.impl.SQLDataType.INTEGER, DOMAINS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.DOMAINS.TYPE_NAME</code>.
      */
-    public static final TableField<Record, String> TYPE_NAME = createField("TYPE_NAME", org.jooq.impl.SQLDataType.VARCHAR(2147483647), DOMAINS, "");
+    public static final TableField<Record, String> TYPE_NAME = createField(DSL.name("TYPE_NAME"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), DOMAINS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.DOMAINS.SELECTIVITY</code>.
      */
-    public static final TableField<Record, Integer> SELECTIVITY = createField("SELECTIVITY", org.jooq.impl.SQLDataType.INTEGER, DOMAINS, "");
+    public static final TableField<Record, Integer> SELECTIVITY = createField(DSL.name("SELECTIVITY"), org.jooq.impl.SQLDataType.INTEGER, DOMAINS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.DOMAINS.CHECK_CONSTRAINT</code>.
      */
-    public static final TableField<Record, String> CHECK_CONSTRAINT = createField("CHECK_CONSTRAINT", org.jooq.impl.SQLDataType.VARCHAR(2147483647), DOMAINS, "");
+    public static final TableField<Record, String> CHECK_CONSTRAINT = createField(DSL.name("CHECK_CONSTRAINT"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), DOMAINS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.DOMAINS.REMARKS</code>.
      */
-    public static final TableField<Record, String> REMARKS = createField("REMARKS", org.jooq.impl.SQLDataType.VARCHAR(2147483647), DOMAINS, "");
+    public static final TableField<Record, String> REMARKS = createField(DSL.name("REMARKS"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), DOMAINS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.DOMAINS.SQL</code>.
      */
-    public static final TableField<Record, String> SQL = createField("SQL", org.jooq.impl.SQLDataType.VARCHAR(2147483647), DOMAINS, "");
+    public static final TableField<Record, String> SQL = createField(DSL.name("SQL"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), DOMAINS, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.DOMAINS.ID</code>.
      */
-    public static final TableField<Record, Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, DOMAINS, "");
+    public static final TableField<Record, Integer> ID = createField(DSL.name("ID"), org.jooq.impl.SQLDataType.INTEGER, DOMAINS, "");
 
     /**
      * No further instances allowed
@@ -126,9 +126,6 @@ public class Domains extends TableImpl<Record> {
         super(child, key, DOMAINS);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Schema getSchema() {
         return InformationSchema.INFORMATION_SCHEMA;

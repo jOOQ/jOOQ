@@ -30,7 +30,7 @@
         <h2.version>1.4.200</h2.version>
         <sqlite.version>3.25.2</sqlite.version>
         <derby.version>10.14.2.0</derby.version>
-        <hsqldb.version>2.4.0</hsqldb.version>
+        <hsqldb.version>2.5.0</hsqldb.version>
 
         <!-- From JDK 11 onwards, we need to depend on the JAXB API explicitly -->
         <jaxb.version>2.3.1</jaxb.version>

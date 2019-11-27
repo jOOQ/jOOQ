@@ -4248,7 +4248,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             String separator = "  ";
             for (CheckConstraintDefinition c : cc) {
-                out.tab(3).println("%s%s.createCheck(this, %s.name(\"%s\"), \"%s\")", separator, Internal.class, DSL.class, c.getName(), c.getCheckClause().replace("\"", "\\\""));
+                out.tab(3).println("%s%s.createCheck(this, %s.name(\"%s\"), \"%s\")", separator, Internal.class, DSL.class, c.getName().replace("\"", "\\\""), c.getCheckClause().replace("\"", "\\\""));
                 separator = ", ";
             }
 

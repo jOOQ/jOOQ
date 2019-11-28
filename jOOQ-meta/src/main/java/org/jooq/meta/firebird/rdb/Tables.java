@@ -4,6 +4,7 @@
 package org.jooq.meta.firebird.rdb;
 
 
+import org.jooq.meta.firebird.rdb.tables.Rdb$checkConstraints;
 import org.jooq.meta.firebird.rdb.tables.Rdb$fields;
 import org.jooq.meta.firebird.rdb.tables.Rdb$generators;
 import org.jooq.meta.firebird.rdb.tables.Rdb$indexSegments;
@@ -14,6 +15,7 @@ import org.jooq.meta.firebird.rdb.tables.Rdb$refConstraints;
 import org.jooq.meta.firebird.rdb.tables.Rdb$relationConstraints;
 import org.jooq.meta.firebird.rdb.tables.Rdb$relationFields;
 import org.jooq.meta.firebird.rdb.tables.Rdb$relations;
+import org.jooq.meta.firebird.rdb.tables.Rdb$triggers;
 
 
 /**
@@ -21,6 +23,11 @@ import org.jooq.meta.firebird.rdb.tables.Rdb$relations;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables {
+
+    /**
+     * The table <code>RDB$CHECK_CONSTRAINTS</code>.
+     */
+    public static final Rdb$checkConstraints RDB$CHECK_CONSTRAINTS = Rdb$checkConstraints.RDB$CHECK_CONSTRAINTS;
 
     /**
      * The table <code>RDB$FIELDS</code>.
@@ -71,4 +78,9 @@ public class Tables {
      * The table <code>RDB$RELATION_FIELDS</code>.
      */
     public static final Rdb$relationFields RDB$RELATION_FIELDS = Rdb$relationFields.RDB$RELATION_FIELDS;
+
+    /**
+     * The table <code>RDB$TRIGGERS</code>.
+     */
+    public static final Rdb$triggers RDB$TRIGGERS = Rdb$triggers.RDB$TRIGGERS;
 }

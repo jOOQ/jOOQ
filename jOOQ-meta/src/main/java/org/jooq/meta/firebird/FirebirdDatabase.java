@@ -41,8 +41,10 @@ import static org.jooq.impl.DSL.choose;
 import static org.jooq.impl.DSL.decode;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.max;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.meta.firebird.rdb.Tables.RDB$CHECK_CONSTRAINTS;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$GENERATORS;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$INDEX_SEGMENTS;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$INDICES;
@@ -50,6 +52,7 @@ import static org.jooq.meta.firebird.rdb.Tables.RDB$PROCEDURES;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$REF_CONSTRAINTS;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$RELATIONS;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$RELATION_CONSTRAINTS;
+import static org.jooq.meta.firebird.rdb.Tables.RDB$TRIGGERS;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -70,6 +73,7 @@ import org.jooq.meta.AbstractIndexDefinition;
 import org.jooq.meta.ArrayDefinition;
 import org.jooq.meta.CatalogDefinition;
 import org.jooq.meta.DataTypeDefinition;
+import org.jooq.meta.DefaultCheckConstraintDefinition;
 import org.jooq.meta.DefaultDataTypeDefinition;
 import org.jooq.meta.DefaultIndexColumnDefinition;
 import org.jooq.meta.DefaultRelations;
@@ -84,11 +88,13 @@ import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
 import org.jooq.meta.TableDefinition;
 import org.jooq.meta.UDTDefinition;
+import org.jooq.meta.firebird.rdb.tables.Rdb$checkConstraints;
 import org.jooq.meta.firebird.rdb.tables.Rdb$fields;
 import org.jooq.meta.firebird.rdb.tables.Rdb$indexSegments;
 import org.jooq.meta.firebird.rdb.tables.Rdb$indices;
 import org.jooq.meta.firebird.rdb.tables.Rdb$refConstraints;
 import org.jooq.meta.firebird.rdb.tables.Rdb$relationConstraints;
+import org.jooq.meta.firebird.rdb.tables.Rdb$triggers;
 import org.jooq.meta.jaxb.SchemaMappingType;
 import org.jooq.util.firebird.FirebirdDataType;
 
@@ -200,8 +206,44 @@ public class FirebirdDatabase extends AbstractDatabase {
     }
 
     @Override
-    protected void loadCheckConstraints(DefaultRelations r) throws SQLException {
-        // Currently not supported
+    protected void loadCheckConstraints(DefaultRelations relations) throws SQLException {
+        Rdb$relationConstraints r = RDB$RELATION_CONSTRAINTS.as("r");
+        Rdb$checkConstraints c = RDB$CHECK_CONSTRAINTS.as("c");
+        Rdb$triggers t = RDB$TRIGGERS.as("t");
+
+        // [#7639] RDB$TRIGGERS is not in 3NF. The RDB$TRIGGER_SOURCE is repeated
+        //         for RDB$TRIGGER_TYPE 1 (before insert) and 3 (before update)
+        for (Record record : create()
+            .select(
+                r.RDB$RELATION_NAME.trim().as(r.RDB$RELATION_NAME),
+                r.RDB$CONSTRAINT_NAME.trim().as(r.RDB$CONSTRAINT_NAME),
+                max(t.RDB$TRIGGER_SOURCE.trim()).as(t.RDB$TRIGGER_SOURCE)
+            )
+            .from(r)
+            .join(c).on(r.RDB$CONSTRAINT_NAME.eq(c.RDB$CONSTRAINT_NAME))
+            .join(t).on(c.RDB$TRIGGER_NAME.eq(t.RDB$TRIGGER_NAME))
+            .where(r.RDB$CONSTRAINT_TYPE.eq(inline("CHECK")))
+            .groupBy(
+                r.RDB$RELATION_NAME,
+                r.RDB$CONSTRAINT_NAME
+            )
+            .orderBy(
+                r.RDB$RELATION_NAME,
+                r.RDB$CONSTRAINT_NAME
+            )
+        ) {
+            SchemaDefinition schema = getSchemata().get(0);
+            TableDefinition table = getTable(schema, record.get(r.RDB$RELATION_NAME));
+
+            if (table != null) {
+                relations.addCheckConstraint(table, new DefaultCheckConstraintDefinition(
+                    schema,
+                    table,
+                    record.get(r.RDB$CONSTRAINT_NAME),
+                    record.get(t.RDB$TRIGGER_SOURCE)
+                ));
+            }
+        }
     }
 
     @Override

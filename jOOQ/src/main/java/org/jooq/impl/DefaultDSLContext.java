@@ -4762,6 +4762,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         try {
             Class.forName(SQLDataType.class.getName());
         } catch (Exception ignore) {}
+
+        // Prevent deadlock between #transactionResult(..) and #parser(..)
+        try {
+            Class.forName(ParserImpl.class.getName());
+        } catch (Exception ignore) {}
     }
 
     // -------------------------------------------------------------------------

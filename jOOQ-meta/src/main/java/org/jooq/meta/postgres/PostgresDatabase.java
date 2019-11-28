@@ -336,6 +336,10 @@ public class PostgresDatabase extends AbstractDatabase {
         TableConstraints tc = TABLE_CONSTRAINTS.as("tc");
         CheckConstraints cc = CHECK_CONSTRAINTS.as("cc");
 
+        PgNamespace pn = PG_NAMESPACE.as("pn");
+        PgClass pt = PG_CLASS.as("pt");
+        PgConstraint pc = PG_CONSTRAINT.as("pc");
+
         for (Record record : create()
                 .select(
                     tc.TABLE_SCHEMA,
@@ -347,8 +351,16 @@ public class PostgresDatabase extends AbstractDatabase {
                 .join(cc)
                 .using(tc.CONSTRAINT_CATALOG, tc.CONSTRAINT_SCHEMA, tc.CONSTRAINT_NAME)
                 .where(tc.TABLE_SCHEMA.in(getInputSchemata()))
-                .orderBy(tc.TABLE_SCHEMA, tc.TABLE_NAME, cc.CONSTRAINT_NAME)
-                .fetch()) {
+                .and(getIncludeSystemCheckConstraints()
+                    ? noCondition()
+                    : row(tc.TABLE_SCHEMA, tc.TABLE_NAME, cc.CONSTRAINT_NAME).in(
+                        select(pn.NSPNAME, pt.RELNAME, pc.CONNAME)
+                        .from(pc)
+                        .join(pt).on(pc.CONRELID.eq(oid(pt)))
+                        .join(pn).on(pc.CONNAMESPACE.eq(oid(pn)))
+                        .where(pc.CONTYPE.eq(inline("c")))
+                    ))
+                .orderBy(tc.TABLE_SCHEMA, tc.TABLE_NAME, cc.CONSTRAINT_NAME)) {
 
             SchemaDefinition schema = getSchema(record.get(tc.TABLE_SCHEMA));
             TableDefinition table = getTable(schema, record.get(tc.TABLE_NAME));

@@ -40,6 +40,7 @@ package org.jooq.meta.mysql;
 
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.meta.mysql.information_schema.Tables.CHECK_CONSTRAINTS;
 import static org.jooq.meta.mysql.information_schema.Tables.COLUMNS;
 import static org.jooq.meta.mysql.information_schema.Tables.KEY_COLUMN_USAGE;
 import static org.jooq.meta.mysql.information_schema.Tables.REFERENTIAL_CONSTRAINTS;
@@ -47,6 +48,7 @@ import static org.jooq.meta.mysql.information_schema.Tables.ROUTINES;
 import static org.jooq.meta.mysql.information_schema.Tables.SCHEMATA;
 import static org.jooq.meta.mysql.information_schema.Tables.STATISTICS;
 import static org.jooq.meta.mysql.information_schema.Tables.TABLES;
+import static org.jooq.meta.mysql.information_schema.Tables.TABLE_CONSTRAINTS;
 import static org.jooq.meta.mysql.mysql.Tables.PROC;
 
 import java.io.StringReader;
@@ -72,6 +74,7 @@ import org.jooq.meta.AbstractIndexDefinition;
 import org.jooq.meta.ArrayDefinition;
 import org.jooq.meta.CatalogDefinition;
 import org.jooq.meta.ColumnDefinition;
+import org.jooq.meta.DefaultCheckConstraintDefinition;
 import org.jooq.meta.DefaultEnumDefinition;
 import org.jooq.meta.DefaultIndexColumnDefinition;
 import org.jooq.meta.DefaultRelations;
@@ -85,12 +88,14 @@ import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
 import org.jooq.meta.TableDefinition;
 import org.jooq.meta.UDTDefinition;
+import org.jooq.meta.mysql.information_schema.tables.CheckConstraints;
 import org.jooq.meta.mysql.information_schema.tables.Columns;
 import org.jooq.meta.mysql.information_schema.tables.KeyColumnUsage;
 import org.jooq.meta.mysql.information_schema.tables.ReferentialConstraints;
 import org.jooq.meta.mysql.information_schema.tables.Routines;
 import org.jooq.meta.mysql.information_schema.tables.Schemata;
 import org.jooq.meta.mysql.information_schema.tables.Statistics;
+import org.jooq.meta.mysql.information_schema.tables.TableConstraints;
 import org.jooq.meta.mysql.information_schema.tables.Tables;
 import org.jooq.meta.mysql.mysql.enums.ProcType;
 import org.jooq.meta.mysql.mysql.tables.Proc;
@@ -101,7 +106,8 @@ import org.jooq.tools.csv.CSVReader;
  */
 public class MySQLDatabase extends AbstractDatabase {
 
-    private static Boolean          is8;
+    private static Boolean is8;
+    private static Boolean is8_0_16;
 
     @Override
     protected List<IndexDefinition> getIndexes0() throws SQLException {
@@ -232,6 +238,15 @@ public class MySQLDatabase extends AbstractDatabase {
         return is8;
     }
 
+    protected boolean is8_0_16() {
+
+        // [#7639] The information_schema.check_constraints table was added in MySQL 8.0.16 only
+        if (is8_0_16 == null)
+            is8_0_16 = exists(CHECK_CONSTRAINTS);
+
+        return is8_0_16;
+    }
+
     private Result<?> fetchKeys(boolean primary) {
 
         // [#3560] It has been shown that querying the STATISTICS table is much faster on
@@ -311,8 +326,34 @@ public class MySQLDatabase extends AbstractDatabase {
     }
 
     @Override
-    protected void loadCheckConstraints(DefaultRelations r) throws SQLException {
-        // Currently not supported
+    protected void loadCheckConstraints(DefaultRelations relations) throws SQLException {
+        if (is8_0_16()) {
+            for (Record record : create()
+                    .select(
+                        TableConstraints.TABLE_SCHEMA,
+                        TableConstraints.TABLE_NAME,
+                        CheckConstraints.CONSTRAINT_NAME,
+                        CheckConstraints.CHECK_CLAUSE
+                     )
+                    .from(TABLE_CONSTRAINTS)
+                    .join(CHECK_CONSTRAINTS)
+                    .using(TableConstraints.CONSTRAINT_CATALOG, TableConstraints.CONSTRAINT_SCHEMA, TableConstraints.CONSTRAINT_NAME)
+                    .where(TableConstraints.TABLE_SCHEMA.in(getInputSchemata()))
+                    .orderBy(TableConstraints.TABLE_SCHEMA, TableConstraints.TABLE_NAME, TableConstraints.CONSTRAINT_NAME)) {
+
+                SchemaDefinition schema = getSchema(record.get(TableConstraints.TABLE_SCHEMA));
+                TableDefinition table = getTable(schema, record.get(TableConstraints.TABLE_NAME));
+
+                if (table != null) {
+                    relations.addCheckConstraint(table, new DefaultCheckConstraintDefinition(
+                        schema,
+                        table,
+                        record.get(CheckConstraints.CONSTRAINT_NAME),
+                        record.get(CheckConstraints.CHECK_CLAUSE)
+                    ));
+                }
+            }
+        }
     }
 
     @Override

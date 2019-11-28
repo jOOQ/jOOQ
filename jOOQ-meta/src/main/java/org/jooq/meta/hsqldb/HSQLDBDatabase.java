@@ -40,6 +40,7 @@ package org.jooq.meta.hsqldb;
 
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.nvl;
 import static org.jooq.meta.hsqldb.information_schema.Tables.CHECK_CONSTRAINTS;
 import static org.jooq.meta.hsqldb.information_schema.Tables.ELEMENT_TYPES;
@@ -300,6 +301,9 @@ public class HSQLDBDatabase extends AbstractDatabase {
                 .join(cc)
                 .using(tc.CONSTRAINT_CATALOG, tc.CONSTRAINT_SCHEMA, tc.CONSTRAINT_NAME)
                 .where(tc.TABLE_SCHEMA.in(getInputSchemata()))
+                .and(getIncludeSystemCheckConstraints()
+                    ? noCondition()
+                    : tc.CONSTRAINT_NAME.notLike("SYS!_CT!_%", '!'))
                 .fetch()) {
 
             SchemaDefinition schema = getSchema(record.get(tc.TABLE_SCHEMA));

@@ -11,6 +11,7 @@ import java.util.List;
 import org.jooq.Catalog;
 import org.jooq.Table;
 import org.jooq.impl.SchemaImpl;
+import org.jooq.meta.mysql.information_schema.tables.CheckConstraints;
 import org.jooq.meta.mysql.information_schema.tables.Columns;
 import org.jooq.meta.mysql.information_schema.tables.KeyColumnUsage;
 import org.jooq.meta.mysql.information_schema.tables.Parameters;
@@ -28,12 +29,17 @@ import org.jooq.meta.mysql.information_schema.tables.Tables;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class InformationSchema extends SchemaImpl {
 
-    private static final long serialVersionUID = -1458007156;
+    private static final long serialVersionUID = -148910691;
 
     /**
      * The reference instance of <code>information_schema</code>
      */
     public static final InformationSchema INFORMATION_SCHEMA = new InformationSchema();
+
+    /**
+     * The table <code>information_schema.CHECK_CONSTRAINTS</code>.
+     */
+    public final CheckConstraints CHECK_CONSTRAINTS = org.jooq.meta.mysql.information_schema.tables.CheckConstraints.CHECK_CONSTRAINTS;
 
     /**
      * The table <code>information_schema.COLUMNS</code>.
@@ -102,6 +108,7 @@ public class InformationSchema extends SchemaImpl {
 
     private final List<Table<?>> getTables0() {
         return Arrays.<Table<?>>asList(
+            CheckConstraints.CHECK_CONSTRAINTS,
             Columns.COLUMNS,
             KeyColumnUsage.KEY_COLUMN_USAGE,
             Parameters.PARAMETERS,

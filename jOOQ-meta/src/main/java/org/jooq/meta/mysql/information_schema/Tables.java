@@ -4,6 +4,7 @@
 package org.jooq.meta.mysql.information_schema;
 
 
+import org.jooq.meta.mysql.information_schema.tables.CheckConstraints;
 import org.jooq.meta.mysql.information_schema.tables.Columns;
 import org.jooq.meta.mysql.information_schema.tables.KeyColumnUsage;
 import org.jooq.meta.mysql.information_schema.tables.Parameters;
@@ -19,6 +20,11 @@ import org.jooq.meta.mysql.information_schema.tables.TableConstraints;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables {
+
+    /**
+     * The table <code>information_schema.CHECK_CONSTRAINTS</code>.
+     */
+    public static final CheckConstraints CHECK_CONSTRAINTS = CheckConstraints.CHECK_CONSTRAINTS;
 
     /**
      * The table <code>information_schema.COLUMNS</code>.

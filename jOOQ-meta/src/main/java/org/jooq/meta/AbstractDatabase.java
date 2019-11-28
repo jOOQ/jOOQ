@@ -136,6 +136,7 @@ public abstract class AbstractDatabase implements Database {
     private boolean                                                          includeSequences                     = true;
     private boolean                                                          includeIndexes                       = true;
     private boolean                                                          includeCheckConstraints              = true;
+    private boolean                                                          includeSystemCheckConstraints        = false;
     private boolean                                                          includePrimaryKeys                   = true;
     private boolean                                                          includeUniqueKeys                    = true;
     private boolean                                                          includeForeignKeys                   = true;
@@ -997,6 +998,16 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final boolean getIncludeCheckConstraints() {
         return includeCheckConstraints;
+    }
+
+    @Override
+    public final void setIncludeSystemCheckConstraints(boolean includeSystemCheckConstraints) {
+        this.includeSystemCheckConstraints = includeSystemCheckConstraints;
+    }
+
+    @Override
+    public final boolean getIncludeSystemCheckConstraints() {
+        return includeSystemCheckConstraints;
     }
 
     @Override

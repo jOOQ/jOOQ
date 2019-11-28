@@ -593,8 +593,8 @@ public class PostgresDatabase extends AbstractDatabase {
                 record.get(SEQUENCES.MINIMUM_VALUE, Long.class),
                 record.get(SEQUENCES.MAXIMUM_VALUE, Long.class),
                 record.get(SEQUENCES.CYCLE_OPTION, Boolean.class),
-                null
-                ));
+                null // [#9442] The CACHE flag is not available from SEQUENCES
+            ));
         }
 
         return result;

@@ -40,6 +40,7 @@ package org.jooq.meta.derby;
 
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.meta.derby.sys.tables.Syschecks.SYSCHECKS;
 import static org.jooq.meta.derby.sys.tables.Sysconglomerates.SYSCONGLOMERATES;
 import static org.jooq.meta.derby.sys.tables.Sysconstraints.SYSCONSTRAINTS;
 import static org.jooq.meta.derby.sys.tables.Syskeys.SYSKEYS;
@@ -64,6 +65,7 @@ import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.ArrayDefinition;
 import org.jooq.meta.CatalogDefinition;
 import org.jooq.meta.DataTypeDefinition;
+import org.jooq.meta.DefaultCheckConstraintDefinition;
 import org.jooq.meta.DefaultDataTypeDefinition;
 import org.jooq.meta.DefaultRelations;
 import org.jooq.meta.DefaultSequenceDefinition;
@@ -75,6 +77,7 @@ import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
 import org.jooq.meta.TableDefinition;
 import org.jooq.meta.UDTDefinition;
+import org.jooq.meta.derby.sys.tables.Syschecks;
 import org.jooq.meta.derby.sys.tables.Sysconglomerates;
 import org.jooq.meta.derby.sys.tables.Sysconstraints;
 import org.jooq.meta.derby.sys.tables.Syskeys;
@@ -225,8 +228,35 @@ public class DerbyDatabase extends AbstractDatabase {
     }
 
     @Override
-    protected void loadCheckConstraints(DefaultRelations r) throws SQLException {
-        // Currently not supported
+    protected void loadCheckConstraints(DefaultRelations relations) throws SQLException {
+
+        for (Record record : create()
+            .select(
+                Sysschemas.SCHEMANAME,
+                Systables.TABLENAME,
+                Sysconstraints.CONSTRAINTNAME,
+                Syschecks.CHECKDEFINITION)
+            .from(SYSCHECKS)
+            .join(SYSCONSTRAINTS)
+                .on(Syschecks.CONSTRAINTID.eq(Sysconstraints.CONSTRAINTID))
+            .join(SYSTABLES)
+                .on(Systables.TABLEID.equal(Sysconstraints.TABLEID))
+            .join(SYSSCHEMAS)
+                .on(Sysschemas.SCHEMAID.equal(Systables.SCHEMAID))
+            .where(Sysschemas.SCHEMANAME.in(getInputSchemata()))
+        ) {
+            SchemaDefinition schema = getSchema(record.get(Sysschemas.SCHEMANAME));
+            TableDefinition table = getTable(schema, record.get(Systables.TABLENAME));
+
+            if (table != null) {
+                relations.addCheckConstraint(table, new DefaultCheckConstraintDefinition(
+                    schema,
+                    table,
+                    record.get(Sysconstraints.CONSTRAINTNAME),
+                    record.get(Syschecks.CHECKDEFINITION)
+                ));
+            }
+        }
     }
 
     @Override

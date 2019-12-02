@@ -39,10 +39,13 @@
 package org.jooq.meta.hsqldb;
 
 import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.nvl;
+import static org.jooq.impl.DSL.select;
 import static org.jooq.meta.hsqldb.information_schema.Tables.CHECK_CONSTRAINTS;
+import static org.jooq.meta.hsqldb.information_schema.Tables.COLUMNS;
 import static org.jooq.meta.hsqldb.information_schema.Tables.ELEMENT_TYPES;
 import static org.jooq.meta.hsqldb.information_schema.Tables.KEY_COLUMN_USAGE;
 import static org.jooq.meta.hsqldb.information_schema.Tables.REFERENTIAL_CONSTRAINTS;
@@ -88,6 +91,7 @@ import org.jooq.meta.SequenceDefinition;
 import org.jooq.meta.TableDefinition;
 import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.hsqldb.information_schema.tables.CheckConstraints;
+import org.jooq.meta.hsqldb.information_schema.tables.Columns;
 import org.jooq.meta.hsqldb.information_schema.tables.TableConstraints;
 import org.jooq.tools.JooqLogger;
 
@@ -286,6 +290,7 @@ public class HSQLDBDatabase extends AbstractDatabase {
     protected void loadCheckConstraints(DefaultRelations relations) throws SQLException {
         TableConstraints tc = TABLE_CONSTRAINTS.as("tc");
         CheckConstraints cc = CHECK_CONSTRAINTS.as("cc");
+        Columns c = COLUMNS.as("c");
 
         // [#2808] [#3019] Workaround for bad handling of JOIN .. USING
         Field<String> constraintName = field(name(cc.CONSTRAINT_NAME.getName()), String.class);
@@ -303,8 +308,18 @@ public class HSQLDBDatabase extends AbstractDatabase {
                 .where(tc.TABLE_SCHEMA.in(getInputSchemata()))
                 .and(getIncludeSystemCheckConstraints()
                     ? noCondition()
-                    : tc.CONSTRAINT_NAME.notLike("SYS!_CT!_%", '!'))
-                .fetch()) {
+                    : tc.CONSTRAINT_NAME.notLike("SYS!_CT!_%", '!')
+                        .or(cc.CHECK_CLAUSE.notIn(
+
+                            // TODO: Should we ever quote these?
+                            select(c.TABLE_SCHEMA.concat(inline('.'))
+                                    .concat(c.TABLE_NAME).concat(inline('.'))
+                                    .concat(c.COLUMN_NAME).concat(inline(" IS NOT NULL")))
+                            .from(c)
+                            .where(c.TABLE_SCHEMA.eq(tc.TABLE_SCHEMA))
+                            .and(c.TABLE_NAME.eq(tc.TABLE_NAME))
+                        )))
+        ) {
 
             SchemaDefinition schema = getSchema(record.get(tc.TABLE_SCHEMA));
             TableDefinition table = getTable(schema, record.get(tc.TABLE_NAME));

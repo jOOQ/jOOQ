@@ -39,6 +39,7 @@
 package org.jooq.meta.postgres;
 
 import static org.jooq.impl.DSL.array;
+import static org.jooq.impl.DSL.cast;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.decode;
@@ -574,7 +575,7 @@ public class PostgresDatabase extends AbstractDatabase {
                     SEQUENCES.INCREMENT.cast(BIGINT).as(SEQUENCES.INCREMENT),
                     SEQUENCES.MINIMUM_VALUE.cast(BIGINT).as(SEQUENCES.MINIMUM_VALUE),
                     nullif(SEQUENCES.MAXIMUM_VALUE.cast(NUMERIC),
-                        power(inline(2, NUMERIC), SEQUENCES.NUMERIC_PRECISION.minus(1)).minus(1)).as(SEQUENCES.MAXIMUM_VALUE),
+                        power(cast(inline(2), NUMERIC), cast(SEQUENCES.NUMERIC_PRECISION.minus(1), NUMERIC)).minus(1)).as(SEQUENCES.MAXIMUM_VALUE),
                     SEQUENCES.CYCLE_OPTION.cast(BOOLEAN).as(SEQUENCES.CYCLE_OPTION))
                 .from(SEQUENCES)
                 .where(SEQUENCES.SEQUENCE_SCHEMA.in(getInputSchemata()))

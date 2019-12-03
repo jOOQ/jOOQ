@@ -123,6 +123,9 @@ public class HSQLDBDatabase extends AbstractDatabase {
                 SYSTEM_INDEXINFO.ASC_OR_DESC)
             .from(SYSTEM_INDEXINFO)
             .where(SYSTEM_INDEXINFO.TABLE_SCHEM.in(getInputSchemata()))
+            .and(getIncludeSystemIndexes()
+                ? noCondition()
+                : SYSTEM_INDEXINFO.INDEX_NAME.notLike("SYS!_IDX!_%", '!'))
             .orderBy(
                 SYSTEM_INDEXINFO.TABLE_SCHEM,
                 SYSTEM_INDEXINFO.TABLE_NAME,

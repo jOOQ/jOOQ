@@ -39,8 +39,10 @@ package org.jooq.meta.sqlite;
 
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.table;
+import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.meta.sqlite.sqlite_master.SQLiteMaster.SQLITE_MASTER;
 
 import java.sql.SQLException;
@@ -122,6 +124,9 @@ public class SQLiteDatabase extends AbstractDatabase {
                 table("pragma_index_list({0})", SQLiteMaster.NAME).as("il"),
                 table("pragma_index_info(il.name)").as("ii"))
             .where(SQLiteMaster.TYPE.eq(inline("table")))
+            .and(getIncludeSystemIndexes()
+                ? noCondition()
+                : field("il.origin", VARCHAR).notIn(inline("pk"), inline("u")))
             .orderBy(1, 2, 4)
             .fetchGroups(
                 new Field[] {

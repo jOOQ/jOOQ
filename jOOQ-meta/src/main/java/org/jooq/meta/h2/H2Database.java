@@ -37,10 +37,13 @@
  */
 package org.jooq.meta.h2;
 
+import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.noCondition;
+import static org.jooq.impl.DSL.not;
 import static org.jooq.impl.DSL.nullif;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.select;
@@ -146,6 +149,9 @@ public class H2Database extends AbstractDatabase {
                 Indexes.ASC_OR_DESC)
             .from(INDEXES)
             .where(Indexes.TABLE_SCHEMA.in(getInputSchemata()))
+            .and(getIncludeSystemIndexes()
+                ? noCondition()
+                : not(condition(Indexes.IS_GENERATED)))
             .orderBy(
                 Indexes.TABLE_SCHEMA,
                 Indexes.TABLE_NAME,

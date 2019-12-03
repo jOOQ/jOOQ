@@ -559,6 +559,10 @@ Excludes match before includes, i.e. excludes have a higher priority.]]></jxb:ja
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This flag indicates whether check constraints should be included in output produced by this database]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="includeSystemIndexes" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This flag indicates whether system generated indexes should be included in output produced by this database]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="includeSystemCheckConstraints" type="boolean" default="false" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This flag indicates whether system generated check constraints should be included in output produced by this database]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

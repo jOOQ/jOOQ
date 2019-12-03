@@ -40,6 +40,9 @@ package org.jooq.meta.mysql;
 
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.noCondition;
+import static org.jooq.impl.DSL.row;
+import static org.jooq.impl.DSL.select;
 import static org.jooq.meta.mysql.information_schema.Tables.CHECK_CONSTRAINTS;
 import static org.jooq.meta.mysql.information_schema.Tables.COLUMNS;
 import static org.jooq.meta.mysql.information_schema.Tables.KEY_COLUMN_USAGE;
@@ -130,6 +133,13 @@ public class MySQLDatabase extends AbstractDatabase {
                   getInputSchemata().size() == 1
                 ? Statistics.TABLE_SCHEMA.in(getInputSchemata())
                 : falseCondition()))
+            .and(getIncludeSystemIndexes()
+                ? noCondition()
+                : row(Statistics.INDEX_SCHEMA, Statistics.INDEX_NAME).notIn(
+                    select(TableConstraints.CONSTRAINT_SCHEMA, TableConstraints.CONSTRAINT_NAME)
+                    .from(TABLE_CONSTRAINTS)
+                  )
+            )
             .orderBy(
                 Statistics.TABLE_SCHEMA,
                 Statistics.TABLE_NAME,

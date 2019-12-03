@@ -82,6 +82,8 @@ public class Database implements Serializable, XMLAppendable
     @XmlElement(defaultValue = "true")
     protected Boolean includeCheckConstraints = true;
     @XmlElement(defaultValue = "false")
+    protected Boolean includeSystemIndexes = false;
+    @XmlElement(defaultValue = "false")
     protected Boolean includeSystemCheckConstraints = false;
     @XmlElement(defaultValue = "true")
     protected Boolean includeInvisibleColumns = true;
@@ -777,6 +779,30 @@ public class Database implements Serializable, XMLAppendable
      */
     public void setIncludeCheckConstraints(Boolean value) {
         this.includeCheckConstraints = value;
+    }
+
+    /**
+     * This flag indicates whether system generated indexes should be included in output produced by this database
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isIncludeSystemIndexes() {
+        return includeSystemIndexes;
+    }
+
+    /**
+     * Sets the value of the includeSystemIndexes property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setIncludeSystemIndexes(Boolean value) {
+        this.includeSystemIndexes = value;
     }
 
     /**
@@ -1733,6 +1759,11 @@ public class Database implements Serializable, XMLAppendable
         return this;
     }
 
+    public Database withIncludeSystemIndexes(Boolean value) {
+        setIncludeSystemIndexes(value);
+        return this;
+    }
+
     public Database withIncludeSystemCheckConstraints(Boolean value) {
         setIncludeSystemCheckConstraints(value);
         return this;
@@ -2163,6 +2194,7 @@ public class Database implements Serializable, XMLAppendable
         builder.append("includeUniqueKeys", includeUniqueKeys);
         builder.append("includeForeignKeys", includeForeignKeys);
         builder.append("includeCheckConstraints", includeCheckConstraints);
+        builder.append("includeSystemIndexes", includeSystemIndexes);
         builder.append("includeSystemCheckConstraints", includeSystemCheckConstraints);
         builder.append("includeInvisibleColumns", includeInvisibleColumns);
         builder.append("recordVersionFields", recordVersionFields);
@@ -2410,6 +2442,15 @@ public class Database implements Serializable, XMLAppendable
             }
         } else {
             if (!includeCheckConstraints.equals(other.includeCheckConstraints)) {
+                return false;
+            }
+        }
+        if (includeSystemIndexes == null) {
+            if (other.includeSystemIndexes!= null) {
+                return false;
+            }
+        } else {
+            if (!includeSystemIndexes.equals(other.includeSystemIndexes)) {
                 return false;
             }
         }
@@ -2721,6 +2762,7 @@ public class Database implements Serializable, XMLAppendable
         result = ((prime*result)+((includeUniqueKeys == null)? 0 :includeUniqueKeys.hashCode()));
         result = ((prime*result)+((includeForeignKeys == null)? 0 :includeForeignKeys.hashCode()));
         result = ((prime*result)+((includeCheckConstraints == null)? 0 :includeCheckConstraints.hashCode()));
+        result = ((prime*result)+((includeSystemIndexes == null)? 0 :includeSystemIndexes.hashCode()));
         result = ((prime*result)+((includeSystemCheckConstraints == null)? 0 :includeSystemCheckConstraints.hashCode()));
         result = ((prime*result)+((includeInvisibleColumns == null)? 0 :includeInvisibleColumns.hashCode()));
         result = ((prime*result)+((recordVersionFields == null)? 0 :recordVersionFields.hashCode()));

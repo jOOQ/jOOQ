@@ -191,6 +191,12 @@ public class PostgresDatabase extends AbstractDatabase {
                 .join(trel).on(oid(trel).eq(i.INDRELID))
                 .join(tnsp).on(oid(tnsp).eq(trel.RELNAMESPACE))
                 .where(tnsp.NSPNAME.in(getInputSchemata()))
+                .and(getIncludeSystemIndexes()
+                    ? noCondition()
+                    : row(tnsp.NSPNAME, irel.RELNAME).notIn(
+                        select(TABLE_CONSTRAINTS.CONSTRAINT_SCHEMA, TABLE_CONSTRAINTS.CONSTRAINT_NAME)
+                        .from(TABLE_CONSTRAINTS)
+                      ))
                 .orderBy(1, 2, 3)) {
 
             final SchemaDefinition tableSchema = getSchema(record.get(tnsp.NSPNAME));

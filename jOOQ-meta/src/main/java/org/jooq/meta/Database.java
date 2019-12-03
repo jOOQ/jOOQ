@@ -439,6 +439,16 @@ public interface Database  extends AutoCloseable  {
     boolean getIncludeCheckConstraints();
 
     /**
+     * whether system generated indexes should be included.
+     */
+    void setIncludeSystemIndexes(boolean systemIndexes);
+
+    /**
+     * whether system generated indexes should be included.
+     */
+    boolean getIncludeSystemIndexes();
+
+    /**
      * whether system generated check constraints should be included.
      */
     void setIncludeSystemCheckConstraints(boolean systemCheckConstraints);

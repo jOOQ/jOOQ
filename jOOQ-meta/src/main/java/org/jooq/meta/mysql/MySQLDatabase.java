@@ -343,13 +343,25 @@ public class MySQLDatabase extends AbstractDatabase {
                         TableConstraints.TABLE_SCHEMA,
                         TableConstraints.TABLE_NAME,
                         CheckConstraints.CONSTRAINT_NAME,
-                        CheckConstraints.CHECK_CLAUSE
+                        CheckConstraints.CHECK_CLAUSE,
+
+                        // We need this additional, useless projection. See:
+                        // https://jira.mariadb.org/browse/MDEV-21201
+                        TableConstraints.CONSTRAINT_CATALOG,
+                        TableConstraints.CONSTRAINT_SCHEMA
                      )
                     .from(TABLE_CONSTRAINTS)
                     .join(CHECK_CONSTRAINTS)
-                    .using(TableConstraints.CONSTRAINT_CATALOG, TableConstraints.CONSTRAINT_SCHEMA, TableConstraints.CONSTRAINT_NAME)
+                    .using(
+                        TableConstraints.CONSTRAINT_CATALOG,
+                        TableConstraints.CONSTRAINT_SCHEMA,
+                        TableConstraints.TABLE_NAME,
+                        TableConstraints.CONSTRAINT_NAME)
                     .where(TableConstraints.TABLE_SCHEMA.in(getInputSchemata()))
-                    .orderBy(TableConstraints.TABLE_SCHEMA, TableConstraints.TABLE_NAME, TableConstraints.CONSTRAINT_NAME)) {
+                    .orderBy(
+                        TableConstraints.TABLE_SCHEMA,
+                        TableConstraints.TABLE_NAME,
+                        TableConstraints.CONSTRAINT_NAME)) {
 
                 SchemaDefinition schema = getSchema(record.get(TableConstraints.TABLE_SCHEMA));
                 TableDefinition table = getTable(schema, record.get(TableConstraints.TABLE_NAME));

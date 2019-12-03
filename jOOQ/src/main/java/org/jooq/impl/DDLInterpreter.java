@@ -46,6 +46,7 @@ import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.intersect;
+import static org.jooq.impl.Tools.reverseIterable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -414,15 +415,31 @@ final class DDLInterpreter {
                 else if (fc instanceof Constraint && !fc.getUnqualifiedName().empty() && existing.constraint((Constraint) fc) != null)
                     throw constraintAlreadyExists((Constraint) fc);
 
-            for (FieldOrConstraint fc : query.$add())
-                if (fc instanceof Field)
+            if (query.$addFirst()) {
+                for (Field<?> f : assertFields(query, reverseIterable(query.$add())))
+                    addField(existing, 0, (UnqualifiedName) f.getUnqualifiedName(), ((Field<?>) f).getDataType());
+            }
+            else if (query.$addBefore() != null) {
+                int index = indexOrFail(existing, query.$addBefore());
 
-                    // TODO: FIRST, BEFORE, AFTER
-                    existing.fields.add(new MutableField((UnqualifiedName) fc.getUnqualifiedName(), existing, ((Field<?>) fc).getDataType()));
-                else if (fc instanceof Constraint)
-                    addConstraint(query, (ConstraintImpl) fc, schema, existing);
-                else
-                    throw unsupportedQuery(query);
+                for (Field<?> f : assertFields(query, reverseIterable(query.$add())))
+                    addField(existing, index, (UnqualifiedName) f.getUnqualifiedName(), ((Field<?>) f).getDataType());
+            }
+            else if (query.$addAfter() != null) {
+                int index = indexOrFail(existing, query.$addAfter()) + 1;
+
+                for (Field<?> f : assertFields(query, reverseIterable(query.$add())))
+                    addField(existing, index, (UnqualifiedName) f.getUnqualifiedName(), ((Field<?>) f).getDataType());
+            }
+            else {
+                for (FieldOrConstraint fc : query.$add())
+                    if (fc instanceof Field)
+                        addField(existing, Integer.MAX_VALUE, (UnqualifiedName) fc.getUnqualifiedName(), ((Field<?>) fc).getDataType());
+                    else if (fc instanceof Constraint)
+                        addConstraint(query, (ConstraintImpl) fc, schema, existing);
+                    else
+                        throw unsupportedQuery(query);
+            }
         }
         else if (query.$addColumn() != null) {
             if (existing.field(query.$addColumn()) != null)
@@ -431,14 +448,17 @@ final class DDLInterpreter {
                 else
                     return;
 
+            UnqualifiedName name = (UnqualifiedName) query.$addColumn().getUnqualifiedName();
+            DataType<?> dataType = query.$addColumnType();
+
             if (query.$addFirst())
-                existing.fields.add(0, new MutableField((UnqualifiedName) query.$addColumn().getUnqualifiedName(), existing, query.$addColumnType()));
+                addField(existing, 0, name, dataType);
             else if (query.$addBefore() != null)
-                existing.fields.add(indexOrFail(existing, query.$addBefore()), new MutableField((UnqualifiedName) query.$addColumn().getUnqualifiedName(), existing, query.$addColumnType()));
+                addField(existing, indexOrFail(existing, query.$addBefore()), name, dataType);
             else if (query.$addAfter() != null)
-                existing.fields.add(indexOrFail(existing, query.$addAfter()) + 1, new MutableField((UnqualifiedName) query.$addColumn().getUnqualifiedName(), existing, query.$addColumnType()));
+                addField(existing, indexOrFail(existing, query.$addAfter()) + 1, name, dataType);
             else
-                existing.fields.add(new MutableField((UnqualifiedName) query.$addColumn().getUnqualifiedName(), existing, query.$addColumnType()));
+                addField(existing, Integer.MAX_VALUE, name, dataType);
         }
         else if (query.$addConstraint() != null) {
             addConstraint(query, (ConstraintImpl) query.$addConstraint(), schema, existing);
@@ -551,6 +571,44 @@ final class DDLInterpreter {
         }
         else
             throw unsupportedQuery(query);
+    }
+
+    private final Iterable<Field<?>> assertFields(final Query query, final Iterable<FieldOrConstraint> fields) {
+        return new Iterable<Field<?>>() {
+            @Override
+            public Iterator<Field<?>> iterator() {
+                return new Iterator<Field<?>>() {
+                    Iterator<FieldOrConstraint> it = fields.iterator();
+
+                    @Override
+                    public boolean hasNext() {
+                        return it.hasNext();
+                    }
+
+                    @Override
+                    public Field<?> next() {
+                        FieldOrConstraint next = it.next();
+
+                        if (next instanceof Field)
+                            return (Field<?>) next;
+                        else
+                            throw unsupportedQuery(query);
+                    }
+
+                    @Override
+                    public void remove() {
+                        it.remove();
+                    }
+                };
+            }
+        };
+    }
+
+    private final void addField(MutableTable existing, int index, UnqualifiedName name, DataType<?> dataType) {
+        if (index == Integer.MAX_VALUE)
+            existing.fields.add(       new MutableField(name, existing, dataType));
+        else
+            existing.fields.add(index, new MutableField(name, existing, dataType));
     }
 
     private final void addConstraint(Query query, ConstraintImpl impl, MutableSchema schema, MutableTable existing) {

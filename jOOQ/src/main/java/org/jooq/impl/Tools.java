@@ -188,6 +188,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
@@ -214,6 +215,7 @@ import org.jooq.CommonTableExpression;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Context;
+import org.jooq.Converter;
 import org.jooq.Cursor;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
@@ -1921,12 +1923,7 @@ final class Tools {
     @SafeVarargs
 
     static final <T> Iterable<T> reverseIterable(final T... array) {
-        return new Iterable<T>() {
-            @Override
-            public Iterator<T> iterator() {
-                return reverseIterator(array);
-            }
-        };
+        return reverseIterable(Arrays.asList(array));
     }
 
     /**
@@ -1936,22 +1933,41 @@ final class Tools {
     @SafeVarargs
 
     static final <T> Iterator<T> reverseIterator(final T... array) {
+        return reverseIterator(Arrays.asList(array));
+    }
+
+    /**
+     * Reverse iterate over a list.
+     */
+    static final <T> Iterable<T> reverseIterable(final List<T> list) {
+        return new Iterable<T>() {
+            @Override
+            public Iterator<T> iterator() {
+                return reverseIterator(list);
+            }
+        };
+    }
+
+    /**
+     * Reverse iterate over a list.
+     */
+    static final <T> Iterator<T> reverseIterator(final List<T> list) {
         return new Iterator<T>() {
-            int index = array.length;
+            ListIterator<T> li = list.listIterator(list.size());
 
             @Override
             public boolean hasNext() {
-                return index > 0;
+                return li.hasPrevious();
             }
 
             @Override
             public T next() {
-                return array[--index];
+                return li.previous();
             }
 
             @Override
             public void remove() {
-                throw new UnsupportedOperationException("remove");
+                li.remove();
             }
         };
     }

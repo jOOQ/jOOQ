@@ -4001,7 +4001,10 @@ final class ParserImpl implements Parser {
             return parseAlterTableAddFieldFirstBeforeLast(ctx, s1.addColumnIfNotExists(parseAlterTableAddField(ctx)));
         }
         else {
-            list.add(parseAlterTableAddFieldOrConstraint(ctx));
+            do {
+                list.add(parseAlterTableAddFieldOrConstraint(ctx));
+            }
+            while (parseIf(ctx, ',') && parseKeyword(ctx, "ADD"));
         }
 
         if (list.size() == 1)

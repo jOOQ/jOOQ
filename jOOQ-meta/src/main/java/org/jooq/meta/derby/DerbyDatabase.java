@@ -38,7 +38,10 @@
 
 package org.jooq.meta.derby;
 
+import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.noCondition;
+import static org.jooq.impl.DSL.not;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.meta.derby.sys.tables.Syschecks.SYSCHECKS;
 import static org.jooq.meta.derby.sys.tables.Sysconglomerates.SYSCONGLOMERATES;
@@ -60,17 +63,22 @@ import org.jooq.Record;
 import org.jooq.Record5;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
+import org.jooq.SortOrder;
 import org.jooq.impl.DSL;
 import org.jooq.meta.AbstractDatabase;
+import org.jooq.meta.AbstractIndexDefinition;
 import org.jooq.meta.ArrayDefinition;
 import org.jooq.meta.CatalogDefinition;
 import org.jooq.meta.DataTypeDefinition;
 import org.jooq.meta.DefaultCheckConstraintDefinition;
 import org.jooq.meta.DefaultDataTypeDefinition;
+import org.jooq.meta.DefaultIndexColumnDefinition;
 import org.jooq.meta.DefaultRelations;
 import org.jooq.meta.DefaultSequenceDefinition;
 import org.jooq.meta.DomainDefinition;
 import org.jooq.meta.EnumDefinition;
+import org.jooq.meta.IndexColumnDefinition;
+import org.jooq.meta.IndexDefinition;
 import org.jooq.meta.PackageDefinition;
 import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SchemaDefinition;
@@ -217,11 +225,9 @@ public class DerbyDatabase extends AbstractDatabase {
         while (m.find()) {
             String[] split = m.group(1).split(",");
 
-            if (split != null) {
-                for (String index : split) {
+            if (split != null)
+                for (String index : split)
                     result.add(Integer.valueOf(index.trim()) - 1);
-                }
-            }
         }
 
         return result;
@@ -229,7 +235,6 @@ public class DerbyDatabase extends AbstractDatabase {
 
     @Override
     protected void loadCheckConstraints(DefaultRelations relations) throws SQLException {
-
         for (Record record : create()
             .select(
                 Sysschemas.SCHEMANAME,
@@ -257,6 +262,71 @@ public class DerbyDatabase extends AbstractDatabase {
                 ));
             }
         }
+    }
+
+    @Override
+    protected List<IndexDefinition> getIndexes0() throws SQLException {
+        List<IndexDefinition> result = new ArrayList<>();
+
+        indexLoop:
+        for (Record record : create()
+            .select(
+                Sysschemas.SCHEMANAME,
+                Systables.TABLENAME,
+                Sysconglomerates.CONGLOMERATENAME,
+                Sysconglomerates.DESCRIPTOR)
+            .from(SYSCONGLOMERATES)
+            .join(SYSTABLES).on(Sysconglomerates.TABLEID.eq(Systables.TABLEID))
+            .join(SYSSCHEMAS).on(Systables.SCHEMAID.eq(Sysschemas.SCHEMAID))
+
+            // [#6797] The cast is necessary if a non-standard collation is used
+            .where(Sysschemas.SCHEMANAME.cast(VARCHAR(32672)).in(getInputSchemata()))
+            .and(Sysconglomerates.ISINDEX)
+            .and(getIncludeSystemIndexes()
+                ? noCondition()
+                : not(condition(Sysconglomerates.ISCONSTRAINT)))
+            .orderBy(
+                Sysschemas.SCHEMANAME,
+                Systables.TABLENAME,
+                Sysconglomerates.CONGLOMERATENAME)
+        ) {
+            final SchemaDefinition tableSchema = getSchema(record.get(Sysschemas.SCHEMANAME));
+            if (tableSchema == null)
+                continue indexLoop;
+
+            final String indexName = record.get(Sysconglomerates.CONGLOMERATENAME);
+            final String tableName = record.get(Systables.TABLENAME);
+            final TableDefinition table = getTable(tableSchema, tableName);
+            if (table == null)
+                continue indexLoop;
+
+            final String descriptor = record.get(Sysconglomerates.DESCRIPTOR);
+            if (descriptor == null)
+                continue indexLoop;
+
+            result.add(new AbstractIndexDefinition(tableSchema, indexName, table, descriptor.toUpperCase().contains("UNIQUE")) {
+                List<IndexColumnDefinition> indexColumns = new ArrayList<>();
+
+                {
+                    List<Integer> columnIndexes = decode(descriptor);
+                    for (int i = 0; i < columnIndexes.size(); i++) {
+                        indexColumns.add(new DefaultIndexColumnDefinition(
+                            this,
+                            table.getColumn(columnIndexes.get(i)),
+                            SortOrder.ASC,
+                            i + 1
+                        ));
+                    }
+                }
+
+                @Override
+                protected List<IndexColumnDefinition> getIndexColumns0() {
+                    return indexColumns;
+                }
+            });
+        }
+
+        return result;
     }
 
     @Override

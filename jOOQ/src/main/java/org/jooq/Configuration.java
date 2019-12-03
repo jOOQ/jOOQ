@@ -40,6 +40,7 @@ package org.jooq;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.Savepoint;
+import java.sql.Wrapper;
 import java.time.Clock;
 import java.util.Map;
 import java.util.concurrent.Executor;
@@ -94,8 +95,8 @@ import org.jooq.tools.StopWatchListener;
  * <h3>Types composing its state:</h3>
  * <ul>
  * <li>{@link #dialect()}: The {@link SQLDialect} that defines the underlying
- * database's behaviour when generating SQL syntax, or bind variables, or
- * when executing the query</li>
+ * database's behaviour when generating SQL syntax, or bind variables, or when
+ * executing the query</li>
  * <li>{@link #settings()}: The {@link Settings} that define general jOOQ
  * behaviour</li>
  * <li>{@link #data()}: A {@link Map} containing user-defined data for the
@@ -117,18 +118,34 @@ import org.jooq.tools.StopWatchListener;
  * connection pools, Java EE, or Spring.</li>
  * </ul>
  * </li>
- * <li>{@link #transactionProvider()}: The {@link TransactionProvider} that
- * defines and implements the behaviour of the
- * {@link DSLContext#transaction(TransactionalRunnable)} and
- * {@link DSLContext#transactionResult(TransactionalCallable)} methods.<br/>
+ * <li>{@link #executeListenerProviders()}: A set of
+ * {@link ExecuteListenerProvider} that implement {@link Query} execution
+ * lifecycle management.<br/>
  * <br/>
- * jOOQ-provided default implementations include:
+ * jOOQ-provided example implementations include:
  * <ul>
- * <li>{@link DefaultTransactionProvider}: an implementation backed by JDBC
- * directly, via {@link Connection#commit()}, {@link Connection#rollback()}, and
- * {@link Connection#rollback(Savepoint)} for nested transactions.</li>
+ * <li>{@link LoggerListener}: generating default query execution log output
+ * (active by default)</li>
+ * <li>{@link StopWatchListener}: generating default query execution speed log
+ * output (inactive by default)</li>
  * </ul>
  * </li>
+ * <li>{@link #executorProvider()}: A provider for an {@link Executor}, which is
+ * used by default, in the absence of an explicit executor, to execute
+ * asynchronous logic throughout the jOOQ API, such as for example
+ * {@link ResultQuery#fetchAsync()}.</li>
+ * <li>{@link #metaProvider()}: A provider for the {@link DSLContext#meta()}
+ * object which is used to look up database meta data from various jOOQ APIs,
+ * such as for example the {@link DSLContext#parser()}.</li>
+ * <li>{@link #migrationListenerProviders()}: A set of
+ * {@link MigrationListenerProvider} that allow for listening to the database
+ * migration lifecycle.</li>
+ * <li>{@link #recordListenerProviders()}: A set of
+ * {@link RecordListenerProvider} that implement {@link Record} fetching and
+ * storing lifecycle management, specifically for use with
+ * {@link UpdatableRecord}.<br/>
+ * <br/>
+ * jOOQ does not provide any implementations.</li>
  * <li>{@link #recordMapperProvider()}: The {@link RecordMapperProvider} that
  * defines and implements the behaviour of {@link Record#into(Class)},
  * {@link ResultQuery#fetchInto(Class)}, {@link Cursor#fetchInto(Class)}, and
@@ -141,23 +158,23 @@ import org.jooq.tools.StopWatchListener;
  * use-cases.</li>
  * </ul>
  * </li>
- * <li>{@link #recordListenerProviders()}: A set of
- * {@link RecordListenerProvider} that implement {@link Record} fetching and
- * storing lifecycle management, specifically for use with
- * {@link UpdatableRecord}.<br/>
+ * <li>{@link #recordUnmapperProvider()}: The inverse of the
+ * {@link #recordMapperProvider()} that allows to implement the behaviour of
+ * {@link Record#from(Object)}, and various related methods.</li>
+ * <li>{@link #transactionProvider()}: The {@link TransactionProvider} that
+ * defines and implements the behaviour of the
+ * {@link DSLContext#transaction(TransactionalRunnable)} and
+ * {@link DSLContext#transactionResult(TransactionalCallable)} methods.<br/>
  * <br/>
- * jOOQ does not provide any implementations.</li>
- * <li>{@link #executeListenerProviders()}: A set of
- * {@link ExecuteListenerProvider} that implement {@link Query} execution
- * lifecycle management.<br/>
- * <br/>
- * jOOQ-provided example implementations include:
+ * jOOQ-provided default implementations include:
  * <ul>
- * <li>{@link LoggerListener}: generating default query execution log output
- * (active by default)</li>
- * <li>{@link StopWatchListener}: generating default query execution speed log
- * output (inactive by default)</li>
+ * <li>{@link DefaultTransactionProvider}: an implementation backed by JDBC
+ * directly, via {@link Connection#commit()}, {@link Connection#rollback()}, and
+ * {@link Connection#rollback(Savepoint)} for nested transactions.</li>
  * </ul>
+ * </li>
+ * <li>{@link #unwrapperProvider()}: An {@link UnwrapperProvider} that allows
+ * for injecting custom JDBC {@link Wrapper#unwrap(Class)} behaviour.</li>
  * <li>{@link #visitListenerProviders()}: A set of {@link VisitListenerProvider}
  * that implement {@link Query} rendering and variable binding lifecycle
  * management, and that are allowed to implement query transformation - e.g. to

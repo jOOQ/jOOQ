@@ -911,17 +911,21 @@ public enum SQLDialect {
 
 
 
-                case DERBY:     return "Derby";
-                case H2:        return "H2";
-                case HSQLDB:    return "HSQL";
+
+
+
+                case DERBY:       return "Derby";
+                case H2:          return "H2";
+                case HSQLDB:      return "HSQL";
                 case MARIADB:
 
 
 
-                case MYSQL:     return "MySQL";
-                case POSTGRES:  return "PostgreSQL";
 
-                default:        return null;
+                case MYSQL:       return "MySQL";
+                case POSTGRES:    return "PostgreSQL";
+
+                default:          return null;
             }
         }
 
@@ -937,6 +941,9 @@ public enum SQLDialect {
          */
         public final String hibernateDialect() {
             switch (SQLDialect.this) {
+
+
+
 
 
 

@@ -117,12 +117,6 @@ final class Ln extends AbstractFunction<BigDecimal> {
 
 
 
-
-
-
-
-
-
                 case DERBY:
                 case HSQLDB:
                     return DSL.ln(argument).div(DSL.ln(base));

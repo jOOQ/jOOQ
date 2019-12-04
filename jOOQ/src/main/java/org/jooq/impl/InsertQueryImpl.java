@@ -360,6 +360,18 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                                .visit(onConflict)
                                .qualify(qualify);
 
+
+
+
+
+
+
+
+
+
+
+
+
                         // [#6462] There is no way to emulate MySQL's ON DUPLICATE KEY UPDATE
                         //         where all UNIQUE keys are considered for conflicts. PostgreSQL
                         //         doesn't allow ON CONFLICT DO UPDATE without either a conflict
@@ -472,14 +484,29 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
                         ctx.data().remove(DATA_CONSTRAINT_REFERENCE);
                     }
-                    else if (onConflict != null && onConflict.size() > 0) {
+                    else {
                         boolean qualify = ctx.qualify();
 
-                        ctx.sql('(')
-                           .qualify(false)
-                           .visit(onConflict)
-                           .qualify(qualify)
-                           .sql(')');
+                        if (onConflict != null && onConflict.size() > 0)
+                            ctx.sql('(')
+                               .qualify(false)
+                               .visit(onConflict)
+                               .qualify(qualify)
+                               .sql(')');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     }
 
                     ctx.sql(' ')

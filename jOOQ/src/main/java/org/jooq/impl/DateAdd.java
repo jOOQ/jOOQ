@@ -178,9 +178,10 @@ final class DateAdd<T> extends AbstractField<T> {
                 // [#3824] Ensure that the output for DATE arithmetic will also
                 // be of type DATE, not TIMESTAMP
                 if (getDataType().isDate())
-                    ctx.sql('(').visit(date).sql(" + (").visit(interval).sql(" || ").visit(inline(string)).sql(")::interval)::date");
+                    ctx.sql('(').visit(date).sql(" + (").visit(interval.concat(inline(string))).sql(")::interval)::date");
                 else
-                    ctx.sql('(').visit(date).sql(" + (").visit(interval).sql(" || ").visit(inline(string)).sql(")::interval)");
+                    ctx.sql('(').visit(date).sql(" + (").visit(interval.concat(inline(string))).sql(")::interval)");
+
                 break;
             }
 

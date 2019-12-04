@@ -1172,7 +1172,7 @@ final class DDLInterpreter {
             this.comment = comment;
         }
 
-        void drop() {}
+        abstract void drop();
 
         @Override
         public String toString() {
@@ -1188,7 +1188,7 @@ final class DDLInterpreter {
         }
 
         @Override
-        void drop() {
+        final void drop() {
             schemas.clear();
         }
 
@@ -1230,7 +1230,7 @@ final class DDLInterpreter {
         }
 
         @Override
-        void drop() {
+        final void drop() {
             tables.clear();
             sequences.clear();
         }
@@ -1303,7 +1303,7 @@ final class DDLInterpreter {
         }
 
         @Override
-        void drop() {
+        final void drop() {
             if (primaryKey != null)
                 primaryKey.drop();
 
@@ -1529,6 +1529,9 @@ final class DDLInterpreter {
             schema.sequences.add(this);
         }
 
+        @Override
+        final void drop() {}
+
         private final class InterpretedSequence extends SequenceImpl<Long> {
             @SuppressWarnings("unchecked")
             InterpretedSequence(Schema schema) {
@@ -1565,6 +1568,9 @@ final class DDLInterpreter {
             this.table = table;
             this.condition = condition;
         }
+
+        @Override
+        final void drop() {}
     }
 
     private static final class MutableUniqueKey extends MutableKey {
@@ -1572,6 +1578,12 @@ final class DDLInterpreter {
 
         MutableUniqueKey(UnqualifiedName name, MutableTable keyTable, List<MutableField> keyFields) {
             super(name, keyTable, keyFields);
+        }
+
+        @Override
+        final void drop() {
+            // TODO Is this StackOverflowError safe?
+            referencingKeys.clear();
         }
     }
 
@@ -1597,7 +1609,7 @@ final class DDLInterpreter {
         }
 
         @Override
-        void drop() {
+        final void drop() {
             this.referencedKey.referencingKeys.remove(this);
         }
     }
@@ -1614,6 +1626,9 @@ final class DDLInterpreter {
             this.fields = fields;
             this.unique = unique;
         }
+
+        @Override
+        final void drop() {}
     }
 
     private static final class MutableField extends MutableNamed {
@@ -1626,6 +1641,9 @@ final class DDLInterpreter {
             this.table = table;
             this.type = type;
         }
+
+        @Override
+        final void drop() {}
     }
 
     private static final class MutableSortField extends MutableNamed {
@@ -1638,6 +1656,9 @@ final class DDLInterpreter {
             this.field = field;
             this.sort = sort;
         }
+
+        @Override
+        final void drop() {}
     }
 
     private static final class MutableNamedList<N extends MutableNamed> extends AbstractList<N> {

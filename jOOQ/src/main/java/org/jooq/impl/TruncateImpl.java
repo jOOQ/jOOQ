@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.TRUE;
 import static org.jooq.Clause.TRUNCATE;
 import static org.jooq.Clause.TRUNCATE_TRUNCATE;
 // ...
@@ -82,7 +83,8 @@ final class TruncateImpl<R extends Record> extends AbstractRowCountQuery impleme
         this.table = table;
     }
 
-    final Table<?> $table() { return table; }
+    final Table<?> $table()   { return table; }
+    final boolean  $cascade() { return TRUE.equals(cascade); }
 
     // ------------------------------------------------------------------------
     // XXX: DSL API

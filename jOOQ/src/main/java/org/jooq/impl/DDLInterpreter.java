@@ -48,6 +48,7 @@ import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.intersect;
 import static org.jooq.impl.Tools.reverseIterable;
 
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -301,7 +302,7 @@ final class DDLInterpreter {
         if (mu == null)
             throw primaryKeyNotExists();
 
-        mt.foreignkeys.add(new MutableForeignKey(
+        mt.foreignKeys.add(new MutableForeignKey(
             (UnqualifiedName) impl.getUnqualifiedName(), mt, mfs, mu, impl.$onDelete(), impl.$onUpdate()
         ));
     }
@@ -340,7 +341,7 @@ final class DDLInterpreter {
             cascade(table.uniqueKeys, fields, check);
         }
 
-        cascade(table.foreignkeys, fields, false);
+        cascade(table.foreignKeys, fields, false);
 
         indexLoop:
         while (it1.hasNext()) {
@@ -374,7 +375,7 @@ final class DDLInterpreter {
 
     private final void cascade(MutableUniqueKey key, List<MutableField> fields, Cascade cascade) {
         for (MutableTable mt : tables()) {
-            Iterator<MutableForeignKey> it = mt.foreignkeys.iterator();
+            Iterator<MutableForeignKey> it = mt.foreignKeys.iterator();
 
             while (it.hasNext()) {
                 MutableForeignKey mfk = it.next();
@@ -519,7 +520,7 @@ final class DDLInterpreter {
             ConstraintImpl impl = (ConstraintImpl) query.$dropConstraint();
 
             removal: {
-                Iterator<MutableForeignKey> fks = existing.foreignkeys.iterator();
+                Iterator<MutableForeignKey> fks = existing.foreignKeys.iterator();
                 while (fks.hasNext()) {
                     if (fks.next().name.equals(impl.getUnqualifiedName())) {
                         fks.remove();
@@ -652,8 +653,6 @@ final class DDLInterpreter {
         Table<?> table = query.$table();
 
         MutableSchema schema = getSchema(table.getSchema());
-
-        // TODO schema == null
         MutableTable existing = schema.table(table);
         if (existing == null) {
             if (!query.$ifExists())
@@ -679,6 +678,8 @@ final class DDLInterpreter {
             throw tableNotExists(table);
         else if (!existing.options.type().isTable())
             throw objectNotTable(table);
+        else if (!query.$cascade() && existing.hasReferencingTables())
+            throw new DataDefinitionException("Cannot truncate table referenced by other tables. Use CASCADE: " + table);
     }
 
     private final void accept0(CreateViewImpl<?> query) {
@@ -1066,10 +1067,7 @@ final class DDLInterpreter {
     }
 
     private final MutableTable table(Table<?> table, boolean throwIfNotExists) {
-
-        // TODO: Can schema be null?
         MutableTable result = getSchema(table.getSchema()).table(table);
-
         if (result == null && throwIfNotExists)
             throw tableNotExists(table);
 
@@ -1174,6 +1172,8 @@ final class DDLInterpreter {
             this.comment = comment;
         }
 
+        void drop() {}
+
         @Override
         public String toString() {
             return name.toString();
@@ -1181,7 +1181,7 @@ final class DDLInterpreter {
     }
 
     private static final class MutableCatalog extends MutableNamed {
-        List<MutableSchema> schemas = new ArrayList<>();
+        List<MutableSchema> schemas = new MutableNamedList<>();
 
         MutableCatalog(UnqualifiedName name) {
             super(name, null);
@@ -1214,8 +1214,8 @@ final class DDLInterpreter {
 
     private static final class MutableSchema extends MutableNamed  {
         MutableCatalog        catalog;
-        List<MutableTable>    tables    = new ArrayList<>();
-        List<MutableSequence> sequences = new ArrayList<>();
+        List<MutableTable>    tables    = new MutableNamedList<>();
+        List<MutableSequence> sequences = new MutableNamedList<>();
 
         MutableSchema(UnqualifiedName name, MutableCatalog catalog) {
             super(name);
@@ -1279,12 +1279,12 @@ final class DDLInterpreter {
 
     private static final class MutableTable extends MutableNamed  {
         MutableSchema           schema;
-        List<MutableField>      fields      = new ArrayList<>();
+        List<MutableField>      fields      = new MutableNamedList<>();
         MutableUniqueKey        primaryKey;
-        List<MutableUniqueKey>  uniqueKeys  = new ArrayList<>();
-        List<MutableForeignKey> foreignkeys = new ArrayList<>();
-        List<MutableCheck>      checks      = new ArrayList<>();
-        List<MutableIndex>      indexes     = new ArrayList<>();
+        List<MutableUniqueKey>  uniqueKeys  = new MutableNamedList<>();
+        List<MutableForeignKey> foreignKeys = new MutableNamedList<>();
+        List<MutableCheck>      checks      = new MutableNamedList<>();
+        List<MutableIndex>      indexes     = new MutableNamedList<>();
         TableOptions            options;
 
         MutableTable(UnqualifiedName name, MutableSchema schema, Comment comment, TableOptions options) {
@@ -1295,8 +1295,31 @@ final class DDLInterpreter {
             schema.tables.add(this);
         }
 
+        @Override
+        void drop() {
+            if (primaryKey != null)
+                primaryKey.drop();
+
+            uniqueKeys.clear();
+            foreignKeys.clear();
+            checks.clear();
+            indexes.clear();
+            fields.clear();
+        }
+
+        boolean hasReferencingTables() {
+            if (primaryKey != null && !primaryKey.referencingKeys.isEmpty())
+                return true;
+
+            for (MutableUniqueKey uk : uniqueKeys)
+                if (!uk.referencingKeys.isEmpty())
+                    return true;
+
+            return false;
+        }
+
         final MutableNamed constraint(Constraint constraint) {
-            for (MutableForeignKey mfk : foreignkeys)
+            for (MutableForeignKey mfk : foreignKeys)
                 if (mfk.name.equals(constraint.getUnqualifiedName()))
                     return mfk;
 
@@ -1408,7 +1431,7 @@ final class DDLInterpreter {
             public List<ForeignKey<Record, ?>> getReferences() {
                 List<ForeignKey<Record, ?>> result = new ArrayList<>();
 
-                for (MutableForeignKey fk : MutableTable.this.foreignkeys)
+                for (MutableForeignKey fk : MutableTable.this.foreignKeys)
                     result.add(interpretedKey(fk));
 
                 return result;
@@ -1538,6 +1561,8 @@ final class DDLInterpreter {
     }
 
     private static final class MutableUniqueKey extends MutableKey {
+        List<MutableForeignKey> referencingKeys = new MutableNamedList<>();
+
         MutableUniqueKey(UnqualifiedName name, MutableTable keyTable, List<MutableField> keyFields) {
             super(name, keyTable, keyFields);
         }
@@ -1545,8 +1570,8 @@ final class DDLInterpreter {
 
     private static final class MutableForeignKey extends MutableKey {
         MutableUniqueKey referencedKey;
-        Action onDelete;
-        Action onUpdate;
+        Action           onDelete;
+        Action           onUpdate;
 
         MutableForeignKey(
             UnqualifiedName name,
@@ -1559,8 +1584,14 @@ final class DDLInterpreter {
             super(name, keyTable, keyFields);
 
             this.referencedKey = referencedKey;
+            this.referencedKey.referencingKeys.add(this);
             this.onDelete = onDelete;
             this.onUpdate = onUpdate;
+        }
+
+        @Override
+        void drop() {
+            this.referencedKey.referencingKeys.remove(this);
         }
     }
 
@@ -1580,7 +1611,7 @@ final class DDLInterpreter {
 
     private static final class MutableField extends MutableNamed {
         MutableTable table;
-        DataType<?> type;
+        DataType<?>  type;
 
         MutableField(UnqualifiedName name, MutableTable table, DataType<?> type) {
             super(name);
@@ -1592,13 +1623,44 @@ final class DDLInterpreter {
 
     private static final class MutableSortField extends MutableNamed {
         MutableField field;
-        SortOrder sort;
+        SortOrder    sort;
 
         MutableSortField(MutableField field, SortOrder sort) {
             super(field.name);
 
             this.field = field;
             this.sort = sort;
+        }
+    }
+
+    private static final class MutableNamedList<N extends MutableNamed> extends AbstractList<N> {
+        private final List<N> delegate = new ArrayList<>();
+
+        @Override
+        public N get(int index) {
+            return delegate.get(index);
+        }
+
+        @Override
+        public int size() {
+            return delegate.size();
+        }
+
+        @Override
+        public N set(int index, N element) {
+            return delegate.set(index, element);
+        }
+
+        @Override
+        public void add(int index, N element) {
+            delegate.add(index, element);
+        }
+
+        @Override
+        public N remove(int index) {
+            N removed = delegate.remove(index);
+            removed.drop();
+            return removed;
         }
     }
 

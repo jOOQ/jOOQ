@@ -90,7 +90,7 @@ final class DiagnosticsResultSet extends DefaultResultSet {
         this.nullable = new BitSet(columns);
 
         for (int i = 0; i < columns; i++)
-            nullable.set(i, meta.isNullable(i + 1) == ResultSetMetaData.columnNullable);
+            nullable.set(i, meta.isNullable(i + 1) != ResultSetMetaData.columnNoNulls);
     }
 
     // ------------------------------------------------------------------------

@@ -67,6 +67,12 @@
             <element name="character_maximum_length" type="int" minOccurs="0" maxOccurs="1" />
             <element name="numeric_precision" type="int" minOccurs="0" maxOccurs="1" />
             <element name="numeric_scale" type="int" minOccurs="0" maxOccurs="1" />
+            <element name="start_with" type="long" minOccurs="0" maxOccurs="1" />
+            <element name="increment_by" type="long" minOccurs="0" maxOccurs="1" />
+            <element name="min_value" type="long" minOccurs="0" maxOccurs="1" />
+            <element name="max_value" type="long" minOccurs="0" maxOccurs="1" />
+            <element name="cycle" type="boolean" minOccurs="0" maxOccurs="1" />
+            <element name="cache" type="long" minOccurs="0" maxOccurs="1" />
             <element name="comment" type="string" minOccurs="0" maxOccurs="1" />
         </all>
     </complexType>

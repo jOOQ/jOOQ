@@ -149,7 +149,18 @@ public final class Internal {
      * Factory method for sequences.
      */
     public static final <T extends Number> Sequence<T> createSequence(String name, Schema schema, DataType<T> type, Long startWith, Long incrementBy, Long minValue, Long maxValue, boolean cycle, Long cache) {
-        return new SequenceImpl<>(DSL.name(name), schema, type, false, Tools.field(startWith, type), Tools.field(incrementBy, type), Tools.field(minValue, type), Tools.field(maxValue, type), cycle, Tools.field(cache, type));
+        return new SequenceImpl<>(
+            DSL.name(name),
+            schema,
+            type,
+            false,
+            startWith != null ? Tools.field(startWith, type) : null,
+            incrementBy != null ? Tools.field(incrementBy, type) : null,
+            minValue != null ? Tools.field(minValue, type) : null,
+            maxValue != null ? Tools.field(maxValue, type) : null,
+            cycle,
+            cache != null ? Tools.field(cache, type) : null
+        );
     }
 
     /**

@@ -54,12 +54,14 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Index;
 import org.jooq.Key;
+import org.jooq.Param;
 import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.SortField;
 import org.jooq.SortOrder;
 import org.jooq.Table;
 import org.jooq.UniqueKey;
+import org.jooq.tools.Convert;
 import org.jooq.tools.StringUtils;
 import org.jooq.util.xml.jaxb.CheckConstraint;
 import org.jooq.util.xml.jaxb.Column;
@@ -176,6 +178,18 @@ final class InformationSchemaExport {
 
         if (q.getDataType().hasScale())
             iq.setNumericScale(q.getDataType().scale());
+
+        if (q.getStartWith() != null)
+            iq.setStartWith(Convert.convert(q.getStartWith() instanceof Param ? ((Param<?>) q.getStartWith()).getValue() : q.getStartWith().toString(), Long.class));
+        if (q.getIncrementBy() != null)
+            iq.setIncrementBy(Convert.convert(q.getIncrementBy() instanceof Param ? ((Param<?>) q.getIncrementBy()).getValue() : q.getIncrementBy().toString(), Long.class));
+        if (q.getMinValue() != null)
+            iq.setMinValue(Convert.convert(q.getMinValue() instanceof Param ? ((Param<?>) q.getMinValue()).getValue() : q.getMinValue().toString(), Long.class));
+        if (q.getMaxValue() != null)
+            iq.setMaxValue(Convert.convert(q.getMaxValue() instanceof Param ? ((Param<?>) q.getMaxValue()).getValue() : q.getMaxValue().toString(), Long.class));
+        iq.setCycle(q.getCycle());
+        if (q.getCache() != null)
+            iq.setCache(Convert.convert(q.getCache() instanceof Param ? ((Param<?>) q.getCache()).getValue() : q.getCache().toString(), Long.class));
 
         result.getSequences().add(iq);
     }

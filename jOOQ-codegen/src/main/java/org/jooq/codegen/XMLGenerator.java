@@ -347,6 +347,13 @@ public class XMLGenerator extends AbstractGenerator {
                     sequence.setNumericPrecision(type.getPrecision());
                     sequence.setNumericScale(type.getScale());
 
+                    sequence.setStartWith(se.getStartWith());
+                    sequence.setIncrementBy(se.getIncrementBy());
+                    sequence.setMinValue(se.getMinValue());
+                    sequence.setMaxValue(se.getMaxValue());
+                    sequence.setCycle(se.getCycle());
+                    sequence.setCache(se.getCache());
+
                     is.getSequences().add(sequence);
                 }
 

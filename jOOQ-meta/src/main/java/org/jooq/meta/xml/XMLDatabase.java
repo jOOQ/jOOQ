@@ -507,7 +507,17 @@ public class XMLDatabase extends AbstractDatabase {
                     (String) null
                 );
 
-                result.add(new DefaultSequenceDefinition(schema, sequence.getSequenceName(), type, sequence.getComment()));
+                result.add(new DefaultSequenceDefinition(
+                    schema,
+                    sequence.getSequenceName(),
+                    type,
+                    sequence.getComment(),
+                    sequence.getStartWith(),
+                    sequence.getIncrementBy(),
+                    sequence.getMinValue(),
+                    sequence.getMaxValue(),
+                    Boolean.TRUE.equals(sequence.isCycle()),
+                    sequence.getCache()));
             }
         }
 

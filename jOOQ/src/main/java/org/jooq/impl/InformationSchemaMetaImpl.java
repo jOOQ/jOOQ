@@ -448,12 +448,24 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
             int precision = xs.getNumericPrecision() == null ? 0 : xs.getNumericPrecision();
             int scale = xs.getNumericScale() == null ? 0 : xs.getNumericScale();
             boolean nullable = true;
+            Long startWith = xs.getStartWith();
+            Long incrementBy = xs.getIncrementBy();
+            Long minValue = xs.getMinValue();
+            Long maxValue = xs.getMaxValue();
+            Boolean cycle = xs.isCycle();
+            Long cache = xs.getCache();
 
             @SuppressWarnings({ "rawtypes", "unchecked" })
             InformationSchemaSequence is = new InformationSchemaSequence(
                 xs.getSequenceName(),
                 schema,
-                type(typeName, length, precision, scale, nullable)
+                type(typeName, length, precision, scale, nullable),
+                startWith,
+                incrementBy,
+                minValue,
+                maxValue,
+                cycle,
+                cache
             );
 
             sequences.add(is);
@@ -636,8 +648,18 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
          */
         private static final long serialVersionUID = -1246697252597049756L;
 
-        InformationSchemaSequence(String name, Schema schema, DataType<N> type) {
-            super(name, schema, type);
+        InformationSchemaSequence(String name, Schema schema, DataType<N> type, Long startWith, Long incrementBy, Long minValue, Long maxValue, Boolean cycle, Long cache) {
+            super(DSL.name(name),
+                schema,
+                type,
+                false,
+                startWith != null ? Tools.field(startWith, type) : null,
+                incrementBy != null ? Tools.field(incrementBy, type) : null,
+                minValue != null ? Tools.field(minValue, type) : null,
+                maxValue != null ? Tools.field(maxValue, type) : null,
+                Boolean.TRUE.equals(cycle),
+                cache != null ? Tools.field(cache, type) : null
+            );
         }
     }
 

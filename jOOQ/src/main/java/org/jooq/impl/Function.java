@@ -288,7 +288,14 @@ class Function<T> extends AbstractField<T> implements
             Field<BigDecimal> logarithmsSum = new CustomField<BigDecimal>("sum", NUMERIC) {
                 @Override
                 public void accept(Context<?> c) {
-                    Field<BigDecimal> ln = DSL.ln(DSL.abs(DSL.nullif(f, zero())));
+                    Field<Integer> abs = DSL.abs(DSL.nullif(f, zero()));
+                    Field<BigDecimal> ln =
+
+
+
+
+
+                        DSL.ln(abs);
 
                     c.visit(distinct
                         ? DSL.sumDistinct(ln)

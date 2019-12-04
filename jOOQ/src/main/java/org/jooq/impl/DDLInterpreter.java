@@ -415,6 +415,7 @@ final class DDLInterpreter {
                 else if (fc instanceof Constraint && !fc.getUnqualifiedName().empty() && existing.constraint((Constraint) fc) != null)
                     throw constraintAlreadyExists((Constraint) fc);
 
+            // TODO: ReverseIterable is not a viable approach if we also allow constraints to be added this way
             if (query.$addFirst()) {
                 for (Field<?> f : assertFields(query, reverseIterable(query.$add())))
                     addField(existing, 0, (UnqualifiedName) f.getUnqualifiedName(), ((Field<?>) f).getDataType());

@@ -38,11 +38,16 @@
 
 package org.jooq.meta.mariadb;
 
+import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.nullif;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.DSLContext;
+import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
@@ -58,6 +63,9 @@ import org.jooq.util.mariadb.MariaDBDataType;
  * @author Lukas Eder
  */
 public class MariaDBDatabase extends MySQLDatabase {
+
+    private static final long DEFAULT_SEQUENCE_MAXVALUE = Long.MAX_VALUE - 1;
+    private static final long DEFAULT_SEQUENCE_CACHE = 1000L;
 
     @Override
     protected DSLContext create0() {
@@ -83,7 +91,29 @@ public class MariaDBDatabase extends MySQLDatabase {
                     MariaDBDataType.BIGINT.getTypeName()
                 );
 
-                result.add(new DefaultSequenceDefinition(schema, name, type));
+                Field<Long> startWith = nullif(field("start_value", Long.class), inline(1L));
+                Field<Long> incrementBy = nullif(field("increment", Long.class), inline(1L));
+                Field<Long> minValue = inline(field("minimum_value", Long.class), inline(1L));
+                Field<Long> maxValue = nullif(field("maximum_value", Long.class), inline(DEFAULT_SEQUENCE_MAXVALUE));
+                Field<Boolean> cycle = field("cycle_option", Boolean.class);
+                Field<Long> cache = nullif(field("cache_size", Long.class), inline(DEFAULT_SEQUENCE_CACHE));
+
+                Record flagsRecord = create()
+                    .select(startWith, incrementBy, minValue, maxValue, cycle, cache)
+                    .from(DSL.name(schema.getName(), name))
+                    .fetchOne();
+                result.add(new DefaultSequenceDefinition(
+                    schema,
+                    name,
+                    type,
+                    null,
+                    flagsRecord.get(startWith),
+                    flagsRecord.get(incrementBy),
+                    flagsRecord.get(minValue),
+                    flagsRecord.get(maxValue),
+                    flagsRecord.get(cycle),
+                    flagsRecord.get(cache)
+                ));
             }
         }
 

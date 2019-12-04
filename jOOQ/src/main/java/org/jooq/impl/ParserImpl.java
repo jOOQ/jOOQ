@@ -3493,7 +3493,7 @@ final class ParserImpl implements Parser {
         boolean nullable = false;
         boolean defaultValue = false;
         boolean onUpdate = false;
-        boolean unique = primary;
+        boolean unique = false;
         boolean identity = type.identity();
         boolean comment = false;
         Comment fieldComment = null;

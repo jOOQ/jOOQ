@@ -1187,6 +1187,11 @@ final class DDLInterpreter {
             super(name, null);
         }
 
+        @Override
+        void drop() {
+            schemas.clear();
+        }
+
         final MutableSchema getSchema(UnqualifiedName n) {
             for (MutableSchema schema : schemas)
                 if (schema.name.equals(n))
@@ -1221,11 +1226,13 @@ final class DDLInterpreter {
             super(name);
 
             this.catalog = catalog;
+            this.catalog.schemas.add(this);
+        }
 
-            // TODO: I'm not sure we should let the constructor add "this" to
-            //       someone else's collection. We're probably reusing code, but
-            //       it seems surprising and is already inconsistent
-            catalog.schemas.add(this);
+        @Override
+        void drop() {
+            tables.clear();
+            sequences.clear();
         }
 
         final boolean isEmpty() {

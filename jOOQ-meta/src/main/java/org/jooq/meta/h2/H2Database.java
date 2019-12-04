@@ -116,6 +116,7 @@ import org.jooq.util.h2.H2DataType;
  */
 public class H2Database extends AbstractDatabase {
 
+    private static final long DEFAULT_SEQUENCE_CACHE    = 32;
     private static final long DEFAULT_SEQUENCE_MAXVALUE = Long.MAX_VALUE;
 
     @Override
@@ -399,12 +400,12 @@ public class H2Database extends AbstractDatabase {
         for (Record record : create().select(
                     Sequences.SEQUENCE_SCHEMA,
                     Sequences.SEQUENCE_NAME,
-                    Sequences.INCREMENT,
-                    Sequences.MIN_VALUE,
+                    nullif(Sequences.INCREMENT, one()).as(Sequences.INCREMENT),
+                    nullif(Sequences.MIN_VALUE, one()).as(Sequences.MIN_VALUE),
                     nullif(Sequences.MAX_VALUE, inline(DEFAULT_SEQUENCE_MAXVALUE)).as(Sequences.MAX_VALUE),
                     Sequences.IS_CYCLE,
-                    Sequences.CACHE
-                    )
+                    nullif(Sequences.CACHE, inline(DEFAULT_SEQUENCE_CACHE)).as(Sequences.CACHE)
+                )
                 .from(SEQUENCES)
                 .where(Sequences.SEQUENCE_SCHEMA.in(getInputSchemata()))
                 .and(Sequences.SEQUENCE_NAME.upper().notLike("SYSTEM!_SEQUENCE!_%", '!'))

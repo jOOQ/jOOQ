@@ -39,6 +39,12 @@ package org.jooq;
 
 /**
  * A JSON wrapper type for JSON data obtained from the database.
+ * <p>
+ * The wrapper represents JSON {@link #data()} in serialised string form. A
+ * <code>CAST(NULL AS JSON)</code> value is represented by a <code>null</code>
+ * reference of type {@link JSON}, not as <code>data() == null</code>. This is
+ * consistent with jOOQ's general way of returning <code>NULL</code> from
+ * {@link Result} and {@link Record} methods.
  */
 public final class JSON {
 

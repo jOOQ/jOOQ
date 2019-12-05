@@ -74,6 +74,7 @@ import org.jooq.Meta;
 import org.jooq.Name;
 import org.jooq.Name.Quoted;
 import org.jooq.Named;
+import org.jooq.Nullability;
 import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Schema;
@@ -477,7 +478,11 @@ final class DDLInterpreter {
             if (query.$alterColumnNullability() != null)
                 existingField.type = existingField.type.nullability(query.$alterColumnNullability());
             else if (query.$alterColumnType() != null)
-                existingField.type = query.$alterColumnType();
+                existingField.type = query.$alterColumnType().nullability(
+                      query.$alterColumnType().nullability() == Nullability.DEFAULT
+                    ? existingField.type.nullability()
+                    : query.$alterColumnType().nullability()
+                );
             else if (query.$alterColumnDefault() != null)
                 existingField.type = existingField.type.default_((Field) query.$alterColumnDefault());
             else if (query.$alterColumnDropDefault())

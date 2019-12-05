@@ -154,6 +154,9 @@ final class MigrationImpl extends AbstractScope implements Migration {
                     // TODO: Add some migration settings, e.g. whether CHANGELOG.SQL should be filled
                     // TODO: Migrate the CHANGELOG table with the Migration API
                     // TODO: Create an Enum for CHANGELOG.STATUS
+                    // TODO: Add CHANGELOG.USERNAME and HOSTNAME columns
+                    // TODO: Add CHANGELOG.COMMENTS column
+                    // TODO: Replace (MIGRATED_AT, MIGRATION_TIME) by (MIGRATION_START, MIGRATION_END)
 
                     log.info("jOOQ Migrations", "Version " + from().id() + " is migrated to " + to().id());
 

@@ -42,7 +42,6 @@ import static org.jooq.impl.Cascade.CASCADE;
 import static org.jooq.impl.Cascade.RESTRICT;
 import static org.jooq.impl.ConstraintType.FOREIGN_KEY;
 import static org.jooq.impl.ConstraintType.PRIMARY_KEY;
-import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.intersect;
@@ -72,7 +71,6 @@ import org.jooq.Insert;
 import org.jooq.Merge;
 import org.jooq.Meta;
 import org.jooq.Name;
-import org.jooq.Name.Quoted;
 import org.jooq.Named;
 import org.jooq.Nullability;
 import org.jooq.Query;
@@ -412,7 +410,7 @@ final class DDLInterpreter {
 
         if (query.$add() != null) {
             for (FieldOrConstraint fc : query.$add())
-                if (fc instanceof Field && existing.field((Field<?>) fc) != null)
+                if (fc instanceof Field && find(existing.fields, (Field<?>) fc) != null)
                     throw fieldAlreadyExists((Field<?>) fc);
                 else if (fc instanceof Constraint && !fc.getUnqualifiedName().empty() && existing.constraint((Constraint) fc) != null)
                     throw constraintAlreadyExists((Constraint) fc);
@@ -423,13 +421,13 @@ final class DDLInterpreter {
                     addField(existing, 0, (UnqualifiedName) f.getUnqualifiedName(), ((Field<?>) f).getDataType());
             }
             else if (query.$addBefore() != null) {
-                int index = indexOrFail(existing, query.$addBefore());
+                int index = indexOrFail(existing.fields, query.$addBefore());
 
                 for (Field<?> f : assertFields(query, reverseIterable(query.$add())))
                     addField(existing, index, (UnqualifiedName) f.getUnqualifiedName(), ((Field<?>) f).getDataType());
             }
             else if (query.$addAfter() != null) {
-                int index = indexOrFail(existing, query.$addAfter()) + 1;
+                int index = indexOrFail(existing.fields, query.$addAfter()) + 1;
 
                 for (Field<?> f : assertFields(query, reverseIterable(query.$add())))
                     addField(existing, index, (UnqualifiedName) f.getUnqualifiedName(), ((Field<?>) f).getDataType());
@@ -445,7 +443,7 @@ final class DDLInterpreter {
             }
         }
         else if (query.$addColumn() != null) {
-            if (existing.field(query.$addColumn()) != null)
+            if (find(existing.fields, query.$addColumn()) != null)
                 if (!query.$ifNotExistsColumn())
                     throw fieldAlreadyExists(query.$addColumn());
                 else
@@ -457,9 +455,9 @@ final class DDLInterpreter {
             if (query.$addFirst())
                 addField(existing, 0, name, dataType);
             else if (query.$addBefore() != null)
-                addField(existing, indexOrFail(existing, query.$addBefore()), name, dataType);
+                addField(existing, indexOrFail(existing.fields, query.$addBefore()), name, dataType);
             else if (query.$addAfter() != null)
-                addField(existing, indexOrFail(existing, query.$addAfter()) + 1, name, dataType);
+                addField(existing, indexOrFail(existing.fields, query.$addAfter()) + 1, name, dataType);
             else
                 addField(existing, Integer.MAX_VALUE, name, dataType);
         }
@@ -467,7 +465,7 @@ final class DDLInterpreter {
             addConstraint(query, (ConstraintImpl) query.$addConstraint(), schema, existing);
         }
         else if (query.$alterColumn() != null) {
-            MutableField existingField = existing.field(query.$alterColumn());
+            MutableField existingField = find(existing.fields, query.$alterColumn());
 
             if (existingField == null)
                 if (!query.$ifExistsColumn())
@@ -494,11 +492,11 @@ final class DDLInterpreter {
             existing.name = (UnqualifiedName) query.$renameTo().getUnqualifiedName();
         }
         else if (query.$renameColumn() != null) {
-            MutableField mf = existing.field(query.$renameColumn());
+            MutableField mf = find(existing.fields, query.$renameColumn());
 
             if (mf == null)
                 throw fieldNotExists(query.$renameColumn());
-            else if (existing.field(query.$renameColumnTo()) != null)
+            else if (find(existing.fields, query.$renameColumnTo()) != null)
                 throw fieldAlreadyExists(query.$renameColumnTo());
             else
                 mf.name = (UnqualifiedName) query.$renameColumnTo().getUnqualifiedName();
@@ -636,22 +634,6 @@ final class DDLInterpreter {
             existing.checks.add(new MutableCheck((UnqualifiedName) impl.getUnqualifiedName(), existing, impl.$check()));
         else
             throw unsupportedQuery(query);
-    }
-
-    private final int indexOrFail(MutableTable existing, Field<?> field) {
-        int result = -1;
-
-        for (int i = 0; i < existing.fields.size(); i++) {
-            if (existing.fields.get(i).name.equals(field.getUnqualifiedName())) {
-                result = i;
-                break;
-            }
-        }
-
-        if (result == -1)
-            throw fieldNotExists(field);
-
-        return result;
     }
 
     private final void accept0(DropTableImpl query) {
@@ -854,7 +836,7 @@ final class DDLInterpreter {
         if (mt == null)
             throw tableNotExists(table);
 
-        MutableIndex existing = mt.index(index);
+        MutableIndex existing = find(mt.indexes, index);
         List<MutableSortField> mtf = mt.sortFields(query.$sortFields());
 
         if (existing != null) {
@@ -997,6 +979,10 @@ final class DDLInterpreter {
         return new DataDefinitionException("Field already exists: " + field.getQualifiedName());
     }
 
+    private static final DataDefinitionException objectNotExists(Named named) {
+        return new DataDefinitionException("Object does not exist: " + named.getQualifiedName());
+    }
+
     // -------------------------------------------------------------------------
     // Auxiliary methods
     // -------------------------------------------------------------------------
@@ -1034,10 +1020,9 @@ final class DDLInterpreter {
             return null;
 
         MutableSchema schema = defaultSchema;
-        UnqualifiedName schemaName = (UnqualifiedName) input.getUnqualifiedName();
-        if ((schema = catalog.getSchema(schemaName)) == null && create)
+        if ((schema = find(catalog.schemas, input)) == null && create)
             // TODO createSchemaIfNotExists should probably be configurable
-            schema = new MutableSchema(schemaName, catalog);
+            schema = new MutableSchema((UnqualifiedName) input.getUnqualifiedName(), catalog);
 
         return schema;
     }
@@ -1090,7 +1075,7 @@ final class DDLInterpreter {
         }
         else {
             for (MutableTable mt1 : tables()) {
-                if ((mi = mt1.index(index)) != null) {
+                if ((mi = find(mt1.indexes, index)) != null) {
                     mt = mt1;
                     ms = mt1.schema;
                     break;
@@ -1099,7 +1084,7 @@ final class DDLInterpreter {
         }
 
         if (mt != null)
-            mi = mt.index(index);
+            mi = find(mt.indexes, index);
         else if (table != null && throwIfNotExists)
             throw tableNotExists(table);
 
@@ -1135,7 +1120,7 @@ final class DDLInterpreter {
         if (table == null)
             return null;
 
-        MutableField result = table.field(field);
+        MutableField result = find(table.fields, field);
 
         if (result == null && throwIfNotExists)
             throw fieldNotExists(field);
@@ -1143,21 +1128,39 @@ final class DDLInterpreter {
         return result;
     }
 
-    // TODO We shouldn't need this "normalize" method, but instead, work out how
-    //      we can implement equivalent logic using configuration.
-    private static final UnqualifiedName normalize(Named named) {
-        return normalize((UnqualifiedName) named.getUnqualifiedName());
+    private static final <M extends MutableNamed> M find(M m, Named named) {
+        if (m != null && m.name.equals(named.getUnqualifiedName()))
+            return m;
+        else
+            return null;
     }
 
-    private static final UnqualifiedName normalize(UnqualifiedName name) {
-        if (name == null)
-            return null;
+    private static final <M extends MutableNamed> M find(List<? extends M> list, Named named) {
+        UnqualifiedName n = (UnqualifiedName) named.getUnqualifiedName();
 
-        if (name.quoted() == Quoted.QUOTED)
-            return name;
+        // TODO Avoid O(N) lookups. Use Maps instead
+        for (M m : list)
+            if (m.name.equals(n))
+                return m;
 
-        String lowerCase = name.first().toLowerCase();
-        return (UnqualifiedName) (name.first() == lowerCase ? name : unquotedName(lowerCase));
+        return null;
+    }
+
+    private static final int indexOrFail(List<? extends MutableNamed> list, Named named) {
+        int result = -1;
+
+        // TODO Avoid O(N) lookups. Use Maps instead
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).name.equals(named.getUnqualifiedName())) {
+                result = i;
+                break;
+            }
+        }
+
+        if (result == -1)
+            throw objectNotExists(named);
+
+        return result;
     }
 
     // -------------------------------------------------------------------------
@@ -1173,7 +1176,7 @@ final class DDLInterpreter {
         }
 
         MutableNamed(UnqualifiedName name, Comment comment) {
-            this.name = normalize(name);
+            this.name = name;
             this.comment = comment;
         }
 
@@ -1195,14 +1198,6 @@ final class DDLInterpreter {
         @Override
         final void drop() {
             schemas.clear();
-        }
-
-        final MutableSchema getSchema(UnqualifiedName n) {
-            for (MutableSchema schema : schemas)
-                if (schema.name.equals(n))
-                    return schema;
-
-            return null;
         }
 
         private final class InterpretedCatalog extends CatalogImpl {
@@ -1250,16 +1245,6 @@ final class DDLInterpreter {
 
         final MutableSequence sequence(Sequence<?> s) {
             return find(sequences, s);
-        }
-
-        final <M extends MutableNamed> M find(List<? extends M> list, Named named) {
-            UnqualifiedName n = normalize(named);
-
-            for (M m : list)
-                if (m.name.equals(n))
-                    return m;
-
-            return null;
         }
 
         private final class InterpretedSchema extends SchemaImpl {
@@ -1331,39 +1316,25 @@ final class DDLInterpreter {
         }
 
         final MutableNamed constraint(Constraint constraint) {
-            for (MutableForeignKey mfk : foreignKeys)
-                if (mfk.name.equals(constraint.getUnqualifiedName()))
-                    return mfk;
+            MutableNamed result;
 
-            for (MutableUniqueKey muk : uniqueKeys)
-                if (muk.name.equals(constraint.getUnqualifiedName()))
-                    return muk;
+            if ((result = find(foreignKeys, constraint)) != null)
+                return result;
 
-            for (MutableCheck chk : checks)
-                if (chk.name.equals(constraint.getUnqualifiedName()))
-                    return chk;
+            if ((result = find(uniqueKeys, constraint)) != null)
+                return result;
 
-            if (primaryKey != null && primaryKey.name.equals(constraint.getUnqualifiedName()))
-                return primaryKey;
-            else
-                return null;
-        }
+            if ((result = find(checks, constraint)) != null)
+                return result;
 
-        final MutableField field(Field<?> f) {
-            Name n = f.getUnqualifiedName();
-
-            for (MutableField mf : fields)
-                if (mf.name.equals(n))
-                    return mf;
-
-            return null;
+            return find(primaryKey, constraint);
         }
 
         final List<MutableField> fields(Field<?>[] fs, boolean failIfNotFound) {
             List<MutableField> result = new ArrayList<>();
 
             for (Field<?> f : fs) {
-                MutableField mf = field(f);
+                MutableField mf = find(fields, f);
 
                 if (mf != null)
                     result.add(mf);
@@ -1379,7 +1350,7 @@ final class DDLInterpreter {
 
             for (SortField<?> sf : sfs) {
                 Field<?> f = ((SortFieldImpl<?>) sf).getField();
-                MutableField mf = field(f);
+                MutableField mf = find(fields, f);
 
                 if (mf == null)
                     throw new DataDefinitionException("Field does not exist in table: " + f.getQualifiedName());
@@ -1388,16 +1359,6 @@ final class DDLInterpreter {
             }
 
             return result;
-        }
-
-        final MutableIndex index(Index i) {
-            Name n = i.getUnqualifiedName();
-
-            for (MutableIndex mi : indexes)
-                if (mi.name.equals(n))
-                    return mi;
-
-            return null;
         }
 
         final MutableUniqueKey uniqueKey(List<MutableField> mrfs) {

@@ -44,12 +44,12 @@ public class DefaultSequenceDefinition
     extends AbstractTypedElementDefinition<SchemaDefinition>
     implements SequenceDefinition {
 
-    private Long startWith;
-    private Long incrementBy;
-    private Long minValue;
-    private Long maxValue;
+    private Number startWith;
+    private Number incrementBy;
+    private Number minValue;
+    private Number maxValue;
     private boolean cycle;
-    private Long cache;
+    private Number cache;
 
     public DefaultSequenceDefinition(SchemaDefinition schema, String name, DataTypeDefinition type) {
         this(schema, name, type, null);
@@ -59,7 +59,7 @@ public class DefaultSequenceDefinition
         this(schema, name, type, comment, null, null, null, null, false, null);
     }
 
-    public DefaultSequenceDefinition(SchemaDefinition schema, String name, DataTypeDefinition type, String comment, Long startWith, Long incrementBy, Long minValue, Long maxValue, boolean cycle, Long cache) {
+    public DefaultSequenceDefinition(SchemaDefinition schema, String name, DataTypeDefinition type, String comment, Number startWith, Number incrementBy, Number minValue, Number maxValue, boolean cycle, Number cache) {
         super(schema, name, -1, type, comment);
 
         this.startWith = startWith;
@@ -71,22 +71,22 @@ public class DefaultSequenceDefinition
     }
 
     @Override
-    public Long getStartWith() {
+    public Number getStartWith() {
         return startWith;
     }
 
     @Override
-    public Long getIncrementBy() {
+    public Number getIncrementBy() {
         return incrementBy;
     }
 
     @Override
-    public Long getMinValue() {
+    public Number getMinvalue() {
         return minValue;
     }
 
     @Override
-    public Long getMaxValue() {
+    public Number getMaxvalue() {
         return maxValue;
     }
 
@@ -96,7 +96,7 @@ public class DefaultSequenceDefinition
     }
 
     @Override
-    public Long getCache() {
+    public Number getCache() {
         return cache;
     }
 }

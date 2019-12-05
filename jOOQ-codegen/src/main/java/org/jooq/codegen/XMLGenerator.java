@@ -44,6 +44,7 @@ import static org.jooq.util.xml.jaxb.TableConstraintType.PRIMARY_KEY;
 import static org.jooq.util.xml.jaxb.TableConstraintType.UNIQUE;
 
 import java.io.StringWriter;
+import java.math.BigInteger;
 import java.util.List;
 
 import org.jooq.SortOrder;
@@ -62,6 +63,7 @@ import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
 import org.jooq.meta.TableDefinition;
 import org.jooq.meta.UniqueKeyDefinition;
+import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 import org.jooq.util.jaxb.tools.MiniJAXB;
@@ -347,12 +349,12 @@ public class XMLGenerator extends AbstractGenerator {
                     sequence.setNumericPrecision(type.getPrecision());
                     sequence.setNumericScale(type.getScale());
 
-                    sequence.setStartWith(se.getStartWith());
-                    sequence.setIncrementBy(se.getIncrementBy());
-                    sequence.setMinValue(se.getMinValue());
-                    sequence.setMaxValue(se.getMaxValue());
-                    sequence.setCycle(se.getCycle());
-                    sequence.setCache(se.getCache());
+                    sequence.setStartValue(Convert.convert(se.getStartWith(), BigInteger.class));
+                    sequence.setIncrement(Convert.convert(se.getIncrementBy(), BigInteger.class));
+                    sequence.setMinimumValue(Convert.convert(se.getMinvalue(), BigInteger.class));
+                    sequence.setMaximumValue(Convert.convert(se.getMaxvalue(), BigInteger.class));
+                    sequence.setCycleOption(se.getCycle());
+                    sequence.setCache(Convert.convert(se.getCache(), BigInteger.class));
 
                     is.getSequences().add(sequence);
                 }

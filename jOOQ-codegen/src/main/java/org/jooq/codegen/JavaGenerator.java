@@ -4634,8 +4634,8 @@ public class JavaGenerator extends AbstractGenerator {
                     typeRef,
                     sequence.getStartWith() != null ? sequence.getStartWith() + "L" : "null",
                     sequence.getIncrementBy() != null ? sequence.getIncrementBy() + "L" : "null",
-                    sequence.getMinValue() != null ? sequence.getMinValue() + "L" : "null",
-                    sequence.getMaxValue() != null ? sequence.getMaxValue() + "L" : "null",
+                    sequence.getMinvalue() != null ? sequence.getMinvalue() + "L" : "null",
+                    sequence.getMaxvalue() != null ? sequence.getMaxvalue() + "L" : "null",
                     sequence.getCycle(),
                     sequence.getCache() != null ? sequence.getCache() + "L" : "null");
             else
@@ -4650,8 +4650,8 @@ public class JavaGenerator extends AbstractGenerator {
                     typeRef,
                     sequence.getStartWith() != null ? sequence.getStartWith() + "L" : "null",
                     sequence.getIncrementBy() != null ? sequence.getIncrementBy() + "L" : "null",
-                    sequence.getMinValue() != null ? sequence.getMinValue() + "L" : "null",
-                    sequence.getMaxValue() != null ? sequence.getMaxValue() + "L" : "null",
+                    sequence.getMinvalue() != null ? sequence.getMinvalue() + "L" : "null",
+                    sequence.getMaxvalue() != null ? sequence.getMaxvalue() + "L" : "null",
                     sequence.getCycle(),
                     sequence.getCache() != null ? sequence.getCache() + "L" : "null"
                 );

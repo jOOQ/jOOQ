@@ -97,17 +97,17 @@ public interface Sequence<T extends Number> extends Named {
      * Get the minimum value for this sequence or <code>null</code>, if no such
      * value is specified.
      */
-    Field<T> getMinValue();
+    Field<T> getMinvalue();
 
     /**
      * Get the maximum value for this sequence or <code>null</code>, if no such
      * value is specified.
      */
-    Field<T> getMaxValue();
+    Field<T> getMaxvalue();
 
     /**
-     * Returns {@code true} if this sequence cycles to {@link #getMinValue()}
-     * when it reaches {@link #getMaxValue()}.
+     * Returns {@code true} if this sequence cycles to {@link #getMinvalue()}
+     * when it reaches {@link #getMaxvalue()}.
      */
     boolean getCycle();
 

@@ -759,8 +759,8 @@ final class DDLInterpreter {
 
         ms.startWith = query.$startWith();
         ms.incrementBy = query.$incrementBy();
-        ms.minValue = query.$noMinvalue() ? null : query.$minvalue();
-        ms.maxValue = query.$noMaxvalue() ? null : query.$maxvalue();
+        ms.minvalue = query.$noMinvalue() ? null : query.$minvalue();
+        ms.maxvalue = query.$noMaxvalue() ? null : query.$maxvalue();
         ms.cycle = query.$cycle();
         ms.cache = query.$noCache() ? null : query.$cache();
     }
@@ -796,15 +796,15 @@ final class DDLInterpreter {
 
             Field<? extends Number> minvalue = query.$minvalue();
             if (minvalue != null && (seen |= true))
-                existing.minValue = minvalue;
+                existing.minvalue = minvalue;
             else if (query.$noMinvalue() && (seen |= true))
-                existing.minValue = null;
+                existing.minvalue = null;
 
             Field<? extends Number> maxvalue = query.$maxvalue();
             if (maxvalue != null && (seen |= true))
-                existing.maxValue = maxvalue;
+                existing.maxvalue = maxvalue;
             else if (query.$noMaxvalue() && (seen |= true))
-                existing.maxValue = null;
+                existing.maxvalue = null;
 
             Boolean cycle = query.$cycle();
             if (cycle != null && (seen |= true))
@@ -1517,8 +1517,8 @@ final class DDLInterpreter {
         MutableSchema           schema;
         Field<? extends Number> startWith;
         Field<? extends Number> incrementBy;
-        Field<? extends Number> minValue;
-        Field<? extends Number> maxValue;
+        Field<? extends Number> minvalue;
+        Field<? extends Number> maxvalue;
         boolean                 cycle;
         Field<? extends Number> cache;
 
@@ -1538,8 +1538,8 @@ final class DDLInterpreter {
                 super(MutableSequence.this.name, schema, BIGINT, false,
                     (Field<Long>) MutableSequence.this.startWith,
                     (Field<Long>) MutableSequence.this.incrementBy,
-                    (Field<Long>) MutableSequence.this.minValue,
-                    (Field<Long>) MutableSequence.this.maxValue,
+                    (Field<Long>) MutableSequence.this.minvalue,
+                    (Field<Long>) MutableSequence.this.maxvalue,
                     MutableSequence.this.cycle,
                     (Field<Long>) MutableSequence.this.cache);
             }

@@ -144,13 +144,13 @@ final class DDL {
         else if (configuration.defaultSequenceFlags())
             result = result.incrementBy(1);
 
-        if (sequence.getMinValue() != null)
-            result = result.minvalue(sequence.getMinValue());
+        if (sequence.getMinvalue() != null)
+            result = result.minvalue(sequence.getMinvalue());
         else if (configuration.defaultSequenceFlags())
             result = result.noMinvalue();
 
-        if (sequence.getMaxValue() != null)
-            result = result.maxvalue(sequence.getMaxValue());
+        if (sequence.getMaxvalue() != null)
+            result = result.maxvalue(sequence.getMaxvalue());
         else if (configuration.defaultSequenceFlags())
             result = result.noMaxvalue();
 

@@ -48,29 +48,29 @@ public interface SequenceDefinition extends TypedElementDefinition<SchemaDefinit
      * Get the start value for this sequence or <code>null</code>, if no such
      * value is specified.
      */
-    Long getStartWith();
+    Number getStartWith();
 
     /**
      * Get the increment for this sequence or <code>null</code>, if no such
      * value is specified.
      */
-    Long getIncrementBy();
+    Number getIncrementBy();
 
     /**
      * Get the minimum value for this sequence or <code>null</code>, if no such
      * value is specified.
      */
-    Long getMinValue();
+    Number getMinvalue();
 
     /**
      * Get the maximum value for this sequence or <code>null</code>, if no such
      * value is specified.
      */
-    Long getMaxValue();
+    Number getMaxvalue();
 
     /**
-     * Returns {@code true} if this sequence cycles to {@link #getMinValue()}
-     * when it reaches {@link #getMaxValue()}.
+     * Returns {@code true} if this sequence cycles to {@link #getMinvalue()}
+     * when it reaches {@link #getMaxvalue()}.
      */
     boolean getCycle();
 
@@ -78,6 +78,6 @@ public interface SequenceDefinition extends TypedElementDefinition<SchemaDefinit
      * Get the number of sequence values to cache for this sequence or
      * <code>null</code>, if no such value is specified.
      */
-    Long getCache();
+    Number getCache();
 
 }

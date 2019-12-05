@@ -2,6 +2,7 @@
 package org.jooq.util.xml.jaxb;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -29,12 +30,12 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *         &lt;element name="character_maximum_length" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/&gt;
  *         &lt;element name="numeric_precision" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/&gt;
  *         &lt;element name="numeric_scale" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/&gt;
- *         &lt;element name="start_with" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/&gt;
- *         &lt;element name="increment_by" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/&gt;
- *         &lt;element name="min_value" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/&gt;
- *         &lt;element name="max_value" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/&gt;
- *         &lt;element name="cycle" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="cache" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/&gt;
+ *         &lt;element name="start_value" type="{http://www.w3.org/2001/XMLSchema}integer" minOccurs="0"/&gt;
+ *         &lt;element name="increment" type="{http://www.w3.org/2001/XMLSchema}integer" minOccurs="0"/&gt;
+ *         &lt;element name="minimum_value" type="{http://www.w3.org/2001/XMLSchema}integer" minOccurs="0"/&gt;
+ *         &lt;element name="maximum_value" type="{http://www.w3.org/2001/XMLSchema}integer" minOccurs="0"/&gt;
+ *         &lt;element name="cycle_option" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
+ *         &lt;element name="cache" type="{http://www.w3.org/2001/XMLSchema}integer" minOccurs="0"/&gt;
  *         &lt;element name="comment" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;
@@ -73,16 +74,16 @@ public class Sequence implements Serializable, XMLAppendable
     protected Integer numericPrecision;
     @XmlElement(name = "numeric_scale")
     protected Integer numericScale;
-    @XmlElement(name = "start_with")
-    protected Long startWith;
-    @XmlElement(name = "increment_by")
-    protected Long incrementBy;
-    @XmlElement(name = "min_value")
-    protected Long minValue;
-    @XmlElement(name = "max_value")
-    protected Long maxValue;
-    protected Boolean cycle;
-    protected Long cache;
+    @XmlElement(name = "start_value")
+    protected BigInteger startValue;
+    protected BigInteger increment;
+    @XmlElement(name = "minimum_value")
+    protected BigInteger minimumValue;
+    @XmlElement(name = "maximum_value")
+    protected BigInteger maximumValue;
+    @XmlElement(name = "cycle_option")
+    protected Boolean cycleOption;
+    protected BigInteger cache;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String comment;
 
@@ -142,67 +143,67 @@ public class Sequence implements Serializable, XMLAppendable
         this.numericScale = value;
     }
 
-    public Long getStartWith() {
-        return startWith;
+    public BigInteger getStartValue() {
+        return startValue;
     }
 
-    public void setStartWith(Long value) {
-        this.startWith = value;
+    public void setStartValue(BigInteger value) {
+        this.startValue = value;
     }
 
-    public Long getIncrementBy() {
-        return incrementBy;
+    public BigInteger getIncrement() {
+        return increment;
     }
 
-    public void setIncrementBy(Long value) {
-        this.incrementBy = value;
+    public void setIncrement(BigInteger value) {
+        this.increment = value;
     }
 
-    public Long getMinValue() {
-        return minValue;
+    public BigInteger getMinimumValue() {
+        return minimumValue;
     }
 
-    public void setMinValue(Long value) {
-        this.minValue = value;
+    public void setMinimumValue(BigInteger value) {
+        this.minimumValue = value;
     }
 
-    public Long getMaxValue() {
-        return maxValue;
+    public BigInteger getMaximumValue() {
+        return maximumValue;
     }
 
-    public void setMaxValue(Long value) {
-        this.maxValue = value;
+    public void setMaximumValue(BigInteger value) {
+        this.maximumValue = value;
     }
 
     /**
-     * Gets the value of the cycle property.
+     * Gets the value of the cycleOption property.
      *
      * @return
      *     possible object is
      *     {@link Boolean }
      *
      */
-    public Boolean isCycle() {
-        return cycle;
+    public Boolean isCycleOption() {
+        return cycleOption;
     }
 
     /**
-     * Sets the value of the cycle property.
+     * Sets the value of the cycleOption property.
      *
      * @param value
      *     allowed object is
      *     {@link Boolean }
      *
      */
-    public void setCycle(Boolean value) {
-        this.cycle = value;
+    public void setCycleOption(Boolean value) {
+        this.cycleOption = value;
     }
 
-    public Long getCache() {
+    public BigInteger getCache() {
         return cache;
     }
 
-    public void setCache(Long value) {
+    public void setCache(BigInteger value) {
         this.cache = value;
     }
 
@@ -249,32 +250,32 @@ public class Sequence implements Serializable, XMLAppendable
         return this;
     }
 
-    public Sequence withStartWith(Long value) {
-        setStartWith(value);
+    public Sequence withStartValue(BigInteger value) {
+        setStartValue(value);
         return this;
     }
 
-    public Sequence withIncrementBy(Long value) {
-        setIncrementBy(value);
+    public Sequence withIncrement(BigInteger value) {
+        setIncrement(value);
         return this;
     }
 
-    public Sequence withMinValue(Long value) {
-        setMinValue(value);
+    public Sequence withMinimumValue(BigInteger value) {
+        setMinimumValue(value);
         return this;
     }
 
-    public Sequence withMaxValue(Long value) {
-        setMaxValue(value);
+    public Sequence withMaximumValue(BigInteger value) {
+        setMaximumValue(value);
         return this;
     }
 
-    public Sequence withCycle(Boolean value) {
-        setCycle(value);
+    public Sequence withCycleOption(Boolean value) {
+        setCycleOption(value);
         return this;
     }
 
-    public Sequence withCache(Long value) {
+    public Sequence withCache(BigInteger value) {
         setCache(value);
         return this;
     }
@@ -293,11 +294,11 @@ public class Sequence implements Serializable, XMLAppendable
         builder.append("character_maximum_length", characterMaximumLength);
         builder.append("numeric_precision", numericPrecision);
         builder.append("numeric_scale", numericScale);
-        builder.append("start_with", startWith);
-        builder.append("increment_by", incrementBy);
-        builder.append("min_value", minValue);
-        builder.append("max_value", maxValue);
-        builder.append("cycle", cycle);
+        builder.append("start_value", startValue);
+        builder.append("increment", increment);
+        builder.append("minimum_value", minimumValue);
+        builder.append("maximum_value", maximumValue);
+        builder.append("cycle_option", cycleOption);
         builder.append("cache", cache);
         builder.append("comment", comment);
     }
@@ -384,48 +385,48 @@ public class Sequence implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (startWith == null) {
-            if (other.startWith!= null) {
+        if (startValue == null) {
+            if (other.startValue!= null) {
                 return false;
             }
         } else {
-            if (!startWith.equals(other.startWith)) {
+            if (!startValue.equals(other.startValue)) {
                 return false;
             }
         }
-        if (incrementBy == null) {
-            if (other.incrementBy!= null) {
+        if (increment == null) {
+            if (other.increment!= null) {
                 return false;
             }
         } else {
-            if (!incrementBy.equals(other.incrementBy)) {
+            if (!increment.equals(other.increment)) {
                 return false;
             }
         }
-        if (minValue == null) {
-            if (other.minValue!= null) {
+        if (minimumValue == null) {
+            if (other.minimumValue!= null) {
                 return false;
             }
         } else {
-            if (!minValue.equals(other.minValue)) {
+            if (!minimumValue.equals(other.minimumValue)) {
                 return false;
             }
         }
-        if (maxValue == null) {
-            if (other.maxValue!= null) {
+        if (maximumValue == null) {
+            if (other.maximumValue!= null) {
                 return false;
             }
         } else {
-            if (!maxValue.equals(other.maxValue)) {
+            if (!maximumValue.equals(other.maximumValue)) {
                 return false;
             }
         }
-        if (cycle == null) {
-            if (other.cycle!= null) {
+        if (cycleOption == null) {
+            if (other.cycleOption!= null) {
                 return false;
             }
         } else {
-            if (!cycle.equals(other.cycle)) {
+            if (!cycleOption.equals(other.cycleOption)) {
                 return false;
             }
         }
@@ -461,11 +462,11 @@ public class Sequence implements Serializable, XMLAppendable
         result = ((prime*result)+((characterMaximumLength == null)? 0 :characterMaximumLength.hashCode()));
         result = ((prime*result)+((numericPrecision == null)? 0 :numericPrecision.hashCode()));
         result = ((prime*result)+((numericScale == null)? 0 :numericScale.hashCode()));
-        result = ((prime*result)+((startWith == null)? 0 :startWith.hashCode()));
-        result = ((prime*result)+((incrementBy == null)? 0 :incrementBy.hashCode()));
-        result = ((prime*result)+((minValue == null)? 0 :minValue.hashCode()));
-        result = ((prime*result)+((maxValue == null)? 0 :maxValue.hashCode()));
-        result = ((prime*result)+((cycle == null)? 0 :cycle.hashCode()));
+        result = ((prime*result)+((startValue == null)? 0 :startValue.hashCode()));
+        result = ((prime*result)+((increment == null)? 0 :increment.hashCode()));
+        result = ((prime*result)+((minimumValue == null)? 0 :minimumValue.hashCode()));
+        result = ((prime*result)+((maximumValue == null)? 0 :maximumValue.hashCode()));
+        result = ((prime*result)+((cycleOption == null)? 0 :cycleOption.hashCode()));
         result = ((prime*result)+((cache == null)? 0 :cache.hashCode()));
         result = ((prime*result)+((comment == null)? 0 :comment.hashCode()));
         return result;

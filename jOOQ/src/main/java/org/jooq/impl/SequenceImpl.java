@@ -89,8 +89,8 @@ public class SequenceImpl<T extends Number> extends AbstractNamed implements Seq
     private final DataType<T>     type;
     private final Field<T>        startWith;
     private final Field<T>        incrementBy;
-    private final Field<T>        minValue;
-    private final Field<T>        maxValue;
+    private final Field<T>        minvalue;
+    private final Field<T>        maxvalue;
     private final boolean         cycle;
     private final Field<T>        cache;
 
@@ -108,7 +108,7 @@ public class SequenceImpl<T extends Number> extends AbstractNamed implements Seq
     }
 
     SequenceImpl(Name name, Schema schema, DataType<T> type, boolean nameIsPlainSQL,
-        Field<T> startWith, Field<T> incrementBy, Field<T> minValue, Field<T> maxValue, boolean cycle, Field<T> cache) {
+        Field<T> startWith, Field<T> incrementBy, Field<T> minvalue, Field<T> maxvalue, boolean cycle, Field<T> cache) {
         super(qualify(schema, name), CommentImpl.NO_COMMENT);
 
         this.schema = schema;
@@ -117,8 +117,8 @@ public class SequenceImpl<T extends Number> extends AbstractNamed implements Seq
 
         this.startWith = startWith;
         this.incrementBy = incrementBy;
-        this.minValue = minValue;
-        this.maxValue = maxValue;
+        this.minvalue = minvalue;
+        this.maxvalue = maxvalue;
         this.cycle = cycle;
         this.cache = cache;
     }
@@ -149,13 +149,13 @@ public class SequenceImpl<T extends Number> extends AbstractNamed implements Seq
     }
 
     @Override
-    public final Field<T> getMinValue() {
-        return minValue;
+    public final Field<T> getMinvalue() {
+        return minvalue;
     }
 
     @Override
-    public final Field<T> getMaxValue() {
-        return maxValue;
+    public final Field<T> getMaxvalue() {
+        return maxvalue;
     }
 
     @Override

@@ -41,6 +41,7 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 import static org.jooq.util.xml.jaxb.TableConstraintType.PRIMARY_KEY;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -448,12 +449,12 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
             int precision = xs.getNumericPrecision() == null ? 0 : xs.getNumericPrecision();
             int scale = xs.getNumericScale() == null ? 0 : xs.getNumericScale();
             boolean nullable = true;
-            Long startWith = xs.getStartWith();
-            Long incrementBy = xs.getIncrementBy();
-            Long minValue = xs.getMinValue();
-            Long maxValue = xs.getMaxValue();
-            Boolean cycle = xs.isCycle();
-            Long cache = xs.getCache();
+            BigInteger startWith = xs.getStartValue();
+            BigInteger incrementBy = xs.getIncrement();
+            BigInteger minvalue = xs.getMinimumValue();
+            BigInteger maxvalue = xs.getMaximumValue();
+            Boolean cycle = xs.isCycleOption();
+            BigInteger cache = xs.getCache();
 
             @SuppressWarnings({ "rawtypes", "unchecked" })
             InformationSchemaSequence is = new InformationSchemaSequence(
@@ -462,8 +463,8 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
                 type(typeName, length, precision, scale, nullable),
                 startWith,
                 incrementBy,
-                minValue,
-                maxValue,
+                minvalue,
+                maxvalue,
                 cycle,
                 cache
             );
@@ -648,15 +649,15 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
          */
         private static final long serialVersionUID = -1246697252597049756L;
 
-        InformationSchemaSequence(String name, Schema schema, DataType<N> type, Long startWith, Long incrementBy, Long minValue, Long maxValue, Boolean cycle, Long cache) {
+        InformationSchemaSequence(String name, Schema schema, DataType<N> type, Number startWith, Number incrementBy, Number minvalue, Number maxvalue, Boolean cycle, Number cache) {
             super(DSL.name(name),
                 schema,
                 type,
                 false,
                 startWith != null ? Tools.field(startWith, type) : null,
                 incrementBy != null ? Tools.field(incrementBy, type) : null,
-                minValue != null ? Tools.field(minValue, type) : null,
-                maxValue != null ? Tools.field(maxValue, type) : null,
+                minvalue != null ? Tools.field(minvalue, type) : null,
+                maxvalue != null ? Tools.field(maxvalue, type) : null,
                 Boolean.TRUE.equals(cycle),
                 cache != null ? Tools.field(cache, type) : null
             );

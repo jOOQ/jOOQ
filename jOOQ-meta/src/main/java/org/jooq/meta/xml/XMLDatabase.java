@@ -512,11 +512,11 @@ public class XMLDatabase extends AbstractDatabase {
                     sequence.getSequenceName(),
                     type,
                     sequence.getComment(),
-                    sequence.getStartWith(),
-                    sequence.getIncrementBy(),
-                    sequence.getMinValue(),
-                    sequence.getMaxValue(),
-                    Boolean.TRUE.equals(sequence.isCycle()),
+                    sequence.getStartValue(),
+                    sequence.getIncrement(),
+                    sequence.getMinimumValue(),
+                    sequence.getMaximumValue(),
+                    Boolean.TRUE.equals(sequence.isCycleOption()),
                     sequence.getCache()));
             }
         }

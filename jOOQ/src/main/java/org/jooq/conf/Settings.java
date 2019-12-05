@@ -190,6 +190,9 @@ public class Settings
     @XmlElement(type = String.class, defaultValue = "DEFAULT")
     @XmlJavaTypeAdapter(SQLDialectAdapter.class)
     protected SQLDialect interpreterDialect;
+    @XmlElement(defaultValue = "DEFAULT")
+    @XmlSchemaType(name = "string")
+    protected InterpreterNameLookupCaseSensitivity interpreterNameCaseSensitivity = InterpreterNameLookupCaseSensitivity.DEFAULT;
     @XmlElement(type = String.class, defaultValue = "DEFAULT")
     @XmlJavaTypeAdapter(SQLDialectAdapter.class)
     protected SQLDialect parseDialect;
@@ -1611,6 +1614,22 @@ public class Settings
     }
 
     /**
+     * [#9633] The case sensitivity of identifiers used when interpreting SQL DDL statements.
+     *
+     */
+    public InterpreterNameLookupCaseSensitivity getInterpreterNameCaseSensitivity() {
+        return interpreterNameCaseSensitivity;
+    }
+
+    /**
+     * [#9633] The case sensitivity of identifiers used when interpreting SQL DDL statements.
+     *
+     */
+    public void setInterpreterNameCaseSensitivity(InterpreterNameLookupCaseSensitivity value) {
+        this.interpreterNameCaseSensitivity = value;
+    }
+
+    /**
      * [#7337] The input dialect that should be chosen to disambiguate ambiguous SQL syntax.
      *
      */
@@ -2274,6 +2293,15 @@ public class Settings
     }
 
     /**
+     * [#9633] The case sensitivity of identifiers used when interpreting SQL DDL statements.
+     *
+     */
+    public Settings withInterpreterNameCaseSensitivity(InterpreterNameLookupCaseSensitivity value) {
+        setInterpreterNameCaseSensitivity(value);
+        return this;
+    }
+
+    /**
      * [#7337] The input dialect that should be chosen to disambiguate ambiguous SQL syntax.
      *
      */
@@ -2428,6 +2456,7 @@ public class Settings
         builder.append("executeUpdateWithoutWhere", executeUpdateWithoutWhere);
         builder.append("executeDeleteWithoutWhere", executeDeleteWithoutWhere);
         builder.append("interpreterDialect", interpreterDialect);
+        builder.append("interpreterNameCaseSensitivity", interpreterNameCaseSensitivity);
         builder.append("parseDialect", parseDialect);
         builder.append("parseNameCase", parseNameCase);
         builder.append("parseWithMetaLookups", parseWithMetaLookups);
@@ -3034,6 +3063,15 @@ public class Settings
                 return false;
             }
         }
+        if (interpreterNameCaseSensitivity == null) {
+            if (other.interpreterNameCaseSensitivity!= null) {
+                return false;
+            }
+        } else {
+            if (!interpreterNameCaseSensitivity.equals(other.interpreterNameCaseSensitivity)) {
+                return false;
+            }
+        }
         if (parseDialect == null) {
             if (other.parseDialect!= null) {
                 return false;
@@ -3186,6 +3224,7 @@ public class Settings
         result = ((prime*result)+((executeUpdateWithoutWhere == null)? 0 :executeUpdateWithoutWhere.hashCode()));
         result = ((prime*result)+((executeDeleteWithoutWhere == null)? 0 :executeDeleteWithoutWhere.hashCode()));
         result = ((prime*result)+((interpreterDialect == null)? 0 :interpreterDialect.hashCode()));
+        result = ((prime*result)+((interpreterNameCaseSensitivity == null)? 0 :interpreterNameCaseSensitivity.hashCode()));
         result = ((prime*result)+((parseDialect == null)? 0 :parseDialect.hashCode()));
         result = ((prime*result)+((parseNameCase == null)? 0 :parseNameCase.hashCode()));
         result = ((prime*result)+((parseWithMetaLookups == null)? 0 :parseWithMetaLookups.hashCode()));

@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.Name.Quoted.QUOTED;
 import static org.jooq.impl.AbstractName.NO_NAME;
 import static org.jooq.impl.Cascade.CASCADE;
 import static org.jooq.impl.Cascade.RESTRICT;
@@ -86,6 +87,7 @@ import org.jooq.TableOptions;
 import org.jooq.TableOptions.TableType;
 import org.jooq.UniqueKey;
 import org.jooq.Update;
+import org.jooq.conf.InterpreterNameLookupCaseSensitivity;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataDefinitionException;
 import org.jooq.impl.ConstraintImpl.Action;
@@ -105,7 +107,7 @@ final class DDLInterpreter {
     DDLInterpreter(Configuration configuration) {
         this.configuration = configuration;
         this.defaultCatalog = new MutableCatalog(NO_NAME);
-        this.catalogs.put(defaultCatalog.name, defaultCatalog);
+        this.catalogs.put(defaultCatalog.name(), defaultCatalog);
         this.defaultSchema = new MutableSchema(NO_NAME, defaultCatalog);
         this.currentSchema = defaultSchema;
     }
@@ -219,7 +221,7 @@ final class DDLInterpreter {
             if (getSchema(renameTo, false) != null)
                 throw schemaAlreadyExists(renameTo);
 
-            oldSchema.name = (UnqualifiedName) renameTo.getUnqualifiedName();
+            oldSchema.name((UnqualifiedName) renameTo.getUnqualifiedName());
             return;
         }
         else
@@ -317,7 +319,7 @@ final class DDLInterpreter {
         Iterator<MutableTable> it = tables.iterator();
 
         while (it.hasNext()) {
-            if (it.next().name.equals(table.name)) {
+            if (it.next().nameEquals(table.name())) {
                 it.remove();
                 break;
             }
@@ -489,7 +491,7 @@ final class DDLInterpreter {
                 throw unsupportedQuery(query);
         }
         else if (query.$renameTo() != null && checkNotExists(schema, query.$renameTo())) {
-            existing.name = (UnqualifiedName) query.$renameTo().getUnqualifiedName();
+            existing.name((UnqualifiedName) query.$renameTo().getUnqualifiedName());
         }
         else if (query.$renameColumn() != null) {
             MutableField mf = find(existing.fields, query.$renameColumn());
@@ -499,7 +501,7 @@ final class DDLInterpreter {
             else if (find(existing.fields, query.$renameColumnTo()) != null)
                 throw fieldAlreadyExists(query.$renameColumnTo());
             else
-                mf.name = (UnqualifiedName) query.$renameColumnTo().getUnqualifiedName();
+                mf.name((UnqualifiedName) query.$renameColumnTo().getUnqualifiedName());
         }
         else if (query.$renameConstraint() != null) {
             MutableNamed mk = existing.constraint(query.$renameConstraint());
@@ -509,7 +511,7 @@ final class DDLInterpreter {
             else if (existing.constraint(query.$renameConstraintTo()) != null)
                 throw constraintAlreadyExists(query.$renameConstraintTo());
             else
-                mk.name = (UnqualifiedName) query.$renameConstraintTo().getUnqualifiedName();
+                mk.name((UnqualifiedName) query.$renameConstraintTo().getUnqualifiedName());
         }
         else if (query.$dropColumns() != null) {
             List<MutableField> fields = existing.fields(query.$dropColumns().toArray(EMPTY_FIELD), false);
@@ -525,7 +527,7 @@ final class DDLInterpreter {
             removal: {
                 Iterator<MutableForeignKey> fks = existing.foreignKeys.iterator();
                 while (fks.hasNext()) {
-                    if (fks.next().name.equals(impl.getUnqualifiedName())) {
+                    if (fks.next().nameEquals((UnqualifiedName) impl.getUnqualifiedName())) {
                         fks.remove();
                         break removal;
                     }
@@ -537,7 +539,7 @@ final class DDLInterpreter {
                     while (uks.hasNext()) {
                         MutableUniqueKey key = uks.next();
 
-                        if (key.name.equals(impl.getUnqualifiedName())) {
+                        if (key.nameEquals((UnqualifiedName) impl.getUnqualifiedName())) {
                             cascade(key, null, query.$dropCascade());
                             uks.remove();
                             break removal;
@@ -549,14 +551,14 @@ final class DDLInterpreter {
                     while (chks.hasNext()) {
                         MutableCheck check = chks.next();
 
-                        if (check.name.equals(impl.getUnqualifiedName())) {
+                        if (check.nameEquals((UnqualifiedName) impl.getUnqualifiedName())) {
                             chks.remove();
                             break removal;
                         }
                     }
 
                     if (existing.primaryKey != null) {
-                        if (existing.primaryKey.name.equals(impl.getUnqualifiedName())) {
+                        if (existing.primaryKey.nameEquals((UnqualifiedName) impl.getUnqualifiedName())) {
                             cascade(existing.primaryKey, null, query.$dropCascade());
                             existing.primaryKey = null;
                             break removal;
@@ -708,7 +710,7 @@ final class DDLInterpreter {
 
         Table<?> renameTo = query.$renameTo();
         if (renameTo != null && checkNotExists(schema, renameTo))
-            existing.name = (UnqualifiedName) renameTo.getUnqualifiedName();
+            existing.name((UnqualifiedName) renameTo.getUnqualifiedName());
         else
             throw unsupportedQuery(query);
     }
@@ -769,7 +771,7 @@ final class DDLInterpreter {
             if (schema.sequence(renameTo) != null)
                 throw sequenceAlreadyExists(renameTo);
 
-            existing.name = (UnqualifiedName) renameTo.getUnqualifiedName();
+            existing.name((UnqualifiedName) renameTo.getUnqualifiedName());
         }
         else {
             Field<? extends Number> startWith = query.$startWith();
@@ -857,7 +859,7 @@ final class DDLInterpreter {
         if (existing != null) {
             if (query.$renameTo() != null)
                 if (index(query.$renameTo(), table, false, false) == null)
-                    existing.name = (UnqualifiedName) query.$renameTo().getUnqualifiedName();
+                    existing.name((UnqualifiedName) query.$renameTo().getUnqualifiedName());
                 else
                     throw indexAlreadyExists(query.$renameTo());
             else
@@ -879,9 +881,9 @@ final class DDLInterpreter {
         Field<?> field = query.$field();
 
         if (table != null)
-            table(table).comment = query.$comment();
+            table(table).comment(query.$comment());
         else if (field != null)
-            field(field).comment = query.$comment();
+            field(field).comment(query.$comment());
         else
             throw unsupportedQuery(query);
     }
@@ -1128,11 +1130,18 @@ final class DDLInterpreter {
         return result;
     }
 
-    private static final <M extends MutableNamed> M find(M m, Named named) {
-        if (m != null && m.name.equals(named.getUnqualifiedName()))
+    private static final <M extends MutableNamed> M find(M m, UnqualifiedName name) {
+        if (m == null)
+            return null;
+
+        if (m.nameEquals(name))
             return m;
         else
             return null;
+    }
+
+    private static final <M extends MutableNamed> M find(M m, Named named) {
+        return find(m, (UnqualifiedName) named.getUnqualifiedName());
     }
 
     private static final <M extends MutableNamed> M find(List<? extends M> list, Named named) {
@@ -1140,7 +1149,7 @@ final class DDLInterpreter {
 
         // TODO Avoid O(N) lookups. Use Maps instead
         for (M m : list)
-            if (m.name.equals(n))
+            if ((m = find(m, n)) != null)
                 return m;
 
         return null;
@@ -1151,7 +1160,7 @@ final class DDLInterpreter {
 
         // TODO Avoid O(N) lookups. Use Maps instead
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).name.equals(named.getUnqualifiedName())) {
+            if (list.get(i).nameEquals((UnqualifiedName) named.getUnqualifiedName())) {
                 result = i;
                 break;
             }
@@ -1168,16 +1177,52 @@ final class DDLInterpreter {
     // -------------------------------------------------------------------------
 
     private static abstract class MutableNamed {
-        UnqualifiedName name;
-        Comment         comment;
+        private UnqualifiedName                      name;
+        private String                               upper;
+        private Comment                              comment;
+
+        // TODO: Access this from Settings
+        private InterpreterNameLookupCaseSensitivity caseSensitive = InterpreterNameLookupCaseSensitivity.WHEN_QUOTED;
 
         MutableNamed(UnqualifiedName name) {
             this(name, null);
         }
 
         MutableNamed(UnqualifiedName name, Comment comment) {
-            this.name = name;
             this.comment = comment;
+
+            name(name);
+        }
+
+        UnqualifiedName name() {
+            return name;
+        }
+
+        void name(UnqualifiedName n) {
+            this.name = n;
+
+            // TODO: Use Settings.renderLocale()
+            this.upper = name.last().toUpperCase();
+        }
+
+        Comment comment() {
+            return comment;
+        }
+
+        void comment(Comment c) {
+            this.comment = c;
+        }
+
+        boolean nameEquals(UnqualifiedName other) {
+
+            // TODO: Implement InterpreterNameLookupCaseSensitivity.DEFAULT
+            if (caseSensitive == InterpreterNameLookupCaseSensitivity.ALWAYS ||
+                (caseSensitive == InterpreterNameLookupCaseSensitivity.WHEN_QUOTED && (name.quoted() == QUOTED || other.quoted() == QUOTED)))
+                return name.last().equals(other.last());
+            else
+
+                // TODO: Use Settings.renderLocale()
+                return upper.equalsIgnoreCase(other.last().toUpperCase());
         }
 
         abstract void drop();
@@ -1202,7 +1247,7 @@ final class DDLInterpreter {
 
         private final class InterpretedCatalog extends CatalogImpl {
             InterpretedCatalog() {
-                super(MutableCatalog.this.name, MutableCatalog.this.comment);
+                super(MutableCatalog.this.name(), MutableCatalog.this.comment());
             }
 
             @Override
@@ -1249,7 +1294,7 @@ final class DDLInterpreter {
 
         private final class InterpretedSchema extends SchemaImpl {
             InterpretedSchema(MutableCatalog.InterpretedCatalog catalog) {
-                super(MutableSchema.this.name, catalog, MutableSchema.this.comment);
+                super(MutableSchema.this.name(), catalog, MutableSchema.this.comment());
             }
 
             @Override
@@ -1375,10 +1420,10 @@ final class DDLInterpreter {
 
         private final class InterpretedTable extends TableImpl<Record> {
             InterpretedTable(MutableSchema.InterpretedSchema schema) {
-                super(MutableTable.this.name, schema, null, null, null, null, MutableTable.this.comment, MutableTable.this.options);
+                super(MutableTable.this.name(), schema, null, null, null, null, MutableTable.this.comment(), MutableTable.this.options);
 
                 for (MutableField field : MutableTable.this.fields)
-                    createField(field.name, field.type, field.comment != null ? field.comment.getComment() : null);
+                    createField(field.name(), field.type, field.comment() != null ? field.comment().getComment() : null);
             }
 
             @Override
@@ -1415,7 +1460,7 @@ final class DDLInterpreter {
                 List<Check<Record>> result = new ArrayList<>();
 
                 for (MutableCheck c : MutableTable.this.checks)
-                    result.add(new CheckImpl<>(this, c.name, c.condition));
+                    result.add(new CheckImpl<>(this, c.name(), c.condition));
 
                 return result;
             }
@@ -1441,10 +1486,10 @@ final class DDLInterpreter {
                 InterpretedTable t = key.keyTable.new InterpretedTable(key.keyTable.schema.new InterpretedSchema(key.keyTable.schema.catalog.new InterpretedCatalog()));
 
                 for (int i = 0; i < f.length; i++)
-                    f[i] = (TableField<Record, ?>) t.field(key.keyFields.get(i).name);
+                    f[i] = (TableField<Record, ?>) t.field(key.keyFields.get(i).name());
 
                 // TODO: Cache these?
-                return new UniqueKeyImpl<Record>(t, key.name.last(), f);
+                return new UniqueKeyImpl<Record>(t, key.name().last(), f);
             }
 
             @SuppressWarnings("unchecked")
@@ -1455,11 +1500,11 @@ final class DDLInterpreter {
                 TableField<Record, ?>[] f = new TableField[key.keyFields.size()];
 
                 for (int i = 0; i < f.length; i++)
-                    f[i] = (TableField<Record, ?>) field(key.keyFields.get(i).name);
+                    f[i] = (TableField<Record, ?>) field(key.keyFields.get(i).name());
 
                 // TODO: Refactor these constructor calls
                 // TODO: Cache these?
-                return new ReferenceImpl<>(key.referencedKey.keyTable.new InterpretedTable((MutableSchema.InterpretedSchema) getSchema()).interpretedKey(key.referencedKey), this, key.name.last(), f);
+                return new ReferenceImpl<>(key.referencedKey.keyTable.new InterpretedTable((MutableSchema.InterpretedSchema) getSchema()).interpretedKey(key.referencedKey), this, key.name().last(), f);
             }
 
             private final Index interpretedIndex(MutableIndex idx) {
@@ -1470,10 +1515,10 @@ final class DDLInterpreter {
 
                 for (int i = 0; i < f.length; i++) {
                     MutableSortField msf = idx.fields.get(i);
-                    f[i] = field(msf.name).sort(msf.sort);
+                    f[i] = field(msf.name()).sort(msf.sort);
                 }
 
-                return new IndexImpl(idx.name, this, f, null, idx.unique);
+                return new IndexImpl(idx.name(), this, f, null, idx.unique);
             }
         }
     }
@@ -1501,7 +1546,7 @@ final class DDLInterpreter {
         private final class InterpretedSequence extends SequenceImpl<Long> {
             @SuppressWarnings("unchecked")
             InterpretedSequence(Schema schema) {
-                super(MutableSequence.this.name, schema, BIGINT, false,
+                super(MutableSequence.this.name(), schema, BIGINT, false,
                     (Field<Long>) MutableSequence.this.startWith,
                     (Field<Long>) MutableSequence.this.incrementBy,
                     (Field<Long>) MutableSequence.this.minvalue,
@@ -1617,7 +1662,7 @@ final class DDLInterpreter {
         SortOrder    sort;
 
         MutableSortField(MutableField field, SortOrder sort) {
-            super(field.name);
+            super(field.name());
 
             this.field = field;
             this.sort = sort;

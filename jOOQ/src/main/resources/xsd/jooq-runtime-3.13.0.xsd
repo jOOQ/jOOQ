@@ -391,6 +391,10 @@ jOOQ queries, for which no specific fetchSize value was specified.]]></jxb:javad
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#7337] The dialect that should be used to interpret SQL DDL statements. {@link SQLDialect#DEFAULT} means that jOOQ interprets the SQL itself. Any other dialect (if supported) will be interpreted on an actual JDBC connection.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="interpreterNameCaseSensitivity" type="jooq-runtime:InterpreterNameLookupCaseSensitivity" minOccurs="0" maxOccurs="1" default="DEFAULT">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#9633] The case sensitivity of identifiers used when interpreting SQL DDL statements.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="parseDialect" type="string" minOccurs="0" maxOccurs="1" default="DEFAULT">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#7337] The input dialect that should be chosen to disambiguate ambiguous SQL syntax.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -800,6 +804,23 @@ Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided]]></jxb:javad
 
       <!-- The default applies for optional keywords. -->
       <enumeration value="DEFAULT"/>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="InterpreterNameLookupCaseSensitivity">
+    <restriction base="string">
+
+      <!-- The default value depending on Settings.interpreterDialect -->
+      <enumeration value="DEFAULT"/>
+
+      <!-- Identifiers are always case sensitive -->
+      <enumeration value="ALWAYS"/>
+
+      <!-- Only quoted identifiers are case sensitive -->
+      <enumeration value="WHEN_QUOTED"/>
+
+      <!-- Identifiers are never case sensitive -->
+      <enumeration value="NEVER"/>
     </restriction>
   </simpleType>
 

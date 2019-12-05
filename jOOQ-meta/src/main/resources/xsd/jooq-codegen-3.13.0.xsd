@@ -1096,6 +1096,10 @@ type. If provided, both "includeExpression" and "includeTypes" must match.]]></j
 This is a prerequisite for various advanced features]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="sequenceFlags" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Sequence flags should be generated and used.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="implicitJoinPathsToOne" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate implicit join path constructors on generated tables for outgoing foreign key relationships (to-one relationships)]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

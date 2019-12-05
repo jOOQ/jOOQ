@@ -70,6 +70,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            useCatalogVersionProvider          = false;
     boolean                            generateRoutines                   = true;
     boolean                            generateSequences                  = true;
+    boolean                            generateSequenceFlags              = true;
     boolean                            generateUDTs                       = true;
     boolean                            generateTables                     = true;
     boolean                            generateEmbeddables                = true;
@@ -333,6 +334,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateSequences(boolean generateSequences) {
         this.generateSequences = generateSequences;
+    }
+
+    @Override
+    public boolean generateSequenceFlags() {
+        return generateSequenceFlags;
+    }
+
+    @Override
+    public void setGenerateSequenceFlags(boolean generateSequenceFlags) {
+        this.generateSequenceFlags = generateSequenceFlags;
     }
 
     @Override

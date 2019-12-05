@@ -35,6 +35,8 @@ public class Generate implements Serializable, XMLAppendable
     @XmlElement(defaultValue = "true")
     protected Boolean relations = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean sequenceFlags = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean implicitJoinPathsToOne = true;
     @XmlElement(defaultValue = "true")
     protected Boolean deprecated = true;
@@ -213,6 +215,30 @@ public class Generate implements Serializable, XMLAppendable
      */
     public void setRelations(Boolean value) {
         this.relations = value;
+    }
+
+    /**
+     * Sequence flags should be generated and used.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isSequenceFlags() {
+        return sequenceFlags;
+    }
+
+    /**
+     * Sets the value of the sequenceFlags property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setSequenceFlags(Boolean value) {
+        this.sequenceFlags = value;
     }
 
     /**
@@ -1758,6 +1784,11 @@ public class Generate implements Serializable, XMLAppendable
         return this;
     }
 
+    public Generate withSequenceFlags(Boolean value) {
+        setSequenceFlags(value);
+        return this;
+    }
+
     public Generate withImplicitJoinPathsToOne(Boolean value) {
         setImplicitJoinPathsToOne(value);
         return this;
@@ -2107,6 +2138,7 @@ public class Generate implements Serializable, XMLAppendable
     public final void appendTo(XMLBuilder builder) {
         builder.append("indexes", indexes);
         builder.append("relations", relations);
+        builder.append("sequenceFlags", sequenceFlags);
         builder.append("implicitJoinPathsToOne", implicitJoinPathsToOne);
         builder.append("deprecated", deprecated);
         builder.append("deprecationOnUnknownTypes", deprecationOnUnknownTypes);
@@ -2207,6 +2239,15 @@ public class Generate implements Serializable, XMLAppendable
             }
         } else {
             if (!relations.equals(other.relations)) {
+                return false;
+            }
+        }
+        if (sequenceFlags == null) {
+            if (other.sequenceFlags!= null) {
+                return false;
+            }
+        } else {
+            if (!sequenceFlags.equals(other.sequenceFlags)) {
                 return false;
             }
         }
@@ -2795,6 +2836,7 @@ public class Generate implements Serializable, XMLAppendable
         int result = 1;
         result = ((prime*result)+((indexes == null)? 0 :indexes.hashCode()));
         result = ((prime*result)+((relations == null)? 0 :relations.hashCode()));
+        result = ((prime*result)+((sequenceFlags == null)? 0 :sequenceFlags.hashCode()));
         result = ((prime*result)+((implicitJoinPathsToOne == null)? 0 :implicitJoinPathsToOne.hashCode()));
         result = ((prime*result)+((deprecated == null)? 0 :deprecated.hashCode()));
         result = ((prime*result)+((deprecationOnUnknownTypes == null)? 0 :deprecationOnUnknownTypes.hashCode()));

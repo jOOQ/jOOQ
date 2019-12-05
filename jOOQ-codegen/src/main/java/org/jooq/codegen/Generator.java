@@ -183,6 +183,16 @@ public interface Generator {
     void setGenerateSequences(boolean generateSequences);
 
     /**
+     * Whether sequence flags should be generated.
+     */
+    boolean generateSequenceFlags();
+
+    /**
+     * Whether sequence flags should be generated.
+     */
+    void setGenerateSequenceFlags(boolean generateSequenceFlags);
+
+    /**
      * Whether UDTs should be generated.
      */
     boolean generateUDTs();

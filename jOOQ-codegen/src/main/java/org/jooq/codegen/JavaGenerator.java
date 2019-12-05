@@ -357,6 +357,7 @@ public class JavaGenerator extends AbstractGenerator {
               + ((!generateRecords && generateDaos) ? " (forced to true because of <daos/>)" : ""));
         log.info("  routines", generateRoutines());
         log.info("  sequences", generateSequences());
+        log.info("  sequenceFlags", generateSequenceFlags());
         log.info("  table-valued functions", generateTableValuedFunctions());
         log.info("  tables", generateTables()
               + ((!generateTables && generateRecords) ? " (forced to true because of <records/>)" :
@@ -4623,6 +4624,8 @@ public class JavaGenerator extends AbstractGenerator {
             if (!printDeprecationIfUnknownType(out, seqTypeFull))
                 out.tab(1).javadoc("The sequence <code>%s</code>", sequence.getQualifiedOutputName());
 
+            boolean flags = generateSequenceFlags();
+
             if (scala)
                 out.tab(1).println("val %s : %s[%s] = %s.createSequence(\"%s\", %s, %s, %s, %s, %s, %s, %s, %s)",
                     seqId,
@@ -4632,12 +4635,12 @@ public class JavaGenerator extends AbstractGenerator {
                     seqName,
                     schemaId,
                     typeRef,
-                    sequence.getStartWith() != null ? sequence.getStartWith() + "L" : "null",
-                    sequence.getIncrementBy() != null ? sequence.getIncrementBy() + "L" : "null",
-                    sequence.getMinvalue() != null ? sequence.getMinvalue() + "L" : "null",
-                    sequence.getMaxvalue() != null ? sequence.getMaxvalue() + "L" : "null",
-                    sequence.getCycle(),
-                    sequence.getCache() != null ? sequence.getCache() + "L" : "null");
+                    flags && sequence.getStartWith() != null ? sequence.getStartWith() + "L" : "null",
+                    flags && sequence.getIncrementBy() != null ? sequence.getIncrementBy() + "L" : "null",
+                    flags && sequence.getMinvalue() != null ? sequence.getMinvalue() + "L" : "null",
+                    flags && sequence.getMaxvalue() != null ? sequence.getMaxvalue() + "L" : "null",
+                    flags && sequence.getCycle(),
+                    flags && sequence.getCache() != null ? sequence.getCache() + "L" : "null");
             else
                 out.tab(1).println("public static final %s<%s> %s = %s.<%s> createSequence(\"%s\", %s, %s, %s, %s, %s, %s, %s, %s);",
                     Sequence.class,
@@ -4648,12 +4651,12 @@ public class JavaGenerator extends AbstractGenerator {
                     seqName,
                     schemaId,
                     typeRef,
-                    sequence.getStartWith() != null ? sequence.getStartWith() + "L" : "null",
-                    sequence.getIncrementBy() != null ? sequence.getIncrementBy() + "L" : "null",
-                    sequence.getMinvalue() != null ? sequence.getMinvalue() + "L" : "null",
-                    sequence.getMaxvalue() != null ? sequence.getMaxvalue() + "L" : "null",
-                    sequence.getCycle(),
-                    sequence.getCache() != null ? sequence.getCache() + "L" : "null"
+                    flags && sequence.getStartWith() != null ? sequence.getStartWith() + "L" : "null",
+                    flags && sequence.getIncrementBy() != null ? sequence.getIncrementBy() + "L" : "null",
+                    flags && sequence.getMinvalue() != null ? sequence.getMinvalue() + "L" : "null",
+                    flags && sequence.getMaxvalue() != null ? sequence.getMaxvalue() + "L" : "null",
+                    flags && sequence.getCycle(),
+                    flags && sequence.getCache() != null ? sequence.getCache() + "L" : "null"
                 );
         }
 

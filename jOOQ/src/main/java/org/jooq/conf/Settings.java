@@ -193,9 +193,18 @@ public class Settings
     @XmlElement(defaultValue = "DEFAULT")
     @XmlSchemaType(name = "string")
     protected InterpreterNameLookupCaseSensitivity interpreterNameLookupCaseSensitivity = InterpreterNameLookupCaseSensitivity.DEFAULT;
+    @XmlElement(type = String.class)
+    @XmlJavaTypeAdapter(LocaleAdapter.class)
+    protected Locale interpreterLocale;
+    @XmlElement(type = String.class)
+    @XmlJavaTypeAdapter(LocaleAdapter.class)
+    protected Locale locale;
     @XmlElement(type = String.class, defaultValue = "DEFAULT")
     @XmlJavaTypeAdapter(SQLDialectAdapter.class)
     protected SQLDialect parseDialect;
+    @XmlElement(type = String.class)
+    @XmlJavaTypeAdapter(LocaleAdapter.class)
+    protected Locale parseLocale;
     @XmlElement(defaultValue = "DEFAULT")
     @XmlSchemaType(name = "string")
     protected ParseNameCase parseNameCase = ParseNameCase.DEFAULT;
@@ -439,7 +448,7 @@ public class Settings
     }
 
     /**
-     * The Locale to be used with any locale dependent logic (as e.g. transforming names to lower / uppper case).
+     * The Locale to be used with any render locale dependent logic (as e.g. transforming names to lower / uppper case), defaulting to {@link #getLocale()}.
      *
      */
     public Locale getRenderLocale() {
@@ -447,7 +456,7 @@ public class Settings
     }
 
     /**
-     * The Locale to be used with any locale dependent logic (as e.g. transforming names to lower / uppper case).
+     * The Locale to be used with any render locale dependent logic (as e.g. transforming names to lower / uppper case), defaulting to {@link #getLocale()}.
      *
      */
     public void setRenderLocale(Locale value) {
@@ -1630,6 +1639,38 @@ public class Settings
     }
 
     /**
+     * The Locale to be used with any interpreter locale dependent logic, defaulting to {@link #getLocale()}.
+     *
+     */
+    public Locale getInterpreterLocale() {
+        return interpreterLocale;
+    }
+
+    /**
+     * The Locale to be used with any interpreter locale dependent logic, defaulting to {@link #getLocale()}.
+     *
+     */
+    public void setInterpreterLocale(Locale value) {
+        this.interpreterLocale = value;
+    }
+
+    /**
+     * The Locale to be used with any locale dependent logic if there is not a more specific locale available. More specific locales include e.g. {@link #getRenderLocale()}, {@link #getParseLocale()}, or {@link #getInterpreterLocale()}.
+     *
+     */
+    public Locale getLocale() {
+        return locale;
+    }
+
+    /**
+     * The Locale to be used with any locale dependent logic if there is not a more specific locale available. More specific locales include e.g. {@link #getRenderLocale()}, {@link #getParseLocale()}, or {@link #getInterpreterLocale()}.
+     *
+     */
+    public void setLocale(Locale value) {
+        this.locale = value;
+    }
+
+    /**
      * [#7337] The input dialect that should be chosen to disambiguate ambiguous SQL syntax.
      *
      */
@@ -1643,6 +1684,22 @@ public class Settings
      */
     public void setParseDialect(SQLDialect value) {
         this.parseDialect = value;
+    }
+
+    /**
+     * The Locale to be used with any parser locale dependent logic, defaulting to {@link #getLocale()}.
+     *
+     */
+    public Locale getParseLocale() {
+        return parseLocale;
+    }
+
+    /**
+     * The Locale to be used with any parser locale dependent logic, defaulting to {@link #getLocale()}.
+     *
+     */
+    public void setParseLocale(Locale value) {
+        this.parseLocale = value;
     }
 
     /**
@@ -1876,7 +1933,7 @@ public class Settings
     }
 
     /**
-     * The Locale to be used with any locale dependent logic (as e.g. transforming names to lower / uppper case).
+     * The Locale to be used with any render locale dependent logic (as e.g. transforming names to lower / uppper case), defaulting to {@link #getLocale()}.
      *
      */
     public Settings withRenderLocale(Locale value) {
@@ -2302,11 +2359,38 @@ public class Settings
     }
 
     /**
+     * The Locale to be used with any interpreter locale dependent logic, defaulting to {@link #getLocale()}.
+     *
+     */
+    public Settings withInterpreterLocale(Locale value) {
+        setInterpreterLocale(value);
+        return this;
+    }
+
+    /**
+     * The Locale to be used with any locale dependent logic if there is not a more specific locale available. More specific locales include e.g. {@link #getRenderLocale()}, {@link #getParseLocale()}, or {@link #getInterpreterLocale()}.
+     *
+     */
+    public Settings withLocale(Locale value) {
+        setLocale(value);
+        return this;
+    }
+
+    /**
      * [#7337] The input dialect that should be chosen to disambiguate ambiguous SQL syntax.
      *
      */
     public Settings withParseDialect(SQLDialect value) {
         setParseDialect(value);
+        return this;
+    }
+
+    /**
+     * The Locale to be used with any parser locale dependent logic, defaulting to {@link #getLocale()}.
+     *
+     */
+    public Settings withParseLocale(Locale value) {
+        setParseLocale(value);
         return this;
     }
 
@@ -2457,7 +2541,10 @@ public class Settings
         builder.append("executeDeleteWithoutWhere", executeDeleteWithoutWhere);
         builder.append("interpreterDialect", interpreterDialect);
         builder.append("interpreterNameLookupCaseSensitivity", interpreterNameLookupCaseSensitivity);
+        builder.append("interpreterLocale", interpreterLocale);
+        builder.append("locale", locale);
         builder.append("parseDialect", parseDialect);
+        builder.append("parseLocale", parseLocale);
         builder.append("parseNameCase", parseNameCase);
         builder.append("parseWithMetaLookups", parseWithMetaLookups);
         builder.append("parseUnsupportedSyntax", parseUnsupportedSyntax);
@@ -3072,12 +3159,39 @@ public class Settings
                 return false;
             }
         }
+        if (interpreterLocale == null) {
+            if (other.interpreterLocale!= null) {
+                return false;
+            }
+        } else {
+            if (!interpreterLocale.equals(other.interpreterLocale)) {
+                return false;
+            }
+        }
+        if (locale == null) {
+            if (other.locale!= null) {
+                return false;
+            }
+        } else {
+            if (!locale.equals(other.locale)) {
+                return false;
+            }
+        }
         if (parseDialect == null) {
             if (other.parseDialect!= null) {
                 return false;
             }
         } else {
             if (!parseDialect.equals(other.parseDialect)) {
+                return false;
+            }
+        }
+        if (parseLocale == null) {
+            if (other.parseLocale!= null) {
+                return false;
+            }
+        } else {
+            if (!parseLocale.equals(other.parseLocale)) {
                 return false;
             }
         }
@@ -3225,7 +3339,10 @@ public class Settings
         result = ((prime*result)+((executeDeleteWithoutWhere == null)? 0 :executeDeleteWithoutWhere.hashCode()));
         result = ((prime*result)+((interpreterDialect == null)? 0 :interpreterDialect.hashCode()));
         result = ((prime*result)+((interpreterNameLookupCaseSensitivity == null)? 0 :interpreterNameLookupCaseSensitivity.hashCode()));
+        result = ((prime*result)+((interpreterLocale == null)? 0 :interpreterLocale.hashCode()));
+        result = ((prime*result)+((locale == null)? 0 :locale.hashCode()));
         result = ((prime*result)+((parseDialect == null)? 0 :parseDialect.hashCode()));
+        result = ((prime*result)+((parseLocale == null)? 0 :parseLocale.hashCode()));
         result = ((prime*result)+((parseNameCase == null)? 0 :parseNameCase.hashCode()));
         result = ((prime*result)+((parseWithMetaLookups == null)? 0 :parseWithMetaLookups.hashCode()));
         result = ((prime*result)+((parseUnsupportedSyntax == null)? 0 :parseUnsupportedSyntax.hashCode()));

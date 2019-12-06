@@ -174,8 +174,32 @@ public final class SettingsTools {
      * The render locale that is applicable, or the default locale if no such
      * locale is configured.
      */
+    public static final Locale locale(Settings settings) {
+        return defaultIfNull(settings.getLocale(), Locale.getDefault());
+    }
+
+    /**
+     * The render locale that is applicable, or the default locale if no such
+     * locale is configured.
+     */
     public static final Locale renderLocale(Settings settings) {
-        return defaultIfNull(settings.getRenderLocale(), Locale.getDefault());
+        return defaultIfNull(settings.getRenderLocale(), locale(settings));
+    }
+
+    /**
+     * The parser locale that is applicable, or the default locale if no such
+     * locale is configured.
+     */
+    public static final Locale parseLocale(Settings settings) {
+        return defaultIfNull(settings.getParseLocale(), locale(settings));
+    }
+
+    /**
+     * The interpreter locale that is applicable, or the default locale if no such
+     * locale is configured.
+     */
+    public static final Locale interpreterLocale(Settings settings) {
+        return defaultIfNull(settings.getInterpreterLocale(), locale(settings));
     }
 
     /**

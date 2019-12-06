@@ -38,7 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.Name.Quoted.QUOTED;
-import static org.jooq.conf.SettingsTools.renderLocale;
+import static org.jooq.conf.SettingsTools.interpreterLocale;
 import static org.jooq.impl.AbstractName.NO_NAME;
 import static org.jooq.impl.Cascade.CASCADE;
 import static org.jooq.impl.Cascade.RESTRICT;
@@ -57,6 +57,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.jooq.Catalog;
@@ -103,6 +104,7 @@ final class DDLInterpreter {
 
     private final Configuration                        configuration;
     private final InterpreterNameLookupCaseSensitivity caseSensitivity;
+    private final Locale                               locale;
     private final Map<Name, MutableCatalog>            catalogs = new LinkedHashMap<>();
     private final MutableCatalog                       defaultCatalog;
     private final MutableSchema                        defaultSchema;
@@ -111,6 +113,7 @@ final class DDLInterpreter {
     DDLInterpreter(Configuration configuration) {
         this.configuration = configuration;
         this.caseSensitivity = caseSensitivity(configuration);
+        this.locale = interpreterLocale(configuration.settings());
         this.defaultCatalog = new MutableCatalog(NO_NAME);
         this.catalogs.put(defaultCatalog.name(), defaultCatalog);
         this.defaultSchema = new MutableSchema(NO_NAME, defaultCatalog);
@@ -1249,9 +1252,7 @@ final class DDLInterpreter {
 
         void name(UnqualifiedName n) {
             this.name = n;
-
-            // TODO: Use Settings.renderLocale()
-            this.upper = name.last().toUpperCase(renderLocale(configuration.settings()));
+            this.upper = name.last().toUpperCase(locale);
         }
 
         Comment comment() {
@@ -1268,11 +1269,11 @@ final class DDLInterpreter {
                     return name.last().equals(other.last());
 
                 case WHEN_QUOTED:
-                    return normaliseNameCase(configuration, name.last(), name.quoted() == QUOTED).equals(
-                           normaliseNameCase(configuration, other.last(), other.quoted() == QUOTED));
+                    return normaliseNameCase(configuration, name.last(), name.quoted() == QUOTED, locale).equals(
+                           normaliseNameCase(configuration, other.last(), other.quoted() == QUOTED, locale));
 
                 case NEVER:
-                    return upper.equalsIgnoreCase(other.last().toUpperCase(renderLocale(configuration.settings())));
+                    return upper.equalsIgnoreCase(other.last().toUpperCase(locale));
 
                 case DEFAULT:
                 default:

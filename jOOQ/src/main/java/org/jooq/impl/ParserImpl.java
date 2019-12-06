@@ -50,6 +50,7 @@ import static org.jooq.JoinType.JOIN;
 // ...
 import static org.jooq.conf.ParseWithMetaLookups.IGNORE_ON_FAILURE;
 import static org.jooq.conf.ParseWithMetaLookups.THROW_ON_FAILURE;
+import static org.jooq.conf.SettingsTools.parseLocale;
 import static org.jooq.impl.AbstractName.NO_NAME;
 import static org.jooq.impl.DSL.abs;
 import static org.jooq.impl.DSL.acos;
@@ -326,6 +327,7 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -9175,7 +9177,7 @@ final class ParserImpl implements Parser {
         if (ctx.position() == start)
             return null;
 
-        String name = normaliseNameCase(ctx.configuration(), ctx.substring(start, ctx.position()), quoted);
+        String name = normaliseNameCase(ctx.configuration(), ctx.substring(start, ctx.position()), quoted, ctx.locale);
 
         if (quoted) {
             if (ctx.character() != quoteEnd)
@@ -10804,6 +10806,7 @@ final class ParserContext {
     private static final boolean          PRO_EDITION     = false;
 
     final DSLContext                      dsl;
+    final Locale                          locale;
     final Meta                            meta;
     final char[]                          sql;
     private final ParseWithMetaLookups    metaLookups;
@@ -10826,6 +10829,7 @@ final class ParserContext {
         Object[] bindings
     ) {
         this.dsl = dsl;
+        this.locale = parseLocale(dsl.settings());
         this.meta = meta;
         this.metaLookups = metaLookups;
         this.sql = sqlString.toCharArray();

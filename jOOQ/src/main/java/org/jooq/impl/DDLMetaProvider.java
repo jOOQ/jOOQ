@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.conf.SettingsTools.renderLocale;
 import static org.jooq.impl.DSL.name;
 
 import java.io.Closeable;
@@ -62,6 +61,7 @@ import org.jooq.Source;
 import org.jooq.VisitContext;
 import org.jooq.conf.RenderNameCase;
 import org.jooq.conf.Settings;
+import org.jooq.conf.SettingsTools;
 import org.jooq.exception.DataAccessException;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.JDBCUtils;
@@ -123,7 +123,7 @@ final class DDLMetaProvider implements MetaProvider {
                 ctx.data("org.jooq.ddl.parse-for-ddldatabase", true);
 
                 final RenderNameCase nameCase = settings.getRenderNameCase();
-                final Locale locale = renderLocale(ctx.settings());
+                final Locale locale = SettingsTools.interpreterLocale(ctx.settings());
                 if (nameCase != null && nameCase != RenderNameCase.AS_IS) {
                     ctx.configuration().set(new DefaultVisitListener() {
                         @Override

@@ -67,7 +67,6 @@ import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.conf.ParamType.NAMED_OR_INLINED;
 import static org.jooq.conf.SettingsTools.getBackslashEscaping;
 import static org.jooq.conf.SettingsTools.reflectionCaching;
-import static org.jooq.conf.SettingsTools.renderLocale;
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
 import static org.jooq.conf.ThrowExceptions.THROW_FIRST;
 import static org.jooq.conf.ThrowExceptions.THROW_NONE;
@@ -191,6 +190,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
@@ -5325,7 +5325,7 @@ final class Tools {
      * Normalise a name case depending on the dialect and the setting for
      * {@link ParseNameCase}.
      */
-    static final String normaliseNameCase(Configuration configuration, String name, boolean quoted) {
+    static final String normaliseNameCase(Configuration configuration, String name, boolean quoted, Locale locale) {
         switch (parseNameCase(configuration)) {
             case LOWER_IF_UNQUOTED:
                 if (quoted)
@@ -5334,7 +5334,7 @@ final class Tools {
                 // no-break
 
             case LOWER:
-                return name.toLowerCase(renderLocale(configuration.settings()));
+                return name.toLowerCase(locale);
 
             case UPPER_IF_UNQUOTED:
                 if (quoted)
@@ -5342,7 +5342,7 @@ final class Tools {
 
                 // no-break
             case UPPER:
-                return name.toUpperCase(renderLocale(configuration.settings()));
+                return name.toUpperCase(locale);
 
             case AS_IS:
             case DEFAULT:

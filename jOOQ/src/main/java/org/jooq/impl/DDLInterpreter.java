@@ -54,6 +54,7 @@ import static org.jooq.tools.StringUtils.defaultIfNull;
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -100,15 +101,24 @@ import org.jooq.tools.JooqLogger;
 @SuppressWarnings("serial")
 final class DDLInterpreter {
 
-    private static final JooqLogger                    log      = JooqLogger.getLogger(DDLInterpreter.class);
+    private static final JooqLogger                              log                    = JooqLogger.getLogger(DDLInterpreter.class);
 
-    private final Configuration                        configuration;
-    private final InterpreterNameLookupCaseSensitivity caseSensitivity;
-    private final Locale                               locale;
-    private final Map<Name, MutableCatalog>            catalogs = new LinkedHashMap<>();
-    private final MutableCatalog                       defaultCatalog;
-    private final MutableSchema                        defaultSchema;
-    private MutableSchema                              currentSchema;
+    private final Configuration                                  configuration;
+    private final InterpreterNameLookupCaseSensitivity           caseSensitivity;
+    private final Locale                                         locale;
+    private final Map<Name, MutableCatalog>                      catalogs               = new LinkedHashMap<>();
+    private final MutableCatalog                                 defaultCatalog;
+    private final MutableSchema                                  defaultSchema;
+    private MutableSchema                                        currentSchema;
+
+    // Caches
+    private final Map<Name, MutableCatalog.InterpretedCatalog>   interpretedCatalogs    = new HashMap<>();
+    private final Map<Name, MutableSchema.InterpretedSchema>     interpretedSchemas     = new HashMap<>();
+    private final Map<Name, MutableTable.InterpretedTable>       interpretedTables      = new HashMap<>();
+    private final Map<Name, UniqueKeyImpl<Record>>               interpretedUniqueKeys  = new HashMap<>();
+    private final Map<Name, ReferenceImpl<Record, ?>>            interpretedForeignKeys = new HashMap<>();
+    private final Map<Name, Index>                               interpretedIndexes     = new HashMap<>();
+    private final Map<Name, MutableSequence.InterpretedSequence> interpretedSequences   = new HashMap<>();
 
     DDLInterpreter(Configuration configuration) {
         this.configuration = configuration;
@@ -129,7 +139,7 @@ final class DDLInterpreter {
                 List<Catalog> result = new ArrayList<>();
 
                 for (MutableCatalog catalog : catalogs.values())
-                    result.add(catalog.new InterpretedCatalog());
+                    result.add(catalog.interpretedCatalog());
 
                 return result;
             }
@@ -141,6 +151,8 @@ final class DDLInterpreter {
     // -------------------------------------------------------------------------
 
     final void accept(Query query) {
+        invalidateCaches();
+
         if (log.isDebugEnabled())
             log.debug(query);
 
@@ -198,6 +210,16 @@ final class DDLInterpreter {
 
         else
             throw unsupportedQuery(query);
+    }
+
+    private final void invalidateCaches() {
+        interpretedCatalogs.clear();
+        interpretedSchemas.clear();
+        interpretedTables.clear();
+        interpretedUniqueKeys.clear();
+        interpretedForeignKeys.clear();
+        interpretedIndexes.clear();
+        interpretedSequences.clear();
     }
 
     private final void accept0(CreateSchemaImpl query) {
@@ -1246,6 +1268,15 @@ final class DDLInterpreter {
             name(name);
         }
 
+        Name qualifiedName() {
+            MutableNamed parent = parent();
+
+            if (parent == null)
+                return name;
+            else
+                return parent.qualifiedName().append(name);
+        }
+
         UnqualifiedName name() {
             return name;
         }
@@ -1281,6 +1312,7 @@ final class DDLInterpreter {
             }
         }
 
+        abstract MutableNamed parent();
         abstract void drop();
 
         @Override
@@ -1301,6 +1333,21 @@ final class DDLInterpreter {
             schemas.clear();
         }
 
+        @Override
+        final MutableNamed parent() {
+            return null;
+        }
+
+        final InterpretedCatalog interpretedCatalog() {
+            Name qualifiedName = qualifiedName();
+            InterpretedCatalog result = interpretedCatalogs.get(qualifiedName);
+
+            if (result == null)
+                interpretedCatalogs.put(qualifiedName, result = new InterpretedCatalog());
+
+            return result;
+        }
+
         private final class InterpretedCatalog extends CatalogImpl {
             InterpretedCatalog() {
                 super(MutableCatalog.this.name(), MutableCatalog.this.comment());
@@ -1311,7 +1358,7 @@ final class DDLInterpreter {
                 List<Schema> result = new ArrayList<>(schemas.size());
 
                 for (MutableSchema schema : schemas)
-                    result.add(schema.new InterpretedSchema(this));
+                    result.add(schema.interpretedSchema());
 
                 return result;
             }
@@ -1336,6 +1383,21 @@ final class DDLInterpreter {
             sequences.clear();
         }
 
+        @Override
+        final MutableNamed parent() {
+            return catalog;
+        }
+
+        final InterpretedSchema interpretedSchema() {
+            Name qualifiedName = qualifiedName();
+            InterpretedSchema result = interpretedSchemas.get(qualifiedName);
+
+            if (result == null)
+                interpretedSchemas.put(qualifiedName, result = new InterpretedSchema(catalog.interpretedCatalog()));
+
+            return result;
+        }
+
         final boolean isEmpty() {
             return tables.isEmpty();
         }
@@ -1358,7 +1420,7 @@ final class DDLInterpreter {
                 List<Table<?>> result = new ArrayList<>(tables.size());
 
                 for (MutableTable table : tables)
-                    result.add(table.new InterpretedTable(this));
+                    result.add(table.interpretedTable());
 
                 return result;
             }
@@ -1368,7 +1430,7 @@ final class DDLInterpreter {
                 List<Sequence<?>> result = new ArrayList<>(sequences.size());
 
                 for (MutableSequence sequence : sequences)
-                    result.add(sequence.new InterpretedSequence(this));
+                    result.add(sequence.interpretedSequence());
 
                 return result;
             }
@@ -1403,6 +1465,21 @@ final class DDLInterpreter {
             checks.clear();
             indexes.clear();
             fields.clear();
+        }
+
+        @Override
+        final MutableNamed parent() {
+            return schema;
+        }
+
+        final InterpretedTable interpretedTable() {
+            Name qualifiedName = qualifiedName();
+            InterpretedTable result = interpretedTables.get(qualifiedName);
+
+            if (result == null)
+                interpretedTables.put(qualifiedName, result = new InterpretedTable(schema.interpretedSchema()));
+
+            return result;
         }
 
         boolean hasReferencingTables() {
@@ -1484,7 +1561,9 @@ final class DDLInterpreter {
 
             @Override
             public final UniqueKey<Record> getPrimaryKey() {
-                return interpretedKey(MutableTable.this.primaryKey);
+                return MutableTable.this.primaryKey != null
+                     ? MutableTable.this.primaryKey.interpretedKey()
+                     : null;
             }
 
             @Override
@@ -1496,7 +1575,7 @@ final class DDLInterpreter {
                     result.add(pk);
 
                 for (MutableUniqueKey uk : MutableTable.this.uniqueKeys)
-                    result.add(interpretedKey(uk));
+                    result.add(uk.interpretedKey());
 
                 return result;
             }
@@ -1506,7 +1585,7 @@ final class DDLInterpreter {
                 List<ForeignKey<Record, ?>> result = new ArrayList<>();
 
                 for (MutableForeignKey fk : MutableTable.this.foreignKeys)
-                    result.add(interpretedKey(fk));
+                    result.add(fk.interpretedKey());
 
                 return result;
             }
@@ -1526,55 +1605,9 @@ final class DDLInterpreter {
                 List<Index> result = new ArrayList<>();
 
                 for (MutableIndex i : MutableTable.this.indexes)
-                    result.add(interpretedIndex(i));
+                    result.add(i.interpretedIndex());
 
                 return result;
-            }
-
-            @SuppressWarnings("unchecked")
-            private final UniqueKey<Record> interpretedKey(MutableUniqueKey key) {
-                if (key == null)
-                    return null;
-
-                TableField<Record, ?>[] f = new TableField[key.keyFields.size()];
-
-                // TODO: Refactor these constructor calls
-                InterpretedTable t = key.keyTable.new InterpretedTable(key.keyTable.schema.new InterpretedSchema(key.keyTable.schema.catalog.new InterpretedCatalog()));
-
-                for (int i = 0; i < f.length; i++)
-                    f[i] = (TableField<Record, ?>) t.field(key.keyFields.get(i).name());
-
-                // TODO: Cache these?
-                return new UniqueKeyImpl<Record>(t, key.name().last(), f);
-            }
-
-            @SuppressWarnings("unchecked")
-            private final ForeignKey<Record, ?> interpretedKey(MutableForeignKey key) {
-                if (key == null)
-                    return null;
-
-                TableField<Record, ?>[] f = new TableField[key.keyFields.size()];
-
-                for (int i = 0; i < f.length; i++)
-                    f[i] = (TableField<Record, ?>) field(key.keyFields.get(i).name());
-
-                // TODO: Refactor these constructor calls
-                // TODO: Cache these?
-                return new ReferenceImpl<>(key.referencedKey.keyTable.new InterpretedTable((MutableSchema.InterpretedSchema) getSchema()).interpretedKey(key.referencedKey), this, key.name().last(), f);
-            }
-
-            private final Index interpretedIndex(MutableIndex idx) {
-                if (idx == null)
-                    return null;
-
-                SortField<?>[] f = new SortField[idx.fields.size()];
-
-                for (int i = 0; i < f.length; i++) {
-                    MutableSortField msf = idx.fields.get(i);
-                    f[i] = field(msf.name()).sort(msf.sort);
-                }
-
-                return new IndexImpl(idx.name(), this, f, null, idx.unique);
             }
         }
     }
@@ -1598,6 +1631,21 @@ final class DDLInterpreter {
 
         @Override
         final void drop() {}
+
+        @Override
+        final MutableNamed parent() {
+            return schema;
+        }
+
+        final InterpretedSequence interpretedSequence() {
+            Name qualifiedName = qualifiedName();
+            InterpretedSequence result = interpretedSequences.get(qualifiedName);
+
+            if (result == null)
+                interpretedSequences.put(qualifiedName, result = new InterpretedSequence(schema.interpretedSchema()));
+
+            return result;
+        }
 
         private final class InterpretedSequence extends SequenceImpl<Long> {
             @SuppressWarnings("unchecked")
@@ -1623,6 +1671,11 @@ final class DDLInterpreter {
             this.keyTable = table;
             this.keyFields = fields;
         }
+
+        @Override
+        final MutableNamed parent() {
+            return keyTable;
+        }
     }
 
     private final class MutableCheck extends MutableNamed {
@@ -1638,6 +1691,21 @@ final class DDLInterpreter {
 
         @Override
         final void drop() {}
+
+        @Override
+        final MutableNamed parent() {
+            return table;
+        }
+
+        @Override
+        final Name qualifiedName() {
+
+            // TODO: Find a better way to identify unnamed constraints.
+            if (name().empty())
+                return super.qualifiedName().append(condition.toString());
+            else
+                return super.qualifiedName();
+        }
     }
 
     private final class MutableUniqueKey extends MutableKey {
@@ -1651,6 +1719,37 @@ final class DDLInterpreter {
         final void drop() {
             // TODO Is this StackOverflowError safe?
             referencingKeys.clear();
+        }
+
+        @Override
+        final Name qualifiedName() {
+
+            // TODO: Find a better way to identify unnamed constraints.
+            if (name().empty())
+                return super.qualifiedName().append(keyFields.toString());
+            else
+                return super.qualifiedName();
+        }
+
+        @SuppressWarnings("unchecked")
+        final UniqueKeyImpl<Record> interpretedKey() {
+            Name qualifiedName = qualifiedName();
+            UniqueKeyImpl<Record> result = interpretedUniqueKeys.get(qualifiedName);
+
+            if (result == null) {
+                MutableTable.InterpretedTable t = keyTable.interpretedTable();
+                TableField<Record, ?>[] f = new TableField[keyFields.size()];
+
+                for (int i = 0; i < f.length; i++)
+                    f[i] = (TableField<Record, ?>) t.field(keyFields.get(i).name());
+
+                // Add to map before adding bi-directionality to avoid StackOverflowErrors
+                interpretedUniqueKeys.put(qualifiedName, result = new UniqueKeyImpl<>(t, name().last(), f));
+                for (MutableForeignKey referencingKey : referencingKeys)
+                    result.references.add((ForeignKey) referencingKey.interpretedKey());
+            }
+
+            return result;
         }
     }
 
@@ -1679,6 +1778,35 @@ final class DDLInterpreter {
         final void drop() {
             this.referencedKey.referencingKeys.remove(this);
         }
+
+        @Override
+        final Name qualifiedName() {
+
+            // TODO: Find a better way to identify unnamed constraints.
+            if (name().empty())
+                return super.qualifiedName().append(referencedKey.qualifiedName());
+            else
+                return super.qualifiedName();
+        }
+
+        @SuppressWarnings("unchecked")
+        final ReferenceImpl<Record, ?> interpretedKey() {
+            Name qualifiedName = qualifiedName();
+            ReferenceImpl<Record, ?> result = interpretedForeignKeys.get(qualifiedName);
+
+            if (result == null) {
+                MutableTable.InterpretedTable t = keyTable.interpretedTable();
+                TableField<Record, ?>[] f = new TableField[keyFields.size()];
+
+                for (int i = 0; i < f.length; i++)
+                    f[i] = (TableField<Record, ?>) t.field(keyFields.get(i).name());
+
+                interpretedForeignKeys.put(qualifiedName, result = new ReferenceImpl<>(referencedKey.interpretedKey(), t, name().last(), f));
+            }
+
+            return result;
+        }
+
     }
 
     private final class MutableIndex extends MutableNamed {
@@ -1696,6 +1824,37 @@ final class DDLInterpreter {
 
         @Override
         final void drop() {}
+
+        @Override
+        final MutableNamed parent() {
+            return table;
+        }
+
+        @Override
+        final Name qualifiedName() {
+
+            // TODO: Can we have unnamed indexes?
+            return super.qualifiedName();
+        }
+
+        final Index interpretedIndex() {
+            Name qualifiedName = qualifiedName();
+            Index result = interpretedIndexes.get(qualifiedName);
+
+            if (result == null) {
+                Table<?> t = table.interpretedTable();
+                SortField<?>[] f = new SortField[fields.size()];
+
+                for (int i = 0; i < f.length; i++) {
+                    MutableSortField msf = fields.get(i);
+                    f[i] = t.field(msf.name()).sort(msf.sort);
+                }
+
+                interpretedIndexes.put(qualifiedName, result = new IndexImpl(name(), t, f, null, unique));
+            }
+
+            return result;
+        }
     }
 
     private final class MutableField extends MutableNamed {
@@ -1711,6 +1870,11 @@ final class DDLInterpreter {
 
         @Override
         final void drop() {}
+
+        @Override
+        final MutableNamed parent() {
+            return table;
+        }
     }
 
     private final class MutableSortField extends MutableNamed {
@@ -1726,6 +1890,11 @@ final class DDLInterpreter {
 
         @Override
         final void drop() {}
+
+        @Override
+        final MutableNamed parent() {
+            return field.parent();
+        }
     }
 
     private final class MutableNamedList<N extends MutableNamed> extends AbstractList<N> {

@@ -21,7 +21,7 @@
     </jaxb:bindings>
 
     <!-- [#7153] Locales -->
-    <jaxb:bindings schemaLocation="../../xsd/jooq-runtime-3.13.0.xsd" multiple="true" node="//xs:element[@name='renderLocale']">
+    <jaxb:bindings schemaLocation="../../xsd/jooq-runtime-3.13.0.xsd" multiple="true" node="//xs:element[@name = 'locale' or @name='renderLocale' or @name='parseLocale' or @name='interpreterLocale']">
         <xjc:javaType name="java.util.Locale" adapter="org.jooq.conf.LocaleAdapter"/>
     </jaxb:bindings>
 

@@ -391,7 +391,7 @@ jOOQ queries, for which no specific fetchSize value was specified.]]></jxb:javad
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#7337] The dialect that should be used to interpret SQL DDL statements. {@link SQLDialect#DEFAULT} means that jOOQ interprets the SQL itself. Any other dialect (if supported) will be interpreted on an actual JDBC connection.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
-      <element name="interpreterNameCaseSensitivity" type="jooq-runtime:InterpreterNameLookupCaseSensitivity" minOccurs="0" maxOccurs="1" default="DEFAULT">
+      <element name="interpreterNameLookupCaseSensitivity" type="jooq-runtime:InterpreterNameLookupCaseSensitivity" minOccurs="0" maxOccurs="1" default="DEFAULT">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#9633] The case sensitivity of identifiers used when interpreting SQL DDL statements.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 

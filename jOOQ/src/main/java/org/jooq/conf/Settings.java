@@ -192,7 +192,7 @@ public class Settings
     protected SQLDialect interpreterDialect;
     @XmlElement(defaultValue = "DEFAULT")
     @XmlSchemaType(name = "string")
-    protected InterpreterNameLookupCaseSensitivity interpreterNameCaseSensitivity = InterpreterNameLookupCaseSensitivity.DEFAULT;
+    protected InterpreterNameLookupCaseSensitivity interpreterNameLookupCaseSensitivity = InterpreterNameLookupCaseSensitivity.DEFAULT;
     @XmlElement(type = String.class, defaultValue = "DEFAULT")
     @XmlJavaTypeAdapter(SQLDialectAdapter.class)
     protected SQLDialect parseDialect;
@@ -1617,16 +1617,16 @@ public class Settings
      * [#9633] The case sensitivity of identifiers used when interpreting SQL DDL statements.
      *
      */
-    public InterpreterNameLookupCaseSensitivity getInterpreterNameCaseSensitivity() {
-        return interpreterNameCaseSensitivity;
+    public InterpreterNameLookupCaseSensitivity getInterpreterNameLookupCaseSensitivity() {
+        return interpreterNameLookupCaseSensitivity;
     }
 
     /**
      * [#9633] The case sensitivity of identifiers used when interpreting SQL DDL statements.
      *
      */
-    public void setInterpreterNameCaseSensitivity(InterpreterNameLookupCaseSensitivity value) {
-        this.interpreterNameCaseSensitivity = value;
+    public void setInterpreterNameLookupCaseSensitivity(InterpreterNameLookupCaseSensitivity value) {
+        this.interpreterNameLookupCaseSensitivity = value;
     }
 
     /**
@@ -2296,8 +2296,8 @@ public class Settings
      * [#9633] The case sensitivity of identifiers used when interpreting SQL DDL statements.
      *
      */
-    public Settings withInterpreterNameCaseSensitivity(InterpreterNameLookupCaseSensitivity value) {
-        setInterpreterNameCaseSensitivity(value);
+    public Settings withInterpreterNameLookupCaseSensitivity(InterpreterNameLookupCaseSensitivity value) {
+        setInterpreterNameLookupCaseSensitivity(value);
         return this;
     }
 
@@ -2456,7 +2456,7 @@ public class Settings
         builder.append("executeUpdateWithoutWhere", executeUpdateWithoutWhere);
         builder.append("executeDeleteWithoutWhere", executeDeleteWithoutWhere);
         builder.append("interpreterDialect", interpreterDialect);
-        builder.append("interpreterNameCaseSensitivity", interpreterNameCaseSensitivity);
+        builder.append("interpreterNameLookupCaseSensitivity", interpreterNameLookupCaseSensitivity);
         builder.append("parseDialect", parseDialect);
         builder.append("parseNameCase", parseNameCase);
         builder.append("parseWithMetaLookups", parseWithMetaLookups);
@@ -3063,12 +3063,12 @@ public class Settings
                 return false;
             }
         }
-        if (interpreterNameCaseSensitivity == null) {
-            if (other.interpreterNameCaseSensitivity!= null) {
+        if (interpreterNameLookupCaseSensitivity == null) {
+            if (other.interpreterNameLookupCaseSensitivity!= null) {
                 return false;
             }
         } else {
-            if (!interpreterNameCaseSensitivity.equals(other.interpreterNameCaseSensitivity)) {
+            if (!interpreterNameLookupCaseSensitivity.equals(other.interpreterNameLookupCaseSensitivity)) {
                 return false;
             }
         }
@@ -3224,7 +3224,7 @@ public class Settings
         result = ((prime*result)+((executeUpdateWithoutWhere == null)? 0 :executeUpdateWithoutWhere.hashCode()));
         result = ((prime*result)+((executeDeleteWithoutWhere == null)? 0 :executeDeleteWithoutWhere.hashCode()));
         result = ((prime*result)+((interpreterDialect == null)? 0 :interpreterDialect.hashCode()));
-        result = ((prime*result)+((interpreterNameCaseSensitivity == null)? 0 :interpreterNameCaseSensitivity.hashCode()));
+        result = ((prime*result)+((interpreterNameLookupCaseSensitivity == null)? 0 :interpreterNameLookupCaseSensitivity.hashCode()));
         result = ((prime*result)+((parseDialect == null)? 0 :parseDialect.hashCode()));
         result = ((prime*result)+((parseNameCase == null)? 0 :parseNameCase.hashCode()));
         result = ((prime*result)+((parseWithMetaLookups == null)? 0 :parseWithMetaLookups.hashCode()));

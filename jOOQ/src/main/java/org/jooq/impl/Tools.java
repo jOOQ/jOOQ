@@ -67,6 +67,7 @@ import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.conf.ParamType.NAMED_OR_INLINED;
 import static org.jooq.conf.SettingsTools.getBackslashEscaping;
 import static org.jooq.conf.SettingsTools.reflectionCaching;
+import static org.jooq.conf.SettingsTools.renderLocale;
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
 import static org.jooq.conf.ThrowExceptions.THROW_FIRST;
 import static org.jooq.conf.ThrowExceptions.THROW_NONE;
@@ -151,6 +152,7 @@ import static org.jooq.impl.Tools.DataCacheKey.DATA_REFLECTION_CACHE_GET_MATCHIN
 import static org.jooq.impl.Tools.DataCacheKey.DATA_REFLECTION_CACHE_GET_MATCHING_SETTERS;
 import static org.jooq.impl.Tools.DataCacheKey.DATA_REFLECTION_CACHE_HAS_COLUMN_ANNOTATIONS;
 import static org.jooq.impl.Tools.DataKey.DATA_BLOCK_NESTING;
+import static org.jooq.tools.StringUtils.defaultIfNull;
 import static org.jooq.tools.reflect.Reflect.accessible;
 
 import java.io.Serializable;
@@ -252,6 +254,7 @@ import org.jooq.UDT;
 import org.jooq.UDTRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.conf.BackslashEscaping;
+import org.jooq.conf.ParseNameCase;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.conf.ThrowExceptions;
@@ -5316,5 +5319,89 @@ final class Tools {
                 return true;
 
         return false;
+    }
+
+    /**
+     * Normalise a name case depending on the dialect and the setting for
+     * {@link ParseNameCase}.
+     */
+    static final String normaliseNameCase(Configuration configuration, String name, boolean quoted) {
+        switch (parseNameCase(configuration)) {
+            case LOWER_IF_UNQUOTED:
+                if (quoted)
+                    return name;
+
+                // no-break
+
+            case LOWER:
+                return name.toLowerCase(renderLocale(configuration.settings()));
+
+            case UPPER_IF_UNQUOTED:
+                if (quoted)
+                    return name;
+
+                // no-break
+            case UPPER:
+                return name.toUpperCase(renderLocale(configuration.settings()));
+
+            case AS_IS:
+            case DEFAULT:
+            default:
+                return name;
+        }
+    }
+
+    /**
+     * Get the {@link ParseNameCase}, looking up the default value from the
+     * parse dialect.
+     */
+    private static final ParseNameCase parseNameCase(Configuration configuration) {
+        ParseNameCase result = defaultIfNull(configuration.settings().getParseNameCase(), ParseNameCase.DEFAULT);
+
+        if (result == ParseNameCase.DEFAULT) {
+            switch (defaultIfNull(configuration.settings().getParseDialect(), configuration.family()).family()) {
+
+
+
+
+
+
+
+                case POSTGRES:
+                    return ParseNameCase.LOWER_IF_UNQUOTED;
+
+
+
+
+
+
+
+
+                case DERBY:
+                case FIREBIRD:
+                case H2:
+                case HSQLDB:
+                    return ParseNameCase.UPPER_IF_UNQUOTED;
+
+
+
+
+
+
+
+
+
+                case MYSQL:
+                case SQLITE:
+                    return ParseNameCase.AS_IS;
+
+                case DEFAULT:
+                default:
+                    // The SQL standard uses upper case identifiers if unquoted
+                    return ParseNameCase.UPPER_IF_UNQUOTED;
+            }
+        }
+
+        return result;
     }
 }

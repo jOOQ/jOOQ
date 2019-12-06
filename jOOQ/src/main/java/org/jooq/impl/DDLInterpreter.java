@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.Name.Quoted.QUOTED;
+import static org.jooq.conf.SettingsTools.renderLocale;
 import static org.jooq.impl.AbstractName.NO_NAME;
 import static org.jooq.impl.Cascade.CASCADE;
 import static org.jooq.impl.Cascade.RESTRICT;
@@ -46,7 +47,9 @@ import static org.jooq.impl.ConstraintType.PRIMARY_KEY;
 import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.intersect;
+import static org.jooq.impl.Tools.normaliseNameCase;
 import static org.jooq.impl.Tools.reverseIterable;
+import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.util.AbstractList;
 import java.util.ArrayList;
@@ -96,16 +99,18 @@ import org.jooq.tools.JooqLogger;
 @SuppressWarnings("serial")
 final class DDLInterpreter {
 
-    private static final JooqLogger         log      = JooqLogger.getLogger(DDLInterpreter.class);
+    private static final JooqLogger                    log      = JooqLogger.getLogger(DDLInterpreter.class);
 
-    private final Configuration             configuration;
-    private final Map<Name, MutableCatalog> catalogs = new LinkedHashMap<>();
-    private final MutableCatalog            defaultCatalog;
-    private final MutableSchema             defaultSchema;
-    private MutableSchema                   currentSchema;
+    private final Configuration                        configuration;
+    private final InterpreterNameLookupCaseSensitivity caseSensitivity;
+    private final Map<Name, MutableCatalog>            catalogs = new LinkedHashMap<>();
+    private final MutableCatalog                       defaultCatalog;
+    private final MutableSchema                        defaultSchema;
+    private MutableSchema                              currentSchema;
 
     DDLInterpreter(Configuration configuration) {
         this.configuration = configuration;
+        this.caseSensitivity = caseSensitivity(configuration);
         this.defaultCatalog = new MutableCatalog(NO_NAME);
         this.catalogs.put(defaultCatalog.name(), defaultCatalog);
         this.defaultSchema = new MutableSchema(NO_NAME, defaultCatalog);
@@ -1029,7 +1034,7 @@ final class DDLInterpreter {
         return schema;
     }
 
-    private static final MutableTable newTable(
+    private final MutableTable newTable(
         Table<?> table,
         MutableSchema schema,
         List<Field<?>> columns,
@@ -1172,17 +1177,61 @@ final class DDLInterpreter {
         return result;
     }
 
+    private static final InterpreterNameLookupCaseSensitivity caseSensitivity(Configuration configuration) {
+        InterpreterNameLookupCaseSensitivity result = defaultIfNull(configuration.settings().getInterpreterNameLookupCaseSensitivity(), InterpreterNameLookupCaseSensitivity.DEFAULT);
+
+        if (result == InterpreterNameLookupCaseSensitivity.DEFAULT) {
+            switch (defaultIfNull(configuration.settings().getInterpreterDialect(), configuration.family()).family()) {
+
+
+
+
+
+
+
+
+
+
+
+
+                case DERBY:
+                case FIREBIRD:
+                case H2:
+                case HSQLDB:
+                case POSTGRES:
+                    return InterpreterNameLookupCaseSensitivity.WHEN_QUOTED;
+
+
+
+
+
+
+
+
+
+
+
+                case MYSQL:
+                case SQLITE:
+                    return InterpreterNameLookupCaseSensitivity.NEVER;
+
+                case DEFAULT:
+                default:
+                    return InterpreterNameLookupCaseSensitivity.WHEN_QUOTED;
+            }
+        }
+
+        return result;
+    }
+
     // -------------------------------------------------------------------------
     // Data model
     // -------------------------------------------------------------------------
 
-    private static abstract class MutableNamed {
+    private abstract class MutableNamed {
         private UnqualifiedName                      name;
         private String                               upper;
         private Comment                              comment;
-
-        // TODO: Access this from Settings
-        private InterpreterNameLookupCaseSensitivity caseSensitive = InterpreterNameLookupCaseSensitivity.WHEN_QUOTED;
 
         MutableNamed(UnqualifiedName name) {
             this(name, null);
@@ -1202,7 +1251,7 @@ final class DDLInterpreter {
             this.name = n;
 
             // TODO: Use Settings.renderLocale()
-            this.upper = name.last().toUpperCase();
+            this.upper = name.last().toUpperCase(renderLocale(configuration.settings()));
         }
 
         Comment comment() {
@@ -1214,15 +1263,21 @@ final class DDLInterpreter {
         }
 
         boolean nameEquals(UnqualifiedName other) {
+            switch (caseSensitivity) {
+                case ALWAYS:
+                    return name.last().equals(other.last());
 
-            // TODO: Implement InterpreterNameLookupCaseSensitivity.DEFAULT
-            if (caseSensitive == InterpreterNameLookupCaseSensitivity.ALWAYS ||
-                (caseSensitive == InterpreterNameLookupCaseSensitivity.WHEN_QUOTED && (name.quoted() == QUOTED || other.quoted() == QUOTED)))
-                return name.last().equals(other.last());
-            else
+                case WHEN_QUOTED:
+                    return normaliseNameCase(configuration, name.last(), name.quoted() == QUOTED).equals(
+                           normaliseNameCase(configuration, other.last(), other.quoted() == QUOTED));
 
-                // TODO: Use Settings.renderLocale()
-                return upper.equalsIgnoreCase(other.last().toUpperCase());
+                case NEVER:
+                    return upper.equalsIgnoreCase(other.last().toUpperCase(renderLocale(configuration.settings())));
+
+                case DEFAULT:
+                default:
+                    throw new IllegalStateException();
+            }
         }
 
         abstract void drop();
@@ -1233,7 +1288,7 @@ final class DDLInterpreter {
         }
     }
 
-    private static final class MutableCatalog extends MutableNamed {
+    private final class MutableCatalog extends MutableNamed {
         List<MutableSchema> schemas = new MutableNamedList<>();
 
         MutableCatalog(UnqualifiedName name) {
@@ -1262,7 +1317,7 @@ final class DDLInterpreter {
         }
     }
 
-    private static final class MutableSchema extends MutableNamed  {
+    private final class MutableSchema extends MutableNamed  {
         MutableCatalog        catalog;
         List<MutableTable>    tables    = new MutableNamedList<>();
         List<MutableSequence> sequences = new MutableNamedList<>();
@@ -1319,7 +1374,7 @@ final class DDLInterpreter {
         }
     }
 
-    private static final class MutableTable extends MutableNamed  {
+    private final class MutableTable extends MutableNamed  {
         MutableSchema           schema;
         List<MutableField>      fields      = new MutableNamedList<>();
         MutableUniqueKey        primaryKey;
@@ -1524,7 +1579,7 @@ final class DDLInterpreter {
     }
 
     @SuppressWarnings("unused")
-    private static final class MutableSequence extends MutableNamed {
+    private final class MutableSequence extends MutableNamed {
         MutableSchema           schema;
         Field<? extends Number> startWith;
         Field<? extends Number> incrementBy;
@@ -1557,7 +1612,7 @@ final class DDLInterpreter {
         }
     }
 
-    private static abstract class MutableKey extends MutableNamed {
+    private abstract class MutableKey extends MutableNamed {
         MutableTable       keyTable;
         List<MutableField> keyFields;
 
@@ -1569,7 +1624,7 @@ final class DDLInterpreter {
         }
     }
 
-    private static final class MutableCheck extends MutableNamed {
+    private final class MutableCheck extends MutableNamed {
         MutableTable table;
         Condition    condition;
 
@@ -1584,7 +1639,7 @@ final class DDLInterpreter {
         final void drop() {}
     }
 
-    private static final class MutableUniqueKey extends MutableKey {
+    private final class MutableUniqueKey extends MutableKey {
         List<MutableForeignKey> referencingKeys = new MutableNamedList<>();
 
         MutableUniqueKey(UnqualifiedName name, MutableTable keyTable, List<MutableField> keyFields) {
@@ -1598,7 +1653,7 @@ final class DDLInterpreter {
         }
     }
 
-    private static final class MutableForeignKey extends MutableKey {
+    private final class MutableForeignKey extends MutableKey {
         MutableUniqueKey referencedKey;
         Action           onDelete;
         Action           onUpdate;
@@ -1625,7 +1680,7 @@ final class DDLInterpreter {
         }
     }
 
-    private static final class MutableIndex extends MutableNamed {
+    private final class MutableIndex extends MutableNamed {
         MutableTable           table;
         List<MutableSortField> fields;
         boolean                unique;
@@ -1642,7 +1697,7 @@ final class DDLInterpreter {
         final void drop() {}
     }
 
-    private static final class MutableField extends MutableNamed {
+    private final class MutableField extends MutableNamed {
         MutableTable table;
         DataType<?>  type;
 
@@ -1657,7 +1712,7 @@ final class DDLInterpreter {
         final void drop() {}
     }
 
-    private static final class MutableSortField extends MutableNamed {
+    private final class MutableSortField extends MutableNamed {
         MutableField field;
         SortOrder    sort;
 
@@ -1672,7 +1727,7 @@ final class DDLInterpreter {
         final void drop() {}
     }
 
-    private static final class MutableNamedList<N extends MutableNamed> extends AbstractList<N> {
+    private final class MutableNamedList<N extends MutableNamed> extends AbstractList<N> {
         private final List<N> delegate = new ArrayList<>();
 
         @Override

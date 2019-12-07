@@ -64,18 +64,18 @@
                             <version>${org.hibernate.version}</version>
                         </annotationProcessorPath>
                         <annotationProcessorPath>
-                            <groupId>javax.xml.bind</groupId>
-                            <artifactId>jaxb-api</artifactId>
-                            <version>2.3.1</version>
+                            <groupId>jakarta.xml.bind</groupId>
+                            <artifactId>jakarta.xml.bind-api</artifactId>
+                            <version>2.3.2</version>
                         </annotationProcessorPath>
                     </annotationProcessorPaths>
                 </configuration>
 
                 <dependencies>
                     <dependency>
-                        <groupId>javax.xml.bind</groupId>
-                        <artifactId>jaxb-api</artifactId>
-                        <version>2.3.1</version>
+                        <groupId>jakarta.xml.bind</groupId>
+                        <artifactId>jakarta.xml.bind-api</artifactId>
+                        <version>2.3.2</version>
                     </dependency>
                 </dependencies>
             </plugin>

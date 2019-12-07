@@ -33,11 +33,11 @@
         <hsqldb.version>2.5.0</hsqldb.version>
 
         <!-- From JDK 11 onwards, we need to depend on the JAXB API explicitly -->
-        <jaxb.version>2.3.1</jaxb.version>
-        <javax.activation.version>1.2.0</javax.activation.version>
+        <jakarta.xml.bind-api.version>2.3.2</jakarta.xml.bind-api.version>
+        <jakarta.activation-api.version>1.2.1</jakarta.activation-api.version>
 
         <!-- DefaultRecordMapper and jOOQ-meta-extensions can read JPA annotations -->
-        <javax.persistence-api.version>2.2</javax.persistence-api.version>
+        <jakarta.persistence-api.version>2.2.3</jakarta.persistence-api.version>
     </properties>
 
     <licenses>
@@ -121,9 +121,9 @@
             <!-- The dependency can cause trouble in older JDKs, so it needs to be
                  excluded from pre-java-9 builds: https://github.com/jOOQ/jOOQ/issues/7649 -->
             <dependency>
-                <groupId>javax.xml.bind</groupId>
-                <artifactId>jaxb-api</artifactId>
-                <version>${jaxb.version}</version>
+                <groupId>jakarta.xml.bind</groupId>
+                <artifactId>jakarta.xml.bind-api</artifactId>
+                <version>${jakarta.xml.bind-api.version}</version>
             </dependency>
 
 
@@ -176,9 +176,9 @@
 
             <!-- Optional JPA dependency -->
             <dependency>
-                <groupId>javax.persistence</groupId>
-                <artifactId>javax.persistence-api</artifactId>
-                <version>${javax.persistence-api.version}</version>
+                <groupId>jakarta.persistence</groupId>
+                <artifactId>jakarta.persistence-api</artifactId>
+                <version>${jakarta.persistence-api.version}</version>
                 <scope>provided</scope>
                 <optional>true</optional>
             </dependency>

@@ -88,16 +88,16 @@
             <artifactId>slf4j-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>javax.persistence</groupId>
-            <artifactId>javax.persistence-api</artifactId>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
         </dependency>
 
         <!-- From JDK 9 onwards, the JAXB dependency needs to be made explicit -->
         <!-- The dependency can cause trouble in older JDKs, so it needs to be
              excluded from pre-java-9 builds: https://github.com/jOOQ/jOOQ/issues/7649 -->
         <dependency>
-            <groupId>javax.xml.bind</groupId>
-            <artifactId>jaxb-api</artifactId>
+            <groupId>jakarta.xml.bind</groupId>
+            <artifactId>jakarta.xml.bind-api</artifactId>
         </dependency>
 
 

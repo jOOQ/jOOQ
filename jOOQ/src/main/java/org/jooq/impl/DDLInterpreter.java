@@ -551,15 +551,37 @@ final class DDLInterpreter {
 
             dropColumns(existing, fields, query.$dropCascade());
         }
-        else if (query.$dropConstraint() != null) {
+        else if (query.$dropConstraint() != null) dropConstraint: {
             ConstraintImpl impl = (ConstraintImpl) query.$dropConstraint();
 
-            removal: {
+            if (impl.getUnqualifiedName().empty()) {
+                if (impl.$foreignKey() != null) {
+                    throw new DataDefinitionException("Cannot drop unnamed foreign key");
+                }
+                else if (impl.$check() != null) {
+                    throw new DataDefinitionException("Cannot drop unnamed check constraint");
+                }
+                else if (impl.$unique() != null) {
+                    Iterator<MutableUniqueKey> uks = existing.uniqueKeys.iterator();
+
+                    while (uks.hasNext()) {
+                        MutableUniqueKey key = uks.next();
+
+                        if (key.fieldsEquals(impl.$unique())) {
+                            cascade(key, null, query.$dropCascade());
+                            uks.remove();
+                            break dropConstraint;
+                        }
+                    }
+                }
+            }
+
+            else {
                 Iterator<MutableForeignKey> fks = existing.foreignKeys.iterator();
                 while (fks.hasNext()) {
                     if (fks.next().nameEquals((UnqualifiedName) impl.getUnqualifiedName())) {
                         fks.remove();
-                        break removal;
+                        break dropConstraint;
                     }
                 }
 
@@ -572,7 +594,7 @@ final class DDLInterpreter {
                         if (key.nameEquals((UnqualifiedName) impl.getUnqualifiedName())) {
                             cascade(key, null, query.$dropCascade());
                             uks.remove();
-                            break removal;
+                            break dropConstraint;
                         }
                     }
 
@@ -583,7 +605,7 @@ final class DDLInterpreter {
 
                         if (check.nameEquals((UnqualifiedName) impl.getUnqualifiedName())) {
                             chks.remove();
-                            break removal;
+                            break dropConstraint;
                         }
                     }
 
@@ -591,14 +613,14 @@ final class DDLInterpreter {
                         if (existing.primaryKey.nameEquals((UnqualifiedName) impl.getUnqualifiedName())) {
                             cascade(existing.primaryKey, null, query.$dropCascade());
                             existing.primaryKey = null;
-                            break removal;
+                            break dropConstraint;
                         }
                     }
                 }
-
-                if (!query.$ifExistsConstraint())
-                    throw constraintNotExists(query.$dropConstraint());
             }
+
+            if (!query.$ifExistsConstraint())
+                throw constraintNotExists(query.$dropConstraint());
         }
         else if (query.$dropConstraintType() == PRIMARY_KEY) {
             if (existing.primaryKey != null)
@@ -1675,6 +1697,17 @@ final class DDLInterpreter {
         @Override
         final MutableNamed parent() {
             return keyTable;
+        }
+
+        final boolean fieldsEquals(Field<?>[] fields) {
+            if (keyFields.size() != fields.length)
+                return false;
+
+            for (int i = 0; i < keyFields.size(); i++)
+                if (!keyFields.get(i).nameEquals((UnqualifiedName) fields[i].getUnqualifiedName()))
+                    return false;
+
+            return true;
         }
     }
 

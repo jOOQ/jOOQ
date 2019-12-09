@@ -1592,7 +1592,10 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
                 ctx.visit(K_DROP).sql(' ').visit(K_PRIMARY_KEY);
             }
             else {
-                ctx.visit(K_DROP_CONSTRAINT).sql(' ');
+
+                // [#9382] In some dialects, unnamed UNIQUE constraints can be
+                //         dropped by dropping their declarations.
+                ctx.visit(dropConstraint.getUnqualifiedName().empty() ? K_DROP : K_DROP_CONSTRAINT).sql(' ');
 
                 if (ifExistsConstraint)
                     ctx.visit(K_IF_EXISTS).sql(' ');

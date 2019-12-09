@@ -3898,7 +3898,10 @@ final class ParserImpl implements Parser {
                             : s1.dropConstraint(parseIdentifier(ctx)));
                     }
                     else if (parseKeywordIf(ctx, "UNIQUE")) {
-                        return parseCascadeRestrictIf(ctx, s1.dropUnique(parseIdentifier(ctx)));
+                        return parseCascadeRestrictIf(ctx, s1.dropUnique(
+                              peek(ctx, '(')
+                            ? unique(parseKeyColumnList(ctx))
+                            : constraint(parseIdentifier(ctx))));
                     }
                     else if (parseKeywordIf(ctx, "PRIMARY KEY")) {
                         Name identifier = parseIdentifierIf(ctx);

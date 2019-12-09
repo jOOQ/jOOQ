@@ -99,7 +99,6 @@ import org.jooq.Name;
 // ...
 import org.jooq.SQLDialect;
 import org.jooq.Table;
-import org.jooq.exception.DataAccessException;
 
 /**
  * @author Lukas Eder
@@ -188,16 +187,15 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (TRUE.equals(ctx.data(DATA_CONSTRAINT_REFERENCE))) {
-            if (getQualifiedName().equals(AbstractName.NO_NAME))
-                throw new DataAccessException("Cannot ALTER or DROP CONSTRAINT without name");
+        boolean named = !getQualifiedName().equals(AbstractName.NO_NAME);
 
+        if (named && TRUE.equals(ctx.data(DATA_CONSTRAINT_REFERENCE))) {
             ctx.visit(getQualifiedName());
         }
         else {
             boolean qualify = ctx.qualify();
 
-            if (!getQualifiedName().equals(AbstractName.NO_NAME)) {
+            if (named) {
                 ctx.visit(K_CONSTRAINT)
                    .sql(' ')
                    .visit(getUnqualifiedName())
@@ -279,7 +277,7 @@ implements
                    .sql(')');
             }
 
-            if (!getQualifiedName().equals(AbstractName.NO_NAME)) {
+            if (named) {
 
 
 

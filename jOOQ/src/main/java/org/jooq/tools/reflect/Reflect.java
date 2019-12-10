@@ -14,6 +14,7 @@
 package org.jooq.tools.reflect;
 
 import java.lang.invoke.MethodHandles;
+import java.lang.invoke.MethodHandles.Lookup;
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -25,6 +26,7 @@ import java.lang.reflect.Proxy;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * A wrapper for an {@link Object} or {@link Class} upon which reflective calls
@@ -295,10 +297,20 @@ public class Reflect {
 
 
         try {
-            result = MethodHandles.Lookup.class.getDeclaredConstructor(Class.class);
+            try {
+                Optional.class.getMethod("stream");
+                result = null;
+            }
 
-            if (!result.isAccessible())
-                result.setAccessible(true);
+            // [jOOQ/jOOR#57] [jOOQ/jOOQ#9157]
+            // A JDK 9 guard that prevents "Illegal reflective access operation"
+            // warnings when running the below on JDK 9+
+            catch (NoSuchMethodException e) {
+                result = MethodHandles.Lookup.class.getDeclaredConstructor(Class.class);
+
+                if (!result.isAccessible())
+                    result.setAccessible(true);
+            }
         }
 
         // Can no longer access the above in JDK 9
@@ -723,13 +735,12 @@ public class Reflect {
     }
 
     /**
-     * Create a proxy for the wrapped object allowing to typesafely invoke methods
-     * on it using a custom interface.
+     * Create a proxy for the wrapped object allowing to typesafely invoke
+     * methods on it using a custom interface.
      *
-     * @param proxyType            The interface type that is implemented by the
-     *                             proxy
-     * @param additionalInterfaces Additional interfaces that are implemented by the
-     *                             proxy
+     * @param proxyType The interface type that is implemented by the proxy
+     * @param additionalInterfaces Additional interfaces that are implemented by
+     *            the proxy
      * @return A proxy for the wrapped object
      */
     @SuppressWarnings("unchecked")
@@ -765,6 +776,10 @@ public class Reflect {
 
 
                     if (method.isDefault()) {
+                        Lookup proxyLookup = null;
+
+                        // Java 9 version
+                        if (CACHED_LOOKUP_CONSTRUCTOR == null) {
 
 
 
@@ -772,16 +787,19 @@ public class Reflect {
 
 
 
-
-
-
-
-
+                            // Java 9 version for Java 8 distribution (jOOQ Open Source Edition)
+                            if (proxyLookup == null)
+                                proxyLookup = onClass(MethodHandles.class)
+                                    .call("privateLookupIn", proxyType, MethodHandles.lookup())
+                                    .call("in", proxyType)
+                                    .<Lookup> get();
+                        }
 
                         // Java 8 version
-                        return CACHED_LOOKUP_CONSTRUCTOR
-                            .newInstance(proxyType)
-                            .unreflectSpecial(method, proxyType)
+                        else
+                            proxyLookup = CACHED_LOOKUP_CONSTRUCTOR.newInstance(proxyType);
+
+                        return proxyLookup.unreflectSpecial(method, proxyType)
                             .bindTo(proxy)
                             .invokeWithArguments(args);
                     }

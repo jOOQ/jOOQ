@@ -294,20 +294,8 @@ final class DDLInterpreter {
 
         MutableTable mt = newTable(table, schema, query.$columnFields(), query.$columnTypes(), query.$select(), query.$comment(), query.$temporary() ? TableOptions.temporaryTable(query.$onCommit()) : TableOptions.table());
 
-        for (Constraint constraint : query.$constraints()) {
-            ConstraintImpl impl = (ConstraintImpl) constraint;
-
-            if (impl.$primaryKey() != null)
-                mt.primaryKey = new MutableUniqueKey((UnqualifiedName) impl.getUnqualifiedName(), mt, mt.fields(impl.$primaryKey(), true));
-            else if (impl.$unique() != null)
-                mt.uniqueKeys.add(new MutableUniqueKey((UnqualifiedName) impl.getUnqualifiedName(), mt, mt.fields(impl.$unique(), true)));
-            else if (impl.$foreignKey() != null)
-                addForeignKey(getSchema(impl.$referencesTable().getSchema(), false), mt, impl);
-            else if (impl.$check() != null)
-                mt.checks.add(new MutableCheck((UnqualifiedName) impl.getUnqualifiedName(), mt, impl.$check()));
-            else
-                throw unsupportedQuery(query);
-        }
+        for (Constraint constraint : query.$constraints())
+            addConstraint(query, (ConstraintImpl) constraint, mt);
 
         for (Index index : query.$indexes()) {
             IndexImpl impl = (IndexImpl) index;
@@ -469,7 +457,7 @@ final class DDLInterpreter {
                     if (fc instanceof Field)
                         addField(existing, Integer.MAX_VALUE, (UnqualifiedName) fc.getUnqualifiedName(), ((Field<?>) fc).getDataType());
                     else if (fc instanceof Constraint)
-                        addConstraint(query, (ConstraintImpl) fc, schema, existing);
+                        addConstraint(query, (ConstraintImpl) fc, existing);
                     else
                         throw unsupportedQuery(query);
             }
@@ -494,7 +482,7 @@ final class DDLInterpreter {
                 addField(existing, Integer.MAX_VALUE, name, dataType);
         }
         else if (query.$addConstraint() != null) {
-            addConstraint(query, (ConstraintImpl) query.$addConstraint(), schema, existing);
+            addConstraint(query, (ConstraintImpl) query.$addConstraint(), existing);
         }
         else if (query.$alterColumn() != null) {
             MutableField existingField = find(existing.fields, query.$alterColumn());
@@ -670,12 +658,10 @@ final class DDLInterpreter {
             existing.fields.add(index, new MutableField(name, existing, dataType));
     }
 
-    private final void addConstraint(Query query, ConstraintImpl impl, MutableSchema schema, MutableTable existing) {
+    private final void addConstraint(Query query, ConstraintImpl impl, MutableTable existing) {
         if (!impl.getUnqualifiedName().empty() && existing.constraint(impl) != null)
             throw constraintAlreadyExists(impl);
         else if (impl.$primaryKey() != null)
-
-            // TODO: More nuanced error messages would be good, in general.
             if (existing.primaryKey != null)
                 throw constraintAlreadyExists(impl);
             else

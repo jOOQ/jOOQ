@@ -217,7 +217,7 @@ final class DDL {
         if (configuration.flags().contains(PRIMARY_KEY))
             for (UniqueKey<?> key : table.getKeys())
                 if (key.isPrimary())
-                    result.add(constraint(key.getName()).primaryKey(key.getFieldsArray()));
+                    result.add(constraint(key.getUnqualifiedName()).primaryKey(key.getFieldsArray()));
 
         return result;
     }
@@ -228,7 +228,7 @@ final class DDL {
         if (configuration.flags().contains(UNIQUE))
             for (UniqueKey<?> key : sortIf(table.getKeys(), !configuration.respectConstraintOrder()))
                 if (!key.isPrimary())
-                    result.add(constraint(key.getName()).unique(key.getFieldsArray()));
+                    result.add(constraint(key.getUnqualifiedName()).unique(key.getFieldsArray()));
 
         return result;
     }
@@ -238,7 +238,7 @@ final class DDL {
 
         if (configuration.flags().contains(FOREIGN_KEY))
             for (ForeignKey<?, ?> key : sortIf(table.getReferences(), !configuration.respectConstraintOrder()))
-                result.add(constraint(key.getName()).foreignKey(key.getFieldsArray()).references(key.getKey().getTable(), key.getKey().getFieldsArray()));
+                result.add(constraint(key.getUnqualifiedName()).foreignKey(key.getFieldsArray()).references(key.getKey().getTable(), key.getKey().getFieldsArray()));
 
         return result;
     }
@@ -248,7 +248,7 @@ final class DDL {
 
         if (configuration.flags().contains(CHECK))
             for (Check<?> check : sortIf(table.getChecks(), !configuration.respectConstraintOrder()))
-                result.add(constraint(check.getName()).check(check.condition()));
+                result.add(constraint(check.getUnqualifiedName()).check(check.condition()));
 
         return result;
     }
@@ -297,11 +297,11 @@ final class DDL {
         List<Schema> schemas = sortIf(meta.getSchemas(), !configuration.respectSchemaOrder());
 
         for (Schema schema : schemas)
-            if (configuration.flags().contains(SCHEMA) && !StringUtils.isBlank(schema.getName()))
+            if (configuration.flags().contains(SCHEMA) && !schema.getUnqualifiedName().empty())
                 if (configuration.createSchemaIfNotExists())
-                    queries.add(ctx.createSchemaIfNotExists(schema.getName()));
+                    queries.add(ctx.createSchemaIfNotExists(schema.getUnqualifiedName()));
                 else
-                    queries.add(ctx.createSchema(schema.getName()));
+                    queries.add(ctx.createSchema(schema.getUnqualifiedName()));
 
         if (configuration.flags().contains(TABLE)) {
             for (Schema schema : schemas) {

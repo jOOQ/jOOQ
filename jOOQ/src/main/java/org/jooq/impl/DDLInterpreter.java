@@ -719,7 +719,7 @@ final class DDLInterpreter {
             throw tableNotExists(table);
         else if (!existing.options.type().isTable())
             throw objectNotTable(table);
-        else if (!query.$cascade() && existing.hasReferencingTables())
+        else if (!query.$cascade() && existing.hasReferencingKeys())
             throw new DataDefinitionException("Cannot truncate table referenced by other tables. Use CASCADE: " + table);
     }
 
@@ -1335,7 +1335,7 @@ final class DDLInterpreter {
         }
 
         abstract MutableNamed parent();
-        abstract void drop();
+        abstract void onDrop();
 
         @Override
         public String toString() {
@@ -1351,7 +1351,7 @@ final class DDLInterpreter {
         }
 
         @Override
-        final void drop() {
+        final void onDrop() {
             schemas.clear();
         }
 
@@ -1400,7 +1400,11 @@ final class DDLInterpreter {
         }
 
         @Override
-        final void drop() {
+        final void onDrop() {
+            for (MutableTable table : tables)
+                for (MutableForeignKey referencingKey : table.referencingKeys())
+                    referencingKey.keyTable.foreignKeys.remove(referencingKey);
+
             tables.clear();
             sequences.clear();
         }
@@ -1478,9 +1482,9 @@ final class DDLInterpreter {
         }
 
         @Override
-        final void drop() {
+        final void onDrop() {
             if (primaryKey != null)
-                primaryKey.drop();
+                primaryKey.onDrop();
 
             uniqueKeys.clear();
             foreignKeys.clear();
@@ -1504,7 +1508,7 @@ final class DDLInterpreter {
             return result;
         }
 
-        boolean hasReferencingTables() {
+        boolean hasReferencingKeys() {
             if (primaryKey != null && !primaryKey.referencingKeys.isEmpty())
                 return true;
 
@@ -1513,6 +1517,18 @@ final class DDLInterpreter {
                     return true;
 
             return false;
+        }
+
+        List<MutableForeignKey> referencingKeys() {
+            List<MutableForeignKey> result = new ArrayList<>();
+
+            if (primaryKey != null)
+                result.addAll(primaryKey.referencingKeys);
+
+            for (MutableUniqueKey uk : uniqueKeys)
+                result.addAll(uk.referencingKeys);
+
+            return result;
         }
 
         final MutableNamed constraint(Constraint constraint) {
@@ -1652,7 +1668,7 @@ final class DDLInterpreter {
         }
 
         @Override
-        final void drop() {}
+        final void onDrop() {}
 
         @Override
         final MutableNamed parent() {
@@ -1723,7 +1739,7 @@ final class DDLInterpreter {
         }
 
         @Override
-        final void drop() {}
+        final void onDrop() {}
 
         @Override
         final MutableNamed parent() {
@@ -1749,7 +1765,7 @@ final class DDLInterpreter {
         }
 
         @Override
-        final void drop() {
+        final void onDrop() {
             // TODO Is this StackOverflowError safe?
             referencingKeys.clear();
         }
@@ -1808,7 +1824,7 @@ final class DDLInterpreter {
         }
 
         @Override
-        final void drop() {
+        final void onDrop() {
             this.referencedKey.referencingKeys.remove(this);
         }
 
@@ -1856,7 +1872,7 @@ final class DDLInterpreter {
         }
 
         @Override
-        final void drop() {}
+        final void onDrop() {}
 
         @Override
         final MutableNamed parent() {
@@ -1902,7 +1918,7 @@ final class DDLInterpreter {
         }
 
         @Override
-        final void drop() {}
+        final void onDrop() {}
 
         @Override
         final MutableNamed parent() {
@@ -1922,7 +1938,7 @@ final class DDLInterpreter {
         }
 
         @Override
-        final void drop() {}
+        final void onDrop() {}
 
         @Override
         final MutableNamed parent() {
@@ -1956,7 +1972,7 @@ final class DDLInterpreter {
         @Override
         public N remove(int index) {
             N removed = delegate.remove(index);
-            removed.drop();
+            removed.onDrop();
             return removed;
         }
     }

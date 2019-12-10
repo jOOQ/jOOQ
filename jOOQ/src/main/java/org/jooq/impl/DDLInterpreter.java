@@ -1636,7 +1636,6 @@ final class DDLInterpreter {
         }
     }
 
-    @SuppressWarnings("unused")
     private final class MutableSequence extends MutableNamed {
         MutableSchema           schema;
         Field<? extends Number> startWith;

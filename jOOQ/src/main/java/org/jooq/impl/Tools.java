@@ -2266,8 +2266,13 @@ final class Tools {
                 // Consume the whole string literal
                 for (;;) {
 
+                    // [#9648] The "string literal" might not be one, if we're inside
+                    //         of some vendor specific comment syntax
+                    if (i >= sqlChars.length)
+                        break characterLoop;
+
                     // [#3000] [#3630] Consume backslash-escaped characters if needed
-                    if (sqlChars[i] == '\\' && needsBackslashEscaping)
+                    else if (sqlChars[i] == '\\' && needsBackslashEscaping)
                         render.sql(sqlChars[i++]);
 
                     // Consume an escaped apostrophe
@@ -2381,8 +2386,14 @@ final class Tools {
                 identifierLoop:
                 for (;;) {
 
+
+                    // [#9648] The "identifier" might not be one, if we're inside
+                    //         of some vendor specific comment syntax
+                    if (i >= sqlChars.length)
+                        break characterLoop;
+
                     // Consume an escaped quote
-                    if (peek(sqlChars, i, quotes[QUOTE_END_DELIMITER_ESCAPED][delimiter])) {
+                    else if (peek(sqlChars, i, quotes[QUOTE_END_DELIMITER_ESCAPED][delimiter])) {
                         for (int d = 0; d < quotes[QUOTE_END_DELIMITER_ESCAPED][delimiter].length; d++)
                             render.sql(sqlChars[i++]);
 

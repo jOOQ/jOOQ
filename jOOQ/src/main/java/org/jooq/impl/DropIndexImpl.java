@@ -179,7 +179,7 @@ final class DropIndexImpl extends AbstractRowCountQuery implements
             ctx.sql(' ').visit(K_ON).sql(' ').visit(on);
 
         if (cascade != null)
-            ctx.visit(cascade ? K_CASCADE : K_RESTRICT);
+            ctx.sql(' ').visit(cascade ? K_CASCADE : K_RESTRICT);
     }
 
     @Override

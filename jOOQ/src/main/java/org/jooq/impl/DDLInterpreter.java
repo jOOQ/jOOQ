@@ -683,7 +683,7 @@ final class DDLInterpreter {
         else if (impl.$unique() != null)
             existing.uniqueKeys.add(new MutableUniqueKey((UnqualifiedName) impl.getUnqualifiedName(), existing, existing.fields(impl.$unique(), true)));
         else if (impl.$foreignKey() != null)
-            addForeignKey(schema, existing, impl);
+            addForeignKey(getSchema(impl.$referencesTable().getSchema(), false), existing, impl);
         else if (impl.$check() != null)
             existing.checks.add(new MutableCheck((UnqualifiedName) impl.getUnqualifiedName(), existing, impl.$check()));
         else
@@ -1339,7 +1339,7 @@ final class DDLInterpreter {
 
         @Override
         public String toString() {
-            return name.toString();
+            return qualifiedName().toString();
         }
     }
 

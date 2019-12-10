@@ -55,6 +55,7 @@ import javax.persistence.criteria.Root;
 import javax.persistence.criteria.SetJoin;
 
 import org.jooq.DSLContext;
+import org.jooq.Record;
 import org.jooq.example.jpa.entity.Actor;
 import org.jooq.example.jpa.entity.Actor_;
 import org.jooq.example.jpa.entity.Film;
@@ -89,7 +90,7 @@ class CriteriaQueryOrJOOQ {
         // Using jOOQ
         // ----------
 
-        for (var rec :
+        for (Record rec :
             ctx.select(FILM.TITLE, FILM.LENGTH, LANGUAGE.NAME)
                .from(FILM)
                .join(LANGUAGE).on(FILM.LANGUAGE_LANGUAGEID.eq(LANGUAGE.LANGUAGEID)))
@@ -118,7 +119,7 @@ class CriteriaQueryOrJOOQ {
         // Using jOOQ
         // ----------
 
-        for (var rec :
+        for (Record rec :
             ctx.select(LANGUAGE.NAME, count())
                .from(LANGUAGE)
                .join(FILM).on(FILM.LANGUAGE_LANGUAGEID.eq(LANGUAGE.LANGUAGEID))
@@ -149,7 +150,7 @@ class CriteriaQueryOrJOOQ {
         // Using jOOQ
         // ----------
 
-        for (var rec :
+        for (Record rec :
             ctx.select(LANGUAGE.NAME, countDistinct(FILM_ACTOR.ACTORS_ACTORID).as("c"))
                .from(LANGUAGE)
                .join(FILM).on(FILM.LANGUAGE_LANGUAGEID.eq(LANGUAGE.LANGUAGEID))

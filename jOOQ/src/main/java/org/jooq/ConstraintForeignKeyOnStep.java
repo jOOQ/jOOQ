@@ -85,7 +85,7 @@ import static org.jooq.SQLDialect.SQLITE;
  *
  * @author Lukas Eder
  */
-public interface ConstraintForeignKeyOnStep extends ConstraintFinalStep {
+public interface ConstraintForeignKeyOnStep extends ConstraintEnforcementStep {
 
     /**
      * Add an <code>ON DELETE NO ACTION</code> clause to the

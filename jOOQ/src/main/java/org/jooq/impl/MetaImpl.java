@@ -654,7 +654,7 @@ final class MetaImpl extends AbstractMeta {
                     fkFields[i] = (TableField<Record, ?>)         field(record.get(7, String.class));
                 }
 
-                references.add(new ReferenceImpl<>(new MetaPrimaryKey(pkTable, pkName, pkFields), this, fkName, fkFields));
+                references.add(new ReferenceImpl<>(new MetaPrimaryKey(pkTable, pkName, pkFields), this, fkName, fkFields, true));
             }
 
             return references;
@@ -868,6 +868,11 @@ final class MetaImpl extends AbstractMeta {
         }
 
         @Override
+        public final boolean enforced() {
+            return true;
+        }
+
+        @Override
         @SuppressWarnings("unchecked")
         public final List<ForeignKey<?, Record>> getReferences() {
             Result<Record> result = meta(new MetaFunction() {
@@ -923,7 +928,7 @@ final class MetaImpl extends AbstractMeta {
                 for (int i = 0; i < value.size(); i++)
                     fkFields[i] = (TableField<Record, ?>) fkTable.field(value.get(i).get(7, String.class));
 
-                references.add(new ReferenceImpl<>(this, fkTable, fkName, fkFields));
+                references.add(new ReferenceImpl<>(this, fkTable, fkName, fkFields, true));
             }
 
             return references;

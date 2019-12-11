@@ -58,6 +58,7 @@ import java.util.List;
 
 import org.jooq.Check;
 import org.jooq.Constraint;
+import org.jooq.ConstraintEnforcementStep;
 import org.jooq.CreateSequenceFlagsStep;
 import org.jooq.CreateTableOnCommitStep;
 import org.jooq.DDLExportConfiguration;
@@ -220,7 +221,7 @@ final class DDL {
         if (configuration.flags().contains(PRIMARY_KEY))
             for (UniqueKey<?> key : table.getKeys())
                 if (key.isPrimary())
-                    result.add(constraint(key.getUnqualifiedName()).primaryKey(key.getFieldsArray()));
+                    result.add(enforced(constraint(key.getUnqualifiedName()).primaryKey(key.getFieldsArray()), key.enforced()));
 
         return result;
     }
@@ -231,7 +232,7 @@ final class DDL {
         if (configuration.flags().contains(UNIQUE))
             for (UniqueKey<?> key : sortKeysIf(table.getKeys(), !configuration.respectConstraintOrder()))
                 if (!key.isPrimary())
-                    result.add(constraint(key.getUnqualifiedName()).unique(key.getFieldsArray()));
+                    result.add(enforced(constraint(key.getUnqualifiedName()).unique(key.getFieldsArray()), key.enforced()));
 
         return result;
     }
@@ -241,7 +242,7 @@ final class DDL {
 
         if (configuration.flags().contains(FOREIGN_KEY))
             for (ForeignKey<?, ?> key : sortKeysIf(table.getReferences(), !configuration.respectConstraintOrder()))
-                result.add(constraint(key.getUnqualifiedName()).foreignKey(key.getFieldsArray()).references(key.getKey().getTable(), key.getKey().getFieldsArray()));
+                result.add(enforced(constraint(key.getUnqualifiedName()).foreignKey(key.getFieldsArray()).references(key.getKey().getTable(), key.getKey().getFieldsArray()), key.enforced()));
 
         return result;
     }
@@ -251,7 +252,7 @@ final class DDL {
 
         if (configuration.flags().contains(CHECK))
             for (Check<?> check : sortIf(table.getChecks(), !configuration.respectConstraintOrder()))
-                result.add(constraint(check.getUnqualifiedName()).check(check.condition()));
+                result.add(enforced(constraint(check.getUnqualifiedName()).check(check.condition()), check.enforced()));
 
         return result;
     }
@@ -381,5 +382,14 @@ final class DDL {
         }
 
         return input;
+    }
+
+    private final Constraint enforced(ConstraintEnforcementStep check, boolean enforced) {
+
+
+
+
+
+        return check;
     }
 }

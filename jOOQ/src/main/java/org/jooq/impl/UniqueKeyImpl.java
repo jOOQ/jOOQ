@@ -60,18 +60,12 @@ final class UniqueKeyImpl<R extends Record> extends AbstractKey<R> implements Un
 
     final List<ForeignKey<?, R>> references;
 
-
-    @SafeVarargs
-
-    UniqueKeyImpl(Table<R> table, TableField<R, ?>... fields) {
-        this(table, null, fields);
+    UniqueKeyImpl(Table<R> table, TableField<R, ?>[] fields, boolean enforced) {
+        this(table, null, fields, enforced);
     }
 
-
-    @SafeVarargs
-
-    UniqueKeyImpl(Table<R> table, String name, TableField<R, ?>... fields) {
-        super(table, name, fields);
+    UniqueKeyImpl(Table<R> table, String name, TableField<R, ?>[] fields, boolean enforced) {
+        super(table, name, fields, enforced);
 
         this.references = new ArrayList<>();
     }

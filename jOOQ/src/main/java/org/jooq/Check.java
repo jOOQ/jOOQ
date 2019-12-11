@@ -62,4 +62,9 @@ public interface Check<R extends Record> extends Named {
      * Get this <code>CHECK</code> as a formal {@link Constraint} specification.
      */
     Constraint constraint();
+
+    /**
+     * Whether this check is being enforced.
+     */
+    boolean enforced();
 }

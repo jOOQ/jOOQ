@@ -149,7 +149,7 @@ import org.jooq.CommonTableExpression;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
-import org.jooq.ConstraintFinalStep;
+import org.jooq.ConstraintEnforcementStep;
 import org.jooq.ConstraintForeignKeyReferencesStep1;
 import org.jooq.ConstraintForeignKeyReferencesStep10;
 import org.jooq.ConstraintForeignKeyReferencesStep11;
@@ -5916,7 +5916,7 @@ public class DSL {
      * Create an unnamed (system named) <code>PRIMARY KEY</code> constraint.
      */
     @Support
-    public static ConstraintFinalStep primaryKey(String... fields) {
+    public static ConstraintEnforcementStep primaryKey(String... fields) {
         return constraint().primaryKey(fields);
     }
 
@@ -5924,7 +5924,7 @@ public class DSL {
      * Create an unnamed (system named) <code>PRIMARY KEY</code> constraint.
      */
     @Support
-    public static ConstraintFinalStep primaryKey(Name... fields) {
+    public static ConstraintEnforcementStep primaryKey(Name... fields) {
         return constraint().primaryKey(fields);
     }
 
@@ -5932,7 +5932,7 @@ public class DSL {
      * Create an unnamed (system named) <code>PRIMARY KEY</code> constraint.
      */
     @Support
-    public static ConstraintFinalStep primaryKey(Field<?>... fields) {
+    public static ConstraintEnforcementStep primaryKey(Field<?>... fields) {
         return constraint().primaryKey(fields);
     }
 
@@ -6496,7 +6496,7 @@ public class DSL {
      * Create an unnamed (system named) <code>UNIQUE</code> constraint.
      */
     @Support
-    public static ConstraintFinalStep unique(String... fields) {
+    public static ConstraintEnforcementStep unique(String... fields) {
         return constraint().unique(fields);
     }
 
@@ -6504,7 +6504,7 @@ public class DSL {
      * Create an unnamed (system named) <code>UNIQUE</code> constraint.
      */
     @Support
-    public static ConstraintFinalStep unique(Name... fields) {
+    public static ConstraintEnforcementStep unique(Name... fields) {
         return constraint().unique(fields);
     }
 
@@ -6512,7 +6512,7 @@ public class DSL {
      * Create an unnamed (system named) <code>UNIQUE</code> constraint.
      */
     @Support
-    public static ConstraintFinalStep unique(Field<?>... fields) {
+    public static ConstraintEnforcementStep unique(Field<?>... fields) {
         return constraint().unique(fields);
     }
 
@@ -6520,7 +6520,7 @@ public class DSL {
      * Create an unnamed (system named) <code>CHECK</code> constraint.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
-    public static ConstraintFinalStep check(Condition condition) {
+    public static ConstraintEnforcementStep check(Condition condition) {
         return constraint().check(condition);
     }
 

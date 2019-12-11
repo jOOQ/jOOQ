@@ -100,7 +100,7 @@ public final class Internal {
     @SafeVarargs
 
     public static final <R extends Record> UniqueKey<R> createUniqueKey(Table<R> table, TableField<R, ?>... fields) {
-        return new UniqueKeyImpl<>(table, fields);
+        return new UniqueKeyImpl<>(table, fields, true);
     }
 
     /**
@@ -110,7 +110,7 @@ public final class Internal {
     @SafeVarargs
 
     public static final <R extends Record> UniqueKey<R> createUniqueKey(Table<R> table, String name, TableField<R, ?>... fields) {
-        return new UniqueKeyImpl<>(table, name, fields);
+        return new UniqueKeyImpl<>(table, name, fields, true);
     }
 
     /**
@@ -130,7 +130,7 @@ public final class Internal {
     @SafeVarargs
 
     public static final <R extends Record, U extends Record> ForeignKey<R, U> createForeignKey(UniqueKey<U> key, Table<R> table, String name, TableField<R, ?>... fields) {
-        ForeignKey<R, U> result = new ReferenceImpl<>(key, table, name, fields);
+        ForeignKey<R, U> result = new ReferenceImpl<>(key, table, name, fields, true);
 
         if (key instanceof UniqueKeyImpl)
             ((UniqueKeyImpl<U>) key).references.add(result);
@@ -167,7 +167,7 @@ public final class Internal {
      * Factory method for check constraints.
      */
     public static final <R extends Record> Check<R> createCheck(Table<R> table, Name name, String condition) {
-        return new CheckImpl<>(table, name, DSL.condition(condition));
+        return new CheckImpl<>(table, name, DSL.condition(condition), true);
     }
 
     /**

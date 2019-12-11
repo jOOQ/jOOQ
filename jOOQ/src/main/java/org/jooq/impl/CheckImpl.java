@@ -57,31 +57,38 @@ final class CheckImpl<R extends Record> extends AbstractNamed implements Check<R
 
     final Table<R>            table;
     final Condition           condition;
+    final boolean             enforced;
 
-    CheckImpl(Table<R> table, Condition condition) {
-        this(table, null, condition);
+    CheckImpl(Table<R> table, Condition condition, boolean enforced) {
+        this(table, null, condition, enforced);
     }
 
-    CheckImpl(Table<R> table, Name name, Condition condition) {
+    CheckImpl(Table<R> table, Name name, Condition condition, boolean enforced) {
         super(name, null);
 
         this.table = table;
         this.condition = condition;
+        this.enforced = enforced;
     }
 
     @Override
-    public Table<R> getTable() {
+    public final Table<R> getTable() {
         return table;
     }
 
     @Override
-    public Condition condition() {
+    public final Condition condition() {
         return condition;
     }
 
     @Override
-    public Constraint constraint() {
+    public final Constraint constraint() {
         return DSL.constraint(getName()).check(condition);
+    }
+
+    @Override
+    public final boolean enforced() {
+        return enforced;
     }
 
     @Override

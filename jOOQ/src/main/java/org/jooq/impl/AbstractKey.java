@@ -60,22 +60,18 @@ abstract class AbstractKey<R extends Record> extends AbstractNamed implements Ke
 
     private final Table<R>           table;
     private final TableField<R, ?>[] fields;
+    private final boolean            enforced;
 
-
-    @SafeVarargs
-
-    AbstractKey(Table<R> table, TableField<R, ?>... fields) {
-        this(table, null, fields);
+    AbstractKey(Table<R> table, TableField<R, ?>[] fields, boolean enforced) {
+        this(table, null, fields, enforced);
     }
 
-
-    @SafeVarargs
-
-    AbstractKey(Table<R> table, String name, TableField<R, ?>... fields) {
+    AbstractKey(Table<R> table, String name, TableField<R, ?>[] fields, boolean enforced) {
         super(name == null ? null : DSL.name(name), null);
 
         this.table = table;
         this.fields = fields;
+        this.enforced = enforced;
     }
 
     @Override
@@ -91,6 +87,11 @@ abstract class AbstractKey<R extends Record> extends AbstractNamed implements Ke
     @Override
     public final TableField<R, ?>[] getFieldsArray() {
         return fields;
+    }
+
+    @Override
+    public final boolean enforced() {
+        return enforced;
     }
 
     @Override

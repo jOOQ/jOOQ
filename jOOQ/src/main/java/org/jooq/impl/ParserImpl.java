@@ -361,6 +361,7 @@ import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Constraint;
+import org.jooq.ConstraintEnforcementStep;
 import org.jooq.ConstraintForeignKeyOnStep;
 import org.jooq.ConstraintTypeStep;
 import org.jooq.CreateIndexFinalStep;
@@ -3610,9 +3611,9 @@ final class ParserImpl implements Parser {
                     if (!parseKeywordIf(ctx, "CLUSTERED"))
                         parseKeywordIf(ctx, "NONCLUSTERED");
 
-                    constraints.add(inlineConstraint == null
+                    constraints.add(parseConstraintEnforcementIf(ctx, inlineConstraint == null
                         ? primaryKey(fieldName)
-                        : inlineConstraint.primaryKey(fieldName));
+                        : inlineConstraint.primaryKey(fieldName)));
                     primary = true;
                     unique = true;
                     continue;
@@ -3621,9 +3622,9 @@ final class ParserImpl implements Parser {
                     if (!parseKeywordIf(ctx, "KEY"))
                         parseKeywordIf(ctx, "INDEX");
 
-                    constraints.add(inlineConstraint == null
+                    constraints.add(parseConstraintEnforcementIf(ctx, inlineConstraint == null
                         ? unique(fieldName)
-                        : inlineConstraint.unique(fieldName));
+                        : inlineConstraint.unique(fieldName)));
                     unique = true;
                     continue;
                 }
@@ -3700,35 +3701,36 @@ final class ParserImpl implements Parser {
         return Internal.createIndex(name == null ? NO_NAME : name, table, fields, false);
     }
 
-    private static final boolean parseConstraintStateIf(ParserContext ctx) {
-        parseKeywordIf(ctx, "ENABLE");
-        return true;
+    private static final Constraint parseConstraintEnforcementIf(ParserContext ctx, ConstraintEnforcementStep e) {
+        if ((parseKeywordIf(ctx, "ENABLE") || parseKeywordIf(ctx, "ENFORCED")) && ctx.requireProEdition())
+            return e.enforced();
+        else if ((parseKeywordIf(ctx, "DISABLE") || parseKeywordIf(ctx, "NOT ENFORCED")) && ctx.requireProEdition())
+            return e.notEnforced();
+        else return e;
     }
 
     private static final Constraint parsePrimaryKeySpecification(ParserContext ctx, ConstraintTypeStep constraint) {
         parseUsingBtreeOrHashIf(ctx);
         Field<?>[] fieldNames = parseKeyColumnList(ctx);
 
-        Constraint e = constraint == null
+        ConstraintEnforcementStep e = constraint == null
             ? primaryKey(fieldNames)
             : constraint.primaryKey(fieldNames);
 
         parseUsingBtreeOrHashIf(ctx);
-        parseConstraintStateIf(ctx);
-        return e;
+        return parseConstraintEnforcementIf(ctx, e);
     }
 
     private static final Constraint parseUniqueSpecification(ParserContext ctx, ConstraintTypeStep constraint) {
         parseUsingBtreeOrHashIf(ctx);
         Field<?>[] fieldNames = parseKeyColumnList(ctx);
 
-        Constraint e = constraint == null
+        ConstraintEnforcementStep e = constraint == null
             ? unique(fieldNames)
             : constraint.unique(fieldNames);
 
         parseUsingBtreeOrHashIf(ctx);
-        parseConstraintStateIf(ctx);
-        return e;
+        return parseConstraintEnforcementIf(ctx, e);
     }
 
     private static Field<?>[] parseKeyColumnList(ParserContext ctx) {
@@ -3754,12 +3756,11 @@ final class ParserImpl implements Parser {
         Condition condition = parseCondition(ctx);
         parse(ctx, ')');
 
-        Constraint e = constraint == null
+        ConstraintEnforcementStep e = constraint == null
             ? check(condition)
             : constraint.check(condition);
 
-        parseConstraintStateIf(ctx);
-        return e;
+        return parseConstraintEnforcementIf(ctx, e);
     }
 
     private static final Constraint parseForeignKeySpecification(ParserContext ctx, ConstraintTypeStep constraint) {
@@ -3831,8 +3832,7 @@ final class ParserImpl implements Parser {
                 throw ctx.expected("DELETE", "UPDATE");
         }
 
-        parseConstraintStateIf(ctx);
-        return e;
+        return parseConstraintEnforcementIf(ctx, e);
     }
 
     private static final Set<String> ALTER_KEYWORDS = new HashSet<>(Arrays.asList("ADD", "ALTER", "COMMENT", "DROP", "MODIFY", "RENAME"));
@@ -3869,8 +3869,11 @@ final class ParserImpl implements Parser {
             case 'A':
                 if (parseKeywordIf(ctx, "ADD"))
                     return parseAlterTableAdd(ctx, s1, tableName);
-                else if (parseKeywordIf(ctx, "ALTER") && (parseKeywordIf(ctx, "COLUMN") || true))
-                    return parseAlterTableAlterColumn(ctx, s1);
+                else if (parseKeywordIf(ctx, "ALTER"))
+                    if (parseKeywordIf(ctx, "CONSTRAINT"))
+                        return parseAlterTableAlterConstraint(ctx, s1);
+                    else if ((parseKeywordIf(ctx, "COLUMN") || true))
+                        return parseAlterTableAlterColumn(ctx, s1);
 
                 break;
 
@@ -3944,8 +3947,11 @@ final class ParserImpl implements Parser {
 
             case 'm':
             case 'M':
-                if (parseKeywordIf(ctx, "MODIFY") && (parseKeywordIf(ctx, "COLUMN") || true))
-                    return parseAlterTableAlterColumn(ctx, s1);
+                if (parseKeywordIf(ctx, "MODIFY"))
+                    if (parseKeywordIf(ctx, "CONSTRAINT"))
+                        return parseAlterTableAlterConstraint(ctx, s1);
+                    else if ((parseKeywordIf(ctx, "COLUMN") || true))
+                        return parseAlterTableAlterColumn(ctx, s1);
 
                 break;
 
@@ -4137,6 +4143,21 @@ final class ParserImpl implements Parser {
             parse(ctx, ')');
 
         return s1.alter(field).set(type);
+    }
+
+    private static final DDLQuery parseAlterTableAlterConstraint(ParserContext ctx, AlterTableStep s1) {
+        ctx.requireProEdition();
+
+
+
+
+
+
+
+
+
+
+        throw ctx.expected("ENABLE", "ENFORCED", "DISABLE", "NOT ENFORCED");
     }
 
     private static final DDLQuery parseAlterType(ParserContext ctx) {

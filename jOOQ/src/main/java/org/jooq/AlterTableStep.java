@@ -197,6 +197,20 @@ public interface AlterTableStep {
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableRenameConstraintToStep renameConstraint(String oldName);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Add an <code>ALTER COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
@@ -244,6 +258,34 @@ public interface AlterTableStep {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableAlterStep<Object> alterColumn(String field);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Add an <code>ADD COLUMN</code> clause to the <code>ALTER TABLE</code>

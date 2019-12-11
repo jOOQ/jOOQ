@@ -37,45 +37,50 @@
  */
 package org.jooq;
 
-import java.util.List;
 
 
-/**
- * A <code>Key</code> is an object representing a <code>UNIQUE KEY</code>, a
- * <code>PRIMARY KEY</code>, or a <code>FOREIGN KEY</code>.
- * <p>
- * Instances of this type cannot be created directly. They are available from
- * generated code.
- *
- * @param <R> The <code>KEY</code>'s owner table record
- * @author Lukas Eder
- */
-public interface Key<R extends Record> extends Named {
 
-    /**
-     * The <code>Key</code>'s owner table
-     */
-    Table<R> getTable();
 
-    /**
-     * The fields that make up the <code>KEY</code>
-     */
-    List<TableField<R, ?>> getFields();
 
-    /**
-     * The fields that make up the <code>KEY</code>
-     *
-     * @see #getFields()
-     */
-    TableField<R, ?>[] getFieldsArray();
 
-    /**
-     * Get this <code>KEY</code> as a formal {@link Constraint} specification.
-     */
-    Constraint constraint();
 
-    /**
-     * Whether this key is being enforced.
-     */
-    boolean enforced();
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

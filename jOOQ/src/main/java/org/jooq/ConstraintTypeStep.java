@@ -89,19 +89,19 @@ public interface ConstraintTypeStep extends ConstraintFinalStep {
      * Create a <code>PRIMARY KEY</code> constraint.
      */
     @Support
-    ConstraintFinalStep primaryKey(String... fields);
+    ConstraintEnforcementStep primaryKey(String... fields);
 
     /**
      * Create a <code>PRIMARY KEY</code> constraint.
      */
     @Support
-    ConstraintFinalStep primaryKey(Name... fields);
+    ConstraintEnforcementStep primaryKey(Name... fields);
 
     /**
      * Create a <code>PRIMARY KEY</code> constraint.
      */
     @Support
-    ConstraintFinalStep primaryKey(Field<?>... fields);
+    ConstraintEnforcementStep primaryKey(Field<?>... fields);
 
     /**
      * Add a <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
@@ -525,23 +525,23 @@ public interface ConstraintTypeStep extends ConstraintFinalStep {
      * Create a <code>UNIQUE</code> constraint.
      */
     @Support
-    ConstraintFinalStep unique(String... fields);
+    ConstraintEnforcementStep unique(String... fields);
 
     /**
      * Create a <code>UNIQUE</code> constraint.
      */
     @Support
-    ConstraintFinalStep unique(Name... fields);
+    ConstraintEnforcementStep unique(Name... fields);
 
     /**
      * Create a <code>UNIQUE</code> constraint.
      */
     @Support
-    ConstraintFinalStep unique(Field<?>... fields);
+    ConstraintEnforcementStep unique(Field<?>... fields);
 
     /**
      * Create a <code>CHECK</code> constraint.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
-    ConstraintFinalStep check(Condition condition);
+    ConstraintEnforcementStep check(Condition condition);
 }

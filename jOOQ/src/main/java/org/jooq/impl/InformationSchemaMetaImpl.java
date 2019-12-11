@@ -421,7 +421,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
 
                     for (CheckConstraint cc : meta.getCheckConstraints()) {
                         if (constraintName.equals(name(cc.getConstraintCatalog(), cc.getConstraintSchema(), cc.getConstraintName()))) {
-                            table.checks.add(new CheckImpl<>(table, constraintName, DSL.condition(cc.getCheckClause())));
+                            table.checks.add(new CheckImpl<>(table, constraintName, DSL.condition(cc.getCheckClause()), true));
                             continue tableConstraintLoop;
                         }
                     }

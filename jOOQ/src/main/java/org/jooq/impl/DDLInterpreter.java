@@ -315,14 +315,14 @@ final class DDLInterpreter {
 
         if (!mrfs.isEmpty())
             mu = mrf.uniqueKey(mrfs);
-        else if (mrf.primaryKey != null && mrf.primaryKey.keyFields.size() == mfs.size())
+        else if (mrf.primaryKey != null && mrf.primaryKey.fields.size() == mfs.size())
             mu = mrf.primaryKey;
 
         if (mu == null)
             throw primaryKeyNotExists();
 
         mt.foreignKeys.add(new MutableForeignKey(
-            (UnqualifiedName) impl.getUnqualifiedName(), mt, mfs, mu, impl.$onDelete(), impl.$onUpdate()
+            (UnqualifiedName) impl.getUnqualifiedName(), mt, mfs, mu, impl.$onDelete(), impl.$onUpdate(), impl.$enforced()
         ));
     }
 
@@ -349,7 +349,7 @@ final class DDLInterpreter {
 
         for (boolean check : cascade == CASCADE ? new boolean [] { false } : new boolean [] { true, false }) {
             if (table.primaryKey != null) {
-                if (intersect(table.primaryKey.keyFields, fields)) {
+                if (intersect(table.primaryKey.fields, fields)) {
                     cascade(table.primaryKey, fields, check ? RESTRICT : CASCADE);
 
                     if (!check)
@@ -382,7 +382,7 @@ final class DDLInterpreter {
         while (it2.hasNext()) {
             MutableKey key = it2.next();
 
-            if (fields == null || intersect(key.keyFields, fields)) {
+            if (fields == null || intersect(key.fields, fields)) {
                 if (key instanceof MutableUniqueKey)
                     cascade((MutableUniqueKey) key, fields, check ? RESTRICT : CASCADE);
 
@@ -522,14 +522,15 @@ final class DDLInterpreter {
                 mf.name((UnqualifiedName) query.$renameColumnTo().getUnqualifiedName());
         }
         else if (query.$renameConstraint() != null) {
-            MutableNamed mk = existing.constraint(query.$renameConstraint());
+            MutableConstraint mc = existing.constraint(query.$renameConstraint(), true);
 
-            if (mk == null)
-                throw constraintNotExists(query.$renameConstraint());
-            else if (existing.constraint(query.$renameConstraintTo()) != null)
+            if (existing.constraint(query.$renameConstraintTo()) != null)
                 throw constraintAlreadyExists(query.$renameConstraintTo());
             else
-                mk.name((UnqualifiedName) query.$renameConstraintTo().getUnqualifiedName());
+                mc.name((UnqualifiedName) query.$renameConstraintTo().getUnqualifiedName());
+        }
+        else if (query.$alterConstraint() != null) {
+            existing.constraint(query.$alterConstraint(), true).enforced = query.$alterConstraintEnforced();
         }
         else if (query.$dropColumns() != null) {
             List<MutableField> fields = existing.fields(query.$dropColumns().toArray(EMPTY_FIELD), false);
@@ -671,13 +672,13 @@ final class DDLInterpreter {
             if (existing.primaryKey != null)
                 throw constraintAlreadyExists(impl);
             else
-                existing.primaryKey = new MutableUniqueKey((UnqualifiedName) impl.getUnqualifiedName(), existing, existing.fields(impl.$primaryKey(), true));
+                existing.primaryKey = new MutableUniqueKey((UnqualifiedName) impl.getUnqualifiedName(), existing, existing.fields(impl.$primaryKey(), true), impl.$enforced());
         else if (impl.$unique() != null)
-            existing.uniqueKeys.add(new MutableUniqueKey((UnqualifiedName) impl.getUnqualifiedName(), existing, existing.fields(impl.$unique(), true)));
+            existing.uniqueKeys.add(new MutableUniqueKey((UnqualifiedName) impl.getUnqualifiedName(), existing, existing.fields(impl.$unique(), true), impl.$enforced()));
         else if (impl.$foreignKey() != null)
             addForeignKey(getSchema(impl.$referencesTable().getSchema(), false), existing, impl);
         else if (impl.$check() != null)
-            existing.checks.add(new MutableCheck((UnqualifiedName) impl.getUnqualifiedName(), existing, impl.$check()));
+            existing.checks.add(new MutableCheck((UnqualifiedName) impl.getUnqualifiedName(), existing, impl.$check(), impl.$enforced()));
         else
             throw unsupportedQuery(query);
     }
@@ -1395,7 +1396,7 @@ final class DDLInterpreter {
         final void onDrop() {
             for (MutableTable table : tables)
                 for (MutableForeignKey referencingKey : table.referencingKeys())
-                    referencingKey.keyTable.foreignKeys.remove(referencingKey);
+                    referencingKey.table.foreignKeys.remove(referencingKey);
 
             tables.clear();
             sequences.clear();
@@ -1523,8 +1524,8 @@ final class DDLInterpreter {
             return result;
         }
 
-        final MutableNamed constraint(Constraint constraint) {
-            MutableNamed result;
+        final MutableConstraint constraint(Constraint constraint, boolean failIfNotFound) {
+            MutableConstraint result;
 
             if ((result = find(foreignKeys, constraint)) != null)
                 return result;
@@ -1535,7 +1536,17 @@ final class DDLInterpreter {
             if ((result = find(checks, constraint)) != null)
                 return result;
 
-            return find(primaryKey, constraint);
+            if ((result = find(primaryKey, constraint)) != null)
+                return result;
+
+            if (failIfNotFound)
+                throw constraintNotExists(constraint);
+
+            return null;
+        }
+
+        final MutableNamed constraint(Constraint constraint) {
+            return constraint(constraint, false);
         }
 
         final List<MutableField> fields(Field<?>[] fs, boolean failIfNotFound) {
@@ -1571,11 +1582,11 @@ final class DDLInterpreter {
 
         final MutableUniqueKey uniqueKey(List<MutableField> mrfs) {
             if (primaryKey != null)
-                if (primaryKey.keyFields.equals(mrfs))
+                if (primaryKey.fields.equals(mrfs))
                     return primaryKey;
 
             for (MutableUniqueKey mu : uniqueKeys)
-                if (mu.keyFields.equals(mrfs))
+                if (mu.fields.equals(mrfs))
                     return mu;
 
             return null;
@@ -1625,7 +1636,7 @@ final class DDLInterpreter {
                 List<Check<Record>> result = new ArrayList<>();
 
                 for (MutableCheck c : MutableTable.this.checks)
-                    result.add(new CheckImpl<>(this, c.name(), c.condition));
+                    result.add(new CheckImpl<>(this, c.name(), c.condition, c.enforced));
 
                 return result;
             }
@@ -1690,52 +1701,55 @@ final class DDLInterpreter {
         }
     }
 
-    private abstract class MutableKey extends MutableNamed {
-        MutableTable       keyTable;
-        List<MutableField> keyFields;
+    private abstract class MutableConstraint extends MutableNamed {
+        MutableTable table;
+        boolean      enforced;
 
-        MutableKey(UnqualifiedName name, MutableTable table, List<MutableField> fields) {
+        MutableConstraint(UnqualifiedName name, MutableTable table, boolean enforced) {
             super(name);
 
-            this.keyTable = table;
-            this.keyFields = fields;
+            this.table = table;
+            this.enforced = enforced;
         }
 
         @Override
         final MutableNamed parent() {
-            return keyTable;
+            return table;
+        }
+    }
+
+    private abstract class MutableKey extends MutableConstraint {
+        List<MutableField> fields;
+
+        MutableKey(UnqualifiedName name, MutableTable table, List<MutableField> fields, boolean enforced) {
+            super(name, table, enforced);
+
+            this.fields = fields;
         }
 
-        final boolean fieldsEquals(Field<?>[] fields) {
-            if (keyFields.size() != fields.length)
+        final boolean fieldsEquals(Field<?>[] f) {
+            if (fields.size() != f.length)
                 return false;
 
-            for (int i = 0; i < keyFields.size(); i++)
-                if (!keyFields.get(i).nameEquals((UnqualifiedName) fields[i].getUnqualifiedName()))
+            for (int i = 0; i < fields.size(); i++)
+                if (!fields.get(i).nameEquals((UnqualifiedName) f[i].getUnqualifiedName()))
                     return false;
 
             return true;
         }
     }
 
-    private final class MutableCheck extends MutableNamed {
-        MutableTable table;
-        Condition    condition;
+    private final class MutableCheck extends MutableConstraint {
+        Condition condition;
 
-        MutableCheck(UnqualifiedName name, MutableTable table, Condition condition) {
-            super(name);
+        MutableCheck(UnqualifiedName name, MutableTable table, Condition condition, boolean enforced) {
+            super(name, table, enforced);
 
-            this.table = table;
             this.condition = condition;
         }
 
         @Override
         final void onDrop() {}
-
-        @Override
-        final MutableNamed parent() {
-            return table;
-        }
 
         @Override
         final Name qualifiedName() {
@@ -1751,8 +1765,8 @@ final class DDLInterpreter {
     private final class MutableUniqueKey extends MutableKey {
         List<MutableForeignKey> referencingKeys = new MutableNamedList<>();
 
-        MutableUniqueKey(UnqualifiedName name, MutableTable keyTable, List<MutableField> keyFields) {
-            super(name, keyTable, keyFields);
+        MutableUniqueKey(UnqualifiedName name, MutableTable table, List<MutableField> fields, boolean enforced) {
+            super(name, table, fields, enforced);
         }
 
         @Override
@@ -1766,7 +1780,7 @@ final class DDLInterpreter {
 
             // TODO: Find a better way to identify unnamed constraints.
             if (name().empty())
-                return super.qualifiedName().append(keyFields.toString());
+                return super.qualifiedName().append(fields.toString());
             else
                 return super.qualifiedName();
         }
@@ -1777,14 +1791,14 @@ final class DDLInterpreter {
             UniqueKeyImpl<Record> result = interpretedUniqueKeys.get(qualifiedName);
 
             if (result == null) {
-                MutableTable.InterpretedTable t = keyTable.interpretedTable();
-                TableField<Record, ?>[] f = new TableField[keyFields.size()];
+                MutableTable.InterpretedTable t = table.interpretedTable();
+                TableField<Record, ?>[] f = new TableField[fields.size()];
 
                 for (int i = 0; i < f.length; i++)
-                    f[i] = (TableField<Record, ?>) t.field(keyFields.get(i).name());
+                    f[i] = (TableField<Record, ?>) t.field(fields.get(i).name());
 
                 // Add to map before adding bi-directionality to avoid StackOverflowErrors
-                interpretedUniqueKeys.put(qualifiedName, result = new UniqueKeyImpl<>(t, name().last(), f));
+                interpretedUniqueKeys.put(qualifiedName, result = new UniqueKeyImpl<>(t, name().last(), f, enforced));
                 for (MutableForeignKey referencingKey : referencingKeys)
                     result.references.add((ForeignKey) referencingKey.interpretedKey());
             }
@@ -1795,18 +1809,21 @@ final class DDLInterpreter {
 
     private final class MutableForeignKey extends MutableKey {
         MutableUniqueKey referencedKey;
+
+        // TODO: Support these
         Action           onDelete;
         Action           onUpdate;
 
         MutableForeignKey(
             UnqualifiedName name,
-            MutableTable keyTable,
-            List<MutableField> keyFields,
+            MutableTable table,
+            List<MutableField> fields,
             MutableUniqueKey referencedKey,
             Action onDelete,
-            Action onUpdate
+            Action onUpdate,
+            boolean enforced
         ) {
-            super(name, keyTable, keyFields);
+            super(name, table, fields, enforced);
 
             this.referencedKey = referencedKey;
             this.referencedKey.referencingKeys.add(this);
@@ -1835,13 +1852,13 @@ final class DDLInterpreter {
             ReferenceImpl<Record, ?> result = interpretedForeignKeys.get(qualifiedName);
 
             if (result == null) {
-                MutableTable.InterpretedTable t = keyTable.interpretedTable();
-                TableField<Record, ?>[] f = new TableField[keyFields.size()];
+                MutableTable.InterpretedTable t = table.interpretedTable();
+                TableField<Record, ?>[] f = new TableField[fields.size()];
 
                 for (int i = 0; i < f.length; i++)
-                    f[i] = (TableField<Record, ?>) t.field(keyFields.get(i).name());
+                    f[i] = (TableField<Record, ?>) t.field(fields.get(i).name());
 
-                interpretedForeignKeys.put(qualifiedName, result = new ReferenceImpl<>(referencedKey.interpretedKey(), t, name().last(), f));
+                interpretedForeignKeys.put(qualifiedName, result = new ReferenceImpl<>(referencedKey.interpretedKey(), t, name().last(), f, enforced));
             }
 
             return result;

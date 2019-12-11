@@ -4072,7 +4072,8 @@ final class ParserImpl implements Parser {
         ConstraintTypeStep constraint = null;
 
         if (parseKeywordIf(ctx, "CONSTRAINT"))
-            constraint = constraint(parseIdentifier(ctx));
+            if (!peekKeyword(ctx, "PRIMARY KEY", "UNIQUE", "FOREIGN KEY", "CHECK"))
+                constraint = constraint(parseIdentifier(ctx));
 
         if (parsePrimaryKeyClusteredNonClusteredKeywordIf(ctx))
             list.add(parsePrimaryKeySpecification(ctx, constraint));

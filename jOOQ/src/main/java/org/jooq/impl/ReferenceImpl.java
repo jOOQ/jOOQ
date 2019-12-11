@@ -46,7 +46,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.jooq.Constraint;
+import org.jooq.ConstraintEnforcementStep;
 import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -194,7 +194,7 @@ final class ReferenceImpl<R extends Record, O extends Record> extends AbstractKe
     }
 
     @Override
-    public Constraint constraint() {
+    final ConstraintEnforcementStep constraint0() {
         return DSL.constraint(getName())
                   .foreignKey(getFieldsArray())
                   .references(key.getTable(), key.getFieldsArray());

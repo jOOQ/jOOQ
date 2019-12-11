@@ -41,7 +41,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.jooq.Constraint;
+import org.jooq.ConstraintEnforcementStep;
 import org.jooq.ForeignKey;
 import org.jooq.Record;
 import org.jooq.Table;
@@ -81,7 +81,7 @@ final class UniqueKeyImpl<R extends Record> extends AbstractKey<R> implements Un
     }
 
     @Override
-    public Constraint constraint() {
+    final ConstraintEnforcementStep constraint0() {
         if (isPrimary())
             return DSL.constraint(getName()).primaryKey(getFieldsArray());
         else

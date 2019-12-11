@@ -40,6 +40,7 @@ package org.jooq.impl;
 import org.jooq.Check;
 import org.jooq.Condition;
 import org.jooq.Constraint;
+import org.jooq.ConstraintEnforcementStep;
 import org.jooq.Context;
 import org.jooq.Name;
 import org.jooq.Record;
@@ -82,13 +83,22 @@ final class CheckImpl<R extends Record> extends AbstractNamed implements Check<R
     }
 
     @Override
-    public final Constraint constraint() {
-        return DSL.constraint(getName()).check(condition);
+    public final boolean enforced() {
+        return enforced;
+    }
+
+    private final Constraint enforced(ConstraintEnforcementStep key) {
+
+
+
+
+
+        return key;
     }
 
     @Override
-    public final boolean enforced() {
-        return enforced;
+    public final Constraint constraint() {
+        return enforced(DSL.constraint(getName()).check(condition));
     }
 
     @Override

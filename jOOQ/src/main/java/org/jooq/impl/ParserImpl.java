@@ -3703,9 +3703,16 @@ final class ParserImpl implements Parser {
 
     private static final Constraint parseConstraintEnforcementIf(ParserContext ctx, ConstraintEnforcementStep e) {
         if ((parseKeywordIf(ctx, "ENABLE") || parseKeywordIf(ctx, "ENFORCED")) && ctx.requireProEdition())
-            return e.enforced();
+
+
+
+            ;
         else if ((parseKeywordIf(ctx, "DISABLE") || parseKeywordIf(ctx, "NOT ENFORCED")) && ctx.requireProEdition())
-            return e.notEnforced();
+
+
+
+            ;
+
         else return e;
     }
 

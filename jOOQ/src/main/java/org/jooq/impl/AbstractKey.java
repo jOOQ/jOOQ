@@ -40,6 +40,8 @@ package org.jooq.impl;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jooq.Constraint;
+import org.jooq.ConstraintEnforcementStep;
 import org.jooq.Context;
 import org.jooq.Key;
 import org.jooq.Record;
@@ -93,6 +95,22 @@ abstract class AbstractKey<R extends Record> extends AbstractNamed implements Ke
     public final boolean enforced() {
         return enforced;
     }
+
+    private final Constraint enforced(ConstraintEnforcementStep key) {
+
+
+
+
+
+        return key;
+    }
+
+    @Override
+    public final Constraint constraint() {
+        return enforced(constraint0());
+    }
+
+    abstract ConstraintEnforcementStep constraint0();
 
     @Override
     public final void accept(Context<?> ctx) {

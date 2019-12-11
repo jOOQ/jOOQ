@@ -652,10 +652,16 @@ final class DDLInterpreter {
     }
 
     private final void addField(MutableTable existing, int index, UnqualifiedName name, DataType<?> dataType) {
+        MutableField field = new MutableField(name, existing, dataType);
+
+        for (MutableField mf : existing.fields)
+            if (mf.nameEquals(field.name()))
+                throw columnAlreadyExists(field.qualifiedName());
+
         if (index == Integer.MAX_VALUE)
-            existing.fields.add(       new MutableField(name, existing, dataType));
+            existing.fields.add(field);
         else
-            existing.fields.add(index, new MutableField(name, existing, dataType));
+            existing.fields.add(index, field);
     }
 
     private final void addConstraint(Query query, ConstraintImpl impl, MutableTable existing) {
@@ -980,7 +986,11 @@ final class DDLInterpreter {
     }
 
     private static final DataDefinitionException columnAlreadyExists(Field<?> field) {
-        return new DataDefinitionException("Column already exists: " + field.getQualifiedName());
+        return columnAlreadyExists(field.getQualifiedName());
+    }
+
+    private static final DataDefinitionException columnAlreadyExists(Name name) {
+        return new DataDefinitionException("Column already exists: " + name);
     }
 
     private static final DataDefinitionException sequenceNotExists(Sequence<?> sequence) {
@@ -1078,16 +1088,12 @@ final class DDLInterpreter {
     ) {
         MutableTable t = new MutableTable((UnqualifiedName) table.getUnqualifiedName(), schema, comment, options);
 
-        if (!columns.isEmpty()) {
-            for (int i = 0; i < columns.size(); i++) {
-                Field<?> column = columns.get(i);
-                t.fields.add(new MutableField((UnqualifiedName) column.getUnqualifiedName(), t, columnTypes.get(i)));
-            }
-        }
-        else if (select != null) {
+        if (!columns.isEmpty())
+            for (int i = 0; i < columns.size(); i++)
+                addField(t, Integer.MAX_VALUE, (UnqualifiedName) columns.get(i).getUnqualifiedName(), columnTypes.get(i));
+        else if (select != null)
             for (Field<?> column : select.fields())
-                t.fields.add(new MutableField((UnqualifiedName) column.getUnqualifiedName(), t, column.getDataType()));
-        }
+                addField(t, Integer.MAX_VALUE, (UnqualifiedName) column.getUnqualifiedName(), column.getDataType());
 
         return t;
     }

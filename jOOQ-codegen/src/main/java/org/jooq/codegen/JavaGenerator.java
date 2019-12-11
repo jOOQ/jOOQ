@@ -57,6 +57,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.TypeVariable;
+import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
@@ -4635,12 +4636,13 @@ public class JavaGenerator extends AbstractGenerator {
                     seqName,
                     schemaId,
                     typeRef,
-                    flags && sequence.getStartWith() != null ? sequence.getStartWith() + "L" : "null",
-                    flags && sequence.getIncrementBy() != null ? sequence.getIncrementBy() + "L" : "null",
-                    flags && sequence.getMinvalue() != null ? sequence.getMinvalue() + "L" : "null",
-                    flags && sequence.getMaxvalue() != null ? sequence.getMaxvalue() + "L" : "null",
+                    flags ? numberLiteral(sequence.getStartWith()) : "null",
+                    flags ? numberLiteral(sequence.getIncrementBy()) : "null",
+                    flags ? numberLiteral(sequence.getMinvalue()) : "null",
+                    flags ? numberLiteral(sequence.getMaxvalue()) : "null",
                     flags && sequence.getCycle(),
-                    flags && sequence.getCache() != null ? sequence.getCache() + "L" : "null");
+                    flags ? numberLiteral(sequence.getCache()) : "null"
+                );
             else
                 out.tab(1).println("public static final %s<%s> %s = %s.<%s> createSequence(\"%s\", %s, %s, %s, %s, %s, %s, %s, %s);",
                     Sequence.class,
@@ -4651,12 +4653,12 @@ public class JavaGenerator extends AbstractGenerator {
                     seqName,
                     schemaId,
                     typeRef,
-                    flags && sequence.getStartWith() != null ? sequence.getStartWith() + "L" : "null",
-                    flags && sequence.getIncrementBy() != null ? sequence.getIncrementBy() + "L" : "null",
-                    flags && sequence.getMinvalue() != null ? sequence.getMinvalue() + "L" : "null",
-                    flags && sequence.getMaxvalue() != null ? sequence.getMaxvalue() + "L" : "null",
+                    flags ? numberLiteral(sequence.getStartWith()) : "null",
+                    flags ? numberLiteral(sequence.getIncrementBy()) : "null",
+                    flags ? numberLiteral(sequence.getMinvalue()) : "null",
+                    flags ? numberLiteral(sequence.getMaxvalue()) : "null",
                     flags && sequence.getCycle(),
-                    flags && sequence.getCache() != null ? sequence.getCache() + "L" : "null"
+                    flags ? numberLiteral(sequence.getCache()) : "null"
                 );
         }
 
@@ -4664,6 +4666,24 @@ public class JavaGenerator extends AbstractGenerator {
         closeJavaWriter(out);
 
         watch.splitInfo("Sequences generated");
+    }
+
+    private String numberLiteral(Number n) {
+        if (n instanceof BigInteger) {
+            BigInteger bi = (BigInteger) n;
+            int bitLength = ((BigInteger) n).bitLength();
+            if (bitLength > Long.SIZE - 1)
+                return "new java.math.BigInteger(\"" + bi.toString() + "\")";
+            else if (bitLength > Integer.SIZE - 1)
+                return Long.toString(n.longValue()) + 'L';
+            else
+                return Integer.toString(n.intValue());
+        }
+        else if (n instanceof Integer || n instanceof Short || n instanceof Byte)
+            return Integer.toString(n.intValue());
+        else if (n != null)
+            return Long.toString(n.longValue()) + 'L';
+        return "null";
     }
 
     private boolean containsConflictingDefinition(SchemaDefinition schema, List<? extends Definition> definitions) {

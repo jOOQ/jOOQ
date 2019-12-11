@@ -4,8 +4,12 @@
 package org.jooq.meta.derby.sys.tables;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Schema;
@@ -13,6 +17,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.impl.DSL;
 import org.jooq.impl.TableImpl;
+import org.jooq.meta.derby.sys.Indexes;
 import org.jooq.meta.derby.sys.Sys;
 
 
@@ -22,7 +27,7 @@ import org.jooq.meta.derby.sys.Sys;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sysconstraints extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 1919449543;
+    private static final long serialVersionUID = -1106134207;
 
     /**
      * The reference instance of <code>SYS.SYSCONSTRAINTS</code>
@@ -94,5 +99,10 @@ public class Sysconstraints extends TableImpl<Record> {
     @Override
     public Schema getSchema() {
         return Sys.SYS;
+    }
+
+    @Override
+    public List<Index> getIndexes() {
+        return Arrays.<Index>asList(Indexes.SYSCONSTRAINTS_INDEX1, Indexes.SYSCONSTRAINTS_INDEX2, Indexes.SYSCONSTRAINTS_INDEX3);
     }
 }

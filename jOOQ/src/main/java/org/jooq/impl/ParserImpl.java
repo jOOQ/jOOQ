@@ -3194,11 +3194,9 @@ final class ParserImpl implements Parser {
 
             columnLoop:
             do {
-                ConstraintTypeStep constraint = null;
                 int position = ctx.position();
 
-                if (parseKeywordIf(ctx, "CONSTRAINT"))
-                    constraint = constraint(parseIdentifier(ctx));
+                ConstraintTypeStep constraint = parseConstraintNameSpecification(ctx);
 
                 if (parsePrimaryKeyClusteredNonClusteredKeywordIf(ctx)) {
                     if (primary)
@@ -3605,9 +3603,7 @@ final class ParserImpl implements Parser {
                 }
             }
 
-            ConstraintTypeStep inlineConstraint = null;
-            if (parseKeywordIf(ctx, "CONSTRAINT"))
-                inlineConstraint = constraint(parseIdentifier(ctx));
+            ConstraintTypeStep inlineConstraint = parseConstraintNameSpecification(ctx);
 
             if (!unique) {
                 if (!primary && parsePrimaryKeyClusteredNonClusteredKeywordIf(ctx)) {
@@ -4069,11 +4065,7 @@ final class ParserImpl implements Parser {
     }
 
     private static final void parseAlterTableAddFieldsOrConstraints(ParserContext ctx, List<FieldOrConstraint> list) {
-        ConstraintTypeStep constraint = null;
-
-        if (parseKeywordIf(ctx, "CONSTRAINT"))
-            if (!peekKeyword(ctx, "PRIMARY KEY", "UNIQUE", "FOREIGN KEY", "CHECK"))
-                constraint = constraint(parseIdentifier(ctx));
+        ConstraintTypeStep constraint = parseConstraintNameSpecification(ctx);
 
         if (parsePrimaryKeyClusteredNonClusteredKeywordIf(ctx))
             list.add(parsePrimaryKeySpecification(ctx, constraint));
@@ -4087,6 +4079,13 @@ final class ParserImpl implements Parser {
             throw ctx.expected("CHECK", "FOREIGN KEY", "PRIMARY KEY", "UNIQUE");
         else if (parseKeywordIf(ctx, "COLUMN") || true)
             parseAlterTableAddField(ctx, list);
+    }
+
+    private static final ConstraintTypeStep parseConstraintNameSpecification(ParserContext ctx) {
+        if (parseKeywordIf(ctx, "CONSTRAINT") && !peekKeyword(ctx, "PRIMARY KEY", "UNIQUE", "FOREIGN KEY", "CHECK"))
+            return constraint(parseIdentifier(ctx));
+
+        return null;
     }
 
     private static final Field<?> parseAlterTableAddField(ParserContext ctx, List<FieldOrConstraint> list) {

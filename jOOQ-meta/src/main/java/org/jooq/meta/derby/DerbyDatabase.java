@@ -38,10 +38,15 @@
 
 package org.jooq.meta.derby;
 
+import static org.jooq.impl.DSL.case_;
+import static org.jooq.impl.DSL.cast;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.not;
+import static org.jooq.impl.DSL.nullif;
+import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.meta.derby.sys.tables.Syschecks.SYSCHECKS;
 import static org.jooq.meta.derby.sys.tables.Sysconglomerates.SYSCONGLOMERATES;
@@ -358,7 +363,21 @@ public class DerbyDatabase extends AbstractDatabase {
         for (Record record : create().select(
                     Sysschemas.SCHEMANAME,
                     Syssequences.SEQUENCENAME,
-                    Syssequences.SEQUENCEDATATYPE)
+                    Syssequences.SEQUENCEDATATYPE,
+                    nullif(Syssequences.STARTVALUE, one()).as(Syssequences.STARTVALUE),
+                    nullif(Syssequences.INCREMENT, one()).as(Syssequences.INCREMENT),
+                    nullif(Syssequences.MINIMUMVALUE, case_(cast(Syssequences.SEQUENCEDATATYPE, VARCHAR))
+                        .when(inline("SMALLINT"), inline((long) Short.MIN_VALUE))
+                        .when(inline("INTEGER"), inline((long) Integer.MIN_VALUE))
+                        .when(inline("BIGINT"), inline(Long.MIN_VALUE))
+                   ).as(Syssequences.MINIMUMVALUE),
+                    nullif(Syssequences.MAXIMUMVALUE, case_(cast(Syssequences.SEQUENCEDATATYPE, VARCHAR))
+                        .when(inline("SMALLINT"), inline((long) Short.MAX_VALUE))
+                        .when(inline("INTEGER"), inline((long) Integer.MAX_VALUE))
+                        .when(inline("BIGINT"), inline(Long.MAX_VALUE))
+                   ).as(Syssequences.MAXIMUMVALUE),
+                    Syssequences.CYCLEOPTION
+                )
                 .from(SYSSEQUENCES)
                 .join(SYSSCHEMAS)
                 .on(Sysschemas.SCHEMAID.equal(Syssequences.SCHEMAID))
@@ -379,8 +398,16 @@ public class DerbyDatabase extends AbstractDatabase {
 
             result.add(new DefaultSequenceDefinition(
                 schema,
-                record.get(Syssequences.SEQUENCENAME, String.class),
-                type));
+                record.get(Syssequences.SEQUENCENAME),
+                type,
+                null,
+                record.get(Syssequences.STARTVALUE),
+                record.get(Syssequences.INCREMENT),
+                record.get(Syssequences.MINIMUMVALUE),
+                record.get(Syssequences.MAXIMUMVALUE),
+                record.get(Syssequences.CYCLEOPTION, Boolean.class),
+                null
+            ));
         }
 
         return result;

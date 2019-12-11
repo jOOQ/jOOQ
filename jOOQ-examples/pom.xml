@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.jooq</groupId>
         <artifactId>jooq-parent</artifactId>
-        <version>3.12.0-SNAPSHOT</version>
+        <version>3.12.3</version>
     </parent>
 
     <groupId>org.jooq</groupId>
@@ -68,13 +68,18 @@
     </build>
 
     <modules>
-        <module>jOOQ-flyway-example</module>
+        <module>jOOQ-academy</module>
+        <module>jOOQ-checker-framework-example</module>
         <module>jOOQ-flyway-ddl-example</module>
+        <module>jOOQ-flyway-example</module>
+        <module>jOOQ-javaee-example</module>
+        <module>jOOQ-javafx-example</module>
+        <module>jOOQ-jooby-example</module>
+        <module>jOOQ-jpa-example</module>
+        <module>jOOQ-jpa-example-entities</module>
         <module>jOOQ-kotlin-example</module>
         <module>jOOQ-spring-example</module>
         <module>jOOQ-spring-boot-example</module>
         <module>jOOQ-spring-guice-example</module>
-        <module>jOOQ-jpa-example-entities</module>
-        <module>jOOQ-jpa-example</module>
     </modules>
 </project>

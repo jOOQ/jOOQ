@@ -43,7 +43,11 @@ import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.max;
 import static org.jooq.impl.DSL.noCondition;
+import static org.jooq.impl.DSL.nullif;
+import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.trim;
+import static org.jooq.impl.DSL.zero;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$CHECK_CONSTRAINTS;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$GENERATORS;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$INDEX_SEGMENTS;
@@ -341,18 +345,33 @@ public class FirebirdDatabase extends AbstractDatabase {
     protected List<SequenceDefinition> getSequences0() throws SQLException {
         List<SequenceDefinition> result = new ArrayList<>();
 
-        for (String sequenceName : create()
-                .select(RDB$GENERATORS.RDB$GENERATOR_NAME.trim())
+        for (Record record : create()
+                .select(
+                    trim(RDB$GENERATORS.RDB$GENERATOR_NAME).as(RDB$GENERATORS.RDB$GENERATOR_NAME),
+                    nullif(RDB$GENERATORS.RDB$INITIAL_VALUE, zero()).as(RDB$GENERATORS.RDB$INITIAL_VALUE),
+                    nullif(RDB$GENERATORS.RDB$GENERATOR_INCREMENT, one()).as(RDB$GENERATORS.RDB$GENERATOR_INCREMENT)
+                )
                 .from(RDB$GENERATORS)
                 .orderBy(1)
-                .fetch(RDB$GENERATORS.RDB$GENERATOR_NAME.trim())) {
+                .fetch()) {
 
             SchemaDefinition schema = getSchemata().get(0);
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 this, schema, FirebirdDataType.BIGINT.getTypeName()
             );
 
-            result.add(new DefaultSequenceDefinition(schema, sequenceName, type ));
+            result.add(new DefaultSequenceDefinition(
+                schema,
+                record.get(RDB$GENERATORS.RDB$GENERATOR_NAME),
+                type,
+                null,
+                record.get(RDB$GENERATORS.RDB$INITIAL_VALUE),
+                record.get(RDB$GENERATORS.RDB$GENERATOR_INCREMENT),
+                null,
+                null,
+                false,
+                null
+            ));
         }
 
         return result;

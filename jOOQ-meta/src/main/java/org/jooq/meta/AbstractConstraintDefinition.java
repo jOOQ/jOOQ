@@ -37,45 +37,41 @@
  */
 package org.jooq.meta;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * An object holding information about a foreign key relationship.
- *
  * @author Lukas Eder
  */
-public interface ForeignKeyDefinition extends ConstraintDefinition {
+public class AbstractConstraintDefinition extends AbstractDefinition implements ConstraintDefinition {
 
-    /**
-     * The definition of the referencing table
-     *
-     * @deprecated - [#9672] - jOOQ 3.13 - Use {@link ConstraintDefinition#getTable()} instead.
-     */
-    @Deprecated
-    TableDefinition getKeyTable();
+    private final TableDefinition table;
+    private final boolean         enforced;
 
-    /**
-     * The list of columns making up the foreign key.
-     */
-    List<ColumnDefinition> getKeyColumns();
+    public AbstractConstraintDefinition(SchemaDefinition schema, TableDefinition table, String name, boolean enforced) {
+        super(schema.getDatabase(), schema, name, null);
 
-    /**
-     * The referenced key.
-     */
-    UniqueKeyDefinition getReferencedKey();
+        this.table = table;
+        this.enforced = enforced;
+    }
 
-    /**
-     * The definition of the referenced table.
-     */
-    TableDefinition getReferencedTable();
+    @Override
+    public List<Definition> getDefinitionPath() {
+        List<Definition> result = new ArrayList<>();
 
-    /**
-     * The list of columns referenced by this foreign key
-     */
-    List<ColumnDefinition> getReferencedColumns();
+        result.addAll(getSchema().getDefinitionPath());
+        result.add(this);
 
-    /**
-     * Count the number of references between referencing and referenced tables.
-     */
-    int countSimilarReferences();
+        return result;
+    }
+
+    @Override
+    public TableDefinition getTable() {
+        return table;
+    }
+
+    @Override
+    public boolean enforced() {
+        return enforced;
+    }
 }

@@ -37,34 +37,18 @@
  */
 package org.jooq.meta;
 
-import java.util.ArrayList;
-import java.util.List;
+public class DefaultCheckConstraintDefinition extends AbstractConstraintDefinition implements CheckConstraintDefinition {
 
-public class DefaultCheckConstraintDefinition extends AbstractDefinition implements CheckConstraintDefinition {
-
-    private final TableDefinition table;
     private final String checkClause;
 
     public DefaultCheckConstraintDefinition(SchemaDefinition schema, TableDefinition table, String name, String checkClause) {
-        super(schema.getDatabase(), schema, name, null);
+        this(schema, table, name, checkClause, true);
+    }
 
-        this.table = table;
+    public DefaultCheckConstraintDefinition(SchemaDefinition schema, TableDefinition table, String name, String checkClause, boolean enforced) {
+        super(schema, table, name, enforced);
+
         this.checkClause = checkClause;
-    }
-
-    @Override
-    public List<Definition> getDefinitionPath() {
-        List<Definition> result = new ArrayList<>();
-
-        result.addAll(getSchema().getDefinitionPath());
-        result.add(this);
-
-        return result;
-    }
-
-    @Override
-    public TableDefinition getTable() {
-        return table;
     }
 
     @Override

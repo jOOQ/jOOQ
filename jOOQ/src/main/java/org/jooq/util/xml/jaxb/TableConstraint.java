@@ -31,6 +31,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *         &lt;element name="table_schema" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="table_name" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="comment" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="enforced" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -73,6 +74,7 @@ public class TableConstraint implements Serializable, XMLAppendable
     protected String tableName;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String comment;
+    protected Boolean enforced;
 
     public String getConstraintCatalog() {
         return constraintCatalog;
@@ -138,6 +140,30 @@ public class TableConstraint implements Serializable, XMLAppendable
         this.comment = value;
     }
 
+    /**
+     * Gets the value of the enforced property.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isEnforced() {
+        return enforced;
+    }
+
+    /**
+     * Sets the value of the enforced property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setEnforced(Boolean value) {
+        this.enforced = value;
+    }
+
     public TableConstraint withConstraintCatalog(String value) {
         setConstraintCatalog(value);
         return this;
@@ -178,6 +204,11 @@ public class TableConstraint implements Serializable, XMLAppendable
         return this;
     }
 
+    public TableConstraint withEnforced(Boolean value) {
+        setEnforced(value);
+        return this;
+    }
+
     @Override
     public final void appendTo(XMLBuilder builder) {
         builder.append("constraint_catalog", constraintCatalog);
@@ -188,6 +219,7 @@ public class TableConstraint implements Serializable, XMLAppendable
         builder.append("table_schema", tableSchema);
         builder.append("table_name", tableName);
         builder.append("comment", comment);
+        builder.append("enforced", enforced);
     }
 
     @Override
@@ -281,6 +313,15 @@ public class TableConstraint implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (enforced == null) {
+            if (other.enforced!= null) {
+                return false;
+            }
+        } else {
+            if (!enforced.equals(other.enforced)) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -296,6 +337,7 @@ public class TableConstraint implements Serializable, XMLAppendable
         result = ((prime*result)+((tableSchema == null)? 0 :tableSchema.hashCode()));
         result = ((prime*result)+((tableName == null)? 0 :tableName.hashCode()));
         result = ((prime*result)+((comment == null)? 0 :comment.hashCode()));
+        result = ((prime*result)+((enforced == null)? 0 :enforced.hashCode()));
         return result;
     }
 

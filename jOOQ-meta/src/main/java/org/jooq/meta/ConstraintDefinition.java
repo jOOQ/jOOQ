@@ -37,45 +37,20 @@
  */
 package org.jooq.meta;
 
-import java.util.List;
-
 /**
- * An object holding information about a foreign key relationship.
+ * An object holding information about a constraint.
  *
  * @author Lukas Eder
  */
-public interface ForeignKeyDefinition extends ConstraintDefinition {
+public interface ConstraintDefinition extends Definition {
 
     /**
-     * The definition of the referencing table
-     *
-     * @deprecated - [#9672] - jOOQ 3.13 - Use {@link ConstraintDefinition#getTable()} instead.
+     * The table holding this constraint.
      */
-    @Deprecated
-    TableDefinition getKeyTable();
+    TableDefinition getTable();
 
     /**
-     * The list of columns making up the foreign key.
+     * Whether this constraint is enforced.
      */
-    List<ColumnDefinition> getKeyColumns();
-
-    /**
-     * The referenced key.
-     */
-    UniqueKeyDefinition getReferencedKey();
-
-    /**
-     * The definition of the referenced table.
-     */
-    TableDefinition getReferencedTable();
-
-    /**
-     * The list of columns referenced by this foreign key
-     */
-    List<ColumnDefinition> getReferencedColumns();
-
-    /**
-     * Count the number of references between referencing and referenced tables.
-     */
-    int countSimilarReferences();
+    boolean enforced();
 }

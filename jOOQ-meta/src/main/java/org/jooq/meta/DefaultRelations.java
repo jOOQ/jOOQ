@@ -66,6 +66,10 @@ public class DefaultRelations implements Relations {
     private transient Map<TableDefinition, List<CheckConstraintDefinition>> checkConstraintsByTable;
 
     public void addPrimaryKey(String keyName, TableDefinition table, ColumnDefinition column) {
+        addPrimaryKey(keyName, table, column, true);
+    }
+
+    public void addPrimaryKey(String keyName, TableDefinition table, ColumnDefinition column, boolean enforced) {
         Key key = key(table, keyName);
 
         // [#2718] Column exclusions may hit primary key references. Ignore
@@ -89,11 +93,15 @@ public class DefaultRelations implements Relations {
 	    if (log.isDebugEnabled())
 	        log.debug("Adding primary key", keyName + " (" + column + ")");
 
-	    UniqueKeyDefinition result = getUniqueKey(keyName, table, column, true);
+	    UniqueKeyDefinition result = getUniqueKey(keyName, table, column, true, enforced);
         result.getKeyColumns().add(column);
 	}
 
     public void addUniqueKey(String keyName, TableDefinition table, ColumnDefinition column) {
+        addUniqueKey(keyName, table, column, true);
+    }
+
+    public void addUniqueKey(String keyName, TableDefinition table, ColumnDefinition column, boolean enforced) {
         Key key = key(table, keyName);
 
         // [#2718] Column exclusions may hit unique key references. Ignore
@@ -116,7 +124,7 @@ public class DefaultRelations implements Relations {
         if (log.isDebugEnabled())
             log.debug("Adding unique key", keyName + " (" + column + ")");
 
-        UniqueKeyDefinition result = getUniqueKey(keyName, table, column, false);
+        UniqueKeyDefinition result = getUniqueKey(keyName, table, column, false, enforced);
         result.getKeyColumns().add(column);
     }
 
@@ -151,12 +159,12 @@ public class DefaultRelations implements Relations {
                  ", new key : " + key.getName());
     }
 
-    private UniqueKeyDefinition getUniqueKey(String keyName, TableDefinition table, ColumnDefinition column, boolean isPK) {
+    private UniqueKeyDefinition getUniqueKey(String keyName, TableDefinition table, ColumnDefinition column, boolean isPK, boolean enforced) {
         Key key = key(table, keyName);
         UniqueKeyDefinition result = uniqueKeys.get(key);
 
         if (result == null) {
-            result = new DefaultUniqueKeyDefinition(column.getSchema(), keyName, table, isPK);
+            result = new DefaultUniqueKeyDefinition(column.getSchema(), keyName, table, isPK, enforced);
             uniqueKeys.put(key, result);
 
             if (isPK)
@@ -172,6 +180,16 @@ public class DefaultRelations implements Relations {
         ColumnDefinition foreignKeyColumn,
         String uniqueKeyName,
         TableDefinition uniqueKeyTable) {
+        addForeignKey(foreignKeyName, foreignKeyTable, foreignKeyColumn, uniqueKeyName, uniqueKeyTable, true);
+    }
+
+    public void addForeignKey(
+        String foreignKeyName,
+        TableDefinition foreignKeyTable,
+        ColumnDefinition foreignKeyColumn,
+        String uniqueKeyName,
+        TableDefinition uniqueKeyTable,
+        boolean enforced) {
 
 
         // [#2718] Column exclusions may hit foreign key references. Ignore
@@ -208,7 +226,7 @@ public class DefaultRelations implements Relations {
 
             // If the unique key is not loaded, ignore this foreign key
             if (uniqueKey != null) {
-                foreignKey = new DefaultForeignKeyDefinition(foreignKeyColumn.getSchema(), foreignKeyName, foreignKeyColumn.getContainer(), uniqueKey);
+                foreignKey = new DefaultForeignKeyDefinition(foreignKeyColumn.getSchema(), foreignKeyName, foreignKeyColumn.getContainer(), uniqueKey, enforced);
                 foreignKeys.put(key, foreignKey);
 
                 uniqueKey.getForeignKeys().add(foreignKey);

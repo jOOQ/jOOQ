@@ -42,15 +42,10 @@ package org.jooq.meta;
  *
  * @author Lukas Eder
  */
-public interface CheckConstraintDefinition extends Definition {
+public interface CheckConstraintDefinition extends ConstraintDefinition {
 
     /**
      * The check clause.
      */
     String getCheckClause();
-
-    /**
-     * The containing table.
-     */
-    TableDefinition getTable();
 }

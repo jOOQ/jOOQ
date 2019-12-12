@@ -223,20 +223,21 @@ public class XMLGenerator extends AbstractGenerator {
                     TableDefinition table = u.getTable();
                     List<ColumnDefinition> columns = u.getKeyColumns();
 
-                    TableConstraint constraint = new TableConstraint();
-                    constraint.setConstraintCatalog(catalogName);
-                    constraint.setConstraintSchema(schemaName);
-                    constraint.setConstraintName(constraintName);
-                    constraint.setConstraintType(u.isPrimaryKey() ? PRIMARY_KEY : UNIQUE);
+                    TableConstraint tc = new TableConstraint();
+                    tc.setConstraintCatalog(catalogName);
+                    tc.setConstraintSchema(schemaName);
+                    tc.setConstraintName(constraintName);
+                    tc.setConstraintType(u.isPrimaryKey() ? PRIMARY_KEY : UNIQUE);
 
                     if (generateCommentsOnKeys())
-                        constraint.setComment(u.getComment());
+                        tc.setComment(u.getComment());
 
-                    constraint.setTableCatalog(table.getCatalog().getOutputName());
-                    constraint.setTableSchema(table.getSchema().getOutputName());
-                    constraint.setTableName(table.getOutputName());
+                    tc.setTableCatalog(table.getCatalog().getOutputName());
+                    tc.setTableSchema(table.getSchema().getOutputName());
+                    tc.setTableName(table.getOutputName());
+                    tc.setEnforced(u.enforced());
 
-                    is.getTableConstraints().add(constraint);
+                    is.getTableConstraints().add(tc);
 
                     for (int i = 0; i < columns.size(); i++) {
                         ColumnDefinition column = columns.get(i);
@@ -274,6 +275,7 @@ public class XMLGenerator extends AbstractGenerator {
                     tc.setTableCatalog(table.getCatalog().getOutputName());
                     tc.setTableSchema(table.getSchema().getOutputName());
                     tc.setTableName(table.getOutputName());
+                    tc.setEnforced(f.enforced());
 
                     ReferentialConstraint rc = new ReferentialConstraint();
                     rc.setConstraintCatalog(catalogName);
@@ -320,6 +322,7 @@ public class XMLGenerator extends AbstractGenerator {
                     tc.setTableCatalog(table.getCatalog().getOutputName());
                     tc.setTableSchema(table.getSchema().getOutputName());
                     tc.setTableName(table.getOutputName());
+                    tc.setEnforced(ch.enforced());
 
                     is.getTableConstraints().add(tc);
 

@@ -42,35 +42,25 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class DefaultForeignKeyDefinition extends AbstractDefinition implements ForeignKeyDefinition {
+public class DefaultForeignKeyDefinition extends AbstractConstraintDefinition implements ForeignKeyDefinition {
 
     private final List<ColumnDefinition> keyColumns;
-    private final TableDefinition        table;
     private final UniqueKeyDefinition    uniqueKey;
 
-    public DefaultForeignKeyDefinition(SchemaDefinition schema, String name, TableDefinition table,
-        UniqueKeyDefinition uniqueKey) {
+    public DefaultForeignKeyDefinition(SchemaDefinition schema, String name, TableDefinition table, UniqueKeyDefinition uniqueKey) {
+        this(schema, name, table, uniqueKey, true);
+    }
 
-        super(schema.getDatabase(), schema, name, null);
+    public DefaultForeignKeyDefinition(SchemaDefinition schema, String name, TableDefinition table, UniqueKeyDefinition uniqueKey, boolean enforced) {
+        super(schema, table, name, enforced);
 
         this.keyColumns = new ArrayList<>();
-        this.table = table;
         this.uniqueKey = uniqueKey;
     }
 
     @Override
-    public List<Definition> getDefinitionPath() {
-        List<Definition> result = new ArrayList<>();
-
-        result.addAll(getSchema().getDefinitionPath());
-        result.add(this);
-
-        return result;
-    }
-
-    @Override
     public TableDefinition getKeyTable() {
-        return table;
+        return getTable();
     }
 
     @Override
@@ -97,11 +87,9 @@ public class DefaultForeignKeyDefinition extends AbstractDefinition implements F
     public int countSimilarReferences() {
         Set<String> keys = new HashSet<>();
 
-        for (ForeignKeyDefinition key : getDatabase().getRelations().getForeignKeys(table)) {
-            if (key.getReferencedTable().equals(getReferencedTable())) {
+        for (ForeignKeyDefinition key : getDatabase().getRelations().getForeignKeys(getTable()))
+            if (key.getReferencedTable().equals(getReferencedTable()))
                 keys.add(key.getName());
-            }
-        }
 
         return keys.size();
     }

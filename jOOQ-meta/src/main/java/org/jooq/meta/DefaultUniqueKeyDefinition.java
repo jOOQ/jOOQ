@@ -40,35 +40,27 @@ package org.jooq.meta;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DefaultUniqueKeyDefinition extends AbstractDefinition implements UniqueKeyDefinition {
+public class DefaultUniqueKeyDefinition extends AbstractConstraintDefinition implements UniqueKeyDefinition {
 
     private final List<ForeignKeyDefinition> foreignKeys;
     private final List<ColumnDefinition>     keyColumns;
-    private final TableDefinition            table;
     private final boolean                    isPrimaryKey;
 
     public DefaultUniqueKeyDefinition(SchemaDefinition schema, String name, TableDefinition table, boolean isPrimaryKey) {
-        super(schema.getDatabase(), schema, name, null);
+        this(schema, name, table, isPrimaryKey, true);
+    }
+
+    public DefaultUniqueKeyDefinition(SchemaDefinition schema, String name, TableDefinition table, boolean isPrimaryKey, boolean enforced) {
+        super(schema, table, name, enforced);
 
         this.foreignKeys = new ArrayList<>();
         this.keyColumns = new ArrayList<>();
-        this.table = table;
         this.isPrimaryKey = isPrimaryKey;
     }
 
     @Override
     public boolean isPrimaryKey() {
         return isPrimaryKey;
-    }
-
-    @Override
-    public List<Definition> getDefinitionPath() {
-        List<Definition> result = new ArrayList<>();
-
-        result.addAll(getSchema().getDefinitionPath());
-        result.add(this);
-
-        return result;
     }
 
     @Override
@@ -79,10 +71,5 @@ public class DefaultUniqueKeyDefinition extends AbstractDefinition implements Un
     @Override
     public List<ForeignKeyDefinition> getForeignKeys() {
         return foreignKeys;
-    }
-
-    @Override
-    public TableDefinition getTable() {
-        return table;
     }
 }

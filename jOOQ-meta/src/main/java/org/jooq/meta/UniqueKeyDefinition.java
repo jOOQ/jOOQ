@@ -47,7 +47,7 @@ import java.util.List;
  *
  * @author Lukas Eder
  */
-public interface UniqueKeyDefinition extends Definition {
+public interface UniqueKeyDefinition extends ConstraintDefinition {
 
     /**
      * Whether this unique key is the primary key
@@ -63,9 +63,4 @@ public interface UniqueKeyDefinition extends Definition {
      * The foreign keys referencing this primary key
      */
     List<ForeignKeyDefinition> getForeignKeys();
-
-    /**
-     * The table holding this key
-     */
-    TableDefinition getTable();
 }

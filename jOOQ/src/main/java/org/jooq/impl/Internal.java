@@ -100,7 +100,7 @@ public final class Internal {
     @SafeVarargs
 
     public static final <R extends Record> UniqueKey<R> createUniqueKey(Table<R> table, TableField<R, ?>... fields) {
-        return new UniqueKeyImpl<>(table, fields, true);
+        return createUniqueKey(table, null, fields, true);
     }
 
     /**
@@ -110,7 +110,14 @@ public final class Internal {
     @SafeVarargs
 
     public static final <R extends Record> UniqueKey<R> createUniqueKey(Table<R> table, String name, TableField<R, ?>... fields) {
-        return new UniqueKeyImpl<>(table, name, fields, true);
+        return createUniqueKey(table, name, fields, true);
+    }
+
+    /**
+     * Factory method for unique keys.
+     */
+    public static final <R extends Record> UniqueKey<R> createUniqueKey(Table<R> table, String name, TableField<R, ?>[] fields, boolean enforced) {
+        return new UniqueKeyImpl<>(table, name, fields, enforced);
     }
 
     /**
@@ -130,7 +137,14 @@ public final class Internal {
     @SafeVarargs
 
     public static final <R extends Record, U extends Record> ForeignKey<R, U> createForeignKey(UniqueKey<U> key, Table<R> table, String name, TableField<R, ?>... fields) {
-        ForeignKey<R, U> result = new ReferenceImpl<>(key, table, name, fields, true);
+        return createForeignKey(key, table, name, fields, true);
+    }
+
+    /**
+     * Factory method for foreign keys.
+     */
+    public static final <R extends Record, U extends Record> ForeignKey<R, U> createForeignKey(UniqueKey<U> key, Table<R> table, String name, TableField<R, ?>[] fields, boolean enforced) {
+        ForeignKey<R, U> result = new ReferenceImpl<>(key, table, name, fields, enforced);
 
         if (key instanceof UniqueKeyImpl)
             ((UniqueKeyImpl<U>) key).references.add(result);
@@ -167,7 +181,14 @@ public final class Internal {
      * Factory method for check constraints.
      */
     public static final <R extends Record> Check<R> createCheck(Table<R> table, Name name, String condition) {
-        return new CheckImpl<>(table, name, DSL.condition(condition), true);
+        return createCheck(table, name, condition, true);
+    }
+
+    /**
+     * Factory method for check constraints.
+     */
+    public static final <R extends Record> Check<R> createCheck(Table<R> table, Name name, String condition, boolean enforced) {
+        return new CheckImpl<>(table, name, DSL.condition(condition), enforced);
     }
 
     /**

@@ -12,7 +12,6 @@ import javax.annotation.processing.Generated;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
-import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Row6;
@@ -21,7 +20,6 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.example.flyway.ddl.db.h2.FlywayTest;
-import org.jooq.example.flyway.ddl.db.h2.Indexes;
 import org.jooq.example.flyway.ddl.db.h2.Keys;
 import org.jooq.example.flyway.ddl.db.h2.tables.records.AuthorRecord;
 import org.jooq.impl.DSL;
@@ -41,7 +39,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Author extends TableImpl<AuthorRecord> {
 
-    private static final long serialVersionUID = 362279619;
+    private static final long serialVersionUID = 984252197;
 
     /**
      * The reference instance of <code>FLYWAY_TEST.AUTHOR</code>
@@ -122,11 +120,6 @@ public class Author extends TableImpl<AuthorRecord> {
     @Override
     public Schema getSchema() {
         return FlywayTest.FLYWAY_TEST;
-    }
-
-    @Override
-    public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.PRIMARY_KEY_7);
     }
 
     @Override

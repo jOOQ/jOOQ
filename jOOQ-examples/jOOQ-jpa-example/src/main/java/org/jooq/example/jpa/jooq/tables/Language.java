@@ -10,7 +10,6 @@ import java.util.List;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
-import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Row2;
@@ -19,7 +18,6 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.example.jpa.jooq.DefaultSchema;
-import org.jooq.example.jpa.jooq.Indexes;
 import org.jooq.example.jpa.jooq.Keys;
 import org.jooq.example.jpa.jooq.tables.records.LanguageRecord;
 import org.jooq.impl.DSL;
@@ -32,7 +30,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Language extends TableImpl<LanguageRecord> {
 
-    private static final long serialVersionUID = -823519981;
+    private static final long serialVersionUID = 389668169;
 
     /**
      * The reference instance of <code>LANGUAGE</code>
@@ -93,11 +91,6 @@ public class Language extends TableImpl<LanguageRecord> {
     @Override
     public Schema getSchema() {
         return DefaultSchema.DEFAULT_SCHEMA;
-    }
-
-    @Override
-    public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.PRIMARY_KEY_C);
     }
 
     @Override

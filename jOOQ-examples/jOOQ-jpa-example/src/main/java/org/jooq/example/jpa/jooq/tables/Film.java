@@ -11,7 +11,6 @@ import java.util.List;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
-import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Row6;
@@ -20,7 +19,6 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.example.jpa.jooq.DefaultSchema;
-import org.jooq.example.jpa.jooq.Indexes;
 import org.jooq.example.jpa.jooq.Keys;
 import org.jooq.example.jpa.jooq.tables.records.FilmRecord;
 import org.jooq.impl.DSL;
@@ -33,7 +31,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Film extends TableImpl<FilmRecord> {
 
-    private static final long serialVersionUID = -1815407288;
+    private static final long serialVersionUID = -1248254596;
 
     /**
      * The reference instance of <code>FILM</code>
@@ -114,11 +112,6 @@ public class Film extends TableImpl<FilmRecord> {
     @Override
     public Schema getSchema() {
         return DefaultSchema.DEFAULT_SCHEMA;
-    }
-
-    @Override
-    public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.FKD2YJC1RU34H1SMWLA3FX7B6NX_INDEX_2, Indexes.FKN2UB730RPO5B5E9X6U2LWL9FT_INDEX_2, Indexes.PRIMARY_KEY_2);
     }
 
     @Override

@@ -10,7 +10,6 @@ import java.util.List;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
-import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Row3;
@@ -19,7 +18,6 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.example.jpa.jooq.DefaultSchema;
-import org.jooq.example.jpa.jooq.Indexes;
 import org.jooq.example.jpa.jooq.Keys;
 import org.jooq.example.jpa.jooq.tables.records.ActorRecord;
 import org.jooq.impl.DSL;
@@ -32,7 +30,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Actor extends TableImpl<ActorRecord> {
 
-    private static final long serialVersionUID = 99932436;
+    private static final long serialVersionUID = -1432536666;
 
     /**
      * The reference instance of <code>ACTOR</code>
@@ -98,11 +96,6 @@ public class Actor extends TableImpl<ActorRecord> {
     @Override
     public Schema getSchema() {
         return DefaultSchema.DEFAULT_SCHEMA;
-    }
-
-    @Override
-    public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.PRIMARY_KEY_3);
     }
 
     @Override

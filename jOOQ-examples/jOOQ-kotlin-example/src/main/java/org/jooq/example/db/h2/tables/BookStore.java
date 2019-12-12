@@ -9,7 +9,6 @@ import java.util.List;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
-import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Row1;
@@ -17,7 +16,6 @@ import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
-import org.jooq.example.db.h2.Indexes;
 import org.jooq.example.db.h2.Keys;
 import org.jooq.example.db.h2.Public;
 import org.jooq.example.db.h2.tables.records.BookStoreRecord;
@@ -31,7 +29,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class BookStore extends TableImpl<BookStoreRecord> {
 
-    private static final long serialVersionUID = 873069360;
+    private static final long serialVersionUID = 1086290239;
 
     /**
      * The reference instance of <code>PUBLIC.BOOK_STORE</code>
@@ -87,11 +85,6 @@ public class BookStore extends TableImpl<BookStoreRecord> {
     @Override
     public Schema getSchema() {
         return Public.PUBLIC;
-    }
-
-    @Override
-    public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.PRIMARY_KEY_F);
     }
 
     @Override

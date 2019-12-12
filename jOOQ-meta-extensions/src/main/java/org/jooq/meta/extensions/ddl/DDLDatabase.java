@@ -206,7 +206,7 @@ public class DDLDatabase extends AbstractInterpretingDatabase {
         catch (DataAccessException e) {
 
             // [#9138] Make users aware of the new parse ignore comment syntax
-            log.error("DDLDatabase Error", "Your SQL string could not be parsed or simulated. This may have a variety of reasons, including:\n"
+            log.error("DDLDatabase Error", "Your SQL string could not be parsed or interpreted. This may have a variety of reasons, including:\n"
                 + "- The jOOQ parser doesn't understand your SQL\n"
                 + "- The jOOQ DDL simulation logic (translating to H2) cannot simulate your SQL\n"
                 + "\n"

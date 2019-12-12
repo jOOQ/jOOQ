@@ -3184,6 +3184,7 @@ final class ParserImpl implements Parser {
         List<Constraint> constraints = new ArrayList<>();
         List<Index> indexes = new ArrayList<>();
         boolean primary = false;
+        boolean identity = false;
 
         // Three valued boolean:
         // null: Possibly CTAS
@@ -3265,10 +3266,12 @@ final class ParserImpl implements Parser {
                     fieldName,
                     !TRUE.equals(ctas) ? parseDataType(ctx) : SQLDataType.OTHER,
                     constraints,
-                    primary
+                    primary,
+                    identity
                 );
 
                 primary = inlineConstraints.primary;
+                identity = inlineConstraints.identity;
 
                 if (ctas)
                     fields.add(field(fieldName));
@@ -3474,11 +3477,13 @@ final class ParserImpl implements Parser {
         final DataType<?> type;
         final Comment     fieldComment;
         final boolean     primary;
+        final boolean     identity;
 
-        ParseInlineConstraints(DataType<?> type, Comment fieldComment, boolean primary) {
+        ParseInlineConstraints(DataType<?> type, Comment fieldComment, boolean primary, boolean identity) {
             this.type = type;
             this.fieldComment = fieldComment;
             this.primary = primary;
+            this.identity = identity;
         }
     }
 
@@ -3487,15 +3492,17 @@ final class ParserImpl implements Parser {
         Name fieldName,
         DataType<?> type,
         List<? super Constraint> constraints,
-        boolean primary
+        boolean primary,
+        boolean identity
     ) {
         boolean nullable = false;
         boolean defaultValue = false;
         boolean onUpdate = false;
         boolean unique = false;
-        boolean identity = type.identity();
         boolean comment = false;
         Comment fieldComment = null;
+
+        identity |= type.identity();
 
         for (;;) {
             if (!nullable) {
@@ -3512,7 +3519,7 @@ final class ParserImpl implements Parser {
             }
 
             if (!defaultValue) {
-                if (parseKeywordIf(ctx, "IDENTITY")) {
+                if (!identity && parseKeywordIf(ctx, "IDENTITY")) {
                     if (parseIf(ctx, '(')) {
                         parseSignedInteger(ctx);
                         parse(ctx, ',');
@@ -3535,7 +3542,7 @@ final class ParserImpl implements Parser {
                     identity = true;
                     continue;
                 }
-                else if (parseKeywordIf(ctx, "GENERATED")) {
+                else if (!identity && parseKeywordIf(ctx, "GENERATED")) {
                     if (!parseKeywordIf(ctx, "ALWAYS")) {
                         parseKeyword(ctx, "BY DEFAULT");
 
@@ -3662,7 +3669,7 @@ final class ParserImpl implements Parser {
             break;
         }
 
-        return new ParseInlineConstraints(type, fieldComment, primary);
+        return new ParseInlineConstraints(type, fieldComment, primary, identity);
     }
 
     private static final boolean parsePrimaryKeyClusteredNonClusteredKeywordIf(ParserContext ctx) {
@@ -4112,7 +4119,7 @@ final class ParserImpl implements Parser {
         DataType type = parseDataType(ctx);
         int position = list == null ? -1 : list.size();
 
-        ParseInlineConstraints inline = parseInlineConstraints(ctx, fieldName, type, list, false);
+        ParseInlineConstraints inline = parseInlineConstraints(ctx, fieldName, type, list, false, false);
         Field<?> result = field(fieldName, inline.type, inline.fieldComment);
 
         if (list != null)

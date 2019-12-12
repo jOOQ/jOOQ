@@ -204,7 +204,9 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
     AlterTableAddStep,
     AlterTableDropStep,
     AlterTableAlterStep,
-    AlterTableAlterConstraintStep,
+
+
+
     AlterTableUsingIndexStep,
     AlterTableRenameColumnToStep,
     AlterTableRenameIndexToStep,

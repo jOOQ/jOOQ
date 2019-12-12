@@ -661,6 +661,8 @@ final class DDLInterpreter {
         for (MutableField mf : existing.fields)
             if (mf.nameEquals(field.name()))
                 throw columnAlreadyExists(field.qualifiedName());
+            else if (mf.type.identity() && dataType.identity())
+                throw new DataDefinitionException("Table can only have one identity: " + mf.qualifiedName());
 
         if (index == Integer.MAX_VALUE)
             existing.fields.add(field);

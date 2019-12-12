@@ -57,9 +57,9 @@ public interface Version {
     Meta meta();
 
     /**
-     * Produce a migration from a previous version.
+     * Produce a migration to a new version.
      */
-    Queries migrateFrom(Version version);
+    Queries migrateTo(Version version);
 
     /**
      * Get the root version of this graph.
@@ -96,28 +96,28 @@ public interface Version {
 
 
     /**
-     * Apply a change set to produce a new version.
+     * Apply a migration to produce a new version.
      */
-    Version apply(String id, Queries diff);
+    Version apply(String id, Queries migration);
 
     /**
-     * Apply a change set to produce a new version.
+     * Apply a migration to produce a new version.
      *
      * @see #apply(String, Queries)
      */
-    Version apply(String id, Query... diff);
+    Version apply(String id, Query... migration);
 
     /**
-     * Apply a change set to produce a new version.
+     * Apply a migration to produce a new version.
      *
      * @see #apply(String, Queries)
      */
-    Version apply(String id, Collection<? extends Query> diff);
+    Version apply(String id, Collection<? extends Query> migration);
 
     /**
-     * Apply a change set to produce a new version.
+     * Apply a migration to produce a new version.
      *
      * @see #apply(String, Queries)
      */
-    Version apply(String id, String diff);
+    Version apply(String id, String migration);
 }

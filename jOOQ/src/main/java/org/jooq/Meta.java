@@ -222,37 +222,37 @@ public interface Meta extends Scope {
     Queries ddl(DDLExportConfiguration configuration) throws DataAccessException;
 
     /**
-     * Apply a diff to this meta to produce a new {@link Meta}.
+     * Apply a migration to this meta to produce a new {@link Meta}.
      *
      * @see Parser#parse(String)
      * @throws DataAccessException If something went wrong fetching the meta
      *             objects
      */
-    Meta apply(String diff) throws DataAccessException;
+    Meta apply(String migration) throws DataAccessException;
 
     /**
-     * Apply a diff to this meta to produce a new {@link Meta}.
+     * Apply a migration to this meta to produce a new {@link Meta}.
      *
      * @throws DataAccessException If something went wrong fetching the meta
      *             objects
      */
-    Meta apply(Query... diff) throws DataAccessException;
+    Meta apply(Query... migration) throws DataAccessException;
 
     /**
-     * Apply a diff to this meta to produce a new {@link Meta}.
+     * Apply a migration to this meta to produce a new {@link Meta}.
      *
      * @throws DataAccessException If something went wrong fetching the meta
      *             objects
      */
-    Meta apply(Collection<? extends Query> diff) throws DataAccessException;
+    Meta apply(Collection<? extends Query> migration) throws DataAccessException;
 
     /**
-     * Apply a diff to this meta to produce a new {@link Meta}.
+     * Apply a migration to this meta to produce a new {@link Meta}.
      *
      * @throws DataAccessException If something went wrong fetching the meta
      *             objects
      */
-    Meta apply(Queries diff) throws DataAccessException;
+    Meta apply(Queries migration) throws DataAccessException;
 
 
 

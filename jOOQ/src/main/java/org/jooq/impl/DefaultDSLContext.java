@@ -417,7 +417,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public Migration migration(Version to) {
+    public Migration migrateTo(Version to) {
         return new MigrationImpl(configuration, to);
     }
 

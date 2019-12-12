@@ -110,28 +110,28 @@ final class VersionImpl implements Version {
     }
 
     @Override
-    public final Version apply(String newId, Query... diff) {
-        return apply(newId, ctx.queries(diff));
+    public final Version apply(String newId, Query... migration) {
+        return apply(newId, ctx.queries(migration));
     }
 
     @Override
-    public final Version apply(String newId, Collection<? extends Query> diff) {
-        return apply(newId, ctx.queries(diff));
+    public final Version apply(String newId, Collection<? extends Query> migration) {
+        return apply(newId, ctx.queries(migration));
     }
 
     @Override
-    public final Version apply(String newId, String diff) {
-        return apply(newId, ctx.parser().parse(diff));
+    public final Version apply(String newId, String migration) {
+        return apply(newId, ctx.parser().parse(migration));
     }
 
     @Override
-    public final Version apply(String newId, Queries diff) {
-        return new VersionImpl(ctx, newId, meta().apply(diff), this, diff);
+    public final Version apply(String newId, Queries migration) {
+        return new VersionImpl(ctx, newId, meta().apply(migration), this, migration);
     }
 
     @Override
-    public final Queries migrateFrom(Version version) {
-        VersionImpl subgraph = subgraphTo((VersionImpl) version);
+    public final Queries migrateTo(Version version) {
+        VersionImpl subgraph = ((VersionImpl) version).subgraphTo(this);
 
 
 
@@ -143,7 +143,7 @@ final class VersionImpl implements Version {
 
 
 
-        return subgraph.migrateFrom((VersionImpl) version, ctx.queries());
+        return migrateTo(subgraph, ctx.queries());
     }
 
     private final VersionImpl subgraphTo(VersionImpl ancestor) {
@@ -171,15 +171,15 @@ final class VersionImpl implements Version {
         return list == null ? null : new VersionImpl(ctx, id, meta, list);
     }
 
-    private final Queries migrateFrom(VersionImpl ancestor, Queries result) {
+    private final Queries migrateTo(VersionImpl target, Queries result) {
 
 
 
 
 
 
-        for (Parent parent : parents) {
-            result = parent.version.migrateFrom(ancestor, result);
+        for (Parent parent : target.parents) {
+            result = migrateTo(parent.version, result);
 
 
 

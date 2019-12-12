@@ -254,9 +254,9 @@ public interface DSLContext extends Scope , AutoCloseable  {
     Version version(String id);
 
     /**
-     * Create a migration to a new version.
+     * Create a migration from the currently installed version to a new version.
      */
-    Migration migration(Version to);
+    Migration migrateTo(Version to);
 
     /**
      * Access the database meta data.

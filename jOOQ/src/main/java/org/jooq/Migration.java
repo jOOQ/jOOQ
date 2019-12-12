@@ -67,5 +67,5 @@ public interface Migration extends Scope {
      * @throws DataDefinitionException When something went wrong during the
      *             application of the migration.
      */
-    MigrationResult migrate() throws DataDefinitionException;
+    MigrationResult execute() throws DataDefinitionException;
 }

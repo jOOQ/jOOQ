@@ -110,7 +110,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
     @Override
     public final Queries queries() {
         if (queries == null)
-            queries = to().migrateFrom(from());
+            queries = from().migrateTo(to());
 
         return queries;
     }
@@ -129,7 +129,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
     private static final MigrationResult MIGRATION_RESULT = new MigrationResult() {};
 
     @Override
-    public final MigrationResult migrate() throws DataDefinitionException {
+    public final MigrationResult execute() throws DataDefinitionException {
 
         // TODO: Transactions don't really make sense in most dialects. In some, they do
         //       e.g. PostgreSQL supports transactional DDL. Check if we're getting this right.

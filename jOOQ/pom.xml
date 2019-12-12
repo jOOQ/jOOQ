@@ -50,8 +50,11 @@
                     <instructions>
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Export-Package>*</Export-Package>
+                        <!-- do not import jooq (ourselves) -->
                         <Import-Package>
                             javax.persistence;resolution:=optional,
+                            org.slf4j;resolution:=optional;version="[1.7,2)",
+                            !org.jooq.*,
                             *
                         </Import-Package>
                         <_versionpolicy>[$(version;==;$(@)),$(version;+;$(@)))</_versionpolicy>

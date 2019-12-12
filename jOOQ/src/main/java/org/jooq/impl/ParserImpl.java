@@ -3713,7 +3713,7 @@ final class ParserImpl implements Parser {
 
             ;
 
-        else return e;
+        return e;
     }
 
     private static final Constraint parsePrimaryKeySpecification(ParserContext ctx, ConstraintTypeStep constraint) {

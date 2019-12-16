@@ -10595,10 +10595,7 @@ final class ParserImpl implements Parser {
         // [#8074] The SQL standard and some implementations (e.g. PostgreSQL,
         //         SQL Server) support nesting block comments
         int blockCommentNestLevel = 0;
-        boolean ignoreComment = false;
-        String ignoreCommentStart = ctx.settings().getParseIgnoreCommentStart();
-        String ignoreCommentStop = ctx.settings().getParseIgnoreCommentStop();
-        boolean checkIgnoreComment = !FALSE.equals(ctx.settings().isParseIgnoreComments());
+        PeekIgnoreComment ignoreComment = new PeekIgnoreComment(ctx);
 
         loop:
         for (int i = position; i < ctx.sql.length; i++) {
@@ -10616,13 +10613,7 @@ final class ParserImpl implements Parser {
                         blockCommentNestLevel++;
 
                         while (i < ctx.sql.length) {
-                            if (checkIgnoreComment)
-                                if (!ignoreComment)
-                                    ignoreComment = peek(ctx, ignoreCommentStart, i);
-                                else
-                                    ignoreComment = !peek(ctx, ignoreCommentStop, i);
-
-                            if (!ignoreComment) {
+                            if (!peekIgnoreComment(ctx, ignoreComment, i).ignoreComment) {
                                 switch (ctx.sql[i]) {
                                     case '/':
                                         if (i + 1 < ctx.sql.length && ctx.sql[i + 1] == '*') {
@@ -10656,6 +10647,26 @@ final class ParserImpl implements Parser {
                         }
                     }
 
+                    // [#9651] H2 and Snowflake's c-style single line comments
+                    else if (i + 1 < ctx.sql.length && ctx.sql[i + 1] == '/') {
+                        i = i + 2;
+
+                        while (i < ctx.sql.length) {
+                            if (!peekIgnoreComment(ctx, ignoreComment, i).ignoreComment) {
+                                switch (ctx.sql[i]) {
+                                    case '\r':
+                                    case '\n':
+                                        position = i + 1;
+                                        continue loop;
+                                }
+                            }
+
+                            i++;
+                        }
+
+                        position = i;
+                    }
+
                     break loop;
 
                 case '-':
@@ -10663,13 +10674,7 @@ final class ParserImpl implements Parser {
                         i = i + 2;
 
                         while (i < ctx.sql.length) {
-                            if (checkIgnoreComment)
-                                if (!ignoreComment)
-                                    ignoreComment = peek(ctx, ignoreCommentStart, i);
-                                else
-                                    ignoreComment = !peek(ctx, ignoreCommentStop, i);
-
-                            if (!ignoreComment) {
+                            if (!peekIgnoreComment(ctx, ignoreComment, i).ignoreComment) {
                                 switch (ctx.sql[i]) {
                                     case '\r':
                                     case '\n':
@@ -10699,6 +10704,35 @@ final class ParserImpl implements Parser {
             throw ctx.exception("Nested block comment not properly closed");
 
         return position;
+    }
+
+    private static final class PeekIgnoreComment {
+        boolean ignoreComment;
+        final String ignoreCommentStart;
+        final String ignoreCommentStop;
+        final boolean checkIgnoreComment;
+
+        PeekIgnoreComment(ParserContext ctx) {
+            this.ignoreComment = false;
+            this.ignoreCommentStart = ctx.settings().getParseIgnoreCommentStart();
+            this.ignoreCommentStop = ctx.settings().getParseIgnoreCommentStop();
+            this.checkIgnoreComment = !FALSE.equals(ctx.settings().isParseIgnoreComments());
+        }
+    }
+
+    private static final PeekIgnoreComment peekIgnoreComment(
+        ParserContext ctx,
+        PeekIgnoreComment param,
+        int i
+    ) {
+
+        if (param.checkIgnoreComment)
+            if (!param.ignoreComment)
+                param.ignoreComment = peek(ctx, param.ignoreCommentStart, i);
+            else
+                param.ignoreComment = !peek(ctx, param.ignoreCommentStop, i);
+
+        return param;
     }
 
     private static final char upper(char c) {

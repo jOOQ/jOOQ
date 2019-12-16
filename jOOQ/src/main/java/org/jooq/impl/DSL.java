@@ -14232,7 +14232,7 @@ public class DSL {
      * </tr>
      * </table>
      */
-    @Support({ MARIADB, MYSQL })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     public static Field<String> md5(String string) {
         return md5(Tools.field(string));
     }
@@ -14265,7 +14265,7 @@ public class DSL {
      * </tr>
      * </table>
      */
-    @Support({ MARIADB, MYSQL })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     public static Field<String> md5(Field<String> string) {
         return new MD5(nullSafe(string));
     }

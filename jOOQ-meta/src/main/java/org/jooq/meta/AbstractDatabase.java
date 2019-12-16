@@ -228,6 +228,7 @@ public abstract class AbstractDatabase implements Database {
         included = new ArrayList<>();
         excluded = new ArrayList<>();
         unusedForcedTypes = new HashSet<>();
+        orderProvider = new DefaultOrderProvider();
     }
 
     @Override

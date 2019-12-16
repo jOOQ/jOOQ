@@ -44,7 +44,7 @@ import org.jooq.Parameter;
  *
  * @author Lukas Eder
  */
-public interface ParameterDefinition extends TypedElementDefinition<RoutineDefinition> {
+public interface ParameterDefinition extends TypedElementDefinition<RoutineDefinition>, PositionedDefinition {
 
     /**
      * Whether the parameter has a default value.

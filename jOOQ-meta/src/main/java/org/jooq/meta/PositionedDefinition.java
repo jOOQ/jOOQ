@@ -35,19 +35,18 @@
  *
  *
  */
-
 package org.jooq.meta;
 
 /**
- * An interface defining a column of an embeddable type.
+ * A definition that is positioned at an index within its parent.
  *
  * @author Lukas Eder
  */
-public interface EmbeddableColumnDefinition extends TypedElementDefinition<EmbeddableDefinition>, PositionedDefinition {
+public interface PositionedDefinition extends Definition {
 
     /**
-     * The backing column definition.
+     * The object position in the parent.
      */
-    ColumnDefinition getColumn();
+    int getPosition();
 
 }

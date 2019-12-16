@@ -48,6 +48,7 @@ public class DefaultParameterDefinition
     extends AbstractTypedElementDefinition<RoutineDefinition>
     implements ParameterDefinition {
 
+    private final int     position;
     private final boolean isDefaulted;
     private final boolean isUnnamed;
 
@@ -70,8 +71,14 @@ public class DefaultParameterDefinition
     public DefaultParameterDefinition(RoutineDefinition routine, String name, int position, DataTypeDefinition type, boolean isDefaulted, boolean isUnnamed, String comment, String overload) {
         super(routine, name, position, type, comment, overload);
 
+        this.position = position;
         this.isDefaulted = isDefaulted;
         this.isUnnamed = isUnnamed;
+    }
+
+    @Override
+    public int getPosition() {
+        return position;
     }
 
     @Override

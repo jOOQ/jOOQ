@@ -42,7 +42,6 @@ package org.jooq.meta;
  *
  * @author Lukas Eder
  */
-public interface AttributeDefinition extends TypedElementDefinition<UDTDefinition> {
-
+public interface AttributeDefinition extends TypedElementDefinition<UDTDefinition>, PositionedDefinition {
 
 }

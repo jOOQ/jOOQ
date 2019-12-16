@@ -45,12 +45,7 @@ import org.jooq.SortOrder;
  *
  * @author Lukas Eder
  */
-public interface IndexColumnDefinition extends TypedElementDefinition<IndexDefinition> {
-
-    /**
-     * The column position in the index.
-     */
-    int getPosition();
+public interface IndexColumnDefinition extends TypedElementDefinition<IndexDefinition>, PositionedDefinition {
 
     /**
      * The <code>ASC</code> or <code>DESC</code> sort order

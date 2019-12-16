@@ -45,12 +45,7 @@ import java.util.List;
  *
  * @author Lukas Eder
  */
-public interface ColumnDefinition extends TypedElementDefinition<TableDefinition> {
-
-    /**
-     * The column position in the table.
-     */
-    int getPosition();
+public interface ColumnDefinition extends TypedElementDefinition<TableDefinition>, PositionedDefinition {
 
     /**
      * A definition for the primary key that this column is part of, or

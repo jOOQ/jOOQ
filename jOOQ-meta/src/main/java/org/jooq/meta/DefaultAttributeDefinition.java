@@ -47,7 +47,16 @@ package org.jooq.meta;
  */
 public class DefaultAttributeDefinition extends AbstractTypedElementDefinition<UDTDefinition> implements AttributeDefinition {
 
+    private final int position;
+
     public DefaultAttributeDefinition(UDTDefinition udt, String name, int position, DataTypeDefinition type) {
         super(udt, name, position, type, null);
+
+        this.position = position;
+    }
+
+    @Override
+    public int getPosition() {
+        return position;
     }
 }

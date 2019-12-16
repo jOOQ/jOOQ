@@ -706,6 +706,7 @@ final class Tools {
     };
 
     private static final char[]              TOKEN_SINGLE_LINE_COMMENT      = { '-', '-' };
+    private static final char[]              TOKEN_SINGLE_LINE_COMMENT_C    = { '/', '/' };
     private static final char[]              TOKEN_HASH                     = { '#' };
     private static final char[]              TOKEN_MULTI_LINE_COMMENT_OPEN  = { '/', '*' };
     private static final char[]              TOKEN_MULTI_LINE_COMMENT_CLOSE = { '*', '/' };
@@ -2234,11 +2235,12 @@ final class Tools {
         characterLoop:
         for (int i = 0; i < sqlChars.length; i++) {
 
-            // [#1797] Skip content inside of single-line comments, e.g.
+            // [#1797] [#9651] Skip content inside of single-line comments, e.g.
             // select 1 x -- what's this ?'?
             // from t_book -- what's that ?'?
             // where id = ?
             if (peek(sqlChars, i, TOKEN_SINGLE_LINE_COMMENT) ||
+                peek(sqlChars, i, TOKEN_SINGLE_LINE_COMMENT_C) ||
 
             // [#4182] MySQL also supports # as a comment character, and requires
             // -- to be followed by a whitespace, although the latter is also not

@@ -35,13 +35,38 @@
  *
  *
  */
-package org.jooq;
+package org.jooq.exception;
+
+import org.jooq.Migration;
 
 /**
- * The result of a {@link Migration}.
+ * An error occurred while running a {@link Migration}.
  *
  * @author Lukas Eder
  */
-public interface MigrationResult {
+public class DataMigrationException extends DataAccessException {
 
+    /**
+     * Generated UID
+     */
+    private static final long serialVersionUID = -6460945824599280420L;
+
+    /**
+     * Constructor for DataMigrationException.
+     *
+     * @param message the detail message
+     */
+    public DataMigrationException(String message) {
+        super(message);
+    }
+
+    /**
+     * Constructor for DataMigrationException.
+     *
+     * @param message the detail message
+     * @param cause the cause
+     */
+    public DataMigrationException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

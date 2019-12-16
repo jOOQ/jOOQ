@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.FALSE;
+import static org.jooq.impl.DSL.createSchemaIfNotExists;
+
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -48,9 +51,9 @@ import org.jooq.Constants;
 import org.jooq.ContextTransactionalCallable;
 import org.jooq.Field;
 import org.jooq.Identity;
+import org.jooq.Meta;
 import org.jooq.Migration;
 import org.jooq.MigrationListener;
-import org.jooq.MigrationResult;
 import org.jooq.Name;
 import org.jooq.Queries;
 import org.jooq.Query;
@@ -61,7 +64,8 @@ import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.Version;
 import org.jooq.exception.DataAccessException;
-import org.jooq.exception.DataDefinitionException;
+import org.jooq.exception.DataMigrationException;
+import org.jooq.exception.DataMigrationValidationException;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StopWatch;
 
@@ -87,17 +91,10 @@ final class MigrationImpl extends AbstractScope implements Migration {
 
     @Override
     public final Version from() {
-        if (from == null) {
+        if (from == null)
 
             // TODO: Use pessimistic locking so no one else can migrate in between
-            JooqMigrationsChangelogRecord currentRecord =
-            dsl().selectFrom(CHANGELOG)
-                 .orderBy(CHANGELOG.MIGRATED_AT.desc(), CHANGELOG.ID.desc())
-                 .limit(1)
-                 .fetchOne();
-
-            from = currentRecord == null ? to().root() : versions().get(currentRecord.getMigratedTo());
-        }
+            from = currentVersion();
 
         return from;
     }
@@ -126,16 +123,45 @@ final class MigrationImpl extends AbstractScope implements Migration {
         return versions;
     }
 
+    @Override
+    public final void validate() {
+        JooqMigrationsChangelogRecord currentRecord = currentChangelogRecord();
+
+        if (currentRecord != null) {
+            Version currentVersion = versions().get(currentRecord.getMigratedTo());
+
+            if (currentVersion == null)
+                throw new DataMigrationValidationException("Version trying to migrate to is not available from VersionProvider: " + currentRecord.getMigratedTo());
+        }
+
+        validateUnexpectedObjects();
+    }
+
+    private final void validateUnexpectedObjects() {
+        Version currentVersion = currentVersion();
+        Meta currentMeta = currentVersion.meta();
+
+        Meta existingMeta = dsl().meta();
+
+        for (Schema schema : existingMeta.getSchemas())
+            currentMeta = currentMeta.apply(createSchemaIfNotExists(schema));
+
+        System.out.println(existingMeta.migrateTo(currentMeta));
+    }
+
     private static final MigrationResult MIGRATION_RESULT = new MigrationResult() {};
 
     @Override
-    public final MigrationResult execute() throws DataDefinitionException {
+    public final MigrationResult execute() {
 
         // TODO: Transactions don't really make sense in most dialects. In some, they do
         //       e.g. PostgreSQL supports transactional DDL. Check if we're getting this right.
         return run(new ContextTransactionalCallable<MigrationResult>() {
             @Override
             public MigrationResult run() {
+                if (!FALSE.equals(dsl().settings().isMigrationAutoValidation()))
+                    validate();
+
                 DefaultMigrationContext ctx = new DefaultMigrationContext(configuration(), from(), to(), queries());
                 MigrationListener listener = new MigrationListeners(configuration);
 
@@ -147,6 +173,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
                         return MIGRATION_RESULT;
                     }
 
+                    // TODO: What to do if we're about to install things on a non-empty schema
                     // TODO: Implement preconditions
                     // TODO: Implement a listener with a variety of pro / oss features
                     // TODO: Implement additional out-of-the-box sanity checks
@@ -230,7 +257,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
     public final void init() {
 
         // TODO: What to do when initialising jOOQ-migrations on an existing database?
-        //       - Should there be init() commands that can be run explicitl by the user?
+        //       - Should there be init() commands that can be run explicitly by the user?
         //       - Will we reverse engineer the production Meta snapshot first?
         if (!existsChangelog())
             dsl().meta(CHANGELOG).ddl().executeBatch();
@@ -248,9 +275,31 @@ final class MigrationImpl extends AbstractScope implements Migration {
         return false;
     }
 
+    private final JooqMigrationsChangelogRecord currentChangelogRecord() {
+        return existsChangelog()
+            ? dsl().selectFrom(CHANGELOG)
+                   .orderBy(CHANGELOG.MIGRATED_AT.desc(), CHANGELOG.ID.desc())
+                   .limit(1)
+                   .fetchOne()
+            : null;
+    }
+
+    private final Version currentVersion() {
+        JooqMigrationsChangelogRecord currentRecord = currentChangelogRecord();
+        return currentRecord == null ? to().root() : versions().get(currentRecord.getMigratedTo());
+    }
+
     private final <T> T run(final ContextTransactionalCallable<T> runnable) {
-        init();
-        return dsl().transactionResult(runnable);
+        try {
+            init();
+            return dsl().transactionResult(runnable);
+        }
+        catch (DataMigrationException e) {
+            throw e;
+        }
+        catch (Exception e) {
+            throw new DataMigrationException("Exception during migration", e);
+        }
     }
 
     // -------------------------------------------------------------------------

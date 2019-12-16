@@ -44,6 +44,8 @@ import static org.jooq.impl.Cascade.CASCADE;
 import static org.jooq.impl.Cascade.RESTRICT;
 import static org.jooq.impl.ConstraintType.FOREIGN_KEY;
 import static org.jooq.impl.ConstraintType.PRIMARY_KEY;
+import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.schema;
 import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.intersect;
@@ -93,6 +95,7 @@ import org.jooq.TableOptions.TableType;
 import org.jooq.UniqueKey;
 import org.jooq.Update;
 import org.jooq.conf.InterpreterNameLookupCaseSensitivity;
+import org.jooq.conf.InterpreterSearchSchema;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataDefinitionException;
 import org.jooq.impl.ConstraintImpl.Action;
@@ -109,7 +112,6 @@ final class DDLInterpreter {
     private final Map<Name, MutableCatalog>                      catalogs               = new LinkedHashMap<>();
     private final MutableCatalog                                 defaultCatalog;
     private final MutableSchema                                  defaultSchema;
-    private MutableSchema                                        currentSchema;
 
     // Caches
     private final Map<Name, MutableCatalog.InterpretedCatalog>   interpretedCatalogs    = new HashMap<>();
@@ -127,7 +129,6 @@ final class DDLInterpreter {
         this.defaultCatalog = new MutableCatalog(NO_NAME);
         this.catalogs.put(defaultCatalog.name(), defaultCatalog);
         this.defaultSchema = new MutableSchema(NO_NAME, defaultCatalog);
-        this.currentSchema = defaultSchema;
     }
 
     final Meta meta() {
@@ -273,10 +274,6 @@ final class DDLInterpreter {
             mutableSchema.catalog.schemas.remove(mutableSchema);
         else
             throw schemaNotEmpty(schema);
-
-        // TODO: Is this needed?
-        if (mutableSchema.equals(currentSchema))
-            currentSchema = null;
     }
 
     private final void accept0(CreateTableImpl query) {
@@ -1061,10 +1058,8 @@ final class DDLInterpreter {
     }
 
     private final MutableSchema getSchema(Schema input, boolean create) {
-
-        // TODO It does not appear we should auto-create schema in the interpreter. Why is this being done?
         if (input == null)
-            return currentSchema;
+            return getInterpreterSearchPathSchema(create);
 
         MutableCatalog catalog = defaultCatalog;
         if (input.getCatalog() != null) {
@@ -1082,6 +1077,16 @@ final class DDLInterpreter {
             schema = new MutableSchema((UnqualifiedName) input.getUnqualifiedName(), catalog);
 
         return schema;
+    }
+
+    private final MutableSchema getInterpreterSearchPathSchema(boolean create) {
+        List<InterpreterSearchSchema> searchPath = configuration.settings().getInterpreterSearchPath();
+
+        if (searchPath.isEmpty())
+            return defaultSchema;
+
+        InterpreterSearchSchema schema = searchPath.get(0);
+        return getSchema(schema(name(schema.getCatalog(), schema.getSchema())), create);
     }
 
     private final MutableTable newTable(

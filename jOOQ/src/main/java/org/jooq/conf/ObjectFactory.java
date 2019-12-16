@@ -50,6 +50,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link InterpreterSearchSchema }
+     *
+     */
+    public InterpreterSearchSchema createInterpreterSearchSchema() {
+        return new InterpreterSearchSchema();
+    }
+
+    /**
      * Create an instance of {@link RenderMapping }
      *
      */

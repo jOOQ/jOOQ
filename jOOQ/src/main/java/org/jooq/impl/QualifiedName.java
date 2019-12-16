@@ -206,7 +206,7 @@ final class QualifiedName extends AbstractName {
 
     @Override
     public final Name unqualifiedName() {
-        if (qualifiedName.length <= 1)
+        if (qualifiedName.length == 0)
             return this;
         else
             return qualifiedName[qualifiedName.length - 1];

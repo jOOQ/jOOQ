@@ -35,53 +35,38 @@
  *
  *
  */
-package org.jooq;
+package org.jooq.exception;
 
-import org.jooq.exception.DataMigrationException;
-import org.jooq.exception.DataMigrationValidationException;
+import org.jooq.Migration;
 
 /**
- * An executable migration between two {@link Version} instances.
+ * An error occurred while running {@link Migration#validate()}.
  *
  * @author Lukas Eder
  */
-public interface Migration extends Scope {
+public class DataMigrationValidationException extends DataAccessException {
 
     /**
-     * The version that is being migrated from.
+     * Generated UID
      */
-    Version from();
+    private static final long serialVersionUID = -6460945824599280420L;
 
     /**
-     * The version that is being migrated to.
-     */
-    Version to();
-
-    /**
-     * The queries that are executed by the migration.
-     */
-    Queries queries();
-
-    /**
-     * Validate a migration.
+     * Constructor for DataMigrationValidationException.
      *
-     * @throws DataMigrationValidationException When something went wrong during
-     *             the validation of the migration.
+     * @param message the detail message
      */
-    void validate() throws DataMigrationValidationException;
+    public DataMigrationValidationException(String message) {
+        super(message);
+    }
 
     /**
-     * Apply the migration.
+     * Constructor for DataMigrationValidationException.
      *
-     * @throws DataMigrationException When something went wrong during the
-     *             application of the migration.
+     * @param message the detail message
+     * @param cause the cause
      */
-    MigrationResult execute() throws DataMigrationException;
-
-    /**
-     * The result of a {@link Migration} execution.
-     */
-    public interface MigrationResult {
-
+    public DataMigrationValidationException(String message, Throwable cause) {
+        super(message, cause);
     }
 }

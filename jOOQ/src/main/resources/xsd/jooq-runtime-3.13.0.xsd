@@ -399,6 +399,14 @@ jOOQ queries, for which no specific fetchSize value was specified.]]></jxb:javad
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The Locale to be used with any interpreter locale dependent logic, defaulting to {@link #getLocale()}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="interpreterSearchPath" type="jooq-runtime:InterpreterSearchSchemata" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#9677] The search path to be used for unqualified table lookups by the interpreter.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="migrationAutoValidation" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether a migration automatically runs a validation first.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="locale" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The Locale to be used with any locale dependent logic if there is not a more specific locale available. More specific locales include e.g. {@link #getRenderLocale()}, {@link #getParseLocale()}, or {@link #getInterpreterLocale()}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -452,6 +460,24 @@ jOOQ queries, for which no specific fetchSize value was specified.]]></jxb:javad
   </complexType>
 
   <complexType name="ParseSearchSchema">
+    <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[A schema that is on the search path.]]></jxb:javadoc></jxb:class></appinfo></annotation>
+    <all>
+      <element name="catalog" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The catalog qualifier of the schema, if applicable.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      <element name="schema" type="string" minOccurs="1" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The schema qualifier whose elements can be found from the search path.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+    </all>
+  </complexType>
+
+  <complexType name="InterpreterSearchSchemata">
+    <sequence>
+      <element name="schema" type="jooq-runtime:InterpreterSearchSchema" minOccurs="0" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+
+  <complexType name="InterpreterSearchSchema">
     <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[A schema that is on the search path.]]></jxb:javadoc></jxb:class></appinfo></annotation>
     <all>
       <element name="catalog" type="string" minOccurs="0" maxOccurs="1">

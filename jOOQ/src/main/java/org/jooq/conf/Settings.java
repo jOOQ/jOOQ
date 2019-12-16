@@ -196,6 +196,8 @@ public class Settings
     @XmlElement(type = String.class)
     @XmlJavaTypeAdapter(LocaleAdapter.class)
     protected Locale interpreterLocale;
+    @XmlElement(defaultValue = "true")
+    protected Boolean migrationAutoValidation = true;
     @XmlElement(type = String.class)
     @XmlJavaTypeAdapter(LocaleAdapter.class)
     protected Locale locale;
@@ -223,6 +225,9 @@ public class Settings
     protected String parseIgnoreCommentStart = "[jooq ignore start]";
     @XmlElement(defaultValue = "[jooq ignore stop]")
     protected String parseIgnoreCommentStop = "[jooq ignore stop]";
+    @XmlElementWrapper(name = "interpreterSearchPath")
+    @XmlElement(name = "schema")
+    protected List<InterpreterSearchSchema> interpreterSearchPath;
     @XmlElementWrapper(name = "parseSearchPath")
     @XmlElement(name = "schema")
     protected List<ParseSearchSchema> parseSearchPath;
@@ -1655,6 +1660,30 @@ public class Settings
     }
 
     /**
+     * Whether a migration automatically runs a validation first.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isMigrationAutoValidation() {
+        return migrationAutoValidation;
+    }
+
+    /**
+     * Sets the value of the migrationAutoValidation property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setMigrationAutoValidation(Boolean value) {
+        this.migrationAutoValidation = value;
+    }
+
+    /**
      * The Locale to be used with any locale dependent logic if there is not a more specific locale available. More specific locales include e.g. {@link #getRenderLocale()}, {@link #getParseLocale()}, or {@link #getInterpreterLocale()}.
      *
      */
@@ -1820,6 +1849,17 @@ public class Settings
      */
     public void setParseIgnoreCommentStop(String value) {
         this.parseIgnoreCommentStop = value;
+    }
+
+    public List<InterpreterSearchSchema> getInterpreterSearchPath() {
+        if (interpreterSearchPath == null) {
+            interpreterSearchPath = new ArrayList<InterpreterSearchSchema>();
+        }
+        return interpreterSearchPath;
+    }
+
+    public void setInterpreterSearchPath(List<InterpreterSearchSchema> interpreterSearchPath) {
+        this.interpreterSearchPath = interpreterSearchPath;
     }
 
     public List<ParseSearchSchema> getParseSearchPath() {
@@ -2367,6 +2407,11 @@ public class Settings
         return this;
     }
 
+    public Settings withMigrationAutoValidation(Boolean value) {
+        setMigrationAutoValidation(value);
+        return this;
+    }
+
     /**
      * The Locale to be used with any locale dependent logic if there is not a more specific locale available. More specific locales include e.g. {@link #getRenderLocale()}, {@link #getParseLocale()}, or {@link #getInterpreterLocale()}.
      *
@@ -2450,6 +2495,27 @@ public class Settings
      */
     public Settings withParseIgnoreCommentStop(String value) {
         setParseIgnoreCommentStop(value);
+        return this;
+    }
+
+    public Settings withInterpreterSearchPath(InterpreterSearchSchema... values) {
+        if (values!= null) {
+            for (InterpreterSearchSchema value: values) {
+                getInterpreterSearchPath().add(value);
+            }
+        }
+        return this;
+    }
+
+    public Settings withInterpreterSearchPath(Collection<InterpreterSearchSchema> values) {
+        if (values!= null) {
+            getInterpreterSearchPath().addAll(values);
+        }
+        return this;
+    }
+
+    public Settings withInterpreterSearchPath(List<InterpreterSearchSchema> interpreterSearchPath) {
+        setInterpreterSearchPath(interpreterSearchPath);
         return this;
     }
 
@@ -2542,6 +2608,7 @@ public class Settings
         builder.append("interpreterDialect", interpreterDialect);
         builder.append("interpreterNameLookupCaseSensitivity", interpreterNameLookupCaseSensitivity);
         builder.append("interpreterLocale", interpreterLocale);
+        builder.append("migrationAutoValidation", migrationAutoValidation);
         builder.append("locale", locale);
         builder.append("parseDialect", parseDialect);
         builder.append("parseLocale", parseLocale);
@@ -2552,6 +2619,7 @@ public class Settings
         builder.append("parseIgnoreComments", parseIgnoreComments);
         builder.append("parseIgnoreCommentStart", parseIgnoreCommentStart);
         builder.append("parseIgnoreCommentStop", parseIgnoreCommentStop);
+        builder.append("interpreterSearchPath", "schema", interpreterSearchPath);
         builder.append("parseSearchPath", "schema", parseSearchPath);
     }
 
@@ -3168,6 +3236,15 @@ public class Settings
                 return false;
             }
         }
+        if (migrationAutoValidation == null) {
+            if (other.migrationAutoValidation!= null) {
+                return false;
+            }
+        } else {
+            if (!migrationAutoValidation.equals(other.migrationAutoValidation)) {
+                return false;
+            }
+        }
         if (locale == null) {
             if (other.locale!= null) {
                 return false;
@@ -3258,6 +3335,15 @@ public class Settings
                 return false;
             }
         }
+        if (interpreterSearchPath == null) {
+            if (other.interpreterSearchPath!= null) {
+                return false;
+            }
+        } else {
+            if (!interpreterSearchPath.equals(other.interpreterSearchPath)) {
+                return false;
+            }
+        }
         if (parseSearchPath == null) {
             if (other.parseSearchPath!= null) {
                 return false;
@@ -3340,6 +3426,7 @@ public class Settings
         result = ((prime*result)+((interpreterDialect == null)? 0 :interpreterDialect.hashCode()));
         result = ((prime*result)+((interpreterNameLookupCaseSensitivity == null)? 0 :interpreterNameLookupCaseSensitivity.hashCode()));
         result = ((prime*result)+((interpreterLocale == null)? 0 :interpreterLocale.hashCode()));
+        result = ((prime*result)+((migrationAutoValidation == null)? 0 :migrationAutoValidation.hashCode()));
         result = ((prime*result)+((locale == null)? 0 :locale.hashCode()));
         result = ((prime*result)+((parseDialect == null)? 0 :parseDialect.hashCode()));
         result = ((prime*result)+((parseLocale == null)? 0 :parseLocale.hashCode()));
@@ -3350,6 +3437,7 @@ public class Settings
         result = ((prime*result)+((parseIgnoreComments == null)? 0 :parseIgnoreComments.hashCode()));
         result = ((prime*result)+((parseIgnoreCommentStart == null)? 0 :parseIgnoreCommentStart.hashCode()));
         result = ((prime*result)+((parseIgnoreCommentStop == null)? 0 :parseIgnoreCommentStop.hashCode()));
+        result = ((prime*result)+((interpreterSearchPath == null)? 0 :interpreterSearchPath.hashCode()));
         result = ((prime*result)+((parseSearchPath == null)? 0 :parseSearchPath.hashCode()));
         return result;
     }

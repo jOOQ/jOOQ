@@ -66,34 +66,31 @@ public interface Version {
      */
     Version root();
 
+    /**
+     * Commit a new {@link Meta} representation to the version graph.
+     * <p>
+     * This calculates a migration path using {@link Meta#migrateTo(Meta)}.
+     */
+    Version commit(String id, Meta meta);
 
+    /**
+     * Commit a new {@link Meta} representation to the version graph.
+     *
+     * @see #commit(String, Meta)
+     */
+    Version commit(String id, String... meta);
 
+    /**
+     * Commit a new {@link Meta} representation to the version graph.
+     *
+     * @see #commit(String, Meta)
+     */
+    Version commit(String id, Source... meta);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /**
+     * Merge versions.
+     */
+    Version merge(String id, Version with);
 
     /**
      * Apply a migration to produce a new version.

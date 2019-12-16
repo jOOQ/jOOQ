@@ -54,7 +54,6 @@ import org.jooq.DDLExportConfiguration;
 import org.jooq.Meta;
 import org.jooq.Name;
 import org.jooq.Named;
-// ...
 import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.Schema;
@@ -317,21 +316,15 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
         return dsl().meta(ddl().concat(migration).queries());
     }
 
+    @Override
+    public final Queries migrateTo(Meta other) {
+        return migrateTo(other, new org.jooq.MigrationConfiguration());
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    @Override
+    public final Queries migrateTo(Meta other, org.jooq.MigrationConfiguration c) {
+        return new Diff(configuration(), c, this, other).queries();
+    }
 
     // [#9396] TODO Fix this. Subclasses should not need to override this to get
     //         correct results

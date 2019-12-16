@@ -133,15 +133,11 @@ final class VersionImpl implements Version {
     public final Queries migrateTo(Version version) {
         VersionImpl subgraph = ((VersionImpl) version).subgraphTo(this);
 
-
-
-
-
-
-
-
-
-
+        // TODO: When there's no common ancestor, we're switching branches.
+        //       We should make this configurable, and turn it off by default.
+        //       This is hardly what we want in production.
+        if (subgraph == null)
+            return meta().migrateTo(version.meta());
 
         return migrateTo(subgraph, ctx.queries());
     }
@@ -172,113 +168,104 @@ final class VersionImpl implements Version {
     }
 
     private final Queries migrateTo(VersionImpl target, Queries result) {
-
-
-
-
-
+        if (!target.forceApply())
+            return meta().migrateTo(target.meta());
 
         for (Parent parent : target.parents) {
             result = migrateTo(parent.version, result);
 
-
-
-
-
-
+            if (!forceApply(parent.queries))
+                result = result.concat(parent.version.meta().migrateTo(target.meta()));
+            else
                 result = result.concat(parent.queries);
         }
 
         return result;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    private final boolean forceApply() {
+        for (Parent parent : parents)
+            if (forceApply(parent.queries))
+                return true;
+            else if (parent.version.forceApply())
+                return true;
+
+        return false;
+    }
+
+    private static final boolean forceApply(Queries queries) {
+        if (queries != null)
+            for (Query query : queries.queries())
+                if (!(query instanceof DDLQuery))
+                    return true;
+
+        return false;
+    }
+
+    @Override
+    public final Version commit(String newId, String... newMeta) {
+        return commit(newId, ctx.meta(newMeta));
+    }
+
+    @Override
+    public final Version commit(String newId, Source... newMeta) {
+        return commit(newId, ctx.meta(newMeta));
+    }
+
+    @Override
+    public final Version commit(String newId, Meta newMeta) {
+        return new VersionImpl(ctx, newId, newMeta, new Version[] { this });
+    }
+
+    private static final Version commonAncestor(Version v1, Version v2) {
+        if (v1.id().equals(v2.id()))
+            return v1;
+
+        // TODO: Find a better solution than the brute force one
+        // See e.g. https://en.wikipedia.org/wiki/Lowest_common_ancestor
+
+        Map<Version, Integer> a1 = ancestors(v1, new HashMap<>(), 1);
+        Map<Version, Integer> a2 = ancestors(v2, new HashMap<>(), 1);
+
+        Version version = null;
+        Integer distance = null;
+
+        for (Entry<Version, Integer> entry : a1.entrySet()) {
+            if (a2.containsKey(entry.getKey())) {
+
+                // TODO: What if there are several conflicting paths?
+                if (distance == null || distance > entry.getValue()) {
+                    version = entry.getKey();
+                    distance = entry.getValue();
+                }
+            }
+        }
+
+        if (version == null)
+            throw new DataDefinitionException("Versions " + v1.id() + " and " + v2.id() + " do not have a common ancestor");
+
+        return version;
+    }
+
+    private static Map<Version, Integer> ancestors(Version v, Map<Version, Integer> result, int distance) {
+        VersionImpl current = (VersionImpl) v;
+        Integer previous = result.get(current);
+
+        if (previous == null || previous > distance) {
+            result.put(current, distance);
+
+            for (Parent parent : current.parents)
+                ancestors(parent.version, result, distance + 1);
+        }
+
+        return result;
+    }
+
+    @Override
+    public final Version merge(String newId, Version with) {
+        Meta m = commonAncestor(this, with).meta();
+        return new VersionImpl(ctx, newId, m.apply(m.migrateTo(meta()).concat(m.migrateTo(with.meta()))), new Version[] { this, with });
+    }
 
     @Override
     public int hashCode() {

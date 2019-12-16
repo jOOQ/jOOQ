@@ -39,6 +39,8 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.FALSE;
 import static org.jooq.impl.DSL.createSchemaIfNotExists;
+import static org.jooq.impl.DSL.dropSchemaIfExists;
+import static org.jooq.impl.DSL.dropTableIfExists;
 
 import java.sql.Timestamp;
 import java.util.Arrays;
@@ -141,12 +143,26 @@ final class MigrationImpl extends AbstractScope implements Migration {
         Version currentVersion = currentVersion();
         Meta currentMeta = currentVersion.meta();
 
+        List<Schema> expectedSchemas = to().meta().getSchemas();
+
+        // TODO Add a settings governing what schemas we're including in the migration
+        //      The current implementation will default to migrating all schemas that are
+        //      touched by the to() version
         Meta existingMeta = dsl().meta();
+        for (Schema schema : existingMeta.getSchemas()) {
 
-        for (Schema schema : existingMeta.getSchemas())
-            currentMeta = currentMeta.apply(createSchemaIfNotExists(schema));
+            // TODO Why is this qualification necessary?
+            existingMeta = existingMeta.apply(dropTableIfExists(schema.getQualifiedName().append(CHANGELOG.getUnqualifiedName())).cascade());
 
-        System.out.println(existingMeta.migrateTo(currentMeta));
+            if (!expectedSchemas.contains(schema))
+                existingMeta = existingMeta.apply(dropSchemaIfExists(schema).cascade());
+            else
+                currentMeta = currentMeta.apply(createSchemaIfNotExists(schema));
+        }
+
+        Queries diff = currentMeta.migrateTo(existingMeta);
+        if (diff.queries().length > 0)
+            throw new DataMigrationValidationException("Non-empty difference between actual schema and migration from schema: " + diff);
     }
 
     private static final MigrationResult MIGRATION_RESULT = new MigrationResult() {};
@@ -215,6 +231,11 @@ final class MigrationImpl extends AbstractScope implements Migration {
 
                         // TODO: Make batching an option: queries().executeBatch();
                         for (Query query : queries().queries()) {
+
+                            // TODO: Properly configure the schema creation
+                            if (query.toString().startsWith("create schema") || query.toString().startsWith("drop schema"))
+                                continue;
+
                             ctx.query(query);
                             listener.queryStart(ctx);
                             query.execute();
@@ -300,6 +321,17 @@ final class MigrationImpl extends AbstractScope implements Migration {
         catch (Exception e) {
             throw new DataMigrationException("Exception during migration", e);
         }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("-- Migration\n--   From: ").append(from().id()).append("\n")
+          .append("--   To  : ").append(to().id()).append("\n")
+          .append(queries());
+
+        return sb.toString();
     }
 
     // -------------------------------------------------------------------------

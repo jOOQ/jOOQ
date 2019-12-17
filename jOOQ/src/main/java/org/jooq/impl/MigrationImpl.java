@@ -38,11 +38,18 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 import static org.jooq.impl.DSL.createSchemaIfNotExists;
 import static org.jooq.impl.DSL.dropSchemaIfExists;
 import static org.jooq.impl.DSL.dropTableIfExists;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.schema;
+import static org.jooq.impl.MigrationImpl.Status.FAILURE;
+import static org.jooq.impl.MigrationImpl.Status.MIGRATING;
+import static org.jooq.impl.MigrationImpl.Status.REVERTING;
+import static org.jooq.impl.MigrationImpl.Status.STARTING;
+import static org.jooq.impl.MigrationImpl.Status.SUCCESS;
 
 import java.sql.Timestamp;
 import java.util.Arrays;
@@ -133,6 +140,10 @@ final class MigrationImpl extends AbstractScope implements Migration {
 
     @Override
     public final void validate() {
+        validate0(migrationContext());
+    }
+
+    private final void validate0(DefaultMigrationContext ctx) {
         JooqMigrationsChangelogRecord currentRecord = currentChangelogRecord();
 
         if (currentRecord != null) {
@@ -144,40 +155,12 @@ final class MigrationImpl extends AbstractScope implements Migration {
 
         validateVersionProvider(from());
         validateVersionProvider(to());
-        validateUnexpectedObjects();
+        revertUntracked(ctx, null);
     }
 
     private final void validateVersionProvider(Version version) {
         if (!versions().containsKey(version.id()))
             throw new DataMigrationValidationException("Version is not available from VersionProvider: " + version.id());
-    }
-
-    private final void validateUnexpectedObjects() {
-        Version currentVersion = currentVersion();
-        Meta currentMeta = currentVersion.meta();
-
-        Set<Schema> expectedSchemas = new HashSet<>();
-        expectedSchemas.addAll(lookup(from().meta().getSchemas()));
-        expectedSchemas.addAll(lookup(to().meta().getSchemas()));
-
-        // TODO Add a settings governing what schemas we're including in the migration
-        //      The current implementation will default to migrating all schemas that are
-        //      touched by the from() or to() version
-        Meta existingMeta = dsl().meta();
-        for (Schema schema : existingMeta.getSchemas()) {
-
-            // TODO Why is this qualification necessary?
-            existingMeta = existingMeta.apply(dropTableIfExists(schema.getQualifiedName().append(CHANGELOG.getUnqualifiedName())).cascade());
-
-            if (!expectedSchemas.contains(schema))
-                existingMeta = existingMeta.apply(dropSchemaIfExists(schema).cascade());
-            else
-                currentMeta = currentMeta.apply(createSchemaIfNotExists(schema));
-        }
-
-        Queries diff = currentMeta.migrateTo(existingMeta);
-        if (diff.queries().length > 0)
-            throw new DataMigrationValidationException("Non-empty difference between actual schema and migration from schema: " + diff);
     }
 
     private final Collection<Schema> lookup(List<Schema> schemas) {
@@ -200,6 +183,44 @@ final class MigrationImpl extends AbstractScope implements Migration {
         return result;
     }
 
+    private final Queries revertUntrackedQueries() {
+        Version currentVersion = currentVersion();
+        Meta currentMeta = currentVersion.meta();
+
+        Set<Schema> expectedSchemas = new HashSet<>();
+        expectedSchemas.addAll(lookup(from().meta().getSchemas()));
+        expectedSchemas.addAll(lookup(to().meta().getSchemas()));
+
+        // TODO Add a settings governing what schemas we're including in the migration
+        //      The current implementation will default to migrating all schemas that are
+        //      touched by the from() or to() version
+        Meta existingMeta = dsl().meta();
+        for (Schema schema : existingMeta.getSchemas()) {
+
+            // TODO Why is this qualification necessary?
+            existingMeta = existingMeta.apply(dropTableIfExists(schema.getQualifiedName().append(CHANGELOG.getUnqualifiedName())).cascade());
+
+            if (!expectedSchemas.contains(schema))
+                existingMeta = existingMeta.apply(dropSchemaIfExists(schema).cascade());
+            else
+                currentMeta = currentMeta.apply(createSchemaIfNotExists(schema));
+        }
+
+        return existingMeta.migrateTo(currentMeta);
+    }
+
+    private final void revertUntracked(DefaultMigrationContext ctx, MigrationListener listener) {
+        if (ctx.revertUntrackedQueries.queries().length > 0)
+            if (!TRUE.equals(dsl().settings().isMigrationRevertUntracked()))
+                throw new DataMigrationValidationException("Non-empty difference between actual schema and migration from schema: " + ctx.revertUntrackedQueries);
+            else if (listener != null)
+                execute(ctx, listener, ctx.revertUntrackedQueries);
+    }
+
+    private final DefaultMigrationContext migrationContext() {
+        return new DefaultMigrationContext(configuration(), from(), to(), queries(), revertUntrackedQueries());
+    }
+
     private static final MigrationResult MIGRATION_RESULT = new MigrationResult() {};
 
     @Override
@@ -210,11 +231,11 @@ final class MigrationImpl extends AbstractScope implements Migration {
         return run(new ContextTransactionalCallable<MigrationResult>() {
             @Override
             public MigrationResult run() {
-                if (!FALSE.equals(dsl().settings().isMigrationAutoValidation()))
-                    validate();
-
-                DefaultMigrationContext ctx = new DefaultMigrationContext(configuration(), from(), to(), queries());
+                DefaultMigrationContext ctx = migrationContext();
                 MigrationListener listener = new MigrationListeners(configuration);
+
+                if (!FALSE.equals(dsl().settings().isMigrationAutoValidation()))
+                    validate0(ctx);
 
                 try {
                     listener.migrationStart(ctx);
@@ -245,50 +266,20 @@ final class MigrationImpl extends AbstractScope implements Migration {
                         for (Query query : queries())
                             log.debug("jOOQ Migrations", dsl().renderInlined(query));
 
-                    JooqMigrationsChangelogRecord newRecord = dsl().newRecord(CHANGELOG);
-
-                    newRecord
-                        .setJooqVersion(Constants.VERSION)
-                        .setMigratedAt(new Timestamp(System.currentTimeMillis()))
-                        .setMigratedFrom(from().id())
-                        .setMigratedTo(to().id())
-                        .setMigrationTime(0L)
-                        .setSql(queries().toString())
-                        .setSqlCount(queries().queries().length)
-                        .setStatus("PENDING")
-                        .insert();
+                    JooqMigrationsChangelogRecord record = createRecord(STARTING);
 
                     try {
-
-                        // TODO: Can we access the individual Queries from Version, if applicable?
-                        // TODO: Set the ctx.queriesFrom(), ctx.queriesTo(), and ctx.queries() values
-                        listener.queriesStart(ctx);
-
-                        // TODO: Make batching an option: queries().executeBatch();
-                        for (Query query : queries().queries()) {
-                            ctx.query(query);
-                            listener.queryStart(ctx);
-                            query.execute();
-                            listener.queryEnd(ctx);
-                            ctx.query(null);
-                        }
-
-                        listener.queriesEnd(ctx);
-
-                        newRecord
-                            .setMigrationTime(watch.split() / 1000000L)
-                            .setStatus("SUCCESS")
-                            .update();
+                        log(watch, record, REVERTING);
+                        revertUntracked(ctx, listener);
+                        log(watch, record, MIGRATING);
+                        execute(ctx, listener, queries());
+                        log(watch, record, SUCCESS);
                     }
                     catch (DataAccessException e) {
 
                         // TODO: Make sure this is committed, given that we're re-throwing the exception.
                         // TODO: How can we recover from failure?
-                        newRecord
-                            .setMigrationTime(watch.split() / 1000000L)
-                            .setStatus("FAILURE")
-                            .update();
-
+                        log(watch, record, FAILURE);
                         throw e;
                     }
 
@@ -298,7 +289,47 @@ final class MigrationImpl extends AbstractScope implements Migration {
                     listener.migrationEnd(ctx);
                 }
             }
+
+            private final JooqMigrationsChangelogRecord createRecord(Status status) {
+                JooqMigrationsChangelogRecord record = dsl().newRecord(CHANGELOG);
+
+                record
+                    .setJooqVersion(Constants.VERSION)
+                    .setMigratedAt(new Timestamp(System.currentTimeMillis()))
+                    .setMigratedFrom(from().id())
+                    .setMigratedTo(to().id())
+                    .setMigrationTime(0L)
+                    .setSql(queries().toString())
+                    .setSqlCount(queries().queries().length)
+                    .setStatus(status)
+                    .insert();
+
+                return record;
+            }
+
+            private final void log(StopWatch watch, JooqMigrationsChangelogRecord record, Status status) {
+                record.setMigrationTime(watch.split() / 1000000L)
+                      .setStatus(status)
+                      .update();
+            }
         });
+    }
+
+    private final void execute(DefaultMigrationContext ctx, MigrationListener listener, Queries q) {
+        // TODO: Can we access the individual Queries from Version, if applicable?
+        // TODO: Set the ctx.queriesFrom(), ctx.queriesTo(), and ctx.queries() values
+        listener.queriesStart(ctx);
+
+        // TODO: Make batching an option: queries().executeBatch();
+        for (Query query : q.queries()) {
+            ctx.query(query);
+            listener.queryStart(ctx);
+            query.execute();
+            listener.queryEnd(ctx);
+            ctx.query(null);
+        }
+
+        listener.queriesEnd(ctx);
     }
 
     /**
@@ -329,6 +360,9 @@ final class MigrationImpl extends AbstractScope implements Migration {
     private final JooqMigrationsChangelogRecord currentChangelogRecord() {
         return existsChangelog()
             ? dsl().selectFrom(CHANGELOG)
+
+                   // TODO: How to recover from failure?
+                   .where(CHANGELOG.STATUS.eq(inline(SUCCESS)))
                    .orderBy(CHANGELOG.MIGRATED_AT.desc(), CHANGELOG.ID.desc())
                    .limit(1)
                    .fetchOne()
@@ -337,7 +371,23 @@ final class MigrationImpl extends AbstractScope implements Migration {
 
     private final Version currentVersion() {
         JooqMigrationsChangelogRecord currentRecord = currentChangelogRecord();
-        return currentRecord == null ? to().root() : versions().get(currentRecord.getMigratedTo());
+
+        if (currentRecord == null) {
+            Version result = to().root();
+
+            if (result == null)
+                throw new DataMigrationValidationException("VersionProvider did not provide a root version for " + to().id());
+
+            return result;
+        }
+        else {
+            Version result = versions().get(currentRecord.getMigratedTo());
+
+            if (result == null)
+                throw new DataMigrationValidationException("VersionProvider did not provide a version for " + currentRecord.getMigratedTo());
+
+            return result;
+        }
     }
 
     private final <T> T run(final ContextTransactionalCallable<T> runnable) {
@@ -362,6 +412,14 @@ final class MigrationImpl extends AbstractScope implements Migration {
           .append(queries());
 
         return sb.toString();
+    }
+
+    enum Status {
+        STARTING,
+        REVERTING,
+        MIGRATING,
+        SUCCESS,
+        FAILURE
     }
 
     // -------------------------------------------------------------------------
@@ -438,7 +496,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
         /**
          * The column <code>JOOQ_MIGRATIONS_CHANGELOG.JOOQ_VERSION</code>. The jOOQ version used to migrate to this database version.
          */
-        public final TableField<JooqMigrationsChangelogRecord, String> STATUS = createField(DSL.name("STATUS"), org.jooq.impl.SQLDataType.VARCHAR(10).nullable(false), this, "The database version installation status.");
+        public final TableField<JooqMigrationsChangelogRecord, Status> STATUS = createField(DSL.name("STATUS"), org.jooq.impl.SQLDataType.VARCHAR(10).nullable(false).asConvertedDataType(new EnumConverter(String.class, Status.class)), this, "The database version installation status.");
 
         /**
          * Create a <code>JOOQ_MIGRATIONS_CHANGELOG</code> table reference
@@ -623,7 +681,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
         /**
          * Setter for <code>JOOQ_MIGRATIONS_CHANGELOG.STATUS</code>. The database version installation status.
          */
-        public JooqMigrationsChangelogRecord setStatus(String value) {
+        public JooqMigrationsChangelogRecord setStatus(Status value) {
             set(8, value);
             return this;
         }
@@ -631,8 +689,8 @@ final class MigrationImpl extends AbstractScope implements Migration {
         /**
          * Getter for <code>JOOQ_MIGRATIONS_CHANGELOG.STATUS</code>. The database version installation status.
          */
-        public String getStatus() {
-            return (String) get(8);
+        public Status getStatus() {
+            return (Status) get(8);
         }
 
         // -------------------------------------------------------------------------

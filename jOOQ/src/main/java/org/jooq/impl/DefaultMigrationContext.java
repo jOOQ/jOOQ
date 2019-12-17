@@ -50,18 +50,20 @@ import org.jooq.Version;
  */
 final class DefaultMigrationContext extends AbstractScope implements MigrationContext {
 
-    private final Version migrationFrom;
-    private final Version migrationTo;
-    private final Queries migrationQueries;
+    final Version migrationFrom;
+    final Version migrationTo;
+    final Queries migrationQueries;
+    final Queries revertUntrackedQueries;
 
-    private Query         query;
+    Query         query;
 
-    DefaultMigrationContext(Configuration configuration, Version migrationFrom, Version migrationTo, Queries migrationQueries) {
+    DefaultMigrationContext(Configuration configuration, Version migrationFrom, Version migrationTo, Queries migrationQueries, Queries revertUntrackedQueries) {
         super(configuration);
 
         this.migrationFrom = migrationFrom;
         this.migrationTo = migrationTo;
         this.migrationQueries = migrationQueries;
+        this.revertUntrackedQueries = revertUntrackedQueries;
     }
 
     @Override

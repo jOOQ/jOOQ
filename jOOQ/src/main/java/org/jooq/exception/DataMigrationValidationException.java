@@ -44,7 +44,7 @@ import org.jooq.Migration;
  *
  * @author Lukas Eder
  */
-public class DataMigrationValidationException extends DataAccessException {
+public class DataMigrationValidationException extends DataMigrationException {
 
     /**
      * Generated UID

@@ -198,6 +198,8 @@ public class Settings
     protected Locale interpreterLocale;
     @XmlElement(defaultValue = "false")
     protected Boolean migrationAllowsUndo = false;
+    @XmlElement(defaultValue = "false")
+    protected Boolean migrationRevertUntracked = false;
     @XmlElement(defaultValue = "true")
     protected Boolean migrationAutoValidation = true;
     @XmlElement(type = String.class)
@@ -1686,6 +1688,30 @@ public class Settings
     }
 
     /**
+     * Whether migrations revert any untracked changes in the schemas that are being migrated.<p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly revert any elements created in a development environment. This feature is available only in commercial distributions.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isMigrationRevertUntracked() {
+        return migrationRevertUntracked;
+    }
+
+    /**
+     * Sets the value of the migrationRevertUntracked property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setMigrationRevertUntracked(Boolean value) {
+        this.migrationRevertUntracked = value;
+    }
+
+    /**
      * Whether a migration automatically runs a validation first.
      *
      * @return
@@ -2438,6 +2464,11 @@ public class Settings
         return this;
     }
 
+    public Settings withMigrationRevertUntracked(Boolean value) {
+        setMigrationRevertUntracked(value);
+        return this;
+    }
+
     public Settings withMigrationAutoValidation(Boolean value) {
         setMigrationAutoValidation(value);
         return this;
@@ -2640,6 +2671,7 @@ public class Settings
         builder.append("interpreterNameLookupCaseSensitivity", interpreterNameLookupCaseSensitivity);
         builder.append("interpreterLocale", interpreterLocale);
         builder.append("migrationAllowsUndo", migrationAllowsUndo);
+        builder.append("migrationRevertUntracked", migrationRevertUntracked);
         builder.append("migrationAutoValidation", migrationAutoValidation);
         builder.append("locale", locale);
         builder.append("parseDialect", parseDialect);
@@ -3277,6 +3309,15 @@ public class Settings
                 return false;
             }
         }
+        if (migrationRevertUntracked == null) {
+            if (other.migrationRevertUntracked!= null) {
+                return false;
+            }
+        } else {
+            if (!migrationRevertUntracked.equals(other.migrationRevertUntracked)) {
+                return false;
+            }
+        }
         if (migrationAutoValidation == null) {
             if (other.migrationAutoValidation!= null) {
                 return false;
@@ -3468,6 +3509,7 @@ public class Settings
         result = ((prime*result)+((interpreterNameLookupCaseSensitivity == null)? 0 :interpreterNameLookupCaseSensitivity.hashCode()));
         result = ((prime*result)+((interpreterLocale == null)? 0 :interpreterLocale.hashCode()));
         result = ((prime*result)+((migrationAllowsUndo == null)? 0 :migrationAllowsUndo.hashCode()));
+        result = ((prime*result)+((migrationRevertUntracked == null)? 0 :migrationRevertUntracked.hashCode()));
         result = ((prime*result)+((migrationAutoValidation == null)? 0 :migrationAutoValidation.hashCode()));
         result = ((prime*result)+((locale == null)? 0 :locale.hashCode()));
         result = ((prime*result)+((parseDialect == null)? 0 :parseDialect.hashCode()));

@@ -144,7 +144,6 @@ final class MigrationImpl extends AbstractScope implements Migration {
 
         validateVersionProvider(from());
         validateVersionProvider(to());
-
         validateUnexpectedObjects();
     }
 

@@ -196,6 +196,8 @@ public class Settings
     @XmlElement(type = String.class)
     @XmlJavaTypeAdapter(LocaleAdapter.class)
     protected Locale interpreterLocale;
+    @XmlElement(defaultValue = "false")
+    protected Boolean migrationAllowsUndo = false;
     @XmlElement(defaultValue = "true")
     protected Boolean migrationAutoValidation = true;
     @XmlElement(type = String.class)
@@ -1660,6 +1662,30 @@ public class Settings
     }
 
     /**
+     * Whether migrations are allowed to be executed in inverse order.<p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly switch between branches in a development environment. This feature is available only in commercial distributions.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isMigrationAllowsUndo() {
+        return migrationAllowsUndo;
+    }
+
+    /**
+     * Sets the value of the migrationAllowsUndo property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setMigrationAllowsUndo(Boolean value) {
+        this.migrationAllowsUndo = value;
+    }
+
+    /**
      * Whether a migration automatically runs a validation first.
      *
      * @return
@@ -2407,6 +2433,11 @@ public class Settings
         return this;
     }
 
+    public Settings withMigrationAllowsUndo(Boolean value) {
+        setMigrationAllowsUndo(value);
+        return this;
+    }
+
     public Settings withMigrationAutoValidation(Boolean value) {
         setMigrationAutoValidation(value);
         return this;
@@ -2608,6 +2639,7 @@ public class Settings
         builder.append("interpreterDialect", interpreterDialect);
         builder.append("interpreterNameLookupCaseSensitivity", interpreterNameLookupCaseSensitivity);
         builder.append("interpreterLocale", interpreterLocale);
+        builder.append("migrationAllowsUndo", migrationAllowsUndo);
         builder.append("migrationAutoValidation", migrationAutoValidation);
         builder.append("locale", locale);
         builder.append("parseDialect", parseDialect);
@@ -3236,6 +3268,15 @@ public class Settings
                 return false;
             }
         }
+        if (migrationAllowsUndo == null) {
+            if (other.migrationAllowsUndo!= null) {
+                return false;
+            }
+        } else {
+            if (!migrationAllowsUndo.equals(other.migrationAllowsUndo)) {
+                return false;
+            }
+        }
         if (migrationAutoValidation == null) {
             if (other.migrationAutoValidation!= null) {
                 return false;
@@ -3426,6 +3467,7 @@ public class Settings
         result = ((prime*result)+((interpreterDialect == null)? 0 :interpreterDialect.hashCode()));
         result = ((prime*result)+((interpreterNameLookupCaseSensitivity == null)? 0 :interpreterNameLookupCaseSensitivity.hashCode()));
         result = ((prime*result)+((interpreterLocale == null)? 0 :interpreterLocale.hashCode()));
+        result = ((prime*result)+((migrationAllowsUndo == null)? 0 :migrationAllowsUndo.hashCode()));
         result = ((prime*result)+((migrationAutoValidation == null)? 0 :migrationAutoValidation.hashCode()));
         result = ((prime*result)+((locale == null)? 0 :locale.hashCode()));
         result = ((prime*result)+((parseDialect == null)? 0 :parseDialect.hashCode()));

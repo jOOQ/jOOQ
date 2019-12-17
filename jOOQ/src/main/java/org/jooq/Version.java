@@ -39,6 +39,8 @@ package org.jooq;
 
 import java.util.Collection;
 
+import org.jooq.conf.Settings;
+
 /**
  * A version ID attached to a {@link Meta} description of a database.
  *
@@ -58,6 +60,17 @@ public interface Version {
 
     /**
      * Produce a migration to a new version.
+     * <p>
+     * In jOOQ's commercial distributions, this method allows for migrating
+     * between versions in any direction, regardless of which version was
+     * "first" in a version graph, or if the two versions are on different
+     * branches. The resulting queries are potentially destructive in such a
+     * case. Such destructive queries ("UNDO" migrations) are prevented by
+     * default, and can be turned on using
+     * {@link Settings#isMigrationAllowsUndo()}.
+     * <p>
+     * In jOOQ's Open Source Edition, this method only allows for migrating
+     * "forward".
      */
     Queries migrateTo(Version version);
 

@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.TRUE;
 import static org.jooq.impl.DSL.createSchema;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.schema;
@@ -154,11 +155,13 @@ final class VersionImpl implements Version {
 
         VersionImpl subgraph = ((VersionImpl) version).subgraphTo(this);
 
-        // TODO: When there's no common ancestor, we're switching branches.
-        //       We should make this configurable, and turn it off by default.
-        //       This is hardly what we want in production.
         if (subgraph == null)
-            return meta().migrateTo(version.meta());
+
+
+
+
+
+                throw new DataDefinitionException("No forward path available between versions " + id() + " and " + version.id() + ". Use Settings.migrationAllowsUndo to enable this feature.");
 
         return migrateTo(subgraph, ctx.queries());
     }

@@ -37,6 +37,10 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.DSL.createSchema;
+import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.schema;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -53,6 +57,7 @@ import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.Source;
 import org.jooq.Version;
+import org.jooq.conf.InterpreterSearchSchema;
 import org.jooq.exception.DataDefinitionException;
 
 /**
@@ -68,8 +73,21 @@ final class VersionImpl implements Version {
     private VersionImpl(DSLContext ctx, String id, Meta meta, List<Parent> parents) {
         this.ctx = ctx;
         this.id = id;
-        this.meta = meta != null ? meta : ctx.meta("");
+        this.meta = meta != null ? meta : init(ctx);
         this.parents = parents;
+    }
+
+    private static final Meta init(DSLContext ctx) {
+        Meta result = ctx.meta("");
+
+        // TODO: Instead of reusing interpreter search path, we should have some dedicated
+        //       configuration for this.
+        // TODO: Should this be moved in DSLContext.meta()?
+        List<InterpreterSearchSchema> searchPath = ctx.settings().getInterpreterSearchPath();
+        for (InterpreterSearchSchema schema : searchPath)
+            result = result.apply(createSchema(schema(name(schema.getCatalog(), schema.getSchema()))));
+
+        return result;
     }
 
     VersionImpl(DSLContext ctx, String id, Meta meta, Version parent, Queries queries) {
@@ -131,6 +149,9 @@ final class VersionImpl implements Version {
 
     @Override
     public final Queries migrateTo(Version version) {
+        if (equals(version))
+            return ctx.queries();
+
         VersionImpl subgraph = ((VersionImpl) version).subgraphTo(this);
 
         // TODO: When there's no common ancestor, we're switching branches.

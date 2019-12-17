@@ -41,12 +41,17 @@ import static java.lang.Boolean.FALSE;
 import static org.jooq.impl.DSL.createSchemaIfNotExists;
 import static org.jooq.impl.DSL.dropSchemaIfExists;
 import static org.jooq.impl.DSL.dropTableIfExists;
+import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.schema;
 
 import java.sql.Timestamp;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.jooq.Configuration;
 import org.jooq.Constants;
@@ -65,6 +70,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.Version;
+import org.jooq.conf.InterpreterSearchSchema;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataMigrationException;
 import org.jooq.exception.DataMigrationValidationException;
@@ -133,21 +139,31 @@ final class MigrationImpl extends AbstractScope implements Migration {
             Version currentVersion = versions().get(currentRecord.getMigratedTo());
 
             if (currentVersion == null)
-                throw new DataMigrationValidationException("Version trying to migrate to is not available from VersionProvider: " + currentRecord.getMigratedTo());
+                throw new DataMigrationValidationException("Version currently installed is not available from VersionProvider: " + currentRecord.getMigratedTo());
         }
 
+        validateVersionProvider(from());
+        validateVersionProvider(to());
+
         validateUnexpectedObjects();
+    }
+
+    private final void validateVersionProvider(Version version) {
+        if (!versions().containsKey(version.id()))
+            throw new DataMigrationValidationException("Version is not available from VersionProvider: " + version.id());
     }
 
     private final void validateUnexpectedObjects() {
         Version currentVersion = currentVersion();
         Meta currentMeta = currentVersion.meta();
 
-        List<Schema> expectedSchemas = to().meta().getSchemas();
+        Set<Schema> expectedSchemas = new HashSet<>();
+        expectedSchemas.addAll(lookup(from().meta().getSchemas()));
+        expectedSchemas.addAll(lookup(to().meta().getSchemas()));
 
         // TODO Add a settings governing what schemas we're including in the migration
         //      The current implementation will default to migrating all schemas that are
-        //      touched by the to() version
+        //      touched by the from() or to() version
         Meta existingMeta = dsl().meta();
         for (Schema schema : existingMeta.getSchemas()) {
 
@@ -163,6 +179,26 @@ final class MigrationImpl extends AbstractScope implements Migration {
         Queries diff = currentMeta.migrateTo(existingMeta);
         if (diff.queries().length > 0)
             throw new DataMigrationValidationException("Non-empty difference between actual schema and migration from schema: " + diff);
+    }
+
+    private final Collection<Schema> lookup(List<Schema> schemas) {
+
+        // TODO: Refactor usages of getInterpreterSearchPath()
+        Collection<Schema> result = schemas;
+        List<InterpreterSearchSchema> searchPath = dsl().settings().getInterpreterSearchPath();
+
+        if (!searchPath.isEmpty()) {
+            result = new HashSet<>();
+            Schema defaultSchema = schema(name(searchPath.get(0).getCatalog(), searchPath.get(0).getSchema()));
+
+            for (Schema schema : schemas)
+                if (schema.getQualifiedName().empty())
+                    result.add(defaultSchema);
+                else
+                    result.add(schema);
+        }
+
+        return result;
     }
 
     private static final MigrationResult MIGRATION_RESULT = new MigrationResult() {};
@@ -231,11 +267,6 @@ final class MigrationImpl extends AbstractScope implements Migration {
 
                         // TODO: Make batching an option: queries().executeBatch();
                         for (Query query : queries().queries()) {
-
-                            // TODO: Properly configure the schema creation
-                            if (query.toString().startsWith("create schema") || query.toString().startsWith("drop schema"))
-                                continue;
-
                             ctx.query(query);
                             listener.queryStart(ctx);
                             query.execute();

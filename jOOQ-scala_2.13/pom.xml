@@ -14,7 +14,7 @@
     <name>jOOQ Scala 2.13</name>
 
     <properties>
-        <scala.version>2.13.0</scala.version>
+        <scala.version>2.13.1</scala.version>
         <jooq-testdata-dir>${project.basedir}/../.data</jooq-testdata-dir>
     </properties>
 
@@ -22,7 +22,6 @@
         <sourceDirectory>src/main/scala</sourceDirectory>
         <testSourceDirectory>src/test/scala</testSourceDirectory>
         <plugins>
-
 
 
 

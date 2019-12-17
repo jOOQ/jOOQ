@@ -52,6 +52,7 @@
                         <Export-Package>*</Export-Package>
                         <Import-Package>
                             javax.persistence;resolution:=optional,
+                            org.slf4j;resolution:=optional;version="[1.7,2)",
                             *
                         </Import-Package>
                         <_versionpolicy>[$(version;==;$(@)),$(version;+;$(@)))</_versionpolicy>

@@ -150,7 +150,7 @@ public interface MergeUsingStep<R extends Record> extends MergeKeyStepN<R> {
      * </tr>
      * </table>
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     MergeKeyStepN<R> columns(Field<?>... fields);
 
     /**
@@ -158,7 +158,7 @@ public interface MergeUsingStep<R extends Record> extends MergeKeyStepN<R> {
      *
      * @see #columns(Field...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     MergeKeyStepN<R> columns(Collection<? extends Field<?>> fields);
 
 

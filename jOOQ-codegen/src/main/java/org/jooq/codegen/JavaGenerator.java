@@ -4952,36 +4952,48 @@ public class JavaGenerator extends AbstractGenerator {
 
             if (scala) {
                 out.tab(1).println("override def get%ss : %s[%s%s] = {", type.getSimpleName(), List.class, type, generic);
-                out.tab(2).println("val result = new %s[%s%s]", ArrayList.class, type, generic);
-                for (int i = 0; i < definitions.size(); i += INITIALISER_SIZE) {
-                    out.tab(2).println("result.addAll(get%ss%s)", type.getSimpleName(), i / INITIALISER_SIZE);
+                if (definitions.size() > INITIALISER_SIZE) {
+                    out.tab(2).println("val result = new %s[%s%s]", ArrayList.class, type, generic);
+                    for (int i = 0; i < definitions.size(); i += INITIALISER_SIZE) {
+                        out.tab(2).println("result.addAll(get%ss%s)", type.getSimpleName(), i / INITIALISER_SIZE);
+                    }
+                    out.tab(2).println("result");
                 }
-                out.tab(2).println("result");
+                else {
+                    out.tab(2).println("return %s.asList[%s%s]([[before=\n\t\t\t][separator=,\n\t\t\t][%s]])", Arrays.class, type, generic, references);
+                }
                 out.tab(1).println("}");
             }
             else {
                 out.tab(1).override();
                 out.tab(1).println("public final %s<%s%s> get%ss() {", List.class, type, generic, type.getSimpleName());
-                out.tab(2).println("%s result = new %s();", List.class, ArrayList.class);
-                for (int i = 0; i < definitions.size(); i += INITIALISER_SIZE) {
-                    out.tab(2).println("result.addAll(get%ss%s());", type.getSimpleName(), i / INITIALISER_SIZE);
+                if (definitions.size() > INITIALISER_SIZE) {
+                    out.tab(2).println("%s result = new %s();", List.class, ArrayList.class);
+                    for (int i = 0; i < definitions.size(); i += INITIALISER_SIZE) {
+                        out.tab(2).println("result.addAll(get%ss%s());", type.getSimpleName(), i / INITIALISER_SIZE);
+                    }
+                    out.tab(2).println("return result;");
                 }
-                out.tab(2).println("return result;");
+                else {
+                    out.tab(2).println("return %s.<%s%s>asList([[before=\n\t\t\t][separator=,\n\t\t\t][%s]]);", Arrays.class, type, generic, references);
+                }
                 out.tab(1).println("}");
             }
 
-            for (int i = 0; i < definitions.size(); i += INITIALISER_SIZE) {
-                out.println();
+            if (definitions.size() > INITIALISER_SIZE) {
+                for (int i = 0; i < definitions.size(); i += INITIALISER_SIZE) {
+                    out.println();
 
-                if (scala) {
-                    out.tab(1).println("private def get%ss%s(): %s[%s%s] = {", type.getSimpleName(), i / INITIALISER_SIZE, List.class, type, generic);
-                    out.tab(2).println("return %s.asList[%s%s]([[before=\n\t\t\t][separator=,\n\t\t\t][%s]])", Arrays.class, type, generic, references.subList(i, Math.min(i + INITIALISER_SIZE, references.size())));
-                    out.tab(1).println("}");
-                }
-                else {
-                    out.tab(1).println("private final %s<%s%s> get%ss%s() {", List.class, type, generic, type.getSimpleName(), i / INITIALISER_SIZE);
-                    out.tab(2).println("return %s.<%s%s>asList([[before=\n\t\t\t][separator=,\n\t\t\t][%s]]);", Arrays.class, type, generic, references.subList(i, Math.min(i + INITIALISER_SIZE, references.size())));
-                    out.tab(1).println("}");
+                    if (scala) {
+                        out.tab(1).println("private def get%ss%s(): %s[%s%s] = {", type.getSimpleName(), i / INITIALISER_SIZE, List.class, type, generic);
+                        out.tab(2).println("return %s.asList[%s%s]([[before=\n\t\t\t][separator=,\n\t\t\t][%s]])", Arrays.class, type, generic, references.subList(i, Math.min(i + INITIALISER_SIZE, references.size())));
+                        out.tab(1).println("}");
+                    }
+                    else {
+                        out.tab(1).println("private final %s<%s%s> get%ss%s() {", List.class, type, generic, type.getSimpleName(), i / INITIALISER_SIZE);
+                        out.tab(2).println("return %s.<%s%s>asList([[before=\n\t\t\t][separator=,\n\t\t\t][%s]]);", Arrays.class, type, generic, references.subList(i, Math.min(i + INITIALISER_SIZE, references.size())));
+                        out.tab(1).println("}");
+                    }
                 }
             }
         }

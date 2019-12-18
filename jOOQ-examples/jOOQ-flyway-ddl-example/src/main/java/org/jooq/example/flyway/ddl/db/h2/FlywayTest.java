@@ -4,7 +4,6 @@
 package org.jooq.example.flyway.ddl.db.h2;
 
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -31,7 +30,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FlywayTest extends SchemaImpl {
 
-    private static final long serialVersionUID = -464060435;
+    private static final long serialVersionUID = -219514663;
 
     /**
      * The reference instance of <code>FLYWAY_TEST</code>
@@ -63,24 +62,12 @@ public class FlywayTest extends SchemaImpl {
 
     @Override
     public final List<Sequence<?>> getSequences() {
-        List result = new ArrayList();
-        result.addAll(getSequences0());
-        return result;
-    }
-
-    private final List<Sequence<?>> getSequences0() {
         return Arrays.<Sequence<?>>asList(
             Sequences.S_AUTHOR_ID);
     }
 
     @Override
     public final List<Table<?>> getTables() {
-        List result = new ArrayList();
-        result.addAll(getTables0());
-        return result;
-    }
-
-    private final List<Table<?>> getTables0() {
         return Arrays.<Table<?>>asList(
             Author.AUTHOR,
             Book.BOOK);

@@ -4,7 +4,6 @@
 package org.jooq.example.db.h2;
 
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -23,7 +22,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Public extends SchemaImpl {
 
-    private static final long serialVersionUID = 1053453567;
+    private static final long serialVersionUID = -767902874;
 
     /**
      * The reference instance of <code>PUBLIC</code>
@@ -65,12 +64,6 @@ public class Public extends SchemaImpl {
 
     @Override
     public final List<Table<?>> getTables() {
-        List result = new ArrayList();
-        result.addAll(getTables0());
-        return result;
-    }
-
-    private final List<Table<?>> getTables0() {
         return Arrays.<Table<?>>asList(
             Author.AUTHOR,
             Book.BOOK,

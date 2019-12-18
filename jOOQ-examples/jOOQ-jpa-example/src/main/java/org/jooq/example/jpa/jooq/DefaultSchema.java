@@ -4,7 +4,6 @@
 package org.jooq.example.jpa.jooq;
 
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -23,7 +22,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DefaultSchema extends SchemaImpl {
 
-    private static final long serialVersionUID = -567042889;
+    private static final long serialVersionUID = 1552766182;
 
     /**
      * The reference instance of <code></code>
@@ -65,12 +64,6 @@ public class DefaultSchema extends SchemaImpl {
 
     @Override
     public final List<Table<?>> getTables() {
-        List result = new ArrayList();
-        result.addAll(getTables0());
-        return result;
-    }
-
-    private final List<Table<?>> getTables0() {
         return Arrays.<Table<?>>asList(
             Actor.ACTOR,
             Film.FILM,

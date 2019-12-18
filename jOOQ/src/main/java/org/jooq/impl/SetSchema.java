@@ -64,6 +64,8 @@ final class SetSchema extends AbstractRowCountQuery {
         this.schema = schema;
     }
 
+    final Schema $schema() { return schema; }
+
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {

@@ -112,6 +112,7 @@ final class DDLInterpreter {
     private final Map<Name, MutableCatalog>                      catalogs               = new LinkedHashMap<>();
     private final MutableCatalog                                 defaultCatalog;
     private final MutableSchema                                  defaultSchema;
+    private MutableSchema                                        currentSchema;
 
     // Caches
     private final Map<Name, MutableCatalog.InterpretedCatalog>   interpretedCatalogs    = new HashMap<>();
@@ -196,6 +197,12 @@ final class DDLInterpreter {
 
         else if (query instanceof CommentOnImpl)
             accept0((CommentOnImpl) query);
+
+        // TODO: Add support for catalogs
+        // else if (query instanceof SetCatalog)
+        //     accept0((SetCatalog) query);
+        else if (query instanceof SetSchema)
+            accept0((SetSchema) query);
 
         // The interpreter cannot handle DML statements. We're ignoring these for now.
         else if (query instanceof Select)
@@ -936,6 +943,14 @@ final class DDLInterpreter {
             throw unsupportedQuery(query);
     }
 
+    private final void accept0(SetSchema query) {
+        MutableSchema schema = getSchema(query.$schema());
+        if (schema == null)
+            throw schemaNotExists(query.$schema());
+
+        currentSchema = schema;
+    }
+
     // -------------------------------------------------------------------------
     // Exceptions
     // -------------------------------------------------------------------------
@@ -1059,7 +1074,7 @@ final class DDLInterpreter {
 
     private final MutableSchema getSchema(Schema input, boolean create) {
         if (input == null)
-            return getInterpreterSearchPathSchema(create);
+            return currentSchema(create);
 
         MutableCatalog catalog = defaultCatalog;
         if (input.getCatalog() != null) {
@@ -1077,6 +1092,13 @@ final class DDLInterpreter {
             schema = new MutableSchema((UnqualifiedName) input.getUnqualifiedName(), catalog);
 
         return schema;
+    }
+
+    private final MutableSchema currentSchema(boolean create) {
+        if (currentSchema == null)
+            currentSchema = getInterpreterSearchPathSchema(create);
+
+        return currentSchema;
     }
 
     private final MutableSchema getInterpreterSearchPathSchema(boolean create) {

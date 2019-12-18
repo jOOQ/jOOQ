@@ -76,12 +76,5 @@ public interface Migration extends Scope {
      * @throws DataMigrationException When something went wrong during the
      *             application of the migration.
      */
-    MigrationResult execute() throws DataMigrationException;
-
-    /**
-     * The result of a {@link Migration} execution.
-     */
-    public interface MigrationResult {
-
-    }
+    void execute() throws DataMigrationException;
 }

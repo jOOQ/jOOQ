@@ -62,7 +62,7 @@ import java.util.Set;
 
 import org.jooq.Configuration;
 import org.jooq.Constants;
-import org.jooq.ContextTransactionalCallable;
+import org.jooq.ContextTransactionalRunnable;
 import org.jooq.Field;
 import org.jooq.Identity;
 import org.jooq.Meta;
@@ -221,16 +221,14 @@ final class MigrationImpl extends AbstractScope implements Migration {
         return new DefaultMigrationContext(configuration(), from(), to(), queries(), revertUntrackedQueries());
     }
 
-    private static final MigrationResult MIGRATION_RESULT = new MigrationResult() {};
-
     @Override
-    public final MigrationResult execute() {
+    public final void execute() {
 
         // TODO: Transactions don't really make sense in most dialects. In some, they do
         //       e.g. PostgreSQL supports transactional DDL. Check if we're getting this right.
-        return run(new ContextTransactionalCallable<MigrationResult>() {
+        run(new ContextTransactionalRunnable() {
             @Override
-            public MigrationResult run() {
+            public void run() {
                 DefaultMigrationContext ctx = migrationContext();
                 MigrationListener listener = new MigrationListeners(configuration);
 
@@ -242,7 +240,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
 
                     if (from().equals(to())) {
                         log.info("jOOQ Migrations", "Version " + to().id() + " is already installed as the current version.");
-                        return MIGRATION_RESULT;
+                        return;
                     }
 
                     // TODO: What to do if we're about to install things on a non-empty schema
@@ -282,8 +280,6 @@ final class MigrationImpl extends AbstractScope implements Migration {
                         log(watch, record, FAILURE);
                         throw e;
                     }
-
-                    return MIGRATION_RESULT;
                 }
                 finally {
                     listener.migrationEnd(ctx);
@@ -390,10 +386,10 @@ final class MigrationImpl extends AbstractScope implements Migration {
         }
     }
 
-    private final <T> T run(final ContextTransactionalCallable<T> runnable) {
+    private final void run(final ContextTransactionalRunnable runnable) {
         try {
             init();
-            return dsl().transactionResult(runnable);
+            dsl().transaction(runnable);
         }
         catch (DataMigrationException e) {
             throw e;

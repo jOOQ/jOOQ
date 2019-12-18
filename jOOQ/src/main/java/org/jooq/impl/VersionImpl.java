@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
+import static java.util.Collections.unmodifiableList;
 import static org.jooq.impl.DSL.createSchema;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.schema;
@@ -126,6 +127,16 @@ final class VersionImpl implements Version {
             result = result.parents.get(0).version;
 
         return result;
+    }
+
+    @Override
+    public final List<Version> parents() {
+        List<Version> result = new ArrayList<>(parents.size());
+
+        for (Parent parent : parents)
+            result.add(parent.version);
+
+        return unmodifiableList(result);
     }
 
     @Override

@@ -38,6 +38,7 @@
 package org.jooq;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.jooq.conf.Settings;
 
@@ -78,6 +79,11 @@ public interface Version {
      * Get the root version of this graph.
      */
     Version root();
+
+    /**
+     * Get the parent versions of this version.
+     */
+    List<Version> parents();
 
     /**
      * Commit a new {@link Meta} representation to the version graph.

@@ -6,6 +6,7 @@ package org.jooq.example.db.h2;
 
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
+import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.example.db.h2.tables.Author;
 import org.jooq.example.db.h2.tables.Book;
@@ -60,16 +61,16 @@ public class Keys {
     }
 
     private static class UniqueKeys0 {
-        public static final UniqueKey<AuthorRecord> PK_T_AUTHOR = Internal.createUniqueKey(Author.AUTHOR, "PK_T_AUTHOR", Author.AUTHOR.ID);
-        public static final UniqueKey<BookRecord> PK_T_BOOK = Internal.createUniqueKey(Book.BOOK, "PK_T_BOOK", Book.BOOK.ID);
-        public static final UniqueKey<BookStoreRecord> UK_T_BOOK_STORE_NAME = Internal.createUniqueKey(BookStore.BOOK_STORE, "UK_T_BOOK_STORE_NAME", BookStore.BOOK_STORE.NAME);
-        public static final UniqueKey<BookToBookStoreRecord> PK_B2BS = Internal.createUniqueKey(BookToBookStore.BOOK_TO_BOOK_STORE, "PK_B2BS", BookToBookStore.BOOK_TO_BOOK_STORE.BOOK_STORE_NAME, BookToBookStore.BOOK_TO_BOOK_STORE.BOOK_ID);
+        public static final UniqueKey<AuthorRecord> PK_T_AUTHOR = Internal.createUniqueKey(Author.AUTHOR, "PK_T_AUTHOR", new TableField[] { Author.AUTHOR.ID }, true);
+        public static final UniqueKey<BookRecord> PK_T_BOOK = Internal.createUniqueKey(Book.BOOK, "PK_T_BOOK", new TableField[] { Book.BOOK.ID }, true);
+        public static final UniqueKey<BookStoreRecord> UK_T_BOOK_STORE_NAME = Internal.createUniqueKey(BookStore.BOOK_STORE, "UK_T_BOOK_STORE_NAME", new TableField[] { BookStore.BOOK_STORE.NAME }, true);
+        public static final UniqueKey<BookToBookStoreRecord> PK_B2BS = Internal.createUniqueKey(BookToBookStore.BOOK_TO_BOOK_STORE, "PK_B2BS", new TableField[] { BookToBookStore.BOOK_TO_BOOK_STORE.BOOK_STORE_NAME, BookToBookStore.BOOK_TO_BOOK_STORE.BOOK_ID }, true);
     }
 
     private static class ForeignKeys0 {
-        public static final ForeignKey<BookRecord, AuthorRecord> FK_T_BOOK_AUTHOR_ID = Internal.createForeignKey(org.jooq.example.db.h2.Keys.PK_T_AUTHOR, Book.BOOK, "FK_T_BOOK_AUTHOR_ID", Book.BOOK.AUTHOR_ID);
-        public static final ForeignKey<BookRecord, AuthorRecord> FK_T_BOOK_CO_AUTHOR_ID = Internal.createForeignKey(org.jooq.example.db.h2.Keys.PK_T_AUTHOR, Book.BOOK, "FK_T_BOOK_CO_AUTHOR_ID", Book.BOOK.CO_AUTHOR_ID);
-        public static final ForeignKey<BookToBookStoreRecord, BookStoreRecord> FK_B2BS_BS_NAME = Internal.createForeignKey(org.jooq.example.db.h2.Keys.UK_T_BOOK_STORE_NAME, BookToBookStore.BOOK_TO_BOOK_STORE, "FK_B2BS_BS_NAME", BookToBookStore.BOOK_TO_BOOK_STORE.BOOK_STORE_NAME);
-        public static final ForeignKey<BookToBookStoreRecord, BookRecord> FK_B2BS_B_ID = Internal.createForeignKey(org.jooq.example.db.h2.Keys.PK_T_BOOK, BookToBookStore.BOOK_TO_BOOK_STORE, "FK_B2BS_B_ID", BookToBookStore.BOOK_TO_BOOK_STORE.BOOK_ID);
+        public static final ForeignKey<BookRecord, AuthorRecord> FK_T_BOOK_AUTHOR_ID = Internal.createForeignKey(org.jooq.example.db.h2.Keys.PK_T_AUTHOR, Book.BOOK, "FK_T_BOOK_AUTHOR_ID", new TableField[] { Book.BOOK.AUTHOR_ID }, true);
+        public static final ForeignKey<BookRecord, AuthorRecord> FK_T_BOOK_CO_AUTHOR_ID = Internal.createForeignKey(org.jooq.example.db.h2.Keys.PK_T_AUTHOR, Book.BOOK, "FK_T_BOOK_CO_AUTHOR_ID", new TableField[] { Book.BOOK.CO_AUTHOR_ID }, true);
+        public static final ForeignKey<BookToBookStoreRecord, BookStoreRecord> FK_B2BS_BS_NAME = Internal.createForeignKey(org.jooq.example.db.h2.Keys.UK_T_BOOK_STORE_NAME, BookToBookStore.BOOK_TO_BOOK_STORE, "FK_B2BS_BS_NAME", new TableField[] { BookToBookStore.BOOK_TO_BOOK_STORE.BOOK_STORE_NAME }, true);
+        public static final ForeignKey<BookToBookStoreRecord, BookRecord> FK_B2BS_B_ID = Internal.createForeignKey(org.jooq.example.db.h2.Keys.PK_T_BOOK, BookToBookStore.BOOK_TO_BOOK_STORE, "FK_B2BS_B_ID", new TableField[] { BookToBookStore.BOOK_TO_BOOK_STORE.BOOK_ID }, true);
     }
 }

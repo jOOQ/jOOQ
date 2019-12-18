@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import org.jooq.Version;
@@ -80,5 +81,10 @@ final class VersionsImpl implements Versions {
     @Override
     public final Version get(String id) {
         return versions.get(id);
+    }
+
+    @Override
+    public final Iterator<Version> iterator() {
+        return versions.values().iterator();
     }
 }

@@ -35,23 +35,50 @@
  *
  *
  */
-package org.jooq;
+package org.jooq.impl;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.jooq.Version;
+import org.jooq.Versions;
 
 /**
- * An SPI that allows for providing a graph of versions.
- *
  * @author Lukas Eder
  */
-@Internal // TODO This SPI is still being worked on and might change incompatibly
-public interface VersionProvider {
+final class VersionsImpl implements Versions {
 
-    /**
-     * Provide a set of versions relevant to a migration.
-     * <p>
-     * This can include the entire set of known versions, or a subset thereof.
-     * There is no requirement to provide a fully connected graph, although
-     * {@link Version#migrateTo(Version)} and other operations are undefined
-     * if two versions do not have a common ancestor.
-     */
-    Versions provide();
+    final Version              root;
+    final Map<String, Version> versions;
+
+    VersionsImpl(Version root) {
+        this.root = root;
+        this.versions = new HashMap<>();
+
+        add(root);
+    }
+
+    void add(Version version) {
+        versions.put(version.id(), version);
+    }
+
+    void addAll(Collection<? extends Version> v) {
+        for (Version version : v)
+            add(version);
+    }
+
+    void remove(Version version) {
+        versions.remove(version.id());
+    }
+
+    @Override
+    public final Version root() {
+        return root;
+    }
+
+    @Override
+    public final Version get(String id) {
+        return versions.get(id);
+    }
 }

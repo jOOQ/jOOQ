@@ -37,15 +37,13 @@
  */
 package org.jooq.impl;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
-
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.Parser;
 import org.jooq.Source;
 import org.jooq.Version;
 import org.jooq.VersionProvider;
+import org.jooq.Versions;
 
 /**
  * A default implementation of the {@link VersionProvider} SPI, which provides
@@ -67,10 +65,9 @@ public class DefaultVersionProvider implements VersionProvider {
     }
 
     @Override
-    public Set<Version> provide() {
-        Set<Version> result = new LinkedHashSet<>();
+    public Versions provide() {
         Version parent;
-        result.add(parent = ctx.version("initial"));
+        VersionsImpl result = new VersionsImpl(parent = ctx.version("initial"));
 
         Parser parser = ctx.parser();
         for (int i = 0; i < sources.length; i++)

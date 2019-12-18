@@ -54,10 +54,8 @@ import static org.jooq.impl.MigrationImpl.Status.SUCCESS;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.jooq.Configuration;
@@ -77,6 +75,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.Version;
+import org.jooq.Versions;
 import org.jooq.conf.InterpreterSearchSchema;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataMigrationException;
@@ -96,7 +95,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
     private final Version                        to;
     private Version                              from;
     private Queries                              queries;
-    private Map<String, Version>                 versions;
+    private Versions                             versions;
 
     MigrationImpl(Configuration configuration, Version to) {
         super(configuration.derive(new ThreadLocalTransactionProvider(configuration.systemConnectionProvider())));
@@ -127,13 +126,9 @@ final class MigrationImpl extends AbstractScope implements Migration {
         return queries;
     }
 
-    private final Map<String, Version> versions() {
-        if (versions == null) {
-            versions = new HashMap<>();
-
-            for (Version version : configuration().versionProvider().provide())
-                versions.put(version.id(), version);
-        }
+    private final Versions versions() {
+        if (versions == null)
+            versions = configuration().versionProvider().provide();
 
         return versions;
     }
@@ -159,7 +154,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
     }
 
     private final void validateVersionProvider(Version version) {
-        if (!versions().containsKey(version.id()))
+        if (versions().get(version.id()) == null)
             throw new DataMigrationValidationException("Version is not available from VersionProvider: " + version.id());
     }
 

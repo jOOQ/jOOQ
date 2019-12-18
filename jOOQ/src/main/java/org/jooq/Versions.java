@@ -38,20 +38,20 @@
 package org.jooq;
 
 /**
- * An SPI that allows for providing a graph of versions.
+ * A directed, acyclic graph of {@link Version} objects
  *
  * @author Lukas Eder
  */
-@Internal // TODO This SPI is still being worked on and might change incompatibly
-public interface VersionProvider {
+public interface Versions {
 
     /**
-     * Provide a set of versions relevant to a migration.
-     * <p>
-     * This can include the entire set of known versions, or a subset thereof.
-     * There is no requirement to provide a fully connected graph, although
-     * {@link Version#migrateTo(Version)} and other operations are undefined
-     * if two versions do not have a common ancestor.
+     * The root version of this graph.
      */
-    Versions provide();
+    Version root();
+
+    /**
+     * Find a version by its id, or <code>null</code>, if no such version was
+     * found.
+     */
+    Version get(String id);
 }

@@ -38,11 +38,13 @@
 package org.jooq;
 
 /**
- * A directed, acyclic graph of {@link Version} objects
+ * A directed, acyclic graph of {@link Version} objects.
+ * <p>
+ * The graph is exposed as {@link Iterable} in no defined iteration order.
  *
  * @author Lukas Eder
  */
-public interface Versions {
+public interface Versions extends Iterable<Version> {
 
     /**
      * The root version of this graph.

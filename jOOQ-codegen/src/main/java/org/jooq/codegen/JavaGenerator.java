@@ -537,7 +537,7 @@ public class JavaGenerator extends AbstractGenerator {
             generateRelations(schema);
         }
 
-        if (generateIndexes() && database.getTables(schema).size() > 0) {
+        if (generateGlobalIndexReferences() && database.getTables(schema).size() > 0) {
             generateIndexes(schema);
         }
 
@@ -975,7 +975,26 @@ public class JavaGenerator extends AbstractGenerator {
                 out.tab(1).println("private static class Indexes%s {", block);
         }
 
-        // (Name name, Table<?> table, SortField<?>[] sortFields, boolean unique)
+        if (scala)
+            out.tab(2).print("val %s : %s = ",
+                getStrategy().getJavaIdentifier(index),
+                Index.class
+            );
+        else
+            out.tab(2).print("public static %s %s = ",
+                Index.class,
+                getStrategy().getJavaIdentifier(index)
+            );
+
+        printCreateIndex(out, index);
+
+        if (scala)
+            out.println();
+        else
+            out.println(";");
+    }
+
+    private void printCreateIndex(JavaWriter out, IndexDefinition index) {
         String sortFieldSeparator = "";
         StringBuilder orderFields = new StringBuilder();
 
@@ -988,9 +1007,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         if (scala)
-            out.tab(2).println("val %s : %s = %s.createIndex(\"%s\", %s, Array[%s [_] ](%s), %s)",
-                getStrategy().getJavaIdentifier(index),
-                Index.class,
+            out.print("%s.createIndex(\"%s\", %s, Array[%s [_] ](%s), %s)",
                 Internal.class,
                 escapeString(index.getOutputName()),
                 out.ref(getStrategy().getFullJavaIdentifier(index.getTable()), 2),
@@ -999,9 +1016,7 @@ public class JavaGenerator extends AbstractGenerator {
                 index.isUnique()
             );
         else
-            out.tab(2).println("public static %s %s = %s.createIndex(\"%s\", %s, new %s[] { %s }, %s);",
-                Index.class,
-                getStrategy().getJavaIdentifier(index),
+            out.print("%s.createIndex(\"%s\", %s, new %s[] { %s }, %s)",
                 Internal.class,
                 escapeString(index.getOutputName()),
                 out.ref(getStrategy().getFullJavaIdentifier(index.getTable()), 2),
@@ -4050,19 +4065,55 @@ public class JavaGenerator extends AbstractGenerator {
             List<IndexDefinition> indexes = table.getIndexes();
 
             if (!indexes.isEmpty()) {
-                final List<String> indexFullIds = out.ref(getStrategy().getFullJavaIdentifiers(indexes), 2);
+                if (generateGlobalIndexReferences()) {
+                    final List<String> indexFullIds = out.ref(getStrategy().getFullJavaIdentifiers(indexes), 2);
 
-                if (scala) {
-                    out.println();
-                    out.tab(1).println("override def getIndexes : %s[ %s ] = {", List.class, Index.class);
-                    out.tab(2).println("return %s.asList[ %s ]([[%s]])", Arrays.class, Index.class, indexFullIds);
-                    out.tab(1).println("}");
+                    if (scala) {
+                        out.println();
+                        out.tab(1).println("override def getIndexes : %s[ %s ] = {", List.class, Index.class);
+                        out.tab(2).println("return %s.asList[ %s ]([[%s]])", Arrays.class, Index.class, indexFullIds);
+                        out.tab(1).println("}");
+                    }
+                    else {
+                        out.tab(1).overrideInherit();
+                        out.tab(1).println("public %s<%s> getIndexes() {", List.class, Index.class);
+                        out.tab(2).println("return %s.<%s>asList([[%s]]);", Arrays.class, Index.class, indexFullIds);
+                        out.tab(1).println("}");
+                    }
                 }
                 else {
-                    out.tab(1).overrideInherit();
-                    out.tab(1).println("public %s<%s> getIndexes() {", List.class, Index.class);
-                    out.tab(2).println("return %s.<%s>asList([[%s]]);", Arrays.class, Index.class, indexFullIds);
-                    out.tab(1).println("}");
+                    String separator = "";
+
+                    if (scala) {
+                        out.println();
+                        out.tab(1).println("override def getIndexes : %s[ %s ] = {", List.class, Index.class);
+                        out.tab(2).println("return %s.asList[ %s ](", Arrays.class, Index.class);
+
+                        for (IndexDefinition index : indexes) {
+                            out.tab(3).print("%s", separator);
+                            printCreateIndex(out, index);
+                            out.println();
+                            separator = ", ";
+                        }
+
+                        out.tab(2).println(")");
+                        out.tab(1).println("}");
+                    }
+                    else {
+                        out.tab(1).overrideInherit();
+                        out.tab(1).println("public %s<%s> getIndexes() {", List.class, Index.class);
+                        out.tab(2).println("return %s.<%s>asList(", Arrays.class, Index.class);
+
+                        for (IndexDefinition index : indexes) {
+                            out.tab(3).print("%s", separator);
+                            printCreateIndex(out, index);
+                            out.println();
+                            separator = ", ";
+                        }
+
+                        out.tab(2).println(");");
+                        out.tab(1).println("}");
+                    }
                 }
             }
         }
@@ -4194,7 +4245,6 @@ public class JavaGenerator extends AbstractGenerator {
 
                         out.tab(2).println(");");
                         out.tab(1).println("}");
-
                     }
                 }
             }

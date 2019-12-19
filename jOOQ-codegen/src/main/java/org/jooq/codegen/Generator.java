@@ -459,6 +459,16 @@ public interface Generator {
     void setGenerateGlobalKeyReferences(boolean globalKeyReferences);
 
     /**
+     * Whether global index references should be generated
+     */
+    boolean generateGlobalIndexReferences();
+
+    /**
+     * Whether global index references should be generated
+     */
+    void setGenerateGlobalIndexReferences(boolean globalIndexReferences);
+
+    /**
      * Whether any Javadoc should be generated.
      */
     boolean generateJavadoc();

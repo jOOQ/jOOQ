@@ -116,6 +116,8 @@ public class Generate implements Serializable, XMLAppendable
     @XmlElement(defaultValue = "true")
     protected Boolean globalKeyReferences = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean globalIndexReferences = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean javadoc = true;
     @XmlElement(defaultValue = "true")
     protected Boolean comments = true;
@@ -1169,6 +1171,30 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
+     * Turn off generation of global index references.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isGlobalIndexReferences() {
+        return globalIndexReferences;
+    }
+
+    /**
+     * Sets the value of the globalIndexReferences property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setGlobalIndexReferences(Boolean value) {
+        this.globalIndexReferences = value;
+    }
+
+    /**
      * Turn off generation of Javadoc on all objects.
      *
      * @return
@@ -1993,6 +2019,11 @@ public class Generate implements Serializable, XMLAppendable
         return this;
     }
 
+    public Generate withGlobalIndexReferences(Boolean value) {
+        setGlobalIndexReferences(value);
+        return this;
+    }
+
     public Generate withJavadoc(Boolean value) {
         setJavadoc(value);
         return this;
@@ -2178,6 +2209,7 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("globalQueueReferences", globalQueueReferences);
         builder.append("globalLinkReferences", globalLinkReferences);
         builder.append("globalKeyReferences", globalKeyReferences);
+        builder.append("globalIndexReferences", globalIndexReferences);
         builder.append("javadoc", javadoc);
         builder.append("comments", comments);
         builder.append("commentsOnCatalogs", commentsOnCatalogs);
@@ -2602,6 +2634,15 @@ public class Generate implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (globalIndexReferences == null) {
+            if (other.globalIndexReferences!= null) {
+                return false;
+            }
+        } else {
+            if (!globalIndexReferences.equals(other.globalIndexReferences)) {
+                return false;
+            }
+        }
         if (javadoc == null) {
             if (other.javadoc!= null) {
                 return false;
@@ -2876,6 +2917,7 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((globalQueueReferences == null)? 0 :globalQueueReferences.hashCode()));
         result = ((prime*result)+((globalLinkReferences == null)? 0 :globalLinkReferences.hashCode()));
         result = ((prime*result)+((globalKeyReferences == null)? 0 :globalKeyReferences.hashCode()));
+        result = ((prime*result)+((globalIndexReferences == null)? 0 :globalIndexReferences.hashCode()));
         result = ((prime*result)+((javadoc == null)? 0 :javadoc.hashCode()));
         result = ((prime*result)+((comments == null)? 0 :comments.hashCode()));
         result = ((prime*result)+((commentsOnCatalogs == null)? 0 :commentsOnCatalogs.hashCode()));

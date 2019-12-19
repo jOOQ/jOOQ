@@ -273,7 +273,12 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
     @Override
     public final void setSelect(Field<?>[] f, Select<?> s) {
-        insertMaps.addFields(Arrays.asList(f));
+        setSelect(Arrays.asList(f), s);
+    }
+
+    @Override
+    public final void setSelect(Collection<? extends Field<?>> f, Select<?> s) {
+        insertMaps.addFields(f);
         select = s;
     }
 

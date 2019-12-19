@@ -4791,10 +4791,12 @@ public class JavaGenerator extends AbstractGenerator {
         if (generateGlobalSequenceReferences())
             printReferences(out, database.getSequences(schema), Sequence.class, true);
 
-        if (generateGlobalTableReferences())
+        // [#9685] Avoid referencing table literals if they're not generated
+        if (generateTables())
             printReferences(out, database.getTables(schema), Table.class, true);
 
-        if (generateGlobalUDTReferences())
+        // [#9685] Avoid referencing UDT literals if they're not generated
+        if (generateUDTs())
             printReferences(out, database.getUDTs(schema), UDT.class, true);
 
         generateSchemaClassFooter(schema, out);

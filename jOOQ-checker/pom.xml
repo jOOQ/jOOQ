@@ -29,6 +29,17 @@
     </licenses>
 
     <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <!-- [#9099] later versions up to 3.1.1 don't appear to work (to be tested with 3.1.2) -->
+                    <version>3.0.1</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -40,13 +51,6 @@
                         </manifestEntries>
                     </archive>
                 </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <!-- [#9099] later versions up to 3.1.1 don't appear to work (to be tested with 3.1.2) -->
-                <version>3.0.1</version>
             </plugin>
         </plugins>
     </build>

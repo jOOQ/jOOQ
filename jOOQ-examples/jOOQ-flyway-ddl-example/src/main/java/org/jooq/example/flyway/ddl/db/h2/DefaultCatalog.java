@@ -26,7 +26,7 @@ import org.jooq.impl.CatalogImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DefaultCatalog extends CatalogImpl {
 
-    private static final long serialVersionUID = -949847017;
+    private static final long serialVersionUID = 1585122192;
 
     /**
      * The reference instance of <code>DEFAULT_CATALOG</code>
@@ -36,7 +36,7 @@ public class DefaultCatalog extends CatalogImpl {
     /**
      * The schema <code>FLYWAY_TEST</code>.
      */
-    public final FlywayTest FLYWAY_TEST = org.jooq.example.flyway.ddl.db.h2.FlywayTest.FLYWAY_TEST;
+    public final FlywayTest FLYWAY_TEST = FlywayTest.FLYWAY_TEST;
 
     /**
      * No further instances allowed

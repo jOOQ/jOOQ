@@ -4794,6 +4794,12 @@ public class JavaGenerator extends AbstractGenerator {
 
         List<SchemaDefinition> schemas = new ArrayList<>();
         if (generateGlobalSchemaReferences()) {
+            Set<String> fieldNames = new HashSet<>();
+            fieldNames.add(catalogId);
+            for (SchemaDefinition schema : catalog.getSchemata())
+                if (generateSchemaIfEmpty(schema))
+                    fieldNames.add(getStrategy().getJavaIdentifier(schema));
+
             for (SchemaDefinition schema : catalog.getSchemata()) {
                 if (generateSchemaIfEmpty(schema)) {
                     schemas.add(schema);
@@ -4801,16 +4807,19 @@ public class JavaGenerator extends AbstractGenerator {
                     final String schemaClassName = out.ref(getStrategy().getFullJavaClassName(schema));
                     final String schemaId = getStrategy().getJavaIdentifier(schema);
                     final String schemaFullId = getStrategy().getFullJavaIdentifier(schema);
+                    String schemaShortId = out.ref(getStrategy().getFullJavaIdentifier(schema), 2);
+                    if (fieldNames.contains(schemaShortId.substring(0, schemaShortId.indexOf('.'))))
+                        schemaShortId = schemaFullId;
                     final String schemaComment = !StringUtils.isBlank(schema.getComment()) && generateCommentsOnSchemas()
                         ? escapeEntities(schema.getComment())
-                        : "The schema <code>" + schema.getQualifiedOutputName() + "</code>.";
+                        : "The schema <code>" + (!schema.getQualifiedOutputName().isEmpty() ? schema.getQualifiedOutputName() : schemaId) + "</code>.";
 
                     out.tab(1).javadoc(schemaComment);
 
                     if (scala)
-                        out.tab(1).println("val %s = %s", schemaId, schemaFullId);
+                        out.tab(1).println("val %s = %s", schemaId, schemaShortId);
                     else
-                        out.tab(1).println("public final %s %s = %s;", schemaClassName, schemaId, schemaFullId);
+                        out.tab(1).println("public final %s %s = %s;", schemaClassName, schemaId, schemaShortId);
                 }
             }
         }

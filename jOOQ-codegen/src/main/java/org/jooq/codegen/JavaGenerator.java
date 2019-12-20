@@ -4764,8 +4764,8 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void generateCatalog(CatalogDefinition catalog, JavaWriter out) {
-        final String catalogName = catalog.getQualifiedOutputName();
         final String catalogId = getStrategy().getJavaIdentifier(catalog);
+        final String catalogName = !catalog.getQualifiedOutputName().isEmpty() ? catalog.getQualifiedOutputName() : catalogId;
         final String className = getStrategy().getJavaClassName(catalog);
         final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(catalog, Mode.DEFAULT));
 
@@ -4856,8 +4856,8 @@ public class JavaGenerator extends AbstractGenerator {
 
     protected void generateSchema(SchemaDefinition schema, JavaWriter out) {
         final String catalogId = out.ref(getStrategy().getFullJavaIdentifier(schema.getCatalog()), 2);
-        final String schemaName = schema.getQualifiedOutputName();
         final String schemaId = getStrategy().getJavaIdentifier(schema);
+        final String schemaName = !schema.getQualifiedOutputName().isEmpty() ? schema.getQualifiedOutputName() : schemaId;
         final String className = getStrategy().getJavaClassName(schema);
         final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(schema, Mode.DEFAULT));
 

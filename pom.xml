@@ -499,9 +499,6 @@
     <profiles>
         <profile>
             <id>default</id>
-            <properties>
-                <java.version>10</java.version>
-            </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
@@ -522,72 +519,6 @@
 
             </modules>
         </profile>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

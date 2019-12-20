@@ -4884,10 +4884,19 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(1).println("public static final %s %s = new %s();", className, schemaId, className);
 
             if (generateGlobalTableReferences()) {
+                Set<String> fieldNames = new HashSet<>();
+                fieldNames.add(schemaId);
+                for (TableDefinition table : schema.getTables()) {
+                    fieldNames.add(getStrategy().getJavaIdentifier(table));
+                }
+
                 for (TableDefinition table : schema.getTables()) {
                     final String tableClassName = out.ref(getStrategy().getFullJavaClassName(table));
                     final String tableId = getStrategy().getJavaIdentifier(table);
                     final String tableFullId = getStrategy().getFullJavaIdentifier(table);
+                    String tableShortId = out.ref(getStrategy().getFullJavaIdentifier(table), 2);
+                    if (fieldNames.contains(tableShortId.substring(0, tableShortId.indexOf('.'))))
+                        tableShortId = tableFullId;
                     final String tableComment = !StringUtils.isBlank(table.getComment()) && generateCommentsOnTables()
                         ? escapeEntities(table.getComment())
                         : "The table <code>" + table.getQualifiedOutputName() + "</code>.";
@@ -4895,9 +4904,9 @@ public class JavaGenerator extends AbstractGenerator {
                     out.tab(1).javadoc(tableComment);
 
                     if (scala)
-                        out.tab(1).println("val %s = %s", tableId, tableFullId);
+                        out.tab(1).println("val %s = %s", tableId, tableShortId);
                     else
-                        out.tab(1).println("public final %s %s = %s;", tableClassName, tableId, tableFullId);
+                        out.tab(1).println("public final %s %s = %s;", tableClassName, tableId, tableShortId);
 
                     // [#3797] Table-valued functions generate two different literals in
                     // globalObjectReferences

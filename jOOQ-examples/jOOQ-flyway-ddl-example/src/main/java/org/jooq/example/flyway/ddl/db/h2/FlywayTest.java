@@ -30,7 +30,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FlywayTest extends SchemaImpl {
 
-    private static final long serialVersionUID = -219514663;
+    private static final long serialVersionUID = 1570021131;
 
     /**
      * The reference instance of <code>FLYWAY_TEST</code>
@@ -40,12 +40,12 @@ public class FlywayTest extends SchemaImpl {
     /**
      * The table <code>FLYWAY_TEST.AUTHOR</code>.
      */
-    public final Author AUTHOR = org.jooq.example.flyway.ddl.db.h2.tables.Author.AUTHOR;
+    public final Author AUTHOR = Author.AUTHOR;
 
     /**
      * The table <code>FLYWAY_TEST.BOOK</code>.
      */
-    public final Book BOOK = org.jooq.example.flyway.ddl.db.h2.tables.Book.BOOK;
+    public final Book BOOK = Book.BOOK;
 
     /**
      * No further instances allowed

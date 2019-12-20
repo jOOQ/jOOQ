@@ -22,7 +22,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DefaultSchema extends SchemaImpl {
 
-    private static final long serialVersionUID = 1552766182;
+    private static final long serialVersionUID = 1869451816;
 
     /**
      * The reference instance of <code></code>
@@ -32,22 +32,22 @@ public class DefaultSchema extends SchemaImpl {
     /**
      * The table <code>ACTOR</code>.
      */
-    public final Actor ACTOR = org.jooq.example.jpa.jooq.tables.Actor.ACTOR;
+    public final Actor ACTOR = Actor.ACTOR;
 
     /**
      * The table <code>FILM</code>.
      */
-    public final Film FILM = org.jooq.example.jpa.jooq.tables.Film.FILM;
+    public final Film FILM = Film.FILM;
 
     /**
      * The table <code>FILM_ACTOR</code>.
      */
-    public final FilmActor FILM_ACTOR = org.jooq.example.jpa.jooq.tables.FilmActor.FILM_ACTOR;
+    public final FilmActor FILM_ACTOR = FilmActor.FILM_ACTOR;
 
     /**
      * The table <code>LANGUAGE</code>.
      */
-    public final Language LANGUAGE = org.jooq.example.jpa.jooq.tables.Language.LANGUAGE;
+    public final Language LANGUAGE = Language.LANGUAGE;
 
     /**
      * No further instances allowed

@@ -22,7 +22,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Public extends SchemaImpl {
 
-    private static final long serialVersionUID = -767902874;
+    private static final long serialVersionUID = -1306251418;
 
     /**
      * The reference instance of <code>PUBLIC</code>
@@ -32,22 +32,22 @@ public class Public extends SchemaImpl {
     /**
      * The table <code>PUBLIC.AUTHOR</code>.
      */
-    public final Author AUTHOR = org.jooq.example.db.h2.tables.Author.AUTHOR;
+    public final Author AUTHOR = Author.AUTHOR;
 
     /**
      * The table <code>PUBLIC.BOOK</code>.
      */
-    public final Book BOOK = org.jooq.example.db.h2.tables.Book.BOOK;
+    public final Book BOOK = Book.BOOK;
 
     /**
      * The table <code>PUBLIC.BOOK_STORE</code>.
      */
-    public final BookStore BOOK_STORE = org.jooq.example.db.h2.tables.BookStore.BOOK_STORE;
+    public final BookStore BOOK_STORE = BookStore.BOOK_STORE;
 
     /**
      * The table <code>PUBLIC.BOOK_TO_BOOK_STORE</code>.
      */
-    public final BookToBookStore BOOK_TO_BOOK_STORE = org.jooq.example.db.h2.tables.BookToBookStore.BOOK_TO_BOOK_STORE;
+    public final BookToBookStore BOOK_TO_BOOK_STORE = BookToBookStore.BOOK_TO_BOOK_STORE;
 
     /**
      * No further instances allowed

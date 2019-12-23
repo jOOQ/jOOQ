@@ -188,8 +188,8 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
             : CastMode.DEFAULT;
         this.scopeStack = new ScopeStack<QueryPart, ScopeStackElement>(new ScopeStack.Constructor<ScopeStackElement>() {
             @Override
-            public ScopeStackElement create() {
-                return new ScopeStackElement();
+            public ScopeStackElement create(int scopeLevel) {
+                return new ScopeStackElement(scopeLevel);
             }
         });
     }
@@ -794,8 +794,13 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     }
 
     static class ScopeStackElement {
-        int[]    positions;
-        int      indent;
-        JoinNode joinNode;
+        final int scopeLevel;
+        int[]     positions;
+        int       indent;
+        JoinNode  joinNode;
+
+        ScopeStackElement(int scopeLevel) {
+            this.scopeLevel = scopeLevel;
+        }
     }
 }

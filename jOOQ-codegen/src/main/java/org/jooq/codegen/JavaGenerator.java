@@ -6248,11 +6248,7 @@ public class JavaGenerator extends AbstractGenerator {
     protected void printPackage(JavaWriter out, Definition definition, Mode mode) {
         printPackageComment(out, definition, mode);
 
-        if (scala)
-            out.println("package %s", getStrategy().getJavaPackageName(definition, mode));
-        else
-            out.println("package %s;", getStrategy().getJavaPackageName(definition, mode));
-
+        out.printPackageSpecification(getStrategy().getJavaPackageName(definition, mode));
         out.println();
         out.printImports();
         out.println();

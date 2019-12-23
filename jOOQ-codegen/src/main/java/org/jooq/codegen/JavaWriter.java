@@ -36,6 +36,7 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
     private final Set<String>         qualifiedTypes   = new TreeSet<>(qualifiedTypeComparator());
     private final Map<String, String> unqualifiedTypes = new TreeMap<>();
     private final String              className;
+    private String                    packageName;
     private final boolean             isJava;
     private final boolean             isScala;
 
@@ -166,6 +167,16 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
         }
     }
 
+    @SuppressWarnings("hiding")
+    public void printPackageSpecification(String packageName) {
+        this.packageName = packageName;
+
+        if (isScala)
+            println("package %s", packageName);
+        else
+            println("package %s;", packageName);
+    }
+
     public void printImports() {
         println(IMPORT_STATEMENT);
     }
@@ -249,7 +260,8 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
                             // Table.TABLE.COLUMN
                             String remainder = StringUtils.join(split.subList(split.size() - keepSegments, split.size()).toArray(), ".");
 
-                            if (!className.equals(unqualifiedType) &&
+                            // [#9697] Don't import a class from a different package by the same name as this class
+                            if ((!className.equals(unqualifiedType) || packageName != null && qualifiedType.equals(packageName + "." + className)) &&
                                (!unqualifiedTypes.containsKey(unqualifiedType) || qualifiedType.equals(unqualifiedTypes.get(unqualifiedType)))) {
 
                                 unqualifiedTypes.put(unqualifiedType, qualifiedType);

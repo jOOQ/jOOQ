@@ -40,6 +40,7 @@ Authors and contributors of jOOQ or parts of jOOQ in alphabetical order:
 - Peter Ertl
 - Richard Bradley
 - Robin Stocker
+- Roland Weisleder
 - Samy Deghou
 - Sander Plas
 - Sean Wellington

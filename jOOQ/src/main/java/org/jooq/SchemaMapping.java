@@ -293,6 +293,8 @@ public class SchemaMapping implements Serializable {
         // [#1774] The default Settings render schema flag takes precedence over
         // The DefaultConfiguration's ignoreMapping flag!
         if (!renderSchema()) return null;
+        // [#9708] Don't map an already mapped schema again
+        else if (schema instanceof RenamedSchema) return schema;
 
         Schema result = schema;
         if (result == null)

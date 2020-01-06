@@ -100,8 +100,10 @@
                                         public\..*
                                       | pg_catalog\.generate_series
                                     </includes>
-                                    <schemaVersionProvider>SELECT :schema_name || '_' || MAX("version") FROM "schema_version"</schemaVersionProvider>
                                 </database>
+                                <generate>
+                                    <generatedAnnotation>false</generatedAnnotation>
+                                </generate>
                                 <target>
                                     <packageName>org.jooq.example.chart.db</packageName>
                                     <directory>src/main/java</directory>

@@ -41,8 +41,8 @@ import static org.jooq.academy.tools.Tools.connection;
 import static org.jooq.example.db.h2.Tables.AUTHOR;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 import org.jooq.DSLContext;
 import org.jooq.academy.tools.Tools;
@@ -63,7 +63,7 @@ public class Example_2_1_ActiveRecords {
         try {
             Tools.title("Loading and changing active records");
             author = dsl.selectFrom(AUTHOR).where(AUTHOR.ID.eq(1)).fetchOne();
-            author.setDateOfBirth(Date.valueOf("2000-01-01"));
+            author.setDateOfBirth(LocalDate.of(2000, 1, 1));
             author.store();
             Tools.print(author);
 
@@ -85,7 +85,7 @@ public class Example_2_1_ActiveRecords {
 
 
             Tools.title("Updating an active record");
-            author.setDateOfBirth(Date.valueOf("1899-08-13"));
+            author.setDateOfBirth(LocalDate.of(1899, 8, 13));
             author.store();
             Tools.print(author);
 

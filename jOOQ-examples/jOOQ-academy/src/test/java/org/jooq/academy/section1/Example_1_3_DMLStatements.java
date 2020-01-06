@@ -41,8 +41,8 @@ import static org.jooq.academy.tools.Tools.connection;
 import static org.jooq.example.db.h2.Tables.AUTHOR;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 import org.jooq.DSLContext;
 import org.jooq.academy.tools.Tools;
@@ -99,7 +99,7 @@ public class Example_1_3_DMLStatements {
             Tools.title("Update the DATE_OF_BIRTH column");
             Tools.print(
                 dsl.update(AUTHOR)
-                   .set(AUTHOR.DATE_OF_BIRTH, Date.valueOf("1899-08-13"))
+                   .set(AUTHOR.DATE_OF_BIRTH, LocalDate.of(1899, 8, 13))
                    .where(AUTHOR.ID.eq(3))
                    .execute()
             );

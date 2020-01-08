@@ -68,9 +68,9 @@ public class Keys {
     }
 
     private static class ForeignKeys0 {
-        public static final ForeignKey<BookRecord, AuthorRecord> FK_T_BOOK_AUTHOR_ID = Internal.createForeignKey(org.jooq.example.db.h2.Keys.PK_T_AUTHOR, Book.BOOK, "FK_T_BOOK_AUTHOR_ID", new TableField[] { Book.BOOK.AUTHOR_ID }, true);
-        public static final ForeignKey<BookRecord, AuthorRecord> FK_T_BOOK_CO_AUTHOR_ID = Internal.createForeignKey(org.jooq.example.db.h2.Keys.PK_T_AUTHOR, Book.BOOK, "FK_T_BOOK_CO_AUTHOR_ID", new TableField[] { Book.BOOK.CO_AUTHOR_ID }, true);
-        public static final ForeignKey<BookToBookStoreRecord, BookStoreRecord> FK_B2BS_BS_NAME = Internal.createForeignKey(org.jooq.example.db.h2.Keys.UK_T_BOOK_STORE_NAME, BookToBookStore.BOOK_TO_BOOK_STORE, "FK_B2BS_BS_NAME", new TableField[] { BookToBookStore.BOOK_TO_BOOK_STORE.BOOK_STORE_NAME }, true);
-        public static final ForeignKey<BookToBookStoreRecord, BookRecord> FK_B2BS_B_ID = Internal.createForeignKey(org.jooq.example.db.h2.Keys.PK_T_BOOK, BookToBookStore.BOOK_TO_BOOK_STORE, "FK_B2BS_B_ID", new TableField[] { BookToBookStore.BOOK_TO_BOOK_STORE.BOOK_ID }, true);
+        public static final ForeignKey<BookRecord, AuthorRecord> FK_T_BOOK_AUTHOR_ID = Internal.createForeignKey(Keys.PK_T_AUTHOR, Book.BOOK, "FK_T_BOOK_AUTHOR_ID", new TableField[] { Book.BOOK.AUTHOR_ID }, true);
+        public static final ForeignKey<BookRecord, AuthorRecord> FK_T_BOOK_CO_AUTHOR_ID = Internal.createForeignKey(Keys.PK_T_AUTHOR, Book.BOOK, "FK_T_BOOK_CO_AUTHOR_ID", new TableField[] { Book.BOOK.CO_AUTHOR_ID }, true);
+        public static final ForeignKey<BookToBookStoreRecord, BookStoreRecord> FK_B2BS_BS_NAME = Internal.createForeignKey(Keys.UK_T_BOOK_STORE_NAME, BookToBookStore.BOOK_TO_BOOK_STORE, "FK_B2BS_BS_NAME", new TableField[] { BookToBookStore.BOOK_TO_BOOK_STORE.BOOK_STORE_NAME }, true);
+        public static final ForeignKey<BookToBookStoreRecord, BookRecord> FK_B2BS_B_ID = Internal.createForeignKey(Keys.PK_T_BOOK, BookToBookStore.BOOK_TO_BOOK_STORE, "FK_B2BS_B_ID", new TableField[] { BookToBookStore.BOOK_TO_BOOK_STORE.BOOK_ID }, true);
     }
 }

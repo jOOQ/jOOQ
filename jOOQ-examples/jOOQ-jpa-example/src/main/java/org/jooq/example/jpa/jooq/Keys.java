@@ -70,9 +70,9 @@ public class Keys {
     }
 
     private static class ForeignKeys0 {
-        public static final ForeignKey<FilmRecord, LanguageRecord> FKD2YJC1RU34H1SMWLA3FX7B6NX = Internal.createForeignKey(org.jooq.example.jpa.jooq.Keys.CONSTRAINT_C, Film.FILM, "FKD2YJC1RU34H1SMWLA3FX7B6NX", new TableField[] { Film.FILM.LANGUAGE_LANGUAGEID }, true);
-        public static final ForeignKey<FilmRecord, LanguageRecord> FKN2UB730RPO5B5E9X6U2LWL9FT = Internal.createForeignKey(org.jooq.example.jpa.jooq.Keys.CONSTRAINT_C, Film.FILM, "FKN2UB730RPO5B5E9X6U2LWL9FT", new TableField[] { Film.FILM.ORIGINALLANGUAGE_LANGUAGEID }, true);
-        public static final ForeignKey<FilmActorRecord, FilmRecord> FK3FSUXQ0JJ1XONRE7BHROOPVBX = Internal.createForeignKey(org.jooq.example.jpa.jooq.Keys.CONSTRAINT_2, FilmActor.FILM_ACTOR, "FK3FSUXQ0JJ1XONRE7BHROOPVBX", new TableField[] { FilmActor.FILM_ACTOR.FILMS_FILMID }, true);
-        public static final ForeignKey<FilmActorRecord, ActorRecord> FK43SD2F45W7YN0GAXQ94EHTWT2 = Internal.createForeignKey(org.jooq.example.jpa.jooq.Keys.CONSTRAINT_3, FilmActor.FILM_ACTOR, "FK43SD2F45W7YN0GAXQ94EHTWT2", new TableField[] { FilmActor.FILM_ACTOR.ACTORS_ACTORID }, true);
+        public static final ForeignKey<FilmRecord, LanguageRecord> FKD2YJC1RU34H1SMWLA3FX7B6NX = Internal.createForeignKey(Keys.CONSTRAINT_C, Film.FILM, "FKD2YJC1RU34H1SMWLA3FX7B6NX", new TableField[] { Film.FILM.LANGUAGE_LANGUAGEID }, true);
+        public static final ForeignKey<FilmRecord, LanguageRecord> FKN2UB730RPO5B5E9X6U2LWL9FT = Internal.createForeignKey(Keys.CONSTRAINT_C, Film.FILM, "FKN2UB730RPO5B5E9X6U2LWL9FT", new TableField[] { Film.FILM.ORIGINALLANGUAGE_LANGUAGEID }, true);
+        public static final ForeignKey<FilmActorRecord, FilmRecord> FK3FSUXQ0JJ1XONRE7BHROOPVBX = Internal.createForeignKey(Keys.CONSTRAINT_2, FilmActor.FILM_ACTOR, "FK3FSUXQ0JJ1XONRE7BHROOPVBX", new TableField[] { FilmActor.FILM_ACTOR.FILMS_FILMID }, true);
+        public static final ForeignKey<FilmActorRecord, ActorRecord> FK43SD2F45W7YN0GAXQ94EHTWT2 = Internal.createForeignKey(Keys.CONSTRAINT_3, FilmActor.FILM_ACTOR, "FK43SD2F45W7YN0GAXQ94EHTWT2", new TableField[] { FilmActor.FILM_ACTOR.ACTORS_ACTORID }, true);
     }
 }

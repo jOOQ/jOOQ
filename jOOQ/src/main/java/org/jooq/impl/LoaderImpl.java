@@ -71,7 +71,6 @@ import org.jooq.LoaderFieldMapper;
 import org.jooq.LoaderFieldMapper.LoaderFieldContext;
 import org.jooq.LoaderJSONOptionsStep;
 import org.jooq.LoaderJSONStep;
-import org.jooq.LoaderListenerStep;
 import org.jooq.LoaderOptionsStep;
 import org.jooq.LoaderRowListener;
 import org.jooq.LoaderRowsStep;
@@ -543,7 +542,7 @@ final class LoaderImpl<R extends Record> implements
     }
 
     @Override
-    public final LoaderListenerStep<R> fields(LoaderFieldMapper mapper) {
+    public final LoaderImpl<R> fields(LoaderFieldMapper mapper) {
         fieldMapper = mapper;
         return this;
     }

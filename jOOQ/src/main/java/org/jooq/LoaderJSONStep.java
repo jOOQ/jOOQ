@@ -85,5 +85,5 @@ public interface LoaderJSONStep<R extends Record> {
      * column index in enumeration order.
      */
     @Support
-    LoaderListenerStep<R> fields(LoaderFieldMapper mapper);
+    LoaderJSONOptionsStep<R> fields(LoaderFieldMapper mapper);
 }

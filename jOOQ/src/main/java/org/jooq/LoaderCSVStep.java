@@ -101,5 +101,5 @@ public interface LoaderCSVStep<R extends Record> {
      * CSV column index.
      */
     @Support
-    LoaderListenerStep<R> fields(LoaderFieldMapper mapper);
+    LoaderCSVOptionsStep<R> fields(LoaderFieldMapper mapper);
 }

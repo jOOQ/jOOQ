@@ -8152,11 +8152,10 @@ final class ParserImpl implements Parser {
         if (parseFunctionNameIf(ctx, "ISNULL")) {
             parse(ctx, '(');
             Field<?> f1 = parseField(ctx);
-            parse(ctx, ',');
-            Field<?> f2 = parseField(ctx);
+            Field<?> f2 = parseIf(ctx, ',') ? parseField(ctx) : null;
             parse(ctx, ')');
 
-            return isnull(f1, f2);
+            return f2 != null ? isnull(f1, f2) : field(f1.isNull());
         }
 
         return null;

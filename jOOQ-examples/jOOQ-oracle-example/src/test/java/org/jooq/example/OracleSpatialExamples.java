@@ -103,7 +103,7 @@ public class OracleSpatialExamples extends Utils {
         System.out.println("Return the areas of all cola markets.");
         System.out.println("-------------------------------------");
 
-        dsl.select(SdoGeom.sdoArea2(c_a.SHAPE, val(0.005)))
+        dsl.select(SdoGeom.sdoArea2(c_a.SHAPE, val(0.005), val("SQ_KM")))
            .from(c_a)
            .fetch()
            .map(Record1::value1)
@@ -117,7 +117,7 @@ public class OracleSpatialExamples extends Utils {
         System.out.println("Return the distance between two geometries.");
         System.out.println("-------------------------------------------");
 
-        dsl.select(SdoGeom.sdoDistance2(c_b.SHAPE, c_d.SHAPE, val(0.005)))
+        dsl.select(SdoGeom.sdoDistance2(c_b.SHAPE, c_d.SHAPE, val(0.005), val("KM"), val("false")))
            .from(c_b, c_d)
            .where(c_b.NAME.eq("cola_b"))
            .and(c_d.NAME.eq("cola_d"))

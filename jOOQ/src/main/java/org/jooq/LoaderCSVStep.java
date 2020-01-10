@@ -40,6 +40,7 @@ package org.jooq;
 import java.util.Collection;
 
 import org.jooq.LoaderFieldMapper.LoaderFieldContext;
+import org.jooq.exception.LoaderConfigurationException;
 
 /**
  * The <code>Loader</code> API is used for configuring data loads.
@@ -102,4 +103,16 @@ public interface LoaderCSVStep<R extends Record> {
      */
     @Support
     LoaderCSVOptionsStep<R> fields(LoaderFieldMapper mapper);
+
+    /**
+     * Indicate that all input fields which have a corresponding field in the
+     * target table (with the same name) should be loaded.
+     * <p>
+     * When {@link LoaderLoadStep#execute() executing the loader} input fields
+     * for which there is no match in the target table will be logged and if no
+     * field names can be derived for the input data a
+     * {@link LoaderConfigurationException} will be reported.
+     */
+    @Support
+    LoaderCSVOptionsStep<R> fieldsFromSource();
 }

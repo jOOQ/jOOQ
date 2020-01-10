@@ -40,6 +40,7 @@ package org.jooq;
 import java.util.Collection;
 
 import org.jooq.LoaderFieldMapper.LoaderFieldContext;
+import org.jooq.exception.LoaderConfigurationException;
 
 /**
  * The <code>Loader</code> API is used for configuring data loads.
@@ -53,7 +54,7 @@ import org.jooq.LoaderFieldMapper.LoaderFieldContext;
 public interface LoaderJSONStep<R extends Record> {
 
     /**
-     * Specify the the fields to be loaded into the table in the correct order.
+     * Specify the fields to be loaded into the table in the correct order.
      * <p>
      * The JSON column at index <code>i</code> is inserted into the table field
      * at index <code>i</code>. If <code>fields[i] == null</code> or
@@ -64,7 +65,7 @@ public interface LoaderJSONStep<R extends Record> {
     LoaderJSONOptionsStep<R> fields(Field<?>... fields);
 
     /**
-     * Specify the the fields to be loaded into the table in the correct order.
+     * Specify the fields to be loaded into the table in the correct order.
      * <p>
      * The JSON column at index <code>i</code> is inserted into the table field
      * at index <code>i</code>. If
@@ -86,4 +87,16 @@ public interface LoaderJSONStep<R extends Record> {
      */
     @Support
     LoaderJSONOptionsStep<R> fields(LoaderFieldMapper mapper);
+
+    /**
+     * Indicate that all input fields which have a corresponding field in the
+     * target table (with the same name) should be loaded.
+     * <p>
+     * When {@link LoaderLoadStep#execute() executing the loader} input fields
+     * for which there is no match in the target table will be logged and if no
+     * field names can be derived for the input data a
+     * {@link LoaderConfigurationException} will be reported.
+     */
+    @Support
+    LoaderJSONOptionsStep<R> fieldsFromSource();
 }

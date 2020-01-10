@@ -191,7 +191,7 @@ final class Dual extends AbstractTable<Record> {
 
 
                 default:
-                    ctx.sql("dual");
+                    ctx.visit(N_DUAL);
                     break;
             }
         }

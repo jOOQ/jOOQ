@@ -8,6 +8,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import org.jooq.util.jaxb.tools.StringAdapter;
 import org.jooq.util.jaxb.tools.XMLAppendable;
 import org.jooq.util.jaxb.tools.XMLBuilder;
 
@@ -26,6 +28,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *         &lt;element name="onError" type="{http://www.jooq.org/xsd/jooq-codegen-3.13.0.xsd}OnError" minOccurs="0"/&gt;
  *         &lt;element name="jdbc" type="{http://www.jooq.org/xsd/jooq-codegen-3.13.0.xsd}Jdbc" minOccurs="0"/&gt;
  *         &lt;element name="generator" type="{http://www.jooq.org/xsd/jooq-codegen-3.13.0.xsd}Generator"/&gt;
+ *         &lt;element name="basedir" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -54,6 +57,8 @@ public class Configuration implements Serializable, XMLAppendable
     protected Jdbc jdbc;
     @XmlElement(required = true)
     protected Generator generator;
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String basedir;
 
     /**
      * The logging configuration element specifies the code generation logging threshold.
@@ -120,6 +125,22 @@ public class Configuration implements Serializable, XMLAppendable
     }
 
     /**
+     * The base directory that should be used instead of the JVM's working directory, to resolve all relative paths.
+     *
+     */
+    public String getBasedir() {
+        return basedir;
+    }
+
+    /**
+     * The base directory that should be used instead of the JVM's working directory, to resolve all relative paths.
+     *
+     */
+    public void setBasedir(String value) {
+        this.basedir = value;
+    }
+
+    /**
      * The logging configuration element specifies the code generation logging threshold.
      *
      */
@@ -155,12 +176,22 @@ public class Configuration implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * The base directory that should be used instead of the JVM's working directory, to resolve all relative paths.
+     *
+     */
+    public Configuration withBasedir(String value) {
+        setBasedir(value);
+        return this;
+    }
+
     @Override
     public final void appendTo(XMLBuilder builder) {
         builder.append("logging", logging);
         builder.append("onError", onError);
         builder.append("jdbc", jdbc);
         builder.append("generator", generator);
+        builder.append("basedir", basedir);
     }
 
     @Override
@@ -218,6 +249,15 @@ public class Configuration implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (basedir == null) {
+            if (other.basedir!= null) {
+                return false;
+            }
+        } else {
+            if (!basedir.equals(other.basedir)) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -229,6 +269,7 @@ public class Configuration implements Serializable, XMLAppendable
         result = ((prime*result)+((onError == null)? 0 :onError.hashCode()));
         result = ((prime*result)+((jdbc == null)? 0 :jdbc.hashCode()));
         result = ((prime*result)+((generator == null)? 0 :generator.hashCode()));
+        result = ((prime*result)+((basedir == null)? 0 :basedir.hashCode()));
         return result;
     }
 

@@ -45,6 +45,7 @@ import static org.jooq.tools.StringUtils.isBlank;
 import static org.jooq.util.xml.jaxb.TableConstraintType.PRIMARY_KEY;
 import static org.jooq.util.xml.jaxb.TableConstraintType.UNIQUE;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.Reader;
@@ -153,7 +154,11 @@ public class XMLDatabase extends AbstractDatabase {
                 throw new RuntimeException("Must provide an xmlFile property");
 
             try {
-                new FilePattern().pattern(xml).sort(Sort.of(sort)).load(new Loader() {
+                new FilePattern()
+                        .basedir(new File(getBasedir()))
+                        .pattern(xml)
+                        .sort(Sort.of(sort))
+                        .load(new Loader() {
                     @Override
                     public void load(Source source) {
                         String content;

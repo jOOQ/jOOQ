@@ -41,6 +41,7 @@ import static org.jooq.conf.SettingsTools.renderLocale;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.tools.StringUtils.isBlank;
 
+import java.io.File;
 import java.io.Reader;
 import java.sql.SQLException;
 import java.util.Scanner;
@@ -144,10 +145,11 @@ public class DDLDatabase extends AbstractInterpretingDatabase {
             }
 
             new FilePattern()
-                .encoding(encoding)
-                .pattern(scripts)
-                .sort(Sort.of(sort))
-                .load(new Loader() {
+                    .encoding(encoding)
+                    .basedir(new File(getBasedir()))
+                    .pattern(scripts)
+                    .sort(Sort.of(sort))
+                    .load(new Loader() {
                 @Override
                 public void load(Source source) {
                     DDLDatabase.this.load(ctx, source);

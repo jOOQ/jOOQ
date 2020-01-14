@@ -995,6 +995,18 @@ public interface Database  extends AutoCloseable  {
     Properties getProperties();
 
     /**
+     * The basedir that can be used by file based implementations to resolve
+     * relative paths.
+     */
+    void setBasedir(String basedir);
+
+    /**
+     * The basedir that can be used by file based implementations to resolve
+     * relative paths.
+     */
+    String getBasedir();
+
+    /**
      * Release any resources that this Database may have allocated.
      */
 

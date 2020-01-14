@@ -26,6 +26,10 @@
         <element name="generator" type="tns:Generator" minOccurs="1" maxOccurs="1">
           <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The GENERATOR configuration element contains information about source code generation itself.]]></jxb:javadoc></jxb:property></appinfo></annotation>
         </element>
+
+        <element name="basedir" type="string" minOccurs="0" maxOccurs="1">
+          <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The base directory that should be used instead of the JVM's working directory, to resolve all relative paths.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        </element>
       </all>
     </complexType>
   </element>

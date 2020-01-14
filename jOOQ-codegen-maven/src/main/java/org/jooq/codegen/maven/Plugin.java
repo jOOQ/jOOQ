@@ -105,6 +105,15 @@ public class Plugin extends AbstractMojo {
     private List<String>                 configurationFiles;
 
     /**
+     * The base directory that should be used instead of the JVM's working
+     * directory, to resolve all relative paths.
+     */
+    @Parameter(
+        property = "jooq.codegen.basedir"
+    )
+    private String                       basedir;
+
+    /**
      * Whether to skip the execution of the Maven Plugin for this module.
      */
     @Parameter(
@@ -175,6 +184,9 @@ public class Plugin extends AbstractMojo {
             // [#2886] Add the surrounding project's dependencies to the current classloader
             Thread.currentThread().setContextClassLoader(pluginClassLoader);
 
+            // [#9727] The Maven basedir may be overridden by explicit configuration
+            String actualBasedir = basedir == null ? project.getBasedir().getAbsolutePath() : basedir;
+
             // [#5881] Target is allowed to be null
             if (generator.getTarget() == null)
                 generator.setTarget(new Target());
@@ -182,15 +194,12 @@ public class Plugin extends AbstractMojo {
             if (generator.getTarget().getDirectory() == null)
                 generator.getTarget().setDirectory(DEFAULT_TARGET_DIRECTORY);
 
-            // [#2887] Patch relative paths to take plugin execution basedir into account
-            if (!new File(generator.getTarget().getDirectory()).isAbsolute())
-                generator.getTarget().setDirectory(new File(project.getBasedir(), generator.getTarget().getDirectory()).getCanonicalPath());
-
             Configuration configuration = new Configuration();
             configuration.setLogging(logging);
             configuration.setOnError(onError);
             configuration.setJdbc(jdbc);
             configuration.setGenerator(generator);
+            configuration.setBasedir(actualBasedir);
 
             if (getLog().isDebugEnabled())
                 getLog().debug("Using this configuration:\n" + configuration);

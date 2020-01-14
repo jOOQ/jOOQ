@@ -45,6 +45,7 @@ import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.meta.AbstractTypedElementDefinition.customType;
 import static org.jooq.tools.StringUtils.defaultIfEmpty;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.math.BigInteger;
@@ -115,6 +116,7 @@ public abstract class AbstractDatabase implements Database {
     // -------------------------------------------------------------------------
 
     private Properties                                                       properties;
+    private String                                                           basedir;
     private SQLDialect                                                       dialect;
     private Connection                                                       connection;
     private boolean                                                          regexMatchesPartialQualification;
@@ -828,6 +830,16 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final Properties getProperties() {
         return properties;
+    }
+
+    @Override
+    public final void setBasedir(String basedir) {
+        this.basedir = basedir;
+    }
+
+    @Override
+    public final String getBasedir() {
+        return basedir == null ? new File(".").getAbsolutePath() : basedir;
     }
 
     @Override

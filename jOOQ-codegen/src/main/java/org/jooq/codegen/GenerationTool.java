@@ -283,6 +283,11 @@ public class GenerationTool {
         if (log.isDebugEnabled())
             log.debug("Input configuration", "" + configuration);
 
+        // [#9727] The Maven plugin will have set the basedir to Maven's ${basedir}.
+        //         Standalone code generation should use the JVM's working dir as basedir, by default.
+        if (configuration.getBasedir() == null)
+            configuration.setBasedir(new File(".").getAbsolutePath());
+
         Jdbc j = configuration.getJdbc();
         org.jooq.meta.jaxb.Generator g = configuration.getGenerator();
         if (g == null)
@@ -395,6 +400,7 @@ public class GenerationTool {
                 ? databaseClass(connection)
                 : databaseClass(j);
             database = databaseClass.newInstance();
+            database.setBasedir(configuration.getBasedir());
             database.setProperties(properties(d.getProperties()));
 
             List<CatalogMappingType> catalogs = d.getCatalogs();
@@ -625,6 +631,10 @@ public class GenerationTool {
                 g.getTarget().setDirectory(DEFAULT_TARGET_DIRECTORY);
             if (StringUtils.isBlank(g.getTarget().getEncoding()))
                 g.getTarget().setEncoding(DEFAULT_TARGET_ENCODING);
+
+            // [#2887] [#9727] Patch relative paths to take plugin execution basedir into account
+            if (!new File(g.getTarget().getDirectory()).isAbsolute())
+                g.getTarget().setDirectory(new File(configuration.getBasedir(), g.getTarget().getDirectory()).getCanonicalPath());
 
             generator.setTargetPackage(g.getTarget().getPackageName());
             generator.setTargetDirectory(g.getTarget().getDirectory());

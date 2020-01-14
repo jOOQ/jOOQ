@@ -222,19 +222,16 @@ public final class FilePattern {
                     load(file, comparator, null, loader);
                     loaded = true;
                 }
+                else if (!pattern.contains("*") && !pattern.contains("?")) {
+                    load(new File(basedir, pattern), comparator, null, loader);
+                    loaded = true;
+                }
                 else {
+                    String prefix = pattern.replaceAll("[*?].*", "");
+                    File canonical = new File(prefix).getCanonicalFile();
 
-                    // [#8336] Relative paths aren't necessarily relative to the
-                    //         working directory, but maybe to some subdirectory
-                    if (pattern.contains("*") || pattern.contains("?")) {
-                        String prefix = pattern.replaceAll("[*?].*", "");
-                        File canonical = new File(prefix).getCanonicalFile();
-
-                        if (canonical.exists())
-                            file = canonical;
-                        else
-                            file = new File(basedir, prefix);
-                    }
+                    if (canonical.exists())
+                        file = canonical;
                     else
                         file = basedir.getCanonicalFile();
 
@@ -290,11 +287,6 @@ public final class FilePattern {
                 for (File f : files)
                     load(f, comparator, regex, loader);
             }
-        }
-
-        // [#7767] Backtrack to a parent directory in case the current file pattern doesn't match yet
-        else if (!file.exists() && file.getParentFile() != null) {
-            load(file.getParentFile(), comparator, regex, loader);
         }
     }
 

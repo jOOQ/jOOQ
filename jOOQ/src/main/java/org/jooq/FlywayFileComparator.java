@@ -35,11 +35,14 @@
  *
  *
  */
-package org.jooq.meta.tools;
+package org.jooq;
 
 import java.io.File;
 import java.util.Comparator;
 
+/**
+ * @author Lukas Eder
+ */
 final class FlywayFileComparator implements Comparator<File> {
 
     public static final FlywayFileComparator INSTANCE = new FlywayFileComparator();

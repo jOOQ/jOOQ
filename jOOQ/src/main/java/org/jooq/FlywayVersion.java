@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jooq.meta.tools;
+package org.jooq;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -65,11 +65,11 @@ final class FlywayVersion implements Comparable<FlywayVersion> {
      */
     private FlywayVersion(String version) {
         if (!StringUtils.isEmpty(version)) {
-          String normalizedVersion = version.replace('_', '.');
-          this.versionParts = tokenize(normalizedVersion);
+            String normalizedVersion = version.replace('_', '.');
+            this.versionParts = tokenize(normalizedVersion);
         }
         else {
-          this.versionParts = new ArrayList<>();
+            this.versionParts = new ArrayList<>();
         }
     }
 

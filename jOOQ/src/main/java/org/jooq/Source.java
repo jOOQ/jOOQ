@@ -249,4 +249,20 @@ public final class Source {
         else
             return new InputStreamReader(is);
     }
+
+    @Override
+    public String toString() {
+        if (string != null)
+            return string;
+        else if (bytes != null)
+            return readString();
+        else if (reader != null)
+            return "Source (Reader)";
+        else if (inputStream != null)
+            return "Source (InputStream)";
+        else if (file != null)
+            return "Source (" + file + ")";
+        else
+            return "Source (other)";
+    }
 }

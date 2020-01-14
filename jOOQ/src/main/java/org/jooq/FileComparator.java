@@ -35,7 +35,7 @@
  *
  *
  */
-package org.jooq.meta.tools;
+package org.jooq;
 
 import java.io.File;
 import java.util.Comparator;
@@ -62,7 +62,7 @@ import java.util.Comparator;
  *
  * @author Lukas Eder
  */
-public final class FileComparator implements Comparator<File> {
+final class FileComparator implements Comparator<File> {
 
     public static final FileComparator INSTANCE = new FileComparator();
 

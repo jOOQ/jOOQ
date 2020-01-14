@@ -41,15 +41,16 @@ import static org.jooq.conf.SettingsTools.renderLocale;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.tools.StringUtils.isBlank;
 
-import java.io.File;
 import java.io.Reader;
 import java.sql.SQLException;
-import java.util.Comparator;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.jooq.DSLContext;
+import org.jooq.FilePattern;
+import org.jooq.FilePattern.Loader;
+import org.jooq.FilePattern.Sort;
 import org.jooq.Name;
 import org.jooq.Name.Quoted;
 import org.jooq.Queries;
@@ -64,8 +65,6 @@ import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultVisitListener;
 import org.jooq.impl.ParserException;
 import org.jooq.meta.extensions.AbstractInterpretingDatabase;
-import org.jooq.meta.tools.FilePattern;
-import org.jooq.meta.tools.FilePattern.Loader;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.JDBCUtils;
 
@@ -98,8 +97,6 @@ public class DDLDatabase extends AbstractInterpretingDatabase {
         boolean parseIgnoreComments = !"false".equalsIgnoreCase(getProperties().getProperty("parseIgnoreComments"));
         String parseIgnoreCommentStart = getProperties().getProperty("parseIgnoreCommentStart", defaultSettings.getParseIgnoreCommentStart());
         String parseIgnoreCommentStop = getProperties().getProperty("parseIgnoreCommentStop", defaultSettings.getParseIgnoreCommentStop());
-
-        Comparator<File> fileComparator = FilePattern.fileComparator(sort);
 
         if (isBlank(scripts)) {
             scripts = "";
@@ -146,7 +143,11 @@ public class DDLDatabase extends AbstractInterpretingDatabase {
                 });
             }
 
-            FilePattern.load(encoding, scripts, fileComparator, new Loader() {
+            new FilePattern()
+                .encoding(encoding)
+                .pattern(scripts)
+                .sort(Sort.of(sort))
+                .load(new Loader() {
                 @Override
                 public void load(Source source) {
                     DDLDatabase.this.load(ctx, source);

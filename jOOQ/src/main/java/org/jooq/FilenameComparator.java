@@ -35,7 +35,7 @@
  *
  *
  */
-package org.jooq.meta.tools;
+package org.jooq;
 
 import java.math.BigInteger;
 import java.util.Comparator;
@@ -63,7 +63,7 @@ import java.util.regex.Pattern;
  *
  * @author Lukas Eder
  */
-public final class FilenameComparator implements Comparator<String> {
+final class FilenameComparator implements Comparator<String> {
 
     // Idea taken from here: https://codereview.stackexchange.com/a/37217/5314
     private static final Pattern           NUMBERS  = Pattern.compile("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");

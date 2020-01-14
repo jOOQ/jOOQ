@@ -293,6 +293,9 @@ public class GenerationTool {
         if (g == null)
             throw new GeneratorException("The <generator/> tag is mandatory. For details, see " + Constants.NS_CODEGEN);
 
+        org.jooq.meta.jaxb.Database d = defaultIfNull(g.getDatabase(), new org.jooq.meta.jaxb.Database());
+        String databaseName = trim(d.getName());
+
         // [#1394] The <generate/> element and some others should be optional
         if (g.getGenerate() == null)
             g.setGenerate(new Generate());
@@ -339,15 +342,24 @@ public class GenerationTool {
                     }
 
                     if (j != null) {
-                        Class<? extends Driver> driver = (Class<? extends Driver>) loadClass(driverClass(j));
+                        try {
+                            Class<? extends Driver> driver = (Class<? extends Driver>) loadClass(driverClass(j));
 
-                        Properties properties = properties(j.getProperties());
-                        if (!properties.containsKey("user"))
-                            properties.put("user", defaultString(defaultString(j.getUser(), j.getUsername())));
-                        if (!properties.containsKey("password"))
-                            properties.put("password", defaultString(j.getPassword()));
+                            Properties properties = properties(j.getProperties());
+                            if (!properties.containsKey("user"))
+                                properties.put("user", defaultString(defaultString(j.getUser(), j.getUsername())));
+                            if (!properties.containsKey("password"))
+                                properties.put("password", defaultString(j.getPassword()));
 
-                        connection = driver.newInstance().connect(defaultString(j.getUrl()), properties);
+                            connection = driver.newInstance().connect(defaultString(j.getUrl()), properties);
+                        }
+                        catch (Exception e) {
+                            if (databaseName != null)
+                                if (databaseName.contains("DDLDatabase") || databaseName.contains("XMLDatabase") || databaseName.contains("JPADatabase"))
+                                    log.warn("Error while connecting to database. Note that file based database implementations do not need a <jdbc/> configuration in the code generator.", e);
+
+                            throw e;
+                        }
                     }
                 }
             }
@@ -392,8 +404,6 @@ public class GenerationTool {
 
             generator.setStrategy(strategy);
 
-            org.jooq.meta.jaxb.Database d = defaultIfNull(g.getDatabase(), new org.jooq.meta.jaxb.Database());
-            String databaseName = trim(d.getName());
             Class<? extends Database> databaseClass = !isBlank(databaseName)
                 ? (Class<? extends Database>) loadClass(databaseName)
                 : connection != null

@@ -227,14 +227,20 @@ public final class FilePattern {
                     loaded = true;
                 }
                 else {
-                    String prefix = pattern.replaceAll("[*?].*", "");
-                    file = new File(basedir, prefix).getAbsoluteFile();
+
+                    // [#9726] The wildcard could be in the middle of a path segment, which
+                    //         has to be ignored, e.g. the prefix of a/b*/c is a/
+                    String prefix = pattern.replaceAll("[^\\/]*?[*?].*", "");
+                    file = new File(prefix);
+
+                    if (!file.isAbsolute())
+                        file = new File(basedir, prefix).getAbsoluteFile();
 
                     Pattern regex = Pattern.compile("^.*?"
                        + pattern
                         .replace("\\", "/")
                         .replace(".", "\\.")
-                        .replace("?", ".")
+                        .replace("?", "[^/]")
                         .replace("**", ".+?")
                         .replace("*", "[^/]*")
                        + "$"
@@ -283,6 +289,11 @@ public final class FilePattern {
                     load(f, comparator, regex, loader);
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        return pattern;
     }
 
     /**

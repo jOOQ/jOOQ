@@ -228,12 +228,7 @@ public final class FilePattern {
                 }
                 else {
                     String prefix = pattern.replaceAll("[*?].*", "");
-                    File canonical = new File(prefix).getCanonicalFile();
-
-                    if (canonical.exists())
-                        file = canonical;
-                    else
-                        file = basedir.getCanonicalFile();
+                    file = new File(basedir, prefix).getCanonicalFile();
 
                     Pattern regex = Pattern.compile("^.*?"
                        + pattern

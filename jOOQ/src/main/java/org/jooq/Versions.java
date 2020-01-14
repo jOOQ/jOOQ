@@ -41,9 +41,13 @@ package org.jooq;
  * A directed, acyclic graph of {@link Version} objects.
  * <p>
  * The graph is exposed as {@link Iterable} in no defined iteration order.
+ * <p>
+ * This is EXPERIMENTAL functionality and subject to change in future jOOQ
+ * versions.
  *
  * @author Lukas Eder
  */
+@Internal
 public interface Versions extends Iterable<Version> {
 
     /**

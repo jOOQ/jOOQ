@@ -250,12 +250,20 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Initialise a {@link Version}.
+     * <p>
+     * This is EXPERIMENTAL functionality and subject to change in future jOOQ
+     * versions.
      */
+    @Internal
     Version version(String id);
 
     /**
      * Create a migration from the currently installed version to a new version.
+     * <p>
+     * This is EXPERIMENTAL functionality and subject to change in future jOOQ
+     * versions.
      */
+    @Internal
     Migration migrateTo(Version to);
 
     /**

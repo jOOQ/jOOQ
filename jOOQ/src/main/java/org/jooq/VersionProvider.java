@@ -39,10 +39,13 @@ package org.jooq;
 
 /**
  * An SPI that allows for providing a graph of versions.
+ * <p>
+ * This is EXPERIMENTAL functionality and subject to change in future jOOQ
+ * versions.
  *
  * @author Lukas Eder
  */
-@Internal // TODO This SPI is still being worked on and might change incompatibly
+@Internal
 public interface VersionProvider {
 
     /**

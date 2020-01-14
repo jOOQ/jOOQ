@@ -44,9 +44,13 @@ import org.jooq.conf.Settings;
 
 /**
  * A version ID attached to a {@link Meta} description of a database.
+ * <p>
+ * This is EXPERIMENTAL functionality and subject to change in future jOOQ
+ * versions.
  *
  * @author Lukas Eder
  */
+@Internal
 public interface Version {
 
     /**

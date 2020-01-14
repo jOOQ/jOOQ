@@ -39,10 +39,14 @@ package org.jooq;
 
 /**
  * The context in which a {@link Migration} is executed.
+ * <p>
+ * This is EXPERIMENTAL functionality and subject to change in future jOOQ
+ * versions.
  *
  * @see MigrationListener
  * @author Lukas Eder
  */
+@Internal
 public interface MigrationContext extends Scope {
 
     /**

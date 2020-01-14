@@ -37,6 +37,8 @@
  */
 package org.jooq;
 
+import org.jooq.impl.DefaultMigrationListenerProvider;
+
 /**
  * A provider for {@link MigrationListener} instances.
  * <p>
@@ -45,6 +47,9 @@ package org.jooq;
  * {@link Configuration}, clients can implement this API. To jOOQ, it is thus
  * irrelevant, if migration listeners are stateful or stateless, local to an
  * execution, or global to an application.
+ * <p>
+ * This is EXPERIMENTAL functionality and subject to change in future jOOQ
+ * versions.
  *
  * @author Lukas Eder
  * @see MigrationListener
@@ -53,6 +58,7 @@ package org.jooq;
 
 @FunctionalInterface
 
+@Internal
 public interface MigrationListenerProvider {
 
     /**

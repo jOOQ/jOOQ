@@ -42,9 +42,13 @@ import org.jooq.exception.DataMigrationValidationException;
 
 /**
  * An executable migration between two {@link Version} instances.
+ * <p>
+ * This is EXPERIMENTAL functionality and subject to change in future jOOQ
+ * versions.
  *
  * @author Lukas Eder
  */
+@Internal
 public interface Migration extends Scope {
 
     /**

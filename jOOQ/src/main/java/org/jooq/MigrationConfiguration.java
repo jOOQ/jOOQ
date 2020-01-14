@@ -40,9 +40,13 @@ package org.jooq;
 /**
  * A configuration type for use with the various {@link Meta#migrateTo(Meta)}
  * methods.
+ * <p>
+ * This is EXPERIMENTAL functionality and subject to change in future jOOQ
+ * versions.
  *
  * @author Lukas Eder
  */
+@Internal
 public final class MigrationConfiguration {
 
     private final boolean alterTableAddMultiple;

@@ -41,9 +41,13 @@ import java.util.EventListener;
 
 /**
  * A listener for {@link Migration} lifecycles.
+ * <p>
+ * This is EXPERIMENTAL functionality and subject to change in future jOOQ
+ * versions.
  *
  * @author Lukas Eder
  */
+@Internal
 public interface MigrationListener extends EventListener {
 
     /**

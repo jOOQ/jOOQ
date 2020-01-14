@@ -228,7 +228,7 @@ public final class FilePattern {
                 }
                 else {
                     String prefix = pattern.replaceAll("[*?].*", "");
-                    file = new File(basedir, prefix).getCanonicalFile();
+                    file = new File(basedir, prefix).getAbsoluteFile();
 
                     Pattern regex = Pattern.compile("^.*?"
                        + pattern

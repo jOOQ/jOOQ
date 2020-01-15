@@ -468,7 +468,7 @@ public interface WithStep extends QueryPart {
      * @see DSL#table(Name)
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    <R extends Record> SelectWhereStep<R> selectFrom(Name table);
+    SelectWhereStep<Record> selectFrom(Name table);
 
     /**
      * Create a new DSL select statement, projecting <code>*</code>.
@@ -492,7 +492,7 @@ public interface WithStep extends QueryPart {
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @PlainSQL
-    <R extends Record> SelectWhereStep<R> selectFrom(SQL sql);
+    SelectWhereStep<Record> selectFrom(SQL sql);
 
     /**
      * Create a new DSL select statement, projecting <code>*</code>.
@@ -517,7 +517,7 @@ public interface WithStep extends QueryPart {
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @PlainSQL
-    <R extends Record> SelectWhereStep<R> selectFrom(String sql);
+    SelectWhereStep<Record> selectFrom(String sql);
 
     /**
      * Create a new DSL select statement, projecting <code>*</code>.
@@ -542,7 +542,7 @@ public interface WithStep extends QueryPart {
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @PlainSQL
-    <R extends Record> SelectWhereStep<R> selectFrom(String sql, Object... bindings);
+    SelectWhereStep<Record> selectFrom(String sql, Object... bindings);
 
     /**
      * Create a new DSL select statement, projecting <code>*</code>.
@@ -567,7 +567,7 @@ public interface WithStep extends QueryPart {
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @PlainSQL
-    <R extends Record> SelectWhereStep<R> selectFrom(String sql, QueryPart... parts);
+    SelectWhereStep<Record> selectFrom(String sql, QueryPart... parts);
 
     /**
      * Create a new DSL select statement.

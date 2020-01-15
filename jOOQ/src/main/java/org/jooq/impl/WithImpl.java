@@ -531,27 +531,27 @@ implements
     }
 
     @Override
-    public final <R extends Record> SelectWhereStep<R> selectFrom(Name table) {
+    public final SelectWhereStep<Record> selectFrom(Name table) {
         return new SelectImpl(configuration, this).from(table);
     }
 
     @Override
-    public final <R extends Record> SelectWhereStep<R> selectFrom(SQL sql) {
+    public final SelectWhereStep<Record> selectFrom(SQL sql) {
         return new SelectImpl(configuration, this).from(sql);
     }
 
     @Override
-    public final <R extends Record> SelectWhereStep<R> selectFrom(String sql) {
+    public final SelectWhereStep<Record> selectFrom(String sql) {
         return new SelectImpl(configuration, this).from(sql);
     }
 
     @Override
-    public final <R extends Record> SelectWhereStep<R> selectFrom(String sql, Object... bindings) {
+    public final SelectWhereStep<Record> selectFrom(String sql, Object... bindings) {
         return new SelectImpl(configuration, this).from(sql, bindings);
     }
 
     @Override
-    public final <R extends Record> SelectWhereStep<R> selectFrom(String sql, QueryPart... parts) {
+    public final SelectWhereStep<Record> selectFrom(String sql, QueryPart... parts) {
         return new SelectImpl(configuration, this).from(sql, parts);
     }
 

@@ -2627,7 +2627,7 @@ public class DSL {
      * @see DSL#table(Name)
      */
     @Support
-    public static <R extends Record> SelectWhereStep<R> selectFrom(Name table) {
+    public static SelectWhereStep<Record> selectFrom(Name table) {
         return dsl().selectFrom(table);
     }
 
@@ -2661,7 +2661,7 @@ public class DSL {
      */
     @Support
     @PlainSQL
-    public static <R extends Record> SelectWhereStep<R> selectFrom(SQL sql) {
+    public static SelectWhereStep<Record> selectFrom(SQL sql) {
         return dsl().selectFrom(sql);
     }
 
@@ -2696,7 +2696,7 @@ public class DSL {
      */
     @Support
     @PlainSQL
-    public static <R extends Record> SelectWhereStep<R> selectFrom(String sql) {
+    public static SelectWhereStep<Record> selectFrom(String sql) {
         return dsl().selectFrom(sql);
     }
 
@@ -2731,7 +2731,7 @@ public class DSL {
      */
     @Support
     @PlainSQL
-    public static <R extends Record> SelectWhereStep<R> selectFrom(String sql, Object... bindings) {
+    public static SelectWhereStep<Record> selectFrom(String sql, Object... bindings) {
         return dsl().selectFrom(sql, bindings);
     }
 
@@ -2766,7 +2766,7 @@ public class DSL {
      */
     @Support
     @PlainSQL
-    public static <R extends Record> SelectWhereStep<R> selectFrom(String sql, QueryPart... parts) {
+    public static SelectWhereStep<Record> selectFrom(String sql, QueryPart... parts) {
         return dsl().selectFrom(sql, parts);
     }
 

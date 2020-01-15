@@ -158,6 +158,24 @@ public interface Generator {
     void setGenerateGeneratedAnnotationType(GeneratedAnnotationType generateGeneratedAnnotationType);
 
     /**
+     * Whether Nonnull annotations should be generated.
+     * <p>
+     * In SQL and by consequence in jOOQ, non-nullability cannot be guaranteed
+     * statically. There may still be some cases (e.g. after unions, outer
+     * joins, etc.) where a normally non-null value turns out to be null!
+     */
+    boolean generateNonnullAnnotation();
+
+    /**
+     * Whether Nonnull annotations should be generated.
+     * <p>
+     * In SQL and by consequence in jOOQ, non-nullability cannot be guaranteed
+     * statically. There may still be some cases (e.g. after unions, outer
+     * joins, etc.) where a normally non-null value turns out to be null!
+     */
+    void setGenerateNonnullAnnotation(boolean generateNonnullAnnotation);
+
+    /**
      * Which type of Nonnull annotation should be generated.
      */
     String generatedNonnullAnnotationType();
@@ -166,6 +184,24 @@ public interface Generator {
      * Which type of Nonnull annotation should be generated.
      */
     void setGeneratedNonnullAnnotationType(String generatedNonnullAnnotationType);
+
+    /**
+     * Whether Nullable annotations should be generated.
+     * <p>
+     * Unlike {@link #generateNonnullAnnotation()}, nullability can be
+     * guaranteed as in SQL, and by consequence in jOOQ, every column expression
+     * can be made nullable using some SQL operation.
+     */
+    boolean generateNullableAnnotation();
+
+    /**
+     * Whether Nullable annotations should be generated.
+     * <p>
+     * Unlike {@link #generateNonnullAnnotation()}, nullability can be
+     * guaranteed as in SQL, and by consequence in jOOQ, every column expression
+     * can be made nullable using some SQL operation.
+     */
+    void setGenerateNullableAnnotation(boolean generateNullableAnnotation);
 
     /**
      * Which type of Nullable annotation should be generated.

@@ -49,12 +49,16 @@ public class Generate implements Serializable, XMLAppendable
     @XmlElement(defaultValue = "DETECT_FROM_JDK")
     @XmlSchemaType(name = "string")
     protected GeneratedAnnotationType generatedAnnotationType = GeneratedAnnotationType.DETECT_FROM_JDK;
+    @XmlElement(defaultValue = "false")
+    protected Boolean nonnullAnnotation = false;
     @XmlElement(defaultValue = "javax.annotation.Nonnull")
     @XmlJavaTypeAdapter(StringAdapter.class)
-    protected String generatedNonnullAnnotationType = "javax.annotation.Nonnull";
+    protected String nonnullAnnotationType = "javax.annotation.Nonnull";
+    @XmlElement(defaultValue = "false")
+    protected Boolean nullableAnnotation = false;
     @XmlElement(defaultValue = "javax.annotation.Nullable")
     @XmlJavaTypeAdapter(StringAdapter.class)
-    protected String generatedNullableAnnotationType = "javax.annotation.Nullable";
+    protected String nullableAnnotationType = "javax.annotation.Nullable";
     @XmlElement(defaultValue = "true")
     protected Boolean routines = true;
     @XmlElement(defaultValue = "true")
@@ -393,35 +397,83 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Specify the qualified annotation name for all non-nullable items in generated code, defaulting to the JSR-305 {@link javax.annotation.Nonnull} type.
+     * Whether non-nullable items should be annotated with the annotation type specified in {@link #nonnullAnnotationType}. In SQL and by consequence in jOOQ, non-nullability cannot be guaranteed statically. There may still be some cases (e.g. after unions, outer joins, etc.) where a normally non-null value turns out to be null!
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
      *
      */
-    public String getGeneratedNonnullAnnotationType() {
-        return generatedNonnullAnnotationType;
+    public Boolean isNonnullAnnotation() {
+        return nonnullAnnotation;
+    }
+
+    /**
+     * Sets the value of the nonnullAnnotation property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setNonnullAnnotation(Boolean value) {
+        this.nonnullAnnotation = value;
     }
 
     /**
      * Specify the qualified annotation name for all non-nullable items in generated code, defaulting to the JSR-305 {@link javax.annotation.Nonnull} type.
      *
      */
-    public void setGeneratedNonnullAnnotationType(String value) {
-        this.generatedNonnullAnnotationType = value;
+    public String getNonnullAnnotationType() {
+        return nonnullAnnotationType;
+    }
+
+    /**
+     * Specify the qualified annotation name for all non-nullable items in generated code, defaulting to the JSR-305 {@link javax.annotation.Nonnull} type.
+     *
+     */
+    public void setNonnullAnnotationType(String value) {
+        this.nonnullAnnotationType = value;
+    }
+
+    /**
+     * Whether nullable items should be annotated with the annotation type specified in {@link #nullableAnnotationType}. Unlike {@link #nonnullAnnotation}, nullability can be guaranteed as in SQL, and by consequence in jOOQ, every column expression can be made nullable using some SQL operation.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isNullableAnnotation() {
+        return nullableAnnotation;
+    }
+
+    /**
+     * Sets the value of the nullableAnnotation property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setNullableAnnotation(Boolean value) {
+        this.nullableAnnotation = value;
     }
 
     /**
      * Specify the qualified annotation name for all nullable items in generated code, defaulting to the JSR-305 {@link javax.annotation.Nullable} type.
      *
      */
-    public String getGeneratedNullableAnnotationType() {
-        return generatedNullableAnnotationType;
+    public String getNullableAnnotationType() {
+        return nullableAnnotationType;
     }
 
     /**
      * Specify the qualified annotation name for all nullable items in generated code, defaulting to the JSR-305 {@link javax.annotation.Nullable} type.
      *
      */
-    public void setGeneratedNullableAnnotationType(String value) {
-        this.generatedNullableAnnotationType = value;
+    public void setNullableAnnotationType(String value) {
+        this.nullableAnnotationType = value;
     }
 
     /**
@@ -1888,12 +1940,22 @@ public class Generate implements Serializable, XMLAppendable
         return this;
     }
 
+    public Generate withNonnullAnnotation(Boolean value) {
+        setNonnullAnnotation(value);
+        return this;
+    }
+
     /**
      * Specify the qualified annotation name for all non-nullable items in generated code, defaulting to the JSR-305 {@link javax.annotation.Nonnull} type.
      *
      */
-    public Generate withGeneratedNonnullAnnotationType(String value) {
-        setGeneratedNonnullAnnotationType(value);
+    public Generate withNonnullAnnotationType(String value) {
+        setNonnullAnnotationType(value);
+        return this;
+    }
+
+    public Generate withNullableAnnotation(Boolean value) {
+        setNullableAnnotation(value);
         return this;
     }
 
@@ -1901,8 +1963,8 @@ public class Generate implements Serializable, XMLAppendable
      * Specify the qualified annotation name for all nullable items in generated code, defaulting to the JSR-305 {@link javax.annotation.Nullable} type.
      *
      */
-    public Generate withGeneratedNullableAnnotationType(String value) {
-        setGeneratedNullableAnnotationType(value);
+    public Generate withNullableAnnotationType(String value) {
+        setNullableAnnotationType(value);
         return this;
     }
 
@@ -2232,8 +2294,10 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("instanceFields", instanceFields);
         builder.append("generatedAnnotation", generatedAnnotation);
         builder.append("generatedAnnotationType", generatedAnnotationType);
-        builder.append("generatedNonnullAnnotationType", generatedNonnullAnnotationType);
-        builder.append("generatedNullableAnnotationType", generatedNullableAnnotationType);
+        builder.append("nonnullAnnotation", nonnullAnnotation);
+        builder.append("nonnullAnnotationType", nonnullAnnotationType);
+        builder.append("nullableAnnotation", nullableAnnotation);
+        builder.append("nullableAnnotationType", nullableAnnotationType);
         builder.append("routines", routines);
         builder.append("sequences", sequences);
         builder.append("udts", udts);
@@ -2395,21 +2459,39 @@ public class Generate implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (generatedNonnullAnnotationType == null) {
-            if (other.generatedNonnullAnnotationType!= null) {
+        if (nonnullAnnotation == null) {
+            if (other.nonnullAnnotation!= null) {
                 return false;
             }
         } else {
-            if (!generatedNonnullAnnotationType.equals(other.generatedNonnullAnnotationType)) {
+            if (!nonnullAnnotation.equals(other.nonnullAnnotation)) {
                 return false;
             }
         }
-        if (generatedNullableAnnotationType == null) {
-            if (other.generatedNullableAnnotationType!= null) {
+        if (nonnullAnnotationType == null) {
+            if (other.nonnullAnnotationType!= null) {
                 return false;
             }
         } else {
-            if (!generatedNullableAnnotationType.equals(other.generatedNullableAnnotationType)) {
+            if (!nonnullAnnotationType.equals(other.nonnullAnnotationType)) {
+                return false;
+            }
+        }
+        if (nullableAnnotation == null) {
+            if (other.nullableAnnotation!= null) {
+                return false;
+            }
+        } else {
+            if (!nullableAnnotation.equals(other.nullableAnnotation)) {
+                return false;
+            }
+        }
+        if (nullableAnnotationType == null) {
+            if (other.nullableAnnotationType!= null) {
+                return false;
+            }
+        } else {
+            if (!nullableAnnotationType.equals(other.nullableAnnotationType)) {
                 return false;
             }
         }
@@ -2960,8 +3042,10 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((instanceFields == null)? 0 :instanceFields.hashCode()));
         result = ((prime*result)+((generatedAnnotation == null)? 0 :generatedAnnotation.hashCode()));
         result = ((prime*result)+((generatedAnnotationType == null)? 0 :generatedAnnotationType.hashCode()));
-        result = ((prime*result)+((generatedNonnullAnnotationType == null)? 0 :generatedNonnullAnnotationType.hashCode()));
-        result = ((prime*result)+((generatedNullableAnnotationType == null)? 0 :generatedNullableAnnotationType.hashCode()));
+        result = ((prime*result)+((nonnullAnnotation == null)? 0 :nonnullAnnotation.hashCode()));
+        result = ((prime*result)+((nonnullAnnotationType == null)? 0 :nonnullAnnotationType.hashCode()));
+        result = ((prime*result)+((nullableAnnotation == null)? 0 :nullableAnnotation.hashCode()));
+        result = ((prime*result)+((nullableAnnotationType == null)? 0 :nullableAnnotationType.hashCode()));
         result = ((prime*result)+((routines == null)? 0 :routines.hashCode()));
         result = ((prime*result)+((sequences == null)? 0 :sequences.hashCode()));
         result = ((prime*result)+((udts == null)? 0 :udts.hashCode()));

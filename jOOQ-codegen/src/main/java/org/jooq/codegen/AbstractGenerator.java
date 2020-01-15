@@ -66,7 +66,9 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateInstanceFields             = true;
     boolean                            generateGeneratedAnnotation        = false;
     GeneratedAnnotationType            generatedGeneratedAnnotationType   = GeneratedAnnotationType.DETECT_FROM_JDK;
+    boolean                            generateNonnullAnnotation          = false;
     String                             generatedNonnullAnnotationType     = "javax.annotation.Nonnull";
+    boolean                            generateNullableAnnotation         = false;
     String                             generatedNullableAnnotationType    = "javax.annotation.Nullable";
     boolean                            useSchemaVersionProvider           = false;
     boolean                            useCatalogVersionProvider          = false;
@@ -300,6 +302,16 @@ abstract class AbstractGenerator implements Generator {
     }
 
     @Override
+    public boolean generateNonnullAnnotation() {
+        return generateNonnullAnnotation;
+    }
+
+    @Override
+    public void setGenerateNonnullAnnotation(boolean generateNonnullAnnotation) {
+        this.generateNonnullAnnotation = generateNonnullAnnotation;
+    }
+
+    @Override
     public String generatedNonnullAnnotationType() {
         return generatedNonnullAnnotationType;
     }
@@ -307,6 +319,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGeneratedNonnullAnnotationType(String generatedNonnullAnnotationType) {
         this.generatedNonnullAnnotationType = generatedNonnullAnnotationType;
+    }
+
+    @Override
+    public boolean generateNullableAnnotation() {
+        return generateNullableAnnotation;
+    }
+
+    @Override
+    public void setGenerateNullableAnnotation(boolean generateNullableAnnotation) {
+        this.generateNullableAnnotation = generateNullableAnnotation;
     }
 
     @Override

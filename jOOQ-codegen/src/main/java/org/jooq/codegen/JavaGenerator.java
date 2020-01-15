@@ -1441,6 +1441,8 @@ public class JavaGenerator extends AbstractGenerator {
                     else
                         out.tab(1).overrideInherit();
 
+                    printNullableOrNonnullAnnotation(out, column);
+
                     out.tab(1).println("public %s component%s() {", colType, i);
                     out.tab(2).println("return %s();", colGetter);
                     out.tab(1).println("}");
@@ -1465,6 +1467,8 @@ public class JavaGenerator extends AbstractGenerator {
                     else
                         out.tab(1).overrideInherit();
 
+                    printNullableOrNonnullAnnotation(out, column);
+
                     out.tab(1).println("public %s value%s() {", colType, i);
                     out.tab(2).println("return %s();", colGetter);
                     out.tab(1).println("}");
@@ -1488,13 +1492,14 @@ public class JavaGenerator extends AbstractGenerator {
                     out.tab(1).println("}");
                 }
                 else {
+                    final String nullableAnnotation = nullableOrNonnullAnnotation(out, column);
 
                     if (printDeprecationIfUnknownType(out, colTypeFull))
                         out.tab(1).override();
                     else
                         out.tab(1).overrideInherit();
 
-                    out.tab(1).println("public %s value%s(%s value) {", className, i, varargsIfArray(colType));
+                    out.tab(1).println("public %s value%s([[before=@][after= ][%s]]%s value) {", className, i, list(nullableAnnotation), varargsIfArray(colType));
                     out.tab(2).println("%s(value);", colSetter);
                     out.tab(2).println("return this;");
                     out.tab(1).println("}");
@@ -1513,7 +1518,9 @@ public class JavaGenerator extends AbstractGenerator {
                     calls.add("this.value" + i + "(value" + i + ")");
                 }
                 else {
-                    arguments.add(colType + " value" + i);
+                    final String nullableAnnotation = nullableOrNonnullAnnotation(out, column);
+
+                    arguments.add((nullableAnnotation == null ? "" : "@" + nullableAnnotation + " ") + colType + " value" + i);
                     calls.add("value" + i + "(value" + i + ");");
                 }
             }
@@ -1582,10 +1589,14 @@ public class JavaGenerator extends AbstractGenerator {
                 final String columnMember = getStrategy().getJavaMemberName(column, Mode.DEFAULT);
                 final String type = out.ref(getJavaType(column.getType(resolver())));
 
-                if (scala)
+                if (scala) {
                     arguments.add(columnMember + " : " + type);
-                else
-                    arguments.add(type + " " + columnMember);
+                }
+                else {
+                    final String nullableAnnotation = nullableOrNonnullAnnotation(out, column);
+
+                    arguments.add((nullableAnnotation == null ? "" : "@" + nullableAnnotation + " ") + type + " " + columnMember);
+                }
             }
 
             out.tab(1).javadoc("Create a detached, initialised %s", className);
@@ -1675,8 +1686,10 @@ public class JavaGenerator extends AbstractGenerator {
                 out.tab(1).println("}");
             }
             else {
+                final String nullableAnnotation = nullableOrNonnullAnnotation(out, column);
+
                 out.tab(1).overrideIf(generateInterfaces() && !generateImmutableInterfaces() && !isUDT);
-                out.tab(1).println("public %s %s(%s value) {", setterReturnType, setter, varargsIfArray(type));
+                out.tab(1).println("public %s %s([[before=@][after= ][%s]]%s value) {", setterReturnType, setter, list(nullableAnnotation), varargsIfArray(type));
                 out.tab(2).println("set(%s, value);", index);
                 if (generateFluentSetters())
                     out.tab(2).println("return this;");
@@ -1708,7 +1721,9 @@ public class JavaGenerator extends AbstractGenerator {
                 out.tab(1).println("}");
             }
             else {
-                out.tab(1).println("public %s %s(%s value) {", setterReturnType, setter, varargsIfArray(columnTypeInterface));
+                final String nullableAnnotation = nullableOrNonnullAnnotation(out, column);
+
+                out.tab(1).println("public %s %s([[before=@][after= ][%s]]%s value) {", setterReturnType, setter, list(nullableAnnotation), varargsIfArray(columnTypeInterface));
                 out.tab(2).println("if (value == null)");
                 out.tab(3).println("set(%s, null);", index);
 
@@ -1778,6 +1793,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (column instanceof ColumnDefinition)
             printColumnJPAAnnotation(out, (ColumnDefinition) column);
         printValidationAnnotation(out, column);
+        printNullableOrNonnullAnnotation(out, column);
 
         if (scala) {
             out.tab(1).println("def %s : %s = {", getter, type);
@@ -1980,10 +1996,14 @@ public class JavaGenerator extends AbstractGenerator {
         if (!printDeprecationIfUnknownType(out, typeFull))
             out.tab(1).javadoc("Setter for <code>%s</code>.%s", name, columnComment(column, comment));
 
-        if (scala)
+        if (scala) {
             out.tab(1).println("def %s(value : %s) : %s", setter, type, setterReturnType);
-        else
-            out.tab(1).println("public %s %s(%s value);", setterReturnType, setter, varargsIfArray(type));
+        }
+        else {
+            final String nullableAnnotation = nullableOrNonnullAnnotation(out, column);
+
+            out.tab(1).println("public %s %s([[before=@][after= ][%s]]%s value);", setterReturnType, setter, list(nullableAnnotation), varargsIfArray(type));
+        }
     }
 
     /**
@@ -2014,6 +2034,7 @@ public class JavaGenerator extends AbstractGenerator {
             printColumnJPAAnnotation(out, (ColumnDefinition) column);
 
         printValidationAnnotation(out, column);
+        printNullableOrNonnullAnnotation(out, column);
 
         if (scala)
             out.tab(1).println("def %s : %s", getter, type);
@@ -3375,9 +3396,11 @@ public class JavaGenerator extends AbstractGenerator {
 
             String separator1 = "";
             for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
-                out.println(separator1);
+                final String nullableAnnotation = nullableOrNonnullAnnotation(out, column);
 
-                out.tab(2).print("%s %s",
+                out.println(separator1);
+                out.tab(2).print("[[before=@][after= ][%s]]%s %s",
+                    list(nullableAnnotation),
                     StringUtils.rightPad(out.ref(getJavaType(column.getType(resolver(Mode.POJO)), Mode.POJO)), maxLength),
                     getStrategy().getJavaMemberName(column, Mode.POJO));
                 separator1 = ",";
@@ -3506,6 +3529,7 @@ public class JavaGenerator extends AbstractGenerator {
             printColumnJPAAnnotation(out, (ColumnDefinition) column);
 
         printValidationAnnotation(out, column);
+        printNullableOrNonnullAnnotation(out, column);
 
         if (scala) {
             out.tab(1).println("def %s : %s = {", columnGetter, columnType);
@@ -3558,8 +3582,10 @@ public class JavaGenerator extends AbstractGenerator {
                 out.tab(1).println("}");
             }
             else {
+                final String nullableAnnotation = nullableOrNonnullAnnotation(out, column);
+
                 out.tab(1).overrideIf(generateInterfaces() && !generateImmutableInterfaces() && !isUDT);
-                out.tab(1).println("public %s %s(%s %s) {", columnSetterReturnType, columnSetter, varargsIfArray(columnType), columnMember);
+                out.tab(1).println("public %s %s([[before=@][after= ][%s]]%s %s) {", columnSetterReturnType, columnSetter, list(nullableAnnotation), varargsIfArray(columnType), columnMember);
                 out.tab(2).println("this.%s = %s;", columnMember, columnMember);
                 if (generateFluentSetters())
                     out.tab(2).println("return this;");
@@ -5251,6 +5277,31 @@ public class JavaGenerator extends AbstractGenerator {
                     out.tab(1).println("@%s(max = %s)", out.ref("javax.validation.constraints.Size"), length);
             }
         }
+    }
+
+    private String nullableOrNonnullAnnotation(JavaWriter out, TypedElementDefinition<?> column) {
+        return column.getType().isNullable() && generateNullableAnnotation()
+             ? out.ref(generatedNullableAnnotationType())
+             : !column.getType().isNullable() && generateNonnullAnnotation()
+             ? out.ref(generatedNonnullAnnotationType())
+             : null;
+    }
+
+    private void printNullableOrNonnullAnnotation(JavaWriter out, TypedElementDefinition<?> column) {
+        if (column.getType().isNullable())
+            printNullableAnnotation(out);
+        else
+            printNonnullAnnotation(out);
+    }
+
+    protected void printNullableAnnotation(JavaWriter out) {
+        if (generateNullableAnnotation())
+            out.tab(1).println("@%s", out.ref(generatedNullableAnnotationType()));
+    }
+
+    protected void printNonnullAnnotation(JavaWriter out) {
+        if (generateNonnullAnnotation())
+            out.tab(1).println("@%s", out.ref(generatedNonnullAnnotationType()));
     }
 
     private boolean printDeprecationIfUnknownTypes(JavaWriter out, Collection<? extends ParameterDefinition> params) {

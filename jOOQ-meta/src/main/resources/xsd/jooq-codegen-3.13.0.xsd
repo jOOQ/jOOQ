@@ -1140,11 +1140,19 @@ jOOQ version used for source code.]]></jxb:javadoc></jxb:property></appinfo></an
 jOOQ version used for source code.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
-      <element name="generatedNonnullAnnotationType" type="string" default="javax.annotation.Nonnull" minOccurs="0" maxOccurs="1">
+      <element name="nonnullAnnotation" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether non-nullable items should be annotated with the annotation type specified in {@link #nonnullAnnotationType}. In SQL and by consequence in jOOQ, non-nullability cannot be guaranteed statically. There may still be some cases (e.g. after unions, outer joins, etc.) where a normally non-null value turns out to be null!]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="nonnullAnnotationType" type="string" default="javax.annotation.Nonnull" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Specify the qualified annotation name for all non-nullable items in generated code, defaulting to the JSR-305 {@link javax.annotation.Nonnull} type.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
-      <element name="generatedNullableAnnotationType" type="string" default="javax.annotation.Nullable" minOccurs="0" maxOccurs="1">
+      <element name="nullableAnnotation" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether nullable items should be annotated with the annotation type specified in {@link #nullableAnnotationType}. Unlike {@link #nonnullAnnotation}, nullability can be guaranteed as in SQL, and by consequence in jOOQ, every column expression can be made nullable using some SQL operation.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="nullableAnnotationType" type="string" default="javax.annotation.Nullable" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Specify the qualified annotation name for all nullable items in generated code, defaulting to the JSR-305 {@link javax.annotation.Nullable} type.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 

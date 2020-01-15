@@ -55,7 +55,7 @@ import org.jooq.tools.JooqLogger;
  * provide} a {@link Meta} implementation based on a set of DDL scripts as the
  * input.
  * <p>
- * In contrast to {@link DDLMetaProvider} this implementation interprets the DDL
+ * In contrast to {@link TranslatingMetaProvider} this implementation interprets the DDL
  * scripts.
  *
  * @author Knut Wannheden

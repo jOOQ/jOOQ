@@ -73,15 +73,15 @@ import org.jooq.tools.jdbc.JDBCUtils;
  *
  * @author Knut Wannheden
  */
-final class DDLMetaProvider implements MetaProvider {
+final class TranslatingMetaProvider implements MetaProvider {
 
-    private static final JooqLogger log    = JooqLogger.getLogger(DDLMetaProvider.class);
+    private static final JooqLogger log    = JooqLogger.getLogger(TranslatingMetaProvider.class);
     private static final Pattern    P_NAME = Pattern.compile("(?s:.*?\"([^\"]*)\".*)");
 
     private final Configuration     configuration;
     private final Source[]          scripts;
 
-    public DDLMetaProvider(Configuration configuration, Source... scripts) {
+    public TranslatingMetaProvider(Configuration configuration, Source... scripts) {
         this.configuration = configuration == null ? new DefaultConfiguration() : configuration;
         this.scripts = scripts;
     }

@@ -83,7 +83,7 @@ final class SourceMetaProvider implements MetaProvider {
             case H2:
             case HSQLDB:
             case SQLITE:
-                return new DDLMetaProvider(configuration, sources).provide();
+                return new TranslatingMetaProvider(configuration, sources).provide();
 
             default:
                 throw new UnsupportedOperationException("Interpreter dialect not yet supported: " + dialect);

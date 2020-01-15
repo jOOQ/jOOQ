@@ -44,8 +44,8 @@ public class Generate implements Serializable, XMLAppendable
     protected Boolean deprecationOnUnknownTypes = true;
     @XmlElement(defaultValue = "true")
     protected Boolean instanceFields = true;
-    @XmlElement(defaultValue = "true")
-    protected Boolean generatedAnnotation = true;
+    @XmlElement(defaultValue = "false")
+    protected Boolean generatedAnnotation = false;
     @XmlElement(defaultValue = "DETECT_FROM_JDK")
     @XmlSchemaType(name = "string")
     protected GeneratedAnnotationType generatedAnnotationType = GeneratedAnnotationType.DETECT_FROM_JDK;

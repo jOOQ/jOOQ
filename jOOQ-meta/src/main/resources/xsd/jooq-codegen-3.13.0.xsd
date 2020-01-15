@@ -1130,7 +1130,7 @@ jOOQ API, without adding custom data type bindings to them.]]></jxb:javadoc></jx
         </annotation>
       </element>
 
-      <element name="generatedAnnotation" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+      <element name="generatedAnnotation" type="boolean" default="false" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate the {@link javax.annotation.Generated} or {@link javax.annotation.processing.Generated} annotation to indicate
 jOOQ version used for source code.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

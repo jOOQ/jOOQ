@@ -166,7 +166,6 @@
                                     <inputSchema>PUBLIC</inputSchema>
                                 </database>
                                 <generate>
-                                    <generatedAnnotation>false</generatedAnnotation>
                                     <instanceFields>true</instanceFields>
                                     <pojos>true</pojos>
                                 </generate>

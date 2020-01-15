@@ -144,9 +144,6 @@
                                     </properties>
                                     <includes>.*</includes>
                                 </database>
-                                <generate>
-                                    <generatedAnnotation>false</generatedAnnotation>
-                                </generate>
                                 <target>
                                     <packageName>org.jooq.example.jpa.jooq</packageName>
                                     <directory>src/main/java</directory>

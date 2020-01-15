@@ -64,7 +64,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateRelations                  = true;
     boolean                            generateImplicitJoinPathsToOne     = true;
     boolean                            generateInstanceFields             = true;
-    boolean                            generateGeneratedAnnotation        = true;
+    boolean                            generateGeneratedAnnotation        = false;
     GeneratedAnnotationType            generateGeneratedAnnotationType    = GeneratedAnnotationType.DETECT_FROM_JDK;
     boolean                            useSchemaVersionProvider           = false;
     boolean                            useCatalogVersionProvider          = false;

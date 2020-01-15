@@ -102,9 +102,9 @@ import org.jooq.impl.ConstraintImpl.Action;
 import org.jooq.tools.JooqLogger;
 
 @SuppressWarnings("serial")
-final class DDLInterpreter {
+final class Interpreter {
 
-    private static final JooqLogger                              log                    = JooqLogger.getLogger(DDLInterpreter.class);
+    private static final JooqLogger                              log                    = JooqLogger.getLogger(Interpreter.class);
 
     private final Configuration                                  configuration;
     private final InterpreterNameLookupCaseSensitivity           caseSensitivity;
@@ -123,7 +123,7 @@ final class DDLInterpreter {
     private final Map<Name, Index>                               interpretedIndexes     = new HashMap<>();
     private final Map<Name, MutableSequence.InterpretedSequence> interpretedSequences   = new HashMap<>();
 
-    DDLInterpreter(Configuration configuration) {
+    Interpreter(Configuration configuration) {
         this.configuration = configuration;
         this.caseSensitivity = caseSensitivity(configuration);
         this.locale = interpreterLocale(configuration.settings());

@@ -60,21 +60,21 @@ import org.jooq.tools.JooqLogger;
  *
  * @author Knut Wannheden
  */
-final class DDLInterpreterMetaProvider implements MetaProvider {
+final class InterpreterMetaProvider implements MetaProvider {
 
-    private static final JooqLogger log = JooqLogger.getLogger(DDLInterpreterMetaProvider.class);
+    private static final JooqLogger log = JooqLogger.getLogger(InterpreterMetaProvider.class);
 
     private final Configuration     configuration;
     private final Source[]          sources;
     private final Query[]           queries;
 
-    public DDLInterpreterMetaProvider(Configuration configuration, Source... sources) {
+    public InterpreterMetaProvider(Configuration configuration, Source... sources) {
         this.configuration = configuration == null ? new DefaultConfiguration() : configuration;
         this.sources = sources;
         this.queries = null;
     }
 
-    public DDLInterpreterMetaProvider(Configuration configuration, Query... queries) {
+    public InterpreterMetaProvider(Configuration configuration, Query... queries) {
         this.configuration = configuration == null ? new DefaultConfiguration() : configuration;
         this.sources = null;
         this.queries = queries;
@@ -82,7 +82,7 @@ final class DDLInterpreterMetaProvider implements MetaProvider {
 
     @Override
     public Meta provide() {
-        final DDLInterpreter interpreter = new DDLInterpreter(configuration);
+        final Interpreter interpreter = new Interpreter(configuration);
         Configuration localConfiguration = configuration.derive();
         DSLContext ctx = DSL.using(localConfiguration);
 
@@ -96,7 +96,7 @@ final class DDLInterpreterMetaProvider implements MetaProvider {
         return interpreter.meta();
     }
 
-    private final void loadSource(DSLContext ctx, Source source, DDLInterpreter interpreter) {
+    private final void loadSource(DSLContext ctx, Source source, Interpreter interpreter) {
         Reader reader = null;
 
         try {

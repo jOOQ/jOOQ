@@ -468,7 +468,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public Meta meta(Query... queries) {
-        return new DDLInterpreterMetaProvider(configuration(), queries).provide();
+        return new InterpreterMetaProvider(configuration(), queries).provide();
     }
 
     @Override

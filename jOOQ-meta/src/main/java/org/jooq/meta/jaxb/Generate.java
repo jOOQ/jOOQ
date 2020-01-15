@@ -49,6 +49,12 @@ public class Generate implements Serializable, XMLAppendable
     @XmlElement(defaultValue = "DETECT_FROM_JDK")
     @XmlSchemaType(name = "string")
     protected GeneratedAnnotationType generatedAnnotationType = GeneratedAnnotationType.DETECT_FROM_JDK;
+    @XmlElement(defaultValue = "javax.annotation.Nonnull")
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String generatedNonnullAnnotationType = "javax.annotation.Nonnull";
+    @XmlElement(defaultValue = "javax.annotation.Nullable")
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String generatedNullableAnnotationType = "javax.annotation.Nullable";
     @XmlElement(defaultValue = "true")
     protected Boolean routines = true;
     @XmlElement(defaultValue = "true")
@@ -384,6 +390,38 @@ public class Generate implements Serializable, XMLAppendable
      */
     public void setGeneratedAnnotationType(GeneratedAnnotationType value) {
         this.generatedAnnotationType = value;
+    }
+
+    /**
+     * Specify the qualified annotation name for all non-nullable items in generated code, defaulting to the JSR-305 {@link javax.annotation.Nonnull} type.
+     *
+     */
+    public String getGeneratedNonnullAnnotationType() {
+        return generatedNonnullAnnotationType;
+    }
+
+    /**
+     * Specify the qualified annotation name for all non-nullable items in generated code, defaulting to the JSR-305 {@link javax.annotation.Nonnull} type.
+     *
+     */
+    public void setGeneratedNonnullAnnotationType(String value) {
+        this.generatedNonnullAnnotationType = value;
+    }
+
+    /**
+     * Specify the qualified annotation name for all nullable items in generated code, defaulting to the JSR-305 {@link javax.annotation.Nullable} type.
+     *
+     */
+    public String getGeneratedNullableAnnotationType() {
+        return generatedNullableAnnotationType;
+    }
+
+    /**
+     * Specify the qualified annotation name for all nullable items in generated code, defaulting to the JSR-305 {@link javax.annotation.Nullable} type.
+     *
+     */
+    public void setGeneratedNullableAnnotationType(String value) {
+        this.generatedNullableAnnotationType = value;
     }
 
     /**
@@ -1850,6 +1888,24 @@ public class Generate implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * Specify the qualified annotation name for all non-nullable items in generated code, defaulting to the JSR-305 {@link javax.annotation.Nonnull} type.
+     *
+     */
+    public Generate withGeneratedNonnullAnnotationType(String value) {
+        setGeneratedNonnullAnnotationType(value);
+        return this;
+    }
+
+    /**
+     * Specify the qualified annotation name for all nullable items in generated code, defaulting to the JSR-305 {@link javax.annotation.Nullable} type.
+     *
+     */
+    public Generate withGeneratedNullableAnnotationType(String value) {
+        setGeneratedNullableAnnotationType(value);
+        return this;
+    }
+
     public Generate withRoutines(Boolean value) {
         setRoutines(value);
         return this;
@@ -2176,6 +2232,8 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("instanceFields", instanceFields);
         builder.append("generatedAnnotation", generatedAnnotation);
         builder.append("generatedAnnotationType", generatedAnnotationType);
+        builder.append("generatedNonnullAnnotationType", generatedNonnullAnnotationType);
+        builder.append("generatedNullableAnnotationType", generatedNullableAnnotationType);
         builder.append("routines", routines);
         builder.append("sequences", sequences);
         builder.append("udts", udts);
@@ -2334,6 +2392,24 @@ public class Generate implements Serializable, XMLAppendable
             }
         } else {
             if (!generatedAnnotationType.equals(other.generatedAnnotationType)) {
+                return false;
+            }
+        }
+        if (generatedNonnullAnnotationType == null) {
+            if (other.generatedNonnullAnnotationType!= null) {
+                return false;
+            }
+        } else {
+            if (!generatedNonnullAnnotationType.equals(other.generatedNonnullAnnotationType)) {
+                return false;
+            }
+        }
+        if (generatedNullableAnnotationType == null) {
+            if (other.generatedNullableAnnotationType!= null) {
+                return false;
+            }
+        } else {
+            if (!generatedNullableAnnotationType.equals(other.generatedNullableAnnotationType)) {
                 return false;
             }
         }
@@ -2884,6 +2960,8 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((instanceFields == null)? 0 :instanceFields.hashCode()));
         result = ((prime*result)+((generatedAnnotation == null)? 0 :generatedAnnotation.hashCode()));
         result = ((prime*result)+((generatedAnnotationType == null)? 0 :generatedAnnotationType.hashCode()));
+        result = ((prime*result)+((generatedNonnullAnnotationType == null)? 0 :generatedNonnullAnnotationType.hashCode()));
+        result = ((prime*result)+((generatedNullableAnnotationType == null)? 0 :generatedNullableAnnotationType.hashCode()));
         result = ((prime*result)+((routines == null)? 0 :routines.hashCode()));
         result = ((prime*result)+((sequences == null)? 0 :sequences.hashCode()));
         result = ((prime*result)+((udts == null)? 0 :udts.hashCode()));

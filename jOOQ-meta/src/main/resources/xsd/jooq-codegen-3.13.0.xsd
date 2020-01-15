@@ -1140,6 +1140,14 @@ jOOQ version used for source code.]]></jxb:javadoc></jxb:property></appinfo></an
 jOOQ version used for source code.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="generatedNonnullAnnotationType" type="string" default="javax.annotation.Nonnull" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Specify the qualified annotation name for all non-nullable items in generated code, defaulting to the JSR-305 {@link javax.annotation.Nonnull} type.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="generatedNullableAnnotationType" type="string" default="javax.annotation.Nullable" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Specify the qualified annotation name for all nullable items in generated code, defaulting to the JSR-305 {@link javax.annotation.Nullable} type.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="routines" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate Routine classes.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

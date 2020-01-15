@@ -669,6 +669,10 @@ public class GenerationTool {
                 generator.setGenerateGeneratedAnnotation(g.getGenerate().isGeneratedAnnotation());
             if (g.getGenerate().getGeneratedAnnotationType() != null)
                 generator.setGenerateGeneratedAnnotationType(g.getGenerate().getGeneratedAnnotationType());
+            if (g.getGenerate().getGeneratedNonnullAnnotationType() != null)
+                generator.setGeneratedNonnullAnnotationType(g.getGenerate().getGeneratedNonnullAnnotationType());
+            if (g.getGenerate().getGeneratedNullableAnnotationType() != null)
+                generator.setGeneratedNullableAnnotationType(g.getGenerate().getGeneratedNullableAnnotationType());
             if (g.getGenerate().isRoutines() != null)
                 generator.setGenerateRoutines(g.getGenerate().isRoutines());
             if (g.getGenerate().isSequences() != null)

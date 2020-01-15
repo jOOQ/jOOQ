@@ -65,7 +65,9 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateImplicitJoinPathsToOne     = true;
     boolean                            generateInstanceFields             = true;
     boolean                            generateGeneratedAnnotation        = false;
-    GeneratedAnnotationType            generateGeneratedAnnotationType    = GeneratedAnnotationType.DETECT_FROM_JDK;
+    GeneratedAnnotationType            generatedGeneratedAnnotationType   = GeneratedAnnotationType.DETECT_FROM_JDK;
+    String                             generatedNonnullAnnotationType     = "javax.annotation.Nonnull";
+    String                             generatedNullableAnnotationType    = "javax.annotation.Nullable";
     boolean                            useSchemaVersionProvider           = false;
     boolean                            useCatalogVersionProvider          = false;
     boolean                            generateRoutines                   = true;
@@ -289,12 +291,32 @@ abstract class AbstractGenerator implements Generator {
 
     @Override
     public GeneratedAnnotationType generateGeneratedAnnotationType() {
-        return generateGeneratedAnnotationType;
+        return generatedGeneratedAnnotationType;
     }
 
     @Override
     public void setGenerateGeneratedAnnotationType(GeneratedAnnotationType generateGeneratedAnnotationType) {
-        this.generateGeneratedAnnotationType = generateGeneratedAnnotationType;
+        this.generatedGeneratedAnnotationType = generateGeneratedAnnotationType;
+    }
+
+    @Override
+    public String generatedNonnullAnnotationType() {
+        return generatedNonnullAnnotationType;
+    }
+
+    @Override
+    public void setGeneratedNonnullAnnotationType(String generatedNonnullAnnotationType) {
+        this.generatedNonnullAnnotationType = generatedNonnullAnnotationType;
+    }
+
+    @Override
+    public String generatedNullableAnnotationType() {
+        return generatedNullableAnnotationType;
+    }
+
+    @Override
+    public void setGeneratedNullableAnnotationType(String generatedNullableAnnotationType) {
+        this.generatedNullableAnnotationType = generatedNullableAnnotationType;
     }
 
     @Override

@@ -157,6 +157,26 @@ public interface Generator {
      */
     void setGenerateGeneratedAnnotationType(GeneratedAnnotationType generateGeneratedAnnotationType);
 
+    /**
+     * Which type of Nonnull annotation should be generated.
+     */
+    String generatedNonnullAnnotationType();
+
+    /**
+     * Which type of Nonnull annotation should be generated.
+     */
+    void setGeneratedNonnullAnnotationType(String generatedNonnullAnnotationType);
+
+    /**
+     * Which type of Nullable annotation should be generated.
+     */
+    String generatedNullableAnnotationType();
+
+    /**
+     * Which type of Nullable annotation should be generated.
+     */
+    void setGeneratedNullableAnnotationType(String generatedNullableAnnotationType);
+
     boolean useSchemaVersionProvider();
     void setUseSchemaVersionProvider(boolean useSchemaVersionProvider);
     boolean useCatalogVersionProvider();

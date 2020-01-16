@@ -206,6 +206,15 @@ public interface Meta extends Scope {
     List<UniqueKey<?>> getPrimaryKeys() throws DataAccessException;
 
     /**
+     * Get all indexes from the underlying meta data sources.
+     *
+     * @throws DataAccessException If something went wrong fetching the meta
+     *             objects
+     */
+    @Support
+    List<Index> getIndexes() throws DataAccessException;
+
+    /**
      * Generate a creation script for the entire meta data.
      *
      * @throws DataAccessException If something went wrong fetching the meta

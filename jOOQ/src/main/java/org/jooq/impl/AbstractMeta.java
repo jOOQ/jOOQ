@@ -51,6 +51,7 @@ import java.util.Map;
 import org.jooq.Catalog;
 import org.jooq.Configuration;
 import org.jooq.DDLExportConfiguration;
+import org.jooq.Index;
 import org.jooq.Meta;
 import org.jooq.Name;
 import org.jooq.Named;
@@ -78,6 +79,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     private Map<Name, List<Table<?>>>    cachedUnqualifiedTables;
     private Map<Name, List<Sequence<?>>> cachedUnqualifiedSequences;
     private List<UniqueKey<?>>           cachedPrimaryKeys;
+    private List<Index>                  cachedIndexes;
 
     protected AbstractMeta(Configuration configuration) {
         super(configuration);
@@ -249,9 +251,31 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
 
     protected List<UniqueKey<?>> getPrimaryKeys0() {
         List<UniqueKey<?>> result = new ArrayList<>();
+
         for (Table<?> table : getTables())
             if (table.getPrimaryKey() != null)
                 result.add(table.getPrimaryKey());
+
+        return result;
+    }
+
+    @Override
+    public final List<Index> getIndexes() {
+        initIndexes();
+        return Collections.unmodifiableList(cachedIndexes);
+    }
+
+    private final void initIndexes() {
+        if (cachedIndexes == null)
+            cachedIndexes = new ArrayList<>(getIndexes0());
+    }
+
+    protected List<Index> getIndexes0() {
+        List<Index> result = new ArrayList<>();
+
+        for (Table<?> table : getTables())
+            result.addAll(table.getIndexes());
+
         return result;
     }
 

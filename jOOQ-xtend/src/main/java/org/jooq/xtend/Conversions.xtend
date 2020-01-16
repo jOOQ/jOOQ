@@ -37,8 +37,6 @@
  */
 package org.jooq.xtend
 
-import javax.annotation.Generated
-
 import org.jooq.Condition
 import org.jooq.Field
 import org.jooq.QuantifiedSelect
@@ -65,7 +63,6 @@ import org.jooq.Record19
 import org.jooq.Record20
 import org.jooq.Record21
 import org.jooq.Record22
-import org.jooq.Row
 import org.jooq.RowN
 import org.jooq.Row1
 import org.jooq.Row2
@@ -99,7 +96,6 @@ import org.jooq.impl.DSL
  * @author Lukas Eder
  * @see <a href="http://www.eclipse.org/xtend/documentation.html#operators">http://www.eclipse.org/xtend/documentation.html#operators</a>
  */
-@Generated("This class was generated using jOOQ-tools")
 class Conversions {
 
     def static <T> operator_or(Condition c1, Condition c2) {

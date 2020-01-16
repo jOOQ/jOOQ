@@ -113,6 +113,7 @@ import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Meta;
 import org.jooq.Name;
@@ -477,19 +478,34 @@ final class MetaImpl extends AbstractMeta {
                         // coercing data types to the expected types
                         // The bug was reported here:
                         // https://connect.microsoft.com/SQLServer/feedback/details/775425/jdbc-4-0-databasemetadata-getcolumns-returns-a-resultset-whose-resultsetmetadata-is-inconsistent
-                        String.class, // TABLE_CAT
-                        String.class, // TABLE_SCHEM
-                        String.class, // TABLE_NAME
-                        String.class, // COLUMN_NAME
-                        int.class,    // DATA_TYPE
-                        String.class, // TYPE_NAME
-                        int.class,    // COLUMN_SIZE
-                        String.class, // BUFFER_LENGTH
-                        int.class,    // DECIMAL_DIGITS
-                        int.class,    // NUM_PREC_RADIX
-                        int.class,    // NULLABLE
-                        String.class, // REMARKS
-                        String.class  // COLUMN_DEF
+                        String.class,  // TABLE_CAT
+                        String.class,  // TABLE_SCHEM
+                        String.class,  // TABLE_NAME
+                        String.class,  // COLUMN_NAME
+                        int.class,     // DATA_TYPE
+
+                        String.class,  // TYPE_NAME
+                        int.class,     // COLUMN_SIZE
+                        String.class,  // BUFFER_LENGTH
+                        int.class,     // DECIMAL_DIGITS
+                        int.class,     // NUM_PREC_RADIX
+
+                        int.class,     // NULLABLE
+                        String.class,  // REMARKS
+                        String.class,  // COLUMN_DEF
+                        int.class,     // SQL_DATA_TYPE
+                        int.class,     // SQL_DATETIME_SUB
+
+                        int.class,     // CHAR_OCTET_LENGTH
+                        int.class,     // ORDINAL_POSITION
+                        String.class,  // IS_NULLABLE
+                        String.class,  // SCOPE_CATALOG
+                        String.class,  // SCOPE_SCHEMA
+
+                        String.class,  // SCOPE_TABLE
+                        short.class,   // SOURCE_DATA_TYPE
+                        String.class,  // IS_AUTOINCREMENT
+                        String.class   // IS_GENERATEDCOLUMN
                     );
                 }
             });
@@ -510,6 +526,16 @@ final class MetaImpl extends AbstractMeta {
             // - The "table" is in fact a SYNONYM
             if (columns != null)
                 init(columns);
+        }
+
+        @SuppressWarnings("unchecked")
+        @Override
+        public Identity<Record, ?> getIdentity() {
+            for (Field<?> field : fields())
+                if (field.getDataType().identity())
+                    return new IdentityImpl<>(this, (TableField<Record, ?>) field);
+
+            return null;
         }
 
         @Override
@@ -779,13 +805,14 @@ final class MetaImpl extends AbstractMeta {
         @SuppressWarnings({ "rawtypes", "unchecked" })
         private final void init(Result<Record> columns) {
             for (Record column : columns) {
-                String columnName = column.get(3, String.class);    // COLUMN_NAME
-                String typeName = column.get(5, String.class);      // TYPE_NAME
-                int precision = column.get(6, int.class);           // COLUMN_SIZE
-                int scale = column.get(8, int.class);               // DECIMAL_DIGITS
-                int nullable = column.get(10, int.class);           // NULLABLE
-                String remarks = column.get(11, String.class);      // REMARKS
-                String defaultValue = column.get(12, String.class); // COLUMN_DEF
+                String columnName = column.get(3, String.class);         // COLUMN_NAME
+                String typeName = column.get(5, String.class);           // TYPE_NAME
+                int precision = column.get(6, int.class);                // COLUMN_SIZE
+                int scale = column.get(8, int.class);                    // DECIMAL_DIGITS
+                int nullable = column.get(10, int.class);                // NULLABLE
+                String remarks = column.get(11, String.class);           // REMARKS
+                String defaultValue = column.get(12, String.class);      // COLUMN_DEF
+                boolean isAutoIncrement = column.get(22, boolean.class); // IS_AUTOINCREMENT
 
                 // TODO: Exception handling should be moved inside SQLDataType
                 DataType type = null;
@@ -795,12 +822,13 @@ final class MetaImpl extends AbstractMeta {
                     // JDBC doesn't distinguish between precision and length
                     type = type.precision(precision, scale);
                     type = type.length(precision);
+                    type = type.identity(isAutoIncrement);
 
                     if (nullable == DatabaseMetaData.columnNoNulls)
                         type = type.nullable(false);
 
                     // [#6883] Default values may be present
-                    if (!StringUtils.isEmpty(defaultValue)) {
+                    if (!isAutoIncrement && !StringUtils.isEmpty(defaultValue)) {
                         try {
 
                             // [#7194] Some databases report all default values as expressions, not as values

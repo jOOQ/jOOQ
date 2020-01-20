@@ -77,8 +77,8 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
     public List<ColumnDefinition> getElements0() throws SQLException {
         List<ColumnDefinition> result = new ArrayList<>();
 
+        PostgresDatabase database = (PostgresDatabase) getDatabase();
         Field<String> dataType = COLUMNS.DATA_TYPE;
-
 
 
 

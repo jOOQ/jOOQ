@@ -207,16 +207,17 @@ public final class FilePattern {
     public final void load(Loader loader) {
         boolean loaded = false;
         URL url = FilePattern.class.getResource(pattern);
+        File file = null;
 
         try {
             if (url != null) {
                 log.info("Reading from classpath: " + pattern);
 
-                loader.load(Source.of(new File(url.toURI()), encoding));
+                load0(new File(url.toURI()), loader);
                 loaded = true;
             }
             else {
-                File file = new File(pattern);
+                file = new File(pattern);
 
                 if (file.exists()) {
                     load(file, comparator, null, loader);
@@ -273,7 +274,7 @@ public final class FilePattern {
         if (file.isFile()) {
             if (regex == null || regex.matcher(file.getCanonicalPath().replace("\\", "/")).matches()) {
                 log.info("Reading from: " + file + " [*]");
-                loader.load(Source.of(file, encoding));
+                load0(file, loader);
             }
         }
         else if (file.isDirectory()) {
@@ -288,6 +289,16 @@ public final class FilePattern {
                 for (File f : files)
                     load(f, comparator, regex, loader);
             }
+        }
+    }
+
+    private final void load0(File file, Loader loader) {
+        try {
+            loader.load(Source.of(file, encoding));
+        }
+        catch (Exception e) {
+            log.error("Error while loading file: " + file);
+            throw e;
         }
     }
 

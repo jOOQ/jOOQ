@@ -37,12 +37,15 @@
  */
 package org.jooq;
 
+import java.io.Serializable;
+
 /**
  * A JSON wrapper type for JSONB data obtained from the database.
  */
-public final class JSONB {
+public final class JSONB implements Serializable {
 
-    private final String data;
+    private static final long serialVersionUID = 860591239448066408L;
+    private final String      data;
 
     private JSONB(String data) {
         this.data = data;

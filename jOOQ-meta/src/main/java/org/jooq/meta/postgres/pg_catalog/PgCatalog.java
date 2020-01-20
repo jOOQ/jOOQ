@@ -4,7 +4,6 @@
 package org.jooq.meta.postgres.pg_catalog;
 
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,6 +21,7 @@ import org.jooq.meta.postgres.pg_catalog.tables.PgIndex;
 import org.jooq.meta.postgres.pg_catalog.tables.PgInherits;
 import org.jooq.meta.postgres.pg_catalog.tables.PgNamespace;
 import org.jooq.meta.postgres.pg_catalog.tables.PgProc;
+import org.jooq.meta.postgres.pg_catalog.tables.PgSequence;
 import org.jooq.meta.postgres.pg_catalog.tables.PgType;
 
 
@@ -31,7 +31,7 @@ import org.jooq.meta.postgres.pg_catalog.tables.PgType;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PgCatalog extends SchemaImpl {
 
-    private static final long serialVersionUID = -743375417;
+    private static final long serialVersionUID = 1085930158;
 
     /**
      * The reference instance of <code>pg_catalog</code>
@@ -41,62 +41,67 @@ public class PgCatalog extends SchemaImpl {
     /**
      * The table <code>pg_catalog.pg_attrdef</code>.
      */
-    public final PgAttrdef PG_ATTRDEF = org.jooq.meta.postgres.pg_catalog.tables.PgAttrdef.PG_ATTRDEF;
+    public final PgAttrdef PG_ATTRDEF = PgAttrdef.PG_ATTRDEF;
 
     /**
      * The table <code>pg_catalog.pg_attribute</code>.
      */
-    public final PgAttribute PG_ATTRIBUTE = org.jooq.meta.postgres.pg_catalog.tables.PgAttribute.PG_ATTRIBUTE;
+    public final PgAttribute PG_ATTRIBUTE = PgAttribute.PG_ATTRIBUTE;
 
     /**
      * The table <code>pg_catalog.pg_class</code>.
      */
-    public final PgClass PG_CLASS = org.jooq.meta.postgres.pg_catalog.tables.PgClass.PG_CLASS;
+    public final PgClass PG_CLASS = PgClass.PG_CLASS;
 
     /**
      * The table <code>pg_catalog.pg_collation</code>.
      */
-    public final PgCollation PG_COLLATION = org.jooq.meta.postgres.pg_catalog.tables.PgCollation.PG_COLLATION;
+    public final PgCollation PG_COLLATION = PgCollation.PG_COLLATION;
 
     /**
      * The table <code>pg_catalog.pg_constraint</code>.
      */
-    public final PgConstraint PG_CONSTRAINT = org.jooq.meta.postgres.pg_catalog.tables.PgConstraint.PG_CONSTRAINT;
+    public final PgConstraint PG_CONSTRAINT = PgConstraint.PG_CONSTRAINT;
 
     /**
      * The table <code>pg_catalog.pg_description</code>.
      */
-    public final PgDescription PG_DESCRIPTION = org.jooq.meta.postgres.pg_catalog.tables.PgDescription.PG_DESCRIPTION;
+    public final PgDescription PG_DESCRIPTION = PgDescription.PG_DESCRIPTION;
 
     /**
      * The table <code>pg_catalog.pg_enum</code>.
      */
-    public final PgEnum PG_ENUM = org.jooq.meta.postgres.pg_catalog.tables.PgEnum.PG_ENUM;
+    public final PgEnum PG_ENUM = PgEnum.PG_ENUM;
 
     /**
      * The table <code>pg_catalog.pg_index</code>.
      */
-    public final PgIndex PG_INDEX = org.jooq.meta.postgres.pg_catalog.tables.PgIndex.PG_INDEX;
+    public final PgIndex PG_INDEX = PgIndex.PG_INDEX;
 
     /**
      * The table <code>pg_catalog.pg_inherits</code>.
      */
-    public final PgInherits PG_INHERITS = org.jooq.meta.postgres.pg_catalog.tables.PgInherits.PG_INHERITS;
+    public final PgInherits PG_INHERITS = PgInherits.PG_INHERITS;
 
     /**
      * The table <code>pg_catalog.pg_namespace</code>.
      */
-    public final PgNamespace PG_NAMESPACE = org.jooq.meta.postgres.pg_catalog.tables.PgNamespace.PG_NAMESPACE;
+    public final PgNamespace PG_NAMESPACE = PgNamespace.PG_NAMESPACE;
 
     /**
      * The table <code>pg_catalog.pg_proc</code>.
      */
-    public final PgProc PG_PROC = org.jooq.meta.postgres.pg_catalog.tables.PgProc.PG_PROC;
+    public final PgProc PG_PROC = PgProc.PG_PROC;
+
+    /**
+     * The table <code>pg_catalog.pg_sequence</code>.
+     */
+    public final PgSequence PG_SEQUENCE = PgSequence.PG_SEQUENCE;
 
     /**
      * The table <code>pg_catalog.pg_type</code>.
      */
-    public final PgType PG_TYPE = org.jooq.meta.postgres.pg_catalog.tables.PgType.PG_TYPE;
+    public final PgType PG_TYPE = PgType.PG_TYPE;
 
     /**
      * No further instances allowed
@@ -106,9 +111,6 @@ public class PgCatalog extends SchemaImpl {
     }
 
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Catalog getCatalog() {
         return DefaultCatalog.DEFAULT_CATALOG;
@@ -116,12 +118,6 @@ public class PgCatalog extends SchemaImpl {
 
     @Override
     public final List<Table<?>> getTables() {
-        List result = new ArrayList();
-        result.addAll(getTables0());
-        return result;
-    }
-
-    private final List<Table<?>> getTables0() {
         return Arrays.<Table<?>>asList(
             PgAttrdef.PG_ATTRDEF,
             PgAttribute.PG_ATTRIBUTE,
@@ -134,6 +130,7 @@ public class PgCatalog extends SchemaImpl {
             PgInherits.PG_INHERITS,
             PgNamespace.PG_NAMESPACE,
             PgProc.PG_PROC,
+            PgSequence.PG_SEQUENCE,
             PgType.PG_TYPE);
     }
 }

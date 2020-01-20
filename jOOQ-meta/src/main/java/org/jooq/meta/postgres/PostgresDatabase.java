@@ -78,6 +78,7 @@ import static org.jooq.meta.postgres.pg_catalog.Tables.PG_INDEX;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_INHERITS;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_NAMESPACE;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_PROC;
+import static org.jooq.meta.postgres.pg_catalog.Tables.PG_SEQUENCE;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_TYPE;
 import static org.jooq.util.postgres.PostgresDSL.array;
 import static org.jooq.util.postgres.PostgresDSL.arrayAppend;
@@ -157,6 +158,7 @@ public class PostgresDatabase extends AbstractDatabase {
 
     private static Boolean is84;
     private static Boolean is94;
+    private static Boolean is10;
     private static Boolean is11;
     private static Boolean canUseRoutines;
     private static Boolean canCastToEnumType;
@@ -899,6 +901,15 @@ public class PostgresDatabase extends AbstractDatabase {
             is94 = exists(PARAMETERS.PARAMETER_DEFAULT);
 
         return is94;
+    }
+
+    boolean is10() {
+
+        // [#7785] pg_sequence was added in PostgreSQL 10 only
+        if (is10 == null)
+            is10 = exists(PG_SEQUENCE.SEQRELID);
+
+        return is10;
     }
 
     boolean is11() {

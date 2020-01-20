@@ -22,7 +22,7 @@ import org.jooq.meta.postgres.pg_catalog.PgCatalog;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PgDescription extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -1066461844;
+    private static final long serialVersionUID = 201387977;
 
     /**
      * The reference instance of <code>pg_catalog.pg_description</code>
@@ -40,22 +40,22 @@ public class PgDescription extends TableImpl<Record> {
     /**
      * The column <code>pg_catalog.pg_description.objoid</code>.
      */
-    public final TableField<Record, Long> OBJOID = createField("objoid", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<Record, Long> OBJOID = createField(DSL.name("objoid"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_description.classoid</code>.
      */
-    public final TableField<Record, Long> CLASSOID = createField("classoid", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<Record, Long> CLASSOID = createField(DSL.name("classoid"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_description.objsubid</code>.
      */
-    public final TableField<Record, Integer> OBJSUBID = createField("objsubid", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<Record, Integer> OBJSUBID = createField(DSL.name("objsubid"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_description.description</code>.
      */
-    public final TableField<Record, String> DESCRIPTION = createField("description", org.jooq.impl.SQLDataType.CLOB.nullable(false), this, "");
+    public final TableField<Record, String> DESCRIPTION = createField(DSL.name("description"), org.jooq.impl.SQLDataType.CLOB.nullable(false), this, "");
 
     /**
      * Create a <code>pg_catalog.pg_description</code> table reference
@@ -90,25 +90,16 @@ public class PgDescription extends TableImpl<Record> {
         super(child, key, PG_DESCRIPTION);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Schema getSchema() {
         return PgCatalog.PG_CATALOG;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public PgDescription as(String alias) {
         return new PgDescription(DSL.name(alias), this);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public PgDescription as(Name alias) {
         return new PgDescription(alias, this);

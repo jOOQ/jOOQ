@@ -22,7 +22,7 @@ import org.jooq.meta.postgres.pg_catalog.PgCatalog;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PgType extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 1666880234;
+    private static final long serialVersionUID = -2146032444;
 
     /**
      * The reference instance of <code>pg_catalog.pg_type</code>
@@ -38,155 +38,160 @@ public class PgType extends TableImpl<Record> {
     }
 
     /**
+     * The column <code>pg_catalog.pg_type.oid</code>.
+     */
+    public final TableField<Record, Long> OID = createField(DSL.name("oid"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+
+    /**
      * The column <code>pg_catalog.pg_type.typname</code>.
      */
-    public final TableField<Record, String> TYPNAME = createField("typname", org.jooq.impl.SQLDataType.VARCHAR.nullable(false), this, "");
+    public final TableField<Record, String> TYPNAME = createField(DSL.name("typname"), org.jooq.impl.SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_type.typnamespace</code>.
      */
-    public final TableField<Record, Long> TYPNAMESPACE = createField("typnamespace", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<Record, Long> TYPNAMESPACE = createField(DSL.name("typnamespace"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_type.typowner</code>.
      */
-    public final TableField<Record, Long> TYPOWNER = createField("typowner", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<Record, Long> TYPOWNER = createField(DSL.name("typowner"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_type.typlen</code>.
      */
-    public final TableField<Record, Short> TYPLEN = createField("typlen", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+    public final TableField<Record, Short> TYPLEN = createField(DSL.name("typlen"), org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_type.typbyval</code>.
      */
-    public final TableField<Record, Boolean> TYPBYVAL = createField("typbyval", org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
+    public final TableField<Record, Boolean> TYPBYVAL = createField(DSL.name("typbyval"), org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_type.typtype</code>.
      */
-    public final TableField<Record, String> TYPTYPE = createField("typtype", org.jooq.impl.SQLDataType.CHAR.nullable(false), this, "");
+    public final TableField<Record, String> TYPTYPE = createField(DSL.name("typtype"), org.jooq.impl.SQLDataType.CHAR.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_type.typcategory</code>.
      */
-    public final TableField<Record, String> TYPCATEGORY = createField("typcategory", org.jooq.impl.SQLDataType.CHAR.nullable(false), this, "");
+    public final TableField<Record, String> TYPCATEGORY = createField(DSL.name("typcategory"), org.jooq.impl.SQLDataType.CHAR.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_type.typispreferred</code>.
      */
-    public final TableField<Record, Boolean> TYPISPREFERRED = createField("typispreferred", org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
+    public final TableField<Record, Boolean> TYPISPREFERRED = createField(DSL.name("typispreferred"), org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_type.typisdefined</code>.
      */
-    public final TableField<Record, Boolean> TYPISDEFINED = createField("typisdefined", org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
+    public final TableField<Record, Boolean> TYPISDEFINED = createField(DSL.name("typisdefined"), org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_type.typdelim</code>.
      */
-    public final TableField<Record, String> TYPDELIM = createField("typdelim", org.jooq.impl.SQLDataType.CHAR.nullable(false), this, "");
+    public final TableField<Record, String> TYPDELIM = createField(DSL.name("typdelim"), org.jooq.impl.SQLDataType.CHAR.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_type.typrelid</code>.
      */
-    public final TableField<Record, Long> TYPRELID = createField("typrelid", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<Record, Long> TYPRELID = createField(DSL.name("typrelid"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_type.typelem</code>.
      */
-    public final TableField<Record, Long> TYPELEM = createField("typelem", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<Record, Long> TYPELEM = createField(DSL.name("typelem"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_type.typarray</code>.
      */
-    public final TableField<Record, Long> TYPARRAY = createField("typarray", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<Record, Long> TYPARRAY = createField(DSL.name("typarray"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_type.typinput</code>.
      */
-    public final TableField<Record, String> TYPINPUT = createField("typinput", org.jooq.impl.SQLDataType.VARCHAR.nullable(false), this, "");
+    public final TableField<Record, String> TYPINPUT = createField(DSL.name("typinput"), org.jooq.impl.SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_type.typoutput</code>.
      */
-    public final TableField<Record, String> TYPOUTPUT = createField("typoutput", org.jooq.impl.SQLDataType.VARCHAR.nullable(false), this, "");
+    public final TableField<Record, String> TYPOUTPUT = createField(DSL.name("typoutput"), org.jooq.impl.SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_type.typreceive</code>.
      */
-    public final TableField<Record, String> TYPRECEIVE = createField("typreceive", org.jooq.impl.SQLDataType.VARCHAR.nullable(false), this, "");
+    public final TableField<Record, String> TYPRECEIVE = createField(DSL.name("typreceive"), org.jooq.impl.SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_type.typsend</code>.
      */
-    public final TableField<Record, String> TYPSEND = createField("typsend", org.jooq.impl.SQLDataType.VARCHAR.nullable(false), this, "");
+    public final TableField<Record, String> TYPSEND = createField(DSL.name("typsend"), org.jooq.impl.SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_type.typmodin</code>.
      */
-    public final TableField<Record, String> TYPMODIN = createField("typmodin", org.jooq.impl.SQLDataType.VARCHAR.nullable(false), this, "");
+    public final TableField<Record, String> TYPMODIN = createField(DSL.name("typmodin"), org.jooq.impl.SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_type.typmodout</code>.
      */
-    public final TableField<Record, String> TYPMODOUT = createField("typmodout", org.jooq.impl.SQLDataType.VARCHAR.nullable(false), this, "");
+    public final TableField<Record, String> TYPMODOUT = createField(DSL.name("typmodout"), org.jooq.impl.SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_type.typanalyze</code>.
      */
-    public final TableField<Record, String> TYPANALYZE = createField("typanalyze", org.jooq.impl.SQLDataType.VARCHAR.nullable(false), this, "");
+    public final TableField<Record, String> TYPANALYZE = createField(DSL.name("typanalyze"), org.jooq.impl.SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_type.typalign</code>.
      */
-    public final TableField<Record, String> TYPALIGN = createField("typalign", org.jooq.impl.SQLDataType.CHAR.nullable(false), this, "");
+    public final TableField<Record, String> TYPALIGN = createField(DSL.name("typalign"), org.jooq.impl.SQLDataType.CHAR.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_type.typstorage</code>.
      */
-    public final TableField<Record, String> TYPSTORAGE = createField("typstorage", org.jooq.impl.SQLDataType.CHAR.nullable(false), this, "");
+    public final TableField<Record, String> TYPSTORAGE = createField(DSL.name("typstorage"), org.jooq.impl.SQLDataType.CHAR.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_type.typnotnull</code>.
      */
-    public final TableField<Record, Boolean> TYPNOTNULL = createField("typnotnull", org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
+    public final TableField<Record, Boolean> TYPNOTNULL = createField(DSL.name("typnotnull"), org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_type.typbasetype</code>.
      */
-    public final TableField<Record, Long> TYPBASETYPE = createField("typbasetype", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<Record, Long> TYPBASETYPE = createField(DSL.name("typbasetype"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_type.typtypmod</code>.
      */
-    public final TableField<Record, Integer> TYPTYPMOD = createField("typtypmod", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<Record, Integer> TYPTYPMOD = createField(DSL.name("typtypmod"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_type.typndims</code>.
      */
-    public final TableField<Record, Integer> TYPNDIMS = createField("typndims", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<Record, Integer> TYPNDIMS = createField(DSL.name("typndims"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_type.typcollation</code>.
      */
-    public final TableField<Record, Long> TYPCOLLATION = createField("typcollation", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<Record, Long> TYPCOLLATION = createField(DSL.name("typcollation"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
-     * @deprecated Unknown data type. Please define an explicit {@link org.jooq.Binding} to specify how this type should be handled. Deprecation can be turned off using <deprecationOnUnknownTypes/> in your code generator configuration.
+     * @deprecated Unknown data type. Please define an explicit {@link org.jooq.Binding} to specify how this type should be handled. Deprecation can be turned off using {@literal <deprecationOnUnknownTypes/>} in your code generator configuration.
      */
     @java.lang.Deprecated
-    public final TableField<Record, Object> TYPDEFAULTBIN = createField("typdefaultbin", org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"pg_node_tree\""), this, "");
+    public final TableField<Record, Object> TYPDEFAULTBIN = createField(DSL.name("typdefaultbin"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"pg_node_tree\""), this, "");
 
     /**
      * The column <code>pg_catalog.pg_type.typdefault</code>.
      */
-    public final TableField<Record, String> TYPDEFAULT = createField("typdefault", org.jooq.impl.SQLDataType.CLOB, this, "");
+    public final TableField<Record, String> TYPDEFAULT = createField(DSL.name("typdefault"), org.jooq.impl.SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>pg_catalog.pg_type.typacl</code>.
      */
-    public final TableField<Record, String[]> TYPACL = createField("typacl", org.jooq.impl.SQLDataType.VARCHAR.getArrayDataType(), this, "");
+    public final TableField<Record, String[]> TYPACL = createField(DSL.name("typacl"), org.jooq.impl.SQLDataType.VARCHAR.getArrayDataType(), this, "");
 
     /**
      * Create a <code>pg_catalog.pg_type</code> table reference
@@ -221,25 +226,16 @@ public class PgType extends TableImpl<Record> {
         super(child, key, PG_TYPE);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Schema getSchema() {
         return PgCatalog.PG_CATALOG;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public PgType as(String alias) {
         return new PgType(DSL.name(alias), this);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public PgType as(Name alias) {
         return new PgType(alias, this);

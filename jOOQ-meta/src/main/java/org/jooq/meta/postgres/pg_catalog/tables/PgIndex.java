@@ -22,7 +22,7 @@ import org.jooq.meta.postgres.pg_catalog.PgCatalog;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PgIndex extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 1437046984;
+    private static final long serialVersionUID = -2067879899;
 
     /**
      * The reference instance of <code>pg_catalog.pg_index</code>
@@ -40,104 +40,104 @@ public class PgIndex extends TableImpl<Record> {
     /**
      * The column <code>pg_catalog.pg_index.indexrelid</code>.
      */
-    public final TableField<Record, Long> INDEXRELID = createField("indexrelid", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<Record, Long> INDEXRELID = createField(DSL.name("indexrelid"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_index.indrelid</code>.
      */
-    public final TableField<Record, Long> INDRELID = createField("indrelid", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<Record, Long> INDRELID = createField(DSL.name("indrelid"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_index.indnatts</code>.
      */
-    public final TableField<Record, Short> INDNATTS = createField("indnatts", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+    public final TableField<Record, Short> INDNATTS = createField(DSL.name("indnatts"), org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_index.indnkeyatts</code>.
      */
-    public final TableField<Record, Short> INDNKEYATTS = createField("indnkeyatts", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+    public final TableField<Record, Short> INDNKEYATTS = createField(DSL.name("indnkeyatts"), org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_index.indisunique</code>.
      */
-    public final TableField<Record, Boolean> INDISUNIQUE = createField("indisunique", org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
+    public final TableField<Record, Boolean> INDISUNIQUE = createField(DSL.name("indisunique"), org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_index.indisprimary</code>.
      */
-    public final TableField<Record, Boolean> INDISPRIMARY = createField("indisprimary", org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
+    public final TableField<Record, Boolean> INDISPRIMARY = createField(DSL.name("indisprimary"), org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_index.indisexclusion</code>.
      */
-    public final TableField<Record, Boolean> INDISEXCLUSION = createField("indisexclusion", org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
+    public final TableField<Record, Boolean> INDISEXCLUSION = createField(DSL.name("indisexclusion"), org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_index.indimmediate</code>.
      */
-    public final TableField<Record, Boolean> INDIMMEDIATE = createField("indimmediate", org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
+    public final TableField<Record, Boolean> INDIMMEDIATE = createField(DSL.name("indimmediate"), org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_index.indisclustered</code>.
      */
-    public final TableField<Record, Boolean> INDISCLUSTERED = createField("indisclustered", org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
+    public final TableField<Record, Boolean> INDISCLUSTERED = createField(DSL.name("indisclustered"), org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_index.indisvalid</code>.
      */
-    public final TableField<Record, Boolean> INDISVALID = createField("indisvalid", org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
+    public final TableField<Record, Boolean> INDISVALID = createField(DSL.name("indisvalid"), org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_index.indcheckxmin</code>.
      */
-    public final TableField<Record, Boolean> INDCHECKXMIN = createField("indcheckxmin", org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
+    public final TableField<Record, Boolean> INDCHECKXMIN = createField(DSL.name("indcheckxmin"), org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_index.indisready</code>.
      */
-    public final TableField<Record, Boolean> INDISREADY = createField("indisready", org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
+    public final TableField<Record, Boolean> INDISREADY = createField(DSL.name("indisready"), org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_index.indislive</code>.
      */
-    public final TableField<Record, Boolean> INDISLIVE = createField("indislive", org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
+    public final TableField<Record, Boolean> INDISLIVE = createField(DSL.name("indislive"), org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_index.indisreplident</code>.
      */
-    public final TableField<Record, Boolean> INDISREPLIDENT = createField("indisreplident", org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
+    public final TableField<Record, Boolean> INDISREPLIDENT = createField(DSL.name("indisreplident"), org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_index.indkey</code>.
      */
-    public final TableField<Record, Object[]> INDKEY = createField("indkey", org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"int2vector\"").getArrayDataType(), this, "");
+    public final TableField<Record, Object[]> INDKEY = createField(DSL.name("indkey"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"int2vector\"").getArrayDataType(), this, "");
 
     /**
      * The column <code>pg_catalog.pg_index.indcollation</code>.
      */
-    public final TableField<Record, Long[]> INDCOLLATION = createField("indcollation", org.jooq.impl.SQLDataType.BIGINT.getArrayDataType(), this, "");
+    public final TableField<Record, Long[]> INDCOLLATION = createField(DSL.name("indcollation"), org.jooq.impl.SQLDataType.BIGINT.getArrayDataType(), this, "");
 
     /**
      * The column <code>pg_catalog.pg_index.indclass</code>.
      */
-    public final TableField<Record, Long[]> INDCLASS = createField("indclass", org.jooq.impl.SQLDataType.BIGINT.getArrayDataType(), this, "");
+    public final TableField<Record, Long[]> INDCLASS = createField(DSL.name("indclass"), org.jooq.impl.SQLDataType.BIGINT.getArrayDataType(), this, "");
 
     /**
      * The column <code>pg_catalog.pg_index.indoption</code>.
      */
-    public final TableField<Record, Object[]> INDOPTION = createField("indoption", org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"int2vector\"").getArrayDataType(), this, "");
+    public final TableField<Record, Object[]> INDOPTION = createField(DSL.name("indoption"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"int2vector\"").getArrayDataType(), this, "");
 
     /**
-     * @deprecated Unknown data type. Please define an explicit {@link org.jooq.Binding} to specify how this type should be handled. Deprecation can be turned off using <deprecationOnUnknownTypes/> in your code generator configuration.
+     * @deprecated Unknown data type. Please define an explicit {@link org.jooq.Binding} to specify how this type should be handled. Deprecation can be turned off using {@literal <deprecationOnUnknownTypes/>} in your code generator configuration.
      */
     @java.lang.Deprecated
-    public final TableField<Record, Object> INDEXPRS = createField("indexprs", org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"pg_node_tree\""), this, "");
+    public final TableField<Record, Object> INDEXPRS = createField(DSL.name("indexprs"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"pg_node_tree\""), this, "");
 
     /**
-     * @deprecated Unknown data type. Please define an explicit {@link org.jooq.Binding} to specify how this type should be handled. Deprecation can be turned off using <deprecationOnUnknownTypes/> in your code generator configuration.
+     * @deprecated Unknown data type. Please define an explicit {@link org.jooq.Binding} to specify how this type should be handled. Deprecation can be turned off using {@literal <deprecationOnUnknownTypes/>} in your code generator configuration.
      */
     @java.lang.Deprecated
-    public final TableField<Record, Object> INDPRED = createField("indpred", org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"pg_node_tree\""), this, "");
+    public final TableField<Record, Object> INDPRED = createField(DSL.name("indpred"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"pg_node_tree\""), this, "");
 
     /**
      * Create a <code>pg_catalog.pg_index</code> table reference
@@ -172,25 +172,16 @@ public class PgIndex extends TableImpl<Record> {
         super(child, key, PG_INDEX);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Schema getSchema() {
         return PgCatalog.PG_CATALOG;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public PgIndex as(String alias) {
         return new PgIndex(DSL.name(alias), this);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public PgIndex as(Name alias) {
         return new PgIndex(alias, this);

@@ -6,6 +6,7 @@ package org.jooq.meta.postgres.pg_catalog.routines;
 
 import org.jooq.Parameter;
 import org.jooq.impl.AbstractRoutine;
+import org.jooq.impl.Internal;
 import org.jooq.meta.postgres.pg_catalog.PgCatalog;
 
 
@@ -15,12 +16,12 @@ import org.jooq.meta.postgres.pg_catalog.PgCatalog;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Count2 extends AbstractRoutine<Long> {
 
-    private static final long serialVersionUID = 2011390593;
+    private static final long serialVersionUID = -160896812;
 
     /**
      * The parameter <code>pg_catalog.count.RETURN_VALUE</code>.
      */
-    public static final Parameter<Long> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.BIGINT, false, false);
+    public static final Parameter<Long> RETURN_VALUE = Internal.createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.BIGINT, false, false);
 
     /**
      * Create a new routine call instance

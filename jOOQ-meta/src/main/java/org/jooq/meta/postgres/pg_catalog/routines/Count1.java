@@ -7,6 +7,7 @@ package org.jooq.meta.postgres.pg_catalog.routines;
 import org.jooq.Field;
 import org.jooq.Parameter;
 import org.jooq.impl.AbstractRoutine;
+import org.jooq.impl.Internal;
 import org.jooq.meta.postgres.pg_catalog.PgCatalog;
 
 
@@ -16,18 +17,18 @@ import org.jooq.meta.postgres.pg_catalog.PgCatalog;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Count1 extends AbstractRoutine<Long> {
 
-    private static final long serialVersionUID = -614321278;
+    private static final long serialVersionUID = -376610363;
 
     /**
      * The parameter <code>pg_catalog.count.RETURN_VALUE</code>.
      */
-    public static final Parameter<Long> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.BIGINT, false, false);
+    public static final Parameter<Long> RETURN_VALUE = Internal.createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.BIGINT, false, false);
 
     /**
-     * @deprecated Unknown data type. Please define an explicit {@link org.jooq.Binding} to specify how this type should be handled. Deprecation can be turned off using <deprecationOnUnknownTypes/> in your code generator configuration.
+     * @deprecated Unknown data type. Please define an explicit {@link org.jooq.Binding} to specify how this type should be handled. Deprecation can be turned off using {@literal <deprecationOnUnknownTypes/>} in your code generator configuration.
      */
     @java.lang.Deprecated
-    public static final Parameter<Object> _1 = createParameter("_1", org.jooq.impl.SQLDataType.OTHER, false, true);
+    public static final Parameter<Object> _1 = Internal.createParameter("_1", org.jooq.impl.SQLDataType.OTHER, false, true);
 
     /**
      * Create a new routine call instance

@@ -22,7 +22,7 @@ import org.jooq.meta.postgres.pg_catalog.PgCatalog;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PgInherits extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 982667057;
+    private static final long serialVersionUID = -1859127245;
 
     /**
      * The reference instance of <code>pg_catalog.pg_inherits</code>
@@ -40,17 +40,17 @@ public class PgInherits extends TableImpl<Record> {
     /**
      * The column <code>pg_catalog.pg_inherits.inhrelid</code>.
      */
-    public final TableField<Record, Long> INHRELID = createField("inhrelid", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<Record, Long> INHRELID = createField(DSL.name("inhrelid"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_inherits.inhparent</code>.
      */
-    public final TableField<Record, Long> INHPARENT = createField("inhparent", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<Record, Long> INHPARENT = createField(DSL.name("inhparent"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_inherits.inhseqno</code>.
      */
-    public final TableField<Record, Integer> INHSEQNO = createField("inhseqno", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<Record, Integer> INHSEQNO = createField(DSL.name("inhseqno"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * Create a <code>pg_catalog.pg_inherits</code> table reference
@@ -85,25 +85,16 @@ public class PgInherits extends TableImpl<Record> {
         super(child, key, PG_INHERITS);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Schema getSchema() {
         return PgCatalog.PG_CATALOG;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public PgInherits as(String alias) {
         return new PgInherits(DSL.name(alias), this);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public PgInherits as(Name alias) {
         return new PgInherits(alias, this);

@@ -22,7 +22,7 @@ import org.jooq.meta.postgres.pg_catalog.PgCatalog;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PgNamespace extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 1800070998;
+    private static final long serialVersionUID = 1835313691;
 
     /**
      * The reference instance of <code>pg_catalog.pg_namespace</code>
@@ -38,19 +38,24 @@ public class PgNamespace extends TableImpl<Record> {
     }
 
     /**
+     * The column <code>pg_catalog.pg_namespace.oid</code>.
+     */
+    public final TableField<Record, Long> OID = createField(DSL.name("oid"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+
+    /**
      * The column <code>pg_catalog.pg_namespace.nspname</code>.
      */
-    public final TableField<Record, String> NSPNAME = createField("nspname", org.jooq.impl.SQLDataType.VARCHAR.nullable(false), this, "");
+    public final TableField<Record, String> NSPNAME = createField(DSL.name("nspname"), org.jooq.impl.SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_namespace.nspowner</code>.
      */
-    public final TableField<Record, Long> NSPOWNER = createField("nspowner", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<Record, Long> NSPOWNER = createField(DSL.name("nspowner"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_namespace.nspacl</code>.
      */
-    public final TableField<Record, String[]> NSPACL = createField("nspacl", org.jooq.impl.SQLDataType.VARCHAR.getArrayDataType(), this, "");
+    public final TableField<Record, String[]> NSPACL = createField(DSL.name("nspacl"), org.jooq.impl.SQLDataType.VARCHAR.getArrayDataType(), this, "");
 
     /**
      * Create a <code>pg_catalog.pg_namespace</code> table reference
@@ -85,25 +90,16 @@ public class PgNamespace extends TableImpl<Record> {
         super(child, key, PG_NAMESPACE);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Schema getSchema() {
         return PgCatalog.PG_CATALOG;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public PgNamespace as(String alias) {
         return new PgNamespace(DSL.name(alias), this);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public PgNamespace as(Name alias) {
         return new PgNamespace(alias, this);

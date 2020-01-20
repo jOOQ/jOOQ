@@ -15,6 +15,7 @@ import org.jooq.meta.postgres.pg_catalog.tables.PgIndex;
 import org.jooq.meta.postgres.pg_catalog.tables.PgInherits;
 import org.jooq.meta.postgres.pg_catalog.tables.PgNamespace;
 import org.jooq.meta.postgres.pg_catalog.tables.PgProc;
+import org.jooq.meta.postgres.pg_catalog.tables.PgSequence;
 import org.jooq.meta.postgres.pg_catalog.tables.PgType;
 
 
@@ -27,60 +28,65 @@ public class Tables {
     /**
      * The table <code>pg_catalog.pg_attrdef</code>.
      */
-    public static final PgAttrdef PG_ATTRDEF = org.jooq.meta.postgres.pg_catalog.tables.PgAttrdef.PG_ATTRDEF;
+    public static final PgAttrdef PG_ATTRDEF = PgAttrdef.PG_ATTRDEF;
 
     /**
      * The table <code>pg_catalog.pg_attribute</code>.
      */
-    public static final PgAttribute PG_ATTRIBUTE = org.jooq.meta.postgres.pg_catalog.tables.PgAttribute.PG_ATTRIBUTE;
+    public static final PgAttribute PG_ATTRIBUTE = PgAttribute.PG_ATTRIBUTE;
 
     /**
      * The table <code>pg_catalog.pg_class</code>.
      */
-    public static final PgClass PG_CLASS = org.jooq.meta.postgres.pg_catalog.tables.PgClass.PG_CLASS;
+    public static final PgClass PG_CLASS = PgClass.PG_CLASS;
 
     /**
      * The table <code>pg_catalog.pg_collation</code>.
      */
-    public static final PgCollation PG_COLLATION = org.jooq.meta.postgres.pg_catalog.tables.PgCollation.PG_COLLATION;
+    public static final PgCollation PG_COLLATION = PgCollation.PG_COLLATION;
 
     /**
      * The table <code>pg_catalog.pg_constraint</code>.
      */
-    public static final PgConstraint PG_CONSTRAINT = org.jooq.meta.postgres.pg_catalog.tables.PgConstraint.PG_CONSTRAINT;
+    public static final PgConstraint PG_CONSTRAINT = PgConstraint.PG_CONSTRAINT;
 
     /**
      * The table <code>pg_catalog.pg_description</code>.
      */
-    public static final PgDescription PG_DESCRIPTION = org.jooq.meta.postgres.pg_catalog.tables.PgDescription.PG_DESCRIPTION;
+    public static final PgDescription PG_DESCRIPTION = PgDescription.PG_DESCRIPTION;
 
     /**
      * The table <code>pg_catalog.pg_enum</code>.
      */
-    public static final PgEnum PG_ENUM = org.jooq.meta.postgres.pg_catalog.tables.PgEnum.PG_ENUM;
+    public static final PgEnum PG_ENUM = PgEnum.PG_ENUM;
 
     /**
      * The table <code>pg_catalog.pg_index</code>.
      */
-    public static final PgIndex PG_INDEX = org.jooq.meta.postgres.pg_catalog.tables.PgIndex.PG_INDEX;
+    public static final PgIndex PG_INDEX = PgIndex.PG_INDEX;
 
     /**
      * The table <code>pg_catalog.pg_inherits</code>.
      */
-    public static final PgInherits PG_INHERITS = org.jooq.meta.postgres.pg_catalog.tables.PgInherits.PG_INHERITS;
+    public static final PgInherits PG_INHERITS = PgInherits.PG_INHERITS;
 
     /**
      * The table <code>pg_catalog.pg_namespace</code>.
      */
-    public static final PgNamespace PG_NAMESPACE = org.jooq.meta.postgres.pg_catalog.tables.PgNamespace.PG_NAMESPACE;
+    public static final PgNamespace PG_NAMESPACE = PgNamespace.PG_NAMESPACE;
 
     /**
      * The table <code>pg_catalog.pg_proc</code>.
      */
-    public static final PgProc PG_PROC = org.jooq.meta.postgres.pg_catalog.tables.PgProc.PG_PROC;
+    public static final PgProc PG_PROC = PgProc.PG_PROC;
+
+    /**
+     * The table <code>pg_catalog.pg_sequence</code>.
+     */
+    public static final PgSequence PG_SEQUENCE = PgSequence.PG_SEQUENCE;
 
     /**
      * The table <code>pg_catalog.pg_type</code>.
      */
-    public static final PgType PG_TYPE = org.jooq.meta.postgres.pg_catalog.tables.PgType.PG_TYPE;
+    public static final PgType PG_TYPE = PgType.PG_TYPE;
 }

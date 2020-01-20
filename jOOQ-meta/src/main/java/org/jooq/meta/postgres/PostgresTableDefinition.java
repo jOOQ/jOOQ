@@ -41,6 +41,7 @@ package org.jooq.meta.postgres;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.nvl;
+import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.meta.postgres.information_schema.Tables.COLUMNS;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_ATTRIBUTE;
@@ -82,6 +83,7 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
 
 
 
+
         for (Record record : create().select(
                 COLUMNS.COLUMN_NAME,
                 COLUMNS.ORDINAL_POSITION,
@@ -93,6 +95,7 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
                     when(COLUMNS.UDT_NAME.eq(inline("_varchar")), PG_ATTRIBUTE.ATTTYPMOD.sub(inline(4)))).as(COLUMNS.CHARACTER_MAXIMUM_LENGTH),
                 COLUMNS.NUMERIC_PRECISION,
                 COLUMNS.NUMERIC_SCALE,
+                (database.is10() ? COLUMNS.IS_IDENTITY : val(null, String.class)).as(COLUMNS.IS_IDENTITY),
                 COLUMNS.IS_NULLABLE,
                 COLUMNS.COLUMN_DEFAULT,
                 COLUMNS.UDT_SCHEMA,
@@ -144,7 +147,11 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
                 record.get(COLUMNS.COLUMN_NAME),
                 record.get(COLUMNS.ORDINAL_POSITION, int.class),
                 type,
-                defaultString(record.get(COLUMNS.COLUMN_DEFAULT)).trim().toLowerCase().startsWith("nextval"),
+                database.is10() ? record.get(COLUMNS.IS_IDENTITY, boolean.class)
+                    : defaultString(record.get(COLUMNS.COLUMN_DEFAULT))
+                        .trim()
+                        .toLowerCase()
+                        .startsWith("nextval"),
                 record.get(PG_DESCRIPTION.DESCRIPTION)
             );
 

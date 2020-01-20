@@ -296,7 +296,7 @@ public final class FilePattern {
         try {
             loader.load(Source.of(file, encoding));
         }
-        catch (Exception e) {
+        catch (RuntimeException e) {
             log.error("Error while loading file: " + file);
             throw e;
         }

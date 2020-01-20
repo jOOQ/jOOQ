@@ -37,6 +37,8 @@
  */
 package org.jooq;
 
+import java.io.Serializable;
+
 /**
  * A JSON wrapper type for JSONB data obtained from the database.
  * <p>
@@ -46,9 +48,10 @@ package org.jooq;
  * consistent with jOOQ's general way of returning <code>NULL</code> from
  * {@link Result} and {@link Record} methods.
  */
-public final class JSONB {
+public final class JSONB implements Serializable {
 
-    private final String data;
+    private static final long serialVersionUID = 860591239448066408L;
+    private final String      data;
 
     private JSONB(String data) {
         this.data = data;

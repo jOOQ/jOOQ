@@ -244,7 +244,10 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         for (ScopeStackElement e1 : scopeStack) {
             String replaced = null;
 
-            if (e1.positions == null) {
+            if (subqueryLevel() != e1.scopeLevel) {
+                continue outer;
+            }
+            else if (e1.positions == null) {
                 continue outer;
             }
             else if (e1 == beforeFirstCte) {

@@ -58,7 +58,7 @@ final class ScopeStack<K, V> implements Iterable<V> {
     ScopeStack(final V defaultValue) {
         this(new Constructor<V>() {
             @Override
-            public V create() {
+            public V create(int scopeLevel) {
                 return defaultValue;
             }
         });
@@ -150,7 +150,7 @@ final class ScopeStack<K, V> implements Iterable<V> {
         V result = get0(list);
 
         if (result == null) {
-            result = constructor.create();
+            result = constructor.create(scopeLevel);
             set0(list, result);
         }
 
@@ -194,6 +194,6 @@ final class ScopeStack<K, V> implements Iterable<V> {
     @FunctionalInterface
 
     interface Constructor<V> {
-        V create();
+        V create(int scopeLevel);
     }
 }

@@ -155,6 +155,17 @@ be enabled as well.
 For details, see <a href="https://github.com/jOOQ/jOOQ/issues/4498">https://github.com/jOOQ/jOOQ/issues/4498</a>.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="renderParenthesisAroundSetOperationQueries" type="boolean" minOccurs="0" maxOccurs="1" default="false">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether queries combined with set operators (e.g. UNION and UNION ALL) should always be surrounded by a parenthesis pair.
+<p>
+By default (i.e. when this setting is set to <code>false</code> jOOQ will only render parenthesis pairs around queries combined with set operators when required.
+This is for example the case when set operators are nested, when non-associative operators like EXCEPT are used, or when the queries are rendered as derived tables.
+<p>
+When this setting is set to <code>true</code> the queries combined with set operators will always be surrounded by a parenthesis pair.
+<p>
+For details, see <a href="https://github.com/jOOQ/jOOQ/issues/3676">https://github.com/jOOQ/jOOQ/issues/3676</a> and <a href="https://github.com/jOOQ/jOOQ/issues/9751">https://github.com/jOOQ/jOOQ/issues/9751</a>.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="fetchTriggerValuesAfterSQLServerOutput" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Fetch trigger values after SQL Server <code>OUTPUT</code> clause.
 <p>

@@ -84,6 +84,17 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
 
 
 
+        // [#9200] only use IS_IDENTITY for ColumnDefinition#isIdentity() if
+        // table has a column with IS_IDENTITY = 'YES'
+        boolean hasIdentity = database.is10() ?
+            create().fetchExists(COLUMNS,
+                COLUMNS.TABLE_SCHEMA.equal(getSchema().getName()),
+                COLUMNS.TABLE_NAME.equal(getName()),
+                COLUMNS.IS_IDENTITY.eq(inline("YES"))
+
+            )
+            : false;
+
         for (Record record : create().select(
                 COLUMNS.COLUMN_NAME,
                 COLUMNS.ORDINAL_POSITION,
@@ -95,7 +106,7 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
                     when(COLUMNS.UDT_NAME.eq(inline("_varchar")), PG_ATTRIBUTE.ATTTYPMOD.sub(inline(4)))).as(COLUMNS.CHARACTER_MAXIMUM_LENGTH),
                 COLUMNS.NUMERIC_PRECISION,
                 COLUMNS.NUMERIC_SCALE,
-                (database.is10() ? COLUMNS.IS_IDENTITY : val(null, String.class)).as(COLUMNS.IS_IDENTITY),
+                (hasIdentity ? COLUMNS.IS_IDENTITY : val(null, String.class)).as(COLUMNS.IS_IDENTITY),
                 COLUMNS.IS_NULLABLE,
                 COLUMNS.COLUMN_DEFAULT,
                 COLUMNS.UDT_SCHEMA,
@@ -147,7 +158,7 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
                 record.get(COLUMNS.COLUMN_NAME),
                 record.get(COLUMNS.ORDINAL_POSITION, int.class),
                 type,
-                database.is10() ? record.get(COLUMNS.IS_IDENTITY, boolean.class)
+                hasIdentity ? record.get(COLUMNS.IS_IDENTITY, boolean.class)
                     : defaultString(record.get(COLUMNS.COLUMN_DEFAULT))
                         .trim()
                         .toLowerCase()

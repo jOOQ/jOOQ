@@ -47,12 +47,17 @@ import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.OrderField;
 import org.jooq.Parameter;
+// ...
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.UDT;
+import org.jooq.UDTRecord;
 import org.jooq.UniqueKey;
+// ...
+// ...
 
 /**
  * A utility class that grants access to internal API, to be used only by
@@ -242,6 +247,13 @@ public final class Internal {
 
         return new ParameterImpl<>(name, actualType, actualBinding, isDefaulted, isUnnamed);
     }
+
+
+
+
+
+
+
 
     private Internal() {}
 }

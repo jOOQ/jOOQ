@@ -164,7 +164,6 @@ import org.jooq.tools.StringUtils;
 import org.jooq.tools.reflect.Reflect;
 import org.jooq.tools.reflect.ReflectException;
 // ...
-// ...
 
 
 /**

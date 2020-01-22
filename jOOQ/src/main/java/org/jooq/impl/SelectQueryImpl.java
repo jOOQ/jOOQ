@@ -1126,6 +1126,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         boolean qualify = context.qualify();
 
         int unionOpSize = unionOp.size();
+        boolean unionParensRequired = false;
         boolean unionOpNesting = false;
 
         // The SQL standard specifies:
@@ -1218,7 +1219,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                     case UNION_ALL:     context.start(SELECT_UNION_ALL);     break;
                 }
 
-                unionParenthesis(context, '(', getSelect().toArray(EMPTY_FIELD));
+                // [#3676] There might be cases where nested set operations do not
+                //         imply required parentheses in some dialects, but better
+                //         play safe than sorry
+                unionParenthesis(context, '(', getSelect().toArray(EMPTY_FIELD), unionParensRequired = unionOpNesting || unionParensRequired(context));
             }
         }
 
@@ -1507,7 +1511,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // SET operations like UNION, EXCEPT, INTERSECT
         // --------------------------------------------
         if (unionOpSize > 0) {
-            unionParenthesis(context, ')', null);
+            unionParenthesis(context, ')', null, unionParensRequired);
 
             for (int i = 0; i < unionOpSize; i++) {
                 CombineOperator op = unionOp.get(i);
@@ -1517,14 +1521,14 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                            .visit(op.toKeyword(dialect))
                            .sql(' ');
 
-                    unionParenthesis(context, '(', other.getSelect().toArray(EMPTY_FIELD));
+                    unionParenthesis(context, '(', other.getSelect().toArray(EMPTY_FIELD), unionParensRequired);
                     context.visit(other);
-                    unionParenthesis(context, ')', null);
+                    unionParenthesis(context, ')', null, unionParensRequired);
                 }
 
                 // [#1658] Close parentheses opened previously
                 if (i < unionOpSize - 1)
-                    unionParenthesis(context, ')', null);
+                    unionParenthesis(context, ')', null, unionParensRequired);
 
                 switch (unionOp.get(i)) {
                     case EXCEPT:        context.end(SELECT_EXCEPT);        break;
@@ -1741,6 +1745,15 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private static final EnumSet<SQLDialect> NO_SUPPORT_UNION_PARENTHESES        = EnumSet.of(SQLITE);
     private static final EnumSet<SQLDialect> UNION_PARENTHESIS                   = EnumSet.of(DERBY, MARIADB, MYSQL);
     private static final EnumSet<SQLDialect> UNION_PARENTHESIS_IN_DERIVED_TABLES = EnumSet.of(DERBY);
+    private static final EnumSet<SQLDialect> AVOID_UNION_PARENTHESIS;
+
+    static {
+        EnumSet<SQLDialect> temp = EnumSet.noneOf(SQLDialect.class);
+
+
+
+        AVOID_UNION_PARENTHESIS = temp;
+    }
 
     private final boolean unionOpNesting() {
         if (unionOp.size() > 1)
@@ -1759,7 +1772,35 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         return false;
     }
 
-    private final void unionParenthesis(Context<?> ctx, char parenthesis, Field<?>[] fields) {
+    private final boolean unionParensRequired(Context<?> context) {
+        if (unionParensRequired(this) || !AVOID_UNION_PARENTHESIS.contains(context.dialect()))
+            return true;
+
+        CombineOperator op = unionOp.get(0);
+
+        // [#3676] EXCEPT and EXCEPT ALL are not associative
+        if ((op == EXCEPT || op == EXCEPT_ALL) && union.get(0).size() > 1)
+            return true;
+
+        // [#3676] if a query has an ORDER BY or LIMIT clause parens are required
+        for (QueryPartList<Select<?>> s1 : union)
+            for (Select<?> s2 : s1)
+                if (s2 instanceof SelectQueryImpl
+                        && unionParensRequired((SelectQueryImpl<?>) s2))
+                    return true;
+                else if (s2 instanceof SelectImpl
+                        && ((SelectImpl) s2).getDelegate() instanceof SelectQueryImpl
+                        && unionParensRequired((SelectQueryImpl<?>) ((SelectImpl) s2).getDelegate()))
+                    return true;
+
+        return false;
+    }
+
+    private final boolean unionParensRequired(SelectQueryImpl<?> select) {
+        return select.orderBy.size() > 0 || select.limit.isApplicable();
+    }
+
+    private final void unionParenthesis(Context<?> ctx, char parenthesis, Field<?>[] fields, boolean parensRequired) {
         boolean derivedTable =
 
             // [#3579] [#6431] [#7222] Some databases don't support nested set operations at all
@@ -1779,14 +1820,16 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             /* [/pro] */
             ;
 
-        if (')' == parenthesis) {
+        parensRequired |= derivedTable;
+
+        if (parensRequired && ')' == parenthesis) {
             ctx.formatIndentEnd()
                .formatNewLine();
         }
 
         // [#3579] Nested set operators aren't supported in some databases. Emulate them via derived tables...
         // [#7222] Do this only in the presence of actual nested set operators
-        else if ('(' == parenthesis) {
+        else if (parensRequired && '(' == parenthesis) {
             if (derivedTable) {
                 ctx.formatNewLine()
                    .visit(K_SELECT).sql(' ');
@@ -1815,16 +1858,18 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 break;
 
             default:
-                ctx.sql(parenthesis);
+                if (parensRequired)
+                    ctx.sql(parenthesis);
+
                 break;
         }
 
-        if ('(' == parenthesis) {
+        if (parensRequired && '(' == parenthesis) {
             ctx.formatIndentStart()
                .formatNewLine();
         }
 
-        else if (')'== parenthesis) {
+        else if (parensRequired && ')' == parenthesis) {
             if (derivedTable)
                 ctx.sql(" x");
         }

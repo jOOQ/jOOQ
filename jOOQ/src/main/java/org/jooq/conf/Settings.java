@@ -71,6 +71,8 @@ public class Settings
     protected Boolean renderOrderByRownumberForEmulatedPagination = true;
     @XmlElement(defaultValue = "true")
     protected Boolean renderOutputForSQLServerReturningClause = true;
+    @XmlElement(defaultValue = "false")
+    protected Boolean renderParenthesisAroundSetOperationQueries = false;
     @XmlElement(defaultValue = "true")
     protected Boolean fetchTriggerValuesAfterSQLServerOutput = true;
     @XmlElement(defaultValue = "false")
@@ -612,6 +614,37 @@ public class Settings
      */
     public void setRenderOutputForSQLServerReturningClause(Boolean value) {
         this.renderOutputForSQLServerReturningClause = value;
+    }
+
+    /**
+     * Whether queries combined with set operators (e.g. UNION and UNION ALL) should always be surrounded by a parenthesis pair.
+     * <p>
+     * By default (i.e. when this setting is set to <code>false</code> jOOQ will only render parenthesis pairs around queries combined with set operators when required.
+     * This is for example the case when set operators are nested, when non-associative operators like EXCEPT are used, or when the queries are rendered as derived tables.
+     * <p>
+     * When this setting is set to <code>true</code> the queries combined with set operators will always be surrounded by a parenthesis pair.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/3676">https://github.com/jOOQ/jOOQ/issues/3676</a> and <a href="https://github.com/jOOQ/jOOQ/issues/9751">https://github.com/jOOQ/jOOQ/issues/9751</a>.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isRenderParenthesisAroundSetOperationQueries() {
+        return renderParenthesisAroundSetOperationQueries;
+    }
+
+    /**
+     * Sets the value of the renderParenthesisAroundSetOperationQueries property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setRenderParenthesisAroundSetOperationQueries(Boolean value) {
+        this.renderParenthesisAroundSetOperationQueries = value;
     }
 
     /**
@@ -1972,6 +2005,11 @@ public class Settings
         return this;
     }
 
+    public Settings withRenderParenthesisAroundSetOperationQueries(Boolean value) {
+        setRenderParenthesisAroundSetOperationQueries(value);
+        return this;
+    }
+
     public Settings withFetchTriggerValuesAfterSQLServerOutput(Boolean value) {
         setFetchTriggerValuesAfterSQLServerOutput(value);
         return this;
@@ -2265,6 +2303,7 @@ public class Settings
         builder.append("renderScalarSubqueriesForStoredFunctions", renderScalarSubqueriesForStoredFunctions);
         builder.append("renderOrderByRownumberForEmulatedPagination", renderOrderByRownumberForEmulatedPagination);
         builder.append("renderOutputForSQLServerReturningClause", renderOutputForSQLServerReturningClause);
+        builder.append("renderParenthesisAroundSetOperationQueries", renderParenthesisAroundSetOperationQueries);
         builder.append("fetchTriggerValuesAfterSQLServerOutput", fetchTriggerValuesAfterSQLServerOutput);
         builder.append("transformTableListsToAnsiJoin", transformTableListsToAnsiJoin);
         builder.append("backslashEscaping", backslashEscaping);
@@ -2470,6 +2509,15 @@ public class Settings
             }
         } else {
             if (!renderOutputForSQLServerReturningClause.equals(other.renderOutputForSQLServerReturningClause)) {
+                return false;
+            }
+        }
+        if (renderParenthesisAroundSetOperationQueries == null) {
+            if (other.renderParenthesisAroundSetOperationQueries!= null) {
+                return false;
+            }
+        } else {
+            if (!renderParenthesisAroundSetOperationQueries.equals(other.renderParenthesisAroundSetOperationQueries)) {
                 return false;
             }
         }
@@ -2963,6 +3011,7 @@ public class Settings
         result = ((prime*result)+((renderScalarSubqueriesForStoredFunctions == null)? 0 :renderScalarSubqueriesForStoredFunctions.hashCode()));
         result = ((prime*result)+((renderOrderByRownumberForEmulatedPagination == null)? 0 :renderOrderByRownumberForEmulatedPagination.hashCode()));
         result = ((prime*result)+((renderOutputForSQLServerReturningClause == null)? 0 :renderOutputForSQLServerReturningClause.hashCode()));
+        result = ((prime*result)+((renderParenthesisAroundSetOperationQueries == null)? 0 :renderParenthesisAroundSetOperationQueries.hashCode()));
         result = ((prime*result)+((fetchTriggerValuesAfterSQLServerOutput == null)? 0 :fetchTriggerValuesAfterSQLServerOutput.hashCode()));
         result = ((prime*result)+((transformTableListsToAnsiJoin == null)? 0 :transformTableListsToAnsiJoin.hashCode()));
         result = ((prime*result)+((backslashEscaping == null)? 0 :backslashEscaping.hashCode()));

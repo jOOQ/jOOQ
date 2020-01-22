@@ -1773,7 +1773,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     private final boolean unionParensRequired(Context<?> context) {
-        if (unionParensRequired(this) || !AVOID_UNION_PARENTHESIS.contains(context.dialect()))
+        if (unionParensRequired(this) || !AVOID_UNION_PARENTHESIS.contains(context.dialect()) || context.settings().isRenderParenthesisAroundSetOperationQueries())
             return true;
 
         CombineOperator op = unionOp.get(0);

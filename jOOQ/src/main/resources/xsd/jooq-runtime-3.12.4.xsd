@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema
   xmlns="http://www.w3.org/2001/XMLSchema"
-  xmlns:jooq-runtime="http://www.jooq.org/xsd/jooq-runtime-3.12.0.xsd"
+  xmlns:jooq-runtime="http://www.jooq.org/xsd/jooq-runtime-3.12.4.xsd"
   xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
-  targetNamespace="http://www.jooq.org/xsd/jooq-runtime-3.12.0.xsd"
+  targetNamespace="http://www.jooq.org/xsd/jooq-runtime-3.12.4.xsd"
   elementFormDefault="qualified"
   jxb:version="2.1">
 
@@ -127,6 +127,17 @@ to fetch trigger generated values, {@link #fetchTriggerValuesAfterSQLServerOutpu
 be enabled as well.
 <p>
 For details, see <a href="https://github.com/jOOQ/jOOQ/issues/4498">https://github.com/jOOQ/jOOQ/issues/4498</a>.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="renderParenthesisAroundSetOperationQueries" type="boolean" minOccurs="0" maxOccurs="1" default="false">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether queries combined with set operators (e.g. UNION and UNION ALL) should always be surrounded by a parenthesis pair.
+<p>
+By default (i.e. when this setting is set to <code>false</code> jOOQ will only render parenthesis pairs around queries combined with set operators when required.
+This is for example the case when set operators are nested, when non-associative operators like EXCEPT are used, or when the queries are rendered as derived tables.
+<p>
+When this setting is set to <code>true</code> the queries combined with set operators will always be surrounded by a parenthesis pair.
+<p>
+For details, see <a href="https://github.com/jOOQ/jOOQ/issues/3676">https://github.com/jOOQ/jOOQ/issues/3676</a> and <a href="https://github.com/jOOQ/jOOQ/issues/9751">https://github.com/jOOQ/jOOQ/issues/9751</a>.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="fetchTriggerValuesAfterSQLServerOutput" type="boolean" minOccurs="0" maxOccurs="1" default="true">

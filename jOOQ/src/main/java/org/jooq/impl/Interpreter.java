@@ -1284,6 +1284,7 @@ final class Interpreter {
 
 
 
+                case MARIADB:
                 case MYSQL:
                 case SQLITE:
                     return InterpreterNameLookupCaseSensitivity.NEVER;

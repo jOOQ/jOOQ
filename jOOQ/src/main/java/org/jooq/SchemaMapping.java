@@ -46,11 +46,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.jooq.conf.MappedCatalog;
 import org.jooq.conf.MappedSchema;
 import org.jooq.conf.MappedTable;
 import org.jooq.conf.RenderMapping;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
+import org.jooq.impl.DSL;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
@@ -92,6 +94,7 @@ public class SchemaMapping implements Serializable {
     private static volatile boolean                  loggedDeprecation = false;
 
     private final Configuration                      configuration;
+    private volatile transient Map<String, Catalog>  catalogs;
     private volatile transient Map<String, Schema>   schemata;
     private volatile transient Map<String, Table<?>> tables;
 
@@ -267,17 +270,56 @@ public class SchemaMapping implements Serializable {
         // [#1774] [#4795] The default Settings render schema flag takes
         // precedence over the DefaultConfiguration's ignoreMapping flag!
         if (!renderCatalog()) return null;
+        // Don't map an already mapped catalog again
+        else if (catalog instanceof RenamedCatalog) return catalog;
 
         Catalog result = catalog;
-        if (result != null) {
-            String catalogName = result.getName();
+        if (result == null)
+            result = DSL.catalog(name(""));
 
-            // [#2089] DefaultCatalog has an empty schema name
-            if (StringUtils.isEmpty(catalogName))
-                return null;
+        // [#2089] DefaultCatalog has an empty schema name
+        // But we're mapping those names as well
+        String catalogName = result.getName();
 
-            // [#4793] TODO implement runtime catalog mapping
+        // [#4642] Don't initialise catalog mapping if not necessary
+        if (!mapping().getCatalogs().isEmpty()) {
+
+            // Lazy initialise catalog mapping
+            if (!getCatalogs().containsKey(catalogName)) {
+
+                // [#1857] thread-safe lazy initialisation for those users who
+                // want to use a Configuration and dependent objects in a "thread-safe" manner
+                synchronized (this) {
+                    if (!getCatalogs().containsKey(catalogName)) {
+                        for (MappedCatalog c : mapping().getCatalogs()) {
+
+                            // A configured mapping was found, add a renamed catalog
+                            if (matches(c, catalogName)) {
+
+                                // Ignore self-mappings and void-mappings
+                                if (!isBlank(c.getOutput()))
+                                    if (c.getInput() != null && !c.getOutput().equals(catalogName))
+                                        result = new RenamedCatalog(result, c.getOutput());
+                                    else if (c.getInputExpression() != null)
+                                        result = new RenamedCatalog(result, c.getInputExpression().matcher(catalogName).replaceAll(c.getOutput()));
+
+                                break;
+                            }
+                        }
+
+                        // Add mapped catalog or self if no mapping was found
+                        getCatalogs().put(catalogName, result);
+                    }
+                }
+            }
+
+            result = getCatalogs().get(catalogName);
         }
+
+        // The configured default catalog is mapped to "null". This prevents
+        // it from being rendered to SQL
+        if ("".equals(result.getName()) || result.getName().equals(mapping().getDefaultCatalog()))
+            result = null;
 
         return result;
     }
@@ -300,43 +342,74 @@ public class SchemaMapping implements Serializable {
         if (result == null)
             result = schema(name(""));
 
+        Catalog catalog = result.getCatalog();
+        if (catalog == null)
+            catalog = DSL.catalog(name(""));
+
         // [#2089] DefaultSchema has an empty schema name
         // [#7498] But we're mapping those names as well
+        String catalogName = catalog.getName();
         String schemaName = result.getName();
+        String key = StringUtils.isEmpty(catalogName) ? schemaName : catalogName + '.' + schemaName;
 
         // [#4642] Don't initialise schema mapping if not necessary
-        if (!mapping().getSchemata().isEmpty()) {
+        if (!mapping().getSchemata().isEmpty() || !mapping().getCatalogs().isEmpty()) {
 
             // Lazy initialise schema mapping
-            if (!getSchemata().containsKey(schemaName)) {
+            if (!getSchemata().containsKey(key)) {
 
                 // [#1857] thread-safe lazy initialisation for those users who
                 // want to use a Configuration and dependent objects in a "thread-safe" manner
                 synchronized (this) {
-                    if (!getSchemata().containsKey(schemaName)) {
-                        for (MappedSchema s : mapping().getSchemata()) {
+                    if (!getSchemata().containsKey(key)) {
 
-                            // A configured mapping was found, add a renamed schema
-                            if (matches(s, schemaName)) {
+                        catalogLoop:
+                        for (MappedCatalog c : mapping().getCatalogs()) {
+                            if (matches(c, catalogName)) {
+                                for (MappedSchema s : c.getSchemata()) {
+                                    if (matches(s, schemaName)) {
 
-                                // Ignore self-mappings and void-mappings
-                                if (!isBlank(s.getOutput()))
-                                    if (s.getInput() != null && !s.getOutput().equals(schemaName))
-                                        result = new RenamedSchema(result, s.getOutput());
-                                    else if (s.getInputExpression() != null)
-                                        result = new RenamedSchema(result, s.getInputExpression().matcher(schemaName).replaceAll(s.getOutput()));
+                                        // Ignore self-mappings and void-mappings
+                                        if (!isBlank(s.getOutput()))
+                                            if (s.getInput() != null && !s.getOutput().equals(schemaName))
+                                                result = new RenamedSchema(map(catalog), result, s.getOutput());
+                                            else if (s.getInputExpression() != null)
+                                                result = new RenamedSchema(map(catalog), result, s.getInputExpression().matcher(schemaName).replaceAll(s.getOutput()));
 
-                                break;
+                                        break catalogLoop;
+                                    }
+                                }
+
+                                // [#7498] Even without schema mapping configuration, we may still need to map the catalog
+                                result = new RenamedSchema(map(catalog), result, schemaName);
+                                break catalogLoop;
                             }
                         }
 
+                        if (!(result instanceof RenamedSchema))
+                            for (MappedSchema s : mapping().getSchemata()) {
+
+                                // A configured mapping was found, add a renamed schema
+                                if (matches(s, schemaName)) {
+
+                                    // Ignore self-mappings and void-mappings
+                                    if (!isBlank(s.getOutput()))
+                                        if (s.getInput() != null && !s.getOutput().equals(schemaName))
+                                            result = new RenamedSchema(catalog, result, s.getOutput());
+                                        else if (s.getInputExpression() != null)
+                                            result = new RenamedSchema(catalog, result, s.getInputExpression().matcher(schemaName).replaceAll(s.getOutput()));
+
+                                    break;
+                                }
+                            }
+
                         // Add mapped schema or self if no mapping was found
-                        getSchemata().put(schemaName, result);
+                        getSchemata().put(key, result);
                     }
                 }
             }
 
-            result = getSchemata().get(schemaName);
+            result = getSchemata().get(key);
         }
 
         // The configured default schema is mapped to "null". This prevents
@@ -358,18 +431,24 @@ public class SchemaMapping implements Serializable {
         Table<R> result = table;
 
         // [#4652] Don't initialise table mapping if not necessary
-        if (result != null && !mapping().getSchemata().isEmpty()) {
+        if (result != null && (!mapping().getSchemata().isEmpty() || !mapping().getCatalogs().isEmpty())) {
+            Catalog catalog = result.getCatalog();
             Schema schema = result.getSchema();
 
             // [#1189] Schema can be null in SQLite
             // [#2089] DefaultSchema have empty schema names
             // [#1186] TODO: replace this by calling table.getQualifiedName()
+            if (catalog == null)
+                catalog = DSL.catalog(name(""));
             if (schema == null)
                 schema = schema(name(""));
 
+            String catalogName = catalog.getName();
             String schemaName = schema.getName();
             String tableName = result.getName();
-            String key = StringUtils.isEmpty(schemaName) ? tableName : (schemaName + "." + tableName);
+            String key = StringUtils.isEmpty(catalogName) ?
+                (StringUtils.isEmpty(schemaName) ? tableName : (schemaName + "." + tableName))
+                : (catalogName + '.' + schemaName + '.' + tableName);
 
             // Lazy initialise table mapping
             if (!getTables().containsKey(key)) {
@@ -379,30 +458,60 @@ public class SchemaMapping implements Serializable {
                 synchronized (this) {
                     if (!getTables().containsKey(key)) {
 
-                        schemaLoop:
-                        for (MappedSchema s : mapping().getSchemata()) {
-                            if (matches(s, schemaName)) {
-                                for (MappedTable t : s.getTables()) {
+                        catalogLoop:
+                        for (MappedCatalog c : mapping().getCatalogs()) {
+                            if (matches(c, catalogName)) {
+                                for (MappedSchema s : c.getSchemata()) {
+                                    if (matches(s, schemaName)) {
+                                        for (MappedTable t : s.getTables()) {
 
-                                    // A configured mapping was found, add a renamed table
-                                    if (matches(t, tableName)) {
+                                            // A configured mapping was found, add a renamed table
+                                            if (matches(t, tableName)) {
 
-                                        // Ignore self-mappings and void-mappings
-                                        if (!isBlank(t.getOutput()))
-                                            if (t.getInput() != null && !t.getOutput().equals(tableName))
-                                                result = new RenamedTable<>(map(schema), result, t.getOutput());
-                                            else if (t.getInputExpression() != null)
-                                                result = new RenamedTable<>(map(schema), result, t.getInputExpression().matcher(tableName).replaceAll(t.getOutput()));
+                                                // Ignore self-mappings and void-mappings
+                                                if (!isBlank(t.getOutput()))
+                                                    if (t.getInput() != null && !t.getOutput().equals(tableName))
+                                                        result = new RenamedTable<>(map(schema), result, t.getOutput());
+                                                    else if (t.getInputExpression() != null)
+                                                        result = new RenamedTable<>(map(schema), result, t.getInputExpression().matcher(tableName).replaceAll(t.getOutput()));
 
-                                        break schemaLoop;
+                                                break catalogLoop;
+                                            }
+                                        }
                                     }
                                 }
 
                                 // [#7498] Even without table mapping configuration, we may still need to map the schema
                                 result = new RenamedTable<>(map(schema), result, tableName);
-                                break schemaLoop;
+                                break catalogLoop;
                             }
                         }
+
+                        if (!(result instanceof RenamedTable))
+                            schemaLoop:
+                            for (MappedSchema s : mapping().getSchemata()) {
+                                if (matches(s, schemaName)) {
+                                    for (MappedTable t : s.getTables()) {
+
+                                        // A configured mapping was found, add a renamed table
+                                        if (matches(t, tableName)) {
+
+                                            // Ignore self-mappings and void-mappings
+                                            if (!isBlank(t.getOutput()))
+                                                if (t.getInput() != null && !t.getOutput().equals(tableName))
+                                                    result = new RenamedTable<>(map(schema), result, t.getOutput());
+                                                else if (t.getInputExpression() != null)
+                                                    result = new RenamedTable<>(map(schema), result, t.getInputExpression().matcher(tableName).replaceAll(t.getOutput()));
+
+                                            break schemaLoop;
+                                        }
+                                    }
+
+                                    // [#7498] Even without table mapping configuration, we may still need to map the schema
+                                    result = new RenamedTable<>(map(schema), result, tableName);
+                                    break schemaLoop;
+                                }
+                            }
 
                         // Add mapped table or self if no mapping was found
                         getTables().put(key, result);
@@ -414,6 +523,11 @@ public class SchemaMapping implements Serializable {
         }
 
         return result;
+    }
+
+    private final boolean matches(MappedCatalog c, String catalogName) {
+        return (c.getInput() != null && catalogName.equals(c.getInput()))
+            || (c.getInputExpression() != null && c.getInputExpression().matcher(catalogName).matches());
     }
 
     private final boolean matches(MappedSchema s, String schemaName) {
@@ -441,6 +555,20 @@ public class SchemaMapping implements Serializable {
         for (Entry<String, String> entry : schemaMap.entrySet()) {
             add(entry.getKey(), entry.getValue());
         }
+    }
+
+    private final Map<String, Catalog> getCatalogs() {
+        if (catalogs == null) {
+
+            // [#1857] thread-safe lazy initialisation for those users who
+            // want to use Configuration and dependent objects in a "thread-safe" manner
+            synchronized (this) {
+                if (catalogs == null) {
+                    catalogs = new HashMap<>();
+                }
+            }
+        }
+        return catalogs;
     }
 
     private final Map<String, Schema> getSchemata() {

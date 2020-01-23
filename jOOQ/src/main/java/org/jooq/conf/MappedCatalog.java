@@ -17,19 +17,19 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 
 
 /**
- * A schema mapping configuration.
+ * A catalog mapping configuration.
  *
  *
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "MappedSchema", propOrder = {
+@XmlType(name = "MappedCatalog", propOrder = {
 
 })
 @SuppressWarnings({
     "all"
 })
-public class MappedSchema
+public class MappedCatalog
     extends SettingsBase
     implements Serializable, Cloneable, XMLAppendable
 {
@@ -40,12 +40,12 @@ public class MappedSchema
     @XmlJavaTypeAdapter(RegexAdapter.class)
     protected Pattern inputExpression;
     protected String output;
-    @XmlElementWrapper(name = "tables")
-    @XmlElement(name = "table")
-    protected List<MappedTable> tables;
+    @XmlElementWrapper(name = "schemata")
+    @XmlElement(name = "schema")
+    protected List<MappedSchema> schemata;
 
     /**
-     * The input schema name as defined in {@link org.jooq.Schema#getName()}
+     * The input catalog name as defined in {@link org.jooq.Catalog#getName()}
      * <p>
      * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided
      *
@@ -55,7 +55,7 @@ public class MappedSchema
     }
 
     /**
-     * The input schema name as defined in {@link org.jooq.Schema#getName()}
+     * The input catalog name as defined in {@link org.jooq.Catalog#getName()}
      * <p>
      * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided
      *
@@ -65,7 +65,7 @@ public class MappedSchema
     }
 
     /**
-     * A regular expression matching the input schema name as defined in {@link org.jooq.Schema#getName()}
+     * A regular expression matching the input catalog name as defined in {@link org.jooq.Catalog#getName()}
      * <p>
      * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided
      *
@@ -75,7 +75,7 @@ public class MappedSchema
     }
 
     /**
-     * A regular expression matching the input schema name as defined in {@link org.jooq.Schema#getName()}
+     * A regular expression matching the input catalog name as defined in {@link org.jooq.Catalog#getName()}
      * <p>
      * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided
      *
@@ -85,9 +85,9 @@ public class MappedSchema
     }
 
     /**
-     * The output schema as it will be rendered in SQL.
+     * The output catalog as it will be rendered in SQL.
      * <ul>
-     * <li>When this is omitted, you can still apply table mapping.</li>
+     * <li>When this is omitted, you can still apply schema and table mapping.</li>
      * <li>When &lt;input/&gt; is provided, &lt;output/&gt; is a constant value.</li>
      * <li>When &lt;inputExpression/&gt; is provided, &lt;output/&gt; is a replacement expression</li>
      * </ul>
@@ -98,9 +98,9 @@ public class MappedSchema
     }
 
     /**
-     * The output schema as it will be rendered in SQL.
+     * The output catalog as it will be rendered in SQL.
      * <ul>
-     * <li>When this is omitted, you can still apply table mapping.</li>
+     * <li>When this is omitted, you can still apply schema and table mapping.</li>
      * <li>When &lt;input/&gt; is provided, &lt;output/&gt; is a constant value.</li>
      * <li>When &lt;inputExpression/&gt; is provided, &lt;output/&gt; is a replacement expression</li>
      * </ul>
@@ -110,71 +110,71 @@ public class MappedSchema
         this.output = value;
     }
 
-    public List<MappedTable> getTables() {
-        if (tables == null) {
-            tables = new ArrayList<MappedTable>();
+    public List<MappedSchema> getSchemata() {
+        if (schemata == null) {
+            schemata = new ArrayList<MappedSchema>();
         }
-        return tables;
+        return schemata;
     }
 
-    public void setTables(List<MappedTable> tables) {
-        this.tables = tables;
+    public void setSchemata(List<MappedSchema> schemata) {
+        this.schemata = schemata;
     }
 
     /**
-     * The input schema name as defined in {@link org.jooq.Schema#getName()}
+     * The input catalog name as defined in {@link org.jooq.Catalog#getName()}
      * <p>
      * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided
      *
      */
-    public MappedSchema withInput(String value) {
+    public MappedCatalog withInput(String value) {
         setInput(value);
         return this;
     }
 
     /**
-     * A regular expression matching the input schema name as defined in {@link org.jooq.Schema#getName()}
+     * A regular expression matching the input catalog name as defined in {@link org.jooq.Catalog#getName()}
      * <p>
      * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided
      *
      */
-    public MappedSchema withInputExpression(Pattern value) {
+    public MappedCatalog withInputExpression(Pattern value) {
         setInputExpression(value);
         return this;
     }
 
     /**
-     * The output schema as it will be rendered in SQL.
+     * The output catalog as it will be rendered in SQL.
      * <ul>
-     * <li>When this is omitted, you can still apply table mapping.</li>
+     * <li>When this is omitted, you can still apply schema and table mapping.</li>
      * <li>When &lt;input/&gt; is provided, &lt;output/&gt; is a constant value.</li>
      * <li>When &lt;inputExpression/&gt; is provided, &lt;output/&gt; is a replacement expression</li>
      * </ul>
      *
      */
-    public MappedSchema withOutput(String value) {
+    public MappedCatalog withOutput(String value) {
         setOutput(value);
         return this;
     }
 
-    public MappedSchema withTables(MappedTable... values) {
+    public MappedCatalog withSchemata(MappedSchema... values) {
         if (values!= null) {
-            for (MappedTable value: values) {
-                getTables().add(value);
+            for (MappedSchema value: values) {
+                getSchemata().add(value);
             }
         }
         return this;
     }
 
-    public MappedSchema withTables(Collection<MappedTable> values) {
+    public MappedCatalog withSchemata(Collection<MappedSchema> values) {
         if (values!= null) {
-            getTables().addAll(values);
+            getSchemata().addAll(values);
         }
         return this;
     }
 
-    public MappedSchema withTables(List<MappedTable> tables) {
-        setTables(tables);
+    public MappedCatalog withSchemata(List<MappedSchema> schemata) {
+        setSchemata(schemata);
         return this;
     }
 
@@ -183,7 +183,7 @@ public class MappedSchema
         builder.append("input", input);
         builder.append("inputExpression", inputExpression);
         builder.append("output", output);
-        builder.append("tables", "table", tables);
+        builder.append("schemata", "schema", schemata);
     }
 
     @Override
@@ -204,7 +204,7 @@ public class MappedSchema
         if (getClass()!= that.getClass()) {
             return false;
         }
-        MappedSchema other = ((MappedSchema) that);
+        MappedCatalog other = ((MappedCatalog) that);
         if (input == null) {
             if (other.input!= null) {
                 return false;
@@ -232,12 +232,12 @@ public class MappedSchema
                 return false;
             }
         }
-        if (tables == null) {
-            if (other.tables!= null) {
+        if (schemata == null) {
+            if (other.schemata!= null) {
                 return false;
             }
         } else {
-            if (!tables.equals(other.tables)) {
+            if (!schemata.equals(other.schemata)) {
                 return false;
             }
         }
@@ -251,7 +251,7 @@ public class MappedSchema
         result = ((prime*result)+((input == null)? 0 :input.hashCode()));
         result = ((prime*result)+((inputExpression == null)? 0 :inputExpression.pattern().hashCode()));
         result = ((prime*result)+((output == null)? 0 :output.hashCode()));
-        result = ((prime*result)+((tables == null)? 0 :tables.hashCode()));
+        result = ((prime*result)+((schemata == null)? 0 :schemata.hashCode()));
         return result;
     }
 

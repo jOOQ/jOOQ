@@ -40,6 +40,7 @@ public class MappedTable
 
     /**
      * The input table as defined in {@link org.jooq.Table#getName()}
+     * <p>
      * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided.
      *
      */
@@ -49,6 +50,7 @@ public class MappedTable
 
     /**
      * The input table as defined in {@link org.jooq.Table#getName()}
+     * <p>
      * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided.
      *
      */
@@ -58,6 +60,7 @@ public class MappedTable
 
     /**
      * A regular expression matching the input table name as defined in {@link org.jooq.Table#getName()}
+     * <p>
      * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided
      *
      */
@@ -67,6 +70,7 @@ public class MappedTable
 
     /**
      * A regular expression matching the input table name as defined in {@link org.jooq.Table#getName()}
+     * <p>
      * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided
      *
      */
@@ -100,6 +104,7 @@ public class MappedTable
 
     /**
      * The input table as defined in {@link org.jooq.Table#getName()}
+     * <p>
      * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided.
      *
      */
@@ -110,6 +115,7 @@ public class MappedTable
 
     /**
      * A regular expression matching the input table name as defined in {@link org.jooq.Table#getName()}
+     * <p>
      * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided
      *
      */

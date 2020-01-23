@@ -39,40 +39,27 @@ package org.jooq;
 
 import java.util.List;
 
-import org.jooq.impl.SchemaImpl;
+import org.jooq.impl.CatalogImpl;
 
 /**
- * A mapped schema
+ * A mapped catalog
  *
- * @author Lukas Eder
+ * @author Knut Wannheden
  */
-class RenamedSchema extends SchemaImpl {
+class RenamedCatalog extends CatalogImpl {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -3579885830845728730L;
+    private static final long serialVersionUID = 8732065374174695141L;
 
-    private final Schema      delegate;
+    private final Catalog     delegate;
 
-    RenamedSchema(Catalog catalog, Schema delegate, String rename) {
-        super(rename, catalog);
+    RenamedCatalog(Catalog delegate, String rename) {
+        super(rename, delegate.getComment());
 
         this.delegate = delegate;
     }
 
     @Override
-    public final List<Table<?>> getTables() {
-        return delegate.getTables();
-    }
-
-    @Override
-    public final List<UDT<?>> getUDTs() {
-        return delegate.getUDTs();
-    }
-
-    @Override
-    public final List<Sequence<?>> getSequences() {
-        return delegate.getSequences();
+    public List<Schema> getSchemas() {
+        return delegate.getSchemas();
     }
 }

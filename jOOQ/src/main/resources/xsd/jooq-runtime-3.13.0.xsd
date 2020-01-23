@@ -512,14 +512,65 @@ jOOQ queries, for which no specific fetchSize value was specified.]]></jxb:javad
     <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[The runtime schema and table mapping.]]></jxb:javadoc></jxb:class></appinfo></annotation>
 
     <all>
+      <element name="defaultCatalog" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The default catalog as defined in {@link org.jooq.Catalog#getName()}.
+<p>
+This catalog will be omitted in rendered SQL.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="defaultSchema" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The default schema as defined in {@link org.jooq.Schema#getName()}.
 <p>
 This schema will be omitted in rendered SQL.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="catalogs" type="jooq-runtime:MappedCatalogs" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The mapped catalogs configuration.
+<p>
+Either &lt;catalogs/&gt; or &lt;schemata/&gt; must be provided]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="schemata" type="jooq-runtime:MappedSchemata" minOccurs="0" maxOccurs="1">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The mapped schemata configuration.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The mapped schemata configuration.
+<p>
+Either &lt;catalogs/&gt; or &lt;schemata/&gt; must be provided]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+    </all>
+  </complexType>
+
+  <complexType name="MappedCatalogs">
+    <sequence>
+      <element name="catalog" type="jooq-runtime:MappedCatalog" minOccurs="0" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+
+  <complexType name="MappedCatalog">
+    <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[A catalog mapping configuration.]]></jxb:javadoc></jxb:class></appinfo></annotation>
+
+    <all>
+      <element name="input" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The input catalog name as defined in {@link org.jooq.Catalog#getName()}
+<p>
+Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="inputExpression" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching the input catalog name as defined in {@link org.jooq.Catalog#getName()}
+<p>
+Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="output" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The output catalog as it will be rendered in SQL.
+<ul>
+<li>When this is omitted, you can still apply schema and table mapping.</li>
+<li>When &lt;input/&gt; is provided, &lt;output/&gt; is a constant value.</li>
+<li>When &lt;inputExpression/&gt; is provided, &lt;output/&gt; is a replacement expression</li>
+</ul>]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="schemata" type="jooq-runtime:MappedSchemata" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Configure schema mapping for runtime table rewriting in generated SQL.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
     </all>
   </complexType>
@@ -542,6 +593,7 @@ Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided]]></jxb:javad
 
       <element name="inputExpression" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching the input schema name as defined in {@link org.jooq.Schema#getName()}
+<p>
 Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
@@ -573,11 +625,13 @@ Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided]]></jxb:javad
 
       <element name="input" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The input table as defined in {@link org.jooq.Table#getName()}
+<p>
 Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="inputExpression" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching the input table name as defined in {@link org.jooq.Table#getName()}
+<p>
 Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 

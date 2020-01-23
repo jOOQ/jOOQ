@@ -66,6 +66,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link MappedCatalog }
+     *
+     */
+    public MappedCatalog createMappedCatalog() {
+        return new MappedCatalog();
+    }
+
+    /**
      * Create an instance of {@link MappedSchema }
      *
      */

@@ -38,11 +38,13 @@
 
 package org.jooq.meta.postgres;
 
+import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.nvl;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DSL.when;
+import static org.jooq.impl.DSL.zero;
 import static org.jooq.meta.postgres.information_schema.Tables.COLUMNS;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_ATTRIBUTE;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_CLASS;
@@ -56,6 +58,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.Field;
+import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.meta.AbstractTableDefinition;
 import org.jooq.meta.ColumnDefinition;
@@ -84,16 +87,7 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
 
 
 
-        // [#9200] only use IS_IDENTITY for ColumnDefinition#isIdentity() if
-        // table has a column with IS_IDENTITY = 'YES'
-        boolean hasIdentity = database.is10() ?
-            create().fetchExists(COLUMNS,
-                COLUMNS.TABLE_SCHEMA.equal(getSchema().getName()),
-                COLUMNS.TABLE_NAME.equal(getName()),
-                COLUMNS.IS_IDENTITY.eq(inline("YES"))
-
-            )
-            : false;
+        Name identityCount = name("identity_count");
 
         for (Record record : create().select(
                 COLUMNS.COLUMN_NAME,
@@ -106,7 +100,10 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
                     when(COLUMNS.UDT_NAME.eq(inline("_varchar")), PG_ATTRIBUTE.ATTTYPMOD.sub(inline(4)))).as(COLUMNS.CHARACTER_MAXIMUM_LENGTH),
                 COLUMNS.NUMERIC_PRECISION,
                 COLUMNS.NUMERIC_SCALE,
-                (hasIdentity ? COLUMNS.IS_IDENTITY : val(null, String.class)).as(COLUMNS.IS_IDENTITY),
+                (database.is10() ? COLUMNS.IS_IDENTITY : val(null, String.class)).as(COLUMNS.IS_IDENTITY),
+                // [#9200] only use IS_IDENTITY for ColumnDefinition#isIdentity() if
+                // table has a column with IS_IDENTITY = 'YES'
+                (database.is10() ? count().filterWhere(COLUMNS.IS_IDENTITY.eq(inline("YES"))).over() : zero()).as(identityCount),
                 COLUMNS.IS_NULLABLE,
                 COLUMNS.COLUMN_DEFAULT,
                 COLUMNS.UDT_SCHEMA,
@@ -158,7 +155,7 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
                 record.get(COLUMNS.COLUMN_NAME),
                 record.get(COLUMNS.ORDINAL_POSITION, int.class),
                 type,
-                hasIdentity ? record.get(COLUMNS.IS_IDENTITY, boolean.class)
+                record.get(identityCount, int.class) > 0 ? record.get(COLUMNS.IS_IDENTITY, boolean.class)
                     : defaultString(record.get(COLUMNS.COLUMN_DEFAULT))
                         .trim()
                         .toLowerCase()

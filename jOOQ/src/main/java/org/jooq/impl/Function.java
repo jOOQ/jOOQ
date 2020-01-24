@@ -596,6 +596,14 @@ class Function<T> extends AbstractField<T> implements
         if (distinct)
             if (( ctx.family() == POSTGRES) && args.size() > 1)
                 ctx.sql(')');
+
+
+
+
+
+
+
+
     }
 
     final void toSQLArguments2(Context<?> ctx) {
@@ -604,30 +612,13 @@ class Function<T> extends AbstractField<T> implements
         else if (FALSE.equals(fromLast))
             ctx.sql(' ').visit(K_FROM).sql(' ').visit(K_FIRST);
 
-        if (TRUE.equals(ignoreNulls)) {
-            switch (ctx.family()) {
 
 
 
-
-
-                default:
-                    ctx.sql(' ').visit(K_IGNORE_NULLS);
-                    break;
-            }
-        }
-        else if (FALSE.equals(ignoreNulls)) {
-            switch (ctx.family()) {
-
-
-
-
-
-                default:
-                    ctx.sql(' ').visit(K_RESPECT_NULLS);
-                    break;
-            }
-        }
+        if (TRUE.equals(ignoreNulls))
+            ctx.sql(' ').visit(K_IGNORE_NULLS);
+        else if (FALSE.equals(ignoreNulls))
+            ctx.sql(' ').visit(K_RESPECT_NULLS);
     }
 
     final void toSQLFunctionName(Context<?> ctx) {

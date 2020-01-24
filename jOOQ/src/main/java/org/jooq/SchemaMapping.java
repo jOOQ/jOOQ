@@ -416,7 +416,9 @@ public class SchemaMapping implements Serializable {
         // it from being rendered to SQL
         if ("".equals(result.getName())
             || result.getName().equals(mapping().getDefaultSchema())
-                && (result.getCatalog() == null || result.getCatalog().getName().equals(mapping().getDefaultCatalog())))
+                && (result.getCatalog() == null
+                    || "".equals(result.getCatalog().getName())
+                    || result.getCatalog().getName().equals(mapping().getDefaultCatalog())))
             result = null;
 
         return result;

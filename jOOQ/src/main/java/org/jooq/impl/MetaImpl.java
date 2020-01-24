@@ -471,46 +471,71 @@ final class MetaImpl extends AbstractMeta {
                     else
                         rs = meta.getColumns(schema, null, table, "%");
 
-                    return dsl().fetch(
-                        rs,
+                    // Work around a bug in the SQL Server JDBC driver by
+                    // coercing data types to the expected types
+                    // The bug was reported here:
+                    // https://connect.microsoft.com/SQLServer/feedback/details/775425/jdbc-4-0-databasemetadata-getcolumns-returns-a-resultset-whose-resultsetmetadata-is-inconsistent
 
-                        // Work around a bug in the SQL Server JDBC driver by
-                        // coercing data types to the expected types
-                        // The bug was reported here:
-                        // https://connect.microsoft.com/SQLServer/feedback/details/775425/jdbc-4-0-databasemetadata-getcolumns-returns-a-resultset-whose-resultsetmetadata-is-inconsistent
-                        String.class,  // TABLE_CAT
-                        String.class,  // TABLE_SCHEM
-                        String.class,  // TABLE_NAME
-                        String.class,  // COLUMN_NAME
-                        int.class,     // DATA_TYPE
-
-                        String.class,  // TYPE_NAME
-                        int.class,     // COLUMN_SIZE
-                        String.class,  // BUFFER_LENGTH
-                        int.class,     // DECIMAL_DIGITS
-                        int.class,     // NUM_PREC_RADIX
-
-                        int.class,     // NULLABLE
-                        String.class,  // REMARKS
-                        String.class,  // COLUMN_DEF
-                        int.class,     // SQL_DATA_TYPE
-                        int.class,     // SQL_DATETIME_SUB
-
-                        int.class,     // CHAR_OCTET_LENGTH
-                        int.class,     // ORDINAL_POSITION
-                        String.class,  // IS_NULLABLE
-                        String.class,  // SCOPE_CATALOG
-                        String.class,  // SCOPE_SCHEMA
-
-                        String.class,  // SCOPE_TABLE
-                        short.class,   // SOURCE_DATA_TYPE
-                        String.class,  // IS_AUTOINCREMENT
-                        String.class   // IS_GENERATEDCOLUMN
-                    );
+                    // [#9740] TODO: Make this call lenient with respect to
+                    //         column count, filling unavailable columns with
+                    //         default values.
+                    return rs.getMetaData().getColumnCount() < GET_COLUMNS_EXTENDED.length
+                        ? dsl().fetch(rs, GET_COLUMNS_SHORT)
+                        : dsl().fetch(rs, GET_COLUMNS_EXTENDED);
                 }
             });
         }
     }
+
+    // Columns available from JDBC 3.0+
+    private static final Class<?>[] GET_COLUMNS_SHORT = {
+        String.class,  // TABLE_CAT
+        String.class,  // TABLE_SCHEM
+        String.class,  // TABLE_NAME
+        String.class,  // COLUMN_NAME
+        int.class,     // DATA_TYPE
+
+        String.class,  // TYPE_NAME
+        int.class,     // COLUMN_SIZE
+        String.class,  // BUFFER_LENGTH
+        int.class,     // DECIMAL_DIGITS
+        int.class,     // NUM_PREC_RADIX
+
+        int.class,     // NULLABLE
+        String.class,  // REMARKS
+        String.class,  // COLUMN_DEF
+    };
+
+    // Columns available from JDBC 4.0+
+    private static final Class<?>[] GET_COLUMNS_EXTENDED = {
+        String.class,  // TABLE_CAT
+        String.class,  // TABLE_SCHEM
+        String.class,  // TABLE_NAME
+        String.class,  // COLUMN_NAME
+        int.class,     // DATA_TYPE
+
+        String.class,  // TYPE_NAME
+        int.class,     // COLUMN_SIZE
+        String.class,  // BUFFER_LENGTH
+        int.class,     // DECIMAL_DIGITS
+        int.class,     // NUM_PREC_RADIX
+
+        int.class,     // NULLABLE
+        String.class,  // REMARKS
+        String.class,  // COLUMN_DEF
+        int.class,     // SQL_DATA_TYPE
+        int.class,     // SQL_DATETIME_SUB
+
+        int.class,     // CHAR_OCTET_LENGTH
+        int.class,     // ORDINAL_POSITION
+        String.class,  // IS_NULLABLE
+        String.class,  // SCOPE_CATALOG
+        String.class,  // SCOPE_SCHEMA
+
+        String.class,  // SCOPE_TABLE
+        short.class,   // SOURCE_DATA_TYPE
+        String.class   // IS_AUTOINCREMENT
+    };
 
     private final class MetaTable extends TableImpl<Record> {
 
@@ -812,7 +837,9 @@ final class MetaImpl extends AbstractMeta {
                 int nullable = column.get(10, int.class);                // NULLABLE
                 String remarks = column.get(11, String.class);           // REMARKS
                 String defaultValue = column.get(12, String.class);      // COLUMN_DEF
-                boolean isAutoIncrement = column.get(22, boolean.class); // IS_AUTOINCREMENT
+                boolean isAutoIncrement = column.size() >= 23
+                    ? column.get(22, boolean.class)                      // IS_AUTOINCREMENT
+                    : false;
 
                 // TODO: Exception handling should be moved inside SQLDataType
                 DataType type = null;

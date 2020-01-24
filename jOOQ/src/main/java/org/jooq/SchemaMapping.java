@@ -414,7 +414,9 @@ public class SchemaMapping implements Serializable {
 
         // The configured default schema is mapped to "null". This prevents
         // it from being rendered to SQL
-        if ("".equals(result.getName()) || result.getName().equals(mapping().getDefaultSchema()))
+        if ("".equals(result.getName())
+            || result.getName().equals(mapping().getDefaultSchema())
+                && (result.getCatalog() == null || result.getCatalog().getName().equals(mapping().getDefaultCatalog())))
             result = null;
 
         return result;

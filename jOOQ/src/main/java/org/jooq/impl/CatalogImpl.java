@@ -85,7 +85,8 @@ public class CatalogImpl extends AbstractNamed implements Catalog {
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(getUnqualifiedName());
+        Catalog mappedCatalog = Tools.getMappedCatalog(ctx.configuration(), this);
+        ctx.visit(mappedCatalog != null ? mappedCatalog.getUnqualifiedName() : getUnqualifiedName());
     }
 
     @Override

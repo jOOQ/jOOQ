@@ -41,9 +41,11 @@ import static java.util.Arrays.asList;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 
@@ -150,9 +152,9 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
 
 
 
-
-
-
+        // [#9758] And then also for foreign keys
+        else if (definition instanceof ForeignKeyDefinition && asList(POSTGRES).contains(definition.getDatabase().getDialect().family()))
+            return ((ForeignKeyDefinition) definition).getTable().getOutputName().toUpperCase() + "__" + definition.getOutputName().toUpperCase();
 
         else
             return definition.getOutputName().toUpperCase();

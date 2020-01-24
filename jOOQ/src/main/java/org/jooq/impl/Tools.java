@@ -4672,6 +4672,16 @@ final class Tools {
                 case DERBY:     ctx.sql(' ').visit(K_GENERATED_BY_DEFAULT_AS_IDENTITY); break;
                 case HSQLDB:    ctx.sql(' ').visit(K_GENERATED_BY_DEFAULT_AS_IDENTITY).sql('(').visit(K_START_WITH).sql(" 1)"); break;
                 case SQLITE:    ctx.sql(' ').visit(K_PRIMARY_KEY).sql(' ').visit(K_AUTOINCREMENT); break;
+                case POSTGRES:
+                    switch (ctx.dialect()) {
+
+
+
+
+                        case POSTGRES:
+                                ctx.sql(' ').visit(K_GENERATED_BY_DEFAULT_AS_IDENTITY); break;
+                    }
+                    break;
             }
         }
     }
@@ -4719,7 +4729,14 @@ final class Tools {
 
 
 
-                case POSTGRES: ctx.visit(type.getType() == Long.class ? K_SERIAL8 : K_SERIAL4); return;
+
+
+
+
+
+
+
+
             }
         }
 

@@ -40,6 +40,7 @@ package org.jooq.codegen;
 import static java.util.Arrays.asList;
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
@@ -142,6 +143,10 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
         //         In order to have non-ambiguous identifiers, we need to include the table name.
         else if (definition instanceof IndexDefinition && asList(MYSQL, MARIADB).contains(definition.getDatabase().getDialect().family()))
             return ((IndexDefinition) definition).getTable().getOutputName().toUpperCase() + "_" + definition.getOutputName().toUpperCase();
+
+
+
+
 
 
 

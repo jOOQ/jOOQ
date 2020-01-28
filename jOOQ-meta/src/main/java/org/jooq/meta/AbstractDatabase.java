@@ -78,6 +78,7 @@ import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.conf.RenderQuotedNames;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.DataAccessException;
@@ -273,6 +274,13 @@ public abstract class AbstractDatabase implements Database {
             log.error("NoSuchFieldError may happen when the jOOQ Open Source Edition (Maven groupId 'org.jooq') is used with a commercial SQLDialect. Use an appropriate groupId instead: 'org.jooq.trial', 'org.jooq.pro', 'org.jooq.pro-java-6', or 'org.jooq.pro-java-8'. See also: https://www.jooq.org/doc/latest/manual/getting-started/tutorials/jooq-in-7-steps/jooq-in-7-steps-step1/");
             throw e;
         }
+
+        // [#9511] In some cases, it's better not to quote identifiers from
+        //         jOOQ-meta queries for better dialect interoperability. No
+        //         cases where quoting would have been necessary were found in
+        //         integration tests, or when looking for identifiers matching
+        //         [A-Za-z_$#][A-Za-z0-9_$#]+ in generated jOOQ-meta code.
+        configuration.settings().setRenderQuotedNames(RenderQuotedNames.NEVER);
 
         if (muteExceptions) {
             return DSL.using(configuration);

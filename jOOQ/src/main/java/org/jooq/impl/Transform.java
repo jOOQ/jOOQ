@@ -38,61 +38,58 @@
 package org.jooq.impl;
 
 
+import java.util.ArrayList;
+import java.util.List;
 
+import org.jooq.Condition;
+import org.jooq.Field;
+// ...
+import org.jooq.QueryPart;
 
+/**
+ * A simple, preliminary pattern matching implementation for {@link Condition}
+ * matching.
+ * <p>
+ * [#8800] Has been implemented to support transforming ANSI join to pre-ANSI
+ * join syntax. For outer join support, the {@link Condition} model needs to be
+ * transformed to yield {@link Field#plus()} expressions where applicable.
+ * <p>
+ * A future jOOQ version will refactor this implementation in favour of much
+ * more generic (and efficient) pattern matching of the {@link QueryPart}
+ * expression tree.
+ *
+ * @author Lukas Eder
+ */
+@Pro
+final class Transform {
 
+    final Transformer<Field<?>> fieldTransformer;
 
+    Transform(Transformer<Field<?>> fieldTransformer) {
+        this.fieldTransformer = fieldTransformer;
+    }
 
+    Condition transform(Condition condition) {
+        if (condition instanceof ConditionProviderImpl)
+            return transform(((ConditionProviderImpl) condition).getWhere());
+        else if (condition instanceof CombinedCondition)
+            return CombinedCondition.of(((CombinedCondition) condition).operator, transform(((CombinedCondition) condition).conditions));
+        else if (condition instanceof CompareCondition)
+            return new CompareCondition(fieldTransformer.transform(((CompareCondition) condition).field1), fieldTransformer.transform(((CompareCondition) condition).field2), ((CompareCondition) condition).comparator);
+        else
+            return condition;
+    }
 
+    List<Condition> transform(List<Condition> conditions) {
+        List<Condition> result = new ArrayList<>(conditions.size());
 
+        for (Condition condition : conditions)
+            result.add(transform(condition));
 
+        return result;
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    interface Transformer<Q extends QueryPart> {
+        Q transform(Q queryPart);
+    }
+}

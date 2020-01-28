@@ -831,7 +831,12 @@ public class PostgresDatabase extends AbstractDatabase {
                 // Calculate overload index if applicable
                 when(
                     count().over(partitionBy(r1.ROUTINE_SCHEMA, r1.ROUTINE_NAME)).gt(one()),
-                    rowNumber().over(partitionBy(r1.ROUTINE_SCHEMA, r1.ROUTINE_NAME).orderBy(r1.SPECIFIC_NAME))
+                    rowNumber().over(partitionBy(r1.ROUTINE_SCHEMA, r1.ROUTINE_NAME).orderBy(
+
+                        // [#9754] To stabilise overload calculation, we use the type signature
+                        // replace(field("pg_get_function_arguments({0})", VARCHAR, oid(PG_PROC)), inline('"'), inline("")),
+                        r1.SPECIFIC_NAME
+                    ))
                 ).as("overload"),
 
                 isAgg)

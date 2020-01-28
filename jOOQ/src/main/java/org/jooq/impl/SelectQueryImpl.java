@@ -1535,7 +1535,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                            .visit(op.toKeyword(family))
                            .sql(' ');
 
-                    unionParenthesis(context, '(', other.getSelect().toArray(EMPTY_FIELD), unionParensRequired);
+                    if (!unionParenthesis(context, '(', other.getSelect().toArray(EMPTY_FIELD), unionParensRequired) && !unionParensRequired)
+                        context.formatNewLine();
+
                     context.visit(other);
                     unionParenthesis(context, ')', null, unionParensRequired);
                 }
@@ -1805,7 +1807,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         return select.orderBy.size() > 0 || select.limit.isApplicable();
     }
 
-    private final void unionParenthesis(Context<?> ctx, char parenthesis, Field<?>[] fields, boolean parensRequired) {
+    private final boolean unionParenthesis(Context<?> ctx, char parenthesis, Field<?>[] fields, boolean parensRequired) {
         boolean derivedTable =
 
             // [#3579] [#6431] [#7222] Some databases don't support nested set operations at all
@@ -1877,6 +1879,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             if (derivedTable)
                 ctx.sql(" x");
         }
+
+        return parensRequired;
     }
 
     @Override

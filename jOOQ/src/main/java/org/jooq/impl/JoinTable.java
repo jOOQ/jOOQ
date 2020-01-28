@@ -167,9 +167,9 @@ implements
 
 
 
-    private final JoinType                type;
-    private final ConditionProviderImpl   condition;
-    private final QueryPartList<Field<?>> using;
+    final JoinType                        type;
+    final ConditionProviderImpl           condition;
+    final QueryPartList<Field<?>>         using;
 
     JoinTable(TableLike<?> lhs, TableLike<?> rhs, JoinType type) {
 
@@ -488,7 +488,7 @@ implements
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    private final Condition naturalCondition() {
+    final Condition naturalCondition() {
         List<Condition> conditions = new ArrayList<>(using.size());
 
         for (Field<?> field : lhs.fields()) {
@@ -502,7 +502,7 @@ implements
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    private final Condition usingCondition() {
+    final Condition usingCondition() {
         List<Condition> conditions = new ArrayList<>(using.size());
 
         for (Field<?> field : using)

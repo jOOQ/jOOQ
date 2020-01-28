@@ -177,6 +177,21 @@ included in the <code>OUTPUT</code> clause.
 For details, see <a href="https://github.com/jOOQ/jOOQ/issues/4498">https://github.com/jOOQ/jOOQ/issues/4498</a>.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="transformAnsiJoinToTableLists" type="boolean" minOccurs="0" maxOccurs="1" default="false">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform ANSI join to table lists if possible
+<p>
+Historically, prior to ANSI join syntax, joins were implemented by listing tables in
+the FROM clause and providing join predicates in the WHERE clause, possibly using vendor specific
+operators like <code>(+)</code> (Oracle, DB2) or <code>*=</code> (SQL Server) for outer join
+support. For backwards compatibility with older RDBMS versions, ANSI joins in jOOQ code may be
+converted to equivalent table lists in generated SQL using this flag.
+<p>
+This flag has a limited implementation that supports inner joins (in most cases) and outer joins
+(only for simple comparison predicates).
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="transformTableListsToAnsiJoin" type="boolean" minOccurs="0" maxOccurs="1" default="false">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform table lists to ANSI join if possible
 <p>
@@ -185,6 +200,8 @@ the FROM clause and providing join predicates in the WHERE clause, possibly usin
 operators like <code>(+)</code> (Oracle, DB2) or <code>*=</code> (SQL Server) for outer join
 support. Migrating such join syntax is tedious. The jOOQ parser can parse the old syntax and
 this flag enables the transformation to ANSI join syntax.
+<p>
+This flag has not been implemented yet!
 <p>
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

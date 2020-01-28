@@ -81,14 +81,14 @@ import org.jooq.conf.ParamType;
  */
 final class CompareCondition extends AbstractCondition implements LikeEscapeStep {
 
-    private static final long                serialVersionUID      = -747240442279619486L;
-    private static final Clause[]            CLAUSES               = { CONDITION, CONDITION_COMPARISON };
-    private static final Set<SQLDialect>     REQUIRES_CAST_ON_LIKE = SQLDialect.supportedBy(DERBY, POSTGRES);
+    private static final long            serialVersionUID      = -747240442279619486L;
+    private static final Clause[]        CLAUSES               = { CONDITION, CONDITION_COMPARISON };
+    private static final Set<SQLDialect> REQUIRES_CAST_ON_LIKE = SQLDialect.supportedBy(DERBY, POSTGRES);
 
-    private final Field<?>                   field1;
-    private final Field<?>                   field2;
-    private final Comparator                 comparator;
-    private Character                        escape;
+    final Field<?>                       field1;
+    final Field<?>                       field2;
+    final Comparator                     comparator;
+    private Character                    escape;
 
     CompareCondition(Field<?> field1, Field<?> field2, Comparator comparator) {
         this.field1 = field1;

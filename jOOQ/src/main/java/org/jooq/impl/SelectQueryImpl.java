@@ -192,6 +192,8 @@ import org.jooq.WindowDefinition;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.Tools.BooleanDataKey;
 import org.jooq.impl.Tools.DataKey;
+import org.jooq.impl.Transform.Transformer;
+import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -207,6 +209,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
      * Generated UID
      */
     private static final long            serialVersionUID                = 1646393178384872967L;
+    private static final JooqLogger      log                             = JooqLogger.getLogger(SelectQueryImpl.class);
     private static final Clause[]        CLAUSES                         = { SELECT };
     private static final Set<SQLDialect> EMULATE_SELECT_INTO_AS_CTAS     = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE);
     private static final Set<SQLDialect> NO_SUPPORT_FOR_UPDATE           = SQLDialect.supportedBy(CUBRID);
@@ -911,7 +914,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     /**
      * The default LIMIT / OFFSET clause in most dialects
      */
-    private void toSQLReferenceLimitDefault(Context<?> context) {
+    private final void toSQLReferenceLimitDefault(Context<?> context) {
         Object data = context.data(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE);
 
         context.data(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE, true);
@@ -1355,6 +1358,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
+
+
             context.formatSeparator()
                    .visit(K_FROM)
                    .sql(' ')
@@ -1590,6 +1596,97 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             context.qualify(qualify);
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private final void toSQLOrderBy(
         Context<?> ctx,

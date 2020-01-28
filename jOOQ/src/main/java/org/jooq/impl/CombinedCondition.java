@@ -66,8 +66,8 @@ final class CombinedCondition extends AbstractCondition {
     private static final Clause[] CLAUSES_AND      = { CONDITION, CONDITION_AND };
     private static final Clause[] CLAUSES_OR       = { CONDITION, CONDITION_OR };
 
-    private final Operator        operator;
-    private final List<Condition> conditions;
+    final Operator                operator;
+    final List<Condition>         conditions;
 
     static Condition of(Operator operator, Condition left, Condition right) {
         if (left instanceof NoCondition)

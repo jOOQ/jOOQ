@@ -47,6 +47,7 @@ import java.util.List;
 import org.jooq.Catalog;
 import org.jooq.DSLContext;
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Meta;
 import org.jooq.Schema;
 import org.jooq.Sequence;
@@ -98,6 +99,51 @@ public abstract class AbstractMetaDatabase extends AbstractDatabase {
 
     @Override
     protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
+        for (Schema referencingS : getSchemasFromMeta()) {
+            SchemaDefinition referencingSD = getSchema(referencingS.getName());
+
+            if (referencingSD != null) {
+                for (Table<?> referencingT : referencingS.getTables()) {
+                    TableDefinition referencingTD = getTable(referencingSD, referencingT.getName());
+
+                    if (referencingTD != null) {
+                        for (ForeignKey<?, ?> fk : referencingT.getReferences()) {
+
+                            UniqueKey<?> uk = fk.getKey();
+                            if (uk != null) {
+                                Table<?> referencedT = uk.getTable();
+
+                                if (referencedT != null) {
+                                    Schema referencedS = referencedT.getSchema();
+
+                                    if (referencedS == null)
+                                        referencedS = referencingS;
+
+                                    SchemaDefinition referencedSD = getSchema(referencedS.getName());
+                                    TableDefinition referencedTD = getTable(referencedSD, referencedT.getName());
+
+                                    addForeignKey:
+                                    if (referencedTD != null) {
+                                        for (Field<?> fkField : fk.getFields())
+                                            if (referencingTD.getColumn(fkField.getName()) == null)
+                                                break addForeignKey;
+
+                                        for (Field<?> fkField : fk.getFields())
+                                            relations.addForeignKey(
+                                                fk.getName(),
+                                                referencingTD,
+                                                referencingTD.getColumn(fkField.getName()),
+                                                uk.getName(),
+                                                referencedTD
+                                            );
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     @Override

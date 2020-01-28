@@ -43,7 +43,6 @@ import java.util.List;
 
 import org.jooq.Condition;
 import org.jooq.Field;
-// ...
 import org.jooq.QueryPart;
 
 /**
@@ -60,7 +59,6 @@ import org.jooq.QueryPart;
  *
  * @author Lukas Eder
  */
-@Pro
 final class Transform {
 
     final Transformer<Field<?>> fieldTransformer;

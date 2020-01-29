@@ -67,6 +67,12 @@ public class Settings
     protected RenderFormatting renderFormatting;
     @XmlElement(defaultValue = "DEFAULT")
     @XmlSchemaType(name = "string")
+    protected RenderOptionalKeyword renderOptionalAsKeywordForTableAliases = RenderOptionalKeyword.DEFAULT;
+    @XmlElement(defaultValue = "DEFAULT")
+    @XmlSchemaType(name = "string")
+    protected RenderOptionalKeyword renderOptionalAsKeywordForFieldAliases = RenderOptionalKeyword.DEFAULT;
+    @XmlElement(defaultValue = "DEFAULT")
+    @XmlSchemaType(name = "string")
     protected RenderOptionalKeyword renderOptionalInnerKeyword = RenderOptionalKeyword.DEFAULT;
     @XmlElement(defaultValue = "DEFAULT")
     @XmlSchemaType(name = "string")
@@ -517,6 +523,38 @@ public class Settings
     }
 
     /**
+     * Whether to render the optional <code>AS</code> keyword in table aliases, if it is optional in the output dialect. This is ignored if the keyword is not supported (e.g. in Oracle)
+     *
+     */
+    public RenderOptionalKeyword getRenderOptionalAsKeywordForTableAliases() {
+        return renderOptionalAsKeywordForTableAliases;
+    }
+
+    /**
+     * Whether to render the optional <code>AS</code> keyword in table aliases, if it is optional in the output dialect. This is ignored if the keyword is not supported (e.g. in Oracle)
+     *
+     */
+    public void setRenderOptionalAsKeywordForTableAliases(RenderOptionalKeyword value) {
+        this.renderOptionalAsKeywordForTableAliases = value;
+    }
+
+    /**
+     * Whether to render the optional <code>AS</code> keyword in table aliases, if it is optional in the output dialect.
+     *
+     */
+    public RenderOptionalKeyword getRenderOptionalAsKeywordForFieldAliases() {
+        return renderOptionalAsKeywordForFieldAliases;
+    }
+
+    /**
+     * Whether to render the optional <code>AS</code> keyword in table aliases, if it is optional in the output dialect.
+     *
+     */
+    public void setRenderOptionalAsKeywordForFieldAliases(RenderOptionalKeyword value) {
+        this.renderOptionalAsKeywordForFieldAliases = value;
+    }
+
+    /**
      * Whether to render the optional <code>INNER</code> keyword in <code>INNER JOIN</code>, if it is optional in the output dialect.
      *
      */
@@ -716,6 +754,9 @@ public class Settings
      * support. For backwards compatibility with older RDBMS versions, ANSI joins in jOOQ code may be
      * converted to equivalent table lists in generated SQL using this flag.
      * <p>
+     * This flag has a limited implementation that supports inner joins (in most cases) and outer joins
+     * (only for simple comparison predicates).
+     * <p>
      * This feature is available in the commercial distribution only.
      *
      * @return
@@ -747,6 +788,8 @@ public class Settings
      * operators like <code>(+)</code> (Oracle, DB2) or <code>*=</code> (SQL Server) for outer join
      * support. Migrating such join syntax is tedious. The jOOQ parser can parse the old syntax and
      * this flag enables the transformation to ANSI join syntax.
+     * <p>
+     * This flag has not been implemented yet!
      * <p>
      * This feature is available in the commercial distribution only.
      *
@@ -2115,6 +2158,24 @@ public class Settings
     }
 
     /**
+     * Whether to render the optional <code>AS</code> keyword in table aliases, if it is optional in the output dialect. This is ignored if the keyword is not supported (e.g. in Oracle)
+     *
+     */
+    public Settings withRenderOptionalAsKeywordForTableAliases(RenderOptionalKeyword value) {
+        setRenderOptionalAsKeywordForTableAliases(value);
+        return this;
+    }
+
+    /**
+     * Whether to render the optional <code>AS</code> keyword in table aliases, if it is optional in the output dialect.
+     *
+     */
+    public Settings withRenderOptionalAsKeywordForFieldAliases(RenderOptionalKeyword value) {
+        setRenderOptionalAsKeywordForFieldAliases(value);
+        return this;
+    }
+
+    /**
      * Whether to render the optional <code>INNER</code> keyword in <code>INNER JOIN</code>, if it is optional in the output dialect.
      *
      */
@@ -2693,6 +2754,8 @@ public class Settings
         builder.append("renderLocale", renderLocale);
         builder.append("renderFormatted", renderFormatted);
         builder.append("renderFormatting", renderFormatting);
+        builder.append("renderOptionalAsKeywordForTableAliases", renderOptionalAsKeywordForTableAliases);
+        builder.append("renderOptionalAsKeywordForFieldAliases", renderOptionalAsKeywordForFieldAliases);
         builder.append("renderOptionalInnerKeyword", renderOptionalInnerKeyword);
         builder.append("renderOptionalOuterKeyword", renderOptionalOuterKeyword);
         builder.append("renderScalarSubqueriesForStoredFunctions", renderScalarSubqueriesForStoredFunctions);
@@ -2890,6 +2953,24 @@ public class Settings
             }
         } else {
             if (!renderFormatting.equals(other.renderFormatting)) {
+                return false;
+            }
+        }
+        if (renderOptionalAsKeywordForTableAliases == null) {
+            if (other.renderOptionalAsKeywordForTableAliases!= null) {
+                return false;
+            }
+        } else {
+            if (!renderOptionalAsKeywordForTableAliases.equals(other.renderOptionalAsKeywordForTableAliases)) {
+                return false;
+            }
+        }
+        if (renderOptionalAsKeywordForFieldAliases == null) {
+            if (other.renderOptionalAsKeywordForFieldAliases!= null) {
+                return false;
+            }
+        } else {
+            if (!renderOptionalAsKeywordForFieldAliases.equals(other.renderOptionalAsKeywordForFieldAliases)) {
                 return false;
             }
         }
@@ -3551,6 +3632,8 @@ public class Settings
         result = ((prime*result)+((renderLocale == null)? 0 :renderLocale.hashCode()));
         result = ((prime*result)+((renderFormatted == null)? 0 :renderFormatted.hashCode()));
         result = ((prime*result)+((renderFormatting == null)? 0 :renderFormatting.hashCode()));
+        result = ((prime*result)+((renderOptionalAsKeywordForTableAliases == null)? 0 :renderOptionalAsKeywordForTableAliases.hashCode()));
+        result = ((prime*result)+((renderOptionalAsKeywordForFieldAliases == null)? 0 :renderOptionalAsKeywordForFieldAliases.hashCode()));
         result = ((prime*result)+((renderOptionalInnerKeyword == null)? 0 :renderOptionalInnerKeyword.hashCode()));
         result = ((prime*result)+((renderOptionalOuterKeyword == null)? 0 :renderOptionalOuterKeyword.hashCode()));
         result = ((prime*result)+((renderScalarSubqueriesForStoredFunctions == null)? 0 :renderScalarSubqueriesForStoredFunctions.hashCode()));

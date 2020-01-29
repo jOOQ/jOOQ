@@ -87,6 +87,7 @@ import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
+import org.jooq.conf.RenderOptionalKeyword;
 
 /**
  * @author Lukas Eder
@@ -282,9 +283,26 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
         }
     }
 
-    static void toSQLAs(Context<?> context) {
-        if (SUPPORT_AS_REQUIRED.contains(context.family()))
-            context.sql(' ').visit(K_AS);
+    void toSQLAs(Context<?> ctx) {
+        if (wrapped instanceof Field) {
+            if (ctx.settings().getRenderOptionalAsKeywordForFieldAliases() == RenderOptionalKeyword.DEFAULT && SUPPORT_AS_REQUIRED.contains(ctx.family()))
+                ctx.sql(' ').visit(K_AS);
+            else if (ctx.settings().getRenderOptionalAsKeywordForFieldAliases() == RenderOptionalKeyword.ON)
+                ctx.sql(' ').visit(K_AS);
+        }
+        else {
+            if (ctx.settings().getRenderOptionalAsKeywordForTableAliases() == RenderOptionalKeyword.DEFAULT && SUPPORT_AS_REQUIRED.contains(ctx.family()))
+                ctx.sql(' ').visit(K_AS);
+
+
+
+
+
+
+
+            else if (ctx.settings().getRenderOptionalAsKeywordForTableAliases() == RenderOptionalKeyword.ON)
+                ctx.sql(' ').visit(K_AS);
+        }
     }
 
     private void toSQLWrapped(Context<?> context) {

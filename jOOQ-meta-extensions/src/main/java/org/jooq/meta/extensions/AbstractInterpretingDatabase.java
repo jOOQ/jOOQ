@@ -95,7 +95,7 @@ public abstract class AbstractInterpretingDatabase extends H2Database {
                 Properties info = new Properties();
                 info.put("user", "sa");
                 info.put("password", "");
-                connection = new org.h2.Driver().connect("jdbc:h2:mem:jooq-meta-extensions-" + UUID.randomUUID(), info);
+                connection = new org.h2.Driver().connect("jdbc:h2:mem:jooq-meta-extensions-" + UUID.randomUUID() + ";DATABASE_TO_UPPER=false", info);
 
                 export();
             }

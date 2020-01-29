@@ -7,6 +7,7 @@ Authors and contributors of jOOQ or parts of jOOQ in alphabetical order:
 - Art O Cathain
 - Artur Dryomov
 - Ben Manes
+- Benno Fünfstück
 - Brent Douglas
 - Brett Meyer
 - Christian Stein

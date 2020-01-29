@@ -456,6 +456,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
 
 
+
                 case MYSQL:
                 case MARIADB: {
                     toSQLInsert(ctx);

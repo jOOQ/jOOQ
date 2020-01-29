@@ -138,17 +138,6 @@ final class Limit extends AbstractQueryPart {
 
 
 
-            case FIREBIRD: {
-                ctx.castMode(NEVER)
-                   .formatSeparator()
-                   .visit(K_ROWS)
-                   .sql(' ').visit(getLowerRownum().add(ONE))
-                   .sql(' ').visit(K_TO)
-                   .sql(' ').visit(getUpperRownum())
-                   .castMode(castMode);
-
-                break;
-            }
 
 
 
@@ -168,6 +157,15 @@ final class Limit extends AbstractQueryPart {
 
 
 
+
+
+
+
+
+
+
+
+            case FIREBIRD:
             case H2:
             case DERBY: {
 

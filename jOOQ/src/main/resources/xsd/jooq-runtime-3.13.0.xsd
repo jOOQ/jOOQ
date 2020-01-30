@@ -479,6 +479,10 @@ jOOQ queries, for which no specific fetchSize value was specified.]]></jxb:javad
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#8616] The search path to be used for unqualified table lookups by the parser.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="parseSetCommands" type="boolean" minOccurs="0" maxOccurs="1" default="false">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#9780] Whether commands of the type <code>SET key = value</code> should be parsed rather than ignored.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="parseUnsupportedSyntax" type="jooq-runtime:ParseUnsupportedSyntax" minOccurs="0" maxOccurs="1" default="IGNORE">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#5917] Whether the parser should accept unsupported (but known) syntax.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

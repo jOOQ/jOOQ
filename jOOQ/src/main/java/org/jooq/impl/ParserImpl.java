@@ -2017,10 +2017,27 @@ final class ParserImpl implements Parser {
             return parseSetSchema(ctx);
         else if (parseKeywordIf(ctx, "SEARCH_PATH"))
             return parseSetSearchPath(ctx);
+        else
+            return parseSetCommand(ctx);
+    }
+
+    private static final Query parseSetCommand(ParserContext ctx) {
+        if (TRUE.equals(ctx.settings().isParseSetCommands())) {
+            Name name = parseIdentifier(ctx);
+
+            // TODO: [#9780] Are there any possible syntaxes and data types?
+            parseIf(ctx, '=');
+            Object value = parseSignedIntegerIf(ctx);
+
+            // TODO: [#9781] Create public DSL API for this
+            return new SetCommand(ctx.dsl.configuration(), name, value != null ? inline(value) : inline(parseStringLiteral(ctx)));
+        }
 
         // There are many SET commands in programs like sqlplus, which we'll simply ignore
-        parseUntilEOL(ctx);
-        return IGNORE_NO_DELIMITER;
+        else {
+            parseUntilEOL(ctx);
+            return IGNORE_NO_DELIMITER;
+        }
     }
 
     private static final Query parseSetCatalog(ParserContext ctx) {

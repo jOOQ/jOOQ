@@ -102,6 +102,7 @@ import org.jooq.conf.InterpreterSearchSchema;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataDefinitionException;
 import org.jooq.impl.ConstraintImpl.Action;
+import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
 
 @SuppressWarnings("serial")
@@ -224,6 +225,9 @@ final class Interpreter {
             ;
         else if (query instanceof Merge)
             ;
+
+        else if (query instanceof SetCommand)
+            accept0((SetCommand) query);
 
         else
             throw unsupportedQuery(query);
@@ -1001,6 +1005,13 @@ final class Interpreter {
             throw schemaNotExists(query.$schema());
 
         currentSchema = schema;
+    }
+
+    private final void accept0(SetCommand query) {
+        if ("foreign_key_checks".equals(query.$name().last().toLowerCase(locale)))
+            delayForeignKeyDeclarations = !Convert.convert(query.$value().getValue(), boolean.class);
+        else
+            throw unsupportedQuery(query);
     }
 
     // -------------------------------------------------------------------------

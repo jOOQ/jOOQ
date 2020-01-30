@@ -229,6 +229,8 @@ public class Settings
     @XmlElement(defaultValue = "OFF")
     @XmlSchemaType(name = "string")
     protected ParseWithMetaLookups parseWithMetaLookups = ParseWithMetaLookups.OFF;
+    @XmlElement(defaultValue = "false")
+    protected Boolean parseSetCommands = false;
     @XmlElement(defaultValue = "IGNORE")
     @XmlSchemaType(name = "string")
     protected ParseUnsupportedSyntax parseUnsupportedSyntax = ParseUnsupportedSyntax.IGNORE;
@@ -1952,6 +1954,30 @@ public class Settings
     }
 
     /**
+     * [#9780] Whether commands of the type <code>SET key = value</code> should be parsed rather than ignored.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isParseSetCommands() {
+        return parseSetCommands;
+    }
+
+    /**
+     * Sets the value of the parseSetCommands property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setParseSetCommands(Boolean value) {
+        this.parseSetCommands = value;
+    }
+
+    /**
      * [#5917] Whether the parser should accept unsupported (but known) syntax.
      *
      */
@@ -2688,6 +2714,11 @@ public class Settings
         return this;
     }
 
+    public Settings withParseSetCommands(Boolean value) {
+        setParseSetCommands(value);
+        return this;
+    }
+
     /**
      * [#5917] Whether the parser should accept unsupported (but known) syntax.
      *
@@ -2852,6 +2883,7 @@ public class Settings
         builder.append("parseLocale", parseLocale);
         builder.append("parseNameCase", parseNameCase);
         builder.append("parseWithMetaLookups", parseWithMetaLookups);
+        builder.append("parseSetCommands", parseSetCommands);
         builder.append("parseUnsupportedSyntax", parseUnsupportedSyntax);
         builder.append("parseUnknownFunctions", parseUnknownFunctions);
         builder.append("parseIgnoreComments", parseIgnoreComments);
@@ -3591,6 +3623,15 @@ public class Settings
                 return false;
             }
         }
+        if (parseSetCommands == null) {
+            if (other.parseSetCommands!= null) {
+                return false;
+            }
+        } else {
+            if (!parseSetCommands.equals(other.parseSetCommands)) {
+                return false;
+            }
+        }
         if (parseUnsupportedSyntax == null) {
             if (other.parseUnsupportedSyntax!= null) {
                 return false;
@@ -3740,6 +3781,7 @@ public class Settings
         result = ((prime*result)+((parseLocale == null)? 0 :parseLocale.hashCode()));
         result = ((prime*result)+((parseNameCase == null)? 0 :parseNameCase.hashCode()));
         result = ((prime*result)+((parseWithMetaLookups == null)? 0 :parseWithMetaLookups.hashCode()));
+        result = ((prime*result)+((parseSetCommands == null)? 0 :parseSetCommands.hashCode()));
         result = ((prime*result)+((parseUnsupportedSyntax == null)? 0 :parseUnsupportedSyntax.hashCode()));
         result = ((prime*result)+((parseUnknownFunctions == null)? 0 :parseUnknownFunctions.hashCode()));
         result = ((prime*result)+((parseIgnoreComments == null)? 0 :parseIgnoreComments.hashCode()));

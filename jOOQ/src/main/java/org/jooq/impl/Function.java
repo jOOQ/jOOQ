@@ -54,6 +54,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
+// ...
 import static org.jooq.impl.DSL.choose;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.inline;
@@ -155,7 +156,7 @@ class Function<T> extends AbstractField<T> implements
     private static final Set<SQLDialect>   SUPPORT_GROUP_CONCAT               = SQLDialect.supportedBy(CUBRID, H2, HSQLDB, MARIADB, MYSQL, SQLITE);
     private static final Set<SQLDialect>   SUPPORT_STRING_AGG                 = SQLDialect.supportedBy(POSTGRES);
     private static final Set<SQLDialect>   SUPPORT_NO_PARENS_WINDOW_REFERENCE = SQLDialect.supportedBy(MYSQL, POSTGRES);
-    private static final Set<SQLDialect>   SUPPORT_FILTER                     = SQLDialect.supportedBy(H2, HSQLDB, POSTGRES);
+    private static final Set<SQLDialect>   SUPPORT_FILTER                     = SQLDialect.supportedBy(H2, HSQLDB, POSTGRES, SQLITE);
     private static final Set<SQLDialect>   SUPPORT_DISTINCT_RVE               = SQLDialect.supportedBy(H2, POSTGRES);
 
     static final Field<Integer>            ASTERISK                           = DSL.field("*", Integer.class);

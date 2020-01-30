@@ -657,6 +657,16 @@ final class Interpreter {
                 }
             }
 
+            Iterator<DelayedForeignKey> it = delayedForeignKeyDeclarations.iterator();
+            while (it.hasNext()) {
+                DelayedForeignKey key = it.next();
+
+                if (existing.equals(key.table) && key.constraint.getUnqualifiedName().equals(impl.getUnqualifiedName())) {
+                    it.remove();
+                    break dropConstraint;
+                }
+            }
+
             if (!query.$ifExistsConstraint())
                 throw constraintNotExists(query.$dropConstraint());
         }

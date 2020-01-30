@@ -37,14 +37,33 @@
  */
 package org.jooq.impl;
 
+// ...
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.CUBRID;
+// ...
+// ...
+import static org.jooq.SQLDialect.MARIADB;
+// ...
+import static org.jooq.SQLDialect.MYSQL;
+// ...
+// ...
+import static org.jooq.SQLDialect.SQLITE;
+// ...
+// ...
+// ...
 import static org.jooq.impl.DSL.nvl2;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.zero;
 import static org.jooq.impl.Keywords.K_NULLS_FIRST;
 import static org.jooq.impl.Keywords.K_NULLS_LAST;
 
+import java.util.Set;
+
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.SQLDialect;
 import org.jooq.SortField;
 import org.jooq.SortOrder;
 
@@ -53,12 +72,15 @@ final class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = 1223739398544155873L;
+    private static final long            serialVersionUID = 1223739398544155873L;
 
-    private final Field<T>    field;
-    private final SortOrder   order;
-    private boolean           nullsFirst;
-    private boolean           nullsLast;
+    // DB2 supports NULLS FIRST/LAST only in OLAP (window) functions
+    private static final Set<SQLDialect> NO_SUPPORT_NULLS = SQLDialect.supportedUntil(CUBRID, MARIADB, MYSQL);
+
+    private final Field<T>               field;
+    private final SortOrder              order;
+    private boolean                      nullsFirst;
+    private boolean                      nullsLast;
 
     SortFieldImpl(Field<T> field, SortOrder order) {
         this.field = field;
@@ -104,46 +126,17 @@ final class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
     @Override
     public final void accept(Context<?> ctx) {
         if (nullsFirst || nullsLast) {
-            switch (ctx.family()) {
+            if (NO_SUPPORT_NULLS.contains(ctx.dialect())) {
+                Field<Integer> ifNull = nullsFirst ? zero() : one();
+                Field<Integer> ifNotNull = nullsFirst ? one() : zero();
 
+                ctx.visit(nvl2(field, ifNotNull, ifNull))
+                   .sql(", ");
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                // These OSS dialects don't support this syntax at all
-                case CUBRID:
-                case MARIADB:
-                case MYSQL:
-                case SQLITE: {
-                    Field<Integer> ifNull = nullsFirst ? zero() : one();
-                    Field<Integer> ifNotNull = nullsFirst ? one() : zero();
-
-                    ctx.visit(nvl2(field, ifNotNull, ifNull))
-                       .sql(", ");
-
-                    acceptFieldAndOrder(ctx, false);
-                    break;
-                }
-
-                // DERBY, H2, HSQLDB, ORACLE, POSTGRES
-                default: {
-                    acceptFieldAndOrder(ctx, true);
-                    break;
-                }
+                acceptFieldAndOrder(ctx, false);
+            }
+            else {
+                acceptFieldAndOrder(ctx, true);
             }
         }
         else {

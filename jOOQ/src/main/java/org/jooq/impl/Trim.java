@@ -100,6 +100,7 @@ final class Trim extends AbstractField<String> {
 
 
 
+
                 case SQLITE:
                     ctx.visit(F_TRIM).sql('(').visit(argument).sql(", ").visit(characters).sql(')');
                     break;

@@ -143,6 +143,7 @@ final class AttributeConverterExtractor implements Integrator {
         PersistenceUnitInfo persistenceUnitInfo = persistenceUnitInfo(getClass().getSimpleName());
         Map<String, Object> configuration = new HashMap<>();
         configuration.put("hibernate.integrator_provider", integratorProvider());
+        configuration.put("hibernate.hbm2ddl.auto", "none");
         configuration.put(AvailableSettings.CONNECTION_PROVIDER, database.connectionProvider());
         PersistenceUnitInfoDescriptor descriptor = new PersistenceUnitInfoDescriptor(persistenceUnitInfo);
         return new EntityManagerFactoryBuilderImpl(descriptor, configuration).build();

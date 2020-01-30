@@ -1012,6 +1012,10 @@ final class ParserImpl implements Parser {
         return result;
     }
 
+    private static final Select<?> parseWithOrSelect(ParserContext ctx) {
+        return peekKeyword(ctx, "WITH") ? (Select<?>) parseWith(ctx, true) : parseSelect(ctx, null, null);
+    }
+
     private static final SelectQueryImpl<Record> parseSelect(ParserContext ctx) {
         return parseSelect(ctx, null, null);
     }
@@ -2932,7 +2936,7 @@ final class ParserImpl implements Parser {
         }
 
         parseKeyword(ctx, "AS");
-        Select<?> select = parseSelect(ctx);
+        Select<?> select = parseWithOrSelect(ctx);
 
         if (fields.length > 0 && fields.length != select.getSelect().size())
             throw ctx.exception("Select list size (" + select.getSelect().size() + ") must match declared field size (" + fields.length + ")");

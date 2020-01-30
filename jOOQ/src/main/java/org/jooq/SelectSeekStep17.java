@@ -110,7 +110,7 @@ public interface SelectSeekStep17<R extends Record, T1, T2, T3, T4, T5, T6, T7, 
      * The above query will render the following SQL statement:
      * <p>
      * <code><pre>
-     * SELECT * FROM table
+     * SELECT table.col1, table.col2, ... FROM table
      * WHERE (id, code) &gt; (3, 'abc')
      * ORDER BY id ASC, code ASC
      * </pre></code>
@@ -162,7 +162,7 @@ public interface SelectSeekStep17<R extends Record, T1, T2, T3, T4, T5, T6, T7, 
      * The above query will render the following SQL statement:
      * <p>
      * <code><pre>
-     * SELECT * FROM table
+     * SELECT table.col1, table.col2, ... FROM table
      * WHERE (id, code) &gt; (3, 'abc')
      * ORDER BY id ASC, code ASC
      * </pre></code>
@@ -214,7 +214,7 @@ public interface SelectSeekStep17<R extends Record, T1, T2, T3, T4, T5, T6, T7, 
      * The above query will render the following SQL statement:
      * <p>
      * <code><pre>
-     * SELECT * FROM table
+     * SELECT table.col1, table.col2, ... FROM table
      * WHERE (id, code) &gt; (3, 'abc')
      * ORDER BY id ASC, code ASC
      * </pre></code>
@@ -265,7 +265,7 @@ public interface SelectSeekStep17<R extends Record, T1, T2, T3, T4, T5, T6, T7, 
      * The above query will render the following SQL statement:
      * <p>
      * <code><pre>
-     * SELECT * FROM table
+     * SELECT table.col1, table.col2, ... FROM table
      * WHERE (id, code) &gt; (3, 'abc')
      * ORDER BY id ASC, code ASC
      * </pre></code>
@@ -316,7 +316,7 @@ public interface SelectSeekStep17<R extends Record, T1, T2, T3, T4, T5, T6, T7, 
      * The above query will render the following SQL statement:
      * <p>
      * <code><pre>
-     * SELECT * FROM table
+     * SELECT table.col1, table.col2, ... FROM table
      * WHERE (id, code) &lt; (3, 'abc')
      * ORDER BY id ASC, code ASC
      * </pre></code>
@@ -369,7 +369,7 @@ public interface SelectSeekStep17<R extends Record, T1, T2, T3, T4, T5, T6, T7, 
      * The above query will render the following SQL statement:
      * <p>
      * <code><pre>
-     * SELECT * FROM table
+     * SELECT table.col1, table.col2, ... FROM table
      * WHERE (id, code) &lt; (3, 'abc')
      * ORDER BY id ASC, code ASC
      * </pre></code>

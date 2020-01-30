@@ -400,6 +400,17 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
     @Override
     public final AlterTableImpl add(Collection<? extends FieldOrConstraint> fields) {
+
+        // [#9570] Better portability of single item ADD statements
+        if (fields.size() == 1) {
+            FieldOrConstraint first = fields.iterator().next();
+
+            if (first instanceof Field)
+                return add((Field<?>) first);
+            else if (first instanceof Constraint)
+                return add((Constraint) first);
+        }
+
         add = new QueryPartList<>(fields);
         return this;
     }
@@ -1052,6 +1063,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
             ctx.end(ALTER_TABLE_RENAME_CONSTRAINT);
         }
         else if (add != null) {
+            boolean qualify = ctx.qualify();
             boolean multiAdd = REQUIRE_REPEAT_ADD_ON_MULTI_ALTER.contains(ctx.family());
             boolean parens = !multiAdd;
             boolean comma = true;
@@ -1077,7 +1089,9 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
                         ctx.sql(comma ? "," : "").formatSeparator();
 
                 FieldOrConstraint part = add.get(i);
-                ctx.visit(part);
+                ctx.qualify(false)
+                   .visit(part)
+                   .qualify(qualify);
 
                 if (part instanceof Field) {
                     ctx.sql(' ');

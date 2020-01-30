@@ -43,7 +43,6 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.row;
-import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.Tools.EMPTY_RECORD;
 
 import java.util.ArrayList;
@@ -109,8 +108,12 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
      * using Spring. It is not exposed in the public API.
      */
     public /* non-final */ void setConfiguration(Configuration configuration) {
-        this.configuration = configuration;
-        this.mapper = Tools.configuration(configuration).recordMapperProvider().provide(table.recordType(), type);
+        this.configuration = Tools.configuration(configuration);
+        this.mapper = this.configuration.recordMapperProvider().provide(table.recordType(), type);
+    }
+
+    public final DSLContext ctx() {
+        return configuration().dsl();
     }
 
     @Override
@@ -165,11 +168,11 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
         if (objects.size() > 1)
 
             // [#2536] [#3327] We cannot batch INSERT RETURNING calls yet
-            if (!FALSE.equals(configuration.settings().isReturnRecordToPojo()))
+            if (!FALSE.equals(settings().isReturnRecordToPojo()))
                 for (R record : records(objects, false))
                     record.insert();
             else
-                using(configuration).batchInsert(records(objects, false)).execute();
+                ctx().batchInsert(records(objects, false)).execute();
 
         // Execute a regular INSERT
         else if (objects.size() == 1)
@@ -194,12 +197,12 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
         if (objects.size() > 1)
 
             // [#2536] [#3327] We cannot batch UPDATE RETURNING calls yet
-            if (!FALSE.equals(configuration.settings().isReturnRecordToPojo()) &&
-                 TRUE.equals(configuration.settings().isReturnAllOnUpdatableRecord()))
+            if (!FALSE.equals(settings().isReturnRecordToPojo()) &&
+                 TRUE.equals(settings().isReturnAllOnUpdatableRecord()))
                 for (R record : records(objects, true))
                     record.update();
             else
-                using(configuration).batchUpdate(records(objects, true)).execute();
+                ctx().batchUpdate(records(objects, true)).execute();
 
         // Execute a regular UPDATE
         else if (objects.size() == 1)
@@ -224,12 +227,12 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
         if (objects.size() > 1)
 
             // [#2536] [#3327] We cannot batch DELETE RETURNING calls yet
-            if (!FALSE.equals(configuration.settings().isReturnRecordToPojo()) &&
-                 TRUE.equals(configuration.settings().isReturnAllOnUpdatableRecord()))
+            if (!FALSE.equals(settings().isReturnRecordToPojo()) &&
+                 TRUE.equals(settings().isReturnAllOnUpdatableRecord()))
                 for (R record : records(objects, true))
                     record.delete();
             else
-                using(configuration).batchDelete(records(objects, true)).execute();
+                ctx().batchDelete(records(objects, true)).execute();
 
         // Execute a regular DELETE
         else if (objects.size() == 1)
@@ -246,9 +249,8 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
     public /* non-final */ void deleteById(Collection<T> ids) {
         Field<?>[] pk = pk();
 
-        if (pk != null) {
-            using(configuration).delete(table).where(equal(pk, ids)).execute();
-        }
+        if (pk != null)
+            ctx().delete(table).where(equal(pk, ids)).execute();
     }
 
     @Override
@@ -260,21 +262,19 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
     public /* non-final */ boolean existsById(T id) {
         Field<?>[] pk = pk();
 
-        if (pk != null) {
-            return using(configuration)
+        if (pk != null)
+            return ctx()
                      .selectCount()
                      .from(table)
                      .where(equal(pk, id))
                      .fetchOne(0, Integer.class) > 0;
-        }
-        else {
+        else
             return false;
-        }
     }
 
     @Override
     public /* non-final */ long count() {
-        return using(configuration)
+        return ctx()
                  .selectCount()
                  .from(table)
                  .fetchOne(0, Long.class);
@@ -282,7 +282,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
 
     @Override
     public /* non-final */ List<P> findAll() {
-        return using(configuration)
+        return ctx()
                  .selectFrom(table)
                  .fetch(mapper());
     }
@@ -292,8 +292,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
         Field<?>[] pk = pk();
 
         if (pk != null)
-            return using(configuration)
-                        .selectFrom(table)
+            return ctx().selectFrom(table)
                         .where(equal(pk, id))
                         .fetchOne(mapper());
 
@@ -302,7 +301,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
 
     @Override
     public /* non-final */ <Z> List<P> fetchRange(Field<Z> field, Z lowerInclusive, Z upperInclusive) {
-        return using(configuration)
+        return ctx()
                 .selectFrom(table)
                 .where(
                     lowerInclusive == null
@@ -318,18 +317,18 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
     @SuppressWarnings("unchecked")
     @Override
     public /* non-final */ <Z> List<P> fetch(Field<Z> field, Z... values) {
-        return using(configuration)
-                 .selectFrom(table)
-                 .where(field.in(values))
-                 .fetch(mapper());
+        return ctx()
+            .selectFrom(table)
+            .where(field.in(values))
+            .fetch(mapper());
     }
 
     @Override
     public /* non-final */ <Z> P fetchOne(Field<Z> field, Z value) {
-        return using(configuration)
-                     .selectFrom(table)
-                     .where(field.equal(value))
-                     .fetchOne(mapper());
+        return ctx()
+            .selectFrom(table)
+            .where(field.equal(value))
+            .fetchOne(mapper());
     }
 
 
@@ -360,8 +359,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
             return null;
 
         TableField<R, Object>[] fields = (TableField<R, Object>[]) key.getFieldsArray();
-        Record result = DSL.using(configuration)
-                           .newRecord(fields);
+        Record result = configuration().dsl().newRecord(fields);
 
         for (int i = 0; i < values.length; i++)
             result.set(fields[i], fields[i].getDataType().convert(values[i]));
@@ -418,13 +416,12 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
 
         // [#2536] Upon store(), insert(), update(), delete(), returned values in the record
         //         are copied back to the relevant POJO using the RecordListener SPI
-        if (!FALSE.equals(configuration.settings().isReturnRecordToPojo())) {
+        if (!FALSE.equals(settings().isReturnRecordToPojo())) {
             mapping = new IdentityHashMap<>();
-            ctx = using(configuration.derive(providers(configuration.recordListenerProviders(), mapping)));
+            ctx = configuration().derive(providers(configuration().recordListenerProviders(), mapping)).dsl();
         }
-        else {
-            ctx = using(configuration);
-        }
+        else
+            ctx = ctx();
 
         for (P object : objects) {
             R record = ctx.newRecord(table, object);

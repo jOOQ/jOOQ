@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.jooq</groupId>
         <artifactId>jooq-parent</artifactId>
-        <version>3.12.4-SNAPSHOT</version>
+        <version>3.12.4</version>
     </parent>
 
     <artifactId>jooq</artifactId>
@@ -56,6 +56,7 @@
                         <Export-Package>*</Export-Package>
                         <Import-Package>
                             javax.persistence;resolution:=optional,
+                            org.slf4j;resolution:=optional;version="[1.7,2)",
                             *
                         </Import-Package>
                         <_versionpolicy>[$(version;==;$(@)),$(version;+;$(@)))</_versionpolicy>

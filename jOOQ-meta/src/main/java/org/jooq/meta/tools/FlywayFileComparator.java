@@ -53,12 +53,18 @@ final class FlywayFileComparator implements Comparator<File> {
             int i1 = s1.indexOf("__");
             int i2 = s2.indexOf("__");
 
-            if (i1 >= 1 && i2 >= 1) {
+            if (i1 > 1 && i2 > 1) {
                 FlywayVersion v1 = FlywayVersion.fromVersion(s1.substring(1, i1));
                 FlywayVersion v2 = FlywayVersion.fromVersion(s2.substring(1, i2));
 
                 return v1.compareTo(v2);
             }
+
+            // [#9498] Emulate "repeatable" migrations, see https://flywaydb.org/documentation/migrations#overview
+            else if (i1 > 1)
+                return -1;
+            else if (i2 > 1)
+                return 1;
         }
 
         // In case we're not comparing two Flyway files, fall back to default comparator logic

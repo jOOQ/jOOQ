@@ -435,20 +435,33 @@ public interface WithStep extends QueryPart {
     // -------------------------------------------------------------------------
 
     /**
-     * Create a new DSL select statement.
+     * Create a new DSL select statement, projecting the known columns from a
+     * table.
      * <p>
-     * Example: <code><pre>
-     * SELECT * FROM [table] WHERE [conditions] ORDER BY [ordering] LIMIT [limit clause]
+     * This will project the known columns from the argument table querying
+     * {@link Table#fields()}. If no known columns are available (e.g. because
+     * the table has been created using {@link DSL#table(String)}), then
+     * <code>SELECT *</code> is projected.
+     * <p>
+     * Example:
+     * <p>
+     * <code><pre>
+     * SELECT table.col1, table.col2 FROM table
      * </pre></code>
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     <R extends Record> SelectWhereStep<R> selectFrom(Table<R> table);
 
     /**
-     * Create a new DSL select statement.
+     * Create a new DSL select statement, projecting <code>*</code>.
      * <p>
-     * Example: <code><pre>
-     * SELECT * FROM [table] WHERE [conditions] ORDER BY [ordering] LIMIT [limit clause]
+     * Without knowing any columns from the argument table (see
+     * {@link #selectFrom(Table)}), this will project <code>SELECT *</code>.
+     * <p>
+     * Example:
+     * <p>
+     * <code><pre>
+     * SELECT * FROM table
      * </pre></code>
      *
      * @see DSL#table(Name)
@@ -457,10 +470,15 @@ public interface WithStep extends QueryPart {
     <R extends Record> SelectWhereStep<R> selectFrom(Name table);
 
     /**
-     * Create a new DSL select statement.
+     * Create a new DSL select statement, projecting <code>*</code>.
      * <p>
-     * Example: <code><pre>
-     * SELECT * FROM [table] WHERE [conditions] ORDER BY [ordering] LIMIT [limit clause]
+     * Without knowing any columns from the argument table (see
+     * {@link #selectFrom(Table)}), this will project <code>SELECT *</code>.
+     * <p>
+     * Example:
+     * <p>
+     * <code><pre>
+     * SELECT * FROM table
      * </pre></code>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
@@ -476,10 +494,15 @@ public interface WithStep extends QueryPart {
     <R extends Record> SelectWhereStep<R> selectFrom(SQL sql);
 
     /**
-     * Create a new DSL select statement.
+     * Create a new DSL select statement, projecting <code>*</code>.
      * <p>
-     * Example: <code><pre>
-     * SELECT * FROM [table] WHERE [conditions] ORDER BY [ordering] LIMIT [limit clause]
+     * Without knowing any columns from the argument table (see
+     * {@link #selectFrom(Table)}), this will project <code>SELECT *</code>.
+     * <p>
+     * Example:
+     * <p>
+     * <code><pre>
+     * SELECT * FROM table
      * </pre></code>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
@@ -496,10 +519,15 @@ public interface WithStep extends QueryPart {
     <R extends Record> SelectWhereStep<R> selectFrom(String sql);
 
     /**
-     * Create a new DSL select statement.
+     * Create a new DSL select statement, projecting <code>*</code>.
      * <p>
-     * Example: <code><pre>
-     * SELECT * FROM [table] WHERE [conditions] ORDER BY [ordering] LIMIT [limit clause]
+     * Without knowing any columns from the argument table (see
+     * {@link #selectFrom(Table)}), this will project <code>SELECT *</code>.
+     * <p>
+     * Example:
+     * <p>
+     * <code><pre>
+     * SELECT * FROM table
      * </pre></code>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
@@ -516,10 +544,15 @@ public interface WithStep extends QueryPart {
     <R extends Record> SelectWhereStep<R> selectFrom(String sql, Object... bindings);
 
     /**
-     * Create a new DSL select statement.
+     * Create a new DSL select statement, projecting <code>*</code>.
      * <p>
-     * Example: <code><pre>
-     * SELECT * FROM [table] WHERE [conditions] ORDER BY [ordering] LIMIT [limit clause]
+     * Without knowing any columns from the argument table (see
+     * {@link #selectFrom(Table)}), this will project <code>SELECT *</code>.
+     * <p>
+     * Example:
+     * <p>
+     * <code><pre>
+     * SELECT * FROM table
      * </pre></code>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must

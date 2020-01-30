@@ -5505,20 +5505,33 @@ public interface DSLContext extends Scope , AutoCloseable  {
     WithStep withRecursive(CommonTableExpression<?>... tables);
 
     /**
-     * Create a new DSL select statement.
+     * Create a new DSL select statement, projecting the known columns from a
+     * table.
      * <p>
-     * Example: <code><pre>
-     * SELECT * FROM [table] WHERE [conditions] ORDER BY [ordering] LIMIT [limit clause]
+     * This will project the known columns from the argument table querying
+     * {@link Table#fields()}. If no known columns are available (e.g. because
+     * the table has been created using {@link DSL#table(String)}), then
+     * <code>SELECT *</code> is projected.
+     * <p>
+     * Example:
+     * <p>
+     * <code><pre>
+     * SELECT table.col1, table.col2 FROM table
      * </pre></code>
      */
     @Support
     <R extends Record> SelectWhereStep<R> selectFrom(Table<R> table);
 
     /**
-     * Create a new DSL select statement.
+     * Create a new DSL select statement, projecting <code>*</code>.
      * <p>
-     * Example: <code><pre>
-     * SELECT * FROM [table] WHERE [conditions] ORDER BY [ordering] LIMIT [limit clause]
+     * Without knowing any columns from the argument table (see
+     * {@link #selectFrom(Table)}), this will project <code>SELECT *</code>.
+     * <p>
+     * Example:
+     * <p>
+     * <code><pre>
+     * SELECT * FROM table
      * </pre></code>
      *
      * @see DSL#table(Name)
@@ -5527,10 +5540,15 @@ public interface DSLContext extends Scope , AutoCloseable  {
     <R extends Record> SelectWhereStep<R> selectFrom(Name table);
 
     /**
-     * Create a new DSL select statement.
+     * Create a new DSL select statement, projecting <code>*</code>.
      * <p>
-     * Example: <code><pre>
-     * SELECT * FROM [table] WHERE [conditions] ORDER BY [ordering] LIMIT [limit clause]
+     * Without knowing any columns from the argument table (see
+     * {@link #selectFrom(Table)}), this will project <code>SELECT *</code>.
+     * <p>
+     * Example:
+     * <p>
+     * <code><pre>
+     * SELECT * FROM table
      * </pre></code>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
@@ -5546,10 +5564,15 @@ public interface DSLContext extends Scope , AutoCloseable  {
     <R extends Record> SelectWhereStep<R> selectFrom(SQL sql);
 
     /**
-     * Create a new DSL select statement.
+     * Create a new DSL select statement, projecting <code>*</code>.
      * <p>
-     * Example: <code><pre>
-     * SELECT * FROM [table] WHERE [conditions] ORDER BY [ordering] LIMIT [limit clause]
+     * Without knowing any columns from the argument table (see
+     * {@link #selectFrom(Table)}), this will project <code>SELECT *</code>.
+     * <p>
+     * Example:
+     * <p>
+     * <code><pre>
+     * SELECT * FROM table
      * </pre></code>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
@@ -5566,10 +5589,15 @@ public interface DSLContext extends Scope , AutoCloseable  {
     <R extends Record> SelectWhereStep<R> selectFrom(String sql);
 
     /**
-     * Create a new DSL select statement.
+     * Create a new DSL select statement, projecting <code>*</code>.
      * <p>
-     * Example: <code><pre>
-     * SELECT * FROM [table] WHERE [conditions] ORDER BY [ordering] LIMIT [limit clause]
+     * Without knowing any columns from the argument table (see
+     * {@link #selectFrom(Table)}), this will project <code>SELECT *</code>.
+     * <p>
+     * Example:
+     * <p>
+     * <code><pre>
+     * SELECT * FROM table
      * </pre></code>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
@@ -5586,10 +5614,15 @@ public interface DSLContext extends Scope , AutoCloseable  {
     <R extends Record> SelectWhereStep<R> selectFrom(String sql, Object... bindings);
 
     /**
-     * Create a new DSL select statement.
+     * Create a new DSL select statement, projecting <code>*</code>.
      * <p>
-     * Example: <code><pre>
-     * SELECT * FROM [table] WHERE [conditions] ORDER BY [ordering] LIMIT [limit clause]
+     * Without knowing any columns from the argument table (see
+     * {@link #selectFrom(Table)}), this will project <code>SELECT *</code>.
+     * <p>
+     * Example:
+     * <p>
+     * <code><pre>
+     * SELECT * FROM table
      * </pre></code>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
@@ -11097,7 +11130,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Execute and return all records for
-     * <code><pre>SELECT * FROM [table]</pre></code>.
+     * <code><pre>SELECT table.col1, table.col2 FROM table</pre></code>.
      * <p>
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
@@ -11112,7 +11145,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Execute and return all records for
-     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
+     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
      * <p>
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
@@ -11127,7 +11160,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Execute and return all records for
-     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
+     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
      * <p>
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
@@ -11145,7 +11178,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Execute and return all records for
-     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
+     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
      * <p>
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
@@ -11163,7 +11196,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Execute and return zero or one record for
-     * <code><pre>SELECT * FROM [table]</pre></code>.
+     * <code><pre>SELECT table.col1, table.col2 FROM table</pre></code>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -11178,7 +11211,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Execute and return zero or one record for
-     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
+     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -11193,7 +11226,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Execute and return zero or one record for
-     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
+     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -11211,7 +11244,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Execute and return zero or one record for
-     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
+     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -11229,7 +11262,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Execute and return exactly one record for
-     * <code><pre>SELECT * FROM [table]</pre></code>.
+     * <code><pre>SELECT table.col1, table.col2 FROM table</pre></code>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -11245,7 +11278,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Execute and return exactly one record for
-     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
+     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -11261,7 +11294,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Execute and return exactly one record for
-     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
+     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -11280,7 +11313,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Execute and return exactly one record for
-     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
+     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -11712,7 +11745,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Execute and return zero or one record for
-     * <code><pre>SELECT * FROM [table]</pre></code>.
+     * <code><pre>SELECT table.col1, table.col2 FROM table</pre></code>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -11727,7 +11760,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Execute and return zero or one record for
-     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
+     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -11742,7 +11775,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Execute and return zero or one record for
-     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
+     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -11760,7 +11793,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Execute and return zero or one record for
-     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
+     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -11779,7 +11812,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Execute and return zero or one record for
-     * <code><pre>SELECT * FROM [table] LIMIT 1</pre></code>.
+     * <code><pre>SELECT table.col1, table.col2 FROM table LIMIT 1</pre></code>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -11793,7 +11826,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Execute and return zero or one record for
-     * <code><pre>SELECT * FROM [table] WHERE [condition] LIMIT 1</pre></code>.
+     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition LIMIT 1</pre></code>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -11807,7 +11840,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Execute and return zero or one record for
-     * <code><pre>SELECT * FROM [table] WHERE [condition] LIMIT 1</pre></code>.
+     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition LIMIT 1</pre></code>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -11824,7 +11857,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Execute and return zero or one record for
-     * <code><pre>SELECT * FROM [table] WHERE [condition] LIMIT 1</pre></code>.
+     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition LIMIT 1</pre></code>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -11841,7 +11874,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Execute and return all records lazily for
-     * <code><pre>SELECT * FROM [table]</pre></code>.
+     * <code><pre>SELECT table.col1, table.col2 FROM table</pre></code>.
      * <p>
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
@@ -11855,7 +11888,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Execute and return all records lazily for
-     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
+     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
      * <p>
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
@@ -11869,7 +11902,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Execute and return all records lazily for
-     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
+     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
      * <p>
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
@@ -11886,7 +11919,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Execute and return all records lazily for
-     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
+     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
      * <p>
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
@@ -11905,7 +11938,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Execute and return all records asynchronously for
-     * <code><pre>SELECT * FROM [table]</pre></code>.
+     * <code><pre>SELECT table.col1, table.col2 FROM table</pre></code>.
      * <p>
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
@@ -11919,7 +11952,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Execute and return all records asynchronously for
-     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
+     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
      * <p>
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
@@ -11933,7 +11966,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Execute and return all records asynchronously for
-     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
+     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
      * <p>
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
@@ -11950,7 +11983,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Execute and return all records asynchronously for
-     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
+     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
      * <p>
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
@@ -11967,7 +12000,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Execute and return all records asynchronously for
-     * <code><pre>SELECT * FROM [table]</pre></code>.
+     * <code><pre>SELECT table.col1, table.col2 FROM table</pre></code>.
      * <p>
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
@@ -11981,7 +12014,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Execute and return all records asynchronously for
-     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
+     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
      * <p>
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
@@ -11995,7 +12028,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Execute and return all records asynchronously for
-     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
+     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
      * <p>
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
@@ -12012,7 +12045,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Execute and return all records asynchronously for
-     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
+     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
      * <p>
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
@@ -12029,7 +12062,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Execute and return all records lazily for
-     * <code><pre>SELECT * FROM [table]</pre></code>.
+     * <code><pre>SELECT table.col1, table.col2 FROM table</pre></code>.
      * <p>
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
@@ -12042,7 +12075,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Execute and return all records lazily for
-     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
+     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
      * <p>
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
@@ -12055,7 +12088,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Execute and return all records lazily for
-     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
+     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
      * <p>
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
@@ -12071,7 +12104,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
 
     /**
      * Execute and return all records lazily for
-     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
+     * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition</pre></code>.
      * <p>
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}

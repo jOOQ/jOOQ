@@ -2574,7 +2574,13 @@ public class DSL {
     }
 
     /**
-     * Create a new DSL select statement.
+     * Create a new DSL select statement, projecting the known columns from a
+     * table.
+     * <p>
+     * This will project the known columns from the argument table querying
+     * {@link Table#fields()}. If no known columns are available (e.g. because
+     * the table has been created using {@link DSL#table(String)}), then
+     * <code>SELECT *</code> is projected.
      * <p>
      * Unlike {@link Select} factory methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
@@ -2585,8 +2591,10 @@ public class DSL {
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
      * <p>
-     * Example: <code><pre>
-     * SELECT * FROM [table] WHERE [conditions] ORDER BY [ordering] LIMIT [limit clause]
+     * Example:
+     * <p>
+     * <code><pre>
+     * SELECT table.col1, table.col2 FROM table
      * </pre></code>
      */
     @Support
@@ -2595,7 +2603,10 @@ public class DSL {
     }
 
     /**
-     * Create a new DSL select statement.
+     * Create a new DSL select statement, projecting <code>*</code>.
+     * <p>
+     * Without knowing any columns from the argument table (see
+     * {@link #selectFrom(Table)}), this will project <code>SELECT *</code>.
      * <p>
      * Unlike {@link Select} factory methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
@@ -2605,9 +2616,10 @@ public class DSL {
      * <li>As a statement, after attaching it using
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
+     * Example:
      * <p>
-     * Example: <code><pre>
-     * SELECT * FROM [table] WHERE [conditions] ORDER BY [ordering] LIMIT [limit clause]
+     * <code><pre>
+     * SELECT * FROM table
      * </pre></code>
      *
      * @see DSL#table(Name)
@@ -2618,7 +2630,10 @@ public class DSL {
     }
 
     /**
-     * Create a new DSL select statement.
+     * Create a new DSL select statement, projecting <code>*</code>.
+     * <p>
+     * Without knowing any columns from the argument table (see
+     * {@link #selectFrom(Table)}), this will project <code>SELECT *</code>.
      * <p>
      * Unlike {@link Select} factory methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
@@ -2628,9 +2643,10 @@ public class DSL {
      * <li>As a statement, after attaching it using
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
+     * Example:
      * <p>
-     * Example: <code><pre>
-     * SELECT * FROM [table] WHERE [conditions] ORDER BY [ordering] LIMIT [limit clause]
+     * <code><pre>
+     * SELECT * FROM table
      * </pre></code>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
@@ -2648,7 +2664,10 @@ public class DSL {
     }
 
     /**
-     * Create a new DSL select statement.
+     * Create a new DSL select statement, projecting <code>*</code>.
+     * <p>
+     * Without knowing any columns from the argument table (see
+     * {@link #selectFrom(Table)}), this will project <code>SELECT *</code>.
      * <p>
      * Unlike {@link Select} factory methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
@@ -2658,9 +2677,10 @@ public class DSL {
      * <li>As a statement, after attaching it using
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
+     * Example:
      * <p>
-     * Example: <code><pre>
-     * SELECT * FROM [table] WHERE [conditions] ORDER BY [ordering] LIMIT [limit clause]
+     * <code><pre>
+     * SELECT * FROM table
      * </pre></code>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
@@ -2679,7 +2699,10 @@ public class DSL {
     }
 
     /**
-     * Create a new DSL select statement.
+     * Create a new DSL select statement, projecting <code>*</code>.
+     * <p>
+     * Without knowing any columns from the argument table (see
+     * {@link #selectFrom(Table)}), this will project <code>SELECT *</code>.
      * <p>
      * Unlike {@link Select} factory methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
@@ -2689,9 +2712,10 @@ public class DSL {
      * <li>As a statement, after attaching it using
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
+     * Example:
      * <p>
-     * Example: <code><pre>
-     * SELECT * FROM [table] WHERE [conditions] ORDER BY [ordering] LIMIT [limit clause]
+     * <code><pre>
+     * SELECT * FROM table
      * </pre></code>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
@@ -2710,7 +2734,10 @@ public class DSL {
     }
 
     /**
-     * Create a new DSL select statement.
+     * Create a new DSL select statement, projecting <code>*</code>.
+     * <p>
+     * Without knowing any columns from the argument table (see
+     * {@link #selectFrom(Table)}), this will project <code>SELECT *</code>.
      * <p>
      * Unlike {@link Select} factory methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
@@ -2720,9 +2747,10 @@ public class DSL {
      * <li>As a statement, after attaching it using
      * {@link Select#attach(org.jooq.Configuration)}</li>
      * </ul>
+     * Example:
      * <p>
-     * Example: <code><pre>
-     * SELECT * FROM [table] WHERE [conditions] ORDER BY [ordering] LIMIT [limit clause]
+     * <code><pre>
+     * SELECT * FROM table
      * </pre></code>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must

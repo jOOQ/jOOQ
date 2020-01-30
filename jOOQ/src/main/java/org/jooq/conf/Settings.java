@@ -207,6 +207,8 @@ public class Settings
     @XmlJavaTypeAdapter(LocaleAdapter.class)
     protected Locale interpreterLocale;
     @XmlElement(defaultValue = "false")
+    protected Boolean interpreterDelayForeignKeyDeclarations = false;
+    @XmlElement(defaultValue = "false")
     protected Boolean migrationAllowsUndo = false;
     @XmlElement(defaultValue = "false")
     protected Boolean migrationRevertUntracked = false;
@@ -1774,6 +1776,30 @@ public class Settings
     }
 
     /**
+     * Using this flag, the interpreter will be able to delay the addition of foreign key declarations until the end of the interpretation run.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isInterpreterDelayForeignKeyDeclarations() {
+        return interpreterDelayForeignKeyDeclarations;
+    }
+
+    /**
+     * Sets the value of the interpreterDelayForeignKeyDeclarations property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setInterpreterDelayForeignKeyDeclarations(Boolean value) {
+        this.interpreterDelayForeignKeyDeclarations = value;
+    }
+
+    /**
      * Whether migrations are allowed to be executed in inverse order.<p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly switch between branches in a development environment. This feature is available only in commercial distributions.
      *
      * @return
@@ -2597,6 +2623,11 @@ public class Settings
         return this;
     }
 
+    public Settings withInterpreterDelayForeignKeyDeclarations(Boolean value) {
+        setInterpreterDelayForeignKeyDeclarations(value);
+        return this;
+    }
+
     public Settings withMigrationAllowsUndo(Boolean value) {
         setMigrationAllowsUndo(value);
         return this;
@@ -2812,6 +2843,7 @@ public class Settings
         builder.append("interpreterDialect", interpreterDialect);
         builder.append("interpreterNameLookupCaseSensitivity", interpreterNameLookupCaseSensitivity);
         builder.append("interpreterLocale", interpreterLocale);
+        builder.append("interpreterDelayForeignKeyDeclarations", interpreterDelayForeignKeyDeclarations);
         builder.append("migrationAllowsUndo", migrationAllowsUndo);
         builder.append("migrationRevertUntracked", migrationRevertUntracked);
         builder.append("migrationAutoValidation", migrationAutoValidation);
@@ -3478,6 +3510,15 @@ public class Settings
                 return false;
             }
         }
+        if (interpreterDelayForeignKeyDeclarations == null) {
+            if (other.interpreterDelayForeignKeyDeclarations!= null) {
+                return false;
+            }
+        } else {
+            if (!interpreterDelayForeignKeyDeclarations.equals(other.interpreterDelayForeignKeyDeclarations)) {
+                return false;
+            }
+        }
         if (migrationAllowsUndo == null) {
             if (other.migrationAllowsUndo!= null) {
                 return false;
@@ -3690,6 +3731,7 @@ public class Settings
         result = ((prime*result)+((interpreterDialect == null)? 0 :interpreterDialect.hashCode()));
         result = ((prime*result)+((interpreterNameLookupCaseSensitivity == null)? 0 :interpreterNameLookupCaseSensitivity.hashCode()));
         result = ((prime*result)+((interpreterLocale == null)? 0 :interpreterLocale.hashCode()));
+        result = ((prime*result)+((interpreterDelayForeignKeyDeclarations == null)? 0 :interpreterDelayForeignKeyDeclarations.hashCode()));
         result = ((prime*result)+((migrationAllowsUndo == null)? 0 :migrationAllowsUndo.hashCode()));
         result = ((prime*result)+((migrationRevertUntracked == null)? 0 :migrationRevertUntracked.hashCode()));
         result = ((prime*result)+((migrationAutoValidation == null)? 0 :migrationAutoValidation.hashCode()));

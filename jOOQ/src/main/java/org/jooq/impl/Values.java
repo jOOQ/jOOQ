@@ -39,15 +39,37 @@ package org.jooq.impl;
 
 import static org.jooq.Clause.TABLE_VALUES;
 // ...
+// ...
+// ...
+import static org.jooq.SQLDialect.FIREBIRD;
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.MARIADB;
+// ...
+import static org.jooq.SQLDialect.MYSQL;
+// ...
+// ...
+// ...
+// ...
+// ...
+// ...
+// ...
 import static org.jooq.impl.Keywords.K_MULTISET;
+import static org.jooq.impl.Keywords.K_ROW;
 import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.Keywords.K_VALUES;
 import static org.jooq.impl.Names.N_VALUES;
+
+import java.util.Collections;
+import java.util.EnumSet;
+import java.util.Set;
 
 import org.jooq.Context;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Row;
+import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableOptions;
@@ -62,9 +84,18 @@ final class Values<R extends Record> extends AbstractTable<R> {
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -637982217747670311L;
+    private static final long            serialVersionUID  = -637982217747670311L;
+    private static final Set<SQLDialect> NO_SUPPORT_VALUES;
 
-    private final Row[]       rows;
+    static {
+        Set<SQLDialect> temp = EnumSet.copyOf(SQLDialect.supportedBy(FIREBIRD, MARIADB));
+
+
+
+        NO_SUPPORT_VALUES = Collections.unmodifiableSet(temp);
+    }
+
+    private final Row[]                  rows;
 
     Values(Row[] rows) {
         super(TableOptions.expression(), N_VALUES);
@@ -97,96 +128,66 @@ final class Values<R extends Record> extends AbstractTable<R> {
 
     @Override
     public final void accept(Context<?> ctx) {
-        switch (ctx.family()) {
+        // [#915] Emulate VALUES(..) with SELECT .. UNION ALL SELECT ..
+        // for those dialects that do not support a VALUES() constructor
+        if (NO_SUPPORT_VALUES.contains(ctx.dialect())) {
+            Select<Record> selects = null;
 
-            // [#915] Emulate VALUES(..) with SELECT .. UNION ALL SELECT ..
-            // for those dialects that do not support a VALUES() constructor
+            for (Row row : rows) {
+                Select<Record> select = DSL.select(row.fields());
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-            case FIREBIRD:
-            case MARIADB:
-            case MYSQL: {
-                Select<Record> selects = null;
-
-                for (Row row : rows) {
-                    Select<Record> select = DSL.select(row.fields());
-
-                    if (selects == null)
-                        selects = select;
-                    else
-                        selects = selects.unionAll(select);
-                }
-
-                ctx.formatIndentStart()
-                   .formatNewLine()
-                   .subquery(true)
-                   .visit(selects)
-                   .subquery(false)
-                   .formatIndentEnd()
-                   .formatNewLine();
-                break;
+                if (selects == null)
+                    selects = select;
+                else
+                    selects = selects.unionAll(select);
             }
 
-            // [#915] Native support of VALUES(..)
-            case CUBRID:
-            case DERBY:
-            case H2:
-            case HSQLDB:
-            case POSTGRES:
-            case SQLITE:
+            ctx.formatIndentStart()
+               .formatNewLine()
+               .subquery(true)
+               .visit(selects)
+               .subquery(false)
+               .formatIndentEnd()
+               .formatNewLine();
+        }
+
+        // [#915] Native support of VALUES(..)
+        else {
+            ctx.start(TABLE_VALUES);
 
 
 
 
 
 
+            ctx.visit(K_VALUES);
 
+            if (rows.length > 1)
+                ctx.formatIndentStart()
+                   .formatSeparator();
+            else
+                ctx.sql(' ');
 
-            default: {
-                ctx.start(TABLE_VALUES);
-
-
-
-
-
-
-                ctx.visit(K_VALUES);
-
-                if (rows.length > 1)
-                    ctx.formatIndentStart()
+            for (int i = 0; i < rows.length; i++) {
+                if (i > 0)
+                    ctx.sql(',')
                        .formatSeparator();
 
-                for (int i = 0; i < rows.length; i++) {
-                    if (i > 0)
-                        ctx.sql(',')
-                           .formatSeparator();
+                if (ctx.family() == MYSQL)
+                    ctx.visit(K_ROW).sql(" ");
 
-                    ctx.visit(rows[i]);
-                }
-
-                if (rows.length > 1)
-                    ctx.formatIndentEnd()
-                       .formatNewLine();
-
-
-
-
-
-                ctx.end(TABLE_VALUES);
-                break;
+                ctx.visit(rows[i]);
             }
+
+            if (rows.length > 1)
+                ctx.formatIndentEnd()
+                   .formatNewLine();
+
+
+
+
+
+            ctx.end(TABLE_VALUES);
         }
     }
 

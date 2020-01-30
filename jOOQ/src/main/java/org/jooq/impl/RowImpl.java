@@ -41,6 +41,7 @@ import static org.jooq.Clause.FIELD_ROW;
 // ...
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.val;
+import static org.jooq.impl.Keywords.K_ROW;
 
 import java.util.Arrays;
 import java.util.Collection;

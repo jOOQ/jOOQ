@@ -150,7 +150,6 @@ import java.sql.ResultSetMetaData;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
@@ -216,7 +215,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private static final Set<SQLDialect> NO_SUPPORT_FOR_UPDATE_QUALIFIED = SQLDialect.supportedBy(DERBY, FIREBIRD, H2, HSQLDB);
     private static final Set<SQLDialect> SUPPORT_SELECT_INTO_TABLE       = SQLDialect.supportedBy(HSQLDB, POSTGRES);
     static final Set<SQLDialect>         SUPPORT_WINDOW_CLAUSE           = SQLDialect.supportedBy(H2 /* -- See [#8279] */, MYSQL, POSTGRES /*, SQLITE -- See [#8279] [#8548] */);
-    private static final Set<SQLDialect> REQUIRES_FROM_CLAUSE;
+    private static final Set<SQLDialect> REQUIRES_FROM_CLAUSE            = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD, HSQLDB);
     private static final Set<SQLDialect> REQUIRES_DERIVED_TABLE_DML      = SQLDialect.supportedBy(MARIADB, MYSQL);
     private static final Set<SQLDialect> EMULATE_EMPTY_GROUP_BY_OTHER    = SQLDialect.supportedBy(FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE);
     private static final Set<SQLDialect> SUPPORT_FULL_WITH_TIES          = SQLDialect.supportedBy(H2);
@@ -235,19 +234,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-    static {
-        Set<SQLDialect> temp = EnumSet.copyOf(SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB));
-
-
-
-        REQUIRES_FROM_CLAUSE = Collections.unmodifiableSet(temp);
 
 
 
 
 
-
-    }
 
     private final WithImpl                               with;
     private final SelectFieldList<SelectFieldOrAsterisk> select;

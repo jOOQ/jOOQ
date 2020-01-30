@@ -61,8 +61,6 @@ import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.Keywords.K_VALUES;
 import static org.jooq.impl.Names.N_VALUES;
 
-import java.util.Collections;
-import java.util.EnumSet;
 import java.util.Set;
 
 import org.jooq.Context;
@@ -85,15 +83,7 @@ final class Values<R extends Record> extends AbstractTable<R> {
      * Generated UID
      */
     private static final long            serialVersionUID  = -637982217747670311L;
-    private static final Set<SQLDialect> NO_SUPPORT_VALUES;
-
-    static {
-        Set<SQLDialect> temp = EnumSet.copyOf(SQLDialect.supportedBy(FIREBIRD, MARIADB));
-
-
-
-        NO_SUPPORT_VALUES = Collections.unmodifiableSet(temp);
-    }
+    private static final Set<SQLDialect> NO_SUPPORT_VALUES = SQLDialect.supportedUntil(FIREBIRD, MARIADB);
 
     private final Row[]                  rows;
 

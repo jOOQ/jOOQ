@@ -298,9 +298,17 @@ public enum SQLDialect {
     /**
      * The SQLite dialect family.
      * <p>
-     * This family behaves like the versioned dialect {@link #SQLITE_3_28}.
+     * This family behaves like the versioned dialect {@link #SQLITE_3_30}.
      */
     SQLITE("SQLite", false, true),
+
+
+
+
+
+
+
+
 
 
 

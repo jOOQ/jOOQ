@@ -83,7 +83,7 @@ final class Values<R extends Record> extends AbstractTable<R> {
      * Generated UID
      */
     private static final long            serialVersionUID  = -637982217747670311L;
-    private static final Set<SQLDialect> NO_SUPPORT_VALUES = SQLDialect.supportedUntil(FIREBIRD, MARIADB);
+    private static final Set<SQLDialect> NO_SUPPORT_VALUES = SQLDialect.supportedUntil(ACCESS, ASE, AURORA_MYSQL, FIREBIRD, HANA, INGRES, MARIADB, MEMSQL, MYSQL_8_0, ORACLE, REDSHIFT, SQLDATAWAREHOUSE, SYBASE, TERADATA, VERTICA);
 
     private final Row[]                  rows;
 

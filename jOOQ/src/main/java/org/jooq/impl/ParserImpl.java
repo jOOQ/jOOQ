@@ -2028,9 +2028,7 @@ final class ParserImpl implements Parser {
             // TODO: [#9780] Are there any possible syntaxes and data types?
             parseIf(ctx, '=');
             Object value = parseSignedIntegerIf(ctx);
-
-            // TODO: [#9781] Create public DSL API for this
-            return new SetCommand(ctx.dsl.configuration(), name, value != null ? inline(value) : inline(parseStringLiteral(ctx)));
+            return ctx.dsl.set(name, value != null ? inline(value) : inline(parseStringLiteral(ctx)));
         }
 
         // There are many SET commands in programs like sqlplus, which we'll simply ignore

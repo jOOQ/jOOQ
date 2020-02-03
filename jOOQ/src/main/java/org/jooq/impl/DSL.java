@@ -6588,6 +6588,16 @@ public class DSL {
         return dsl().setSchema(schema);
     }
 
+    /**
+     * Set a vendor specific flag to a new value.
+     *
+     * @see DSLContext#set(Name, Param)
+     */
+    @Support({ MYSQL })
+    public static RowCountQuery set(Name name, Param<?> param) {
+        return dsl().set(name, param);
+    }
+
     // -------------------------------------------------------------------------
     // XXX DDL Statements
     // -------------------------------------------------------------------------

@@ -49,7 +49,7 @@ import org.jooq.Param;
  *
  * @author Lukas Eder
  */
-final class SetCommand extends AbstractQuery {
+final class SetCommand extends AbstractRowCountQuery {
 
     /**
      * Generated UID

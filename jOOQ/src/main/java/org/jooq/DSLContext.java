@@ -8513,6 +8513,14 @@ public interface DSLContext extends Scope , AutoCloseable  {
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     RowCountQuery setSchema(Schema schema);
 
+    /**
+     * Set a vendor specific flag to a new value.
+     *
+     * @see DSL#set(Name, Param)
+     */
+    @Support({ MYSQL })
+    RowCountQuery set(Name name, Param<?> param);
+
     // -------------------------------------------------------------------------
     // XXX DDL Statements
     // -------------------------------------------------------------------------

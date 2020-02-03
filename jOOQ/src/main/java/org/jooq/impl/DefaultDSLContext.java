@@ -2899,6 +2899,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
+    public RowCountQuery set(Name name, Param<?> param) {
+        return new SetCommand(configuration(), name, param);
+    }
+
+    @Override
     public CommentOnIsStep commentOnTable(String tableName) {
         return commentOnTable(name(tableName));
     }

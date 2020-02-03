@@ -118,7 +118,7 @@ final class Interpreter {
     private final MutableSchema                                  defaultSchema;
     private MutableSchema                                        currentSchema;
     private boolean                                              delayForeignKeyDeclarations;
-    private final Deque<DelayedForeignKey>                      delayedForeignKeyDeclarations;
+    private final Deque<DelayedForeignKey>                       delayedForeignKeyDeclarations;
 
     // Caches
     private final Map<Name, MutableCatalog.InterpretedCatalog>   interpretedCatalogs    = new HashMap<>();
@@ -1008,8 +1008,12 @@ final class Interpreter {
     }
 
     private final void accept0(SetCommand query) {
-        if ("foreign_key_checks".equals(query.$name().last().toLowerCase(locale)))
+        if ("foreign_key_checks".equals(query.$name().last().toLowerCase(locale))) {
             delayForeignKeyDeclarations = !Convert.convert(query.$value().getValue(), boolean.class);
+
+            if (!delayForeignKeyDeclarations)
+                applyDelayedForeignKeys();
+        }
         else
             throw unsupportedQuery(query);
     }

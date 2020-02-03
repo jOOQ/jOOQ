@@ -435,6 +435,7 @@ import org.jooq.OrderedAggregateFunctionOfDeferredType;
 import org.jooq.Param;
 import org.jooq.Parameter;
 import org.jooq.Parser;
+// ...
 import org.jooq.Privilege;
 // ...
 import org.jooq.QualifiedAsterisk;
@@ -4955,6 +4956,18 @@ final class ParserImpl implements Parser {
 
 
 
+
+
+
+
+
+
+
+
+
+
+        }
+        else if (parseKeywordIf(ctx, "FOR") && ctx.requireProEdition()) {
 
 
 

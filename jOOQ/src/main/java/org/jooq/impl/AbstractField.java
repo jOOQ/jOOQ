@@ -86,9 +86,7 @@ import org.jooq.Collation;
 import org.jooq.Comment;
 import org.jooq.Comparator;
 import org.jooq.Condition;
-import org.jooq.Configuration;
 import org.jooq.Context;
-import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.DatePart;
 import org.jooq.Field;
@@ -108,15 +106,13 @@ import org.jooq.WindowPartitionByStep;
 /**
  * @author Lukas Eder
  */
-abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
+abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T> {
 
     /**
      * Generated UID
      */
     private static final long     serialVersionUID = 2884811923648354905L;
     private static final Clause[] CLAUSES          = { FIELD };
-
-    private final DataType<T>     dataType;
 
     AbstractField(Name name, DataType<T> type) {
         this(name, type, null);
@@ -128,9 +124,7 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
 
     @SuppressWarnings("unchecked")
     AbstractField(Name name, DataType<T> type, Comment comment, Binding<?, T> binding) {
-        super(name, comment);
-
-        this.dataType = type.asConvertedDataType((Binding<T, T>) binding);
+        super(name, comment, type.asConvertedDataType((Binding<T, T>) binding));
     }
 
     // ------------------------------------------------------------------------
@@ -211,31 +205,6 @@ abstract class AbstractField<T> extends AbstractNamed implements Field<T> {
     }
 
 
-
-    @Override
-    public final Converter<?, T> getConverter() {
-        return getBinding().converter();
-    }
-
-    @Override
-    public final Binding<?, T> getBinding() {
-        return dataType.getBinding();
-    }
-
-    @Override
-    public final DataType<T> getDataType() {
-        return dataType;
-    }
-
-    @Override
-    public final DataType<T> getDataType(Configuration configuration) {
-        return dataType.getDataType(configuration);
-    }
-
-    @Override
-    public final Class<T> getType() {
-        return dataType.getType();
-    }
 
     // ------------------------------------------------------------------------
     // XXX: Type casts

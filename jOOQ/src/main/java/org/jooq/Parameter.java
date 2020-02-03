@@ -48,36 +48,7 @@ package org.jooq;
  * @param <T> The parameter type
  * @author Lukas Eder
  */
-public interface Parameter<T> extends Named {
-
-    /**
-     * The Java type of the parameter.
-     */
-    Class<T> getType();
-
-    /**
-     * The parameter's underlying {@link Converter}.
-     * <p>
-     * By default, all parameters reference an identity-converter
-     * <code>Converter&lt;T, T&gt;</code>. Custom data types may be obtained by a
-     * custom {@link Converter} placed on the generated {@link Parameter}.
-     */
-    Converter<?, T> getConverter();
-
-    /**
-     * The parameter's underlying {@link Binding}.
-     */
-    Binding<?, T> getBinding();
-
-    /**
-     * The type of this parameter (might not be dialect-specific)
-     */
-    DataType<T> getDataType();
-
-    /**
-     * The dialect-specific type of this parameter
-     */
-    DataType<T> getDataType(Configuration configuration);
+public interface Parameter<T> extends Named, Typed<T> {
 
     /**
      * Whether this parameter has a default value

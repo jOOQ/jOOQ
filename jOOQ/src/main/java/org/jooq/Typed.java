@@ -37,15 +37,44 @@
  */
 package org.jooq;
 
-
 /**
- * A <code>QueryPart</code> to be used exclusively in <code>SELECT</code>
- * clauses.
+ * A marker interface for all query parts that have a {@link DataType}.
  * <p>
- * Instances of this type cannot be created directly, only of its subtypes.
+ * While there is no requirement for implementations to also implement
+ * {@link Named}, a lot of implementations do.
  *
  * @author Lukas Eder
  */
-public interface SelectField<T> extends SelectFieldOrAsterisk, Named, Typed<T> {
+public interface Typed<T> extends QueryPart {
+
+    /**
+     * The object's underlying {@link Converter}.
+     * <p>
+     * By default, all typed objects reference an identity-converter
+     * <code>Converter&lt;T, T&gt;</code>. If an implementation is generated,
+     * custom data types may be obtained by a custom {@link Converter} placed on
+     * the generated object.
+     */
+    Converter<?, T> getConverter();
+
+    /**
+     * The object's underlying {@link Binding}.
+     */
+    Binding<?, T> getBinding();
+
+    /**
+     * The Java type of the object.
+     */
+    Class<T> getType();
+
+    /**
+     * The type of this object (might not be dialect-specific).
+     */
+    DataType<T> getDataType();
+
+    /**
+     * The dialect-specific type of this object.
+     */
+    DataType<T> getDataType(Configuration configuration);
 
 }

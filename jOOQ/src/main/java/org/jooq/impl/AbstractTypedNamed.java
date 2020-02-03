@@ -39,42 +39,53 @@
 package org.jooq.impl;
 
 import org.jooq.Binding;
-import org.jooq.Context;
+import org.jooq.Comment;
+import org.jooq.Configuration;
+import org.jooq.Converter;
 import org.jooq.DataType;
-import org.jooq.Parameter;
+import org.jooq.Name;
+import org.jooq.Typed;
 
 /**
- * A common base class for stored procedure parameters
- *
  * @author Lukas Eder
  */
-final class ParameterImpl<T> extends AbstractTypedNamed<T> implements Parameter<T> {
+abstract class AbstractTypedNamed<T> extends AbstractNamed implements Typed<T> {
 
-    private static final long serialVersionUID = -5277225593751085577L;
+    private static final long serialVersionUID = 4569512766643813958L;
+    private final DataType<T> type;
 
-    private final boolean     isDefaulted;
-    private final boolean     isUnnamed;
+    AbstractTypedNamed(Name name, Comment comment, DataType<T> type) {
+        super(name, comment);
 
-    @SuppressWarnings("unchecked")
-    ParameterImpl(String name, DataType<T> type, Binding<?, T> binding, boolean isDefaulted, boolean isUnnamed) {
-        super(DSL.name(name), CommentImpl.NO_COMMENT, type.asConvertedDataType((Binding<T, T>) binding));
+        this.type = type;
+    }
 
-        this.isDefaulted = isDefaulted;
-        this.isUnnamed = isUnnamed;
+    // -------------------------------------------------------------------------
+    // XXX: Typed API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Converter<?, T> getConverter() {
+        return type.getConverter();
     }
 
     @Override
-    public final void accept(Context<?> ctx) {
-        ctx.visit(getUnqualifiedName());
+    public final Binding<?, T> getBinding() {
+        return type.getBinding();
     }
 
     @Override
-    public final boolean isDefaulted() {
-        return isDefaulted;
+    public final Class<T> getType() {
+        return type.getType();
     }
 
     @Override
-    public final boolean isUnnamed() {
-        return isUnnamed;
+    public final DataType<T> getDataType() {
+        return type;
+    }
+
+    @Override
+    public final DataType<T> getDataType(Configuration configuration) {
+        return type.getDataType(configuration);
     }
 }

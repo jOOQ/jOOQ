@@ -170,40 +170,6 @@ extends
     String getComment();
 
     /**
-     * The field's underlying {@link Converter}.
-     * <p>
-     * By default, all fields reference an identity-converter
-     * <code>Converter&lt;T, T&gt;</code>. Custom data types may be obtained by a
-     * custom {@link Converter} placed on the generated {@link TableField}.
-     */
-    @Override
-    Converter<?, T> getConverter();
-
-    /**
-     * The field's underlying {@link Binding}.
-     */
-    @Override
-    Binding<?, T> getBinding();
-
-    /**
-     * The Java type of the field.
-     */
-    @Override
-    Class<T> getType();
-
-    /**
-     * The type of this field (might not be dialect-specific).
-     */
-    @Override
-    DataType<T> getDataType();
-
-    /**
-     * The dialect-specific type of this field.
-     */
-    @Override
-    DataType<T> getDataType(Configuration configuration);
-
-    /**
      * Create an alias for this field.
      * <p>
      * Note that the case-sensitivity of the returned field depends on

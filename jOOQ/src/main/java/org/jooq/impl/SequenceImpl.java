@@ -76,7 +76,7 @@ import org.jooq.exception.SQLDialectNotSupportedException;
  * @author Lukas Eder
  */
 @org.jooq.Internal
-public class SequenceImpl<T extends Number> extends AbstractNamed implements Sequence<T> {
+public class SequenceImpl<T extends Number> extends AbstractTypedNamed<T> implements Sequence<T> {
 
     /**
      * Generated UID
@@ -86,7 +86,6 @@ public class SequenceImpl<T extends Number> extends AbstractNamed implements Seq
 
     private final boolean         nameIsPlainSQL;
     private final Schema          schema;
-    private final DataType<T>     type;
     private final Field<T>        startWith;
     private final Field<T>        incrementBy;
     private final Field<T>        minvalue;
@@ -107,12 +106,21 @@ public class SequenceImpl<T extends Number> extends AbstractNamed implements Seq
         this(name, schema, type, nameIsPlainSQL, null, null, null, null, false, null);
     }
 
-    SequenceImpl(Name name, Schema schema, DataType<T> type, boolean nameIsPlainSQL,
-        Field<T> startWith, Field<T> incrementBy, Field<T> minvalue, Field<T> maxvalue, boolean cycle, Field<T> cache) {
-        super(qualify(schema, name), CommentImpl.NO_COMMENT);
+    SequenceImpl(
+            Name name,
+            Schema schema,
+            DataType<T> type,
+            boolean nameIsPlainSQL,
+            Field<T> startWith,
+            Field<T> incrementBy,
+            Field<T> minvalue,
+            Field<T> maxvalue,
+            boolean cycle,
+            Field<T> cache
+    ) {
+        super(qualify(schema, name), CommentImpl.NO_COMMENT, type);
 
         this.schema = schema;
-        this.type = type;
         this.nameIsPlainSQL = nameIsPlainSQL;
 
         this.startWith = startWith;
@@ -131,11 +139,6 @@ public class SequenceImpl<T extends Number> extends AbstractNamed implements Seq
     @Override
     public final Schema getSchema() {
         return schema;
-    }
-
-    @Override
-    public final DataType<T> getDataType() {
-        return type;
     }
 
     @Override
@@ -200,7 +203,7 @@ public class SequenceImpl<T extends Number> extends AbstractNamed implements Seq
         private final SequenceMethod method;
 
         SequenceFunction(SequenceMethod method) {
-            super(method.name, type);
+            super(method.name, SequenceImpl.this.getDataType());
 
             this.method = method;
         }

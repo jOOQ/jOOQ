@@ -64,7 +64,7 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
-public interface Sequence<T extends Number> extends Named {
+public interface Sequence<T extends Number> extends Named, Typed<T> {
 
     /**
      * Get the sequence catalog.
@@ -75,11 +75,6 @@ public interface Sequence<T extends Number> extends Named {
      * Get the sequence schema.
      */
     Schema getSchema();
-
-    /**
-     * Get the sequence data type.
-     */
-    DataType<T> getDataType();
 
     /**
      * Get the start value for this sequence or <code>null</code>, if no such

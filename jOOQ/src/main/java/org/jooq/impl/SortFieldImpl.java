@@ -75,7 +75,7 @@ final class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
     private static final long            serialVersionUID = 1223739398544155873L;
 
     // DB2 supports NULLS FIRST/LAST only in OLAP (window) functions
-    private static final Set<SQLDialect> NO_SUPPORT_NULLS = SQLDialect.supportedUntil(ACCESS, ASE, AURORA_MYSQL, COCKROACHDB, CUBRID, DB2, INGRES, MARIADB, MEMSQL, MYSQL, REDSHIFT, SQLDATAWAREHOUSE, SQLITE_3_28, SQLSERVER, SYBASE, VERTICA);
+    private static final Set<SQLDialect> NO_SUPPORT_NULLS = SQLDialect.supportedUntil(CUBRID, MARIADB, MYSQL);
 
     private final Field<T>               field;
     private final SortOrder              order;

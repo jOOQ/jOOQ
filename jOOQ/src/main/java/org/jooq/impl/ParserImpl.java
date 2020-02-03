@@ -4967,7 +4967,12 @@ final class ParserImpl implements Parser {
 
 
         }
-        else if (!peekKeyword(ctx, "FOR UPDATE") && parseKeywordIf(ctx, "FOR") && ctx.requireProEdition()) {
+        else if (peekKeyword(ctx, "FOR")
+            && !peekKeyword(ctx, "FOR KEY SHARE")
+            && !peekKeyword(ctx, "FOR NO KEY UPDATE")
+            && !peekKeyword(ctx, "FOR SHARE")
+            && !peekKeyword(ctx, "FOR UPDATE")
+            && parseKeyword(ctx, "FOR") && ctx.requireProEdition()) {
 
 
 

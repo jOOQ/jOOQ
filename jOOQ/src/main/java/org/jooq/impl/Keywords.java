@@ -96,6 +96,7 @@ final class Keywords {
     static final Keyword K_CONNECT_BY                       = keyword("connect by");
     static final Keyword K_CONSTRAINT                       = keyword("constraint");
     static final Keyword K_CONSTRAINTS                      = keyword("constraints");
+    static final Keyword K_CONTAINED                        = keyword("contained");
     static final Keyword K_CONTINUE                         = keyword("continue");
     static final Keyword K_CONTINUE_IDENTITY                = keyword("continue identity");
     static final Keyword K_CREATE                           = keyword("create");

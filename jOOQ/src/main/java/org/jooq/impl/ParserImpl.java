@@ -4978,6 +4978,19 @@ final class ParserImpl implements Parser {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
         }
         else if (parseKeywordIf(ctx, "AS OF") && ctx.requireProEdition()) {
 

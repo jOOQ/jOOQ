@@ -90,6 +90,7 @@ import org.jooq.JoinType;
 import org.jooq.Name;
 // ...
 // ...
+// ...
 import org.jooq.QualifiedAsterisk;
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -910,6 +911,12 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
     public final Table<R> as(Table<?> otherTable, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> aliasFunction) {
         return as(otherTable.getUnqualifiedName(), (f, i) -> aliasFunction.apply(f, i).getUnqualifiedName());
     }
+
+
+
+
+
+
 
 
 

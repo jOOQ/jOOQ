@@ -111,6 +111,7 @@ final class Names {
     static final Name N_SPACE             = DSL.name("space");
     static final Name N_SQRT              = DSL.name("sqrt");
     static final Name N_SUBSTRING         = DSL.name("substring");
+    static final Name N_SYSTEM_TIME       = DSL.unquotedName("system_time");
     static final Name N_T                 = DSL.name("t");
     static final Name N_TANH              = DSL.name("tanh");
     static final Name N_TIMESTAMPDIFF     = DSL.name("timestampdiff");

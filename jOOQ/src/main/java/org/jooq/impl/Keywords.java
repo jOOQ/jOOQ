@@ -52,6 +52,7 @@ final class Keywords {
     static final Keyword K_AFTER                            = keyword("after");
     static final Keyword K_ALIAS                            = keyword("alias");
     static final Keyword K_ALTER                            = keyword("alter");
+    static final Keyword K_ALL                              = keyword("all");
     static final Keyword K_ALTER_COLUMN                     = keyword("alter column");
     static final Keyword K_ALTER_CONSTRAINT                 = keyword("alter constraint");
     static final Keyword K_ALTER_INDEX                      = keyword("alter index");

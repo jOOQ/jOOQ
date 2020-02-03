@@ -2825,6 +2825,19 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
     // ------------------------------------------------------------------------
     // [#5518] Record method inversions, e.g. for use as method references
     // ------------------------------------------------------------------------

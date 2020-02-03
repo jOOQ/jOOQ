@@ -81,8 +81,10 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+import static org.jooq.impl.Names.N_SYSTEM_TIME;
 import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.SQLDataType.JSONB;
+import static org.jooq.impl.SQLDataType.TIMESTAMP;
 import static org.jooq.impl.Term.CUME_DIST;
 import static org.jooq.impl.Term.DENSE_RANK;
 import static org.jooq.impl.Term.FIRST_VALUE;
@@ -269,6 +271,7 @@ import org.jooq.OrderField;
 import org.jooq.OrderedAggregateFunction;
 import org.jooq.OrderedAggregateFunctionOfDeferredType;
 import org.jooq.Param;
+// ...
 import org.jooq.PlainSQL;
 import org.jooq.Privilege;
 // ...
@@ -10029,6 +10032,64 @@ public class DSL {
     public static Index index(Name name) {
         return new IndexImpl(name);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // -------------------------------------------------------------------------
     // XXX: Queries

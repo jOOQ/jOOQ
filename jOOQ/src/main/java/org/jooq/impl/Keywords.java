@@ -271,6 +271,7 @@ final class Keywords {
     static final Keyword K_PARTITION_BY                     = keyword("partition by");
     static final Keyword K_PASSING                          = keyword("passing");
     static final Keyword K_PERCENT                          = keyword("percent");
+    static final Keyword K_PERIOD                           = keyword("period");
     static final Keyword K_PIVOT                            = keyword("pivot");
     static final Keyword K_POSITION                         = keyword("position");
     static final Keyword K_PRECEDING                        = keyword("preceding");
@@ -363,7 +364,7 @@ final class Keywords {
     static final Keyword K_VALUE                            = keyword("value");
     static final Keyword K_VALUES                           = keyword("values");
     static final Keyword K_VARCHAR                          = keyword("varchar");
-    static final Keyword K_VERSIONS_BETWEEN                 = keyword("versions between");
+    static final Keyword K_VERSIONS                         = keyword("versions");
     static final Keyword K_VIEW                             = keyword("view");
     static final Keyword K_WHEN                             = keyword("when");
     static final Keyword K_WHERE                            = keyword("where");

@@ -167,6 +167,7 @@ final class Keywords {
     static final Keyword K_FIRST                            = keyword("first");
     static final Keyword K_FOLLOWING                        = keyword("following");
     static final Keyword K_FOR                              = keyword("for");
+    static final Keyword K_FOR_PORTION_OF                   = keyword("for portion of");
     static final Keyword K_FOR_SHARE                        = keyword("for share");
     static final Keyword K_FOR_UPDATE                       = keyword("for update");
     static final Keyword K_FORALL                           = keyword("forall");

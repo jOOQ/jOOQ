@@ -68,6 +68,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+// ...
 
 import java.sql.Timestamp;
 import java.util.Collection;
@@ -2743,6 +2744,14 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      */
     @Support
     TableOnStep<R> leftAntiJoin(TableLike<?> table);
+
+
+
+
+
+
+
+
 
 
 

@@ -191,7 +191,6 @@ import org.jooq.WindowDefinition;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.Tools.BooleanDataKey;
 import org.jooq.impl.Tools.DataKey;
-import org.jooq.impl.Transform.Transformer;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 

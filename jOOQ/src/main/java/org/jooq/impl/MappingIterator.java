@@ -44,10 +44,10 @@ import java.util.Iterator;
  */
 final class MappingIterator<T, U> implements Iterator<U> {
 
-    final Iterator<? extends T>            delegate;
-    final Function<? super T, ? extends U> mapper;
+    final Iterator<? extends T>      delegate;
+    final F1<? super T, ? extends U> mapper;
 
-    MappingIterator(Iterator<? extends T> delegate, Function<? super T, ? extends U> mapper) {
+    MappingIterator(Iterator<? extends T> delegate, F1<? super T, ? extends U> mapper) {
         this.delegate = delegate;
         this.mapper = mapper;
     }
@@ -59,15 +59,11 @@ final class MappingIterator<T, U> implements Iterator<U> {
 
     @Override
     public U next() {
-        return mapper.map(delegate.next());
+        return mapper.apply(delegate.next());
     }
 
     @Override
     public void remove() {
         delegate.remove();
-    }
-
-    interface Function<T, U> {
-        U map(T value);
     }
 }

@@ -264,7 +264,6 @@ import org.jooq.exception.MappingException;
 import org.jooq.exception.NoDataFoundException;
 import org.jooq.exception.TooManyRowsException;
 import org.jooq.impl.ResultsImpl.ResultOrRowsImpl;
-import org.jooq.impl.Tools.Cache.CachedOperation;
 import org.jooq.tools.Ints;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
@@ -858,9 +857,9 @@ final class Tools {
     /**
      * Create a new record.
      */
-    static final <R extends Record> RecordDelegate<R> newRecord(boolean fetched, RecordFactory<R> factory, Configuration configuration) {
+    static final <R extends Record> RecordDelegate<R> newRecord(boolean fetched, F0<R> factory, Configuration configuration) {
         try {
-            R record = factory.newInstance();
+            R record = factory.apply();
 
             // [#3300] Records that were fetched from the database
             if (record instanceof AbstractRecord)
@@ -877,15 +876,15 @@ final class Tools {
      * Create a new record factory.
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    static final <R extends Record> RecordFactory<R> recordFactory(final Class<R> type, final Field<?>[] fields) {
+    static final <R extends Record> F0<R> recordFactory(final Class<R> type, final Field<?>[] fields) {
 
         // An ad-hoc type resulting from a JOIN or arbitrary SELECT
         if (type == RecordImpl.class || type == Record.class) {
             final RowImpl row = new RowImpl(fields);
 
-            return new RecordFactory<R>() {
+            return new F0<R>() {
                 @Override
-                public R newInstance() {
+                public R apply() {
                     return (R) new RecordImpl(row);
                 }
             };
@@ -898,9 +897,9 @@ final class Tools {
                 // [#919] Allow for accessing non-public constructors
                 final Constructor<R> constructor = Reflect.accessible(type.getDeclaredConstructor());
 
-                return new RecordFactory<R>() {
+                return new F0<R>() {
                     @Override
-                    public R newInstance() {
+                    public R apply() {
                         try {
                             return constructor.newInstance();
                         }
@@ -3161,29 +3160,17 @@ final class Tools {
     static class Cache {
 
         /**
-         * A callback wrapping expensive operations.
-         */
-        static interface CachedOperation<V> {
-
-            /**
-             * An expensive operation.
-             */
-            V call();
-        }
-
-        /**
-         * Run a {@link CachedOperation} in the context of a
-         * {@link Configuration}.
+         * Run a cached operation in the context of a {@link Configuration}.
          *
          * @param configuration The configuration that may cache the outcome of
-         *            the {@link CachedOperation}.
+         *            the cached operation.
          * @param operation The expensive operation.
          * @param type The cache type to be used.
          * @param keys The cache keys.
          * @return The cached value or the outcome of the cached operation.
          */
         @SuppressWarnings("unchecked")
-        static final <V> V run(Configuration configuration, CachedOperation<V> operation, DataCacheKey type, Object key) {
+        static final <V> V run(Configuration configuration, F0<V> operation, DataCacheKey type, Object key) {
 
             // If no configuration is provided take the default configuration that loads the default Settings
             if (configuration == null)
@@ -3191,7 +3178,7 @@ final class Tools {
 
             // Shortcut caching when the relevant Settings flag isn't set.
             if (!reflectionCaching(configuration.settings()))
-                return operation.call();
+                return operation.apply();
 
             Map<Object, Object> cache = (Map<Object, Object>) configuration.data(type);
             if (cache == null) {
@@ -3211,7 +3198,7 @@ final class Tools {
                     result = cache.get(key);
 
                     if (result == null) {
-                        result = operation.call();
+                        result = operation.apply();
                         cache.put(key, result == null ? NULL : result);
                     }
                 }
@@ -3407,10 +3394,10 @@ final class Tools {
      * or methods
      */
     static final boolean hasColumnAnnotations(final Configuration configuration, final Class<?> type) {
-        return Cache.run(configuration, new CachedOperation<Boolean>() {
+        return Cache.run(configuration, new F0<Boolean>() {
 
             @Override
-            public Boolean call() {
+            public Boolean apply() {
                 if (!isJPAAvailable())
                     return false;
 
@@ -3443,10 +3430,10 @@ final class Tools {
      * Get all members annotated with a given column name
      */
     static final List<java.lang.reflect.Field> getAnnotatedMembers(final Configuration configuration, final Class<?> type, final String name) {
-        return Cache.run(configuration, new CachedOperation<List<java.lang.reflect.Field>>() {
+        return Cache.run(configuration, new F0<List<java.lang.reflect.Field>>() {
 
             @Override
-            public List<java.lang.reflect.Field> call() {
+            public List<java.lang.reflect.Field> apply() {
                 List<java.lang.reflect.Field> result = new ArrayList<>();
 
                 for (java.lang.reflect.Field member : getInstanceMembers(type)) {
@@ -3484,10 +3471,10 @@ final class Tools {
      * Get all members matching a given column name
      */
     static final List<java.lang.reflect.Field> getMatchingMembers(final Configuration configuration, final Class<?> type, final String name) {
-        return Cache.run(configuration, new CachedOperation<List<java.lang.reflect.Field>>() {
+        return Cache.run(configuration, new F0<List<java.lang.reflect.Field>>() {
 
             @Override
-            public List<java.lang.reflect.Field> call() {
+            public List<java.lang.reflect.Field> apply() {
                 List<java.lang.reflect.Field> result = new ArrayList<>();
 
                 // [#1942] Caching these values before the field-loop significantly
@@ -3510,10 +3497,10 @@ final class Tools {
      * Get all setter methods annotated with a given column name
      */
     static final List<Method> getAnnotatedSetters(final Configuration configuration, final Class<?> type, final String name) {
-        return Cache.run(configuration, new CachedOperation<List<Method>>() {
+        return Cache.run(configuration, new F0<List<Method>>() {
 
             @Override
-            public List<Method> call() {
+            public List<Method> apply() {
                 Set<SourceMethod> set = new LinkedHashSet<>();
 
                 for (Method method : getInstanceMethods(type)) {
@@ -3561,10 +3548,10 @@ final class Tools {
      * Get the first getter method annotated with a given column name
      */
     static final Method getAnnotatedGetter(final Configuration configuration, final Class<?> type, final String name) {
-        return Cache.run(configuration, new CachedOperation<Method>() {
+        return Cache.run(configuration, new F0<Method>() {
 
             @Override
-            public Method call() {
+            public Method apply() {
                 for (Method method : getInstanceMethods(type)) {
                     Column column = method.getAnnotation(Column.class);
 
@@ -3612,10 +3599,10 @@ final class Tools {
      * Get all setter methods matching a given column name
      */
     static final List<Method> getMatchingSetters(final Configuration configuration, final Class<?> type, final String name) {
-        return Cache.run(configuration, new CachedOperation<List<Method>>() {
+        return Cache.run(configuration, new F0<List<Method>>() {
 
             @Override
-            public List<Method> call() {
+            public List<Method> apply() {
 
                 // [#8460] Prevent duplicate methods in the call hierarchy
                 Set<SourceMethod> set = new LinkedHashSet<>();
@@ -3650,10 +3637,10 @@ final class Tools {
      * Get the first getter method matching a given column name
      */
     static final Method getMatchingGetter(final Configuration configuration, final Class<?> type, final String name) {
-        return Cache.run(configuration, new CachedOperation<Method>() {
+        return Cache.run(configuration, new F0<Method>() {
 
             @Override
-            public Method call() {
+            public Method apply() {
                 // [#1942] Caching these values before the method-loop significantly
                 // accerates POJO mapping
                 String camelCase = StringUtils.toCamelCase(name);

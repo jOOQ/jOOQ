@@ -106,7 +106,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
     private final boolean                                  keepStatement;
     private final boolean                                  autoclosing;
     private final int                                      maxRows;
-    private final RecordFactory<? extends R>               factory;
+    private final F0<? extends R>                          factory;
     private boolean                                        isClosed;
 
     private transient CursorResultSet                      rs;
@@ -1610,7 +1610,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
                         rs.updateRow();
                     }
 
-                    record = Tools.newRecord(true, (RecordFactory<AbstractRecord>) factory, ((DefaultExecuteContext) ctx).originalConfiguration())
+                    record = Tools.newRecord(true, (F0<AbstractRecord>) factory, ((DefaultExecuteContext) ctx).originalConfiguration())
                                   .operate(new CursorRecordInitialiser(fields.fields, 0));
 
                     rows++;

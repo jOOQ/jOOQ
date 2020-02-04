@@ -61,9 +61,9 @@ import org.jooq.QueryPart;
  */
 final class Transform {
 
-    final Transformer<Field<?>> fieldTransformer;
+    final F1<Field<?>, Field<?>> fieldTransformer;
 
-    Transform(Transformer<Field<?>> fieldTransformer) {
+    Transform(F1<Field<?>, Field<?>> fieldTransformer) {
         this.fieldTransformer = fieldTransformer;
     }
 
@@ -73,7 +73,7 @@ final class Transform {
         else if (condition instanceof CombinedCondition)
             return CombinedCondition.of(((CombinedCondition) condition).operator, transform(((CombinedCondition) condition).conditions));
         else if (condition instanceof CompareCondition)
-            return new CompareCondition(fieldTransformer.transform(((CompareCondition) condition).field1), fieldTransformer.transform(((CompareCondition) condition).field2), ((CompareCondition) condition).comparator);
+            return new CompareCondition(fieldTransformer.apply(((CompareCondition) condition).field1), fieldTransformer.apply(((CompareCondition) condition).field2), ((CompareCondition) condition).comparator);
         else
             return condition;
     }
@@ -85,9 +85,5 @@ final class Transform {
             result.add(transform(condition));
 
         return result;
-    }
-
-    interface Transformer<Q extends QueryPart> {
-        Q transform(Q queryPart);
     }
 }

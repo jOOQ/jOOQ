@@ -48,7 +48,6 @@ import org.jooq.RecordMapper;
 import org.jooq.RecordMapperProvider;
 import org.jooq.RecordType;
 import org.jooq.impl.Tools.Cache;
-import org.jooq.impl.Tools.Cache.CachedOperation;
 
 /**
  * A default {@link RecordMapperProvider} implementation, providing a
@@ -81,9 +80,9 @@ public class DefaultRecordMapperProvider implements RecordMapperProvider, Serial
     @Override
     public final <R extends Record, E> RecordMapper<R, E> provide(final RecordType<R> rowType, final Class<? extends E> type) {
         if (configuration != null && TRUE.equals(configuration.settings().isCacheRecordMappers()))
-            return Cache.run(configuration, new CachedOperation<RecordMapper<R, E>>() {
+            return Cache.run(configuration, new F0<RecordMapper<R, E>>() {
                 @Override
-                public RecordMapper<R, E> call() {
+                public RecordMapper<R, E> apply() {
                     return new DefaultRecordMapper<>(rowType, type, configuration);
                 }
             }, DATA_CACHE_RECORD_MAPPERS, Cache.key(rowType, type));

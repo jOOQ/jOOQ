@@ -436,6 +436,7 @@ import org.jooq.Param;
 import org.jooq.Parameter;
 import org.jooq.Parser;
 // ...
+// ...
 import org.jooq.Privilege;
 // ...
 import org.jooq.QualifiedAsterisk;
@@ -4973,6 +4974,15 @@ final class ParserImpl implements Parser {
             && !peekKeyword(ctx, "FOR SHARE")
             && !peekKeyword(ctx, "FOR UPDATE")
             && parseKeyword(ctx, "FOR") && ctx.requireProEdition()) {
+
+
+
+
+
+
+
+
+
 
 
 

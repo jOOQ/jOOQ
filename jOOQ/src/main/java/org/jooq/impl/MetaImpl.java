@@ -533,7 +533,7 @@ final class MetaImpl extends AbstractMeta {
         String.class,  // SCOPE_SCHEMA
 
         String.class,  // SCOPE_TABLE
-        short.class,   // SOURCE_DATA_TYPE
+        String.class,  // SOURCE_DATA_TYPE
         String.class   // IS_AUTOINCREMENT
     };
 

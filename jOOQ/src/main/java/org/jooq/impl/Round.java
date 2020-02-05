@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.SQLDataType.NUMERIC;
 import static org.jooq.impl.Tools.castIfNeeded;
 
@@ -96,6 +97,9 @@ final class Round<T extends Number> extends AbstractFunction<T> {
                 }
                 // fall-through
             }
+
+
+
 
 
 

@@ -392,8 +392,10 @@ final class MetaImpl extends AbstractMeta {
 
 
 
+
+
                     // [#2760] MySQL JDBC confuses "catalog" and "schema"
-                    else if (inverseSchemaCatalog)
+                    if (inverseSchemaCatalog)
                         rs = meta.getTables(getName(), null, "%", types);
 
                     else

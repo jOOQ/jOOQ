@@ -858,6 +858,11 @@ final class MetaImpl extends AbstractMeta {
                     ? column.get(22, boolean.class)                      // IS_AUTOINCREMENT
                     : false;
 
+
+
+
+
+
                 // TODO: Exception handling should be moved inside SQLDataType
                 DataType type = null;
                 try {

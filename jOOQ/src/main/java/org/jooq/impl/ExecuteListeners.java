@@ -75,13 +75,28 @@ final class ExecuteListeners implements ExecuteListener {
     private boolean                      resultStart;
     private boolean                      fetchEnd;
 
+    /**
+     * Initialise the provided {@link ExecuteListener} set and return a wrapper.
+     */
     static ExecuteListener get(ExecuteContext ctx) {
         ExecuteListener[][] listeners = listeners(ctx);
 
         if (listeners == null)
             return EMPTY_LISTENER;
         else
-            return new ExecuteListeners(ctx, listeners);
+            return new ExecuteListeners(listeners);
+    }
+
+    /**
+     * Initialise the provided {@link ExecuteListener} set and return a wrapper.
+     * <p>
+     * Call this if the {@link ExecuteListener#start(ExecuteContext)} event
+     * should be triggered eagerly.
+     */
+    static ExecuteListener getAndStart(ExecuteContext ctx) {
+        ExecuteListener result = get(ctx);
+        result.start(ctx);
+        return result;
     }
 
     /**
@@ -128,10 +143,8 @@ final class ExecuteListeners implements ExecuteListener {
         return result == null ? new ArrayList<>() : result;
     }
 
-    private ExecuteListeners(ExecuteContext ctx, ExecuteListener[][] listeners) {
+    private ExecuteListeners(ExecuteListener[][] listeners) {
         this.listeners = listeners;
-
-        start(ctx);
     }
 
     @Override

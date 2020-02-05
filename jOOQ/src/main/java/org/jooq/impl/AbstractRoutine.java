@@ -480,6 +480,9 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
         ExecuteListener listener = ExecuteListeners.get(ctx);
 
         try {
+            // [#8968] Keep start() event inside of lifecycle management
+            listener.start(ctx);
+
             Connection connection = ctx.connection();
 
             listener.renderStart(ctx);

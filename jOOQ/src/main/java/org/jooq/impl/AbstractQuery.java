@@ -305,6 +305,9 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
             int result = 0;
             try {
 
+                // [#8968] Keep start() event inside of lifecycle management
+                listener.start(ctx);
+
                 // [#385] If a statement was previously kept open
                 if (keepStatement() && statement != null) {
                     ctx.sql(rendered.sql);

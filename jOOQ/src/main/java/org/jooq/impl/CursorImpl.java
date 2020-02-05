@@ -131,7 +131,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
         super(ctx.configuration(), new Fields<>(fields));
 
         this.ctx = ctx;
-        this.listener = (listener != null ? listener : ExecuteListeners.get(ctx));
+        this.listener = (listener != null ? listener : ExecuteListeners.getAndStart(ctx));
         this.factory = recordFactory(type, fields);
         this.keepStatement = keepStatement;
         this.keepResultSet = keepResultSet;

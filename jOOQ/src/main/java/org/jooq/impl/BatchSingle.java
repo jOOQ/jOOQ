@@ -205,6 +205,9 @@ final class BatchSingle implements BatchBindStep {
         DataType<?>[] paramTypes = dataTypes(params);
 
         try {
+            // [#8968] Keep start() event inside of lifecycle management
+            listener.start(ctx);
+
             listener.renderStart(ctx);
             // [#1520] TODO: Should the number of bind values be checked, here?
             ctx.sql(create.render(query));

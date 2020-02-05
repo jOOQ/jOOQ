@@ -82,6 +82,10 @@ final class BatchMultiple implements Batch {
         Connection connection = ctx.connection();
 
         try {
+
+            // [#8968] Keep start() event inside of lifecycle management
+            listener.start(ctx);
+
             ctx.statement(new SettingsEnabledPreparedStatement(connection));
 
             String[] batchSQL = ctx.batchSQL();

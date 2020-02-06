@@ -103,6 +103,7 @@ import org.jooq.Sequence;
 import org.jooq.SortOrder;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.UDT;
 import org.jooq.UDTField;
 import org.jooq.UniqueKey;
@@ -3884,6 +3885,15 @@ public class JavaGenerator extends AbstractGenerator {
         final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(table, Mode.DEFAULT));
         final String schemaId = out.ref(getStrategy().getFullJavaIdentifier(schema), 2);
         final String comment = defaultString(table.getComment());
+        final String tableType = table.isTemporary()
+            ? "temporaryTable"
+            : table.isView()
+            ? "view"
+            : table.isMaterializedView()
+            ? "materializedView"
+            : table.isTableValuedFunction()
+            ? "function"
+            : "table";
 
         log.info("Generating table", out.file().getName() +
             " [input=" + table.getInputName() +
@@ -3918,7 +3928,8 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(1).println("path,");
             out.tab(1).println("aliased,");
             out.tab(1).println("parameters,");
-            out.tab(1).println("%s.comment(\"%s\")", DSL.class, escapeString(comment));
+            out.tab(1).println("%s.comment(\"%s\"),", DSL.class, escapeString(comment));
+            out.tab(1).println("%s.%s", TableOptions.class, tableType);
             out.println(")");
 
             if (!interfaces.isEmpty())
@@ -4055,7 +4066,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             out.println();
             out.tab(1).println("private %s(%s alias, %s<%s> aliased, %s<?>[] parameters) {", className, Name.class, Table.class, recordType, Field.class);
-            out.tab(2).println("super(alias, null, aliased, parameters, %s.comment(\"%s\"));", DSL.class, escapeString(comment));
+            out.tab(2).println("super(alias, null, aliased, parameters, %s.comment(\"%s\"), %s.%s());", DSL.class, escapeString(comment), TableOptions.class, tableType);
             out.tab(1).println("}");
         }
 

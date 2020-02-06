@@ -47,6 +47,7 @@ import java.util.List;
 
 import org.jooq.Record;
 import org.jooq.Table;
+import org.jooq.TableOptions.TableType;
 
 /**
  * A base implementation for table definitions.
@@ -60,12 +61,18 @@ implements TableDefinition {
     private List<ParameterDefinition> parameters;
     private TableDefinition           parentTable;
     private List<TableDefinition>     childTables;
+    private TableType                 tableType;
 
     public AbstractTableDefinition(SchemaDefinition schema, String name, String comment) {
+        this(schema, name, comment, TableType.TABLE);
+    }
+
+    public AbstractTableDefinition(SchemaDefinition schema, String name, String comment, TableType tableType) {
         super(schema, name, comment);
 
         this.parentTable = null;
         this.childTables = new ArrayList<>();
+        this.tableType = tableType;
     }
 
     @Override
@@ -75,16 +82,11 @@ implements TableDefinition {
 
     @Override
     public final UniqueKeyDefinition getPrimaryKey() {
-        UniqueKeyDefinition primaryKey = null;
+        for (ColumnDefinition column : getColumns())
+            if (column.getPrimaryKey() != null)
+                return column.getPrimaryKey();
 
-        for (ColumnDefinition column : getColumns()) {
-            if (column.getPrimaryKey() != null) {
-                primaryKey = column.getPrimaryKey();
-                return primaryKey;
-            }
-        }
-
-        return primaryKey;
+        return null;
     }
 
     @Override
@@ -173,16 +175,30 @@ implements TableDefinition {
 
     @Override
     public final List<ParameterDefinition> getParameters() {
-        if (parameters == null) {
+        if (parameters == null)
             parameters = getParameters0();
-        }
 
         return parameters;
     }
 
     @Override
+    public /* non-final */ boolean isTemporary() {
+        return tableType == TableType.TEMPORARY;
+    }
+
+    @Override
+    public /* non-final */ boolean isView() {
+        return tableType == TableType.VIEW;
+    }
+
+    @Override
+    public /* non-final */ boolean isMaterializedView() {
+        return tableType == TableType.MATERIALIZED_VIEW;
+    }
+
+    @Override
     public /* non-final */ boolean isTableValuedFunction() {
-        return false;
+        return tableType == TableType.FUNCTION;
     }
 
     @Override

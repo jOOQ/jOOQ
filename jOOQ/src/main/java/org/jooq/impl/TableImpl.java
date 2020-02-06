@@ -161,6 +161,10 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
         this(name, schema, null, null, aliased, parameters, comment);
     }
 
+    public TableImpl(Name name, Schema schema, Table<R> aliased, Field<?>[] parameters, Comment comment, TableOptions options) {
+        this(name, schema, null, null, aliased, parameters, comment, options);
+    }
+
     public TableImpl(Table<?> child, ForeignKey<?, R> path, Table<R> parent) {
         this(createPathAlias(child, path), null, child, path, parent, null, DSL.comment(parent.getComment()));
     }

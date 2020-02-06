@@ -51,9 +51,14 @@ import java.io.Serializable;
  */
 public final class TableOptions implements Serializable {
 
-    private final TableType type;
-    private final OnCommit  onCommit;
-    private final Select<?> select;
+    /**
+     * Generated UID
+     */
+    private static final long serialVersionUID = -4840043541516260827L;
+
+    private final TableType   type;
+    private final OnCommit    onCommit;
+    private final Select<?>   select;
 
     private TableOptions(TableType type) {
         this.type = type;
@@ -95,10 +100,26 @@ public final class TableOptions implements Serializable {
     }
 
     /**
+     * Create a new {@link TableOptions} object for a {@link TableType#VIEW} of
+     * unknown content.
+     */
+    public static final TableOptions view() {
+        return view(null);
+    }
+
+    /**
      * Create a new {@link TableOptions} object for a {@link TableType#VIEW}.
      */
     public static final TableOptions view(Select<?> select) {
         return new TableOptions(TableType.VIEW, select);
+    }
+
+    /**
+     * Create a new {@link TableOptions} object for a
+     * {@link TableType#MATERIALIZED_VIEW} of unknown content.
+     */
+    public static final TableOptions materializedView() {
+        return materializedView(null);
     }
 
     /**

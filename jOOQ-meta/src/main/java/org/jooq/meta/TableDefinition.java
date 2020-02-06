@@ -132,6 +132,21 @@ public interface TableDefinition extends Definition {
     List<ParameterDefinition> getParameters();
 
     /**
+     * Whether this table is a temporary table.
+     */
+    boolean isTemporary();
+
+    /**
+     * Whether this table is a view.
+     */
+    boolean isView();
+
+    /**
+     * Whether this table is a materialized view.
+     */
+    boolean isMaterializedView();
+
+    /**
      * Whether this table is a table-valued function.
      */
     boolean isTableValuedFunction();

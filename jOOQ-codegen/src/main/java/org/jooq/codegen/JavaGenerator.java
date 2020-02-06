@@ -6185,7 +6185,7 @@ public class JavaGenerator extends AbstractGenerator {
                 else
                     out.tab(1).println("value = {");
 
-                out.tab(2).println("\"http://www.jooq.org\",");
+                out.tab(2).println("\"https://www.jooq.org\",");
                 out.tab(2).println("\"jOOQ version:%s\"%s", Constants.VERSION, (hasCatalogVersion || hasSchemaVersion ? "," : ""));
 
                 if (hasCatalogVersion)
@@ -6207,7 +6207,7 @@ public class JavaGenerator extends AbstractGenerator {
                 else
                     out.tab(1).println("value = {");
 
-                out.tab(2).println("\"http://www.jooq.org\",");
+                out.tab(2).println("\"https://www.jooq.org\",");
                 out.tab(2).println("\"jOOQ version:%s\"", Constants.VERSION);
 
                 if (scala)

@@ -126,6 +126,8 @@ import org.jooq.Sequence;
 import org.jooq.SortField;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
+import org.jooq.TableOptions.TableType;
 import org.jooq.UniqueKey;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataTypeException;
@@ -418,8 +420,26 @@ final class MetaImpl extends AbstractMeta {
                 String catalog = table.get(0, String.class);
                 String schema = table.get(1, String.class);
                 String name = table.get(2, String.class);
+                String type = table.get(3, String.class);
 
-                result.add(new MetaTable(name, this, getColumns(catalog, schema, name)));
+                // "TABLE","VIEW", "SYSTEM TABLE", "GLOBAL TEMPORARY","LOCAL TEMPORARY", "ALIAS", "SYNONYM".
+                TableType tableType =
+                      "VIEW".equals(type)
+                    ? TableType.VIEW
+                    : "SYSTEM_VIEW".equals(type)
+                    ? TableType.VIEW
+                    : "GLOBAL TEMPORARY".equals(type)
+                    ? TableType.TEMPORARY
+                    : "LOCAL TEMPORARY".equals(type)
+                    ? TableType.TEMPORARY
+                    : "TEMPORARY".equals(type)
+                    ? TableType.TEMPORARY
+                    : "MATERIALIZED VIEW".equals(type)
+                    ? TableType.MATERIALIZED_VIEW
+                    : TableType.TABLE;
+
+
+                result.add(new MetaTable(name, this, getColumns(catalog, schema, name), tableType));
 
 //              TODO: Find a more efficient way to do this
 //              Result<Record> pkColumns = executor.fetch(meta().getPrimaryKeys(catalog, schema, name))
@@ -552,8 +572,8 @@ final class MetaImpl extends AbstractMeta {
          */
         private static final long serialVersionUID = 4843841667753000233L;
 
-        MetaTable(String name, Schema schema, Result<Record> columns) {
-            super(name, schema);
+        MetaTable(String name, Schema schema, Result<Record> columns, TableType tableType) {
+            super(DSL.name(name), schema, null, null, null, null, null, TableOptions.of(tableType));
 
             // Possible scenarios for columns being null:
             // - The "table" is in fact a SYNONYM

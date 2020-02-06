@@ -44,6 +44,7 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.nvl;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.when;
 import static org.jooq.meta.hsqldb.information_schema.Tables.CHECK_CONSTRAINTS;
 import static org.jooq.meta.hsqldb.information_schema.Tables.COLUMNS;
 import static org.jooq.meta.hsqldb.information_schema.Tables.ELEMENT_TYPES;
@@ -69,6 +70,7 @@ import org.jooq.Record4;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.SortOrder;
+import org.jooq.TableOptions.TableType;
 import org.jooq.impl.DSL;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
@@ -399,18 +401,21 @@ public class HSQLDBDatabase extends AbstractDatabase {
                 .select(
                     SYSTEM_TABLES.TABLE_SCHEM,
                     SYSTEM_TABLES.TABLE_NAME,
-                    SYSTEM_TABLES.REMARKS)
+                    SYSTEM_TABLES.REMARKS,
+                    when(SYSTEM_TABLES.TABLE_TYPE.eq(inline("VIEW")), inline(TableType.VIEW.name()))
+                        .else_(inline(TableType.TABLE.name())).trim().as("table_type"))
                 .from(SYSTEM_TABLES)
                 .where(SYSTEM_TABLES.TABLE_SCHEM.in(getInputSchemata()))
                 .orderBy(
                     SYSTEM_TABLES.TABLE_SCHEM,
-                    SYSTEM_TABLES.TABLE_NAME)) {
+                    SYSTEM_TABLES.TABLE_NAME).fetch()) {
 
             SchemaDefinition schema = getSchema(record.get(SYSTEM_TABLES.TABLE_SCHEM));
             String name = record.get(SYSTEM_TABLES.TABLE_NAME);
             String comment = record.get(SYSTEM_TABLES.REMARKS);
+            TableType tableType = record.get("table_type", TableType.class);
 
-            result.add(new HSQLDBTableDefinition(schema, name, comment));
+            result.add(new HSQLDBTableDefinition(schema, name, comment, tableType));
         }
 
         return result;

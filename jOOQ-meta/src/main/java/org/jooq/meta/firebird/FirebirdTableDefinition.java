@@ -49,6 +49,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import org.jooq.Record;
+import org.jooq.TableOptions.TableType;
 import org.jooq.impl.DSL;
 import org.jooq.meta.AbstractTableDefinition;
 import org.jooq.meta.ColumnDefinition;
@@ -67,6 +68,10 @@ public class FirebirdTableDefinition extends AbstractTableDefinition {
 
     public FirebirdTableDefinition(SchemaDefinition schema, String name, String comment) {
         super(schema, name, comment);
+    }
+
+    public FirebirdTableDefinition(SchemaDefinition schema, String name, String comment, TableType tableType) {
+        super(schema, name, comment, tableType);
     }
 
     @Override
@@ -88,7 +93,7 @@ public class FirebirdTableDefinition extends AbstractTableDefinition {
                     r.RDB$FIELD_POSITION,
 
                     // [#3342] FIELD_LENGTH should be ignored for LOBs
-                    CHARACTER_LENGTH(f).as("CHARACTER_LENGTH"),
+                    CHARACTER_LENGTH(f).as("CHAR_LEN"),
                     f.RDB$FIELD_PRECISION,
                     FIELD_SCALE(f).as("FIELD_SCALE"),
                     FIELD_TYPE(f).as("FIELD_TYPE"),
@@ -110,7 +115,7 @@ public class FirebirdTableDefinition extends AbstractTableDefinition {
                     getDatabase(),
                     getSchema(),
                     record.get("FIELD_TYPE", String.class),
-                    record.get("CHARACTER_LENGTH", short.class),
+                    record.get("CHAR_LEN", short.class),
                     record.get(f.RDB$FIELD_PRECISION),
                     record.get("FIELD_SCALE", Integer.class),
                     record.get(r.RDB$NULL_FLAG) == 0,

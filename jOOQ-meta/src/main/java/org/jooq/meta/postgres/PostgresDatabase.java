@@ -107,6 +107,7 @@ import org.jooq.Select;
 import org.jooq.SortOrder;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions.TableType;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
@@ -387,8 +388,8 @@ public class PostgresDatabase extends AbstractDatabase {
         List<TableDefinition> result = new ArrayList<>();
         Map<Name, PostgresTableDefinition> map = new HashMap<>();
 
-        Select<Record6<String, String, String, Boolean, Boolean, String>> empty =
-            select(inline(""), inline(""), inline(""), inline(false), inline(false), inline(""))
+        Select<Record5<String, String, String, String, String>> empty =
+            select(inline(""), inline(""), inline(""), inline(""), inline(""))
             .where(falseCondition());
 
         for (Record record : create()
@@ -398,9 +399,9 @@ public class PostgresDatabase extends AbstractDatabase {
                         TABLES.TABLE_SCHEMA,
                         TABLES.TABLE_NAME,
                         TABLES.TABLE_NAME.as("specific_name"),
-                        inline(false).as("table_valued_function"),
-                        inline(false).as("materialized_view"),
-                        PG_DESCRIPTION.DESCRIPTION)
+                        PG_DESCRIPTION.DESCRIPTION,
+                        when(TABLES.TABLE_TYPE.eq(inline("VIEW")), inline(TableType.VIEW.name()))
+                        .else_(inline(TableType.TABLE.name())).as("table_type"))
                     .from(TABLES)
                     .join(PG_NAMESPACE)
                         .on(TABLES.TABLE_SCHEMA.eq(PG_NAMESPACE.NSPNAME))
@@ -435,9 +436,8 @@ public class PostgresDatabase extends AbstractDatabase {
                         field("{0}::varchar", PG_NAMESPACE.NSPNAME.getDataType(), PG_NAMESPACE.NSPNAME),
                         field("{0}::varchar", PG_CLASS.RELNAME.getDataType(), PG_CLASS.RELNAME),
                         field("{0}::varchar", PG_CLASS.RELNAME.getDataType(), PG_CLASS.RELNAME),
-                        inline(false).as("table_valued_function"),
-                        inline(true).as("materialized_view"),
-                        PG_DESCRIPTION.DESCRIPTION)
+                        PG_DESCRIPTION.DESCRIPTION,
+                        inline(TableType.MATERIALIZED_VIEW.name()).as("table_type"))
                     .from(PG_CLASS)
                     .join(PG_NAMESPACE)
                         .on(PG_CLASS.RELNAMESPACE.eq(oid(PG_NAMESPACE)))
@@ -455,9 +455,8 @@ public class PostgresDatabase extends AbstractDatabase {
                             ROUTINES.ROUTINE_SCHEMA,
                             ROUTINES.ROUTINE_NAME,
                             ROUTINES.SPECIFIC_NAME,
-                            inline(true).as("table_valued_function"),
-                            inline(false).as("materialized_view"),
-                            inline(""))
+                            inline(""),
+                            inline(TableType.FUNCTION.name()).as("table_type"))
                         .from(ROUTINES)
                         .join(PG_NAMESPACE).on(ROUTINES.SPECIFIC_SCHEMA.eq(PG_NAMESPACE.NSPNAME))
                         .join(PG_PROC).on(PG_PROC.PRONAMESPACE.eq(oid(PG_NAMESPACE)))
@@ -472,20 +471,21 @@ public class PostgresDatabase extends AbstractDatabase {
 
             SchemaDefinition schema = getSchema(record.get(TABLES.TABLE_SCHEMA));
             String name = record.get(TABLES.TABLE_NAME);
-            boolean tableValuedFunction = record.get("table_valued_function", boolean.class);
-            boolean materializedView = record.get("materialized_view", boolean.class);
             String comment = record.get(PG_DESCRIPTION.DESCRIPTION, String.class);
+            TableType tableType = record.get("table_type", TableType.class);
 
-            if (tableValuedFunction) {
-                result.add(new PostgresTableValuedFunction(schema, name, record.get(ROUTINES.SPECIFIC_NAME), comment));
-            }
-            else if (materializedView) {
-                result.add(new PostgresMaterializedViewDefinition(schema, name, comment));
-            }
-            else {
-                PostgresTableDefinition t = new PostgresTableDefinition(schema, name, comment);
-                result.add(t);
-                map.put(name(schema.getName(), name), t);
+            switch (tableType) {
+                case FUNCTION:
+                    result.add(new PostgresTableValuedFunction(schema, name, record.get(ROUTINES.SPECIFIC_NAME), comment));
+                    break;
+                case MATERIALIZED_VIEW:
+                    result.add(new PostgresMaterializedViewDefinition(schema, name, comment));
+                    break;
+                default:
+                    PostgresTableDefinition t = new PostgresTableDefinition(schema, name, comment, tableType);
+                    result.add(t);
+                    map.put(name(schema.getName(), name), t);
+                    break;
             }
         }
 

@@ -61,6 +61,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.Record;
+import org.jooq.TableOptions.TableType;
 import org.jooq.meta.AbstractTableDefinition;
 import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.DataTypeDefinition;
@@ -81,7 +82,7 @@ import org.jooq.meta.postgres.pg_catalog.tables.PgType;
 public class PostgresMaterializedViewDefinition extends AbstractTableDefinition {
 
     public PostgresMaterializedViewDefinition(SchemaDefinition schema, String name, String comment) {
-        super(schema, name, comment);
+        super(schema, name, comment, TableType.MATERIALIZED_VIEW);
     }
 
     @Override

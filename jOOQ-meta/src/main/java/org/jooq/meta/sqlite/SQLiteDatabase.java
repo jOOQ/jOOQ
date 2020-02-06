@@ -42,6 +42,7 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.table;
+import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.meta.sqlite.sqlite_master.SQLiteMaster.SQLITE_MASTER;
 
@@ -58,6 +59,7 @@ import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.SortOrder;
+import org.jooq.TableOptions.TableType;
 import org.jooq.impl.DSL;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
@@ -317,13 +319,19 @@ public class SQLiteDatabase extends AbstractDatabase {
     protected List<TableDefinition> getTables0() throws SQLException {
         List<TableDefinition> result = new ArrayList<>();
 
-        for (String name : create().select(SQLiteMaster.NAME)
-            .from(SQLITE_MASTER)
-            .where(SQLiteMaster.TYPE.in("table", "view"))
-            .orderBy(SQLiteMaster.NAME)
-            .fetch(SQLiteMaster.NAME)) {
+        for (Record record : create()
+                .select(
+                    SQLiteMaster.NAME,
+                    when(SQLiteMaster.TYPE.eq(inline("view")), inline(TableType.VIEW.name()))
+                    .else_(inline(TableType.TABLE.name())).as("table_type"))
+                .from(SQLITE_MASTER)
+                .where(SQLiteMaster.TYPE.in("table", "view"))
+                .orderBy(SQLiteMaster.NAME)) {
 
-            SQLiteTableDefinition table = new SQLiteTableDefinition(getSchemata().get(0), name, "");
+            String name = record.get(SQLiteMaster.NAME);
+            TableType tableType = record.get("table_type", TableType.class);
+
+            SQLiteTableDefinition table = new SQLiteTableDefinition(getSchemata().get(0), name, "", tableType);
             result.add(table);
         }
 

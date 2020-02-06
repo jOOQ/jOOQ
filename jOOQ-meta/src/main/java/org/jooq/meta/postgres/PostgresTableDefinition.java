@@ -60,6 +60,7 @@ import java.util.List;
 import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.TableOptions.TableType;
 import org.jooq.meta.AbstractTableDefinition;
 import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.DataTypeDefinition;
@@ -74,6 +75,10 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
 
     public PostgresTableDefinition(SchemaDefinition schema, String name, String comment) {
         super(schema, name, comment);
+    }
+
+    public PostgresTableDefinition(SchemaDefinition schema, String name, String comment, TableType tableType) {
+        super(schema, name, comment, tableType);
     }
 
     @Override

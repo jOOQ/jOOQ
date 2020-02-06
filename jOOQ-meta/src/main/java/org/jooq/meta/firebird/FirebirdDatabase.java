@@ -47,6 +47,7 @@ import static org.jooq.impl.DSL.nullif;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.trim;
+import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.DSL.zero;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$CHECK_CONSTRAINTS;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$GENERATORS;
@@ -71,6 +72,7 @@ import org.jooq.Record3;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.SortOrder;
+import org.jooq.TableOptions.TableType;
 import org.jooq.impl.DSL;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
@@ -381,17 +383,18 @@ public class FirebirdDatabase extends AbstractDatabase {
     protected List<TableDefinition> getTables0() throws SQLException {
         List<TableDefinition> result = new ArrayList<>();
 
-        for (Record3<String, Boolean, String> record : create()
+        for (Record3<String, String, String> record : create()
                 .select(
                     RDB$RELATIONS.RDB$RELATION_NAME.trim(),
-                    inline(false).as("table_valued_function"),
-                    RDB$RELATIONS.RDB$DESCRIPTION.trim())
+                    RDB$RELATIONS.RDB$DESCRIPTION.trim(),
+                    when(RDB$RELATIONS.RDB$RELATION_TYPE.eq(inline((short) 1)), inline(TableType.VIEW.name()))
+                    .else_(inline(TableType.TABLE.name())).trim().as("table_type"))
                 .from(RDB$RELATIONS)
                 .unionAll(
                      select(
                          RDB$PROCEDURES.RDB$PROCEDURE_NAME.trim(),
-                         inline(true).as("table_valued_function"),
-                         inline(""))
+                         inline(""),
+                         inline(TableType.FUNCTION.name()).trim())
                     .from(RDB$PROCEDURES)
 
                     // "selectable" procedures
@@ -402,10 +405,12 @@ public class FirebirdDatabase extends AbstractDatabase {
                 )
                 .orderBy(1)) {
 
-            if (record.value2())
+            TableType tableType = record.get("table_type", TableType.class);
+
+            if (TableType.FUNCTION == tableType)
                 result.add(new FirebirdTableValuedFunction(getSchemata().get(0), record.value1(), ""));
             else
-                result.add(new FirebirdTableDefinition(getSchemata().get(0), record.value1(), record.value3()));
+                result.add(new FirebirdTableDefinition(getSchemata().get(0), record.value1(), record.value2(), tableType));
         }
 
         return result;

@@ -52,6 +52,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.jooq.Record;
+import org.jooq.TableOptions.TableType;
 import org.jooq.meta.AbstractTableDefinition;
 import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.DataTypeDefinition;
@@ -69,6 +70,10 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
 
     public MySQLTableDefinition(SchemaDefinition schema, String name, String comment) {
         super(schema, name, comment);
+    }
+
+    public MySQLTableDefinition(SchemaDefinition schema, String name, String comment, TableType tableType) {
+        super(schema, name, comment, tableType);
     }
 
     @Override

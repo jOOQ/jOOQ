@@ -79,6 +79,28 @@ public final class TableOptions implements Serializable {
     }
 
     /**
+     * Get a new {@link TableOptions} object for a given table type.
+     */
+    public static final TableOptions of(TableType tableType) {
+        switch (tableType) {
+            case EXPRESSION:
+                return expression();
+            case FUNCTION:
+                return function();
+            case MATERIALIZED_VIEW:
+                return materializedView();
+            case TEMPORARY:
+                return temporaryTable();
+            case VIEW:
+                return view();
+            case TABLE:
+            case UNKNOWN:
+            default:
+                return table();
+        }
+    }
+
+    /**
      * Create a new {@link TableOptions} object for a {@link TableType#TABLE}.
      */
     public static final TableOptions table() {

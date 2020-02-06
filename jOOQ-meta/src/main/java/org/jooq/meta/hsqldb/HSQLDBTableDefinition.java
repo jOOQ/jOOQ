@@ -51,6 +51,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.Record;
+import org.jooq.TableOptions.TableType;
 import org.jooq.meta.AbstractTableDefinition;
 import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.DataTypeDefinition;
@@ -63,9 +64,13 @@ import org.jooq.meta.SchemaDefinition;
  */
 public class HSQLDBTableDefinition extends AbstractTableDefinition {
 
-	public HSQLDBTableDefinition(SchemaDefinition schema, String name, String comment) {
-		super(schema, name, comment);
-	}
+    public HSQLDBTableDefinition(SchemaDefinition schema, String name, String comment) {
+        super(schema, name, comment);
+    }
+
+    public HSQLDBTableDefinition(SchemaDefinition schema, String name, String comment, TableType tableType) {
+        super(schema, name, comment, tableType);
+    }
 
 	@Override
 	public List<ColumnDefinition> getElements0() throws SQLException {

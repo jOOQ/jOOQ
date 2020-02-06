@@ -47,6 +47,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.Record;
+import org.jooq.TableOptions.TableType;
 import org.jooq.meta.AbstractTableDefinition;
 import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.DataTypeDefinition;
@@ -62,8 +63,8 @@ public class DerbyTableDefinition extends AbstractTableDefinition {
 
     private final String         tableid;
 
-    public DerbyTableDefinition(SchemaDefinition schema, String name, String tableid) {
-		super(schema, name, "");
+    public DerbyTableDefinition(SchemaDefinition schema, String name, String tableid, TableType tableType) {
+		super(schema, name, "", tableType);
 
 		this.tableid = tableid;
 	}

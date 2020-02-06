@@ -41,6 +41,7 @@ package org.jooq.meta.mysql;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.noCondition;
+import static org.jooq.impl.DSL.when;
 import static org.jooq.meta.mysql.information_schema.Tables.CHECK_CONSTRAINTS;
 import static org.jooq.meta.mysql.information_schema.Tables.COLUMNS;
 import static org.jooq.meta.mysql.information_schema.Tables.KEY_COLUMN_USAGE;
@@ -69,6 +70,7 @@ import org.jooq.SQLDialect;
 import org.jooq.SortOrder;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions.TableType;
 import org.jooq.impl.DSL;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
@@ -427,7 +429,9 @@ public class MySQLDatabase extends AbstractDatabase {
         for (Record record : create().select(
                 Tables.TABLE_SCHEMA,
                 Tables.TABLE_NAME,
-                Tables.TABLE_COMMENT)
+                Tables.TABLE_COMMENT,
+                when(Tables.TABLE_TYPE.eq(inline("VIEW")), inline(TableType.VIEW.name()))
+                .else_(inline(TableType.TABLE.name())).as("table_type"))
             .from(TABLES)
 
             // [#5213] Duplicate schema value to work around MySQL issue https://bugs.mysql.com/bug.php?id=86022
@@ -445,8 +449,9 @@ public class MySQLDatabase extends AbstractDatabase {
             SchemaDefinition schema = getSchema(record.get(Tables.TABLE_SCHEMA));
             String name = record.get(Tables.TABLE_NAME);
             String comment = record.get(Tables.TABLE_COMMENT);
+            TableType tableType = record.get("table_type", TableType.class);
 
-            MySQLTableDefinition table = new MySQLTableDefinition(schema, name, comment);
+            MySQLTableDefinition table = new MySQLTableDefinition(schema, name, comment, tableType);
             result.add(table);
         }
 

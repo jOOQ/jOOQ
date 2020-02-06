@@ -49,6 +49,7 @@ import java.util.List;
 
 import org.jooq.Field;
 import org.jooq.Record;
+import org.jooq.TableOptions.TableType;
 import org.jooq.impl.DSL;
 import org.jooq.meta.AbstractTableDefinition;
 import org.jooq.meta.ColumnDefinition;
@@ -68,6 +69,10 @@ public class SQLiteTableDefinition extends AbstractTableDefinition {
 
     public SQLiteTableDefinition(SchemaDefinition schema, String name, String comment) {
         super(schema, name, comment);
+    }
+
+    public SQLiteTableDefinition(SchemaDefinition schema, String name, String comment, TableType tableType) {
+        super(schema, name, comment, tableType);
     }
 
     @Override

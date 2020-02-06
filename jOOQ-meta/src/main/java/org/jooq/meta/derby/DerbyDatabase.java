@@ -47,6 +47,7 @@ import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.not;
 import static org.jooq.impl.DSL.nullif;
 import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.meta.derby.sys.tables.Syschecks.SYSCHECKS;
 import static org.jooq.meta.derby.sys.tables.Sysconglomerates.SYSCONGLOMERATES;
@@ -69,6 +70,7 @@ import org.jooq.Record5;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.SortOrder;
+import org.jooq.TableOptions.TableType;
 import org.jooq.impl.DSL;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
@@ -420,7 +422,9 @@ public class DerbyDatabase extends AbstractDatabase {
 		for (Record record : create().select(
 		            Sysschemas.SCHEMANAME,
 		            Systables.TABLENAME,
-		            Systables.TABLEID)
+		            Systables.TABLEID,
+		            when(Systables.TABLETYPE.eq(inline("V")), inline(TableType.VIEW.name()))
+		                .else_(inline(TableType.TABLE.name())).as("table_type"))
                 .from(SYSTABLES)
                 .join(SYSSCHEMAS)
                 .on(Systables.SCHEMAID.equal(Sysschemas.SCHEMAID))
@@ -428,14 +432,14 @@ public class DerbyDatabase extends AbstractDatabase {
                 .where(Sysschemas.SCHEMANAME.cast(VARCHAR(32672)).in(getInputSchemata()))
                 .orderBy(
                     Sysschemas.SCHEMANAME,
-                    Systables.TABLENAME)
-    	        .fetch()) {
+                    Systables.TABLENAME)) {
 
 		    SchemaDefinition schema = getSchema(record.get(Sysschemas.SCHEMANAME));
 		    String name = record.get(Systables.TABLENAME);
 		    String id = record.get(Systables.TABLEID);
+		    TableType tableType = record.get("table_type", TableType.class);
 
-		    DerbyTableDefinition table = new DerbyTableDefinition(schema, name, id);
+		    DerbyTableDefinition table = new DerbyTableDefinition(schema, name, id, tableType);
             result.add(table);
 		}
 

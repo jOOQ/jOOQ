@@ -60,6 +60,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.Record;
+import org.jooq.TableOptions.TableType;
 import org.jooq.meta.AbstractTableDefinition;
 import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.DataTypeDefinition;
@@ -83,7 +84,7 @@ public class PostgresTableValuedFunction extends AbstractTableDefinition {
     private final String                    specificName;
 
     public PostgresTableValuedFunction(SchemaDefinition schema, String name, String specificName, String comment) {
-        super(schema, name, comment);
+        super(schema, name, comment, TableType.FUNCTION);
 
         this.routine = new PostgresRoutineDefinition(schema.getDatabase(), schema.getInputName(), name, specificName);
         this.specificName = specificName;
@@ -211,10 +212,5 @@ public class PostgresTableValuedFunction extends AbstractTableDefinition {
     @Override
     protected List<ParameterDefinition> getParameters0() {
         return routine.getInParameters();
-    }
-
-    @Override
-    public boolean isTableValuedFunction() {
-        return true;
     }
 }

@@ -48,6 +48,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.Record;
+import org.jooq.TableOptions.TableType;
 import org.jooq.impl.DSL;
 import org.jooq.meta.AbstractTableDefinition;
 import org.jooq.meta.ColumnDefinition;
@@ -66,7 +67,7 @@ public class FirebirdTableValuedFunction extends AbstractTableDefinition {
     private final FirebirdRoutineDefinition routine;
 
     public FirebirdTableValuedFunction(SchemaDefinition schema, String name, String comment) {
-        super(schema, name, comment);
+        super(schema, name, comment, TableType.FUNCTION);
 
         routine = new FirebirdRoutineDefinition(schema, name);
     }
@@ -90,7 +91,7 @@ public class FirebirdTableValuedFunction extends AbstractTableDefinition {
                     p.RDB$DEFAULT_SOURCE,
 
                     // [#3342] FIELD_LENGTH should be ignored for LOBs
-                    CHARACTER_LENGTH(f).as("CHARACTER_LENGTH"),
+                    CHARACTER_LENGTH(f).as("CHAR_LEN"),
                     f.RDB$FIELD_PRECISION,
                     FIELD_SCALE(f).as("FIELD_SCALE"),
                     FIELD_TYPE(f).as("FIELD_TYPE"),
@@ -105,7 +106,7 @@ public class FirebirdTableValuedFunction extends AbstractTableDefinition {
                     getDatabase(),
                     getSchema(),
                     record.get("FIELD_TYPE", String.class),
-                    record.get("CHARACTER_LENGTH", short.class),
+                    record.get("CHAR_LEN", short.class),
                     record.get(f.RDB$FIELD_PRECISION),
                     record.get("FIELD_SCALE", Integer.class),
                     record.get(p.RDB$NULL_FLAG) == 0,
@@ -125,11 +126,6 @@ public class FirebirdTableValuedFunction extends AbstractTableDefinition {
         }
 
         return result;
-    }
-
-    @Override
-    public boolean isTableValuedFunction() {
-        return true;
     }
 
     @Override

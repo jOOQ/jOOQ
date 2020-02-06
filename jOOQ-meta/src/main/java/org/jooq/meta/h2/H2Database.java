@@ -452,16 +452,14 @@ public class H2Database extends AbstractDatabase {
                     Tables.TABLE_SCHEMA,
                     Tables.TABLE_NAME,
                     when(Tables.TABLE_TYPE.eq(inline("VIEW")), inline(TableType.VIEW.name()))
-                   .when(Tables.TABLE_TYPE.eq(inline("TABLE")),
-                        when(Tables.STORAGE_TYPE.like(inline("%TEMPORARY%")), inline(TableType.TEMPORARY.name()))
-                        .else_(inline(TableType.TABLE.name()))).as("table_type"),
+                       .when(Tables.STORAGE_TYPE.like(inline("%TEMPORARY%")), inline(TableType.TEMPORARY.name()))
+                       .else_(inline(TableType.TABLE.name())).as("table_type"),
                     Tables.REMARKS)
                 .from(TABLES)
                 .where(Tables.TABLE_SCHEMA.in(getInputSchemata()))
                 .orderBy(
                     Tables.TABLE_SCHEMA,
-                    Tables.TABLE_NAME)
-                .fetch()) {
+                    Tables.TABLE_NAME)) {
 
             SchemaDefinition schema = getSchema(record.get(Tables.TABLE_SCHEMA));
 

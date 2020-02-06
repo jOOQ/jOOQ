@@ -136,4 +136,9 @@ public class FirebirdDataType {
     // -------------------------------------------------------------------------
     // Dialect-specific data types and synonyms thereof
     // -------------------------------------------------------------------------
+
+    protected static final DataType<byte[]>      BLOBSUBTYPEBINARY  = new DefaultDataType<>(SQLDialect.FIREBIRD, SQLDataType.BLOB, "blob sub_type binary");
+    protected static final DataType<byte[]>      BLOBSUBTYPE0       = new DefaultDataType<>(SQLDialect.FIREBIRD, SQLDataType.BLOB, "blob sub_type 0");
+    protected static final DataType<String>      BLOBSUBTYPETEXT    = new DefaultDataType<>(SQLDialect.FIREBIRD, SQLDataType.CLOB, "blob sub_type text");
+    protected static final DataType<String>      BLOBSUBTYPE1       = new DefaultDataType<>(SQLDialect.FIREBIRD, SQLDataType.CLOB, "blob sub_type 1");
 }

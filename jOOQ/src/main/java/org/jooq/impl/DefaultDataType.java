@@ -860,8 +860,13 @@ public class DefaultDataType<T> implements DataType<T> {
             if (result == null) {
                 result = TYPES_BY_NAME[SQLDialect.DEFAULT.ordinal()].get(normalised);
 
+                // [#9797] INT = INTEGER alias in case dialect specific information is not available
+                // [#5713] TODO: A more generic type aliasing system would be useful, in general!
+                if (result == null && "INT".equals(normalised))
+                    result = TYPES_BY_NAME[SQLDialect.DEFAULT.ordinal()].get("INTEGER");
+
                 // [#4065] PostgreSQL reports array types as _typename, e.g. _varchar
-                if (result == null && ( family == POSTGRES) && normalised.charAt(0) == '_')
+                else if (result == null && ( family == POSTGRES) && normalised.charAt(0) == '_')
                     result = getDataType(dialect, normalised.substring(1)).getArrayDataType();
 
                 // [#6466] HSQLDB reports array types as XYZARRAY

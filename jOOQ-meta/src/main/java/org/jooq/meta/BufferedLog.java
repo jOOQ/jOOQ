@@ -253,4 +253,28 @@ public class BufferedLog implements Log {
         delegate.error(message, details, throwable);
         messages.add(message(ERROR, message, details, throwable));
     }
+
+    @Override
+    public void log(Level level, Object message) {
+        delegate.log(level, message);
+        messages.add(message(ERROR, message));
+    }
+
+    @Override
+    public void log(Level level, Object message, Object details) {
+        delegate.log(level, message, details);
+        messages.add(message(ERROR, message, details));
+    }
+
+    @Override
+    public void log(Level level, Object message, Throwable throwable) {
+        delegate.log(level, message, throwable);
+        messages.add(message(ERROR, message, throwable));
+    }
+
+    @Override
+    public void log(Level level, Object message, Object details, Throwable throwable) {
+        delegate.log(level, message, details, throwable);
+        messages.add(message(ERROR, message, details, throwable));
+    }
 }

@@ -39,6 +39,8 @@ package org.jooq;
 
 import java.io.Serializable;
 import java.sql.Statement;
+import java.util.concurrent.CompletionStage;
+import java.util.concurrent.Executor;
 
 import org.jooq.exception.DataAccessException;
 
@@ -72,6 +74,27 @@ public interface Batch extends Serializable {
      * @throws DataAccessException if something went wrong executing the query
      */
     int[] execute() throws DataAccessException;
+
+
+
+    /**
+     * Execute the batch operation in a new {@link CompletionStage}.
+     * <p>
+     * The result is asynchronously completed by a task running in an
+     * {@link Executor} provided by the underlying
+     * {@link Configuration#executorProvider()}.
+     *
+     * @see Statement#executeBatch()
+     */
+    CompletionStage<int[]> executeAsync();
+
+    /**
+     * Execute the query in a new {@link CompletionStage} that is asynchronously
+     * completed by a task running in the given executor.
+     */
+    CompletionStage<int[]> executeAsync(Executor executor);
+
+
 
     /**
      * Get the number of executed queries in this batch operation

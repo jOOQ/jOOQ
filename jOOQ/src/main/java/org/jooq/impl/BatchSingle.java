@@ -54,7 +54,6 @@ import java.util.Map.Entry;
 
 import org.jooq.BatchBindStep;
 import org.jooq.Configuration;
-import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
@@ -67,7 +66,7 @@ import org.jooq.tools.JooqLogger;
 /**
  * @author Lukas Eder
  */
-final class BatchSingle implements BatchBindStep {
+final class BatchSingle extends AbstractBatch implements BatchBindStep {
 
     /**
      * Generated UID
@@ -75,21 +74,19 @@ final class BatchSingle implements BatchBindStep {
     private static final long                serialVersionUID = 3793967258181493207L;
     private static final JooqLogger          log              = JooqLogger.getLogger(BatchSingle.class);
 
-    private final DSLContext                 create;
-    private final Configuration              configuration;
     private final Query                      query;
     private final Map<String, List<Integer>> nameToIndexMapping;
     private final List<Object[]>             allBindValues;
     private final int                        expectedBindValues;
 
     public BatchSingle(Configuration configuration, Query query) {
+        super(configuration);
+
         int i = 0;
 
         ParamCollector collector = new ParamCollector(configuration, false);
         collector.visit(query);
 
-        this.create = DSL.using(configuration);
-        this.configuration = configuration;
         this.query = query;
         this.allBindValues = new ArrayList<>();
         this.nameToIndexMapping = new LinkedHashMap<>();
@@ -132,7 +129,7 @@ final class BatchSingle implements BatchBindStep {
     @SafeVarargs
 
     public final BatchSingle bind(Map<String, Object>... namedBindValues) {
-        List<Object> defaultValues = create.extractBindValues(query);
+        List<Object> defaultValues = dsl.extractBindValues(query);
 
         Object[][] bindValues = new Object[namedBindValues.length][];
         for (int row = 0; row < bindValues.length; row++) {
@@ -210,7 +207,7 @@ final class BatchSingle implements BatchBindStep {
 
             listener.renderStart(ctx);
             // [#1520] TODO: Should the number of bind values be checked, here?
-            ctx.sql(create.render(query));
+            ctx.sql(dsl.render(query));
             listener.renderEnd(ctx);
 
             listener.prepareStart(ctx);
@@ -275,9 +272,9 @@ final class BatchSingle implements BatchBindStep {
             for (int i = 0; i < bindValues.length; i++)
                 query.bind(i + 1, bindValues[i]);
 
-            queries.add(create.query(query.getSQL(INLINED)));
+            queries.add(dsl.query(query.getSQL(INLINED)));
         }
 
-        return create.batch(queries).execute();
+        return dsl.batch(queries).execute();
     }
 }

@@ -46,10 +46,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.jooq.Batch;
 import org.jooq.BatchBindStep;
 import org.jooq.Configuration;
-import org.jooq.DSLContext;
 import org.jooq.ExecuteContext;
 import org.jooq.Query;
 import org.jooq.TableRecord;
@@ -60,21 +58,19 @@ import org.jooq.exception.DataAccessException;
 /**
  * @author Lukas Eder
  */
-final class BatchCRUD implements Batch {
+final class BatchCRUD extends AbstractBatch {
 
     /**
      * Generated UID
      */
     private static final long      serialVersionUID = -2935544935267715011L;
 
-    private final DSLContext       create;
-    private final Configuration    configuration;
     private final TableRecord<?>[] records;
     private final Action           action;
 
     BatchCRUD(Configuration configuration, Action action, TableRecord<?>[] records) {
-        this.create = DSL.using(configuration);
-        this.configuration = configuration;
+        super(configuration);
+
         this.action = action;
         this.records = records;
     }
@@ -89,12 +85,10 @@ final class BatchCRUD implements Batch {
 
         // [#1180] Run batch queries with BatchMultiple, if no bind variables
         // should be used...
-        if (executeStaticStatements(configuration.settings())) {
+        if (executeStaticStatements(configuration.settings()))
             return executeStatic();
-        }
-        else {
+        else
             return executePrepared();
-        }
     }
 
     private final int[] executePrepared() {
@@ -146,22 +140,19 @@ final class BatchCRUD implements Batch {
         // The order is preserved as much as possible
         List<Integer> result = new ArrayList<>();
         for (Entry<String, List<Query>> entry : queries.entrySet()) {
-            BatchBindStep batch = create.batch(entry.getValue().get(0));
+            BatchBindStep batch = dsl.batch(entry.getValue().get(0));
 
-            for (Query query : entry.getValue()) {
+            for (Query query : entry.getValue())
                 batch.bind(query.getBindValues().toArray());
-            }
 
             int[] array = batch.execute();
-            for (int i : array) {
+            for (int i : array)
                 result.add(i);
-            }
         }
 
         int[] array = new int[result.size()];
-        for (int i = 0; i < result.size(); i++) {
+        for (int i = 0; i < result.size(); i++)
             array[i] = result.get(i);
-        }
 
         updateChangedFlag();
         return array;
@@ -186,9 +177,8 @@ final class BatchCRUD implements Batch {
             catch (QueryCollectorSignal e) {
                 Query query = e.getQuery();
 
-                if (query.isExecutable()) {
+                if (query.isExecutable())
                     queries.add(query);
-                }
             }
             finally {
                 records[i].attach(previous);
@@ -196,7 +186,7 @@ final class BatchCRUD implements Batch {
         }
 
         // Resulting statements can be batch executed in their requested order
-        int[] result = create.batch(queries).execute();
+        int[] result = dsl.batch(queries).execute();
         updateChangedFlag();
         return result;
     }
@@ -227,9 +217,8 @@ final class BatchCRUD implements Batch {
 
             // [#3362] If new records (fetched = false) are batch-stored twice in a row, the second
             // batch-store needs to generate an UPDATE statement.
-            if (record instanceof AbstractRecord) {
+            if (record instanceof AbstractRecord)
                 ((AbstractRecord) record).fetched = action != Action.DELETE;
-            }
         }
     }
 

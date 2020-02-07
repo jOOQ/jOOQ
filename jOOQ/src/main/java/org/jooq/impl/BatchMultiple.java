@@ -40,7 +40,6 @@ package org.jooq.impl;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import org.jooq.Batch;
 import org.jooq.Configuration;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
@@ -51,18 +50,18 @@ import org.jooq.exception.ControlFlowSignal;
 /**
  * @author Lukas Eder
  */
-final class BatchMultiple implements Batch {
+final class BatchMultiple extends AbstractBatch {
 
     /**
      * Generated UID
      */
     private static final long   serialVersionUID = -7337667281292354043L;
 
-    private final Configuration configuration;
     private final Query[]       queries;
 
     public BatchMultiple(Configuration configuration, Query... queries) {
-        this.configuration = configuration;
+        super(configuration);
+
         this.queries = queries;
     }
 

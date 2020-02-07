@@ -3179,5 +3179,5 @@ public interface WithStep extends QueryPart {
      * Some but not all databases support aliased tables in delete statements.
      */
     @Support({ POSTGRES, SQLITE })
-    <R extends Record> DeleteWhereStep<R> delete(Table<R> table);
+    <R extends Record> DeleteUsingStep<R> delete(Table<R> table);
 }

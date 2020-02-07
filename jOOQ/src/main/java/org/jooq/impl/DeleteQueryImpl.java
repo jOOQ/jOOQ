@@ -75,6 +75,7 @@ import static org.jooq.impl.Keywords.K_DELETE;
 import static org.jooq.impl.Keywords.K_FROM;
 import static org.jooq.impl.Keywords.K_LIMIT;
 import static org.jooq.impl.Keywords.K_ORDER_BY;
+import static org.jooq.impl.Keywords.K_USING;
 import static org.jooq.impl.Keywords.K_WHERE;
 
 import java.util.Arrays;
@@ -94,6 +95,7 @@ import org.jooq.Param;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
+import org.jooq.TableLike;
 
 /**
  * @author Lukas Eder
@@ -105,6 +107,7 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
     private static final Set<SQLDialect> SPECIAL_DELETE_AS_SYNTAX = SQLDialect.supportedBy(MARIADB, MYSQL);
     private static final Set<SQLDialect> NO_SUPPORT_LIMIT         = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE);
 
+    private final TableList              using;
     private final ConditionProviderImpl  condition;
     private final SortFieldList          orderBy;
     private Param<? extends Number>      limit;
@@ -112,6 +115,7 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
     DeleteQueryImpl(Configuration configuration, WithImpl with, Table<R> table) {
         super(configuration, with, table);
 
+        this.using = new TableList();
         this.condition = new ConditionProviderImpl();
         this.orderBy = new SortFieldList();
     }
@@ -122,6 +126,23 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
 
     final boolean hasWhere() {
         return condition.hasWhere();
+    }
+
+    @Override
+    public final void addUsing(Collection<? extends TableLike<?>> f) {
+        for (TableLike<?> provider : f)
+            using.add(provider.asTable());
+    }
+
+    @Override
+    public final void addUsing(TableLike<?> f) {
+        using.add(f.asTable());
+    }
+
+    @Override
+    public final void addUsing(TableLike<?>... f) {
+        for (TableLike<?> provider : f)
+            using.add(provider.asTable());
     }
 
     @Override
@@ -194,8 +215,15 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
 
         ctx.visit(K_FROM).sql(' ')
            .declareTables(true)
-           .visit(table(ctx))
-           .declareTables(declare)
+           .visit(table(ctx));
+
+        if (!using.isEmpty())
+            ctx.formatSeparator()
+               .visit(K_USING)
+               .sql(' ')
+               .visit(using);
+
+        ctx.declareTables(declare)
            .end(DELETE_DELETE);
 
 

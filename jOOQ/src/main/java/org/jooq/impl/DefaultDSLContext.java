@@ -127,7 +127,7 @@ import org.jooq.DDLFlag;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.DeleteQuery;
-import org.jooq.DeleteWhereStep;
+import org.jooq.DeleteUsingStep;
 import org.jooq.DropIndexOnStep;
 import org.jooq.DropSchemaStep;
 import org.jooq.DropSequenceFinalStep;
@@ -2686,12 +2686,12 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public <R extends Record> DeleteWhereStep<R> delete(Table<R> table) {
+    public <R extends Record> DeleteUsingStep<R> delete(Table<R> table) {
         return deleteFrom(table);
     }
 
     @Override
-    public <R extends Record> DeleteWhereStep<R> deleteFrom(Table<R> table) {
+    public <R extends Record> DeleteUsingStep<R> deleteFrom(Table<R> table) {
         return new DeleteImpl<>(configuration(), null, table);
     }
 

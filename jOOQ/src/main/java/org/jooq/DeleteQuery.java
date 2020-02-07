@@ -62,6 +62,24 @@ import java.util.Collection;
 @SuppressWarnings("deprecation")
 public interface DeleteQuery<R extends Record> extends ConditionProvider, Delete<R> {
 
+    /**
+     * Add tables to the <code>USING</code> clause.
+     */
+    @Support({ POSTGRES })
+    void addUsing(TableLike<?> table);
+
+    /**
+     * Add tables to the <code>USING</code> clause.
+     */
+    @Support({ POSTGRES })
+    void addUsing(TableLike<?>... tables);
+
+    /**
+     * Add tables to the <code>USING</code> clause.
+     */
+    @Support({ POSTGRES })
+    void addUsing(Collection<? extends TableLike<?>> tables);
+
     // ------------------------------------------------------------------------
     // Methods from ConditionProvider, OrderProvider, LockProvider
     // ------------------------------------------------------------------------

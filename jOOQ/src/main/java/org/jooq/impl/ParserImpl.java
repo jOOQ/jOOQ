@@ -384,6 +384,7 @@ import org.jooq.Delete;
 import org.jooq.DeleteLimitStep;
 import org.jooq.DeleteOrderByStep;
 import org.jooq.DeleteReturningStep;
+import org.jooq.DeleteUsingStep;
 import org.jooq.DeleteWhereStep;
 import org.jooq.DerivedColumnList;
 import org.jooq.DropIndexCascadeStep;
@@ -1696,15 +1697,16 @@ final class ParserImpl implements Parser {
                 table = table.as(parseIdentifierIf(ctx));
         }
 
-        DeleteWhereStep<?> s1 = with == null ? ctx.dsl.delete(table) : with.delete(table);
-        DeleteOrderByStep<?> s2 = parseKeywordIf(ctx, "WHERE") ? s1.where(parseCondition(ctx)) : s1;
-        DeleteLimitStep<?> s3 = parseKeywordIf(ctx, "ORDER BY") ? s2.orderBy(parseSortSpecification(ctx)) : s2;
-        DeleteReturningStep<?> s4 = (limit != null || parseKeywordIf(ctx, "LIMIT"))
-            ? s3.limit(limit != null ? limit : parseParenthesisedUnsignedIntegerOrBindVariable(ctx))
-            : s3;
-        Delete<?> s5 = parseKeywordIf(ctx, "RETURNING") ? s4.returning(parseSelectList(ctx)) : s4;
+        DeleteUsingStep<?> s1 = with == null ? ctx.dsl.delete(table) : with.delete(table);
+        DeleteWhereStep<?> s2 = parseKeywordIf(ctx, "USING") ? s1.using(parseTables(ctx)) : s1;
+        DeleteOrderByStep<?> s3 = parseKeywordIf(ctx, "WHERE") ? s2.where(parseCondition(ctx)) : s2;
+        DeleteLimitStep<?> s4 = parseKeywordIf(ctx, "ORDER BY") ? s3.orderBy(parseSortSpecification(ctx)) : s3;
+        DeleteReturningStep<?> s5 = (limit != null || parseKeywordIf(ctx, "LIMIT"))
+            ? s4.limit(limit != null ? limit : parseParenthesisedUnsignedIntegerOrBindVariable(ctx))
+            : s4;
+        Delete<?> s6 = parseKeywordIf(ctx, "RETURNING") ? s5.returning(parseSelectList(ctx)) : s5;
 
-        return s5;
+        return s6;
     }
 
     private static final Insert<?> parseInsert(ParserContext ctx, WithImpl with) {

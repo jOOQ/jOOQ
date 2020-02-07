@@ -7998,7 +7998,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * Some but not all databases support aliased tables in delete statements.
      */
     @Support
-    <R extends Record> DeleteWhereStep<R> deleteFrom(Table<R> table);
+    <R extends Record> DeleteUsingStep<R> deleteFrom(Table<R> table);
 
     /**
      * Create a new DSL delete statement.
@@ -8006,7 +8006,7 @@ public interface DSLContext extends Scope , AutoCloseable  {
      * This is an alias for {@link #deleteFrom(Table)}
      */
     @Support
-    <R extends Record> DeleteWhereStep<R> delete(Table<R> table);
+    <R extends Record> DeleteUsingStep<R> delete(Table<R> table);
 
     // -------------------------------------------------------------------------
     // XXX Batch query execution

@@ -188,7 +188,7 @@ import org.jooq.DataType;
 import org.jooq.DatePart;
 // ...
 import org.jooq.Delete;
-import org.jooq.DeleteWhereStep;
+import org.jooq.DeleteUsingStep;
 import org.jooq.DerivedColumnList;
 import org.jooq.DropIndexOnStep;
 import org.jooq.DropSchemaStep;
@@ -5775,7 +5775,7 @@ public class DSL {
      * @see DSLContext#deleteFrom(Table)
      */
     @Support
-    public static <R extends Record> DeleteWhereStep<R> deleteFrom(Table<R> table) {
+    public static <R extends Record> DeleteUsingStep<R> deleteFrom(Table<R> table) {
         return dsl().deleteFrom(table);
     }
 
@@ -5785,7 +5785,7 @@ public class DSL {
      * This is an alias for {@link #deleteFrom(Table)}
      */
     @Support
-    public static <R extends Record> DeleteWhereStep<R> delete(Table<R> table) {
+    public static <R extends Record> DeleteUsingStep<R> delete(Table<R> table) {
         return dsl().deleteFrom(table);
     }
 

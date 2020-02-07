@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.notExists;
+import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.Tools.filterOne;
 
 import java.util.Collection;
@@ -49,8 +50,9 @@ import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.DeleteConditionStep;
 import org.jooq.DeleteResultStep;
-import org.jooq.DeleteWhereStep;
+import org.jooq.DeleteUsingStep;
 import org.jooq.Field;
+import org.jooq.Name;
 import org.jooq.Operator;
 import org.jooq.OrderField;
 import org.jooq.Param;
@@ -84,6 +86,7 @@ import org.jooq.Select;
 import org.jooq.SelectField;
 import org.jooq.SelectFieldOrAsterisk;
 import org.jooq.Table;
+import org.jooq.TableLike;
 
 /**
  * @author Lukas Eder
@@ -94,7 +97,7 @@ final class DeleteImpl<R extends Record>
     implements
 
     // Cascading interface implementations for Delete behaviour
-    DeleteWhereStep<R>,
+    DeleteUsingStep<R>,
     DeleteConditionStep<R>,
     DeleteResultStep<R> {
 
@@ -106,6 +109,49 @@ final class DeleteImpl<R extends Record>
 
     DeleteImpl(Configuration configuration, WithImpl with, Table<R> table) {
         super(new DeleteQueryImpl<>(configuration, with, table));
+    }
+
+    @Override
+    public final DeleteImpl<R> using(TableLike<?> table) {
+        getDelegate().addUsing(table);
+        return this;
+    }
+
+    @Override
+    public final DeleteImpl<R> using(TableLike<?>... tables) {
+        getDelegate().addUsing(tables);
+        return this;
+    }
+
+    @Override
+    public final DeleteImpl<R> using(Collection<? extends TableLike<?>> tables) {
+        getDelegate().addUsing(tables);
+        return this;
+    }
+
+    @Override
+    public final DeleteImpl<R> using(SQL sql) {
+        return using(table(sql));
+    }
+
+    @Override
+    public final DeleteImpl<R> using(String sql) {
+        return using(table(sql));
+    }
+
+    @Override
+    public final DeleteImpl<R> using(String sql, Object... bindings) {
+        return using(table(sql, bindings));
+    }
+
+    @Override
+    public final DeleteImpl<R> using(String sql, QueryPart... parts) {
+        return using(table(sql, parts));
+    }
+
+    @Override
+    public final DeleteImpl<R> using(Name name) {
+        return using(table(name));
     }
 
     @Override

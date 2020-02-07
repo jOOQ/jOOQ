@@ -230,6 +230,44 @@ public interface Log {
     void error(Object message, Object details, Throwable throwable);
 
     /**
+     * Log a message in a given log level.
+     *
+     * @param level The log level
+     * @param message The log message
+     */
+    void log(Level level, Object message);
+
+    /**
+     * Log a message in a given log level.
+     *
+     * @param level The log level
+     * @param message The log message
+     * @param details The message details (padded to a constant-width message);
+     */
+    void log(Level level, Object message, Object details);
+
+    /**
+     * Log a message in a given log level.
+     *
+     * @param level The log level
+     * @param message The log message
+     * @param throwable An exception whose stacktrace is logged along with the
+     *            message
+     */
+    void log(Level level, Object message, Throwable throwable);
+
+    /**
+     * Log a message in a given log level.
+     *
+     * @param level The log level
+     * @param message The log message
+     * @param details The message details (padded to a constant-width message);
+     * @param throwable An exception whose stacktrace is logged along with the
+     *            message
+     */
+    void log(Level level, Object message, Object details, Throwable throwable);
+
+    /**
      * The log level.
      */
     public static enum Level {

@@ -457,6 +457,70 @@ public final class JooqLogger implements Log {
     }
 
     /**
+     * Log a message in a given log level.
+     *
+     * @param level The log level
+     * @param message The log message
+     */
+    @Override
+    public void log(Log.Level level, Object message) {
+        log(level, message, (Object) null);
+    }
+
+    /**
+     * Log a message in a given log level.
+     *
+     * @param level The log level
+     * @param message The log message
+     * @param details The message details (padded to a constant-width message)
+     */
+    @Override
+    public void log(Log.Level level, Object message, Object details) {
+        switch (level) {
+            case TRACE: trace(message, details); break;
+            case DEBUG: debug(message, details); break;
+            case INFO:  info (message, details); break;
+            case WARN:  warn (message, details); break;
+            case ERROR: error(message, details); break;
+            case FATAL: error(message, details); break;
+        }
+    }
+
+    /**
+     * Log a message in a given log level.
+     *
+     * @param level The log level
+     * @param message The log message
+     * @param throwable An exception whose stacktrace is logged along with the
+     *            message
+     */
+    @Override
+    public void log(Log.Level level, Object message, Throwable throwable) {
+        log(level, message, null, throwable);
+    }
+
+    /**
+     * Log a message in a given log level.
+     *
+     * @param level The log level
+     * @param message The log message
+     * @param details The message details (padded to a constant-width message)
+     * @param throwable An exception whose stacktrace is logged along with the
+     *            message
+     */
+    @Override
+    public void log(Log.Level level, Object message, Object details, Throwable throwable) {
+        switch (level) {
+            case TRACE: trace(message, details, throwable); break;
+            case DEBUG: debug(message, details, throwable); break;
+            case INFO:  info (message, details, throwable); break;
+            case WARN:  warn (message, details, throwable); break;
+            case ERROR: error(message, details, throwable); break;
+            case FATAL: error(message, details, throwable); break;
+        }
+    }
+
+    /**
      * Get a formatted message.
      */
     private String getMessage(Object message, Object details) {

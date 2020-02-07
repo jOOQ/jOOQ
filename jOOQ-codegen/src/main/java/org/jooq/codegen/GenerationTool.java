@@ -412,6 +412,7 @@ public class GenerationTool {
             database = databaseClass.newInstance();
             database.setBasedir(configuration.getBasedir());
             database.setProperties(properties(d.getProperties()));
+            database.setOnError(configuration.getOnError());
 
             List<CatalogMappingType> catalogs = d.getCatalogs();
             List<SchemaMappingType> schemata = d.getSchemata();

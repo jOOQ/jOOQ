@@ -53,6 +53,7 @@ import org.jooq.meta.jaxb.CustomType;
 import org.jooq.meta.jaxb.Embeddable;
 import org.jooq.meta.jaxb.EnumType;
 import org.jooq.meta.jaxb.ForcedType;
+import org.jooq.meta.jaxb.OnError;
 import org.jooq.meta.jaxb.RegexFlag;
 import org.jooq.meta.jaxb.SchemaMappingType;
 
@@ -589,6 +590,16 @@ public interface Database  extends AutoCloseable  {
      * appropriate, corresponding integer type.
      */
     boolean getForceIntegerTypesOnZeroScaleDecimals();
+
+    /**
+     * The behaviour when errors are encountered.
+     */
+    void setOnError(OnError onError);
+
+    /**
+     * The behaviour when errors are encountered.
+     */
+    OnError onError();
 
     /**
      * [#3488] Add an additional filter to the database that is applied in

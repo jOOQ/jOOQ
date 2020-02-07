@@ -38,6 +38,7 @@
 
 package org.jooq.meta;
 
+import static org.jooq.Log.Level.ERROR;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.SQLITE;
@@ -71,6 +72,7 @@ import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListenerProvider;
+import org.jooq.Log;
 import org.jooq.Name;
 import org.jooq.Query;
 import org.jooq.Record;
@@ -94,6 +96,7 @@ import org.jooq.meta.jaxb.EnumType;
 import org.jooq.meta.jaxb.ForcedType;
 import org.jooq.meta.jaxb.ForcedTypeObjectType;
 import org.jooq.meta.jaxb.Nullability;
+import org.jooq.meta.jaxb.OnError;
 import org.jooq.meta.jaxb.RegexFlag;
 import org.jooq.meta.jaxb.SchemaMappingType;
 // ...
@@ -122,6 +125,7 @@ public abstract class AbstractDatabase implements Database {
     private Connection                                                       connection;
     private boolean                                                          regexMatchesPartialQualification;
     private boolean                                                          sqlMatchesPartialQualification;
+    private OnError                                                          onError                              = OnError.FAIL;
     private List<Filter>                                                     filters;
     private String[]                                                         excludes;
     private String[]                                                         includes                             = { ".*" };
@@ -333,7 +337,8 @@ public abstract class AbstractDatabase implements Database {
                             "Slow SQL",
                             "jOOQ Meta executed a slow query (slower than " + s + " seconds, configured by configuration/generator/database/logSlowQueriesAfterSeconds)"
                           + "\n\n"
-                          + "If you think this is a bug in jOOQ, please report it here: https://github.com/jOOQ/jOOQ/issues/new\n\n```sql\n"
+                          + "If you think this is a bug in jOOQ, please report it here: https://github.com/jOOQ/jOOQ/issues/new"
+                          + "\n\n```sql\n"
                           + formatted(ctx.query())
                           + "```\n",
                             new SQLPerformanceWarning());
@@ -360,7 +365,8 @@ public abstract class AbstractDatabase implements Database {
                             "Slow Result Fetching",
                             "jOOQ Meta fetched a slow result (slower than " + s + " seconds, configured by configuration/generator/database/logSlowResultsAfterSeconds)"
                           + "\n\n"
-                          + "If you think this is a bug in jOOQ, please report it here: https://github.com/jOOQ/jOOQ/issues/new\n\n```sql\n"
+                          + "If you think this is a bug in jOOQ, please report it here: https://github.com/jOOQ/jOOQ/issues/new"
+                          + "\n\n```sql\n"
                           + formatted(ctx.query())
                           + "```\n",
                             new SQLPerformanceWarning());
@@ -378,7 +384,10 @@ public abstract class AbstractDatabase implements Database {
                       ? ctx.exception().getMessage()
                       : "No exception available")
                       + "\n\n"
-                      + "If you think this is a bug in jOOQ, please report it here: https://github.com/jOOQ/jOOQ/issues/new\n\n```sql\n"
+                      + "If you think this is a bug in jOOQ, please report it here: https://github.com/jOOQ/jOOQ/issues/new"
+                      + "\n\n"
+                      + "Note you can mute some exceptions using the configuration/onError flag"
+                      + "\n\n```sql\n"
                       + formatted(ctx.query())
                       + "```\n");
                 }
@@ -555,12 +564,12 @@ public abstract class AbstractDatabase implements Database {
         if (catalogs == null) {
             catalogs = new ArrayList<>();
 
-            try {
-                catalogs = getCatalogs0();
-            }
-            catch (Exception e) {
-                log.error("Could not load catalogs", e);
-            }
+            onError(ERROR, "Could not load catalogs", new ExceptionRunnable() {
+                @Override
+                public void run() throws Exception {
+                    catalogs = getCatalogs0();
+                }
+            });
 
             boolean onlyDefaultCatalog = true;
 
@@ -603,12 +612,12 @@ public abstract class AbstractDatabase implements Database {
         if (schemata == null) {
             schemata = new ArrayList<>();
 
-            try {
-                schemata = getSchemata0();
-            }
-            catch (Exception e) {
-                log.error("Could not load schemata", e);
-            }
+            onError(ERROR, "Could not load schemata", new ExceptionRunnable() {
+                @Override
+                public void run() throws Exception {
+                    schemata = getSchemata0();
+                }
+            });
 
             Iterator<SchemaDefinition> it = schemata.iterator();
             while (it.hasNext()) {
@@ -659,13 +668,13 @@ public abstract class AbstractDatabase implements Database {
             // [#1312] Allow for ommitting inputSchema configuration. Generate
             // All catalogs instead
             if (configuredCatalogs.size() == 1 && StringUtils.isBlank(configuredCatalogs.get(0).getInputCatalog())) {
-                try {
-                    for (CatalogDefinition catalog : getCatalogs0())
-                        inputCatalogs.add(catalog.getName());
-                }
-                catch (Exception e) {
-                    log.error("Could not load catalogs", e);
-                }
+                onError(ERROR, "Could not load catalogs", new ExceptionRunnable() {
+                    @Override
+                    public void run() throws Exception {
+                        for (CatalogDefinition catalog : getCatalogs0())
+                            inputCatalogs.add(catalog.getName());
+                    }
+                });
             }
             else {
                 for (CatalogMappingType catalog : configuredCatalogs) {
@@ -756,22 +765,22 @@ public abstract class AbstractDatabase implements Database {
     }
 
     private void initAllSchemata() {
-        try {
-            for (SchemaDefinition schema : getSchemata0()) {
-                inputSchemata.add(schema.getName());
-                List<String> list = inputSchemataPerCatalog.get(schema.getCatalog().getName());
+        onError(ERROR, "Could not load schemata", new ExceptionRunnable() {
+            @Override
+            public void run() throws Exception {
+                for (SchemaDefinition schema : getSchemata0()) {
+                    inputSchemata.add(schema.getName());
+                    List<String> list = inputSchemataPerCatalog.get(schema.getCatalog().getName());
 
-                if (list == null) {
-                    list = new ArrayList<>();
-                    inputSchemataPerCatalog.put(schema.getCatalog().getName(), list);
+                    if (list == null) {
+                        list = new ArrayList<>();
+                        inputSchemataPerCatalog.put(schema.getCatalog().getName(), list);
+                    }
+
+                    list.add(schema.getName());
                 }
-
-                list.add(schema.getName());
             }
-        }
-        catch (Exception e) {
-            log.error("Could not load schemata", e);
-        }
+        });
     }
 
     @Override
@@ -851,10 +860,19 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
+    public final void setOnError(OnError onError) {
+        this.onError = onError;
+    }
+
+    @Override
+    public final OnError onError() {
+        return onError == null ? OnError.FAIL : onError;
+    }
+
+    @Override
     public final List<Filter> getFilters() {
-        if (filters == null) {
+        if (filters == null)
             filters = new ArrayList<>();
-        }
 
         return Collections.unmodifiableList(filters);
     }
@@ -871,9 +889,8 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public final String[] getExcludes() {
-        if (excludes == null) {
+        if (excludes == null)
             excludes = new String[0];
-        }
 
         return excludes;
     }
@@ -885,9 +902,8 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public final String[] getIncludes() {
-        if (includes == null) {
+        if (includes == null)
             includes = new String[0];
-        }
 
         return includes;
     }
@@ -1465,15 +1481,15 @@ public abstract class AbstractDatabase implements Database {
             sequences = new ArrayList<>();
 
             if (getIncludeSequences()) {
-                try {
-                    List<SequenceDefinition> s = getSequences0();
+                onError(ERROR, "Error while fetching sequences", new ExceptionRunnable() {
+                    @Override
+                    public void run() throws Exception {
+                        List<SequenceDefinition> s = getSequences0();
 
-                    sequences = sort(filterExcludeInclude(s));
-                    log.info("Sequences fetched", fetchedSize(s, sequences));
-                }
-                catch (Exception e) {
-                    log.error("Error while fetching sequences", e);
-                }
+                        sequences = sort(filterExcludeInclude(s));
+                        log.info("Sequences fetched", fetchedSize(s, sequences));
+                    }
+                });
             }
             else
                 log.info("Sequences excluded");
@@ -1568,15 +1584,15 @@ public abstract class AbstractDatabase implements Database {
             tables = new ArrayList<>();
 
             if (getIncludeTables()) {
-                try {
-                    List<TableDefinition> t = getTables0();
+                onError(ERROR, "Error while fetching tables", new ExceptionRunnable() {
+                    @Override
+                    public void run() throws Exception {
+                        List<TableDefinition> t = getTables0();
 
-                    tables = sort(filterExcludeInclude(t));
-                    log.info("Tables fetched", fetchedSize(t, tables));
-                }
-                catch (Exception e) {
-                    log.error("Error while fetching tables", e);
-                }
+                        tables = sort(filterExcludeInclude(t));
+                        log.info("Tables fetched", fetchedSize(t, tables));
+                    }
+                });
             }
             else
                 log.info("Tables excluded");
@@ -1613,17 +1629,17 @@ public abstract class AbstractDatabase implements Database {
         if (enums == null) {
             enums = new ArrayList<>();
 
-            try {
-                List<EnumDefinition> e = getEnums0();
+            onError(ERROR, "Error while fetching enums", new ExceptionRunnable() {
+                @Override
+                public void run() throws Exception {
+                    List<EnumDefinition> e = getEnums0();
 
-                enums = sort(filterExcludeInclude(e));
-                enums.addAll(getConfiguredEnums());
+                    enums = sort(filterExcludeInclude(e));
+                    enums.addAll(getConfiguredEnums());
 
-                log.info("Enums fetched", fetchedSize(e, enums));
-            }
-            catch (Exception e) {
-                log.error("Error while fetching enums", e);
-            }
+                    log.info("Enums fetched", fetchedSize(e, enums));
+                }
+            });
         }
 
         if (enumsBySchema == null)
@@ -1778,16 +1794,16 @@ public abstract class AbstractDatabase implements Database {
             embeddables = new ArrayList<>();
 
             if (getIncludeEmbeddables()) {
-                try {
-                    List<EmbeddableDefinition> r = getEmbeddables();
+                onError(ERROR, "Error while fetching embeddables", new ExceptionRunnable() {
+                    @Override
+                    public void run() throws Exception {
+                        List<EmbeddableDefinition> r = getEmbeddables();
 
-                    embeddables = sort(r);
-                    // indexes = sort(filterExcludeInclude(r)); TODO Support include / exclude for indexes (and constraints!)
-                    log.info("Embeddables fetched", fetchedSize(r, embeddables));
-                }
-                catch (Exception e) {
-                    log.error("Error while fetching embeddables", e);
-                }
+                        embeddables = sort(r);
+                        // indexes = sort(filterExcludeInclude(r)); TODO Support include / exclude for indexes (and constraints!)
+                        log.info("Embeddables fetched", fetchedSize(r, embeddables));
+                    }
+                });
             }
             else
                 log.info("Embeddables excluded");
@@ -1832,15 +1848,15 @@ public abstract class AbstractDatabase implements Database {
         if (domains == null) {
             domains = new ArrayList<>();
 
-            try {
-                List<DomainDefinition> e = getDomains0();
+            onError(ERROR, "Error while fetching domains", new ExceptionRunnable() {
+                @Override
+                public void run() throws Exception {
+                    List<DomainDefinition> e = getDomains0();
 
-                domains = sort(filterExcludeInclude(e));
-                log.info("Domains fetched", fetchedSize(e, domains));
-            }
-            catch (Exception e) {
-                log.error("Error while fetching domains", e);
-            }
+                    domains = sort(filterExcludeInclude(e));
+                    log.info("Domains fetched", fetchedSize(e, domains));
+                }
+            });
         }
 
         return domains;
@@ -1872,15 +1888,15 @@ public abstract class AbstractDatabase implements Database {
             arrays = new ArrayList<>();
 
             if (getIncludeUDTs()) {
-                try {
-                    List<ArrayDefinition> a = getArrays0();
+                onError(ERROR, "Error while fetching ARRAYs", new ExceptionRunnable() {
+                    @Override
+                    public void run() throws Exception {
+                        List<ArrayDefinition> a = getArrays0();
 
-                    arrays = sort(filterExcludeInclude(a));
-                    log.info("ARRAYs fetched", fetchedSize(a, arrays));
-                }
-                catch (Exception e) {
-                    log.error("Error while fetching ARRAYS", e);
-                }
+                        arrays = sort(filterExcludeInclude(a));
+                        log.info("ARRAYs fetched", fetchedSize(a, arrays));
+                    }
+                });
             }
             else
                 log.info("ARRAYs excluded");
@@ -1917,15 +1933,15 @@ public abstract class AbstractDatabase implements Database {
             udts = new ArrayList<>();
 
             if (getIncludeUDTs()) {
-                try {
-                    List<UDTDefinition> u = getUDTs0();
+                onError(ERROR, "Error while fetching UDTs", new ExceptionRunnable() {
+                    @Override
+                    public void run() throws Exception {
+                        List<UDTDefinition> u = getUDTs0();
 
-                    udts = sort(filterExcludeInclude(u));
-                    log.info("UDTs fetched", fetchedSize(u, udts));
-                }
-                catch (Exception e) {
-                    log.error("Error while fetching udts", e);
-                }
+                        udts = sort(filterExcludeInclude(u));
+                        log.info("UDTs fetched", fetchedSize(u, udts));
+                    }
+                });
             }
             else
                 log.info("UDTs excluded");
@@ -1985,12 +2001,12 @@ public abstract class AbstractDatabase implements Database {
             // [#3559] If the code generator doesn't need relation information, we shouldn't
             // populate them here to avoid running potentially expensive queries.
             if (includeRelations) {
-                try {
-                    relations = getRelations0();
-                }
-                catch (Exception e) {
-                    log.error("Error while fetching relations", e);
-                }
+                onError(ERROR, "Error while fetching relations", new ExceptionRunnable() {
+                    @Override
+                    public void run() throws Exception {
+                        relations = getRelations0();
+                    }
+                });
             }
         }
 
@@ -2003,16 +2019,16 @@ public abstract class AbstractDatabase implements Database {
             indexes = new ArrayList<>();
 
             if (getIncludeIndexes()) {
-                try {
-                    List<IndexDefinition> r = getIndexes0();
+                onError(ERROR, "Error while fetching indexes", new ExceptionRunnable() {
+                    @Override
+                    public void run() throws Exception {
+                        List<IndexDefinition> r = getIndexes0();
 
-                    indexes = sort(r);
-                    // indexes = sort(filterExcludeInclude(r)); TODO Support include / exclude for indexes (and constraints!)
-                    log.info("Indexes fetched", fetchedSize(r, indexes));
-                }
-                catch (Exception e) {
-                    log.error("Error while fetching indexes", e);
-                }
+                        indexes = sort(r);
+                        // indexes = sort(filterExcludeInclude(r)); TODO Support include / exclude for indexes (and constraints!)
+                        log.info("Indexes fetched", fetchedSize(r, indexes));
+                    }
+                });
             }
             else
                 log.info("Indexes excluded");
@@ -2056,15 +2072,15 @@ public abstract class AbstractDatabase implements Database {
             routines = new ArrayList<>();
 
             if (getIncludeRoutines()) {
-                try {
-                    List<RoutineDefinition> r = getRoutines0();
+                onError(ERROR, "Error while fetching routines", new ExceptionRunnable() {
+                    @Override
+                    public void run() throws Exception {
+                        List<RoutineDefinition> r = getRoutines0();
 
-                    routines = sort(filterExcludeInclude(r));
-                    log.info("Routines fetched", fetchedSize(r, routines));
-                }
-                catch (Exception e) {
-                    log.error("Error while fetching routines", e);
-                }
+                        routines = sort(filterExcludeInclude(r));
+                        log.info("Routines fetched", fetchedSize(r, routines));
+                    }
+                });
             }
             else
                 log.info("Routines excluded");
@@ -2082,15 +2098,15 @@ public abstract class AbstractDatabase implements Database {
             packages = new ArrayList<>();
 
             if (getIncludePackages()) {
-                try {
-                    List<PackageDefinition> p = getPackages0();
+                onError(ERROR, "Error while fetching packages", new ExceptionRunnable() {
+                    @Override
+                    public void run() throws Exception {
+                        List<PackageDefinition> p = getPackages0();
 
-                    packages = sort(filterExcludeInclude(p));
-                    log.info("Packages fetched", fetchedSize(p, packages));
-                }
-                catch (Exception e) {
-                    log.error("Error while fetching packages", e);
-                }
+                        packages = sort(filterExcludeInclude(p));
+                        log.info("Packages fetched", fetchedSize(p, packages));
+                    }
+                });
             }
             else
                 log.info("Packages excluded");
@@ -2272,52 +2288,58 @@ public abstract class AbstractDatabase implements Database {
     protected final Relations getRelations0() {
         DefaultRelations result = new DefaultRelations();
 
-        try {
-            if (getIncludePrimaryKeys())
-                loadPrimaryKeys(result);
-        }
-        catch (Exception e) {
-            log.error("Error while fetching primary keys", e);
-        }
-
-        try {
-            if (getIncludeUniqueKeys())
-                loadUniqueKeys(result);
-        }
-        catch (Exception e) {
-            log.error("Error while fetching unique keys", e);
+        if (getIncludePrimaryKeys()) {
+            onError(ERROR, "Error while fetching primary keys", new ExceptionRunnable() {
+                @Override
+                public void run() throws Exception {
+                    loadPrimaryKeys(result);
+                }
+            });
         }
 
-        try {
-            if (getIncludeForeignKeys())
-                loadForeignKeys(result);
-        }
-        catch (Exception e) {
-            log.error("Error while fetching foreign keys", e);
-        }
-
-        try {
-            if (getIncludeCheckConstraints())
-                loadCheckConstraints(result);
-        }
-        catch (Exception e) {
-            log.error("Error while fetching check constraints", e);
+        if (getIncludeUniqueKeys()) {
+            onError(ERROR, "Error while fetching unique keys", new ExceptionRunnable() {
+                @Override
+                public void run() throws Exception {
+                        loadUniqueKeys(result);
+                }
+            });
         }
 
-        try {
-            if (getIncludePrimaryKeys())
-                syntheticPrimaryKeys(result);
-        }
-        catch (Exception e) {
-            log.error("Error while generating synthetic primary keys", e);
+        if (getIncludeForeignKeys()) {
+            onError(ERROR, "Error while fetching foreign keys", new ExceptionRunnable() {
+                @Override
+                public void run() throws Exception {
+                        loadForeignKeys(result);
+                }
+            });
         }
 
-        try {
-            if (getIncludePrimaryKeys())
-                overridePrimaryKeys(result);
+        if (getIncludeCheckConstraints()) {
+            onError(ERROR, "Error while fetching check constraints", new ExceptionRunnable() {
+                @Override
+                public void run() throws Exception {
+                    loadCheckConstraints(result);
+                }
+            });
         }
-        catch (Exception e) {
-            log.error("Error while overriding primary keys", e);
+
+        if (getIncludePrimaryKeys()) {
+            onError(ERROR, "Error while generating synthetic primary keys", new ExceptionRunnable() {
+                @Override
+                public void run() throws Exception {
+                    syntheticPrimaryKeys(result);
+                }
+            });
+        }
+
+        if (getIncludePrimaryKeys()) {
+            onError(ERROR, "Error while fetching domains", new ExceptionRunnable() {
+                @Override
+                public void run() throws Exception {
+                    overridePrimaryKeys(result);
+                }
+            });
         }
 
         return result;
@@ -2487,22 +2509,41 @@ public abstract class AbstractDatabase implements Database {
     protected final DataTypeDefinition getDataTypeForMAX_VAL(SchemaDefinition schema, BigInteger value) {
         DataTypeDefinition type;
 
-        if (BigInteger.valueOf(Byte.MAX_VALUE).compareTo(value) >= 0) {
+        if (BigInteger.valueOf(Byte.MAX_VALUE).compareTo(value) >= 0)
             type = new DefaultDataTypeDefinition(this, schema, SQLDataType.NUMERIC.getTypeName(), 0, 2, 0, false, (String) null);
-        }
-        else if (BigInteger.valueOf(Short.MAX_VALUE).compareTo(value) >= 0) {
+        else if (BigInteger.valueOf(Short.MAX_VALUE).compareTo(value) >= 0)
             type = new DefaultDataTypeDefinition(this, schema, SQLDataType.NUMERIC.getTypeName(), 0, 4, 0, false, (String) null);
-        }
-        else if (BigInteger.valueOf(Integer.MAX_VALUE).compareTo(value) >= 0) {
+        else if (BigInteger.valueOf(Integer.MAX_VALUE).compareTo(value) >= 0)
             type = new DefaultDataTypeDefinition(this, schema, SQLDataType.NUMERIC.getTypeName(), 0, 9, 0, false, (String) null);
-        }
-        else if (BigInteger.valueOf(Long.MAX_VALUE).compareTo(value) >= 0) {
+        else if (BigInteger.valueOf(Long.MAX_VALUE).compareTo(value) >= 0)
             type = new DefaultDataTypeDefinition(this, schema, SQLDataType.NUMERIC.getTypeName(), 0, 18, 0, false, (String) null);
-        }
-        else {
+        else
             type = new DefaultDataTypeDefinition(this, schema, SQLDataType.NUMERIC.getTypeName(), 0, 38, 0, false, (String) null);
-        }
 
         return type;
+    }
+
+
+    @FunctionalInterface
+
+    private interface ExceptionRunnable {
+        void run() throws Exception;
+    }
+
+    private void onError(Log.Level level, String message, ExceptionRunnable runnable) {
+        try {
+            runnable.run();
+        }
+        catch (Exception e) {
+            switch (onError) {
+                case SILENT:
+                    break;
+                case LOG:
+                    log.log(level, message, e);
+                    break;
+                case FAIL:
+                    throw new RuntimeException(e);
+            }
+        }
     }
 }

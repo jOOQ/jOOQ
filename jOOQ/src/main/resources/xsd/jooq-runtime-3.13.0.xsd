@@ -502,6 +502,10 @@ jOOQ queries, for which no specific fetchSize value was specified.]]></jxb:javad
       <element name="parseIgnoreCommentStop" type="string" minOccurs="0" maxOccurs="1" default="[jooq ignore stop]">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#8325] The ignore comment stop token]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+
+      <element name="applyWorkaroundFor7962" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#7963] Apply workaround for ORA-04043 when inserting into Oracle tables with qualified, quoted identifiers, and fetching generated keys]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
     </all>
   </complexType>
 

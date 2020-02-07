@@ -243,6 +243,8 @@ public class Settings
     protected String parseIgnoreCommentStart = "[jooq ignore start]";
     @XmlElement(defaultValue = "[jooq ignore stop]")
     protected String parseIgnoreCommentStop = "[jooq ignore stop]";
+    @XmlElement(defaultValue = "true")
+    protected Boolean applyWorkaroundFor7962 = true;
     @XmlElementWrapper(name = "interpreterSearchPath")
     @XmlElement(name = "schema")
     protected List<InterpreterSearchSchema> interpreterSearchPath;
@@ -2065,6 +2067,30 @@ public class Settings
         this.parseIgnoreCommentStop = value;
     }
 
+    /**
+     * [#7963] Apply workaround for ORA-04043 when inserting into Oracle tables with qualified, quoted identifiers, and fetching generated keys
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isApplyWorkaroundFor7962() {
+        return applyWorkaroundFor7962;
+    }
+
+    /**
+     * Sets the value of the applyWorkaroundFor7962 property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setApplyWorkaroundFor7962(Boolean value) {
+        this.applyWorkaroundFor7962 = value;
+    }
+
     public List<InterpreterSearchSchema> getInterpreterSearchPath() {
         if (interpreterSearchPath == null) {
             interpreterSearchPath = new ArrayList<InterpreterSearchSchema>();
@@ -2760,6 +2786,11 @@ public class Settings
         return this;
     }
 
+    public Settings withApplyWorkaroundFor7962(Boolean value) {
+        setApplyWorkaroundFor7962(value);
+        return this;
+    }
+
     public Settings withInterpreterSearchPath(InterpreterSearchSchema... values) {
         if (values!= null) {
             for (InterpreterSearchSchema value: values) {
@@ -2889,6 +2920,7 @@ public class Settings
         builder.append("parseIgnoreComments", parseIgnoreComments);
         builder.append("parseIgnoreCommentStart", parseIgnoreCommentStart);
         builder.append("parseIgnoreCommentStop", parseIgnoreCommentStop);
+        builder.append("applyWorkaroundFor7962", applyWorkaroundFor7962);
         builder.append("interpreterSearchPath", "schema", interpreterSearchPath);
         builder.append("parseSearchPath", "schema", parseSearchPath);
     }
@@ -3677,6 +3709,15 @@ public class Settings
                 return false;
             }
         }
+        if (applyWorkaroundFor7962 == null) {
+            if (other.applyWorkaroundFor7962 != null) {
+                return false;
+            }
+        } else {
+            if (!applyWorkaroundFor7962 .equals(other.applyWorkaroundFor7962)) {
+                return false;
+            }
+        }
         if (interpreterSearchPath == null) {
             if (other.interpreterSearchPath!= null) {
                 return false;
@@ -3787,6 +3828,7 @@ public class Settings
         result = ((prime*result)+((parseIgnoreComments == null)? 0 :parseIgnoreComments.hashCode()));
         result = ((prime*result)+((parseIgnoreCommentStart == null)? 0 :parseIgnoreCommentStart.hashCode()));
         result = ((prime*result)+((parseIgnoreCommentStop == null)? 0 :parseIgnoreCommentStop.hashCode()));
+        result = ((prime*result)+((applyWorkaroundFor7962 == null)? 0 :applyWorkaroundFor7962 .hashCode()));
         result = ((prime*result)+((interpreterSearchPath == null)? 0 :interpreterSearchPath.hashCode()));
         result = ((prime*result)+((parseSearchPath == null)? 0 :parseSearchPath.hashCode()));
         return result;

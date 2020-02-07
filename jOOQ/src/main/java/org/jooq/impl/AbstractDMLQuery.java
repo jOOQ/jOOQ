@@ -106,6 +106,7 @@ import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Field;
 import org.jooq.Identity;
+import org.jooq.Insert;
 import org.jooq.Name;
 import org.jooq.Param;
 // ...
@@ -239,6 +240,19 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
     }
 
     final Table<?> table(Context<?> ctx) {
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

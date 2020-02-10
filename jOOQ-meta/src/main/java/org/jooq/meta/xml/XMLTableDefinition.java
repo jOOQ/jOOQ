@@ -44,6 +44,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jooq.TableOptions.TableType;
 import org.jooq.meta.AbstractTableDefinition;
 import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.DataTypeDefinition;
@@ -68,7 +69,11 @@ public class XMLTableDefinition extends AbstractTableDefinition {
     }
 
     public XMLTableDefinition(SchemaDefinition schema, InformationSchema info, Table table, String comment) {
-        super(schema, table.getTableName(), comment);
+        this(schema, info, table, comment, TableType.TABLE);
+    }
+
+    public XMLTableDefinition(SchemaDefinition schema, InformationSchema info, Table table, String comment, TableType tableType) {
+        super(schema, table.getTableName(), comment, tableType);
 
         this.info = info;
         this.table = table;

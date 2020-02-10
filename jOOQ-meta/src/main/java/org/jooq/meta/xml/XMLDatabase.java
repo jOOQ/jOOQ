@@ -82,6 +82,7 @@ import org.jooq.Name;
 import org.jooq.SQLDialect;
 import org.jooq.SortOrder;
 import org.jooq.Source;
+import org.jooq.TableOptions.TableType;
 import org.jooq.exception.IOException;
 import org.jooq.impl.DSL;
 import org.jooq.meta.AbstractDatabase;
@@ -546,7 +547,16 @@ public class XMLDatabase extends AbstractDatabase {
             if (getInputSchemata().contains(table.getTableSchema())) {
                 SchemaDefinition schema = getSchema(table.getTableSchema());
 
-                result.add(new XMLTableDefinition(schema, info(), table, table.getComment()));
+                TableType tableType;
+
+                switch (table.getTableType()) {
+                    case GLOBAL_TEMPORARY: tableType = TableType.TEMPORARY; break;
+                    case VIEW:             tableType = TableType.VIEW; break;
+                    case BASE_TABLE:
+                    default:               tableType = TableType.TABLE; break;
+                }
+
+                result.add(new XMLTableDefinition(schema, info(), table, table.getComment(), tableType));
             }
         }
 

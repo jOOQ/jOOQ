@@ -72,6 +72,7 @@ import org.jooq.util.xml.jaxb.KeyColumnUsage;
 import org.jooq.util.xml.jaxb.ReferentialConstraint;
 import org.jooq.util.xml.jaxb.TableConstraint;
 import org.jooq.util.xml.jaxb.TableConstraintType;
+import org.jooq.util.xml.jaxb.TableType;
 
 /**
  * @author Lukas Eder
@@ -226,6 +227,17 @@ final class InformationSchemaExport {
 
         if (!StringUtils.isBlank(t.getSchema().getName()))
             it.setTableSchema(t.getSchema().getName());
+
+        switch (t.getOptions().type()) {
+            case MATERIALIZED_VIEW:
+            case VIEW:              it.setTableType(TableType.VIEW); break;
+            case TEMPORARY:         it.setTableType(TableType.GLOBAL_TEMPORARY); break;
+            case FUNCTION:
+            case TABLE:
+            case EXPRESSION:
+            case UNKNOWN:
+            default:                it.setTableType(TableType.BASE_TABLE); break;
+        }
 
         it.setTableName(t.getName());
         it.setComment(t.getComment());

@@ -62,6 +62,8 @@ import org.jooq.Sequence;
 import org.jooq.SortField;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
+import org.jooq.TableOptions.TableType;
 import org.jooq.UniqueKey;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.util.xml.jaxb.CheckConstraint;
@@ -171,7 +173,16 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
                 continue tableLoop;
             }
 
-            InformationSchemaTable it = new InformationSchemaTable(xt.getTableName(), schema, xt.getComment());
+            TableType tableType;
+
+            switch (xt.getTableType()) {
+                case GLOBAL_TEMPORARY: tableType = TableType.TEMPORARY; break;
+                case VIEW:             tableType = TableType.VIEW; break;
+                case BASE_TABLE:
+                default:               tableType = TableType.TABLE; break;
+            }
+
+            InformationSchemaTable it = new InformationSchemaTable(xt.getTableName(), schema, xt.getComment(), tableType);
             tables.add(it);
             tablesByName.put(name(xt.getTableCatalog(), xt.getTableSchema(), xt.getTableName()), it);
         }
@@ -584,7 +595,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
          */
         private static final long serialVersionUID = 7290709749127378187L;
 
-        public InformationSchemaSchema(String name, Catalog catalog, String comment) {
+        InformationSchemaSchema(String name, Catalog catalog, String comment) {
             super(name, catalog, comment);
         }
 
@@ -612,8 +623,8 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
         final List<Check<Record>>              checks           = new ArrayList<>();
         final List<Index>                      indexes          = new ArrayList<>();
 
-        public InformationSchemaTable(String name, Schema schema, String comment) {
-            super(name, schema, null, null, comment);
+        InformationSchemaTable(String name, Schema schema, String comment, TableType tableType) {
+            super(DSL.name(name), schema, null, null, DSL.comment(comment), TableOptions.of(tableType));
         }
 
         @Override

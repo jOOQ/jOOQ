@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.jooq.util.jaxb.tools.StringAdapter;
@@ -25,6 +26,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *         &lt;element name="table_catalog" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="table_schema" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="table_name" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="table_type" type="{http://www.jooq.org/xsd/jooq-meta-3.12.0.xsd}TableType"/&gt;
  *         &lt;element name="comment" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;
@@ -54,6 +56,9 @@ public class Table implements Serializable, XMLAppendable
     @XmlElement(name = "table_name", required = true)
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String tableName;
+    @XmlElement(name = "table_type", required = true, defaultValue = "BASE TABLE")
+    @XmlSchemaType(name = "string")
+    protected TableType tableType = TableType.BASE_TABLE;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String comment;
 
@@ -81,6 +86,14 @@ public class Table implements Serializable, XMLAppendable
         this.tableName = value;
     }
 
+    public TableType getTableType() {
+        return tableType;
+    }
+
+    public void setTableType(TableType value) {
+        this.tableType = value;
+    }
+
     public String getComment() {
         return comment;
     }
@@ -104,6 +117,11 @@ public class Table implements Serializable, XMLAppendable
         return this;
     }
 
+    public Table withTableType(TableType value) {
+        setTableType(value);
+        return this;
+    }
+
     public Table withComment(String value) {
         setComment(value);
         return this;
@@ -114,6 +132,7 @@ public class Table implements Serializable, XMLAppendable
         builder.append("table_catalog", tableCatalog);
         builder.append("table_schema", tableSchema);
         builder.append("table_name", tableName);
+        builder.append("table_type", tableType);
         builder.append("comment", comment);
     }
 
@@ -163,6 +182,15 @@ public class Table implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (tableType == null) {
+            if (other.tableType!= null) {
+                return false;
+            }
+        } else {
+            if (!tableType.equals(other.tableType)) {
+                return false;
+            }
+        }
         if (comment == null) {
             if (other.comment!= null) {
                 return false;
@@ -182,6 +210,7 @@ public class Table implements Serializable, XMLAppendable
         result = ((prime*result)+((tableCatalog == null)? 0 :tableCatalog.hashCode()));
         result = ((prime*result)+((tableSchema == null)? 0 :tableSchema.hashCode()));
         result = ((prime*result)+((tableName == null)? 0 :tableName.hashCode()));
+        result = ((prime*result)+((tableType == null)? 0 :tableType.hashCode()));
         result = ((prime*result)+((comment == null)? 0 :comment.hashCode()));
         return result;
     }

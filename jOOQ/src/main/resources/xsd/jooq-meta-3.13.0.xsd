@@ -88,6 +88,7 @@
             <element name="table_catalog" type="string" minOccurs="0" maxOccurs="1" />
             <element name="table_schema" type="string" minOccurs="0" maxOccurs="1" />
             <element name="table_name" type="string" minOccurs="1" maxOccurs="1" />
+            <element name="table_type" type="tns:TableType" minOccurs="1" maxOccurs="1" default="BASE TABLE"/>
             <element name="comment" type="string" minOccurs="0" maxOccurs="1" />
         </all>
     </complexType>
@@ -336,6 +337,14 @@
             <enumeration value="ROUTINE"/>
             <enumeration value="TABLE"/>
             <enumeration value="USER-DEFINED TYPE"/>
+        </restriction>
+    </simpleType>
+
+    <simpleType name="TableType">
+        <restriction base="string">
+            <enumeration value="BASE TABLE"/>
+            <enumeration value="VIEW"/>
+            <enumeration value="GLOBAL TEMPORARY"/>
         </restriction>
     </simpleType>
 </schema>

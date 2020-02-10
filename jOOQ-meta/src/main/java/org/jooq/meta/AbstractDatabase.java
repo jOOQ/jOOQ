@@ -2286,7 +2286,7 @@ public abstract class AbstractDatabase implements Database {
      * Retrieve ALL relations from the database.
      */
     protected final Relations getRelations0() {
-        DefaultRelations result = new DefaultRelations();
+        final DefaultRelations result = new DefaultRelations();
 
         if (getIncludePrimaryKeys()) {
             onError(ERROR, "Error while fetching primary keys", new ExceptionRunnable() {

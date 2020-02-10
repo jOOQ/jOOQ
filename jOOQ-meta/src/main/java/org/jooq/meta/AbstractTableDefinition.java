@@ -182,22 +182,22 @@ implements TableDefinition {
     }
 
     @Override
-    public /* non-final */ boolean isTemporary() {
+    public final boolean isTemporary() {
         return tableType == TableType.TEMPORARY;
     }
 
     @Override
-    public /* non-final */ boolean isView() {
+    public final boolean isView() {
         return tableType == TableType.VIEW;
     }
 
     @Override
-    public /* non-final */ boolean isMaterializedView() {
+    public final boolean isMaterializedView() {
         return tableType == TableType.MATERIALIZED_VIEW;
     }
 
     @Override
-    public /* non-final */ boolean isTableValuedFunction() {
+    public final boolean isTableValuedFunction() {
         return tableType == TableType.FUNCTION;
     }
 

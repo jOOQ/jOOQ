@@ -62,6 +62,7 @@ public abstract class AbstractDefinition implements Definition {
     private final String            name;
     private final String            comment;
     private final String            overload;
+    private final String            source;
 
     // [#2238] Some caches for strings that are heavy to calculate in large schemas
     private transient String       qualifiedInputName;
@@ -83,6 +84,10 @@ public abstract class AbstractDefinition implements Definition {
     }
 
     public AbstractDefinition(Database database, SchemaDefinition schema, PackageDefinition pkg, String name, String comment, String overload) {
+        this(database, schema, pkg, name, comment, overload, null);
+    }
+
+    public AbstractDefinition(Database database, SchemaDefinition schema, PackageDefinition pkg, String name, String comment, String overload, String source) {
         this.database = database;
 
         // The subclass constructor cannot pass "this" to the super constructor
@@ -93,6 +98,7 @@ public abstract class AbstractDefinition implements Definition {
         this.name = name;
         this.comment = comment;
         this.overload = overload;
+        this.source = source;
     }
 
     @Override
@@ -293,5 +299,10 @@ public abstract class AbstractDefinition implements Definition {
 
     protected final SQLDialect getDialect() {
         return database.getDialect();
+    }
+
+    @Override
+    public final String getSource() {
+        return source;
     }
 }

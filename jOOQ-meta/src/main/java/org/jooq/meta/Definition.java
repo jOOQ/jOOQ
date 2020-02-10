@@ -136,4 +136,10 @@ public interface Definition {
      * @return The overload suffix if applicable
      */
     String getOverload();
+
+    /**
+     * @return The source code of this object, if applicable, or
+     *         <code>null</code>, if no such source code is available.
+     */
+    String getSource();
 }

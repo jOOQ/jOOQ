@@ -2198,11 +2198,11 @@ final class ParserImpl implements Parser {
             return parseCreateSchema(ctx);
         else if (parseKeywordIf(ctx, "SEQUENCE"))
             return parseCreateSequence(ctx);
-        else if (parseKeywordIf(ctx, "OR REPLACE VIEW"))
+        else if (parseKeywordIf(ctx, "OR REPLACE VIEW") || parseKeywordIf(ctx, "OR REPLACE FORCE VIEW"))
             return parseCreateView(ctx, true);
         else if (parseKeywordIf(ctx, "OR ALTER VIEW"))
             return parseCreateView(ctx, true);
-        else if (parseKeywordIf(ctx, "VIEW"))
+        else if (parseKeywordIf(ctx, "VIEW") || parseKeywordIf(ctx, "FORCE VIEW"))
             return parseCreateView(ctx, false);
         else if (parseKeywordIf(ctx, "EXTENSION"))
             return parseCreateExtension(ctx);

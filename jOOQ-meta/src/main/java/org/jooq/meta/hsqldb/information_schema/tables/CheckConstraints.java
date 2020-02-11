@@ -11,6 +11,7 @@ import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.impl.DSL;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.hsqldb.information_schema.InformationSchema;
@@ -22,7 +23,7 @@ import org.jooq.meta.hsqldb.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class CheckConstraints extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -757426002;
+    private static final long serialVersionUID = -689370862;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA.CHECK_CONSTRAINTS</code>
@@ -83,7 +84,7 @@ public class CheckConstraints extends TableImpl<Record> {
     }
 
     private CheckConstraints(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment("one row for each domain constraint, table check constraint, and assertion."));
+        super(alias, null, aliased, parameters, DSL.comment("one row for each domain constraint, table check constraint, and assertion."), TableOptions.table());
     }
 
     public <O extends Record> CheckConstraints(Table<O> child, ForeignKey<O, Record> key) {

@@ -22,6 +22,7 @@ import org.jooq.meta.postgres.information_schema.tables.Schemata;
 import org.jooq.meta.postgres.information_schema.tables.Sequences;
 import org.jooq.meta.postgres.information_schema.tables.TableConstraints;
 import org.jooq.meta.postgres.information_schema.tables.Tables;
+import org.jooq.meta.postgres.information_schema.tables.Views;
 
 
 /**
@@ -30,7 +31,7 @@ import org.jooq.meta.postgres.information_schema.tables.Tables;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class InformationSchema extends SchemaImpl {
 
-    private static final long serialVersionUID = -756918565;
+    private static final long serialVersionUID = 1434628550;
 
     /**
      * The reference instance of <code>information_schema</code>
@@ -98,6 +99,11 @@ public class InformationSchema extends SchemaImpl {
     public final Tables TABLES = Tables.TABLES;
 
     /**
+     * The table <code>information_schema.views</code>.
+     */
+    public final Views VIEWS = Views.VIEWS;
+
+    /**
      * No further instances allowed
      */
     private InformationSchema() {
@@ -124,6 +130,7 @@ public class InformationSchema extends SchemaImpl {
             Schemata.SCHEMATA,
             Sequences.SEQUENCES,
             TableConstraints.TABLE_CONSTRAINTS,
-            Tables.TABLES);
+            Tables.TABLES,
+            Views.VIEWS);
     }
 }

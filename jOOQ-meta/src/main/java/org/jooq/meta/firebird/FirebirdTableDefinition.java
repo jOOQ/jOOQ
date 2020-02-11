@@ -70,8 +70,8 @@ public class FirebirdTableDefinition extends AbstractTableDefinition {
         super(schema, name, comment);
     }
 
-    public FirebirdTableDefinition(SchemaDefinition schema, String name, String comment, TableType tableType) {
-        super(schema, name, comment, tableType);
+    public FirebirdTableDefinition(SchemaDefinition schema, String name, String comment, TableType tableType, String source) {
+        super(schema, name, comment, tableType, source);
     }
 
     @Override

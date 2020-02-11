@@ -11,6 +11,7 @@ import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.impl.DSL;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.hsqldb.information_schema.InformationSchema;
@@ -22,7 +23,7 @@ import org.jooq.meta.hsqldb.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ElementTypes extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -1574646653;
+    private static final long serialVersionUID = 1446349351;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA.ELEMENT_TYPES</code>
@@ -218,7 +219,7 @@ public class ElementTypes extends TableImpl<Record> {
     }
 
     private ElementTypes(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""));
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     public <O extends Record> ElementTypes(Table<O> child, ForeignKey<O, Record> key) {

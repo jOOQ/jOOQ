@@ -70,6 +70,7 @@ import static org.jooq.meta.postgres.information_schema.Tables.ROUTINES;
 import static org.jooq.meta.postgres.information_schema.Tables.SEQUENCES;
 import static org.jooq.meta.postgres.information_schema.Tables.TABLES;
 import static org.jooq.meta.postgres.information_schema.Tables.TABLE_CONSTRAINTS;
+import static org.jooq.meta.postgres.information_schema.Tables.VIEWS;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_CLASS;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_CONSTRAINT;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_DESCRIPTION;
@@ -388,8 +389,8 @@ public class PostgresDatabase extends AbstractDatabase {
         List<TableDefinition> result = new ArrayList<>();
         Map<Name, PostgresTableDefinition> map = new HashMap<>();
 
-        Select<Record5<String, String, String, String, String>> empty =
-            select(inline(""), inline(""), inline(""), inline(""), inline(""))
+        Select<Record6<String, String, String, String, String, String>> empty =
+            select(inline(""), inline(""), inline(""), inline(""), inline(""), inline(""))
             .where(falseCondition());
 
         for (Record record : create()
@@ -401,16 +402,20 @@ public class PostgresDatabase extends AbstractDatabase {
                         TABLES.TABLE_NAME.as("specific_name"),
                         PG_DESCRIPTION.DESCRIPTION,
                         when(TABLES.TABLE_TYPE.eq(inline("VIEW")), inline(TableType.VIEW.name()))
-                        .else_(inline(TableType.TABLE.name())).as("table_type"))
+                            .else_(inline(TableType.TABLE.name())).as("table_type"),
+                        VIEWS.VIEW_DEFINITION)
                     .from(TABLES)
                     .join(PG_NAMESPACE)
                         .on(TABLES.TABLE_SCHEMA.eq(PG_NAMESPACE.NSPNAME))
                     .join(PG_CLASS)
                         .on(PG_CLASS.RELNAME.eq(TABLES.TABLE_NAME))
                         .and(PG_CLASS.RELNAMESPACE.eq(oid(PG_NAMESPACE)))
-                    .leftOuterJoin(PG_DESCRIPTION)
+                    .leftJoin(PG_DESCRIPTION)
                         .on(PG_DESCRIPTION.OBJOID.eq(oid(PG_CLASS)))
                         .and(PG_DESCRIPTION.OBJSUBID.eq(0))
+                    .leftJoin(VIEWS)
+                        .on(TABLES.TABLE_SCHEMA.eq(VIEWS.TABLE_SCHEMA))
+                        .and(TABLES.TABLE_NAME.eq(VIEWS.TABLE_NAME))
                     .where(TABLES.TABLE_SCHEMA.in(getInputSchemata()))
 
                     // To stay on the safe side, if the INFORMATION_SCHEMA ever
@@ -437,7 +442,8 @@ public class PostgresDatabase extends AbstractDatabase {
                         field("{0}::varchar", PG_CLASS.RELNAME.getDataType(), PG_CLASS.RELNAME),
                         field("{0}::varchar", PG_CLASS.RELNAME.getDataType(), PG_CLASS.RELNAME),
                         PG_DESCRIPTION.DESCRIPTION,
-                        inline(TableType.MATERIALIZED_VIEW.name()).as("table_type"))
+                        inline(TableType.MATERIALIZED_VIEW.name()).as("table_type"),
+                        inline(""))
                     .from(PG_CLASS)
                     .join(PG_NAMESPACE)
                         .on(PG_CLASS.RELNAMESPACE.eq(oid(PG_NAMESPACE)))
@@ -456,7 +462,8 @@ public class PostgresDatabase extends AbstractDatabase {
                             ROUTINES.ROUTINE_NAME,
                             ROUTINES.SPECIFIC_NAME,
                             inline(""),
-                            inline(TableType.FUNCTION.name()).as("table_type"))
+                            inline(TableType.FUNCTION.name()).as("table_type"),
+                            inline(""))
                         .from(ROUTINES)
                         .join(PG_NAMESPACE).on(ROUTINES.SPECIFIC_SCHEMA.eq(PG_NAMESPACE.NSPNAME))
                         .join(PG_PROC).on(PG_PROC.PRONAMESPACE.eq(oid(PG_NAMESPACE)))
@@ -473,6 +480,10 @@ public class PostgresDatabase extends AbstractDatabase {
             String name = record.get(TABLES.TABLE_NAME);
             String comment = record.get(PG_DESCRIPTION.DESCRIPTION, String.class);
             TableType tableType = record.get("table_type", TableType.class);
+            String source = record.get(VIEWS.VIEW_DEFINITION);
+
+            if (source != null && !source.toLowerCase().startsWith("create"))
+                source = "create view \"" + name + "\" as " + source;
 
             switch (tableType) {
                 case FUNCTION:
@@ -482,7 +493,7 @@ public class PostgresDatabase extends AbstractDatabase {
                     result.add(new PostgresMaterializedViewDefinition(schema, name, comment));
                     break;
                 default:
-                    PostgresTableDefinition t = new PostgresTableDefinition(schema, name, comment, tableType);
+                    PostgresTableDefinition t = new PostgresTableDefinition(schema, name, comment, tableType, source);
                     result.add(t);
                     map.put(name(schema.getName(), name), t);
                     break;

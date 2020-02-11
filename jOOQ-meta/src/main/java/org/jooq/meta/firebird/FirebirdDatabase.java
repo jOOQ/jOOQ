@@ -69,6 +69,7 @@ import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Record3;
+import org.jooq.Record4;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.SortOrder;
@@ -383,18 +384,21 @@ public class FirebirdDatabase extends AbstractDatabase {
     protected List<TableDefinition> getTables0() throws SQLException {
         List<TableDefinition> result = new ArrayList<>();
 
-        for (Record3<String, String, String> record : create()
+        for (Record4<String, String, String, String> record : create()
                 .select(
                     RDB$RELATIONS.RDB$RELATION_NAME.trim(),
                     RDB$RELATIONS.RDB$DESCRIPTION.trim(),
                     when(RDB$RELATIONS.RDB$RELATION_TYPE.eq(inline((short) 1)), inline(TableType.VIEW.name()))
-                    .else_(inline(TableType.TABLE.name())).trim().as("table_type"))
+                        .else_(inline(TableType.TABLE.name())).trim().as("table_type"),
+                    when(RDB$RELATIONS.RDB$VIEW_SOURCE.lower().like(inline("create%")), RDB$RELATIONS.RDB$VIEW_SOURCE.trim())
+                        .else_(inline("create view \"").concat(RDB$RELATIONS.RDB$RELATION_NAME.trim()).concat("\" as ").concat(RDB$RELATIONS.RDB$VIEW_SOURCE)).as("view_source"))
                 .from(RDB$RELATIONS)
                 .unionAll(
                      select(
                          RDB$PROCEDURES.RDB$PROCEDURE_NAME.trim(),
                          inline(""),
-                         inline(TableType.FUNCTION.name()).trim())
+                         inline(TableType.FUNCTION.name()).trim(),
+                         inline(""))
                     .from(RDB$PROCEDURES)
 
                     // "selectable" procedures
@@ -410,7 +414,7 @@ public class FirebirdDatabase extends AbstractDatabase {
             if (TableType.FUNCTION == tableType)
                 result.add(new FirebirdTableValuedFunction(getSchemata().get(0), record.value1(), ""));
             else
-                result.add(new FirebirdTableDefinition(getSchemata().get(0), record.value1(), record.value2(), tableType));
+                result.add(new FirebirdTableDefinition(getSchemata().get(0), record.value1(), record.value2(), tableType, record.value4()));
         }
 
         return result;

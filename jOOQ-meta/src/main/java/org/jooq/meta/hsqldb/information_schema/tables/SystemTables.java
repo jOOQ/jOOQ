@@ -11,6 +11,7 @@ import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.impl.DSL;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.hsqldb.information_schema.InformationSchema;
@@ -22,7 +23,7 @@ import org.jooq.meta.hsqldb.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SystemTables extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 558643219;
+    private static final long serialVersionUID = 108850521;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA.SYSTEM_TABLES</code>
@@ -128,7 +129,7 @@ public class SystemTables extends TableImpl<Record> {
     }
 
     private SystemTables(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment("the accessible tables defined within this database"));
+        super(alias, null, aliased, parameters, DSL.comment("the accessible tables defined within this database"), TableOptions.table());
     }
 
     public <O extends Record> SystemTables(Table<O> child, ForeignKey<O, Record> key) {

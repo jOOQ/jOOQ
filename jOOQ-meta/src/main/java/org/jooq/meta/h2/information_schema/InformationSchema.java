@@ -4,7 +4,6 @@
 package org.jooq.meta.h2.information_schema;
 
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,6 +21,7 @@ import org.jooq.meta.h2.information_schema.tables.Schemata;
 import org.jooq.meta.h2.information_schema.tables.Sequences;
 import org.jooq.meta.h2.information_schema.tables.Tables;
 import org.jooq.meta.h2.information_schema.tables.TypeInfo;
+import org.jooq.meta.h2.information_schema.tables.Views;
 
 
 /**
@@ -30,7 +30,7 @@ import org.jooq.meta.h2.information_schema.tables.TypeInfo;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class InformationSchema extends SchemaImpl {
 
-    private static final long serialVersionUID = 1869673880;
+    private static final long serialVersionUID = -463923478;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA</code>
@@ -40,57 +40,62 @@ public class InformationSchema extends SchemaImpl {
     /**
      * The table <code>INFORMATION_SCHEMA.COLUMNS</code>.
      */
-    public final Columns COLUMNS = org.jooq.meta.h2.information_schema.tables.Columns.COLUMNS;
+    public final Columns COLUMNS = Columns.COLUMNS;
 
     /**
      * The table <code>INFORMATION_SCHEMA.CONSTRAINTS</code>.
      */
-    public final Constraints CONSTRAINTS = org.jooq.meta.h2.information_schema.tables.Constraints.CONSTRAINTS;
+    public final Constraints CONSTRAINTS = Constraints.CONSTRAINTS;
 
     /**
      * The table <code>INFORMATION_SCHEMA.CROSS_REFERENCES</code>.
      */
-    public final CrossReferences CROSS_REFERENCES = org.jooq.meta.h2.information_schema.tables.CrossReferences.CROSS_REFERENCES;
+    public final CrossReferences CROSS_REFERENCES = CrossReferences.CROSS_REFERENCES;
 
     /**
      * The table <code>INFORMATION_SCHEMA.DOMAINS</code>.
      */
-    public final Domains DOMAINS = org.jooq.meta.h2.information_schema.tables.Domains.DOMAINS;
+    public final Domains DOMAINS = Domains.DOMAINS;
 
     /**
      * The table <code>INFORMATION_SCHEMA.FUNCTION_ALIASES</code>.
      */
-    public final FunctionAliases FUNCTION_ALIASES = org.jooq.meta.h2.information_schema.tables.FunctionAliases.FUNCTION_ALIASES;
+    public final FunctionAliases FUNCTION_ALIASES = FunctionAliases.FUNCTION_ALIASES;
 
     /**
      * The table <code>INFORMATION_SCHEMA.FUNCTION_COLUMNS</code>.
      */
-    public final FunctionColumns FUNCTION_COLUMNS = org.jooq.meta.h2.information_schema.tables.FunctionColumns.FUNCTION_COLUMNS;
+    public final FunctionColumns FUNCTION_COLUMNS = FunctionColumns.FUNCTION_COLUMNS;
 
     /**
      * The table <code>INFORMATION_SCHEMA.INDEXES</code>.
      */
-    public final Indexes INDEXES = org.jooq.meta.h2.information_schema.tables.Indexes.INDEXES;
+    public final Indexes INDEXES = Indexes.INDEXES;
 
     /**
      * The table <code>INFORMATION_SCHEMA.SCHEMATA</code>.
      */
-    public final Schemata SCHEMATA = org.jooq.meta.h2.information_schema.tables.Schemata.SCHEMATA;
+    public final Schemata SCHEMATA = Schemata.SCHEMATA;
 
     /**
      * The table <code>INFORMATION_SCHEMA.SEQUENCES</code>.
      */
-    public final Sequences SEQUENCES = org.jooq.meta.h2.information_schema.tables.Sequences.SEQUENCES;
+    public final Sequences SEQUENCES = Sequences.SEQUENCES;
 
     /**
      * The table <code>INFORMATION_SCHEMA.TABLES</code>.
      */
-    public final Tables TABLES = org.jooq.meta.h2.information_schema.tables.Tables.TABLES;
+    public final Tables TABLES = Tables.TABLES;
 
     /**
      * The table <code>INFORMATION_SCHEMA.TYPE_INFO</code>.
      */
-    public final TypeInfo TYPE_INFO = org.jooq.meta.h2.information_schema.tables.TypeInfo.TYPE_INFO;
+    public final TypeInfo TYPE_INFO = TypeInfo.TYPE_INFO;
+
+    /**
+     * The table <code>INFORMATION_SCHEMA.VIEWS</code>.
+     */
+    public final Views VIEWS = Views.VIEWS;
 
     /**
      * No further instances allowed
@@ -107,12 +112,6 @@ public class InformationSchema extends SchemaImpl {
 
     @Override
     public final List<Table<?>> getTables() {
-        List result = new ArrayList();
-        result.addAll(getTables0());
-        return result;
-    }
-
-    private final List<Table<?>> getTables0() {
         return Arrays.<Table<?>>asList(
             Columns.COLUMNS,
             Constraints.CONSTRAINTS,
@@ -124,6 +123,7 @@ public class InformationSchema extends SchemaImpl {
             Schemata.SCHEMATA,
             Sequences.SEQUENCES,
             Tables.TABLES,
-            TypeInfo.TYPE_INFO);
+            TypeInfo.TYPE_INFO,
+            Views.VIEWS);
     }
 }

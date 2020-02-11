@@ -157,6 +157,10 @@ public class Generate implements Serializable, XMLAppendable
     protected Boolean commentsOnQueues = true;
     @XmlElement(defaultValue = "true")
     protected Boolean commentsOnKeys = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean sources = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean sourcesOnViews = true;
     @XmlElement(defaultValue = "false")
     protected Boolean fluentSetters = false;
     @XmlElement(defaultValue = "false")
@@ -1645,6 +1649,54 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
+     * Turn off generation of all source code on all object types.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isSources() {
+        return sources;
+    }
+
+    /**
+     * Sets the value of the sources property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setSources(Boolean value) {
+        this.sources = value;
+    }
+
+    /**
+     * Turn off generation of all source code on all views.
+     *
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *
+     */
+    public Boolean isSourcesOnViews() {
+        return sourcesOnViews;
+    }
+
+    /**
+     * Sets the value of the sourcesOnViews property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *
+     */
+    public void setSourcesOnViews(Boolean value) {
+        this.sourcesOnViews = value;
+    }
+
+    /**
      * Generate fluent setters in records, POJOs, interfaces.
      *
      * @return
@@ -2217,6 +2269,16 @@ public class Generate implements Serializable, XMLAppendable
         return this;
     }
 
+    public Generate withSources(Boolean value) {
+        setSources(value);
+        return this;
+    }
+
+    public Generate withSourcesOnViews(Boolean value) {
+        setSourcesOnViews(value);
+        return this;
+    }
+
     public Generate withFluentSetters(Boolean value) {
         setFluentSetters(value);
         return this;
@@ -2347,6 +2409,8 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("commentsOnLinks", commentsOnLinks);
         builder.append("commentsOnQueues", commentsOnQueues);
         builder.append("commentsOnKeys", commentsOnKeys);
+        builder.append("sources", sources);
+        builder.append("sourcesOnViews", sourcesOnViews);
         builder.append("fluentSetters", fluentSetters);
         builder.append("javaBeansGettersAndSetters", javaBeansGettersAndSetters);
         builder.append("varargSetters", varargSetters);
@@ -2936,6 +3000,24 @@ public class Generate implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (sources == null) {
+            if (other.sources!= null) {
+                return false;
+            }
+        } else {
+            if (!sources.equals(other.sources)) {
+                return false;
+            }
+        }
+        if (sourcesOnViews == null) {
+            if (other.sourcesOnViews!= null) {
+                return false;
+            }
+        } else {
+            if (!sourcesOnViews.equals(other.sourcesOnViews)) {
+                return false;
+            }
+        }
         if (fluentSetters == null) {
             if (other.fluentSetters!= null) {
                 return false;
@@ -3095,6 +3177,8 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((commentsOnLinks == null)? 0 :commentsOnLinks.hashCode()));
         result = ((prime*result)+((commentsOnQueues == null)? 0 :commentsOnQueues.hashCode()));
         result = ((prime*result)+((commentsOnKeys == null)? 0 :commentsOnKeys.hashCode()));
+        result = ((prime*result)+((sources == null)? 0 :sources.hashCode()));
+        result = ((prime*result)+((sourcesOnViews == null)? 0 :sourcesOnViews.hashCode()));
         result = ((prime*result)+((fluentSetters == null)? 0 :fluentSetters.hashCode()));
         result = ((prime*result)+((javaBeansGettersAndSetters == null)? 0 :javaBeansGettersAndSetters.hashCode()));
         result = ((prime*result)+((varargSetters == null)? 0 :varargSetters.hashCode()));

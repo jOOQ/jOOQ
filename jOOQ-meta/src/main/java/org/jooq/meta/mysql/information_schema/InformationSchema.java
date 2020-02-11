@@ -4,7 +4,6 @@
 package org.jooq.meta.mysql.information_schema;
 
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -21,6 +20,7 @@ import org.jooq.meta.mysql.information_schema.tables.Schemata;
 import org.jooq.meta.mysql.information_schema.tables.Statistics;
 import org.jooq.meta.mysql.information_schema.tables.TableConstraints;
 import org.jooq.meta.mysql.information_schema.tables.Tables;
+import org.jooq.meta.mysql.information_schema.tables.Views;
 
 
 /**
@@ -29,7 +29,7 @@ import org.jooq.meta.mysql.information_schema.tables.Tables;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class InformationSchema extends SchemaImpl {
 
-    private static final long serialVersionUID = -148910691;
+    private static final long serialVersionUID = 1825826342;
 
     /**
      * The reference instance of <code>information_schema</code>
@@ -39,52 +39,57 @@ public class InformationSchema extends SchemaImpl {
     /**
      * The table <code>information_schema.CHECK_CONSTRAINTS</code>.
      */
-    public final CheckConstraints CHECK_CONSTRAINTS = org.jooq.meta.mysql.information_schema.tables.CheckConstraints.CHECK_CONSTRAINTS;
+    public final CheckConstraints CHECK_CONSTRAINTS = CheckConstraints.CHECK_CONSTRAINTS;
 
     /**
      * The table <code>information_schema.COLUMNS</code>.
      */
-    public final Columns COLUMNS = org.jooq.meta.mysql.information_schema.tables.Columns.COLUMNS;
+    public final Columns COLUMNS = Columns.COLUMNS;
 
     /**
      * The table <code>information_schema.KEY_COLUMN_USAGE</code>.
      */
-    public final KeyColumnUsage KEY_COLUMN_USAGE = org.jooq.meta.mysql.information_schema.tables.KeyColumnUsage.KEY_COLUMN_USAGE;
+    public final KeyColumnUsage KEY_COLUMN_USAGE = KeyColumnUsage.KEY_COLUMN_USAGE;
 
     /**
      * The table <code>information_schema.PARAMETERS</code>.
      */
-    public final Parameters PARAMETERS = org.jooq.meta.mysql.information_schema.tables.Parameters.PARAMETERS;
+    public final Parameters PARAMETERS = Parameters.PARAMETERS;
 
     /**
      * The table <code>information_schema.REFERENTIAL_CONSTRAINTS</code>.
      */
-    public final ReferentialConstraints REFERENTIAL_CONSTRAINTS = org.jooq.meta.mysql.information_schema.tables.ReferentialConstraints.REFERENTIAL_CONSTRAINTS;
+    public final ReferentialConstraints REFERENTIAL_CONSTRAINTS = ReferentialConstraints.REFERENTIAL_CONSTRAINTS;
 
     /**
      * The table <code>information_schema.ROUTINES</code>.
      */
-    public final Routines ROUTINES = org.jooq.meta.mysql.information_schema.tables.Routines.ROUTINES;
+    public final Routines ROUTINES = Routines.ROUTINES;
 
     /**
      * The table <code>information_schema.SCHEMATA</code>.
      */
-    public final Schemata SCHEMATA = org.jooq.meta.mysql.information_schema.tables.Schemata.SCHEMATA;
+    public final Schemata SCHEMATA = Schemata.SCHEMATA;
 
     /**
      * The table <code>information_schema.STATISTICS</code>.
      */
-    public final Statistics STATISTICS = org.jooq.meta.mysql.information_schema.tables.Statistics.STATISTICS;
-
-    /**
-     * The table <code>information_schema.TABLES</code>.
-     */
-    public final Tables TABLES = org.jooq.meta.mysql.information_schema.tables.Tables.TABLES;
+    public final Statistics STATISTICS = Statistics.STATISTICS;
 
     /**
      * The table <code>information_schema.TABLE_CONSTRAINTS</code>.
      */
-    public final TableConstraints TABLE_CONSTRAINTS = org.jooq.meta.mysql.information_schema.tables.TableConstraints.TABLE_CONSTRAINTS;
+    public final TableConstraints TABLE_CONSTRAINTS = TableConstraints.TABLE_CONSTRAINTS;
+
+    /**
+     * The table <code>information_schema.TABLES</code>.
+     */
+    public final Tables TABLES = Tables.TABLES;
+
+    /**
+     * The table <code>information_schema.VIEWS</code>.
+     */
+    public final Views VIEWS = Views.VIEWS;
 
     /**
      * No further instances allowed
@@ -101,12 +106,6 @@ public class InformationSchema extends SchemaImpl {
 
     @Override
     public final List<Table<?>> getTables() {
-        List result = new ArrayList();
-        result.addAll(getTables0());
-        return result;
-    }
-
-    private final List<Table<?>> getTables0() {
         return Arrays.<Table<?>>asList(
             CheckConstraints.CHECK_CONSTRAINTS,
             Columns.COLUMNS,
@@ -116,7 +115,8 @@ public class InformationSchema extends SchemaImpl {
             Routines.ROUTINES,
             Schemata.SCHEMATA,
             Statistics.STATISTICS,
+            TableConstraints.TABLE_CONSTRAINTS,
             Tables.TABLES,
-            TableConstraints.TABLE_CONSTRAINTS);
+            Views.VIEWS);
     }
 }

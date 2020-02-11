@@ -72,8 +72,8 @@ public class H2TableDefinition extends AbstractTableDefinition {
         super(schema, name, comment);
     }
 
-    public H2TableDefinition(SchemaDefinition schema, String name, String comment, TableType tableType) {
-        super(schema, name, comment, tableType);
+    public H2TableDefinition(SchemaDefinition schema, String name, String comment, TableType tableType, String source) {
+        super(schema, name, comment, tableType, source);
     }
 
     @Override

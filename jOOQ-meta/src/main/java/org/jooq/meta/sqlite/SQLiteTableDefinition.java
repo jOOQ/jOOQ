@@ -71,8 +71,8 @@ public class SQLiteTableDefinition extends AbstractTableDefinition {
         super(schema, name, comment);
     }
 
-    public SQLiteTableDefinition(SchemaDefinition schema, String name, String comment, TableType tableType) {
-        super(schema, name, comment, tableType);
+    public SQLiteTableDefinition(SchemaDefinition schema, String name, String comment, TableType tableType, String source) {
+        super(schema, name, comment, tableType, source);
     }
 
     @Override

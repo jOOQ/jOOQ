@@ -11,6 +11,7 @@ import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.impl.DSL;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.mysql.information_schema.InformationSchema;
@@ -23,7 +24,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Statistics extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -1229540560;
+    private static final long serialVersionUID = 711396970;
 
     /**
      * The reference instance of <code>information_schema.STATISTICS</code>
@@ -140,7 +141,7 @@ public class Statistics extends TableImpl<Record> {
     }
 
     private Statistics(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""));
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     public <O extends Record> Statistics(Table<O> child, ForeignKey<O, Record> key) {

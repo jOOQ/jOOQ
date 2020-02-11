@@ -4,7 +4,6 @@
 package org.jooq.meta.hsqldb.information_schema;
 
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -25,6 +24,7 @@ import org.jooq.meta.hsqldb.information_schema.tables.SystemIndexinfo;
 import org.jooq.meta.hsqldb.information_schema.tables.SystemTables;
 import org.jooq.meta.hsqldb.information_schema.tables.TableConstraints;
 import org.jooq.meta.hsqldb.information_schema.tables.Tables;
+import org.jooq.meta.hsqldb.information_schema.tables.Views;
 
 
 /**
@@ -33,7 +33,7 @@ import org.jooq.meta.hsqldb.information_schema.tables.Tables;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class InformationSchema extends SchemaImpl {
 
-    private static final long serialVersionUID = -1737332876;
+    private static final long serialVersionUID = 1993917154;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA</code>
@@ -43,72 +43,77 @@ public class InformationSchema extends SchemaImpl {
     /**
      * one row for each domain constraint, table check constraint, and assertion.
      */
-    public final CheckConstraints CHECK_CONSTRAINTS = org.jooq.meta.hsqldb.information_schema.tables.CheckConstraints.CHECK_CONSTRAINTS;
+    public final CheckConstraints CHECK_CONSTRAINTS = CheckConstraints.CHECK_CONSTRAINTS;
 
     /**
      * one row for each column of table of view
      */
-    public final Columns COLUMNS = org.jooq.meta.hsqldb.information_schema.tables.Columns.COLUMNS;
+    public final Columns COLUMNS = Columns.COLUMNS;
 
     /**
      * The table <code>INFORMATION_SCHEMA.ELEMENT_TYPES</code>.
      */
-    public final ElementTypes ELEMENT_TYPES = org.jooq.meta.hsqldb.information_schema.tables.ElementTypes.ELEMENT_TYPES;
+    public final ElementTypes ELEMENT_TYPES = ElementTypes.ELEMENT_TYPES;
 
     /**
      * one row for each column used in s primary key or unique constraint
      */
-    public final KeyColumnUsage KEY_COLUMN_USAGE = org.jooq.meta.hsqldb.information_schema.tables.KeyColumnUsage.KEY_COLUMN_USAGE;
+    public final KeyColumnUsage KEY_COLUMN_USAGE = KeyColumnUsage.KEY_COLUMN_USAGE;
 
     /**
      * one row for each routine parameter
      */
-    public final Parameters PARAMETERS = org.jooq.meta.hsqldb.information_schema.tables.Parameters.PARAMETERS;
+    public final Parameters PARAMETERS = Parameters.PARAMETERS;
 
     /**
      * one row for each foreign key constraint
      */
-    public final ReferentialConstraints REFERENTIAL_CONSTRAINTS = org.jooq.meta.hsqldb.information_schema.tables.ReferentialConstraints.REFERENTIAL_CONSTRAINTS;
+    public final ReferentialConstraints REFERENTIAL_CONSTRAINTS = ReferentialConstraints.REFERENTIAL_CONSTRAINTS;
 
     /**
      * one row for each routine
      */
-    public final Routines ROUTINES = org.jooq.meta.hsqldb.information_schema.tables.Routines.ROUTINES;
+    public final Routines ROUTINES = Routines.ROUTINES;
 
     /**
      * one row for each schema
      */
-    public final Schemata SCHEMATA = org.jooq.meta.hsqldb.information_schema.tables.Schemata.SCHEMATA;
+    public final Schemata SCHEMATA = Schemata.SCHEMATA;
 
     /**
      * one row for each external sequence generator
      */
-    public final Sequences SEQUENCES = org.jooq.meta.hsqldb.information_schema.tables.Sequences.SEQUENCES;
+    public final Sequences SEQUENCES = Sequences.SEQUENCES;
 
     /**
      * the visible columns of each accessible table defined within this database
      */
-    public final SystemColumns SYSTEM_COLUMNS = org.jooq.meta.hsqldb.information_schema.tables.SystemColumns.SYSTEM_COLUMNS;
+    public final SystemColumns SYSTEM_COLUMNS = SystemColumns.SYSTEM_COLUMNS;
 
     /**
      * information about the indices of each accessible table defined within this database
      */
-    public final SystemIndexinfo SYSTEM_INDEXINFO = org.jooq.meta.hsqldb.information_schema.tables.SystemIndexinfo.SYSTEM_INDEXINFO;
+    public final SystemIndexinfo SYSTEM_INDEXINFO = SystemIndexinfo.SYSTEM_INDEXINFO;
 
     /**
      * the accessible tables defined within this database
      */
-    public final SystemTables SYSTEM_TABLES = org.jooq.meta.hsqldb.information_schema.tables.SystemTables.SYSTEM_TABLES;
-
-    /**
-     * one row for each table or view
-     */
-    public final Tables TABLES = org.jooq.meta.hsqldb.information_schema.tables.Tables.TABLES;
+    public final SystemTables SYSTEM_TABLES = SystemTables.SYSTEM_TABLES;
 
     /**
      * one row for each table constraint associated with a table
      */
-    public final TableConstraints TABLE_CONSTRAINTS = org.jooq.meta.hsqldb.information_schema.tables.TableConstraints.TABLE_CONSTRAINTS;
+    public final TableConstraints TABLE_CONSTRAINTS = TableConstraints.TABLE_CONSTRAINTS;
+
+    /**
+     * one row for each table or view
+     */
+    public final Tables TABLES = Tables.TABLES;
+
+    /**
+     * the view descriptors of the accessible views defined within this database
+     */
+    public final Views VIEWS = Views.VIEWS;
 
     /**
      * No further instances allowed
@@ -125,12 +130,6 @@ public class InformationSchema extends SchemaImpl {
 
     @Override
     public final List<Table<?>> getTables() {
-        List result = new ArrayList();
-        result.addAll(getTables0());
-        return result;
-    }
-
-    private final List<Table<?>> getTables0() {
         return Arrays.<Table<?>>asList(
             CheckConstraints.CHECK_CONSTRAINTS,
             Columns.COLUMNS,
@@ -144,7 +143,8 @@ public class InformationSchema extends SchemaImpl {
             SystemColumns.SYSTEM_COLUMNS,
             SystemIndexinfo.SYSTEM_INDEXINFO,
             SystemTables.SYSTEM_TABLES,
+            TableConstraints.TABLE_CONSTRAINTS,
             Tables.TABLES,
-            TableConstraints.TABLE_CONSTRAINTS);
+            Views.VIEWS);
     }
 }

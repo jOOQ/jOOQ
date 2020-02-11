@@ -17,6 +17,7 @@ import org.jooq.meta.hsqldb.information_schema.tables.SystemColumns;
 import org.jooq.meta.hsqldb.information_schema.tables.SystemIndexinfo;
 import org.jooq.meta.hsqldb.information_schema.tables.SystemTables;
 import org.jooq.meta.hsqldb.information_schema.tables.TableConstraints;
+import org.jooq.meta.hsqldb.information_schema.tables.Views;
 
 
 /**
@@ -86,12 +87,17 @@ public class Tables {
     public static final SystemTables SYSTEM_TABLES = SystemTables.SYSTEM_TABLES;
 
     /**
+     * one row for each table constraint associated with a table
+     */
+    public static final TableConstraints TABLE_CONSTRAINTS = TableConstraints.TABLE_CONSTRAINTS;
+
+    /**
      * one row for each table or view
      */
     public static final org.jooq.meta.hsqldb.information_schema.tables.Tables TABLES = org.jooq.meta.hsqldb.information_schema.tables.Tables.TABLES;
 
     /**
-     * one row for each table constraint associated with a table
+     * the view descriptors of the accessible views defined within this database
      */
-    public static final TableConstraints TABLE_CONSTRAINTS = TableConstraints.TABLE_CONSTRAINTS;
+    public static final Views VIEWS = Views.VIEWS;
 }

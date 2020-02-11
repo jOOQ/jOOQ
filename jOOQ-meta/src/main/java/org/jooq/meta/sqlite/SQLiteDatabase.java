@@ -323,16 +323,17 @@ public class SQLiteDatabase extends AbstractDatabase {
                 .select(
                     SQLiteMaster.NAME,
                     when(SQLiteMaster.TYPE.eq(inline("view")), inline(TableType.VIEW.name()))
-                    .else_(inline(TableType.TABLE.name())).as("table_type"))
+                    .else_(inline(TableType.TABLE.name())).as("table_type"),
+                    SQLiteMaster.SQL)
                 .from(SQLITE_MASTER)
                 .where(SQLiteMaster.TYPE.in("table", "view"))
                 .orderBy(SQLiteMaster.NAME)) {
 
             String name = record.get(SQLiteMaster.NAME);
             TableType tableType = record.get("table_type", TableType.class);
+            String source = record.get(SQLiteMaster.SQL);
 
-            SQLiteTableDefinition table = new SQLiteTableDefinition(getSchemata().get(0), name, "", tableType);
-            result.add(table);
+            result.add(new SQLiteTableDefinition(getSchemata().get(0), name, "", tableType, source));
         }
 
         return result;

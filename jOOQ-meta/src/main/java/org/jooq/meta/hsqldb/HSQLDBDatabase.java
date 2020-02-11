@@ -56,6 +56,7 @@ import static org.jooq.meta.hsqldb.information_schema.Tables.SEQUENCES;
 import static org.jooq.meta.hsqldb.information_schema.Tables.SYSTEM_INDEXINFO;
 import static org.jooq.meta.hsqldb.information_schema.Tables.SYSTEM_TABLES;
 import static org.jooq.meta.hsqldb.information_schema.Tables.TABLE_CONSTRAINTS;
+import static org.jooq.meta.hsqldb.information_schema.Tables.VIEWS;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -403,8 +404,14 @@ public class HSQLDBDatabase extends AbstractDatabase {
                     SYSTEM_TABLES.TABLE_NAME,
                     SYSTEM_TABLES.REMARKS,
                     when(SYSTEM_TABLES.TABLE_TYPE.eq(inline("VIEW")), inline(TableType.VIEW.name()))
-                        .else_(inline(TableType.TABLE.name())).trim().as("table_type"))
+                        .else_(inline(TableType.TABLE.name())).trim().as("table_type"),
+                    when(VIEWS.VIEW_DEFINITION.lower().like(inline("create%")), VIEWS.VIEW_DEFINITION)
+                        .else_(inline("create view \"").concat(SYSTEM_TABLES.TABLE_NAME).concat("\" as ").concat(VIEWS.VIEW_DEFINITION)).as(VIEWS.VIEW_DEFINITION)
+                )
                 .from(SYSTEM_TABLES)
+                .leftJoin(VIEWS)
+                    .on(SYSTEM_TABLES.TABLE_SCHEM.eq(VIEWS.TABLE_SCHEMA))
+                    .and(SYSTEM_TABLES.TABLE_NAME.eq(VIEWS.TABLE_NAME))
                 .where(SYSTEM_TABLES.TABLE_SCHEM.in(getInputSchemata()))
                 .orderBy(
                     SYSTEM_TABLES.TABLE_SCHEM,
@@ -414,8 +421,9 @@ public class HSQLDBDatabase extends AbstractDatabase {
             String name = record.get(SYSTEM_TABLES.TABLE_NAME);
             String comment = record.get(SYSTEM_TABLES.REMARKS);
             TableType tableType = record.get("table_type", TableType.class);
+            String source = record.get(VIEWS.VIEW_DEFINITION);
 
-            result.add(new HSQLDBTableDefinition(schema, name, comment, tableType));
+            result.add(new HSQLDBTableDefinition(schema, name, comment, tableType, source));
         }
 
         return result;

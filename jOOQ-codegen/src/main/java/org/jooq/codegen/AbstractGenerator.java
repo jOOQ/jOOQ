@@ -122,6 +122,8 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateCommentsOnSequences        = true;
     boolean                            generateCommentsOnTables           = true;
     boolean                            generateCommentsOnUDTs             = true;
+    boolean                            generateSources                    = true;
+    boolean                            generateSourcesOnViews             = true;
     boolean                            generateFluentSetters              = false;
     boolean                            generateJavaBeansGettersAndSetters = false;
     boolean                            generateVarargsSetters             = true;
@@ -846,6 +848,26 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateCommentsOnUDTs(boolean commentsOnUDTs) {
         this.generateCommentsOnUDTs = commentsOnUDTs;
+    }
+
+    @Override
+    public boolean generateSources() {
+        return generateSources;
+    }
+
+    @Override
+    public void setGenerateSources(boolean sources) {
+        this.generateSources = sources;
+    }
+
+    @Override
+    public boolean generateSourcesOnViews() {
+        return generateSources() && generateSourcesOnViews;
+    }
+
+    @Override
+    public void setGenerateSourcesOnViews(boolean sourcesOnViews) {
+        this.generateSourcesOnViews = sourcesOnViews;
     }
 
     @Override

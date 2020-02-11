@@ -556,7 +556,7 @@ public class XMLDatabase extends AbstractDatabase {
                     default:               tableType = TableType.TABLE; break;
                 }
 
-                result.add(new XMLTableDefinition(schema, info(), table, table.getComment(), tableType));
+                result.add(new XMLTableDefinition(schema, info(), table, table.getComment(), tableType, null));
             }
         }
 

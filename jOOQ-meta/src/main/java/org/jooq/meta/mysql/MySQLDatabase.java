@@ -51,6 +51,7 @@ import static org.jooq.meta.mysql.information_schema.Tables.SCHEMATA;
 import static org.jooq.meta.mysql.information_schema.Tables.STATISTICS;
 import static org.jooq.meta.mysql.information_schema.Tables.TABLES;
 import static org.jooq.meta.mysql.information_schema.Tables.TABLE_CONSTRAINTS;
+import static org.jooq.meta.mysql.information_schema.Tables.VIEWS;
 import static org.jooq.meta.mysql.mysql.Tables.PROC;
 
 import java.io.StringReader;
@@ -101,6 +102,7 @@ import org.jooq.meta.mysql.information_schema.tables.Schemata;
 import org.jooq.meta.mysql.information_schema.tables.Statistics;
 import org.jooq.meta.mysql.information_schema.tables.TableConstraints;
 import org.jooq.meta.mysql.information_schema.tables.Tables;
+import org.jooq.meta.mysql.information_schema.tables.Views;
 import org.jooq.meta.mysql.mysql.enums.ProcType;
 import org.jooq.meta.mysql.mysql.tables.Proc;
 import org.jooq.tools.csv.CSVReader;
@@ -431,8 +433,13 @@ public class MySQLDatabase extends AbstractDatabase {
                 Tables.TABLE_NAME,
                 Tables.TABLE_COMMENT,
                 when(Tables.TABLE_TYPE.eq(inline("VIEW")), inline(TableType.VIEW.name()))
-                .else_(inline(TableType.TABLE.name())).as("table_type"))
+                    .else_(inline(TableType.TABLE.name())).as("table_type"),
+                when(Views.VIEW_DEFINITION.lower().like(inline("create%")), Views.VIEW_DEFINITION)
+                    .else_(inline("create view `").concat(Tables.TABLE_NAME).concat("` as ").concat(Views.VIEW_DEFINITION)).as(Views.VIEW_DEFINITION))
             .from(TABLES)
+            .leftJoin(VIEWS)
+                .on(Tables.TABLE_SCHEMA.eq(Views.TABLE_SCHEMA))
+                .and(Tables.TABLE_NAME.eq(Views.TABLE_NAME))
 
             // [#5213] Duplicate schema value to work around MySQL issue https://bugs.mysql.com/bug.php?id=86022
             .where(Tables.TABLE_SCHEMA.in(getInputSchemata()).or(
@@ -450,8 +457,9 @@ public class MySQLDatabase extends AbstractDatabase {
             String name = record.get(Tables.TABLE_NAME);
             String comment = record.get(Tables.TABLE_COMMENT);
             TableType tableType = record.get("table_type", TableType.class);
+            String source = record.get(Views.VIEW_DEFINITION);
 
-            MySQLTableDefinition table = new MySQLTableDefinition(schema, name, comment, tableType);
+            MySQLTableDefinition table = new MySQLTableDefinition(schema, name, comment, tableType, source);
             result.add(table);
         }
 

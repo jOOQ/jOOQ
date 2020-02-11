@@ -11,6 +11,7 @@ import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.impl.DSL;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.postgres.information_schema.InformationSchema;
@@ -22,7 +23,7 @@ import org.jooq.meta.postgres.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 1692316602;
+    private static final long serialVersionUID = -1212566173;
 
     /**
      * The reference instance of <code>information_schema.tables</code>
@@ -123,7 +124,7 @@ public class Tables extends TableImpl<Record> {
     }
 
     private Tables(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""));
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view());
     }
 
     public <O extends Record> Tables(Table<O> child, ForeignKey<O, Record> key) {

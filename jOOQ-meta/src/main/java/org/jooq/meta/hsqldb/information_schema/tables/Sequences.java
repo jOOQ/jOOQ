@@ -11,6 +11,7 @@ import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.impl.DSL;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.hsqldb.information_schema.InformationSchema;
@@ -22,7 +23,7 @@ import org.jooq.meta.hsqldb.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sequences extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 2110371307;
+    private static final long serialVersionUID = 1757043557;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA.SEQUENCES</code>
@@ -143,7 +144,7 @@ public class Sequences extends TableImpl<Record> {
     }
 
     private Sequences(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment("one row for each external sequence generator"));
+        super(alias, null, aliased, parameters, DSL.comment("one row for each external sequence generator"), TableOptions.table());
     }
 
     public <O extends Record> Sequences(Table<O> child, ForeignKey<O, Record> key) {

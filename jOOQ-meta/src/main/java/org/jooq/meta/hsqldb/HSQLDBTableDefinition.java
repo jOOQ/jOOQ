@@ -68,8 +68,8 @@ public class HSQLDBTableDefinition extends AbstractTableDefinition {
         super(schema, name, comment);
     }
 
-    public HSQLDBTableDefinition(SchemaDefinition schema, String name, String comment, TableType tableType) {
-        super(schema, name, comment, tableType);
+    public HSQLDBTableDefinition(SchemaDefinition schema, String name, String comment, TableType tableType, String source) {
+        super(schema, name, comment, tableType, source);
     }
 
 	@Override

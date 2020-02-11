@@ -59,23 +59,34 @@ public final class TableOptions implements Serializable {
     private final TableType   type;
     private final OnCommit    onCommit;
     private final Select<?>   select;
+    private final String      source;
 
     private TableOptions(TableType type) {
         this.type = type;
         this.onCommit = null;
         this.select = null;
+        this.source = null;
     }
 
     private TableOptions(OnCommit onCommit) {
         this.type = TableType.TEMPORARY;
         this.onCommit = onCommit;
         this.select = null;
+        this.source = null;
     }
 
     private TableOptions(TableType type, Select<?> select) {
         this.type = type;
         this.onCommit = null;
         this.select = select;
+        this.source = select == null ? null : select.toString();
+    }
+
+    private TableOptions(TableType type, String source) {
+        this.type = type;
+        this.onCommit = null;
+        this.select = null;
+        this.source = source;
     }
 
     /**
@@ -126,7 +137,7 @@ public final class TableOptions implements Serializable {
      * unknown content.
      */
     public static final TableOptions view() {
-        return view(null);
+        return view((String) null);
     }
 
     /**
@@ -134,6 +145,13 @@ public final class TableOptions implements Serializable {
      */
     public static final TableOptions view(Select<?> select) {
         return new TableOptions(TableType.VIEW, select);
+    }
+
+    /**
+     * Create a new {@link TableOptions} object for a {@link TableType#VIEW}.
+     */
+    public static final TableOptions view(String source) {
+        return new TableOptions(TableType.VIEW, source);
     }
 
     /**
@@ -193,6 +211,17 @@ public final class TableOptions implements Serializable {
      */
     public final Select<?> select() {
         return select;
+    }
+
+    /**
+     * The <code>SELECT</code> statement defining this {@link TableType#VIEW} or
+     * {@link TableType#MATERIALIZED_VIEW}, in source form.
+     * <p>
+     * This may be <code>null</code>, if it is undefined, or unknown, or if the
+     * table is not a view.
+     */
+    public final String source() {
+        return source;
     }
 
     /**

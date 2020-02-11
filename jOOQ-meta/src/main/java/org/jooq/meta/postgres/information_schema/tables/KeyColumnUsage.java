@@ -11,6 +11,7 @@ import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.impl.DSL;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.postgres.information_schema.InformationSchema;
@@ -22,7 +23,7 @@ import org.jooq.meta.postgres.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class KeyColumnUsage extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -1881498801;
+    private static final long serialVersionUID = 1561775192;
 
     /**
      * The reference instance of <code>information_schema.key_column_usage</code>
@@ -108,7 +109,7 @@ public class KeyColumnUsage extends TableImpl<Record> {
     }
 
     private KeyColumnUsage(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""));
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view());
     }
 
     public <O extends Record> KeyColumnUsage(Table<O> child, ForeignKey<O, Record> key) {

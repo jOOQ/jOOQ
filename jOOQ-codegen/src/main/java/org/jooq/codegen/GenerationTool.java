@@ -774,6 +774,10 @@ public class GenerationTool {
                 generator.setGenerateCommentsOnTables(g.getGenerate().isCommentsOnTables());
             if (g.getGenerate().isCommentsOnUDTs() != null)
                 generator.setGenerateCommentsOnUDTs(g.getGenerate().isCommentsOnUDTs());
+            if (g.getGenerate().isSources() != null)
+                generator.setGenerateSources(g.getGenerate().isSources());
+            if (g.getGenerate().isSourcesOnViews() != null)
+                generator.setGenerateSourcesOnViews(g.getGenerate().isSourcesOnViews());
             if (g.getGenerate().isFluentSetters() != null)
                 generator.setGenerateFluentSetters(g.getGenerate().isFluentSetters());
             if (g.getGenerate().isJavaBeansGettersAndSetters() != null)

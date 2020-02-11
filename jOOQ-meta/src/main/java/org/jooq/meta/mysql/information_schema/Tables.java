@@ -13,6 +13,7 @@ import org.jooq.meta.mysql.information_schema.tables.Routines;
 import org.jooq.meta.mysql.information_schema.tables.Schemata;
 import org.jooq.meta.mysql.information_schema.tables.Statistics;
 import org.jooq.meta.mysql.information_schema.tables.TableConstraints;
+import org.jooq.meta.mysql.information_schema.tables.Views;
 
 
 /**
@@ -62,12 +63,17 @@ public class Tables {
     public static final Statistics STATISTICS = Statistics.STATISTICS;
 
     /**
+     * The table <code>information_schema.TABLE_CONSTRAINTS</code>.
+     */
+    public static final TableConstraints TABLE_CONSTRAINTS = TableConstraints.TABLE_CONSTRAINTS;
+
+    /**
      * The table <code>information_schema.TABLES</code>.
      */
     public static final org.jooq.meta.mysql.information_schema.tables.Tables TABLES = org.jooq.meta.mysql.information_schema.tables.Tables.TABLES;
 
     /**
-     * The table <code>information_schema.TABLE_CONSTRAINTS</code>.
+     * The table <code>information_schema.VIEWS</code>.
      */
-    public static final TableConstraints TABLE_CONSTRAINTS = TableConstraints.TABLE_CONSTRAINTS;
+    public static final Views VIEWS = Views.VIEWS;
 }

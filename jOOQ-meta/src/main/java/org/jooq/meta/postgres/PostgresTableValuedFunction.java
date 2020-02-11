@@ -84,7 +84,11 @@ public class PostgresTableValuedFunction extends AbstractTableDefinition {
     private final String                    specificName;
 
     public PostgresTableValuedFunction(SchemaDefinition schema, String name, String specificName, String comment) {
-        super(schema, name, comment, TableType.FUNCTION);
+        this(schema, name, specificName, comment, null);
+    }
+
+    public PostgresTableValuedFunction(SchemaDefinition schema, String name, String specificName, String comment, String source) {
+        super(schema, name, comment, TableType.FUNCTION, source);
 
         this.routine = new PostgresRoutineDefinition(schema.getDatabase(), schema.getInputName(), name, specificName);
         this.specificName = specificName;

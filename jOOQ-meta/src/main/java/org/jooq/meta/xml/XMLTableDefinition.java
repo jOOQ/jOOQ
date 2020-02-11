@@ -69,11 +69,11 @@ public class XMLTableDefinition extends AbstractTableDefinition {
     }
 
     public XMLTableDefinition(SchemaDefinition schema, InformationSchema info, Table table, String comment) {
-        this(schema, info, table, comment, TableType.TABLE);
+        this(schema, info, table, comment, TableType.TABLE, null);
     }
 
-    public XMLTableDefinition(SchemaDefinition schema, InformationSchema info, Table table, String comment, TableType tableType) {
-        super(schema, table.getTableName(), comment, tableType);
+    public XMLTableDefinition(SchemaDefinition schema, InformationSchema info, Table table, String comment, TableType tableType, String source) {
+        super(schema, table.getTableName(), comment, tableType, source);
 
         this.info = info;
         this.table = table;

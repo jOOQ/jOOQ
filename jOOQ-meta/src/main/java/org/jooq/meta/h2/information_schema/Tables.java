@@ -14,6 +14,7 @@ import org.jooq.meta.h2.information_schema.tables.Indexes;
 import org.jooq.meta.h2.information_schema.tables.Schemata;
 import org.jooq.meta.h2.information_schema.tables.Sequences;
 import org.jooq.meta.h2.information_schema.tables.TypeInfo;
+import org.jooq.meta.h2.information_schema.tables.Views;
 
 
 /**
@@ -76,4 +77,9 @@ public class Tables {
      * The table <code>INFORMATION_SCHEMA.TYPE_INFO</code>.
      */
     public static final TypeInfo TYPE_INFO = TypeInfo.TYPE_INFO;
+
+    /**
+     * The table <code>INFORMATION_SCHEMA.VIEWS</code>.
+     */
+    public static final Views VIEWS = Views.VIEWS;
 }

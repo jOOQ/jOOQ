@@ -1352,6 +1352,14 @@ jOOQ version used for source code.]]></jxb:javadoc></jxb:property></appinfo></an
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of all SQL comments as Javadoc on all keys.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="sources" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of all source code on all object types.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="sourcesOnViews" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of all source code on all views.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="fluentSetters" type="boolean" default="false" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate fluent setters in records, POJOs, interfaces.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

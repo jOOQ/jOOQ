@@ -82,7 +82,11 @@ import org.jooq.meta.postgres.pg_catalog.tables.PgType;
 public class PostgresMaterializedViewDefinition extends AbstractTableDefinition {
 
     public PostgresMaterializedViewDefinition(SchemaDefinition schema, String name, String comment) {
-        super(schema, name, comment, TableType.MATERIALIZED_VIEW);
+        this(schema, name, comment, null);
+    }
+
+    public PostgresMaterializedViewDefinition(SchemaDefinition schema, String name, String comment, String source) {
+        super(schema, name, comment, TableType.MATERIALIZED_VIEW, source);
     }
 
     @Override

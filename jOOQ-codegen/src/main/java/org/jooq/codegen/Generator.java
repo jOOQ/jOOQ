@@ -675,6 +675,26 @@ public interface Generator {
     void setGenerateCommentsOnUDTs(boolean commentsOnUDTs);
 
     /**
+     * Whether source code should be generated on any object type.
+     */
+    boolean generateSources();
+
+    /**
+     * Whether source code should be generated on any object type.
+     */
+    void setGenerateSources(boolean sourcesOnViews);
+
+    /**
+     * Whether source code should be generated on views.
+     */
+    boolean generateSourcesOnViews();
+
+    /**
+     * Whether source code should be generated on views.
+     */
+    void setGenerateSourcesOnViews(boolean sourcesOnViews);
+
+    /**
      * Whether queue related code should be generated
      */
     boolean generateQueues();

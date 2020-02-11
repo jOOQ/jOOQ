@@ -11,6 +11,7 @@ import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.impl.DSL;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.hsqldb.information_schema.InformationSchema;
@@ -22,7 +23,7 @@ import org.jooq.meta.hsqldb.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TableConstraints extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 1914703396;
+    private static final long serialVersionUID = -193086968;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA.TABLE_CONSTRAINTS</code>
@@ -108,7 +109,7 @@ public class TableConstraints extends TableImpl<Record> {
     }
 
     private TableConstraints(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment("one row for each table constraint associated with a table"));
+        super(alias, null, aliased, parameters, DSL.comment("one row for each table constraint associated with a table"), TableOptions.table());
     }
 
     public <O extends Record> TableConstraints(Table<O> child, ForeignKey<O, Record> key) {

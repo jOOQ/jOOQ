@@ -11,6 +11,7 @@ import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.impl.DSL;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.derby.sys.Sys;
@@ -22,7 +23,7 @@ import org.jooq.meta.derby.sys.Sys;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Syskeys extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 1636373174;
+    private static final long serialVersionUID = -166123046;
 
     /**
      * The reference instance of <code>SYS.SYSKEYS</code>
@@ -59,7 +60,7 @@ public class Syskeys extends TableImpl<Record> {
     }
 
     private Syskeys(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""));
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     public <O extends Record> Syskeys(Table<O> child, ForeignKey<O, Record> key) {

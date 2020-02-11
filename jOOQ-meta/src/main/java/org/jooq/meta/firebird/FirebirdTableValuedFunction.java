@@ -67,7 +67,11 @@ public class FirebirdTableValuedFunction extends AbstractTableDefinition {
     private final FirebirdRoutineDefinition routine;
 
     public FirebirdTableValuedFunction(SchemaDefinition schema, String name, String comment) {
-        super(schema, name, comment, TableType.FUNCTION);
+        this(schema, name, comment, null);
+    }
+
+    public FirebirdTableValuedFunction(SchemaDefinition schema, String name, String comment, String source) {
+        super(schema, name, comment, TableType.FUNCTION, source);
 
         routine = new FirebirdRoutineDefinition(schema, name);
     }

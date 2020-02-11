@@ -329,6 +329,8 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("  comments on sequences", generateCommentsOnSequences());
         log.info("  comments on tables", generateCommentsOnTables());
         log.info("  comments on udts", generateCommentsOnUDTs());
+        log.info("  sources", generateSources());
+        log.info("  sources on views", generateSourcesOnViews());
         log.info("  daos", generateDaos());
         log.info("  deprecated code", generateDeprecated());
         log.info("  global references (any)", generateGlobalObjectReferences());
@@ -3929,7 +3931,12 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(1).println("aliased,");
             out.tab(1).println("parameters,");
             out.tab(1).println("%s.comment(\"%s\"),", DSL.class, escapeString(comment));
-            out.tab(1).println("%s.%s", TableOptions.class, tableType);
+
+            if (generateSourcesOnViews() && table.isView() && table.getSource() != null)
+                out.tab(1).println("%s.%s(\"%s\")", TableOptions.class, tableType, escapeString(table.getSource()));
+            else
+                out.tab(1).println("%s.%s", TableOptions.class, tableType);
+
             out.println(")");
 
             if (!interfaces.isEmpty())
@@ -4066,7 +4073,12 @@ public class JavaGenerator extends AbstractGenerator {
 
             out.println();
             out.tab(1).println("private %s(%s alias, %s<%s> aliased, %s<?>[] parameters) {", className, Name.class, Table.class, recordType, Field.class);
-            out.tab(2).println("super(alias, null, aliased, parameters, %s.comment(\"%s\"), %s.%s());", DSL.class, escapeString(comment), TableOptions.class, tableType);
+
+            if (generateSourcesOnViews() && table.isView() && table.getSource() != null)
+                out.tab(2).println("super(alias, null, aliased, parameters, %s.comment(\"%s\"), %s.%s(\"%s\"));", DSL.class, escapeString(comment), TableOptions.class, tableType, escapeString(table.getSource()));
+            else
+                out.tab(2).println("super(alias, null, aliased, parameters, %s.comment(\"%s\"), %s.%s());", DSL.class, escapeString(comment), TableOptions.class, tableType);
+
             out.tab(1).println("}");
         }
 

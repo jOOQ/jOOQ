@@ -72,7 +72,11 @@ extends AbstractDefinition {
     }
 
     public AbstractElementContainerDefinition(SchemaDefinition schema, PackageDefinition pkg, String name, String comment) {
-        super(schema.getDatabase(), schema, pkg, name, comment, null);
+        super(schema.getDatabase(), schema, pkg, name, comment, null, null);
+    }
+
+    public AbstractElementContainerDefinition(SchemaDefinition schema, PackageDefinition pkg, String name, String comment, String source) {
+        super(schema.getDatabase(), schema, pkg, name, comment, null, source);
     }
 
     protected final List<E> getElements() {

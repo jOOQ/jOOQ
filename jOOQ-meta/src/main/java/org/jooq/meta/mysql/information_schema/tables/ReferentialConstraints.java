@@ -11,6 +11,7 @@ import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.impl.DSL;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.mysql.information_schema.InformationSchema;
@@ -22,7 +23,7 @@ import org.jooq.meta.mysql.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ReferentialConstraints extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 337605758;
+    private static final long serialVersionUID = 986266884;
 
     /**
      * The reference instance of <code>information_schema.REFERENTIAL_CONSTRAINTS</code>
@@ -104,7 +105,7 @@ public class ReferentialConstraints extends TableImpl<Record> {
     }
 
     private ReferentialConstraints(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""));
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     public <O extends Record> ReferentialConstraints(Table<O> child, ForeignKey<O, Record> key) {

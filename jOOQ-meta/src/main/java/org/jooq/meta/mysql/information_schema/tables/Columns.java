@@ -11,6 +11,7 @@ import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.impl.DSL;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.mysql.information_schema.InformationSchema;
@@ -24,7 +25,7 @@ import org.jooq.types.ULong;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Columns extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 1880096405;
+    private static final long serialVersionUID = 811858127;
 
     /**
      * The reference instance of <code>information_schema.COLUMNS</code>
@@ -161,7 +162,7 @@ public class Columns extends TableImpl<Record> {
     }
 
     private Columns(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""));
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     public <O extends Record> Columns(Table<O> child, ForeignKey<O, Record> key) {

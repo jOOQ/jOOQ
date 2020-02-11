@@ -4,7 +4,6 @@
 package org.jooq.meta.derby.sys;
 
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,6 +18,7 @@ import org.jooq.meta.derby.sys.tables.Syskeys;
 import org.jooq.meta.derby.sys.tables.Sysschemas;
 import org.jooq.meta.derby.sys.tables.Syssequences;
 import org.jooq.meta.derby.sys.tables.Systables;
+import org.jooq.meta.derby.sys.tables.Sysviews;
 
 
 /**
@@ -27,7 +27,7 @@ import org.jooq.meta.derby.sys.tables.Systables;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sys extends SchemaImpl {
 
-    private static final long serialVersionUID = -1952686643;
+    private static final long serialVersionUID = -2021070810;
 
     /**
      * The reference instance of <code>SYS</code>
@@ -37,42 +37,47 @@ public class Sys extends SchemaImpl {
     /**
      * The table <code>SYS.SYSCHECKS</code>.
      */
-    public final Syschecks SYSCHECKS = org.jooq.meta.derby.sys.tables.Syschecks.SYSCHECKS;
+    public final Syschecks SYSCHECKS = Syschecks.SYSCHECKS;
 
     /**
      * The table <code>SYS.SYSCOLUMNS</code>.
      */
-    public final Syscolumns SYSCOLUMNS = org.jooq.meta.derby.sys.tables.Syscolumns.SYSCOLUMNS;
+    public final Syscolumns SYSCOLUMNS = Syscolumns.SYSCOLUMNS;
 
     /**
      * The table <code>SYS.SYSCONGLOMERATES</code>.
      */
-    public final Sysconglomerates SYSCONGLOMERATES = org.jooq.meta.derby.sys.tables.Sysconglomerates.SYSCONGLOMERATES;
+    public final Sysconglomerates SYSCONGLOMERATES = Sysconglomerates.SYSCONGLOMERATES;
 
     /**
      * The table <code>SYS.SYSCONSTRAINTS</code>.
      */
-    public final Sysconstraints SYSCONSTRAINTS = org.jooq.meta.derby.sys.tables.Sysconstraints.SYSCONSTRAINTS;
+    public final Sysconstraints SYSCONSTRAINTS = Sysconstraints.SYSCONSTRAINTS;
 
     /**
      * The table <code>SYS.SYSKEYS</code>.
      */
-    public final Syskeys SYSKEYS = org.jooq.meta.derby.sys.tables.Syskeys.SYSKEYS;
+    public final Syskeys SYSKEYS = Syskeys.SYSKEYS;
 
     /**
      * The table <code>SYS.SYSSCHEMAS</code>.
      */
-    public final Sysschemas SYSSCHEMAS = org.jooq.meta.derby.sys.tables.Sysschemas.SYSSCHEMAS;
+    public final Sysschemas SYSSCHEMAS = Sysschemas.SYSSCHEMAS;
 
     /**
      * The table <code>SYS.SYSSEQUENCES</code>.
      */
-    public final Syssequences SYSSEQUENCES = org.jooq.meta.derby.sys.tables.Syssequences.SYSSEQUENCES;
+    public final Syssequences SYSSEQUENCES = Syssequences.SYSSEQUENCES;
 
     /**
      * The table <code>SYS.SYSTABLES</code>.
      */
-    public final Systables SYSTABLES = org.jooq.meta.derby.sys.tables.Systables.SYSTABLES;
+    public final Systables SYSTABLES = Systables.SYSTABLES;
+
+    /**
+     * The table <code>SYS.SYSVIEWS</code>.
+     */
+    public final Sysviews SYSVIEWS = Sysviews.SYSVIEWS;
 
     /**
      * No further instances allowed
@@ -89,12 +94,6 @@ public class Sys extends SchemaImpl {
 
     @Override
     public final List<Table<?>> getTables() {
-        List result = new ArrayList();
-        result.addAll(getTables0());
-        return result;
-    }
-
-    private final List<Table<?>> getTables0() {
         return Arrays.<Table<?>>asList(
             Syschecks.SYSCHECKS,
             Syscolumns.SYSCOLUMNS,
@@ -103,6 +102,7 @@ public class Sys extends SchemaImpl {
             Syskeys.SYSKEYS,
             Sysschemas.SYSSCHEMAS,
             Syssequences.SYSSEQUENCES,
-            Systables.SYSTABLES);
+            Systables.SYSTABLES,
+            Sysviews.SYSVIEWS);
     }
 }

@@ -63,8 +63,8 @@ public class DerbyTableDefinition extends AbstractTableDefinition {
 
     private final String         tableid;
 
-    public DerbyTableDefinition(SchemaDefinition schema, String name, String tableid, TableType tableType) {
-		super(schema, name, "", tableType);
+    public DerbyTableDefinition(SchemaDefinition schema, String name, String tableid, TableType tableType, String source) {
+		super(schema, name, "", tableType, source);
 
 		this.tableid = tableid;
 	}

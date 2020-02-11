@@ -15,6 +15,7 @@ import org.jooq.meta.postgres.information_schema.tables.Routines;
 import org.jooq.meta.postgres.information_schema.tables.Schemata;
 import org.jooq.meta.postgres.information_schema.tables.Sequences;
 import org.jooq.meta.postgres.information_schema.tables.TableConstraints;
+import org.jooq.meta.postgres.information_schema.tables.Views;
 
 
 /**
@@ -82,4 +83,9 @@ public class Tables {
      * The table <code>information_schema.tables</code>.
      */
     public static final org.jooq.meta.postgres.information_schema.tables.Tables TABLES = org.jooq.meta.postgres.information_schema.tables.Tables.TABLES;
+
+    /**
+     * The table <code>information_schema.views</code>.
+     */
+    public static final Views VIEWS = Views.VIEWS;
 }

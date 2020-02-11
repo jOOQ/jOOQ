@@ -56,6 +56,7 @@ import static org.jooq.meta.derby.sys.tables.Syskeys.SYSKEYS;
 import static org.jooq.meta.derby.sys.tables.Sysschemas.SYSSCHEMAS;
 import static org.jooq.meta.derby.sys.tables.Syssequences.SYSSEQUENCES;
 import static org.jooq.meta.derby.sys.tables.Systables.SYSTABLES;
+import static org.jooq.meta.derby.sys.tables.Sysviews.SYSVIEWS;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -99,6 +100,7 @@ import org.jooq.meta.derby.sys.tables.Syskeys;
 import org.jooq.meta.derby.sys.tables.Sysschemas;
 import org.jooq.meta.derby.sys.tables.Syssequences;
 import org.jooq.meta.derby.sys.tables.Systables;
+import org.jooq.meta.derby.sys.tables.Sysviews;
 
 /**
  * @author Lukas Eder
@@ -424,10 +426,13 @@ public class DerbyDatabase extends AbstractDatabase {
 		            Systables.TABLENAME,
 		            Systables.TABLEID,
 		            when(Systables.TABLETYPE.eq(inline("V")), inline(TableType.VIEW.name()))
-		                .else_(inline(TableType.TABLE.name())).as("table_type"))
+		                .else_(inline(TableType.TABLE.name())).as("table_type"),
+	                Sysviews.VIEWDEFINITION)
                 .from(SYSTABLES)
                 .join(SYSSCHEMAS)
-                .on(Systables.SCHEMAID.equal(Sysschemas.SCHEMAID))
+                    .on(Systables.SCHEMAID.equal(Sysschemas.SCHEMAID))
+                .leftJoin(SYSVIEWS)
+                    .on(Systables.TABLEID.eq(Sysviews.TABLEID))
                 // [#6797] The cast is necessary if a non-standard collation is used
                 .where(Sysschemas.SCHEMANAME.cast(VARCHAR(32672)).in(getInputSchemata()))
                 .orderBy(
@@ -438,8 +443,9 @@ public class DerbyDatabase extends AbstractDatabase {
 		    String name = record.get(Systables.TABLENAME);
 		    String id = record.get(Systables.TABLEID);
 		    TableType tableType = record.get("table_type", TableType.class);
+		    String source = record.get(Sysviews.VIEWDEFINITION);
 
-		    DerbyTableDefinition table = new DerbyTableDefinition(schema, name, id, tableType);
+		    DerbyTableDefinition table = new DerbyTableDefinition(schema, name, id, tableType, source);
             result.add(table);
 		}
 

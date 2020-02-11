@@ -48,15 +48,16 @@ import static org.jooq.impl.DSL.nullif;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.when;
-import static org.jooq.meta.h2.information_schema.tables.Columns.COLUMNS;
-import static org.jooq.meta.h2.information_schema.tables.Constraints.CONSTRAINTS;
-import static org.jooq.meta.h2.information_schema.tables.CrossReferences.CROSS_REFERENCES;
-import static org.jooq.meta.h2.information_schema.tables.FunctionAliases.FUNCTION_ALIASES;
-import static org.jooq.meta.h2.information_schema.tables.Indexes.INDEXES;
-import static org.jooq.meta.h2.information_schema.tables.Schemata.SCHEMATA;
-import static org.jooq.meta.h2.information_schema.tables.Sequences.SEQUENCES;
-import static org.jooq.meta.h2.information_schema.tables.Tables.TABLES;
-import static org.jooq.meta.h2.information_schema.tables.TypeInfo.TYPE_INFO;
+import static org.jooq.meta.h2.information_schema.Tables.COLUMNS;
+import static org.jooq.meta.h2.information_schema.Tables.CONSTRAINTS;
+import static org.jooq.meta.h2.information_schema.Tables.CROSS_REFERENCES;
+import static org.jooq.meta.h2.information_schema.Tables.FUNCTION_ALIASES;
+import static org.jooq.meta.h2.information_schema.Tables.INDEXES;
+import static org.jooq.meta.h2.information_schema.Tables.SCHEMATA;
+import static org.jooq.meta.h2.information_schema.Tables.SEQUENCES;
+import static org.jooq.meta.h2.information_schema.Tables.TABLES;
+import static org.jooq.meta.h2.information_schema.Tables.TYPE_INFO;
+import static org.jooq.meta.h2.information_schema.Tables.VIEWS;
 
 import java.io.StringReader;
 import java.sql.SQLException;
@@ -108,6 +109,7 @@ import org.jooq.meta.h2.information_schema.tables.Schemata;
 import org.jooq.meta.h2.information_schema.tables.Sequences;
 import org.jooq.meta.h2.information_schema.tables.Tables;
 import org.jooq.meta.h2.information_schema.tables.TypeInfo;
+import org.jooq.meta.h2.information_schema.tables.Views;
 import org.jooq.tools.csv.CSVReader;
 import org.jooq.util.h2.H2DataType;
 
@@ -454,8 +456,12 @@ public class H2Database extends AbstractDatabase {
                     when(Tables.TABLE_TYPE.eq(inline("VIEW")), inline(TableType.VIEW.name()))
                        .when(Tables.STORAGE_TYPE.like(inline("%TEMPORARY%")), inline(TableType.TEMPORARY.name()))
                        .else_(inline(TableType.TABLE.name())).as("table_type"),
-                    Tables.REMARKS)
+                    Tables.REMARKS,
+                    Views.VIEW_DEFINITION)
                 .from(TABLES)
+                .leftJoin(VIEWS)
+                    .on(Tables.TABLE_SCHEMA.eq(Views.TABLE_SCHEMA))
+                    .and(Tables.TABLE_NAME.eq(Views.TABLE_NAME))
                 .where(Tables.TABLE_SCHEMA.in(getInputSchemata()))
                 .orderBy(
                     Tables.TABLE_SCHEMA,
@@ -467,8 +473,9 @@ public class H2Database extends AbstractDatabase {
                 String name = record.get(Tables.TABLE_NAME);
                 String comment = record.get(Tables.REMARKS);
                 TableType tableType = record.get("table_type", TableType.class);
+                String source = record.get(Views.VIEW_DEFINITION);
 
-                H2TableDefinition table = new H2TableDefinition(schema, name, comment, tableType);
+                H2TableDefinition table = new H2TableDefinition(schema, name, comment, tableType, source);
                 result.add(table);
             }
         }

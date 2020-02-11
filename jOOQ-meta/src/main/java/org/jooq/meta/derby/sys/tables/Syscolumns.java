@@ -11,6 +11,7 @@ import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.impl.DSL;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.derby.sys.Sys;
@@ -22,7 +23,7 @@ import org.jooq.meta.derby.sys.Sys;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Syscolumns extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 1849209761;
+    private static final long serialVersionUID = 1350441861;
 
     /**
      * The reference instance of <code>SYS.SYSCOLUMNS</code>
@@ -99,7 +100,7 @@ public class Syscolumns extends TableImpl<Record> {
     }
 
     private Syscolumns(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""));
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     public <O extends Record> Syscolumns(Table<O> child, ForeignKey<O, Record> key) {

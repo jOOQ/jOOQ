@@ -64,11 +64,11 @@ implements TableDefinition {
     private TableType                 tableType;
 
     public AbstractTableDefinition(SchemaDefinition schema, String name, String comment) {
-        this(schema, name, comment, TableType.TABLE);
+        this(schema, name, comment, TableType.TABLE, null);
     }
 
-    public AbstractTableDefinition(SchemaDefinition schema, String name, String comment, TableType tableType) {
-        super(schema, name, comment);
+    public AbstractTableDefinition(SchemaDefinition schema, String name, String comment, TableType tableType, String source) {
+        super(schema, null, name, comment, source);
 
         this.parentTable = null;
         this.childTables = new ArrayList<>();

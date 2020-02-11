@@ -4,7 +4,6 @@
 package org.jooq.meta.derby.sys;
 
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,17 +17,17 @@ import org.jooq.impl.CatalogImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DefaultCatalog extends CatalogImpl {
 
-    private static final long serialVersionUID = 1914219230;
+    private static final long serialVersionUID = 1659713251;
 
     /**
-     * The reference instance of <code></code>
+     * The reference instance of <code>DEFAULT_CATALOG</code>
      */
     public static final DefaultCatalog DEFAULT_CATALOG = new DefaultCatalog();
 
     /**
      * The schema <code>SYS</code>.
      */
-    public final Sys SYS = org.jooq.meta.derby.sys.Sys.SYS;
+    public final Sys SYS = Sys.SYS;
 
     /**
      * No further instances allowed
@@ -39,12 +38,6 @@ public class DefaultCatalog extends CatalogImpl {
 
     @Override
     public final List<Schema> getSchemas() {
-        List result = new ArrayList();
-        result.addAll(getSchemas0());
-        return result;
-    }
-
-    private final List<Schema> getSchemas0() {
         return Arrays.<Schema>asList(
             Sys.SYS);
     }

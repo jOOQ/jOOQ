@@ -29,6 +29,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *         &lt;element name="schemata" type="{http://www.jooq.org/xsd/jooq-meta-3.12.0.xsd}Schemata" minOccurs="0"/&gt;
  *         &lt;element name="sequences" type="{http://www.jooq.org/xsd/jooq-meta-3.12.0.xsd}Sequences" minOccurs="0"/&gt;
  *         &lt;element name="tables" type="{http://www.jooq.org/xsd/jooq-meta-3.12.0.xsd}Tables" minOccurs="0"/&gt;
+ *         &lt;element name="views" type="{http://www.jooq.org/xsd/jooq-meta-3.12.0.xsd}Views" minOccurs="0"/&gt;
  *         &lt;element name="columns" type="{http://www.jooq.org/xsd/jooq-meta-3.12.0.xsd}Columns" minOccurs="0"/&gt;
  *         &lt;element name="table_constraints" type="{http://www.jooq.org/xsd/jooq-meta-3.12.0.xsd}TableConstraints" minOccurs="0"/&gt;
  *         &lt;element name="key_column_usages" type="{http://www.jooq.org/xsd/jooq-meta-3.12.0.xsd}KeyColumnUsages" minOccurs="0"/&gt;
@@ -71,6 +72,9 @@ public class InformationSchema implements Serializable, XMLAppendable
     @XmlElementWrapper(name = "tables")
     @XmlElement(name = "table")
     protected List<Table> tables;
+    @XmlElementWrapper(name = "views")
+    @XmlElement(name = "view")
+    protected List<View> views;
     @XmlElementWrapper(name = "columns")
     @XmlElement(name = "column")
     protected List<Column> columns;
@@ -144,6 +148,17 @@ public class InformationSchema implements Serializable, XMLAppendable
 
     public void setTables(List<Table> tables) {
         this.tables = tables;
+    }
+
+    public List<View> getViews() {
+        if (views == null) {
+            views = new ArrayList<View>();
+        }
+        return views;
+    }
+
+    public void setViews(List<View> views) {
+        this.views = views;
     }
 
     public List<Column> getColumns() {
@@ -337,6 +352,27 @@ public class InformationSchema implements Serializable, XMLAppendable
 
     public InformationSchema withTables(List<Table> tables) {
         setTables(tables);
+        return this;
+    }
+
+    public InformationSchema withViews(View... values) {
+        if (values!= null) {
+            for (View value: values) {
+                getViews().add(value);
+            }
+        }
+        return this;
+    }
+
+    public InformationSchema withViews(Collection<View> values) {
+        if (values!= null) {
+            getViews().addAll(values);
+        }
+        return this;
+    }
+
+    public InformationSchema withViews(List<View> views) {
+        setViews(views);
         return this;
     }
 
@@ -556,6 +592,7 @@ public class InformationSchema implements Serializable, XMLAppendable
         builder.append("schemata", "schema", schemata);
         builder.append("sequences", "sequence", sequences);
         builder.append("tables", "table", tables);
+        builder.append("views", "view", views);
         builder.append("columns", "column", columns);
         builder.append("table_constraints", "table_constraint", tableConstraints);
         builder.append("key_column_usages", "key_column_usage", keyColumnUsages);
@@ -620,6 +657,15 @@ public class InformationSchema implements Serializable, XMLAppendable
             }
         } else {
             if (!tables.equals(other.tables)) {
+                return false;
+            }
+        }
+        if (views == null) {
+            if (other.views!= null) {
+                return false;
+            }
+        } else {
+            if (!views.equals(other.views)) {
                 return false;
             }
         }
@@ -724,6 +770,7 @@ public class InformationSchema implements Serializable, XMLAppendable
         result = ((prime*result)+((schemata == null)? 0 :schemata.hashCode()));
         result = ((prime*result)+((sequences == null)? 0 :sequences.hashCode()));
         result = ((prime*result)+((tables == null)? 0 :tables.hashCode()));
+        result = ((prime*result)+((views == null)? 0 :views.hashCode()));
         result = ((prime*result)+((columns == null)? 0 :columns.hashCode()));
         result = ((prime*result)+((tableConstraints == null)? 0 :tableConstraints.hashCode()));
         result = ((prime*result)+((keyColumnUsages == null)? 0 :keyColumnUsages.hashCode()));

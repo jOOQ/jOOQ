@@ -11,6 +11,7 @@
                 <element name="schemata" type="tns:Schemata" minOccurs="0" maxOccurs="1" />
                 <element name="sequences" type="tns:Sequences" minOccurs="0" maxOccurs="1" />
                 <element name="tables" type="tns:Tables" minOccurs="0" maxOccurs="1" />
+                <element name="views" type="tns:Views" minOccurs="0" maxOccurs="1" />
                 <element name="columns" type="tns:Columns" minOccurs="0" maxOccurs="1" />
                 <element name="table_constraints" type="tns:TableConstraints" minOccurs="0" maxOccurs="1" />
                 <element name="key_column_usages" type="tns:KeyColumnUsages" minOccurs="0" maxOccurs="1" />
@@ -90,6 +91,21 @@
             <element name="table_name" type="string" minOccurs="1" maxOccurs="1" />
             <element name="table_type" type="tns:TableType" minOccurs="1" maxOccurs="1" default="BASE TABLE"/>
             <element name="comment" type="string" minOccurs="0" maxOccurs="1" />
+        </all>
+    </complexType>
+
+    <complexType name="Views">
+        <sequence>
+            <element name="view" type="tns:View" minOccurs="0" maxOccurs="unbounded" />
+        </sequence>
+    </complexType>
+
+    <complexType name="View">
+        <all>
+            <element name="table_catalog" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="table_schema" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="table_name" type="string" minOccurs="1" maxOccurs="1" />
+            <element name="view_definition" type="string" minOccurs="1" maxOccurs="1"/>
         </all>
     </complexType>
 

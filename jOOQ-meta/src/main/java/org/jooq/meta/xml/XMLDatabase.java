@@ -111,6 +111,7 @@ import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.util.jaxb.tools.MiniJAXB;
 import org.jooq.util.xml.jaxb.CheckConstraint;
+import org.jooq.util.xml.jaxb.Column;
 import org.jooq.util.xml.jaxb.Index;
 import org.jooq.util.xml.jaxb.IndexColumnUsage;
 import org.jooq.util.xml.jaxb.InformationSchema;
@@ -122,6 +123,7 @@ import org.jooq.util.xml.jaxb.Sequence;
 import org.jooq.util.xml.jaxb.Table;
 import org.jooq.util.xml.jaxb.TableConstraint;
 import org.jooq.util.xml.jaxb.TableConstraintType;
+import org.jooq.util.xml.jaxb.View;
 
 /**
  * The XML Database.
@@ -556,7 +558,23 @@ public class XMLDatabase extends AbstractDatabase {
                     default:               tableType = TableType.TABLE; break;
                 }
 
-                result.add(new XMLTableDefinition(schema, info(), table, table.getComment(), tableType, null));
+                String source = null;
+
+                if (tableType == TableType.VIEW) {
+
+                    viewLoop:
+                    for (View view : info().getViews()) {
+                        if (StringUtils.equals(defaultIfNull(table.getTableCatalog(), ""), defaultIfNull(view.getTableCatalog(), "")) &&
+                            StringUtils.equals(defaultIfNull(table.getTableSchema(), ""), defaultIfNull(view.getTableSchema(), "")) &&
+                            StringUtils.equals(defaultIfNull(table.getTableName(), ""), defaultIfNull(view.getTableName(), ""))) {
+
+                            source = view.getViewDefinition();
+                            break viewLoop;
+                        }
+                    }
+                }
+
+                result.add(new XMLTableDefinition(schema, info(), table, table.getComment(), tableType, source));
             }
         }
 

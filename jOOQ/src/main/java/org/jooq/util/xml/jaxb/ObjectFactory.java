@@ -70,6 +70,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link View }
+     *
+     */
+    public View createView() {
+        return new View();
+    }
+
+    /**
      * Create an instance of {@link Column }
      *
      */

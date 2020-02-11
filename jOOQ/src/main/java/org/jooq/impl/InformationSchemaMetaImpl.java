@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
+import static org.jooq.tools.StringUtils.defaultIfNull;
 import static org.jooq.util.xml.jaxb.TableConstraintType.PRIMARY_KEY;
 
 import java.math.BigInteger;
@@ -66,6 +67,7 @@ import org.jooq.TableOptions;
 import org.jooq.TableOptions.TableType;
 import org.jooq.UniqueKey;
 import org.jooq.exception.SQLDialectNotSupportedException;
+import org.jooq.tools.StringUtils;
 import org.jooq.util.xml.jaxb.CheckConstraint;
 import org.jooq.util.xml.jaxb.Column;
 import org.jooq.util.xml.jaxb.IndexColumnUsage;
@@ -182,7 +184,23 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
                 default:               tableType = TableType.TABLE; break;
             }
 
-            InformationSchemaTable it = new InformationSchemaTable(xt.getTableName(), schema, xt.getComment(), tableType);
+            String sql = null;
+
+            if (tableType == TableType.VIEW) {
+
+                viewLoop:
+                for (org.jooq.util.xml.jaxb.View vt : meta.getViews()) {
+                    if (StringUtils.equals(defaultIfNull(xt.getTableCatalog(), ""), defaultIfNull(vt.getTableCatalog(), "")) &&
+                        StringUtils.equals(defaultIfNull(xt.getTableSchema(), ""), defaultIfNull(vt.getTableSchema(), "")) &&
+                        StringUtils.equals(defaultIfNull(xt.getTableName(), ""), defaultIfNull(vt.getTableName(), ""))) {
+
+                        sql = vt.getViewDefinition();
+                        break viewLoop;
+                    }
+                }
+            }
+
+            InformationSchemaTable it = new InformationSchemaTable(xt.getTableName(), schema, xt.getComment(), tableType, sql);
             tables.add(it);
             tablesByName.put(name(xt.getTableCatalog(), xt.getTableSchema(), xt.getTableName()), it);
         }
@@ -623,8 +641,8 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
         final List<Check<Record>>              checks           = new ArrayList<>();
         final List<Index>                      indexes          = new ArrayList<>();
 
-        InformationSchemaTable(String name, Schema schema, String comment, TableType tableType) {
-            super(DSL.name(name), schema, null, null, DSL.comment(comment), TableOptions.of(tableType));
+        InformationSchemaTable(String name, Schema schema, String comment, TableType tableType, String source) {
+            super(DSL.name(name), schema, null, null, DSL.comment(comment), tableType == TableType.VIEW ? TableOptions.view(source) : TableOptions.of(tableType));
         }
 
         @Override

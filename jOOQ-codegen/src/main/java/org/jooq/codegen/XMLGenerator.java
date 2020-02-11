@@ -84,6 +84,7 @@ import org.jooq.util.xml.jaxb.Sequence;
 import org.jooq.util.xml.jaxb.Table;
 import org.jooq.util.xml.jaxb.TableConstraint;
 import org.jooq.util.xml.jaxb.TableType;
+import org.jooq.util.xml.jaxb.View;
 
 /**
  * @author Lukas Eder
@@ -159,6 +160,17 @@ public class XMLGenerator extends AbstractGenerator {
                         table.setComment(t.getComment());
 
                     is.getTables().add(table);
+
+                    if (t.isView()) {
+                        View view = new View();
+
+                        view.setTableCatalog(catalogName);
+                        view.setTableSchema(schemaName);
+                        view.setTableName(tableName);
+                        view.setViewDefinition(t.getSource());
+
+                        is.getViews().add(view);
+                    }
 
                     for (ColumnDefinition co : t.getColumns()) {
                         String columnName = co.getOutputName();

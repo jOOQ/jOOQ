@@ -243,6 +243,20 @@ final class InformationSchemaExport {
         it.setComment(t.getComment());
         result.getTables().add(it);
 
+        if (t.getOptions().type() == org.jooq.TableOptions.TableType.VIEW) {
+            org.jooq.util.xml.jaxb.View iv = new org.jooq.util.xml.jaxb.View();
+
+            if (!StringUtils.isBlank(t.getCatalog().getName()))
+                iv.setTableCatalog(t.getCatalog().getName());
+
+            if (!StringUtils.isBlank(t.getSchema().getName()))
+                iv.setTableSchema(t.getSchema().getName());
+
+            iv.setTableName(t.getName());
+            iv.setViewDefinition(t.getOptions().source());
+            result.getViews().add(iv);
+        }
+
         Field<?>[] fields = t.fields();
         for (int i = 0; i < fields.length; i++) {
             Field<?> f = fields[i];

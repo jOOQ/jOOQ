@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.jooq</groupId>
         <artifactId>jooq-examples</artifactId>
-        <version>3.13.0-SNAPSHOT</version>
+        <version>3.13.0</version>
     </parent>
 
     <artifactId>jooq-spring-boot-example</artifactId>

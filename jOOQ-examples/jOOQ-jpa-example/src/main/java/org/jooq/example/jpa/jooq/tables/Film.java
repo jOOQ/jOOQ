@@ -17,6 +17,7 @@ import org.jooq.Row6;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.example.jpa.jooq.DefaultSchema;
 import org.jooq.example.jpa.jooq.Keys;
@@ -31,7 +32,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Film extends TableImpl<FilmRecord> {
 
-    private static final long serialVersionUID = -1248254596;
+    private static final long serialVersionUID = 1375443672;
 
     /**
      * The reference instance of <code>FILM</code>
@@ -102,7 +103,7 @@ public class Film extends TableImpl<FilmRecord> {
     }
 
     private Film(Name alias, Table<FilmRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""));
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     public <O extends Record> Film(Table<O> child, ForeignKey<O, FilmRecord> key) {

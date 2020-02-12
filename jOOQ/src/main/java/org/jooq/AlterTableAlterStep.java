@@ -46,6 +46,7 @@ import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
+// ...
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
@@ -145,12 +146,12 @@ public interface AlterTableAlterStep<T> {
     /**
      * Make the column <code>NOT NULL</code>.
      */
-    @Support({ DERBY, H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     AlterTableFinalStep setNotNull();
 
     /**
      * Make the column nullable.
      */
-    @Support({ DERBY, H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     AlterTableFinalStep dropNotNull();
 }

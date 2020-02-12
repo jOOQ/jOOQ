@@ -17,6 +17,7 @@ import org.jooq.Row6;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.example.db.h2.Keys;
 import org.jooq.example.db.h2.Public;
@@ -31,7 +32,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Author extends TableImpl<AuthorRecord> {
 
-    private static final long serialVersionUID = 273274760;
+    private static final long serialVersionUID = -227991572;
 
     /**
      * The reference instance of <code>PUBLIC.AUTHOR</code>
@@ -102,7 +103,7 @@ public class Author extends TableImpl<AuthorRecord> {
     }
 
     private Author(Name alias, Table<AuthorRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""));
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     public <O extends Record> Author(Table<O> child, ForeignKey<O, AuthorRecord> key) {

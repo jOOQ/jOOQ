@@ -16,6 +16,7 @@ import org.jooq.Row2;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.example.jpa.jooq.DefaultSchema;
 import org.jooq.example.jpa.jooq.Keys;
@@ -30,7 +31,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Language extends TableImpl<LanguageRecord> {
 
-    private static final long serialVersionUID = 389668169;
+    private static final long serialVersionUID = 1073752323;
 
     /**
      * The reference instance of <code>LANGUAGE</code>
@@ -81,7 +82,7 @@ public class Language extends TableImpl<LanguageRecord> {
     }
 
     private Language(Name alias, Table<LanguageRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""));
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     public <O extends Record> Language(Table<O> child, ForeignKey<O, LanguageRecord> key) {

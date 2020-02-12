@@ -15,6 +15,7 @@ import org.jooq.Row1;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.example.db.h2.Keys;
 import org.jooq.example.db.h2.Public;
@@ -29,7 +30,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class BookStore extends TableImpl<BookStoreRecord> {
 
-    private static final long serialVersionUID = 1086290239;
+    private static final long serialVersionUID = -490084615;
 
     /**
      * The reference instance of <code>PUBLIC.BOOK_STORE</code>
@@ -75,7 +76,7 @@ public class BookStore extends TableImpl<BookStoreRecord> {
     }
 
     private BookStore(Name alias, Table<BookStoreRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""));
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     public <O extends Record> BookStore(Table<O> child, ForeignKey<O, BookStoreRecord> key) {

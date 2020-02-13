@@ -104,6 +104,7 @@ import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StopWatch;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.csv.CSVReader;
+import org.jooq.tools.jdbc.JDBCUtils;
 
 /**
  * A base implementation for all types of databases.
@@ -271,6 +272,15 @@ public abstract class AbstractDatabase implements Database {
 
         try {
             configuration = create0().configuration();
+
+
+
+
+
+
+
+
+
         }
 
         // [#6226] This is mostly due to a wrong Maven groupId

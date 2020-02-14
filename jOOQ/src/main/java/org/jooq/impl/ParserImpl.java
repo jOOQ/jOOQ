@@ -132,7 +132,7 @@ import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.generateSeries;
 import static org.jooq.impl.DSL.greatest;
 import static org.jooq.impl.DSL.grouping;
-import static org.jooq.impl.DSL.groupingId;
+// ...
 import static org.jooq.impl.DSL.groupingSets;
 import static org.jooq.impl.DSL.groupsBetweenCurrentRow;
 import static org.jooq.impl.DSL.groupsBetweenFollowing;

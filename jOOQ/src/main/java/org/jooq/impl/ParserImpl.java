@@ -6843,12 +6843,15 @@ final class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldGroupingIdIf(ParserContext ctx) {
-        if (parseFunctionNameIf(ctx, "GROUPING_ID")) {
-            parse(ctx, '(');
-            List<Field<?>> fields = parseFields(ctx);
-            parse(ctx, ')');
+        if (parseFunctionNameIf(ctx, "GROUPING_ID") && ctx.requireProEdition()) {
 
-            return groupingId(fields.toArray(EMPTY_FIELD));
+
+
+
+
+
+
+
         }
 
         return null;

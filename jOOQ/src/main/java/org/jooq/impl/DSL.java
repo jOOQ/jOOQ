@@ -16708,6 +16708,28 @@ public class DSL {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Create a GROUPING(field) aggregation field to be used along with
      * <code>CUBE</code>, <code>ROLLUP</code>, and <code>GROUPING SETS</code>
@@ -16730,27 +16752,6 @@ public class DSL {
     @Support({ POSTGRES })
     public static Field<Integer> grouping(Field<?> field) {
         return function("grouping", Integer.class, field);
-    }
-
-    /**
-     * Create a GROUPING_ID(field1, field2, .., fieldn) aggregation field to be
-     * used along with <code>CUBE</code>, <code>ROLLUP</code>, and
-     * <code>GROUPING SETS</code> groupings.
-     * <p>
-     * This has been observed to work with the following databases:
-     * <ul>
-     * <li>Oracle</li>
-     * <li>SQL Server</li>
-     * </ul>
-     *
-     * @param fields The function arguments
-     * @return The <code>GROUPING_ID</code> aggregation field
-     * @see #cube(Field...)
-     * @see #rollup(Field...)
-     */
-    @Support({  })
-    public static Field<Integer> groupingId(Field<?>... fields) {
-        return function("grouping_id", Integer.class, fields);
     }
 
     // ------------------------------------------------------------------------

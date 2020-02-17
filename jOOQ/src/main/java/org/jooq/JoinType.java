@@ -129,13 +129,13 @@ public enum JoinType {
     /**
      * <code>CROSS APPLY</code> two tables.
      */
-    @Support({})
+    @Support({  })
     CROSS_APPLY("cross apply", false),
 
     /**
      * <code>OUTER APPLY</code> two tables.
      */
-    @Support({})
+    @Support({  })
     OUTER_APPLY("outer apply", false),
 
     /**

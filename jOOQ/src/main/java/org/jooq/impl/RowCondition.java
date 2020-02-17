@@ -89,7 +89,7 @@ final class RowCondition extends AbstractCondition {
     private static final long                serialVersionUID  = -1806139685201770706L;
     private static final Clause[]            CLAUSES           = { CONDITION, CONDITION_COMPARISON };
     private static final EnumSet<SQLDialect> EMULATE_EQ_AND_NE = EnumSet.of(DERBY, FIREBIRD);
-    private static final EnumSet<SQLDialect> EMULATE_RANGES    = EnumSet.of(DERBY, CUBRID, FIREBIRD);
+    private static final EnumSet<SQLDialect> EMULATE_RANGES    = EnumSet.of(CUBRID, DERBY, FIREBIRD);
 
     private final Row                        left;
     private final Row                        right;

@@ -49,7 +49,9 @@ import org.jooq.TableRecord;
  * <p>
  * Client code may provide proper {@link TableRecord} implementations extending
  * this useful base class. All necessary parts of the {@link TableRecord}
- * interface are already implemented. No methods need further implementation.
+ * interface are already implemented. No methods need further implementation,
+ * but implementations have to provide a no-arg constructor that can be called
+ * reflectively.
  * <p>
  * Use this base class when providing custom tables to any of the following
  * methods:

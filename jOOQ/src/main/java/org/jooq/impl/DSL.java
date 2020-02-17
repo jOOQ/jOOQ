@@ -16459,7 +16459,7 @@ public class DSL {
      * @see #cube(Field...)
      * @see #rollup(Field...)
      */
-    @Support({})
+    @Support({  })
     public static Field<Integer> groupingId(Field<?>... fields) {
         return function("grouping_id", Integer.class, fields);
     }

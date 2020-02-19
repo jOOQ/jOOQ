@@ -503,6 +503,10 @@
 
         <module>jOOQ-xtend</module>
 
+        <module>jOOQ-refaster</module>
+
+
+
 
 
 
@@ -535,8 +539,6 @@
             <modules>
             	<!-- all modules which are not already listed as submodules -->
                 <module>jOOQ-examples</module>
-
-
 
 
 

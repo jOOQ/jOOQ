@@ -790,7 +790,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
 
 
-if (returning.isEmpty()) {
+ if (returning.isEmpty()) {
             super.prepare(ctx);
             return;
         }

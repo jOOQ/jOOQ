@@ -8,7 +8,7 @@ CREATE TABLE jooq_migrations_changelog (
   sql            CLOB             NULL,
   sql_count      INT          NOT NULL,
   status         VARCHAR(10)  NOT NULL,
-
+  
   CONSTRAINT jooq_migr_pk   PRIMARY KEY (id),
   CONSTRAINT jooq_migr_chk1 CHECK (status IN ('RUNNING', 'SUCCESS', 'FAILED'))
 );

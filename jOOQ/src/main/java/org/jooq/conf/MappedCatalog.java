@@ -18,9 +18,9 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 
 /**
  * A catalog mapping configuration.
- *
- *
- *
+ * 
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "MappedCatalog", propOrder = {
@@ -48,7 +48,7 @@ public class MappedCatalog
      * The input catalog name as defined in {@link org.jooq.Catalog#getName()}
      * <p>
      * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided
-     *
+     * 
      */
     public String getInput() {
         return input;
@@ -58,7 +58,7 @@ public class MappedCatalog
      * The input catalog name as defined in {@link org.jooq.Catalog#getName()}
      * <p>
      * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided
-     *
+     * 
      */
     public void setInput(String value) {
         this.input = value;
@@ -68,7 +68,7 @@ public class MappedCatalog
      * A regular expression matching the input catalog name as defined in {@link org.jooq.Catalog#getName()}
      * <p>
      * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided
-     *
+     * 
      */
     public Pattern getInputExpression() {
         return inputExpression;
@@ -78,7 +78,7 @@ public class MappedCatalog
      * A regular expression matching the input catalog name as defined in {@link org.jooq.Catalog#getName()}
      * <p>
      * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided
-     *
+     * 
      */
     public void setInputExpression(Pattern value) {
         this.inputExpression = value;
@@ -91,7 +91,7 @@ public class MappedCatalog
      * <li>When &lt;input/&gt; is provided, &lt;output/&gt; is a constant value.</li>
      * <li>When &lt;inputExpression/&gt; is provided, &lt;output/&gt; is a replacement expression</li>
      * </ul>
-     *
+     * 
      */
     public String getOutput() {
         return output;
@@ -104,7 +104,7 @@ public class MappedCatalog
      * <li>When &lt;input/&gt; is provided, &lt;output/&gt; is a constant value.</li>
      * <li>When &lt;inputExpression/&gt; is provided, &lt;output/&gt; is a replacement expression</li>
      * </ul>
-     *
+     * 
      */
     public void setOutput(String value) {
         this.output = value;
@@ -125,7 +125,7 @@ public class MappedCatalog
      * The input catalog name as defined in {@link org.jooq.Catalog#getName()}
      * <p>
      * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided
-     *
+     * 
      */
     public MappedCatalog withInput(String value) {
         setInput(value);
@@ -136,7 +136,7 @@ public class MappedCatalog
      * A regular expression matching the input catalog name as defined in {@link org.jooq.Catalog#getName()}
      * <p>
      * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided
-     *
+     * 
      */
     public MappedCatalog withInputExpression(Pattern value) {
         setInputExpression(value);
@@ -150,7 +150,7 @@ public class MappedCatalog
      * <li>When &lt;input/&gt; is provided, &lt;output/&gt; is a constant value.</li>
      * <li>When &lt;inputExpression/&gt; is provided, &lt;output/&gt; is a replacement expression</li>
      * </ul>
-     *
+     * 
      */
     public MappedCatalog withOutput(String value) {
         setOutput(value);

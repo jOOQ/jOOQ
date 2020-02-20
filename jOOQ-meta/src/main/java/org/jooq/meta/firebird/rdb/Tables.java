@@ -19,7 +19,7 @@ import org.jooq.meta.firebird.rdb.tables.Rdb$triggers;
 
 
 /**
- * Convenience access to all tables in
+ * Convenience access to all tables in 
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables {

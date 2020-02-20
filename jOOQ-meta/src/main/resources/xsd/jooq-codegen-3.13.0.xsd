@@ -26,7 +26,7 @@
         <element name="generator" type="tns:Generator" minOccurs="1" maxOccurs="1">
           <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The GENERATOR configuration element contains information about source code generation itself.]]></jxb:javadoc></jxb:property></appinfo></annotation>
         </element>
-
+         
         <element name="basedir" type="string" minOccurs="0" maxOccurs="1">
           <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The base directory that should be used instead of the JVM's working directory, to resolve all relative paths.]]></jxb:javadoc></jxb:property></appinfo></annotation>
         </element>
@@ -87,7 +87,7 @@
       <element name="password" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The JDBC connection password.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-
+      
       <element name="autoCommit" type="boolean" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The value of the JDBC autocommit flag. The flag is not set by default, i.e. it keeps the default provided to jOOQ.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -562,11 +562,11 @@ Excludes match before includes, i.e. excludes have a higher priority.]]></jxb:ja
       <element name="includeCheckConstraints" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This flag indicates whether check constraints should be included in output produced by this database]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-
+      
       <element name="includeSystemIndexes" type="boolean" default="false" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This flag indicates whether system generated indexes should be included in output produced by this database]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-
+      
       <element name="includeSystemCheckConstraints" type="boolean" default="false" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This flag indicates whether system generated check constraints should be included in output produced by this database]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -654,7 +654,7 @@ jOOQ 4.0.]]></jxb:javadoc>
       <element name="unsignedTypes" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate jOOU data types for your unsigned data types, which are not natively supported in Java]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-
+      
       <element name="integerDisplayWidths" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Include display width in type declaration. In some RDBMS (e.g. MariaDB, MySQL), fixed width integer types are optionally accompanied by a display width. This is sometimes abused to model BOOLEAN types via TINYINT(1). This flag allows for including that display width in the type declaration exposed by jOOQ-meta code, as if it were a numeric precision.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -758,9 +758,9 @@ generated artefacts.]]></jxb:javadoc></jxb:property></appinfo></annotation>
 <p>
 This comparator can be used to influence the order of any object that is produced by jOOQ meta, and thus, indirectly, the order of declared objects in generated code.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-
+      
       <element name="embeddables" type="tns:Embeddables" minOccurs="0" maxOccurs="1">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Configure embeddable types.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Configure embeddable types.]]></jxb:javadoc></jxb:property></appinfo></annotation>      
       </element>
 
       <element name="customTypes" type="tns:CustomTypes" minOccurs="0" maxOccurs="1">
@@ -878,7 +878,7 @@ for Oracle.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       <element name="enumType" type="tns:EnumType" minOccurs="0" maxOccurs="unbounded" />
     </sequence>
   </complexType>
-
+  
   <complexType name="Embeddables">
     <sequence>
       <element name="embeddable" type="tns:Embeddable" minOccurs="0" maxOccurs="unbounded" />
@@ -969,33 +969,33 @@ for Oracle.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       <element name="literals" type="string" minOccurs="1" maxOccurs="1" />
     </all>
   </complexType>
-
+  
   <complexType name="Embeddable">
     <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[An embeddable type declaration]]></jxb:javadoc></jxb:class></appinfo></annotation>
     <all>
       <element name="name" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The name of the embeddable type]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-
+      
       <element name="fields" type="tns:EmbeddableFields" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A set of field specifications for the embeddable type.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
     </all>
   </complexType>
-
+  
   <complexType name="EmbeddableFields">
     <sequence>
       <element name="field" type="tns:EmbeddableField" minOccurs="0" maxOccurs="unbounded" />
     </sequence>
   </complexType>
-
+  
   <complexType name="EmbeddableField">
     <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A field specification for an embeddable type.]]></jxb:javadoc></jxb:property></appinfo></annotation>
     <all>
       <element name="name" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A name for the field in case the regex does not produce unique names for all matches.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-
+      
       <element name="expression" type="string" minOccurs="1" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regex matching all column names that are part of the embeddable type. The regex must match only one column per table.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -1047,7 +1047,7 @@ etc. to be forced to have this type. If provided, both "includeExpression" and
       <element name="expressions" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The same as {@link #getIncludeExpression()}. This is kept for backwards compatibility reasons.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-
+      
       <element name="sql" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A SQL statement that produces a table with one column containing the matched qualified or unqualified column names.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -1070,13 +1070,13 @@ type. If provided, both "includeExpression" and "includeTypes" must match.]]></j
       <element name="nullability" type="tns:Nullability" default="ALL" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether this forced type should apply to nullable / non-nullable / all columns]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-
+      
       <element name="objectType" type="tns:ForcedTypeObjectType" default="ALL" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether this forced type should apply to all object types, or only to specific ones]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
     </all>
   </complexType>
-
+  
   <simpleType name="ForcedTypeObjectType">
     <restriction base="string">
       <enumeration value="ALL"/>
@@ -1139,19 +1139,19 @@ jOOQ version used for source code.]]></jxb:javadoc></jxb:property></appinfo></an
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate the {@link javax.annotation.Generated} or {@link javax.annotation.processing.Generated} annotation to indicate
 jOOQ version used for source code.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-
+      
       <element name="nonnullAnnotation" type="boolean" default="false" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether non-nullable items should be annotated with the annotation type specified in {@link #nonnullAnnotationType}. In SQL and by consequence in jOOQ, non-nullability cannot be guaranteed statically. There may still be some cases (e.g. after unions, outer joins, etc.) where a normally non-null value turns out to be null!]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-
+      
       <element name="nonnullAnnotationType" type="string" default="javax.annotation.Nonnull" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Specify the qualified annotation name for all non-nullable items in generated code, defaulting to the JSR-305 {@link javax.annotation.Nonnull} type.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-
+      
       <element name="nullableAnnotation" type="boolean" default="false" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether nullable items should be annotated with the annotation type specified in {@link #nullableAnnotationType}. Unlike {@link #nonnullAnnotation}, nullability can be guaranteed as in SQL, and by consequence in jOOQ, every column expression can be made nullable using some SQL operation.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-
+      
       <element name="nullableAnnotationType" type="string" default="javax.annotation.Nullable" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Specify the qualified annotation name for all nullable items in generated code, defaulting to the JSR-305 {@link javax.annotation.Nullable} type.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -1183,7 +1183,7 @@ jOOQ version used for source code.]]></jxb:javadoc></jxb:property></appinfo></an
       <element name="tables" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate Table classes.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-
+      
       <element name="embeddables" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate embeddable classes.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -1351,11 +1351,11 @@ jOOQ version used for source code.]]></jxb:javadoc></jxb:property></appinfo></an
       <element name="commentsOnKeys" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of all SQL comments as Javadoc on all keys.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-
+      
       <element name="sources" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of all source code on all object types.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-
+      
       <element name="sourcesOnViews" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of all source code on all views.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -1438,11 +1438,11 @@ This flag is ignored in the commercial Java 6 distribution of jOOQ 3.9+ ]]></jxb
       <element name="primaryKeyTypes" type="boolean" default="false" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether wrapper types should be generated for primary key columns, and for their referencing foreign keys.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-
+      
       <element name="newline" type="string" default="\n" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The newline characters to be used in generated code. Whitespace characters can be used, e.g. \n, \r\n]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-
+      
       <element name="indentation" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The indentation characters to be used in generated code. If unspecified, an idiomatic default indentation of the language will be used (4 spaces in Java, 2 spaces in Scala). Whitespace characters can be used, e.g. \t]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -1507,7 +1507,7 @@ e.g. org.jooq.generated.schema1, org.jooq.generated.schema2]]></jxb:javadoc></jx
       <enumeration value="NOT_NULL"/>
     </restriction>
   </simpleType>
-
+  
   <simpleType name="GeneratedAnnotationType">
     <restriction base="string">
       <enumeration value="DETECT_FROM_JDK"/>

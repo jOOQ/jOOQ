@@ -106,7 +106,7 @@ public interface RowN extends Row {
     // ------------------------------------------------------------------------
     // Generic comparison predicates
     // ------------------------------------------------------------------------
-
+    
     /**
      * Compare this row value expression with another row value expression
      * using a dynamic comparator.

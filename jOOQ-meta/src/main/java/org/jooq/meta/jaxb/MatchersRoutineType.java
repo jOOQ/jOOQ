@@ -13,9 +13,9 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 
 /**
  * Declarative naming strategy configuration for routine names.
- *
- *
- *
+ * 
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "MatchersRoutineType", propOrder = {
@@ -37,7 +37,7 @@ public class MatchersRoutineType implements Serializable, XMLAppendable
 
     /**
      * This routine matcher applies to all unqualified or qualified routine names matched by this expression. If left empty, this matcher applies to all routines.
-     *
+     * 
      */
     public String getExpression() {
         return expression;
@@ -45,7 +45,7 @@ public class MatchersRoutineType implements Serializable, XMLAppendable
 
     /**
      * This routine matcher applies to all unqualified or qualified routine names matched by this expression. If left empty, this matcher applies to all routines.
-     *
+     * 
      */
     public void setExpression(String value) {
         this.expression = value;
@@ -53,7 +53,7 @@ public class MatchersRoutineType implements Serializable, XMLAppendable
 
     /**
      * This rule influences the naming of the generated {@link org.jooq.Routine} object.
-     *
+     * 
      */
     public MatcherRule getRoutineClass() {
         return routineClass;
@@ -61,7 +61,7 @@ public class MatchersRoutineType implements Serializable, XMLAppendable
 
     /**
      * This rule influences the naming of the generated {@link org.jooq.Routine} object.
-     *
+     * 
      */
     public void setRoutineClass(MatcherRule value) {
         this.routineClass = value;
@@ -69,7 +69,7 @@ public class MatchersRoutineType implements Serializable, XMLAppendable
 
     /**
      * This rule influences the naming of generated convenience methods used to call the {@link org.jooq.Routine}.
-     *
+     * 
      */
     public MatcherRule getRoutineMethod() {
         return routineMethod;
@@ -77,7 +77,7 @@ public class MatchersRoutineType implements Serializable, XMLAppendable
 
     /**
      * This rule influences the naming of generated convenience methods used to call the {@link org.jooq.Routine}.
-     *
+     * 
      */
     public void setRoutineMethod(MatcherRule value) {
         this.routineMethod = value;
@@ -85,7 +85,7 @@ public class MatchersRoutineType implements Serializable, XMLAppendable
 
     /**
      * This string provides additional interfaces that a generated {@link org.jooq.Routine} should implement.
-     *
+     * 
      */
     public String getRoutineImplements() {
         return routineImplements;
@@ -93,7 +93,7 @@ public class MatchersRoutineType implements Serializable, XMLAppendable
 
     /**
      * This string provides additional interfaces that a generated {@link org.jooq.Routine} should implement.
-     *
+     * 
      */
     public void setRoutineImplements(String value) {
         this.routineImplements = value;
@@ -101,7 +101,7 @@ public class MatchersRoutineType implements Serializable, XMLAppendable
 
     /**
      * This routine matcher applies to all unqualified or qualified routine names matched by this expression. If left empty, this matcher applies to all routines.
-     *
+     * 
      */
     public MatchersRoutineType withExpression(String value) {
         setExpression(value);
@@ -110,7 +110,7 @@ public class MatchersRoutineType implements Serializable, XMLAppendable
 
     /**
      * This rule influences the naming of the generated {@link org.jooq.Routine} object.
-     *
+     * 
      */
     public MatchersRoutineType withRoutineClass(MatcherRule value) {
         setRoutineClass(value);
@@ -119,7 +119,7 @@ public class MatchersRoutineType implements Serializable, XMLAppendable
 
     /**
      * This rule influences the naming of generated convenience methods used to call the {@link org.jooq.Routine}.
-     *
+     * 
      */
     public MatchersRoutineType withRoutineMethod(MatcherRule value) {
         setRoutineMethod(value);
@@ -128,7 +128,7 @@ public class MatchersRoutineType implements Serializable, XMLAppendable
 
     /**
      * This string provides additional interfaces that a generated {@link org.jooq.Routine} should implement.
-     *
+     * 
      */
     public MatchersRoutineType withRoutineImplements(String value) {
         setRoutineImplements(value);

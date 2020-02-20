@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for InvocationOrder.
- *
+ * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
  * <pre>
@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/restriction&gt;
  * &lt;/simpleType&gt;
  * </pre>
- *
+ * 
  */
 @XmlType(name = "InvocationOrder")
 @XmlEnum

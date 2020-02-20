@@ -14,9 +14,9 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 
 /**
  * <p>Java class for EmbeddableField complex type.
- *
+ * 
  * <p>The following schema fragment specifies the expected content contained within this class.
- *
+ * 
  * <pre>
  * &lt;complexType name="EmbeddableField"&gt;
  *   &lt;complexContent&gt;
@@ -29,8 +29,8 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- *
- *
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "EmbeddableField", propOrder = {
@@ -51,7 +51,7 @@ public class EmbeddableField implements Serializable, XMLAppendable
 
     /**
      * A name for the field in case the regex does not produce unique names for all matches.
-     *
+     * 
      */
     public String getName() {
         return name;
@@ -59,7 +59,7 @@ public class EmbeddableField implements Serializable, XMLAppendable
 
     /**
      * A name for the field in case the regex does not produce unique names for all matches.
-     *
+     * 
      */
     public void setName(String value) {
         this.name = value;
@@ -67,7 +67,7 @@ public class EmbeddableField implements Serializable, XMLAppendable
 
     /**
      * A regex matching all column names that are part of the embeddable type. The regex must match only one column per table.
-     *
+     * 
      */
     public String getExpression() {
         return expression;
@@ -75,7 +75,7 @@ public class EmbeddableField implements Serializable, XMLAppendable
 
     /**
      * A regex matching all column names that are part of the embeddable type. The regex must match only one column per table.
-     *
+     * 
      */
     public void setExpression(String value) {
         this.expression = value;
@@ -83,7 +83,7 @@ public class EmbeddableField implements Serializable, XMLAppendable
 
     /**
      * A name for the field in case the regex does not produce unique names for all matches.
-     *
+     * 
      */
     public EmbeddableField withName(String value) {
         setName(value);
@@ -92,7 +92,7 @@ public class EmbeddableField implements Serializable, XMLAppendable
 
     /**
      * A regex matching all column names that are part of the embeddable type. The regex must match only one column per table.
-     *
+     * 
      */
     public EmbeddableField withExpression(String value) {
         setExpression(value);

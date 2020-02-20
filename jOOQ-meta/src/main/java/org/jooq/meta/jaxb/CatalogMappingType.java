@@ -18,9 +18,9 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 
 /**
  * Configuration of an input catalog and its mappings.
- *
- *
- *
+ * 
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "CatalogMappingType", propOrder = {
@@ -46,7 +46,7 @@ public class CatalogMappingType implements Serializable, XMLAppendable
 
     /**
      * See also {@link Database#getInputCatalog()}
-     *
+     * 
      */
     public String getInputCatalog() {
         return inputCatalog;
@@ -54,7 +54,7 @@ public class CatalogMappingType implements Serializable, XMLAppendable
 
     /**
      * See also {@link Database#getInputCatalog()}
-     *
+     * 
      */
     public void setInputCatalog(String value) {
         this.inputCatalog = value;
@@ -62,7 +62,7 @@ public class CatalogMappingType implements Serializable, XMLAppendable
 
     /**
      * See also {@link Database#getOutputCatalog()}
-     *
+     * 
      */
     public String getOutputCatalog() {
         return outputCatalog;
@@ -70,7 +70,7 @@ public class CatalogMappingType implements Serializable, XMLAppendable
 
     /**
      * See also {@link Database#getOutputCatalog()}
-     *
+     * 
      */
     public void setOutputCatalog(String value) {
         this.outputCatalog = value;
@@ -78,11 +78,11 @@ public class CatalogMappingType implements Serializable, XMLAppendable
 
     /**
      * See also {@link Database#isOutputCatalogToDefault()}
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isOutputCatalogToDefault() {
         return outputCatalogToDefault;
@@ -90,11 +90,11 @@ public class CatalogMappingType implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the outputCatalogToDefault property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setOutputCatalogToDefault(Boolean value) {
         this.outputCatalogToDefault = value;
@@ -113,7 +113,7 @@ public class CatalogMappingType implements Serializable, XMLAppendable
 
     /**
      * See also {@link Database#getInputCatalog()}
-     *
+     * 
      */
     public CatalogMappingType withInputCatalog(String value) {
         setInputCatalog(value);
@@ -122,7 +122,7 @@ public class CatalogMappingType implements Serializable, XMLAppendable
 
     /**
      * See also {@link Database#getOutputCatalog()}
-     *
+     * 
      */
     public CatalogMappingType withOutputCatalog(String value) {
         setOutputCatalog(value);

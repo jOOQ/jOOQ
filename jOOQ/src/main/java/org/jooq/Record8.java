@@ -215,56 +215,56 @@ public interface Record8<T1, T2, T3, T4, T5, T6, T7, T8> extends Record {
     /**
      * Get the first value.
      * <p>
-     * This is the same as {@link #value1()}.
+     * This is the same as {@link #value1()}. 
      */
     T1 component1();
 
     /**
      * Get the second value.
      * <p>
-     * This is the same as {@link #value2()}.
+     * This is the same as {@link #value2()}. 
      */
     T2 component2();
 
     /**
      * Get the third value.
      * <p>
-     * This is the same as {@link #value3()}.
+     * This is the same as {@link #value3()}. 
      */
     T3 component3();
 
     /**
      * Get the fourth value.
      * <p>
-     * This is the same as {@link #value4()}.
+     * This is the same as {@link #value4()}. 
      */
     T4 component4();
 
     /**
      * Get the fifth value.
      * <p>
-     * This is the same as {@link #value5()}.
+     * This is the same as {@link #value5()}. 
      */
     T5 component5();
 
     /**
      * Get the sixth value.
      * <p>
-     * This is the same as {@link #value6()}.
+     * This is the same as {@link #value6()}. 
      */
     T6 component6();
 
     /**
      * Get the seventh value.
      * <p>
-     * This is the same as {@link #value7()}.
+     * This is the same as {@link #value7()}. 
      */
     T7 component7();
 
     /**
      * Get the eighth value.
      * <p>
-     * This is the same as {@link #value8()}.
+     * This is the same as {@link #value8()}. 
      */
     T8 component8();
 }

@@ -59,7 +59,7 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
-public interface Query extends Statement, Attachable , AutoCloseable  {
+public interface Query extends Statement, Attachable, AutoCloseable {
 
     /**
      * Execute the query, if it has been created with a proper configuration.

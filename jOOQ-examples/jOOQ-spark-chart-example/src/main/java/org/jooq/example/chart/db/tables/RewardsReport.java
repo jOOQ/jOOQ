@@ -177,7 +177,7 @@ public class RewardsReport extends TableImpl<RewardsReportRecord> {
      * Call this table-valued function
      */
     public RewardsReport call(Integer minMonthlyPurchases, BigDecimal minDollarAmountPurchased) {
-        return new RewardsReport(DSL.name(getName()), null, new Field[] {
+        return new RewardsReport(DSL.name(getName()), null, new Field[] { 
               DSL.val(minMonthlyPurchases, org.jooq.impl.SQLDataType.INTEGER)
             , DSL.val(minDollarAmountPurchased, org.jooq.impl.SQLDataType.NUMERIC)
         });
@@ -187,7 +187,7 @@ public class RewardsReport extends TableImpl<RewardsReportRecord> {
      * Call this table-valued function
      */
     public RewardsReport call(Field<Integer> minMonthlyPurchases, Field<BigDecimal> minDollarAmountPurchased) {
-        return new RewardsReport(DSL.name(getName()), null, new Field[] {
+        return new RewardsReport(DSL.name(getName()), null, new Field[] { 
               minMonthlyPurchases
             , minDollarAmountPurchased
         });

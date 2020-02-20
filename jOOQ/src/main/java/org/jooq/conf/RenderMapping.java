@@ -16,9 +16,9 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 
 /**
  * The runtime schema and table mapping.
- *
- *
- *
+ * 
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "RenderMapping", propOrder = {
@@ -46,7 +46,7 @@ public class RenderMapping
      * The default catalog as defined in {@link org.jooq.Catalog#getName()}.
      * <p>
      * This catalog will be omitted in rendered SQL.
-     *
+     * 
      */
     public String getDefaultCatalog() {
         return defaultCatalog;
@@ -56,7 +56,7 @@ public class RenderMapping
      * The default catalog as defined in {@link org.jooq.Catalog#getName()}.
      * <p>
      * This catalog will be omitted in rendered SQL.
-     *
+     * 
      */
     public void setDefaultCatalog(String value) {
         this.defaultCatalog = value;
@@ -66,7 +66,7 @@ public class RenderMapping
      * The default schema as defined in {@link org.jooq.Schema#getName()}.
      * <p>
      * This schema will be omitted in rendered SQL.
-     *
+     * 
      */
     public String getDefaultSchema() {
         return defaultSchema;
@@ -76,7 +76,7 @@ public class RenderMapping
      * The default schema as defined in {@link org.jooq.Schema#getName()}.
      * <p>
      * This schema will be omitted in rendered SQL.
-     *
+     * 
      */
     public void setDefaultSchema(String value) {
         this.defaultSchema = value;
@@ -108,7 +108,7 @@ public class RenderMapping
      * The default catalog as defined in {@link org.jooq.Catalog#getName()}.
      * <p>
      * This catalog will be omitted in rendered SQL.
-     *
+     * 
      */
     public RenderMapping withDefaultCatalog(String value) {
         setDefaultCatalog(value);
@@ -119,7 +119,7 @@ public class RenderMapping
      * The default schema as defined in {@link org.jooq.Schema#getName()}.
      * <p>
      * This schema will be omitted in rendered SQL.
-     *
+     * 
      */
     public RenderMapping withDefaultSchema(String value) {
         setDefaultSchema(value);

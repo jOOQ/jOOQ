@@ -18,9 +18,9 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 
 /**
  * An embeddable type declaration
- *
- *
- *
+ * 
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Embeddable", propOrder = {
@@ -41,7 +41,7 @@ public class Embeddable implements Serializable, XMLAppendable
 
     /**
      * The name of the embeddable type
-     *
+     * 
      */
     public String getName() {
         return name;
@@ -49,7 +49,7 @@ public class Embeddable implements Serializable, XMLAppendable
 
     /**
      * The name of the embeddable type
-     *
+     * 
      */
     public void setName(String value) {
         this.name = value;
@@ -68,7 +68,7 @@ public class Embeddable implements Serializable, XMLAppendable
 
     /**
      * The name of the embeddable type
-     *
+     * 
      */
     public Embeddable withName(String value) {
         setName(value);

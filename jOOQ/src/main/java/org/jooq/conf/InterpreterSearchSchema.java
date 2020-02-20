@@ -12,9 +12,9 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 
 /**
  * A schema that is on the search path.
- *
- *
- *
+ * 
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "InterpreterSearchSchema", propOrder = {
@@ -35,7 +35,7 @@ public class InterpreterSearchSchema
 
     /**
      * The catalog qualifier of the schema, if applicable.
-     *
+     * 
      */
     public String getCatalog() {
         return catalog;
@@ -43,7 +43,7 @@ public class InterpreterSearchSchema
 
     /**
      * The catalog qualifier of the schema, if applicable.
-     *
+     * 
      */
     public void setCatalog(String value) {
         this.catalog = value;
@@ -51,7 +51,7 @@ public class InterpreterSearchSchema
 
     /**
      * The schema qualifier whose elements can be found from the search path.
-     *
+     * 
      */
     public String getSchema() {
         return schema;
@@ -59,7 +59,7 @@ public class InterpreterSearchSchema
 
     /**
      * The schema qualifier whose elements can be found from the search path.
-     *
+     * 
      */
     public void setSchema(String value) {
         this.schema = value;
@@ -67,7 +67,7 @@ public class InterpreterSearchSchema
 
     /**
      * The catalog qualifier of the schema, if applicable.
-     *
+     * 
      */
     public InterpreterSearchSchema withCatalog(String value) {
         setCatalog(value);
@@ -76,7 +76,7 @@ public class InterpreterSearchSchema
 
     /**
      * The schema qualifier whose elements can be found from the search path.
-     *
+     * 
      */
     public InterpreterSearchSchema withSchema(String value) {
         setSchema(value);

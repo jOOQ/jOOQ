@@ -15,9 +15,9 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 
 /**
  * <p>Java class for TableConstraint complex type.
- *
+ * 
  * <p>The following schema fragment specifies the expected content contained within this class.
- *
+ * 
  * <pre>
  * &lt;complexType name="TableConstraint"&gt;
  *   &lt;complexContent&gt;
@@ -37,8 +37,8 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- *
- *
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "TableConstraint", propOrder = {
@@ -142,11 +142,11 @@ public class TableConstraint implements Serializable, XMLAppendable
 
     /**
      * Gets the value of the enforced property.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isEnforced() {
         return enforced;
@@ -154,11 +154,11 @@ public class TableConstraint implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the enforced property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setEnforced(Boolean value) {
         this.enforced = value;

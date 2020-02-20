@@ -18,9 +18,9 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 
 /**
  * JDBC connection configuration.
- *
- *
- *
+ * 
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Jdbc", propOrder = {
@@ -53,7 +53,7 @@ public class Jdbc implements Serializable, XMLAppendable
 
     /**
      * The JDBC driver class.
-     *
+     * 
      */
     public String getDriver() {
         return driver;
@@ -61,7 +61,7 @@ public class Jdbc implements Serializable, XMLAppendable
 
     /**
      * The JDBC driver class.
-     *
+     * 
      */
     public void setDriver(String value) {
         this.driver = value;
@@ -69,7 +69,7 @@ public class Jdbc implements Serializable, XMLAppendable
 
     /**
      * The JDBC connection URL.
-     *
+     * 
      */
     public String getUrl() {
         return url;
@@ -77,7 +77,7 @@ public class Jdbc implements Serializable, XMLAppendable
 
     /**
      * The JDBC connection URL.
-     *
+     * 
      */
     public void setUrl(String value) {
         this.url = value;
@@ -85,7 +85,7 @@ public class Jdbc implements Serializable, XMLAppendable
 
     /**
      * @deprecated Use database schema configuration elements instead.
-     *
+     * 
      */
     @Deprecated
     public String getSchema() {
@@ -94,7 +94,7 @@ public class Jdbc implements Serializable, XMLAppendable
 
     /**
      * @deprecated Use database schema configuration elements instead.
-     *
+     * 
      */
     @Deprecated
     public void setSchema(String value) {
@@ -103,7 +103,7 @@ public class Jdbc implements Serializable, XMLAppendable
 
     /**
      * The JDBC connection user. Be sure this user has all required GRANTs to the dictionary views/tables to generate the desired artefacts
-     *
+     * 
      */
     public String getUser() {
         return user;
@@ -111,7 +111,7 @@ public class Jdbc implements Serializable, XMLAppendable
 
     /**
      * The JDBC connection user. Be sure this user has all required GRANTs to the dictionary views/tables to generate the desired artefacts
-     *
+     * 
      */
     public void setUser(String value) {
         this.user = value;
@@ -119,7 +119,7 @@ public class Jdbc implements Serializable, XMLAppendable
 
     /**
      * Just a synonym for "user" to be compatible with other Maven plugins.
-     *
+     * 
      */
     public String getUsername() {
         return username;
@@ -127,7 +127,7 @@ public class Jdbc implements Serializable, XMLAppendable
 
     /**
      * Just a synonym for "user" to be compatible with other Maven plugins.
-     *
+     * 
      */
     public void setUsername(String value) {
         this.username = value;
@@ -135,7 +135,7 @@ public class Jdbc implements Serializable, XMLAppendable
 
     /**
      * The JDBC connection password.
-     *
+     * 
      */
     public String getPassword() {
         return password;
@@ -143,7 +143,7 @@ public class Jdbc implements Serializable, XMLAppendable
 
     /**
      * The JDBC connection password.
-     *
+     * 
      */
     public void setPassword(String value) {
         this.password = value;
@@ -151,11 +151,11 @@ public class Jdbc implements Serializable, XMLAppendable
 
     /**
      * The value of the JDBC autocommit flag. The flag is not set by default, i.e. it keeps the default provided to jOOQ.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isAutoCommit() {
         return autoCommit;
@@ -163,11 +163,11 @@ public class Jdbc implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the autoCommit property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setAutoCommit(Boolean value) {
         this.autoCommit = value;
@@ -186,7 +186,7 @@ public class Jdbc implements Serializable, XMLAppendable
 
     /**
      * The JDBC driver class.
-     *
+     * 
      */
     public Jdbc withDriver(String value) {
         setDriver(value);
@@ -195,7 +195,7 @@ public class Jdbc implements Serializable, XMLAppendable
 
     /**
      * The JDBC connection URL.
-     *
+     * 
      */
     public Jdbc withUrl(String value) {
         setUrl(value);
@@ -204,7 +204,7 @@ public class Jdbc implements Serializable, XMLAppendable
 
     /**
      * @deprecated Use database schema configuration elements instead.
-     *
+     * 
      */
     @Deprecated
     public Jdbc withSchema(String value) {
@@ -214,7 +214,7 @@ public class Jdbc implements Serializable, XMLAppendable
 
     /**
      * The JDBC connection user. Be sure this user has all required GRANTs to the dictionary views/tables to generate the desired artefacts
-     *
+     * 
      */
     public Jdbc withUser(String value) {
         setUser(value);
@@ -223,7 +223,7 @@ public class Jdbc implements Serializable, XMLAppendable
 
     /**
      * Just a synonym for "user" to be compatible with other Maven plugins.
-     *
+     * 
      */
     public Jdbc withUsername(String value) {
         setUsername(value);
@@ -232,7 +232,7 @@ public class Jdbc implements Serializable, XMLAppendable
 
     /**
      * The JDBC connection password.
-     *
+     * 
      */
     public Jdbc withPassword(String value) {
         setPassword(value);

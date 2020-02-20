@@ -14,9 +14,9 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 
 /**
  * Configuration of an input schema and its mappings.
- *
- *
- *
+ * 
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "SchemaMappingType", propOrder = {
@@ -39,7 +39,7 @@ public class SchemaMappingType implements Serializable, XMLAppendable
 
     /**
      * See also {@link Database#getInputSchema()}
-     *
+     * 
      */
     public String getInputSchema() {
         return inputSchema;
@@ -47,7 +47,7 @@ public class SchemaMappingType implements Serializable, XMLAppendable
 
     /**
      * See also {@link Database#getInputSchema()}
-     *
+     * 
      */
     public void setInputSchema(String value) {
         this.inputSchema = value;
@@ -55,7 +55,7 @@ public class SchemaMappingType implements Serializable, XMLAppendable
 
     /**
      * See also {@link Database#getOutputSchema()}
-     *
+     * 
      */
     public String getOutputSchema() {
         return outputSchema;
@@ -63,7 +63,7 @@ public class SchemaMappingType implements Serializable, XMLAppendable
 
     /**
      * See also {@link Database#getOutputSchema()}
-     *
+     * 
      */
     public void setOutputSchema(String value) {
         this.outputSchema = value;
@@ -71,11 +71,11 @@ public class SchemaMappingType implements Serializable, XMLAppendable
 
     /**
      * See also {@link Database#isOutputSchemaToDefault()}
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isOutputSchemaToDefault() {
         return outputSchemaToDefault;
@@ -83,11 +83,11 @@ public class SchemaMappingType implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the outputSchemaToDefault property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setOutputSchemaToDefault(Boolean value) {
         this.outputSchemaToDefault = value;
@@ -95,7 +95,7 @@ public class SchemaMappingType implements Serializable, XMLAppendable
 
     /**
      * See also {@link Database#getInputSchema()}
-     *
+     * 
      */
     public SchemaMappingType withInputSchema(String value) {
         setInputSchema(value);
@@ -104,7 +104,7 @@ public class SchemaMappingType implements Serializable, XMLAppendable
 
     /**
      * See also {@link Database#getOutputSchema()}
-     *
+     * 
      */
     public SchemaMappingType withOutputSchema(String value) {
         setOutputSchema(value);

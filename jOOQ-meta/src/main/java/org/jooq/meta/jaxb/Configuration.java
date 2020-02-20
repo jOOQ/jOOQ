@@ -16,9 +16,9 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 
 /**
  * <p>Java class for anonymous complex type.
- *
+ * 
  * <p>The following schema fragment specifies the expected content contained within this class.
- *
+ * 
  * <pre>
  * &lt;complexType&gt;
  *   &lt;complexContent&gt;
@@ -34,8 +34,8 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- *
- *
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -62,7 +62,7 @@ public class Configuration implements Serializable, XMLAppendable
 
     /**
      * The logging configuration element specifies the code generation logging threshold.
-     *
+     * 
      */
     public Logging getLogging() {
         return logging;
@@ -70,7 +70,7 @@ public class Configuration implements Serializable, XMLAppendable
 
     /**
      * The logging configuration element specifies the code generation logging threshold.
-     *
+     * 
      */
     public void setLogging(Logging value) {
         this.logging = value;
@@ -78,7 +78,7 @@ public class Configuration implements Serializable, XMLAppendable
 
     /**
      * The action to be taken by the generator as the consequence of an encountered exception. Defaults to FAIL.
-     *
+     * 
      */
     public OnError getOnError() {
         return onError;
@@ -86,7 +86,7 @@ public class Configuration implements Serializable, XMLAppendable
 
     /**
      * The action to be taken by the generator as the consequence of an encountered exception. Defaults to FAIL.
-     *
+     * 
      */
     public void setOnError(OnError value) {
         this.onError = value;
@@ -94,7 +94,7 @@ public class Configuration implements Serializable, XMLAppendable
 
     /**
      * The JDBC configuration element contains information about how to set up the database connection used for source code generation.
-     *
+     * 
      */
     public Jdbc getJdbc() {
         return jdbc;
@@ -102,7 +102,7 @@ public class Configuration implements Serializable, XMLAppendable
 
     /**
      * The JDBC configuration element contains information about how to set up the database connection used for source code generation.
-     *
+     * 
      */
     public void setJdbc(Jdbc value) {
         this.jdbc = value;
@@ -110,7 +110,7 @@ public class Configuration implements Serializable, XMLAppendable
 
     /**
      * The GENERATOR configuration element contains information about source code generation itself.
-     *
+     * 
      */
     public Generator getGenerator() {
         return generator;
@@ -118,7 +118,7 @@ public class Configuration implements Serializable, XMLAppendable
 
     /**
      * The GENERATOR configuration element contains information about source code generation itself.
-     *
+     * 
      */
     public void setGenerator(Generator value) {
         this.generator = value;
@@ -126,7 +126,7 @@ public class Configuration implements Serializable, XMLAppendable
 
     /**
      * The base directory that should be used instead of the JVM's working directory, to resolve all relative paths.
-     *
+     * 
      */
     public String getBasedir() {
         return basedir;
@@ -134,7 +134,7 @@ public class Configuration implements Serializable, XMLAppendable
 
     /**
      * The base directory that should be used instead of the JVM's working directory, to resolve all relative paths.
-     *
+     * 
      */
     public void setBasedir(String value) {
         this.basedir = value;
@@ -142,7 +142,7 @@ public class Configuration implements Serializable, XMLAppendable
 
     /**
      * The logging configuration element specifies the code generation logging threshold.
-     *
+     * 
      */
     public Configuration withLogging(Logging value) {
         setLogging(value);
@@ -151,7 +151,7 @@ public class Configuration implements Serializable, XMLAppendable
 
     /**
      * The action to be taken by the generator as the consequence of an encountered exception. Defaults to FAIL.
-     *
+     * 
      */
     public Configuration withOnError(OnError value) {
         setOnError(value);
@@ -160,7 +160,7 @@ public class Configuration implements Serializable, XMLAppendable
 
     /**
      * The JDBC configuration element contains information about how to set up the database connection used for source code generation.
-     *
+     * 
      */
     public Configuration withJdbc(Jdbc value) {
         setJdbc(value);
@@ -169,7 +169,7 @@ public class Configuration implements Serializable, XMLAppendable
 
     /**
      * The GENERATOR configuration element contains information about source code generation itself.
-     *
+     * 
      */
     public Configuration withGenerator(Generator value) {
         setGenerator(value);
@@ -178,7 +178,7 @@ public class Configuration implements Serializable, XMLAppendable
 
     /**
      * The base directory that should be used instead of the JVM's working directory, to resolve all relative paths.
-     *
+     * 
      */
     public Configuration withBasedir(String value) {
         setBasedir(value);

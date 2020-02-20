@@ -3953,7 +3953,7 @@ final class Tools {
 
 
 
-                             if (stmt.execute()) {
+if (stmt.execute()) {
                 ctx.resultSet(stmt.getResultSet());
             }
 
@@ -4945,21 +4945,21 @@ final class Tools {
      * Whether a Java type is suitable for {@link Types#TIME}.
      */
     static final boolean isTime(Class<?> t) {
-        return t == Time.class  || t == LocalTime.class ;
+        return t == Time.class || t == LocalTime.class;
     }
 
     /**
      * Whether a Java type is suitable for {@link Types#TIMESTAMP}.
      */
     static final boolean isTimestamp(Class<?> t) {
-        return t == Timestamp.class  || t == LocalDateTime.class ;
+        return t == Timestamp.class || t == LocalDateTime.class;
     }
 
     /**
      * Whether a Java type is suitable for {@link Types#DATE}.
      */
     static final boolean isDate(Class<?> t) {
-        return t == Date.class  || t == LocalDate.class ;
+        return t == Date.class || t == LocalDate.class;
     }
 
     static final boolean hasAmbiguousNames(Collection<? extends Field<?>> fields) {

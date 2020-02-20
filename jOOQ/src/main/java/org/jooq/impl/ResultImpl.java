@@ -356,7 +356,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
         Map<Record, R> map = new LinkedHashMap<>();
         for (R record : this) {
-            RecordImpl key = new RecordImpl(keys);
+            RecordImplN key = new RecordImplN(keys);
 
             for (Field<?> field : keys)
                 Tools.copyValue(key, field, record, field);
@@ -390,8 +390,8 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
         Map<Record, Record> map = new LinkedHashMap<>();
         for (R record : this) {
-            RecordImpl key = new RecordImpl(keys);
-            RecordImpl value = new RecordImpl(values);
+            RecordImplN key = new RecordImplN(keys);
+            RecordImplN value = new RecordImplN(values);
 
             for (Field<?> field : keys)
                 Tools.copyValue(key, field, record, field);
@@ -765,7 +765,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
         Map<Record, Result<R>> map = new LinkedHashMap<>();
         for (R record : this) {
-            RecordImpl key = new RecordImpl(keys);
+            RecordImplN key = new RecordImplN(keys);
 
             for (Field<?> field : keys)
                 Tools.copyValue(key, field, record, field);
@@ -805,8 +805,8 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
         Map<Record, Result<Record>> map = new LinkedHashMap<>();
         for (R record : this) {
-            RecordImpl key = new RecordImpl(keys);
-            RecordImpl value = new RecordImpl(values);
+            RecordImplN key = new RecordImplN(keys);
+            RecordImplN value = new RecordImplN(values);
 
             for (Field<?> field : keys)
                 Tools.copyValue(key, field, record, field);
@@ -866,7 +866,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
         Map<Record, List<E>> map = new LinkedHashMap<>();
         for (R record : this) {
-            RecordImpl key = new RecordImpl(keys);
+            RecordImplN key = new RecordImplN(keys);
 
             for (Field<?> field : keys)
                 Tools.copyValue(key, field, record, field);

@@ -88,7 +88,7 @@ final class RowField<ROW extends Row, REC extends Record> extends AbstractField<
 
             @Override
             public Class<REC> toType() {
-                return (Class<REC>) RecordImpl.class;
+                return (Class<REC>) Tools.recordType(row.size());
             }
         }));
 

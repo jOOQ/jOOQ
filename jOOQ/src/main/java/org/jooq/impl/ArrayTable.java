@@ -148,7 +148,7 @@ final class ArrayTable extends AbstractTable<Record> {
 
     @Override
     public final Class<? extends Record> getRecordType() {
-        return RecordImpl.class;
+        return RecordImplN.class;
     }
 
     @Override
@@ -280,7 +280,7 @@ final class ArrayTable extends AbstractTable<Record> {
 
         @Override
         public final Class<? extends Record> getRecordType() {
-            return RecordImpl.class;
+            return RecordImplN.class;
         }
 
         @Override

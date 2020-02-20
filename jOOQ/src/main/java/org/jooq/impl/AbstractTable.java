@@ -208,10 +208,9 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
     /*
      * Subclasses may override this method
      */
-    @SuppressWarnings({ "rawtypes" })
     @Override
     public Row fieldsRow() {
-        return new RowImpl(fields0());
+        return Tools.row0(fields0());
     }
 
 

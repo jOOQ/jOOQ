@@ -321,7 +321,9 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
     @SuppressWarnings("unchecked")
     @Override
     public Class<? extends R> getRecordType() {
-        return (Class<? extends R>) RecordImpl.class;
+
+        // TODO: [#4695] Calculate the correct Record[B] type
+        return (Class<? extends R>) RecordImplN.class;
     }
 
     @Override

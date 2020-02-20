@@ -1563,7 +1563,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
             if (strings.size() > firstRow) {
                 for (String[] values : strings.subList(firstRow, strings.size())) {
-                    RecordImpl record = new RecordImpl(fields);
+                    RecordImplN record = new RecordImplN(fields);
 
                     for (int i = 0; i < Math.min(values.length, fields.size()); i++) {
                         record.values[i] = values[i];
@@ -3877,7 +3877,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public Record newRecord(Field<?>... fields) {
-        return Tools.newRecord(false, RecordImpl.class, fields, configuration()).<RuntimeException>operate(null);
+        return Tools.newRecord(false, RecordImplN.class, fields, configuration()).<RuntimeException>operate(null);
     }
 
     @Override

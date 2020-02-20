@@ -65,7 +65,7 @@ final class SQLTable extends AbstractTable<Record> {
 
     @Override
     public final Class<? extends Record> getRecordType() {
-        return RecordImpl.class;
+        return RecordImplN.class;
     }
 
     @Override

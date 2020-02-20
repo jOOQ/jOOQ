@@ -40,6 +40,7 @@ package org.jooq.impl;
 
 import static java.util.Arrays.asList;
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
+import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.embeddedFields;
 import static org.jooq.impl.Tools.indexOrFail;
 import static org.jooq.impl.Tools.isEmbeddable;
@@ -124,21 +125,21 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     private static final long       serialVersionUID = -6052512608911220404L;
     private static final JooqLogger log              = JooqLogger.getLogger(AbstractRecord.class);
 
-    final RowImpl                   fields;
+    final AbstractRow               fields;
     final Object[]                  values;
     final Object[]                  originals;
     final BitSet                    changed;
     boolean                         fetched;
 
     AbstractRecord(Collection<? extends Field<?>> fields) {
-        this(new RowImpl(fields));
+        this(Tools.row0(fields.toArray(EMPTY_FIELD)));
     }
 
     AbstractRecord(Field<?>... fields) {
-        this(new RowImpl(fields));
+        this(Tools.row0(fields));
     }
 
-    AbstractRecord(RowImpl fields) {
+    AbstractRecord(AbstractRow fields) {
         int size = fields.size();
 
         this.fields = fields;
@@ -728,7 +729,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final <E> E into(Class<? extends E> type) {
-        return (E) Tools.configuration(this).recordMapperProvider().provide(fields.fields, type).map(this);
+        return (E) Tools.configuration(this).recordMapperProvider().provide((Fields) fields.fields, type).map(this);
     }
 
     @Override
@@ -740,7 +741,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         Class<E> type = (Class<E>) object.getClass();
 
         try {
-            return new DefaultRecordMapper<Record, E>(fields.fields, type, object, configuration()).map(this);
+            return new DefaultRecordMapper<Record, E>((Fields) fields.fields, type, object, configuration()).map(this);
         }
 
         // Pass MappingExceptions on to client code

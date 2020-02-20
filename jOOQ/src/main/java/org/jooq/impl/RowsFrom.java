@@ -71,7 +71,8 @@ final class RowsFrom extends AbstractTable<Record> {
 
     @Override
     public final Class<? extends Record> getRecordType() {
-        return RecordImpl.class;
+        // TODO: [#4695] Calculate the correct Record[B] type
+        return RecordImplN.class;
     }
 
     @Override

@@ -126,9 +126,8 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
         return fields;
     }
 
-    @SuppressWarnings("rawtypes")
     public final Row fieldsRow() {
-        return new RowImpl(fields);
+        return Tools.row0(fields);
     }
 
     public final <T> Field<T> field(Field<T> field) {

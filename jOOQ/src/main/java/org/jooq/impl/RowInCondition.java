@@ -65,7 +65,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.jooq.Clause;
-import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -91,12 +90,12 @@ final class RowInCondition extends AbstractCondition {
 
     private final Row                          left;
     private final QueryPartList<? extends Row> right;
-    private final Comparator                   comparator;
+    private final boolean                      not;
 
-    RowInCondition(Row left, QueryPartList<? extends Row> right, Comparator comparator) {
+    RowInCondition(Row left, QueryPartList<? extends Row> right, boolean not) {
         this.left = left;
         this.right = right;
-        this.comparator = comparator;
+        this.not = not;
     }
 
     @Override
@@ -118,7 +117,7 @@ final class RowInCondition extends AbstractCondition {
 
             Condition result = DSL.or(conditions);
 
-            if (comparator == NOT_IN)
+            if (not)
                 result = result.not();
 
             return (QueryPartInternal) result;
@@ -138,15 +137,15 @@ final class RowInCondition extends AbstractCondition {
         @Override
         public final void accept(Context<?> ctx) {
             if (right.size() == 0) {
-                if (comparator == IN)
-                    ctx.visit(falseCondition());
-                else
+                if (not)
                     ctx.visit(trueCondition());
+                else
+                    ctx.visit(falseCondition());
             }
             else {
                 ctx.visit(left)
                    .sql(' ')
-                   .visit(comparator.toKeyword())
+                   .visit((not ? NOT_IN : IN).toKeyword())
                    .sql(" (")
                    .visit(new QueryPartList<>(padded(ctx, right)))
                    .sql(')');
@@ -155,7 +154,7 @@ final class RowInCondition extends AbstractCondition {
 
         @Override
         public final Clause[] clauses(Context<?> ctx) {
-            return comparator == IN ? CLAUSES_IN : CLAUSES_IN_NOT;
+            return not ? CLAUSES_IN_NOT : CLAUSES_IN;
         }
     }
 }

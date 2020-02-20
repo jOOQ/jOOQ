@@ -124,7 +124,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
 
     @SuppressWarnings("unchecked")
     CursorImpl(ExecuteContext ctx, ExecuteListener listener, Field<?>[] fields, int[] internIndexes, boolean keepStatement, boolean keepResultSet) {
-        this(ctx, listener, fields, internIndexes, keepStatement, keepResultSet, (Class<? extends R>) RecordImpl.class, 0, true);
+        this(ctx, listener, fields, internIndexes, keepStatement, keepResultSet, (Class<? extends R>) RecordImplN.class, 0, true);
     }
 
     CursorImpl(ExecuteContext ctx, ExecuteListener listener, Field<?>[] fields, int[] internIndexes, boolean keepStatement, boolean keepResultSet, Class<? extends R> type, int maxRows, boolean autoclosing) {
@@ -1707,7 +1707,8 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
 
                     if (field instanceof RowField) {
                         nested = ((RowField<?, ?>) field).emulatedFields();
-                        recordType = RecordImpl.class;
+                        // TODO: [#4695] Calculate the correct Record[B] type
+                        recordType = RecordImplN.class;
                     }
                     else if (field instanceof EmbeddableTableField) {
                         nested = embeddedFields(field);

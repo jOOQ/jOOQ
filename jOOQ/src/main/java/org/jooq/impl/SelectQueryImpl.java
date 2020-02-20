@@ -2331,8 +2331,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         if (getFrom().size() == 1 && getSelectAsSpecified().isEmpty())
             return (Class<? extends R>) getFrom().get(0).asTable().getRecordType();
+
+        // TODO: [#4695] Calculate the correct Record[B] type
         else
-            return (Class<? extends R>) RecordImpl.class;
+            return (Class<? extends R>) RecordImplN.class;
     }
 
     final TableList getFrom() {

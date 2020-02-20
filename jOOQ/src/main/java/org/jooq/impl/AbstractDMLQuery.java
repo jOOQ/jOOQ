@@ -1192,13 +1192,13 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                         ((Result) getResult()).add(
                         Tools.newRecord(
                                 true,
-                                RecordImpl.class,
+                                AbstractRecord.class,
                                 returningResolvedAsterisks.toArray(EMPTY_FIELD),
                                 originalConfiguration)
-                             .operate(new RecordOperation<RecordImpl, RuntimeException>() {
+                             .operate(new RecordOperation<AbstractRecord, RuntimeException>() {
 
                                 @Override
-                                public RecordImpl operate(RecordImpl record) throws RuntimeException {
+                                public AbstractRecord operate(AbstractRecord record) throws RuntimeException {
                                     record.values[0] = id;
                                     record.originals[0] = id;
 

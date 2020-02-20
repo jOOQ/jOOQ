@@ -95,7 +95,7 @@ final class FetchCount extends AbstractResultQuery<Record1<Integer>> {
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     final Class<? extends Record1<Integer>> getRecordType0() {
-        return (Class) RecordImpl.class;
+        return (Class) RecordImpl1.class;
     }
 
     @Override

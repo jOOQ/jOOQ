@@ -95,6 +95,7 @@ import org.jooq.BetweenAndStep21;
 import org.jooq.BetweenAndStep22;
 import org.jooq.BetweenAndStepN;
 import org.jooq.Clause;
+import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -190,11 +191,11 @@ implements
     private static final Set<SQLDialect>     NO_SUPPORT_SYMMETRIC          = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, MARIADB, MYSQL, SQLITE);
     private static final Set<SQLDialect>     EMULATE_BETWEEN               = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, MARIADB, MYSQL);
 
-    private final boolean         symmetric;
-    private final boolean         not;
-    private final Row             row;
-    private final Row             minValue;
-    private Row                   maxValue;
+    private final boolean                    symmetric;
+    private final boolean                    not;
+    private final Row                        row;
+    private final Row                        minValue;
+    private Row                              maxValue;
 
     RowBetweenCondition(Row row, Row minValue, boolean not, boolean symmetric) {
         this.row = row;
@@ -203,18 +204,22 @@ implements
         this.symmetric = symmetric;
     }
 
+    RowBetweenCondition(Row row, Row minValue, boolean not, boolean symmetric, Row maxValue) {
+        this(row, minValue, not, symmetric);
+
+        this.maxValue = maxValue;
+    }
+
     // ------------------------------------------------------------------------
     // XXX: BetweenAndStep API
     // ------------------------------------------------------------------------
 
     @Override
     public final Condition and(Field f) {
-        if (maxValue == null) {
+        if (maxValue == null)
             return and(row(f));
-        }
-        else {
+        else
             return super.and(f);
-        }
     }
 
     @Override
@@ -692,8 +697,7 @@ implements
 
     @Override
     public final Condition and(Record record) {
-        RowN r = new RowImpl(Tools.fields(record.intoArray(), record.fields()));
-        return and(r);
+        return and(new RowImplN(Tools.fields(record.intoArray(), record.fields())));
     }
 
     // ------------------------------------------------------------------------
@@ -709,24 +713,20 @@ implements
     public final Clause[] clauses(Context<?> ctx) {
         return null;
     }
-    
+
     private final QueryPartInternal delegate(Configuration configuration) {
-        // These casts are safe for RowImpl
-        RowN r = (RowN) row;
-        RowN min = (RowN) minValue;
-        RowN max = (RowN) maxValue;
 
         // These dialects don't support the SYMMETRIC keyword at all
         if (symmetric && NO_SUPPORT_SYMMETRIC.contains(configuration.family())) {
             return not
-                ? (QueryPartInternal) r.notBetween(min, max).and(r.notBetween(max, min))
-                : (QueryPartInternal) r.between(min, max).or(r.between(max, min));
+                ? (QueryPartInternal) new RowBetweenCondition<>(row, minValue, true, false, maxValue).and(new RowBetweenCondition<>(row, maxValue, true, false, minValue))
+                : (QueryPartInternal) new RowBetweenCondition<>(row, minValue, false, false, maxValue).or(new RowBetweenCondition<>(row, maxValue, false, false, minValue));
         }
 
         // These dialects either don't support row value expressions, or they
         // Can't handle row value expressions with the BETWEEN predicate
         else if (row.size() > 1 && EMULATE_BETWEEN.contains(configuration.family())) {
-            Condition result = r.ge(min).and(r.le(max));
+            Condition result = new RowCondition(row, minValue, Comparator.GREATER_OR_EQUAL).and(new RowCondition(row, maxValue, Comparator.LESS_OR_EQUAL));
 
             if (not)
                 result = result.not();

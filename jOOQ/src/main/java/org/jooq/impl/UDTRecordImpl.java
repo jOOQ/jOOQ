@@ -90,10 +90,9 @@ public class UDTRecordImpl<R extends UDTRecord<R>> extends AbstractRecord implem
     /*
      * Subclasses may override this method
      */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public Row valuesRow() {
-        return new RowImpl(Tools.fields(intoArray(), fields.fields.fields()));
+        return Tools.row0(Tools.fields(intoArray(), fields.fields.fields()));
     }
 
     @Override

@@ -96,9 +96,8 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
     }
 
     @Override
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     public Record key() {
-        RecordImpl result = new RecordImpl(getPrimaryKey().getFields());
+        AbstractRecord result = Tools.newRecord(fetched, AbstractRecord.class, getPrimaryKey().getFieldsArray()).<RuntimeException>operate(null);
         result.setValues(result.fields.fields.fields, this);
         return result;
     }

@@ -66,7 +66,6 @@ import static org.jooq.impl.DSL.select;
 import java.util.Set;
 
 import org.jooq.Clause;
-import org.jooq.Comparator;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.QueryPartInternal;
@@ -76,7 +75,7 @@ import org.jooq.SQLDialect;
 /**
  * @author Lukas Eder
  */
-final class RowIsDistinctFrom<T> extends AbstractCondition {
+final class RowIsDistinctFrom extends AbstractCondition {
 
     /**
      * Generated UID
@@ -87,16 +86,16 @@ final class RowIsDistinctFrom<T> extends AbstractCondition {
 
     private final Row                    lhs;
     private final Row                    rhs;
-    private final Comparator             comparator;
+    private final boolean                not;
 
     private transient QueryPartInternal  mySQLCondition;
     private transient QueryPartInternal  sqliteCondition;
     private transient QueryPartInternal  compareCondition;
 
-    RowIsDistinctFrom(Row lhs, Row rhs, Comparator comparator) {
+    RowIsDistinctFrom(Row lhs, Row rhs, boolean not) {
         this.lhs = lhs;
         this.rhs = rhs;
-        this.comparator = comparator;
+        this.not = not;
     }
 
     @Override
@@ -120,17 +119,17 @@ final class RowIsDistinctFrom<T> extends AbstractCondition {
         //                 optimally using INTERSECT...
         // [#7222] [#7224] Make sure the columns are aliased
         if (EMULATE_DISTINCT_PREDICATE.contains(configuration.family())) {
-            return (comparator == IS_DISTINCT_FROM)
-                ? (QueryPartInternal) notExists(select(lhs.fields()).intersect(select(rhs.fields())))
-                : (QueryPartInternal) exists(select(lhs.fields()).intersect(select(rhs.fields())));
+            return not
+                ? (QueryPartInternal) exists(select(lhs.fields()).intersect(select(rhs.fields())))
+                : (QueryPartInternal) notExists(select(lhs.fields()).intersect(select(rhs.fields())));
         }
 
         // MySQL knows the <=> operator
         else if (SUPPORT_DISTINCT_WITH_ARROW.contains(configuration.family())) {
             if (mySQLCondition == null)
-                mySQLCondition = (QueryPartInternal) ((comparator == IS_DISTINCT_FROM)
-                    ? condition("{not}({0} <=> {1})", lhs, rhs)
-                    : condition("{0} <=> {1}", lhs, rhs));
+                mySQLCondition = (QueryPartInternal) (not
+                    ? condition("{0} <=> {1}", lhs, rhs)
+                    : condition("{not}({0} <=> {1})", lhs, rhs));
 
             return mySQLCondition;
         }
@@ -138,9 +137,9 @@ final class RowIsDistinctFrom<T> extends AbstractCondition {
         // SQLite knows the IS / IS NOT predicate
         else if (SQLITE == configuration.family()) {
             if (sqliteCondition == null)
-                sqliteCondition = (QueryPartInternal) ((comparator == IS_DISTINCT_FROM)
-                    ? condition("{0} {is not} {1}", lhs, rhs)
-                    : condition("{0} {is} {1}", lhs, rhs));
+                sqliteCondition = (QueryPartInternal) (not
+                    ? condition("{0} {is} {1}", lhs, rhs)
+                    : condition("{0} {is not} {1}", lhs, rhs));
 
             return sqliteCondition;
         }
@@ -163,7 +162,7 @@ final class RowIsDistinctFrom<T> extends AbstractCondition {
         // H2, Postgres
         else {
             if (compareCondition == null)
-                compareCondition = new RowCondition(lhs, rhs, comparator);
+                compareCondition = new RowCondition(lhs, rhs, not ? IS_NOT_DISTINCT_FROM : IS_DISTINCT_FROM);
 
             return compareCondition;
         }

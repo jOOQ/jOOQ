@@ -41,6 +41,8 @@ import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
+import static org.jooq.Comparator.IN;
+import static org.jooq.Comparator.NOT_IN;
 import static org.jooq.JoinType.JOIN;
 // ...
 // ...
@@ -281,7 +283,7 @@ import static org.jooq.impl.DSL.trunc;
 import static org.jooq.impl.DSL.unique;
 import static org.jooq.impl.DSL.unnest;
 import static org.jooq.impl.DSL.user;
-import static org.jooq.impl.DSL.values;
+import static org.jooq.impl.DSL.values0;
 // ...
 import static org.jooq.impl.DSL.varPop;
 import static org.jooq.impl.DSL.varSamp;
@@ -309,7 +311,7 @@ import static org.jooq.impl.Tools.EMPTY_COMMON_TABLE_EXPRESSION;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_NAME;
 import static org.jooq.impl.Tools.EMPTY_QUERYPART;
-import static org.jooq.impl.Tools.EMPTY_ROWN;
+import static org.jooq.impl.Tools.EMPTY_ROW;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 import static org.jooq.impl.Tools.normaliseNameCase;
 
@@ -451,7 +453,6 @@ import org.jooq.RevokeFromStep;
 import org.jooq.RevokeOnStep;
 import org.jooq.Row;
 import org.jooq.Row2;
-import org.jooq.RowN;
 import org.jooq.SQL;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
@@ -713,7 +714,7 @@ final class ParserImpl implements Parser {
     @Override
     public final Row parseRow(String sql, Object... bindings) {
         ParserContext ctx = ctx(sql, bindings);
-        RowN result = parseRow(ctx);
+        Row result = parseRow(ctx);
 
         ctx.done("Unexpected content after end of row input");
         return result;
@@ -4646,14 +4647,14 @@ final class ParserImpl implements Parser {
                       all
                     ? left instanceof Field
                         ? ((Field) left).compare(comp, DSL.all(parseWithOrSelect(ctx, 1)))
-                        : ((RowN) left).compare(comp, DSL.all(parseWithOrSelect(ctx, ((RowN) left).size())))
+                        : new RowSubqueryCondition((Row) left, DSL.all(parseWithOrSelect(ctx, ((Row) left).size())), comp)
                     : any
                     ? left instanceof Field
                         ? ((Field) left).compare(comp, DSL.any(parseWithOrSelect(ctx, 1)))
-                        : ((RowN) left).compare(comp, DSL.any(parseWithOrSelect(ctx, ((RowN) left).size())))
+                        : new RowSubqueryCondition((Row) left, DSL.any(parseWithOrSelect(ctx, ((Row) left).size())), comp)
                     : left instanceof Field
                         ? ((Field) left).compare(comp, toField(ctx, parseConcat(ctx, null)))
-                        : ((RowN) left).compare(comp, parseRow(ctx, ((RowN) left).size(), true));
+                        : new RowCondition((Row) left, parseRow(ctx, ((Row) left).size(), true), comp);
 
                 if (all || any)
                     parse(ctx, ')');
@@ -4667,10 +4668,10 @@ final class ParserImpl implements Parser {
                     return not
                         ? left instanceof Field
                             ? ((Field) left).isNotNull()
-                            : ((RowN) left).isNotNull()
+                            : ((Row) left).isNotNull()
                         : left instanceof Field
                             ? ((Field) left).isNull()
-                            : ((RowN) left).isNull();
+                            : ((Row) left).isNull();
                 else if (left instanceof Field && parseKeywordIf(ctx, "JSON"))
                     return not
                         ? ((Field) left).isNotJson()
@@ -4682,8 +4683,8 @@ final class ParserImpl implements Parser {
                     return not ? ((Field) left).isNotDistinctFrom(right) : ((Field) left).isDistinctFrom(right);
                 }
                 else {
-                    RowN right = parseRow(ctx, ((RowN) left).size(), true);
-                    return not ? ((RowN) left).isNotDistinctFrom(right) : ((RowN) left).isDistinctFrom(right);
+                    Row right = parseRow(ctx, ((Row) left).size(), true);
+                    return new RowIsDistinctFrom((Row) left, right, not);
                 }
             }
             else if (!not && parseIf(ctx, "@>")) {
@@ -4697,26 +4698,26 @@ final class ParserImpl implements Parser {
                     result = not
                         ? left instanceof Field
                             ? ((Field) left).notIn(EMPTY_FIELD)
-                            : ((RowN) left).notIn(EMPTY_ROWN)
+                            : new RowInCondition((Row) left, new QueryPartList<>(), true)
                         : left instanceof Field
                             ? ((Field) left).in(EMPTY_FIELD)
-                            : ((RowN) left).in(EMPTY_ROWN);
+                            : new RowInCondition((Row) left, new QueryPartList<>(), false);
                 else if (peekKeyword(ctx, "SELECT") || peekKeyword(ctx, "SEL") || peekKeyword(ctx, "WITH"))
                     result = not
                         ? left instanceof Field
                             ? ((Field) left).notIn(parseWithOrSelect(ctx, 1))
-                            : ((RowN) left).notIn(parseWithOrSelect(ctx, ((RowN) left).size()))
+                            : new RowSubqueryCondition((Row) left, parseWithOrSelect(ctx, ((Row) left).size()), NOT_IN)
                         : left instanceof Field
                             ? ((Field) left).in(parseWithOrSelect(ctx, 1))
-                            : ((RowN) left).in(parseWithOrSelect(ctx, ((RowN) left).size()));
+                            : new RowSubqueryCondition((Row) left, parseWithOrSelect(ctx, ((Row) left).size()), IN);
                 else
                     result = not
                         ? left instanceof Field
                             ? ((Field) left).notIn(parseFields(ctx))
-                            : ((RowN) left).notIn(parseRows(ctx, ((RowN) left).size()))
+                            : new RowInCondition((Row) left, new QueryPartList<>(parseRows(ctx, ((Row) left).size())), true)
                         : left instanceof Field
                             ? ((Field) left).in(parseFields(ctx))
-                            : ((RowN) left).in(parseRows(ctx, ((RowN) left).size()));
+                            : new RowInCondition((Row) left, new QueryPartList<>(parseRows(ctx, ((Row) left).size())), false);
 
                 parse(ctx, ')');
                 return result;
@@ -4725,27 +4726,27 @@ final class ParserImpl implements Parser {
                 boolean symmetric = parseKeywordIf(ctx, "SYMMETRIC");
                 FieldOrRow r1 = left instanceof Field
                     ? parseConcat(ctx, null)
-                    : parseRow(ctx, ((RowN) left).size());
+                    : parseRow(ctx, ((Row) left).size());
                 parseKeyword(ctx, "AND");
                 FieldOrRow r2 = left instanceof Field
                     ? parseConcat(ctx, null)
-                    : parseRow(ctx, ((RowN) left).size());
+                    : parseRow(ctx, ((Row) left).size());
 
                 return symmetric
                     ? not
                         ? left instanceof Field
                             ? ((Field) left).notBetweenSymmetric((Field) r1, (Field) r2)
-                            : ((RowN) left).notBetweenSymmetric((RowN) r1, (RowN) r2)
+                            : new RowBetweenCondition((Row) left, (Row) r1, not, symmetric, (Row) r2)
                         : left instanceof Field
                             ? ((Field) left).betweenSymmetric((Field) r1, (Field) r2)
-                            : ((RowN) left).betweenSymmetric((RowN) r1, (RowN) r2)
+                            : new RowBetweenCondition((Row) left, (Row) r1, not, symmetric, (Row) r2)
                     : not
                         ? left instanceof Field
                             ? ((Field) left).notBetween((Field) r1, (Field) r2)
-                            : ((RowN) left).notBetween((RowN) r1, (RowN) r2)
+                            : new RowBetweenCondition((Row) left, (Row) r1, not, symmetric, (Row) r2)
                         : left instanceof Field
                             ? ((Field) left).between((Field) r1, (Field) r2)
-                            : ((RowN) left).between((RowN) r1, (RowN) r2);
+                            : new RowBetweenCondition((Row) left, (Row) r1, not, symmetric, (Row) r2);
             }
             else if (left instanceof Field && parseKeywordIf(ctx, "LIKE")) {
                 if (parseKeywordIf(ctx, "ANY")) {
@@ -4822,8 +4823,14 @@ final class ParserImpl implements Parser {
                 LikeEscapeStep like = not ? ((Field) left).notSimilarTo(right) : ((Field) left).similarTo(right);
                 return parseEscapeClauseIf(ctx, like);
             }
-            else if (left instanceof RowN && ((RowN) left).size() == 2 && parseKeywordIf(ctx, "OVERLAPS")) {
-                return ((Row2) left).overlaps((Row2) parseRow(ctx, 2));
+            else if (left instanceof Row && ((Row) left).size() == 2 && parseKeywordIf(ctx, "OVERLAPS")) {
+                Row leftRow = (Row) left;
+                Row rightRow = parseRow(ctx, 2);
+
+                Row2 leftRow2 = row(leftRow.field(0), leftRow.field(1));
+                Row2 rightRow2 = row(rightRow.field(0), rightRow.field(1));
+
+                return leftRow2.overlaps(rightRow2);
             }
             else
                 return left;
@@ -5174,27 +5181,27 @@ final class ParserImpl implements Parser {
     private static final Table<?> parseTableValueConstructor(ParserContext ctx) {
         parseKeyword(ctx, "VALUES");
 
-        List<RowN> rows = new ArrayList<>();
+        List<Row> rows = new ArrayList<>();
         do {
             rows.add(parseTuple(ctx));
         }
         while (parseIf(ctx, ','));
-        return values(rows.toArray(Tools.EMPTY_ROWN));
+        return values0(rows.toArray(EMPTY_ROW));
     }
 
-    private static final RowN parseTuple(ParserContext ctx) {
+    private static final Row parseTuple(ParserContext ctx) {
         return parseTuple(ctx, null, false);
     }
 
-    private static final RowN parseTuple(ParserContext ctx, Integer degree) {
+    private static final Row parseTuple(ParserContext ctx, Integer degree) {
         return parseTuple(ctx, degree, false);
     }
 
-    private static final RowN parseTupleIf(ParserContext ctx, Integer degree) {
+    private static final Row parseTupleIf(ParserContext ctx, Integer degree) {
         return parseTupleIf(ctx, degree, false);
     }
 
-    private static final RowN parseTuple(ParserContext ctx, Integer degree, boolean allowDoubleParens) {
+    private static final Row parseTuple(ParserContext ctx, Integer degree, boolean allowDoubleParens) {
         parse(ctx, '(');
         List<? extends FieldOrRow> fieldsOrRows;
 
@@ -5203,14 +5210,14 @@ final class ParserImpl implements Parser {
         else
             fieldsOrRows = parseFields(ctx);
 
-        RowN row;
+        Row row;
 
         if (fieldsOrRows.size() == 0)
             row = row();
         else if (fieldsOrRows.get(0) instanceof Field)
             row = row(fieldsOrRows);
         else if (fieldsOrRows.size() == 1)
-            row = (RowN) fieldsOrRows.get(0);
+            row = (Row) fieldsOrRows.get(0);
         else
             throw ctx.exception("Unsupported row size");
 
@@ -5221,7 +5228,7 @@ final class ParserImpl implements Parser {
         return row;
     }
 
-    private static final RowN parseTupleIf(ParserContext ctx, Integer degree, boolean allowDoubleParens) {
+    private static final Row parseTupleIf(ParserContext ctx, Integer degree, boolean allowDoubleParens) {
         if (peek(ctx, '('))
             return parseTuple(ctx, degree, allowDoubleParens);
 
@@ -5432,16 +5439,16 @@ final class ParserImpl implements Parser {
         return parseFieldOrRow(ctx, null);
     }
 
-    private static final RowN parseRow(ParserContext ctx) {
+    private static final Row parseRow(ParserContext ctx) {
         return parseRow(ctx, null);
     }
 
-    private static final RowN parseRowIf(ParserContext ctx) {
+    private static final Row parseRowIf(ParserContext ctx) {
         return parseRowIf(ctx, null);
     }
 
-    private static final List<RowN> parseRows(ParserContext ctx, Integer degree) {
-        List<RowN> result = new ArrayList<>();
+    private static final List<Row> parseRows(ParserContext ctx, Integer degree) {
+        List<Row> result = new ArrayList<>();
 
         do {
             result.add(parseRow(ctx, degree));
@@ -5451,22 +5458,19 @@ final class ParserImpl implements Parser {
         return result;
     }
 
-    private static final RowN parseRow(ParserContext ctx, Integer degree) {
+    private static final Row parseRow(ParserContext ctx, Integer degree) {
         parseFunctionNameIf(ctx, "ROW");
-        RowN row = parseTuple(ctx, degree);
-        return row;
+        return parseTuple(ctx, degree);
     }
 
-    private static final RowN parseRowIf(ParserContext ctx, Integer degree) {
+    private static final Row parseRowIf(ParserContext ctx, Integer degree) {
         parseFunctionNameIf(ctx, "ROW");
-        RowN row = parseTupleIf(ctx, degree);
-        return row;
+        return parseTupleIf(ctx, degree);
     }
 
-    private static final RowN parseRow(ParserContext ctx, Integer degree, boolean allowDoubleParens) {
+    private static final Row parseRow(ParserContext ctx, Integer degree, boolean allowDoubleParens) {
         parseFunctionNameIf(ctx, "ROW");
-        RowN row = parseTuple(ctx, degree, allowDoubleParens);
-        return row;
+        return parseTuple(ctx, degree, allowDoubleParens);
     }
 
     static enum Type {
@@ -9029,7 +9033,7 @@ final class ParserImpl implements Parser {
 
             Field<?>[] fields = null;
             QualifiedAsterisk asterisk = null;
-            RowN row = parseRowIf(ctx);
+            Row row = parseRowIf(ctx);
             if (row != null)
                 fields = row.fields();
             else if ((asterisk = parseQualifiedAsteriskIf(ctx)) == null)

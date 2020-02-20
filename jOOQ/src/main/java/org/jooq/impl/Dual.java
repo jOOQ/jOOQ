@@ -92,7 +92,7 @@ final class Dual extends AbstractTable<Record> {
 
     @Override
     public final Class<? extends Record> getRecordType() {
-        return RecordImpl.class;
+        return RecordImpl1.class;
     }
 
     @Override

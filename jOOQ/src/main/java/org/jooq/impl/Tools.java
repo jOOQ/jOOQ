@@ -302,6 +302,7 @@ final class Tools {
     static final Query[]                    EMPTY_QUERY                    = {};
     static final QueryPart[]                EMPTY_QUERYPART                = {};
     static final Record[]                   EMPTY_RECORD                   = {};
+    static final Row[]                      EMPTY_ROW                      = {};
     static final RowN[]                     EMPTY_ROWN                     = {};
     static final Schema[]                   EMPTY_SCHEMA                   = {};
     static final SelectFieldOrAsterisk[]    EMPTY_SELECT_FIELD_OR_ASTERISK = {};
@@ -872,22 +873,124 @@ final class Tools {
         }
     }
 
+    static final AbstractRow row0(Fields<?> fields) {
+        return row0(fields.fields);
+    }
+
+    static final AbstractRow row0(Collection<? extends Field<?>> fields) {
+        return row0(fields.toArray(EMPTY_FIELD));
+    }
+
+    static final AbstractRow row0(Field<?>... fields) {
+        switch (fields.length) {
+
+            case 1: return new RowImpl1<>(fields[0]);
+            case 2: return new RowImpl2<>(fields[0], fields[1]);
+            case 3: return new RowImpl3<>(fields[0], fields[1], fields[2]);
+            case 4: return new RowImpl4<>(fields[0], fields[1], fields[2], fields[3]);
+            case 5: return new RowImpl5<>(fields[0], fields[1], fields[2], fields[3], fields[4]);
+            case 6: return new RowImpl6<>(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5]);
+            case 7: return new RowImpl7<>(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6]);
+            case 8: return new RowImpl8<>(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], fields[7]);
+            case 9: return new RowImpl9<>(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], fields[7], fields[8]);
+            case 10: return new RowImpl10<>(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], fields[7], fields[8], fields[9]);
+            case 11: return new RowImpl11<>(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], fields[7], fields[8], fields[9], fields[10]);
+            case 12: return new RowImpl12<>(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], fields[7], fields[8], fields[9], fields[10], fields[11]);
+            case 13: return new RowImpl13<>(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], fields[7], fields[8], fields[9], fields[10], fields[11], fields[12]);
+            case 14: return new RowImpl14<>(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], fields[7], fields[8], fields[9], fields[10], fields[11], fields[12], fields[13]);
+            case 15: return new RowImpl15<>(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], fields[7], fields[8], fields[9], fields[10], fields[11], fields[12], fields[13], fields[14]);
+            case 16: return new RowImpl16<>(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], fields[7], fields[8], fields[9], fields[10], fields[11], fields[12], fields[13], fields[14], fields[15]);
+            case 17: return new RowImpl17<>(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], fields[7], fields[8], fields[9], fields[10], fields[11], fields[12], fields[13], fields[14], fields[15], fields[16]);
+            case 18: return new RowImpl18<>(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], fields[7], fields[8], fields[9], fields[10], fields[11], fields[12], fields[13], fields[14], fields[15], fields[16], fields[17]);
+            case 19: return new RowImpl19<>(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], fields[7], fields[8], fields[9], fields[10], fields[11], fields[12], fields[13], fields[14], fields[15], fields[16], fields[17], fields[18]);
+            case 20: return new RowImpl20<>(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], fields[7], fields[8], fields[9], fields[10], fields[11], fields[12], fields[13], fields[14], fields[15], fields[16], fields[17], fields[18], fields[19]);
+            case 21: return new RowImpl21<>(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], fields[7], fields[8], fields[9], fields[10], fields[11], fields[12], fields[13], fields[14], fields[15], fields[16], fields[17], fields[18], fields[19], fields[20]);
+            case 22: return new RowImpl22<>(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], fields[7], fields[8], fields[9], fields[10], fields[11], fields[12], fields[13], fields[14], fields[15], fields[16], fields[17], fields[18], fields[19], fields[20], fields[21]);
+
+
+
+            default: return new RowImplN(fields);
+        }
+    }
+
+    static final Class<? extends Record> recordType(int length) {
+        switch (length) {
+
+            case 1: return RecordImpl1.class;
+            case 2: return RecordImpl2.class;
+            case 3: return RecordImpl3.class;
+            case 4: return RecordImpl4.class;
+            case 5: return RecordImpl5.class;
+            case 6: return RecordImpl6.class;
+            case 7: return RecordImpl7.class;
+            case 8: return RecordImpl8.class;
+            case 9: return RecordImpl9.class;
+            case 10: return RecordImpl10.class;
+            case 11: return RecordImpl11.class;
+            case 12: return RecordImpl12.class;
+            case 13: return RecordImpl13.class;
+            case 14: return RecordImpl14.class;
+            case 15: return RecordImpl15.class;
+            case 16: return RecordImpl16.class;
+            case 17: return RecordImpl17.class;
+            case 18: return RecordImpl18.class;
+            case 19: return RecordImpl19.class;
+            case 20: return RecordImpl20.class;
+            case 21: return RecordImpl21.class;
+            case 22: return RecordImpl22.class;
+
+
+
+            default: return RecordImplN.class;
+        }
+    }
+
     /**
      * Create a new record factory.
      */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({ "unchecked" })
     static final <R extends Record> F0<R> recordFactory(final Class<R> type, final Field<?>[] fields) {
 
         // An ad-hoc type resulting from a JOIN or arbitrary SELECT
-        if (type == RecordImpl.class || type == Record.class) {
-            final RowImpl row = new RowImpl(fields);
+        if (type == AbstractRecord.class || type == Record.class || InternalRecord.class.isAssignableFrom(type)) {
+            switch (fields.length) {
 
-            return new F0<R>() {
-                @Override
-                public R apply() {
-                    return (R) new RecordImpl(row);
-                }
-            };
+
+                case 1: return new F0<R>() { @Override public R apply() { return (R) new RecordImpl1<>(fields[0]); } };
+                case 2: return new F0<R>() { @Override public R apply() { return (R) new RecordImpl2<>(fields[0], fields[1]); } };
+                case 3: return new F0<R>() { @Override public R apply() { return (R) new RecordImpl3<>(fields[0], fields[1], fields[2]); } };
+                case 4: return new F0<R>() { @Override public R apply() { return (R) new RecordImpl4<>(fields[0], fields[1], fields[2], fields[3]); } };
+                case 5: return new F0<R>() { @Override public R apply() { return (R) new RecordImpl5<>(fields[0], fields[1], fields[2], fields[3], fields[4]); } };
+                case 6: return new F0<R>() { @Override public R apply() { return (R) new RecordImpl6<>(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5]); } };
+                case 7: return new F0<R>() { @Override public R apply() { return (R) new RecordImpl7<>(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6]); } };
+                case 8: return new F0<R>() { @Override public R apply() { return (R) new RecordImpl8<>(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], fields[7]); } };
+                case 9: return new F0<R>() { @Override public R apply() { return (R) new RecordImpl9<>(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], fields[7], fields[8]); } };
+                case 10: return new F0<R>() { @Override public R apply() { return (R) new RecordImpl10<>(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], fields[7], fields[8], fields[9]); } };
+                case 11: return new F0<R>() { @Override public R apply() { return (R) new RecordImpl11<>(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], fields[7], fields[8], fields[9], fields[10]); } };
+                case 12: return new F0<R>() { @Override public R apply() { return (R) new RecordImpl12<>(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], fields[7], fields[8], fields[9], fields[10], fields[11]); } };
+                case 13: return new F0<R>() { @Override public R apply() { return (R) new RecordImpl13<>(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], fields[7], fields[8], fields[9], fields[10], fields[11], fields[12]); } };
+                case 14: return new F0<R>() { @Override public R apply() { return (R) new RecordImpl14<>(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], fields[7], fields[8], fields[9], fields[10], fields[11], fields[12], fields[13]); } };
+                case 15: return new F0<R>() { @Override public R apply() { return (R) new RecordImpl15<>(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], fields[7], fields[8], fields[9], fields[10], fields[11], fields[12], fields[13], fields[14]); } };
+                case 16: return new F0<R>() { @Override public R apply() { return (R) new RecordImpl16<>(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], fields[7], fields[8], fields[9], fields[10], fields[11], fields[12], fields[13], fields[14], fields[15]); } };
+                case 17: return new F0<R>() { @Override public R apply() { return (R) new RecordImpl17<>(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], fields[7], fields[8], fields[9], fields[10], fields[11], fields[12], fields[13], fields[14], fields[15], fields[16]); } };
+                case 18: return new F0<R>() { @Override public R apply() { return (R) new RecordImpl18<>(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], fields[7], fields[8], fields[9], fields[10], fields[11], fields[12], fields[13], fields[14], fields[15], fields[16], fields[17]); } };
+                case 19: return new F0<R>() { @Override public R apply() { return (R) new RecordImpl19<>(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], fields[7], fields[8], fields[9], fields[10], fields[11], fields[12], fields[13], fields[14], fields[15], fields[16], fields[17], fields[18]); } };
+                case 20: return new F0<R>() { @Override public R apply() { return (R) new RecordImpl20<>(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], fields[7], fields[8], fields[9], fields[10], fields[11], fields[12], fields[13], fields[14], fields[15], fields[16], fields[17], fields[18], fields[19]); } };
+                case 21: return new F0<R>() { @Override public R apply() { return (R) new RecordImpl21<>(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], fields[7], fields[8], fields[9], fields[10], fields[11], fields[12], fields[13], fields[14], fields[15], fields[16], fields[17], fields[18], fields[19], fields[20]); } };
+                case 22: return new F0<R>() { @Override public R apply() { return (R) new RecordImpl22<>(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], fields[7], fields[8], fields[9], fields[10], fields[11], fields[12], fields[13], fields[14], fields[15], fields[16], fields[17], fields[18], fields[19], fields[20], fields[21]); } };
+
+
+
+                default:
+                    final RowImplN row = new RowImplN(fields);
+
+                    return new F0<R>() {
+                        @Override
+                        public R apply() {
+                            return (R) new RecordImplN(row);
+                        }
+                    };
+            }
         }
 
         // Any generated record

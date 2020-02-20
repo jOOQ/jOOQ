@@ -88,7 +88,7 @@ final class SQLResultQuery extends AbstractResultQuery<Record> {
 
     @Override
     final Class<? extends Record> getRecordType0() {
-        return RecordImpl.class;
+        return RecordImplN.class;
     }
 
     @Override

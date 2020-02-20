@@ -128,7 +128,7 @@ final class GenerateSeries extends AbstractTable<Record1<Integer>> {
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final Class<? extends Record1<Integer>> getRecordType() {
-        return (Class) RecordImpl.class;
+        return (Class) RecordImpl1.class;
     }
 
     @Override

@@ -309,6 +309,7 @@ import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.RevokeOnStep;
 import org.jooq.Role;
+import org.jooq.Row;
 import org.jooq.Row1;
 import org.jooq.Row10;
 import org.jooq.Row11;
@@ -8716,9 +8717,9 @@ public class DSL {
     public static <R extends Record> Table<R> table(Result<R> result) {
         int size = result.size();
 
-        RowN[] rows = new RowN[size];
+        Row[] rows = new Row[size];
         for (int i = 0; i < size; i++)
-            rows[i] = (RowN) result.get(i).valuesRow();
+            rows[i] = result.get(i).valuesRow();
 
         Field<?>[] fields = result.fields();
         String[] columns = new String[fields.length];
@@ -8726,7 +8727,7 @@ public class DSL {
             columns[i] = fields[i].getName();
 
         // TODO [#2986] Coerce the record type upon the resulting table.
-        return (Table<R>) values(rows).as("v", columns);
+        return (Table<R>) values0(rows).as("v", columns);
     }
 
     /**
@@ -21706,7 +21707,7 @@ public class DSL {
      */
     @Support
     public static <T1> Row1<T1> row(Field<T1> t1) {
-        return new RowImpl(t1);
+        return new RowImpl1<>(t1);
     }
 
     /**
@@ -21718,7 +21719,7 @@ public class DSL {
      */
     @Support
     public static <T1, T2> Row2<T1, T2> row(Field<T1> t1, Field<T2> t2) {
-        return new RowImpl(t1, t2);
+        return new RowImpl2<>(t1, t2);
     }
 
     /**
@@ -21730,7 +21731,7 @@ public class DSL {
      */
     @Support
     public static <T1, T2, T3> Row3<T1, T2, T3> row(Field<T1> t1, Field<T2> t2, Field<T3> t3) {
-        return new RowImpl(t1, t2, t3);
+        return new RowImpl3<>(t1, t2, t3);
     }
 
     /**
@@ -21742,7 +21743,7 @@ public class DSL {
      */
     @Support
     public static <T1, T2, T3, T4> Row4<T1, T2, T3, T4> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4) {
-        return new RowImpl(t1, t2, t3, t4);
+        return new RowImpl4<>(t1, t2, t3, t4);
     }
 
     /**
@@ -21754,7 +21755,7 @@ public class DSL {
      */
     @Support
     public static <T1, T2, T3, T4, T5> Row5<T1, T2, T3, T4, T5> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5) {
-        return new RowImpl(t1, t2, t3, t4, t5);
+        return new RowImpl5<>(t1, t2, t3, t4, t5);
     }
 
     /**
@@ -21766,7 +21767,7 @@ public class DSL {
      */
     @Support
     public static <T1, T2, T3, T4, T5, T6> Row6<T1, T2, T3, T4, T5, T6> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6) {
-        return new RowImpl(t1, t2, t3, t4, t5, t6);
+        return new RowImpl6<>(t1, t2, t3, t4, t5, t6);
     }
 
     /**
@@ -21778,7 +21779,7 @@ public class DSL {
      */
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7> Row7<T1, T2, T3, T4, T5, T6, T7> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7) {
-        return new RowImpl(t1, t2, t3, t4, t5, t6, t7);
+        return new RowImpl7<>(t1, t2, t3, t4, t5, t6, t7);
     }
 
     /**
@@ -21790,7 +21791,7 @@ public class DSL {
      */
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8> Row8<T1, T2, T3, T4, T5, T6, T7, T8> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8) {
-        return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8);
+        return new RowImpl8<>(t1, t2, t3, t4, t5, t6, t7, t8);
     }
 
     /**
@@ -21802,7 +21803,7 @@ public class DSL {
      */
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9> Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9) {
-        return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8, t9);
+        return new RowImpl9<>(t1, t2, t3, t4, t5, t6, t7, t8, t9);
     }
 
     /**
@@ -21814,7 +21815,7 @@ public class DSL {
      */
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10) {
-        return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10);
+        return new RowImpl10<>(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10);
     }
 
     /**
@@ -21826,7 +21827,7 @@ public class DSL {
      */
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11) {
-        return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11);
+        return new RowImpl11<>(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11);
     }
 
     /**
@@ -21838,7 +21839,7 @@ public class DSL {
      */
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12) {
-        return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12);
+        return new RowImpl12<>(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12);
     }
 
     /**
@@ -21850,7 +21851,7 @@ public class DSL {
      */
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13) {
-        return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13);
+        return new RowImpl13<>(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13);
     }
 
     /**
@@ -21862,7 +21863,7 @@ public class DSL {
      */
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14) {
-        return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14);
+        return new RowImpl14<>(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14);
     }
 
     /**
@@ -21874,7 +21875,7 @@ public class DSL {
      */
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15) {
-        return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15);
+        return new RowImpl15<>(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15);
     }
 
     /**
@@ -21886,7 +21887,7 @@ public class DSL {
      */
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16) {
-        return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16);
+        return new RowImpl16<>(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16);
     }
 
     /**
@@ -21898,7 +21899,7 @@ public class DSL {
      */
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17) {
-        return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17);
+        return new RowImpl17<>(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17);
     }
 
     /**
@@ -21910,7 +21911,7 @@ public class DSL {
      */
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18) {
-        return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18);
+        return new RowImpl18<>(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18);
     }
 
     /**
@@ -21922,7 +21923,7 @@ public class DSL {
      */
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19) {
-        return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19);
+        return new RowImpl19<>(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19);
     }
 
     /**
@@ -21934,7 +21935,7 @@ public class DSL {
      */
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20) {
-        return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20);
+        return new RowImpl20<>(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20);
     }
 
     /**
@@ -21946,7 +21947,7 @@ public class DSL {
      */
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20, Field<T21> t21) {
-        return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21);
+        return new RowImpl21<>(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21);
     }
 
     /**
@@ -21958,7 +21959,7 @@ public class DSL {
      */
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20, Field<T21> t21, Field<T22> t22) {
-        return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22);
+        return new RowImpl22<>(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22);
     }
 
 
@@ -21972,7 +21973,7 @@ public class DSL {
      */
     @Support
     public static RowN row(Field<?>... values) {
-        return new RowImpl(values);
+        return new RowImplN(values);
     }
 
     /**
@@ -21989,7 +21990,7 @@ public class DSL {
         for (Object o : values)
             fields.add(o instanceof Field<?> ? (Field<?>) o : val(o));
 
-        return new RowImpl(fields);
+        return new RowImplN(fields);
     }
 
     // -------------------------------------------------------------------------
@@ -22024,6 +22025,16 @@ public class DSL {
      */
     @Support
     public static Table<Record> values(RowN... rows) {
+        return values0(rows);
+    }
+
+    /**
+     * Internal values constructor.
+     * <p>
+     * [#6003] TODO: Make this public
+     */
+    @Support
+    static Table<Record> values0(Row... rows) {
         Values.assertNotEmpty(rows);
         int size = rows[0].size();
 

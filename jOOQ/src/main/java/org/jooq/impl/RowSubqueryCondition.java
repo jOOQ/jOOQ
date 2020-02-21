@@ -165,6 +165,9 @@ final class RowSubqueryCondition extends AbstractCondition {
             Condition condition;
             switch (comparator) {
                 case GREATER:
+                case GREATER_OR_EQUAL:
+                case LESS:
+                case LESS_OR_EQUAL:
                     condition = new RowCondition(left, row(fields), comparator);
                     break;
 

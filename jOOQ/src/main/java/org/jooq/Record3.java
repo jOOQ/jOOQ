@@ -140,21 +140,21 @@ public interface Record3<T1, T2, T3> extends Record {
     /**
      * Get the first value.
      * <p>
-     * This is the same as {@link #value1()}. 
+     * This is the same as {@link #value1()}.
      */
     T1 component1();
 
     /**
      * Get the second value.
      * <p>
-     * This is the same as {@link #value2()}. 
+     * This is the same as {@link #value2()}.
      */
     T2 component2();
 
     /**
      * Get the third value.
      * <p>
-     * This is the same as {@link #value3()}. 
+     * This is the same as {@link #value3()}.
      */
     T3 component3();
 }

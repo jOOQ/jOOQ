@@ -110,7 +110,7 @@ public interface Record1<T1> extends Record {
     /**
      * Get the first value.
      * <p>
-     * This is the same as {@link #value1()}. 
+     * This is the same as {@link #value1()}.
      */
     T1 component1();
 }

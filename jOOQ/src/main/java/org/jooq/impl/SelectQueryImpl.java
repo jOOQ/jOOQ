@@ -72,9 +72,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
 // ...
-// ...
 import static org.jooq.SQLDialect.MYSQL;
-// ...
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
@@ -218,7 +216,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
     static final Set<SQLDialect>         SUPPORT_WINDOW_CLAUSE           = SQLDialect.supportedBy(H2, MYSQL, POSTGRES);
-    private static final Set<SQLDialect> REQUIRES_FROM_CLAUSE            = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD, HSQLDB);
+
+    // [#7421] [#9832] We can eventually stop generating the FROM clause in newer versions of MariaDB and MySQL
+    private static final Set<SQLDialect> REQUIRES_FROM_CLAUSE            = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL);
     private static final Set<SQLDialect> REQUIRES_DERIVED_TABLE_DML      = SQLDialect.supportedBy(MARIADB, MYSQL);
     private static final Set<SQLDialect> EMULATE_EMPTY_GROUP_BY_OTHER    = SQLDialect.supportedBy(FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE);
     private static final Set<SQLDialect> SUPPORT_FULL_WITH_TIES          = SQLDialect.supportedBy(H2);

@@ -89,19 +89,17 @@ public interface Record1<T1> extends Record {
      */
     Record1<T1> values(T1 t1);
 
-//  [#4695] [#5501] The following covariant overrides cannot be published yet for implementation reasons (see #4695)
-//
-//  /**
-//   * {@inheritDoc}
-//   */
-//  @Override
-//  <T> Record1<T1> with(Field<T> field, T value);
-//
-//  /**
-//   * {@inheritDoc}
-//   */
-//  @Override
-//  <T, U> Record1<T1> with(Field<T> field, U value, Converter<? extends T, ? super U> converter);
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    <T> Record1<T1> with(Field<T> field, T value);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    <T, U> Record1<T1> with(Field<T> field, U value, Converter<? extends T, ? super U> converter);
 
     // ------------------------------------------------------------------------
     // Value accessors for record destructuring in Kotlin

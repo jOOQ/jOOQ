@@ -37,8 +37,7 @@
  */
 package org.jooq.impl;
 
-import java.util.Collection;
-
+import org.jooq.Converter;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Record3;
@@ -52,6 +51,7 @@ import org.jooq.Record3;
  *
  * @author Lukas Eder
  */
+@SuppressWarnings({ "unchecked" })
 class RecordImpl3<T1, T2, T3> extends AbstractRecord implements InternalRecord, Record3<T1, T2, T3> {
 
     /**
@@ -129,6 +129,16 @@ class RecordImpl3<T1, T2, T3> extends AbstractRecord implements InternalRecord, 
     public final Record3<T1, T2, T3> values(T1 t1, T2 t2, T3 t3) {
         fromArray(t1, t2, t3);
         return this;
+    }
+
+    @Override
+    public <T> Record3<T1, T2, T3> with(Field<T> field, T value) {
+        return (Record3<T1, T2, T3>) super.with(field, value);
+    }
+
+    @Override
+    public <T, U> Record3<T1, T2, T3> with(Field<T> field, U value, Converter<? extends T, ? super U> converter) {
+        return (Record3<T1, T2, T3>) super.with(field, value, converter);
     }
 
     @Override

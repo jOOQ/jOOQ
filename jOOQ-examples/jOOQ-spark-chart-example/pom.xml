@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.jooq</groupId>
         <artifactId>jooq-examples</artifactId>
-        <version>3.13.1-SNAPSHOT</version>
+        <version>3.13.1</version>
     </parent>
 
     <artifactId>jooq-spark-chart-example</artifactId>

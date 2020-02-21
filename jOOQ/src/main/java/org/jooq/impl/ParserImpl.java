@@ -10063,8 +10063,6 @@ final class ParserImpl implements Parser {
 
 
 
-
-
                 case '\'': {
                     if (ctx.character(i + 1) != delimiter) {
                         ctx.position(i + 1);

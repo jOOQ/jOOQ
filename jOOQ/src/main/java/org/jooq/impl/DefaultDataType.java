@@ -1046,7 +1046,7 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final boolean isArray() {
-        return
+        return 
             (!isBinary() && tType.isArray());
     }
 

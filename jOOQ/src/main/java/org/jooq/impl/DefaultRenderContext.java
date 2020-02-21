@@ -327,7 +327,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     public final String render() {
-        String prepend = null;
+        String prepend = null; 
         String result = sql.toString();
         return prepend == null ? result : prepend + result;
     }

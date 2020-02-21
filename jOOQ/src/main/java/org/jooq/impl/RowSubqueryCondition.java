@@ -212,7 +212,7 @@ final class RowSubqueryCondition extends AbstractCondition {
             if (rightQuantified == null) {
 
                 // Some databases need extra parentheses around the RHS
-                boolean extraParentheses = false;
+                boolean extraParentheses = false ;
 
                 ctx.sql(extraParentheses ? "((" : "(");
 

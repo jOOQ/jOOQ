@@ -652,7 +652,7 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         }
 
         // [#2059] MemSQL does not support UPDATE ... ORDER BY
-        if (limit != null && NO_SUPPORT_LIMIT.contains(ctx.family())) {
+        if (limit != null && NO_SUPPORT_LIMIT.contains(ctx.family()) ) {
             Field<?>[] keyFields =
                 table().getKeys().isEmpty()
               ? new Field[] { table().rowid() }

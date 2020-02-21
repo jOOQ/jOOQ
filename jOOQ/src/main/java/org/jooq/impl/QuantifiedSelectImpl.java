@@ -95,7 +95,7 @@ final class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart imp
 
         ctx.visit(quantifier.toKeyword());
 
-        boolean extraParentheses = false;
+        boolean extraParentheses = false ;
 
         ctx.sql(extraParentheses ? " ((" : " (");
 

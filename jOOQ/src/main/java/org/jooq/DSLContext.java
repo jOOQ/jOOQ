@@ -139,7 +139,7 @@ import org.jooq.util.xml.jaxb.InformationSchema;
  * @see Configuration
  * @author Lukas Eder
  */
-public interface DSLContext extends Scope, AutoCloseable {
+public interface DSLContext extends Scope , AutoCloseable {
 
     // -------------------------------------------------------------------------
     // XXX AutoCloseable API

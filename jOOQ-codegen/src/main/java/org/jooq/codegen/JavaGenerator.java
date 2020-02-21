@@ -2630,7 +2630,7 @@ public class JavaGenerator extends AbstractGenerator {
                     : out.ref(getStrategy().getFullJavaIdentifier(e.getSchema()), 2));
             out.tab(1).println("override def getName : %s = %s",
                 String.class,
-                e.isSynthetic() ? "null" : "\"" + e.getName().replace("\"", "\\\"") + "\"");
+                e.isSynthetic() ? "null" : "\"" + escapeString(e.getName()) + "\"");
 
             generateEnumClassFooter(e, out);
             out.println("}");
@@ -2681,7 +2681,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             out.tab(1).overrideInherit();
             out.tab(1).println("public %s getName() {", String.class);
-            out.tab(2).println("return %s;", e.isSynthetic() ? "null" : "\"" + e.getName().replace("\"", "\\\"") + "\"");
+            out.tab(2).println("return %s;", e.isSynthetic() ? "null" : "\"" + escapeString(e.getName()) + "\"");
             out.tab(1).println("}");
 
             out.tab(1).overrideInherit();
@@ -4357,7 +4357,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             String separator = "  ";
             for (CheckConstraintDefinition c : cc) {
-                out.tab(3).println("%s%s.createCheck(this, %s.name(\"%s\"), \"%s\", %s)", separator, Internal.class, DSL.class, c.getName().replace("\"", "\\\""), c.getCheckClause().replace("\"", "\\\""), c.enforced());
+                out.tab(3).println("%s%s.createCheck(this, %s.name(\"%s\"), \"%s\", %s)", separator, Internal.class, DSL.class, escapeString(c.getName()), escapeString(c.getCheckClause()), c.enforced());
                 separator = ", ";
             }
 
@@ -5125,12 +5125,12 @@ public class JavaGenerator extends AbstractGenerator {
 
             // Since JPA 1.0
             out.print("@%s(name = \"", out.ref("javax.persistence.Table"));
-            out.print(table.getName().replace("\"", "\\\""));
+            out.print(escapeString(table.getName()));
             out.print("\"");
 
             if (!schema.isDefaultSchema()) {
                 out.print(", schema = \"");
-                out.print(schema.getOutputName().replace("\"", "\\\""));
+                out.print(escapeString(schema.getOutputName()));
                 out.print("\"");
             }
 
@@ -5147,7 +5147,7 @@ public class JavaGenerator extends AbstractGenerator {
                    .append("(");
 
                 if (!StringUtils.isBlank(uk.getOutputName()))
-                    sb1.append("name = \"" + uk.getOutputName().replace("\"", "\\\"") + "\", ");
+                    sb1.append("name = \"" + escapeString(uk.getOutputName()) + "\", ");
 
                 sb1.append("columnNames = ")
                    .append(scala ? "Array(" : "{");
@@ -5156,7 +5156,7 @@ public class JavaGenerator extends AbstractGenerator {
                 for (ColumnDefinition column : uk.getKeyColumns()) {
                     sb1.append(glue1Inner);
                     sb1.append("\"");
-                    sb1.append(column.getName().replace("\"", "\\\""));
+                    sb1.append(escapeString(column.getName()));
                     sb1.append("\"");
 
                     glue1Inner = ", ";
@@ -5183,7 +5183,7 @@ public class JavaGenerator extends AbstractGenerator {
                     sb2.append("\t")
                        .append(scala ? "new " : "@")
                        .append(out.ref("javax.persistence.Index"))
-                       .append("(name = \"").append(index.getOutputName().replace("\"", "\\\"")).append("\"");
+                       .append("(name = \"").append(escapeString(index.getOutputName())).append("\"");
 
                     if (index.isUnique())
                         sb2.append(", unique = true");
@@ -5193,7 +5193,7 @@ public class JavaGenerator extends AbstractGenerator {
                     String glue2Inner = "";
                     for (IndexColumnDefinition column : index.getIndexColumns()) {
                         sb2.append(glue2Inner)
-                           .append(column.getOutputName().replace("\"", "\\\""));
+                           .append(escapeString(column.getOutputName()));
 
                         if (column.getSortOrder() == SortOrder.ASC)
                             sb2.append(" ASC");
@@ -5262,7 +5262,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             // Since JPA 1.0
             out.print("\t@%s(name = \"", out.ref("javax.persistence.Column"));
-            out.print(column.getName().replace("\"", "\\\""));
+            out.print(escapeString(column.getName()));
             out.print("\"");
             out.print(nullable);
             out.print(length);
@@ -6212,9 +6212,9 @@ public class JavaGenerator extends AbstractGenerator {
                 out.tab(2).println("\"jOOQ version:%s\"%s", Constants.VERSION, (hasCatalogVersion || hasSchemaVersion ? "," : ""));
 
                 if (hasCatalogVersion)
-                    out.tab(2).println("\"catalog version:%s\"%s", catalogVersions.get(catalog).replace("\"", "\\\""), (hasSchemaVersion ? "," : ""));
+                    out.tab(2).println("\"catalog version:%s\"%s", escapeString(catalogVersions.get(catalog)), (hasSchemaVersion ? "," : ""));
                 if (hasSchemaVersion)
-                    out.tab(2).println("\"schema version:%s\"", schemaVersions.get(schema).replace("\"", "\\\""));
+                    out.tab(2).println("\"schema version:%s\"", escapeString(schemaVersions.get(schema)));
 
                 if (scala)
                     out.tab(1).println("),");
@@ -6612,7 +6612,7 @@ public class JavaGenerator extends AbstractGenerator {
 
                 sb.append(DefaultDataType.class.getName());
                 sb.append(".getDefaultDataType(\"");
-                sb.append((u != null ? u.toString() : t).replace("\"", "\\\""));
+                sb.append(escapeString(u != null ? u.toString() : t));
                 sb.append("\")");
             }
 

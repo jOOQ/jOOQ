@@ -5,18 +5,18 @@ import javax.xml.bind.annotation.XmlRegistry;
 
 
 /**
- * This object contains factory methods for each
- * Java content interface and Java element interface
- * generated in the org.jooq.util.xml.jaxb package.
- * <p>An ObjectFactory allows you to programatically
- * construct new instances of the Java representation
- * for XML content. The Java representation of XML
- * content can consist of schema derived interfaces
- * and classes representing the binding of schema
- * type definitions, element declarations and model
- * groups.  Factory methods for each of these are
+ * This object contains factory methods for each 
+ * Java content interface and Java element interface 
+ * generated in the org.jooq.util.xml.jaxb package. 
+ * <p>An ObjectFactory allows you to programatically 
+ * construct new instances of the Java representation 
+ * for XML content. The Java representation of XML 
+ * content can consist of schema derived interfaces 
+ * and classes representing the binding of schema 
+ * type definitions, element declarations and model 
+ * groups.  Factory methods for each of these are 
  * provided in this class.
- *
+ * 
  */
 @XmlRegistry
 public class ObjectFactory {
@@ -24,14 +24,14 @@ public class ObjectFactory {
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: org.jooq.util.xml.jaxb
-     *
+     * 
      */
     public ObjectFactory() {
     }
 
     /**
      * Create an instance of {@link InformationSchema }
-     *
+     * 
      */
     public InformationSchema createInformationSchema() {
         return new InformationSchema();
@@ -39,7 +39,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link Catalog }
-     *
+     * 
      */
     public Catalog createCatalog() {
         return new Catalog();
@@ -47,7 +47,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link Schema }
-     *
+     * 
      */
     public Schema createSchema() {
         return new Schema();
@@ -55,7 +55,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link Sequence }
-     *
+     * 
      */
     public Sequence createSequence() {
         return new Sequence();
@@ -63,7 +63,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link Table }
-     *
+     * 
      */
     public Table createTable() {
         return new Table();
@@ -71,7 +71,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link View }
-     *
+     * 
      */
     public View createView() {
         return new View();
@@ -79,7 +79,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link Column }
-     *
+     * 
      */
     public Column createColumn() {
         return new Column();
@@ -87,7 +87,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link TableConstraint }
-     *
+     * 
      */
     public TableConstraint createTableConstraint() {
         return new TableConstraint();
@@ -95,7 +95,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link KeyColumnUsage }
-     *
+     * 
      */
     public KeyColumnUsage createKeyColumnUsage() {
         return new KeyColumnUsage();
@@ -103,7 +103,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ReferentialConstraint }
-     *
+     * 
      */
     public ReferentialConstraint createReferentialConstraint() {
         return new ReferentialConstraint();
@@ -111,7 +111,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link CheckConstraint }
-     *
+     * 
      */
     public CheckConstraint createCheckConstraint() {
         return new CheckConstraint();
@@ -119,7 +119,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link Index }
-     *
+     * 
      */
     public Index createIndex() {
         return new Index();
@@ -127,7 +127,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link IndexColumnUsage }
-     *
+     * 
      */
     public IndexColumnUsage createIndexColumnUsage() {
         return new IndexColumnUsage();
@@ -135,7 +135,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link Routine }
-     *
+     * 
      */
     public Routine createRoutine() {
         return new Routine();
@@ -143,7 +143,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link Parameter }
-     *
+     * 
      */
     public Parameter createParameter() {
         return new Parameter();
@@ -151,7 +151,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ElementType }
-     *
+     * 
      */
     public ElementType createElementType() {
         return new ElementType();

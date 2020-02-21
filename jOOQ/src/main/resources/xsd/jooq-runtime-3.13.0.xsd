@@ -34,7 +34,7 @@ available using synonyms]]></jxb:javadoc></jxb:property></appinfo></annotation>
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Configure render mapping for runtime schema / table rewriting in
 generated SQL.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-
+      
       <element name="renderQuotedNames" type="jooq-runtime:RenderQuotedNames" minOccurs="0" maxOccurs="1" default="EXPLICIT_DEFAULT_QUOTED">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether rendered schema, table, column names, etc should be quoted.
 <p>
@@ -42,7 +42,7 @@ This only affects names created through {@link org.jooq.impl.DSL#name(String)} m
 <p>
 This setting does not affect any plain SQL usage.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-
+      
       <element name="renderNameCase" type="jooq-runtime:RenderNameCase" minOccurs="0" maxOccurs="1" default="AS_IS">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether the case of {@link org.jooq.Name} references should be modified in any way.
 <p>
@@ -67,11 +67,11 @@ This is set to "QUOTED" by default for backwards-compatibility.
           </appinfo>
         </annotation>
       </element>
-
+      
       <element name="renderNamedParamPrefix" type="string" minOccurs="0" maxOccurs="1" default=":">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The prefix to use for named parameters.
 <p>
-Named parameter syntax defaults to <code>:name</code> (such as supported by Oracle, JPA, Spring), but
+Named parameter syntax defaults to <code>:name</code> (such as supported by Oracle, JPA, Spring), but 
 vendor specific parameters may look differently. This flag can be used to determine the prefix to be
 used by named parameters, such as <code>@</code> for SQL Server's <code>@name</code> or <code>$</code>
 for PostgreSQL's <code>$name</code>.
@@ -97,7 +97,7 @@ providing a name to parameters, resulting in <code>:1</code> or <code>@1</code> 
           </appinfo>
         </annotation>
       </element>
-
+      
       <element name="renderLocale" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The Locale to be used with any render locale dependent logic (as e.g. transforming names to lower / uppper case), defaulting to {@link #getLocale()}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -109,19 +109,19 @@ providing a name to parameters, resulting in <code>:1</code> or <code>@1</code> 
       <element name="renderFormatting" type="jooq-runtime:RenderFormatting" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[All sorts of formatting flags / settings.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-
+      
       <element name="renderOptionalAsKeywordForTableAliases" type="jooq-runtime:RenderOptionalKeyword" minOccurs="0" maxOccurs="1" default="DEFAULT">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to render the optional <code>AS</code> keyword in table aliases, if it is optional in the output dialect. This is ignored if the keyword is not supported (e.g. in Oracle)]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-
+      
       <element name="renderOptionalAsKeywordForFieldAliases" type="jooq-runtime:RenderOptionalKeyword" minOccurs="0" maxOccurs="1" default="DEFAULT">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to render the optional <code>AS</code> keyword in table aliases, if it is optional in the output dialect.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-
+      
       <element name="renderOptionalInnerKeyword" type="jooq-runtime:RenderOptionalKeyword" minOccurs="0" maxOccurs="1" default="DEFAULT">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to render the optional <code>INNER</code> keyword in <code>INNER JOIN</code>, if it is optional in the output dialect.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-
+      
       <element name="renderOptionalOuterKeyword" type="jooq-runtime:RenderOptionalKeyword" minOccurs="0" maxOccurs="1" default="DEFAULT">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to render the optional <code>OUTER</code> keyword in <code>OUTER JOIN</code>, if it is optional in the output dialect.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -137,16 +137,16 @@ set to true, users can automatically profit from this feature in all SQL stateme
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether an additional <code>ORDER BY rn</code> clause should be rendered on emulated paginated queries.
 <p>
 Older databases did not support OFFSET .. FETCH pagination, so jOOQ emulates it using derived
-tables and <code>ROWNUM</code> (Oracle 11g and older) or <code>ROW_NUMBER()</code> (e.g. DB2,
-SQL Server, etc.) filtering. While these subqueries are ordered, the ordering is not
-<em>guaranteed</em> to be stable in the outer most queries. It may be stable (and e.g. in Oracle,
-it mostly is, if queries are not parallel, or joined to other queries, etc.), so the excess
-<code>ORDER BY</code> clause may add some additional performance overhead. This setting forces
+tables and <code>ROWNUM</code> (Oracle 11g and older) or <code>ROW_NUMBER()</code> (e.g. DB2, 
+SQL Server, etc.) filtering. While these subqueries are ordered, the ordering is not 
+<em>guaranteed</em> to be stable in the outer most queries. It may be stable (and e.g. in Oracle, 
+it mostly is, if queries are not parallel, or joined to other queries, etc.), so the excess 
+<code>ORDER BY</code> clause may add some additional performance overhead. This setting forces 
 jOOQ to not generate the additional <code>ORDER BY</code> clause.
 <p>
 For details, see <a href="https://github.com/jOOQ/jOOQ/issues/7609">https://github.com/jOOQ/jOOQ/issues/7609</a>.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-
+      
       <element name="renderOutputForSQLServerReturningClause" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether the jOOQ <code>RETURNING</code> clause should map to SQL Server's <code>OUTPUT</code> clause.
 <p>
@@ -162,7 +162,7 @@ be enabled as well.
 <p>
 For details, see <a href="https://github.com/jOOQ/jOOQ/issues/4498">https://github.com/jOOQ/jOOQ/issues/4498</a>.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-
+      
       <element name="renderParenthesisAroundSetOperationQueries" type="boolean" minOccurs="0" maxOccurs="1" default="false">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether queries combined with set operators (e.g. UNION and UNION ALL) should always be surrounded by a parenthesis pair.
 <p>
@@ -173,7 +173,7 @@ When this setting is set to <code>true</code> the queries combined with set oper
 <p>
 For details, see <a href="https://github.com/jOOQ/jOOQ/issues/3676">https://github.com/jOOQ/jOOQ/issues/3676</a> and <a href="https://github.com/jOOQ/jOOQ/issues/9751">https://github.com/jOOQ/jOOQ/issues/9751</a>.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-
+      
       <element name="fetchTriggerValuesAfterSQLServerOutput" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Fetch trigger values after SQL Server <code>OUTPUT</code> clause.
 <p>
@@ -184,11 +184,11 @@ included in the <code>OUTPUT</code> clause.
 <p>
 For details, see <a href="https://github.com/jOOQ/jOOQ/issues/4498">https://github.com/jOOQ/jOOQ/issues/4498</a>.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-
+      
       <element name="transformAnsiJoinToTableLists" type="boolean" minOccurs="0" maxOccurs="1" default="false">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform ANSI join to table lists if possible
 <p>
-Historically, prior to ANSI join syntax, joins were implemented by listing tables in
+Historically, prior to ANSI join syntax, joins were implemented by listing tables in 
 the FROM clause and providing join predicates in the WHERE clause, possibly using vendor specific
 operators like <code>(+)</code> (Oracle, DB2) or <code>*=</code> (SQL Server) for outer join
 support. For backwards compatibility with older RDBMS versions, ANSI joins in jOOQ code may be
@@ -199,11 +199,11 @@ This flag has a limited implementation that supports inner joins (in most cases)
 <p>
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-
+      
       <element name="transformTableListsToAnsiJoin" type="boolean" minOccurs="0" maxOccurs="1" default="false">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform table lists to ANSI join if possible
 <p>
-(Very) historically, prior to ANSI join syntax, joins were implemented by listing tables in
+(Very) historically, prior to ANSI join syntax, joins were implemented by listing tables in 
 the FROM clause and providing join predicates in the WHERE clause, possibly using vendor specific
 operators like <code>(+)</code> (Oracle, DB2) or <code>*=</code> (SQL Server) for outer join
 support. Migrating such join syntax is tedious. The jOOQ parser can parse the old syntax and
@@ -239,7 +239,7 @@ case of which, this defaults to INLINED]]></jxb:javadoc></jxb:property></appinfo
       <element name="statementType" type="jooq-runtime:StatementType" minOccurs="0" maxOccurs="1" default="PREPARED_STATEMENT">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The type of statement that is to be executed.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-
+      
       <element name="inlineThreshold" type="int" minOccurs="0" maxOccurs="1" default="0">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The maximum number of allowed bind variables before inlining all values where <code>0</code> uses the dialect defaults: <ul>
 <li>{@link org.jooq.SQLDialect#ACCESS} : 768</li>
@@ -422,7 +422,7 @@ jOOQ queries, for which no specific fetchSize value was specified.]]></jxb:javad
       <element name="executeDeleteWithoutWhere" type="jooq-runtime:ExecuteWithoutWhere" minOccurs="0" maxOccurs="1" default="LOG_DEBUG">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#6771] Specifies whether DELETE statements are allowed to be executed lacking a WHERE clause. This has no effect on rendering the statements SQL string.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-
+      
       <element name="interpreterDialect" type="string" minOccurs="0" maxOccurs="1" default="DEFAULT">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#7337] The dialect that should be used to interpret SQL DDL statements. {@link SQLDialect#DEFAULT} means that jOOQ interprets the SQL itself. Any other dialect (if supported) will be interpreted on an actual JDBC connection.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -430,31 +430,31 @@ jOOQ queries, for which no specific fetchSize value was specified.]]></jxb:javad
       <element name="interpreterNameLookupCaseSensitivity" type="jooq-runtime:InterpreterNameLookupCaseSensitivity" minOccurs="0" maxOccurs="1" default="DEFAULT">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#9633] The case sensitivity of identifiers used when interpreting SQL DDL statements.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-
+            
       <element name="interpreterLocale" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The Locale to be used with any interpreter locale dependent logic, defaulting to {@link #getLocale()}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-
+      
       <element name="interpreterSearchPath" type="jooq-runtime:InterpreterSearchSchemata" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#9677] The search path to be used for unqualified table lookups by the interpreter.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-
+            
       <element name="interpreterDelayForeignKeyDeclarations" type="boolean" minOccurs="0" maxOccurs="1" default="false">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Using this flag, the interpreter will be able to delay the addition of foreign key declarations until the end of the interpretation run.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-
+      
       <element name="migrationAllowsUndo" type="boolean" minOccurs="0" maxOccurs="1" default="false">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether migrations are allowed to be executed in inverse order.<p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly switch between branches in a development environment. This feature is available only in commercial distributions.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-
+      
       <element name="migrationRevertUntracked" type="boolean" minOccurs="0" maxOccurs="1" default="false">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether migrations revert any untracked changes in the schemas that are being migrated.<p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly revert any elements created in a development environment. This feature is available only in commercial distributions.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-
+      
       <element name="migrationAutoValidation" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether a migration automatically runs a validation first.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-
+      
       <element name="locale" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The Locale to be used with any locale dependent logic if there is not a more specific locale available. More specific locales include e.g. {@link #getRenderLocale()}, {@link #getParseLocale()}, or {@link #getInterpreterLocale()}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -462,7 +462,7 @@ jOOQ queries, for which no specific fetchSize value was specified.]]></jxb:javad
       <element name="parseDialect" type="string" minOccurs="0" maxOccurs="1" default="DEFAULT">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#7337] The input dialect that should be chosen to disambiguate ambiguous SQL syntax.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-
+      
       <element name="parseLocale" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The Locale to be used with any parser locale dependent logic, defaulting to {@link #getLocale()}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -502,7 +502,7 @@ jOOQ queries, for which no specific fetchSize value was specified.]]></jxb:javad
       <element name="parseIgnoreCommentStop" type="string" minOccurs="0" maxOccurs="1" default="[jooq ignore stop]">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#8325] The ignore comment stop token]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-
+      
       <element name="applyWorkaroundFor7962" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#7963] Apply workaround for ORA-04043 when inserting into Oracle tables with qualified, quoted identifiers, and fetching generated keys]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -731,13 +731,13 @@ Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided]]></jxb:javad
       <enumeration value="PREPARED_STATEMENT"/>
     </restriction>
   </simpleType>
-
+  
   <simpleType name="InvocationOrder">
     <restriction base="string">
-
+    
       <!-- The first registered listener is invoked first -->
       <enumeration value="DEFAULT"/>
-
+    
       <!-- The first registered listener is invoked last -->
       <enumeration value="REVERSE"/>
     </restriction>
@@ -789,10 +789,10 @@ Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided]]></jxb:javad
            MySQL     : `information_schema`.`TABLES`
            SQL Server: [INFORMATION_SCHEMA].[TABLES] -->
       <enumeration value="ALWAYS"/>
-
+      
       <!-- Render object names quoted if they are constructed using DSL.quotedName() or DSL.name() -->
       <enumeration value="EXPLICIT_DEFAULT_QUOTED"/>
-
+      
       <!-- Render object names quoted if they are constructed using DSL.quotedName() -->
       <enumeration value="EXPLICIT_DEFAULT_UNQUOTED"/>
 
@@ -940,10 +940,10 @@ Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided]]></jxb:javad
       <enumeration value="THROW"/>
     </restriction>
   </simpleType>
-
+  
   <simpleType name="RenderOptionalKeyword">
     <restriction base="string">
-
+    
       <!-- Optional keywords will never be generated (does not affect mandatory keywords). -->
       <enumeration value="OFF"/>
 
@@ -954,19 +954,19 @@ Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided]]></jxb:javad
       <enumeration value="DEFAULT"/>
     </restriction>
   </simpleType>
-
+  
   <simpleType name="InterpreterNameLookupCaseSensitivity">
     <restriction base="string">
-
+    
       <!-- The default value depending on Settings.interpreterDialect -->
       <enumeration value="DEFAULT"/>
-
+      
       <!-- Identifiers are always case sensitive -->
       <enumeration value="ALWAYS"/>
-
+      
       <!-- Only quoted identifiers are case sensitive -->
       <enumeration value="WHEN_QUOTED"/>
-
+      
       <!-- Identifiers are never case sensitive -->
       <enumeration value="NEVER"/>
     </restriction>
@@ -989,7 +989,7 @@ Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided]]></jxb:javad
 
       <!-- Force parsing object names in upper case, if unquoted. For instance SCHEMA."table" -->
       <enumeration value="UPPER_IF_UNQUOTED"/>
-
+      
       <!-- Apply the parse dialect specific default behaviour -->
       <enumeration value="DEFAULT"></enumeration>
     </restriction>
@@ -1030,16 +1030,16 @@ Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided]]></jxb:javad
       <enumeration value="IGNORE"/>
     </restriction>
   </simpleType>
-
+  
   <simpleType name="QueryPoolable">
     <restriction base="string">
-
+    
       <!-- Statements are poolable -->
       <enumeration value="TRUE"/>
-
+    
       <!-- Statements are not poolable -->
       <enumeration value="FALSE"/>
-
+    
       <!-- Statements may be poolable, according to JDBC's default behaviour -->
       <enumeration value="DEFAULT"/>
     </restriction>

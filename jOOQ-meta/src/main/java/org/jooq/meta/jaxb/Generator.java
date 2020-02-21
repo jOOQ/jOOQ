@@ -14,9 +14,9 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 
 /**
  * Configuration that affects the way code is being generated.
- *
- *
- *
+ * 
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Generator", propOrder = {
@@ -39,7 +39,7 @@ public class Generator implements Serializable, XMLAppendable
 
     /**
      * The class used to generate source code. This can be overridden with a custom code generator implementation.
-     *
+     * 
      */
     public String getName() {
         return name;
@@ -47,7 +47,7 @@ public class Generator implements Serializable, XMLAppendable
 
     /**
      * The class used to generate source code. This can be overridden with a custom code generator implementation.
-     *
+     * 
      */
     public void setName(String value) {
         this.name = value;
@@ -55,7 +55,7 @@ public class Generator implements Serializable, XMLAppendable
 
     /**
      * Definitions of custom naming strategies (declarative or programmatic) to define how generated Java objects should be named.
-     *
+     * 
      */
     public Strategy getStrategy() {
         return strategy;
@@ -63,7 +63,7 @@ public class Generator implements Serializable, XMLAppendable
 
     /**
      * Definitions of custom naming strategies (declarative or programmatic) to define how generated Java objects should be named.
-     *
+     * 
      */
     public void setStrategy(Strategy value) {
         this.strategy = value;
@@ -71,7 +71,7 @@ public class Generator implements Serializable, XMLAppendable
 
     /**
      * Configuration of the database meta data source.
-     *
+     * 
      */
     public Database getDatabase() {
         return database;
@@ -79,7 +79,7 @@ public class Generator implements Serializable, XMLAppendable
 
     /**
      * Configuration of the database meta data source.
-     *
+     * 
      */
     public void setDatabase(Database value) {
         this.database = value;
@@ -87,7 +87,7 @@ public class Generator implements Serializable, XMLAppendable
 
     /**
      * Options strictly related to generated code.
-     *
+     * 
      */
     public Generate getGenerate() {
         return generate;
@@ -95,7 +95,7 @@ public class Generator implements Serializable, XMLAppendable
 
     /**
      * Options strictly related to generated code.
-     *
+     * 
      */
     public void setGenerate(Generate value) {
         this.generate = value;
@@ -103,7 +103,7 @@ public class Generator implements Serializable, XMLAppendable
 
     /**
      * Options to define where the generated code should be located.
-     *
+     * 
      */
     public Target getTarget() {
         return target;
@@ -111,7 +111,7 @@ public class Generator implements Serializable, XMLAppendable
 
     /**
      * Options to define where the generated code should be located.
-     *
+     * 
      */
     public void setTarget(Target value) {
         this.target = value;
@@ -119,7 +119,7 @@ public class Generator implements Serializable, XMLAppendable
 
     /**
      * The class used to generate source code. This can be overridden with a custom code generator implementation.
-     *
+     * 
      */
     public Generator withName(String value) {
         setName(value);
@@ -128,7 +128,7 @@ public class Generator implements Serializable, XMLAppendable
 
     /**
      * Definitions of custom naming strategies (declarative or programmatic) to define how generated Java objects should be named.
-     *
+     * 
      */
     public Generator withStrategy(Strategy value) {
         setStrategy(value);
@@ -137,7 +137,7 @@ public class Generator implements Serializable, XMLAppendable
 
     /**
      * Configuration of the database meta data source.
-     *
+     * 
      */
     public Generator withDatabase(Database value) {
         setDatabase(value);
@@ -146,7 +146,7 @@ public class Generator implements Serializable, XMLAppendable
 
     /**
      * Options strictly related to generated code.
-     *
+     * 
      */
     public Generator withGenerate(Generate value) {
         setGenerate(value);
@@ -155,7 +155,7 @@ public class Generator implements Serializable, XMLAppendable
 
     /**
      * Options to define where the generated code should be located.
-     *
+     * 
      */
     public Generator withTarget(Target value) {
         setTarget(value);

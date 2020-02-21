@@ -14,9 +14,9 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 
 /**
  * @deprecated Use ForcedType only
- *
- *
- *
+ * 
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "CustomType", propOrder = {
@@ -43,7 +43,7 @@ public class CustomType implements Serializable, XMLAppendable
 
     /**
      * @deprecated Use ForcedType only
-     *
+     * 
      */
     @Deprecated
     public String getName() {
@@ -52,7 +52,7 @@ public class CustomType implements Serializable, XMLAppendable
 
     /**
      * @deprecated Use ForcedType only
-     *
+     * 
      */
     @Deprecated
     public void setName(String value) {
@@ -61,7 +61,7 @@ public class CustomType implements Serializable, XMLAppendable
 
     /**
      * @deprecated Use ForcedType only
-     *
+     * 
      */
     @Deprecated
     public String getType() {
@@ -70,7 +70,7 @@ public class CustomType implements Serializable, XMLAppendable
 
     /**
      * @deprecated Use ForcedType only
-     *
+     * 
      */
     @Deprecated
     public void setType(String value) {
@@ -79,7 +79,7 @@ public class CustomType implements Serializable, XMLAppendable
 
     /**
      * @deprecated Use ForcedType only
-     *
+     * 
      */
     @Deprecated
     public String getConverter() {
@@ -88,7 +88,7 @@ public class CustomType implements Serializable, XMLAppendable
 
     /**
      * @deprecated Use ForcedType only
-     *
+     * 
      */
     @Deprecated
     public void setConverter(String value) {
@@ -97,11 +97,11 @@ public class CustomType implements Serializable, XMLAppendable
 
     /**
      * @deprecated Use ForcedType only
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     @Deprecated
     public Boolean isEnumConverter() {
@@ -110,11 +110,11 @@ public class CustomType implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the enumConverter property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     @Deprecated
     public void setEnumConverter(Boolean value) {
@@ -123,7 +123,7 @@ public class CustomType implements Serializable, XMLAppendable
 
     /**
      * @deprecated Use ForcedType only
-     *
+     * 
      */
     @Deprecated
     public String getBinding() {
@@ -132,7 +132,7 @@ public class CustomType implements Serializable, XMLAppendable
 
     /**
      * @deprecated Use ForcedType only
-     *
+     * 
      */
     @Deprecated
     public void setBinding(String value) {
@@ -141,7 +141,7 @@ public class CustomType implements Serializable, XMLAppendable
 
     /**
      * @deprecated Use ForcedType only
-     *
+     * 
      */
     @Deprecated
     public CustomType withName(String value) {
@@ -151,7 +151,7 @@ public class CustomType implements Serializable, XMLAppendable
 
     /**
      * @deprecated Use ForcedType only
-     *
+     * 
      */
     @Deprecated
     public CustomType withType(String value) {
@@ -161,7 +161,7 @@ public class CustomType implements Serializable, XMLAppendable
 
     /**
      * @deprecated Use ForcedType only
-     *
+     * 
      */
     @Deprecated
     public CustomType withConverter(String value) {
@@ -176,7 +176,7 @@ public class CustomType implements Serializable, XMLAppendable
 
     /**
      * @deprecated Use ForcedType only
-     *
+     * 
      */
     @Deprecated
     public CustomType withBinding(String value) {

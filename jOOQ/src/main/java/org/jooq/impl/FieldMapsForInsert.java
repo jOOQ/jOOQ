@@ -111,7 +111,7 @@ final class FieldMapsForInsert extends AbstractQueryPart {
 
 
 
-        else if (rows == 1) {
+        else if (rows == 1 ) {
             ctx.formatSeparator()
                .start(INSERT_VALUES)
                .visit(K_VALUES)
@@ -245,9 +245,9 @@ final class FieldMapsForInsert extends AbstractQueryPart {
 
     final void toSQL92Values(Context<?> ctx, boolean emulateBulkInsertReturning) {
         boolean indent = (values.size() > 1);
-        boolean castFirstRowNumericValues = false;
+        boolean castFirstRowNumericValues = false ;
 
-        for (int row = 0; row < rows; row++) {
+        for (int row = 0; row < rows ; row++) {
             if (row > 0)
                 ctx.sql(", ");
 

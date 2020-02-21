@@ -15,9 +15,9 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 
 /**
  * <p>Java class for MatcherRule complex type.
- *
+ * 
  * <p>The following schema fragment specifies the expected content contained within this class.
- *
+ * 
  * <pre>
  * &lt;complexType name="MatcherRule"&gt;
  *   &lt;complexContent&gt;
@@ -30,8 +30,8 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- *
- *
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "MatcherRule", propOrder = {
@@ -52,7 +52,7 @@ public class MatcherRule implements Serializable, XMLAppendable
 
     /**
      * A pre-defined transformation type that transforms this rule's output into a specific format.
-     *
+     * 
      */
     public MatcherTransformType getTransform() {
         return transform;
@@ -60,7 +60,7 @@ public class MatcherRule implements Serializable, XMLAppendable
 
     /**
      * A pre-defined transformation type that transforms this rule's output into a specific format.
-     *
+     * 
      */
     public void setTransform(MatcherTransformType value) {
         this.transform = value;
@@ -68,7 +68,7 @@ public class MatcherRule implements Serializable, XMLAppendable
 
     /**
      * A replacement expression that transforms the matched expression in a new value.
-     *
+     * 
      */
     public String getExpression() {
         return expression;
@@ -76,7 +76,7 @@ public class MatcherRule implements Serializable, XMLAppendable
 
     /**
      * A replacement expression that transforms the matched expression in a new value.
-     *
+     * 
      */
     public void setExpression(String value) {
         this.expression = value;
@@ -84,7 +84,7 @@ public class MatcherRule implements Serializable, XMLAppendable
 
     /**
      * A pre-defined transformation type that transforms this rule's output into a specific format.
-     *
+     * 
      */
     public MatcherRule withTransform(MatcherTransformType value) {
         setTransform(value);
@@ -93,7 +93,7 @@ public class MatcherRule implements Serializable, XMLAppendable
 
     /**
      * A replacement expression that transforms the matched expression in a new value.
-     *
+     * 
      */
     public MatcherRule withExpression(String value) {
         setExpression(value);

@@ -18,7 +18,7 @@ import org.jooq.meta.hsqldb.information_schema.InformationSchema;
 
 
 /**
- * information about the indices of each accessible table defined within this
+ * information about the indices of each accessible table defined within this 
  * database
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })

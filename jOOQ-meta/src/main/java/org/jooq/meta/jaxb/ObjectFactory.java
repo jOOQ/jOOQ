@@ -5,18 +5,18 @@ import javax.xml.bind.annotation.XmlRegistry;
 
 
 /**
- * This object contains factory methods for each
- * Java content interface and Java element interface
- * generated in the org.jooq.meta.jaxb package.
- * <p>An ObjectFactory allows you to programatically
- * construct new instances of the Java representation
- * for XML content. The Java representation of XML
- * content can consist of schema derived interfaces
- * and classes representing the binding of schema
- * type definitions, element declarations and model
- * groups.  Factory methods for each of these are
+ * This object contains factory methods for each 
+ * Java content interface and Java element interface 
+ * generated in the org.jooq.meta.jaxb package. 
+ * <p>An ObjectFactory allows you to programatically 
+ * construct new instances of the Java representation 
+ * for XML content. The Java representation of XML 
+ * content can consist of schema derived interfaces 
+ * and classes representing the binding of schema 
+ * type definitions, element declarations and model 
+ * groups.  Factory methods for each of these are 
  * provided in this class.
- *
+ * 
  */
 @XmlRegistry
 public class ObjectFactory {
@@ -24,14 +24,14 @@ public class ObjectFactory {
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: org.jooq.meta.jaxb
-     *
+     * 
      */
     public ObjectFactory() {
     }
 
     /**
      * Create an instance of {@link Configuration }
-     *
+     * 
      */
     public Configuration createConfiguration() {
         return new Configuration();
@@ -39,7 +39,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link Jdbc }
-     *
+     * 
      */
     public Jdbc createJdbc() {
         return new Jdbc();
@@ -47,7 +47,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link Generator }
-     *
+     * 
      */
     public Generator createGenerator() {
         return new Generator();
@@ -55,7 +55,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link Property }
-     *
+     * 
      */
     public Property createProperty() {
         return new Property();
@@ -63,7 +63,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link Strategy }
-     *
+     * 
      */
     public Strategy createStrategy() {
         return new Strategy();
@@ -71,7 +71,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link Matchers }
-     *
+     * 
      */
     public Matchers createMatchers() {
         return new Matchers();
@@ -79,7 +79,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link MatchersSchemaType }
-     *
+     * 
      */
     public MatchersSchemaType createMatchersSchemaType() {
         return new MatchersSchemaType();
@@ -87,7 +87,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link MatchersTableType }
-     *
+     * 
      */
     public MatchersTableType createMatchersTableType() {
         return new MatchersTableType();
@@ -95,7 +95,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link MatchersFieldType }
-     *
+     * 
      */
     public MatchersFieldType createMatchersFieldType() {
         return new MatchersFieldType();
@@ -103,7 +103,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link MatchersRoutineType }
-     *
+     * 
      */
     public MatchersRoutineType createMatchersRoutineType() {
         return new MatchersRoutineType();
@@ -111,7 +111,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link MatchersSequenceType }
-     *
+     * 
      */
     public MatchersSequenceType createMatchersSequenceType() {
         return new MatchersSequenceType();
@@ -119,7 +119,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link MatchersEnumType }
-     *
+     * 
      */
     public MatchersEnumType createMatchersEnumType() {
         return new MatchersEnumType();
@@ -127,7 +127,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link MatcherRule }
-     *
+     * 
      */
     public MatcherRule createMatcherRule() {
         return new MatcherRule();
@@ -135,7 +135,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link Database }
-     *
+     * 
      */
     public Database createDatabase() {
         return new Database();
@@ -143,7 +143,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link CatalogMappingType }
-     *
+     * 
      */
     public CatalogMappingType createCatalogMappingType() {
         return new CatalogMappingType();
@@ -151,7 +151,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link SchemaMappingType }
-     *
+     * 
      */
     public SchemaMappingType createSchemaMappingType() {
         return new SchemaMappingType();
@@ -159,7 +159,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link CustomType }
-     *
+     * 
      */
     public CustomType createCustomType() {
         return new CustomType();
@@ -167,7 +167,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link EnumType }
-     *
+     * 
      */
     public EnumType createEnumType() {
         return new EnumType();
@@ -175,7 +175,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link Embeddable }
-     *
+     * 
      */
     public Embeddable createEmbeddable() {
         return new Embeddable();
@@ -183,7 +183,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link EmbeddableField }
-     *
+     * 
      */
     public EmbeddableField createEmbeddableField() {
         return new EmbeddableField();
@@ -191,7 +191,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ForcedType }
-     *
+     * 
      */
     public ForcedType createForcedType() {
         return new ForcedType();
@@ -199,7 +199,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link Generate }
-     *
+     * 
      */
     public Generate createGenerate() {
         return new Generate();
@@ -207,7 +207,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link Target }
-     *
+     * 
      */
     public Target createTarget() {
         return new Target();

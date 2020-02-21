@@ -14,9 +14,9 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 
 /**
  * A table mapping configuration.
- *
- *
- *
+ * 
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "MappedTable", propOrder = {
@@ -42,7 +42,7 @@ public class MappedTable
      * The input table as defined in {@link org.jooq.Table#getName()}
      * <p>
      * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided.
-     *
+     * 
      */
     public String getInput() {
         return input;
@@ -52,7 +52,7 @@ public class MappedTable
      * The input table as defined in {@link org.jooq.Table#getName()}
      * <p>
      * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided.
-     *
+     * 
      */
     public void setInput(String value) {
         this.input = value;
@@ -62,7 +62,7 @@ public class MappedTable
      * A regular expression matching the input table name as defined in {@link org.jooq.Table#getName()}
      * <p>
      * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided
-     *
+     * 
      */
     public Pattern getInputExpression() {
         return inputExpression;
@@ -72,7 +72,7 @@ public class MappedTable
      * A regular expression matching the input table name as defined in {@link org.jooq.Table#getName()}
      * <p>
      * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided
-     *
+     * 
      */
     public void setInputExpression(Pattern value) {
         this.inputExpression = value;
@@ -84,7 +84,7 @@ public class MappedTable
      * <li>When &lt;input/&gt; is provided, &lt;output/&gt; is a constant value.</li>
      * <li>When &lt;inputExpression/&gt; is provided, &lt;output/&gt; is a replacement expression.</li>
      * </ul>
-     *
+     * 
      */
     public String getOutput() {
         return output;
@@ -96,7 +96,7 @@ public class MappedTable
      * <li>When &lt;input/&gt; is provided, &lt;output/&gt; is a constant value.</li>
      * <li>When &lt;inputExpression/&gt; is provided, &lt;output/&gt; is a replacement expression.</li>
      * </ul>
-     *
+     * 
      */
     public void setOutput(String value) {
         this.output = value;
@@ -106,7 +106,7 @@ public class MappedTable
      * The input table as defined in {@link org.jooq.Table#getName()}
      * <p>
      * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided.
-     *
+     * 
      */
     public MappedTable withInput(String value) {
         setInput(value);
@@ -117,7 +117,7 @@ public class MappedTable
      * A regular expression matching the input table name as defined in {@link org.jooq.Table#getName()}
      * <p>
      * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided
-     *
+     * 
      */
     public MappedTable withInputExpression(Pattern value) {
         setInputExpression(value);
@@ -130,7 +130,7 @@ public class MappedTable
      * <li>When &lt;input/&gt; is provided, &lt;output/&gt; is a constant value.</li>
      * <li>When &lt;inputExpression/&gt; is provided, &lt;output/&gt; is a replacement expression.</li>
      * </ul>
-     *
+     * 
      */
     public MappedTable withOutput(String value) {
         setOutput(value);

@@ -15,9 +15,9 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 
 /**
  * Options strictly related to generated code.
- *
- *
- *
+ * 
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Generate", propOrder = {
@@ -186,11 +186,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Generate index information.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isIndexes() {
         return indexes;
@@ -198,11 +198,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the indexes property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setIndexes(Boolean value) {
         this.indexes = value;
@@ -211,11 +211,11 @@ public class Generate implements Serializable, XMLAppendable
     /**
      * Primary key / foreign key relations should be generated and used.
      * This is a prerequisite for various advanced features
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isRelations() {
         return relations;
@@ -223,11 +223,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the relations property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setRelations(Boolean value) {
         this.relations = value;
@@ -235,11 +235,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sequence flags should be generated and used.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isSequenceFlags() {
         return sequenceFlags;
@@ -247,11 +247,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the sequenceFlags property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setSequenceFlags(Boolean value) {
         this.sequenceFlags = value;
@@ -259,11 +259,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Generate implicit join path constructors on generated tables for outgoing foreign key relationships (to-one relationships)
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isImplicitJoinPathsToOne() {
         return implicitJoinPathsToOne;
@@ -271,11 +271,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the implicitJoinPathsToOne property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setImplicitJoinPathsToOne(Boolean value) {
         this.implicitJoinPathsToOne = value;
@@ -283,11 +283,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Generate deprecated code for backwards compatibility
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isDeprecated() {
         return deprecated;
@@ -295,11 +295,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the deprecated property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setDeprecated(Boolean value) {
         this.deprecated = value;
@@ -309,11 +309,11 @@ public class Generate implements Serializable, XMLAppendable
      * Generate deprecation annotations on references to unknown data types.
      * This helps identifying columns, attributes, and parameters, which may not be usable through
      * jOOQ API, without adding custom data type bindings to them.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isDeprecationOnUnknownTypes() {
         return deprecationOnUnknownTypes;
@@ -321,11 +321,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the deprecationOnUnknownTypes property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setDeprecationOnUnknownTypes(Boolean value) {
         this.deprecationOnUnknownTypes = value;
@@ -333,11 +333,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * @deprecated
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     @Deprecated
     public Boolean isInstanceFields() {
@@ -346,11 +346,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the instanceFields property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     @Deprecated
     public void setInstanceFields(Boolean value) {
@@ -360,11 +360,11 @@ public class Generate implements Serializable, XMLAppendable
     /**
      * Generate the {@link javax.annotation.Generated} or {@link javax.annotation.processing.Generated} annotation to indicate
      * jOOQ version used for source code.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isGeneratedAnnotation() {
         return generatedAnnotation;
@@ -372,11 +372,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the generatedAnnotation property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setGeneratedAnnotation(Boolean value) {
         this.generatedAnnotation = value;
@@ -385,7 +385,7 @@ public class Generate implements Serializable, XMLAppendable
     /**
      * Generate the {@link javax.annotation.Generated} or {@link javax.annotation.processing.Generated} annotation to indicate
      * jOOQ version used for source code.
-     *
+     * 
      */
     public GeneratedAnnotationType getGeneratedAnnotationType() {
         return generatedAnnotationType;
@@ -394,7 +394,7 @@ public class Generate implements Serializable, XMLAppendable
     /**
      * Generate the {@link javax.annotation.Generated} or {@link javax.annotation.processing.Generated} annotation to indicate
      * jOOQ version used for source code.
-     *
+     * 
      */
     public void setGeneratedAnnotationType(GeneratedAnnotationType value) {
         this.generatedAnnotationType = value;
@@ -402,11 +402,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Whether non-nullable items should be annotated with the annotation type specified in {@link #nonnullAnnotationType}. In SQL and by consequence in jOOQ, non-nullability cannot be guaranteed statically. There may still be some cases (e.g. after unions, outer joins, etc.) where a normally non-null value turns out to be null!
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isNonnullAnnotation() {
         return nonnullAnnotation;
@@ -414,11 +414,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the nonnullAnnotation property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setNonnullAnnotation(Boolean value) {
         this.nonnullAnnotation = value;
@@ -426,7 +426,7 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Specify the qualified annotation name for all non-nullable items in generated code, defaulting to the JSR-305 {@link javax.annotation.Nonnull} type.
-     *
+     * 
      */
     public String getNonnullAnnotationType() {
         return nonnullAnnotationType;
@@ -434,7 +434,7 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Specify the qualified annotation name for all non-nullable items in generated code, defaulting to the JSR-305 {@link javax.annotation.Nonnull} type.
-     *
+     * 
      */
     public void setNonnullAnnotationType(String value) {
         this.nonnullAnnotationType = value;
@@ -442,11 +442,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Whether nullable items should be annotated with the annotation type specified in {@link #nullableAnnotationType}. Unlike {@link #nonnullAnnotation}, nullability can be guaranteed as in SQL, and by consequence in jOOQ, every column expression can be made nullable using some SQL operation.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isNullableAnnotation() {
         return nullableAnnotation;
@@ -454,11 +454,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the nullableAnnotation property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setNullableAnnotation(Boolean value) {
         this.nullableAnnotation = value;
@@ -466,7 +466,7 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Specify the qualified annotation name for all nullable items in generated code, defaulting to the JSR-305 {@link javax.annotation.Nullable} type.
-     *
+     * 
      */
     public String getNullableAnnotationType() {
         return nullableAnnotationType;
@@ -474,7 +474,7 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Specify the qualified annotation name for all nullable items in generated code, defaulting to the JSR-305 {@link javax.annotation.Nullable} type.
-     *
+     * 
      */
     public void setNullableAnnotationType(String value) {
         this.nullableAnnotationType = value;
@@ -482,11 +482,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Generate Routine classes.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isRoutines() {
         return routines;
@@ -494,23 +494,23 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the routines property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setRoutines(Boolean value) {
         this.routines = value;
     }
 
     /**
-     * Generate Sequence classes.
-     *
+     * Generate Sequence classes. 
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isSequences() {
         return sequences;
@@ -518,23 +518,23 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the sequences property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setSequences(Boolean value) {
         this.sequences = value;
     }
 
     /**
-     * Generate UDT classes.
-     *
+     * Generate UDT classes. 
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isUdts() {
         return udts;
@@ -542,11 +542,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the udts property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setUdts(Boolean value) {
         this.udts = value;
@@ -554,11 +554,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Generate Queue classes.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isQueues() {
         return queues;
@@ -566,11 +566,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the queues property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setQueues(Boolean value) {
         this.queues = value;
@@ -578,11 +578,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Generate database Link classes.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isLinks() {
         return links;
@@ -590,11 +590,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the links property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setLinks(Boolean value) {
         this.links = value;
@@ -602,11 +602,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Generate Key classes.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isKeys() {
         return keys;
@@ -614,11 +614,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the keys property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setKeys(Boolean value) {
         this.keys = value;
@@ -626,11 +626,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Generate Table classes.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isTables() {
         return tables;
@@ -638,11 +638,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the tables property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setTables(Boolean value) {
         this.tables = value;
@@ -650,11 +650,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Generate embeddable classes.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isEmbeddables() {
         return embeddables;
@@ -662,11 +662,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the embeddables property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setEmbeddables(Boolean value) {
         this.embeddables = value;
@@ -674,11 +674,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Generate TableRecord classes.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isRecords() {
         return records;
@@ -686,11 +686,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the records property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setRecords(Boolean value) {
         this.records = value;
@@ -698,11 +698,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Generate TableRecord classes that implement Record[N] super types
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isRecordsImplementingRecordN() {
         return recordsImplementingRecordN;
@@ -710,11 +710,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the recordsImplementingRecordN property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setRecordsImplementingRecordN(Boolean value) {
         this.recordsImplementingRecordN = value;
@@ -722,11 +722,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Generate POJOs.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isPojos() {
         return pojos;
@@ -734,11 +734,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the pojos property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setPojos(Boolean value) {
         this.pojos = value;
@@ -746,11 +746,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Generate basic equals() and hashCode() methods in POJOs.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isPojosEqualsAndHashCode() {
         return pojosEqualsAndHashCode;
@@ -758,11 +758,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the pojosEqualsAndHashCode property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setPojosEqualsAndHashCode(Boolean value) {
         this.pojosEqualsAndHashCode = value;
@@ -770,11 +770,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Generate basic toString() methods in POJOs.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isPojosToString() {
         return pojosToString;
@@ -782,11 +782,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the pojosToString property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setPojosToString(Boolean value) {
         this.pojosToString = value;
@@ -794,11 +794,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Generate immutable POJOs.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isImmutablePojos() {
         return immutablePojos;
@@ -806,11 +806,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the immutablePojos property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setImmutablePojos(Boolean value) {
         this.immutablePojos = value;
@@ -818,11 +818,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Generate serializable POJOs.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isSerializablePojos() {
         return serializablePojos;
@@ -830,11 +830,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the serializablePojos property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setSerializablePojos(Boolean value) {
         this.serializablePojos = value;
@@ -842,11 +842,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Generated interfaces to be implemented by records and/or POJOs.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isInterfaces() {
         return interfaces;
@@ -854,11 +854,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the interfaces property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setInterfaces(Boolean value) {
         this.interfaces = value;
@@ -866,11 +866,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Generate immutable interfaces.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isImmutableInterfaces() {
         return immutableInterfaces;
@@ -878,11 +878,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the immutableInterfaces property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setImmutableInterfaces(Boolean value) {
         this.immutableInterfaces = value;
@@ -890,11 +890,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Generate serializable interfaces.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isSerializableInterfaces() {
         return serializableInterfaces;
@@ -902,11 +902,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the serializableInterfaces property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setSerializableInterfaces(Boolean value) {
         this.serializableInterfaces = value;
@@ -914,11 +914,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Generate DAOs.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isDaos() {
         return daos;
@@ -926,11 +926,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the daos property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setDaos(Boolean value) {
         this.daos = value;
@@ -938,11 +938,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Annotate POJOs and Records with JPA annotations.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isJpaAnnotations() {
         return jpaAnnotations;
@@ -950,11 +950,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the jpaAnnotations property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setJpaAnnotations(Boolean value) {
         this.jpaAnnotations = value;
@@ -962,7 +962,7 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Version of JPA specification is to be used to generate version-specific annotations. If it is omitted, the latest version is used by default.
-     *
+     * 
      */
     public String getJpaVersion() {
         return jpaVersion;
@@ -970,7 +970,7 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Version of JPA specification is to be used to generate version-specific annotations. If it is omitted, the latest version is used by default.
-     *
+     * 
      */
     public void setJpaVersion(String value) {
         this.jpaVersion = value;
@@ -978,11 +978,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Annotate POJOs and Records with JSR-303 validation annotations
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isValidationAnnotations() {
         return validationAnnotations;
@@ -990,11 +990,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the validationAnnotations property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setValidationAnnotations(Boolean value) {
         this.validationAnnotations = value;
@@ -1002,11 +1002,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Annotate DAOs with useful spring annotations such as @Repository or @Autowired.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isSpringAnnotations() {
         return springAnnotations;
@@ -1014,11 +1014,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the springAnnotations property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setSpringAnnotations(Boolean value) {
         this.springAnnotations = value;
@@ -1026,11 +1026,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Turn off generation of all global object references.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isGlobalObjectReferences() {
         return globalObjectReferences;
@@ -1038,11 +1038,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the globalObjectReferences property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setGlobalObjectReferences(Boolean value) {
         this.globalObjectReferences = value;
@@ -1050,11 +1050,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Turn off generation of global catalog references.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isGlobalCatalogReferences() {
         return globalCatalogReferences;
@@ -1062,11 +1062,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the globalCatalogReferences property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setGlobalCatalogReferences(Boolean value) {
         this.globalCatalogReferences = value;
@@ -1074,11 +1074,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Turn off generation of global schema references.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isGlobalSchemaReferences() {
         return globalSchemaReferences;
@@ -1086,11 +1086,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the globalSchemaReferences property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setGlobalSchemaReferences(Boolean value) {
         this.globalSchemaReferences = value;
@@ -1098,11 +1098,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Turn off generation of global table references.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isGlobalTableReferences() {
         return globalTableReferences;
@@ -1110,11 +1110,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the globalTableReferences property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setGlobalTableReferences(Boolean value) {
         this.globalTableReferences = value;
@@ -1122,11 +1122,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Turn off generation of global sequence references.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isGlobalSequenceReferences() {
         return globalSequenceReferences;
@@ -1134,11 +1134,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the globalSequenceReferences property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setGlobalSequenceReferences(Boolean value) {
         this.globalSequenceReferences = value;
@@ -1146,11 +1146,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Turn off generation of global UDT references.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isGlobalUDTReferences() {
         return globalUDTReferences;
@@ -1158,11 +1158,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the globalUDTReferences property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setGlobalUDTReferences(Boolean value) {
         this.globalUDTReferences = value;
@@ -1170,11 +1170,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Turn off generation of global routine references.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isGlobalRoutineReferences() {
         return globalRoutineReferences;
@@ -1182,11 +1182,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the globalRoutineReferences property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setGlobalRoutineReferences(Boolean value) {
         this.globalRoutineReferences = value;
@@ -1194,11 +1194,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Turn off generation of global queue references.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isGlobalQueueReferences() {
         return globalQueueReferences;
@@ -1206,11 +1206,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the globalQueueReferences property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setGlobalQueueReferences(Boolean value) {
         this.globalQueueReferences = value;
@@ -1218,11 +1218,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Turn off generation of global database link references.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isGlobalLinkReferences() {
         return globalLinkReferences;
@@ -1230,11 +1230,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the globalLinkReferences property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setGlobalLinkReferences(Boolean value) {
         this.globalLinkReferences = value;
@@ -1242,11 +1242,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Turn off generation of global key references.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isGlobalKeyReferences() {
         return globalKeyReferences;
@@ -1254,11 +1254,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the globalKeyReferences property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setGlobalKeyReferences(Boolean value) {
         this.globalKeyReferences = value;
@@ -1266,11 +1266,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Turn off generation of global index references.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isGlobalIndexReferences() {
         return globalIndexReferences;
@@ -1278,11 +1278,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the globalIndexReferences property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setGlobalIndexReferences(Boolean value) {
         this.globalIndexReferences = value;
@@ -1290,11 +1290,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Turn off generation of Javadoc on all objects.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isJavadoc() {
         return javadoc;
@@ -1302,11 +1302,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the javadoc property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setJavadoc(Boolean value) {
         this.javadoc = value;
@@ -1314,11 +1314,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Turn off generation of all SQL comments as Javadoc on all objects.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isComments() {
         return comments;
@@ -1326,11 +1326,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the comments property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setComments(Boolean value) {
         this.comments = value;
@@ -1338,11 +1338,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Turn off generation of all SQL comments as Javadoc on all catalogs.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isCommentsOnCatalogs() {
         return commentsOnCatalogs;
@@ -1350,11 +1350,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the commentsOnCatalogs property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setCommentsOnCatalogs(Boolean value) {
         this.commentsOnCatalogs = value;
@@ -1362,11 +1362,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Turn off generation of all SQL comments as Javadoc on all schemas.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isCommentsOnSchemas() {
         return commentsOnSchemas;
@@ -1374,11 +1374,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the commentsOnSchemas property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setCommentsOnSchemas(Boolean value) {
         this.commentsOnSchemas = value;
@@ -1386,11 +1386,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Turn off generation of all SQL comments as Javadoc on all tables.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isCommentsOnTables() {
         return commentsOnTables;
@@ -1398,11 +1398,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the commentsOnTables property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setCommentsOnTables(Boolean value) {
         this.commentsOnTables = value;
@@ -1410,11 +1410,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Turn off generation of all SQL comments as Javadoc on all columns.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isCommentsOnColumns() {
         return commentsOnColumns;
@@ -1422,11 +1422,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the commentsOnColumns property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setCommentsOnColumns(Boolean value) {
         this.commentsOnColumns = value;
@@ -1434,11 +1434,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Turn off generation of all SQL comments as Javadoc on all UDTs.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isCommentsOnUDTs() {
         return commentsOnUDTs;
@@ -1446,11 +1446,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the commentsOnUDTs property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setCommentsOnUDTs(Boolean value) {
         this.commentsOnUDTs = value;
@@ -1458,11 +1458,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Turn off generation of all SQL comments as Javadoc on all attributes.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isCommentsOnAttributes() {
         return commentsOnAttributes;
@@ -1470,11 +1470,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the commentsOnAttributes property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setCommentsOnAttributes(Boolean value) {
         this.commentsOnAttributes = value;
@@ -1482,11 +1482,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Turn off generation of all SQL comments as Javadoc on all packages.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isCommentsOnPackages() {
         return commentsOnPackages;
@@ -1494,11 +1494,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the commentsOnPackages property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setCommentsOnPackages(Boolean value) {
         this.commentsOnPackages = value;
@@ -1506,11 +1506,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Turn off generation of all SQL comments as Javadoc on all routines.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isCommentsOnRoutines() {
         return commentsOnRoutines;
@@ -1518,11 +1518,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the commentsOnRoutines property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setCommentsOnRoutines(Boolean value) {
         this.commentsOnRoutines = value;
@@ -1530,11 +1530,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Turn off generation of all SQL comments as Javadoc on all parameters.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isCommentsOnParameters() {
         return commentsOnParameters;
@@ -1542,11 +1542,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the commentsOnParameters property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setCommentsOnParameters(Boolean value) {
         this.commentsOnParameters = value;
@@ -1554,11 +1554,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Turn off generation of all SQL comments as Javadoc on all sequences.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isCommentsOnSequences() {
         return commentsOnSequences;
@@ -1566,11 +1566,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the commentsOnSequences property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setCommentsOnSequences(Boolean value) {
         this.commentsOnSequences = value;
@@ -1578,11 +1578,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Turn off generation of all SQL comments as Javadoc on all links.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isCommentsOnLinks() {
         return commentsOnLinks;
@@ -1590,11 +1590,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the commentsOnLinks property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setCommentsOnLinks(Boolean value) {
         this.commentsOnLinks = value;
@@ -1602,11 +1602,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Turn off generation of all SQL comments as Javadoc on all queues.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isCommentsOnQueues() {
         return commentsOnQueues;
@@ -1614,11 +1614,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the commentsOnQueues property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setCommentsOnQueues(Boolean value) {
         this.commentsOnQueues = value;
@@ -1626,11 +1626,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Turn off generation of all SQL comments as Javadoc on all keys.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isCommentsOnKeys() {
         return commentsOnKeys;
@@ -1638,11 +1638,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the commentsOnKeys property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setCommentsOnKeys(Boolean value) {
         this.commentsOnKeys = value;
@@ -1650,11 +1650,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Turn off generation of all source code on all object types.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isSources() {
         return sources;
@@ -1662,11 +1662,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the sources property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setSources(Boolean value) {
         this.sources = value;
@@ -1674,11 +1674,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Turn off generation of all source code on all views.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isSourcesOnViews() {
         return sourcesOnViews;
@@ -1686,11 +1686,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the sourcesOnViews property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setSourcesOnViews(Boolean value) {
         this.sourcesOnViews = value;
@@ -1698,11 +1698,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Generate fluent setters in records, POJOs, interfaces.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isFluentSetters() {
         return fluentSetters;
@@ -1710,11 +1710,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the fluentSetters property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setFluentSetters(Boolean value) {
         this.fluentSetters = value;
@@ -1739,11 +1739,11 @@ public class Generate implements Serializable, XMLAppendable
      * </ul>
      * <p>
      * Custom GeneratorStrategy implementations are unaffected
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isJavaBeansGettersAndSetters() {
         return javaBeansGettersAndSetters;
@@ -1751,11 +1751,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the javaBeansGettersAndSetters property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setJavaBeansGettersAndSetters(Boolean value) {
         this.javaBeansGettersAndSetters = value;
@@ -1765,11 +1765,11 @@ public class Generate implements Serializable, XMLAppendable
      * Generate varargs setters for array types for convenience.
      * <p>
      * This may lead to compilation warnings in current Java versions.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isVarargSetters() {
         return varargSetters;
@@ -1777,11 +1777,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the varargSetters property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setVarargSetters(Boolean value) {
         this.varargSetters = value;
@@ -1793,7 +1793,7 @@ public class Generate implements Serializable, XMLAppendable
      * This can be useful if you have a database object that generates a String
      * class, and you want to avoid naming clashes with the java.lang package
      * by specifying <code>java\.lang\..*</code>
-     *
+     * 
      */
     public String getFullyQualifiedTypes() {
         return fullyQualifiedTypes;
@@ -1805,7 +1805,7 @@ public class Generate implements Serializable, XMLAppendable
      * This can be useful if you have a database object that generates a String
      * class, and you want to avoid naming clashes with the java.lang package
      * by specifying <code>java\.lang\..*</code>
-     *
+     * 
      */
     public void setFullyQualifiedTypes(String value) {
         this.fullyQualifiedTypes = value;
@@ -1813,11 +1813,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Whether empty catalogs (e.g. empty because of <excludes/> configurations) should still be generated.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isEmptyCatalogs() {
         return emptyCatalogs;
@@ -1825,11 +1825,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the emptyCatalogs property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setEmptyCatalogs(Boolean value) {
         this.emptyCatalogs = value;
@@ -1837,11 +1837,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Whether empty schemas (e.g. empty because of <excludes/> configurations) should still be generated.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isEmptySchemas() {
         return emptySchemas;
@@ -1849,11 +1849,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the emptySchemas property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setEmptySchemas(Boolean value) {
         this.emptySchemas = value;
@@ -1863,12 +1863,12 @@ public class Generate implements Serializable, XMLAppendable
      * A flag indicating whether Java 8's java.time types should be used by the
      * source code generator, rather than JDBC's java.sql types.
      * <p>
-     * This flag is ignored in the commercial Java 6 distribution of jOOQ 3.9+
-     *
+     * This flag is ignored in the commercial Java 6 distribution of jOOQ 3.9+ 
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isJavaTimeTypes() {
         return javaTimeTypes;
@@ -1876,11 +1876,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the javaTimeTypes property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setJavaTimeTypes(Boolean value) {
         this.javaTimeTypes = value;
@@ -1888,11 +1888,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Whether wrapper types should be generated for primary key columns, and for their referencing foreign keys.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isPrimaryKeyTypes() {
         return primaryKeyTypes;
@@ -1900,11 +1900,11 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the primaryKeyTypes property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setPrimaryKeyTypes(Boolean value) {
         this.primaryKeyTypes = value;
@@ -1912,7 +1912,7 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * The newline characters to be used in generated code. Whitespace characters can be used, e.g. \n, \r\n
-     *
+     * 
      */
     public String getNewline() {
         return newline;
@@ -1920,7 +1920,7 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * The newline characters to be used in generated code. Whitespace characters can be used, e.g. \n, \r\n
-     *
+     * 
      */
     public void setNewline(String value) {
         this.newline = value;
@@ -1928,7 +1928,7 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * The indentation characters to be used in generated code. If unspecified, an idiomatic default indentation of the language will be used (4 spaces in Java, 2 spaces in Scala). Whitespace characters can be used, e.g. \t
-     *
+     * 
      */
     public String getIndentation() {
         return indentation;
@@ -1936,7 +1936,7 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * The indentation characters to be used in generated code. If unspecified, an idiomatic default indentation of the language will be used (4 spaces in Java, 2 spaces in Scala). Whitespace characters can be used, e.g. \t
-     *
+     * 
      */
     public void setIndentation(String value) {
         this.indentation = value;
@@ -1985,7 +1985,7 @@ public class Generate implements Serializable, XMLAppendable
     /**
      * Generate the {@link javax.annotation.Generated} or {@link javax.annotation.processing.Generated} annotation to indicate
      * jOOQ version used for source code.
-     *
+     * 
      */
     public Generate withGeneratedAnnotationType(GeneratedAnnotationType value) {
         setGeneratedAnnotationType(value);
@@ -1999,7 +1999,7 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Specify the qualified annotation name for all non-nullable items in generated code, defaulting to the JSR-305 {@link javax.annotation.Nonnull} type.
-     *
+     * 
      */
     public Generate withNonnullAnnotationType(String value) {
         setNonnullAnnotationType(value);
@@ -2013,7 +2013,7 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Specify the qualified annotation name for all nullable items in generated code, defaulting to the JSR-305 {@link javax.annotation.Nullable} type.
-     *
+     * 
      */
     public Generate withNullableAnnotationType(String value) {
         setNullableAnnotationType(value);
@@ -2122,7 +2122,7 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * Version of JPA specification is to be used to generate version-specific annotations. If it is omitted, the latest version is used by default.
-     *
+     * 
      */
     public Generate withJpaVersion(String value) {
         setJpaVersion(value);
@@ -2300,7 +2300,7 @@ public class Generate implements Serializable, XMLAppendable
      * This can be useful if you have a database object that generates a String
      * class, and you want to avoid naming clashes with the java.lang package
      * by specifying <code>java\.lang\..*</code>
-     *
+     * 
      */
     public Generate withFullyQualifiedTypes(String value) {
         setFullyQualifiedTypes(value);
@@ -2329,7 +2329,7 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * The newline characters to be used in generated code. Whitespace characters can be used, e.g. \n, \r\n
-     *
+     * 
      */
     public Generate withNewline(String value) {
         setNewline(value);
@@ -2338,7 +2338,7 @@ public class Generate implements Serializable, XMLAppendable
 
     /**
      * The indentation characters to be used in generated code. If unspecified, an idiomatic default indentation of the language will be used (4 spaces in Java, 2 spaces in Scala). Whitespace characters can be used, e.g. \t
-     *
+     * 
      */
     public Generate withIndentation(String value) {
         setIndentation(value);

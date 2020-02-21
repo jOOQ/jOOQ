@@ -281,7 +281,7 @@ final class CreateIndexImpl extends AbstractRowCountQuery implements
                .sql(' ');
 
         boolean supportsInclude = SUPPORT_INCLUDE.contains(ctx.dialect());
-        boolean supportsFieldsBeforeTable = false;
+        boolean supportsFieldsBeforeTable = false ;
 
         QueryPartList<QueryPart> list = new QueryPartList<>();
         list.addAll(asList(sortFields));

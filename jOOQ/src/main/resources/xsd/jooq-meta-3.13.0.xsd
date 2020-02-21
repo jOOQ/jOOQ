@@ -200,7 +200,7 @@
             <element name="unique_constraint_name" type="string" minOccurs="1" maxOccurs="1" />
         </all>
     </complexType>
-
+    
     <complexType name="CheckConstraints">
         <sequence>
             <element name="check_constraint" type="tns:CheckConstraint" minOccurs="0" maxOccurs="unbounded" />
@@ -324,7 +324,7 @@
             <enumeration value="OUT"/>
         </restriction>
     </simpleType>
-
+    
     <complexType name="ElementTypes">
         <sequence>
             <element name="element_type" type="tns:ElementType" minOccurs="0" maxOccurs="unbounded" />
@@ -346,7 +346,7 @@
             <element name="udt_name" type="string" minOccurs="0" maxOccurs="1" />
         </all>
     </complexType>
-
+    
     <simpleType name="ObjectType">
         <restriction base="string">
             <enumeration value="DOMAIN"/>
@@ -355,7 +355,7 @@
             <enumeration value="USER-DEFINED TYPE"/>
         </restriction>
     </simpleType>
-
+    
     <simpleType name="TableType">
         <restriction base="string">
             <enumeration value="BASE TABLE"/>

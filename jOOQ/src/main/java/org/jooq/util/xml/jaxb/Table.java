@@ -15,9 +15,9 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 
 /**
  * <p>Java class for Table complex type.
- *
+ * 
  * <p>The following schema fragment specifies the expected content contained within this class.
- *
+ * 
  * <pre>
  * &lt;complexType name="Table"&gt;
  *   &lt;complexContent&gt;
@@ -33,8 +33,8 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- *
- *
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Table", propOrder = {

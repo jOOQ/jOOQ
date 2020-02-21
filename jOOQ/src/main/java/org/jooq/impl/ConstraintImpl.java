@@ -207,7 +207,7 @@ implements
         else {
             boolean qualify = ctx.qualify();
 
-            if (named) {
+            if (named ) {
                 ctx.visit(K_CONSTRAINT)
                    .sql(' ')
                    .visit(getUnqualifiedName())

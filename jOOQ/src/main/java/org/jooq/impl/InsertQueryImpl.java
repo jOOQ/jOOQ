@@ -347,7 +347,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                        .visit(K_ON_CONFLICT)
                        .sql(' ');
 
-                    if (onConstraint != null) {
+                    if (onConstraint != null ) {
                         ctx.data(DATA_CONSTRAINT_REFERENCE, true);
                         ctx.visit(K_ON_CONSTRAINT)
                            .sql(' ')
@@ -483,7 +483,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                        .visit(K_ON_CONFLICT)
                        .sql(' ');
 
-                    if (onConstraint != null) {
+                    if (onConstraint != null ) {
                         ctx.data(DATA_CONSTRAINT_REFERENCE, true);
                         ctx.visit(K_ON_CONSTRAINT)
                            .sql(' ')

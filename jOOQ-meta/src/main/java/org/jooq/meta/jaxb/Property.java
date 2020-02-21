@@ -15,9 +15,9 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 /**
  * Custom properties that are useful for Database implementations like
  * <code>JPADatabase</code>, <code>XMLDatabase</code>, or <code>DDLDatabase</code>, or to pass to JDBC drivers.
- *
- *
- *
+ * 
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Property", propOrder = {

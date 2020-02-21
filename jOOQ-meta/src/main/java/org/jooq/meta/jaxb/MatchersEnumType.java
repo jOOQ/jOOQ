@@ -13,9 +13,9 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 
 /**
  * Declarative naming strategy configuration for enum names.
- *
- *
- *
+ * 
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "MatchersEnumType", propOrder = {
@@ -36,7 +36,7 @@ public class MatchersEnumType implements Serializable, XMLAppendable
 
     /**
      * This enum matcher applies to all unqualified or qualified enum names matched by this expression. If left empty, this matcher applies to all enums.
-     *
+     * 
      */
     public String getExpression() {
         return expression;
@@ -44,7 +44,7 @@ public class MatchersEnumType implements Serializable, XMLAppendable
 
     /**
      * This enum matcher applies to all unqualified or qualified enum names matched by this expression. If left empty, this matcher applies to all enums.
-     *
+     * 
      */
     public void setExpression(String value) {
         this.expression = value;
@@ -52,7 +52,7 @@ public class MatchersEnumType implements Serializable, XMLAppendable
 
     /**
      * This rule influences the naming of the generated {@link org.jooq.EnumType} object.
-     *
+     * 
      */
     public MatcherRule getEnumClass() {
         return enumClass;
@@ -60,7 +60,7 @@ public class MatchersEnumType implements Serializable, XMLAppendable
 
     /**
      * This rule influences the naming of the generated {@link org.jooq.EnumType} object.
-     *
+     * 
      */
     public void setEnumClass(MatcherRule value) {
         this.enumClass = value;
@@ -68,7 +68,7 @@ public class MatchersEnumType implements Serializable, XMLAppendable
 
     /**
      * This string provides additional interfaces that a generated {@link org.jooq.EnumType} should implement.
-     *
+     * 
      */
     public String getEnumImplements() {
         return enumImplements;
@@ -76,7 +76,7 @@ public class MatchersEnumType implements Serializable, XMLAppendable
 
     /**
      * This string provides additional interfaces that a generated {@link org.jooq.EnumType} should implement.
-     *
+     * 
      */
     public void setEnumImplements(String value) {
         this.enumImplements = value;
@@ -84,7 +84,7 @@ public class MatchersEnumType implements Serializable, XMLAppendable
 
     /**
      * This enum matcher applies to all unqualified or qualified enum names matched by this expression. If left empty, this matcher applies to all enums.
-     *
+     * 
      */
     public MatchersEnumType withExpression(String value) {
         setExpression(value);
@@ -93,7 +93,7 @@ public class MatchersEnumType implements Serializable, XMLAppendable
 
     /**
      * This rule influences the naming of the generated {@link org.jooq.EnumType} object.
-     *
+     * 
      */
     public MatchersEnumType withEnumClass(MatcherRule value) {
         setEnumClass(value);
@@ -102,7 +102,7 @@ public class MatchersEnumType implements Serializable, XMLAppendable
 
     /**
      * This string provides additional interfaces that a generated {@link org.jooq.EnumType} should implement.
-     *
+     * 
      */
     public MatchersEnumType withEnumImplements(String value) {
         setEnumImplements(value);

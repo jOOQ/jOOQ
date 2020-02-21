@@ -371,7 +371,7 @@ final class Interpreter {
         if (mu == null)
             throw primaryKeyNotExists();
 
-        boolean enforced = true;
+        boolean enforced = true ;
         mt.foreignKeys.add(new MutableForeignKey(
             (UnqualifiedName) impl.getUnqualifiedName(), mt, mfs, mu, impl.$onDelete(), impl.$onUpdate(), enforced
         ));
@@ -733,7 +733,7 @@ final class Interpreter {
     private final void addConstraint(Query query, ConstraintImpl impl, MutableTable existing) {
         if (!impl.getUnqualifiedName().empty() && existing.constraint(impl) != null)
             throw constraintAlreadyExists(impl);
-        boolean enforced = true;
+        boolean enforced = true ;
         if (impl.$primaryKey() != null)
             if (existing.primaryKey != null)
                 throw constraintAlreadyExists(impl);

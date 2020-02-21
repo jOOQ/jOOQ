@@ -11,7 +11,7 @@ import org.jooq.example.jpa.jooq.tables.Language;
 
 
 /**
- * Convenience access to all tables in
+ * Convenience access to all tables in 
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables {

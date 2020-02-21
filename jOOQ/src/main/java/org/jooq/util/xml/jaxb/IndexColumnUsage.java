@@ -14,9 +14,9 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 
 /**
  * <p>Java class for IndexColumnUsage complex type.
- *
+ * 
  * <p>The following schema fragment specifies the expected content contained within this class.
- *
+ * 
  * <pre>
  * &lt;complexType name="IndexColumnUsage"&gt;
  *   &lt;complexContent&gt;
@@ -36,8 +36,8 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- *
- *
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "IndexColumnUsage", propOrder = {
@@ -142,11 +142,11 @@ public class IndexColumnUsage implements Serializable, XMLAppendable
 
     /**
      * Gets the value of the isDescending property.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isIsDescending() {
         return isDescending;
@@ -154,11 +154,11 @@ public class IndexColumnUsage implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the isDescending property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setIsDescending(Boolean value) {
         this.isDescending = value;

@@ -273,6 +273,7 @@ final class Keywords {
     static final Keyword K_PERCENT                          = keyword("percent");
     static final Keyword K_PERIOD                           = keyword("period");
     static final Keyword K_PIVOT                            = keyword("pivot");
+    static final Keyword K_PLACING                          = keyword("placing");
     static final Keyword K_POSITION                         = keyword("position");
     static final Keyword K_PRECEDING                        = keyword("preceding");
     static final Keyword K_PREVIOUS_VALUE_FOR               = keyword("previous value for");
@@ -446,6 +447,7 @@ final class Keywords {
     static final Keyword F_NUMTODSINTERVAL                  = keyword("numtodsinterval");
     static final Keyword F_NVL                              = keyword("nvl");
     static final Keyword F_NVL2                             = keyword("nvl2");
+    static final Keyword F_OVERLAY                          = keyword("overlay");
     static final Keyword F_POSITION                         = keyword("position");
     static final Keyword F_POWER                            = keyword("power");
     static final Keyword F_RAND                             = keyword("rand");

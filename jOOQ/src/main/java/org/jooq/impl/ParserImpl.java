@@ -194,6 +194,7 @@ import static org.jooq.impl.DSL.nvl2;
 import static org.jooq.impl.DSL.octetLength;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.orderBy;
+import static org.jooq.impl.DSL.overlay;
 import static org.jooq.impl.DSL.partitionBy;
 import static org.jooq.impl.DSL.percentRank;
 import static org.jooq.impl.DSL.percentileCont;
@@ -6116,6 +6117,8 @@ final class ParserImpl implements Parser {
                 if (S.is(type))
                     if ((field = parseFieldReplaceIf(ctx)) != null)
                         return field;
+                    else if ((field = parseFieldOverlayIf(ctx)) != null)
+                        return field;
 
                 if (N.is(type))
                     if ((field = parseFieldOctetLengthIf(ctx)) != null)
@@ -7542,6 +7545,26 @@ final class ParserImpl implements Parser {
             return f3 == null
                 ? rpad(f1, f2)
                 : rpad(f1, f2, f3);
+        }
+
+        return null;
+    }
+
+    private static final Field<?> parseFieldOverlayIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "OVERLAY")) {
+            parse(ctx, '(');
+            Field<String> f1 = (Field) parseField(ctx, S);
+            parseKeyword(ctx, "PLACING");
+            Field<String> f2 = (Field) parseField(ctx, S);
+            parseKeyword(ctx, "FROM");
+            Field<Number> f3 = (Field) parseField(ctx, N);
+            Field<Number> f4 =
+                parseKeywordIf(ctx, "FOR")
+              ? (Field) parseField(ctx, N)
+              : null;
+            parse(ctx, ')');
+
+            return f4 == null ? overlay(f1, f2, f3) : overlay(f1, f2, f3, f4);
         }
 
         return null;

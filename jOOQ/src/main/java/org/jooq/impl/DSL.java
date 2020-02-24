@@ -13955,6 +13955,38 @@ public class DSL {
     }
 
     /**
+     * Get the overlay(in, placing, startIndex) function.
+     */
+    @Support
+    public static Field<String> overlay(Field<String> in, String placing, Number startIndex) {
+        return new Overlay(nullSafe(in), Tools.field(placing), Tools.field(startIndex));
+    }
+
+    /**
+     * Get the overlay(in, placing, startIndex) function.
+     */
+    @Support
+    public static Field<String> overlay(Field<String> in, Field<String> placing, Field<? extends Number> startIndex) {
+        return new Overlay(nullSafe(in), nullSafe(placing), nullSafe(startIndex));
+    }
+
+    /**
+     * Get the overlay(in, placing, startIndex, length) function.
+     */
+    @Support
+    public static Field<String> overlay(Field<String> in, String placing, Number startIndex, Number length) {
+        return new Overlay(nullSafe(in), Tools.field(placing), Tools.field(startIndex), Tools.field(length));
+    }
+
+    /**
+     * Get the overlay(in, placing, startIndex, length) function.
+     */
+    @Support
+    public static Field<String> overlay(Field<String> in, Field<String> placing, Field<? extends Number> startIndex, Field<? extends Number> length) {
+        return new Overlay(nullSafe(in), nullSafe(placing), nullSafe(startIndex), nullSafe(length));
+    }
+
+    /**
      * Get the ascii(field) function.
      *
      * @see #ascii(Field)

@@ -93,6 +93,7 @@ final class Names {
     static final Name N_NULLIF            = DSL.name("nullif");
     static final Name N_NVL               = DSL.name("nvl");
     static final Name N_NVL2              = DSL.name("nvl2");
+    static final Name N_OVERLAY           = DSL.name("overlay");
     static final Name N_PIVOT             = DSL.name("pivot");
     static final Name N_POSITION          = DSL.name("position");
     static final Name N_POWER             = DSL.name("power");

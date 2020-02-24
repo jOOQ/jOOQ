@@ -3820,6 +3820,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      * @return The transformed result. This will never be <code>null</code>.
      * @see #fetchFromStringData(List)
      */
+    @Support
     Result<Record> fetchFromStringData(String[]... data);
 
     /**
@@ -3839,6 +3840,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      * @param data The data to be transformed into a <code>Result</code>
      * @return The transformed result. This will never be <code>null</code>.
      */
+    @Support
     Result<Record> fetchFromStringData(List<String[]> data);
 
     /**
@@ -3858,6 +3860,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      *            names.
      * @return The transformed result. This will never be <code>null</code>.
      */
+    @Support
     Result<Record> fetchFromStringData(List<String[]> data, boolean header);
 
     // -------------------------------------------------------------------------
@@ -10806,6 +10809,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      * @throws DataAccessException if something went wrong executing the query
      * @see ResultQuery#fetch()
      */
+    @Support
     <R extends Record> Result<R> fetch(ResultQuery<R> query) throws DataAccessException;
 
     /**
@@ -10817,6 +10821,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      * @throws DataAccessException if something went wrong executing the query
      * @see ResultQuery#fetchLazy()
      */
+    @Support
     <R extends Record> Cursor<R> fetchLazy(ResultQuery<R> query) throws DataAccessException;
 
 
@@ -10833,6 +10838,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      *         <code>null</code>.
      * @see ResultQuery#fetchAsync()
      */
+    @Support
     <R extends Record> CompletionStage<Result<R>> fetchAsync(ResultQuery<R> query);
 
     /**
@@ -10844,6 +10850,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      *         <code>null</code>.
      * @see ResultQuery#fetchAsync()
      */
+    @Support
     <R extends Record> CompletionStage<Result<R>> fetchAsync(Executor executor, ResultQuery<R> query);
 
     /**
@@ -10855,6 +10862,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      * @throws DataAccessException if something went wrong executing the query
      * @see ResultQuery#stream()
      */
+    @Support
     <R extends Record> Stream<R> fetchStream(ResultQuery<R> query) throws DataAccessException;
 
 
@@ -10867,6 +10875,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      * @throws DataAccessException if something went wrong executing the query
      * @see ResultQuery#fetchMany()
      */
+    @Support
     <R extends Record> Results fetchMany(ResultQuery<R> query) throws DataAccessException;
 
     /**
@@ -10879,6 +10888,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      * @throws TooManyRowsException if the query returned more than one record
      * @see ResultQuery#fetchOne()
      */
+    @Support
     <R extends Record> R fetchOne(ResultQuery<R> query) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -10892,6 +10902,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      * @throws TooManyRowsException if the query returned more than one record
      * @see ResultQuery#fetchSingle()
      */
+    @Support
     <R extends Record> R fetchSingle(ResultQuery<R> query) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
 
@@ -10905,6 +10916,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      * @throws TooManyRowsException if the query returned more than one record
      * @see ResultQuery#fetchOptional()
      */
+    @Support
     <R extends Record> Optional<R> fetchOptional(ResultQuery<R> query) throws DataAccessException, TooManyRowsException;
 
 
@@ -10916,6 +10928,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @Support
     <T> T fetchValue(Table<? extends Record1<T>> table) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -10927,6 +10940,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @Support
     <T, R extends Record1<T>> T fetchValue(ResultQuery<R> query) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -10938,6 +10952,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @Support
     <T> T fetchValue(TableField<?, T> field) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -10948,6 +10963,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      * @return The value or <code>null</code>, if no record was found.
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     <T> T fetchValue(Field<T> field) throws DataAccessException;
 
 
@@ -10962,6 +10978,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      * @throws InvalidResultException if the query returned a record with more
      *             than one value
      */
+    @Support
     <T, R extends Record1<T>> Optional<T> fetchOptionalValue(ResultQuery<R> query) throws DataAccessException, TooManyRowsException, InvalidResultException;
 
     /**
@@ -10975,6 +10992,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      * @throws InvalidResultException if the query returned a record with more
      *             than one value
      */
+    @Support
     <T> Optional<T> fetchOptionalValue(TableField<?, T> field) throws DataAccessException, TooManyRowsException, InvalidResultException;
 
 
@@ -10985,6 +11003,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      * @return The values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     <T> List<T> fetchValues(Table<? extends Record1<T>> table) throws DataAccessException;
 
     /**
@@ -10995,6 +11014,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      * @return The values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     <T, R extends Record1<T>> List<T> fetchValues(ResultQuery<R> query) throws DataAccessException;
 
     /**
@@ -11004,6 +11024,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      * @return The values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     <T> List<T> fetchValues(TableField<?, T> field) throws DataAccessException;
 
     /**
@@ -11014,6 +11035,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      * @throws DataAccessException if something went wrong executing the query
      * @see DSL#condition(Record)
      */
+    @Support
     <R extends TableRecord<R>> Result<R> fetchByExample(R example) throws DataAccessException;
 
     /**
@@ -11038,6 +11060,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      * @return The <code>COUNT(*)</code> result
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     int fetchCount(Select<?> query) throws DataAccessException;
 
     /**
@@ -11049,6 +11072,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      * @return The number of records in the table
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     int fetchCount(Table<?> table) throws DataAccessException;
 
     /**
@@ -11061,6 +11085,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      * @return The number of records in the table that satisfy a condition
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     int fetchCount(Table<?> table, Condition condition) throws DataAccessException;
 
     /**
@@ -11077,6 +11102,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      * @return The number of records in the table that satisfy a condition
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     int fetchCount(Table<?> table, Condition... conditions) throws DataAccessException;
 
     /**
@@ -11093,6 +11119,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      * @return The number of records in the table that satisfy a condition
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     int fetchCount(Table<?> table, Collection<? extends Condition> conditions) throws DataAccessException;
 
     /**
@@ -11114,6 +11141,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      * @return The <code>EXISTS(...)</code> result
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     boolean fetchExists(Select<?> query) throws DataAccessException;
 
     /**
@@ -11125,6 +11153,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      * @return Whether the table contains any records
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     boolean fetchExists(Table<?> table) throws DataAccessException;
 
     /**
@@ -11136,6 +11165,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      * @return Whether the table contains any records that satisfy a condition
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     boolean fetchExists(Table<?> table, Condition condition) throws DataAccessException;
 
     /**
@@ -11150,6 +11180,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      * @return Whether the table contains any records that satisfy a condition
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     boolean fetchExists(Table<?> table, Condition... conditions) throws DataAccessException;
 
     /**
@@ -11164,6 +11195,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      * @return Whether the table contains any records that satisfy a condition
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     boolean fetchExists(Table<?> table, Collection<? extends Condition> conditions) throws DataAccessException;
 
     /**
@@ -11174,6 +11206,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      * @throws DataAccessException if something went wrong executing the query
      * @see Query#execute()
      */
+    @Support
     int execute(Query query) throws DataAccessException;
 
     // -------------------------------------------------------------------------

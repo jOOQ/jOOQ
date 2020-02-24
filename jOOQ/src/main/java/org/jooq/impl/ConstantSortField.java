@@ -73,6 +73,7 @@ final class ConstantSortField<T> extends CustomField<T> {
 
 
 
+
             case DERBY:
             case HSQLDB:
             case POSTGRES:

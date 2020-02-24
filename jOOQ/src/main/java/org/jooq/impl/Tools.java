@@ -57,6 +57,7 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
+// ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
@@ -5479,6 +5480,8 @@ final class Tools {
 
         if (result == ParseNameCase.DEFAULT) {
             switch (defaultIfNull(configuration.settings().getParseDialect(), configuration.family()).family()) {
+
+
 
 
 

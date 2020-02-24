@@ -1333,13 +1333,13 @@ final class Interpreter {
 
 
 
-
                 case DERBY:
                 case FIREBIRD:
                 case H2:
                 case HSQLDB:
                 case POSTGRES:
                     return InterpreterNameLookupCaseSensitivity.WHEN_QUOTED;
+
 
 
 

@@ -10930,7 +10930,7 @@ final class ParserImpl implements Parser {
 }
 
 final class ParserContext {
-    private static final boolean          PRO_EDITION     = false;
+    private static final boolean          PRO_EDITION     = false ;
 
     final DSLContext                      dsl;
     final Locale                          locale;

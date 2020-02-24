@@ -13,9 +13,9 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 
 /**
  * Declarative naming strategy configuration for schema names.
- *
- *
- *
+ * 
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "MatchersSchemaType", propOrder = {
@@ -37,7 +37,7 @@ public class MatchersSchemaType implements Serializable, XMLAppendable
 
     /**
      * This schema matcher applies to all unqualified or qualified schema names matched by this expression. If left empty, this matcher applies to all schemas.
-     *
+     * 
      */
     public String getExpression() {
         return expression;
@@ -45,7 +45,7 @@ public class MatchersSchemaType implements Serializable, XMLAppendable
 
     /**
      * This schema matcher applies to all unqualified or qualified schema names matched by this expression. If left empty, this matcher applies to all schemas.
-     *
+     * 
      */
     public void setExpression(String value) {
         this.expression = value;
@@ -53,7 +53,7 @@ public class MatchersSchemaType implements Serializable, XMLAppendable
 
     /**
      * This rule influences the naming of the generated {@link org.jooq.Schema} object.
-     *
+     * 
      */
     public MatcherRule getSchemaClass() {
         return schemaClass;
@@ -61,7 +61,7 @@ public class MatchersSchemaType implements Serializable, XMLAppendable
 
     /**
      * This rule influences the naming of the generated {@link org.jooq.Schema} object.
-     *
+     * 
      */
     public void setSchemaClass(MatcherRule value) {
         this.schemaClass = value;
@@ -69,7 +69,7 @@ public class MatchersSchemaType implements Serializable, XMLAppendable
 
     /**
      * This rule influences the naming of the generated {@link org.jooq.Schema} identifier.
-     *
+     * 
      */
     public MatcherRule getSchemaIdentifier() {
         return schemaIdentifier;
@@ -77,7 +77,7 @@ public class MatchersSchemaType implements Serializable, XMLAppendable
 
     /**
      * This rule influences the naming of the generated {@link org.jooq.Schema} identifier.
-     *
+     * 
      */
     public void setSchemaIdentifier(MatcherRule value) {
         this.schemaIdentifier = value;
@@ -85,7 +85,7 @@ public class MatchersSchemaType implements Serializable, XMLAppendable
 
     /**
      * This string provides additional interfaces that a generated {@link org.jooq.Schema} should implement.
-     *
+     * 
      */
     public String getSchemaImplements() {
         return schemaImplements;
@@ -93,7 +93,7 @@ public class MatchersSchemaType implements Serializable, XMLAppendable
 
     /**
      * This string provides additional interfaces that a generated {@link org.jooq.Schema} should implement.
-     *
+     * 
      */
     public void setSchemaImplements(String value) {
         this.schemaImplements = value;
@@ -101,7 +101,7 @@ public class MatchersSchemaType implements Serializable, XMLAppendable
 
     /**
      * This schema matcher applies to all unqualified or qualified schema names matched by this expression. If left empty, this matcher applies to all schemas.
-     *
+     * 
      */
     public MatchersSchemaType withExpression(String value) {
         setExpression(value);
@@ -110,7 +110,7 @@ public class MatchersSchemaType implements Serializable, XMLAppendable
 
     /**
      * This rule influences the naming of the generated {@link org.jooq.Schema} object.
-     *
+     * 
      */
     public MatchersSchemaType withSchemaClass(MatcherRule value) {
         setSchemaClass(value);
@@ -119,7 +119,7 @@ public class MatchersSchemaType implements Serializable, XMLAppendable
 
     /**
      * This rule influences the naming of the generated {@link org.jooq.Schema} identifier.
-     *
+     * 
      */
     public MatchersSchemaType withSchemaIdentifier(MatcherRule value) {
         setSchemaIdentifier(value);
@@ -128,7 +128,7 @@ public class MatchersSchemaType implements Serializable, XMLAppendable
 
     /**
      * This string provides additional interfaces that a generated {@link org.jooq.Schema} should implement.
-     *
+     * 
      */
     public MatchersSchemaType withSchemaImplements(String value) {
         setSchemaImplements(value);

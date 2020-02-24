@@ -26,7 +26,7 @@
         <Logger name="org.jooq.impl" level="debug">
             <AppenderRef ref="Console"/>
         </Logger>
-
+        
         <Root level="debug">
             <AppenderRef ref="Console"/>
         </Root>

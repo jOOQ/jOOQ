@@ -694,7 +694,7 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
         toSQLCall(context);
         context.sql(' ');
 
-//
+//        
 
 
         context.sql('(');
@@ -752,7 +752,7 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
         if (indent)
             context.formatIndentEnd().formatNewLine();
 
-//
+//        
 
 
         context.sql(')');

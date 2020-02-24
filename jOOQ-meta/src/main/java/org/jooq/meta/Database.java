@@ -62,7 +62,7 @@ import org.jooq.meta.jaxb.SchemaMappingType;
  *
  * @author Lukas Eder
  */
-public interface Database  extends AutoCloseable  {
+public interface Database extends AutoCloseable {
 
     /**
      * The catalogs generated from this database.

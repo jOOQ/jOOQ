@@ -12,9 +12,9 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 
 /**
  * All sorts of formatting flags / settings.
- *
- *
- *
+ * 
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "RenderFormatting", propOrder = {
@@ -38,7 +38,7 @@ public class RenderFormatting
 
     /**
      * The character to be used for line breaks.
-     *
+     * 
      */
     public String getNewline() {
         return newline;
@@ -46,7 +46,7 @@ public class RenderFormatting
 
     /**
      * The character to be used for line breaks.
-     *
+     * 
      */
     public void setNewline(String value) {
         this.newline = value;
@@ -54,7 +54,7 @@ public class RenderFormatting
 
     /**
      * The characters to be used for indentation.
-     *
+     * 
      */
     public String getIndentation() {
         return indentation;
@@ -62,7 +62,7 @@ public class RenderFormatting
 
     /**
      * The characters to be used for indentation.
-     *
+     * 
      */
     public void setIndentation(String value) {
         this.indentation = value;
@@ -70,7 +70,7 @@ public class RenderFormatting
 
     /**
      * The print margin after which (some) formatted elements will break lines.
-     *
+     * 
      */
     public Integer getPrintMargin() {
         return printMargin;
@@ -78,7 +78,7 @@ public class RenderFormatting
 
     /**
      * The print margin after which (some) formatted elements will break lines.
-     *
+     * 
      */
     public void setPrintMargin(Integer value) {
         this.printMargin = value;
@@ -86,7 +86,7 @@ public class RenderFormatting
 
     /**
      * The character to be used for line breaks.
-     *
+     * 
      */
     public RenderFormatting withNewline(String value) {
         setNewline(value);
@@ -95,7 +95,7 @@ public class RenderFormatting
 
     /**
      * The characters to be used for indentation.
-     *
+     * 
      */
     public RenderFormatting withIndentation(String value) {
         setIndentation(value);
@@ -104,7 +104,7 @@ public class RenderFormatting
 
     /**
      * The print margin after which (some) formatted elements will break lines.
-     *
+     * 
      */
     public RenderFormatting withPrintMargin(Integer value) {
         setPrintMargin(value);

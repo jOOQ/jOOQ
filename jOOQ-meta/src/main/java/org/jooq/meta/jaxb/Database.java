@@ -19,9 +19,9 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 
 /**
  * Configuration of the database meta data source.
- *
- *
- *
+ * 
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Database", propOrder = {
@@ -206,7 +206,7 @@ public class Database implements Serializable, XMLAppendable
      * <p>
      * You can also provide your own org.jooq.meta.Database implementation
      * here, if your database is currently not supported
-     *
+     * 
      */
     public String getName() {
         return name;
@@ -256,7 +256,7 @@ public class Database implements Serializable, XMLAppendable
      * <p>
      * You can also provide your own org.jooq.meta.Database implementation
      * here, if your database is currently not supported
-     *
+     * 
      */
     public void setName(String value) {
         this.name = value;
@@ -266,25 +266,25 @@ public class Database implements Serializable, XMLAppendable
      * The flags that will be applied to all regular expressions from this configuration by default.
      * <p>
      * The default value is "COMMENTS CASE_INSENSITIVE"Gets the value of the regexFlags property.
-     *
+     * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the regexFlags property.
-     *
+     * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getRegexFlags().add(newItem);
      * </pre>
-     *
-     *
+     * 
+     * 
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link RegexFlag }
-     *
-     *
+     * 
+     * 
      */
     public List<RegexFlag> getRegexFlags() {
         if (regexFlags == null) {
@@ -295,11 +295,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * Whether regular expressions that match qualified object names also match partial qualifications (e.g. `table\.column` matches `schema.table.column`) or only full and/or no qualifications (e.g. `schema\.table\.column` and `column` match `schema.table.column`)
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isRegexMatchesPartialQualification() {
         return regexMatchesPartialQualification;
@@ -307,11 +307,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the regexMatchesPartialQualification property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setRegexMatchesPartialQualification(Boolean value) {
         this.regexMatchesPartialQualification = value;
@@ -319,11 +319,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * Whether SQL queries that match qualified object names also match partial qualifications (e.g. `table\.column` matches `schema.table.column`) or only full and/or no qualifications (e.g. `schema\.table\.column` and `column` match `schema.table.column`)
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isSqlMatchesPartialQualification() {
         return sqlMatchesPartialQualification;
@@ -331,11 +331,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the sqlMatchesPartialQualification property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setSqlMatchesPartialQualification(Boolean value) {
         this.sqlMatchesPartialQualification = value;
@@ -352,7 +352,7 @@ public class Database implements Serializable, XMLAppendable
      * using this syntax: <code>(?i:expr)</code>
      * <p>
      * Whitespace is ignored and comments are possible unless overridden in {@link #getRegexFlags()}.
-     *
+     * 
      */
     public String getIncludes() {
         return includes;
@@ -369,7 +369,7 @@ public class Database implements Serializable, XMLAppendable
      * using this syntax: <code>(?i:expr)</code>
      * <p>
      * Whitespace is ignored and comments are possible unless overridden in {@link #getRegexFlags()}.
-     *
+     * 
      */
     public void setIncludes(String value) {
         this.includes = value;
@@ -380,7 +380,7 @@ public class Database implements Serializable, XMLAppendable
      * <p>
      * This is a Java regular expression. Use the pipe to separate several expressions.
      * Excludes match before includes, i.e. excludes have a higher priority.
-     *
+     * 
      */
     public String getExcludes() {
         return excludes;
@@ -391,7 +391,7 @@ public class Database implements Serializable, XMLAppendable
      * <p>
      * This is a Java regular expression. Use the pipe to separate several expressions.
      * Excludes match before includes, i.e. excludes have a higher priority.
-     *
+     * 
      */
     public void setExcludes(String value) {
         this.excludes = value;
@@ -399,11 +399,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * This flag indicates whether include / exclude patterns should also match columns within tables.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isIncludeExcludeColumns() {
         return includeExcludeColumns;
@@ -411,11 +411,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the includeExcludeColumns property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setIncludeExcludeColumns(Boolean value) {
         this.includeExcludeColumns = value;
@@ -423,11 +423,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * This flag indicates whether tables should be included in output produced by this database
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isIncludeTables() {
         return includeTables;
@@ -435,11 +435,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the includeTables property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setIncludeTables(Boolean value) {
         this.includeTables = value;
@@ -447,11 +447,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * This flag indicates whether embeddable types should be included in output produced by this database
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isIncludeEmbeddables() {
         return includeEmbeddables;
@@ -459,11 +459,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the includeEmbeddables property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setIncludeEmbeddables(Boolean value) {
         this.includeEmbeddables = value;
@@ -471,11 +471,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * This flag indicates whether routines should be included in output produced by this database
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isIncludeRoutines() {
         return includeRoutines;
@@ -483,11 +483,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the includeRoutines property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setIncludeRoutines(Boolean value) {
         this.includeRoutines = value;
@@ -495,11 +495,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * This flag indicates whether trigger implementation routines should be included in output produced by this database (e.g. in PostgreSQL)
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isIncludeTriggerRoutines() {
         return includeTriggerRoutines;
@@ -507,11 +507,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the includeTriggerRoutines property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setIncludeTriggerRoutines(Boolean value) {
         this.includeTriggerRoutines = value;
@@ -519,11 +519,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * This flag indicates whether packages should be included in output produced by this database
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isIncludePackages() {
         return includePackages;
@@ -531,11 +531,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the includePackages property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setIncludePackages(Boolean value) {
         this.includePackages = value;
@@ -543,11 +543,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * This flag indicates whether routines contained in packages should be included in output produced by this database
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isIncludePackageRoutines() {
         return includePackageRoutines;
@@ -555,11 +555,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the includePackageRoutines property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setIncludePackageRoutines(Boolean value) {
         this.includePackageRoutines = value;
@@ -567,11 +567,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * This flag indicates whether UDTs contained in packages should be included in output produced by this database
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isIncludePackageUDTs() {
         return includePackageUDTs;
@@ -579,11 +579,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the includePackageUDTs property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setIncludePackageUDTs(Boolean value) {
         this.includePackageUDTs = value;
@@ -591,11 +591,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * This flag indicates whether constants contained in packages should be included in output produced by this database
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isIncludePackageConstants() {
         return includePackageConstants;
@@ -603,11 +603,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the includePackageConstants property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setIncludePackageConstants(Boolean value) {
         this.includePackageConstants = value;
@@ -615,11 +615,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * This flag indicates whether udts should be included in output produced by this database
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isIncludeUDTs() {
         return includeUDTs;
@@ -627,11 +627,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the includeUDTs property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setIncludeUDTs(Boolean value) {
         this.includeUDTs = value;
@@ -639,11 +639,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * This flag indicates whether sequences should be included in output produced by this database
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isIncludeSequences() {
         return includeSequences;
@@ -651,11 +651,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the includeSequences property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setIncludeSequences(Boolean value) {
         this.includeSequences = value;
@@ -663,11 +663,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * This flag indicates whether indexes should be included in output produced by this database
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isIncludeIndexes() {
         return includeIndexes;
@@ -675,11 +675,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the includeIndexes property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setIncludeIndexes(Boolean value) {
         this.includeIndexes = value;
@@ -687,11 +687,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * This flag indicates whether primary keys should be included in output produced by this database
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isIncludePrimaryKeys() {
         return includePrimaryKeys;
@@ -699,11 +699,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the includePrimaryKeys property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setIncludePrimaryKeys(Boolean value) {
         this.includePrimaryKeys = value;
@@ -711,11 +711,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * This flag indicates whether unique keys should be included in output produced by this database
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isIncludeUniqueKeys() {
         return includeUniqueKeys;
@@ -723,11 +723,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the includeUniqueKeys property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setIncludeUniqueKeys(Boolean value) {
         this.includeUniqueKeys = value;
@@ -735,11 +735,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * This flag indicates whether foreign keys should be included in output produced by this database
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isIncludeForeignKeys() {
         return includeForeignKeys;
@@ -747,11 +747,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the includeForeignKeys property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setIncludeForeignKeys(Boolean value) {
         this.includeForeignKeys = value;
@@ -759,11 +759,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * This flag indicates whether check constraints should be included in output produced by this database
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isIncludeCheckConstraints() {
         return includeCheckConstraints;
@@ -771,11 +771,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the includeCheckConstraints property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setIncludeCheckConstraints(Boolean value) {
         this.includeCheckConstraints = value;
@@ -783,11 +783,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * This flag indicates whether system generated indexes should be included in output produced by this database
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isIncludeSystemIndexes() {
         return includeSystemIndexes;
@@ -795,11 +795,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the includeSystemIndexes property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setIncludeSystemIndexes(Boolean value) {
         this.includeSystemIndexes = value;
@@ -807,11 +807,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * This flag indicates whether system generated check constraints should be included in output produced by this database
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isIncludeSystemCheckConstraints() {
         return includeSystemCheckConstraints;
@@ -819,11 +819,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the includeSystemCheckConstraints property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setIncludeSystemCheckConstraints(Boolean value) {
         this.includeSystemCheckConstraints = value;
@@ -831,11 +831,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * This flag indicates whether invisible columns should be included in output produced by this database
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isIncludeInvisibleColumns() {
         return includeInvisibleColumns;
@@ -843,11 +843,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the includeInvisibleColumns property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setIncludeInvisibleColumns(Boolean value) {
         this.includeInvisibleColumns = value;
@@ -858,7 +858,7 @@ public class Database implements Serializable, XMLAppendable
      * <p>
      * This is a Java regular expression. Use the pipe to separate several expressions.
      * See {@link org.jooq.UpdatableRecord#store()} and {@link org.jooq.UpdatableRecord#delete()} for details about optimistic locking.
-     *
+     * 
      */
     public String getRecordVersionFields() {
         return recordVersionFields;
@@ -869,7 +869,7 @@ public class Database implements Serializable, XMLAppendable
      * <p>
      * This is a Java regular expression. Use the pipe to separate several expressions.
      * See {@link org.jooq.UpdatableRecord#store()} and {@link org.jooq.UpdatableRecord#delete()} for details about optimistic locking.
-     *
+     * 
      */
     public void setRecordVersionFields(String value) {
         this.recordVersionFields = value;
@@ -880,7 +880,7 @@ public class Database implements Serializable, XMLAppendable
      * <p>
      * This is a Java regular expression. Use the pipe to separate several expressions.
      * See {@link org.jooq.UpdatableRecord#store()} and {@link org.jooq.UpdatableRecord#delete()} for details about optimistic locking.
-     *
+     * 
      */
     public String getRecordTimestampFields() {
         return recordTimestampFields;
@@ -891,7 +891,7 @@ public class Database implements Serializable, XMLAppendable
      * <p>
      * This is a Java regular expression. Use the pipe to separate several expressions.
      * See {@link org.jooq.UpdatableRecord#store()} and {@link org.jooq.UpdatableRecord#delete()} for details about optimistic locking.
-     *
+     * 
      */
     public void setRecordTimestampFields(String value) {
         this.recordTimestampFields = value;
@@ -901,7 +901,7 @@ public class Database implements Serializable, XMLAppendable
      * A regular expression matching all columns that represent identities.
      * <p>
      * To be used if columns are not detected as automatically as identities.
-     *
+     * 
      */
     public String getSyntheticIdentities() {
         return syntheticIdentities;
@@ -911,7 +911,7 @@ public class Database implements Serializable, XMLAppendable
      * A regular expression matching all columns that represent identities.
      * <p>
      * To be used if columns are not detected as automatically as identities.
-     *
+     * 
      */
     public void setSyntheticIdentities(String value) {
         this.syntheticIdentities = value;
@@ -930,7 +930,7 @@ public class Database implements Serializable, XMLAppendable
      * </ul>
      * <p>
      * Synthetic primary keys will override existing primary keys.
-     *
+     * 
      */
     public String getSyntheticPrimaryKeys() {
         return syntheticPrimaryKeys;
@@ -949,7 +949,7 @@ public class Database implements Serializable, XMLAppendable
      * </ul>
      * <p>
      * Synthetic primary keys will override existing primary keys.
-     *
+     * 
      */
     public void setSyntheticPrimaryKeys(String value) {
         this.syntheticPrimaryKeys = value;
@@ -970,7 +970,7 @@ public class Database implements Serializable, XMLAppendable
      * If several keys match, a warning is emitted and the first one encountered will be used.
      * <p>
      * This flag will also replace synthetic primary keys, if it matches.
-     *
+     * 
      */
     public String getOverridePrimaryKeys() {
         return overridePrimaryKeys;
@@ -991,7 +991,7 @@ public class Database implements Serializable, XMLAppendable
      * If several keys match, a warning is emitted and the first one encountered will be used.
      * <p>
      * This flag will also replace synthetic primary keys, if it matches.
-     *
+     * 
      */
     public void setOverridePrimaryKeys(String value) {
         this.overridePrimaryKeys = value;
@@ -999,11 +999,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * Generate {@link java.sql.Timestamp} fields for DATE columns. This is particularly useful for Oracle databases
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isDateAsTimestamp() {
         return dateAsTimestamp;
@@ -1011,11 +1011,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the dateAsTimestamp property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setDateAsTimestamp(Boolean value) {
         this.dateAsTimestamp = value;
@@ -1031,11 +1031,11 @@ public class Database implements Serializable, XMLAppendable
      * <p>
      * @deprecated This feature is deprecated as of jOOQ 3.6.0 and will be removed again in
      * jOOQ 4.0.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     @Deprecated
     public Boolean isIgnoreProcedureReturnValues() {
@@ -1044,11 +1044,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the ignoreProcedureReturnValues property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     @Deprecated
     public void setIgnoreProcedureReturnValues(Boolean value) {
@@ -1057,11 +1057,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * Generate jOOU data types for your unsigned data types, which are not natively supported in Java
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isUnsignedTypes() {
         return unsignedTypes;
@@ -1069,11 +1069,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the unsignedTypes property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setUnsignedTypes(Boolean value) {
         this.unsignedTypes = value;
@@ -1081,11 +1081,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * Include display width in type declaration. In some RDBMS (e.g. MariaDB, MySQL), fixed width integer types are optionally accompanied by a display width. This is sometimes abused to model BOOLEAN types via TINYINT(1). This flag allows for including that display width in the type declaration exposed by jOOQ-meta code, as if it were a numeric precision.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isIntegerDisplayWidths() {
         return integerDisplayWidths;
@@ -1093,11 +1093,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the integerDisplayWidths property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setIntegerDisplayWidths(Boolean value) {
         this.integerDisplayWidths = value;
@@ -1108,7 +1108,7 @@ public class Database implements Serializable, XMLAppendable
      * <p>
      * This cannot be combined with the {@link #getCatalogs()} configuration element.
      * If left empty (and without any {@link #getCatalogs()} configuration  element), jOOQ will generate all available catalogs.
-     *
+     * 
      */
     public String getInputCatalog() {
         return inputCatalog;
@@ -1119,7 +1119,7 @@ public class Database implements Serializable, XMLAppendable
      * <p>
      * This cannot be combined with the {@link #getCatalogs()} configuration element.
      * If left empty (and without any {@link #getCatalogs()} configuration  element), jOOQ will generate all available catalogs.
-     *
+     * 
      */
     public void setInputCatalog(String value) {
         this.inputCatalog = value;
@@ -1133,7 +1133,7 @@ public class Database implements Serializable, XMLAppendable
      * will be the same as {@link #getInputCatalog()}
      * <p>
      * This will be ignored if {@link #isOutputCatalogToDefault()} is set to true
-     *
+     * 
      */
     public String getOutputCatalog() {
         return outputCatalog;
@@ -1147,7 +1147,7 @@ public class Database implements Serializable, XMLAppendable
      * will be the same as {@link #getInputCatalog()}
      * <p>
      * This will be ignored if {@link #isOutputCatalogToDefault()} is set to true
-     *
+     * 
      */
     public void setOutputCatalog(String value) {
         this.outputCatalog = value;
@@ -1156,11 +1156,11 @@ public class Database implements Serializable, XMLAppendable
     /**
      * A flag to indicate that the outputCatalog should be the "default" catalog,
      * which generates catalog-less, unqualified tables, procedures, etc.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isOutputCatalogToDefault() {
         return outputCatalogToDefault;
@@ -1168,11 +1168,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the outputCatalogToDefault property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setOutputCatalogToDefault(Boolean value) {
         this.outputCatalogToDefault = value;
@@ -1183,7 +1183,7 @@ public class Database implements Serializable, XMLAppendable
      * <p>
      * This cannot be combined with the {@link #getSchemata()} configuration element.
      * If left empty (and without any {@link #getSchemata()} configuration element), jOOQ will generate all available schemata.
-     *
+     * 
      */
     public String getInputSchema() {
         return inputSchema;
@@ -1194,7 +1194,7 @@ public class Database implements Serializable, XMLAppendable
      * <p>
      * This cannot be combined with the {@link #getSchemata()} configuration element.
      * If left empty (and without any {@link #getSchemata()} configuration element), jOOQ will generate all available schemata.
-     *
+     * 
      */
     public void setInputSchema(String value) {
         this.inputSchema = value;
@@ -1206,9 +1206,9 @@ public class Database implements Serializable, XMLAppendable
      * Use this to override your local development
      * schema name for source code generation. If not specified, this
      * will be the same as {@link #getInputSchema()}.
-     *
+     * 
      * This will be ignored if {@link #isOutputSchemaToDefault()} is set to true
-     *
+     * 
      */
     public String getOutputSchema() {
         return outputSchema;
@@ -1220,9 +1220,9 @@ public class Database implements Serializable, XMLAppendable
      * Use this to override your local development
      * schema name for source code generation. If not specified, this
      * will be the same as {@link #getInputSchema()}.
-     *
+     * 
      * This will be ignored if {@link #isOutputSchemaToDefault()} is set to true
-     *
+     * 
      */
     public void setOutputSchema(String value) {
         this.outputSchema = value;
@@ -1231,11 +1231,11 @@ public class Database implements Serializable, XMLAppendable
     /**
      * A flag to indicate that the outputSchema should be the "default" schema,
      * which generates schema-less, unqualified tables, procedures, etc.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isOutputSchemaToDefault() {
         return outputSchemaToDefault;
@@ -1243,11 +1243,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the outputSchemaToDefault property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setOutputSchemaToDefault(Boolean value) {
         this.outputSchemaToDefault = value;
@@ -1268,7 +1268,7 @@ public class Database implements Serializable, XMLAppendable
      * <p>
      * Schema versions will be generated into the {@link javax.annotation.Generated} annotation on
      * generated artefacts.
-     *
+     * 
      */
     public String getSchemaVersionProvider() {
         return schemaVersionProvider;
@@ -1289,7 +1289,7 @@ public class Database implements Serializable, XMLAppendable
      * <p>
      * Schema versions will be generated into the {@link javax.annotation.Generated} annotation on
      * generated artefacts.
-     *
+     * 
      */
     public void setSchemaVersionProvider(String value) {
         this.schemaVersionProvider = value;
@@ -1309,7 +1309,7 @@ public class Database implements Serializable, XMLAppendable
      * <p>
      * Catalog versions will be generated into the {@link javax.annotation.Generated} annotation on
      * generated artefacts.
-     *
+     * 
      */
     public String getCatalogVersionProvider() {
         return catalogVersionProvider;
@@ -1329,7 +1329,7 @@ public class Database implements Serializable, XMLAppendable
      * <p>
      * Catalog versions will be generated into the {@link javax.annotation.Generated} annotation on
      * generated artefacts.
-     *
+     * 
      */
     public void setCatalogVersionProvider(String value) {
         this.catalogVersionProvider = value;
@@ -1339,7 +1339,7 @@ public class Database implements Serializable, XMLAppendable
      * A custom {@link java.util.Comparator} that can compare two {@link org.jooq.meta.Definition} objects to determine their order.
      * <p>
      * This comparator can be used to influence the order of any object that is produced by jOOQ meta, and thus, indirectly, the order of declared objects in generated code.
-     *
+     * 
      */
     public String getOrderProvider() {
         return orderProvider;
@@ -1349,7 +1349,7 @@ public class Database implements Serializable, XMLAppendable
      * A custom {@link java.util.Comparator} that can compare two {@link org.jooq.meta.Definition} objects to determine their order.
      * <p>
      * This comparator can be used to influence the order of any object that is produced by jOOQ meta, and thus, indirectly, the order of declared objects in generated code.
-     *
+     * 
      */
     public void setOrderProvider(String value) {
         this.orderProvider = value;
@@ -1357,11 +1357,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * Historically, zero-scale decimal types are generated as their most appropriate, corresponding integer type (e.g. NUMBER(2, 0) and less: Byte). This allows for turning off this feature. In case of conflict between this rule and actual {@link #getForcedTypes()}, the latter will win.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isForceIntegerTypesOnZeroScaleDecimals() {
         return forceIntegerTypesOnZeroScaleDecimals;
@@ -1369,11 +1369,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the forceIntegerTypesOnZeroScaleDecimals property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setForceIntegerTypesOnZeroScaleDecimals(Boolean value) {
         this.forceIntegerTypesOnZeroScaleDecimals = value;
@@ -1389,11 +1389,11 @@ public class Database implements Serializable, XMLAppendable
      * <p>
      * While this flag defaults to true for most databases, it defaults to false
      * for Oracle.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isTableValuedFunctions() {
         return tableValuedFunctions;
@@ -1401,11 +1401,11 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the tableValuedFunctions property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setTableValuedFunctions(Boolean value) {
         this.tableValuedFunctions = value;
@@ -1413,7 +1413,7 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * The number of seconds that are considered "slow" before a query is logged to indicate a bug, 0 for not logging.
-     *
+     * 
      */
     public Integer getLogSlowQueriesAfterSeconds() {
         return logSlowQueriesAfterSeconds;
@@ -1421,7 +1421,7 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * The number of seconds that are considered "slow" before a query is logged to indicate a bug, 0 for not logging.
-     *
+     * 
      */
     public void setLogSlowQueriesAfterSeconds(Integer value) {
         this.logSlowQueriesAfterSeconds = value;
@@ -1429,7 +1429,7 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * The number of seconds that are considered "slow" before a result set is logged to indicate a bug, 0 for not logging.
-     *
+     * 
      */
     public Integer getLogSlowResultsAfterSeconds() {
         return logSlowResultsAfterSeconds;
@@ -1437,7 +1437,7 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * The number of seconds that are considered "slow" before a result set is logged to indicate a bug, 0 for not logging.
-     *
+     * 
      */
     public void setLogSlowResultsAfterSeconds(Integer value) {
         this.logSlowResultsAfterSeconds = value;
@@ -1568,7 +1568,7 @@ public class Database implements Serializable, XMLAppendable
      * <p>
      * You can also provide your own org.jooq.meta.Database implementation
      * here, if your database is currently not supported
-     *
+     * 
      */
     public Database withName(String value) {
         setName(value);
@@ -1579,25 +1579,25 @@ public class Database implements Serializable, XMLAppendable
      * The flags that will be applied to all regular expressions from this configuration by default.
      * <p>
      * The default value is "COMMENTS CASE_INSENSITIVE"Gets the value of the regexFlags property.
-     *
+     * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the regexFlags property.
-     *
+     * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getRegexFlags().add(newItem);
      * </pre>
-     *
-     *
+     * 
+     * 
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link RegexFlag }
-     *
-     *
+     * 
+     * 
      */
     public Database withRegexFlags(RegexFlag... values) {
         if (values!= null) {
@@ -1612,25 +1612,25 @@ public class Database implements Serializable, XMLAppendable
      * The flags that will be applied to all regular expressions from this configuration by default.
      * <p>
      * The default value is "COMMENTS CASE_INSENSITIVE"Gets the value of the regexFlags property.
-     *
+     * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the regexFlags property.
-     *
+     * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getRegexFlags().add(newItem);
      * </pre>
-     *
-     *
+     * 
+     * 
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link RegexFlag }
-     *
-     *
+     * 
+     * 
      */
     public Database withRegexFlags(Collection<RegexFlag> values) {
         if (values!= null) {
@@ -1660,7 +1660,7 @@ public class Database implements Serializable, XMLAppendable
      * using this syntax: <code>(?i:expr)</code>
      * <p>
      * Whitespace is ignored and comments are possible unless overridden in {@link #getRegexFlags()}.
-     *
+     * 
      */
     public Database withIncludes(String value) {
         setIncludes(value);
@@ -1672,7 +1672,7 @@ public class Database implements Serializable, XMLAppendable
      * <p>
      * This is a Java regular expression. Use the pipe to separate several expressions.
      * Excludes match before includes, i.e. excludes have a higher priority.
-     *
+     * 
      */
     public Database withExcludes(String value) {
         setExcludes(value);
@@ -1779,7 +1779,7 @@ public class Database implements Serializable, XMLAppendable
      * <p>
      * This is a Java regular expression. Use the pipe to separate several expressions.
      * See {@link org.jooq.UpdatableRecord#store()} and {@link org.jooq.UpdatableRecord#delete()} for details about optimistic locking.
-     *
+     * 
      */
     public Database withRecordVersionFields(String value) {
         setRecordVersionFields(value);
@@ -1791,7 +1791,7 @@ public class Database implements Serializable, XMLAppendable
      * <p>
      * This is a Java regular expression. Use the pipe to separate several expressions.
      * See {@link org.jooq.UpdatableRecord#store()} and {@link org.jooq.UpdatableRecord#delete()} for details about optimistic locking.
-     *
+     * 
      */
     public Database withRecordTimestampFields(String value) {
         setRecordTimestampFields(value);
@@ -1802,7 +1802,7 @@ public class Database implements Serializable, XMLAppendable
      * A regular expression matching all columns that represent identities.
      * <p>
      * To be used if columns are not detected as automatically as identities.
-     *
+     * 
      */
     public Database withSyntheticIdentities(String value) {
         setSyntheticIdentities(value);
@@ -1822,7 +1822,7 @@ public class Database implements Serializable, XMLAppendable
      * </ul>
      * <p>
      * Synthetic primary keys will override existing primary keys.
-     *
+     * 
      */
     public Database withSyntheticPrimaryKeys(String value) {
         setSyntheticPrimaryKeys(value);
@@ -1844,7 +1844,7 @@ public class Database implements Serializable, XMLAppendable
      * If several keys match, a warning is emitted and the first one encountered will be used.
      * <p>
      * This flag will also replace synthetic primary keys, if it matches.
-     *
+     * 
      */
     public Database withOverridePrimaryKeys(String value) {
         setOverridePrimaryKeys(value);
@@ -1876,7 +1876,7 @@ public class Database implements Serializable, XMLAppendable
      * <p>
      * This cannot be combined with the {@link #getCatalogs()} configuration element.
      * If left empty (and without any {@link #getCatalogs()} configuration  element), jOOQ will generate all available catalogs.
-     *
+     * 
      */
     public Database withInputCatalog(String value) {
         setInputCatalog(value);
@@ -1891,7 +1891,7 @@ public class Database implements Serializable, XMLAppendable
      * will be the same as {@link #getInputCatalog()}
      * <p>
      * This will be ignored if {@link #isOutputCatalogToDefault()} is set to true
-     *
+     * 
      */
     public Database withOutputCatalog(String value) {
         setOutputCatalog(value);
@@ -1908,7 +1908,7 @@ public class Database implements Serializable, XMLAppendable
      * <p>
      * This cannot be combined with the {@link #getSchemata()} configuration element.
      * If left empty (and without any {@link #getSchemata()} configuration element), jOOQ will generate all available schemata.
-     *
+     * 
      */
     public Database withInputSchema(String value) {
         setInputSchema(value);
@@ -1921,9 +1921,9 @@ public class Database implements Serializable, XMLAppendable
      * Use this to override your local development
      * schema name for source code generation. If not specified, this
      * will be the same as {@link #getInputSchema()}.
-     *
+     * 
      * This will be ignored if {@link #isOutputSchemaToDefault()} is set to true
-     *
+     * 
      */
     public Database withOutputSchema(String value) {
         setOutputSchema(value);
@@ -1950,7 +1950,7 @@ public class Database implements Serializable, XMLAppendable
      * <p>
      * Schema versions will be generated into the {@link javax.annotation.Generated} annotation on
      * generated artefacts.
-     *
+     * 
      */
     public Database withSchemaVersionProvider(String value) {
         setSchemaVersionProvider(value);
@@ -1971,7 +1971,7 @@ public class Database implements Serializable, XMLAppendable
      * <p>
      * Catalog versions will be generated into the {@link javax.annotation.Generated} annotation on
      * generated artefacts.
-     *
+     * 
      */
     public Database withCatalogVersionProvider(String value) {
         setCatalogVersionProvider(value);
@@ -1982,7 +1982,7 @@ public class Database implements Serializable, XMLAppendable
      * A custom {@link java.util.Comparator} that can compare two {@link org.jooq.meta.Definition} objects to determine their order.
      * <p>
      * This comparator can be used to influence the order of any object that is produced by jOOQ meta, and thus, indirectly, the order of declared objects in generated code.
-     *
+     * 
      */
     public Database withOrderProvider(String value) {
         setOrderProvider(value);
@@ -2001,7 +2001,7 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * The number of seconds that are considered "slow" before a query is logged to indicate a bug, 0 for not logging.
-     *
+     * 
      */
     public Database withLogSlowQueriesAfterSeconds(Integer value) {
         setLogSlowQueriesAfterSeconds(value);
@@ -2010,7 +2010,7 @@ public class Database implements Serializable, XMLAppendable
 
     /**
      * The number of seconds that are considered "slow" before a result set is logged to indicate a bug, 0 for not logging.
-     *
+     * 
      */
     public Database withLogSlowResultsAfterSeconds(Integer value) {
         setLogSlowResultsAfterSeconds(value);

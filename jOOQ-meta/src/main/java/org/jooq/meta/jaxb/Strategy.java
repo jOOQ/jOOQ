@@ -14,9 +14,9 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 
 /**
  * Definitions of custom naming strategies (declarative or programmatic) to define how generated Java objects should be named.
- *
- *
- *
+ * 
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Strategy", propOrder = {
@@ -37,7 +37,7 @@ public class Strategy implements Serializable, XMLAppendable
 
     /**
      * The class used to provide a naming strategy for generated source code. You may override this with your custom naming strategy. This cannot be combined with a matcher configuration.
-     *
+     * 
      */
     public String getName() {
         return name;
@@ -45,7 +45,7 @@ public class Strategy implements Serializable, XMLAppendable
 
     /**
      * The class used to provide a naming strategy for generated source code. You may override this with your custom naming strategy. This cannot be combined with a matcher configuration.
-     *
+     * 
      */
     public void setName(String value) {
         this.name = value;
@@ -53,7 +53,7 @@ public class Strategy implements Serializable, XMLAppendable
 
     /**
      * The matcher strategy configuration used when applying an XML-based strategy. This cannot be combined with a named strategy configuration.
-     *
+     * 
      */
     public Matchers getMatchers() {
         return matchers;
@@ -61,7 +61,7 @@ public class Strategy implements Serializable, XMLAppendable
 
     /**
      * The matcher strategy configuration used when applying an XML-based strategy. This cannot be combined with a named strategy configuration.
-     *
+     * 
      */
     public void setMatchers(Matchers value) {
         this.matchers = value;
@@ -69,7 +69,7 @@ public class Strategy implements Serializable, XMLAppendable
 
     /**
      * The class used to provide a naming strategy for generated source code. You may override this with your custom naming strategy. This cannot be combined with a matcher configuration.
-     *
+     * 
      */
     public Strategy withName(String value) {
         setName(value);
@@ -78,7 +78,7 @@ public class Strategy implements Serializable, XMLAppendable
 
     /**
      * The matcher strategy configuration used when applying an XML-based strategy. This cannot be combined with a named strategy configuration.
-     *
+     * 
      */
     public Strategy withMatchers(Matchers value) {
         setMatchers(value);

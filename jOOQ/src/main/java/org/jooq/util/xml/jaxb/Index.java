@@ -14,9 +14,9 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 
 /**
  * <p>Java class for Index complex type.
- *
+ * 
  * <p>The following schema fragment specifies the expected content contained within this class.
- *
+ * 
  * <pre>
  * &lt;complexType name="Index"&gt;
  *   &lt;complexContent&gt;
@@ -35,8 +35,8 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- *
- *
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Index", propOrder = {
@@ -122,11 +122,11 @@ public class Index implements Serializable, XMLAppendable
 
     /**
      * Gets the value of the isUnique property.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isIsUnique() {
         return isUnique;
@@ -134,11 +134,11 @@ public class Index implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the isUnique property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setIsUnique(Boolean value) {
         this.isUnique = value;

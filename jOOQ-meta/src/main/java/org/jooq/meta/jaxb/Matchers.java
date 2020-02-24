@@ -16,9 +16,9 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 
 /**
  * Declarative naming strategy configuration.
- *
- *
- *
+ * 
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Matchers", propOrder = {

@@ -13,9 +13,9 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 
 /**
  * Declarative naming strategy configuration for sequence names.
- *
- *
- *
+ * 
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "MatchersSequenceType", propOrder = {
@@ -34,7 +34,7 @@ public class MatchersSequenceType implements Serializable, XMLAppendable
 
     /**
      * This sequence matcher applies to all unqualified or qualified sequence names matched by this expression. If left empty, this matcher applies to all sequences.
-     *
+     * 
      */
     public String getExpression() {
         return expression;
@@ -42,7 +42,7 @@ public class MatchersSequenceType implements Serializable, XMLAppendable
 
     /**
      * This sequence matcher applies to all unqualified or qualified sequence names matched by this expression. If left empty, this matcher applies to all sequences.
-     *
+     * 
      */
     public void setExpression(String value) {
         this.expression = value;
@@ -50,7 +50,7 @@ public class MatchersSequenceType implements Serializable, XMLAppendable
 
     /**
      * This rule influences the naming of the generated {@link org.jooq.Sequence} identifier.
-     *
+     * 
      */
     public MatcherRule getSequenceIdentifier() {
         return sequenceIdentifier;
@@ -58,7 +58,7 @@ public class MatchersSequenceType implements Serializable, XMLAppendable
 
     /**
      * This rule influences the naming of the generated {@link org.jooq.Sequence} identifier.
-     *
+     * 
      */
     public void setSequenceIdentifier(MatcherRule value) {
         this.sequenceIdentifier = value;
@@ -66,7 +66,7 @@ public class MatchersSequenceType implements Serializable, XMLAppendable
 
     /**
      * This sequence matcher applies to all unqualified or qualified sequence names matched by this expression. If left empty, this matcher applies to all sequences.
-     *
+     * 
      */
     public MatchersSequenceType withExpression(String value) {
         setExpression(value);
@@ -75,7 +75,7 @@ public class MatchersSequenceType implements Serializable, XMLAppendable
 
     /**
      * This rule influences the naming of the generated {@link org.jooq.Sequence} identifier.
-     *
+     * 
      */
     public MatchersSequenceType withSequenceIdentifier(MatcherRule value) {
         setSequenceIdentifier(value);

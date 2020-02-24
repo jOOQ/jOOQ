@@ -13,9 +13,9 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 
 /**
  * Declarative naming strategy configuration for field names.
- *
- *
- *
+ * 
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "MatchersFieldType", propOrder = {
@@ -37,7 +37,7 @@ public class MatchersFieldType implements Serializable, XMLAppendable
 
     /**
      * This field matcher applies to all unqualified or qualified field names matched by this expression. If left empty, this matcher applies to all fields.
-     *
+     * 
      */
     public String getExpression() {
         return expression;
@@ -45,7 +45,7 @@ public class MatchersFieldType implements Serializable, XMLAppendable
 
     /**
      * This field matcher applies to all unqualified or qualified field names matched by this expression. If left empty, this matcher applies to all fields.
-     *
+     * 
      */
     public void setExpression(String value) {
         this.expression = value;
@@ -53,7 +53,7 @@ public class MatchersFieldType implements Serializable, XMLAppendable
 
     /**
      * This rule influences the naming of the generated {@link org.jooq.Field} identifier.
-     *
+     * 
      */
     public MatcherRule getFieldIdentifier() {
         return fieldIdentifier;
@@ -61,7 +61,7 @@ public class MatchersFieldType implements Serializable, XMLAppendable
 
     /**
      * This rule influences the naming of the generated {@link org.jooq.Field} identifier.
-     *
+     * 
      */
     public void setFieldIdentifier(MatcherRule value) {
         this.fieldIdentifier = value;
@@ -69,7 +69,7 @@ public class MatchersFieldType implements Serializable, XMLAppendable
 
     /**
      * This rule influences the naming of generated members (e.g. in POJOs) corresponding to this {@link org.jooq.Field}
-     *
+     * 
      */
     public MatcherRule getFieldMember() {
         return fieldMember;
@@ -77,7 +77,7 @@ public class MatchersFieldType implements Serializable, XMLAppendable
 
     /**
      * This rule influences the naming of generated members (e.g. in POJOs) corresponding to this {@link org.jooq.Field}
-     *
+     * 
      */
     public void setFieldMember(MatcherRule value) {
         this.fieldMember = value;
@@ -85,7 +85,7 @@ public class MatchersFieldType implements Serializable, XMLAppendable
 
     /**
      * This rule influences the naming of generated setters (e.g. in {@link org.jooq.TableRecord} and/or POJOs) corresponding to this {@link org.jooq.Field}
-     *
+     * 
      */
     public MatcherRule getFieldSetter() {
         return fieldSetter;
@@ -93,7 +93,7 @@ public class MatchersFieldType implements Serializable, XMLAppendable
 
     /**
      * This rule influences the naming of generated setters (e.g. in {@link org.jooq.TableRecord} and/or POJOs) corresponding to this {@link org.jooq.Field}
-     *
+     * 
      */
     public void setFieldSetter(MatcherRule value) {
         this.fieldSetter = value;
@@ -101,7 +101,7 @@ public class MatchersFieldType implements Serializable, XMLAppendable
 
     /**
      * This rule influences the naming of generated getters (e.g. in {@link org.jooq.TableRecord} and/or POJOs) corresponding to this {@link org.jooq.Field}
-     *
+     * 
      */
     public MatcherRule getFieldGetter() {
         return fieldGetter;
@@ -109,7 +109,7 @@ public class MatchersFieldType implements Serializable, XMLAppendable
 
     /**
      * This rule influences the naming of generated getters (e.g. in {@link org.jooq.TableRecord} and/or POJOs) corresponding to this {@link org.jooq.Field}
-     *
+     * 
      */
     public void setFieldGetter(MatcherRule value) {
         this.fieldGetter = value;
@@ -117,7 +117,7 @@ public class MatchersFieldType implements Serializable, XMLAppendable
 
     /**
      * This field matcher applies to all unqualified or qualified field names matched by this expression. If left empty, this matcher applies to all fields.
-     *
+     * 
      */
     public MatchersFieldType withExpression(String value) {
         setExpression(value);
@@ -126,7 +126,7 @@ public class MatchersFieldType implements Serializable, XMLAppendable
 
     /**
      * This rule influences the naming of the generated {@link org.jooq.Field} identifier.
-     *
+     * 
      */
     public MatchersFieldType withFieldIdentifier(MatcherRule value) {
         setFieldIdentifier(value);
@@ -135,7 +135,7 @@ public class MatchersFieldType implements Serializable, XMLAppendable
 
     /**
      * This rule influences the naming of generated members (e.g. in POJOs) corresponding to this {@link org.jooq.Field}
-     *
+     * 
      */
     public MatchersFieldType withFieldMember(MatcherRule value) {
         setFieldMember(value);
@@ -144,7 +144,7 @@ public class MatchersFieldType implements Serializable, XMLAppendable
 
     /**
      * This rule influences the naming of generated setters (e.g. in {@link org.jooq.TableRecord} and/or POJOs) corresponding to this {@link org.jooq.Field}
-     *
+     * 
      */
     public MatchersFieldType withFieldSetter(MatcherRule value) {
         setFieldSetter(value);
@@ -153,7 +153,7 @@ public class MatchersFieldType implements Serializable, XMLAppendable
 
     /**
      * This rule influences the naming of generated getters (e.g. in {@link org.jooq.TableRecord} and/or POJOs) corresponding to this {@link org.jooq.Field}
-     *
+     * 
      */
     public MatchersFieldType withFieldGetter(MatcherRule value) {
         setFieldGetter(value);

@@ -15,9 +15,9 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 
 /**
  * <p>Java class for Sequence complex type.
- *
+ * 
  * <p>The following schema fragment specifies the expected content contained within this class.
- *
+ * 
  * <pre>
  * &lt;complexType name="Sequence"&gt;
  *   &lt;complexContent&gt;
@@ -42,8 +42,8 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- *
- *
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Sequence", propOrder = {
@@ -177,11 +177,11 @@ public class Sequence implements Serializable, XMLAppendable
 
     /**
      * Gets the value of the cycleOption property.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isCycleOption() {
         return cycleOption;
@@ -189,11 +189,11 @@ public class Sequence implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the cycleOption property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setCycleOption(Boolean value) {
         this.cycleOption = value;

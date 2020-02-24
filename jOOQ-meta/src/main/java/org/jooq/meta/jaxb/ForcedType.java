@@ -15,9 +15,9 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 
 /**
  * A forced type declaration
- *
- *
- *
+ * 
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ForcedType", propOrder = {
@@ -64,7 +64,7 @@ public class ForcedType implements Serializable, XMLAppendable
 
     /**
      * The name (in {@link org.jooq.impl.SQLDataType}) to force any matches to
-     *
+     * 
      */
     public String getName() {
         return name;
@@ -72,7 +72,7 @@ public class ForcedType implements Serializable, XMLAppendable
 
     /**
      * The name (in {@link org.jooq.impl.SQLDataType}) to force any matches to
-     *
+     * 
      */
     public void setName(String value) {
         this.name = value;
@@ -83,7 +83,7 @@ public class ForcedType implements Serializable, XMLAppendable
      * <p>
      * If provided, {@link #getName()} will be ignored, and either {@link #getConverter()}
      * or {@link #getBinding()} is required
-     *
+     * 
      */
     public String getUserType() {
         return userType;
@@ -94,7 +94,7 @@ public class ForcedType implements Serializable, XMLAppendable
      * <p>
      * If provided, {@link #getName()} will be ignored, and either {@link #getConverter()}
      * or {@link #getBinding()} is required
-     *
+     * 
      */
     public void setUserType(String value) {
         this.userType = value;
@@ -102,7 +102,7 @@ public class ForcedType implements Serializable, XMLAppendable
 
     /**
      * A converter implementation for the {@link #getUserType()}.
-     *
+     * 
      */
     public String getConverter() {
         return converter;
@@ -110,7 +110,7 @@ public class ForcedType implements Serializable, XMLAppendable
 
     /**
      * A converter implementation for the {@link #getUserType()}.
-     *
+     * 
      */
     public void setConverter(String value) {
         this.converter = value;
@@ -118,11 +118,11 @@ public class ForcedType implements Serializable, XMLAppendable
 
     /**
      * Whether the converter is an {@link org.jooq.impl.EnumConverter}.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isEnumConverter() {
         return enumConverter;
@@ -130,11 +130,11 @@ public class ForcedType implements Serializable, XMLAppendable
 
     /**
      * Sets the value of the enumConverter property.
-     *
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setEnumConverter(Boolean value) {
         this.enumConverter = value;
@@ -142,7 +142,7 @@ public class ForcedType implements Serializable, XMLAppendable
 
     /**
      * A {@link org.jooq.Binding} implementation for the custom type.
-     *
+     * 
      */
     public String getBinding() {
         return binding;
@@ -150,7 +150,7 @@ public class ForcedType implements Serializable, XMLAppendable
 
     /**
      * A {@link org.jooq.Binding} implementation for the custom type.
-     *
+     * 
      */
     public void setBinding(String value) {
         this.binding = value;
@@ -160,7 +160,7 @@ public class ForcedType implements Serializable, XMLAppendable
      * A Java regular expression matching columns, parameters, attributes,
      * etc. which must not have this type. Excludes match before includes, i.e.
      * excludes have a higher priority.
-     *
+     * 
      */
     public String getExcludeExpression() {
         return excludeExpression;
@@ -170,7 +170,7 @@ public class ForcedType implements Serializable, XMLAppendable
      * A Java regular expression matching columns, parameters, attributes,
      * etc. which must not have this type. Excludes match before includes, i.e.
      * excludes have a higher priority.
-     *
+     * 
      */
     public void setExcludeExpression(String value) {
         this.excludeExpression = value;
@@ -180,7 +180,7 @@ public class ForcedType implements Serializable, XMLAppendable
      * A Java regular expression matching columns, parameters, attributes,
      * etc. to be forced to have this type. If provided, both "includeExpression" and
      * "includeTypes" must match.
-     *
+     * 
      */
     public String getIncludeExpression() {
         return includeExpression;
@@ -190,7 +190,7 @@ public class ForcedType implements Serializable, XMLAppendable
      * A Java regular expression matching columns, parameters, attributes,
      * etc. to be forced to have this type. If provided, both "includeExpression" and
      * "includeTypes" must match.
-     *
+     * 
      */
     public void setIncludeExpression(String value) {
         this.includeExpression = value;
@@ -198,7 +198,7 @@ public class ForcedType implements Serializable, XMLAppendable
 
     /**
      * The same as {@link #getIncludeExpression()}. This is kept for backwards compatibility reasons.
-     *
+     * 
      */
     public String getExpression() {
         return expression;
@@ -206,7 +206,7 @@ public class ForcedType implements Serializable, XMLAppendable
 
     /**
      * The same as {@link #getIncludeExpression()}. This is kept for backwards compatibility reasons.
-     *
+     * 
      */
     public void setExpression(String value) {
         this.expression = value;
@@ -214,7 +214,7 @@ public class ForcedType implements Serializable, XMLAppendable
 
     /**
      * The same as {@link #getIncludeExpression()}. This is kept for backwards compatibility reasons.
-     *
+     * 
      */
     public String getExpressions() {
         return expressions;
@@ -222,7 +222,7 @@ public class ForcedType implements Serializable, XMLAppendable
 
     /**
      * The same as {@link #getIncludeExpression()}. This is kept for backwards compatibility reasons.
-     *
+     * 
      */
     public void setExpressions(String value) {
         this.expressions = value;
@@ -230,7 +230,7 @@ public class ForcedType implements Serializable, XMLAppendable
 
     /**
      * A SQL statement that produces a table with one column containing the matched qualified or unqualified column names.
-     *
+     * 
      */
     public String getSql() {
         return sql;
@@ -238,7 +238,7 @@ public class ForcedType implements Serializable, XMLAppendable
 
     /**
      * A SQL statement that produces a table with one column containing the matched qualified or unqualified column names.
-     *
+     * 
      */
     public void setSql(String value) {
         this.sql = value;
@@ -248,7 +248,7 @@ public class ForcedType implements Serializable, XMLAppendable
      * A Java regular expression matching data types
      * which must not have this type. Excludes match before includes, i.e.
      * excludes have a higher priority.
-     *
+     * 
      */
     public String getExcludeTypes() {
         return excludeTypes;
@@ -258,7 +258,7 @@ public class ForcedType implements Serializable, XMLAppendable
      * A Java regular expression matching data types
      * which must not have this type. Excludes match before includes, i.e.
      * excludes have a higher priority.
-     *
+     * 
      */
     public void setExcludeTypes(String value) {
         this.excludeTypes = value;
@@ -267,7 +267,7 @@ public class ForcedType implements Serializable, XMLAppendable
     /**
      * A Java regular expression matching data types to be forced to have this
      * type. If provided, both "includeExpression" and "includeTypes" must match.
-     *
+     * 
      */
     public String getIncludeTypes() {
         return includeTypes;
@@ -276,7 +276,7 @@ public class ForcedType implements Serializable, XMLAppendable
     /**
      * A Java regular expression matching data types to be forced to have this
      * type. If provided, both "includeExpression" and "includeTypes" must match.
-     *
+     * 
      */
     public void setIncludeTypes(String value) {
         this.includeTypes = value;
@@ -284,7 +284,7 @@ public class ForcedType implements Serializable, XMLAppendable
 
     /**
      * The same as {@link #getIncludeTypes()}. This is kept for backwards compatibility reasons.
-     *
+     * 
      */
     public String getTypes() {
         return types;
@@ -292,7 +292,7 @@ public class ForcedType implements Serializable, XMLAppendable
 
     /**
      * The same as {@link #getIncludeTypes()}. This is kept for backwards compatibility reasons.
-     *
+     * 
      */
     public void setTypes(String value) {
         this.types = value;
@@ -300,7 +300,7 @@ public class ForcedType implements Serializable, XMLAppendable
 
     /**
      * Whether this forced type should apply to nullable / non-nullable / all columns
-     *
+     * 
      */
     public Nullability getNullability() {
         return nullability;
@@ -308,7 +308,7 @@ public class ForcedType implements Serializable, XMLAppendable
 
     /**
      * Whether this forced type should apply to nullable / non-nullable / all columns
-     *
+     * 
      */
     public void setNullability(Nullability value) {
         this.nullability = value;
@@ -316,7 +316,7 @@ public class ForcedType implements Serializable, XMLAppendable
 
     /**
      * Whether this forced type should apply to all object types, or only to specific ones
-     *
+     * 
      */
     public ForcedTypeObjectType getObjectType() {
         return objectType;
@@ -324,7 +324,7 @@ public class ForcedType implements Serializable, XMLAppendable
 
     /**
      * Whether this forced type should apply to all object types, or only to specific ones
-     *
+     * 
      */
     public void setObjectType(ForcedTypeObjectType value) {
         this.objectType = value;
@@ -332,7 +332,7 @@ public class ForcedType implements Serializable, XMLAppendable
 
     /**
      * The name (in {@link org.jooq.impl.SQLDataType}) to force any matches to
-     *
+     * 
      */
     public ForcedType withName(String value) {
         setName(value);
@@ -344,7 +344,7 @@ public class ForcedType implements Serializable, XMLAppendable
      * <p>
      * If provided, {@link #getName()} will be ignored, and either {@link #getConverter()}
      * or {@link #getBinding()} is required
-     *
+     * 
      */
     public ForcedType withUserType(String value) {
         setUserType(value);
@@ -353,7 +353,7 @@ public class ForcedType implements Serializable, XMLAppendable
 
     /**
      * A converter implementation for the {@link #getUserType()}.
-     *
+     * 
      */
     public ForcedType withConverter(String value) {
         setConverter(value);
@@ -367,7 +367,7 @@ public class ForcedType implements Serializable, XMLAppendable
 
     /**
      * A {@link org.jooq.Binding} implementation for the custom type.
-     *
+     * 
      */
     public ForcedType withBinding(String value) {
         setBinding(value);
@@ -378,7 +378,7 @@ public class ForcedType implements Serializable, XMLAppendable
      * A Java regular expression matching columns, parameters, attributes,
      * etc. which must not have this type. Excludes match before includes, i.e.
      * excludes have a higher priority.
-     *
+     * 
      */
     public ForcedType withExcludeExpression(String value) {
         setExcludeExpression(value);
@@ -389,7 +389,7 @@ public class ForcedType implements Serializable, XMLAppendable
      * A Java regular expression matching columns, parameters, attributes,
      * etc. to be forced to have this type. If provided, both "includeExpression" and
      * "includeTypes" must match.
-     *
+     * 
      */
     public ForcedType withIncludeExpression(String value) {
         setIncludeExpression(value);
@@ -398,7 +398,7 @@ public class ForcedType implements Serializable, XMLAppendable
 
     /**
      * The same as {@link #getIncludeExpression()}. This is kept for backwards compatibility reasons.
-     *
+     * 
      */
     public ForcedType withExpression(String value) {
         setExpression(value);
@@ -407,7 +407,7 @@ public class ForcedType implements Serializable, XMLAppendable
 
     /**
      * The same as {@link #getIncludeExpression()}. This is kept for backwards compatibility reasons.
-     *
+     * 
      */
     public ForcedType withExpressions(String value) {
         setExpressions(value);
@@ -416,7 +416,7 @@ public class ForcedType implements Serializable, XMLAppendable
 
     /**
      * A SQL statement that produces a table with one column containing the matched qualified or unqualified column names.
-     *
+     * 
      */
     public ForcedType withSql(String value) {
         setSql(value);
@@ -427,7 +427,7 @@ public class ForcedType implements Serializable, XMLAppendable
      * A Java regular expression matching data types
      * which must not have this type. Excludes match before includes, i.e.
      * excludes have a higher priority.
-     *
+     * 
      */
     public ForcedType withExcludeTypes(String value) {
         setExcludeTypes(value);
@@ -437,7 +437,7 @@ public class ForcedType implements Serializable, XMLAppendable
     /**
      * A Java regular expression matching data types to be forced to have this
      * type. If provided, both "includeExpression" and "includeTypes" must match.
-     *
+     * 
      */
     public ForcedType withIncludeTypes(String value) {
         setIncludeTypes(value);
@@ -446,7 +446,7 @@ public class ForcedType implements Serializable, XMLAppendable
 
     /**
      * The same as {@link #getIncludeTypes()}. This is kept for backwards compatibility reasons.
-     *
+     * 
      */
     public ForcedType withTypes(String value) {
         setTypes(value);
@@ -455,7 +455,7 @@ public class ForcedType implements Serializable, XMLAppendable
 
     /**
      * Whether this forced type should apply to nullable / non-nullable / all columns
-     *
+     * 
      */
     public ForcedType withNullability(Nullability value) {
         setNullability(value);
@@ -464,7 +464,7 @@ public class ForcedType implements Serializable, XMLAppendable
 
     /**
      * Whether this forced type should apply to all object types, or only to specific ones
-     *
+     * 
      */
     public ForcedType withObjectType(ForcedTypeObjectType value) {
         setObjectType(value);

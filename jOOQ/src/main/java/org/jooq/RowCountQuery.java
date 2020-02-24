@@ -49,7 +49,7 @@ public interface RowCountQuery
 extends
     Query
     , org.reactivestreams.Publisher<Integer>
-
+    
 {
 
 }

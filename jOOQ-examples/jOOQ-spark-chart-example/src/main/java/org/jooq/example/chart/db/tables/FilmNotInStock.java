@@ -121,7 +121,7 @@ public class FilmNotInStock extends TableImpl<FilmNotInStockRecord> {
      * Call this table-valued function
      */
     public FilmNotInStock call(Integer pFilmId, Integer pStoreId) {
-        return new FilmNotInStock(DSL.name(getName()), null, new Field[] {
+        return new FilmNotInStock(DSL.name(getName()), null, new Field[] { 
               DSL.val(pFilmId, org.jooq.impl.SQLDataType.INTEGER)
             , DSL.val(pStoreId, org.jooq.impl.SQLDataType.INTEGER)
         });
@@ -131,7 +131,7 @@ public class FilmNotInStock extends TableImpl<FilmNotInStockRecord> {
      * Call this table-valued function
      */
     public FilmNotInStock call(Field<Integer> pFilmId, Field<Integer> pStoreId) {
-        return new FilmNotInStock(DSL.name(getName()), null, new Field[] {
+        return new FilmNotInStock(DSL.name(getName()), null, new Field[] { 
               pFilmId
             , pStoreId
         });

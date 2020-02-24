@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.jooq</groupId>
         <artifactId>jooq-examples</artifactId>
-        <version>3.13.1</version>
+        <version>3.13.2-SNAPSHOT</version>
     </parent>
 
     <artifactId>jooq-javaee-example</artifactId>

@@ -5,7 +5,7 @@
 
     <groupId>org.jooq</groupId>
     <artifactId>jooq-jpa-example</artifactId>
-    <version>3.13.1</version>
+    <version>3.13.2-SNAPSHOT</version>
     <name>jOOQ JPA Example</name>
 
     <licenses>

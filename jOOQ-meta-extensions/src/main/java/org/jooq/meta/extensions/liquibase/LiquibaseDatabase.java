@@ -97,8 +97,7 @@ public class LiquibaseDatabase extends AbstractInterpretingDatabase {
     @Override
     protected void export() throws Exception {
         String scripts = getProperties().getProperty("scripts");
-        String liquibaseContexts = getProperties().getProperty("contexts", "");
-        includeLiquibaseTables = Boolean.parseBoolean(getProperties().getProperty("includeLiquibaseTables", "false"));
+        includeLiquibaseTables = Boolean.valueOf(getProperties().getProperty("includeLiquibaseTables", "false"));
 
         if (isBlank(scripts)) {
             scripts = "";
@@ -106,6 +105,7 @@ public class LiquibaseDatabase extends AbstractInterpretingDatabase {
         }
 
         Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(connection()));
+        String contexts = "";
 
         // [#9514] Forward all database.xyz properties to matching Liquibase
         //         Database.setXyz() configuration setter calls
@@ -124,10 +124,18 @@ public class LiquibaseDatabase extends AbstractInterpretingDatabase {
                     log.warn("Configuration error", e.getMessage(), e);
                 }
             }
+
+            // [#9872] Some changeLogParameters can also be passed along
+            if (key.startsWith("changeLogParameters.")) {
+                String property = key.substring("changeLogParameters.".length());
+
+                if ("contexts".equals(property))
+                    contexts = "" + entry.getValue();
+            }
         }
 
         Liquibase liquibase = new Liquibase(scripts, new FileSystemResourceAccessor(), database);
-        liquibase.update(liquibaseContexts);
+        liquibase.update(contexts);
     }
 
     @Override

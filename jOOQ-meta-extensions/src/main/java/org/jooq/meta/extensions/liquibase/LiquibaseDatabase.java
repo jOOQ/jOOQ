@@ -58,6 +58,8 @@ import liquibase.Liquibase;
 import liquibase.database.Database;
 import liquibase.database.DatabaseFactory;
 import liquibase.database.jvm.JdbcConnection;
+import liquibase.resource.ClassLoaderResourceAccessor;
+import liquibase.resource.CompositeResourceAccessor;
 import liquibase.resource.FileSystemResourceAccessor;
 
 /**
@@ -135,11 +137,22 @@ public class LiquibaseDatabase extends AbstractInterpretingDatabase {
                     contexts = "" + entry.getValue();
             }
         }
+
         // Retrieve changeLog table names as they might be overridden by configuration setters
         databaseChangeLogTableName = database.getDatabaseChangeLogTableName();
         databaseChangeLogLockTableName = database.getDatabaseChangeLogLockTableName();
 
-        Liquibase liquibase = new Liquibase(scripts, new FileSystemResourceAccessor(), database);
+        // [#9866] Allow for loading included files from the classpath or using absolute paths.
+        Liquibase liquibase = new Liquibase(
+            scripts,
+            new CompositeResourceAccessor(
+                new FileSystemResourceAccessor(),
+                new ClassLoaderResourceAccessor(),
+                new ClassLoaderResourceAccessor(Thread.currentThread().getContextClassLoader())
+            ),
+            database
+        );
+
         liquibase.update(contexts);
     }
 

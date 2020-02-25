@@ -77,6 +77,8 @@ public class LiquibaseDatabase extends AbstractInterpretingDatabase {
     private static final JooqLogger          log = JooqLogger.getLogger(LiquibaseDatabase.class);
     private static final Map<String, Method> SETTERS;
     private boolean                          includeLiquibaseTables;
+    private String                           databaseChangeLogTableName;
+    private String                           databaseChangeLogLockTableName;
 
     static {
         SETTERS = new HashMap<>();
@@ -133,6 +135,9 @@ public class LiquibaseDatabase extends AbstractInterpretingDatabase {
                     contexts = "" + entry.getValue();
             }
         }
+        // Retrieve changeLog table names as they might be overridden by configuration setters
+        databaseChangeLogTableName = database.getDatabaseChangeLogTableName();
+        databaseChangeLogLockTableName = database.getDatabaseChangeLogLockTableName();
 
         Liquibase liquibase = new Liquibase(scripts, new FileSystemResourceAccessor(), database);
         liquibase.update(contexts);
@@ -143,7 +148,7 @@ public class LiquibaseDatabase extends AbstractInterpretingDatabase {
         List<TableDefinition> result = new ArrayList<>(super.getTables0());
 
         if (!includeLiquibaseTables) {
-            List<String> liquibaseTables = Arrays.asList("DATABASECHANGELOG", "DATABASECHANGELOGLOCK");
+            List<String> liquibaseTables = Arrays.asList(databaseChangeLogTableName, databaseChangeLogLockTableName);
 
             Iterator<TableDefinition> it = result.iterator();
             while (it.hasNext())

@@ -126,7 +126,7 @@ public class LiquibaseDatabase extends AbstractInterpretingDatabase {
             }
 
             // [#9872] Some changeLogParameters can also be passed along
-            if (key.startsWith("changeLogParameters.")) {
+            else if (key.startsWith("changeLogParameters.")) {
                 String property = key.substring("changeLogParameters.".length());
 
                 if ("contexts".equals(property))

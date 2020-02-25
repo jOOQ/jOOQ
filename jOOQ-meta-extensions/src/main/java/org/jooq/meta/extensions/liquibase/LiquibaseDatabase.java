@@ -105,6 +105,7 @@ public class LiquibaseDatabase extends AbstractInterpretingDatabase {
         }
 
         Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(connection()));
+        String contexts = "";
 
         // [#9514] Forward all database.xyz properties to matching Liquibase
         //         Database.setXyz() configuration setter calls
@@ -123,10 +124,18 @@ public class LiquibaseDatabase extends AbstractInterpretingDatabase {
                     log.warn("Configuration error", e.getMessage(), e);
                 }
             }
+
+            // [#9872] Some changeLogParameters can also be passed along
+            else if (key.startsWith("changeLogParameters.")) {
+                String property = key.substring("changeLogParameters.".length());
+
+                if ("contexts".equals(property))
+                    contexts = "" + entry.getValue();
+            }
         }
 
         Liquibase liquibase = new Liquibase(scripts, new FileSystemResourceAccessor(), database);
-        liquibase.update("");
+        liquibase.update(contexts);
     }
 
     @Override

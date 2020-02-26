@@ -136,6 +136,7 @@ final class CompareCondition extends AbstractCondition implements LikeEscapeStep
 
 
 
+
                 && POSTGRES != family) {
 
             lhs = lhs.lower();

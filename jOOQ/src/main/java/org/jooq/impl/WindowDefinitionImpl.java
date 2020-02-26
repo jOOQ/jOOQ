@@ -92,7 +92,7 @@ final class WindowDefinitionImpl extends AbstractQueryPart implements WindowDefi
 
         // Outside the WINDOW clause, only few dialects actually support
         // referencing WINDOW definitions
-        else if (ctx.dialect().supports(SUPPORT_WINDOW_CLAUSE)) {
+        else if (SUPPORT_WINDOW_CLAUSE.contains(ctx.dialect())) {
             ctx.visit(name);
         }
 

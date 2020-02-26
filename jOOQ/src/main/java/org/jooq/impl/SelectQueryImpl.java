@@ -1504,7 +1504,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // -------------
         context.start(SELECT_WINDOW);
 
-        if (Tools.isNotEmpty(window) && context.dialect().supports(SUPPORT_WINDOW_CLAUSE)) {
+        if (Tools.isNotEmpty(window) && SUPPORT_WINDOW_CLAUSE.contains(context.dialect())) {
             context.formatSeparator()
                    .visit(K_WINDOW)
                    .sql(' ')

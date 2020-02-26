@@ -508,7 +508,7 @@ class Function<T> extends AbstractField<T> implements
 
         // [#531] Inline window specifications if the WINDOW clause is not supported
         if (windowName != null) {
-            if (ctx.dialect().supports(SUPPORT_WINDOW_CLAUSE))
+            if (SUPPORT_WINDOW_CLAUSE.contains(ctx.dialect()))
                 return windowName;
 
             QueryPartList<WindowDefinition> windows = (QueryPartList<WindowDefinition>) ctx.data(DATA_WINDOW_DEFINITIONS);

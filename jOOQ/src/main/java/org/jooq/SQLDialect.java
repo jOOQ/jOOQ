@@ -881,7 +881,10 @@ public enum SQLDialect {
     /**
      * Check whether this dialect supports any dialect from the argument
      * collection.
+     *
+     * @deprecated - [#9882] - 3.14.0 - Use {@link #supportedBy(SQLDialect...)} instead
      */
+    @Deprecated
     public final boolean supports(Collection<SQLDialect> other) {
         if (other.contains(family))
             return true;

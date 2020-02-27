@@ -50,9 +50,26 @@ import static org.jooq.Comparator.SIMILAR_TO;
 // ...
 // ...
 // ...
+// ...
+import static org.jooq.SQLDialect.CUBRID;
+// ...
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
+// ...
+import static org.jooq.SQLDialect.HSQLDB;
+// ...
+// ...
+import static org.jooq.SQLDialect.MARIADB;
+// ...
+import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+// ...
+// ...
+import static org.jooq.SQLDialect.SQLITE;
+// ...
+// ...
+// ...
 // ...
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.inline;
@@ -84,6 +101,7 @@ final class CompareCondition extends AbstractCondition implements LikeEscapeStep
     private static final long            serialVersionUID      = -747240442279619486L;
     private static final Clause[]        CLAUSES               = { CONDITION, CONDITION_COMPARISON };
     private static final Set<SQLDialect> REQUIRES_CAST_ON_LIKE = SQLDialect.supportedBy(DERBY, POSTGRES);
+    private static final Set<SQLDialect> NO_SUPPORT_ILIKE      = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, SQLITE);
 
     final Field<?>                       field1;
     final Field<?>                       field2;
@@ -129,16 +147,9 @@ final class CompareCondition extends AbstractCondition implements LikeEscapeStep
             lhs = castIfNeeded(lhs, String.class);
         }
 
-        // [#1423] Only Postgres knows a true ILIKE operator. Other dialects
+        // [#1423] [#9889] PostgreSQL and H2 support ILIKE natively. Other dialects
         // need to emulate this as LOWER(lhs) LIKE LOWER(rhs)
-        else if ((op == LIKE_IGNORE_CASE || op == NOT_LIKE_IGNORE_CASE)
-
-
-
-
-
-                && POSTGRES != family) {
-
+        else if ((op == LIKE_IGNORE_CASE || op == NOT_LIKE_IGNORE_CASE) && NO_SUPPORT_ILIKE.contains(family)) {
             lhs = lhs.lower();
             rhs = rhs.lower();
             op = (op == LIKE_IGNORE_CASE ? LIKE : NOT_LIKE);

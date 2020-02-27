@@ -132,6 +132,18 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
         this.orderBy = new SortFieldList();
     }
 
+    WindowSpecificationImpl copy() {
+        WindowSpecificationImpl copy = new WindowSpecificationImpl(this.windowDefinition);
+        copy.partitionBy.addAll(this.partitionBy);
+        copy.orderBy.addAll(this.orderBy);
+        copy.frameStart = this.frameStart;
+        copy.frameEnd = this.frameEnd;
+        copy.frameUnits = this.frameUnits;
+        copy.exclude = this.exclude;
+        copy.partitionByOne = this.partitionByOne;
+        return copy;
+    }
+
     @Override
     public final void accept(Context<?> ctx) {
         String glue = "";

@@ -241,14 +241,12 @@ enum Term {
 
 
 
-
             return "stddev_pop";
         }
     },
     STDDEV_SAMP {
         @Override
         public String translate(SQLDialect dialect) {
-
 
 
 
@@ -284,14 +282,12 @@ enum Term {
 
 
 
-
             return "var_pop";
         }
     },
     VAR_SAMP {
         @Override
         public String translate(SQLDialect dialect) {
-
 
 
 

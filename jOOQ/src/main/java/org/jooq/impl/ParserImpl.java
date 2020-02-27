@@ -4616,6 +4616,7 @@ final class ParserImpl implements Parser {
             Comparator comp;
             TSQLOuterJoinComparator outer;
             boolean not;
+            boolean notOp = false;
 
             left = parseConcat(ctx, null);
             not = parseKeywordIf(ctx, "NOT");
@@ -4749,13 +4750,13 @@ final class ParserImpl implements Parser {
                             ? ((Field) left).between((Field) r1, (Field) r2)
                             : new RowBetweenCondition((Row) left, (Row) r1, not, symmetric, (Row) r2);
             }
-            else if (left instanceof Field && parseKeywordIf(ctx, "LIKE")) {
+            else if (left instanceof Field && (parseKeywordIf(ctx, "LIKE") || parseOperatorIf(ctx, "~~") || (notOp = parseOperatorIf(ctx, "!~~")))) {
                 if (parseKeywordIf(ctx, "ANY")) {
                     parse(ctx, '(');
                     if (peekKeyword(ctx, "SELECT") || peekKeyword(ctx, "SEL") || peekKeyword(ctx, "WITH")) {
                         Select<?> select = parseWithOrSelect(ctx);
                         parse(ctx, ')');
-                        LikeEscapeStep result = not ? ((Field) left).notLike(any(select)) : ((Field) left).like(any(select));
+                        LikeEscapeStep result = (not ^ notOp) ? ((Field) left).notLike(any(select)) : ((Field) left).like(any(select));
                         return parseEscapeClauseIf(ctx, result);
                     }
                     else {
@@ -4771,7 +4772,7 @@ final class ParserImpl implements Parser {
                             parse(ctx, ')');
                         }
                         Field<String>[] fieldArray = fields.toArray(new Field[0]);
-                        LikeEscapeStep result = not ? ((Field<String>) left).notLike(any(fieldArray)) : ((Field<String>) left).like(any(fieldArray));
+                        LikeEscapeStep result = (not ^ notOp) ? ((Field<String>) left).notLike(any(fieldArray)) : ((Field<String>) left).like(any(fieldArray));
                         return parseEscapeClauseIf(ctx, result);
                     }
                 }
@@ -4780,7 +4781,7 @@ final class ParserImpl implements Parser {
                     if (peekKeyword(ctx, "SELECT") || peekKeyword(ctx, "SEL") || peekKeyword(ctx, "WITH")) {
                         Select<?> select = parseWithOrSelect(ctx);
                         parse(ctx, ')');
-                        LikeEscapeStep result = not ? ((Field) left).notLike(all(select)) : ((Field) left).like(all(select));
+                        LikeEscapeStep result = (not ^ notOp) ? ((Field) left).notLike(all(select)) : ((Field) left).like(all(select));
                         return parseEscapeClauseIf(ctx, result);
                     }
                     else {
@@ -4796,26 +4797,28 @@ final class ParserImpl implements Parser {
                             parse(ctx, ')');
                         }
                         Field<String>[] fieldArray = fields.toArray(new Field[0]);
-                        LikeEscapeStep result = not ? ((Field<String>) left).notLike(all(fieldArray)) : ((Field<String>) left).like(all(fieldArray));
+                        LikeEscapeStep result = (not ^ notOp) ? ((Field<String>) left).notLike(all(fieldArray)) : ((Field<String>) left).like(all(fieldArray));
                         return parseEscapeClauseIf(ctx, result);
                     }
                 }
                 else {
                     Field right = toField(ctx, parseConcat(ctx, null));
-                    LikeEscapeStep like = not ? ((Field) left).notLike(right) : ((Field) left).like(right);
+                    LikeEscapeStep like = (not ^ notOp) ? ((Field) left).notLike(right) : ((Field) left).like(right);
                     return parseEscapeClauseIf(ctx, like);
                 }
             }
-            else if (left instanceof Field && parseKeywordIf(ctx, "ILIKE")) {
+            else if (left instanceof Field && (parseKeywordIf(ctx, "ILIKE") || parseOperatorIf(ctx, "~~*") || (notOp = parseOperatorIf(ctx, "!~~*")))) {
                 Field right = toField(ctx, parseConcat(ctx, null));
-                LikeEscapeStep like = not ? ((Field) left).notLikeIgnoreCase(right) : ((Field) left).likeIgnoreCase(right);
+                LikeEscapeStep like = (not ^ notOp) ? ((Field) left).notLikeIgnoreCase(right) : ((Field) left).likeIgnoreCase(right);
                 return parseEscapeClauseIf(ctx, like);
             }
             else if (left instanceof Field && (parseKeywordIf(ctx, "REGEXP")
                                             || parseKeywordIf(ctx, "RLIKE")
-                                            || parseKeywordIf(ctx, "LIKE_REGEX"))) {
+                                            || parseKeywordIf(ctx, "LIKE_REGEX")
+                                            || parseOperatorIf(ctx, "~")
+                                            || (notOp = parseOperatorIf(ctx, "!~")))) {
                 Field right = toField(ctx, parseConcat(ctx, null));
-                return not
+                return (not ^ notOp)
                         ? ((Field) left).notLikeRegex(right)
                         : ((Field) left).likeRegex(right);
             }
@@ -10532,6 +10535,46 @@ final class ParserImpl implements Parser {
         return peekKeyword(ctx, string, true, false, true);
     }
 
+    private static final boolean parseOperator(ParserContext ctx, String operator) {
+        if (!parseOperatorIf(ctx, operator))
+            throw ctx.expected("Operator '" + operator + "'");
+
+        return true;
+    }
+
+    private static final boolean parseOperatorIf(ParserContext ctx, String operator) {
+        return peekOperator(ctx, operator, true);
+    }
+
+    private static final boolean peekOperator(ParserContext ctx, String operator) {
+        return peekOperator(ctx, operator, false);
+    }
+
+    private static final boolean peekOperator(ParserContext ctx, String operator, boolean updatePosition) {
+        int length = operator.length();
+        int position = ctx.position();
+
+        if (ctx.sql.length < position + length)
+            return false;
+
+        int pos = afterWhitespace(ctx, position, false);
+
+        for (int i = 0; i < length; i++, pos++)
+            if (ctx.sql[pos] != operator.charAt(i))
+                return false;
+
+        // [#9888] An operator that is followed by a special character is very likely another, more complex operator
+        if (ctx.isOperatorPart(pos))
+            return false;
+
+        if (updatePosition) {
+            ctx.position(pos);
+            parseWhitespaceIf(ctx);
+        }
+
+        return true;
+    }
+
     private static final boolean parseKeyword(ParserContext ctx, String keyword) {
         if (!parseKeywordIf(ctx, keyword))
             throw ctx.expected("Keyword '" + keyword + "'");
@@ -10605,34 +10648,12 @@ final class ParserImpl implements Parser {
 
     private static final boolean peekKeyword(ParserContext ctx, String keyword, boolean updatePosition, boolean peekIntoParens, boolean requireFunction) {
         int length = keyword.length();
-        int skip;
         int position = ctx.position();
 
         if (ctx.sql.length < position + length)
             return false;
 
-        skipLoop:
-        for (skip = 0; position + skip < ctx.sql.length; skip++) {
-            char c = ctx.sql[position + skip];
-
-            switch (c) {
-                case ' ':
-                case '\t':
-                case '\r':
-                case '\n':
-                    continue skipLoop;
-
-                case '(':
-                    if (peekIntoParens)
-                        continue skipLoop;
-                    else
-                        break skipLoop;
-
-                default:
-                    break skipLoop;
-            }
-        }
-
+        int skip = afterWhitespace(ctx, position, peekIntoParens) - position;
 
         for (int i = 0; i < length; i++) {
             char c = keyword.charAt(i);
@@ -10676,6 +10697,10 @@ final class ParserImpl implements Parser {
     }
 
     private static final int afterWhitespace(ParserContext ctx, int position) {
+        return afterWhitespace(ctx, position, false);
+    }
+
+    private static final int afterWhitespace(ParserContext ctx, int position, boolean peekIntoParens) {
 
         // [#8074] The SQL standard and some implementations (e.g. PostgreSQL,
         //         SQL Server) support nesting block comments
@@ -10691,6 +10716,12 @@ final class ParserImpl implements Parser {
                 case '\n':
                     position = i + 1;
                     continue loop;
+
+                case '(':
+                    if (peekIntoParens)
+                        continue loop;
+                    else
+                        break loop;
 
                 case '/':
                     if (i + 1 < ctx.sql.length && ctx.sql[i + 1] == '*') {
@@ -11163,6 +11194,41 @@ final class ParserContext {
 
     boolean isWhitespace(int pos) {
         return Character.isWhitespace(character(pos));
+    }
+
+    boolean isOperatorPart() {
+        return isOperatorPart(character());
+    }
+
+    boolean isOperatorPart(int pos) {
+        return isOperatorPart(character(pos));
+    }
+
+    boolean isOperatorPart(char character) {
+        // Obtain all distinct, built-in PostgreSQL operator characters:
+        // select distinct regexp_split_to_table(oprname, '') from pg_catalog.pg_operator order by 1;
+        switch (character) {
+            case '!':
+            case '#':
+            case '%':
+            case '&':
+            case '*':
+            case '+':
+            case '-':
+            case '/':
+            case ':':
+            case '<':
+            case '=':
+            case '>':
+            case '?':
+            case '@':
+            case '^':
+            case '|':
+            case '~':
+                return true;
+        }
+
+        return false;
     }
 
     boolean isIdentifierPart() {

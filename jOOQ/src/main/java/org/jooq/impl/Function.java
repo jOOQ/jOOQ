@@ -171,6 +171,8 @@ class Function<T> extends AbstractField<T> implements
 
 
 
+
+
     static final Field<Integer>            ASTERISK                           = DSL.field("*", Integer.class);
 
     // Mutually exclusive attributes: super.getName(), this.name, this.term
@@ -240,15 +242,15 @@ class Function<T> extends AbstractField<T> implements
 
     @Override
     public /* final */ void accept(Context<?> ctx) {
-        if (term == ARRAY_AGG && SUPPORT_ARRAY_AGG.contains(ctx.family())) {
+        if (term == ARRAY_AGG && SUPPORT_ARRAY_AGG.contains(ctx.dialect())) {
             toSQLGroupConcat(ctx);
             toSQLFilterClause(ctx);
             toSQLOverClause(ctx);
         }
-        else if (term == LIST_AGG && SUPPORT_GROUP_CONCAT.contains(ctx.family())) {
+        else if (term == LIST_AGG && SUPPORT_GROUP_CONCAT.contains(ctx.dialect())) {
             toSQLGroupConcat(ctx);
         }
-        else if (term == LIST_AGG && SUPPORT_STRING_AGG  .contains(ctx.family())) {
+        else if (term == LIST_AGG && SUPPORT_STRING_AGG  .contains(ctx.dialect())) {
             toSQLStringAgg(ctx);
             toSQLFilterClause(ctx);
             toSQLOverClause(ctx);

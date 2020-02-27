@@ -263,7 +263,6 @@ enum Term {
 
 
 
-
             return "stddev_samp";
         }
     },
@@ -292,6 +291,8 @@ enum Term {
     VAR_SAMP {
         @Override
         public String translate(SQLDialect dialect) {
+
+
 
 
 

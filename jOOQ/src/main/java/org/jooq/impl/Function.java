@@ -92,6 +92,7 @@ import static org.jooq.impl.Keywords.K_WITHIN_GROUP;
 import static org.jooq.impl.SQLDataType.NUMERIC;
 import static org.jooq.impl.SelectQueryImpl.SUPPORT_WINDOW_CLAUSE;
 import static org.jooq.impl.Term.ARRAY_AGG;
+import static org.jooq.impl.Term.CUME_DIST;
 import static org.jooq.impl.Term.LIST_AGG;
 import static org.jooq.impl.Term.MEDIAN;
 import static org.jooq.impl.Term.MODE;
@@ -163,6 +164,8 @@ class Function<T> extends AbstractField<T> implements
     private static final Set<SQLDialect>   SUPPORT_NO_PARENS_WINDOW_REFERENCE = SQLDialect.supportedBy(MYSQL, POSTGRES);
     private static final Set<SQLDialect>   SUPPORT_FILTER                     = SQLDialect.supportedBy(H2, HSQLDB, POSTGRES, SQLITE);
     private static final Set<SQLDialect>   SUPPORT_DISTINCT_RVE               = SQLDialect.supportedBy(H2, POSTGRES);
+
+
 
 
 
@@ -250,6 +253,14 @@ class Function<T> extends AbstractField<T> implements
             toSQLFilterClause(ctx);
             toSQLOverClause(ctx);
         }
+
+
+
+
+
+
+
+
 
 
 

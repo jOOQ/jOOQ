@@ -3525,7 +3525,8 @@ public class JavaGenerator extends AbstractGenerator {
         // Getter
         out.println();
 
-        printDeprecationIfUnknownType(out, columnTypeFull);
+        if (!printDeprecationIfUnknownType(out, columnTypeFull))
+            printJavadoc(column, "Getter", out);
 
         if (column instanceof ColumnDefinition)
             printColumnJPAAnnotation(out, (ColumnDefinition) column);
@@ -3546,6 +3547,16 @@ public class JavaGenerator extends AbstractGenerator {
         }
     }
 
+
+    private void printJavadoc(TypedElementDefinition<?> column, String prefix, JavaWriter out) {
+        out.tab(1).println("/**");
+        out.tab(1).println(" * " + prefix + " for column '" + column.getInputName() + "'.");
+        if (column.getComment() != null && !column.getComment().isEmpty()) {
+            out.tab(1).println(" * <p>");
+            out.tab(1).println(" * " + column.getComment());
+        }
+        out.tab(1).println(" */");
+    }
 
     /**
      * Subclasses may override this method to provide their own pojo setters.
@@ -3575,7 +3586,8 @@ public class JavaGenerator extends AbstractGenerator {
         if (!(generateInterfaces() && isUDTArray)) {
             out.println();
 
-            printDeprecationIfUnknownType(out, columnTypeFull);
+            if (!printDeprecationIfUnknownType(out, columnTypeFull))
+                printJavadoc(column, "Setter", out);
             if (scala) {
                 out.tab(1).println("def %s(%s : %s) : %s = {", columnSetter, columnMember, columnType, columnSetterReturnType);
                 out.tab(2).println("this.%s = %s", columnMember, columnMember);

@@ -3517,16 +3517,18 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     private final void generatePojoGetter0(TypedElementDefinition<?> column, @SuppressWarnings("unused") int index, JavaWriter out) {
+        final String comment = StringUtils.defaultString(column.getComment());
         final String columnTypeFull = getJavaType(column.getType(resolver(Mode.POJO)), Mode.POJO);
         final String columnType = out.ref(columnTypeFull);
         final String columnGetter = getStrategy().getJavaGetterName(column, Mode.POJO);
         final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
+        final String name = column.getQualifiedOutputName();
 
         // Getter
         out.println();
 
         if (!printDeprecationIfUnknownType(out, columnTypeFull))
-            printJavadoc(column, "Getter", out);
+            out.tab(1).javadoc("Getter for <code>%s</code>.%s", name, columnComment(column, comment));
 
         if (column instanceof ColumnDefinition)
             printColumnJPAAnnotation(out, (ColumnDefinition) column);
@@ -3547,17 +3549,6 @@ public class JavaGenerator extends AbstractGenerator {
         }
     }
 
-
-    private void printJavadoc(TypedElementDefinition<?> column, String prefix, JavaWriter out) {
-        out.tab(1).println("/**");
-        out.tab(1).println(" * " + prefix + " for column '" + column.getInputName() + "'.");
-        if (column.getComment() != null && !column.getComment().isEmpty()) {
-            out.tab(1).println(" * <p>");
-            out.tab(1).println(" * " + column.getComment());
-        }
-        out.tab(1).println(" */");
-    }
-
     /**
      * Subclasses may override this method to provide their own pojo setters.
      */
@@ -3573,6 +3564,7 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     private final void generatePojoSetter0(TypedElementDefinition<?> column, @SuppressWarnings("unused") int index, JavaWriter out) {
+        final String comment = StringUtils.defaultString(column.getComment());
         final String className = getStrategy().getJavaClassName(column.getContainer(), Mode.POJO);
         final String columnTypeFull = getJavaType(column.getType(resolver(Mode.POJO)), Mode.POJO);
         final String columnType = out.ref(columnTypeFull);
@@ -3581,13 +3573,15 @@ public class JavaGenerator extends AbstractGenerator {
         final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
         final boolean isUDT = column.getType(resolver()).isUDT();
         final boolean isUDTArray = column.getType(resolver()).isArray() && database.getArray(column.getType(resolver()).getSchema(), column.getType(resolver()).getQualifiedUserType()).getElementType(resolver()).isUDT();
+        final String name = column.getQualifiedOutputName();
 
         // We cannot have covariant setters for arrays because of type erasure
         if (!(generateInterfaces() && isUDTArray)) {
             out.println();
 
             if (!printDeprecationIfUnknownType(out, columnTypeFull))
-                printJavadoc(column, "Setter", out);
+                out.tab(1).javadoc("Setter for <code>%s</code>.%s", name, columnComment(column, comment));
+
             if (scala) {
                 out.tab(1).println("def %s(%s : %s) : %s = {", columnSetter, columnMember, columnType, columnSetterReturnType);
                 out.tab(2).println("this.%s = %s", columnMember, columnMember);

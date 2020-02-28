@@ -107,31 +107,30 @@ import static org.jooq.SQLDialect.POSTGRES;
 public interface SelectForUpdateWaitStep<R extends Record> extends SelectOptionStep<R> {
 
     /**
-     * Add a <code>WAIT</code> clause to the <code>FOR UPDATE</code> clause at
-     * the end of the query.
+     * Add a <code>WAIT</code> clause to the <code>FOR &lt;lock_mode&gt;</code>
+     * clause at the end of the query.
      * <p>
      * Be careful not to confuse this with {@link Object#wait(long)} !
      *
-     * @see SelectQuery#setForUpdateWait(int) see LockProvider for more details
+     * @see SelectQuery#setForLockModeWait(int)
      */
     @Support({ MARIADB })
     SelectOptionStep<R> wait(int seconds);
 
     /**
-     * Add a <code>NOWAIT</code> clause to the <code>FOR UPDATE</code> clause at
-     * the end of the query.
+     * Add a <code>NOWAIT</code> clause to the
+     * <code>FOR &lt;lock_mode&gt;</code> clause at the end of the query.
      *
-     * @see SelectQuery#setForUpdateNoWait() see LockProvider for more details
+     * @see SelectQuery#setForLockModeNoWait()
      */
     @Support({ MARIADB, MYSQL, POSTGRES })
     SelectOptionStep<R> noWait();
 
     /**
-     * Add a <code>WAIT</code> clause to the <code>FOR UPDATE</code> clause at
-     * the end of the query.
+     * Add a <code>WAIT</code> clause to the <code>FOR &lt;lock_mode&gt;</code>
+     * clause at the end of the query.
      *
-     * @see SelectQuery#setForUpdateSkipLocked() see LockProvider for more
-     *      details
+     * @see SelectQuery#setForLockModeSkipLocked()
      */
     @Support({ MYSQL, POSTGRES })
     SelectOptionStep<R> skipLocked();

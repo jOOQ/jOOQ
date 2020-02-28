@@ -1772,37 +1772,37 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
 
     @Override
     public final SelectImpl of(Field<?>... fields) {
-        getQuery().setForUpdateOf(fields);
+        getQuery().setForLockModeOf(fields);
         return this;
     }
 
     @Override
     public final SelectImpl of(Collection<? extends Field<?>> fields) {
-        getQuery().setForUpdateOf(fields);
+        getQuery().setForLockModeOf(fields);
         return this;
     }
 
     @Override
     public final SelectImpl of(Table<?>... tables) {
-        getQuery().setForUpdateOf(tables);
+        getQuery().setForLockModeOf(tables);
         return this;
     }
 
     @Override
     public final SelectImpl wait(int seconds) {
-        getQuery().setForUpdateWait(seconds);
+        getQuery().setForLockModeWait(seconds);
         return this;
     }
 
     @Override
     public final SelectImpl noWait() {
-        getQuery().setForUpdateNoWait();
+        getQuery().setForLockModeNoWait();
         return this;
     }
 
     @Override
     public final SelectImpl skipLocked() {
-        getQuery().setForUpdateSkipLocked();
+        getQuery().setForLockModeSkipLocked();
         return this;
     }
 

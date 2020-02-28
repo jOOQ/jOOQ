@@ -117,31 +117,28 @@ import java.util.Collection;
 public interface SelectForUpdateOfStep<R extends Record> extends SelectForUpdateWaitStep<R> {
 
     /**
-     * Add an <code>OF</code> clause to the <code>FOR UPDATE</code> clause at
+     * Add an <code>OF</code> clause to the <code>FOR &lt;lock_mode&gt;</code> clause at
      * the end of the query.
      *
-     * @see SelectQuery#setForUpdateOf(Field...) see LockProvider for more
-     *      details
+     * @see SelectQuery#setForLockModeOf(Field...)
      */
     @Support({ DERBY, FIREBIRD, H2, HSQLDB })
     SelectForUpdateWaitStep<R> of(Field<?>... fields);
 
     /**
-     * Add an <code>OF</code> clause to the <code>FOR UPDATE</code> clause at
+     * Add an <code>OF</code> clause to the <code>FOR &lt;lock_mode&gt;</code> clause at
      * the end of the query.
      *
-     * @see SelectQuery#setForUpdateOf(Collection) see LockProvider for
-     *      more details
+     * @see SelectQuery#setForLockModeOf(Collection)
      */
     @Support({ DERBY, FIREBIRD, H2, HSQLDB })
     SelectForUpdateWaitStep<R> of(Collection<? extends Field<?>> fields);
 
     /**
-     * Add an <code>OF</code> clause to the <code>FOR UPDATE</code> clause at
-     * the end of the query.
+     * Add an <code>OF</code> clause to the <code>FOR &lt;lock_mode&gt;</code>
+     * clause at the end of the query.
      *
-     * @see SelectQuery#setForUpdateOf(Table...) see LockProvider for more
-     *      details
+     * @see SelectQuery#setForLockModeOf(Table...)
      */
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MYSQL, POSTGRES })
     SelectForUpdateWaitStep<R> of(Table<?>... tables);

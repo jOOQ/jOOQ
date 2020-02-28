@@ -250,11 +250,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private String                                       option;
     private boolean                                      distinct;
     private QueryPartList<SelectFieldOrAsterisk>         distinctOn;
-    private QueryPartList<Field<?>>                      forUpdateOf;
-    private TableList                                    forUpdateOfTables;
-    private ForUpdateLockMode                            forUpdateLockMode;
-    private ForUpdateWaitMode                            forUpdateWaitMode;
-    private int                                          forUpdateWait;
+    private QueryPartList<Field<?>>                      forLockOf;
+    private TableList                                    forLockOfTables;
+    private ForLockMode                                  forLockMode;
+    private ForLockWaitMode                              forLockWaitMode;
+    private int                                          forLockWait;
 
 
 
@@ -729,13 +729,13 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             }
 
             // [#1296] FOR UPDATE is emulated in some dialects using ResultSet.CONCUR_UPDATABLE
-            if (forUpdateLockMode != null && !NO_SUPPORT_FOR_UPDATE.contains(family)) {
-                switch (forUpdateLockMode) {
+            if (forLockMode != null && !NO_SUPPORT_FOR_UPDATE.contains(family)) {
+                switch (forLockMode) {
                     case UPDATE:
                         context.formatSeparator()
                                .visit(K_FOR)
                                .sql(' ')
-                               .visit(forUpdateLockMode.toKeyword());
+                               .visit(forLockMode.toKeyword());
                         break;
 
                     case SHARE:
@@ -755,9 +755,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
                             // Postgres is known to implement the "FOR SHARE" clause like this
                             default:
-                                context.visit(K_FOR)
+                                context.formatSeparator()
+                                       .visit(K_FOR)
                                        .sql(' ')
-                                       .visit(forUpdateLockMode.toKeyword());
+                                       .visit(forLockMode.toKeyword());
                                 break;
                         }
 
@@ -766,13 +767,14 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                     case KEY_SHARE:
                     case NO_KEY_UPDATE:
                     default:
-                        context.visit(K_FOR)
+                        context.formatSeparator()
+                               .visit(K_FOR)
                                .sql(' ')
-                               .visit(forUpdateLockMode.toKeyword());
+                               .visit(forLockMode.toKeyword());
                         break;
                 }
 
-                if (Tools.isNotEmpty(forUpdateOf)) {
+                if (Tools.isNotEmpty(forLockOf)) {
 
                     // [#4151] [#6117] Some databases don't allow for qualifying column
                     // names here. Copy also to TableList
@@ -783,12 +785,12 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                         context.qualify(false);
 
                     context.sql(' ').visit(K_OF)
-                           .sql(' ').visit(forUpdateOf);
+                           .sql(' ').visit(forLockOf);
 
                     if (unqualified)
                         context.qualify(qualify);
                 }
-                else if (Tools.isNotEmpty(forUpdateOfTables)) {
+                else if (Tools.isNotEmpty(forLockOfTables)) {
                     context.sql(' ').visit(K_OF).sql(' ');
 
                     switch (family) {
@@ -803,13 +805,13 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
                         case DERBY: {
-                            forUpdateOfTables.toSQLFields(context);
+                            forLockOfTables.toSQLFields(context);
                             break;
                         }
 
                         // Render the OF [table-names] clause
                         default:
-                            Tools.tableNames(context, forUpdateOfTables);
+                            Tools.tableNames(context, forLockOfTables);
                             break;
                     }
                 }
@@ -819,13 +821,13 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 if (family == FIREBIRD)
                     context.sql(' ').visit(K_WITH_LOCK);
 
-                if (forUpdateWaitMode != null) {
+                if (forLockWaitMode != null) {
                     context.sql(' ');
-                    context.visit(forUpdateWaitMode.toKeyword());
+                    context.visit(forLockWaitMode.toKeyword());
 
-                    if (forUpdateWaitMode == ForUpdateWaitMode.WAIT) {
+                    if (forLockWaitMode == ForLockWaitMode.WAIT) {
                         context.sql(' ');
-                        context.sql(forUpdateWait);
+                        context.sql(forLockWait);
                     }
                 }
             }
@@ -2090,66 +2092,96 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @Override
     public final void setForUpdate(boolean forUpdate) {
-        this.forUpdateLockMode = ForUpdateLockMode.UPDATE;
+        this.forLockMode = ForLockMode.UPDATE;
     }
 
     @Override
     public final void setForNoKeyUpdate(boolean forNoKeyUpdate) {
-        this.forUpdateLockMode = ForUpdateLockMode.NO_KEY_UPDATE;
+        this.forLockMode = ForLockMode.NO_KEY_UPDATE;
     }
 
     @Override
     public final void setForKeyShare(boolean forKeyShare) {
-        this.forUpdateLockMode = ForUpdateLockMode.KEY_SHARE;
+        this.forLockMode = ForLockMode.KEY_SHARE;
     }
 
     @Override
     public final void setForUpdateOf(Field<?>... fields) {
-        setForUpdateOf(Arrays.asList(fields));
+        setForLockModeOf(fields);
     }
 
     @Override
     public final void setForUpdateOf(Collection<? extends Field<?>> fields) {
-        setForUpdate(true);
-        forUpdateOf = new QueryPartList<>(fields);
-        forUpdateOfTables = null;
+        setForLockModeOf(fields);
     }
 
     @Override
     public final void setForUpdateOf(Table<?>... tables) {
-        setForUpdate(true);
-        forUpdateOf = null;
-        forUpdateOfTables = new TableList(Arrays.asList(tables));
+        setForLockModeOf(tables);
     }
 
     @Override
     public final void setForUpdateWait(int seconds) {
-        setForUpdate(true);
-        forUpdateWaitMode = ForUpdateWaitMode.WAIT;
-        forUpdateWait = seconds;
+        setForLockModeWait(seconds);
     }
 
     @Override
     public final void setForUpdateNoWait() {
-        setForUpdate(true);
-        forUpdateWaitMode = ForUpdateWaitMode.NOWAIT;
-        forUpdateWait = 0;
+        setForLockModeNoWait();
     }
 
     @Override
     public final void setForUpdateSkipLocked() {
-        setForUpdate(true);
-        forUpdateWaitMode = ForUpdateWaitMode.SKIP_LOCKED;
-        forUpdateWait = 0;
+        setForLockModeSkipLocked();
     }
 
     @Override
     public final void setForShare(boolean forShare) {
-        this.forUpdateLockMode = ForUpdateLockMode.SHARE;
-        this.forUpdateOf = null;
-        this.forUpdateOfTables = null;
-        this.forUpdateWaitMode = null;
-        this.forUpdateWait = 0;
+        this.forLockMode = ForLockMode.SHARE;
+    }
+
+    @Override
+    public final void setForLockModeOf(Field<?>... fields) {
+        setForLockModeOf(Arrays.asList(fields));
+    }
+
+    @Override
+    public final void setForLockModeOf(Collection<? extends Field<?>> fields) {
+        initLockMode();
+        forLockOf = new QueryPartList<>(fields);
+        forLockOfTables = null;
+    }
+
+    @Override
+    public final void setForLockModeOf(Table<?>... tables) {
+        initLockMode();
+        forLockOf = null;
+        forLockOfTables = new TableList(Arrays.asList(tables));
+    }
+
+    @Override
+    public final void setForLockModeWait(int seconds) {
+        initLockMode();
+        forLockWaitMode = ForLockWaitMode.WAIT;
+        forLockWait = seconds;
+    }
+
+    @Override
+    public final void setForLockModeNoWait() {
+        initLockMode();
+        forLockWaitMode = ForLockWaitMode.NOWAIT;
+        forLockWait = 0;
+    }
+
+    @Override
+    public final void setForLockModeSkipLocked() {
+        initLockMode();
+        forLockWaitMode = ForLockWaitMode.SKIP_LOCKED;
+        forLockWait = 0;
+    }
+
+    private final void initLockMode() {
+        forLockMode = forLockMode == null ? ForLockMode.UPDATE : forLockMode;
     }
 
 
@@ -2578,7 +2610,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @Override
     final boolean isForUpdate() {
-        return forUpdateLockMode == ForUpdateLockMode.UPDATE;
+        return forLockMode == ForLockMode.UPDATE;
     }
 
     @Override
@@ -2960,7 +2992,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     /**
      * The lock mode for the <code>FOR UPDATE</code> clause, if set.
      */
-    private static enum ForUpdateLockMode {
+    private static enum ForLockMode {
         UPDATE("update"),
         NO_KEY_UPDATE("no key update"),
         SHARE("share"),
@@ -2970,7 +3002,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         private final Keyword keyword;
 
-        private ForUpdateLockMode(String sql) {
+        private ForLockMode(String sql) {
             this.keyword = DSL.keyword(sql);
         }
 
@@ -2982,7 +3014,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     /**
      * The wait mode for the <code>FOR UPDATE</code> clause, if set.
      */
-    private static enum ForUpdateWaitMode {
+    private static enum ForLockWaitMode {
         WAIT("wait"),
         NOWAIT("nowait"),
         SKIP_LOCKED("skip locked"),
@@ -2991,7 +3023,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         private final Keyword keyword;
 
-        private ForUpdateWaitMode(String sql) {
+        private ForLockWaitMode(String sql) {
             this.keyword = DSL.keyword(sql);
         }
 

@@ -129,8 +129,7 @@ public interface SelectForUpdateStep<R extends Record> extends SelectOptionStep<
      * {@link SQLDialect#ORACLE}. These incompatibilities are not reflected by
      * the jOOQ API.
      *
-     * @see SelectQuery#setForUpdate(boolean) see LockProvider for more
-     *      details
+     * @see SelectQuery#setForUpdate(boolean)
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     SelectForUpdateOfStep<R> forUpdate();
@@ -138,8 +137,7 @@ public interface SelectForUpdateStep<R extends Record> extends SelectOptionStep<
     /**
      * Add a <code>FOR NO KEY UPDATE</code> clause to the end of the query.
      *
-     * @see SelectQuery#setForShare(boolean) see LockProvider for more
-     *      details
+     * @see SelectQuery#setForShare(boolean)
      */
     @Support({ POSTGRES })
     SelectForUpdateOfStep<R> forNoKeyUpdate();
@@ -147,17 +145,15 @@ public interface SelectForUpdateStep<R extends Record> extends SelectOptionStep<
     /**
      * Add a <code>FOR SHARE</code> clause to the end of the query.
      *
-     * @see SelectQuery#setForShare(boolean) see LockProvider for more
-     *      details
+     * @see SelectQuery#setForShare(boolean)
      */
     @Support({ MARIADB, MYSQL, POSTGRES })
-    SelectOptionStep<R> forShare();
+    SelectForUpdateOfStep<R> forShare();
 
     /**
      * Add a <code>FOR KEY SHARE</code> clause to the end of the query.
      *
-     * @see SelectQuery#setForShare(boolean) see LockProvider for more
-     *      details
+     * @see SelectQuery#setForShare(boolean)
      */
     @Support({ POSTGRES })
     SelectForUpdateOfStep<R> forKeyShare();

@@ -857,7 +857,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void setWithTies(boolean withTies);
 
     /**
-     * Sets the "FOR UPDATE" flag onto the query.
+     * Sets the "FOR UPDATE" lock mode onto the query.
      * <p>
      * <h5>Native implementation</h5>
      * <p>
@@ -920,7 +920,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void setForUpdate(boolean forUpdate);
 
     /**
-     * Sets the "FOR NO KEY UPDATE" flag onto the query.
+     * Sets the "FOR NO KEY UPDATE" lock mode onto the query.
      */
     @Support({ POSTGRES })
     void setForNoKeyUpdate(boolean forNoKeyUpdate);
@@ -948,7 +948,10 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * further details
      *
      * @param fields The fields that should be locked
+     *
+     * @deprecated [#5218] - 3.14.0 - Use {@link #setForLockModeOf(Field...)}
      */
+    @Deprecated
     @Support({ DERBY, FIREBIRD, H2, HSQLDB })
     void setForUpdateOf(Field<?>... fields);
 
@@ -958,7 +961,10 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * <p>
      *
      * @see #setForUpdateOf(Field...)
+     *
+     * @deprecated [#5218] - 3.14.0 - Use {@link #setForLockModeOf(Collection)}
      */
+    @Deprecated
     @Support({ DERBY, FIREBIRD, H2, HSQLDB })
     void setForUpdateOf(Collection<? extends Field<?>> fields);
 
@@ -987,7 +993,10 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * </ul>
      *
      * @param tables The tables that should be locked
+     *
+     * @deprecated [#5218] - 3.14.0 - Use {@link #setForLockModeOf(Table...)}
      */
+    @Deprecated
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MYSQL, POSTGRES })
     void setForUpdateOf(Table<?>... tables);
 
@@ -1006,7 +1015,10 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * </ul>
      *
      * @param seconds The number of seconds to wait for a lock
+     *
+     * @deprecated [#5218] - 3.14.0 - Use {@link #setForLockModeWait(int)}
      */
+    @Deprecated
     @Support({ MARIADB })
     void setForUpdateWait(int seconds);
 
@@ -1022,7 +1034,10 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * <ul>
      * <li>Oracle</li>
      * </ul>
+     *
+     * @deprecated [#5218] - 3.14.0 - Use {@link #setForLockModeNoWait()}
      */
+    @Deprecated
     @Support({ MARIADB, MYSQL, POSTGRES })
     void setForUpdateNoWait();
 
@@ -1038,12 +1053,15 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * <ul>
      * <li>Oracle</li>
      * </ul>
+     *
+     * @deprecated [#5218] - 3.14.0 - Use {@link #setForLockModeSkipLocked()}
      */
+    @Deprecated
     @Support({ MYSQL, POSTGRES })
     void setForUpdateSkipLocked();
 
     /**
-     * Sets the "FOR SHARE" flag onto the query.
+     * Sets the "FOR SHARE" lock mode onto the query.
      * <p>
      * This has been observed to be supported by any of these dialects:
      * <ul>
@@ -1067,10 +1085,101 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void setForShare(boolean forShare);
 
     /**
-     * Sets the "FOR KEY SHARE" flag onto the query.
+     * Sets the "FOR KEY SHARE" lock mode onto the query.
      */
     @Support({ POSTGRES })
     void setForKeyShare(boolean forKeyShare);
+
+    /**
+     * Some RDBMS allow for specifying the fields that should be locked by the
+     * <code>FOR &lt;lock_mode&gt;</code> clause, instead of the full row.
+     * <p>
+     * In case no lock mode has been set yet, it will implicitly be set to
+     * <code>UPDATE</code> (i.e. {@link #setForUpdate(boolean)}).
+     * <p>
+     * Depending on the dialect and lock mode this flag may or may not be
+     * supported.
+     * <p>
+     * Note, that {@link SQLDialect#DB2} has some stricter requirements
+     * regarding the updatability of fields. Refer to the DB2 documentation for
+     * further details
+     *
+     * @param fields The fields that should be locked
+     */
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB })
+    void setForLockModeOf(Field<?>... fields);
+
+    /**
+     * Some RDBMS allow for specifying the fields that should be locked by the
+     * <code>FOR &lt;lock_mode&gt;</code> clause, instead of the full row.
+     * <p>
+     *
+     * @see #setForLockModeOf(Field...)
+     */
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB })
+    void setForLockModeOf(Collection<? extends Field<?>> fields);
+
+    /**
+     * Some RDBMS allow for specifying the tables that should be locked by the
+     * <code>FOR &lt;lock_mode&gt;</code> clause, instead of the full row.
+     * <p>
+     * In case no lock mode has been set yet, it will implicitly be set to
+     * <code>UPDATE</code> (i.e. {@link #setForUpdate(boolean)}).
+     * <p>
+     * Depending on the dialect and lock mode this flag may or may not be
+     * supported.
+     *
+     * @param tables The tables that should be locked
+     */
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MYSQL, POSTGRES })
+    void setForLockModeOf(Table<?>... tables);
+
+    /**
+     * Some RDBMS allow for specifying the locking mode for the applied
+     * <code>FOR &lt;lock_mode&gt;</code> clause. In this case, the session will
+     * wait for some <code>seconds</code>, before aborting the lock acquirement
+     * if the lock is not available.
+     * <p>
+     * In case no lock mode has been set yet, it will implicitly be set to
+     * <code>UPDATE</code> (i.e. {@link #setForUpdate(boolean)}).
+     * <p>
+     * Depending on the dialect and lock mode this flag may or may not be
+     * supported.
+     *
+     * @param seconds The number of seconds to wait for a lock
+     */
+    @Support({ MARIADB })
+    void setForLockModeWait(int seconds);
+
+    /**
+     * Some RDBMS allow for specifying the locking mode for the applied
+     * <code>FOR &lt;lock_mode&gt;</code> clause. In this case, the session will
+     * not wait before aborting the lock acquirement if the lock is not
+     * available.
+     * <p>
+     * In case no lock mode has been set yet, it will implicitly be set to
+     * <code>UPDATE</code> (i.e. {@link #setForUpdate(boolean)}).
+     * <p>
+     * Depending on the dialect and lock mode this flag may or may not be
+     * supported.
+     */
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    void setForLockModeNoWait();
+
+    /**
+     * Some RDBMS allow for specifying the locking mode for the applied
+     * <code>FOR &lt;lock_mode&gt;</code> clause. In this case, the session will
+     * skip all locked rows from the select statement, whose lock is not
+     * available.
+     * <p>
+     * In case no lock mode has been set yet, it will implicitly be set to
+     * <code>UPDATE</code> (i.e. {@link #setForUpdate(boolean)}).
+     * <p>
+     * Depending on the dialect and lock mode this flag may or may not be
+     * supported.
+     */
+    @Support({ MYSQL, POSTGRES })
+    void setForLockModeSkipLocked();
 
 
 

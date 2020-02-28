@@ -41,6 +41,7 @@ package org.jooq.impl;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.H2;
 // ...
@@ -98,19 +99,27 @@ final class Overlay extends AbstractField<String> {
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (length != null) {
+        Field<? extends Number> l = length;
+
+
+
+
+
+
+
+        if (l != null) {
             if (NO_SUPPORT.contains(ctx.family())) {
                 ctx.visit(
                     DSL.substring(in, inline(1), startIndex.minus(inline(1)))
                        .concat(placing)
-                       .concat(DSL.substring(in, startIndex.plus(length)))
+                       .concat(DSL.substring(in, startIndex.plus(l)))
                 );
             }
             else {
                 ctx.visit(F_OVERLAY).sql('(').visit(in).sql(' ')
                    .visit(K_PLACING).sql(' ').visit(placing).sql(' ')
                    .visit(K_FROM).sql(' ').visit(startIndex).sql(' ')
-                   .visit(K_FOR).sql(' ').visit(length).sql(')');
+                   .visit(K_FOR).sql(' ').visit(l).sql(')');
             }
         }
         else {

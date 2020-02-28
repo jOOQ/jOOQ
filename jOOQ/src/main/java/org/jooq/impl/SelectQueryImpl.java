@@ -75,6 +75,7 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
@@ -210,6 +211,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private static final Set<SQLDialect> EMULATE_SELECT_INTO_AS_CTAS     = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE);
     private static final Set<SQLDialect> NO_SUPPORT_FOR_UPDATE           = SQLDialect.supportedBy(CUBRID);
     private static final Set<SQLDialect> NO_SUPPORT_FOR_UPDATE_QUALIFIED = SQLDialect.supportedBy(DERBY, FIREBIRD, H2, HSQLDB);
+    private static final Set<SQLDialect> NO_SUPPORT_STANDARD_FOR_SHARE   = SQLDialect.supportedUntil(MARIADB);
     private static final Set<SQLDialect> SUPPORT_SELECT_INTO_TABLE       = SQLDialect.supportedBy(HSQLDB, POSTGRES);
 
 
@@ -739,29 +741,14 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                         break;
 
                     case SHARE:
-                        switch (family) {
-
-                            // MySQL has a non-standard implementation for the "FOR SHARE" clause
-
-
-
-
-
-                            case MARIADB:
-                            case MYSQL:
-                                context.formatSeparator()
-                                       .visit(K_LOCK_IN_SHARE_MODE);
-                                break;
-
-                            // Postgres is known to implement the "FOR SHARE" clause like this
-                            default:
-                                context.formatSeparator()
-                                       .visit(K_FOR)
-                                       .sql(' ')
-                                       .visit(forLockMode.toKeyword());
-                                break;
-                        }
-
+                        if (NO_SUPPORT_STANDARD_FOR_SHARE.contains(dialect))
+                            context.formatSeparator()
+                                .visit(K_LOCK_IN_SHARE_MODE);
+                        else
+                            context.formatSeparator()
+                                .visit(K_FOR)
+                                .sql(' ')
+                                .visit(forLockMode.toKeyword());
                         break;
 
                     case KEY_SHARE:

@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 /**
  * An <code>FunctionalInterface</code> that wraps transactional code.
  * <p>
@@ -70,4 +73,27 @@ public interface TransactionalRunnable {
      *             before executing this <code>TransactionalRunnable</code>.
      */
     void run(Configuration configuration) throws Throwable;
+
+
+
+    /**
+     * Wrap a set of nested {@link TransactionalRunnable} objects in a single
+     * global {@link TransactionalRunnable}.
+     */
+    static TransactionalRunnable of(TransactionalRunnable... runnables) {
+        return of(Arrays.asList(runnables));
+    }
+
+    /**
+     * Wrap a set of nested {@link TransactionalRunnable} objects in a single
+     * global {@link TransactionalRunnable}.
+     */
+    static TransactionalRunnable of(Collection<? extends TransactionalRunnable> runnables) {
+        return configuration -> {
+            for (TransactionalRunnable runnable : runnables)
+                configuration.dsl().transaction(runnable);
+        };
+    }
+
+
 }

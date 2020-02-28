@@ -37,6 +37,10 @@
  */
 package org.jooq;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.stream.Collector;
+
 /**
  * An <code>FunctionalInterface</code> that wraps transactional code.
  * <p>
@@ -71,4 +75,50 @@ public interface TransactionalCallable<T> {
      *             before executing this <code>TransactionalCallable</code>.
      */
     T run(Configuration configuration) throws Throwable;
+
+
+
+    /**
+     * Wrap a set of nested {@link TransactionalCallable} objects in a single
+     * global {@link TransactionalCallable}, returning the last callable's
+     * result.
+     */
+    @SafeVarargs
+    static <T> TransactionalCallable<T> of(TransactionalCallable<T>... callables) {
+        return of(Arrays.asList(callables));
+    }
+
+    /**
+     * Wrap a set of nested {@link TransactionalCallable} objects in a single
+     * global {@link TransactionalCallable}, returning the last callable's
+     * result.
+     */
+    static <T> TransactionalCallable<T> of(Collection<? extends TransactionalCallable<T>> callables) {
+        return configuration -> {
+            T result = null;
+
+            for (TransactionalCallable<T> callable : callables)
+                result = configuration.dsl().transactionResult(callable);
+
+            return result;
+        };
+    }
+
+    /**
+     * Wrap a set of nested {@link TransactionalCallable} objects in a single
+     * global {@link TransactionalCallable}, collecting the callables' results.
+     */
+    static <T, R> TransactionalCallable<R> of(TransactionalCallable<T>[] callables, Collector<T, ?, R> collector) {
+        return of(Arrays.asList(callables), collector);
+    }
+
+    /**
+     * Wrap a set of nested {@link TransactionalCallable} objects in a single
+     * global {@link TransactionalCallable}, collecting the callables' results.
+     */
+    static <T, R> TransactionalCallable<R> of(Collection<? extends TransactionalCallable<T>> callables, Collector<T, ?, R> collector) {
+        return configuration -> callables.stream().map(configuration.dsl()::transactionResult).collect(collector);
+    }
+
+
 }

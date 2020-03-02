@@ -6522,7 +6522,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         // Check for ENUM types
         else if (db.getEnum(schema, u) != null) {
-            type = getStrategy().getFullJavaClassName(db.getEnum(schema, u));
+            type = getStrategy().getFullJavaClassName(db.getEnum(schema, u), Mode.ENUM);
         }
 
         // Check for UDTs
@@ -6599,7 +6599,7 @@ public class JavaGenerator extends AbstractGenerator {
                 db, schema, DefaultDataType.getDataType(db.getDialect(), String.class).getTypeName(), l, p, s, n, d, (Name) null
             )));
             sb.append(".asEnumDataType(");
-            sb.append(classOf(getStrategy().getFullJavaClassName(db.getEnum(schema, u))));
+            sb.append(classOf(getStrategy().getFullJavaClassName(db.getEnum(schema, u), Mode.ENUM)));
             sb.append(")");
         }
         else {

@@ -141,14 +141,20 @@ public enum Comparator {
 
     /**
      * Whether this comparator supports quantifiers on the right-hand side.
+     *
+     * @deprecated - 3.14.0 - [#9911] - This method is no longer supported.
      */
+    @Deprecated
     public boolean supportsQuantifier() {
         return supportsQuantifier;
     }
 
     /**
      * Whether this comparator supports subselects on the right-hand side.
+     *
+     * @deprecated - 3.14.0 - [#9911] - This method is no longer supported.
      */
+    @Deprecated
     public boolean supportsSubselect() {
         return supportsSubselect;
     }

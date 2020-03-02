@@ -41,15 +41,32 @@ package org.jooq.impl;
 
 import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_BETWEEN;
-import static org.jooq.Comparator.LIKE;
-import static org.jooq.Comparator.LIKE_IGNORE_CASE;
-import static org.jooq.Comparator.NOT_LIKE;
-import static org.jooq.Comparator.NOT_LIKE_IGNORE_CASE;
-import static org.jooq.Comparator.NOT_SIMILAR_TO;
-import static org.jooq.Comparator.SIMILAR_TO;
 // ...
+// ...
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.CUBRID;
+// ...
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
+// ...
+import static org.jooq.SQLDialect.HSQLDB;
+// ...
+// ...
+import static org.jooq.SQLDialect.MARIADB;
+// ...
+import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+// ...
+// ...
+import static org.jooq.SQLDialect.SQLITE;
+// ...
+// ...
+// ...
+// ...
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.row;
@@ -60,7 +77,6 @@ import static org.jooq.impl.Tools.isEmbeddable;
 import static org.jooq.tools.Convert.convert;
 
 import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 
@@ -83,10 +99,11 @@ import org.jooq.Table;
  */
 final class QuantifiedComparisonCondition extends AbstractCondition implements LikeEscapeStep {
 
-    private static final long                serialVersionUID           = -402776705884329740L;
-    private static final Clause[]            CLAUSES                    = { CONDITION, CONDITION_BETWEEN };
-    private static final EnumSet<Comparator> SYNTHETIC_OPERATORS        = EnumSet.of(LIKE, NOT_LIKE, LIKE_IGNORE_CASE, NOT_LIKE_IGNORE_CASE, SIMILAR_TO, NOT_SIMILAR_TO);
-    private static final Set<SQLDialect>     SUPPORTS_QUANTIFIED_ARRAYS = SQLDialect.supportedBy(POSTGRES);
+    private static final long                serialVersionUID                 = -402776705884329740L;
+    private static final Clause[]            CLAUSES                          = { CONDITION, CONDITION_BETWEEN };
+    private static final Set<SQLDialect>     NO_SUPPORT_QUANTIFIED_LIKE       = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, SQLITE);
+    private static final Set<SQLDialect>     NO_SUPPORT_QUANTIFIED_SIMILAR_TO = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE);
+    private static final Set<SQLDialect>     SUPPORTS_QUANTIFIED_ARRAYS       = SQLDialect.supportedBy(POSTGRES);
 
     private final QuantifiedSelectImpl<?>    query;
     private final Field<?>                   field;
@@ -115,12 +132,28 @@ final class QuantifiedComparisonCondition extends AbstractCondition implements L
 
     @SuppressWarnings({ "unchecked" })
     private final void accept0(Context<?> ctx) {
-        boolean syntheticOperator = SYNTHETIC_OPERATORS.contains(comparator);
         boolean quantifiedArray = query.array instanceof Param<?>;
+        boolean emulateOperator;
+
+        switch (comparator) {
+            case LIKE:
+            case NOT_LIKE:
+            case LIKE_IGNORE_CASE:
+            case NOT_LIKE_IGNORE_CASE:
+                emulateOperator = escape != null || NO_SUPPORT_QUANTIFIED_LIKE.contains(ctx.dialect());
+                break;
+            case SIMILAR_TO:
+            case NOT_SIMILAR_TO:
+                emulateOperator = escape != null || NO_SUPPORT_QUANTIFIED_SIMILAR_TO.contains(ctx.dialect());
+                break;
+            default:
+                emulateOperator = false;
+                break;
+        }
 
         // [#9224] Special case when a SQL dialect actually supports quantified
         //         arrays, such as x = any(?::int[]) in PostgreSQL
-        if (quantifiedArray && SUPPORTS_QUANTIFIED_ARRAYS.contains(ctx.family()) && !syntheticOperator) {
+        if (quantifiedArray && SUPPORTS_QUANTIFIED_ARRAYS.contains(ctx.family()) && !emulateOperator) {
             accept1(ctx);
         }
         else if (query.values != null || quantifiedArray) {
@@ -135,7 +168,7 @@ final class QuantifiedComparisonCondition extends AbstractCondition implements L
 
             ctx.visit(CombinedCondition.of(query.quantifier == Quantifier.ALL ? Operator.AND : Operator.OR, conditions));
         }
-        else if ((query.array != null || query.query != null) && syntheticOperator) {
+        else if ((query.array != null || query.query != null) && emulateOperator) {
             Field<String> pattern = DSL.field(name("pattern"), VARCHAR);
             Condition cond;
             Field<Boolean> lhs;
@@ -167,10 +200,10 @@ final class QuantifiedComparisonCondition extends AbstractCondition implements L
 
     private final void accept1(Context<?> ctx) {
         ctx.visit(field)
-        .sql(' ')
-        .visit(comparator.toKeyword())
-        .sql(' ')
-        .visit(query);
+           .sql(' ')
+           .visit(comparator.toKeyword())
+           .sql(' ')
+           .visit(query);
     }
 
     private Comparator inverse(Comparator operator) {

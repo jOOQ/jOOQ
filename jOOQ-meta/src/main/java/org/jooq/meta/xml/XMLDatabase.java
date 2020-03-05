@@ -38,6 +38,7 @@
 
 package org.jooq.meta.xml;
 
+import static java.lang.Boolean.FALSE;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.tools.StringUtils.defaultIfBlank;
 import static org.jooq.tools.StringUtils.defaultIfNull;
@@ -111,7 +112,6 @@ import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.util.jaxb.tools.MiniJAXB;
 import org.jooq.util.xml.jaxb.CheckConstraint;
-import org.jooq.util.xml.jaxb.Column;
 import org.jooq.util.xml.jaxb.Index;
 import org.jooq.util.xml.jaxb.IndexColumnUsage;
 import org.jooq.util.xml.jaxb.InformationSchema;
@@ -357,7 +357,7 @@ public class XMLDatabase extends AbstractDatabase {
             TableConstraint tc = tableConstraint(usage.getConstraintCatalog(), usage.getConstraintSchema(), usage.getConstraintName());
             TableDefinition table = getTable(schema, tableName);
             if (table != null)
-                relations.addPrimaryKey(key, table, table.getColumn(columnName), tc.isEnforced());
+                relations.addPrimaryKey(key, table, table.getColumn(columnName), tc != null && !FALSE.equals(tc.isEnforced()));
         }
     }
 
@@ -372,7 +372,7 @@ public class XMLDatabase extends AbstractDatabase {
             TableConstraint tc = tableConstraint(usage.getConstraintCatalog(), usage.getConstraintSchema(), usage.getConstraintName());
             TableDefinition table = getTable(schema, tableName);
             if (table != null)
-                relations.addUniqueKey(key, table, table.getColumn(columnName), tc.isEnforced());
+                relations.addUniqueKey(key, table, table.getColumn(columnName), tc != null && !FALSE.equals(tc.isEnforced()));
         }
     }
 
@@ -432,7 +432,7 @@ public class XMLDatabase extends AbstractDatabase {
                         TableConstraint fktc = tableConstraint(fk.getConstraintCatalog(), fk.getConstraintSchema(), fk.getConstraintName());
                         TableConstraint uktc = tableConstraint(fk.getUniqueConstraintCatalog(), fk.getUniqueConstraintSchema(), fk.getUniqueConstraintName());
 
-                        if (uktc != null) {
+                        if (fktc != null && uktc != null) {
                             TableDefinition foreignKeyTable = getTable(foreignKeySchema, foreignKeyTableName);
                             TableDefinition uniqueKeyTable = getTable(uniqueKeySchema, uktc.getTableName());
 
@@ -443,7 +443,7 @@ public class XMLDatabase extends AbstractDatabase {
                                     foreignKeyTable.getColumn(foreignKeyColumn),
                                     uniqueKey,
                                     uniqueKeyTable,
-                                    fktc.isEnforced()
+                                    !FALSE.equals(fktc.isEnforced())
                                 );
                         }
                     }
@@ -482,7 +482,13 @@ public class XMLDatabase extends AbstractDatabase {
             if (table == null)
                 continue constraintLoop;
 
-            r.addCheckConstraint(table, new DefaultCheckConstraintDefinition(schema, table, check.getConstraintName(), check.getCheckClause(), tc.isEnforced()));
+            r.addCheckConstraint(table, new DefaultCheckConstraintDefinition(
+                schema,
+                table,
+                check.getConstraintName(),
+                check.getCheckClause(),
+                !FALSE.equals(tc.isEnforced())
+            ));
         }
     }
 

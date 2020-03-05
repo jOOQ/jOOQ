@@ -3532,7 +3532,7 @@ final class ParserImpl implements Parser {
                     nullable = true;
                     continue;
                 }
-                else if (parseKeywordIf(ctx, "NOT NULL")) {
+                else if (parseKeywordIf(ctx, "NOT NULL") && (parseKeywordIf(ctx, "ENABLE") || true)) {
                     type = type.nullable(false);
                     nullable = true;
                     continue;
@@ -4171,7 +4171,7 @@ final class ParserImpl implements Parser {
 
         if (parseKeywordIf(ctx, "NULL"))
             type = type.nullable(true);
-        else if (parseKeywordIf(ctx, "NOT NULL"))
+        else if (parseKeywordIf(ctx, "NOT NULL") && (parseKeywordIf(ctx, "ENABLE") || true))
             type = type.nullable(false);
 
         if (paren)

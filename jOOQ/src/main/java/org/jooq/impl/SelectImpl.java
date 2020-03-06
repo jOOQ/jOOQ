@@ -112,6 +112,8 @@ import org.jooq.SelectConnectByAfterStartWithStep;
 import org.jooq.SelectConnectByConditionStep;
 import org.jooq.SelectFieldOrAsterisk;
 import org.jooq.SelectFinalStep;
+// ...
+// ...
 import org.jooq.SelectForUpdateOfStep;
 // ...
 // ...
@@ -199,6 +201,8 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     SelectSeekStep20<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>,
     SelectSeekStep21<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>,
     SelectSeekStep22<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>,
+
+
 
 
 
@@ -1833,6 +1837,40 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
         getQuery().setForKeyShare(true);
         return this;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

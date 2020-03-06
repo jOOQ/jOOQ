@@ -266,6 +266,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
+
     private final TableList                              from;
     private final ConditionProviderImpl                  condition;
     private final ConditionProviderImpl                  connectBy;
@@ -492,6 +494,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // [#1808] TODO: Restrict this field list, in case a restricting fetch()
         // method was called to get here
         if (fields == null || fields.isEmpty())
+
+
 
 
 
@@ -849,17 +853,15 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
             // [#1952] SQL Server OPTION() clauses as well as many other optional
             // end-of-query clauses are appended to the end of a query
-            if (!StringUtils.isBlank(option)) {
+            if (!StringUtils.isBlank(option))
                 context.formatSeparator()
                        .sql(option);
-            }
 
-            if (TRUE.equals(wrapDerivedTables)) {
+            if (TRUE.equals(wrapDerivedTables))
                 context.formatIndentEnd()
                        .formatNewLine()
                        .sql(')')
                        .data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES, true);
-            }
 
 
 
@@ -2186,6 +2188,44 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private final void initLockMode() {
         forLockMode = forLockMode == null ? ForLockMode.UPDATE : forLockMode;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

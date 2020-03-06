@@ -1084,6 +1084,7 @@ final class ParserImpl implements Parser {
             parseLimit(ctx, result, true);
         }
 
+        forClause:
         if (parseKeywordIf(ctx, "FOR")) {
             if (parseKeywordIf(ctx, "KEY SHARE"))
                 result.setForKeyShare(true);
@@ -1093,8 +1094,74 @@ final class ParserImpl implements Parser {
                 result.setForShare(true);
             else if (parseKeywordIf(ctx, "UPDATE"))
                 result.setForUpdate(true);
+            else if (parseKeywordIf(ctx, "XML") && ctx.requireProEdition()) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            }
+            else if (parseKeywordIf(ctx, "JSON") && ctx.requireProEdition()) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            }
             else
-                throw ctx.expected("UPDATE", "NO KEY UPDATE", "SHARE", "KEY SHARE");
+                throw ctx.expected("UPDATE", "NO KEY UPDATE", "SHARE", "KEY SHARE", "XML", "JSON");
 
             if (parseKeywordIf(ctx, "OF"))
                 result.setForUpdateOf(parseFields(ctx));

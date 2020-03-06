@@ -43,11 +43,7 @@ import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.DSL.values;
-import static org.jooq.impl.Keywords.K_AUTO;
-import static org.jooq.impl.Keywords.K_FOR;
-import static org.jooq.impl.Keywords.K_JSON;
 import static org.jooq.impl.Keywords.K_JSON_OBJECT;
-import static org.jooq.impl.Keywords.K_WITHOUT_ARRAY_WRAPPER;
 import static org.jooq.impl.Names.N_JSON_OBJECT;
 import static org.jooq.impl.Names.N_T;
 
@@ -90,7 +86,6 @@ final class JSONObject<J> extends AbstractField<J> {
             case POSTGRES:
                 ctx.visit(unquotedName("json_build_object")).sql('(').visit(args).sql(')');
                 break;
-
 
 
 

@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
+import static java.util.Arrays.asList;
 import static org.jooq.Clause.SELECT;
 import static org.jooq.Clause.SELECT_CONNECT_BY;
 import static org.jooq.Clause.SELECT_EXCEPT;
@@ -257,6 +258,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private ForLockMode                                  forLockMode;
     private ForLockWaitMode                              forLockWaitMode;
     private int                                          forLockWait;
+
+
 
 
 
@@ -489,6 +492,13 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // [#1808] TODO: Restrict this field list, in case a restricting fetch()
         // method was called to get here
         if (fields == null || fields.isEmpty())
+
+
+
+
+
+
+
             fields = getSelect();
 
         // If no projection was specified explicitly, create fields from result
@@ -818,6 +828,12 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                     }
                 }
             }
+
+
+
+
+
+
 
 
 
@@ -2170,6 +2186,58 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private final void initLockMode() {
         forLockMode = forLockMode == null ? ForLockMode.UPDATE : forLockMode;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

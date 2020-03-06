@@ -104,7 +104,7 @@ import static org.jooq.SQLDialect.POSTGRES;
  *
  * @author Lukas Eder
  */
-public interface SelectForUpdateWaitStep<R extends Record> extends SelectOptionStep<R> {
+public interface SelectForUpdateWaitStep<R extends Record> extends SelectForStep<R> {
 
     /**
      * Add a <code>WAIT</code> clause to the <code>FOR &lt;lock_mode&gt;</code>
@@ -115,7 +115,7 @@ public interface SelectForUpdateWaitStep<R extends Record> extends SelectOptionS
      * @see SelectQuery#setForLockModeWait(int)
      */
     @Support({ MARIADB })
-    SelectOptionStep<R> wait(int seconds);
+    SelectForStep<R> wait(int seconds);
 
     /**
      * Add a <code>NOWAIT</code> clause to the
@@ -124,7 +124,7 @@ public interface SelectForUpdateWaitStep<R extends Record> extends SelectOptionS
      * @see SelectQuery#setForLockModeNoWait()
      */
     @Support({ MARIADB, MYSQL, POSTGRES })
-    SelectOptionStep<R> noWait();
+    SelectForStep<R> noWait();
 
     /**
      * Add a <code>WAIT</code> clause to the <code>FOR &lt;lock_mode&gt;</code>
@@ -133,5 +133,5 @@ public interface SelectForUpdateWaitStep<R extends Record> extends SelectOptionS
      * @see SelectQuery#setForLockModeSkipLocked()
      */
     @Support({ MYSQL, POSTGRES })
-    SelectOptionStep<R> skipLocked();
+    SelectForStep<R> skipLocked();
 }

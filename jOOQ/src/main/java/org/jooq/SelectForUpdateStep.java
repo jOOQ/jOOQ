@@ -118,7 +118,7 @@ import static org.jooq.SQLDialect.POSTGRES;
  *
  * @author Lukas Eder
  */
-public interface SelectForUpdateStep<R extends Record> extends SelectOptionStep<R> {
+public interface SelectForUpdateStep<R extends Record> extends SelectForStep<R> {
 
     /**
      * Add a <code>FOR UPDATE</code> clause to the end of the query.

@@ -137,6 +137,7 @@ final class Keywords {
     static final Keyword K_DROP_SCHEMA                      = keyword("drop schema");
     static final Keyword K_DROP_TABLE                       = keyword("drop table");
     static final Keyword K_DROP_VIEW                        = keyword("drop view");
+    static final Keyword K_ELEMENTS                         = keyword("elements");
     static final Keyword K_ELSE                             = keyword("else");
     static final Keyword K_ELSEIF                           = keyword("elseif");
     static final Keyword K_ELSIF                            = keyword("elsif");
@@ -270,6 +271,7 @@ final class Keywords {
     static final Keyword K_OVERLAPS                         = keyword("overlaps");
     static final Keyword K_PARTITION_BY                     = keyword("partition by");
     static final Keyword K_PASSING                          = keyword("passing");
+    static final Keyword K_PATH                             = keyword("path");
     static final Keyword K_PERCENT                          = keyword("percent");
     static final Keyword K_PERIOD                           = keyword("period");
     static final Keyword K_PIVOT                            = keyword("pivot");
@@ -307,6 +309,8 @@ final class Keywords {
     static final Keyword K_RETURNING                        = keyword("returning");
     static final Keyword K_REVERSE                          = keyword("reverse");
     static final Keyword K_REVOKE                           = keyword("revoke");
+    static final Keyword K_RAW                              = keyword("raw");
+    static final Keyword K_ROOT                             = keyword("root");
     static final Keyword K_ROW                              = keyword("row");
     static final Keyword K_ROWCOUNT                         = keyword("rowcount");
     static final Keyword K_ROWS                             = keyword("rows");
@@ -384,6 +388,7 @@ final class Keywords {
     static final Keyword K_WITH_TIES                        = keyword("with ties");
     static final Keyword K_WITHIN_GROUP                     = keyword("within group");
     static final Keyword K_WITHOUT_ARRAY_WRAPPER            = keyword("without_array_wrapper");
+    static final Keyword K_XML                              = keyword("xml");
     static final Keyword K_XMLTABLE                         = keyword("xmltable");
     static final Keyword K_YEAR                             = keyword("year");
     static final Keyword K_YEAR_MONTH                       = keyword("year_month");

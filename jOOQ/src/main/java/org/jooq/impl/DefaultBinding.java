@@ -169,6 +169,7 @@ import org.jooq.Schema;
 import org.jooq.Scope;
 import org.jooq.TableRecord;
 import org.jooq.UDTRecord;
+import org.jooq.XML;
 import org.jooq.exception.ControlFlowSignal;
 import org.jooq.exception.DataTypeException;
 import org.jooq.exception.MappingException;
@@ -251,6 +252,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             return new DefaultJSONBinding(converter, isLob);
         else if (type == JSONB.class)
             return new DefaultJSONBBinding(converter, isLob);
+        else if (type == XML.class)
+            return new DefaultXMLBinding(converter, isLob);
 
         else if (type == LocalDate.class) {
             DateToLocalDateConverter c1 = new DateToLocalDateConverter();
@@ -4381,6 +4384,51 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+            return Types.VARCHAR;
+        }
+    }
+
+    static final class DefaultXMLBinding<U> extends AbstractBinding<XML, U> {
+
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = 3430629127218407737L;
+
+        DefaultXMLBinding(Converter<XML, U> converter, boolean isLob) {
+            super(converter, isLob);
+        }
+
+        @Override
+        final void set0(BindingSetStatementContext<U> ctx, XML value) throws SQLException {
+            ctx.statement().setString(ctx.index(), value.toString());
+        }
+
+        @Override
+        final void set0(BindingSetSQLOutputContext<U> ctx, XML value) throws SQLException {
+            ctx.output().writeString(value.toString());
+        }
+
+        @Override
+        final XML get0(BindingGetResultSetContext<U> ctx) throws SQLException {
+            String string = ctx.resultSet().getString(ctx.index());
+            return string == null ? null : XML.valueOf(string);
+        }
+
+        @Override
+        final XML get0(BindingGetStatementContext<U> ctx) throws SQLException {
+            String string = ctx.statement().getString(ctx.index());
+            return string == null ? null : XML.valueOf(string);
+        }
+
+        @Override
+        final XML get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
+            String string = ctx.input().readString();
+            return string == null ? null : XML.valueOf(string);
+        }
+
+        @Override
+        final int sqltype(Statement statement, Configuration configuration) {
             return Types.VARCHAR;
         }
     }

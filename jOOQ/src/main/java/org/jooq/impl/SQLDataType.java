@@ -88,6 +88,7 @@ import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.RowId;
 import org.jooq.SQLDialect;
+import org.jooq.XML;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
@@ -675,6 +676,14 @@ public final class SQLDataType {
      * they are supported
      */
     public static final DataType<JSONB> JSONB = new DefaultDataType<>(null, JSONB.class, "jsonb");
+
+    /**
+     * The {@link XML} type.
+     * <p>
+     * This is not a SQL or JDBC standard. This type handles XML types where
+     * they are supported
+     */
+    public static final DataType<XML> XML = new DefaultDataType<>(null, XML.class, "xml");
 
     // -------------------------------------------------------------------------
     // Static initialisation of dialect-specific data types

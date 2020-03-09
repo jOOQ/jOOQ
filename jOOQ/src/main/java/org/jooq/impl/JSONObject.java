@@ -61,6 +61,7 @@ import org.jooq.Field;
 import org.jooq.JSONEntry;
 import org.jooq.JSONObjectNullStep;
 import org.jooq.Name;
+// ...
 
 
 /**
@@ -128,6 +129,15 @@ final class JSONObject<J> extends AbstractField<J> implements JSONObjectNullStep
                     ctx.sql(')');
 
                 break;
+
+
+
+
+
+
+
+
+
 
 
 

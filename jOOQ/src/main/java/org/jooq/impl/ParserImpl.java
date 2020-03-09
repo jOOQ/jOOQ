@@ -420,7 +420,9 @@ import org.jooq.InsertOnDuplicateStep;
 import org.jooq.InsertReturningStep;
 import org.jooq.InsertSetStep;
 import org.jooq.InsertValuesStepN;
+import org.jooq.JSON;
 import org.jooq.JSONEntry;
+import org.jooq.JSONObjectNullStep;
 import org.jooq.JoinType;
 import org.jooq.Keyword;
 // ...
@@ -502,6 +504,7 @@ import org.jooq.conf.RenderNameCase;
 import org.jooq.conf.RenderQuotedNames;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
+import org.jooq.impl.JSONObject.NullClause;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.reflect.Reflect;
 import org.jooq.types.DayToSecond;
@@ -6677,16 +6680,36 @@ final class ParserImpl implements Parser {
                 return DSL.jsonObject();
 
             List<JSONEntry<?>> result = new ArrayList<>();
-            do {
-                result.add(parseJSONEntry(ctx));
+            NullClause nullClause = parseJSONObjectNullClauseIf(ctx);
+
+            if (nullClause == null) {
+                do {
+                    result.add(parseJSONEntry(ctx));
+                }
+                while (parseIf(ctx, ','));
+
+                nullClause = parseJSONObjectNullClauseIf(ctx);
             }
-            while (parseIf(ctx, ','));
             parse(ctx, ')');
 
-            return DSL.jsonObject(result);
+            JSONObjectNullStep<JSON> o = DSL.jsonObject(result);
+            return nullClause == NullClause.NULL_ON_NULL
+                 ? o.nullOnNull()
+                 : nullClause == NullClause.ABSENT_ON_NULL
+                 ? o.absentOnNull()
+                 : o;
         }
 
         return null;
+    }
+
+    private static final NullClause parseJSONObjectNullClauseIf(ParserContext ctx) {
+        if (parseKeywordIf(ctx, "NULL ON NULL"))
+            return NullClause.NULL_ON_NULL;
+        else if (parseKeywordIf(ctx, "ABSENT ON NULL"))
+            return NullClause.ABSENT_ON_NULL;
+        else
+            return null;
     }
 
     private static final JSONEntry<?> parseJSONEntry(ParserContext ctx) {

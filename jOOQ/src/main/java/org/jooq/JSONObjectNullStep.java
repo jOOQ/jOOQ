@@ -38,6 +38,7 @@
 package org.jooq;
 
 import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.POSTGRES;
 
 import org.jooq.impl.DSL;
 
@@ -53,12 +54,12 @@ public interface JSONObjectNullStep<T> extends Field<T> {
     /**
      * Include <code>NULL</code> values in output JSON.
      */
-    @Support({ H2 })
+    @Support({ H2, POSTGRES })
     Field<T> nullOnNull();
 
     /**
      * Exclude <code>NULL</code> values in output JSON.
      */
-    @Support({ H2 })
+    @Support({ H2, POSTGRES })
     Field<T> absentOnNull();
 }

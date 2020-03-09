@@ -119,7 +119,14 @@ final class JSONObject<J> extends AbstractField<J> implements JSONObjectNullStep
 
 
             case POSTGRES:
+                if (nullClause == NullClause.ABSENT_ON_NULL)
+                    ctx.visit(unquotedName("json_strip_nulls")).sql('(');
+
                 ctx.visit(unquotedName("json_build_object")).sql('(').visit(args).sql(')');
+
+                if (nullClause == NullClause.ABSENT_ON_NULL)
+                    ctx.sql(')');
+
                 break;
 
 

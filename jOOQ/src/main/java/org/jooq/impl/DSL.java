@@ -18099,7 +18099,7 @@ public class DSL {
     /**
      * The JSON array constructor.
      */
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static Field<JSON> jsonArray(Field<?>... fields) {
         return jsonArray(Arrays.asList(fields));
     }
@@ -18107,7 +18107,7 @@ public class DSL {
     /**
      * The JSON array constructor.
      */
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static Field<JSON> jsonArray(Collection<? extends Field<?>> fields) {
         return new JSONArray<>(JSON, fields);
     }
@@ -18115,7 +18115,7 @@ public class DSL {
     /**
      * The JSONB array constructor.
      */
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static Field<JSONB> jsonbArray(Field<?>... fields) {
         return jsonbArray(Arrays.asList(fields));
     }
@@ -18123,7 +18123,7 @@ public class DSL {
     /**
      * The JSONB array constructor.
      */
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static Field<JSONB> jsonbArray(Collection<? extends Field<?>> fields) {
         return new JSONArray<>(JSONB, fields);
     }
@@ -18131,7 +18131,7 @@ public class DSL {
     /**
      * A constructor for JSON entries to be used with {@link #jsonObject(JSONEntry...)}.
      */
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static <T> JSONEntry<T> jsonEntry(Field<String> key, Field<T> value) {
         return new JSONEntryImpl<>(key, value);
     }
@@ -18139,7 +18139,7 @@ public class DSL {
     /**
      * The JSON object constructor.
      */
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static Field<JSON> jsonObject(Field<String> key, Field<?> value) {
         return jsonObject(jsonEntry(key, value));
     }
@@ -18147,7 +18147,7 @@ public class DSL {
     /**
      * The JSON object constructor.
      */
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static Field<JSON> jsonObject(JSONEntry<?>... entries) {
         return jsonObject(Arrays.asList(entries));
     }
@@ -18155,7 +18155,7 @@ public class DSL {
     /**
      * The JSON object constructor.
      */
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static Field<JSON> jsonObject(Collection<? extends JSONEntry<?>> entries) {
         return new JSONObject<>(JSON, entries);
     }
@@ -18163,7 +18163,7 @@ public class DSL {
     /**
      * The JSONB object constructor.
      */
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static Field<JSONB> jsonbObject(JSONEntry<?>... entries) {
         return jsonbObject(Arrays.asList(entries));
     }
@@ -18171,7 +18171,7 @@ public class DSL {
     /**
      * The JSONB object constructor.
      */
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static Field<JSONB> jsonbObject(Collection<? extends JSONEntry<?>> entries) {
         return new JSONObject<>(JSONB, entries);
     }

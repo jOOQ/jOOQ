@@ -40,6 +40,8 @@ package org.jooq;
 // ...
 // ...
 import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
@@ -58,7 +60,7 @@ public interface JSONObjectNullStep<T> extends Field<T> {
     /**
      * Include <code>NULL</code> values in output JSON.
      */
-    @Support({ H2, POSTGRES })
+    @Support({ AURORA_POSTGRES, COCKROACHDB, MARIADB, MYSQL, H2, ORACLE12C, POSTGRES, SQLSERVER })
     Field<T> nullOnNull();
 
     /**

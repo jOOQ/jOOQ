@@ -43,7 +43,12 @@ import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.DSL.values;
+import static org.jooq.impl.JSONObject.NullClause.ABSENT_ON_NULL;
+import static org.jooq.impl.JSONObject.NullClause.NULL_ON_NULL;
+import static org.jooq.impl.Keywords.K_ABSENT;
 import static org.jooq.impl.Keywords.K_JSON_OBJECT;
+import static org.jooq.impl.Keywords.K_NULL;
+import static org.jooq.impl.Keywords.K_ON;
 import static org.jooq.impl.Names.N_JSON_OBJECT;
 import static org.jooq.impl.Names.N_T;
 
@@ -53,6 +58,7 @@ import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.JSONEntry;
+import org.jooq.JSONObjectNullStep;
 import org.jooq.Name;
 
 
@@ -61,19 +67,47 @@ import org.jooq.Name;
  *
  * @author Lukas Eder
  */
-final class JSONObject<J> extends AbstractField<J> {
+final class JSONObject<J> extends AbstractField<J> implements JSONObjectNullStep<J> {
 
     /**
      * Generated UID
      */
     private static final long                 serialVersionUID = 1772007627336725780L;
     private final QueryPartList<JSONEntry<?>> args;
+    private final NullClause                  nullClause;
 
     JSONObject(DataType<J> type, Collection<? extends JSONEntry<?>> args) {
+        this(type, args, null);
+    }
+
+    JSONObject(DataType<J> type, Collection<? extends JSONEntry<?>> args, NullClause nullClause) {
         super(N_JSON_OBJECT, type);
 
         this.args = new QueryPartList<>(args);
+        this.nullClause = nullClause;
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: DSL API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final JSONObject<J> nullOnNull() {
+        return new JSONObject<>(getDataType(), args, NULL_ON_NULL);
+    }
+
+    @Override
+    public final JSONObject<J> absentOnNull() {
+        return new JSONObject<>(getDataType(), args, ABSENT_ON_NULL);
+    }
+
+    enum NullClause {
+        NULL_ON_NULL, ABSENT_ON_NULL
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
 
     @Override
     public void accept(Context<?> ctx) {
@@ -119,7 +153,14 @@ final class JSONObject<J> extends AbstractField<J> {
 
 
             default:
-                ctx.visit(K_JSON_OBJECT).sql('(').visit(args).sql(')');
+                ctx.visit(K_JSON_OBJECT).sql('(').visit(args);
+
+                if (nullClause == NULL_ON_NULL)
+                    ctx.sql(' ').visit(K_NULL).sql(' ').visit(K_ON).sql(' ').visit(K_NULL);
+                else if (nullClause == ABSENT_ON_NULL)
+                    ctx.sql(' ').visit(K_ABSENT).sql(' ').visit(K_ON).sql(' ').visit(K_NULL);
+
+                ctx.sql(')');
                 break;
         }
     }

@@ -235,6 +235,7 @@ import org.jooq.InsertValuesStepN;
 import org.jooq.JSON;
 import org.jooq.JSONB;
 import org.jooq.JSONEntry;
+import org.jooq.JSONObjectNullStep;
 import org.jooq.Keyword;
 // ...
 // ...
@@ -18140,7 +18141,7 @@ public class DSL {
      * The JSON object constructor.
      */
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
-    public static Field<JSON> jsonObject(Field<String> key, Field<?> value) {
+    public static JSONObjectNullStep<JSON> jsonObject(Field<String> key, Field<?> value) {
         return jsonObject(jsonEntry(key, value));
     }
 
@@ -18148,7 +18149,7 @@ public class DSL {
      * The JSON object constructor.
      */
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
-    public static Field<JSON> jsonObject(JSONEntry<?>... entries) {
+    public static JSONObjectNullStep<JSON> jsonObject(JSONEntry<?>... entries) {
         return jsonObject(Arrays.asList(entries));
     }
 
@@ -18156,7 +18157,7 @@ public class DSL {
      * The JSON object constructor.
      */
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
-    public static Field<JSON> jsonObject(Collection<? extends JSONEntry<?>> entries) {
+    public static JSONObjectNullStep<JSON> jsonObject(Collection<? extends JSONEntry<?>> entries) {
         return new JSONObject<>(JSON, entries);
     }
 
@@ -18164,7 +18165,7 @@ public class DSL {
      * The JSONB object constructor.
      */
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
-    public static Field<JSONB> jsonbObject(JSONEntry<?>... entries) {
+    public static JSONObjectNullStep<JSONB> jsonbObject(JSONEntry<?>... entries) {
         return jsonbObject(Arrays.asList(entries));
     }
 
@@ -18172,7 +18173,7 @@ public class DSL {
      * The JSONB object constructor.
      */
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
-    public static Field<JSONB> jsonbObject(Collection<? extends JSONEntry<?>> entries) {
+    public static JSONObjectNullStep<JSONB> jsonbObject(Collection<? extends JSONEntry<?>> entries) {
         return new JSONObject<>(JSONB, entries);
     }
 

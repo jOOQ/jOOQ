@@ -48,6 +48,7 @@ import org.jooq.Keyword;
  */
 final class Keywords {
 
+    static final Keyword K_ABSENT                           = keyword("absent");
     static final Keyword K_ADD                              = keyword("add");
     static final Keyword K_AFTER                            = keyword("after");
     static final Keyword K_ALIAS                            = keyword("alias");

@@ -166,6 +166,7 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.GroupField;
+import org.jooq.JSONEntry;
 import org.jooq.JoinType;
 import org.jooq.Keyword;
 import org.jooq.Name;
@@ -225,6 +226,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private static final Set<SQLDialect> REQUIRES_DERIVED_TABLE_DML      = SQLDialect.supportedBy(MARIADB, MYSQL);
     private static final Set<SQLDialect> EMULATE_EMPTY_GROUP_BY_OTHER    = SQLDialect.supportedBy(FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE);
     private static final Set<SQLDialect> SUPPORT_FULL_WITH_TIES          = SQLDialect.supportedBy(H2);
+
+
+
+
 
 
 
@@ -529,6 +534,21 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             && containsTable(dmlTable)) {
             context.visit(DSL.select(asterisk()).from(DSL.table(this).as("t")));
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         else
             accept0(context);
     }

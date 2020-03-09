@@ -166,7 +166,9 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.GroupField;
+import org.jooq.JSON;
 import org.jooq.JSONEntry;
+import org.jooq.JSONObjectNullStep;
 import org.jooq.JoinType;
 import org.jooq.Keyword;
 import org.jooq.Name;
@@ -534,6 +536,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             && containsTable(dmlTable)) {
             context.visit(DSL.select(asterisk()).from(DSL.table(this).as("t")));
         }
+
+
+
 
 
 

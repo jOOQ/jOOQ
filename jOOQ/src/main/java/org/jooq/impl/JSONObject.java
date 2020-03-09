@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.SQLDialect.H2;
 import static org.jooq.impl.DSL.asterisk;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.row;
@@ -159,6 +160,10 @@ final class JSONObject<J> extends AbstractField<J> implements JSONObjectNullStep
                     ctx.sql(' ').visit(K_NULL).sql(' ').visit(K_ON).sql(' ').visit(K_NULL);
                 else if (nullClause == ABSENT_ON_NULL)
                     ctx.sql(' ').visit(K_ABSENT).sql(' ').visit(K_ON).sql(' ').visit(K_NULL);
+
+                // Workaround for https://github.com/h2database/h2database/issues/2496
+                else if (ctx.family() == H2 && args.isEmpty())
+                    ctx.visit(K_NULL).sql(' ').visit(K_ON).sql(' ').visit(K_NULL);
 
                 ctx.sql(')');
                 break;

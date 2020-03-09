@@ -37,8 +37,11 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.SQLDialect.H2;
 import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.Keywords.K_JSON_ARRAY;
+import static org.jooq.impl.Keywords.K_NULL;
+import static org.jooq.impl.Keywords.K_ON;
 import static org.jooq.impl.Names.N_JSON_ARRAY;
 
 import java.util.Collection;
@@ -80,7 +83,13 @@ final class JSONArray<J> extends AbstractField<J> {
                 break;
 
             default:
-                ctx.visit(K_JSON_ARRAY).sql('(').visit(args).sql(')');
+                ctx.visit(K_JSON_ARRAY).sql('(').visit(args);
+
+                // Workaround for https://github.com/h2database/h2database/issues/2496
+                if (ctx.family() == H2 && args.isEmpty())
+                    ctx.visit(K_NULL).sql(' ').visit(K_ON).sql(' ').visit(K_NULL);
+
+                ctx.sql(')');
                 break;
         }
     }

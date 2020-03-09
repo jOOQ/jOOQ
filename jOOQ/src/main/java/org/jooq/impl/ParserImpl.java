@@ -5052,10 +5052,12 @@ final class ParserImpl implements Parser {
 
         }
         else if (peekKeyword(ctx, "FOR")
+            && !peekKeyword(ctx, "FOR JSON")
             && !peekKeyword(ctx, "FOR KEY SHARE")
             && !peekKeyword(ctx, "FOR NO KEY UPDATE")
             && !peekKeyword(ctx, "FOR SHARE")
             && !peekKeyword(ctx, "FOR UPDATE")
+            && !peekKeyword(ctx, "FOR XML")
             && parseKeyword(ctx, "FOR") && ctx.requireProEdition()) {
 
 
@@ -10996,10 +10998,12 @@ final class ParserImpl implements Parser {
         "EXCEPT",
         "FETCH FIRST",
         "FETCH NEXT",
+        "FOR JSON",
         "FOR KEY SHARE",
         "FOR NO KEY UPDATE",
         "FOR SHARE",
         "FOR UPDATE",
+        "FOR XML",
         "FROM",
         "GO", // The T-SQL statement batch delimiter, not a SELECT keyword
         "GROUP BY",
@@ -11028,10 +11032,12 @@ final class ParserImpl implements Parser {
         "EXCEPT",
         "FETCH FIRST",
         "FETCH NEXT",
+        "FOR JSON",
         "FOR KEY SHARE",
         "FOR NO KEY UPDATE",
         "FOR SHARE",
         "FOR UPDATE",
+        "FOR XML",
         "FULL JOIN",
         "FULL OUTER JOIN",
         "GO", // The T-SQL statement batch delimiter, not a SELECT keyword

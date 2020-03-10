@@ -240,7 +240,7 @@ enum Term {
     private final String  translation;
 
     private Term() {
-        this.name = DSL.name(name());
+        this.name = DSL.unquotedName(name());
         this.keyword = DSL.keyword(name());
         this.translation = name().toLowerCase();
     }

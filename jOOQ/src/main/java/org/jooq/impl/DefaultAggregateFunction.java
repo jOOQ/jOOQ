@@ -81,7 +81,7 @@ class DefaultAggregateFunction<T> extends AbstractAggregateFunction<T> {
     }
 
     DefaultAggregateFunction(boolean distinct, String name, DataType<T> type, Field<?>... arguments) {
-        this(distinct, DSL.name(name), type, arguments);
+        this(distinct, DSL.unquotedName(name), type, arguments);
     }
 
     DefaultAggregateFunction(boolean distinct, Name name, DataType<T> type, Field<?>... arguments) {
@@ -153,6 +153,6 @@ class DefaultAggregateFunction<T> extends AbstractAggregateFunction<T> {
         if (term != null)
             ctx.sql(term.translate(ctx.dialect()));
         else
-            ctx.sql(getName());
+            ctx.visit(getQualifiedName());
     }
 }

@@ -111,7 +111,7 @@ implements
     // -------------------------------------------------------------------------
 
     final void acceptArguments(Context<?> ctx) {
-        ctx.sql(getName());
+        ctx.visit(getQualifiedName());
         ctx.sql('(');
         acceptArguments0(ctx);
         ctx.sql(')');

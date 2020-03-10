@@ -18131,8 +18131,24 @@ public class DSL {
      * A constructor for JSON entries to be used with {@link #jsonObject(JSONEntry...)}.
      */
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    public static <T> JSONEntry<T> jsonEntry(String key, Field<T> value) {
+        return jsonEntry(Tools.field(key), value);
+    }
+
+    /**
+     * A constructor for JSON entries to be used with {@link #jsonObject(JSONEntry...)}.
+     */
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static <T> JSONEntry<T> jsonEntry(Field<String> key, Field<T> value) {
         return new JSONEntryImpl<>(key, value);
+    }
+
+    /**
+     * The JSON object constructor.
+     */
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    public static JSONObjectNullStep<JSON> jsonObject(String key, Field<?> value) {
+        return jsonObject(jsonEntry(key, value));
     }
 
     /**

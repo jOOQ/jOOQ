@@ -120,19 +120,6 @@ enum Term {
             return "char_length";
         }
     },
-    MODE {
-        @Override
-        public String translate(SQLDialect dialect) {
-            switch (dialect.family()) {
-
-
-
-
-                default:
-                    return "mode";
-            }
-        }
-    },
     OCTET_LENGTH {
         @Override
         public String translate(SQLDialect dialect) {

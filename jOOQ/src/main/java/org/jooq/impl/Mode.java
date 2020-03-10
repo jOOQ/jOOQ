@@ -39,9 +39,11 @@ package org.jooq.impl;
 
 // ...
 import static org.jooq.SQLDialect.H2;
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.DSL.mode;
 import static org.jooq.impl.Names.N_MODE;
+import static org.jooq.impl.Names.N_STATS_MODE;
 
 import java.util.Set;
 
@@ -68,6 +70,10 @@ final class Mode<T> extends DefaultAggregateFunction<T> {
     public void accept(Context<?> ctx) {
         if (EMULATE_AS_ORDERED_SET_AGG.contains(ctx.dialect()))
             ctx.visit(mode().withinGroupOrderBy(arguments.get(0)));
+
+
+
+
         else
             super.accept(ctx);
     }

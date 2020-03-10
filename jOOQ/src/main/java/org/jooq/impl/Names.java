@@ -123,6 +123,7 @@ final class Names {
     static final Name N_SINH              = DSL.unquotedName("sinh");
     static final Name N_SPACE             = DSL.unquotedName("space");
     static final Name N_SQRT              = DSL.unquotedName("sqrt");
+    static final Name N_STATS_MODE        = DSL.unquotedName("stats_mode");
     static final Name N_STRING_AGG        = DSL.unquotedName("string_agg");
     static final Name N_SUBSTRING         = DSL.unquotedName("substring");
     static final Name N_SYSTEM_TIME       = DSL.unquotedName("system_time");

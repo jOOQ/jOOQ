@@ -44,7 +44,7 @@ import org.jooq.UniqueKey;
 /**
  * @author Lukas Eder
  */
-final class CountTable extends Function<Integer> {
+final class CountTable extends DefaultAggregateFunction<Integer> {
 
     /**
      * Generated UID
@@ -78,7 +78,7 @@ final class CountTable extends Function<Integer> {
                 UniqueKey<?> pk = table.getPrimaryKey();
 
                 if (pk != null)
-                    ctx.visit(new Function<>("count", distinct, SQLDataType.INTEGER, table.fields(pk.getFieldsArray())));
+                    ctx.visit(new DefaultAggregateFunction<>("count", distinct, SQLDataType.INTEGER, table.fields(pk.getFieldsArray())));
                 else
                     super.accept(ctx);
 

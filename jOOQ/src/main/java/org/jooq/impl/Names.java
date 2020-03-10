@@ -90,6 +90,7 @@ final class Names {
     static final Name N_MOD               = DSL.name("mod");
     static final Name N_NEXTVAL           = DSL.name("nextval");
     static final Name N_NOT               = DSL.name("not");
+    static final Name N_NTILE             = DSL.unquotedName("ntile");
     static final Name N_NULLIF            = DSL.name("nullif");
     static final Name N_NVL               = DSL.name("nvl");
     static final Name N_NVL2              = DSL.name("nvl2");
@@ -103,6 +104,8 @@ final class Names {
     static final Name N_RIGHT             = DSL.name("right");
     static final Name N_ROLLUP            = DSL.name("rollup");
     static final Name N_ROW               = DSL.name("row");
+    static final Name N_ROWNUM            = DSL.unquotedName("rownum");
+    static final Name N_ROW_NUMBER        = DSL.unquotedName("row_number");
     static final Name N_ROWSFROM          = DSL.name("rowsfrom");
     static final Name N_RPAD              = DSL.name("rpad");
     static final Name N_RTRIM             = DSL.name("rtrim");

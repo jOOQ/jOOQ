@@ -37,58 +37,37 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.SQLDialect.SQLITE;
-import static org.jooq.impl.Keywords.F_RATIO_TO_REPORT;
-import static org.jooq.impl.SQLDataType.DECIMAL;
-import static org.jooq.impl.SQLDataType.DOUBLE;
-import static org.jooq.impl.Tools.castIfNeeded;
-
-import java.math.BigDecimal;
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.impl.Names.N_ROWNUM;
+import static org.jooq.impl.Names.N_ROW_NUMBER;
+import static org.jooq.impl.SQLDataType.INTEGER;
 
 import org.jooq.Context;
-import org.jooq.DataType;
-import org.jooq.Field;
 
 /**
  * @author Lukas Eder
  */
-final class RatioToReport extends DefaultAggregateFunction<BigDecimal> {
+final class RowNumber extends AbstractWindowFunction<Integer> {
 
     /**
      * Generated UID
      */
-    private static final long             serialVersionUID = 7292087943334025737L;
-    private final Field<? extends Number> field;
+    private static final long serialVersionUID = -7318928420486422195L;
 
-    RatioToReport(Field<? extends Number> field) {
-        super("ratio_to_report", DECIMAL, field);
-
-        this.field = field;
+    RowNumber() {
+        super(N_ROW_NUMBER, INTEGER);
     }
 
     @Override
     public final void accept(Context<?> ctx) {
-        switch (ctx.family()) {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-            default:
-                ctx.visit(castIfNeeded(field, (DataType<?>) (ctx.family() == SQLITE ? DOUBLE : DECIMAL)))
-                   .sql(" / ")
-                   .visit(DSL.sum(field));
-                acceptOverClause(ctx);
-                break;
+        // [#1524] Don't render this clause where it is not supported
+        if (ctx.family() == HSQLDB) {
+            ctx.visit(N_ROWNUM).sql("()");
+        }
+        else {
+            ctx.visit(N_ROW_NUMBER).sql("()");
+            acceptOverClause(ctx);
         }
     }
 }

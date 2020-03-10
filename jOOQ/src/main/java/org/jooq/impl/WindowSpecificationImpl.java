@@ -194,7 +194,7 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
 
 
 
-        else if (TRUE.equals(ctx.data(BooleanDataKey.DATA_RANKING_FUNCTION)) && REQUIRES_ORDER_BY_IN_RANKING.contains(ctx.family())) {
+        else if (TRUE.equals(ctx.data(BooleanDataKey.DATA_ORDERED_WINDOW_FUNCTION)) && REQUIRES_ORDER_BY_IN_RANKING.contains(ctx.family())) {
             Field<Integer> constant;
 
 

@@ -37,58 +37,33 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.SQLDialect.SQLITE;
-import static org.jooq.impl.Keywords.F_RATIO_TO_REPORT;
-import static org.jooq.impl.SQLDataType.DECIMAL;
-import static org.jooq.impl.SQLDataType.DOUBLE;
-import static org.jooq.impl.Tools.castIfNeeded;
-
-import java.math.BigDecimal;
+import static org.jooq.impl.Names.N_NTILE;
+import static org.jooq.impl.SQLDataType.INTEGER;
 
 import org.jooq.Context;
-import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.impl.AbstractWindowFunction.OrderedWindowFunction;
 
 /**
  * @author Lukas Eder
  */
-final class RatioToReport extends DefaultAggregateFunction<BigDecimal> {
+final class Ntile extends AbstractWindowFunction<Integer> implements OrderedWindowFunction {
 
     /**
      * Generated UID
      */
-    private static final long             serialVersionUID = 7292087943334025737L;
-    private final Field<? extends Number> field;
+    private static final long    serialVersionUID = -7318928420486422195L;
+    private final Field<Integer> tiles;
 
-    RatioToReport(Field<? extends Number> field) {
-        super("ratio_to_report", DECIMAL, field);
+    Ntile(Field<Integer> tiles) {
+        super(N_NTILE, INTEGER);
 
-        this.field = field;
+        this.tiles = tiles;
     }
 
     @Override
     public final void accept(Context<?> ctx) {
-        switch (ctx.family()) {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            default:
-                ctx.visit(castIfNeeded(field, (DataType<?>) (ctx.family() == SQLITE ? DOUBLE : DECIMAL)))
-                   .sql(" / ")
-                   .visit(DSL.sum(field));
-                acceptOverClause(ctx);
-                break;
-        }
+        ctx.visit(Names.N_NTILE).sql('(').visit(tiles).sql(')');
+        acceptOverClause(ctx);
     }
 }

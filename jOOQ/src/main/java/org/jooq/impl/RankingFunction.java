@@ -37,38 +37,52 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.SQLDialect.SQLITE;
-import static org.jooq.impl.Keywords.F_RATIO_TO_REPORT;
-import static org.jooq.impl.SQLDataType.DECIMAL;
-import static org.jooq.impl.SQLDataType.DOUBLE;
-import static org.jooq.impl.Tools.castIfNeeded;
+// ...
+// ...
+import static org.jooq.impl.DSL.case_;
+import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.rank;
+import static org.jooq.impl.RankingFunction.RankingType.CUME_DIST;
+import static org.jooq.impl.RankingFunction.RankingType.PERCENT_RANK;
+import static org.jooq.impl.SQLDataType.NUMERIC;
 
-import java.math.BigDecimal;
+import java.util.Set;
 
 import org.jooq.Context;
 import org.jooq.DataType;
-import org.jooq.Field;
+import org.jooq.Name;
+// ...
+import org.jooq.SQLDialect;
+import org.jooq.WindowSpecification;
+import org.jooq.impl.AbstractWindowFunction.OrderedWindowFunction;
 
 /**
  * @author Lukas Eder
  */
-final class RatioToReport extends DefaultAggregateFunction<BigDecimal> {
+final class RankingFunction<T> extends AbstractWindowFunction<T> implements OrderedWindowFunction {
 
     /**
      * Generated UID
      */
-    private static final long             serialVersionUID = 7292087943334025737L;
-    private final Field<? extends Number> field;
+    private static final long            serialVersionUID     = -7318928420486422195L;
 
-    RatioToReport(Field<? extends Number> field) {
-        super("ratio_to_report", DECIMAL, field);
 
-        this.field = field;
+
+
+
+
+
+
+    private final RankingType            rankingType;
+
+    RankingFunction(RankingType rankingType, DataType<T> type) {
+        super(rankingType.name, type);
+
+        this.rankingType = rankingType;
     }
 
     @Override
     public final void accept(Context<?> ctx) {
-        switch (ctx.family()) {
 
 
 
@@ -83,12 +97,35 @@ final class RatioToReport extends DefaultAggregateFunction<BigDecimal> {
 
 
 
-            default:
-                ctx.visit(castIfNeeded(field, (DataType<?>) (ctx.family() == SQLITE ? DOUBLE : DECIMAL)))
-                   .sql(" / ")
-                   .visit(DSL.sum(field));
-                acceptOverClause(ctx);
-                break;
+
+
+
+
+        {
+            ctx.visit(rankingType.name).sql("()");
+            acceptOverClause(ctx);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    enum RankingType {
+        RANK, DENSE_RANK, PERCENT_RANK, CUME_DIST;
+
+        private final Name name;
+
+        RankingType() {
+            this.name = DSL.unquotedName(name());
         }
     }
 }

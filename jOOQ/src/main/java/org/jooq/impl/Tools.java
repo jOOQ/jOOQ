@@ -495,7 +495,7 @@ final class Tools {
         /**
          * [#1535] We're currently generating the window specification of a ranking function.
          */
-        DATA_RANKING_FUNCTION,
+        DATA_ORDERED_WINDOW_FUNCTION,
     }
 
     /**

@@ -47,7 +47,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-final class BoolOr extends Function<Boolean> {
+final class BoolOr extends DefaultAggregateFunction<Boolean> {
 
     /**
      * Generated UID
@@ -80,7 +80,7 @@ final class BoolOr extends Function<Boolean> {
                     @Override
                     public void accept(Context<?> c) {
                         c.visit(DSL.max(DSL.when(condition, one()).otherwise(zero())));
-                        toSQLOverClause(c);
+                        acceptOverClause(c);
                     }
                 });
 

@@ -126,12 +126,6 @@ enum Term {
 
 
 
-    CUME_DIST,
-    DENSE_RANK,
-    FIRST_VALUE,
-    LAG,
-    LAST_VALUE,
-    LEAD,
     LIST_AGG {
         @Override
         public String translate(SQLDialect dialect) {
@@ -180,8 +174,6 @@ enum Term {
             }
         }
     },
-    NTH_VALUE,
-    NTILE,
     OCTET_LENGTH {
         @Override
         public String translate(SQLDialect dialect) {
@@ -209,20 +201,7 @@ enum Term {
             return "octet_length";
         }
     },
-    PERCENT_RANK,
     PRODUCT,
-    RANK,
-    ROW_NUMBER {
-        @Override
-        public String translate(SQLDialect dialect) {
-            switch (dialect.family()) {
-                case HSQLDB:
-                    return "rownum";
-            }
-
-            return "row_number";
-        }
-    },
     STDDEV_POP {
         @Override
         public String translate(SQLDialect dialect) {

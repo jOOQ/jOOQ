@@ -60,7 +60,7 @@ public interface JSONObjectNullStep<T> extends Field<T> {
     /**
      * Include <code>NULL</code> values in output JSON.
      */
-    @Support({ AURORA_POSTGRES, COCKROACHDB, MARIADB, MYSQL, H2, ORACLE12C, POSTGRES, SQLSERVER })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     Field<T> nullOnNull();
 
     /**

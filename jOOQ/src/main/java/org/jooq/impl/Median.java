@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.percentileCont;
 import static org.jooq.impl.Names.N_MEDIAN;
 
@@ -66,13 +67,8 @@ final class Median extends DefaultAggregateFunction<BigDecimal> {
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (EMULATE_WITH_PERCENTILES.contains(ctx.dialect())) {
-            Field<?>[] fields = new Field[arguments.size()];
-            for (int i = 0; i < fields.length; i++)
-                fields[i] = DSL.field("{0}", arguments.get(i));
-
-            ctx.visit(percentileCont(new BigDecimal("0.5")).withinGroupOrderBy(fields));
-        }
+        if (EMULATE_WITH_PERCENTILES.contains(ctx.dialect()))
+            ctx.visit(percentileCont(inline(new BigDecimal("0.5"))).withinGroupOrderBy(arguments));
         else
             super.accept(ctx);
     }

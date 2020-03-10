@@ -18575,7 +18575,7 @@ public class DSL {
      */
     @Support({ H2, POSTGRES })
     public static <T> AggregateFunction<T> mode(Field<T> field) {
-        return new DefaultAggregateFunction<>(Term.MODE, nullSafeDataType(field), field);
+        return new Mode(nullSafe(field));
     }
 
     /**
@@ -18890,7 +18890,7 @@ public class DSL {
      */
     @Support({ H2, POSTGRES })
     public static OrderedAggregateFunctionOfDeferredType mode() {
-        return new Mode();
+        return new ModeDeferred();
     }
 
     /**

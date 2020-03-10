@@ -38,10 +38,6 @@
 
 package org.jooq.impl;
 
-// ...
-import static org.jooq.SQLDialect.H2;
-import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.impl.DSL.mode;
 import static org.jooq.impl.Keywords.K_DENSE_RANK;
 import static org.jooq.impl.Keywords.K_FIRST;
 import static org.jooq.impl.Keywords.K_KEEP;
@@ -49,7 +45,6 @@ import static org.jooq.impl.Keywords.K_LAST;
 import static org.jooq.impl.Keywords.K_NULL;
 import static org.jooq.impl.Keywords.K_ORDER_BY;
 import static org.jooq.impl.Keywords.K_WITHIN_GROUP;
-import static org.jooq.impl.Term.MODE;
 
 import org.jooq.Context;
 import org.jooq.DataType;
@@ -107,16 +102,11 @@ class DefaultAggregateFunction<T> extends AbstractAggregateFunction<T> {
 
     @Override
     public /* final */ void accept(Context<?> ctx) {
-        if (term == MODE && ( ctx.family() == H2 || ctx.family() == POSTGRES)) {
-            ctx.visit(mode().withinGroupOrderBy(DSL.field("{0}", arguments.get(0))));
-        }
-        else {
-            toSQLArguments(ctx);
-            acceptKeepDenseRankOrderByClause(ctx);
-            acceptWithinGroupClause(ctx);
-            acceptFilterClause(ctx);
-            acceptOverClause(ctx);
-        }
+        toSQLArguments(ctx);
+        acceptKeepDenseRankOrderByClause(ctx);
+        acceptWithinGroupClause(ctx);
+        acceptFilterClause(ctx);
+        acceptOverClause(ctx);
     }
 
     /**

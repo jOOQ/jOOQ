@@ -37,35 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Names.N_ARRAY_AGG;
-
-import java.util.Arrays;
-
-import org.jooq.Context;
-import org.jooq.Field;
-
-/**
- * @author Lukas Eder
- */
-final class ArrayAgg<T> extends DefaultAggregateFunction<T[]> {
-
-    /**
-     * Generated UID
-     */
-    private static final long            serialVersionUID  = 8039163610536383826L;
-
-    ArrayAgg(boolean distinct, Field<T> arg) {
-        super(distinct, N_ARRAY_AGG, arg.getDataType().getArrayDataType(), arg);
-    }
-
-    @Override
-    public final void accept(Context<?> ctx) {
-        ctx.visit(N_ARRAY_AGG).sql('(');
-        acceptArguments1(ctx, new QueryPartList<>(Arrays.asList(arguments.get(0))));
-        acceptOrderBy(ctx);
-        ctx.sql(')');
-
-        acceptFilterClause(ctx);
-        acceptOverClause(ctx);
-    }
+enum JSONNullClause {
+    NULL_ON_NULL, ABSENT_ON_NULL
 }

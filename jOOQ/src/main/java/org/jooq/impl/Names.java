@@ -84,8 +84,11 @@ final class Names {
     static final Name N_GROUP_CONCAT      = DSL.unquotedName("group_concat");
     static final Name N_IIF               = DSL.unquotedName("iif");
     static final Name N_JOIN              = DSL.unquotedName("join");
+    static final Name N_JSON_AGG          = DSL.unquotedName("json_agg");
     static final Name N_JSON_ARRAY        = DSL.unquotedName("json_array");
+    static final Name N_JSON_ARRAYAGG     = DSL.unquotedName("json_arrayagg");
     static final Name N_JSON_OBJECT       = DSL.unquotedName("json_object");
+    static final Name N_JSONB_AGG         = DSL.unquotedName("jsonb_agg");
     static final Name N_LEFT              = DSL.unquotedName("left");
     static final Name N_LIST              = DSL.unquotedName("list");
     static final Name N_LISTAGG           = DSL.unquotedName("listagg");

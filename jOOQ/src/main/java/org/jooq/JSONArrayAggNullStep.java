@@ -35,37 +35,36 @@
  *
  *
  */
-package org.jooq.impl;
+package org.jooq;
 
-import static org.jooq.impl.Names.N_ARRAY_AGG;
+// ...
+// ...
+import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
+// ...
+import static org.jooq.SQLDialect.POSTGRES;
 
-import java.util.Arrays;
-
-import org.jooq.Context;
-import org.jooq.Field;
+import org.jooq.impl.DSL;
 
 /**
+ * A step in the construction of {@link DSL#jsonObject(JSONEntry...)} or
+ * {@link DSL#jsonbObject(JSONEntry...)} functions where the <code>NULL</code>
+ * clause can be defined.
+ *
  * @author Lukas Eder
  */
-final class ArrayAgg<T> extends DefaultAggregateFunction<T[]> {
+public interface JSONArrayAggNullStep<T> extends AggregateFilterStep<T> {
 
     /**
-     * Generated UID
+     * Include <code>NULL</code> values in output JSON.
      */
-    private static final long            serialVersionUID  = 8039163610536383826L;
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    AggregateFilterStep<T> nullOnNull();
 
-    ArrayAgg(boolean distinct, Field<T> arg) {
-        super(distinct, N_ARRAY_AGG, arg.getDataType().getArrayDataType(), arg);
-    }
-
-    @Override
-    public final void accept(Context<?> ctx) {
-        ctx.visit(N_ARRAY_AGG).sql('(');
-        acceptArguments1(ctx, new QueryPartList<>(Arrays.asList(arguments.get(0))));
-        acceptOrderBy(ctx);
-        ctx.sql(')');
-
-        acceptFilterClause(ctx);
-        acceptOverClause(ctx);
-    }
+    /**
+     * Exclude <code>NULL</code> values in output JSON.
+     */
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    AggregateFilterStep<T> absentOnNull();
 }

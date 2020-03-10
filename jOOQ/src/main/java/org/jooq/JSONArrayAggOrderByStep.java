@@ -35,37 +35,37 @@
  *
  *
  */
-package org.jooq.impl;
+package org.jooq;
 
-import static org.jooq.impl.Names.N_ARRAY_AGG;
+// ...
+// ...
+import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
+// ...
+import static org.jooq.SQLDialect.POSTGRES;
 
-import java.util.Arrays;
+import java.util.Collection;
 
-import org.jooq.Context;
-import org.jooq.Field;
+import org.jooq.impl.DSL;
 
 /**
+ * The SQL standard <code>ARRAY_AGG()</code> function.
+ *
  * @author Lukas Eder
+ * @see DSL#arrayAgg(Field)
  */
-final class ArrayAgg<T> extends DefaultAggregateFunction<T[]> {
+public interface JSONArrayAggOrderByStep<J> extends JSONArrayAggNullStep<J> {
 
     /**
-     * Generated UID
+     * Add an <code>ORDER BY</code> clause to the function.
      */
-    private static final long            serialVersionUID  = 8039163610536383826L;
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    JSONArrayAggNullStep<J> orderBy(OrderField<?>... fields);
 
-    ArrayAgg(boolean distinct, Field<T> arg) {
-        super(distinct, N_ARRAY_AGG, arg.getDataType().getArrayDataType(), arg);
-    }
-
-    @Override
-    public final void accept(Context<?> ctx) {
-        ctx.visit(N_ARRAY_AGG).sql('(');
-        acceptArguments1(ctx, new QueryPartList<>(Arrays.asList(arguments.get(0))));
-        acceptOrderBy(ctx);
-        ctx.sql(')');
-
-        acceptFilterClause(ctx);
-        acceptOverClause(ctx);
-    }
+    /**
+     * Add an <code>ORDER BY</code> clause to the function.
+     */
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    JSONArrayAggNullStep<J> orderBy(Collection<? extends OrderField<?>> fields);
 }

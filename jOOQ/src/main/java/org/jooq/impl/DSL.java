@@ -59,6 +59,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MARIADB;
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
@@ -231,6 +232,7 @@ import org.jooq.InsertValuesStep8;
 import org.jooq.InsertValuesStep9;
 import org.jooq.InsertValuesStepN;
 import org.jooq.JSON;
+import org.jooq.JSONArrayAggOrderByStep;
 import org.jooq.JSONB;
 import org.jooq.JSONEntry;
 import org.jooq.JSONObjectNullStep;
@@ -18189,6 +18191,22 @@ public class DSL {
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static JSONObjectNullStep<JSONB> jsonbObject(Collection<? extends JSONEntry<?>> entries) {
         return new JSONObject<>(JSONB, entries);
+    }
+
+    /**
+     * The JSON array aggregate function
+     */
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    public static JSONArrayAggOrderByStep<JSON> jsonArrayAgg(Field<?> value) {
+        return new JSONArrayAgg<JSON>(JSON, value);
+    }
+
+    /**
+     * The JSON array aggregate function
+     */
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    public static JSONArrayAggOrderByStep<JSONB> jsonbArrayAgg(Field<?> value) {
+        return new JSONArrayAgg<JSONB>(JSONB, value);
     }
 
     // -------------------------------------------------------------------------

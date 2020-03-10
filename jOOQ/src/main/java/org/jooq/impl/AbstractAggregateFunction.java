@@ -48,6 +48,7 @@ import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.Keywords.K_DISTINCT;
 import static org.jooq.impl.Keywords.K_FILTER;
+import static org.jooq.impl.Keywords.K_ORDER_BY;
 import static org.jooq.impl.Keywords.K_WHERE;
 
 import java.util.Arrays;
@@ -160,6 +161,12 @@ implements
                .sql(')');
     }
 
+    final void acceptOrderBy(Context<?> ctx) {
+        if (!Tools.isEmpty(withinGroupOrderBy))
+            ctx.sql(' ').visit(K_ORDER_BY).sql(' ')
+               .visit(withinGroupOrderBy);
+    }
+
     // -------------------------------------------------------------------------
     // XXX Aggregate function API
     // -------------------------------------------------------------------------
@@ -268,9 +275,9 @@ implements
 
 
     @Override
-    public final AbstractAggregateFunction<T> orderBy(OrderField<?>... fields) {
+    public /* non-final */ AbstractAggregateFunction<T> orderBy(OrderField<?>... fields) {
         if (windowSpecification != null)
-            windowSpecification.orderBy(fields);
+            super.orderBy(fields);
         else
             withinGroupOrderBy(fields);
 
@@ -278,7 +285,7 @@ implements
     }
 
     @Override
-    public final AbstractAggregateFunction<T> orderBy(Collection<? extends OrderField<?>> fields) {
+    public /* non-final */ AbstractAggregateFunction<T> orderBy(Collection<? extends OrderField<?>> fields) {
         if (windowSpecification != null)
             windowSpecification.orderBy(fields);
         else

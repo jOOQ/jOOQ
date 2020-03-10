@@ -504,7 +504,6 @@ import org.jooq.conf.RenderNameCase;
 import org.jooq.conf.RenderQuotedNames;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
-import org.jooq.impl.JSONObject.NullClause;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.reflect.Reflect;
 import org.jooq.types.DayToSecond;
@@ -6682,7 +6681,7 @@ final class ParserImpl implements Parser {
                 return DSL.jsonObject();
 
             List<JSONEntry<?>> result = new ArrayList<>();
-            NullClause nullClause = parseJSONObjectNullClauseIf(ctx);
+            JSONNullClause nullClause = parseJSONObjectNullClauseIf(ctx);
 
             if (nullClause == null) {
                 do {
@@ -6695,9 +6694,9 @@ final class ParserImpl implements Parser {
             parse(ctx, ')');
 
             JSONObjectNullStep<JSON> o = DSL.jsonObject(result);
-            return nullClause == NullClause.NULL_ON_NULL
+            return nullClause == JSONNullClause.NULL_ON_NULL
                  ? o.nullOnNull()
-                 : nullClause == NullClause.ABSENT_ON_NULL
+                 : nullClause == JSONNullClause.ABSENT_ON_NULL
                  ? o.absentOnNull()
                  : o;
         }
@@ -6705,11 +6704,11 @@ final class ParserImpl implements Parser {
         return null;
     }
 
-    private static final NullClause parseJSONObjectNullClauseIf(ParserContext ctx) {
+    private static final JSONNullClause parseJSONObjectNullClauseIf(ParserContext ctx) {
         if (parseKeywordIf(ctx, "NULL ON NULL"))
-            return NullClause.NULL_ON_NULL;
+            return JSONNullClause.NULL_ON_NULL;
         else if (parseKeywordIf(ctx, "ABSENT ON NULL"))
-            return NullClause.ABSENT_ON_NULL;
+            return JSONNullClause.ABSENT_ON_NULL;
         else
             return null;
     }

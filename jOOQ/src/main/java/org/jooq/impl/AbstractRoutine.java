@@ -1486,7 +1486,7 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
         }
 
         // [#2393] Fully qualify custom aggregate functions.
-        return (AggregateFunction<T>) function(getQualifiedName(), type, array);
+        return new DefaultAggregateFunction<>(false, getQualifiedName(), type, array);
     }
 
     /**

@@ -39,9 +39,7 @@
 package org.jooq.impl;
 
 // ...
-// ...
 import static org.jooq.SQLDialect.H2;
-import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.DSL.mode;
 import static org.jooq.impl.Keywords.K_DENSE_RANK;
@@ -51,17 +49,12 @@ import static org.jooq.impl.Keywords.K_LAST;
 import static org.jooq.impl.Keywords.K_NULL;
 import static org.jooq.impl.Keywords.K_ORDER_BY;
 import static org.jooq.impl.Keywords.K_WITHIN_GROUP;
-import static org.jooq.impl.Term.ARRAY_AGG;
 import static org.jooq.impl.Term.MODE;
-
-import java.util.Arrays;
-import java.util.Set;
 
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Name;
-import org.jooq.SQLDialect;
 
 /**
  * A field that handles built-in functions, aggregate functions, and window
@@ -71,12 +64,10 @@ import org.jooq.SQLDialect;
  */
 class DefaultAggregateFunction<T> extends AbstractAggregateFunction<T> {
 
-
-    private static final long             serialVersionUID             = 347252741712134044L;
-    private static final Set<SQLDialect>  SUPPORT_ARRAY_AGG            = SQLDialect.supportedBy(HSQLDB, POSTGRES);
+    private static final long serialVersionUID = 347252741712134044L;
 
     // Mutually exclusive attributes: super.getName(), this.term
-    private final Term                    term;
+    private final Term        term;
 
     // -------------------------------------------------------------------------
     // XXX Constructors
@@ -116,12 +107,7 @@ class DefaultAggregateFunction<T> extends AbstractAggregateFunction<T> {
 
     @Override
     public /* final */ void accept(Context<?> ctx) {
-        if (term == ARRAY_AGG && SUPPORT_ARRAY_AGG.contains(ctx.dialect())) {
-            toSQLArrayAgg(ctx);
-            acceptFilterClause(ctx);
-            acceptOverClause(ctx);
-        }
-        else if (term == MODE && ( ctx.family() == H2 || ctx.family() == POSTGRES)) {
+        if (term == MODE && ( ctx.family() == H2 || ctx.family() == POSTGRES)) {
             ctx.visit(mode().withinGroupOrderBy(DSL.field("{0}", arguments.get(0))));
         }
         else {
@@ -131,21 +117,6 @@ class DefaultAggregateFunction<T> extends AbstractAggregateFunction<T> {
             acceptFilterClause(ctx);
             acceptOverClause(ctx);
         }
-    }
-
-    /**
-     * <code>ARRAY_AGG</code>
-     */
-    final void toSQLArrayAgg(Context<?> ctx) {
-        toSQLFunctionName(ctx);
-        ctx.sql('(');
-        acceptArguments1(ctx, new QueryPartList<>(Arrays.asList(arguments.get(0))));
-
-        if (!Tools.isEmpty(withinGroupOrderBy))
-            ctx.sql(' ').visit(K_ORDER_BY).sql(' ')
-               .visit(withinGroupOrderBy);
-
-        ctx.sql(')');
     }
 
     /**

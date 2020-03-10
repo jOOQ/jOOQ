@@ -18315,7 +18315,7 @@ public class DSL {
      */
     @Support({ HSQLDB, POSTGRES })
     public static <T> ArrayAggOrderByStep<T[]> arrayAgg(Field<T> field) {
-        return new DefaultAggregateFunction<>(Term.ARRAY_AGG, field.getDataType().getArrayDataType(), nullSafe(field));
+        return new ArrayAgg(false, nullSafe(field));
     }
 
     /**
@@ -18323,7 +18323,7 @@ public class DSL {
      */
     @Support({ HSQLDB, POSTGRES })
     public static <T> ArrayAggOrderByStep<T[]> arrayAggDistinct(Field<T> field) {
-        return new DefaultAggregateFunction<>(true, Term.ARRAY_AGG, field.getDataType().getArrayDataType(), nullSafe(field));
+        return new ArrayAgg(true, nullSafe(field));
     }
 
 

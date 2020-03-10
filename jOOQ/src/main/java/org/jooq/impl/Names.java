@@ -51,6 +51,7 @@ final class Names {
 
     static final Name N_ACOS              = DSL.unquotedName("acos");
     static final Name N_ARRAY             = DSL.unquotedName("array");
+    static final Name N_ARRAY_AGG         = DSL.unquotedName("array_agg");
     static final Name N_ASCII             = DSL.unquotedName("ascii");
     static final Name N_ASIN              = DSL.unquotedName("asin");
     static final Name N_ATAN              = DSL.unquotedName("atan");

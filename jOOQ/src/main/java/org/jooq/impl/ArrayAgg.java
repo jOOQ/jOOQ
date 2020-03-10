@@ -37,35 +37,40 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Keywords.K_ORDER_BY;
+import static org.jooq.impl.Names.N_ARRAY_AGG;
+
+import java.util.Arrays;
+
 import org.jooq.Context;
-import org.jooq.DataType;
 import org.jooq.Field;
-import org.jooq.Name;
 
 /**
  * @author Lukas Eder
  */
-final class Function<T> extends AbstractField<T> {
+final class ArrayAgg<T> extends DefaultAggregateFunction<T[]> {
 
     /**
      * Generated UID
      */
-    private static final long             serialVersionUID = -2034096213592995420L;
+    private static final long            serialVersionUID  = 8039163610536383826L;
 
-    private final QueryPartList<Field<?>> arguments;
-
-    Function(String name, DataType<T> type, Field<?>... arguments) {
-        this(DSL.unquotedName(name), type, arguments);
-    }
-
-    Function(Name name, DataType<T> type, Field<?>... arguments) {
-        super(name, type);
-
-        this.arguments = new QueryPartList<>(arguments);
+    ArrayAgg(boolean distinct, Field<T> arg) {
+        super(distinct, N_ARRAY_AGG, arg.getDataType().getArrayDataType(), arg);
     }
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(getQualifiedName()).sql('(').visit(arguments).sql(')');
+        ctx.visit(N_ARRAY_AGG).sql('(');
+        acceptArguments1(ctx, new QueryPartList<>(Arrays.asList(arguments.get(0))));
+
+        if (!Tools.isEmpty(withinGroupOrderBy))
+            ctx.sql(' ').visit(K_ORDER_BY).sql(' ')
+               .visit(withinGroupOrderBy);
+
+        ctx.sql(')');
+
+        acceptFilterClause(ctx);
+        acceptOverClause(ctx);
     }
 }

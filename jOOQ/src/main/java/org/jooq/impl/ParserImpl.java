@@ -570,7 +570,7 @@ final class ParserImpl implements Parser {
         return dsl.queries(result);
     }
 
-    private static final Pattern P_SEARCH_PATH = Pattern.compile("select\\s+(pg_catalog\\s*\\.\\s*)?set_config\\s*\\(\\s*'search_path'\\s*,\\s*'([^']*)'\\s*,\\s*\\w+\\s*\\)");
+    private static final Pattern P_SEARCH_PATH = Pattern.compile("(?i:select\\s+(pg_catalog\\s*\\.\\s*)?set_config\\s*\\(\\s*'search_path'\\s*,\\s*'([^']*)'\\s*,\\s*\\w+\\s*\\))");
 
     private final Query patchParsedQuery(ParserContext ctx, Query query) {
 

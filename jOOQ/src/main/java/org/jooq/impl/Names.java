@@ -61,6 +61,7 @@ final class Names {
     static final Name N_CEIL              = DSL.unquotedName("ceil");
     static final Name N_CHOOSE            = DSL.unquotedName("choose");
     static final Name N_COALESCE          = DSL.unquotedName("coalesce");
+    static final Name N_COLLECT           = DSL.unquotedName("collect");
     static final Name N_CONCAT            = DSL.unquotedName("concat");
     static final Name N_CONVERT           = DSL.unquotedName("convert");
     static final Name N_COSH              = DSL.unquotedName("cosh");

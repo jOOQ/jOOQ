@@ -39,7 +39,6 @@ package org.jooq.impl;
 
 import org.jooq.Keyword;
 import org.jooq.Name;
-// ...
 import org.jooq.SQLDialect;
 
 /**
@@ -121,10 +120,6 @@ enum Term {
             return "char_length";
         }
     },
-
-
-
-
     MODE {
         @Override
         public String translate(SQLDialect dialect) {

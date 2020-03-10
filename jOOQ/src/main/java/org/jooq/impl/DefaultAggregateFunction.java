@@ -112,8 +112,8 @@ class DefaultAggregateFunction<T> extends AbstractAggregateFunction<T> {
         }
         else {
             toSQLArguments(ctx);
-            toSQLKeepDenseRankOrderByClause(ctx);
-            toSQLWithinGroupClause(ctx);
+            acceptKeepDenseRankOrderByClause(ctx);
+            acceptWithinGroupClause(ctx);
             acceptFilterClause(ctx);
             acceptOverClause(ctx);
         }
@@ -122,21 +122,20 @@ class DefaultAggregateFunction<T> extends AbstractAggregateFunction<T> {
     /**
      * Render <code>KEEP (DENSE_RANK [FIRST | LAST] ORDER BY {...})</code> clause
      */
-    final void toSQLKeepDenseRankOrderByClause(Context<?> ctx) {
-        if (!Tools.isEmpty(keepDenseRankOrderBy)) {
+    private final void acceptKeepDenseRankOrderByClause(Context<?> ctx) {
+        if (!Tools.isEmpty(keepDenseRankOrderBy))
             ctx.sql(' ').visit(K_KEEP)
                .sql(" (").visit(K_DENSE_RANK)
                .sql(' ').visit(first ? K_FIRST : K_LAST)
                .sql(' ').visit(K_ORDER_BY)
                .sql(' ').visit(keepDenseRankOrderBy)
                .sql(')');
-        }
     }
 
     /**
      * Render <code>WITHIN GROUP (ORDER BY ..)</code> clause
      */
-    final void toSQLWithinGroupClause(Context<?> ctx) {
+    private final void acceptWithinGroupClause(Context<?> ctx) {
         if (withinGroupOrderBy != null) {
             ctx.sql(' ').visit(K_WITHIN_GROUP)
                .sql(" (").visit(K_ORDER_BY).sql(' ');
@@ -153,14 +152,14 @@ class DefaultAggregateFunction<T> extends AbstractAggregateFunction<T> {
     /**
      * Render function arguments and argument modifiers
      */
-    final void toSQLArguments(Context<?> ctx) {
+    private final void toSQLArguments(Context<?> ctx) {
         toSQLFunctionName(ctx);
         ctx.sql('(');
         acceptArguments0(ctx);
         ctx.sql(')');
     }
 
-    final void toSQLFunctionName(Context<?> ctx) {
+    private final void toSQLFunctionName(Context<?> ctx) {
         if (term != null)
             ctx.sql(term.translate(ctx.dialect()));
         else

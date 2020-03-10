@@ -89,12 +89,12 @@ final class GroupConcat extends AbstractFunction<String> implements GroupConcatO
 
     @Override
     final Field<String> getFunction0(Configuration configuration) {
-        DefaultAggregateFunction<String> result;
+        ListAgg result;
 
         if (separator == null)
-            result = new DefaultAggregateFunction<>(Term.LIST_AGG, distinct, SQLDataType.VARCHAR, field, inline(","));
+            result = new ListAgg(distinct, field, inline(","));
         else
-            result = new DefaultAggregateFunction<>(Term.LIST_AGG, distinct, SQLDataType.VARCHAR, field, inline(separator));
+            result = new ListAgg(distinct, field, inline(separator));
 
 
 

@@ -126,41 +126,6 @@ enum Term {
 
 
 
-    LIST_AGG {
-        @Override
-        public String translate(SQLDialect dialect) {
-            switch (dialect.family()) {
-
-
-
-
-
-
-
-
-
-
-                case CUBRID:
-                case H2:
-                case HSQLDB:
-                case MARIADB:
-                case MYSQL:
-                case SQLITE:
-                    return "group_concat";
-
-
-
-
-
-
-                case POSTGRES:
-                    return "string_agg";
-            }
-
-            return "listagg";
-        }
-    },
-    MEDIAN,
     MODE {
         @Override
         public String translate(SQLDialect dialect) {
@@ -201,7 +166,6 @@ enum Term {
             return "octet_length";
         }
     },
-    PRODUCT,
     STDDEV_POP {
         @Override
         public String translate(SQLDialect dialect) {

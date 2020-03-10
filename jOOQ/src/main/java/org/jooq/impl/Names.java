@@ -78,15 +78,19 @@ final class Names {
     static final Name N_FLOOR             = DSL.name("floor");
     static final Name N_FUNCTION          = DSL.name("function");
     static final Name N_GENERATE_SERIES   = DSL.name("generate_series");
+    static final Name N_GROUP_CONCAT      = DSL.unquotedName("group_concat");
     static final Name N_IIF               = DSL.name("iif");
     static final Name N_JOIN              = DSL.name("join");
     static final Name N_JSON_ARRAY        = DSL.name("json_array");
     static final Name N_JSON_OBJECT       = DSL.name("json_object");
     static final Name N_LEFT              = DSL.name("left");
+    static final Name N_LIST              = DSL.unquotedName("list");
+    static final Name N_LISTAGG           = DSL.unquotedName("listagg");
     static final Name N_LOWER             = DSL.name("lower");
     static final Name N_LPAD              = DSL.name("lpad");
     static final Name N_LTRIM             = DSL.name("ltrim");
     static final Name N_MD5               = DSL.name("md5");
+    static final Name N_MEDIAN            = DSL.name("median");
     static final Name N_MOD               = DSL.name("mod");
     static final Name N_NEXTVAL           = DSL.name("nextval");
     static final Name N_NOT               = DSL.name("not");
@@ -99,6 +103,7 @@ final class Names {
     static final Name N_POSITION          = DSL.name("position");
     static final Name N_POWER             = DSL.name("power");
     static final Name N_PRIOR             = DSL.name("prior");
+    static final Name N_PRODUCT           = DSL.unquotedName("product");
     static final Name N_RANDOM            = DSL.name("rand");
     static final Name N_REVERSE           = DSL.name("reverse");
     static final Name N_RIGHT             = DSL.name("right");
@@ -114,6 +119,7 @@ final class Names {
     static final Name N_SINH              = DSL.name("sinh");
     static final Name N_SPACE             = DSL.name("space");
     static final Name N_SQRT              = DSL.name("sqrt");
+    static final Name N_STRING_AGG        = DSL.unquotedName("string_agg");
     static final Name N_SUBSTRING         = DSL.name("substring");
     static final Name N_SYSTEM_TIME       = DSL.unquotedName("system_time");
     static final Name N_T                 = DSL.name("t");

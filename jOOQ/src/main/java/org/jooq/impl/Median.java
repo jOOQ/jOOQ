@@ -37,53 +37,43 @@
  */
 package org.jooq.impl;
 
+// ...
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.impl.DSL.percentileCont;
+import static org.jooq.impl.Names.N_MEDIAN;
+
+import java.math.BigDecimal;
+import java.util.Set;
+
 import org.jooq.Context;
-import org.jooq.Table;
-import org.jooq.UniqueKey;
+import org.jooq.Field;
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
  */
-final class CountTable extends DefaultAggregateFunction<Integer> {
+final class Median extends DefaultAggregateFunction<BigDecimal> {
 
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = 7292087943334025737L;
+    private static final long            serialVersionUID         = -7378732863724089028L;
+    private static final Set<SQLDialect> EMULATE_WITH_PERCENTILES = SQLDialect.supportedBy(POSTGRES);
 
-    private final Table<?>    table;
-    private final boolean     distinct;
-
-    CountTable(Table<?> table, boolean distinct) {
-        super(distinct, "count", SQLDataType.INTEGER, DSL.field(DSL.name(table.getName())));
-
-        this.table = table;
-        this.distinct = distinct;
+    Median(Field<? extends Number> arg) {
+        super(false, N_MEDIAN, SQLDataType.NUMERIC, arg);
     }
 
     @Override
     public final void accept(Context<?> ctx) {
-        switch (ctx.family()) {
+        if (EMULATE_WITH_PERCENTILES.contains(ctx.dialect())) {
+            Field<?>[] fields = new Field[arguments.size()];
+            for (int i = 0; i < fields.length; i++)
+                fields[i] = DSL.field("{0}", arguments.get(i));
 
-
-
-
-
-            case POSTGRES: {
-                super.accept(ctx);
-                break;
-            }
-
-            default: {
-                UniqueKey<?> pk = table.getPrimaryKey();
-
-                if (pk != null)
-                    ctx.visit(new DefaultAggregateFunction<>(distinct, "count", SQLDataType.INTEGER, table.fields(pk.getFieldsArray())));
-                else
-                    super.accept(ctx);
-
-                break;
-            }
+            ctx.visit(percentileCont(new BigDecimal("0.5")).withinGroupOrderBy(fields));
         }
+        else
+            super.accept(ctx);
     }
 }

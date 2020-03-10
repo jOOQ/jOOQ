@@ -18220,7 +18220,7 @@ public class DSL {
      */
     @Support
     public static AggregateFunction<Integer> countDistinct(Field<?> field) {
-        return new DefaultAggregateFunction<>("count", true, SQLDataType.INTEGER, nullSafe(field));
+        return new DefaultAggregateFunction<>(true, "count", SQLDataType.INTEGER, nullSafe(field));
     }
 
     /**
@@ -18228,7 +18228,7 @@ public class DSL {
      */
     @Support
     public static AggregateFunction<Integer> countDistinct(SelectFieldOrAsterisk field) {
-        return new DefaultAggregateFunction<>("count", true, SQLDataType.INTEGER, field("{0}", field));
+        return new DefaultAggregateFunction<>(true, "count", SQLDataType.INTEGER, field("{0}", field));
     }
 
     /**
@@ -18255,7 +18255,7 @@ public class DSL {
     @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static AggregateFunction<Integer> countDistinct(Field<?>... fields) {
         fields = nullSafe(fields);
-        return fields.length == 0 ? countDistinct(asterisk()) : new DefaultAggregateFunction<>("count", true, SQLDataType.INTEGER, fields);
+        return fields.length == 0 ? countDistinct(asterisk()) : new DefaultAggregateFunction<>(true, "count", SQLDataType.INTEGER, fields);
     }
 
     /**
@@ -18323,7 +18323,7 @@ public class DSL {
      */
     @Support({ HSQLDB, POSTGRES })
     public static <T> ArrayAggOrderByStep<T[]> arrayAggDistinct(Field<T> field) {
-        return new DefaultAggregateFunction<>(Term.ARRAY_AGG, true, field.getDataType().getArrayDataType(), nullSafe(field));
+        return new DefaultAggregateFunction<>(true, Term.ARRAY_AGG, field.getDataType().getArrayDataType(), nullSafe(field));
     }
 
 
@@ -18483,7 +18483,7 @@ public class DSL {
      */
     @Support
     public static <T> AggregateFunction<T> maxDistinct(Field<T> field) {
-        return new DefaultAggregateFunction<>("max", true, nullSafeDataType(field), nullSafe(field));
+        return new DefaultAggregateFunction<>(true, "max", nullSafeDataType(field), nullSafe(field));
     }
 
     /**
@@ -18499,7 +18499,7 @@ public class DSL {
      */
     @Support
     public static <T> AggregateFunction<T> minDistinct(Field<T> field) {
-        return new DefaultAggregateFunction<>("min", true, nullSafeDataType(field), nullSafe(field));
+        return new DefaultAggregateFunction<>(true, "min", nullSafeDataType(field), nullSafe(field));
     }
 
     /**
@@ -18515,7 +18515,7 @@ public class DSL {
      */
     @Support
     public static AggregateFunction<BigDecimal> sumDistinct(Field<? extends Number> field) {
-        return new DefaultAggregateFunction<>("sum", true, SQLDataType.NUMERIC, nullSafe(field));
+        return new DefaultAggregateFunction<>(true, "sum", SQLDataType.NUMERIC, nullSafe(field));
     }
 
     /**
@@ -18533,7 +18533,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static AggregateFunction<BigDecimal> product(Field<? extends Number> field) {
-        return new DefaultAggregateFunction<>(Term.PRODUCT, SQLDataType.NUMERIC, nullSafe(field));
+        return new Product(false, nullSafe(field));
     }
 
     /**
@@ -18551,7 +18551,7 @@ public class DSL {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static AggregateFunction<BigDecimal> productDistinct(Field<? extends Number> field) {
-        return new DefaultAggregateFunction<>(Term.PRODUCT, true, SQLDataType.NUMERIC, nullSafe(field));
+        return new Product(true, nullSafe(field));
     }
 
     /**
@@ -18567,7 +18567,7 @@ public class DSL {
      */
     @Support
     public static AggregateFunction<BigDecimal> avgDistinct(Field<? extends Number> field) {
-        return new DefaultAggregateFunction<>("avg", true, SQLDataType.NUMERIC, nullSafe(field));
+        return new DefaultAggregateFunction<>(true, "avg", SQLDataType.NUMERIC, nullSafe(field));
     }
 
     /**
@@ -18583,7 +18583,7 @@ public class DSL {
      */
     @Support({ CUBRID, H2, HSQLDB, MARIADB, POSTGRES })
     public static AggregateFunction<BigDecimal> median(Field<? extends Number> field) {
-        return new DefaultAggregateFunction<>(Term.MEDIAN, SQLDataType.NUMERIC, nullSafe(field));
+        return new Median(nullSafe(field));
     }
 
     /**
@@ -18772,7 +18772,7 @@ public class DSL {
      */
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static OrderedAggregateFunction<String> listAgg(Field<?> field) {
-        return new DefaultAggregateFunction<>(Term.LIST_AGG, SQLDataType.VARCHAR, nullSafe(field));
+        return new ListAgg(false, nullSafe(field));
     }
 
     /**
@@ -18794,7 +18794,7 @@ public class DSL {
      */
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static OrderedAggregateFunction<String> listAgg(Field<?> field, String separator) {
-        return new DefaultAggregateFunction<>(Term.LIST_AGG, SQLDataType.VARCHAR, nullSafe(field), inline(separator));
+        return new ListAgg(false, nullSafe(field), inline(separator));
     }
 
     /**

@@ -81,6 +81,7 @@ import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_EMULATE_BULK_INSERT_RETURNING;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_UNALIAS_ALIASED_EXPRESSIONS;
 import static org.jooq.impl.Tools.DataKey.DATA_DML_TARGET_TABLE;
+import static org.jooq.tools.StringUtils.defaultIfNull;
 import static org.jooq.util.sqlite.SQLiteDSL.rowid;
 
 import java.sql.CallableStatement;
@@ -278,7 +279,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
         // [#8382] [#8384] Table might be aliased and dialect doesn't like that
         if (NO_SUPPORT_INSERT_ALIASED_TABLE.contains(ctx.dialect()) && this instanceof Insert)
-            return Tools.aliased(table());
+            return defaultIfNull(Tools.aliased(table()), table());
         else
             return table();
     }

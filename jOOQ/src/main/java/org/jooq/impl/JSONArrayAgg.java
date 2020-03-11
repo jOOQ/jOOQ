@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.JSONNullClause.ABSENT_ON_NULL;
 import static org.jooq.impl.JSONNullClause.NULL_ON_NULL;
 import static org.jooq.impl.JSONObject.acceptJSONNullClause;
@@ -84,16 +83,14 @@ implements JSONArrayAggOrderByStep<J> {
 
 
             case POSTGRES:
-                if (nullClause == ABSENT_ON_NULL)
-                    ctx.visit(unquotedName("json_strip_nulls")).sql('(');
-
                 ctx.visit(getDataType() == JSON ? N_JSON_AGG : N_JSONB_AGG).sql('(');
                 ctx.visit(arguments.get(0));
                 acceptOrderBy(ctx);
                 ctx.sql(')');
 
+                // TODO: What about a user-defined filter clause?
                 if (nullClause == ABSENT_ON_NULL)
-                    ctx.sql(')');
+                    acceptFilterClause(ctx, arguments.get(0).isNotNull());
 
                 break;
 

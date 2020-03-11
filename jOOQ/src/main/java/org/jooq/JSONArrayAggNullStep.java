@@ -40,8 +40,6 @@ package org.jooq;
 // ...
 // ...
 import static org.jooq.SQLDialect.H2;
-import static org.jooq.SQLDialect.MARIADB;
-import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 
@@ -59,12 +57,12 @@ public interface JSONArrayAggNullStep<T> extends AggregateFilterStep<T> {
     /**
      * Include <code>NULL</code> values in output JSON.
      */
-    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, POSTGRES })
     AggregateFilterStep<T> nullOnNull();
 
     /**
      * Exclude <code>NULL</code> values in output JSON.
      */
-    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, POSTGRES })
     AggregateFilterStep<T> absentOnNull();
 }

@@ -40,8 +40,6 @@ package org.jooq;
 // ...
 // ...
 import static org.jooq.SQLDialect.H2;
-import static org.jooq.SQLDialect.MARIADB;
-import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 
@@ -60,12 +58,12 @@ public interface JSONArrayAggOrderByStep<J> extends JSONArrayAggNullStep<J> {
     /**
      * Add an <code>ORDER BY</code> clause to the function.
      */
-    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, POSTGRES })
     JSONArrayAggNullStep<J> orderBy(OrderField<?>... fields);
 
     /**
      * Add an <code>ORDER BY</code> clause to the function.
      */
-    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, POSTGRES })
     JSONArrayAggNullStep<J> orderBy(Collection<? extends OrderField<?>> fields);
 }

@@ -151,6 +151,10 @@ implements
     }
 
     final void acceptFilterClause(Context<?> ctx) {
+        acceptFilterClause(ctx, filter);
+    }
+
+    static final void acceptFilterClause(Context<?> ctx, Condition filter) {
         if (filter != null && SUPPORT_FILTER.contains(ctx.dialect()))
             ctx.sql(' ')
                .visit(K_FILTER)

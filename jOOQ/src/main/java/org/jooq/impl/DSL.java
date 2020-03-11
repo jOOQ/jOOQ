@@ -233,6 +233,7 @@ import org.jooq.InsertValuesStep9;
 import org.jooq.InsertValuesStepN;
 import org.jooq.JSON;
 import org.jooq.JSONArrayAggOrderByStep;
+import org.jooq.JSONArrayNullStep;
 import org.jooq.JSONB;
 import org.jooq.JSONEntry;
 import org.jooq.JSONObjectAggNullStep;
@@ -18102,7 +18103,7 @@ public class DSL {
      * The JSON array constructor.
      */
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
-    public static Field<JSON> jsonArray(Field<?>... fields) {
+    public static JSONArrayNullStep<JSON> jsonArray(Field<?>... fields) {
         return jsonArray(Arrays.asList(fields));
     }
 
@@ -18110,7 +18111,7 @@ public class DSL {
      * The JSON array constructor.
      */
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
-    public static Field<JSON> jsonArray(Collection<? extends Field<?>> fields) {
+    public static JSONArrayNullStep<JSON> jsonArray(Collection<? extends Field<?>> fields) {
         return new JSONArray<>(JSON, fields);
     }
 
@@ -18118,7 +18119,7 @@ public class DSL {
      * The JSONB array constructor.
      */
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
-    public static Field<JSONB> jsonbArray(Field<?>... fields) {
+    public static JSONArrayNullStep<JSONB> jsonbArray(Field<?>... fields) {
         return jsonbArray(Arrays.asList(fields));
     }
 
@@ -18126,7 +18127,7 @@ public class DSL {
      * The JSONB array constructor.
      */
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
-    public static Field<JSONB> jsonbArray(Collection<? extends Field<?>> fields) {
+    public static JSONArrayNullStep<JSONB> jsonbArray(Collection<? extends Field<?>> fields) {
         return new JSONArray<>(JSONB, fields);
     }
 

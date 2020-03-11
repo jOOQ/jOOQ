@@ -48,10 +48,11 @@ import java.util.Collection;
 import org.jooq.impl.DSL;
 
 /**
- * The SQL standard <code>ARRAY_AGG()</code> function.
+ * A step in the construction of {@link DSL#jsonArrayAgg(Field)} or
+ * {@link DSL#jsonbArrayAgg(Field)} functions where the <code>ORDER BY</code>
+ * clause can be defined.
  *
  * @author Lukas Eder
- * @see DSL#arrayAgg(Field)
  */
 public interface JSONArrayAggOrderByStep<J> extends JSONArrayAggNullStep<J> {
 

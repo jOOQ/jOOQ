@@ -46,8 +46,8 @@ import static org.jooq.SQLDialect.POSTGRES;
 import org.jooq.impl.DSL;
 
 /**
- * A step in the construction of {@link DSL#jsonObject(JSONEntry...)} or
- * {@link DSL#jsonbObject(JSONEntry...)} functions where the <code>NULL</code>
+ * A step in the construction of {@link DSL#jsonObjectAgg(JSONEntry)} or
+ * {@link DSL#jsonbObjectAgg(JSONEntry)} functions where the <code>NULL</code>
  * clause can be defined.
  *
  * @author Lukas Eder

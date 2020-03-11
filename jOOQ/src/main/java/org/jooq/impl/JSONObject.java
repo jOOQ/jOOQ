@@ -176,18 +176,16 @@ final class JSONObject<J> extends AbstractField<J> implements JSONObjectNullStep
             default:
                 ctx.visit(K_JSON_OBJECT).sql('(').visit(args);
 
-                if (!NO_SUPPORT_ABSENT_ON_NULL.contains(ctx.dialect()))
-
-                    // Workaround for https://github.com/h2database/h2database/issues/2496
-                    if (args.isEmpty() && ctx.family() == H2)
-                        ctx.visit(K_NULL).sql(' ').visit(K_ON).sql(' ').visit(K_NULL);
+                // Workaround for https://github.com/h2database/h2database/issues/2496
+                if (args.isEmpty() && ctx.family() == H2)
+                    ctx.visit(K_NULL).sql(' ').visit(K_ON).sql(' ').visit(K_NULL);
 
 
 
 
 
-                    else
-                        acceptJSONNullClause(ctx, nullClause);
+                else
+                    acceptJSONNullClause(ctx, nullClause);
 
                 ctx.sql(')');
                 break;
@@ -195,9 +193,10 @@ final class JSONObject<J> extends AbstractField<J> implements JSONObjectNullStep
     }
 
     static final void acceptJSONNullClause(Context<?> ctx, JSONNullClause nullClause) {
-        if (nullClause == NULL_ON_NULL)
-            ctx.sql(' ').visit(K_NULL).sql(' ').visit(K_ON).sql(' ').visit(K_NULL);
-        else if (nullClause == ABSENT_ON_NULL)
-            ctx.sql(' ').visit(K_ABSENT).sql(' ').visit(K_ON).sql(' ').visit(K_NULL);
+        if (!NO_SUPPORT_ABSENT_ON_NULL.contains(ctx.dialect()))
+            if (nullClause == NULL_ON_NULL)
+                ctx.sql(' ').visit(K_NULL).sql(' ').visit(K_ON).sql(' ').visit(K_NULL);
+            else if (nullClause == ABSENT_ON_NULL)
+                ctx.sql(' ').visit(K_ABSENT).sql(' ').visit(K_ON).sql(' ').visit(K_NULL);
     }
 }

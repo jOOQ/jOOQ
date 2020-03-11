@@ -38,7 +38,11 @@
 package org.jooq.impl;
 
 import static org.jooq.SQLDialect.H2;
+import static org.jooq.impl.DSL.jsonArrayAgg;
+import static org.jooq.impl.DSL.row;
+import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.unquotedName;
+import static org.jooq.impl.DSL.values;
 import static org.jooq.impl.JSONNullClause.ABSENT_ON_NULL;
 import static org.jooq.impl.JSONNullClause.NULL_ON_NULL;
 import static org.jooq.impl.JSONObject.acceptJSONNullClause;
@@ -53,6 +57,8 @@ import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.JSONArrayNullStep;
+import org.jooq.Row1;
+import org.jooq.Table;
 
 
 /**
@@ -107,7 +113,18 @@ final class JSONArray<J> extends AbstractField<J> implements JSONArrayNullStep<J
 
 
             case POSTGRES:
-                ctx.visit(unquotedName("json_build_array")).sql('(').visit(args).sql(')');
+                if (nullClause == ABSENT_ON_NULL) {
+                    Row1<?>[] rows = new Row1[args.size()];
+                    for (int i = 0; i < rows.length; i++)
+                        rows[i] = row(args.get(i));
+                    Table<?> t = values(rows).as("t", "a");
+                    Field<?> a = t.field("a");
+                    ctx.visit(DSL.field(select(jsonArrayAgg(a)).from(t).where(a.isNotNull())));
+                }
+                else {
+                    ctx.visit(unquotedName("json_build_array")).sql('(').visit(args).sql(')');
+                }
+
                 break;
 
             default:

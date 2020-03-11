@@ -23,6 +23,39 @@ Connect as the `SAKILA` user and run:
 SQL> @oracle-sakila-insert-data.sql
 ```
 
+Once the script is completed, run the following verification:
+
+```sql
+SQL> SELECT table_name FROM user_tables;
+
+TABLE_NAME
+--------------
+ACTOR
+COUNTRY
+CITY
+ADDRESS
+LANGUAGE
+CATEGORY
+CUSTOMER
+FILM
+FILM_ACTOR
+FILM_CATEGORY
+FILM_TEXT
+INVENTORY
+STAFF
+STORE
+PAYMENT
+RENTAL
+
+16 rows selected.
+
+SQL> SELECT COUNT(*) FROM film;
+
+  COUNT(*)
+----------
+      1000
+```
+
 ## Delete data
 Connect as the `SAKILA` user and run:
 

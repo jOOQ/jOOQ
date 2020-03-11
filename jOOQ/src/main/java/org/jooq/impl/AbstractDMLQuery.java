@@ -41,9 +41,16 @@ import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 // ...
 // ...
+// ...
+import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
+// ...
+import static org.jooq.SQLDialect.MARIADB;
+// ...
+import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
 // ...
@@ -137,6 +144,8 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
      */
     private static final long                    serialVersionUID                 = -7438014075226919192L;
     private static final JooqLogger              log                              = JooqLogger.getLogger(AbstractQuery.class);
+
+    private static final Set<SQLDialect>         NO_SUPPORT_INSERT_ALIASED_TABLE  = SQLDialect.supportedBy(DERBY, H2, MARIADB, MYSQL);
 
 
 
@@ -260,7 +269,11 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
 
 
-        return table();
+        // [#8382] [#8384] Table might be aliased and dialect doesn't like that
+        if (NO_SUPPORT_INSERT_ALIASED_TABLE.contains(ctx.dialect()) && this instanceof Insert)
+            return Tools.aliased(table());
+        else
+            return table();
     }
 
     // @Override

@@ -24,15 +24,11 @@ CREATE TABLE actor (
   CONSTRAINT pk_actor PRIMARY KEY  (actor_id)
 );
 
-CREATE  INDEX idx_actor_last_name ON actor(last_name);
-/
+CREATE INDEX idx_actor_last_name ON actor(last_name);
  
   --DROP SEQUENCE actor_sequence;
 
 CREATE SEQUENCE actor_sequence;
-/
-
-
 
 CREATE OR REPLACE TRIGGER actor_before_trigger 
 BEFORE INSERT ON actor FOR EACH ROW 
@@ -67,7 +63,6 @@ CREATE TABLE country (
 ---DROP SEQUENCE country_sequence;
 
 CREATE SEQUENCE country_sequence;
-/
 
 
 CREATE OR REPLACE TRIGGER country_before_trigger
@@ -102,13 +97,11 @@ CREATE TABLE city (
   CONSTRAINT fk_city_country FOREIGN KEY (country_id) REFERENCES country (country_id)
 );
 
-CREATE  INDEX idx_fk_country_id ON city(country_id);
-/
+CREATE INDEX idx_fk_country_id ON city(country_id);
 
 --- DROP SEQUENCE city_sequence;
 
 CREATE SEQUENCE city_sequence;
-/
 
 CREATE OR REPLACE TRIGGER city_before_trigger
 BEFORE INSERT ON city FOR EACH ROW 
@@ -145,16 +138,13 @@ CREATE TABLE address (
   CONSTRAINT pk_address PRIMARY KEY (address_id)
 );
 
-CREATE  INDEX idx_fk_city_id ON address(city_id);
-/
+CREATE INDEX idx_fk_city_id ON address(city_id);
 
-ALTER TABLE address ADD  CONSTRAINT fk_address_city FOREIGN KEY (city_id) REFERENCES city (city_id);
-/
+ALTER TABLE address ADD CONSTRAINT fk_address_city FOREIGN KEY (city_id) REFERENCES city (city_id);
 
   --DROP SEQUENCE city_sequence;
 
 CREATE SEQUENCE address_sequence;
-/
 
 CREATE OR REPLACE TRIGGER address_before_trigger
 BEFORE INSERT ON address FOR EACH ROW 
@@ -188,7 +178,6 @@ CREATE TABLE language (
 ---DROP SEQUENCE language_sequence;
 
 CREATE SEQUENCE language_sequence;
-/
 
 CREATE OR REPLACE TRIGGER language_before_trigger
 BEFORE INSERT ON language FOR EACH ROW 
@@ -222,7 +211,6 @@ CREATE TABLE category (
 ---DROP SEQUENCE category_sequence;
 
 CREATE SEQUENCE category_sequence;
-/
 
 CREATE OR REPLACE TRIGGER category_before_trigger
 BEFORE INSERT ON category FOR EACH ROW 
@@ -260,16 +248,15 @@ CREATE TABLE customer (
   CONSTRAINT fk_customer_address FOREIGN KEY (address_id) REFERENCES address(address_id)
 );
 
-CREATE  INDEX idx_customer_fk_store_id ON customer(store_id);
-/
-CREATE  INDEX idx_customer_fk_address_id ON customer(address_id);
-/
-CREATE  INDEX idx_customer_last_name ON customer(last_name);
-/
+CREATE INDEX idx_customer_fk_store_id ON customer(store_id);
+
+CREATE INDEX idx_customer_fk_address_id ON customer(address_id);
+
+CREATE INDEX idx_customer_last_name ON customer(last_name);
+
 ---DROP SEQUENCE customer_sequence;
 
 CREATE SEQUENCE customer_sequence;
-/
 
 CREATE OR REPLACE TRIGGER customer_before_trigger
 BEFORE INSERT ON customer FOR EACH ROW 
@@ -316,18 +303,17 @@ ALTER TABLE film ADD CONSTRAINT CHECK_special_features CHECK(special_features is
                                                               special_features like '%Commentaries%' or
                                                               special_features like '%Deleted Scenes%' or
                                                               special_features like '%Behind the Scenes%');
-/
+
 ALTER TABLE film ADD CONSTRAINT CHECK_special_rating CHECK(rating in ('G','PG','PG-13','R','NC-17'));
-/
-CREATE  INDEX idx_fk_language_id ON film(language_id);
-/
-CREATE  INDEX idx_fk_original_language_id ON film(original_language_id);
-/
+
+CREATE INDEX idx_fk_language_id ON film(language_id);
+
+CREATE INDEX idx_fk_original_language_id ON film(original_language_id);
+
 
 ---DROP SEQUENCE film_sequence;
 
 CREATE SEQUENCE film_sequence;
-/
 
 CREATE OR REPLACE TRIGGER film_before_trigger
 BEFORE INSERT ON film FOR EACH ROW 
@@ -360,11 +346,9 @@ CREATE TABLE film_actor (
   CONSTRAINT fk_film_actor_film FOREIGN KEY (film_id) REFERENCES film (film_id)
 );
 
-CREATE  INDEX idx_fk_film_actor_film ON film_actor(film_id);
-/
+CREATE INDEX idx_fk_film_actor_film ON film_actor(film_id);
 
-CREATE  INDEX idx_fk_film_actor_actor ON film_actor(actor_id) ;
-/
+CREATE INDEX idx_fk_film_actor_actor ON film_actor(actor_id) ;
 
 CREATE OR REPLACE TRIGGER film_actor_before_trigger
 BEFORE INSERT ON film_actor FOR EACH ROW 
@@ -393,10 +377,10 @@ CREATE TABLE film_category (
   CONSTRAINT fk_film_category_category FOREIGN KEY (category_id) REFERENCES category (category_id)
 );
 
-CREATE  INDEX idx_fk_film_category_film ON film_category(film_id);
-/
-CREATE  INDEX idx_fk_film_category_category ON film_category(category_id);
-/
+CREATE INDEX idx_fk_film_category_film ON film_category(film_id);
+
+CREATE INDEX idx_fk_film_category_category ON film_category(category_id);
+
 
 CREATE OR REPLACE TRIGGER film_category_before_trigger
 BEFORE INSERT ON film_category FOR EACH ROW 
@@ -435,16 +419,13 @@ CREATE TABLE inventory (
   CONSTRAINT fk_inventory_film FOREIGN KEY (film_id) REFERENCES film (film_id)
 );
 
-CREATE  INDEX idx_fk_film_id ON inventory(film_id);
-/
+CREATE INDEX idx_fk_film_id ON inventory(film_id);
 
-CREATE  INDEX idx_fk_film_id_store_id ON inventory(store_id,film_id);
-/
+CREATE INDEX idx_fk_film_id_store_id ON inventory(store_id,film_id);
 
 ---DROP SEQUENCE inventory_sequence;
 
 CREATE SEQUENCE inventory_sequence;
-/
 
 CREATE OR REPLACE TRIGGER inventory_before_trigger
 BEFORE INSERT ON inventory FOR EACH ROW 
@@ -483,16 +464,13 @@ CREATE TABLE staff (
   CONSTRAINT fk_staff_address FOREIGN KEY (address_id) REFERENCES address (address_id)
 );
 
-CREATE  INDEX idx_fk_staff_store_id ON staff(store_id);
-/
+CREATE INDEX idx_fk_staff_store_id ON staff(store_id);
 
-CREATE  INDEX idx_fk_staff_address_id ON staff(address_id);
-/
+CREATE INDEX idx_fk_staff_address_id ON staff(address_id);
 
 ---DROP SEQUENCE inventory_sequence;
 
 CREATE SEQUENCE staff_sequence;
-/
 
 CREATE OR REPLACE TRIGGER staff_before_trigger
 BEFORE INSERT ON staff FOR EACH ROW 
@@ -526,17 +504,13 @@ CREATE TABLE store (
   CONSTRAINT fk_store_address FOREIGN KEY (address_id) REFERENCES address (address_id)
 );
 
-CREATE  INDEX idx_store_fk_manager_staff_id ON store(manager_staff_id);
-/
+CREATE INDEX idx_store_fk_manager_staff_id ON store(manager_staff_id);
 
-CREATE  INDEX idx_fk_store_address ON store(address_id);
-/
+CREATE INDEX idx_fk_store_address ON store(address_id);
 
 ---DROP SEQUENCE store_sequence;
 
 CREATE SEQUENCE store_sequence;
-/
-
 
 
 CREATE OR REPLACE TRIGGER store_before_trigger
@@ -574,15 +548,13 @@ CREATE TABLE payment (
   CONSTRAINT fk_payment_staff FOREIGN KEY (staff_id) REFERENCES staff (staff_id)
 );
 
-CREATE  INDEX idx_fk_staff_id ON payment(staff_id);
-/
-CREATE  INDEX idx_fk_customer_id ON payment(customer_id);
-/
+CREATE INDEX idx_fk_staff_id ON payment(staff_id);
+
+CREATE INDEX idx_fk_customer_id ON payment(customer_id);
 
 ---DROP SEQUENCE payment_sequence;
 
 CREATE SEQUENCE payment_sequence;
-/
 
 CREATE OR REPLACE TRIGGER payment_before_trigger
 BEFORE INSERT ON payment FOR EACH ROW 
@@ -617,18 +589,17 @@ CREATE TABLE rental (
 );
 
 CREATE INDEX idx_rental_fk_inventory_id ON rental(inventory_id);
-/
+
 CREATE INDEX idx_rental_fk_customer_id ON rental(customer_id);
-/
+
 CREATE INDEX idx_rental_fk_staff_id ON rental(staff_id);
-/
-CREATE UNIQUE INDEX   idx_rental_uq  ON rental (rental_date,inventory_id,customer_id);
-/
+
+CREATE UNIQUE INDEX idx_rental_uq  ON rental (rental_date,inventory_id,customer_id);
+
 
 ---DROP SEQUENCE payment_sequence;
 
 CREATE SEQUENCE rental_sequence;
-/
 
 CREATE OR REPLACE TRIGGER rental_before_trigger
 BEFORE INSERT ON rental FOR EACH ROW 
@@ -650,13 +621,13 @@ END;
 
 -- FK CONSTRAINTS
 ALTER TABLE customer ADD CONSTRAINT fk_customer_store FOREIGN KEY (store_id) REFERENCES store (store_id);
-/
+
 ALTER TABLE inventory ADD CONSTRAINT fk_inventory_store FOREIGN KEY (store_id) REFERENCES store (store_id);
-/
+
 ALTER TABLE staff ADD CONSTRAINT fk_staff_store FOREIGN KEY (store_id) REFERENCES store (store_id);
-/
+
 ALTER TABLE payment ADD CONSTRAINT fk_payment_rental FOREIGN KEY (rental_id) REFERENCES rental (rental_id) ON DELETE SET NULL;
-/
+
 --
 -- View structure for view customer_list
 --
@@ -674,7 +645,7 @@ SELECT cu.customer_id AS ID,
        cu.store_id AS SID
 FROM customer cu JOIN address a ON cu.address_id = a.address_id JOIN city ON a.city_id = city.city_id
     JOIN country ON city.country_id = country.country_id;
-/
+
 --
 -- View structure for view film_list
 --
@@ -692,7 +663,6 @@ SELECT film.film_id AS FID,
 FROM category LEFT JOIN film_category ON category.category_id = film_category.category_id LEFT JOIN film ON film_category.film_id = film.film_id
         JOIN film_actor ON film.film_id = film_actor.film_id
     JOIN actor ON film_actor.actor_id = actor.actor_id;
-/
 
 --
 -- View structure for view staff_list
@@ -710,7 +680,7 @@ SELECT s.staff_id AS ID,
        s.store_id AS SID
 FROM staff s JOIN address a ON s.address_id = a.address_id JOIN city ON a.city_id = city.city_id
     JOIN country ON city.country_id = country.country_id;
-/
+    
 --
 -- View structure for view sales_by_store
 --
@@ -734,7 +704,7 @@ GROUP BY
   s.store_id
 , c.city||','||cy.country
 , m.first_name||' '||m.last_name;
-/
+
 --
 -- View structure for view sales_by_film_category
 --
@@ -754,7 +724,6 @@ INNER JOIN film f ON i.film_id = f.film_id
 INNER JOIN film_category fc ON f.film_id = fc.film_id
 INNER JOIN category c ON fc.category_id = c.category_id
 GROUP BY c.name;
-/
 
 --
 -- View structure for view actor_info

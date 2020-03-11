@@ -99,7 +99,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
     private static final Clause[]        CLAUSES_TABLE_ALIAS                   = { TABLE, TABLE_ALIAS };
     private static final Clause[]        CLAUSES_FIELD_REFERENCE               = { FIELD, FIELD_REFERENCE };
     private static final Clause[]        CLAUSES_FIELD_ALIAS                   = { FIELD, FIELD_ALIAS };
-    private static final Set<SQLDialect> SUPPORT_AS_REQUIRED                   = SQLDialect.supportedBy(DERBY, HSQLDB, MARIADB, MYSQL, POSTGRES);
+    private static final Set<SQLDialect> SUPPORT_AS_REQUIRED                   = SQLDialect.supportedBy(DERBY, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE);
     private static final Set<SQLDialect> SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL1 = SQLDialect.supportedBy(CUBRID, FIREBIRD, MYSQL);
     private static final Set<SQLDialect> SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL2 = SQLDialect.supportedBy(H2, MARIADB, MYSQL, SQLITE);
 

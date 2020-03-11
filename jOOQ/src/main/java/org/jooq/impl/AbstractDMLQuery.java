@@ -269,6 +269,13 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
 
 
+
+
+
+
+
+
+
         // [#8382] [#8384] Table might be aliased and dialect doesn't like that
         if (NO_SUPPORT_INSERT_ALIASED_TABLE.contains(ctx.dialect()) && this instanceof Insert)
             return Tools.aliased(table());

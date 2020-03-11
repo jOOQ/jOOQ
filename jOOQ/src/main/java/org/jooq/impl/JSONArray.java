@@ -104,6 +104,7 @@ final class JSONArray<J> extends AbstractField<J> implements JSONArrayNullStep<J
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public void accept(Context<?> ctx) {
         switch (ctx.family()) {
@@ -114,7 +115,7 @@ final class JSONArray<J> extends AbstractField<J> implements JSONArrayNullStep<J
 
             case POSTGRES:
                 if (nullClause == ABSENT_ON_NULL) {
-                    Row1<?>[] rows = new Row1[args.size()];
+                    Row1[] rows = new Row1[args.size()];
                     for (int i = 0; i < rows.length; i++)
                         rows[i] = row(args.get(i));
                     Table<?> t = values(rows).as("t", "a");

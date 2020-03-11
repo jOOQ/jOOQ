@@ -421,6 +421,8 @@ import org.jooq.InsertReturningStep;
 import org.jooq.InsertSetStep;
 import org.jooq.InsertValuesStepN;
 import org.jooq.JSON;
+import org.jooq.JSONArrayAggNullStep;
+import org.jooq.JSONArrayAggOrderByStep;
 import org.jooq.JSONEntry;
 import org.jooq.JSONObjectNullStep;
 import org.jooq.JoinType;
@@ -6098,6 +6100,8 @@ final class ParserImpl implements Parser {
                 if (J.is(type))
                     if ((field = parseFieldJSONArrayConstructorIf(ctx)) != null)
                         return field;
+                    else if ((field = parseFieldJSONArrayAggIf(ctx)) != null)
+                        return field;
                     else if ((field = parseFieldJSONObjectConstructorIf(ctx)) != null)
                         return field;
 
@@ -6670,6 +6674,29 @@ final class ParserImpl implements Parser {
     private static final Field<?> parseFieldJSONArrayConstructorIf(ParserContext ctx) {
         if (parseKeywordIf(ctx, "JSON_ARRAY"))
             return DSL.jsonArray(parseFieldsOrEmptyParenthesised(ctx));
+
+        return null;
+    }
+
+    private static final Field<?> parseFieldJSONArrayAggIf(ParserContext ctx) {
+        if (parseKeywordIf(ctx, "JSON_ARRAYAGG")) {
+            Field<?> result;
+            JSONArrayAggOrderByStep<JSON> s1;
+            JSONArrayAggNullStep<JSON> s2;
+            JSONNullClause nullClause;
+
+            parse(ctx, '(');
+            result = s2 = s1 = DSL.jsonArrayAgg(parseField(ctx));
+
+            if (parseKeywordIf(ctx, "ORDER BY"))
+                result = s2 = s1.orderBy(parseSortSpecification(ctx));
+
+            if ((nullClause = parseJSONObjectNullClauseIf(ctx)) != null)
+                result = nullClause == JSONNullClause.ABSENT_ON_NULL ? s2.absentOnNull() : s2.nullOnNull();
+
+            parse(ctx, ')');
+            return result;
+        }
 
         return null;
     }

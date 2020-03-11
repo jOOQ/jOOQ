@@ -235,6 +235,7 @@ import org.jooq.JSON;
 import org.jooq.JSONArrayAggOrderByStep;
 import org.jooq.JSONB;
 import org.jooq.JSONEntry;
+import org.jooq.JSONObjectAggNullStep;
 import org.jooq.JSONObjectNullStep;
 import org.jooq.Keyword;
 // ...
@@ -18194,7 +18195,7 @@ public class DSL {
     }
 
     /**
-     * The JSON array aggregate function
+     * The JSON array aggregate function.
      */
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static JSONArrayAggOrderByStep<JSON> jsonArrayAgg(Field<?> value) {
@@ -18202,11 +18203,59 @@ public class DSL {
     }
 
     /**
-     * The JSON array aggregate function
+     * The JSON array aggregate function.
      */
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static JSONArrayAggOrderByStep<JSONB> jsonbArrayAgg(Field<?> value) {
         return new JSONArrayAgg<JSONB>(JSONB, value);
+    }
+
+    /**
+     * The JSON object aggregate function.
+     */
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    public static JSONObjectAggNullStep<JSON> jsonObjectAgg(String key, Field<?> value) {
+        return jsonObjectAgg(Tools.field(key), value);
+    }
+
+    /**
+     * The JSON object aggregate function.
+     */
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    public static JSONObjectAggNullStep<JSON> jsonObjectAgg(Field<String> key, Field<?> value) {
+        return jsonObjectAgg(jsonEntry(key, value));
+    }
+
+    /**
+     * The JSON object aggregate function.
+     */
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    public static JSONObjectAggNullStep<JSON> jsonObjectAgg(JSONEntry<?> entry) {
+        return new JSONObjectAgg<JSON>(JSON, entry);
+    }
+
+    /**
+     * The JSONB object aggregate function.
+     */
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    public static JSONObjectAggNullStep<JSONB> jsonbObjectAgg(String key, Field<?> value) {
+        return jsonbObjectAgg(Tools.field(key), value);
+    }
+
+    /**
+     * The JSONB object aggregate function.
+     */
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    public static JSONObjectAggNullStep<JSONB> jsonbObjectAgg(Field<String> key, Field<?> value) {
+        return jsonbObjectAgg(jsonEntry(key, value));
+    }
+
+    /**
+     * The JSONB object aggregate function.
+     */
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    public static JSONObjectAggNullStep<JSONB> jsonbObjectAgg(JSONEntry<?> entry) {
+        return new JSONObjectAgg<JSONB>(JSONB, entry);
     }
 
     // -------------------------------------------------------------------------

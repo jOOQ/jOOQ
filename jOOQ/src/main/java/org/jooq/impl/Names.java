@@ -88,7 +88,12 @@ final class Names {
     static final Name N_JSON_ARRAY        = DSL.unquotedName("json_array");
     static final Name N_JSON_ARRAYAGG     = DSL.unquotedName("json_arrayagg");
     static final Name N_JSON_OBJECT       = DSL.unquotedName("json_object");
+    static final Name N_JSON_OBJECTAGG    = DSL.unquotedName("json_objectagg");
+    static final Name N_JSON_OBJECT_AGG   = DSL.unquotedName("json_object_agg");
     static final Name N_JSONB_AGG         = DSL.unquotedName("jsonb_agg");
+    static final Name N_JSONB_OBJECT      = DSL.unquotedName("jsonb_object");
+    static final Name N_JSONB_OBJECTAGG   = DSL.unquotedName("jsonb_objectagg");
+    static final Name N_JSONB_OBJECT_AGG  = DSL.unquotedName("jsonb_object_agg");
     static final Name N_LEFT              = DSL.unquotedName("left");
     static final Name N_LIST              = DSL.unquotedName("list");
     static final Name N_LISTAGG           = DSL.unquotedName("listagg");

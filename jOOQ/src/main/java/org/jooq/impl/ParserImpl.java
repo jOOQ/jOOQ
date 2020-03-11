@@ -425,6 +425,7 @@ import org.jooq.InsertValuesStepN;
 import org.jooq.JSON;
 import org.jooq.JSONArrayAggNullStep;
 import org.jooq.JSONArrayAggOrderByStep;
+import org.jooq.JSONArrayNullStep;
 import org.jooq.JSONEntry;
 import org.jooq.JSONObjectAggNullStep;
 import org.jooq.JSONObjectNullStep;
@@ -6677,8 +6678,26 @@ final class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldJSONArrayConstructorIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "JSON_ARRAY"))
-            return DSL.jsonArray(parseFieldsOrEmptyParenthesised(ctx));
+        if (parseKeywordIf(ctx, "JSON_ARRAY")) {
+            parse(ctx, '(');
+
+            List<Field<?>> result = null;
+            JSONNullClause nullClause = parseJSONObjectNullClauseIf(ctx);
+
+            if (nullClause == null) {
+                result = parseFields(ctx);
+                nullClause = parseJSONObjectNullClauseIf(ctx);
+            }
+
+            parse(ctx, ')');
+
+            JSONArrayNullStep<JSON> a = result == null ? DSL.jsonArray() : DSL.jsonArray(result);
+            return nullClause == NULL_ON_NULL
+                 ? a.nullOnNull()
+                 : nullClause == ABSENT_ON_NULL
+                 ? a.absentOnNull()
+                 : a;
+        }
 
         return null;
     }

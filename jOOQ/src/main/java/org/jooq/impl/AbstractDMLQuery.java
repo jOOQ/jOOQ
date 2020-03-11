@@ -260,6 +260,13 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
 
 
+
+
+
+
+
+
+
         return table();
     }
 

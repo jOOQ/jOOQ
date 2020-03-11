@@ -6680,6 +6680,8 @@ final class ParserImpl implements Parser {
     private static final Field<?> parseFieldJSONArrayConstructorIf(ParserContext ctx) {
         if (parseKeywordIf(ctx, "JSON_ARRAY")) {
             parse(ctx, '(');
+            if (parseIf(ctx, ')'))
+                return DSL.jsonArray();
 
             List<Field<?>> result = null;
             JSONNullClause nullClause = parseJSONObjectNullClauseIf(ctx);

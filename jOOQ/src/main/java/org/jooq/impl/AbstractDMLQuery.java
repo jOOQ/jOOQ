@@ -1184,22 +1184,17 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
     ) {
         if (values != null && values.length > 0) {
 
-            // [#3035] Support identity columns and single column primary keys
-            final Field<?> identity =
-                  table.getIdentity() != null
-                ? (Field<Object>) table.getIdentity().getField()
-                : table.getPrimaryKey() != null && table.getPrimaryKey().getFields().size() == 1
-                ? table.getPrimaryKey().getFields().get(0)
-                : null;
-
-            if (identity != null) {
+            // This shouldn't be null, as relevant dialects should
+            // return empty generated keys ResultSet
+            if (table.getIdentity() != null) {
+                final Field<Object> field = (Field<Object>) table.getIdentity().getField();
                 Object[] ids = new Object[values.length];
                 for (int i = 0; i < values.length; i++)
-                    ids[i] = identity.getDataType().convert(values[i]);
+                    ids[i] = field.getDataType().convert(values[i]);
 
                 // Only the IDENTITY value was requested. No need for an
                 // additional query
-                if (returningResolvedAsterisks.size() == 1 && new Fields<>(returningResolvedAsterisks).field(identity) != null) {
+                if (returningResolvedAsterisks.size() == 1 && new Fields<>(returningResolvedAsterisks).field(field) != null) {
                     for (final Object id : ids) {
                         ((Result) getResult()).add(
                         Tools.newRecord(
@@ -1228,7 +1223,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                                         .from(table)
 
                                         // [#5050] [#9946] Table.getIdentity() doesn't produce aliased fields yet
-                                        .where(table.field((Field) identity).in(ids))
+                                        .where(table.field(field).in(ids))
                                         .fetch();
 
                     returnedResult.attach(originalConfiguration);

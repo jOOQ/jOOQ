@@ -65,6 +65,7 @@ import java.util.Set;
 import org.jooq.Configuration;
 import org.jooq.Converter;
 import org.jooq.DSLContext;
+import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
@@ -331,10 +332,23 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
 
             result = new Timestamp(configuration().clock().millis());
 
-            addValue(store, timestamp, result);
+
+            // [#9933] Truncate timestamp to column precision, if needed
+            addValue(store, timestamp, result = truncate(result, timestamp.getDataType()));
         }
 
         return result;
+    }
+
+    private static final long[] TRUNCATE = { 1000L, 100L, 10L, 1L };
+
+    private static final Timestamp truncate(Timestamp ts, DataType<?> type) {
+        if (type.isDate())
+            return new Timestamp(ts.getYear(), ts.getMonth(), ts.getDate(), 0, 0, 0, 0);
+        else if (type.precision() >= 3)
+            return ts;
+        else
+            return new Timestamp((ts.getTime() / TRUNCATE[type.precision()]) * TRUNCATE[type.precision()]);
     }
 
     /**

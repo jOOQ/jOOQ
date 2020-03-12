@@ -121,7 +121,7 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
             case FIREBIRD: {
                 if (increment(ctx.data(), DATA_BLOCK_NESTING)) {
                     ctx.paramType(INLINED)
-                       .visit(K_EXECUTE_BLOCK).sql(' ').visit(K_AS)
+                       .visit(K_EXECUTE_BLOCK).sql(' ').visit(K_AS).sql(' ')
                        .formatSeparator();
 
                     ctx.data(DATA_FORCE_STATIC_STATEMENT, true);

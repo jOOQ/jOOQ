@@ -1221,7 +1221,9 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                     derivedConfiguration.dsl()
                                         .select(returning)
                                         .from(table)
-                                        .where(field.in(ids))
+
+                                        // [#5050] [#9946] Table.getIdentity() doesn't produce aliased fields yet
+                                        .where(table.field(field).in(ids))
                                         .fetch();
 
                     returnedResult.attach(originalConfiguration);

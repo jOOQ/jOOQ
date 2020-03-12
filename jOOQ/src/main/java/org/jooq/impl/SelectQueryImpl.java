@@ -1332,13 +1332,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // [#....] Some SQL dialects do not require a FROM clause. Others do and
         //         jOOQ generates a "DUAL" table or something equivalent.
         //         See also org.jooq.impl.Dual for details.
-        boolean hasFrom = !getFrom().isEmpty()
-
-
-
-            || REQUIRES_FROM_CLAUSE.contains(context.dialect())
-        ;
-
+        boolean hasFrom = !getFrom().isEmpty() || REQUIRES_FROM_CLAUSE.contains(context.dialect());
         List<Condition> semiAntiJoinPredicates = null;
         ConditionProviderImpl where = getWhere();
 

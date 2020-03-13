@@ -39,6 +39,7 @@
 package org.jooq.meta.mysql;
 
 import static java.util.Arrays.asList;
+import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.meta.mysql.information_schema.tables.Columns.COLUMNS;
 import static org.jooq.meta.mysql.information_schema.tables.Columns.ORDINAL_POSITION;
@@ -89,7 +90,7 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
                     Columns.IS_NULLABLE,
                     Columns.COLUMN_DEFAULT,
                     Columns.CHARACTER_MAXIMUM_LENGTH,
-                    Columns.NUMERIC_PRECISION,
+                    coalesce(Columns.NUMERIC_PRECISION, Columns.DATETIME_PRECISION).as(Columns.NUMERIC_PRECISION),
                     Columns.NUMERIC_SCALE,
                     Columns.EXTRA)
                 .from(COLUMNS)

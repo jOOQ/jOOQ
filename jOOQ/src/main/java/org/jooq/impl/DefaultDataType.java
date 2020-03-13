@@ -1206,7 +1206,7 @@ public class DefaultDataType<T> implements DataType<T> {
         return unmodifiableCollection(SQL_DATATYPES_BY_TYPE.keySet());
     }
 
-    static final Collection<DataType<?>> dataTypes() {
+    static final Collection<DefaultDataType<?>> dataTypes() {
         return unmodifiableCollection(SQL_DATATYPES_BY_TYPE.values());
     }
 

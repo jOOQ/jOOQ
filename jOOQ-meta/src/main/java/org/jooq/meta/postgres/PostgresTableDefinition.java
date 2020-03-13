@@ -103,7 +103,9 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
                 nvl(
                     COLUMNS.CHARACTER_MAXIMUM_LENGTH,
                     when(COLUMNS.UDT_NAME.eq(inline("_varchar")), PG_ATTRIBUTE.ATTTYPMOD.sub(inline(4)))).as(COLUMNS.CHARACTER_MAXIMUM_LENGTH),
-                COLUMNS.NUMERIC_PRECISION,
+                nvl(
+                    COLUMNS.DATETIME_PRECISION,
+                    COLUMNS.NUMERIC_PRECISION).as(COLUMNS.NUMERIC_PRECISION),
                 COLUMNS.NUMERIC_SCALE,
                 (database.is10() ? COLUMNS.IS_IDENTITY : val(null, String.class)).as(COLUMNS.IS_IDENTITY),
                 // [#9200] only use IS_IDENTITY for ColumnDefinition#isIdentity() if

@@ -3525,8 +3525,6 @@ public class JavaGenerator extends AbstractGenerator {
         final String name = column.getQualifiedOutputName();
 
         // Getter
-        out.println();
-
         if (!printDeprecationIfUnknownType(out, columnTypeFull))
             out.tab(1).javadoc("Getter for <code>%s</code>.%s", name, columnComment(column, comment));
 
@@ -3577,8 +3575,6 @@ public class JavaGenerator extends AbstractGenerator {
 
         // We cannot have covariant setters for arrays because of type erasure
         if (!(generateInterfaces() && isUDTArray)) {
-            out.println();
-
             if (!printDeprecationIfUnknownType(out, columnTypeFull))
                 out.tab(1).javadoc("Setter for <code>%s</code>.%s", name, columnComment(column, comment));
 

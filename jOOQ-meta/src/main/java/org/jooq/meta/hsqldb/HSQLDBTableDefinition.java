@@ -38,6 +38,7 @@
 
 package org.jooq.meta.hsqldb;
 
+import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.DSL.concat;
 import static org.jooq.impl.DSL.nvl;
 import static org.jooq.impl.DSL.nvl2;
@@ -87,7 +88,11 @@ public class HSQLDBTableDefinition extends AbstractTableDefinition {
                 COLUMNS.IS_NULLABLE,
                 COLUMNS.COLUMN_DEFAULT,
                 nvl(ELEMENT_TYPES.CHARACTER_MAXIMUM_LENGTH, COLUMNS.CHARACTER_MAXIMUM_LENGTH).as(COLUMNS.CHARACTER_MAXIMUM_LENGTH),
-                nvl(ELEMENT_TYPES.NUMERIC_PRECISION, COLUMNS.NUMERIC_PRECISION).as(COLUMNS.NUMERIC_PRECISION),
+                coalesce(
+                    ELEMENT_TYPES.DATETIME_PRECISION,
+                    ELEMENT_TYPES.NUMERIC_PRECISION,
+                    COLUMNS.DATETIME_PRECISION,
+                    COLUMNS.NUMERIC_PRECISION).as(COLUMNS.NUMERIC_PRECISION),
                 nvl(ELEMENT_TYPES.NUMERIC_SCALE, COLUMNS.NUMERIC_SCALE).as(COLUMNS.NUMERIC_SCALE),
                 COLUMNS.UDT_NAME,
                 SYSTEM_COLUMNS.REMARKS)

@@ -172,13 +172,13 @@ final class InformationSchemaExport {
         iq.setSequenceName(q.getName());
         iq.setDataType(q.getDataType().getTypeName(configuration));
 
-        if (q.getDataType().hasLength())
+        if (q.getDataType().lengthDefined())
             iq.setCharacterMaximumLength(q.getDataType().length());
 
-        if (q.getDataType().hasPrecision())
+        if (q.getDataType().precisionDefined())
             iq.setNumericPrecision(q.getDataType().precision());
 
-        if (q.getDataType().hasScale())
+        if (q.getDataType().scaleDefined())
             iq.setNumericScale(q.getDataType().scale());
 
         if (q.getStartWith() != null)
@@ -273,13 +273,13 @@ final class InformationSchemaExport {
             ic.setComment(f.getComment());
             ic.setDataType(f.getDataType().getTypeName(configuration));
 
-            if (f.getDataType().hasLength())
+            if (f.getDataType().lengthDefined())
                 ic.setCharacterMaximumLength(f.getDataType().length());
 
-            if (f.getDataType().hasPrecision())
+            if (f.getDataType().precisionDefined())
                 ic.setNumericPrecision(f.getDataType().precision());
 
-            if (f.getDataType().hasScale())
+            if (f.getDataType().scaleDefined())
                 ic.setNumericScale(f.getDataType().scale());
 
             ic.setColumnDefault(DSL.using(configuration).render(f.getDataType().defaultValue()));

@@ -443,6 +443,16 @@ public interface DataType<T> extends Serializable {
     boolean hasPrecision();
 
     /**
+     * Whether the precision returned by {@link #precision()} is defined.
+     * <p>
+     * The default precision is <code>0</code> for all data types. If a data
+     * type does not have a precision (see {@link #hasPrecision()}), or if it
+     * was initialised without precision (e.g. {@link SQLDataType#TIMESTAMP}),
+     * then the precision is not defined.
+     */
+    boolean precisionDefined();
+
+    /**
      * Return a new data type like this, with a new scale value.
      * <p>
      * This will have no effect if {@link #hasScale()} is <code>false</code>
@@ -468,6 +478,16 @@ public interface DataType<T> extends Serializable {
     boolean hasScale();
 
     /**
+     * Whether the precision returned by {@link #scale()} is defined.
+     * <p>
+     * The default scale is <code>0</code> for all data types. If a data type
+     * does not have a scale (see {@link #hasScale()}), or if it was initialised
+     * without scale (e.g. {@link SQLDataType#TIMESTAMP}), then the scale is not
+     * defined.
+     */
+    boolean scaleDefined();
+
+    /**
      * Return a new data type like this, with a new length value.
      * <p>
      * This will have no effect if {@link #hasLength()} is <code>false</code>
@@ -491,6 +511,16 @@ public interface DataType<T> extends Serializable {
      * @return Whether this data type has a length
      */
     boolean hasLength();
+
+    /**
+     * Whether the precision returned by {@link #length()} is defined.
+     * <p>
+     * The default length is <code>0</code> for all data types. If a data type
+     * does not have a length (see {@link #hasLength()}), or if it was initialised
+     * without length (e.g. {@link SQLDataType#TIMESTAMP}), then the length is not
+     * defined.
+     */
+    boolean lengthDefined();
 
     /**
      * Whether this data type is any numeric data type.

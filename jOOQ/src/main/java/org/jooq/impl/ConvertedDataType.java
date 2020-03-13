@@ -71,16 +71,16 @@ final class ConvertedDataType<T, U> extends DefaultDataType<U> {
     private final DataType<T>           delegate;
 
     @SuppressWarnings("unchecked")
-    ConvertedDataType(DataType<T> delegate, Binding<? super T, U> binding) {
+    ConvertedDataType(DefaultDataType<T> delegate, Binding<? super T, U> binding) {
         super(
             null,
             binding.converter().toType(),
             binding,
             delegate.getTypeName(),
             delegate.getCastTypeName(),
-            delegate.precision(),
-            delegate.scale(),
-            delegate.length(),
+            delegate.precisionDefined() ? delegate.precision() : null,
+            delegate.scaleDefined() ? delegate.scale() : null,
+            delegate.lengthDefined() ? delegate.length() : null,
             delegate.nullability(),
             (Field<U>) delegate.defaultValue()
         );

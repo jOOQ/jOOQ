@@ -345,7 +345,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
     private static final Timestamp truncate(Timestamp ts, DataType<?> type) {
         if (type.isDate())
             return new Timestamp(ts.getYear(), ts.getMonth(), ts.getDate(), 0, 0, 0, 0);
-        else if (type.precision() >= 3)
+        else if (!type.precisionDefined() || type.precision() >= 3)
             return ts;
         else
             return new Timestamp((ts.getTime() / TRUNCATE[type.precision()]) * TRUNCATE[type.precision()]);

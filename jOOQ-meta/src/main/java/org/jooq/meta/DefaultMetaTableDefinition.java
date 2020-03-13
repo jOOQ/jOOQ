@@ -42,6 +42,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Table;
@@ -65,15 +66,17 @@ public class DefaultMetaTableDefinition extends AbstractTableDefinition {
 
         int ordinal = 0;
         for (Field<?> field : table.fields()) {
+            DataType<?> dataType = field.getDataType();
+
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
                 getSchema(),
-                field.getDataType().getTypeName(),
-                field.getDataType().length(),
-                field.getDataType().precision(),
-                field.getDataType().scale(),
-                field.getDataType().nullable(),
-                create().renderInlined(field.getDataType().defaultValue()),
+                dataType.getTypeName(),
+                dataType.lengthDefined() ? dataType.length() : null,
+                dataType.precisionDefined() ? dataType.precision() : null,
+                dataType.scaleDefined() ? dataType.scale() : null,
+                dataType.nullable(),
+                create().renderInlined(dataType.defaultValue()),
                 (Name) null
             );
 

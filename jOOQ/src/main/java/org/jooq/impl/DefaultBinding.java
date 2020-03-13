@@ -656,7 +656,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 if (scale >= precision)
                     precision = scale + 1;
 
-                sqlCast(ctx, converted, dataType, 0, precision, scale);
+                sqlCast(ctx, converted, dataType, null, precision, scale);
             }
 
             // [#7905] The ROWID type cannot be cast to
@@ -668,7 +668,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 // If the bind value is set, it can be used to derive the cast type
                 if (converted != null)
-                    sqlCast(ctx, converted, DefaultDataType.getDataType(family, converted.getClass()), 0, 0, 0);
+                    sqlCast(ctx, converted, DefaultDataType.getDataType(family, converted.getClass()), null, null, null);
 
 
 
@@ -680,7 +680,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 // Derby and DB2 must have a type associated with NULL. Use VARCHAR
                 // as a workaround. That's probably not correct in all cases, though
                 else
-                    sqlCast(ctx, converted, DefaultDataType.getDataType(family, String.class), 0, 0, 0);
+                    sqlCast(ctx, converted, DefaultDataType.getDataType(family, String.class), null, null, null);
 
             // [#1029] Postgres generally doesn't need the casting. Only in the
             // above case where the type is OTHER
@@ -700,7 +700,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             // [#1727] VARCHAR types should be cast to their actual lengths in some
             // dialects
             else if (FIREBIRD == family && (sqlDataType == SQLDataType.VARCHAR || sqlDataType == SQLDataType.CHAR))
-                sqlCast(ctx, converted, dataType, getValueLength((String) converted), 0, 0);
+                sqlCast(ctx, converted, dataType, getValueLength((String) converted), null, null);
 
 
 
@@ -710,11 +710,25 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // [#7379] Most databases cannot cast a bind variable to an enum type
             else if (!NO_SUPPORT_ENUM_CAST.contains(family) && EnumType.class.isAssignableFrom(type))
-                sqlCast(ctx, converted, Tools.emulateEnumType((DataType<EnumType>) dataType), dataType.length(), dataType.precision(), dataType.scale());
+                sqlCast(
+                    ctx,
+                    converted,
+                    Tools.emulateEnumType((DataType<EnumType>) dataType),
+                    dataType.lengthDefined() ? dataType.length() : null,
+                    dataType.precisionDefined() ? dataType.precision() : null,
+                    dataType.scaleDefined() ? dataType.scale() : null
+                );
 
             // In all other cases, the bind variable can be cast normally
             else
-                sqlCast(ctx, converted, dataType, dataType.length(), dataType.precision(), dataType.scale());
+                sqlCast(
+                    ctx,
+                    converted,
+                    dataType,
+                    dataType.lengthDefined() ? dataType.length() : null,
+                    dataType.precisionDefined() ? dataType.precision() : null,
+                    dataType.scaleDefined() ? dataType.scale() : null
+                );
         }
 
         private static final int getValueLength(String string) {
@@ -735,11 +749,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             }
         }
 
-        private final void sqlCast(BindingSQLContext<U> ctx, T converted, DataType<?> dataType, int length, int precision, int scale) throws SQLException {
+        private final void sqlCast(BindingSQLContext<U> ctx, T converted, DataType<?> dataType, Integer length, Integer precision, Integer scale) throws SQLException {
             ctx.render().visit(K_CAST).sql('(');
             sql(ctx, converted);
             ctx.render().sql(' ').visit(K_AS).sql(' ')
-                        .sql(dataType.length(length).precision(precision, scale).getCastTypeName(ctx.configuration()))
+                        .sql(DefaultDataType.set(dataType, length, precision, scale).getCastTypeName(ctx.configuration()))
                         .sql(')');
         }
 

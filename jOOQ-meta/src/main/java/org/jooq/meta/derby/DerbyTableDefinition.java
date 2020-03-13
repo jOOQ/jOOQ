@@ -86,18 +86,21 @@ public class DerbyTableDefinition extends AbstractTableDefinition {
             .orderBy(Syscolumns.COLUMNNUMBER)
             .fetch()) {
 
-            String typeName = record.get(Syscolumns.COLUMNDATATYPE, String.class);
-            Number precision = parsePrecision(typeName);
-            Number scale = parseScale(typeName);
+            String columnDataType = record.get(Syscolumns.COLUMNDATATYPE, String.class);
+            String typeName = parseTypeName(columnDataType);
+
+            // [#9945] Derby timestamps always have a precision of 9
+            Number precision = "TIMESTAMP".equalsIgnoreCase(typeName) ? 9 : parsePrecision(columnDataType);
+            Number scale = parseScale(columnDataType);
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
                 getSchema(),
-                parseTypeName(typeName),
+                typeName,
                 precision,
                 precision,
                 scale,
-                !parseNotNull(typeName),
+                !parseNotNull(columnDataType),
                 record.get(Syscolumns.COLUMNDEFAULT)
             );
 

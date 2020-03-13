@@ -70,9 +70,9 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
     ArrayDataType(
         DefaultDataType<T[]> t,
         DataType<T> elementType,
-        int precision,
-        int scale,
-        int length,
+        Integer precision,
+        Integer scale,
+        Integer length,
         Nullability nullability,
         Collation collation,
         CharacterSet characterSet,
@@ -87,9 +87,9 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     DefaultDataType<T[]> construct(
-        int newPrecision,
-        int newScale,
-        int newLength,
+        Integer newPrecision,
+        Integer newScale,
+        Integer newLength,
         Nullability
         newNullability,
         Collation newCollation,

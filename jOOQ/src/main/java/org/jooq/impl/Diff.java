@@ -376,9 +376,9 @@ final class Diff {
                     else if (type2.defaulted() && (!type1.defaulted() || !d2.equals(d1)))
                         r.queries.add(ctx.alterTable(t1).alter(f1).setDefault((Field) d2));
 
-                    if ((type1.hasLength() && type2.hasLength() && type1.length() != type2.length())
-                        || (type1.hasPrecision() && type2.hasPrecision() && type1.precision() != type2.precision())
-                        || (type1.hasScale() && type2.hasScale() && type1.scale() != type2.scale()))
+                    if ((type1.hasLength() && type2.hasLength() && (type1.lengthDefined() != type2.lengthDefined() || type1.length() != type2.length()))
+                        || (type1.hasPrecision() && type2.hasPrecision() && (type1.precisionDefined() != type2.precisionDefined() || type1.precision() != type2.precision()))
+                        || (type1.hasScale() && type2.hasScale() && (type1.scaleDefined() != type2.scaleDefined() || type1.scale() != type2.scale())))
                         r.queries.add(ctx.alterTable(t1).alter(f1).set(type2));
 
                     // [#9656] TODO: Change collation

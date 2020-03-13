@@ -265,14 +265,14 @@ public class JavaGenerator extends AbstractGenerator {
             for (java.lang.reflect.Method m : SQLDataType.class.getMethods()) {
                 if (Modifier.isPublic(m.getModifiers()) &&
                     Modifier.isStatic(m.getModifiers()) &&
-                    m.getParameterTypes().length == 2)
+                    ((DataType<?>) SQLDataType.class.getField(m.getName()).get(SQLDataType.class)).hasPrecision())
                     SQLDATATYPE_WITH_PRECISION.add(m.getName());
             }
 
             for (java.lang.reflect.Method m : SQLDataType.class.getMethods()) {
                 if (Modifier.isPublic(m.getModifiers()) &&
                     Modifier.isStatic(m.getModifiers()) &&
-                    m.getParameterTypes().length == 1 &&
+                    ((DataType<?>) SQLDataType.class.getField(m.getName()).get(SQLDataType.class)).hasLength() &&
                     !SQLDATATYPE_WITH_PRECISION.contains(m.getName()))
                     SQLDATATYPE_WITH_LENGTH.add(m.getName());
             }

@@ -87,3 +87,14 @@ package org.jooq.impl;
 
 
 
+
+
+
+
+
+
+
+
+
+
+

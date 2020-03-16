@@ -286,7 +286,7 @@ public final class SQLDataType {
      * The zero-scale {@link Types#DECIMAL} type.
      */
     public static final DataType<BigInteger> DECIMAL_INTEGER(int precision) {
-        return DECIMAL_INTEGER.precision(precision);
+        return DECIMAL_INTEGER.precision(precision, 0);
     }
 
     // -------------------------------------------------------------------------
@@ -345,7 +345,7 @@ public final class SQLDataType {
      * The {@link Types#NUMERIC} type.
      */
     public static final DataType<BigDecimal> NUMERIC(int precision) {
-        return NUMERIC.precision(precision);
+        return NUMERIC.precision(precision, 0);
     }
 
     /**
@@ -364,7 +364,7 @@ public final class SQLDataType {
      * The {@link Types#DECIMAL} type.
      */
     public static final DataType<BigDecimal> DECIMAL(int precision) {
-        return DECIMAL.precision(precision);
+        return DECIMAL.precision(precision, 0);
     }
 
     /**

@@ -854,8 +854,13 @@ final class MetaImpl extends AbstractMeta {
                     type = DefaultDataType.getDataType(family(), typeName, precision, scale);
 
                     // JDBC doesn't distinguish between precision and length
-                    type = type.precision(precision, scale);
-                    type = type.length(precision);
+                    if (type.hasPrecision() && type.hasScale())
+                        type = type.precision(precision, scale);
+                    else if (type.hasPrecision())
+                        type = type.precision(precision);
+                    else if (type.hasLength())
+                        type = type.length(precision);
+
                     type = type.identity(isAutoIncrement);
 
                     if (nullable == DatabaseMetaData.columnNoNulls)

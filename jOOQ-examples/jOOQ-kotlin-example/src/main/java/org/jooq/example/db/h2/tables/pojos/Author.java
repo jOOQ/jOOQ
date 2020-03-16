@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Author implements Serializable {
 
-    private static final long serialVersionUID = 1287432081;
+    private static final long serialVersionUID = -1160184137;
 
     private Integer   id;
     private String    firstName;
@@ -50,50 +50,86 @@ public class Author implements Serializable {
         this.address = address;
     }
 
+    /**
+     * Getter for <code>PUBLIC.AUTHOR.ID</code>.
+     */
     public Integer getId() {
         return this.id;
     }
 
+    /**
+     * Setter for <code>PUBLIC.AUTHOR.ID</code>.
+     */
     public void setId(Integer id) {
         this.id = id;
     }
 
+    /**
+     * Getter for <code>PUBLIC.AUTHOR.FIRST_NAME</code>.
+     */
     public String getFirstName() {
         return this.firstName;
     }
 
+    /**
+     * Setter for <code>PUBLIC.AUTHOR.FIRST_NAME</code>.
+     */
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
+    /**
+     * Getter for <code>PUBLIC.AUTHOR.LAST_NAME</code>.
+     */
     public String getLastName() {
         return this.lastName;
     }
 
+    /**
+     * Setter for <code>PUBLIC.AUTHOR.LAST_NAME</code>.
+     */
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
+    /**
+     * Getter for <code>PUBLIC.AUTHOR.DATE_OF_BIRTH</code>.
+     */
     public LocalDate getDateOfBirth() {
         return this.dateOfBirth;
     }
 
+    /**
+     * Setter for <code>PUBLIC.AUTHOR.DATE_OF_BIRTH</code>.
+     */
     public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
+    /**
+     * Getter for <code>PUBLIC.AUTHOR.YEAR_OF_BIRTH</code>.
+     */
     public Integer getYearOfBirth() {
         return this.yearOfBirth;
     }
 
+    /**
+     * Setter for <code>PUBLIC.AUTHOR.YEAR_OF_BIRTH</code>.
+     */
     public void setYearOfBirth(Integer yearOfBirth) {
         this.yearOfBirth = yearOfBirth;
     }
 
+    /**
+     * Getter for <code>PUBLIC.AUTHOR.ADDRESS</code>.
+     */
     public String getAddress() {
         return this.address;
     }
 
+    /**
+     * Setter for <code>PUBLIC.AUTHOR.ADDRESS</code>.
+     */
     public void setAddress(String address) {
         this.address = address;
     }

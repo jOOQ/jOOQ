@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Book implements Serializable {
 
-    private static final long serialVersionUID = 610281033;
+    private static final long serialVersionUID = -1597923197;
 
     private Integer       id;
     private Integer       authorId;
@@ -70,90 +70,156 @@ public class Book implements Serializable {
         this.recTimestamp = recTimestamp;
     }
 
+    /**
+     * Getter for <code>PUBLIC.BOOK.ID</code>.
+     */
     public Integer getId() {
         return this.id;
     }
 
+    /**
+     * Setter for <code>PUBLIC.BOOK.ID</code>.
+     */
     public void setId(Integer id) {
         this.id = id;
     }
 
+    /**
+     * Getter for <code>PUBLIC.BOOK.AUTHOR_ID</code>.
+     */
     public Integer getAuthorId() {
         return this.authorId;
     }
 
+    /**
+     * Setter for <code>PUBLIC.BOOK.AUTHOR_ID</code>.
+     */
     public void setAuthorId(Integer authorId) {
         this.authorId = authorId;
     }
 
+    /**
+     * Getter for <code>PUBLIC.BOOK.CO_AUTHOR_ID</code>.
+     */
     public Integer getCoAuthorId() {
         return this.coAuthorId;
     }
 
+    /**
+     * Setter for <code>PUBLIC.BOOK.CO_AUTHOR_ID</code>.
+     */
     public void setCoAuthorId(Integer coAuthorId) {
         this.coAuthorId = coAuthorId;
     }
 
+    /**
+     * Getter for <code>PUBLIC.BOOK.DETAILS_ID</code>.
+     */
     public Integer getDetailsId() {
         return this.detailsId;
     }
 
+    /**
+     * Setter for <code>PUBLIC.BOOK.DETAILS_ID</code>.
+     */
     public void setDetailsId(Integer detailsId) {
         this.detailsId = detailsId;
     }
 
+    /**
+     * Getter for <code>PUBLIC.BOOK.TITLE</code>.
+     */
     public String getTitle() {
         return this.title;
     }
 
+    /**
+     * Setter for <code>PUBLIC.BOOK.TITLE</code>.
+     */
     public void setTitle(String title) {
         this.title = title;
     }
 
+    /**
+     * Getter for <code>PUBLIC.BOOK.PUBLISHED_IN</code>.
+     */
     public Integer getPublishedIn() {
         return this.publishedIn;
     }
 
+    /**
+     * Setter for <code>PUBLIC.BOOK.PUBLISHED_IN</code>.
+     */
     public void setPublishedIn(Integer publishedIn) {
         this.publishedIn = publishedIn;
     }
 
+    /**
+     * Getter for <code>PUBLIC.BOOK.LANGUAGE_ID</code>.
+     */
     public Integer getLanguageId() {
         return this.languageId;
     }
 
+    /**
+     * Setter for <code>PUBLIC.BOOK.LANGUAGE_ID</code>.
+     */
     public void setLanguageId(Integer languageId) {
         this.languageId = languageId;
     }
 
+    /**
+     * Getter for <code>PUBLIC.BOOK.CONTENT_TEXT</code>.
+     */
     public String getContentText() {
         return this.contentText;
     }
 
+    /**
+     * Setter for <code>PUBLIC.BOOK.CONTENT_TEXT</code>.
+     */
     public void setContentText(String contentText) {
         this.contentText = contentText;
     }
 
+    /**
+     * Getter for <code>PUBLIC.BOOK.CONTENT_PDF</code>.
+     */
     public byte[] getContentPdf() {
         return this.contentPdf;
     }
 
+    /**
+     * Setter for <code>PUBLIC.BOOK.CONTENT_PDF</code>.
+     */
     public void setContentPdf(byte[] contentPdf) {
         this.contentPdf = contentPdf;
     }
 
+    /**
+     * Getter for <code>PUBLIC.BOOK.REC_VERSION</code>.
+     */
     public Integer getRecVersion() {
         return this.recVersion;
     }
 
+    /**
+     * Setter for <code>PUBLIC.BOOK.REC_VERSION</code>.
+     */
     public void setRecVersion(Integer recVersion) {
         this.recVersion = recVersion;
     }
 
+    /**
+     * Getter for <code>PUBLIC.BOOK.REC_TIMESTAMP</code>.
+     */
     public LocalDateTime getRecTimestamp() {
         return this.recTimestamp;
     }
 
+    /**
+     * Setter for <code>PUBLIC.BOOK.REC_TIMESTAMP</code>.
+     */
     public void setRecTimestamp(LocalDateTime recTimestamp) {
         this.recTimestamp = recTimestamp;
     }

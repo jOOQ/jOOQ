@@ -13,7 +13,7 @@ import java.io.Serializable;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class BookToBookStore implements Serializable {
 
-    private static final long serialVersionUID = -114511192;
+    private static final long serialVersionUID = -1002158446;
 
     private String  bookStoreName;
     private Integer bookId;
@@ -37,26 +37,44 @@ public class BookToBookStore implements Serializable {
         this.stock = stock;
     }
 
+    /**
+     * Getter for <code>PUBLIC.BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>.
+     */
     public String getBookStoreName() {
         return this.bookStoreName;
     }
 
+    /**
+     * Setter for <code>PUBLIC.BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>.
+     */
     public void setBookStoreName(String bookStoreName) {
         this.bookStoreName = bookStoreName;
     }
 
+    /**
+     * Getter for <code>PUBLIC.BOOK_TO_BOOK_STORE.BOOK_ID</code>.
+     */
     public Integer getBookId() {
         return this.bookId;
     }
 
+    /**
+     * Setter for <code>PUBLIC.BOOK_TO_BOOK_STORE.BOOK_ID</code>.
+     */
     public void setBookId(Integer bookId) {
         this.bookId = bookId;
     }
 
+    /**
+     * Getter for <code>PUBLIC.BOOK_TO_BOOK_STORE.STOCK</code>.
+     */
     public Integer getStock() {
         return this.stock;
     }
 
+    /**
+     * Setter for <code>PUBLIC.BOOK_TO_BOOK_STORE.STOCK</code>.
+     */
     public void setStock(Integer stock) {
         this.stock = stock;
     }

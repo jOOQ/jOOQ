@@ -13,7 +13,7 @@ import java.io.Serializable;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class BookStore implements Serializable {
 
-    private static final long serialVersionUID = -1971243490;
+    private static final long serialVersionUID = 1239527942;
 
     private String name;
 
@@ -29,10 +29,16 @@ public class BookStore implements Serializable {
         this.name = name;
     }
 
+    /**
+     * Getter for <code>PUBLIC.BOOK_STORE.NAME</code>.
+     */
     public String getName() {
         return this.name;
     }
 
+    /**
+     * Setter for <code>PUBLIC.BOOK_STORE.NAME</code>.
+     */
     public void setName(String name) {
         this.name = name;
     }

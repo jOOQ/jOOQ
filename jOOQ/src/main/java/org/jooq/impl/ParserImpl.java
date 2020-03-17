@@ -4800,7 +4800,7 @@ final class ParserImpl implements Parser {
                 return result;
             }
             else if (parseKeywordIf(ctx, "BETWEEN")) {
-                boolean symmetric = parseKeywordIf(ctx, "SYMMETRIC");
+                boolean symmetric = !parseKeywordIf(ctx, "ASYMMETRIC") && parseKeywordIf(ctx, "SYMMETRIC");
                 FieldOrRow r1 = left instanceof Field
                     ? parseConcat(ctx, null)
                     : parseRow(ctx, ((Row) left).size());
@@ -5064,6 +5064,7 @@ final class ParserImpl implements Parser {
             && !peekKeyword(ctx, "FOR UPDATE")
             && !peekKeyword(ctx, "FOR XML")
             && parseKeyword(ctx, "FOR") && ctx.requireProEdition()) {
+
 
 
 

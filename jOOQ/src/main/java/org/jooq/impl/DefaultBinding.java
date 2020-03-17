@@ -39,6 +39,13 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
+import static java.time.temporal.ChronoField.DAY_OF_MONTH;
+import static java.time.temporal.ChronoField.HOUR_OF_DAY;
+import static java.time.temporal.ChronoField.MINUTE_OF_HOUR;
+import static java.time.temporal.ChronoField.MONTH_OF_YEAR;
+import static java.time.temporal.ChronoField.NANO_OF_SECOND;
+import static java.time.temporal.ChronoField.SECOND_OF_MINUTE;
+import static java.time.temporal.ChronoField.YEAR;
 // ...
 // ...
 // ...
@@ -97,6 +104,7 @@ import static org.jooq.impl.Tools.attachRecords;
 import static org.jooq.impl.Tools.convertBytesToHex;
 import static org.jooq.impl.Tools.getMappedUDTName;
 import static org.jooq.impl.Tools.needsBackslashEscaping;
+import static org.jooq.tools.StringUtils.leftPad;
 import static org.jooq.tools.jdbc.JDBCUtils.safeClose;
 import static org.jooq.tools.jdbc.JDBCUtils.safeFree;
 import static org.jooq.tools.jdbc.JDBCUtils.wasNull;
@@ -128,6 +136,8 @@ import java.time.OffsetDateTime;
 import java.time.OffsetTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.SignStyle;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -2011,7 +2021,15 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 else if (value.getTime() == PG_DATE_NEGATIVE_INFINITY)
                     return "-infinity";
 
-            return escape(value, render);
+            // [#9968] JDBC's java.sql.Date formats years as YYYY, which is wrong when the
+            //         year exceeds 10000. We could use java.time.LocalDate, but that's not
+            //         available in jOOQ's Java 6 distribution.
+            if (value.getYear() + 1900 >= 10000)
+                return (value.getYear() + 1900) +
+                            "-" + leftPad("" + (value.getMonth() + 1), 2, '0') +
+                            "-" + leftPad("" + value.getDate(), 2, '0');
+            else
+                return escape(value, render);
         }
 
         @Override
@@ -2606,7 +2624,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         static final LocalDate parseLocalDate(String string, int[] position) {
-            int year = parseInt(string, position, 4);
+            int year = parseInt(string, position, 10);
 
             parseChar(string, position, '-');
             int month = parseInt(string, position, 2);
@@ -2886,6 +2904,22 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+        private static final DateTimeFormatter F_TIMESTAMPTZ = new DateTimeFormatterBuilder()
+            .appendValue(YEAR, 4, 10, SignStyle.NORMAL)
+            .appendLiteral('-')
+            .appendValue(MONTH_OF_YEAR, 2)
+            .appendLiteral('-')
+            .appendValue(DAY_OF_MONTH, 2)
+            .appendLiteral(' ')
+            .appendValue(HOUR_OF_DAY, 2)
+            .appendLiteral(':')
+            .appendValue(MINUTE_OF_HOUR, 2)
+            .appendLiteral(':')
+            .appendValue(SECOND_OF_MINUTE, 2)
+            .appendFraction(NANO_OF_SECOND, 0, 9, true)
+            .appendOffset("+HH:MM", "+00:00")
+            .toFormatter();
+
         private static final String format(OffsetDateTime val, SQLDialect family) {
             if (family == POSTGRES)
                 if (val.toEpochSecond() * 1000 == PG_DATE_POSITIVE_INFINITY)
@@ -2897,12 +2931,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             if (family == POSTGRES && val.getYear() <= 0)
                 return formatEra(val);
 
-            String format = formatISO(val);
-
             // Remove the ISO standard T character, as some databases don't like that
             // Replace the ISO standard Z character for UTC, as some databases don't like that
-            // TODO: Write a custom formatter rather than string replacing things
-            return StringUtils.replace(format.substring(0, 10) + ' ' + format.substring(11), "Z", "+00:00");
+            return val.format(F_TIMESTAMPTZ);
         }
 
         private static final String formatISO(OffsetDateTime val) {

@@ -39,6 +39,8 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Names.N_XMLATTRIBUTES;
 
+import java.util.Collection;
+
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.XMLAttributes;
@@ -55,7 +57,7 @@ final class XMLAttributesImpl extends AbstractQueryPart implements XMLAttributes
 
     final SelectFieldList<Field<?>> attributes;
 
-    XMLAttributesImpl(Field<?>... attributes) {
+    XMLAttributesImpl(Collection<? extends Field<?>> attributes) {
         this.attributes = new SelectFieldList<>(attributes);
     }
 

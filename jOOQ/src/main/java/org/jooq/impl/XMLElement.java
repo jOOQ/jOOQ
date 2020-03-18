@@ -41,6 +41,8 @@ import static org.jooq.impl.Names.N_NAME;
 import static org.jooq.impl.Names.N_XMLCONCAT;
 import static org.jooq.impl.Names.N_XMLELEMENT;
 
+import java.util.Collection;
+
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Name;
@@ -60,7 +62,7 @@ final class XMLElement extends AbstractField<XML> {
     private final XMLAttributes           attributes;
     private final QueryPartList<Field<?>> content;
 
-    XMLElement(Name elementName, XMLAttributes attributes, Field<?>[] content) {
+    XMLElement(Name elementName, XMLAttributes attributes, Collection<? extends Field<?>> content) {
         super(N_XMLCONCAT, SQLDataType.XML);
 
         this.elementName = elementName;

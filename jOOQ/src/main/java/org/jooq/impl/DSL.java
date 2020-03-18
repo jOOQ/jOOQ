@@ -18114,7 +18114,7 @@ public class DSL {
      */
     @Support({ POSTGRES })
     @SafeVarargs
-    public static Field<XML> xmlconcat(Field<XML>... fields) {
+    public static Field<XML> xmlconcat(Field<?>... fields) {
         return xmlconcat(asList(fields));
     }
 
@@ -18122,7 +18122,7 @@ public class DSL {
      * The XML concat function.
      */
     @Support({ POSTGRES })
-    public static Field<XML> xmlconcat(Collection<? extends Field<XML>> fields) {
+    public static Field<XML> xmlconcat(Collection<? extends Field<?>> fields) {
         return new XMLConcat(fields);
     }
 
@@ -18131,6 +18131,14 @@ public class DSL {
      */
     @Support({ POSTGRES })
     public static Field<XML> xmlelement(String name, Field<?>... content) {
+        return xmlelement(name(name), (XMLAttributes) null, asList(content));
+    }
+
+    /**
+     * The XML element constructor.
+     */
+    @Support({ POSTGRES })
+    public static Field<XML> xmlelement(String name, Collection<? extends Field<?>> content) {
         return xmlelement(name(name), (XMLAttributes) null, content);
     }
 
@@ -18139,6 +18147,14 @@ public class DSL {
      */
     @Support({ POSTGRES })
     public static Field<XML> xmlelement(Name name, Field<?>... content) {
+        return xmlelement(name, (XMLAttributes) null, asList(content));
+    }
+
+    /**
+     * The XML element constructor.
+     */
+    @Support({ POSTGRES })
+    public static Field<XML> xmlelement(Name name, Collection<? extends Field<?>> content) {
         return xmlelement(name, (XMLAttributes) null, content);
     }
 
@@ -18147,6 +18163,14 @@ public class DSL {
      */
     @Support({ POSTGRES })
     public static Field<XML> xmlelement(String name, XMLAttributes attributes, Field<?>... content) {
+        return xmlelement(name(name), attributes, asList(content));
+    }
+
+    /**
+     * The XML element constructor.
+     */
+    @Support({ POSTGRES })
+    public static Field<XML> xmlelement(String name, XMLAttributes attributes, Collection<? extends Field<?>> content) {
         return xmlelement(name(name), attributes, content);
     }
 
@@ -18155,6 +18179,14 @@ public class DSL {
      */
     @Support({ POSTGRES })
     public static Field<XML> xmlelement(Name name, XMLAttributes attributes, Field<?>... content) {
+        return xmlelement(name, attributes, asList(content));
+    }
+
+    /**
+     * The XML element constructor.
+     */
+    @Support({ POSTGRES })
+    public static Field<XML> xmlelement(Name name, XMLAttributes attributes, Collection<? extends Field<?>> content) {
         return new XMLElement(name, attributes, content);
     }
 
@@ -18163,6 +18195,14 @@ public class DSL {
      */
     @Support({ POSTGRES })
     public static XMLAttributes xmlattributes(Field<?>... attributes) {
+        return xmlattributes(asList(attributes));
+    }
+
+    /**
+     * The XML attributes constructor.
+     */
+    @Support({ POSTGRES })
+    public static XMLAttributes xmlattributes(Collection<? extends Field<?>> attributes) {
         return new XMLAttributesImpl(attributes);
     }
 

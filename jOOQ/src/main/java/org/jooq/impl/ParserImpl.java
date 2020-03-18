@@ -291,6 +291,10 @@ import static org.jooq.impl.DSL.varSamp;
 import static org.jooq.impl.DSL.week;
 import static org.jooq.impl.DSL.when;
 // ...
+import static org.jooq.impl.DSL.xmlattributes;
+import static org.jooq.impl.DSL.xmlcomment;
+import static org.jooq.impl.DSL.xmlconcat;
+import static org.jooq.impl.DSL.xmlelement;
 import static org.jooq.impl.DSL.year;
 import static org.jooq.impl.DSL.zero;
 import static org.jooq.impl.JSONNullClause.ABSENT_ON_NULL;
@@ -306,6 +310,7 @@ import static org.jooq.impl.ParserImpl.Type.J;
 import static org.jooq.impl.ParserImpl.Type.N;
 import static org.jooq.impl.ParserImpl.Type.S;
 import static org.jooq.impl.ParserImpl.Type.X;
+import static org.jooq.impl.ParserImpl.Type.Y;
 import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.Tools.EMPTY_BYTE;
@@ -501,6 +506,7 @@ import org.jooq.WindowSpecificationExcludeStep;
 import org.jooq.WindowSpecificationOrderByStep;
 import org.jooq.WindowSpecificationRowsAndStep;
 import org.jooq.WindowSpecificationRowsStep;
+import org.jooq.XMLAttributes;
 import org.jooq.conf.ParseSearchSchema;
 import org.jooq.conf.ParseUnknownFunctions;
 import org.jooq.conf.ParseUnsupportedSyntax;
@@ -5561,8 +5567,9 @@ final class ParserImpl implements Parser {
         S("string"),
         N("numeric"),
         B("boolean"),
-        X("binary"),
-        J("json");
+        Y("binary"),
+        J("json"),
+        X("xml");
 
         private final String name;
 
@@ -6382,9 +6389,17 @@ final class ParserImpl implements Parser {
 
             case 'x':
             case 'X':
-                if (X.is(type))
+                if (Y.is(type))
                     if ((value = parseBinaryLiteralIf(ctx)) != null)
                         return inline((byte[]) value);
+
+                if (X.is(type))
+                    if ((field = parseFieldXMLCommentIf(ctx)) != null)
+                        return field;
+                    else if ((field = parseFieldXMLConcatIf(ctx)) != null)
+                        return field;
+                    else if ((field = parseFieldXMLElementIf(ctx)) != null)
+                        return field;
 
                 break;
 
@@ -6678,8 +6693,77 @@ final class ParserImpl implements Parser {
         CURRVAL;
     }
 
+    private static final Field<?> parseFieldXMLCommentIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "XMLCOMMENT")) {
+            parse(ctx, '(');
+            Field<String> comment = (Field<String>) parseField(ctx);
+            parse(ctx, ')');
+
+            return xmlcomment(comment);
+        }
+
+        return null;
+    }
+
+    private static final Field<?> parseFieldXMLConcatIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "XMLCONCAT")) {
+            parse(ctx, '(');
+            List<Field<?>> fields = parseFields(ctx);
+            parse(ctx, ')');
+
+            return xmlconcat(fields);
+        }
+
+        return null;
+    }
+
+    private static final Field<?> parseFieldXMLElementIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "XMLELEMENT")) {
+            parse(ctx, '(');
+            parseKeyword(ctx, "NAME");
+            Name name = parseIdentifier(ctx);
+            XMLAttributes attr = null;
+            List<Field<?>> content = new ArrayList<>();
+
+            while (parseIf(ctx, ',')) {
+                if (attr == null && parseKeywordIf(ctx, "XMLATTRIBUTES")) {
+                    List<Field<?>> attrs = new ArrayList<>();
+
+                    parse(ctx, '(');
+
+                    do {
+                        Name alias = null;
+                        Field<?> field = null;
+
+                        if (field == null) {
+                            field = parseField(ctx);
+
+                            if (parseKeywordIf(ctx, "AS"))
+                                alias = parseIdentifier(ctx, true);
+                        }
+
+                        attrs.add(alias == null ? field : field.as(alias));
+                    }
+                    while (parseIf(ctx, ','));
+
+                    parse(ctx, ')');
+                    attr = xmlattributes(attrs);
+                }
+                else
+                    content.add(parseField(ctx));
+            }
+            parse(ctx, ')');
+
+            return attr == null
+                ? xmlelement(name, content)
+                : xmlelement(name, attr, content);
+        }
+
+        return null;
+    }
+
     private static final Field<?> parseFieldJSONArrayConstructorIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "JSON_ARRAY")) {
+        if (parseFunctionNameIf(ctx, "JSON_ARRAY")) {
             parse(ctx, '(');
             if (parseIf(ctx, ')'))
                 return DSL.jsonArray();
@@ -6706,7 +6790,7 @@ final class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldJSONArrayAggIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "JSON_ARRAYAGG")) {
+        if (parseFunctionNameIf(ctx, "JSON_ARRAYAGG")) {
             Field<?> result;
             JSONArrayAggOrderByStep<JSON> s1;
             JSONArrayAggNullStep<JSON> s2;
@@ -6759,7 +6843,7 @@ final class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldJSONObjectAggIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "JSON_OBJECTAGG")) {
+        if (parseFunctionNameIf(ctx, "JSON_OBJECTAGG")) {
             Field<?> result;
             JSONObjectAggNullStep<JSON> s1;
             JSONNullClause nullClause;

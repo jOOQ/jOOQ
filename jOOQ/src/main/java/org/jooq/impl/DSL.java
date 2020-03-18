@@ -18206,6 +18206,38 @@ public class DSL {
         return new XMLAttributesImpl(attributes);
     }
 
+    /**
+     * The XML processing instruction constructor.
+     */
+    @Support({ POSTGRES })
+    public static Field<XML> xmlpi(String target) {
+        return xmlpi(name(target), null);
+    }
+
+    /**
+     * The XML processing instruction constructor.
+     */
+    @Support({ POSTGRES })
+    public static Field<XML> xmlpi(Name target) {
+        return xmlpi(target, null);
+    }
+
+    /**
+     * The XML processing instruction constructor.
+     */
+    @Support({ POSTGRES })
+    public static Field<XML> xmlpi(String target, Field<?> content) {
+        return xmlpi(name(target), content);
+    }
+
+    /**
+     * The XML processing instruction constructor.
+     */
+    @Support({ POSTGRES })
+    public static Field<XML> xmlpi(Name target, Field<?> content) {
+        return new XMLPI(target, content);
+    }
+
     // -------------------------------------------------------------------------
     // XXX JSON functions
     // -------------------------------------------------------------------------

@@ -38,48 +38,39 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Keywords.K_NAME;
-import static org.jooq.impl.Names.N_XMLCONCAT;
-import static org.jooq.impl.Names.N_XMLELEMENT;
-
-import java.util.Collection;
+import static org.jooq.impl.Names.N_XMLPI;
 
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.XML;
-import org.jooq.XMLAttributes;
 
 /**
  * @author Lukas Eder
  */
-final class XMLElement extends AbstractField<XML> {
+final class XMLPI extends AbstractField<XML> {
 
     /**
      * Generated UID
      */
-    private static final long             serialVersionUID = 4505809303211506197L;
-    private final Name                    elementName;
-    private final XMLAttributes           attributes;
-    private final QueryPartList<Field<?>> content;
+    private static final long serialVersionUID = 4505809303211506197L;
 
-    XMLElement(Name elementName, XMLAttributes attributes, Collection<? extends Field<?>> content) {
-        super(N_XMLCONCAT, SQLDataType.XML);
+    private final Name        target;
+    private final Field<?>    content;
 
-        this.elementName = elementName;
-        this.attributes = attributes;
-        this.content = new QueryPartList<>(content);
+    XMLPI(Name target, Field<?> content) {
+        super(N_XMLPI, SQLDataType.XML);
+
+        this.target = target;
+        this.content = content;
     }
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(N_XMLELEMENT).sql('(');
-        ctx.visit(K_NAME).sql(' ').visit(elementName);
+        ctx.visit(N_XMLPI).sql('(').visit(K_NAME).sql(' ').visit(target.unquotedName());
 
-        if (attributes != null && !((XMLAttributesImpl) attributes).attributes.isEmpty())
-            ctx.sql(',').formatSeparator().visit(attributes);
-
-        if (!content.isEmpty())
-            ctx.sql(',').formatSeparator().visit(content);
+        if (content != null)
+            ctx.sql(", ").visit(content);
 
         ctx.sql(')');
     }

@@ -236,6 +236,7 @@ final class Keywords {
     static final Keyword K_MODIFY                           = keyword("modify");
     static final Keyword K_MONTH                            = keyword("month");
     static final Keyword K_MULTISET                         = keyword("multiset");
+    static final Keyword K_NAME                             = keyword("name");
     static final Keyword K_NEW_TABLE                        = keyword("new table");
     static final Keyword K_NEXT_VALUE_FOR                   = keyword("next value for");
     static final Keyword K_NEXTVAL                          = keyword("nextval");

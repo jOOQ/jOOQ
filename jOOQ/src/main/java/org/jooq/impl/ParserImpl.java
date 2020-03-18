@@ -295,6 +295,7 @@ import static org.jooq.impl.DSL.xmlattributes;
 import static org.jooq.impl.DSL.xmlcomment;
 import static org.jooq.impl.DSL.xmlconcat;
 import static org.jooq.impl.DSL.xmlelement;
+import static org.jooq.impl.DSL.xmlpi;
 import static org.jooq.impl.DSL.year;
 import static org.jooq.impl.DSL.zero;
 import static org.jooq.impl.JSONNullClause.ABSENT_ON_NULL;
@@ -6400,6 +6401,8 @@ final class ParserImpl implements Parser {
                         return field;
                     else if ((field = parseFieldXMLElementIf(ctx)) != null)
                         return field;
+                    else if ((field = parseFieldXMLPIIf(ctx)) != null)
+                        return field;
 
                 break;
 
@@ -6757,6 +6760,24 @@ final class ParserImpl implements Parser {
             return attr == null
                 ? xmlelement(name, content)
                 : xmlelement(name, attr, content);
+        }
+
+        return null;
+    }
+
+    private static final Field<?> parseFieldXMLPIIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "XMLPI")) {
+            parse(ctx, '(');
+            parseKeyword(ctx, "NAME");
+            Name target = parseIdentifier(ctx);
+            Field<?> content = null;
+
+            if (parseIf(ctx, ',')) {
+                content = parseField(ctx);
+            }
+
+            parse(ctx, ')');
+            return content == null ? xmlpi(target) : xmlpi(target, content);
         }
 
         return null;

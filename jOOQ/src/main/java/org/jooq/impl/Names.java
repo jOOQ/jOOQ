@@ -110,7 +110,6 @@ final class Names {
     static final Name N_MEDIAN            = DSL.unquotedName("median");
     static final Name N_MOD               = DSL.unquotedName("mod");
     static final Name N_MODE              = DSL.unquotedName("mode");
-    static final Name N_NAME              = DSL.unquotedName("name");
     static final Name N_NEXTVAL           = DSL.unquotedName("nextval");
     static final Name N_NOT               = DSL.unquotedName("not");
     static final Name N_NTILE             = DSL.unquotedName("ntile");

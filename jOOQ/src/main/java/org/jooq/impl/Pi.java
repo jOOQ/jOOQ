@@ -41,16 +41,16 @@ import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.two;
+import static org.jooq.impl.Names.N_PI;
 
 import java.math.BigDecimal;
 
-import org.jooq.Configuration;
-import org.jooq.Field;
+import org.jooq.Context;
 
 /**
  * @author Lukas Eder
  */
-final class Pi extends AbstractFunction<BigDecimal> {
+final class Pi extends AbstractField<BigDecimal> {
 
     /**
      * Generated UID
@@ -58,12 +58,13 @@ final class Pi extends AbstractFunction<BigDecimal> {
     private static final long serialVersionUID = -420788300355442056L;
 
     Pi() {
-        super("pi", SQLDataType.NUMERIC);
+        super(N_PI, SQLDataType.NUMERIC);
     }
 
     @Override
-    final Field<BigDecimal> getFunction0(Configuration configuration) {
-        switch (configuration.family()) {
+    public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
+
 
 
 
@@ -75,10 +76,12 @@ final class Pi extends AbstractFunction<BigDecimal> {
 
 
             case SQLITE:
-                return inline(Math.PI, BigDecimal.class);
+                ctx.visit(inline(Math.PI, BigDecimal.class));
+                return;
 
             default:
-                return function("pi", getDataType());
+                ctx.visit(function("pi", getDataType()));
+                return;
         }
     }
 }

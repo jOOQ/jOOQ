@@ -38,15 +38,16 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.Names.N_DECODE;
 
 import org.jooq.CaseConditionStep;
-import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
 
 /**
  * @author Lukas Eder
  */
-final class Decode<T, Z> extends AbstractFunction<Z> {
+final class Decode<T, Z> extends AbstractField<Z> {
 
     /**
      * Generated UID
@@ -59,7 +60,7 @@ final class Decode<T, Z> extends AbstractFunction<Z> {
     private final Field<?>[]  more;
 
     public Decode(Field<T> field, Field<T> search, Field<Z> result, Field<?>[] more) {
-        super("decode", result.getDataType(), Tools.combine(field, search, result, more));
+        super(N_DECODE, result.getDataType());
 
         this.field = field;
         this.search = search;
@@ -69,8 +70,10 @@ final class Decode<T, Z> extends AbstractFunction<Z> {
 
     @SuppressWarnings("unchecked")
     @Override
-    final Field<Z> getFunction0(Configuration configuration) {
-        switch (configuration.family()) {
+    public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
+
+
 
 
 
@@ -87,17 +90,22 @@ final class Decode<T, Z> extends AbstractFunction<Z> {
                     .choose()
                     .when(field.isNotDistinctFrom(search), result);
 
-                for (int i = 0; i < more.length; i += 2)
+                for (int i = 0; i < more.length; i += 2) {
 
                     // search/result pair
-                    if (i + 1 < more.length)
+                    if (i + 1 < more.length) {
                         when = when.when(field.isNotDistinctFrom((Field<T>) more[i]), (Field<Z>) more[i + 1]);
+                    }
 
                     // trailing default value
-                    else
-                        return when.otherwise((Field<Z>) more[i]);
+                    else {
+                        ctx.visit(when.otherwise((Field<Z>) more[i]));
+                        return;
+                    }
+                }
 
-                return when;
+                ctx.visit(when);
+                return;
         }
     }
 }

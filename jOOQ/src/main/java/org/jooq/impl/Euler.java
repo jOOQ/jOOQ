@@ -40,16 +40,16 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.Names.N_E;
 
 import java.math.BigDecimal;
 
-import org.jooq.Configuration;
-import org.jooq.Field;
+import org.jooq.Context;
 
 /**
  * @author Lukas Eder
  */
-final class Euler extends AbstractFunction<BigDecimal> {
+final class Euler extends AbstractField<BigDecimal> {
 
     /**
      * Generated UID
@@ -57,12 +57,12 @@ final class Euler extends AbstractFunction<BigDecimal> {
     private static final long serialVersionUID = -420788300355442056L;
 
     Euler() {
-        super("e", SQLDataType.NUMERIC);
+        super(N_E, SQLDataType.NUMERIC);
     }
 
     @Override
-    final Field<BigDecimal> getFunction0(Configuration configuration) {
-        switch (configuration.family()) {
+    public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
 
 
 
@@ -90,14 +90,17 @@ final class Euler extends AbstractFunction<BigDecimal> {
             case MARIADB:
             case MYSQL:
             case POSTGRES:
-                return DSL.exp(one());
+                ctx.visit(DSL.exp(one()));
+                return;
 
             case SQLITE:
-                return inline(Math.E, BigDecimal.class);
+                ctx.visit(inline(Math.E, BigDecimal.class));
+                return;
 
             // The Euler number doesn't seem to exist in any dialect...
             default:
-                return function("e", getDataType());
+                ctx.visit(function("e", getDataType()));
+                return;
         }
     }
 }

@@ -38,17 +38,18 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.Names.N_LN;
 import static org.jooq.impl.SQLDataType.NUMERIC;
 
 import java.math.BigDecimal;
 
-import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
 
 /**
  * @author Lukas Eder
  */
-final class Ln extends AbstractFunction<BigDecimal> {
+final class Ln extends AbstractField<BigDecimal> {
 
     /**
      * Generated UID
@@ -63,16 +64,20 @@ final class Ln extends AbstractFunction<BigDecimal> {
     }
 
     Ln(Field<? extends Number> argument, Field<? extends Number> base) {
-        super("ln", SQLDataType.NUMERIC, argument);
+        super(N_LN, SQLDataType.NUMERIC);
 
         this.argument = argument;
         this.base = base;
     }
 
     @Override
-    final Field<BigDecimal> getFunction0(Configuration configuration) {
+    public final void accept(Context<?> ctx) {
         if (base == null) {
-            switch (configuration.family()) {
+            switch (ctx.family()) {
+
+
+
+
 
 
 
@@ -92,11 +97,13 @@ final class Ln extends AbstractFunction<BigDecimal> {
 
 
                 default:
-                    return function("ln", SQLDataType.NUMERIC, argument);
+                    ctx.visit(function("ln", SQLDataType.NUMERIC, argument));
+                    return;
             }
         }
         else {
-            switch (configuration.family()) {
+            switch (ctx.family()) {
+
 
 
 
@@ -119,10 +126,12 @@ final class Ln extends AbstractFunction<BigDecimal> {
 
                 case DERBY:
                 case HSQLDB:
-                    return DSL.ln(argument).div(DSL.ln(base));
+                    ctx.visit(DSL.ln(argument).div(DSL.ln(base)));
+                    return;
 
                 default:
-                    return function("log", SQLDataType.NUMERIC, base, argument);
+                    ctx.visit(function("log", SQLDataType.NUMERIC, base, argument));
+                    return;
             }
         }
     }

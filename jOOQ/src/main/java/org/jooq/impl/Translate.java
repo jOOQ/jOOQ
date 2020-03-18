@@ -38,28 +38,38 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.Names.N_TRANSLATE;
 
-import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.QueryPart;
 
 /**
  * @author Lukas Eder
  */
-final class Translate extends AbstractFunction<String> {
+final class Translate extends AbstractField<String> {
 
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = 6776882414592454999L;
+    private static final long   serialVersionUID = 6776882414592454999L;
+
+    private final Field<String> text;
+    private final Field<String> from;
+    private final Field<String> to;
 
     Translate(Field<String> text, Field<String> from, Field<String> to) {
-        super("translate", text.getDataType(), text, from, to);
+        super(N_TRANSLATE, text.getDataType());
+
+        this.text = text;
+        this.from = from;
+        this.to = to;
     }
 
     @Override
-    final QueryPart getFunction0(Configuration configuration) {
-        switch (configuration.family()) {
+    public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
+
+
 
 
 
@@ -69,7 +79,8 @@ final class Translate extends AbstractFunction<String> {
 
 
             default:
-                return function("translate", getDataType(), getArguments());
+                ctx.visit(function("translate", getDataType(), text, from, to));
+                return;
         }
     }
 }

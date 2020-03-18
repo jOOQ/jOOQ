@@ -38,35 +38,40 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.Names.N_GREATEST;
 
-import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 
 /**
  * @author Lukas Eder
  */
-final class Greatest<T> extends AbstractFunction<T> {
+final class Greatest<T> extends AbstractField<T> {
 
     /**
      * Generated UID
      */
     private static final long serialVersionUID = -7273879239726265322L;
+    private final Field<?>[]  args;
 
-    Greatest(DataType<T> type, Field<?>... arguments) {
-        super("greatest", type, arguments);
+    Greatest(DataType<T> type, Field<?>... args) {
+        super(N_GREATEST, type);
+
+        this.args = args;
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    final Field<T> getFunction0(Configuration configuration) {
+    public final void accept(Context<?> ctx) {
 
         // In any dialect, a single argument is always the greatest
-        if (getArguments().length == 1) {
-            return (Field<T>) getArguments()[0];
+        if (args.length == 1) {
+            ctx.visit(args[0]);
+            return;
         }
 
-        switch (configuration.family()) {
+        switch (ctx.family()) {
             // This implementation has O(2^n) complexity. Better implementations
             // are very welcome
             // [#1049] TODO Fix this!
@@ -80,32 +85,37 @@ final class Greatest<T> extends AbstractFunction<T> {
 
 
             case DERBY: {
-                Field<T> first = (Field<T>) getArguments()[0];
-                Field<T> other = (Field<T>) getArguments()[1];
+                Field<T> first = (Field<T>) args[0];
+                Field<T> other = (Field<T>) args[1];
 
-                if (getArguments().length > 2) {
-                    Field<?>[] remaining = new Field[getArguments().length - 2];
-                    System.arraycopy(getArguments(), 2, remaining, 0, remaining.length);
+                if (args.length > 2) {
+                    Field<?>[] remaining = new Field[args.length - 2];
+                    System.arraycopy(args, 2, remaining, 0, remaining.length);
 
-                    return DSL
-                        .when(first.greaterThan(other), DSL.greatest(first, remaining))
-                        .otherwise(DSL.greatest(other, remaining));
+                    ctx.visit(DSL
+                        .when(first.gt(other), DSL.greatest(first, remaining))
+                        .otherwise(DSL.greatest(other, remaining)));
                 }
                 else {
-                    return DSL
-                        .when(first.greaterThan(other), first)
-                        .otherwise(other);
+                    ctx.visit(DSL
+                        .when(first.gt(other), first)
+                        .otherwise(other));
                 }
+
+                return;
             }
 
             case FIREBIRD:
-                return function("maxvalue", getDataType(), getArguments());
+                ctx.visit(function("maxvalue", getDataType(), args));
+                return;
 
             case SQLITE:
-                return function("max", getDataType(), getArguments());
+                ctx.visit(function("max", getDataType(), args));
+                return;
 
             default:
-                return function("greatest", getDataType(), getArguments());
+                ctx.visit(function("greatest", getDataType(), args));
+                return;
         }
     }
 }

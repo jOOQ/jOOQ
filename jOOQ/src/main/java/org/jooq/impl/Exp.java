@@ -38,17 +38,18 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.Names.N_EXP;
 import static org.jooq.impl.SQLDataType.NUMERIC;
 
 import java.math.BigDecimal;
 
-import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
 
 /**
  * @author Lukas Eder
  */
-final class Exp extends AbstractFunction<BigDecimal> {
+final class Exp extends AbstractField<BigDecimal> {
 
     /**
      * Generated UID
@@ -58,14 +59,16 @@ final class Exp extends AbstractFunction<BigDecimal> {
     private final Field<? extends Number> argument;
 
     Exp(Field<? extends Number> argument) {
-        super("exp", NUMERIC, argument);
+        super(N_EXP, NUMERIC);
 
         this.argument = argument;
     }
 
     @Override
-    final Field<BigDecimal> getFunction0(Configuration configuration) {
-        switch (configuration.family()) {
+    public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
+
+
 
 
 
@@ -76,7 +79,8 @@ final class Exp extends AbstractFunction<BigDecimal> {
 
 
             default:
-                return function("exp", NUMERIC, argument);
+                ctx.visit(function("exp", NUMERIC, argument));
+                return;
         }
     }
 }

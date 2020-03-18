@@ -13790,7 +13790,7 @@ public class DSL {
      */
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> replace(Field<String> field, Field<String> search) {
-        return new Replace(nullSafe(field), nullSafe(search));
+        return new Replace(nullSafe(field), nullSafe(search), null);
     }
 
     /**

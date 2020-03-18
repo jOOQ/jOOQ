@@ -39,31 +39,42 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.val;
+import static org.jooq.impl.Names.N_REPLACE;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 
-import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
 
 /**
  * @author Lukas Eder
  */
-final class Replace extends AbstractFunction<String> {
+final class Replace extends AbstractField<String> {
 
     /**
      * Generated UID
      */
     private static final long serialVersionUID = -7273879239726265322L;
+    private final Field<?>    field;
+    private final Field<?>    search;
+    private final Field<?>    replace;
 
-    Replace(Field<?>... arguments) {
-        super("replace", SQLDataType.VARCHAR, arguments);
+    Replace(Field<?> field, Field<?> search, Field<?> replace) {
+        super(N_REPLACE, SQLDataType.VARCHAR);
+
+        this.field = field;
+        this.search = search;
+        this.replace = replace;
     }
 
     @Override
-    final Field<String> getFunction0(Configuration configuration) {
-        Field<?>[] args = getArguments();
+    public final void accept(Context<?> ctx) {
 
         // [#861] Most dialects don't ship with a two-argument replace function:
-        switch (configuration.family()) {
+        switch (ctx.family()) {
+
+
+
+
 
 
 
@@ -97,13 +108,20 @@ final class Replace extends AbstractFunction<String> {
             case MYSQL:
             case POSTGRES:
             case SQLITE:
-                if (args.length == 2)
-                    return function("replace", VARCHAR, args[0], args[1], val(""));
+                if (replace == null)
+                    ctx.visit(function("replace", VARCHAR, field, search, val("")));
                 else
-                    return function("replace", VARCHAR, args);
+                    ctx.visit(function("replace", VARCHAR, field, search, replace));
+
+                return;
 
             default:
-                return function("replace", VARCHAR, args);
+                if (replace == null)
+                    ctx.visit(function("replace", VARCHAR, field, search));
+                else
+                    ctx.visit(function("replace", VARCHAR, field, search, replace));
+
+                return;
         }
     }
 }

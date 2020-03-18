@@ -39,31 +39,23 @@ package org.jooq.impl;
 
 // ...
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.Names.N_GROUP_CONCAT;
 
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.jooq.AggregateFilterStep;
 import org.jooq.AggregateFunction;
-import org.jooq.Condition;
-import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.GroupConcatOrderByStep;
-import org.jooq.GroupConcatSeparatorStep;
-import org.jooq.Name;
 import org.jooq.OrderField;
-// ...
-import org.jooq.QueryPart;
-import org.jooq.SQL;
-import org.jooq.WindowDefinition;
-import org.jooq.WindowFinalStep;
-import org.jooq.WindowPartitionByStep;
-import org.jooq.WindowSpecification;
 
 /**
  * @author Lukas Eder
  */
-final class GroupConcat extends AbstractFunction<String> implements GroupConcatOrderByStep {
+final class GroupConcat
+extends AbstractAggregateFunction<String>
+implements GroupConcatOrderByStep {
 
     /**
      * Generated UID
@@ -71,7 +63,6 @@ final class GroupConcat extends AbstractFunction<String> implements GroupConcatO
     private static final long   serialVersionUID = -6884415527559632960L;
 
     private final Field<?>      field;
-    private final boolean       distinct;
     private final SortFieldList orderBy;
     private String              separator;
 
@@ -80,15 +71,14 @@ final class GroupConcat extends AbstractFunction<String> implements GroupConcatO
     }
 
     GroupConcat(Field<?> field, boolean distinct) {
-        super("group_concat", SQLDataType.VARCHAR);
+        super(distinct, N_GROUP_CONCAT, SQLDataType.VARCHAR, field);
 
         this.field = field;
-        this.distinct = distinct;
         this.orderBy = new SortFieldList();
     }
 
     @Override
-    final Field<String> getFunction0(Configuration configuration) {
+    public final void accept(Context<?> ctx) {
         ListAgg result;
 
         if (separator == null)
@@ -103,106 +93,9 @@ final class GroupConcat extends AbstractFunction<String> implements GroupConcatO
 
 
         if (orderBy.isEmpty())
-            return result;
+            ctx.visit(result);
         else
-            return result.withinGroupOrderBy(orderBy);
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    @Override
-    public final AggregateFilterStep<String> filterWhere(Condition condition) {
-        throw new UnsupportedOperationException("FILTER() not supported on GROUP_CONCAT aggregate function");
-    }
-
-    @Override
-    public final AggregateFilterStep<String> filterWhere(Condition... conditions) {
-        throw new UnsupportedOperationException("FILTER() not supported on GROUP_CONCAT aggregate function");
-    }
-
-    @Override
-    public final AggregateFilterStep<String> filterWhere(Collection<? extends Condition> conditions) {
-        throw new UnsupportedOperationException("FILTER() not supported on GROUP_CONCAT aggregate function");
-    }
-
-    @Override
-    public final AggregateFilterStep<String> filterWhere(Field<Boolean> c) {
-        throw new UnsupportedOperationException("FILTER() not supported on GROUP_CONCAT aggregate function");
-    }
-
-    @Override
-    public final AggregateFilterStep<String> filterWhere(Boolean c) {
-        throw new UnsupportedOperationException("FILTER() not supported on GROUP_CONCAT aggregate function");
-    }
-
-    @Override
-    public final AggregateFilterStep<String> filterWhere(SQL sql) {
-        throw new UnsupportedOperationException("FILTER() not supported on GROUP_CONCAT aggregate function");
-    }
-
-    @Override
-    public final AggregateFilterStep<String> filterWhere(String sql) {
-        throw new UnsupportedOperationException("FILTER() not supported on GROUP_CONCAT aggregate function");
-    }
-
-    @Override
-    public final AggregateFilterStep<String> filterWhere(String sql, Object... bindings) {
-        throw new UnsupportedOperationException("FILTER() not supported on GROUP_CONCAT aggregate function");
-    }
-
-    @Override
-    public final AggregateFilterStep<String> filterWhere(String sql, QueryPart... parts) {
-        throw new UnsupportedOperationException("FILTER() not supported on GROUP_CONCAT aggregate function");
-    }
-
-    @Override
-    public final WindowPartitionByStep<String> over() {
-        throw new UnsupportedOperationException("OVER() not supported on GROUP_CONCAT aggregate function");
-    }
-
-    @Override
-    public final WindowFinalStep<String> over(WindowSpecification specification) {
-        throw new UnsupportedOperationException("OVER() not supported on GROUP_CONCAT aggregate function");
-    }
-
-    @Override
-    public final WindowFinalStep<String> over(WindowDefinition definition) {
-        throw new UnsupportedOperationException("OVER() not supported on GROUP_CONCAT aggregate function");
-    }
-
-    @Override
-    public final WindowFinalStep<String> over(Name name) {
-        throw new UnsupportedOperationException("OVER() not supported on GROUP_CONCAT aggregate function");
-    }
-
-    @Override
-    public final WindowFinalStep<String> over(String name) {
-        throw new UnsupportedOperationException("OVER() not supported on GROUP_CONCAT aggregate function");
+            ctx.visit(result.withinGroupOrderBy(orderBy));
     }
 
     @Override
@@ -212,12 +105,12 @@ final class GroupConcat extends AbstractFunction<String> implements GroupConcatO
     }
 
     @Override
-    public final GroupConcatSeparatorStep orderBy(OrderField<?>... fields) {
+    public final GroupConcat orderBy(OrderField<?>... fields) {
         return orderBy(Arrays.asList(fields));
     }
 
     @Override
-    public final GroupConcatSeparatorStep orderBy(Collection<? extends OrderField<?>> fields) {
+    public final GroupConcat orderBy(Collection<? extends OrderField<?>> fields) {
         orderBy.addAll(Tools.sortFields(fields));
         return this;
     }

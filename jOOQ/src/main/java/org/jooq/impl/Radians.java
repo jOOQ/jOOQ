@@ -40,17 +40,18 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.pi;
+import static org.jooq.impl.Names.N_RADIANS;
 import static org.jooq.impl.Tools.castIfNeeded;
 
 import java.math.BigDecimal;
 
-import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
 
 /**
  * @author Lukas Eder
  */
-final class Radians extends AbstractFunction<BigDecimal> {
+final class Radians extends AbstractField<BigDecimal> {
 
     /**
      * Generated UID
@@ -60,14 +61,14 @@ final class Radians extends AbstractFunction<BigDecimal> {
     private final Field<?>    argument;
 
     Radians(Field<?> argument) {
-        super("radians", SQLDataType.NUMERIC, argument);
+        super(N_RADIANS, SQLDataType.NUMERIC);
 
         this.argument = argument;
     }
 
     @Override
-    final Field<BigDecimal> getFunction0(Configuration configuration) {
-        switch (configuration.family()) {
+    public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
 
 
 
@@ -76,10 +77,12 @@ final class Radians extends AbstractFunction<BigDecimal> {
 
             case FIREBIRD:
             case SQLITE:
-                return castIfNeeded(argument, BigDecimal.class).mul(pi()).div(inline(180));
+                ctx.visit(castIfNeeded(argument, BigDecimal.class).mul(pi()).div(inline(180)));
+                return;
 
             default:
-                return function("radians", SQLDataType.NUMERIC, argument);
+                ctx.visit(function("radians", SQLDataType.NUMERIC, argument));
+                return;
         }
     }
 }

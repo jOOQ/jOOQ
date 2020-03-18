@@ -64,15 +64,22 @@ final class XMLAttributesImpl extends AbstractQueryPart implements XMLAttributes
     @Override
     public final void accept(Context<?> ctx) {
         boolean declareFields = ctx.declareFields();
+        boolean format = attributes.size() > 1;
 
-        ctx.visit(N_XMLATTRIBUTES).sql('(')
-           .formatIndentStart()
-           .formatNewLine()
-           .declareFields(true)
+        ctx.visit(N_XMLATTRIBUTES).sql('(');
+
+        if (format)
+            ctx.formatIndentStart()
+               .formatNewLine();
+
+        ctx.declareFields(true)
            .visit(attributes)
-           .declareFields(declareFields)
-           .formatIndentEnd()
-           .formatNewLine()
-           .sql(')');
+           .declareFields(declareFields);
+
+        if (format)
+            ctx.formatIndentEnd()
+               .formatNewLine();
+
+        ctx.sql(')');
     }
 }

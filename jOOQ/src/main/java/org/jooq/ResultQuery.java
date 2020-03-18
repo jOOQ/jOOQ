@@ -66,35 +66,69 @@ import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
 import org.jooq.exception.NoDataFoundException;
 import org.jooq.exception.TooManyRowsException;
-import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultRecordMapper;
 
 /**
- * A query that can return results. Mostly, this is a {@link Select} query used
- * for a <code>SELECT</code> statement.
+ * A query that can return results.
  * <p>
- * <h3>Lifecycle guarantees</h3>
+ * jOOQ distinguishes between ordinary {@link Query} types, such as
+ * {@link Insert}, {@link Update}, {@link Delete}, and any {@link DDLQuery},
+ * which are meant to produce side effects in a database, and the
+ * {@link ResultQuery}, which is meant to produce a {@link Result} through
+ * various means.
  * <p>
- * Most methods in this type are based on {@link #fetch()}, which completes the
- * whole {@link ConnectionProvider} and {@link ExecuteListener} lifecycles,
- * eagerly fetching all results into memory. Underlying JDBC {@link ResultSet}s
- * are always closed. Underlying JDBC {@link PreparedStatement}s are closed,
- * unless {@link #keepStatement(boolean)} is set.
+ * The most common way to create a result is by calling {@link #fetch()}, or by
+ * using the query's {@link #iterator()} method in a foreach loop:
  * <p>
- * In order to keep open {@link ResultSet}s and fetch records lazily, use
- * {@link #fetchLazy()} instead and then operate on {@link Cursor}.
+ * <code><pre>
+ * Result&lt;TRecord> result = ctx.select(T.A, T.B).from(T).fetch();
+ *
+ * for (TRecord record : ctx.select(T.A, T.B).from(T)) {
+ *   // ...
+ * }
+ * </pre></code>
  * <p>
- * <h3>Performance</h3>
+ * Most approaches to fetching results in {@link ResultQuery} (including the
+ * above), fetch the entire JDBC {@link ResultSet} eagerly into memory, which
+ * allows for closing the underlying JDBC resources as quickly as possible. Such
+ * operations are not resourceful, i.e. users do not need to worry about closing
+ * any resources.
  * <p>
- * Methods throwing {@link TooManyRowsException} need to retrieve at most two
- * records from the underlying JDBC {@link ResultSet}, which, depending on the
- * {@link java.sql.Statement#getFetchSize()} /
- * {@link ResultQuery#fetchSize(int)}, might incur additional database
- * roundtrips. If this causes problems, {@link ResultQuery#fetchAny()} may be
- * preferred.
+ * There are, however, some ways of fetching results lazily, and thus in a
+ * resourceful way. These include:
+ * <ul>
+ * <li>{@link ResultQuery#fetchLazy()} and related methods, which produce a
+ * {@link Cursor} for imperative style consumption of resulting records.</li>
+ * <li>{@link ResultQuery#fetchStream()} and related methods, which produce a
+ * Java {@link Stream} for functional style consumption of resulting
+ * records.</li>
+ * </ul>
  * <p>
- * Instances can be created using {@link DSL#resultQuery(String)} and overloads,
- * or by creating a subtype.
+ * In both cases, it is recommended to explicitly close the underlying resources
+ * (i.e. JDBC {@link ResultSet}) using <code>try-with-resources</code>:
+ * <p>
+ * <code><pre>
+ * try (Cursor&lt;TRecord> cursor = ctx.select(T.A, T.B).from(T).fetchLazy()) {
+ *   for (;;) {
+ *     TRecord record = cursor.fetchNext();
+ *     if (record == null)
+ *       break;
+ *
+ *     // ...
+ *   }
+ * }
+ *
+ * try (Stream&lt;TRecord> stream = ctx.select(T.A, T.B).from(T).fetchStream()) {
+ *   stream.forEach(record -> {
+ *     // ...
+ *   });
+ * }
+ * </pre></code>
+ * <p>
+ * While most instances of {@link ResultQuery} implement {@link Select}, there
+ * also exist other types of {@link ResultQuery} constructed e.g. from plain SQL
+ * APIs, such as {@link DSLContext#resultQuery(String)}.
+ * <p>
  *
  * @author Lukas Eder
  */

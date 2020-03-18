@@ -389,6 +389,7 @@ import org.jooq.WithAsStep7;
 import org.jooq.WithAsStep8;
 import org.jooq.WithAsStep9;
 import org.jooq.WithStep;
+import org.jooq.XML;
 import org.jooq.conf.Settings;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.Convert;
@@ -18093,6 +18094,45 @@ public class DSL {
     @Support({ CUBRID })
     public static Field<Integer> rownum() {
         return field("rownum", Integer.class);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX XML functions
+    // -------------------------------------------------------------------------
+
+    /**
+     * The XML comment constructor.
+     */
+    @Support({ POSTGRES })
+    public static Field<XML> xmlcomment(String comment) {
+        return xmlcomment(val(comment));
+    }
+
+    /**
+     * The XML comment constructor.
+     */
+    @Support({ POSTGRES })
+    public static Field<XML> xmlcomment(Field<String> comment) {
+        return new XMLComment(comment);
+    }
+
+    /**
+     * The XML concat function.
+     */
+    @Support({ POSTGRES })
+
+    @SafeVarargs
+
+    public static Field<XML> xmlconcat(Field<XML>... fields) {
+        return xmlconcat(asList(fields));
+    }
+
+    /**
+     * The XML concat function.
+     */
+    @Support({ POSTGRES })
+    public static Field<XML> xmlconcat(Collection<? extends Field<XML>> fields) {
+        return new XMLConcat(fields);
     }
 
     // -------------------------------------------------------------------------

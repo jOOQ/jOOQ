@@ -143,5 +143,14 @@ final class Names {
     static final Name N_UPPER             = DSL.unquotedName("upper");
     static final Name N_VALUES            = DSL.unquotedName("values");
     static final Name N_WIDTH_BUCKET      = DSL.unquotedName("width_bucket");
+    static final Name N_XMLCOMMENT        = DSL.unquotedName("xmlcomment");
+    static final Name N_XMLCONCAT         = DSL.unquotedName("xmlconcat");
+    static final Name N_XMLELEMENT        = DSL.unquotedName("xmlelement");
+    static final Name N_XMLATTRIBUTES     = DSL.unquotedName("xmlattributes");
+    static final Name N_XMLPI             = DSL.unquotedName("xmlpi");
+    static final Name N_XMLROOT           = DSL.unquotedName("xmlroot");
+    static final Name N_XMLFOREST         = DSL.unquotedName("xmlforest");
+    static final Name N_XMLAGG            = DSL.unquotedName("xmlagg");
+    static final Name N_XPATH             = DSL.unquotedName("xpath");
 
 }

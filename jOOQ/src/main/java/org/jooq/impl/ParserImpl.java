@@ -295,6 +295,7 @@ import static org.jooq.impl.DSL.xmlattributes;
 import static org.jooq.impl.DSL.xmlcomment;
 import static org.jooq.impl.DSL.xmlconcat;
 import static org.jooq.impl.DSL.xmlelement;
+import static org.jooq.impl.DSL.xmlforest;
 import static org.jooq.impl.DSL.xmlpi;
 import static org.jooq.impl.DSL.year;
 import static org.jooq.impl.DSL.zero;
@@ -6403,6 +6404,8 @@ final class ParserImpl implements Parser {
                         return field;
                     else if ((field = parseFieldXMLPIIf(ctx)) != null)
                         return field;
+                    else if ((field = parseFieldXMLForestIf(ctx)) != null)
+                        return field;
 
                 break;
 
@@ -6730,25 +6733,8 @@ final class ParserImpl implements Parser {
 
             while (parseIf(ctx, ',')) {
                 if (attr == null && parseKeywordIf(ctx, "XMLATTRIBUTES")) {
-                    List<Field<?>> attrs = new ArrayList<>();
-
                     parse(ctx, '(');
-
-                    do {
-                        Name alias = null;
-                        Field<?> field = null;
-
-                        if (field == null) {
-                            field = parseField(ctx);
-
-                            if (parseKeywordIf(ctx, "AS"))
-                                alias = parseIdentifier(ctx, true);
-                        }
-
-                        attrs.add(alias == null ? field : field.as(alias));
-                    }
-                    while (parseIf(ctx, ','));
-
+                    List<Field<?>> attrs = parseAliasedXMLContent(ctx);
                     parse(ctx, ')');
                     attr = xmlattributes(attrs);
                 }
@@ -6770,17 +6756,39 @@ final class ParserImpl implements Parser {
             parse(ctx, '(');
             parseKeyword(ctx, "NAME");
             Name target = parseIdentifier(ctx);
-            Field<?> content = null;
-
-            if (parseIf(ctx, ',')) {
-                content = parseField(ctx);
-            }
-
+            Field<?> content = parseIf(ctx, ',') ? parseField(ctx) : null;
             parse(ctx, ')');
             return content == null ? xmlpi(target) : xmlpi(target, content);
         }
 
         return null;
+    }
+
+    private static final Field<?> parseFieldXMLForestIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "XMLFOREST")) {
+            parse(ctx, '(');
+            List<Field<?>> content = parseAliasedXMLContent(ctx);
+            parse(ctx, ')');
+
+            return xmlforest(content);
+        }
+
+        return null;
+    }
+
+    private static final List<Field<?>> parseAliasedXMLContent(ParserContext ctx) {
+        List<Field<?>> result = new ArrayList<>();
+
+        do {
+            Field<?> field = parseField(ctx);
+
+            if (parseKeywordIf(ctx, "AS"))
+                field = field.as(parseIdentifier(ctx, true));
+
+            result.add(field);
+        }
+        while (parseIf(ctx, ','));
+        return result;
     }
 
     private static final Field<?> parseFieldJSONArrayConstructorIf(ParserContext ctx) {

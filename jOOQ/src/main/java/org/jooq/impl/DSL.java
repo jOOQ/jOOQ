@@ -18238,6 +18238,22 @@ public class DSL {
         return new XMLPI(target, content);
     }
 
+    /**
+     * The XML forest constructor.
+     */
+    @Support({ POSTGRES })
+    public static Field<XML> xmlforest(Field<?>... fields) {
+        return xmlforest(asList(fields));
+    }
+
+    /**
+     * The XML forest constructor.
+     */
+    @Support({ POSTGRES })
+    public static Field<XML> xmlforest(Collection<? extends Field<?>> fields) {
+        return new XMLForest(fields);
+    }
+
     // -------------------------------------------------------------------------
     // XXX JSON functions
     // -------------------------------------------------------------------------

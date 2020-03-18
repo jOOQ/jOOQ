@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static org.jooq.impl.Keywords.K_NAME;
 import static org.jooq.impl.Names.N_XMLCONCAT;
 import static org.jooq.impl.Names.N_XMLELEMENT;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
 
 import java.util.Collection;
 
@@ -72,14 +73,40 @@ final class XMLElement extends AbstractField<XML> {
 
     @Override
     public final void accept(Context<?> ctx) {
+        boolean hasAttributes = attributes != null && !((XMLAttributesImpl) attributes).attributes.isEmpty();
+        boolean hasContent = !content.isEmpty();
+        boolean format =
+               hasAttributes && ((XMLAttributesImpl) attributes).attributes.size() > 1
+            || hasContent && content.size() > 1;
+        Object previous = ctx.data(DATA_LIST_ALREADY_INDENTED);
+
         ctx.visit(N_XMLELEMENT).sql('(');
+
+        if (format) {
+            ctx.formatIndentStart()
+               .formatNewLine();
+            ctx.data(DATA_LIST_ALREADY_INDENTED, true);
+        }
+
         ctx.visit(K_NAME).sql(' ').visit(elementName);
 
-        if (attributes != null && !((XMLAttributesImpl) attributes).attributes.isEmpty())
-            ctx.sql(',').formatSeparator().visit(attributes);
+        if (hasAttributes)
+            if (format)
+                ctx.sql(',').formatSeparator().visit(attributes);
+            else
+                ctx.sql(", ").visit(attributes);
 
-        if (!content.isEmpty())
-            ctx.sql(',').formatSeparator().visit(content);
+        if (hasContent)
+            if (format)
+                ctx.sql(',').formatSeparator().visit(content);
+            else
+                ctx.sql(", ").visit(content);
+
+        if (format) {
+            ctx.formatIndentEnd()
+               .formatNewLine();
+            ctx.data(DATA_LIST_ALREADY_INDENTED, previous);
+        }
 
         ctx.sql(')');
     }

@@ -18254,6 +18254,14 @@ public class DSL {
         return new XMLForest(fields);
     }
 
+    /**
+     * The XML aggregate function.
+     */
+    @Support({ POSTGRES })
+    public static ArrayAggOrderByStep<XML> xmlagg(Field<XML> field) {
+        return new XMLAgg(field);
+    }
+
     // -------------------------------------------------------------------------
     // XXX JSON functions
     // -------------------------------------------------------------------------

@@ -37,42 +37,36 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Names.N_XMLATTRIBUTES;
-
-import java.util.Collection;
+import static org.jooq.impl.Names.N_XMLAGG;
 
 import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.XMLAttributes;
+import org.jooq.XML;
+
 
 /**
+ * The JSON array constructor.
+ *
  * @author Lukas Eder
  */
-final class XMLAttributesImpl extends AbstractQueryPart implements XMLAttributes {
+final class XMLAgg extends AbstractAggregateFunction<XML> {
 
     /**
      * Generated UID
      */
-    private static final long     serialVersionUID = 1887555231334164185L;
+    private static final long serialVersionUID = 1772007627336725780L;
 
-    final SelectFieldList<Field<?>> attributes;
-
-    XMLAttributesImpl(Collection<? extends Field<?>> attributes) {
-        this.attributes = new SelectFieldList<>(attributes);
+    XMLAgg(Field<XML> arg) {
+        super(false, N_XMLAGG, SQLDataType.XML, arg);
     }
 
     @Override
-    public final void accept(Context<?> ctx) {
-        boolean declareFields = ctx.declareFields();
+    public void accept(Context<?> ctx) {
+        ctx.visit(N_XMLAGG).sql('(').visit(arguments);
+        acceptOrderBy(ctx);
+        ctx.sql(')');
 
-        ctx.visit(N_XMLATTRIBUTES).sql('(')
-           .formatIndentStart()
-           .formatNewLine()
-           .declareFields(true)
-           .visit(attributes)
-           .declareFields(declareFields)
-           .formatIndentEnd()
-           .formatNewLine()
-           .sql(')');
+        acceptFilterClause(ctx);
+        acceptOverClause(ctx);
     }
 }

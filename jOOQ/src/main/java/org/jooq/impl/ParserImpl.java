@@ -291,6 +291,7 @@ import static org.jooq.impl.DSL.varSamp;
 import static org.jooq.impl.DSL.week;
 import static org.jooq.impl.DSL.when;
 // ...
+import static org.jooq.impl.DSL.xmlagg;
 import static org.jooq.impl.DSL.xmlattributes;
 import static org.jooq.impl.DSL.xmlcomment;
 import static org.jooq.impl.DSL.xmlconcat;
@@ -508,6 +509,7 @@ import org.jooq.WindowSpecificationExcludeStep;
 import org.jooq.WindowSpecificationOrderByStep;
 import org.jooq.WindowSpecificationRowsAndStep;
 import org.jooq.WindowSpecificationRowsStep;
+import org.jooq.XML;
 import org.jooq.XMLAttributes;
 import org.jooq.conf.ParseSearchSchema;
 import org.jooq.conf.ParseUnknownFunctions;
@@ -6791,6 +6793,24 @@ final class ParserImpl implements Parser {
         return result;
     }
 
+    private static final AggregateFilterStep<?> parseXMLAggFunctionIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "XMLAGG")) {
+            ArrayAggOrderByStep<?> s1;
+            AggregateFilterStep<?> s2;
+
+            parse(ctx, '(');
+            s2 = s1 = xmlagg((Field<XML>) parseField(ctx));
+
+            if (parseKeywordIf(ctx, "ORDER BY"))
+                s2 = s1.orderBy(parseSortSpecification(ctx));
+
+            parse(ctx, ')');
+            return s2;
+        }
+
+        return null;
+    }
+
     private static final Field<?> parseFieldJSONArrayConstructorIf(ParserContext ctx) {
         if (parseFunctionNameIf(ctx, "JSON_ARRAY")) {
             parse(ctx, '(');
@@ -8761,6 +8781,8 @@ final class ParserImpl implements Parser {
             over = filter = parseOrderedSetFunctionIf(ctx);
         if (filter == null && !basic)
             over = filter = parseArrayAggFunctionIf(ctx);
+        if (filter == null && !basic)
+            over = filter = parseXMLAggFunctionIf(ctx);
 
         if (filter == null && over == null)
             if (!basic)

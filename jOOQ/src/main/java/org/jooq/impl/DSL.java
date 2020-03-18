@@ -390,6 +390,7 @@ import org.jooq.WithAsStep8;
 import org.jooq.WithAsStep9;
 import org.jooq.WithStep;
 import org.jooq.XML;
+import org.jooq.XMLAttributes;
 import org.jooq.conf.Settings;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.Convert;
@@ -18123,6 +18124,46 @@ public class DSL {
     @Support({ POSTGRES })
     public static Field<XML> xmlconcat(Collection<? extends Field<XML>> fields) {
         return new XMLConcat(fields);
+    }
+
+    /**
+     * The XML element constructor.
+     */
+    @Support({ POSTGRES })
+    public static Field<XML> xmlelement(String name, Field<?>... content) {
+        return xmlelement(name(name), (XMLAttributes) null, content);
+    }
+
+    /**
+     * The XML element constructor.
+     */
+    @Support({ POSTGRES })
+    public static Field<XML> xmlelement(Name name, Field<?>... content) {
+        return xmlelement(name, (XMLAttributes) null, content);
+    }
+
+    /**
+     * The XML element constructor.
+     */
+    @Support({ POSTGRES })
+    public static Field<XML> xmlelement(String name, XMLAttributes attributes, Field<?>... content) {
+        return xmlelement(name(name), attributes, content);
+    }
+
+    /**
+     * The XML element constructor.
+     */
+    @Support({ POSTGRES })
+    public static Field<XML> xmlelement(Name name, XMLAttributes attributes, Field<?>... content) {
+        return new XMLElement(name, attributes, content);
+    }
+
+    /**
+     * The XML attributes constructor.
+     */
+    @Support({ POSTGRES })
+    public static XMLAttributes xmlattributes(Field<?>... attributes) {
+        return new XMLAttributesImpl(attributes);
     }
 
     // -------------------------------------------------------------------------

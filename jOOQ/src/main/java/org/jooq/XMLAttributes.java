@@ -35,40 +35,16 @@
  *
  *
  */
+package org.jooq;
 
-package org.jooq.impl;
-
-import java.util.Collection;
-
-import org.jooq.Context;
-import org.jooq.SelectFieldOrAsterisk;
+import org.jooq.impl.DSL;
 
 /**
+ * A type modelling XML attributes for use in
+ * {@link DSL#xmlelement(Name, XMLAttributes, Field...)}.
+ *
  * @author Lukas Eder
  */
-final class SelectFieldList<F extends SelectFieldOrAsterisk> extends QueryPartList<F> {
+public interface XMLAttributes extends QueryPart {
 
-    private static final long serialVersionUID = 8850104968428500798L;
-
-    SelectFieldList() {
-        super();
-    }
-
-    SelectFieldList(Collection<? extends F> wrappedList) {
-        super(wrappedList);
-    }
-
-    SelectFieldList(F[] wrappedList) {
-        super(wrappedList);
-    }
-
-    @Override
-    protected void toSQLEmptyList(Context<?> ctx) {
-        ctx.visit(AsteriskImpl.INSTANCE);
-    }
-
-    @Override
-    public final boolean declaresFields() {
-        return true;
-    }
 }

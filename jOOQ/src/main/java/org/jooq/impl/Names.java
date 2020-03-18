@@ -92,12 +92,12 @@ final class Names {
     static final Name N_JSON_ARRAY        = DSL.unquotedName("json_array");
     static final Name N_JSON_ARRAYAGG     = DSL.unquotedName("json_arrayagg");
     static final Name N_JSON_OBJECT       = DSL.unquotedName("json_object");
-    static final Name N_JSON_OBJECTAGG    = DSL.unquotedName("json_objectagg");
     static final Name N_JSON_OBJECT_AGG   = DSL.unquotedName("json_object_agg");
+    static final Name N_JSON_OBJECTAGG    = DSL.unquotedName("json_objectagg");
     static final Name N_JSONB_AGG         = DSL.unquotedName("jsonb_agg");
     static final Name N_JSONB_OBJECT      = DSL.unquotedName("jsonb_object");
-    static final Name N_JSONB_OBJECTAGG   = DSL.unquotedName("jsonb_objectagg");
     static final Name N_JSONB_OBJECT_AGG  = DSL.unquotedName("jsonb_object_agg");
+    static final Name N_JSONB_OBJECTAGG   = DSL.unquotedName("jsonb_objectagg");
     static final Name N_LEAST             = DSL.unquotedName("least");
     static final Name N_LEFT              = DSL.unquotedName("left");
     static final Name N_LIST              = DSL.unquotedName("list");
@@ -110,6 +110,7 @@ final class Names {
     static final Name N_MEDIAN            = DSL.unquotedName("median");
     static final Name N_MOD               = DSL.unquotedName("mod");
     static final Name N_MODE              = DSL.unquotedName("mode");
+    static final Name N_NAME              = DSL.unquotedName("name");
     static final Name N_NEXTVAL           = DSL.unquotedName("nextval");
     static final Name N_NOT               = DSL.unquotedName("not");
     static final Name N_NTILE             = DSL.unquotedName("ntile");
@@ -131,8 +132,8 @@ final class Names {
     static final Name N_ROLLUP            = DSL.unquotedName("rollup");
     static final Name N_ROUND             = DSL.unquotedName("round");
     static final Name N_ROW               = DSL.unquotedName("row");
-    static final Name N_ROWNUM            = DSL.unquotedName("rownum");
     static final Name N_ROW_NUMBER        = DSL.unquotedName("row_number");
+    static final Name N_ROWNUM            = DSL.unquotedName("rownum");
     static final Name N_ROWSFROM          = DSL.unquotedName("rowsfrom");
     static final Name N_RPAD              = DSL.unquotedName("rpad");
     static final Name N_RTRIM             = DSL.unquotedName("rtrim");
@@ -154,14 +155,14 @@ final class Names {
     static final Name N_UPPER             = DSL.unquotedName("upper");
     static final Name N_VALUES            = DSL.unquotedName("values");
     static final Name N_WIDTH_BUCKET      = DSL.unquotedName("width_bucket");
+    static final Name N_XMLAGG            = DSL.unquotedName("xmlagg");
+    static final Name N_XMLATTRIBUTES     = DSL.unquotedName("xmlattributes");
     static final Name N_XMLCOMMENT        = DSL.unquotedName("xmlcomment");
     static final Name N_XMLCONCAT         = DSL.unquotedName("xmlconcat");
     static final Name N_XMLELEMENT        = DSL.unquotedName("xmlelement");
-    static final Name N_XMLATTRIBUTES     = DSL.unquotedName("xmlattributes");
+    static final Name N_XMLFOREST         = DSL.unquotedName("xmlforest");
     static final Name N_XMLPI             = DSL.unquotedName("xmlpi");
     static final Name N_XMLROOT           = DSL.unquotedName("xmlroot");
-    static final Name N_XMLFOREST         = DSL.unquotedName("xmlforest");
-    static final Name N_XMLAGG            = DSL.unquotedName("xmlagg");
     static final Name N_XPATH             = DSL.unquotedName("xpath");
 
 }

@@ -35,40 +35,38 @@
  *
  *
  */
-
 package org.jooq.impl;
 
-import java.util.Collection;
+import static org.jooq.impl.Names.N_XMLATTRIBUTES;
 
 import org.jooq.Context;
-import org.jooq.SelectFieldOrAsterisk;
+import org.jooq.Field;
+import org.jooq.XMLAttributes;
 
 /**
  * @author Lukas Eder
  */
-final class SelectFieldList<F extends SelectFieldOrAsterisk> extends QueryPartList<F> {
+final class XMLAttributesImpl extends AbstractQueryPart implements XMLAttributes {
 
-    private static final long serialVersionUID = 8850104968428500798L;
+    /**
+     * Generated UID
+     */
+    private static final long     serialVersionUID = 1887555231334164185L;
 
-    SelectFieldList() {
-        super();
-    }
+    final SelectFieldList<Field<?>> attributes;
 
-    SelectFieldList(Collection<? extends F> wrappedList) {
-        super(wrappedList);
-    }
-
-    SelectFieldList(F[] wrappedList) {
-        super(wrappedList);
+    XMLAttributesImpl(Field<?>... attributes) {
+        this.attributes = new SelectFieldList<>(attributes);
     }
 
     @Override
-    protected void toSQLEmptyList(Context<?> ctx) {
-        ctx.visit(AsteriskImpl.INSTANCE);
-    }
+    public final void accept(Context<?> ctx) {
+        boolean declareFields = ctx.declareFields();
 
-    @Override
-    public final boolean declaresFields() {
-        return true;
+        ctx.visit(N_XMLATTRIBUTES).sql('(')
+           .declareFields(true)
+           .visit(attributes)
+           .declareFields(declareFields)
+           .sql(')');
     }
 }

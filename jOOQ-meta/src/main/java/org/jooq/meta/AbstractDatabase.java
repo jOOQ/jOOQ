@@ -2535,9 +2535,7 @@ public abstract class AbstractDatabase implements Database {
         return type;
     }
 
-
     @FunctionalInterface
-
     private interface ExceptionRunnable {
         void run() throws Exception;
     }

@@ -87,9 +87,7 @@ final class ReferenceImpl<R extends Record, O extends Record> extends AbstractKe
     }
 
     @Override
-
     @SafeVarargs
-
     public final Result<O> fetchParents(R... records) {
         return fetchParents(list(records));
     }
@@ -100,9 +98,7 @@ final class ReferenceImpl<R extends Record, O extends Record> extends AbstractKe
     }
 
     @Override
-
     @SafeVarargs
-
     public final Result<R> fetchChildren(O... records) {
         return fetchChildren(list(records));
     }

@@ -2004,9 +2004,7 @@ final class Tools {
     /**
      * Create a new array
      */
-
     @SafeVarargs
-
     static final <T> T[] array(T... array) {
         return array;
     }
@@ -2014,9 +2012,7 @@ final class Tools {
     /**
      * Reverse an array.
      */
-
     @SafeVarargs
-
     static final <T> T[] reverse(T... array) {
         if (array == null)
             return null;
@@ -2033,9 +2029,7 @@ final class Tools {
     /**
      * Reverse iterate over an array.
      */
-
     @SafeVarargs
-
     static final <T> Iterable<T> reverseIterable(final T... array) {
         return reverseIterable(Arrays.asList(array));
     }
@@ -2043,9 +2037,7 @@ final class Tools {
     /**
      * Reverse iterate over an array.
      */
-
     @SafeVarargs
-
     static final <T> Iterator<T> reverseIterator(final T... array) {
         return reverseIterator(Arrays.asList(array));
     }
@@ -2090,9 +2082,7 @@ final class Tools {
      * Use this rather than {@link Arrays#asList(Object...)} for
      * <code>null</code>-safety
      */
-
     @SafeVarargs
-
     static final <T> List<T> list(T... array) {
         return array == null ? Collections.<T>emptyList() : Arrays.asList(array);
     }

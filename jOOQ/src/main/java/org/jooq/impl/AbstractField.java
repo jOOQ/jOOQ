@@ -280,9 +280,7 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     }
 
     @Override
-
     @SafeVarargs
-
     public final SortField<Integer> sortAsc(T... sortList) {
         return sortAsc(Arrays.asList(sortList));
     }
@@ -299,9 +297,7 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     }
 
     @Override
-
     @SafeVarargs
-
     public final SortField<Integer> sortDesc(T... sortList) {
         return sortDesc(Arrays.asList(sortList));
     }
@@ -2007,9 +2003,7 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
     @Override
     @Deprecated
-
     @SafeVarargs
-
     public final Field<T> greatest(T... others) {
         return DSL.greatest(this, Tools.fields(others).toArray(EMPTY_FIELD));
     }
@@ -2022,9 +2016,7 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
     @Override
     @Deprecated
-
     @SafeVarargs
-
     public final Field<T> least(T... others) {
         return DSL.least(this, Tools.fields(others).toArray(EMPTY_FIELD));
     }
@@ -2109,9 +2101,7 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
 
     @Override
     @Deprecated
-
     @SafeVarargs
-
     public final Field<T> coalesce(T option, T... options) {
         return DSL.coalesce(this, Tools.combine(Tools.field(option, this), Tools.fields(options, this).toArray(EMPTY_FIELD)));
     }

@@ -310,9 +310,7 @@ public final class FilePattern {
     /**
      * A callback interface that allows for loading a {@link Source}.
      */
-
     @FunctionalInterface
-
     public interface Loader {
         void load(Source source);
     }

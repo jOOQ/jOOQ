@@ -84,9 +84,7 @@ public abstract class AbstractKeys {
      * @deprecated - [#6875] [#7158] - 3.11.0 - Please re-generate your code
      */
     @Deprecated
-
     @SafeVarargs
-
     public static <R extends Record> UniqueKey<R> createUniqueKey(Table<R> table, TableField<R, ?>... fields) {
         return Internal.createUniqueKey(table, fields);
     }
@@ -97,9 +95,7 @@ public abstract class AbstractKeys {
      * @deprecated - [#6875] [#7158] - 3.11.0 - Please re-generate your code
      */
     @Deprecated
-
     @SafeVarargs
-
     public static <R extends Record> UniqueKey<R> createUniqueKey(Table<R> table, String name, TableField<R, ?>... fields) {
         return Internal.createUniqueKey(table, name, fields);
     }
@@ -110,9 +106,7 @@ public abstract class AbstractKeys {
      * @deprecated - [#6875] [#7158] - 3.11.0 - Please re-generate your code
      */
     @Deprecated
-
     @SafeVarargs
-
     public static <R extends Record, U extends Record> ForeignKey<R, U> createForeignKey(UniqueKey<U> key, Table<R> table, TableField<R, ?>... fields) {
         return Internal.createForeignKey(key, table, fields);
     }
@@ -123,9 +117,7 @@ public abstract class AbstractKeys {
      * @deprecated - [#6875] [#7158] - 3.11.0 - Please re-generate your code
      */
     @Deprecated
-
     @SafeVarargs
-
     public static <R extends Record, U extends Record> ForeignKey<R, U> createForeignKey(UniqueKey<U> key, Table<R> table, String name, TableField<R, ?>... fields) {
         return Internal.createForeignKey(key, table, name, fields);
     }

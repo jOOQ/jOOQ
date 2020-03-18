@@ -88,9 +88,7 @@ final class CreateTypeImpl extends AbstractRowCountQuery implements
         return asEnum(Tools.inline(v));
     }
 
-
     @SafeVarargs
-
     @Override
     public final CreateTypeFinalStep asEnum(Field<String>... v) {
         return asEnum(Arrays.asList(v));

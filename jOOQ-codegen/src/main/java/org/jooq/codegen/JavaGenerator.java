@@ -6726,9 +6726,7 @@ public class JavaGenerator extends AbstractGenerator {
         return getJavaType(type1).equals(getJavaType(type2));
     }
 
-
     @SafeVarargs
-
     private static final <T> List<T> list(T... objects) {
         List<T> result = new ArrayList<>();
 

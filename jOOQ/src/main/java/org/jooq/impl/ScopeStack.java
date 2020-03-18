@@ -190,9 +190,7 @@ final class ScopeStack<K, V> implements Iterable<V> {
     /**
      * Create a new value
      */
-
     @FunctionalInterface
-
     interface Constructor<V> {
         V create(int scopeLevel);
     }

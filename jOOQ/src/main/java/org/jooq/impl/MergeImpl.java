@@ -202,7 +202,6 @@ implements
     MergeOnStep<R>,
     MergeOnConditionStep<R>,
     MergeMatchedSetMoreStep<R>,
-    MergeMatchedDeleteStep<R>,
     MergeNotMatchedSetMoreStep<R>,
 
 

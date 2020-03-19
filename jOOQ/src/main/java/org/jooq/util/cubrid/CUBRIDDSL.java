@@ -45,7 +45,10 @@ import org.jooq.impl.DSL;
  * The {@link SQLDialect#CUBRID} specific DSL.
  *
  * @author Lukas Eder
+ * @deprecated - [#9403] - 3.13.0 - This dialect is hardly used by anyone with
+ *             jOOQ or without jOOQ and will be removed in the near future.
  */
+@Deprecated
 public class CUBRIDDSL extends DSL {
 
     /**

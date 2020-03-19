@@ -1918,9 +1918,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 if (s2 instanceof SelectQueryImpl
                         && ((SelectQueryImpl<?>) s2).unionOp.size() > 0)
                     return true;
-                else if (s2 instanceof SelectImpl
-                        && ((SelectImpl) s2).getDelegate() instanceof SelectQueryImpl
-                        && ((SelectQueryImpl<?>) ((SelectImpl) s2).getDelegate()).unionOp.size() > 0)
+                else if (s2 instanceof AbstractDelegatingQuery
+                        && ((AbstractDelegatingQuery<?>) s2).getDelegate() instanceof SelectQueryImpl
+                        && ((SelectQueryImpl<?>) ((AbstractDelegatingQuery<?>) s2).getDelegate()).unionOp.size() > 0)
                     return true;
 
         return false;
@@ -1942,9 +1942,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 if (s2 instanceof SelectQueryImpl
                         && unionParensRequired((SelectQueryImpl<?>) s2))
                     return true;
-                else if (s2 instanceof SelectImpl
-                        && ((SelectImpl) s2).getDelegate() instanceof SelectQueryImpl
-                        && unionParensRequired((SelectQueryImpl<?>) ((SelectImpl) s2).getDelegate()))
+                else if (s2 instanceof AbstractDelegatingQuery
+                        && ((AbstractDelegatingQuery<?>) s2).getDelegate() instanceof SelectQueryImpl
+                        && unionParensRequired((SelectQueryImpl<?>) ((AbstractDelegatingQuery<?>) s2).getDelegate()))
                     return true;
 
         return false;

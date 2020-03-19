@@ -1344,6 +1344,7 @@ public interface Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> extends Row {
      *
      * @see #in(Collection)
      */
+    @SuppressWarnings("unchecked")
     @Support
     Condition in(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>... rows);
 
@@ -1365,6 +1366,7 @@ public interface Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> extends Row {
      *
      * @see #in(Collection)
      */
+    @SuppressWarnings("unchecked")
     @Support
     Condition in(Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>... record);
 
@@ -1447,6 +1449,7 @@ public interface Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> extends Row {
      *
      * @see #notIn(Collection)
      */
+    @SuppressWarnings("unchecked")
     @Support
     Condition notIn(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>... rows);
 
@@ -1468,6 +1471,7 @@ public interface Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> extends Row {
      *
      * @see #notIn(Collection)
      */
+    @SuppressWarnings("unchecked")
     @Support
     Condition notIn(Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>... record);
 

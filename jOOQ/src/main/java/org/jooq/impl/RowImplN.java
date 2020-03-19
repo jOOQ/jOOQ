@@ -58,7 +58,6 @@ import org.jooq.Select;
 /**
  * @author Lukas Eder
  */
-@SuppressWarnings({ "rawtypes", "unchecked" }) 
 final class RowImplN extends AbstractRow implements RowN {
 
     /**

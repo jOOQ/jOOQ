@@ -1304,6 +1304,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #in(Collection)
      */
+    @SuppressWarnings("unchecked")
     @Support
     Condition in(Row2<T1, T2>... rows);
 
@@ -1325,6 +1326,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #in(Collection)
      */
+    @SuppressWarnings("unchecked")
     @Support
     Condition in(Record2<T1, T2>... record);
 
@@ -1407,6 +1409,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #notIn(Collection)
      */
+    @SuppressWarnings("unchecked")
     @Support
     Condition notIn(Row2<T1, T2>... rows);
 
@@ -1428,6 +1431,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #notIn(Collection)
      */
+    @SuppressWarnings("unchecked")
     @Support
     Condition notIn(Record2<T1, T2>... record);
 

@@ -1364,6 +1364,7 @@ public interface Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      *
      * @see #in(Collection)
      */
+    @SuppressWarnings("unchecked")
     @Support
     Condition in(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>... rows);
 
@@ -1385,6 +1386,7 @@ public interface Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      *
      * @see #in(Collection)
      */
+    @SuppressWarnings("unchecked")
     @Support
     Condition in(Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>... record);
 
@@ -1467,6 +1469,7 @@ public interface Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      *
      * @see #notIn(Collection)
      */
+    @SuppressWarnings("unchecked")
     @Support
     Condition notIn(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>... rows);
 
@@ -1488,6 +1491,7 @@ public interface Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
      *
      * @see #notIn(Collection)
      */
+    @SuppressWarnings("unchecked")
     @Support
     Condition notIn(Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>... record);
 

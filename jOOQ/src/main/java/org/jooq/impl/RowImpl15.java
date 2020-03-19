@@ -59,12 +59,13 @@ import org.jooq.Select;
 /**
  * @author Lukas Eder
  */
+@SuppressWarnings({ "rawtypes", "unchecked" }) 
 final class RowImpl15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> extends AbstractRow implements Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> {
 
     /**
      * Generated UID
      */
-    private static final long     serialVersionUID = -929427349071556318L;
+    private static final long serialVersionUID = -929427349071556318L;
     
     RowImpl15(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15) {
         super(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15);

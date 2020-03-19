@@ -59,12 +59,13 @@ import org.jooq.Select;
 /**
  * @author Lukas Eder
  */
+@SuppressWarnings({ "rawtypes", "unchecked" }) 
 final class RowImpl2<T1, T2> extends AbstractRow implements Row2<T1, T2> {
 
     /**
      * Generated UID
      */
-    private static final long     serialVersionUID = -929427349071556318L;
+    private static final long serialVersionUID = -929427349071556318L;
     
     RowImpl2(Field<T1> t1, Field<T2> t2) {
         super(t1, t2);

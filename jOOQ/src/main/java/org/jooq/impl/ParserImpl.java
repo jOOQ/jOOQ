@@ -8746,11 +8746,11 @@ final class ParserImpl implements Parser {
 
         if (truth != null) {
             switch (truth) {
-                case TRUE:
+                case T_TRUE:
                     return inline(true);
-                case FALSE:
+                case T_FALSE:
                     return inline(false);
-                case NULL:
+                case T_NULL:
                     return inline((Boolean) null);
                 default:
                     throw ctx.exception("Truth value not supported: " + truth);
@@ -10619,11 +10619,11 @@ final class ParserImpl implements Parser {
 
     private static final TruthValue parseTruthValueIf(ParserContext ctx) {
         if (parseKeywordIf(ctx, "TRUE"))
-            return TruthValue.TRUE;
+            return TruthValue.T_TRUE;
         else if (parseKeywordIf(ctx, "FALSE"))
-            return TruthValue.FALSE;
+            return TruthValue.T_FALSE;
         else if (parseKeywordIf(ctx, "NULL"))
-            return TruthValue.NULL;
+            return TruthValue.T_NULL;
 
         return null;
     }
@@ -11159,9 +11159,9 @@ final class ParserImpl implements Parser {
     }
 
     private static enum TruthValue {
-        TRUE,
-        FALSE,
-        NULL;
+        T_TRUE,
+        T_FALSE,
+        T_NULL;
     }
 
     private static enum ComputationalOperation {

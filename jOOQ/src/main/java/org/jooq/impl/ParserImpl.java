@@ -302,6 +302,7 @@ import static org.jooq.impl.DSL.xmlforest;
 import static org.jooq.impl.DSL.xmlparseContent;
 import static org.jooq.impl.DSL.xmlparseDocument;
 import static org.jooq.impl.DSL.xmlpi;
+import static org.jooq.impl.DSL.xmlquery;
 import static org.jooq.impl.DSL.year;
 import static org.jooq.impl.DSL.zero;
 import static org.jooq.impl.JSONNullClause.ABSENT_ON_NULL;
@@ -329,6 +330,8 @@ import static org.jooq.impl.Tools.EMPTY_QUERYPART;
 import static org.jooq.impl.Tools.EMPTY_ROW;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 import static org.jooq.impl.Tools.normaliseNameCase;
+import static org.jooq.impl.XMLPassingMechanism.BY_REF;
+import static org.jooq.impl.XMLPassingMechanism.BY_VALUE;
 
 import java.io.ByteArrayOutputStream;
 import java.math.BigDecimal;
@@ -525,7 +528,6 @@ import org.jooq.conf.RenderNameCase;
 import org.jooq.conf.RenderQuotedNames;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
-import org.jooq.impl.XMLExists.PassingMechanism;
 import org.jooq.impl.XMLParse.DocumentOrContent;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.reflect.Reflect;
@@ -4706,24 +4708,13 @@ final class ParserImpl implements Parser {
         else if (parseKeywordIf(ctx, "XMLEXISTS")) {
             parse(ctx, '(');
             Field<String> xpath = (Field<String>) parseField(ctx);
-            parseKeyword(ctx, "PASSING");
-            PassingMechanism m = null;
-
-            if (parseKeywordIf(ctx, "BY")) {
-                if (parseKeywordIf(ctx, "REF"))
-                    m = PassingMechanism.BY_REF;
-                else if (parseKeywordIf(ctx, "VALUE"))
-                    m = PassingMechanism.BY_VALUE;
-                else
-                    throw ctx.expected("REF", "VALUE");
-            }
-
+            XMLPassingMechanism m = parseXMLPassingMechanism(ctx);
             Field<XML> xml = (Field<XML>) parseField(ctx);
             parse(ctx, ')');
 
-            if (m == PassingMechanism.BY_REF)
+            if (m == BY_REF)
                 return xmlexists(xpath).passingByRef(xml);
-            else if (m == PassingMechanism.BY_VALUE)
+            else if (m == BY_VALUE)
                 return xmlexists(xpath).passingByValue(xml);
             else
                 return xmlexists(xpath).passing(xml);
@@ -6448,6 +6439,8 @@ final class ParserImpl implements Parser {
                         return field;
                     else if ((field = parseFieldXMLDocumentIf(ctx)) != null)
                         return field;
+                    else if ((field = parseFieldXMLQueryIf(ctx)) != null)
+                        return field;
 
                 break;
 
@@ -6851,6 +6844,38 @@ final class ParserImpl implements Parser {
             return documentOrContent == DocumentOrContent.DOCUMENT
                  ? xmlparseDocument(xml)
                  : xmlparseContent(xml);
+        }
+
+        return null;
+    }
+
+    private static final Field<?> parseFieldXMLQueryIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "XMLQUERY")) {
+            parse(ctx, '(');
+            Field<String> xpath = (Field<String>) parseField(ctx);
+            XMLPassingMechanism m = parseXMLPassingMechanism(ctx);
+            Field<XML> xml = (Field<XML>) parseField(ctx);
+            parse(ctx, ')');
+
+            if (m == BY_REF)
+                return xmlquery(xpath).passingByRef(xml);
+            else
+                return xmlquery(xpath).passing(xml);
+        }
+
+        return null;
+    }
+
+    private static final XMLPassingMechanism parseXMLPassingMechanism(ParserContext ctx) {
+        parseKeyword(ctx, "PASSING");
+
+        if (parseKeywordIf(ctx, "BY")) {
+            if (parseKeywordIf(ctx, "REF"))
+                return BY_REF;
+            else if (parseKeywordIf(ctx, "VALUE"))
+                return BY_VALUE;
+            else
+                throw ctx.expected("REF", "VALUE");
         }
 
         return null;

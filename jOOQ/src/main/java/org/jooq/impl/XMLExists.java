@@ -44,8 +44,8 @@ import static org.jooq.impl.Keywords.K_PASSING;
 import static org.jooq.impl.Keywords.K_REF;
 import static org.jooq.impl.Keywords.K_VALUE;
 import static org.jooq.impl.Keywords.K_XMLEXISTS;
-import static org.jooq.impl.XMLExists.PassingMechanism.BY_REF;
-import static org.jooq.impl.XMLExists.PassingMechanism.BY_VALUE;
+import static org.jooq.impl.XMLPassingMechanism.BY_REF;
+import static org.jooq.impl.XMLPassingMechanism.BY_VALUE;
 
 import org.jooq.Condition;
 import org.jooq.Context;
@@ -62,16 +62,16 @@ final class XMLExists extends AbstractCondition implements XMLExistsPassingStep 
     /**
      * Generated UID
      */
-    private static final long      serialVersionUID = -4881363881968319258L;
-    private final Field<String>    xpath;
-    private final Field<XML>       passing;
-    private final PassingMechanism passingMechanism;
+    private static final long         serialVersionUID = -4881363881968319258L;
+    private final Field<String>       xpath;
+    private final Field<XML>          passing;
+    private final XMLPassingMechanism passingMechanism;
 
     XMLExists(Field<String> xpath) {
         this(xpath, null, null);
     }
 
-    private XMLExists(Field<String> xpath, Field<XML> passing, PassingMechanism passingMechanism) {
+    private XMLExists(Field<String> xpath, Field<XML> passing, XMLPassingMechanism passingMechanism) {
         this.xpath = xpath;
         this.passing = passing;
         this.passingMechanism = passingMechanism;
@@ -109,8 +109,6 @@ final class XMLExists extends AbstractCondition implements XMLExistsPassingStep 
     public final Condition passingByValue(Field<XML> xml) {
         return new XMLExists(xpath, xml, BY_VALUE);
     }
-
-    enum PassingMechanism { BY_REF, BY_VALUE }
 
     // -------------------------------------------------------------------------
     // XXX: QueryPart API

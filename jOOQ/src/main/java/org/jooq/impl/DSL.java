@@ -393,6 +393,7 @@ import org.jooq.XML;
 import org.jooq.XMLAggOrderByStep;
 import org.jooq.XMLAttributes;
 import org.jooq.XMLExistsPassingStep;
+import org.jooq.XMLQueryPassingStep;
 import org.jooq.conf.Settings;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.XMLParse.DocumentOrContent;
@@ -18308,6 +18309,22 @@ public class DSL {
     @Support({ POSTGRES })
     public static XMLAggOrderByStep<XML> xmlagg(Field<XML> field) {
         return new XMLAgg(field);
+    }
+
+    /**
+     * The XML query function.
+     */
+    @Support({ POSTGRES })
+    public static XMLQueryPassingStep xmlquery(String xpath) {
+        return xmlquery(Tools.field(xpath));
+    }
+
+    /**
+     * The XML query function.
+     */
+    @Support({ POSTGRES })
+    public static XMLQueryPassingStep xmlquery(Field<String> xpath) {
+        return new XMLQuery(xpath);
     }
 
     /**

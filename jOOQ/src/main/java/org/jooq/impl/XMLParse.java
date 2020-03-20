@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.xmlparseDocument;
+import static org.jooq.impl.DSL.xmlquery;
 import static org.jooq.impl.Keywords.K_CONTENT;
 import static org.jooq.impl.Keywords.K_DOCUMENT;
 import static org.jooq.impl.Names.N_XMLPARSE;
@@ -71,6 +72,9 @@ final class XMLParse extends AbstractField<XML> {
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
+
+
+
 
 
 

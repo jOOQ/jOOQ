@@ -19931,10 +19931,10 @@ public class DSL {
     }
 
     /**
-     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * A synonym for {@link #val(byte)} to be used in Scala and Groovy, where
      * <code>val</code> is a reserved keyword.
      *
-     * @see #val(Object)
+     * @see #val(byte)
      */
     @Support
     public static Param<Byte> value(byte value) {
@@ -19942,10 +19942,10 @@ public class DSL {
     }
 
     /**
-     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * A synonym for {@link #val(Byte)} to be used in Scala and Groovy, where
      * <code>val</code> is a reserved keyword.
      *
-     * @see #val(Object)
+     * @see #val(Byte)
      */
     @Support
     public static Param<Byte> value(Byte value) {
@@ -19953,10 +19953,10 @@ public class DSL {
     }
 
     /**
-     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * A synonym for {@link #val(UByte)} to be used in Scala and Groovy, where
      * <code>val</code> is a reserved keyword.
      *
-     * @see #val(Object)
+     * @see #val(UByte)
      */
     @Support
     public static Param<UByte> value(UByte value) {
@@ -19964,10 +19964,10 @@ public class DSL {
     }
 
     /**
-     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * A synonym for {@link #val(short)} to be used in Scala and Groovy, where
      * <code>val</code> is a reserved keyword.
      *
-     * @see #val(Object)
+     * @see #val(short)
      */
     @Support
     public static Param<Short> value(short value) {
@@ -19975,10 +19975,10 @@ public class DSL {
     }
 
     /**
-     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * A synonym for {@link #val(Short)} to be used in Scala and Groovy, where
      * <code>val</code> is a reserved keyword.
      *
-     * @see #val(Object)
+     * @see #val(Short)
      */
     @Support
     public static Param<Short> value(Short value) {
@@ -19986,10 +19986,10 @@ public class DSL {
     }
 
     /**
-     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * A synonym for {@link #val(UShort)} to be used in Scala and Groovy, where
      * <code>val</code> is a reserved keyword.
      *
-     * @see #val(Object)
+     * @see #val(UShort)
      */
     @Support
     public static Param<UShort> value(UShort value) {
@@ -19997,10 +19997,10 @@ public class DSL {
     }
 
     /**
-     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * A synonym for {@link #val(int)} to be used in Scala and Groovy, where
      * <code>val</code> is a reserved keyword.
      *
-     * @see #val(Object)
+     * @see #val(int)
      */
     @Support
     public static Param<Integer> value(int value) {
@@ -20008,10 +20008,10 @@ public class DSL {
     }
 
     /**
-     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * A synonym for {@link #val(Integer)} to be used in Scala and Groovy, where
      * <code>val</code> is a reserved keyword.
      *
-     * @see #val(Object)
+     * @see #val(Integer)
      */
     @Support
     public static Param<Integer> value(Integer value) {
@@ -20019,10 +20019,10 @@ public class DSL {
     }
 
     /**
-     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * A synonym for {@link #val(UInteger)} to be used in Scala and Groovy, where
      * <code>val</code> is a reserved keyword.
      *
-     * @see #val(Object)
+     * @see #val(UInteger)
      */
     @Support
     public static Param<UInteger> value(UInteger value) {
@@ -20030,10 +20030,10 @@ public class DSL {
     }
 
     /**
-     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * A synonym for {@link #val(long)} to be used in Scala and Groovy, where
      * <code>val</code> is a reserved keyword.
      *
-     * @see #val(Object)
+     * @see #val(long)
      */
     @Support
     public static Param<Long> value(long value) {
@@ -20041,10 +20041,10 @@ public class DSL {
     }
 
     /**
-     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * A synonym for {@link #val(Long)} to be used in Scala and Groovy, where
      * <code>val</code> is a reserved keyword.
      *
-     * @see #val(Object)
+     * @see #val(Long)
      */
     @Support
     public static Param<Long> value(Long value) {
@@ -20052,10 +20052,10 @@ public class DSL {
     }
 
     /**
-     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * A synonym for {@link #val(ULong)} to be used in Scala and Groovy, where
      * <code>val</code> is a reserved keyword.
      *
-     * @see #val(Object)
+     * @see #val(ULong)
      */
     @Support
     public static Param<ULong> value(ULong value) {
@@ -20063,10 +20063,10 @@ public class DSL {
     }
 
     /**
-     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * A synonym for {@link #val(float)} to be used in Scala and Groovy, where
      * <code>val</code> is a reserved keyword.
      *
-     * @see #val(Object)
+     * @see #val(float)
      */
     @Support
     public static Param<Float> value(float value) {
@@ -20074,10 +20074,10 @@ public class DSL {
     }
 
     /**
-     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * A synonym for {@link #val(Float)} to be used in Scala and Groovy, where
      * <code>val</code> is a reserved keyword.
      *
-     * @see #val(Object)
+     * @see #val(Float)
      */
     @Support
     public static Param<Float> value(Float value) {
@@ -20085,10 +20085,10 @@ public class DSL {
     }
 
     /**
-     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * A synonym for {@link #val(double)} to be used in Scala and Groovy, where
      * <code>val</code> is a reserved keyword.
      *
-     * @see #val(Object)
+     * @see #val(double)
      */
     @Support
     public static Param<Double> value(double value) {
@@ -20096,10 +20096,10 @@ public class DSL {
     }
 
     /**
-     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * A synonym for {@link #val(Double)} to be used in Scala and Groovy, where
      * <code>val</code> is a reserved keyword.
      *
-     * @see #val(Object)
+     * @see #val(Double)
      */
     @Support
     public static Param<Double> value(Double value) {
@@ -20107,10 +20107,10 @@ public class DSL {
     }
 
     /**
-     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * A synonym for {@link #val(boolean)} to be used in Scala and Groovy, where
      * <code>val</code> is a reserved keyword.
      *
-     * @see #val(Object)
+     * @see #val(boolean)
      */
     @Support
     public static Param<Boolean> value(boolean value) {
@@ -20118,10 +20118,10 @@ public class DSL {
     }
 
     /**
-     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * A synonym for {@link #val(Boolean)} to be used in Scala and Groovy, where
      * <code>val</code> is a reserved keyword.
      *
-     * @see #val(Object)
+     * @see #val(Boolean)
      */
     @Support
     public static Param<Boolean> value(Boolean value) {
@@ -20129,10 +20129,10 @@ public class DSL {
     }
 
     /**
-     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * A synonym for {@link #val(BigDecimal)} to be used in Scala and Groovy, where
      * <code>val</code> is a reserved keyword.
      *
-     * @see #val(Object)
+     * @see #val(BigDecimal)
      */
     @Support
     public static Param<BigDecimal> value(BigDecimal value) {
@@ -20140,10 +20140,10 @@ public class DSL {
     }
 
     /**
-     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * A synonym for {@link #val(BigInteger)} to be used in Scala and Groovy, where
      * <code>val</code> is a reserved keyword.
      *
-     * @see #val(Object)
+     * @see #val(BigInteger)
      */
     @Support
     public static Param<BigInteger> value(BigInteger value) {
@@ -20151,10 +20151,10 @@ public class DSL {
     }
 
     /**
-     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * A synonym for {@link #val(byte[])} to be used in Scala and Groovy, where
      * <code>val</code> is a reserved keyword.
      *
-     * @see #val(Object)
+     * @see #val(byte[])
      */
     @Support
     public static Param<byte[]> value(byte[] value) {
@@ -20162,10 +20162,10 @@ public class DSL {
     }
 
     /**
-     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * A synonym for {@link #val(String)} to be used in Scala and Groovy, where
      * <code>val</code> is a reserved keyword.
      *
-     * @see #val(Object)
+     * @see #val(String)
      */
     @Support
     public static Param<String> value(String value) {
@@ -20173,10 +20173,10 @@ public class DSL {
     }
 
     /**
-     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * A synonym for {@link #val(Date)} to be used in Scala and Groovy, where
      * <code>val</code> is a reserved keyword.
      *
-     * @see #val(Object)
+     * @see #val(Date)
      */
     @Support
     public static Param<Date> value(Date value) {
@@ -20184,10 +20184,10 @@ public class DSL {
     }
 
     /**
-     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * A synonym for {@link #val(Time)} to be used in Scala and Groovy, where
      * <code>val</code> is a reserved keyword.
      *
-     * @see #val(Object)
+     * @see #val(Time)
      */
     @Support
     public static Param<Time> value(Time value) {
@@ -20195,10 +20195,10 @@ public class DSL {
     }
 
     /**
-     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * A synonym for {@link #val(Timestamp)} to be used in Scala and Groovy, where
      * <code>val</code> is a reserved keyword.
      *
-     * @see #val(Object)
+     * @see #val(Timestamp)
      */
     @Support
     public static Param<Timestamp> value(Timestamp value) {
@@ -20207,10 +20207,10 @@ public class DSL {
 
 
     /**
-     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * A synonym for {@link #val(LocalDate)} to be used in Scala and Groovy, where
      * <code>val</code> is a reserved keyword.
      *
-     * @see #val(Object)
+     * @see #val(LocalDate)
      */
     @Support
     public static Param<LocalDate> value(LocalDate value) {
@@ -20218,10 +20218,10 @@ public class DSL {
     }
 
     /**
-     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * A synonym for {@link #val(LocalTime)} to be used in Scala and Groovy, where
      * <code>val</code> is a reserved keyword.
      *
-     * @see #val(Object)
+     * @see #val(LocalTime)
      */
     @Support
     public static Param<LocalTime> value(LocalTime value) {
@@ -20229,10 +20229,10 @@ public class DSL {
     }
 
     /**
-     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * A synonym for {@link #val(LocalDateTime)} to be used in Scala and Groovy, where
      * <code>val</code> is a reserved keyword.
      *
-     * @see #val(Object)
+     * @see #val(LocalDateTime)
      */
     @Support
     public static Param<LocalDateTime> value(LocalDateTime value) {
@@ -20240,10 +20240,10 @@ public class DSL {
     }
 
     /**
-     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * A synonym for {@link #val(OffsetTime)} to be used in Scala and Groovy, where
      * <code>val</code> is a reserved keyword.
      *
-     * @see #val(Object)
+     * @see #val(OffsetTime)
      */
     @Support
     public static Param<OffsetTime> value(OffsetTime value) {
@@ -20251,10 +20251,10 @@ public class DSL {
     }
 
     /**
-     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * A synonym for {@link #val(OffsetDateTime)} to be used in Scala and Groovy, where
      * <code>val</code> is a reserved keyword.
      *
-     * @see #val(Object)
+     * @see #val(OffsetDateTime)
      */
     @Support
     public static Param<OffsetDateTime> value(OffsetDateTime value) {
@@ -20262,10 +20262,10 @@ public class DSL {
     }
 
     /**
-     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * A synonym for {@link #val(Instant)} to be used in Scala and Groovy, where
      * <code>val</code> is a reserved keyword.
      *
-     * @see #val(Object)
+     * @see #val(Instant)
      */
     @Support
     public static Param<Instant> value(Instant value) {
@@ -20274,10 +20274,10 @@ public class DSL {
 
 
     /**
-     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * A synonym for {@link #val(UUID)} to be used in Scala and Groovy, where
      * <code>val</code> is a reserved keyword.
      *
-     * @see #val(Object)
+     * @see #val(UUID)
      */
     @Support
     public static Param<UUID> value(UUID value) {

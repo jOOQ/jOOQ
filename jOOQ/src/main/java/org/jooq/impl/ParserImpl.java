@@ -295,6 +295,7 @@ import static org.jooq.impl.DSL.xmlagg;
 import static org.jooq.impl.DSL.xmlattributes;
 import static org.jooq.impl.DSL.xmlcomment;
 import static org.jooq.impl.DSL.xmlconcat;
+// ...
 import static org.jooq.impl.DSL.xmlelement;
 import static org.jooq.impl.DSL.xmlexists;
 import static org.jooq.impl.DSL.xmlforest;
@@ -6445,6 +6446,8 @@ final class ParserImpl implements Parser {
                         return field;
                     else if ((field = parseFieldXMLParseIf(ctx)) != null)
                         return field;
+                    else if ((field = parseFieldXMLDocumentIf(ctx)) != null)
+                        return field;
 
                 break;
 
@@ -6785,6 +6788,21 @@ final class ParserImpl implements Parser {
             return attr == null
                 ? xmlelement(name, content)
                 : xmlelement(name, attr, content);
+        }
+
+        return null;
+    }
+
+    private static final Field<?> parseFieldXMLDocumentIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "XMLDOCUMENT") && ctx.requireProEdition()) {
+
+
+
+
+
+
+
+
         }
 
         return null;

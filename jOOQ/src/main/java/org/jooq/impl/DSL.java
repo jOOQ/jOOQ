@@ -18161,6 +18161,19 @@ public class DSL {
         return new XMLConcat(fields);
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * The XML element constructor.
      */

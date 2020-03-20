@@ -158,6 +158,7 @@ final class Names {
     static final Name N_XMLATTRIBUTES     = DSL.unquotedName("xmlattributes");
     static final Name N_XMLCOMMENT        = DSL.unquotedName("xmlcomment");
     static final Name N_XMLCONCAT         = DSL.unquotedName("xmlconcat");
+    static final Name N_XMLDOCUMENT       = DSL.unquotedName("xmldocument");
     static final Name N_XMLELEMENT        = DSL.unquotedName("xmlelement");
     static final Name N_XMLFOREST         = DSL.unquotedName("xmlforest");
     static final Name N_XMLPARSE          = DSL.unquotedName("xmlparse");

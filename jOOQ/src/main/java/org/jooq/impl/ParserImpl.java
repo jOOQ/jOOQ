@@ -296,6 +296,7 @@ import static org.jooq.impl.DSL.xmlattributes;
 import static org.jooq.impl.DSL.xmlcomment;
 import static org.jooq.impl.DSL.xmlconcat;
 import static org.jooq.impl.DSL.xmlelement;
+import static org.jooq.impl.DSL.xmlexists;
 import static org.jooq.impl.DSL.xmlforest;
 import static org.jooq.impl.DSL.xmlpi;
 import static org.jooq.impl.DSL.year;
@@ -520,6 +521,7 @@ import org.jooq.conf.RenderNameCase;
 import org.jooq.conf.RenderQuotedNames;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
+import org.jooq.impl.XMLExists.PassingMechanism;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.reflect.Reflect;
 import org.jooq.types.DayToSecond;
@@ -4695,6 +4697,31 @@ final class ParserImpl implements Parser {
             parse(ctx, ')');
 
             return unique(select);
+        }
+        else if (parseKeywordIf(ctx, "XMLEXISTS")) {
+            parse(ctx, '(');
+            Field<String> xpath = (Field<String>) parseField(ctx);
+            parseKeyword(ctx, "PASSING");
+            PassingMechanism m = null;
+
+            if (parseKeywordIf(ctx, "BY")) {
+                if (parseKeywordIf(ctx, "REF"))
+                    m = PassingMechanism.BY_REF;
+                else if (parseKeywordIf(ctx, "VALUE"))
+                    m = PassingMechanism.BY_VALUE;
+                else
+                    throw ctx.expected("REF", "VALUE");
+            }
+
+            Field<XML> xml = (Field<XML>) parseField(ctx);
+            parse(ctx, ')');
+
+            if (m == PassingMechanism.BY_REF)
+                return xmlexists(xpath).passingByRef(xml);
+            else if (m == PassingMechanism.BY_VALUE)
+                return xmlexists(xpath).passingByValue(xml);
+            else
+                return xmlexists(xpath).passing(xml);
         }
         else {
             FieldOrRow left;

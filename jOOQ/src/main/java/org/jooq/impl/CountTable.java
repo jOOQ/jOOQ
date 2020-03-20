@@ -52,13 +52,11 @@ final class CountTable extends DefaultAggregateFunction<Integer> {
     private static final long serialVersionUID = 7292087943334025737L;
 
     private final Table<?>    table;
-    private final boolean     distinct;
 
     CountTable(Table<?> table, boolean distinct) {
         super(distinct, "count", SQLDataType.INTEGER, DSL.field(DSL.name(table.getName())));
 
         this.table = table;
-        this.distinct = distinct;
     }
 
     @Override

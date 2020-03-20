@@ -74,6 +74,7 @@ import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.K_AS;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_AS_REQUIRED;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_UNALIAS_ALIASED_EXPRESSIONS;
 
 import java.util.Set;
@@ -284,7 +285,13 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
     }
 
     void toSQLAs(Context<?> ctx) {
-        if (wrapped instanceof Field) {
+
+        // [#9925] In some cases, AS is always required, regardless
+        //         of the dialect or settings (e.g. XMLATTRIBUTES).
+        if (TRUE.equals(ctx.data(DATA_AS_REQUIRED))) {
+            ctx.sql(' ').visit(K_AS);
+        }
+        else if (wrapped instanceof Field) {
             if (ctx.settings().getRenderOptionalAsKeywordForFieldAliases() == RenderOptionalKeyword.DEFAULT && SUPPORT_AS_REQUIRED.contains(ctx.family()))
                 ctx.sql(' ').visit(K_AS);
             else if (ctx.settings().getRenderOptionalAsKeywordForFieldAliases() == RenderOptionalKeyword.ON)

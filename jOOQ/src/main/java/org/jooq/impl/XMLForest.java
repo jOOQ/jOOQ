@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Names.N_XMLFOREST;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_AS_REQUIRED;
 
 import java.util.Collection;
 
@@ -66,10 +67,12 @@ final class XMLForest extends AbstractField<XML> {
     public final void accept(Context<?> ctx) {
         boolean declareFields = ctx.declareFields();
 
+        Object previous = ctx.data(DATA_AS_REQUIRED, true);
         ctx.visit(N_XMLFOREST).sql('(')
            .declareFields(true)
            .visit(args)
            .declareFields(declareFields)
            .sql(')');
+        ctx.data(DATA_AS_REQUIRED, previous);
     }
 }

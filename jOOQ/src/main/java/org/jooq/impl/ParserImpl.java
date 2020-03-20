@@ -513,6 +513,7 @@ import org.jooq.WindowSpecificationOrderByStep;
 import org.jooq.WindowSpecificationRowsAndStep;
 import org.jooq.WindowSpecificationRowsStep;
 import org.jooq.XML;
+import org.jooq.XMLAggOrderByStep;
 import org.jooq.XMLAttributes;
 import org.jooq.conf.ParseSearchSchema;
 import org.jooq.conf.ParseUnknownFunctions;
@@ -6854,7 +6855,7 @@ final class ParserImpl implements Parser {
 
     private static final AggregateFilterStep<?> parseXMLAggFunctionIf(ParserContext ctx) {
         if (parseFunctionNameIf(ctx, "XMLAGG")) {
-            ArrayAggOrderByStep<?> s1;
+            XMLAggOrderByStep<?> s1;
             AggregateFilterStep<?> s2;
 
             parse(ctx, '(');

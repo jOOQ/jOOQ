@@ -67,7 +67,7 @@ final class XMLPI extends AbstractField<XML> {
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(N_XMLPI).sql('(').visit(K_NAME).sql(' ').visit(target.unquotedName());
+        ctx.visit(N_XMLPI).sql('(').visit(K_NAME).sql(' ').visit(target);
 
         if (content != null)
             ctx.sql(", ").visit(content);

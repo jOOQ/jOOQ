@@ -496,6 +496,11 @@ final class Tools {
          * [#1535] We're currently generating the window specification of a ranking function.
          */
         DATA_ORDERED_WINDOW_FUNCTION,
+
+        /**
+         * [#9925] In some cases the <code>AS</code> keyword is required for aliasing, e.g. XML.
+         */
+        DATA_AS_REQUIRED
     }
 
     /**

@@ -37,9 +37,12 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.xmlparseDocument;
 import static org.jooq.impl.Keywords.K_CONTENT;
 import static org.jooq.impl.Keywords.K_DOCUMENT;
 import static org.jooq.impl.Names.N_XMLPARSE;
+import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.XMLParse.DocumentOrContent.DOCUMENT;
 
 import org.jooq.Context;
@@ -67,7 +70,40 @@ final class XMLParse extends AbstractField<XML> {
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(N_XMLPARSE).sql('(').visit(documentOrContent == DOCUMENT ? K_DOCUMENT : K_CONTENT).sql(' ').visit(content).sql(')');
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            case POSTGRES:
+            default:
+                acceptStandard(ctx, documentOrContent, content);
+                break;
+        }
+    }
+
+    private static final void acceptStandard(
+        Context<?> ctx,
+        DocumentOrContent documentOrContent,
+        Field<String> content
+    ) {
+        ctx.visit(N_XMLPARSE).sql('(')
+           .visit(documentOrContent == DOCUMENT ? K_DOCUMENT : K_CONTENT).sql(' ')
+           .visit(content)
+           .sql(')');
     }
 
     enum DocumentOrContent { DOCUMENT, CONTENT }

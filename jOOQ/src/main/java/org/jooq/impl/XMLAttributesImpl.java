@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Names.N_XMLATTRIBUTES;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_AS_REQUIRED;
 
 import java.util.Collection;
 
@@ -53,7 +54,7 @@ final class XMLAttributesImpl extends AbstractQueryPart implements XMLAttributes
     /**
      * Generated UID
      */
-    private static final long     serialVersionUID = 1887555231334164185L;
+    private static final long       serialVersionUID = 1887555231334164185L;
 
     final SelectFieldList<Field<?>> attributes;
 
@@ -66,6 +67,7 @@ final class XMLAttributesImpl extends AbstractQueryPart implements XMLAttributes
         boolean declareFields = ctx.declareFields();
         boolean format = attributes.size() > 1;
 
+        Object previous = ctx.data(DATA_AS_REQUIRED, true);
         ctx.visit(N_XMLATTRIBUTES).sql('(');
 
         if (format)
@@ -81,5 +83,6 @@ final class XMLAttributesImpl extends AbstractQueryPart implements XMLAttributes
                .formatNewLine();
 
         ctx.sql(')');
+        ctx.data(DATA_AS_REQUIRED, previous);
     }
 }

@@ -390,6 +390,7 @@ import org.jooq.WithAsStep8;
 import org.jooq.WithAsStep9;
 import org.jooq.WithStep;
 import org.jooq.XML;
+import org.jooq.XMLAggOrderByStep;
 import org.jooq.XMLAttributes;
 import org.jooq.XMLExistsPassingStep;
 import org.jooq.conf.Settings;
@@ -18292,7 +18293,7 @@ public class DSL {
      * The XML aggregate function.
      */
     @Support({ POSTGRES })
-    public static ArrayAggOrderByStep<XML> xmlagg(Field<XML> field) {
+    public static XMLAggOrderByStep<XML> xmlagg(Field<XML> field) {
         return new XMLAgg(field);
     }
 

@@ -42,6 +42,7 @@ import static org.jooq.impl.Names.N_XMLAGG;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.XML;
+import org.jooq.XMLAggOrderByStep;
 
 
 /**
@@ -49,7 +50,7 @@ import org.jooq.XML;
  *
  * @author Lukas Eder
  */
-final class XMLAgg extends AbstractAggregateFunction<XML> {
+final class XMLAgg extends AbstractAggregateFunction<XML> implements XMLAggOrderByStep<XML> {
 
     /**
      * Generated UID

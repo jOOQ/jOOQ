@@ -98,6 +98,7 @@ final class Keywords {
     static final Keyword K_CONSTRAINT                       = keyword("constraint");
     static final Keyword K_CONSTRAINTS                      = keyword("constraints");
     static final Keyword K_CONTAINED                        = keyword("contained");
+    static final Keyword K_CONTENT                          = keyword("content");
     static final Keyword K_CONTINUE                         = keyword("continue");
     static final Keyword K_CONTINUE_IDENTITY                = keyword("continue identity");
     static final Keyword K_CREATE                           = keyword("create");
@@ -129,6 +130,7 @@ final class Keywords {
     static final Keyword K_DO                               = keyword("do");
     static final Keyword K_DO_NOTHING                       = keyword("do nothing");
     static final Keyword K_DO_UPDATE                        = keyword("do update");
+    static final Keyword K_DOCUMENT                         = keyword("document");
     static final Keyword K_DROP                             = keyword("drop");
     static final Keyword K_DROP_COLUMN                      = keyword("drop column");
     static final Keyword K_DROP_CONSTRAINT                  = keyword("drop constraint");

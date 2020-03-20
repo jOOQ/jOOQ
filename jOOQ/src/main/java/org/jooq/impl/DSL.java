@@ -394,6 +394,7 @@ import org.jooq.XMLAttributes;
 import org.jooq.XMLExistsPassingStep;
 import org.jooq.conf.Settings;
 import org.jooq.exception.SQLDialectNotSupportedException;
+import org.jooq.impl.XMLParse.DocumentOrContent;
 import org.jooq.tools.Convert;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
@@ -18093,6 +18094,38 @@ public class DSL {
     // -------------------------------------------------------------------------
     // XXX XML functions
     // -------------------------------------------------------------------------
+
+    /**
+     * The XML parse function.
+     */
+    @Support({ POSTGRES })
+    public static Field<XML> xmlparseDocument(String content) {
+        return xmlparseDocument(Tools.field(content));
+    }
+
+    /**
+     * The XML parse function.
+     */
+    @Support({ POSTGRES })
+    public static Field<XML> xmlparseDocument(Field<String> content) {
+        return new XMLParse(content, DocumentOrContent.DOCUMENT);
+    }
+
+    /**
+     * The XML parse function.
+     */
+    @Support({ POSTGRES })
+    public static Field<XML> xmlparseContent(String content) {
+        return xmlparseContent(Tools.field(content));
+    }
+
+    /**
+     * The XML parse function.
+     */
+    @Support({ POSTGRES })
+    public static Field<XML> xmlparseContent(Field<String> content) {
+        return new XMLParse(content, DocumentOrContent.CONTENT);
+    }
 
     /**
      * The XML comment constructor.

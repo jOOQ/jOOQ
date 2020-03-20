@@ -298,6 +298,8 @@ import static org.jooq.impl.DSL.xmlconcat;
 import static org.jooq.impl.DSL.xmlelement;
 import static org.jooq.impl.DSL.xmlexists;
 import static org.jooq.impl.DSL.xmlforest;
+import static org.jooq.impl.DSL.xmlparseContent;
+import static org.jooq.impl.DSL.xmlparseDocument;
 import static org.jooq.impl.DSL.xmlpi;
 import static org.jooq.impl.DSL.year;
 import static org.jooq.impl.DSL.zero;
@@ -522,6 +524,7 @@ import org.jooq.conf.RenderQuotedNames;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.impl.XMLExists.PassingMechanism;
+import org.jooq.impl.XMLParse.DocumentOrContent;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.reflect.Reflect;
 import org.jooq.types.DayToSecond;
@@ -6439,6 +6442,8 @@ final class ParserImpl implements Parser {
                         return field;
                     else if ((field = parseFieldXMLForestIf(ctx)) != null)
                         return field;
+                    else if ((field = parseFieldXMLParseIf(ctx)) != null)
+                        return field;
 
                 break;
 
@@ -6804,6 +6809,29 @@ final class ParserImpl implements Parser {
             parse(ctx, ')');
 
             return xmlforest(content);
+        }
+
+        return null;
+    }
+
+    private static final Field<?> parseFieldXMLParseIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "XMLPARSE")) {
+            parse(ctx, '(');
+            DocumentOrContent documentOrContent;
+
+            if (parseKeywordIf(ctx, "DOCUMENT"))
+                documentOrContent = DocumentOrContent.DOCUMENT;
+            else if (parseKeywordIf(ctx, "CONTENT"))
+                documentOrContent = DocumentOrContent.CONTENT;
+            else
+                throw ctx.expected("CONTENT", "DOCUMENT");
+
+            Field<String> xml = (Field<String>) parseField(ctx);
+            parse(ctx, ')');
+
+            return documentOrContent == DocumentOrContent.DOCUMENT
+                 ? xmlparseDocument(xml)
+                 : xmlparseContent(xml);
         }
 
         return null;

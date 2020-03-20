@@ -4790,6 +4790,10 @@ final class ParserImpl implements Parser {
                     return not
                         ? ((Field) left).isNotJson()
                         : ((Field) left).isJson();
+                else if (left instanceof Field && parseKeywordIf(ctx, "DOCUMENT"))
+                    return not
+                        ? ((Field) left).isNotDocument()
+                        : ((Field) left).isDocument();
 
                 parseKeyword(ctx, "DISTINCT FROM");
                 if (left instanceof Field) {

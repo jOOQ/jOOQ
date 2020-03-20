@@ -81,15 +81,6 @@ import org.jooq.tools.StopWatchListener;
  * <li>by a {@link Query} or {@link Routine} object to execute themselves</li>
  * </ul>
  * <p>
- * The simplest usage of a <code>Configuration</code> instance is to use it
- * exactly for a single <code>Query</code> execution, disposing it immediately.
- * This will make it very simple to implement thread-safe behaviour.
- * <p>
- * At the same time, jOOQ does not require <code>Configuration</code> instances
- * to be that short-lived. Thread-safety will then be delegated to component
- * objects, such as the {@link ConnectionProvider}, the {@link ExecuteListener}
- * list, etc.
- * <p>
  * A <code>Configuration</code> is composed of types composing its state and of
  * SPIs:
  * <h3>Types composing its state:</h3>
@@ -184,6 +175,25 @@ import org.jooq.tools.StopWatchListener;
  * </ul>
  * </li>
  * </ul>
+ * <p>
+ * <h3>Thread safety</h3>
+ * <p>
+ * The simplest usage of a <code>Configuration</code> instance is to use it
+ * exactly for a single <code>Query</code> execution, disposing it immediately.
+ * This will make it very simple to implement thread-safe behaviour, but
+ * reflection caches will not be used optimally, e.g. when using
+ * {@link DefaultRecordMapper}.
+ * <p>
+ * At the same time, jOOQ does not require <code>Configuration</code> instances
+ * to be that short-lived. Thread-safety will then be delegated to component
+ * objects, such as the {@link ConnectionProvider}, the {@link ExecuteListener}
+ * list, etc.
+ * <p>
+ * For a {@link Configuration} to be used in a thread safe way, all
+ * <code>set()</code> methods must be avoided post initialisation, and
+ * {@link #settings()} must not be modified either. If you wish to create a
+ * derived configuration for local usage, with some configuration parts changed,
+ * use the various <code>derive()</code> methods, instead.
  *
  * @author Lukas Eder
  */

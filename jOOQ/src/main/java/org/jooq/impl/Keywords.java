@@ -293,6 +293,7 @@ final class Keywords {
     static final Keyword K_RAISERROR                        = keyword("raiserror");
     static final Keyword K_RECORD                           = keyword("record");
     static final Keyword K_RECURSIVE                        = keyword("recursive");
+    static final Keyword K_REF                              = keyword("ref");
     static final Keyword K_REFERENCES                       = keyword("references");
     static final Keyword K_REGEXP                           = keyword("regexp");
     static final Keyword K_RENAME                           = keyword("rename");
@@ -394,6 +395,7 @@ final class Keywords {
     static final Keyword K_WITHIN_GROUP                     = keyword("within group");
     static final Keyword K_WITHOUT_ARRAY_WRAPPER            = keyword("without_array_wrapper");
     static final Keyword K_XML                              = keyword("xml");
+    static final Keyword K_XMLEXISTS                        = keyword("xmlexists");
     static final Keyword K_XMLTABLE                         = keyword("xmltable");
     static final Keyword K_YEAR                             = keyword("year");
     static final Keyword K_YEAR_MONTH                       = keyword("year_month");

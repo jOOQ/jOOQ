@@ -391,6 +391,7 @@ import org.jooq.WithAsStep9;
 import org.jooq.WithStep;
 import org.jooq.XML;
 import org.jooq.XMLAttributes;
+import org.jooq.XMLExistsPassingStep;
 import org.jooq.conf.Settings;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.Convert;
@@ -18260,6 +18261,22 @@ public class DSL {
     @Support({ POSTGRES })
     public static ArrayAggOrderByStep<XML> xmlagg(Field<XML> field) {
         return new XMLAgg(field);
+    }
+
+    /**
+     * The XML exists function.
+     */
+    @Support({ POSTGRES })
+    public static XMLExistsPassingStep xmlexists(String xpath) {
+        return xmlexists(Tools.field(xpath));
+    }
+
+    /**
+     * The XML exists function.
+     */
+    @Support({ POSTGRES })
+    public static XMLExistsPassingStep xmlexists(Field<String> xpath) {
+        return new XMLExists(xpath);
     }
 
     // -------------------------------------------------------------------------

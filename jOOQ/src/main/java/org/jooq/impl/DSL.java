@@ -20285,6 +20285,39 @@ public class DSL {
     }
 
     /**
+     * A synonym for {@link #val(JSON)} to be used in Scala and Groovy, where
+     * <code>val</code> is a reserved keyword.
+     *
+     * @see #val(JSON)
+     */
+    @Support
+    public static Param<JSON> value(JSON value) {
+        return value((Object) value, SQLDataType.JSON);
+    }
+
+    /**
+     * A synonym for {@link #val(JSONB)} to be used in Scala and Groovy, where
+     * <code>val</code> is a reserved keyword.
+     *
+     * @see #val(JSONB)
+     */
+    @Support
+    public static Param<JSONB> value(JSONB value) {
+        return value((Object) value, SQLDataType.JSONB);
+    }
+
+    /**
+     * A synonym for {@link #val(XML)} to be used in Scala and Groovy, where
+     * <code>val</code> is a reserved keyword.
+     *
+     * @see #val(XML)
+     */
+    @Support
+    public static Param<XML> value(XML value) {
+        return value((Object) value, SQLDataType.XML);
+    }
+
+    /**
      * A synonym for {@link #val(Object, Class)} to be used in Scala and Groovy, where
      * <code>val</code> is a reserved keyword.
      *
@@ -21015,6 +21048,69 @@ public class DSL {
     }
 
     /**
+     * Create a bind value that is always inlined.
+     * <p>
+     * The resulting bind value is always inlined, regardless of the
+     * {@link Settings#getStatementType()} property of the rendering factory.
+     * Unlike with {@link #field(String)}, you can expect <code>value</code> to
+     * be properly escaped for SQL syntax correctness and SQL injection
+     * prevention. For example:
+     * <ul>
+     * <li><code>inline("abc'def")</code> renders <code>'abc''def'</code></li>
+     * <li><code>field("abc'def")</code> renders <code>abc'def</code></li>
+     * </ul>
+     *
+     * @see #inline(Object)
+     * @see #val(Object)
+     */
+    @Support
+    public static Param<JSON> inline(JSON value) {
+        return inline((Object) value, SQLDataType.JSON);
+    }
+
+    /**
+     * Create a bind value that is always inlined.
+     * <p>
+     * The resulting bind value is always inlined, regardless of the
+     * {@link Settings#getStatementType()} property of the rendering factory.
+     * Unlike with {@link #field(String)}, you can expect <code>value</code> to
+     * be properly escaped for SQL syntax correctness and SQL injection
+     * prevention. For example:
+     * <ul>
+     * <li><code>inline("abc'def")</code> renders <code>'abc''def'</code></li>
+     * <li><code>field("abc'def")</code> renders <code>abc'def</code></li>
+     * </ul>
+     *
+     * @see #inline(Object)
+     * @see #val(Object)
+     */
+    @Support
+    public static Param<JSONB> inline(JSONB value) {
+        return inline((Object) value, SQLDataType.JSONB);
+    }
+
+    /**
+     * Create a bind value that is always inlined.
+     * <p>
+     * The resulting bind value is always inlined, regardless of the
+     * {@link Settings#getStatementType()} property of the rendering factory.
+     * Unlike with {@link #field(String)}, you can expect <code>value</code> to
+     * be properly escaped for SQL syntax correctness and SQL injection
+     * prevention. For example:
+     * <ul>
+     * <li><code>inline("abc'def")</code> renders <code>'abc''def'</code></li>
+     * <li><code>field("abc'def")</code> renders <code>abc'def</code></li>
+     * </ul>
+     *
+     * @see #inline(Object)
+     * @see #val(Object)
+     */
+    @Support
+    public static Param<XML> inline(XML value) {
+        return inline((Object) value, SQLDataType.XML);
+    }
+
+    /**
      * Create a bind value, that is always inlined.
      * <p>
      * This is a convenience method for {@link #inline(Object)}, returning
@@ -21477,6 +21573,36 @@ public class DSL {
     @Support
     public static Param<UUID> val(UUID value) {
         return val((Object) value, SQLDataType.UUID);
+    }
+
+    /**
+     * Get a bind value.
+     *
+     * @see #val(Object)
+     */
+    @Support
+    public static Param<JSON> val(JSON value) {
+        return val((Object) value, SQLDataType.JSON);
+    }
+
+    /**
+     * Get a bind value.
+     *
+     * @see #val(Object)
+     */
+    @Support
+    public static Param<JSONB> val(JSONB value) {
+        return val((Object) value, SQLDataType.JSONB);
+    }
+
+    /**
+     * Get a bind value.
+     *
+     * @see #val(Object)
+     */
+    @Support
+    public static Param<XML> val(XML value) {
+        return val((Object) value, SQLDataType.XML);
     }
 
     /**

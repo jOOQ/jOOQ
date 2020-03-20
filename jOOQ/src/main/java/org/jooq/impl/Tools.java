@@ -227,6 +227,8 @@ import org.jooq.EnumType;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Field;
+import org.jooq.JSON;
+import org.jooq.JSONB;
 import org.jooq.Name;
 import org.jooq.OrderField;
 import org.jooq.Param;
@@ -254,6 +256,7 @@ import org.jooq.TableRecord;
 import org.jooq.UDT;
 import org.jooq.UDTRecord;
 import org.jooq.UpdatableRecord;
+import org.jooq.XML;
 import org.jooq.conf.BackslashEscaping;
 import org.jooq.conf.ParseNameCase;
 import org.jooq.conf.Settings;
@@ -1620,6 +1623,18 @@ final class Tools {
 
     static final Param<UUID> field(UUID value) {
         return val((Object) value, SQLDataType.UUID);
+    }
+
+    static final Param<JSON> field(JSON value) {
+        return val((Object) value, SQLDataType.JSON);
+    }
+
+    static final Param<JSONB> field(JSONB value) {
+        return val((Object) value, SQLDataType.JSONB);
+    }
+
+    static final Param<XML> field(XML value) {
+        return val((Object) value, SQLDataType.XML);
     }
 
     /**

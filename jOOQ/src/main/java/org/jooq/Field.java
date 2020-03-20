@@ -1050,6 +1050,22 @@ extends
     Field<T> shr(Field<? extends Number> value);
 
     // ------------------------------------------------------------------------
+    // XML predicates
+    // ------------------------------------------------------------------------
+
+    /**
+     * Create a condition to check if this field contains XML data.
+     */
+    @Support({ POSTGRES })
+    Condition isDocument();
+
+    /**
+     * Create a condition to check if this field does not contain XML data.
+     */
+    @Support({ POSTGRES })
+    Condition isNotDocument();
+
+    // ------------------------------------------------------------------------
     // JSON predicates
     // ------------------------------------------------------------------------
 

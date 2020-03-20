@@ -628,6 +628,16 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     // ------------------------------------------------------------------------
 
     @Override
+    public final Condition isDocument() {
+        return new IsDocument(this, true);
+    }
+
+    @Override
+    public final Condition isNotDocument() {
+        return new IsDocument(this, false);
+    }
+
+    @Override
     public final Condition isJson() {
         return new IsJSON(this, true);
     }

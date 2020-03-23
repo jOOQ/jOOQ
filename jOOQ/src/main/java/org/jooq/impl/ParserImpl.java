@@ -303,6 +303,7 @@ import static org.jooq.impl.DSL.xmlparseContent;
 import static org.jooq.impl.DSL.xmlparseDocument;
 import static org.jooq.impl.DSL.xmlpi;
 import static org.jooq.impl.DSL.xmlquery;
+import static org.jooq.impl.DSL.xmltable;
 import static org.jooq.impl.DSL.year;
 import static org.jooq.impl.DSL.zero;
 import static org.jooq.impl.JSONNullClause.ABSENT_ON_NULL;
@@ -519,6 +520,9 @@ import org.jooq.WindowSpecificationRowsStep;
 import org.jooq.XML;
 import org.jooq.XMLAggOrderByStep;
 import org.jooq.XMLAttributes;
+import org.jooq.XMLTableColumnPathStep;
+import org.jooq.XMLTableColumnsStep;
+import org.jooq.XMLTablePassingStep;
 import org.jooq.conf.ParseSearchSchema;
 import org.jooq.conf.ParseUnknownFunctions;
 import org.jooq.conf.ParseUnsupportedSyntax;
@@ -5034,6 +5038,41 @@ final class ParserImpl implements Parser {
                 ? generateSeries(from, to)
                 : generateSeries(from, to, step);
         }
+        else if (parseFunctionNameIf(ctx, "XMLTABLE")) {
+            parse(ctx, '(');
+
+            XMLTablePassingStep s1 = xmltable((Field) toField(ctx, parseConcat(ctx, Type.S)));
+            XMLPassingMechanism m = parseXMLPassingMechanismIf(ctx);
+            Field<XML> passing = m == null ? null : (Field<XML>) parseField(ctx);
+
+            XMLTableColumnsStep s2 = (XMLTableColumnsStep) (
+                  m == BY_REF
+                ? s1.passingByRef(passing)
+                : m == BY_VALUE
+                ? s1.passingByValue(passing)
+                : m == XMLPassingMechanism.DEFAULT
+                ? s1.passing(passing)
+                : s1
+            );
+
+            parseKeyword(ctx, "COLUMNS");
+
+            do {
+                Name fieldName = parseIdentifier(ctx);
+
+                if (parseKeywordIf(ctx, "FOR ORDINALITY")) {
+                    s2 = s2.column(fieldName).forOrdinality();
+                }
+                else {
+                    XMLTableColumnPathStep s3 = s2.column(fieldName, parseDataType(ctx));
+                    s2 = parseKeywordIf(ctx, "PATH") ? s3.path(parseStringLiteral(ctx)) : s3;
+                }
+            }
+            while (parseIf(ctx, ','));
+
+            parse(ctx, ')');
+            result = s2;
+        }
         else if (parseIf(ctx, '(')) {
 
             // A table factor parenthesis can mark the beginning of any of:
@@ -6867,18 +6906,25 @@ final class ParserImpl implements Parser {
     }
 
     private static final XMLPassingMechanism parseXMLPassingMechanism(ParserContext ctx) {
-        parseKeyword(ctx, "PASSING");
+        XMLPassingMechanism result = parseXMLPassingMechanismIf(ctx);
 
-        if (parseKeywordIf(ctx, "BY")) {
-            if (parseKeywordIf(ctx, "REF"))
-                return BY_REF;
-            else if (parseKeywordIf(ctx, "VALUE"))
-                return BY_VALUE;
-            else
-                throw ctx.expected("REF", "VALUE");
-        }
+        if (result == null)
+            throw ctx.expected("PASSING");
 
-        return null;
+        return result;
+    }
+
+    private static final XMLPassingMechanism parseXMLPassingMechanismIf(ParserContext ctx) {
+        if (!parseKeywordIf(ctx, "PASSING"))
+            return null;
+        else if (!parseKeywordIf(ctx, "BY"))
+            return XMLPassingMechanism.DEFAULT;
+        else if (parseKeywordIf(ctx, "REF"))
+            return BY_REF;
+        else if (parseKeywordIf(ctx, "VALUE"))
+            return BY_VALUE;
+        else
+            throw ctx.expected("REF", "VALUE");
     }
 
     private static final List<Field<?>> parseAliasedXMLContent(ParserContext ctx) {

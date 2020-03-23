@@ -35,6 +35,13 @@
  *
  *
  */
-package org.jooq.impl;
+package org.jooq;
 
-enum XMLPassingMechanism { BY_REF, BY_VALUE, DEFAULT }
+/**
+ * A step in the construction of an <code>XMLTABLE</code> expression.
+ *
+ * @author Lukas Eder
+ */
+public interface XMLTableColumnsStep extends XMLTableColumnsFirstStep, Table<Record> {
+
+}

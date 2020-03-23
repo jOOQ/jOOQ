@@ -394,6 +394,7 @@ import org.jooq.XMLAggOrderByStep;
 import org.jooq.XMLAttributes;
 import org.jooq.XMLExistsPassingStep;
 import org.jooq.XMLQueryPassingStep;
+import org.jooq.XMLTablePassingStep;
 import org.jooq.conf.Settings;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.XMLParse.DocumentOrContent;
@@ -18341,6 +18342,22 @@ public class DSL {
     @Support({ POSTGRES })
     public static XMLExistsPassingStep xmlexists(Field<String> xpath) {
         return new XMLExists(xpath);
+    }
+
+    /**
+     * The XML table function.
+     */
+    @Support({ POSTGRES })
+    public static XMLTablePassingStep xmltable(String xpath) {
+        return xmltable(Tools.field(xpath));
+    }
+
+    /**
+     * The XML table function.
+     */
+    @Support({ POSTGRES })
+    public static XMLTablePassingStep xmltable(Field<String> xpath) {
+        return new XMLTable(xpath);
     }
 
     // -------------------------------------------------------------------------

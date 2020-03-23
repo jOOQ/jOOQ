@@ -165,6 +165,7 @@ final class Names {
     static final Name N_XMLPI             = DSL.unquotedName("xmlpi");
     static final Name N_XMLQUERY          = DSL.unquotedName("xmlquery");
     static final Name N_XMLROOT           = DSL.unquotedName("xmlroot");
+    static final Name N_XMLTABLE          = DSL.unquotedName("xmltable");
     static final Name N_XPATH             = DSL.unquotedName("xpath");
 
 }

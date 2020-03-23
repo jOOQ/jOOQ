@@ -37,23 +37,19 @@
  */
 package org.jooq.impl;
 
-// ...
-import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.unnest;
 import static org.jooq.impl.DSL.xmlagg;
-import static org.jooq.impl.Keywords.K_BY;
-import static org.jooq.impl.Keywords.K_PASSING;
-import static org.jooq.impl.Keywords.K_REF;
 import static org.jooq.impl.Names.N_XMLQUERY;
 import static org.jooq.impl.SQLDataType.XML;
 import static org.jooq.impl.XMLPassingMechanism.BY_REF;
+import static org.jooq.impl.XMLTable.acceptPassing;
+import static org.jooq.impl.XMLTable.acceptXPath;
 
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.XML;
 import org.jooq.XMLQueryPassingStep;
-import org.jooq.conf.ParamType;
 
 /**
  * @author Lukas Eder
@@ -127,27 +123,10 @@ final class XMLQuery extends AbstractField<XML> implements XMLQueryPassingStep {
                    .formatIndentStart()
                    .formatNewLine();
 
+                acceptXPath(ctx, xpath);
+                acceptPassing(ctx, passing, passingMechanism);
 
-
-
-
-
-
-
-
-
-
-
-                    ctx.visit(xpath);
-
-                ctx.formatSeparator()
-                   .visit(K_PASSING);
-
-                if (passingMechanism == BY_REF)
-                    ctx.sql(' ').visit(K_BY).sql(' ').visit(K_REF);
-
-                ctx.sql(' ').visit(passing)
-                   .formatIndentEnd()
+                ctx.formatIndentEnd()
                    .formatNewLine()
                    .sql(')');
 

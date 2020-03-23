@@ -35,6 +35,23 @@
  *
  *
  */
-package org.jooq.impl;
+package org.jooq;
 
-enum XMLPassingMechanism { BY_REF, BY_VALUE, DEFAULT }
+// ...
+import static org.jooq.SQLDialect.POSTGRES;
+
+/**
+ * A step in the construction of an <code>XMLTABLE</code> expression.
+ *
+ * @author Lukas Eder
+ */
+public interface XMLTableColumnPathStep extends XMLTableColumnForOrdinalityStep, XMLTableColumnsStep {
+
+    /**
+     * Specify the <code>PATH</code> of a column in the <code>COLUMNS</code>
+     * clause of the <code>XMLTABLE</code> predicate.
+     */
+    @Support({ POSTGRES })
+    XMLTableColumnsStep path(String path);
+
+}

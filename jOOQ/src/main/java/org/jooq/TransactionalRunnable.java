@@ -52,9 +52,7 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
-
 @FunctionalInterface
-
 public interface TransactionalRunnable {
 
     /**

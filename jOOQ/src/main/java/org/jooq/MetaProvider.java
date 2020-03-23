@@ -48,9 +48,7 @@ import java.sql.DatabaseMetaData;
  *
  * @author Lukas Eder
  */
-
 @FunctionalInterface
-
 public interface MetaProvider {
 
     /**

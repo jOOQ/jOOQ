@@ -53,9 +53,7 @@ import java.util.stream.Collector;
  *
  * @author Lukas Eder
  */
-
 @FunctionalInterface
-
 public interface TransactionalCallable<T> {
 
     /**

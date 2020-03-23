@@ -43,9 +43,7 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-
 @FunctionalInterface
-
 public interface RecordHandler<R extends Record> {
 
     /**

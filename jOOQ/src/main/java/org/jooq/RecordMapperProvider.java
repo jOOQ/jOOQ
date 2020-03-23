@@ -86,9 +86,7 @@ import org.jooq.impl.DefaultRecordMapperProvider;
  * @see RecordMapper
  * @see Configuration
  */
-
 @FunctionalInterface
-
 public interface RecordMapperProvider {
 
     /**

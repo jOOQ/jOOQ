@@ -46,9 +46,7 @@ import java.sql.Wrapper;
  *
  * @author Lukas Eder
  */
-
 @FunctionalInterface
-
 public interface UnwrapperProvider {
 
     /**

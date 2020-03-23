@@ -46,9 +46,7 @@ package org.jooq.meta;
  *
  * @author Lukas Eder
  */
-
 @FunctionalInterface
-
 public interface JavaTypeResolver {
 
     /**

@@ -56,9 +56,7 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-
 @FunctionalInterface
-
 public interface RecordMapper<R extends Record, E> {
 
     /**

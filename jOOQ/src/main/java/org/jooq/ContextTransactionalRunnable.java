@@ -52,9 +52,7 @@ import org.jooq.impl.ThreadLocalTransactionProvider;
  *
  * @author Lukas Eder
  */
-
 @FunctionalInterface
-
 public interface ContextTransactionalRunnable {
 
     /**

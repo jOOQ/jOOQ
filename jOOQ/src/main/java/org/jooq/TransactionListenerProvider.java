@@ -52,9 +52,7 @@ import org.jooq.impl.DefaultTransactionListenerProvider;
  * @see TransactionListener
  * @see Configuration
  */
-
 @FunctionalInterface
-
 public interface TransactionListenerProvider {
 
     /**

@@ -66,9 +66,7 @@ import org.jooq.ResultQuery;
  * @author Lukas Eder
  * @see MockConnection
  */
-
 @FunctionalInterface
-
 public interface MockDataProvider {
 
     /**

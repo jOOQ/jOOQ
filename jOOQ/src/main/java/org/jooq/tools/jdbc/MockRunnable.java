@@ -44,9 +44,7 @@ import org.jooq.Configuration;
  *
  * @author Lukas Eder
  */
-
 @FunctionalInterface
-
 public interface MockRunnable {
 
     /**

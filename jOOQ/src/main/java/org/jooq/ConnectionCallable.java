@@ -50,9 +50,7 @@ import org.jooq.exception.DataAccessException;
  *
  * @author Lukas Eder
  */
-
 @FunctionalInterface
-
 public interface ConnectionCallable<T> {
 
     /**

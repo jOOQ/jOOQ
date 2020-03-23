@@ -65,9 +65,7 @@ import java.util.concurrent.ForkJoinPool;
  *
  * @author Lukas Eder
  */
-
 @FunctionalInterface
-
 public interface ExecutorProvider {
 
     /**

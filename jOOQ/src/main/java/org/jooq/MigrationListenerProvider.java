@@ -55,9 +55,7 @@ import org.jooq.impl.DefaultMigrationListenerProvider;
  * @see MigrationListener
  * @see Configuration
  */
-
 @FunctionalInterface
-
 @Internal
 public interface MigrationListenerProvider {
 

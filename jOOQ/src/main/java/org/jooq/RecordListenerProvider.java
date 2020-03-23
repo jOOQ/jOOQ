@@ -52,9 +52,7 @@ import org.jooq.impl.DefaultRecordListenerProvider;
  * @see RecordListener
  * @see Configuration
  */
-
 @FunctionalInterface
-
 public interface RecordListenerProvider {
 
     /**

@@ -57,9 +57,7 @@ import org.jooq.exception.MappingException;
  *
  * @author Lukas Eder
  */
-
 @FunctionalInterface
-
 public interface RecordUnmapper<E, R extends Record> {
 
     /**

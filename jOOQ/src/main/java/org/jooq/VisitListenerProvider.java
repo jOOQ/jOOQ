@@ -52,9 +52,7 @@ import org.jooq.impl.DefaultVisitListenerProvider;
  * @see VisitListener
  * @see Configuration
  */
-
 @FunctionalInterface
-
 public interface VisitListenerProvider {
 
     /**

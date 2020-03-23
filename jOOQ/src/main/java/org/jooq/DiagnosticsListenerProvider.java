@@ -52,9 +52,7 @@ import org.jooq.impl.DefaultDiagnosticsListenerProvider;
  * @see TransactionListener
  * @see Configuration
  */
-
 @FunctionalInterface
-
 public interface DiagnosticsListenerProvider {
 
     /**

@@ -68,9 +68,7 @@ import org.jooq.impl.DefaultRecordUnmapperProvider;
  * @see RecordUnmapper
  * @see Configuration
  */
-
 @FunctionalInterface
-
 public interface RecordUnmapperProvider {
 
     /**

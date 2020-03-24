@@ -146,43 +146,13 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        String glue = "";
+        SortFieldList o = orderBy;
 
-        if (windowDefinition != null) {
-            boolean declareWindows = ctx.declareWindows();
-
-            ctx.sql(glue)
-               .declareWindows(false)
-               .visit(windowDefinition)
-               .declareWindows(declareWindows);
-
-            glue = " ";
-        }
-
-
-        if (!partitionBy.isEmpty()) {
-
-            // Ignore PARTITION BY 1 clause. These databases erroneously map the
-            // 1 literal onto the column index (CUBRID, Sybase), or do not support
-            // constant expressions in the PARTITION BY clause (HANA)
-            if (partitionByOne && OMIT_PARTITION_BY_ONE.contains(ctx.family())) {
-            }
-            else {
-                ctx.sql(glue)
-                   .visit(K_PARTITION_BY).sql(' ')
-                   .visit(partitionBy);
-
-                glue = " ";
-            }
-        }
-
-        if (!orderBy.isEmpty()) {
-            ctx.sql(glue)
-               .visit(K_ORDER_BY).sql(' ')
-               .visit(orderBy);
-
-            glue = " ";
-        }
+        // [#8414] [#8593] Some RDBMS require ORDER BY in some window functions
+        if (o.isEmpty()) {
+            boolean requiresOrderBy =
+                   TRUE.equals(ctx.data(BooleanDataKey.DATA_ORDERED_WINDOW_FUNCTION))
+                && REQUIRES_ORDER_BY_IN_RANKING.contains(ctx.family());
 
 
 
@@ -190,12 +160,8 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
 
 
 
-
-
-
-
-        else if (TRUE.equals(ctx.data(BooleanDataKey.DATA_ORDERED_WINDOW_FUNCTION)) && REQUIRES_ORDER_BY_IN_RANKING.contains(ctx.family())) {
-            Field<Integer> constant;
+            if (requiresOrderBy) {
+                Field<Integer> constant;
 
 
 
@@ -204,15 +170,69 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
 
                 constant = field(select(one()));
 
-            ctx.sql(glue)
-               .visit(K_ORDER_BY).sql(' ')
-               .visit(constant);
-
-            glue = " ";
+                o = new SortFieldList();
+                o.add(constant.sortDefault());
+            }
         }
 
-        if (frameStart != null) {
-            ctx.sql(glue);
+        boolean hasWindowDefinitions = windowDefinition != null;
+        boolean hasPartitionBy = !partitionBy.isEmpty();
+        boolean hasOrderBy = !o.isEmpty();
+        boolean hasFrame = frameStart != null;
+
+        int clauses = 0;
+
+        if (hasWindowDefinitions)
+            clauses++;
+        if (hasPartitionBy)
+            clauses++;
+        if (hasOrderBy)
+            clauses++;
+        if (hasFrame)
+            clauses++;
+
+        boolean indent = clauses > 1;
+
+        if (indent)
+            ctx.formatIndentStart()
+               .formatNewLine();
+
+        if (windowDefinition != null) {
+            boolean declareWindows = ctx.declareWindows();
+
+            ctx.declareWindows(false)
+               .visit(windowDefinition)
+               .declareWindows(declareWindows);
+        }
+
+        if (hasPartitionBy) {
+
+            // Ignore PARTITION BY 1 clause. These databases erroneously map the
+            // 1 literal onto the column index (CUBRID, Sybase), or do not support
+            // constant expressions in the PARTITION BY clause (HANA)
+            if (partitionByOne && OMIT_PARTITION_BY_ONE.contains(ctx.family())) {
+            }
+            else {
+                if (hasWindowDefinitions)
+                    ctx.formatSeparator();
+
+                ctx.visit(K_PARTITION_BY).separatorRequired(true)
+                   .visit(partitionBy);
+            }
+        }
+
+        if (hasOrderBy) {
+            if (hasWindowDefinitions || hasPartitionBy)
+                ctx.formatSeparator();
+
+            ctx.visit(K_ORDER_BY).separatorRequired(true)
+               .visit(o);
+        }
+
+        if (hasFrame) {
+            if (hasWindowDefinitions || hasPartitionBy || hasOrderBy)
+                ctx.formatSeparator();
+
             ctx.visit(frameUnits.keyword).sql(' ');
 
             if (frameEnd != null) {
@@ -226,11 +246,13 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
                 toSQLRows(ctx, frameStart);
             }
 
-            glue = " ";
-
             if (exclude != null)
-                ctx.sql(glue).visit(K_EXCLUDE).sql(' ').visit(exclude.keyword);
+                ctx.sql(' ').visit(K_EXCLUDE).sql(' ').visit(exclude.keyword);
         }
+
+        if (indent)
+            ctx.formatIndentEnd()
+               .formatNewLine();
     }
 
     private final void toSQLRows(Context<?> ctx, Integer rows) {

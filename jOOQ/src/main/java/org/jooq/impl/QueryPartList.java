@@ -80,31 +80,40 @@ class QueryPartList<T extends QueryPart> extends AbstractQueryPart implements Li
 
     @Override
     public /* non-final */ void accept(Context<?> ctx) {
+        int size = size();
+
+        if (ctx.separatorRequired())
+            if (size > 1)
+                ctx.formatSeparator();
+            else
+                ctx.sql(' ');
 
         // Some lists render different SQL when empty
-        if (isEmpty()) {
+        if (size == 0) {
             toSQLEmptyList(ctx);
         }
 
         else {
-            String separator = "";
-            boolean indent = (size() > 1) && !TRUE.equals(ctx.data(DATA_LIST_ALREADY_INDENTED));
+            boolean indent = (size > 1) && !TRUE.equals(ctx.data(DATA_LIST_ALREADY_INDENTED));
 
             if (indent)
                 ctx.formatIndentStart();
 
-            for (int i = 0; i < size(); i++) {
-                ctx.sql(separator);
+            for (int i = 0; i < size; i++) {
+                T part = get(i);
 
-                if (i > 0 || indent)
+                if (i > 0) {
+
+                    // [#3607] Procedures and functions are not separated by comma
+                    if (!(part instanceof Statement))
+                        ctx.sql(',');
+
+                    ctx.formatSeparator();
+                }
+                else if (indent)
                     ctx.formatNewLine();
 
-                T part = get(i);
                 ctx.visit(part);
-
-                // [#3607] Procedures and functions are not separated by comma
-                if (!(part instanceof Statement))
-                    separator = ", ";
             }
 
             if (indent)

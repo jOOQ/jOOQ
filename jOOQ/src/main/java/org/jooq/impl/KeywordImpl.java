@@ -66,6 +66,9 @@ final class KeywordImpl extends AbstractQueryPart implements Keyword {
 
     @Override
     public final void accept(Context<?> ctx) {
+        if (ctx.separatorRequired())
+            ctx.sql(' ');
+
         ctx.sql(render(ctx), true);
     }
 

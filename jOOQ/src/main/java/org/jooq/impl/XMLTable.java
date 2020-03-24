@@ -226,7 +226,7 @@ implements
             acceptPassing(ctx, passing, passingMechanism);
 
         ctx.formatSeparator()
-           .visit(K_COLUMNS).sql(' ').visit(columns);
+           .visit(K_COLUMNS).separatorRequired(true).visit(columns);
 
         ctx.formatIndentEnd()
            .formatNewLine()

@@ -102,6 +102,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     private int                           alias;
     private int                           indent;
     private Deque<Integer>                indentLock;
+    private boolean                       separatorRequired;
     private boolean                       separator;
     private boolean                       newline;
     private int                           skipUpdateCounts;
@@ -355,67 +356,75 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         if (stringLiteral())
             s = StringUtils.replace(s, "'", stringLiteralEscapedApos);
 
+        applyNewLine();
         sql.append(s);
-        separator = false;
-        newline = false;
+        resetSeparatorFlags();
         return this;
-
     }
 
     @Override
     public final RenderContext sql(char c) {
+        applyNewLine();
         sql.append(c);
 
         if (c == '\'' && stringLiteral())
             sql.append(c);
 
-        separator = false;
-        newline = false;
+        resetSeparatorFlags();
         return this;
     }
 
     @Override
     public final RenderContext sql(int i) {
+        applyNewLine();
         sql.append(i);
-        separator = false;
-        newline = false;
+        resetSeparatorFlags();
         return this;
     }
 
     @Override
     public final RenderContext sql(long l) {
+        applyNewLine();
         sql.append(l);
-        separator = false;
-        newline = false;
+        resetSeparatorFlags();
         return this;
     }
 
     @Override
     public final RenderContext sql(float f) {
+        applyNewLine();
         sql.append(f);
-        separator = false;
-        newline = false;
+        resetSeparatorFlags();
         return this;
     }
 
     @Override
     public final RenderContext sql(double d) {
+        applyNewLine();
         sql.append(d);
+        resetSeparatorFlags();
+        return this;
+    }
+
+    private final void resetSeparatorFlags() {
+        separatorRequired = false;
         separator = false;
         newline = false;
-        return this;
     }
 
     @Override
     public final RenderContext formatNewLine() {
-        if (cachedRenderFormatted) {
-            sql(cachedNewline, true);
-            sql(indentation(), true);
-
+        if (cachedRenderFormatted)
             newline = true;
-        }
 
         return this;
+    }
+
+    private final void applyNewLine() {
+        if (newline) {
+            sql.append(cachedNewline);
+            sql.append(indentation());
+        }
     }
 
     @Override
@@ -457,6 +466,17 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     }
 
     @Override
+    public final RenderContext separatorRequired(boolean separatorRequired) {
+        this.separatorRequired = separatorRequired;
+        return this;
+    }
+
+    @Override
+    public final boolean separatorRequired() {
+        return separatorRequired;
+    }
+
+    @Override
     public final RenderContext formatIndentStart() {
         return formatIndentStart(cachedIndentWidth);
     }
@@ -468,13 +488,12 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     public final RenderContext formatIndentStart(int i) {
-        if (cachedRenderFormatted) {
+        if (cachedRenderFormatted)
             indent += i;
 
-            // [#9193] If we've already generated the separator (and indentation)
-            if (newline)
-                sql.append(cachedIndentation);
-        }
+//            // [#9193] If we've already generated the separator (and indentation)
+//            if (newline)
+//                sql.append(cachedIndentation);
 
         return this;
     }

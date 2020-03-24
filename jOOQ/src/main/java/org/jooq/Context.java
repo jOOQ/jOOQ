@@ -335,6 +335,20 @@ public interface Context<C extends Context<C>> extends Scope {
     C formatSeparator();
 
     /**
+     * Specify that a separator will be required before the next
+     * {@link #visit(QueryPart)} call, but leave the decision whether to
+     * generate a {@link #formatSeparator()} or just a whitespace to that next
+     * {@link QueryPart}.
+     */
+    C separatorRequired(boolean separatorRequired);
+
+    /**
+     * Whether some sort of separator is required before rendering the next
+     * {@link QueryPart}.
+     */
+    boolean separatorRequired();
+
+    /**
      * Start indenting subsequent SQL by one level (two characters), if
      * {@link Settings#isRenderFormatted()} is set to <code>true</code>.
      * <p>

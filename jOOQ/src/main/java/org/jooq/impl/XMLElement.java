@@ -75,9 +75,7 @@ final class XMLElement extends AbstractField<XML> {
     public final void accept(Context<?> ctx) {
         boolean hasAttributes = attributes != null && !((XMLAttributesImpl) attributes).attributes.isEmpty();
         boolean hasContent = !content.isEmpty();
-        boolean format =
-               hasAttributes && ((XMLAttributesImpl) attributes).attributes.size() > 1
-            || hasContent && content.size() > 1;
+        boolean format = hasAttributes || hasContent;
         Object previous = ctx.data(DATA_LIST_ALREADY_INDENTED);
 
         ctx.visit(N_XMLELEMENT).sql('(');

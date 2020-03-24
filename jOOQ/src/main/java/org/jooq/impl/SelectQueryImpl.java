@@ -1053,7 +1053,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // v1 as ID, v2 as ID, v3 as TITLE
         final Field<?>[] unaliasedFields = Tools.aliasedFields(Tools.fields(originalFields.length), originalNames);
 
-        ctx.visit(K_SELECT).sql(' ')
+        ctx.visit(K_SELECT).separatorRequired(true)
            .declareFields(true)
            .visit(new SelectFieldList<>(unaliasedFields))
            .declareFields(false)
@@ -1302,12 +1302,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // SELECT clause
         // -------------
         context.start(SELECT_SELECT)
-               .visit(K_SELECT)
-               .sql(' ');
+               .visit(K_SELECT).separatorRequired(true);
 
         // [#1493] Oracle hints come directly after the SELECT keyword
         if (!StringUtils.isBlank(hint))
-            context.sql(hint).sql(' ');
+            context.sql(' ').sql(hint).separatorRequired(true);
 
 
 
@@ -1316,9 +1315,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
         if (Tools.isNotEmpty(distinctOn))
-            context.visit(K_DISTINCT_ON).sql(" (").visit(distinctOn).sql(") ");
+            context.visit(K_DISTINCT_ON).sql(" (").visit(distinctOn).sql(')').separatorRequired(true);
         else if (distinct)
-            context.visit(K_DISTINCT).sql(' ');
+            context.visit(K_DISTINCT).separatorRequired(true);
 
 
 
@@ -1413,7 +1412,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
             context.formatSeparator()
                    .visit(K_FROM)
-                   .sql(' ')
+                   .separatorRequired(true)
                    .visit(tablelist);
 
 
@@ -1499,10 +1498,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         if (grouping) {
             context.formatSeparator()
                    .visit(K_GROUP_BY)
-                   .sql(' ');
+                   .separatorRequired(true);
 
             // [#1665] Empty GROUP BY () clauses need parentheses
-            if (Tools.isEmpty(groupBy))
+            if (Tools.isEmpty(groupBy)) {
+                context.sql(' ');
 
                 // [#4292] Some dialects accept constant expressions in GROUP BY
                 // Note that dialects may consider constants as indexed field
@@ -1527,6 +1527,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 // Few dialects support the SQL standard "grand total" (i.e. empty grouping set)
                 else
                     context.sql("()");
+            }
             else
                 context.visit(groupBy);
         }
@@ -1558,14 +1559,13 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // -------------
         context.start(SELECT_WINDOW);
 
-        if (Tools.isNotEmpty(window) && SUPPORT_WINDOW_CLAUSE.contains(context.dialect())) {
+        if (Tools.isNotEmpty(window) && SUPPORT_WINDOW_CLAUSE.contains(context.dialect()))
             context.formatSeparator()
                    .visit(K_WINDOW)
-                   .sql(' ')
+                   .separatorRequired(true)
                    .declareWindows(true)
                    .visit(window)
                    .declareWindows(false);
-        }
 
         context.end(SELECT_WINDOW);
 
@@ -1588,12 +1588,14 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
                 for (Select<?> other : union.get(i)) {
                     context.formatSeparator()
-                           .visit(op.toKeyword(family))
-                           .sql(' ');
+                           .visit(op.toKeyword(family));
 
-                    if (!unionParenthesis(context, '(', other.getSelect().toArray(EMPTY_FIELD), unionParensRequired) && !unionParensRequired)
-                        context.formatNewLine();
+                    if (unionParensRequired)
+                        context.sql(' ');
+                    else
+                        context.formatSeparator();
 
+                    unionParenthesis(context, '(', other.getSelect().toArray(EMPTY_FIELD), unionParensRequired);
                     context.visit(other);
                     unionParenthesis(context, ')', null, unionParensRequired);
                 }
@@ -1768,8 +1770,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 if (orderBySiblings)
                     ctx.sql(' ').visit(K_SIBLINGS);
 
-                ctx.sql(' ').visit(K_BY)
-                   .sql(' ');
+                ctx.sql(' ').visit(K_BY).separatorRequired(true);
 
 
 

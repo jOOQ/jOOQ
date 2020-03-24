@@ -218,6 +218,16 @@ abstract class AbstractBindContext extends AbstractContext<BindContext> implemen
     }
 
     @Override
+    public final BindContext separatorRequired(boolean separatorRequired) {
+        return this;
+    }
+
+    @Override
+    public final boolean separatorRequired() {
+        return false;
+    }
+
+    @Override
     public final BindContext formatIndentStart() {
         return this;
     }

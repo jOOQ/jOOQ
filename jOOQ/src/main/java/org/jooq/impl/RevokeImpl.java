@@ -49,6 +49,7 @@ import static org.jooq.impl.Keywords.K_ON;
 import static org.jooq.impl.Keywords.K_PUBLIC;
 import static org.jooq.impl.Keywords.K_RESTRICT;
 import static org.jooq.impl.Keywords.K_REVOKE;
+import static org.jooq.impl.QueryPartCollectionView.wrap;
 
 import java.util.Collection;
 
@@ -110,15 +111,8 @@ final class RevokeImpl extends AbstractRowCountQuery implements
             ctx.visit(K_GRANT_OPTION_FOR)
                .sql(' ');
 
-        String separator = "";
-        for (Privilege privilege : privileges) {
-            ctx.sql(separator)
-               .visit(privilege);
-
-            separator = ", ";
-        }
-
-        ctx.end(REVOKE_PRIVILEGE).sql(' ')
+        ctx.visit(wrap(privileges).indentSize(0))
+           .end(REVOKE_PRIVILEGE).sql(' ')
            .start(REVOKE_ON)
            .visit(K_ON).sql(' ')
            .visit(table)

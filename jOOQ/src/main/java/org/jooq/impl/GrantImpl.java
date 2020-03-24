@@ -47,6 +47,7 @@ import static org.jooq.impl.Keywords.K_ON;
 import static org.jooq.impl.Keywords.K_PUBLIC;
 import static org.jooq.impl.Keywords.K_TO;
 import static org.jooq.impl.Keywords.K_WITH_GRANT_OPTION;
+import static org.jooq.impl.QueryPartCollectionView.wrap;
 
 import java.util.Collection;
 
@@ -98,17 +99,9 @@ final class GrantImpl extends AbstractRowCountQuery implements
     @Override
     public final void accept(Context<?> ctx) {
         ctx.start(GRANT_PRIVILEGE)
-           .visit(K_GRANT).sql(' ');
-
-        String separator = "";
-        for (Privilege privilege : privileges) {
-            ctx.sql(separator)
-               .visit(privilege);
-
-            separator = ", ";
-        }
-
-        ctx.end(GRANT_PRIVILEGE).sql(' ')
+           .visit(K_GRANT).sql(' ')
+           .visit(wrap(privileges).indentSize(0))
+           .end(GRANT_PRIVILEGE).sql(' ')
            .start(GRANT_ON)
            .visit(K_ON).sql(' ')
            .visit(table)

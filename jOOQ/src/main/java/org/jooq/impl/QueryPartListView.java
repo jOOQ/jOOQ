@@ -42,9 +42,7 @@ import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -58,11 +56,9 @@ import org.jooq.Statement;
  *
  * @author Lukas Eder
  */
-class QueryPartListView<T extends QueryPart> extends AbstractQueryPart implements List<T> {
+class QueryPartListView<T extends QueryPart> extends QueryPartCollectionView<T> implements List<T> {
 
     private static final long serialVersionUID = -2936922742534009564L;
-    private final List<T>     wrappedList;
-    private int               indentSize       = 2;
 
     static <T extends QueryPart> QueryPartListView<T> wrap(T[] wrappedList) {
         return new QueryPartListView<>(wrappedList);
@@ -77,15 +73,17 @@ class QueryPartListView<T extends QueryPart> extends AbstractQueryPart implement
     }
 
     QueryPartListView(List<T> wrappedList) {
-        this.wrappedList = wrappedList;
+        super(wrappedList);
     }
 
-    /**
-     * Whether to indent this list, and after what size indentation is applied.
-     */
+    @Override
     QueryPartListView<T> indentSize(int newIndentSize) {
-        this.indentSize = newIndentSize;
-        return this;
+        return (QueryPartListView<T>) super.indentSize(newIndentSize);
+    }
+
+    @Override
+    List<T> wrapped() {
+        return (List<T>) super.wrapped();
     }
 
     @Override
@@ -134,166 +132,64 @@ class QueryPartListView<T extends QueryPart> extends AbstractQueryPart implement
     /**
      * Subclasses may override this method
      */
-    @SuppressWarnings("unused")
-    protected void toSQLEmptyList(Context<?> context) {
-    }
+    @Override
+    protected void toSQLEmptyList(Context<?> context) {}
 
     // -------------------------------------------------------------------------
     // Implementations from the List API
     // -------------------------------------------------------------------------
 
     @Override
-    public final int size() {
-        return wrappedList.size();
-    }
-
-    @Override
-    public final boolean isEmpty() {
-        return wrappedList.isEmpty();
-    }
-
-    @Override
-    public final boolean contains(Object o) {
-        return wrappedList.contains(o);
-    }
-
-    @Override
-    public final Iterator<T> iterator() {
-        return wrappedList.iterator();
-    }
-
-    @Override
-    public final Object[] toArray() {
-        return wrappedList.toArray();
-    }
-
-    @Override
-    public final <E> E[] toArray(E[] a) {
-        return wrappedList.toArray(a);
-    }
-
-    @Override
-    public final boolean add(T e) {
-        if (e != null) {
-            return wrappedList.add(e);
-        }
-
-        return false;
-    }
-
-    @Override
-    public final boolean remove(Object o) {
-        return wrappedList.remove(o);
-    }
-
-    @Override
-    public final boolean containsAll(Collection<?> c) {
-        return wrappedList.containsAll(c);
-    }
-
-    @Override
-    public final boolean addAll(Collection<? extends T> c) {
-        return wrappedList.addAll(removeNulls(c));
-    }
-
-    @Override
     public final boolean addAll(int index, Collection<? extends T> c) {
-        return wrappedList.addAll(index, removeNulls(c));
-    }
-
-    private final Collection<? extends T> removeNulls(Collection<? extends T> c) {
-
-        // [#2145] Collections that contain nulls are quite rare, so it is wise
-        // to add a relatively cheap defender check to avoid unnecessary loops
-        boolean containsNulls;
-
-        try {
-            containsNulls = c.contains(null);
-        }
-
-        // [#7991] Some immutable collections do not allow for nulls to be contained
-        catch (NullPointerException ignore) {
-            containsNulls = false;
-        }
-
-        if (containsNulls) {
-            List<T> list = new ArrayList<>(c);
-            Iterator<T> it = list.iterator();
-
-            while (it.hasNext())
-                if (it.next() == null)
-                    it.remove();
-
-            return list;
-        }
-        else {
-            return c;
-        }
-    }
-
-    @Override
-    public final boolean removeAll(Collection<?> c) {
-        return wrappedList.removeAll(c);
-    }
-
-    @Override
-    public final boolean retainAll(Collection<?> c) {
-        return wrappedList.retainAll(c);
-    }
-
-    @Override
-    public final void clear() {
-        wrappedList.clear();
+        return wrapped().addAll(index, removeNulls(c));
     }
 
     @Override
     public final T get(int index) {
-        return wrappedList.get(index);
+        return wrapped().get(index);
     }
 
     @Override
     public final T set(int index, T element) {
-        if (element != null) {
-            return wrappedList.set(index, element);
-        }
+        if (element != null)
+            return wrapped().set(index, element);
 
         return null;
     }
 
     @Override
     public final void add(int index, T element) {
-        if (element != null) {
-            wrappedList.add(index, element);
-        }
+        if (element != null)
+            wrapped().add(index, element);
     }
 
     @Override
     public final T remove(int index) {
-        return wrappedList.remove(index);
+        return wrapped().remove(index);
     }
 
     @Override
     public final int indexOf(Object o) {
-        return wrappedList.indexOf(o);
+        return wrapped().indexOf(o);
     }
 
     @Override
     public final int lastIndexOf(Object o) {
-        return wrappedList.lastIndexOf(o);
+        return wrapped().lastIndexOf(o);
     }
 
     @Override
     public final ListIterator<T> listIterator() {
-        return wrappedList.listIterator();
+        return wrapped().listIterator();
     }
 
     @Override
     public final ListIterator<T> listIterator(int index) {
-        return wrappedList.listIterator(index);
+        return wrapped().listIterator(index);
     }
 
     @Override
     public final List<T> subList(int fromIndex, int toIndex) {
-        return wrappedList.subList(fromIndex, toIndex);
+        return wrapped().subList(fromIndex, toIndex);
     }
 }

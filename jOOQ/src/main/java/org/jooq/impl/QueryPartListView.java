@@ -79,6 +79,11 @@ class QueryPartListView<T extends QueryPart> extends QueryPartCollectionView<T> 
     }
 
     @Override
+    QueryPartListView<T> qualify(boolean newQualify) {
+        return (QueryPartListView<T>) super.qualify(newQualify);
+    }
+
+    @Override
     List<T> wrapped() {
         return (List<T>) super.wrapped();
     }

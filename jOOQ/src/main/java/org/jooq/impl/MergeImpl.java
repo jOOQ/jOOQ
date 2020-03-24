@@ -76,6 +76,7 @@ import static org.jooq.impl.Keywords.K_VALUES;
 import static org.jooq.impl.Keywords.K_WHEN;
 import static org.jooq.impl.Keywords.K_WHERE;
 import static org.jooq.impl.Keywords.K_WITH_PRIMARY_KEY;
+import static org.jooq.impl.QueryPartCollectionView.wrap;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.renderUnqualifiedNames;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
@@ -1375,22 +1376,24 @@ implements
            .visit(table)
            .formatSeparator();
 
-        ctx.sql('(');
-        renderUnqualifiedNames(ctx, getUpsertFields());
-        ctx.sql(')');
+        ctx.sql('(')
+           .visit(wrap(getUpsertFields()).qualify(false))
+           .sql(')');
 
         if (!getUpsertKeys().isEmpty()) {
-            ctx.sql(' ').visit(K_KEY).sql(" (");
-            renderUnqualifiedNames(ctx, getUpsertKeys());
-            ctx.sql(')');
+            ctx.formatSeparator()
+               .visit(K_KEY).sql(" (")
+               .visit(wrap(getUpsertKeys()).qualify(false))
+               .sql(')');
         }
 
         if (upsertSelect != null) {
-            ctx.sql(' ')
+            ctx.formatSeparator()
                .visit(upsertSelect);
         }
         else {
-            ctx.sql(' ').visit(K_VALUES).sql(" (")
+            ctx.formatSeparator()
+               .visit(K_VALUES).sql(" (")
                .visit(getUpsertValues())
                .sql(')');
         }

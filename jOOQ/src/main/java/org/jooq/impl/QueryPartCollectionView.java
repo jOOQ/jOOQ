@@ -61,6 +61,7 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
     private static final long serialVersionUID = -2936922742534009564L;
     final Collection<T>       wrapped;
     int                       indentSize;
+    Boolean                   qualify;
 
     static <T extends QueryPart> QueryPartCollectionView<T> wrap(Collection<T> wrapped) {
         return new QueryPartCollectionView<>(wrapped);
@@ -79,6 +80,11 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
         return this;
     }
 
+    QueryPartCollectionView<T> qualify(boolean newQualify) {
+        this.qualify = newQualify;
+        return this;
+    }
+
     Collection<T> wrapped() {
         return wrapped;
     }
@@ -87,6 +93,10 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
     public /* non-final */ void accept(Context<?> ctx) {
         int size = size();
         boolean format = size >= indentSize;
+        boolean previousQualify = ctx.qualify();
+
+        if (qualify != null)
+            ctx.qualify(qualify);
 
         if (ctx.separatorRequired())
             if (format)
@@ -127,6 +137,9 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
             if (indent)
                 ctx.formatIndentEnd().formatNewLine();
         }
+
+        if (qualify != null)
+            ctx.qualify(previousQualify);
     }
 
     /**

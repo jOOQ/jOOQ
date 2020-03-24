@@ -39,6 +39,7 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
+import static java.util.Collections.nCopies;
 import static org.jooq.Clause.INSERT;
 import static org.jooq.Clause.INSERT_INSERT_INTO;
 import static org.jooq.Clause.INSERT_ON_DUPLICATE_KEY_UPDATE;
@@ -74,6 +75,7 @@ import static org.jooq.impl.Keywords.K_ON_DUPLICATE_KEY_UPDATE;
 import static org.jooq.impl.Keywords.K_SET;
 import static org.jooq.impl.Keywords.K_VALUES;
 import static org.jooq.impl.Keywords.K_WHERE;
+import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.aliasedFields;
 import static org.jooq.impl.Tools.fieldNameStrings;
@@ -663,23 +665,15 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                 case MYSQL:
                     ctx.formatSeparator()
                        .visit(K_VALUES)
-                       .sql('(');
+                       .sql(" (")
+                       .visit(wrap(nCopies(table().fields().length, K_DEFAULT)))
+                       .sql(')');
 
-                    int count = table().fields().length;
-                    String separator = "";
-
-                    for (int i = 0; i < count; i++) {
-                        ctx.sql(separator);
-                        ctx.visit(K_DEFAULT);
-                        separator = ", ";
-                    }
-
-                    ctx.sql(')');
                     break;
-
                 default:
                     ctx.formatSeparator()
                        .visit(K_DEFAULT_VALUES);
+
                     break;
             }
         }

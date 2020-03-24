@@ -62,6 +62,15 @@ class QueryPartListView<T extends QueryPart> extends AbstractQueryPart implement
 
     private static final long serialVersionUID = -2936922742534009564L;
     private final List<T>     wrappedList;
+    private int               indentSize       = 2;
+
+    static <T extends QueryPart> QueryPartListView<T> wrap(T[] wrappedList) {
+        return new QueryPartListView<>(wrappedList);
+    }
+
+    static <T extends QueryPart> QueryPartListView<T> wrap(List<T> wrappedList) {
+        return new QueryPartListView<>(wrappedList);
+    }
 
     QueryPartListView(T[] wrappedList) {
         this(asList(wrappedList));
@@ -71,12 +80,20 @@ class QueryPartListView<T extends QueryPart> extends AbstractQueryPart implement
         this.wrappedList = wrappedList;
     }
 
+    /**
+     * Whether to indent this list, and after what size indentation is applied.
+     */
+    QueryPartListView<T> indentSize(int newIndentSize) {
+        this.indentSize = newIndentSize;
+        return this;
+    }
+
     @Override
     public /* non-final */ void accept(Context<?> ctx) {
         int size = size();
 
         if (ctx.separatorRequired())
-            if (size > 1)
+            if (size >= indentSize)
                 ctx.formatSeparator();
             else
                 ctx.sql(' ');
@@ -87,7 +104,7 @@ class QueryPartListView<T extends QueryPart> extends AbstractQueryPart implement
         }
 
         else {
-            boolean indent = (size > 1) && !TRUE.equals(ctx.data(DATA_LIST_ALREADY_INDENTED));
+            boolean indent = (size >= indentSize) && !TRUE.equals(ctx.data(DATA_LIST_ALREADY_INDENTED));
 
             if (indent)
                 ctx.formatIndentStart();

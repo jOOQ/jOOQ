@@ -97,6 +97,7 @@ import static org.jooq.impl.Keywords.K_ON;
 import static org.jooq.impl.Keywords.K_PARTITION_BY;
 import static org.jooq.impl.Keywords.K_USING;
 import static org.jooq.impl.Names.N_JOIN;
+import static org.jooq.impl.Tools.renderUnqualifiedNames;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_COLLECT_SEMI_ANTI_JOIN;
 import static org.jooq.impl.Tools.DataKey.DATA_COLLECTED_SEMI_ANTI_JOIN;
 
@@ -465,7 +466,7 @@ implements
                        .start(TABLE_JOIN_USING)
                        .visit(K_USING)
                        .sql(" (");
-                Tools.fieldNames(context, using);
+                renderUnqualifiedNames(context, using);
                 context.sql(')')
                        .end(TABLE_JOIN_USING);
             }

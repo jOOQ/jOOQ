@@ -77,6 +77,7 @@ import static org.jooq.impl.Keywords.K_WHEN;
 import static org.jooq.impl.Keywords.K_WHERE;
 import static org.jooq.impl.Keywords.K_WITH_PRIMARY_KEY;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.impl.Tools.renderUnqualifiedNames;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
 
 import java.util.ArrayList;
@@ -1375,12 +1376,12 @@ implements
            .formatSeparator();
 
         ctx.sql('(');
-        Tools.fieldNames(ctx, getUpsertFields());
+        renderUnqualifiedNames(ctx, getUpsertFields());
         ctx.sql(')');
 
         if (!getUpsertKeys().isEmpty()) {
             ctx.sql(' ').visit(K_KEY).sql(" (");
-            Tools.fieldNames(ctx, getUpsertKeys());
+            renderUnqualifiedNames(ctx, getUpsertKeys());
             ctx.sql(')');
         }
 

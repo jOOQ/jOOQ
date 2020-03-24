@@ -74,6 +74,7 @@ import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.K_AS;
+import static org.jooq.impl.Tools.renderUnqualifiedNames;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_AS_REQUIRED;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_UNALIAS_ALIASED_EXPRESSIONS;
 
@@ -263,7 +264,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
                             ArrayTable table = (ArrayTable) o;
 
                             context.sql('(');
-                            Tools.fieldNames(context, table.fields());
+                            renderUnqualifiedNames(context, table.fields());
                             context.sql(')');
                         }
 

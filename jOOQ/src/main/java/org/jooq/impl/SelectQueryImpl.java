@@ -134,6 +134,7 @@ import static org.jooq.impl.ScopeMarkers.BEFORE_FIRST_TOP_LEVEL_CTE;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.fieldArray;
 import static org.jooq.impl.Tools.hasAmbiguousNames;
+import static org.jooq.impl.Tools.renderUnqualifiedNames;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_COLLECT_SEMI_ANTI_JOIN;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_NESTED_SET_OPERATIONS;
@@ -865,7 +866,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
                         // Render the OF [table-names] clause
                         default:
-                            Tools.tableNames(context, forLockOfTables);
+                            renderUnqualifiedNames(context, forLockOfTables);
                             break;
                     }
                 }

@@ -230,6 +230,7 @@ import org.jooq.Field;
 import org.jooq.JSON;
 import org.jooq.JSONB;
 import org.jooq.Name;
+import org.jooq.Named;
 import org.jooq.OrderField;
 import org.jooq.Param;
 // ...
@@ -2756,49 +2757,27 @@ final class Tools {
      * Render a list of names of the <code>NamedQueryParts</code> contained in
      * this list.
      */
-    static final void fieldNames(Context<?> context, Fields<?> fields) {
-        fieldNames(context, list(fields.fields));
+    static final void renderUnqualifiedNames(Context<?> context, Fields<?> fields) {
+        renderUnqualifiedNames(context, list(fields.fields));
     }
 
     /**
      * Render a list of names of the <code>NamedQueryParts</code> contained in
      * this list.
      */
-    static final void fieldNames(Context<?> context, Field<?>... fields) {
-        fieldNames(context, list(fields));
+    static final void renderUnqualifiedNames(Context<?> context, Named... list) {
+        renderUnqualifiedNames(context, list(list));
     }
 
     /**
      * Render a list of names of the <code>NamedQueryParts</code> contained in
      * this list.
      */
-    static final void fieldNames(Context<?> context, Collection<? extends Field<?>> list) {
+    static final void renderUnqualifiedNames(Context<?> context, Collection<? extends Named> list) {
         String separator = "";
 
-        for (Field<?> field : list) {
-            context.sql(separator).visit(field.getUnqualifiedName());
-
-            separator = ", ";
-        }
-    }
-
-    /**
-     * Render a list of names of the <code>NamedQueryParts</code> contained in
-     * this list.
-     */
-    static final void tableNames(Context<?> context, Table<?>... list) {
-        tableNames(context, list(list));
-    }
-
-    /**
-     * Render a list of names of the <code>NamedQueryParts</code> contained in
-     * this list.
-     */
-    static final void tableNames(Context<?> context, Collection<? extends Table<?>> list) {
-        String separator = "";
-
-        for (Table<?> table : list) {
-            context.sql(separator).visit(table.getUnqualifiedName());
+        for (Named named : list) {
+            context.sql(separator).visit(named.getUnqualifiedName());
 
             separator = ", ";
         }

@@ -74,6 +74,7 @@ import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.K_AS;
+import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.Tools.renderUnqualifiedNames;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_AS_REQUIRED;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_UNALIAS_ALIASED_EXPRESSIONS;
@@ -313,25 +314,16 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
         }
     }
 
-    private void toSQLWrapped(Context<?> context) {
-        context.sql(wrapInParentheses ? "(" : "")
-               .visit(wrapped)
-               .sql(wrapInParentheses ? ")" : "");
+    private void toSQLWrapped(Context<?> ctx) {
+        ctx.sql(wrapInParentheses ? "(" : "")
+           .visit(wrapped)
+           .sql(wrapInParentheses ? ")" : "");
     }
 
-    private void toSQLDerivedColumnList(Context<?> context) {
-        String separator = "";
-
-        context.sql('(');
-
-        for (int i = 0; i < fieldAliases.length; i++) {
-            context.sql(separator);
-            context.visit(fieldAliases[i]);
-
-            separator = ", ";
-        }
-
-        context.sql(')');
+    private void toSQLDerivedColumnList(Context<?> ctx) {
+        ctx.sql('(')
+           .visit(wrap(fieldAliases).indentSize(0))
+           .sql(')');
     }
 
     @Override

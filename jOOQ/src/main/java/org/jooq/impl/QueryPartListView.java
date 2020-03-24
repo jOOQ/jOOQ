@@ -38,9 +38,7 @@
 
 package org.jooq.impl;
 
-import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
-import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
 
 import java.util.Collection;
 import java.util.List;
@@ -48,7 +46,6 @@ import java.util.ListIterator;
 
 import org.jooq.Context;
 import org.jooq.QueryPart;
-import org.jooq.Statement;
 
 /**
  * A {@link List} view, delegating all calls to a wrapped list, but acting like
@@ -84,49 +81,6 @@ class QueryPartListView<T extends QueryPart> extends QueryPartCollectionView<T> 
     @Override
     List<T> wrapped() {
         return (List<T>) super.wrapped();
-    }
-
-    @Override
-    public /* non-final */ void accept(Context<?> ctx) {
-        int size = size();
-
-        if (ctx.separatorRequired())
-            if (size >= indentSize)
-                ctx.formatSeparator();
-            else
-                ctx.sql(' ');
-
-        // Some lists render different SQL when empty
-        if (size == 0) {
-            toSQLEmptyList(ctx);
-        }
-
-        else {
-            boolean indent = (size >= indentSize) && !TRUE.equals(ctx.data(DATA_LIST_ALREADY_INDENTED));
-
-            if (indent)
-                ctx.formatIndentStart();
-
-            for (int i = 0; i < size; i++) {
-                T part = get(i);
-
-                if (i > 0) {
-
-                    // [#3607] Procedures and functions are not separated by comma
-                    if (!(part instanceof Statement))
-                        ctx.sql(',');
-
-                    ctx.formatSeparator();
-                }
-                else if (indent)
-                    ctx.formatNewLine();
-
-                ctx.visit(part);
-            }
-
-            if (indent)
-                ctx.formatIndentEnd().formatNewLine();
-        }
     }
 
     /**

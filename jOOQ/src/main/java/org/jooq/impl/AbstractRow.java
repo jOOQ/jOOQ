@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static org.jooq.Clause.FIELD_ROW;
 // ...
 import static org.jooq.impl.Keywords.K_ROW;
+import static org.jooq.impl.QueryPartListView.wrap;
 
 import java.util.Collection;
 import java.util.stream.Stream;
@@ -87,24 +88,16 @@ abstract class AbstractRow extends AbstractQueryPart implements Row {
     // ------------------------------------------------------------------------
 
     @Override
-    public final void accept(Context<?> context) {
+    public final void accept(Context<?> ctx) {
 
 
 
 
 
 
-        context.sql("(");
-
-        String separator = "";
-        for (Field<?> field : fields.fields) {
-            context.sql(separator);
-            context.visit(field);
-
-            separator = ", ";
-        }
-
-        context.sql(")");
+        ctx.sql("(")
+           .visit(wrap(fields.fields).indentSize(0))
+           .sql(")");
     }
 
     @Override

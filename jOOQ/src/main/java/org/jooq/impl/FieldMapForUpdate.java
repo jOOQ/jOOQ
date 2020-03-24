@@ -94,10 +94,9 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> {
             boolean supportsQualify = NO_SUPPORT_QUALIFY.contains(ctx.family()) ? false : restoreQualify;
 
             for (Entry<Field<?>, Field<?>> entry : flattenEntrySet(entrySet())) {
-                ctx.sql(separator);
-
                 if (!"".equals(separator))
-                    ctx.formatNewLine();
+                    ctx.sql(separator)
+                       .formatSeparator();
 
                 ctx.start(assignmentClause)
                    .qualify(supportsQualify)
@@ -114,7 +113,7 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> {
 
                 ctx.end(assignmentClause);
 
-                separator = ", ";
+                separator = ",";
             }
         }
         else {

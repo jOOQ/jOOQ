@@ -230,7 +230,6 @@ import org.jooq.Field;
 import org.jooq.JSON;
 import org.jooq.JSONB;
 import org.jooq.Name;
-import org.jooq.Named;
 import org.jooq.OrderField;
 import org.jooq.Param;
 // ...
@@ -2750,36 +2749,6 @@ final class Tools {
             }
 
             return result;
-        }
-    }
-
-    /**
-     * Render a list of names of the <code>NamedQueryParts</code> contained in
-     * this list.
-     */
-    static final void renderUnqualifiedNames(Context<?> context, Fields<?> fields) {
-        renderUnqualifiedNames(context, list(fields.fields));
-    }
-
-    /**
-     * Render a list of names of the <code>NamedQueryParts</code> contained in
-     * this list.
-     */
-    static final void renderUnqualifiedNames(Context<?> context, Named... list) {
-        renderUnqualifiedNames(context, list(list));
-    }
-
-    /**
-     * Render a list of names of the <code>NamedQueryParts</code> contained in
-     * this list.
-     */
-    static final void renderUnqualifiedNames(Context<?> context, Collection<? extends Named> list) {
-        String separator = "";
-
-        for (Named named : list) {
-            context.sql(separator).visit(named.getUnqualifiedName());
-
-            separator = ", ";
         }
     }
 

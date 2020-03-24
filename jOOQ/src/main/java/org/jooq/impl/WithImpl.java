@@ -196,7 +196,7 @@ implements
     @Override
     public final void accept(Context<?> ctx) {
         ctx.visit(K_WITH)
-           .sql(' ');
+           .separatorRequired(true);
 
         if (recursive
 
@@ -204,7 +204,7 @@ implements
 
         )
             ctx.visit(K_RECURSIVE)
-               .sql(' ');
+               .separatorRequired(true);
 
         CommonTableExpressionList c = cte;
 

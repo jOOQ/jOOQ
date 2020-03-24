@@ -75,7 +75,6 @@ import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.QueryPartListView.wrap;
-import static org.jooq.impl.Tools.renderUnqualifiedNames;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_AS_REQUIRED;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_UNALIAS_ALIASED_EXPRESSIONS;
 
@@ -261,13 +260,10 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
                         // The javac compiler doesn't like casting of generics
                         Object o = wrapped;
 
-                        if (context.declareTables() && o instanceof ArrayTable) {
-                            ArrayTable table = (ArrayTable) o;
-
-                            context.sql('(');
-                            renderUnqualifiedNames(context, table.fields());
-                            context.sql(')');
-                        }
+                        if (context.declareTables() && o instanceof ArrayTable)
+                            context.sql('(')
+                                   .visit(wrap(((ArrayTable) o).fields()).qualify(false).indentSize(0))
+                                   .sql(')');
 
                         break;
                     }

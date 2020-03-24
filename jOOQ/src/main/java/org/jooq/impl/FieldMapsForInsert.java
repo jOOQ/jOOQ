@@ -501,33 +501,13 @@ final class FieldMapsForInsert extends AbstractQueryPart {
             return;
         }
 
-        boolean indent = (values.size() > 1);
-
         ctx.sql(" (");
-
-        if (indent)
-            ctx.formatIndentStart();
 
         // [#989] Avoid qualifying fields in INSERT field declaration
         boolean qualify = ctx.qualify();
-        ctx.qualify(false);
-
-        String separator = "";
-        for (Field<?> field : values.keySet()) {
-            ctx.sql(separator);
-
-            if (indent)
-                ctx.formatNewLine();
-
-            ctx.visit(field);
-            separator = ", ";
-        }
-
-        ctx.qualify(qualify);
-
-        if (indent)
-            ctx.formatIndentEnd()
-               .formatNewLine();
+        ctx.qualify(false)
+           .visit(new QueryPartList<>(values.keySet()))
+           .qualify(qualify);
 
         ctx.sql(')');
     }

@@ -144,6 +144,7 @@ final class Keywords {
     static final Keyword K_ELSE                             = keyword("else");
     static final Keyword K_ELSEIF                           = keyword("elseif");
     static final Keyword K_ELSIF                            = keyword("elsif");
+    static final Keyword K_EMPTY                            = keyword("empty");
     static final Keyword K_ENABLE                           = keyword("enable");
     static final Keyword K_END                              = keyword("end");
     static final Keyword K_END_CATCH                        = keyword("end catch");
@@ -152,6 +153,7 @@ final class Keywords {
     static final Keyword K_END_TRY                          = keyword("end try");
     static final Keyword K_ENFORCED                         = keyword("enforced");
     static final Keyword K_ENUM                             = keyword("enum");
+    static final Keyword K_ERROR                            = keyword("error");
     static final Keyword K_ESCAPE                           = keyword("escape");
     static final Keyword K_EXCEPT                           = keyword("except");
     static final Keyword K_EXCEPTION                        = keyword("exception");

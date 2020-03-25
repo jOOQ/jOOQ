@@ -238,6 +238,7 @@ import org.jooq.JSONB;
 import org.jooq.JSONEntry;
 import org.jooq.JSONObjectAggNullStep;
 import org.jooq.JSONObjectNullStep;
+import org.jooq.JSONValueOnStep;
 import org.jooq.Keyword;
 // ...
 // ...
@@ -18363,6 +18364,38 @@ public class DSL {
     // -------------------------------------------------------------------------
     // XXX JSON functions
     // -------------------------------------------------------------------------
+
+    /**
+     * The JSON value extractor function.
+     */
+    @Support({ MARIADB })
+    public static JSONValueOnStep<JSON> jsonValue(Field<?> json, String path) {
+        return jsonValue(json, Tools.field(path));
+    }
+
+    /**
+     * The JSON value extractor function.
+     */
+    @Support({ MARIADB })
+    public static JSONValueOnStep<JSON> jsonValue(Field<?> json, Field<String> path) {
+        return new JSONValue<>(SQLDataType.JSON, json, path);
+    }
+
+    /**
+     * The JSON value extractor function.
+     */
+    @Support({ MARIADB })
+    public static JSONValueOnStep<JSONB> jsonbValue(Field<?> json, String path) {
+        return jsonbValue(json, Tools.field(path));
+    }
+
+    /**
+     * The JSON value extractor function.
+     */
+    @Support({ MARIADB })
+    public static JSONValueOnStep<JSONB> jsonbValue(Field<?> json, Field<String> path) {
+        return new JSONValue<>(SQLDataType.JSONB, json, path);
+    }
 
     /**
      * The JSON array constructor.

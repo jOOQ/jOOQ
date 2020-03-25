@@ -154,6 +154,7 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.isnull;
 import static org.jooq.impl.DSL.isoDayOfWeek;
 import static org.jooq.impl.DSL.jsonEntry;
+import static org.jooq.impl.DSL.jsonValue;
 import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.lag;
 import static org.jooq.impl.DSL.lastValue;
@@ -445,6 +446,8 @@ import org.jooq.JSONArrayNullStep;
 import org.jooq.JSONEntry;
 import org.jooq.JSONObjectAggNullStep;
 import org.jooq.JSONObjectNullStep;
+import org.jooq.JSONValueDefaultStep;
+import org.jooq.JSONValueOnStep;
 import org.jooq.JoinType;
 import org.jooq.Keyword;
 // ...
@@ -6188,6 +6191,8 @@ final class ParserImpl implements Parser {
                         return field;
                     else if ((field = parseFieldJSONObjectAggIf(ctx)) != null)
                         return field;
+                    else if ((field = parseFieldJSONValueIf(ctx)) != null)
+                        return field;
 
                 break;
 
@@ -6960,6 +6965,65 @@ final class ParserImpl implements Parser {
         return null;
     }
 
+    private static final Field<?> parseFieldJSONValueIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "JSON_VALUE")) {
+            parse(ctx, '(');
+            Field<?> json = parseField(ctx);
+            parse(ctx, ',');
+            Field<String> path = (Field<String>) parseField(ctx);
+
+            JSONValueOnStep<?> s1 = jsonValue(json, path);
+            JSONValue.Behaviour behaviour = parseBehaviourIf(ctx);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            parse(ctx, ')');
+            return s1;
+        }
+
+        return null;
+    }
+
+    private static final JSONValue.Behaviour parseBehaviourIf(ParserContext ctx) {
+        if (parseKeywordIf(ctx, "ERROR") && ctx.requireProEdition())
+            return JSONValue.Behaviour.ERROR;
+        else if (parseKeywordIf(ctx, "NULL") && ctx.requireProEdition())
+            return JSONValue.Behaviour.NULL;
+        else if (parseKeywordIf(ctx, "DEFAULT") && ctx.requireProEdition())
+            return JSONValue.Behaviour.DEFAULT;
+        else
+            return null;
+    }
+
     private static final Field<?> parseFieldJSONArrayConstructorIf(ParserContext ctx) {
         if (parseFunctionNameIf(ctx, "JSON_ARRAY")) {
             parse(ctx, '(');
@@ -7011,7 +7075,7 @@ final class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldJSONObjectConstructorIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "JSON_OBJECT")) {
+        if (parseFunctionNameIf(ctx, "JSON_OBJECT")) {
             parse(ctx, '(');
             if (parseIf(ctx, ')'))
                 return DSL.jsonObject();

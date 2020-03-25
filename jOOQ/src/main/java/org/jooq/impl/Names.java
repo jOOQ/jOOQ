@@ -94,6 +94,7 @@ final class Names {
     static final Name N_JSON_OBJECT       = DSL.unquotedName("json_object");
     static final Name N_JSON_OBJECT_AGG   = DSL.unquotedName("json_object_agg");
     static final Name N_JSON_OBJECTAGG    = DSL.unquotedName("json_objectagg");
+    static final Name N_JSON_VALUE        = DSL.unquotedName("json_value");
     static final Name N_JSONB_AGG         = DSL.unquotedName("jsonb_agg");
     static final Name N_JSONB_OBJECT      = DSL.unquotedName("jsonb_object");
     static final Name N_JSONB_OBJECT_AGG  = DSL.unquotedName("jsonb_object_agg");

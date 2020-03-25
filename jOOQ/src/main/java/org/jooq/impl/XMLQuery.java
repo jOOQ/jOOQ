@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+// ...
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.unnest;
 import static org.jooq.impl.DSL.xmlagg;
@@ -142,6 +143,7 @@ final class XMLQuery extends AbstractField<XML> implements XMLQueryPassingStep {
 
                 acceptXPath(ctx, xpath);
                 acceptPassing(ctx, passing, passingMechanism);
+
 
 
 

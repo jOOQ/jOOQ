@@ -935,6 +935,26 @@ public enum SQLDialect {
     public final class ThirdParty {
 
         /**
+         * "Guess" the JDBC driver from a {@link SQLDialect}.
+         *
+         * @return The appropriate JDBC driver class or
+         *         <code>"java.sql.Driver"</code> if no driver class could be
+         *         derived from the URL. Never <code>null</code>.
+         */
+        public final String driver() {
+
+            // jOOQ build tools need this class without its dependencies, which
+            // is why we are using reflection here.
+            try {
+                Class<?> utils = Class.forName("org.jooq.tools.jdbc.JDBCUtils");
+                return (String) utils.getMethod("driver", SQLDialect.class).invoke(utils, SQLDialect.this);
+            }
+            catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        /**
          * The Spring DB name or <code>null</code>, if the db name is not
          * supported by Spring.
          * <p>

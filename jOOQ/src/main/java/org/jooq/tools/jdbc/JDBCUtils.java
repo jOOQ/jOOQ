@@ -361,14 +361,14 @@ public class JDBCUtils {
     }
 
     /**
-     * "Guess" the JDBC driver from a connection URL.
+     * "Guess" the JDBC driver from a {@link SQLDialect}.
      *
      * @return The appropriate JDBC driver class or
      *         <code>"java.sql.Driver"</code> if no driver class could be
      *         derived from the URL. Never <code>null</code>.
      */
-    public static final String driver(String url) {
-        switch (dialect(url).family()) {
+    public static final String driver(SQLDialect dialect) {
+        switch (dialect.family()) {
             case CUBRID:
                 return "cubrid.jdbc.driver.CUBRIDDriver";
             case DERBY:
@@ -417,6 +417,17 @@ public class JDBCUtils {
         }
 
         return "java.sql.Driver";
+    }
+
+    /**
+     * "Guess" the JDBC driver from a connection URL.
+     *
+     * @return The appropriate JDBC driver class or
+     *         <code>"java.sql.Driver"</code> if no driver class could be
+     *         derived from the URL. Never <code>null</code>.
+     */
+    public static final String driver(String url) {
+        return driver(dialect(url).family());
     }
 
     /**

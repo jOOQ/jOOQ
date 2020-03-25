@@ -38,6 +38,7 @@
 package org.jooq;
 
 // ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 
 /**
@@ -74,5 +75,22 @@ public interface XMLQueryPassingStep {
      */
     @Support({ POSTGRES })
     Field<XML> passingByRef(Field<XML> xml);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

@@ -40,9 +40,12 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.unnest;
 import static org.jooq.impl.DSL.xmlagg;
+import static org.jooq.impl.Keywords.K_CONTENT;
+import static org.jooq.impl.Keywords.K_RETURNING;
 import static org.jooq.impl.Names.N_XMLQUERY;
 import static org.jooq.impl.SQLDataType.XML;
 import static org.jooq.impl.XMLPassingMechanism.BY_REF;
+import static org.jooq.impl.XMLPassingMechanism.BY_VALUE;
 import static org.jooq.impl.XMLTable.acceptPassing;
 import static org.jooq.impl.XMLTable.acceptXPath;
 
@@ -99,6 +102,20 @@ final class XMLQuery extends AbstractField<XML> implements XMLQueryPassingStep {
         return new XMLQuery(xpath, xml, BY_REF);
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // -------------------------------------------------------------------------
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
@@ -126,12 +143,15 @@ final class XMLQuery extends AbstractField<XML> implements XMLQueryPassingStep {
                 acceptXPath(ctx, xpath);
                 acceptPassing(ctx, passing, passingMechanism);
 
+
+
+
+
                 ctx.formatIndentEnd()
                    .formatNewLine()
                    .sql(')');
 
                break;
         }
-
     }
 }

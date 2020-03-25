@@ -6899,10 +6899,17 @@ final class ParserImpl implements Parser {
             Field<String> xpath = (Field<String>) parseField(ctx);
             XMLPassingMechanism m = parseXMLPassingMechanism(ctx);
             Field<XML> xml = (Field<XML>) parseField(ctx);
+            parseKeywordIf(ctx, "RETURNING CONTENT");
             parse(ctx, ')');
 
             if (m == BY_REF)
                 return xmlquery(xpath).passingByRef(xml);
+
+
+
+
+
+
             else
                 return xmlquery(xpath).passing(xml);
         }

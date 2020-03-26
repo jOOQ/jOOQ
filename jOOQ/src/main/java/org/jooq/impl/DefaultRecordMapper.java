@@ -485,7 +485,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             Parameter[] parameters = constructor.getParameters();
 
             if (parameters != null && parameters.length > 0) {
-                delegate = new ImmutablePOJOMapperWithParameterNames(constructor, collectParameterNames(parameters), true);
+                delegate = new ImmutablePOJOMapperWithParameterNames(constructor, collectParameterNames(parameters), false);
                 return;
             }
         }
@@ -904,8 +904,8 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
      */
     private class ImmutablePOJOMapper implements RecordMapper<R, E> {
 
-        private final Constructor<E>                         constructor;
-        private final Class<?>[]                             parameterTypes;
+        final Constructor<E>                         constructor;
+        final Class<?>[]                             parameterTypes;
         private final boolean                        nested;
         private final int[]                          nonNestedIndexLookup;
         private final List<Integer>[]                nestedIndexLookup;
@@ -975,8 +975,8 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         private final Object[] mapNonnested(R record) {
             Object[] converted = new Object[parameterTypes.length];
 
-            for (int i = 0; i < converted.length; i++)
-                set(converted, i, record.get(i, parameterTypes[i]));
+            for (int i = 0; i < record.size(); i++)
+                set(record, converted, i);
 
             return converted;
         }
@@ -1001,8 +1001,8 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             return converted;
         }
 
-        void set(Object[] array, int i, Object value) {
-            array[i] = value;
+        void set(Record from, Object[] to, int index) {
+            to[index] = from.get(index, parameterTypes[index]);
         }
     }
 
@@ -1057,16 +1057,16 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         }
 
         @Override
-        void set(Object[] array, int i, Object value) {
+        void set(Record from, Object[] to, int i) {
             if (propertyIndexes[i] != null) {
-                array[propertyIndexes[i]] = value;
+                to[propertyIndexes[i]] = from.get(i, parameterTypes[propertyIndexes[i]]);
             }
             else {
                 for (java.lang.reflect.Field member : members[i]) {
                     int index = propertyNames.indexOf(member.getName());
 
                     if (index >= 0)
-                        array[index] = value;
+                        to[index] = from.get(i, member.getType());
                 }
 
                 if (methods[i] != null) {
@@ -1074,7 +1074,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                     int index = propertyNames.indexOf(name);
 
                     if (index >= 0)
-                        array[index] = value;
+                        to[index] = from.get(i, methods[i].getReturnType());
                 }
             }
         }

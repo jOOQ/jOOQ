@@ -804,7 +804,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                         String prefix = entry.getKey();
 
                         for (RecordMapper<Record, Object> mapper : entry.getValue()) {
-                            RecordImplN rec = new RecordImplN(nestedMappedFields.get(prefix));
+                            RecordImpl rec = new RecordImpl(nestedMappedFields.get(prefix));
 
                             List<Integer> indexes = nestedIndexLookup.get(prefix);
                             for (int index = 0; index < indexes.size(); index++)
@@ -989,7 +989,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                     converted[i] = record.get(nonNestedIndexLookup[i], parameterTypes[i]);
                 }
                 else {
-                    RecordImplN rec = new RecordImplN(nestedMappedFields[i]);
+                    RecordImpl rec = new RecordImpl(nestedMappedFields[i]);
 
                     for (int index = 0; index < nestedIndexLookup[i].size(); index++)
                         rec.set(index, record.get(nestedIndexLookup[i].get(index)));

@@ -3908,6 +3908,22 @@ public interface DSLContext extends Scope , AutoCloseable {
      * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
      * databases, in case of which it will not be rendered. For optimal database
      * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    WithAsStep with(String alias, Collection<String> fieldAliases);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
      * {@link #with(Name)} for strictly non-recursive CTE
      * and {@link #withRecursive(Name)} for strictly
      * recursive CTE.
@@ -3930,6 +3946,22 @@ public interface DSLContext extends Scope , AutoCloseable {
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep with(Name alias, Name... fieldAliases);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(Name, Name...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(Name, Name...)} for strictly
+     * recursive CTE.
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    WithAsStep with(Name alias, Collection<? extends Name> fieldAliases);
 
 
     /**
@@ -4709,6 +4741,30 @@ public interface DSLContext extends Scope , AutoCloseable {
      * <code>DELETE</code>, and <code>MERGE</code> statements with
      * {@link CommonTableExpression}s.
      * <p>
+     * Reusable {@link CommonTableExpression} types can be constructed through
+     * <ul>
+     * <li>{@link DSL#name(String...)}</li>
+     * <li>{@link Name#fields(String...)}</li>
+     * <li>
+     * {@link DerivedColumnList#as(Select)}</li>
+     * </ul>
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(CommonTableExpression...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(CommonTableExpression...)} for strictly
+     * recursive CTE.
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    WithStep with(Collection<? extends CommonTableExpression<?>> tables);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
      * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
      * databases, in case of which it will not be rendered. For optimal database
      * interoperability and readability, however, it is suggested that you use
@@ -4744,6 +4800,22 @@ public interface DSLContext extends Scope , AutoCloseable {
      * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
      * databases, in case of which it will not be rendered. For optimal database
      * interoperability and readability, however, it is suggested that you use
+     * {@link #with(String, String...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(String, String...)} for strictly
+     * recursive CTE.
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    WithAsStep withRecursive(String alias, Collection<String> fieldAliases);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
      * {@link #with(Name)} for strictly non-recursive CTE
      * and {@link #withRecursive(Name)} for strictly
      * recursive CTE.
@@ -4766,6 +4838,22 @@ public interface DSLContext extends Scope , AutoCloseable {
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep withRecursive(Name alias, Name... fieldAliases);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(Name, Name...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(Name, Name...)} for strictly
+     * recursive CTE.
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    WithAsStep withRecursive(Name alias, Collection<? extends Name> fieldAliases);
 
 
     /**
@@ -5540,6 +5628,30 @@ public interface DSLContext extends Scope , AutoCloseable {
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithStep withRecursive(CommonTableExpression<?>... tables);
+
+    /**
+     * Create a <code>WITH</code> clause to supply subsequent
+     * <code>SELECT</code>, <code>UPDATE</code>, <code>INSERT</code>,
+     * <code>DELETE</code>, and <code>MERGE</code> statements with
+     * {@link CommonTableExpression}s.
+     * <p>
+     * Reusable {@link CommonTableExpression} types can be constructed through
+     * <ul>
+     * <li>{@link DSL#name(String...)}</li>
+     * <li>{@link Name#fields(String...)}</li>
+     * <li>
+     * {@link DerivedColumnList#as(Select)}</li>
+     * </ul>
+     * <p>
+     * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
+     * databases, in case of which it will not be rendered. For optimal database
+     * interoperability and readability, however, it is suggested that you use
+     * {@link #with(CommonTableExpression...)} for strictly non-recursive CTE
+     * and {@link #withRecursive(CommonTableExpression...)} for strictly
+     * recursive CTE.
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    WithStep withRecursive(Collection<? extends CommonTableExpression<?>> tables);
 
     /**
      * Create a new DSL select statement, projecting the known columns from a

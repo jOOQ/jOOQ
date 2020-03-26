@@ -48,6 +48,7 @@ import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.zero;
 import static org.jooq.impl.Keywords.K_RECURSIVE;
 import static org.jooq.impl.Keywords.K_WITH;
+import static org.jooq.impl.Tools.EMPTY_NAME;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -263,6 +264,11 @@ implements
     }
 
     @Override
+    public final WithImpl with(String a, Collection<String> f) {
+        return with(DSL.name(a), Tools.names(f));
+    }
+
+    @Override
     public final WithImpl with(Name a) {
         return with(a, new Name[0]);
     }
@@ -273,6 +279,11 @@ implements
         this.fieldAliases = f;
 
         return this;
+    }
+
+    @Override
+    public final WithImpl with(Name a, Collection<? extends Name> f) {
+        return with(a, f.toArray(EMPTY_NAME));
     }
 
 
@@ -519,6 +530,11 @@ implements
 
     @Override
     public final WithStep with(CommonTableExpression<?>... tables) {
+        return with(Arrays.asList(tables));
+    }
+
+    @Override
+    public final WithStep with(Collection<? extends CommonTableExpression<?>> tables) {
         for (CommonTableExpression<?> table : tables)
             cte.add(table);
 

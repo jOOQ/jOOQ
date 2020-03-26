@@ -119,6 +119,12 @@ public interface WithStep extends QueryPart {
      * Add another common table expression to the <code>WITH</code> clause.
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    WithAsStep with(String alias, Collection<String> fieldAliases);
+
+    /**
+     * Add another common table expression to the <code>WITH</code> clause.
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep with(Name alias);
 
     /**
@@ -126,6 +132,12 @@ public interface WithStep extends QueryPart {
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep with(Name alias, Name... fieldAliases);
+
+    /**
+     * Add another common table expression to the <code>WITH</code> clause.
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    WithAsStep with(Name alias, Collection<? extends Name> fieldAliases);
 
 
     /**
@@ -430,6 +442,20 @@ public interface WithStep extends QueryPart {
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithStep with(CommonTableExpression<?>... tables);
+
+    /**
+     * Add another common table expression to the <code>WITH</code> clause.
+     * <p>
+     * Reusable {@link CommonTableExpression} types can be constructed through
+     * <ul>
+     * <li>{@link DSL#name(String...)}</li>
+     * <li>{@link Name#fields(String...)}</li>
+     * <li>
+     * {@link DerivedColumnList#as(Select)}</li>
+     * </ul>
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    WithStep with(Collection<? extends CommonTableExpression<?>> tables);
 
     // -------------------------------------------------------------------------
     // XXX Continue with the actual INSERT, UPDATE, DELETE, SELECT statement type

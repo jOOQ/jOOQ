@@ -1593,12 +1593,22 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
+    public WithAsStep with(String alias, Collection<String> fieldAliases) {
+        return new WithImpl(configuration(), false).with(alias, fieldAliases);
+    }
+
+    @Override
     public WithAsStep with(Name alias) {
         return new WithImpl(configuration(), false).with(alias);
     }
 
     @Override
     public WithAsStep with(Name alias, Name... fieldAliases) {
+        return new WithImpl(configuration(), false).with(alias, fieldAliases);
+    }
+
+    @Override
+    public WithAsStep with(Name alias, Collection<? extends Name> fieldAliases) {
         return new WithImpl(configuration(), false).with(alias, fieldAliases);
     }
 
@@ -1844,6 +1854,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
+    public WithStep with(Collection<? extends CommonTableExpression<?>> tables) {
+        return new WithImpl(configuration(), false).with(tables);
+    }
+
+    @Override
     public WithAsStep withRecursive(String alias) {
         return new WithImpl(configuration(), true).with(alias);
     }
@@ -1854,12 +1869,22 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
+    public WithAsStep withRecursive(String alias, Collection<String> fieldAliases) {
+        return new WithImpl(configuration(), true).with(alias, fieldAliases);
+    }
+
+    @Override
     public WithAsStep withRecursive(Name alias) {
         return new WithImpl(configuration(), true).with(alias);
     }
 
     @Override
     public WithAsStep withRecursive(Name alias, Name... fieldAliases) {
+        return new WithImpl(configuration(), true).with(alias, fieldAliases);
+    }
+
+    @Override
+    public WithAsStep withRecursive(Name alias, Collection<? extends Name> fieldAliases) {
         return new WithImpl(configuration(), true).with(alias, fieldAliases);
     }
 
@@ -2101,6 +2126,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public WithStep withRecursive(CommonTableExpression<?>... tables) {
+        return new WithImpl(configuration(), true).with(tables);
+    }
+
+    @Override
+    public WithStep withRecursive(Collection<? extends CommonTableExpression<?>> tables) {
         return new WithImpl(configuration(), true).with(tables);
     }
 

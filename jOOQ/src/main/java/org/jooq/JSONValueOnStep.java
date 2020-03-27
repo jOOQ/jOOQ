@@ -38,6 +38,7 @@
 package org.jooq;
 
 // ...
+// ...
 
 import org.jooq.impl.DSL;
 

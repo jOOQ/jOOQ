@@ -42,7 +42,6 @@ import static org.jooq.impl.JSONExists.Behaviour.ERROR;
 import static org.jooq.impl.JSONExists.Behaviour.FALSE;
 import static org.jooq.impl.JSONExists.Behaviour.TRUE;
 import static org.jooq.impl.JSONExists.Behaviour.UNKNOWN;
-import static org.jooq.impl.JSONValue.NO_SUPPORT_PATH_BINDS;
 import static org.jooq.impl.Keywords.K_ERROR;
 import static org.jooq.impl.Keywords.K_JSON_EXISTS;
 import static org.jooq.impl.Keywords.K_ON;

@@ -309,6 +309,7 @@ final class Limit extends AbstractQueryPart {
 
 
 
+
             case HSQLDB:
             case POSTGRES:
                 // No break

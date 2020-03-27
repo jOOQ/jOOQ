@@ -4721,16 +4721,18 @@ final class ParserImpl implements Parser {
             JSONExists.Behaviour b = parseJSONExistsOnErrorBehaviourIf(ctx);
             parse(ctx, ')');
 
-            if (b == JSONExists.Behaviour.ERROR)
-                return jsonExists(json, path).errorOnError();
-            else if (b == JSONExists.Behaviour.TRUE)
-                return jsonExists(json, path).trueOnError();
-            else if (b == JSONExists.Behaviour.FALSE)
-                return jsonExists(json, path).falseOnError();
-            else if (b == JSONExists.Behaviour.UNKNOWN)
-                return jsonExists(json, path).unknownOnError();
-            else
-                return jsonExists(json, path);
+
+
+
+
+
+
+
+
+
+
+
+            return jsonExists(json, path);
         }
         else if (parseKeywordIf(ctx, "XMLEXISTS")) {
             parse(ctx, '(');

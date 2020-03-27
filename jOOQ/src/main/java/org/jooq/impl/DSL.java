@@ -23576,7 +23576,7 @@ public class DSL {
     }
 
     /**
-     * The <code>PI</code> literal.
+     * The <code>π</code> literal.
      * <p>
      * This will be any of the following:
      * <ul>
@@ -23587,6 +23587,14 @@ public class DSL {
     @Support
     public static Field<BigDecimal> pi() {
         return new Pi();
+    }
+
+    /**
+     * The <code>τ</code> literal, or <code>π</code>, in a better world.
+     */
+    @Support
+    public static Field<BigDecimal> tau() {
+        return pi().times(two());
     }
 
     /**

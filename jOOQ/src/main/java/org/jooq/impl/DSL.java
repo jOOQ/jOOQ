@@ -73,6 +73,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
@@ -236,6 +237,7 @@ import org.jooq.JSONArrayAggOrderByStep;
 import org.jooq.JSONArrayNullStep;
 import org.jooq.JSONB;
 import org.jooq.JSONEntry;
+import org.jooq.JSONExistsOnStep;
 import org.jooq.JSONObjectAggNullStep;
 import org.jooq.JSONObjectNullStep;
 import org.jooq.JSONValueOnStep;
@@ -18498,32 +18500,32 @@ public class DSL {
     /**
      * The JSON value extractor function.
      */
-    @Support({ MARIADB })
-    public static JSONValueOnStep<JSON> jsonValue(Field<?> json, String path) {
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    public static JSONValueOnStep<JSON> jsonValue(Field<JSON> json, String path) {
         return jsonValue(json, Tools.field(path));
     }
 
     /**
      * The JSON value extractor function.
      */
-    @Support({ MARIADB })
-    public static JSONValueOnStep<JSON> jsonValue(Field<?> json, Field<String> path) {
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    public static JSONValueOnStep<JSON> jsonValue(Field<JSON> json, Field<String> path) {
         return new JSONValue<>(SQLDataType.JSON, json, path);
     }
 
     /**
      * The JSON value extractor function.
      */
-    @Support({ MARIADB })
-    public static JSONValueOnStep<JSONB> jsonbValue(Field<?> json, String path) {
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    public static JSONValueOnStep<JSONB> jsonbValue(Field<JSONB> json, String path) {
         return jsonbValue(json, Tools.field(path));
     }
 
     /**
      * The JSON value extractor function.
      */
-    @Support({ MARIADB })
-    public static JSONValueOnStep<JSONB> jsonbValue(Field<?> json, Field<String> path) {
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    public static JSONValueOnStep<JSONB> jsonbValue(Field<JSONB> json, Field<String> path) {
         return new JSONValue<>(SQLDataType.JSONB, json, path);
     }
 
@@ -18628,7 +18630,7 @@ public class DSL {
      */
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static JSONArrayAggOrderByStep<JSON> jsonArrayAgg(Field<?> value) {
-        return new JSONArrayAgg<JSON>(JSON, value);
+        return new JSONArrayAgg<>(JSON, value);
     }
 
     /**
@@ -18636,7 +18638,7 @@ public class DSL {
      */
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static JSONArrayAggOrderByStep<JSONB> jsonbArrayAgg(Field<?> value) {
-        return new JSONArrayAgg<JSONB>(JSONB, value);
+        return new JSONArrayAgg<>(JSONB, value);
     }
 
     /**
@@ -18660,7 +18662,7 @@ public class DSL {
      */
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static JSONObjectAggNullStep<JSON> jsonObjectAgg(JSONEntry<?> entry) {
-        return new JSONObjectAgg<JSON>(JSON, entry);
+        return new JSONObjectAgg<>(JSON, entry);
     }
 
     /**
@@ -18684,7 +18686,39 @@ public class DSL {
      */
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static JSONObjectAggNullStep<JSONB> jsonbObjectAgg(JSONEntry<?> entry) {
-        return new JSONObjectAgg<JSONB>(JSONB, entry);
+        return new JSONObjectAgg<>(JSONB, entry);
+    }
+
+    /**
+     * The JSON exists predicate.
+     */
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    public static JSONExistsOnStep jsonExists(Field<JSON> field, String path) {
+        return jsonExists(field, Tools.field(path));
+    }
+
+    /**
+     * The JSON exists predicate.
+     */
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    public static JSONExistsOnStep jsonExists(Field<JSON> field, Field<String> path) {
+        return new JSONExists(field, nullSafe(path));
+    }
+
+    /**
+     * The JSONB exists predicate.
+     */
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    public static JSONExistsOnStep jsonbExists(Field<JSONB> field, String path) {
+        return jsonbExists(field, Tools.field(path));
+    }
+
+    /**
+     * The JSONB exists predicate.
+     */
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    public static JSONExistsOnStep jsonbExists(Field<JSONB> field, Field<String> path) {
+        return new JSONExists(field, nullSafe(path));
     }
 
     // -------------------------------------------------------------------------

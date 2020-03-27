@@ -37,30 +37,24 @@
  */
 package org.jooq.impl;
 
-// ...
 import static org.jooq.conf.ParamType.INLINED;
-import static org.jooq.impl.JSONValue.Behaviour.DEFAULT;
-import static org.jooq.impl.JSONValue.Behaviour.ERROR;
-import static org.jooq.impl.JSONValue.Behaviour.NULL;
-import static org.jooq.impl.Keywords.K_EMPTY;
+import static org.jooq.impl.JSONExists.Behaviour.ERROR;
+import static org.jooq.impl.JSONExists.Behaviour.FALSE;
+import static org.jooq.impl.JSONExists.Behaviour.TRUE;
+import static org.jooq.impl.JSONExists.Behaviour.UNKNOWN;
+import static org.jooq.impl.JSONValue.NO_SUPPORT_PATH_BINDS;
 import static org.jooq.impl.Keywords.K_ERROR;
+import static org.jooq.impl.Keywords.K_JSON_EXISTS;
 import static org.jooq.impl.Keywords.K_ON;
-import static org.jooq.impl.Names.N_JSONB_PATH_QUERY_FIRST;
-import static org.jooq.impl.Names.N_JSON_EXTRACT;
-import static org.jooq.impl.Names.N_JSON_VALUE;
+import static org.jooq.impl.Names.N_JSONB_PATH_EXISTS;
+import static org.jooq.impl.Names.N_JSON_CONTAINS_PATH;
 import static org.jooq.impl.SQLDataType.JSONB;
 import static org.jooq.impl.Tools.castIfNeeded;
 
-import java.util.Set;
-
 import org.jooq.Context;
-import org.jooq.DataType;
 import org.jooq.Field;
-import org.jooq.JSONValueDefaultStep;
-import org.jooq.JSONValueOnStep;
+import org.jooq.JSONExistsOnStep;
 import org.jooq.Keyword;
-// ...
-import org.jooq.SQLDialect;
 import org.jooq.conf.ParamType;
 
 
@@ -69,56 +63,32 @@ import org.jooq.conf.ParamType;
  *
  * @author Lukas Eder
  */
-final class JSONValue<J>
-extends AbstractField<J>
-implements
-    JSONValueOnStep<J>,
-    JSONValueDefaultStep<J> {
+final class JSONExists extends AbstractCondition implements JSONExistsOnStep {
 
     /**
      * Generated UID
      */
-    private static final long    serialVersionUID      = 1772007627336725780L;
+    private static final long   serialVersionUID = 1772007627336725780L;
+
+    private final Field<?>      json;
+    private final Field<String> path;
 
 
 
 
 
-    private final Field<?>       json;
-    private final Field<String>  path;
-
-
-
-
-
-
-
-
-
-
-
-    JSONValue(DataType<J> type, Field<?> json, Field<String> path) {
-        this(type, json, path, null, null, null, null, null);
+    JSONExists(Field<?> json, Field<String> path) {
+        this(json, path, null);
     }
 
-    private JSONValue(
-        DataType<J> type,
+    private JSONExists(
         Field<?> json,
         Field<String> path,
-        Behaviour onError,
-        Field<?> onErrorDefault,
-        Behaviour onEmpty,
-        Field<?> onEmptyDefault,
-        Field<?> default_
+        Behaviour onError
     ) {
-        super(N_JSON_VALUE, type);
 
         this.json = json;
         this.path = path;
-
-
-
-
 
 
 
@@ -128,21 +98,6 @@ implements
     // -------------------------------------------------------------------------
     // XXX: DSL API
     // -------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -179,15 +134,15 @@ implements
 
 
             case MYSQL:
-                ctx.visit(N_JSON_EXTRACT).sql('(').visit(json).sql(", ").visit(path).sql(')');
+                ctx.visit(N_JSON_CONTAINS_PATH).sql('(').visit(json).sql(", 'one', ").visit(path).sql(')');
                 break;
 
             case POSTGRES:
-                ctx.visit(N_JSONB_PATH_QUERY_FIRST).sql('(').visit(castIfNeeded(json, JSONB)).sql(", ").visit(path).sql("::jsonpath)");
+                ctx.visit(N_JSONB_PATH_EXISTS).sql('(').visit(castIfNeeded(json, JSONB)).sql(", ").visit(path).sql("::jsonpath)");
                 break;
 
             default:
-                ctx.visit(N_JSON_VALUE).sql('(').visit(json).sql(", ");
+                ctx.visit(K_JSON_EXISTS).sql('(').visit(json).sql(", ");
 
 
 
@@ -203,38 +158,13 @@ implements
 
 
 
-
-
-
-
-
                 ctx.sql(')');
                 break;
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     enum Behaviour {
-        ERROR, NULL, DEFAULT;
+        ERROR, TRUE, FALSE, UNKNOWN;
 
         final Keyword keyword;
 

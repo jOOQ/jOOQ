@@ -217,6 +217,7 @@ final class Keywords {
     static final Keyword K_ITERATE                          = keyword("iterate");
     static final Keyword K_JSON                             = keyword("json");
     static final Keyword K_JSON_ARRAY                       = keyword("json_array");
+    static final Keyword K_JSON_EXISTS                      = keyword("json_exists");
     static final Keyword K_JSON_OBJECT                      = keyword("json_object");
     static final Keyword K_KEEP                             = keyword("keep");
     static final Keyword K_KEY                              = keyword("key");

@@ -154,6 +154,7 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.isnull;
 import static org.jooq.impl.DSL.isoDayOfWeek;
 import static org.jooq.impl.DSL.jsonEntry;
+import static org.jooq.impl.DSL.jsonExists;
 import static org.jooq.impl.DSL.jsonValue;
 import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.lag;
@@ -4712,6 +4713,25 @@ final class ParserImpl implements Parser {
 
             return unique(select);
         }
+        else if (parseKeywordIf(ctx, "JSON_EXISTS")) {
+            parse(ctx, '(');
+            Field json = parseField(ctx);
+            parse(ctx, ',');
+            Field<String> path = (Field<String>) parseField(ctx);
+            JSONExists.Behaviour b = parseJSONExistsOnErrorBehaviourIf(ctx);
+            parse(ctx, ')');
+
+            if (b == JSONExists.Behaviour.ERROR)
+                return jsonExists(json, path).errorOnError();
+            else if (b == JSONExists.Behaviour.TRUE)
+                return jsonExists(json, path).trueOnError();
+            else if (b == JSONExists.Behaviour.FALSE)
+                return jsonExists(json, path).falseOnError();
+            else if (b == JSONExists.Behaviour.UNKNOWN)
+                return jsonExists(json, path).unknownOnError();
+            else
+                return jsonExists(json, path);
+        }
         else if (parseKeywordIf(ctx, "XMLEXISTS")) {
             parse(ctx, '(');
             Field<String> xpath = (Field<String>) parseField(ctx);
@@ -6975,12 +6995,12 @@ final class ParserImpl implements Parser {
     private static final Field<?> parseFieldJSONValueIf(ParserContext ctx) {
         if (parseFunctionNameIf(ctx, "JSON_VALUE")) {
             parse(ctx, '(');
-            Field<?> json = parseField(ctx);
+            Field json = parseField(ctx);
             parse(ctx, ',');
             Field<String> path = (Field<String>) parseField(ctx);
 
             JSONValueOnStep<?> s1 = jsonValue(json, path);
-            JSONValue.Behaviour behaviour = parseBehaviourIf(ctx);
+            JSONValue.Behaviour behaviour = parseJSONValueBehaviourIf(ctx);
 
 
 
@@ -7020,13 +7040,26 @@ final class ParserImpl implements Parser {
         return null;
     }
 
-    private static final JSONValue.Behaviour parseBehaviourIf(ParserContext ctx) {
+    private static final JSONValue.Behaviour parseJSONValueBehaviourIf(ParserContext ctx) {
         if (parseKeywordIf(ctx, "ERROR") && ctx.requireProEdition())
             return JSONValue.Behaviour.ERROR;
         else if (parseKeywordIf(ctx, "NULL") && ctx.requireProEdition())
             return JSONValue.Behaviour.NULL;
         else if (parseKeywordIf(ctx, "DEFAULT") && ctx.requireProEdition())
             return JSONValue.Behaviour.DEFAULT;
+        else
+            return null;
+    }
+
+    private static final JSONExists.Behaviour parseJSONExistsOnErrorBehaviourIf(ParserContext ctx) {
+        if (parseKeywordIf(ctx, "ERROR") && parseKeyword(ctx, "ON ERROR") && ctx.requireProEdition())
+            return JSONExists.Behaviour.ERROR;
+        else if (parseKeywordIf(ctx, "TRUE") && parseKeyword(ctx, "ON ERROR") && ctx.requireProEdition())
+            return JSONExists.Behaviour.TRUE;
+        else if (parseKeywordIf(ctx, "FALSE") && parseKeyword(ctx, "ON ERROR") && ctx.requireProEdition())
+            return JSONExists.Behaviour.FALSE;
+        else if (parseKeywordIf(ctx, "UNKNOWN") && parseKeyword(ctx, "ON ERROR") && ctx.requireProEdition())
+            return JSONExists.Behaviour.UNKNOWN;
         else
             return null;
     }

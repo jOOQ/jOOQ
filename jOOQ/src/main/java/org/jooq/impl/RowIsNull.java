@@ -42,6 +42,7 @@ import static org.jooq.Clause.CONDITION_IS_NOT_NULL;
 import static org.jooq.Clause.CONDITION_IS_NULL;
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
@@ -112,8 +113,11 @@ final class RowIsNull extends AbstractCondition {
 
     private final QueryPartInternal delegate(Configuration configuration) {
 
-        // CUBRID 9, HSQLDB, and Vertica have incorrect implementations of the NULL predicate.
-        // Informix doesn't implement the RVE IS NULL predicate.
+
+
+
+
+
         if (EMULATE_NULL.contains(configuration.family())) {
             Field<?>[] fields = row.fields();
             List<Condition> conditions = new ArrayList<>(fields.length);

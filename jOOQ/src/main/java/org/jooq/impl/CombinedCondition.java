@@ -43,6 +43,7 @@ import static org.jooq.Clause.CONDITION_AND;
 import static org.jooq.Clause.CONDITION_OR;
 import static org.jooq.Operator.AND;
 import static org.jooq.impl.DSL.falseCondition;
+import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.Keywords.K_AND;
 import static org.jooq.impl.Keywords.K_OR;
@@ -97,6 +98,12 @@ final class CombinedCondition extends AbstractCondition {
             return result;
         else if (first != null)
             return first;
+
+        // [#9998] All conditions were NoCondition
+        else if (!conditions.isEmpty())
+            return noCondition();
+
+        // [#9998] Otherwise, return the identity for the operator
         else if (operator == AND)
             return trueCondition();
         else

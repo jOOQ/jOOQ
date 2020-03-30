@@ -4684,10 +4684,25 @@ public class JavaGenerator extends AbstractGenerator {
             return null;
 
         // [#3450] Escape also the escape sequence, among other things that break Java strings.
-        return comment.replace("\\", "\\\\")
-                      .replace("\"", "\\\"")
-                      .replace("\n", "\\n")
-                      .replace("\r", "\\r");
+        String result = comment.replace("\\", "\\\\")
+                               .replace("\"", "\\\"")
+                               .replace("\n", "\\n")
+                               .replace("\r", "\\r");
+
+        // [#10007] Very long strings cannot be handled by the javac compiler.
+        int max = 16384;
+        if (result.length() <= max)
+            return result;
+
+        StringBuilder sb = new StringBuilder("\" + new String(\"");
+        for (int i = 0; i < result.length(); i += max) {
+            if (i > 0)
+                sb.append("\") + new String(\"");
+
+            sb.append(result.substring(i, Math.min(i + max, result.length())));
+        }
+
+        return sb.append("\") + \"").toString();
     }
 
     /**

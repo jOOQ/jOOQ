@@ -85,8 +85,11 @@ import org.h2.api.ErrorCode;
  */
 public class DDLDatabase extends AbstractInterpretingDatabase {
 
-    private static final JooqLogger log    = JooqLogger.getLogger(DDLDatabase.class);
-    private static final Pattern    P_NAME = Pattern.compile("(?s:.*?\"([^\"]*)\".*)");
+    private static final JooqLogger log                 = JooqLogger.getLogger(DDLDatabase.class);
+    private static final Pattern    P_NAME              = Pattern.compile("(?s:.*?\"([^\"]*)\".*)");
+
+    private boolean                 logExecutedQueries  = true;
+    private boolean                 logExecutionResults = true;
 
     @Override
     protected void export() throws Exception {
@@ -98,6 +101,8 @@ public class DDLDatabase extends AbstractInterpretingDatabase {
         boolean parseIgnoreComments = !"false".equalsIgnoreCase(getProperties().getProperty("parseIgnoreComments"));
         String parseIgnoreCommentStart = getProperties().getProperty("parseIgnoreCommentStart", defaultSettings.getParseIgnoreCommentStart());
         String parseIgnoreCommentStop = getProperties().getProperty("parseIgnoreCommentStop", defaultSettings.getParseIgnoreCommentStop());
+        logExecutedQueries = !"false".equalsIgnoreCase(getProperties().getProperty("logExecutedQueries"));
+        logExecutionResults = !"false".equalsIgnoreCase(getProperties().getProperty("logExecutionResults"));
 
         if (isBlank(scripts)) {
             scripts = "";
@@ -174,12 +179,18 @@ public class DDLDatabase extends AbstractInterpretingDatabase {
                 repeat:
                 for (;;) {
                     try {
-                        log.info(query);
+                        if (logExecutedQueries)
+                            log.info(query);
 
-                        if (query instanceof ResultQuery)
-                            log.info("\n" + ((ResultQuery<?>) query).fetch());
+                        if (logExecutedQueries && logExecutionResults)
+                            if (query instanceof ResultQuery)
+                                log.info("\n" + ((ResultQuery<?>) query).fetch());
+                            else
+                                log.info("Update count: " + query.execute());
+
+                        // [#10008] Execute all queries. Could have FOR UPDATE or other side effects
                         else
-                            log.info("Update count: " + query.execute());
+                            query.execute();
 
                         break repeat;
                     }

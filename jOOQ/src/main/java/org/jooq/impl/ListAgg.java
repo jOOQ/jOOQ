@@ -51,6 +51,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
+// ...
 import static org.jooq.impl.Keywords.F_CONCAT;
 import static org.jooq.impl.Keywords.F_SUBSTR;
 import static org.jooq.impl.Keywords.F_XMLAGG;
@@ -110,6 +111,10 @@ final class ListAgg extends DefaultAggregateFunction<String> {
         else if (SUPPORT_STRING_AGG.contains(ctx.dialect())) {
             acceptStringAgg(ctx);
             acceptFilterClause(ctx);
+
+
+
+
             acceptOverClause(ctx);
         }
 
@@ -168,6 +173,9 @@ final class ListAgg extends DefaultAggregateFunction<String> {
             ctx.sql(", ").visit(arguments.get(1));
         else
             ctx.sql(", ''");
+
+
+
 
         acceptOrderBy(ctx);
         ctx.sql(')');

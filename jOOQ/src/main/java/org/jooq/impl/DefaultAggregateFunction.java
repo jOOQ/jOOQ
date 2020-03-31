@@ -125,7 +125,7 @@ class DefaultAggregateFunction<T> extends AbstractAggregateFunction<T> {
     /**
      * Render <code>WITHIN GROUP (ORDER BY ..)</code> clause
      */
-    private final void acceptWithinGroupClause(Context<?> ctx) {
+    final void acceptWithinGroupClause(Context<?> ctx) {
         if (withinGroupOrderBy != null) {
             ctx.sql(' ').visit(K_WITHIN_GROUP)
                .sql(" (").visit(K_ORDER_BY).sql(' ');

@@ -75,9 +75,12 @@ import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.QueryPartListView.wrap;
+import static org.jooq.impl.Tools.fieldNames;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_AS_REQUIRED;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_UNALIAS_ALIASED_EXPRESSIONS;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.jooq.Clause;
@@ -103,7 +106,8 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
     private static final Clause[]        CLAUSES_FIELD_ALIAS                   = { FIELD, FIELD_ALIAS };
     private static final Set<SQLDialect> SUPPORT_AS_REQUIRED                   = SQLDialect.supportedBy(DERBY, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE);
     private static final Set<SQLDialect> SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL1 = SQLDialect.supportedBy(CUBRID, FIREBIRD, MYSQL);
-    private static final Set<SQLDialect> SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL2 = SQLDialect.supportedBy(H2, MARIADB, MYSQL, SQLITE);
+    private static final Set<SQLDialect> SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL2 = SQLDialect.supportedBy(MARIADB, MYSQL, SQLITE);
+    private static final Set<SQLDialect> SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL3 = SQLDialect.supportedBy(H2);
 
     final Q                              wrapped;
     final Q                              wrapping;
@@ -179,49 +183,61 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
             // [#1801] Some databases do not support "derived column names".
             // They can be emulated by concatenating a dummy SELECT with no
             // results using UNION ALL
-            else if (fieldAliases != null && SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL2.contains(family)) {
+            else if (fieldAliases != null && (
+                    SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL2.contains(family)
+                 || SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL3.contains(family))) {
+
                 emulatedDerivedColumnList = true;
 
-                SelectFieldList<Field<?>> fields = new SelectFieldList<>();
-                for (Name fieldAlias : fieldAliases) {
-                    switch (family) {
+                // [#3156] Do not SELECT * from derived tables to prevent ambiguously defined columns
+                // in those derived tables
+                Select<? extends Record> wrappedAsSelect =
+                    wrapped instanceof Select
+                  ? (Select<?>) wrapped
+                  : wrapped instanceof DerivedTable
+                  ? ((DerivedTable<?>) wrapped).query()
+                  : select(asterisk()).from(((Table<?>) wrapped).as(alias));
 
+                // [#9486] H2 cannot handle duplicate column names in derived tables, despite derived column lists
+                //         See: https://github.com/h2database/h2database/issues/2532
+                if (SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL3.contains(family)) {
+                    List<Name> names = fieldNames(wrappedAsSelect.getSelect());
 
-
-
-
-
-
-
-
-
-                        default: {
-                            fields.add(field("null").as(fieldAlias));
-                            break;
-                        }
+                    if (names.size() > 0 && names.size() == new HashSet<>(names).size()) {
+                        toSQLWrapped(context);
+                        emulatedDerivedColumnList = false;
                     }
                 }
 
-                Select<Record> select = select(fields).where(falseCondition())
-                .unionAll(
+                if (emulatedDerivedColumnList) {
+                    SelectFieldList<Field<?>> fields = new SelectFieldList<>();
+                    for (Name fieldAlias : fieldAliases) {
+                        switch (family) {
 
-                    // [#3156] Do not SELECT * from derived tables to prevent ambiguously defined columns
-                    // in those derived tables
-                      wrapped instanceof Select
-                    ? (Select<?>) wrapped
-                    : wrapped instanceof DerivedTable
-                    ? ((DerivedTable<?>) wrapped).query()
-                    : select(asterisk()).from(((Table<?>) wrapped).as(alias))
 
-                );
 
-                context.sql('(')
-                       .formatIndentStart().formatNewLine()
-                       .subquery(true)
-                       .visit(select)
-                       .subquery(false)
-                       .formatIndentEnd().formatNewLine()
-                       .sql(')');
+
+
+
+
+
+
+
+                            default: {
+                                fields.add(field("null").as(fieldAlias));
+                                break;
+                            }
+                        }
+                    }
+
+                    context.sql('(')
+                           .formatIndentStart().formatNewLine()
+                           .subquery(true)
+                           .visit(select(fields).where(falseCondition()).unionAll(wrappedAsSelect))
+                           .subquery(false)
+                           .formatIndentEnd().formatNewLine()
+                           .sql(')');
+                }
             }
 
             // The default behaviour

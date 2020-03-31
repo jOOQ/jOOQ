@@ -1273,6 +1273,18 @@ final class Tools {
         return result;
     }
 
+    static final List<Name> fieldNames(Collection<? extends Field<?>> fields) {
+        if (fields == null)
+            return null;
+
+        List<Name> result = new ArrayList<>(fields.size());
+
+        for (Field<?> field : fields)
+            result.add(field.getUnqualifiedName());
+
+        return result;
+    }
+
     static final String[] fieldNameStrings(Field<?>[] fields) {
         if (fields == null)
             return null;

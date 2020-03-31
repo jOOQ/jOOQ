@@ -27,7 +27,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class MatchersFieldType implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31200L;
+    private final static long serialVersionUID = 31400L;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String expression;
     protected MatcherRule fieldIdentifier;

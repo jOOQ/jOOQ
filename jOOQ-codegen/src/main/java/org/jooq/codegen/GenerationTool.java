@@ -678,6 +678,12 @@ public class GenerationTool {
                 generator.setGenerateNullableAnnotation(g.getGenerate().isNullableAnnotation());
             if (g.getGenerate().getNullableAnnotationType() != null)
                 generator.setGeneratedNullableAnnotationType(g.getGenerate().getNullableAnnotationType());
+            if (g.getGenerate().isConstructorPropertiesAnnotation() != null)
+                generator.setGenerateConstructorPropertiesAnnotation(g.getGenerate().isConstructorPropertiesAnnotation());
+            if (g.getGenerate().isConstructorPropertiesAnnotationOnPojos() != null)
+                generator.setGenerateConstructorPropertiesAnnotationOnPojos(g.getGenerate().isConstructorPropertiesAnnotationOnPojos());
+            if (g.getGenerate().isConstructorPropertiesAnnotationOnRecords() != null)
+                generator.setGenerateConstructorPropertiesAnnotationOnRecords(g.getGenerate().isConstructorPropertiesAnnotationOnRecords());
             if (g.getGenerate().isRoutines() != null)
                 generator.setGenerateRoutines(g.getGenerate().isRoutines());
             if (g.getGenerate().isSequences() != null)

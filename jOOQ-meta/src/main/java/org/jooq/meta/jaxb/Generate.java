@@ -29,7 +29,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class Generate implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31200L;
+    private final static long serialVersionUID = 31400L;
     @XmlElement(defaultValue = "true")
     protected Boolean indexes = true;
     @XmlElement(defaultValue = "true")
@@ -59,6 +59,10 @@ public class Generate implements Serializable, XMLAppendable
     @XmlElement(defaultValue = "javax.annotation.Nullable")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String nullableAnnotationType = "javax.annotation.Nullable";
+    @XmlElement(defaultValue = "false")
+    protected Boolean constructorPropertiesAnnotation = false;
+    protected Boolean constructorPropertiesAnnotationOnPojos;
+    protected Boolean constructorPropertiesAnnotationOnRecords;
     @XmlElement(defaultValue = "true")
     protected Boolean routines = true;
     @XmlElement(defaultValue = "true")
@@ -478,6 +482,78 @@ public class Generate implements Serializable, XMLAppendable
      */
     public void setNullableAnnotationType(String value) {
         this.nullableAnnotationType = value;
+    }
+
+    /**
+     * Generate the {@link java.beans.ConstructorProperties} annotation on generated POJOs and/or records.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isConstructorPropertiesAnnotation() {
+        return constructorPropertiesAnnotation;
+    }
+
+    /**
+     * Sets the value of the constructorPropertiesAnnotation property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setConstructorPropertiesAnnotation(Boolean value) {
+        this.constructorPropertiesAnnotation = value;
+    }
+
+    /**
+     * Generate the {@link java.beans.ConstructorProperties} annotation on generated POJOs (defaults to <code>true</code> if {@link #constructorPropertiesAnnotation} is active).
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isConstructorPropertiesAnnotationOnPojos() {
+        return constructorPropertiesAnnotationOnPojos;
+    }
+
+    /**
+     * Sets the value of the constructorPropertiesAnnotationOnPojos property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setConstructorPropertiesAnnotationOnPojos(Boolean value) {
+        this.constructorPropertiesAnnotationOnPojos = value;
+    }
+
+    /**
+     * Generate the {@link java.beans.ConstructorProperties} annotation on generated records (defaults to <code>true</code> if {@link #constructorPropertiesAnnotation} is active).
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isConstructorPropertiesAnnotationOnRecords() {
+        return constructorPropertiesAnnotationOnRecords;
+    }
+
+    /**
+     * Sets the value of the constructorPropertiesAnnotationOnRecords property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setConstructorPropertiesAnnotationOnRecords(Boolean value) {
+        this.constructorPropertiesAnnotationOnRecords = value;
     }
 
     /**
@@ -2020,6 +2096,21 @@ public class Generate implements Serializable, XMLAppendable
         return this;
     }
 
+    public Generate withConstructorPropertiesAnnotation(Boolean value) {
+        setConstructorPropertiesAnnotation(value);
+        return this;
+    }
+
+    public Generate withConstructorPropertiesAnnotationOnPojos(Boolean value) {
+        setConstructorPropertiesAnnotationOnPojos(value);
+        return this;
+    }
+
+    public Generate withConstructorPropertiesAnnotationOnRecords(Boolean value) {
+        setConstructorPropertiesAnnotationOnRecords(value);
+        return this;
+    }
+
     public Generate withRoutines(Boolean value) {
         setRoutines(value);
         return this;
@@ -2360,6 +2451,9 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("nonnullAnnotationType", nonnullAnnotationType);
         builder.append("nullableAnnotation", nullableAnnotation);
         builder.append("nullableAnnotationType", nullableAnnotationType);
+        builder.append("constructorPropertiesAnnotation", constructorPropertiesAnnotation);
+        builder.append("constructorPropertiesAnnotationOnPojos", constructorPropertiesAnnotationOnPojos);
+        builder.append("constructorPropertiesAnnotationOnRecords", constructorPropertiesAnnotationOnRecords);
         builder.append("routines", routines);
         builder.append("sequences", sequences);
         builder.append("udts", udts);
@@ -2556,6 +2650,33 @@ public class Generate implements Serializable, XMLAppendable
             }
         } else {
             if (!nullableAnnotationType.equals(other.nullableAnnotationType)) {
+                return false;
+            }
+        }
+        if (constructorPropertiesAnnotation == null) {
+            if (other.constructorPropertiesAnnotation!= null) {
+                return false;
+            }
+        } else {
+            if (!constructorPropertiesAnnotation.equals(other.constructorPropertiesAnnotation)) {
+                return false;
+            }
+        }
+        if (constructorPropertiesAnnotationOnPojos == null) {
+            if (other.constructorPropertiesAnnotationOnPojos!= null) {
+                return false;
+            }
+        } else {
+            if (!constructorPropertiesAnnotationOnPojos.equals(other.constructorPropertiesAnnotationOnPojos)) {
+                return false;
+            }
+        }
+        if (constructorPropertiesAnnotationOnRecords == null) {
+            if (other.constructorPropertiesAnnotationOnRecords!= null) {
+                return false;
+            }
+        } else {
+            if (!constructorPropertiesAnnotationOnRecords.equals(other.constructorPropertiesAnnotationOnRecords)) {
                 return false;
             }
         }
@@ -3128,6 +3249,9 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((nonnullAnnotationType == null)? 0 :nonnullAnnotationType.hashCode()));
         result = ((prime*result)+((nullableAnnotation == null)? 0 :nullableAnnotation.hashCode()));
         result = ((prime*result)+((nullableAnnotationType == null)? 0 :nullableAnnotationType.hashCode()));
+        result = ((prime*result)+((constructorPropertiesAnnotation == null)? 0 :constructorPropertiesAnnotation.hashCode()));
+        result = ((prime*result)+((constructorPropertiesAnnotationOnPojos == null)? 0 :constructorPropertiesAnnotationOnPojos.hashCode()));
+        result = ((prime*result)+((constructorPropertiesAnnotationOnRecords == null)? 0 :constructorPropertiesAnnotationOnRecords.hashCode()));
         result = ((prime*result)+((routines == null)? 0 :routines.hashCode()));
         result = ((prime*result)+((sequences == null)? 0 :sequences.hashCode()));
         result = ((prime*result)+((udts == null)? 0 :udts.hashCode()));

@@ -1155,6 +1155,18 @@ jOOQ version used for source code.]]></jxb:javadoc></jxb:property></appinfo></an
       <element name="nullableAnnotationType" type="string" default="javax.annotation.Nullable" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Specify the qualified annotation name for all nullable items in generated code, defaulting to the JSR-305 {@link javax.annotation.Nullable} type.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+    
+      <element name="constructorPropertiesAnnotation" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate the {@link java.beans.ConstructorProperties} annotation on generated POJOs and/or records.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="constructorPropertiesAnnotationOnPojos" type="boolean" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate the {@link java.beans.ConstructorProperties} annotation on generated POJOs (defaults to <code>true</code> if {@link #constructorPropertiesAnnotation} is active).]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="constructorPropertiesAnnotationOnRecords" type="boolean" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate the {@link java.beans.ConstructorProperties} annotation on generated records (defaults to <code>true</code> if {@link #constructorPropertiesAnnotation} is active).]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
       <element name="routines" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate Routine classes.]]></jxb:javadoc></jxb:property></appinfo></annotation>

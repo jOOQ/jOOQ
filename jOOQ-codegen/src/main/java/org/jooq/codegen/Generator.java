@@ -213,6 +213,37 @@ public interface Generator {
      */
     void setGeneratedNullableAnnotationType(String generatedNullableAnnotationType);
 
+    /**
+     * Whether the <code>ConstructorProperties</code> annotation should be generated.
+     */
+    void setGenerateConstructorPropertiesAnnotation(boolean generateConstructorPropertiesAnnotation);
+
+    /**
+     * Whether the <code>ConstructorProperties</code> annotation should be generated.
+     */
+    boolean generateConstructorPropertiesAnnotation();
+
+    /**
+     * Whether the <code>ConstructorProperties</code> annotation should be generated on POJOs.
+     */
+    void setGenerateConstructorPropertiesAnnotationOnPojos(boolean generateConstructorPropertiesAnnotationOnPojos);
+
+    /**
+     * Whether the <code>ConstructorProperties</code> annotation should be generated on POJOs.
+     */
+    boolean generateConstructorPropertiesAnnotationOnPojos();
+
+    /**
+     * Whether the <code>ConstructorProperties</code> annotation should be generated on records.
+     */
+    void setGenerateConstructorPropertiesAnnotationOnRecords(boolean generateConstructorPropertiesAnnotationOnRecords);
+
+    /**
+     * Whether the <code>ConstructorProperties</code> annotation should be generated on records.
+     */
+    boolean generateConstructorPropertiesAnnotationOnRecords();
+
+
     boolean useSchemaVersionProvider();
     void setUseSchemaVersionProvider(boolean useSchemaVersionProvider);
     boolean useCatalogVersionProvider();

@@ -52,6 +52,7 @@ import static org.jooq.meta.AbstractTypedElementDefinition.getDataType;
 import static org.jooq.tools.StringUtils.defaultIfBlank;
 import static org.jooq.tools.StringUtils.defaultString;
 
+import java.beans.ConstructorProperties;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -1585,6 +1586,7 @@ public class JavaGenerator extends AbstractGenerator {
         // [#3176] Avoid generating constructors for tables with more than 255 columns (Java's method argument limit)
         if (degree > 0 && degree < 256) {
             List<String> arguments = new ArrayList<>(degree);
+            List<String> properties = new ArrayList<>(degree);
 
             for (int i = 0; i < degree; i++) {
                 final TypedElementDefinition<?> column = columns.get(i);
@@ -1599,6 +1601,8 @@ public class JavaGenerator extends AbstractGenerator {
 
                     arguments.add((nullableAnnotation == null ? "" : "@" + nullableAnnotation + " ") + type + " " + columnMember);
                 }
+
+                properties.add("\"" + escapeString(columnMember) + "\"");
             }
 
             out.tab(1).javadoc("Create a detached, initialised %s", className);
@@ -1608,6 +1612,9 @@ public class JavaGenerator extends AbstractGenerator {
                 out.tab(2).println("this()", tableIdentifier);
             }
             else {
+                if (generateConstructorPropertiesAnnotationOnRecords())
+                    out.tab(1).println("@%s({ [[%s]] })", ConstructorProperties.class, properties);
+
                 out.tab(1).println("public %s([[%s]]) {", className, arguments);
 
                 if (tableUdtOrEmbeddable instanceof EmbeddableDefinition)
@@ -3381,10 +3388,13 @@ public class JavaGenerator extends AbstractGenerator {
      */
     protected void generatePojoMultiConstructor(Definition tableOrUDT, JavaWriter out) {
         final String className = getStrategy().getJavaClassName(tableOrUDT, Mode.POJO);
+        final List<String> properties = new ArrayList<>();
 
         int maxLength = 0;
-        for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT))
+        for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
             maxLength = Math.max(maxLength, out.ref(getJavaType(column.getType(resolver(Mode.POJO)), Mode.POJO)).length());
+            properties.add("\"" + escapeString(getStrategy().getJavaMemberName(column, Mode.POJO)) + "\"");
+        }
 
         if (scala) {
         }
@@ -3394,6 +3404,10 @@ public class JavaGenerator extends AbstractGenerator {
         else if (getTypedElements(tableOrUDT).size() > 0 &&
                  getTypedElements(tableOrUDT).size() < 256) {
             out.println();
+
+            if (generateConstructorPropertiesAnnotationOnPojos())
+                out.tab(1).println("@%s({ [[%s]] })", ConstructorProperties.class, properties);
+
             out.tab(1).print("public %s(", className);
 
             String separator1 = "";

@@ -65,7 +65,7 @@ public enum SQLDialect {
      *             pseudo-dialect.
      */
     @Deprecated
-    SQL99("", false, true, false),
+    SQL99("", false, false),
 
     /**
      * The default SQL dialect.
@@ -74,67 +74,11 @@ public enum SQLDialect {
      * not intended to be used with any actual database as it may combined
      * dialect-specific things from various dialects.
      */
-    DEFAULT("", false, true, false),
+    DEFAULT("", false, false),
 
     // -------------------------------------------------------------------------
-    // SQL dialects for free usage, included in the jOOQ Lite Edition
+    // SQL dialects for free usage
     // -------------------------------------------------------------------------
-
-    /**
-     * The Apache Derby dialect family.
-     */
-    DERBY("Derby", false, true, true),
-
-    /**
-     * The H2 dialect family.
-     */
-    H2("H2", false, true, true),
-
-    /**
-     * The Hypersonic dialect family.
-     */
-    HSQLDB("HSQLDB", false, true, true),
-
-    /**
-     * The SQLite dialect family.
-     * <p>
-     * This family behaves like the versioned dialect {@link #SQLITE_3_30}.
-     */
-    SQLITE("SQLite", false, true, true),
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // -------------------------------------------------------------------------
-    // SQL dialects for free usage, included in the jOOQ Open Source Edition
-    // -------------------------------------------------------------------------
-
-
 
     /**
      * The CUBRID dialect family.
@@ -144,17 +88,19 @@ public enum SQLDialect {
      *             future.
      */
     @Deprecated
-    CUBRID("CUBRID", false, false, true),
+    CUBRID("CUBRID", false, true),
+
+    /**
+     * The Apache Derby dialect family.
+     */
+    DERBY("Derby", false, true),
 
     /**
      * The Firebird dialect family.
      * <p>
      * This family behaves like the versioned dialect {@link #FIREBIRD_3_0}.
      */
-    FIREBIRD("Firebird", false, false, true),
-
-
-
+    FIREBIRD("Firebird", false, true),
 
 
 
@@ -175,11 +121,21 @@ public enum SQLDialect {
 
 
     /**
+     * The H2 dialect family.
+     */
+    H2("H2", false, true),
+
+    /**
+     * The Hypersonic dialect family.
+     */
+    HSQLDB("HSQLDB", false, true),
+
+    /**
      * The MariaDB dialect family.
      * <p>
      * This family behaves like the versioned dialect {@link #MARIADB_10_5}.
      */
-    MARIADB("MariaDB", false, false, true),
+    MARIADB("MariaDB", false, true),
 
 
 
@@ -238,9 +194,7 @@ public enum SQLDialect {
      * <p>
      * This family behaves like the versioned dialect {@link #MYSQL_8_0_19}.
      */
-    MYSQL("MySQL", false, false, true),
-
-
+    MYSQL("MySQL", false, true),
 
 
 
@@ -277,7 +231,7 @@ public enum SQLDialect {
      * extent on Amazon RedShift as well, we strongly suggest you use the
      * official {@link #REDSHIFT} support, instead.
      */
-    POSTGRES("Postgres", false, false, true),
+    POSTGRES("Postgres", false, true),
 
 
 
@@ -327,6 +281,38 @@ public enum SQLDialect {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * The SQLite dialect family.
+     * <p>
+     * This family behaves like the versioned dialect {@link #SQLITE_3_30}.
+     */
+    SQLITE("SQLite", false, true),
 
 
 
@@ -650,7 +636,6 @@ public enum SQLDialect {
 
     private final String                  name;
     private final boolean                 commercial;
-    private final boolean                 lite;
     private final boolean                 supported;
     private final SQLDialect              family;
     private SQLDialect                    predecessor;
@@ -740,18 +725,17 @@ public enum SQLDialect {
                 supported.add(candidate);
     }
 
-    private SQLDialect(String name, boolean commercial, boolean lite, boolean supported) {
-        this(name, commercial, lite, supported, null, null);
+    private SQLDialect(String name, boolean commercial, boolean supported) {
+        this(name, commercial, supported, null, null);
     }
 
-    private SQLDialect(String name, boolean commercial, boolean lite, boolean supported, SQLDialect family) {
-        this(name, commercial, lite, supported, family, null);
+    private SQLDialect(String name, boolean commercial, boolean supported, SQLDialect family) {
+        this(name, commercial, supported, family, null);
     }
 
-    private SQLDialect(String name, boolean commercial, boolean lite, boolean supported, SQLDialect family, SQLDialect predecessor) {
+    private SQLDialect(String name, boolean commercial, boolean supported, SQLDialect family, SQLDialect predecessor) {
         this.name = name;
         this.commercial = commercial;
-        this.lite = lite;
         this.supported = supported;
         this.family = family == null ? this : family;
         this.predecessor = predecessor == null ? this : predecessor;
@@ -760,13 +744,6 @@ public enum SQLDialect {
             family.predecessor = this;
 
         this.thirdParty = new ThirdParty();
-    }
-
-    /**
-     * Whether this dialect is supported also in the jOOQ Lite Edition.
-     */
-    public final boolean lite() {
-        return lite;
     }
 
     /**

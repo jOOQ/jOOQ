@@ -282,7 +282,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
         }
     }
 
-    void toSQLAs(Context<?> ctx) {
+    final void toSQLAs(Context<?> ctx) {
 
         // [#9925] In some cases, AS is always required, regardless
         //         of the dialect or settings (e.g. XMLATTRIBUTES).
@@ -310,14 +310,14 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
         }
     }
 
-    private void toSQLWrapped(Context<?> ctx) {
+    private final void toSQLWrapped(Context<?> ctx) {
         ctx.sql(wrapInParentheses ? "(" : "")
            .visit(wrapped)
            .sql(wrapInParentheses ? ")" : "");
     }
 
-    private void toSQLDerivedColumnList(Context<?> ctx) {
-        ctx.sql('(')
+    private final void toSQLDerivedColumnList(Context<?> ctx) {
+        ctx.sql(" (")
            .visit(wrap(fieldAliases).indentSize(0))
            .sql(')');
     }

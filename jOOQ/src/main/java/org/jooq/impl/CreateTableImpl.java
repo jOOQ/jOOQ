@@ -459,7 +459,7 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
 
         if (!columnFields.isEmpty()
                 && (select == null || !NO_SUPPORT_CTAS_COLUMN_NAMES.contains(ctx.family()))) {
-            ctx.sql('(')
+            ctx.sql(" (")
                .start(CREATE_TABLE_COLUMNS)
                .formatIndentStart()
                .formatNewLine();

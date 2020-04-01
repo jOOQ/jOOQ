@@ -42,14 +42,13 @@ import static java.util.Arrays.asList;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import org.jooq.QueryPart;
 
 /**
  * @author Lukas Eder
  */
-class QueryPartList<T extends QueryPart> extends QueryPartListView<T> implements List<T> {
+class QueryPartList<T extends QueryPart> extends QueryPartListView<T> {
 
     private static final long serialVersionUID = -2936922742534009564L;
 
@@ -67,5 +66,15 @@ class QueryPartList<T extends QueryPart> extends QueryPartListView<T> implements
         // [#4664] Don't allocate the backing array if not necessary!
         if (wrappedList != null && !wrappedList.isEmpty())
             addAll(wrappedList);
+    }
+
+    @Override
+    QueryPartList<T> indentSize(int newIndentSize) {
+        return (QueryPartList<T>) super.indentSize(newIndentSize);
+    }
+
+    @Override
+    QueryPartList<T> qualify(boolean newQualify) {
+        return (QueryPartList<T>) super.qualify(newQualify);
     }
 }

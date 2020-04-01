@@ -47,7 +47,6 @@ import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
@@ -91,7 +90,7 @@ final class RowIsNull extends AbstractCondition {
 
     // Currently not yet supported in SQLite:
     // https://www.sqlite.org/rowvalue.html
-    private static final Set<SQLDialect> EMULATE_NULL     = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, SQLITE);
+    private static final Set<SQLDialect> EMULATE_NULL     = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, SQLITE);
 
     private final Row                    row;
     private final boolean                isNull;

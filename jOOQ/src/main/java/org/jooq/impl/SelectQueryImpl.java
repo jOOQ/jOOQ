@@ -87,6 +87,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SortOrder.DESC;
 import static org.jooq.impl.CombineOperator.EXCEPT;
 import static org.jooq.impl.CombineOperator.EXCEPT_ALL;
@@ -217,8 +218,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-
-    static final Set<SQLDialect>         SUPPORT_WINDOW_CLAUSE           = SQLDialect.supportedBy(H2, MYSQL, POSTGRES);
+    static final Set<SQLDialect>         SUPPORT_WINDOW_CLAUSE           = SQLDialect.supportedBy(H2, MYSQL, POSTGRES, SQLITE);
 
     // [#7421] [#9832] We can eventually stop generating the FROM clause in newer versions of MariaDB and MySQL
     private static final Set<SQLDialect> REQUIRES_FROM_CLAUSE            = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL);

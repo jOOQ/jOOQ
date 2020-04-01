@@ -45,6 +45,7 @@ import static java.lang.Boolean.TRUE;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Keywords.K_FIRST;
 import static org.jooq.impl.Keywords.K_FROM;
@@ -95,7 +96,7 @@ implements
      * Generated UID
      */
     private static final long            serialVersionUID                   = 2524547974085497171L;
-    private static final Set<SQLDialect> SUPPORT_NO_PARENS_WINDOW_REFERENCE = SQLDialect.supportedBy(MYSQL, POSTGRES);
+    private static final Set<SQLDialect> SUPPORT_NO_PARENS_WINDOW_REFERENCE = SQLDialect.supportedBy(MYSQL, POSTGRES, SQLITE);
 
     // Other attributes
     WindowSpecificationImpl              windowSpecification;

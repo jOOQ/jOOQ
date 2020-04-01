@@ -57,6 +57,7 @@ import static org.jooq.impl.DSL.exists;
 // ...
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.selectFrom;
+import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
@@ -910,6 +911,22 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
     public final Table<R> as(Table<?> otherTable, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> aliasFunction) {
         return as(otherTable.getUnqualifiedName(), (f, i) -> aliasFunction.apply(f, i).getUnqualifiedName());
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

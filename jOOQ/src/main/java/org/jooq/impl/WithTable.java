@@ -37,63 +37,69 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Keywords.K_WITH;
 
-import org.jooq.Context;
-import org.jooq.Name;
-import org.jooq.Record;
-import org.jooq.Table;
 
-/**
- * @author Lukas Eder
- */
-final class WithTable<R extends Record> extends AbstractTable<R> {
 
-    /**
-     * Generated UID
-     */
-    private static final long      serialVersionUID = -3905775637768497535L;
 
-    private final AbstractTable<R> delegate;
-    private final String           hint;
 
-    WithTable(AbstractTable<R> delegate, String hint) {
-        super(delegate.getOptions(), delegate.getQualifiedName(), delegate.getSchema());
 
-        this.delegate = delegate;
-        this.hint = hint;
-    }
 
-    @Override
-    public final boolean declaresTables() {
-        return true;
-    }
 
-    @Override
-    public final void accept(Context<?> ctx) {
-        ctx.visit(delegate)
-           .sql(' ').visit(K_WITH)
-           .sql(" (").sql(hint)
-           .sql(')');
-    }
 
-    @Override
-    public final Class<? extends R> getRecordType() {
-        return delegate.getRecordType();
-    }
 
-    @Override
-    public final Table<R> as(Name alias) {
-        return new WithTable<>(new TableAlias<>(delegate, alias), hint);
-    }
 
-    @Override
-    public final Table<R> as(Name alias, Name... fieldAliases) {
-        return new WithTable<>(new TableAlias<>(delegate, alias, fieldAliases), hint);
-    }
 
-    @Override
-    final Fields<R> fields0() {
-        return delegate.fields0();
-    }
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

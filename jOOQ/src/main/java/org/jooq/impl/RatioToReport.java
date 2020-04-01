@@ -79,8 +79,10 @@ final class RatioToReport extends DefaultAggregateFunction<BigDecimal> {
 
 
 
-
-
+            case H2:
+                ctx.visit(F_RATIO_TO_REPORT).sql('(').visit(field).sql(')');
+                acceptOverClause(ctx);
+                break;
 
 
             default:

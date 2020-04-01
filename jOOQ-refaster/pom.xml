@@ -27,22 +27,18 @@
         <dependency>
             <groupId>com.google.errorprone</groupId>
             <artifactId>error_prone_refaster</artifactId>
-            <version>2.3.4</version>
         </dependency>
         <dependency>
             <groupId>com.google.errorprone</groupId>
             <artifactId>error_prone_core</artifactId>
-            <version>2.3.4</version>
         </dependency>
         <dependency>
             <groupId>com.google.errorprone</groupId>
             <artifactId>error_prone_annotation</artifactId>
-            <version>2.3.4</version>
         </dependency>
         <dependency>
             <groupId>com.google.auto.service</groupId>
             <artifactId>auto-service-annotations</artifactId>
-            <version>1.0-rc6</version>
         </dependency>
     </dependencies>
 

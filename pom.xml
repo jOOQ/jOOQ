@@ -38,6 +38,12 @@
 
         <!-- DefaultRecordMapper and jOOQ-meta-extensions can read JPA annotations -->
         <javax.persistence-api.version>2.2</javax.persistence-api.version>
+        
+        <!-- Examples and/or extension modules use these dependencies -->
+        <hibernate.version>5.4.9.Final</hibernate.version>
+        <liquibase.version>3.8.0</liquibase.version>
+        <spring.version>5.2.5.RELEASE</spring.version>
+        <spring.boot.version>2.2.6.RELEASE</spring.boot.version>
     </properties>
 
     <licenses>
@@ -252,19 +258,34 @@
             <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-core</artifactId>
-                <version>5.4.9.Final</version>
+                <version>${hibernate.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-context</artifactId>
-                <version>5.1.9.RELEASE</version>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-jdbc</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-orm</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
+                <version>${spring.version}</version>
             </dependency>
 
             <!-- jooq-meta-extensions and integration tests have this dependency -->
             <dependency>
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-core</artifactId>
-                <version>3.8.0</version>
+                <version>${liquibase.version}</version>
             </dependency>
 
             <!-- checker framework and error prone dependency for use with jOOQ-checker -->
@@ -418,6 +439,12 @@
                     <version>1.5</version>
                 </plugin>
 
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring.boot.version}</version>
+                </plugin>
+                
                 <plugin>
                     <groupId>net.alchim31.maven</groupId>
                     <artifactId>scala-maven-plugin</artifactId>

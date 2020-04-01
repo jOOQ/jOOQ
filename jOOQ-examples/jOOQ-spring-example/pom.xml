@@ -22,8 +22,6 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <org.springframework.version>4.3.10.RELEASE</org.springframework.version>
-        <org.h2.version>1.4.199</org.h2.version>
     </properties>
 
     <dependencies>
@@ -32,7 +30,6 @@
         <dependency>
             <groupId>org.jooq</groupId>
             <artifactId>jooq</artifactId>
-            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-dbcp</groupId>
@@ -42,7 +39,6 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>${org.h2.version}</version>
         </dependency>
 
         <!-- Logging -->
@@ -56,26 +52,22 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>${org.springframework.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
-            <version>${org.springframework.version}</version>
         </dependency>
 
         <!-- Testing -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.13</version>
             <type>jar</type>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <version>${org.springframework.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -99,7 +91,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.0</version>
                 <configuration>
                     <fork>true</fork>
                     <maxmem>1024m</maxmem>
@@ -149,7 +140,6 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>sql-maven-plugin</artifactId>
-                <version>1.5</version>
 
                 <configuration>
                     <skip>${maven.test.skip}</skip>
@@ -181,7 +171,7 @@
                     <dependency>
                         <groupId>com.h2database</groupId>
                         <artifactId>h2</artifactId>
-                        <version>${org.h2.version}</version>
+                        <version>${h2.version}</version>
                     </dependency>
                 </dependencies>
             </plugin>
@@ -190,7 +180,6 @@
             <plugin>
                 <groupId>org.jooq</groupId>
                 <artifactId>jooq-codegen-maven</artifactId>
-                <version>${project.version}</version>
 
                 <executions>
                     <execution>

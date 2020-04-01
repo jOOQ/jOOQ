@@ -56,7 +56,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
@@ -68,8 +67,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
  *      href="http://www.petrikainulainen.net/programming/jooq/using-jooq-with-spring-configuration/">http://www.petrikainulainen.net/programming/jooq/using-jooq-with-spring-configuration/</a>
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"/jooq-spring.xml"})
-@TransactionConfiguration(transactionManager="transactionManager")
+@ContextConfiguration(locations = { "/jooq-spring.xml" })
 public class TransactionTest {
 
     @Autowired DSLContext                   dsl;

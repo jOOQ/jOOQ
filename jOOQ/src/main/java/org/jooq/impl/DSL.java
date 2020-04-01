@@ -116,7 +116,6 @@ import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.OffsetTime;
 import java.time.temporal.Temporal;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -22686,12 +22685,7 @@ public class DSL {
      */
     @Support
     public static RowN row(Collection<?> values) {
-        Collection<Field<?>> fields = new ArrayList<>(values.size());
-
-        for (Object o : values)
-            fields.add(o instanceof Field<?> ? (Field<?>) o : val(o));
-
-        return new RowImplN(fields);
+        return row(values.toArray());
     }
 
     // -------------------------------------------------------------------------

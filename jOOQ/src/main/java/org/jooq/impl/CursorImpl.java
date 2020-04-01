@@ -37,11 +37,9 @@
  */
 package org.jooq.impl;
 
-import static java.lang.Boolean.TRUE;
 // ...
 import static org.jooq.impl.Tools.embeddedFields;
 import static org.jooq.impl.Tools.recordFactory;
-import static org.jooq.impl.Tools.BooleanDataKey.DATA_LOCK_ROWS_FOR_UPDATE;
 
 import java.io.InputStream;
 import java.io.Reader;
@@ -119,7 +117,6 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
 
     private transient Iterator<R>                          iterator;
     private transient int                                  rows;
-    private transient boolean                              lockRowsForUpdate;
 
 
     @SuppressWarnings("unchecked")
@@ -142,7 +139,6 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
 
 
         this.maxRows = maxRows;
-        this.lockRowsForUpdate = TRUE.equals(ctx.data(DATA_LOCK_ROWS_FOR_UPDATE));
         this.autoclosing = autoclosing;
 
         if (internIndexes != null) {
@@ -1602,14 +1598,6 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> implements Cu
 
             try {
                 if (!isClosed && rs.next()) {
-
-                    // [#1296] Force a row-lock by updating the row if the
-                    // FOR UPDATE clause is emulated
-                    if (lockRowsForUpdate) {
-                        rs.updateObject(1, rs.getObject(1));
-                        rs.updateRow();
-                    }
-
                     record = Tools.newRecord(true, (F0<AbstractRecord>) factory, ((DefaultExecuteContext) ctx).originalConfiguration())
                                   .operate(new CursorRecordInitialiser(fields.fields, 0));
 

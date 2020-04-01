@@ -37,8 +37,6 @@
  */
 package org.jooq.impl;
 
-import static java.sql.ResultSet.CONCUR_UPDATABLE;
-import static java.sql.ResultSet.TYPE_SCROLL_SENSITIVE;
 import static java.util.concurrent.Executors.newSingleThreadExecutor;
 // ...
 // ...
@@ -51,7 +49,6 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Tools.blocking;
 import static org.jooq.impl.Tools.consumeResultSets;
 import static org.jooq.impl.Tools.executeStatementAndGetFirstResultSet;
-import static org.jooq.impl.Tools.BooleanDataKey.DATA_LOCK_ROWS_FOR_UPDATE;
 
 import java.lang.reflect.Array;
 import java.sql.ResultSet;
@@ -262,13 +259,6 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
             }
         }
 
-        // [#1296] These dialects do not implement FOR UPDATE. But the same
-        // effect can be achieved using ResultSet.CONCUR_UPDATABLE
-        else if (isForUpdate() && NO_SUPPORT_FOR_UPDATE.contains(ctx.family())) {
-            ctx.data(DATA_LOCK_ROWS_FOR_UPDATE, true);
-            ctx.statement(ctx.connection().prepareStatement(ctx.sql(), TYPE_SCROLL_SENSITIVE, CONCUR_UPDATABLE));
-        }
-
         // Regular behaviour
         else {
             ctx.statement(ctx.connection().prepareStatement(ctx.sql()));
@@ -339,11 +329,6 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     protected final boolean keepResultSet() {
         return lazy;
     }
-
-    /**
-     * Subclasses should indicate whether they want an updatable {@link ResultSet}
-     */
-    abstract boolean isForUpdate();
 
     final Collection<? extends Field<?>> coerce() {
         return coerceFields;

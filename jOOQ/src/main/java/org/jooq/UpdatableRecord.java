@@ -37,7 +37,6 @@
  */
 package org.jooq;
 
-import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Collection;
 
@@ -62,10 +61,10 @@ import org.jooq.exception.TooManyRowsException;
  * can be performed on an <code>UpdatableRecord</code>:
  * <p>
  * <ul>
- * <li> {@link #delete()} : Deleting the record</li>
- * <li> {@link #refresh()} : Refreshing the records attributes (or loading it for
+ * <li>{@link #delete()} : Deleting the record</li>
+ * <li>{@link #refresh()} : Refreshing the records attributes (or loading it for
  * the first time)</li>
- * <li> {@link #store()} : Storing the record to the database. This executes
+ * <li>{@link #store()} : Storing the record to the database. This executes
  * either an <code>INSERT</code> or an <code>UPDATE</code> statement</li>
  * </ul>
  * <p>
@@ -176,11 +175,9 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * the <code>FOR UPDATE</code> clause natively. Namely, the following
      * databases will show slightly different behaviour:
      * <ul>
-     * <li> {@link SQLDialect#SQLSERVER}: jOOQ will
-     * try to lock the database record using JDBC's
-     * {@link ResultSet#TYPE_SCROLL_SENSITIVE} and
-     * {@link ResultSet#CONCUR_UPDATABLE}.</li>
-     * <li> {@link SQLDialect#SQLITE}: No pessimistic locking is possible. Client
+     * <li>{@link SQLDialect#SQLSERVER}: jOOQ will try to lock the database
+     * record using <code>WITH (ROWLOCK, UPDLOCK)</code> hints.</li>
+     * <li>{@link SQLDialect#SQLITE}: No pessimistic locking is possible. Client
      * code must assure that no race-conditions can occur between jOOQ's
      * checking of database record state and the actual <code>UPDATE</code></li>
      * </ul>
@@ -192,12 +189,10 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * <p>
      * Possible statements are
      * <ul>
-     * <li>
-     * <code><pre>
+     * <li><code><pre>
      * INSERT INTO [table] ([modified fields, including keys])
      * VALUES ([modified values, including keys])</pre></code></li>
-     * <li>
-     * <code><pre>
+     * <li><code><pre>
      * UPDATE [table]
      * SET [modified fields = modified values, excluding keys]
      * WHERE [key fields = key values]
@@ -362,10 +357,10 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * <p>
      * This is the preferred way of using optimistic locking in jOOQ. If this is
      * an {@link UpdatableRecord} and if this record returns fields for either
-     * {@link Table#getRecordVersion()} or
-     * {@link Table#getRecordTimestamp()}, then these values are
-     * compared to the corresponding value in the database in the
-     * <code>WHERE</code> clause of the executed <code>DELETE</code> statement.</li>
+     * {@link Table#getRecordVersion()} or {@link Table#getRecordTimestamp()},
+     * then these values are compared to the corresponding value in the database
+     * in the <code>WHERE</code> clause of the executed <code>DELETE</code>
+     * statement.</li>
      * <li><strong>Without any specific column configurations</strong>
      * <p>
      * In order to compare this record with the latest state, the database
@@ -374,11 +369,9 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * the <code>FOR UPDATE</code> clause natively. Namely, the following
      * databases will show slightly different behaviour:
      * <ul>
-     * <li> {@link SQLDialect#SQLSERVER}: jOOQ will
-     * try to lock the database record using JDBC's
-     * {@link ResultSet#TYPE_SCROLL_SENSITIVE} and
-     * {@link ResultSet#CONCUR_UPDATABLE}.</li>
-     * <li> {@link SQLDialect#SQLITE}: No pessimistic locking is possible. Client
+     * <li>{@link SQLDialect#SQLSERVER}: jOOQ will try to lock the database
+     * record using <code>WITH (ROWLOCK, UPDLOCK)</code> hints.</li>
+     * <li>{@link SQLDialect#SQLITE}: No pessimistic locking is possible. Client
      * code must assure that no race-conditions can occur between jOOQ's
      * checking of database record state and the actual <code>DELETE</code></li>
      * </ul>

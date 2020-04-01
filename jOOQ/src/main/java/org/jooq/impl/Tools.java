@@ -335,13 +335,6 @@ final class Tools {
         DATA_OMIT_RETURNING_CLAUSE,
 
         /**
-         * [#1296] This constant is used internally by jOOQ to indicate that
-         * {@link ResultSet} rows must be locked to emulate a
-         * <code>FOR UPDATE</code> clause.
-         */
-        DATA_LOCK_ROWS_FOR_UPDATE,
-
-        /**
          * [#1520] Count the number of bind values, and potentially enforce a static
          * statement.
          */
@@ -613,6 +606,14 @@ final class Tools {
      * more optimal memory layout.
      */
     enum DataExtendedKey {
+
+
+
+
+
+
+
+
 
 
 

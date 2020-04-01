@@ -48,6 +48,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.Internal.createPathAlias;
 import static org.jooq.impl.Keywords.K_TABLE;
+import static org.jooq.impl.Tools.getMappedTable;
 
 import java.util.Arrays;
 import java.util.Set;
@@ -243,6 +244,10 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
 
             accept0(ctx);
         }
+
+
+
+
     }
 
     private void accept0(Context<?> ctx) {
@@ -259,7 +264,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
             }
         }
 
-        ctx.visit(Tools.getMappedTable(ctx.configuration(), this).getUnqualifiedName());
+        ctx.visit(getMappedTable(ctx.configuration(), this).getUnqualifiedName());
 
         if (parameters != null && ctx.declareTables()) {
 

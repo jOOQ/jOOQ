@@ -255,6 +255,7 @@ final class Keywords {
     static final Keyword K_NOT_EXISTS                       = keyword("not exists");
     static final Keyword K_NOT_IN                           = keyword("not in");
     static final Keyword K_NOT_NULL                         = keyword("not null");
+    static final Keyword K_NOWAIT                           = keyword("nowait");
     static final Keyword K_NULL                             = keyword("null");
     static final Keyword K_NULLS_FIRST                      = keyword("nulls first");
     static final Keyword K_NULLS_LAST                       = keyword("nulls last");
@@ -297,6 +298,7 @@ final class Keywords {
     static final Keyword K_QUALIFY                          = keyword("qualify");
     static final Keyword K_RAISE                            = keyword("raise");
     static final Keyword K_RAISERROR                        = keyword("raiserror");
+    static final Keyword K_READPAST                         = keyword("readpast");
     static final Keyword K_RECORD                           = keyword("record");
     static final Keyword K_RECURSIVE                        = keyword("recursive");
     static final Keyword K_REF                              = keyword("ref");
@@ -325,6 +327,7 @@ final class Keywords {
     static final Keyword K_ROOT                             = keyword("root");
     static final Keyword K_ROW                              = keyword("row");
     static final Keyword K_ROWCOUNT                         = keyword("rowcount");
+    static final Keyword K_ROWLOCK                          = keyword("rowlock");
     static final Keyword K_ROWS                             = keyword("rows");
     static final Keyword K_ROWS_FROM                        = keyword("rows from");
     static final Keyword K_ROWS_ONLY                        = keyword("rows only");
@@ -374,6 +377,7 @@ final class Keywords {
     static final Keyword K_UNNEST                           = keyword("unnest");
     static final Keyword K_UNTIL                            = keyword("until");
     static final Keyword K_UPDATE                           = keyword("update");
+    static final Keyword K_UPDLOCK                          = keyword("updlock");
     static final Keyword K_UPSERT                           = keyword("upsert");
     static final Keyword K_USE                              = keyword("use");
     static final Keyword K_USING                            = keyword("using");

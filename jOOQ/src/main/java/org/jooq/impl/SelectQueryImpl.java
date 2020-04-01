@@ -107,14 +107,11 @@ import static org.jooq.impl.Keywords.K_BY;
 import static org.jooq.impl.Keywords.K_CONNECT_BY;
 import static org.jooq.impl.Keywords.K_DISTINCT;
 import static org.jooq.impl.Keywords.K_DISTINCT_ON;
-import static org.jooq.impl.Keywords.K_FOR;
 import static org.jooq.impl.Keywords.K_FROM;
 import static org.jooq.impl.Keywords.K_GROUP_BY;
 import static org.jooq.impl.Keywords.K_HAVING;
 import static org.jooq.impl.Keywords.K_INTO;
-import static org.jooq.impl.Keywords.K_LOCK_IN_SHARE_MODE;
 import static org.jooq.impl.Keywords.K_NOCYCLE;
-import static org.jooq.impl.Keywords.K_OF;
 import static org.jooq.impl.Keywords.K_ORDER;
 import static org.jooq.impl.Keywords.K_ORDER_BY;
 import static org.jooq.impl.Keywords.K_PERCENT;
@@ -126,9 +123,7 @@ import static org.jooq.impl.Keywords.K_TOP;
 import static org.jooq.impl.Keywords.K_WHERE;
 import static org.jooq.impl.Keywords.K_WINDOW;
 import static org.jooq.impl.Keywords.K_WITH_CHECK_OPTION;
-import static org.jooq.impl.Keywords.K_WITH_LOCK;
 import static org.jooq.impl.Keywords.K_WITH_READ_ONLY;
-import static org.jooq.impl.QueryPartCollectionView.wrap;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.ScopeMarkers.AFTER_LAST_TOP_LEVEL_CTE;
 import static org.jooq.impl.ScopeMarkers.BEFORE_FIRST_TOP_LEVEL_CTE;
@@ -173,7 +168,6 @@ import org.jooq.JSON;
 import org.jooq.JSONEntry;
 import org.jooq.JSONObjectNullStep;
 import org.jooq.JoinType;
-import org.jooq.Keyword;
 import org.jooq.Name;
 import org.jooq.Operator;
 import org.jooq.OrderField;
@@ -195,7 +189,10 @@ import org.jooq.TableOptionalOnStep;
 import org.jooq.TablePartitionByStep;
 import org.jooq.WindowDefinition;
 import org.jooq.exception.DataAccessException;
+import org.jooq.impl.ForLock.ForLockMode;
+import org.jooq.impl.ForLock.ForLockWaitMode;
 import org.jooq.impl.Tools.BooleanDataKey;
+import org.jooq.impl.Tools.DataExtendedKey;
 import org.jooq.impl.Tools.DataKey;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
@@ -216,9 +213,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private static final JooqLogger      log                             = JooqLogger.getLogger(SelectQueryImpl.class);
     private static final Clause[]        CLAUSES                         = { SELECT };
     private static final Set<SQLDialect> EMULATE_SELECT_INTO_AS_CTAS     = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE);
-    private static final Set<SQLDialect> NO_SUPPORT_FOR_UPDATE           = SQLDialect.supportedBy(CUBRID);
-    private static final Set<SQLDialect> NO_SUPPORT_FOR_UPDATE_QUALIFIED = SQLDialect.supportedBy(DERBY, FIREBIRD, H2, HSQLDB);
-    private static final Set<SQLDialect> NO_SUPPORT_STANDARD_FOR_SHARE   = SQLDialect.supportedUntil(MARIADB);
     private static final Set<SQLDialect> SUPPORT_SELECT_INTO_TABLE       = SQLDialect.supportedBy(HSQLDB, POSTGRES);
 
 
@@ -263,11 +257,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private String                                       option;
     private boolean                                      distinct;
     private QueryPartList<SelectFieldOrAsterisk>         distinctOn;
-    private QueryPartList<Field<?>>                      forLockOf;
-    private TableList                                    forLockOfTables;
-    private ForLockMode                                  forLockMode;
-    private ForLockWaitMode                              forLockWaitMode;
-    private int                                          forLockWait;
+    private ForLock                                      forLock;
 
 
 
@@ -799,94 +789,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 }
             }
 
-            // [#1296] FOR UPDATE is emulated in some dialects using ResultSet.CONCUR_UPDATABLE
-            if (forLockMode != null && !NO_SUPPORT_FOR_UPDATE.contains(family)) {
-                switch (forLockMode) {
-                    case UPDATE:
-                        context.formatSeparator()
-                               .visit(K_FOR)
-                               .sql(' ')
-                               .visit(forLockMode.toKeyword());
-                        break;
-
-                    case SHARE:
-                        if (NO_SUPPORT_STANDARD_FOR_SHARE.contains(dialect))
-                            context.formatSeparator()
-                                .visit(K_LOCK_IN_SHARE_MODE);
-                        else
-                            context.formatSeparator()
-                                .visit(K_FOR)
-                                .sql(' ')
-                                .visit(forLockMode.toKeyword());
-                        break;
-
-                    case KEY_SHARE:
-                    case NO_KEY_UPDATE:
-                    default:
-                        context.formatSeparator()
-                               .visit(K_FOR)
-                               .sql(' ')
-                               .visit(forLockMode.toKeyword());
-                        break;
-                }
-
-                if (Tools.isNotEmpty(forLockOf)) {
-
-                    // [#4151] [#6117] Some databases don't allow for qualifying column
-                    // names here. Copy also to TableList
-                    boolean unqualified = NO_SUPPORT_FOR_UPDATE_QUALIFIED.contains(context.family());
-                    boolean qualify = context.qualify();
-
-                    if (unqualified)
-                        context.qualify(false);
-
-                    context.sql(' ').visit(K_OF)
-                           .sql(' ').visit(forLockOf);
-
-                    if (unqualified)
-                        context.qualify(qualify);
-                }
-                else if (Tools.isNotEmpty(forLockOfTables)) {
-                    context.sql(' ').visit(K_OF).sql(' ');
-
-                    switch (family) {
-
-                        // Some dialects don't allow for an OF [table-names] clause
-                        // It can be emulated by listing the table's fields, though
-
-
-
-
-
-
-
-                        case DERBY: {
-                            forLockOfTables.toSQLFields(context);
-                            break;
-                        }
-
-                        // Render the OF [table-names] clause
-                        default:
-                            context.visit(wrap(forLockOfTables).qualify(false).indentSize(0));
-                            break;
-                    }
-                }
-
-                // [#3186] Firebird's FOR UPDATE clause has a different semantics. To achieve "regular"
-                // FOR UPDATE semantics, we should use FOR UPDATE WITH LOCK
-                if (family == FIREBIRD)
-                    context.sql(' ').visit(K_WITH_LOCK);
-
-                if (forLockWaitMode != null) {
-                    context.sql(' ');
-                    context.visit(forLockWaitMode.toKeyword());
-
-                    if (forLockWaitMode == ForLockWaitMode.WAIT) {
-                        context.sql(' ');
-                        context.sql(forLockWait);
-                    }
-                }
-            }
+            // [#1296] [#7328] FOR UPDATE is emulated in some dialects using hints
+            if (forLock != null)
+                context.visit(forLock);
 
 
 
@@ -1412,10 +1317,19 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
+
+
+
+
             context.formatSeparator()
                    .visit(K_FROM)
                    .separatorRequired(true)
                    .visit(tablelist);
+
+
+
+
 
 
 
@@ -2145,19 +2059,26 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         getLimit().setWithTies(withTies);
     }
 
+    final ForLock forLock() {
+        if (forLock == null)
+            forLock = new ForLock();
+
+        return forLock;
+    }
+
     @Override
     public final void setForUpdate(boolean forUpdate) {
-        this.forLockMode = ForLockMode.UPDATE;
+        forLock().forLockMode = ForLockMode.UPDATE;
     }
 
     @Override
     public final void setForNoKeyUpdate(boolean forNoKeyUpdate) {
-        this.forLockMode = ForLockMode.NO_KEY_UPDATE;
+        forLock().forLockMode = ForLockMode.NO_KEY_UPDATE;
     }
 
     @Override
     public final void setForKeyShare(boolean forKeyShare) {
-        this.forLockMode = ForLockMode.KEY_SHARE;
+        forLock().forLockMode = ForLockMode.KEY_SHARE;
     }
 
     @Override
@@ -2192,7 +2113,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @Override
     public final void setForShare(boolean forShare) {
-        this.forLockMode = ForLockMode.SHARE;
+        forLock().forLockMode = ForLockMode.SHARE;
     }
 
     @Override
@@ -2203,40 +2124,40 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     @Override
     public final void setForLockModeOf(Collection<? extends Field<?>> fields) {
         initLockMode();
-        forLockOf = new QueryPartList<>(fields);
-        forLockOfTables = null;
+        forLock().forLockOf = new QueryPartList<>(fields);
+        forLock().forLockOfTables = null;
     }
 
     @Override
     public final void setForLockModeOf(Table<?>... tables) {
         initLockMode();
-        forLockOf = null;
-        forLockOfTables = new TableList(Arrays.asList(tables));
+        forLock().forLockOf = null;
+        forLock().forLockOfTables = new TableList(Arrays.asList(tables));
     }
 
     @Override
     public final void setForLockModeWait(int seconds) {
         initLockMode();
-        forLockWaitMode = ForLockWaitMode.WAIT;
-        forLockWait = seconds;
+        forLock().forLockWaitMode = ForLockWaitMode.WAIT;
+        forLock().forLockWait = seconds;
     }
 
     @Override
     public final void setForLockModeNoWait() {
         initLockMode();
-        forLockWaitMode = ForLockWaitMode.NOWAIT;
-        forLockWait = 0;
+        forLock().forLockWaitMode = ForLockWaitMode.NOWAIT;
+        forLock().forLockWait = 0;
     }
 
     @Override
     public final void setForLockModeSkipLocked() {
         initLockMode();
-        forLockWaitMode = ForLockWaitMode.SKIP_LOCKED;
-        forLockWait = 0;
+        forLock().forLockWaitMode = ForLockWaitMode.SKIP_LOCKED;
+        forLock().forLockWait = 0;
     }
 
     private final void initLockMode() {
-        forLockMode = forLockMode == null ? ForLockMode.UPDATE : forLockMode;
+        forLock().forLockMode = forLock().forLockMode == null ? ForLockMode.UPDATE : forLock().forLockMode;
     }
 
 
@@ -2754,11 +2675,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
-    final boolean isForUpdate() {
-        return forLockMode == ForLockMode.UPDATE;
-    }
-
-    @Override
     public final void addFrom(Collection<? extends TableLike<?>> f) {
         for (TableLike<?> provider : f)
             getFrom().add(provider.asTable());
@@ -3128,52 +3044,5 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     @Override
     public final void addOption(String o) {
         setOption(o);
-    }
-
-    // -------------------------------------------------------------------------
-    // Utility classes
-    // -------------------------------------------------------------------------
-
-    /**
-     * The lock mode for the <code>FOR UPDATE</code> clause, if set.
-     */
-    private static enum ForLockMode {
-        UPDATE("update"),
-        NO_KEY_UPDATE("no key update"),
-        SHARE("share"),
-        KEY_SHARE("key share"),
-
-        ;
-
-        private final Keyword keyword;
-
-        private ForLockMode(String sql) {
-            this.keyword = DSL.keyword(sql);
-        }
-
-        public final Keyword toKeyword() {
-            return keyword;
-        }
-    }
-
-    /**
-     * The wait mode for the <code>FOR UPDATE</code> clause, if set.
-     */
-    private static enum ForLockWaitMode {
-        WAIT("wait"),
-        NOWAIT("nowait"),
-        SKIP_LOCKED("skip locked"),
-
-        ;
-
-        private final Keyword keyword;
-
-        private ForLockWaitMode(String sql) {
-            this.keyword = DSL.keyword(sql);
-        }
-
-        public final Keyword toKeyword() {
-            return keyword;
-        }
     }
 }

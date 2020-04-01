@@ -100,9 +100,4 @@ final class SQLResultQuery extends AbstractResultQuery<Record> {
         else
             return new MetaDataFieldProvider(configuration(), meta).getFields();
     }
-
-    @Override
-    final boolean isForUpdate() {
-        return false;
-    }
 }

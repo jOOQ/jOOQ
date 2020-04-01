@@ -71,9 +71,6 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.Collection;
 
 import org.jooq.exception.DataAccessException;
@@ -868,46 +865,35 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * <li><a href=
      * "http://publib.boulder.ibm.com/infocenter/db2luw/v9r7/index.jsp?topic=/com.ibm.db2.luw.sql.ref.doc/doc/r0000879.html"
      * >DB2 FOR UPDATE and similar clauses</a></li>
-     * <li><a
-     * href="http://db.apache.org/derby/docs/10.7/ref/rrefsqlj31783.html">
-     * Derby's FOR UPDATE clause</a></li>
+     * <li><a href=
+     * "http://db.apache.org/derby/docs/10.7/ref/rrefsqlj31783.html"> Derby's
+     * FOR UPDATE clause</a></li>
      * <li><a href="http://www.h2database.com/html/grammar.html#select">H2's FOR
      * UPDATE clause</a></li>
-     * <li><a
-     * href="http://www.hsqldb.org/doc/2.0/guide/dataaccess-chapt.html#N11DA9"
+     * <li><a href=
+     * "http://www.hsqldb.org/doc/2.0/guide/dataaccess-chapt.html#N11DA9"
      * >HSQLDB's FOR UPDATE clause</a></li>
-     * <li><a
-     * href="http://dev.mysql.com/doc/refman/5.5/en/innodb-locking-reads.html"
+     * <li><a href=
+     * "http://dev.mysql.com/doc/refman/5.5/en/innodb-locking-reads.html"
      * >MySQL's InnoDB locking reads</a></li>
-     * <li><a
-     * href="http://www.techonthenet.com/oracle/cursors/for_update.php">Oracle's
+     * <li><a href=
+     * "http://www.techonthenet.com/oracle/cursors/for_update.php">Oracle's
      * PL/SQL FOR UPDATE clause</a></li>
      * <li><a href=
      * "http://www.postgresql.org/docs/9.0/static/sql-select.html#SQL-FOR-UPDATE-SHARE"
      * >Postgres FOR UPDATE / FOR SHARE</a></li>
      * </ul>
      * <p>
-     * <h5>emulation</h5>
+     * <h5>Emulation</h5>
      * <p>
-     * These dialects can emulate the <code>FOR UPDATE</code> clause using a
-     * cursor. The cursor is handled by the JDBC driver, at
-     * {@link PreparedStatement} construction time, when calling
-     * {@link Connection#prepareStatement(String, int, int)} with
-     * {@link ResultSet#CONCUR_UPDATABLE}. jOOQ handles emulation of a
-     * <code>FOR UPDATE</code> clause using <code>CONCUR_UPDATABLE</code> for
-     * these dialects:
-     * <ul>
-     * <li> {@link SQLDialect#SQLSERVER}</li>
-     * </ul>
-     * <p>
-     * Note: This emulation may not be efficient for large result sets!
-     * <p>
+     * {@link SQLDialect#SQLSERVER}: jOOQ will try to lock the database record
+     * using <code>WITH (ROWLOCK, UPDLOCK)</code> hints.
      * <h5>Not supported</h5>
      * <p>
      * These dialects are known not to support the <code>FOR UPDATE</code>
      * clause in regular SQL:
      * <ul>
-     * <li> {@link SQLDialect#SQLITE}</li>
+     * <li>{@link SQLDialect#SQLITE}</li>
      * </ul>
      * <p>
      * If your dialect does not support this clause, jOOQ will still render it,

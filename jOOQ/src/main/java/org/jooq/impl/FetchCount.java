@@ -102,9 +102,4 @@ final class FetchCount extends AbstractResultQuery<Record1<Integer>> {
     protected final Field<?>[] getFields(ResultSetMetaData rs) {
         return count;
     }
-
-    @Override
-    final boolean isForUpdate() {
-        return false;
-    }
 }

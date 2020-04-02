@@ -37,8 +37,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Keywords.F_UCASE;
-import static org.jooq.impl.Keywords.F_UPPER;
+import static org.jooq.impl.Names.N_UCASE;
 import static org.jooq.impl.Names.N_UPPER;
 
 import org.jooq.Context;
@@ -71,7 +70,7 @@ final class Upper extends AbstractField<String> {
 
 
             default:
-                ctx.visit(F_UPPER).sql('(').visit(field).sql(')');
+                ctx.visit(N_UPPER).sql('(').visit(field).sql(')');
                 break;
         }
     }

@@ -38,14 +38,14 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.Keywords.F_TO_CLOB;
-import static org.jooq.impl.Keywords.F_TO_DATE;
-import static org.jooq.impl.Keywords.F_TO_TIMESTAMP;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_CAST;
 import static org.jooq.impl.Keywords.K_DECIMAL;
 import static org.jooq.impl.Keywords.K_TRIM;
 import static org.jooq.impl.Names.N_CAST;
+import static org.jooq.impl.Names.N_TO_CLOB;
+import static org.jooq.impl.Names.N_TO_DATE;
+import static org.jooq.impl.Names.N_TO_TIMESTAMP;
 import static org.jooq.impl.SQLDataType.BOOLEAN;
 import static org.jooq.impl.SQLDataType.DOUBLE;
 import static org.jooq.impl.SQLDataType.FLOAT;

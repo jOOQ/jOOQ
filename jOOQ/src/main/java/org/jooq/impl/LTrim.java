@@ -37,11 +37,10 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Keywords.F_LTRIM;
-import static org.jooq.impl.Keywords.F_TRIM;
 import static org.jooq.impl.Keywords.K_FROM;
 import static org.jooq.impl.Keywords.K_LEADING;
 import static org.jooq.impl.Names.N_LTRIM;
+import static org.jooq.impl.Names.N_TRIM;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 
 import org.jooq.Context;
@@ -76,11 +75,11 @@ final class LTrim extends AbstractField<String> {
         if (characters == null) {
             switch (ctx.family()) {
                 case FIREBIRD:
-                    ctx.visit(F_TRIM).sql('(').visit(K_LEADING).sql(' ').visit(K_FROM).sql(' ').visit(argument).sql(')');
+                    ctx.visit(N_TRIM).sql('(').visit(K_LEADING).sql(' ').visit(K_FROM).sql(' ').visit(argument).sql(')');
                     break;
 
                 default:
-                    ctx.visit(F_LTRIM).sql('(').visit(argument).sql(')');
+                    ctx.visit(N_LTRIM).sql('(').visit(argument).sql(')');
                     break;
             }
         }
@@ -92,11 +91,11 @@ final class LTrim extends AbstractField<String> {
 
 
                 case SQLITE:
-                    ctx.visit(F_LTRIM).sql('(').visit(argument).sql(", ").visit(characters).sql(')');
+                    ctx.visit(N_LTRIM).sql('(').visit(argument).sql(", ").visit(characters).sql(')');
                     break;
 
                 default:
-                    ctx.visit(F_TRIM).sql('(').visit(K_LEADING).sql(' ').visit(characters).sql(' ').visit(K_FROM).sql(' ').visit(argument).sql(')');
+                    ctx.visit(N_TRIM).sql('(').visit(K_LEADING).sql(' ').visit(characters).sql(' ').visit(K_FROM).sql(' ').visit(argument).sql(')');
                     break;
             }
         }

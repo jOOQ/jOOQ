@@ -37,9 +37,8 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Keywords.F_CEIL;
-import static org.jooq.impl.Keywords.F_CEILING;
 import static org.jooq.impl.Names.N_CEIL;
+import static org.jooq.impl.Names.N_CEILING;
 
 import org.jooq.Context;
 import org.jooq.Field;
@@ -84,11 +83,11 @@ final class Ceil<T extends Number> extends AbstractField<T> {
 
 
             case H2:
-                ctx.visit(F_CEILING).sql('(').visit(argument).sql(')');
+                ctx.visit(N_CEILING).sql('(').visit(argument).sql(')');
                 break;
 
             default:
-                ctx.visit(F_CEIL).sql('(').visit(argument).sql(')');
+                ctx.visit(N_CEIL).sql('(').visit(argument).sql(')');
                 break;
         }
     }

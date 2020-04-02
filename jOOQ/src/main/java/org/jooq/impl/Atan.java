@@ -37,9 +37,8 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Keywords.F_ATAN;
-import static org.jooq.impl.Keywords.F_ATN;
 import static org.jooq.impl.Names.N_ATAN;
+import static org.jooq.impl.Names.N_ATN;
 
 import java.math.BigDecimal;
 
@@ -73,7 +72,7 @@ final class Atan extends AbstractField<BigDecimal> {
 
 
             default:
-                ctx.visit(F_ATAN).sql('(').visit(arg).sql(')');
+                ctx.visit(N_ATAN).sql('(').visit(arg).sql(')');
                 break;
         }
     }

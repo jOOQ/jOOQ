@@ -63,7 +63,7 @@ final class Ntile extends AbstractWindowFunction<Integer> implements OrderedWind
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(Names.N_NTILE).sql('(').visit(tiles).sql(')');
+        ctx.visit(N_NTILE).sql('(').visit(tiles).sql(')');
         acceptOverClause(ctx);
     }
 }

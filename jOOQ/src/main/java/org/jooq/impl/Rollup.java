@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Keywords.F_ROLLUP;
 import static org.jooq.impl.Keywords.K_WITH_ROLLUP;
 import static org.jooq.impl.Names.N_ROLLUP;
 import static org.jooq.impl.SQLDataType.OTHER;
@@ -75,7 +74,7 @@ final class Rollup extends AbstractField<Object> {
                 break;
 
             default:
-                ctx.visit(F_ROLLUP).sql('(').visit(arguments).sql(')');
+                ctx.visit(N_ROLLUP).sql('(').visit(arguments).sql(')');
                 break;
         }
     }

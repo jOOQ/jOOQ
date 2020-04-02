@@ -37,13 +37,12 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Keywords.F_CONVERT;
-import static org.jooq.impl.Keywords.F_CURRENT_TIME;
-import static org.jooq.impl.Keywords.F_CURRENT_TIMESTAMP;
 import static org.jooq.impl.Keywords.K_CURRENT;
 import static org.jooq.impl.Keywords.K_HOUR_TO_SECOND;
 import static org.jooq.impl.Keywords.K_TIME;
+import static org.jooq.impl.Names.N_CONVERT;
 import static org.jooq.impl.Names.N_CURRENT_TIME;
+import static org.jooq.impl.Names.N_CURRENT_TIMESTAMP;
 
 import org.jooq.Context;
 import org.jooq.DataType;
@@ -92,7 +91,7 @@ final class CurrentTime<T> extends AbstractField<T> {
             case HSQLDB:
             case POSTGRES:
             case SQLITE:
-                ctx.visit(F_CURRENT_TIME);
+                ctx.visit(N_CURRENT_TIME);
                 break;
 
 
@@ -106,7 +105,7 @@ final class CurrentTime<T> extends AbstractField<T> {
 
 
             default:
-                ctx.visit(F_CURRENT_TIME).sql("()");
+                ctx.visit(N_CURRENT_TIME).sql("()");
                 break;
         }
     }

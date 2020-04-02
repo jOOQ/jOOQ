@@ -37,13 +37,12 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Keywords.F_RAND;
-import static org.jooq.impl.Keywords.F_RANDOM;
-import static org.jooq.impl.Keywords.F_RND;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_CAST;
 import static org.jooq.impl.Keywords.K_NUMERIC;
+import static org.jooq.impl.Names.N_RAND;
 import static org.jooq.impl.Names.N_RANDOM;
+import static org.jooq.impl.Names.N_RND;
 import static org.jooq.impl.SQLDataType.NUMERIC;
 
 import java.math.BigDecimal;
@@ -97,10 +96,10 @@ final class Rand extends AbstractField<BigDecimal> {
             case DERBY:
             case POSTGRES:
             case SQLITE:
-                ctx.visit(F_RANDOM).sql("()");
+                ctx.visit(N_RANDOM).sql("()");
                 break;
             default:
-                ctx.visit(F_RAND).sql("()");
+                ctx.visit(N_RAND).sql("()");
                 break;
         }
     }

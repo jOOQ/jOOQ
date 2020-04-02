@@ -37,8 +37,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Keywords.F_SQR;
-import static org.jooq.impl.Keywords.F_SQRT;
+import static org.jooq.impl.Names.N_SQR;
 import static org.jooq.impl.Names.N_SQRT;
 import static org.jooq.impl.SQLDataType.NUMERIC;
 
@@ -88,7 +87,7 @@ final class Sqrt extends AbstractField<BigDecimal> {
                 break;
 
             default:
-                ctx.visit(F_SQRT).sql('(').visit(argument).sql(')');
+                ctx.visit(N_SQRT).sql('(').visit(argument).sql(')');
                 break;
         }
     }

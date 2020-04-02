@@ -39,8 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.zero;
-import static org.jooq.impl.Keywords.F_SGN;
-import static org.jooq.impl.Keywords.F_SIGN;
+import static org.jooq.impl.Names.N_SGN;
 import static org.jooq.impl.Names.N_SIGN;
 import static org.jooq.impl.SQLDataType.INTEGER;
 
@@ -83,7 +82,7 @@ final class Sign extends AbstractField<Integer> {
                 break;
 
             default:
-                ctx.visit(F_SIGN).sql('(').visit(argument).sql(')');
+                ctx.visit(N_SIGN).sql('(').visit(argument).sql(')');
                 break;
         }
     }

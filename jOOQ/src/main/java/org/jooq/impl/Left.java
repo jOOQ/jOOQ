@@ -38,7 +38,6 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.Keywords.F_LEFT;
 import static org.jooq.impl.Names.N_LEFT;
 
 import org.jooq.Context;
@@ -94,7 +93,7 @@ final class Left extends AbstractField<String> {
             case MYSQL:
             case POSTGRES:
             default:
-                ctx.visit(F_LEFT).sql('(').visit(field).sql(", ").visit(length).sql(')');
+                ctx.visit(N_LEFT).sql('(').visit(field).sql(", ").visit(length).sql(')');
                 break;
         }
     }

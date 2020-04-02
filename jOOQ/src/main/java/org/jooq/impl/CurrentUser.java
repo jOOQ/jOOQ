@@ -37,10 +37,9 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Keywords.F_CURRENTUSER;
-import static org.jooq.impl.Keywords.F_CURRENT_USER;
-import static org.jooq.impl.Keywords.F_USER;
+import static org.jooq.impl.Names.N_CURRENTUSER;
 import static org.jooq.impl.Names.N_CURRENT_USER;
+import static org.jooq.impl.Names.N_USER;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 
 import org.jooq.Context;
@@ -88,14 +87,14 @@ final class CurrentUser extends AbstractField<String> {
             case FIREBIRD:
             case HSQLDB:
             case POSTGRES:
-                ctx.visit(F_CURRENT_USER);
+                ctx.visit(N_CURRENT_USER);
                 break;
 
             case SQLITE:
                 ctx.visit(DSL.inline(""));
                 break;
             default:
-                ctx.visit(F_CURRENT_USER).sql("()");
+                ctx.visit(N_CURRENT_USER).sql("()");
                 break;
         }
     }

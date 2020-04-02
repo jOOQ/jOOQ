@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Keywords.F_FLOOR;
 import static org.jooq.impl.Names.N_FLOOR;
 
 import org.jooq.Context;
@@ -76,7 +75,7 @@ final class Floor<T extends Number> extends AbstractField<T> {
                 break;
 
             default:
-                ctx.visit(F_FLOOR).sql('(').visit(argument).sql(')');
+                ctx.visit(N_FLOOR).sql('(').visit(argument).sql(')');
                 break;
         }
     }

@@ -39,7 +39,6 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.two;
-import static org.jooq.impl.Keywords.F_COSH;
 import static org.jooq.impl.Names.N_COSH;
 
 import java.math.BigDecimal;
@@ -91,7 +90,7 @@ final class Cosh extends AbstractField<BigDecimal> {
                 break;
 
             default:
-                ctx.visit(F_COSH).sql('(').visit(argument).sql(')');
+                ctx.visit(N_COSH).sql('(').visit(argument).sql(')');
                 break;
         }
     }

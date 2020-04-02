@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Keywords.F_COT;
 import static org.jooq.impl.Names.N_COT;
 
 import java.math.BigDecimal;
@@ -77,7 +76,7 @@ final class Cot extends AbstractField<BigDecimal> {
 
 
             default:
-                ctx.visit(F_COT).sql('(').visit(argument).sql(')');
+                ctx.visit(N_COT).sql('(').visit(argument).sql(')');
                 break;
         }
     }

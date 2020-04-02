@@ -73,10 +73,6 @@ import static org.jooq.impl.ExpressionOperator.BIT_XOR;
 import static org.jooq.impl.ExpressionOperator.SHL;
 import static org.jooq.impl.ExpressionOperator.SHR;
 import static org.jooq.impl.ExpressionOperator.SUBTRACT;
-import static org.jooq.impl.Keywords.F_DATEADD;
-import static org.jooq.impl.Keywords.F_DATE_ADD;
-import static org.jooq.impl.Keywords.F_STRFTIME;
-import static org.jooq.impl.Keywords.F_TIMESTAMPADD;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_CAST;
 import static org.jooq.impl.Keywords.K_DAY;
@@ -88,6 +84,10 @@ import static org.jooq.impl.Keywords.K_MILLISECOND;
 import static org.jooq.impl.Keywords.K_MONTH;
 import static org.jooq.impl.Keywords.K_YEAR_MONTH;
 import static org.jooq.impl.Keywords.K_YEAR_TO_MONTH;
+import static org.jooq.impl.Names.N_DATEADD;
+import static org.jooq.impl.Names.N_DATE_ADD;
+import static org.jooq.impl.Names.N_STRFTIME;
+import static org.jooq.impl.Names.N_TIMESTAMPADD;
 import static org.jooq.impl.Tools.castIfNeeded;
 
 import java.sql.Timestamp;
@@ -336,18 +336,18 @@ final class Expression<T> extends AbstractField<T> {
                         interval = interval.neg();
 
                     if (rhs.getType() == YearToMonth.class)
-                        ctx.visit(F_DATE_ADD).sql('(').visit(lhs).sql(", ").visit(K_INTERVAL).sql(' ')
-                            .visit(Tools.field(interval, SQLDataType.VARCHAR)).sql(' ').visit(K_YEAR_MONTH).sql(')');
+                        ctx.visit(N_DATE_ADD).sql('(').visit(lhs).sql(", ").visit(K_INTERVAL).sql(' ')
+                           .visit(Tools.field(interval, SQLDataType.VARCHAR)).sql(' ').visit(K_YEAR_MONTH).sql(')');
                     else if (family == CUBRID)
-                        ctx.visit(F_DATE_ADD).sql('(').visit(lhs).sql(", ").visit(K_INTERVAL).sql(' ')
-                            .visit(Tools.field(interval, SQLDataType.VARCHAR)).sql(' ').visit(K_DAY_MILLISECOND).sql(')');
+                        ctx.visit(N_DATE_ADD).sql('(').visit(lhs).sql(", ").visit(K_INTERVAL).sql(' ')
+                           .visit(Tools.field(interval, SQLDataType.VARCHAR)).sql(' ').visit(K_DAY_MILLISECOND).sql(')');
 
                     // [#6820] Workaround for bugs:
                     //         https://bugs.mysql.com/bug.php?id=88573
                     //         https://jira.mariadb.org/browse/MDEV-14452
                     else
-                        ctx.visit(F_DATE_ADD).sql('(').visit(lhs).sql(", ").visit(K_INTERVAL).sql(' ')
-                            .visit(Tools.field(TRUNC_TO_MICROS.matcher("" + interval).replaceAll("$1"), SQLDataType.VARCHAR)).sql(' ').visit(K_DAY_MICROSECOND).sql(')');
+                        ctx.visit(N_DATE_ADD).sql('(').visit(lhs).sql(", ").visit(K_INTERVAL).sql(' ')
+                           .visit(Tools.field(TRUNC_TO_MICROS.matcher("" + interval).replaceAll("$1"), SQLDataType.VARCHAR)).sql(' ').visit(K_DAY_MICROSECOND).sql(')');
                     break;
                 }
 
@@ -363,12 +363,12 @@ final class Expression<T> extends AbstractField<T> {
                         ctx.visit(K_CAST).sql('(');
 
                     if (rhs.getType() == YearToMonth.class)
-                        ctx.sql("{fn ").visit(F_TIMESTAMPADD).sql('(').visit(keyword("sql_tsi_month")).sql(", ")
+                        ctx.sql("{fn ").visit(N_TIMESTAMPADD).sql('(').visit(keyword("sql_tsi_month")).sql(", ")
                             .visit(p(sign * rhsAsYTM().intValue())).sql(", ").visit(lhs).sql(") }");
                     else
-                        ctx.sql("{fn ").visit(F_TIMESTAMPADD).sql('(').visit(keyword("sql_tsi_second")).sql(", ")
+                        ctx.sql("{fn ").visit(N_TIMESTAMPADD).sql('(').visit(keyword("sql_tsi_second")).sql(", ")
                             .visit(p(sign * (long) rhsAsDTS().getTotalSeconds())).sql(", {fn ")
-                            .visit(F_TIMESTAMPADD).sql('(').visit(keyword("sql_tsi_milli_second")).sql(", ")
+                            .visit(N_TIMESTAMPADD).sql('(').visit(keyword("sql_tsi_milli_second")).sql(", ")
                             .visit(p(sign * (long) rhsAsDTS().getMilli())).sql(", ").visit(lhs).sql(") }) }");
 
                     // [#1883] TIMESTAMPADD returns TIMESTAMP columns. If this
@@ -383,9 +383,9 @@ final class Expression<T> extends AbstractField<T> {
                     if (rhs.getType() == YearToSecond.class)
                         ctx.visit(getYTSExpression());
                     else if (rhs.getType() == YearToMonth.class)
-                        ctx.visit(F_DATEADD).sql('(').visit(K_MONTH).sql(", ").visit(p(sign * rhsAsYTM().intValue())).sql(", ").visit(lhs).sql(')');
+                        ctx.visit(N_DATEADD).sql('(').visit(K_MONTH).sql(", ").visit(p(sign * rhsAsYTM().intValue())).sql(", ").visit(lhs).sql(')');
                     else
-                        ctx.visit(F_DATEADD).sql('(').visit(K_MILLISECOND).sql(", ").visit(p(sign * (long) rhsAsDTS().getTotalMilli())).sql(", ").visit(lhs).sql(')');
+                        ctx.visit(N_DATEADD).sql('(').visit(K_MILLISECOND).sql(", ").visit(p(sign * (long) rhsAsDTS().getTotalMilli())).sql(", ").visit(lhs).sql(')');
                     break;
                 }
 
@@ -393,9 +393,9 @@ final class Expression<T> extends AbstractField<T> {
                     if (rhs.getType() == YearToSecond.class)
                         ctx.visit(getYTSExpression());
                     else if (rhs.getType() == YearToMonth.class)
-                        ctx.visit(F_DATEADD).sql("('month', ").visit(p(sign * rhsAsYTM().intValue())).sql(", ").visit(lhs).sql(')');
+                        ctx.visit(N_DATEADD).sql("('month', ").visit(p(sign * rhsAsYTM().intValue())).sql(", ").visit(lhs).sql(')');
                     else
-                        ctx.visit(F_DATEADD).sql("('ms', ").visit(p(sign * (long) rhsAsDTS().getTotalMilli())).sql(", ").visit(lhs).sql(')');
+                        ctx.visit(N_DATEADD).sql("('ms', ").visit(p(sign * (long) rhsAsDTS().getTotalMilli())).sql(", ").visit(lhs).sql(')');
                     break;
                 }
 
@@ -412,7 +412,7 @@ final class Expression<T> extends AbstractField<T> {
                         interval = interval.neg();
 
                     interval = interval.concat(inline(ytm ? " months" : " seconds"));
-                    ctx.visit(F_STRFTIME).sql("('%Y-%m-%d %H:%M:%f', ").visit(lhs).sql(", ").visit(interval).sql(')');
+                    ctx.visit(N_STRFTIME).sql("('%Y-%m-%d %H:%M:%f', ").visit(lhs).sql(", ").visit(interval).sql(')');
                     break;
                 }
 
@@ -609,9 +609,9 @@ final class Expression<T> extends AbstractField<T> {
 
                 case FIREBIRD: {
                     if (operator == ADD)
-                        ctx.visit(F_DATEADD).sql('(').visit(K_DAY).sql(", ").visit(rhsAsNumber()).sql(", ").visit(lhs).sql(')');
+                        ctx.visit(N_DATEADD).sql('(').visit(K_DAY).sql(", ").visit(rhsAsNumber()).sql(", ").visit(lhs).sql(')');
                     else
-                        ctx.visit(F_DATEADD).sql('(').visit(K_DAY).sql(", ").visit(rhsAsNumber().neg()).sql(", ").visit(lhs).sql(')');
+                        ctx.visit(N_DATEADD).sql('(').visit(K_DAY).sql(", ").visit(rhsAsNumber().neg()).sql(", ").visit(lhs).sql(')');
                     break;
                 }
 
@@ -632,9 +632,9 @@ final class Expression<T> extends AbstractField<T> {
                         ctx.visit(K_CAST).sql('(');
 
                     if (operator == ADD)
-                        ctx.sql("{fn ").visit(F_TIMESTAMPADD).sql('(').visit(keyword("sql_tsi_day")).sql(", ").visit(rhsAsNumber()).sql(", ").visit(lhs).sql(") }");
+                        ctx.sql("{fn ").visit(N_TIMESTAMPADD).sql('(').visit(keyword("sql_tsi_day")).sql(", ").visit(rhsAsNumber()).sql(", ").visit(lhs).sql(") }");
                     else
-                        ctx.sql("{fn ").visit(F_TIMESTAMPADD).sql('(').visit(keyword("sql_tsi_day")).sql(", ").visit(rhsAsNumber().neg()).sql(", ").visit(lhs).sql(") }");
+                        ctx.sql("{fn ").visit(N_TIMESTAMPADD).sql('(').visit(keyword("sql_tsi_day")).sql(", ").visit(rhsAsNumber().neg()).sql(", ").visit(lhs).sql(") }");
 
                     // [#1883] TIMESTAMPADD returns TIMESTAMP columns. If this
                     // is a DATE column, cast it to DATE
@@ -652,9 +652,9 @@ final class Expression<T> extends AbstractField<T> {
                 case MARIADB:
                 case MYSQL: {
                     if (operator == ADD)
-                        ctx.visit(F_DATE_ADD).sql('(').visit(lhs).sql(", ").visit(K_INTERVAL).sql(' ').visit(rhsAsNumber()).sql(' ').visit(K_DAY).sql(')');
+                        ctx.visit(N_DATE_ADD).sql('(').visit(lhs).sql(", ").visit(K_INTERVAL).sql(' ').visit(rhsAsNumber()).sql(' ').visit(K_DAY).sql(')');
                     else
-                        ctx.visit(F_DATE_ADD).sql('(').visit(lhs).sql(", ").visit(K_INTERVAL).sql(' ').visit(rhsAsNumber().neg()).sql(' ').visit(K_DAY).sql(')');
+                        ctx.visit(N_DATE_ADD).sql('(').visit(lhs).sql(", ").visit(K_INTERVAL).sql(' ').visit(rhsAsNumber().neg()).sql(' ').visit(K_DAY).sql(')');
                     break;
                 }
 
@@ -694,9 +694,9 @@ final class Expression<T> extends AbstractField<T> {
 
                 case SQLITE:
                     if (operator == ADD)
-                        ctx.visit(F_STRFTIME).sql("('%Y-%m-%d %H:%M:%f', ").visit(lhs).sql(", ").visit(rhsAsNumber().concat(inline(" day"))).sql(')');
+                        ctx.visit(N_STRFTIME).sql("('%Y-%m-%d %H:%M:%f', ").visit(lhs).sql(", ").visit(rhsAsNumber().concat(inline(" day"))).sql(')');
                     else
-                        ctx.visit(F_STRFTIME).sql("('%Y-%m-%d %H:%M:%f', ").visit(lhs).sql(", ").visit(rhsAsNumber().neg().concat(inline(" day"))).sql(')');
+                        ctx.visit(N_STRFTIME).sql("('%Y-%m-%d %H:%M:%f', ").visit(lhs).sql(", ").visit(rhsAsNumber().neg().concat(inline(" day"))).sql(')');
                     break;
 
 

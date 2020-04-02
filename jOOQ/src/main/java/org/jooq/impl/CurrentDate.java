@@ -37,15 +37,14 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Keywords.F_CONVERT;
-import static org.jooq.impl.Keywords.F_CURRENT_DATE;
-import static org.jooq.impl.Keywords.F_CURRENT_TIMESTAMP;
-import static org.jooq.impl.Keywords.F_SYSDATE;
-import static org.jooq.impl.Keywords.F_TRUNC;
 import static org.jooq.impl.Keywords.K_CURRENT;
 import static org.jooq.impl.Keywords.K_DATE;
 import static org.jooq.impl.Keywords.K_YEAR_TO_DAY;
+import static org.jooq.impl.Names.N_CONVERT;
 import static org.jooq.impl.Names.N_CURRENT_DATE;
+import static org.jooq.impl.Names.N_CURRENT_TIMESTAMP;
+import static org.jooq.impl.Names.N_SYSDATE;
+import static org.jooq.impl.Names.N_TRUNC;
 
 import org.jooq.Context;
 import org.jooq.DataType;
@@ -105,10 +104,10 @@ final class CurrentDate<T> extends AbstractField<T> {
             case HSQLDB:
             case POSTGRES:
             case SQLITE:
-                ctx.visit(F_CURRENT_DATE);
+                ctx.visit(N_CURRENT_DATE);
                 break;
             default:
-                ctx.visit(F_CURRENT_DATE).sql("()");
+                ctx.visit(N_CURRENT_DATE).sql("()");
                 break;
         }
     }

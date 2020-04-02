@@ -38,7 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.SQLDialect.SQLITE;
-import static org.jooq.impl.Keywords.F_RATIO_TO_REPORT;
+import static org.jooq.impl.Names.N_RATIO_TO_REPORT;
 import static org.jooq.impl.SQLDataType.DECIMAL;
 import static org.jooq.impl.SQLDataType.DOUBLE;
 import static org.jooq.impl.Tools.castIfNeeded;
@@ -61,7 +61,7 @@ final class RatioToReport extends DefaultAggregateFunction<BigDecimal> {
     private final Field<? extends Number> field;
 
     RatioToReport(Field<? extends Number> field) {
-        super("ratio_to_report", DECIMAL, field);
+        super(N_RATIO_TO_REPORT, DECIMAL, field);
 
         this.field = field;
     }
@@ -80,7 +80,7 @@ final class RatioToReport extends DefaultAggregateFunction<BigDecimal> {
 
 
             case H2:
-                ctx.visit(F_RATIO_TO_REPORT).sql('(').visit(field).sql(')');
+                ctx.visit(N_RATIO_TO_REPORT).sql('(').visit(field).sql(')');
                 acceptOverClause(ctx);
                 break;
 

@@ -38,9 +38,8 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.Keywords.F_DATE_TRUNC;
-import static org.jooq.impl.Keywords.F_TRUNC;
 import static org.jooq.impl.Keywords.K_CAST;
+import static org.jooq.impl.Names.N_DATE_TRUNC;
 import static org.jooq.impl.Names.N_TRUNC;
 import static org.jooq.impl.Tools.castIfNeeded;
 
@@ -90,7 +89,7 @@ final class TruncDate<T> extends AbstractField<T> {
                     default: throwUnsupported();
                 }
 
-                ctx.visit(F_TRUNC).sql('(').visit(date).sql(", ").visit(inline(keyword)).sql(')');
+                ctx.visit(N_TRUNC).sql('(').visit(date).sql(", ").visit(inline(keyword)).sql(')');
                 break;
             }
 
@@ -143,7 +142,7 @@ final class TruncDate<T> extends AbstractField<T> {
                     default: throwUnsupported();
                 }
 
-                ctx.visit(F_DATE_TRUNC).sql('(').visit(inline(keyword)).sql(", ").visit(date).sql(')');
+                ctx.visit(N_DATE_TRUNC).sql('(').visit(inline(keyword)).sql(", ").visit(date).sql(')');
                 break;
             }
 
@@ -242,7 +241,7 @@ final class TruncDate<T> extends AbstractField<T> {
 
 
             default:
-                ctx.visit(F_TRUNC).sql('(').visit(date).sql(", ").visit(inline(keyword)).sql(')');
+                ctx.visit(N_TRUNC).sql('(').visit(date).sql(", ").visit(inline(keyword)).sql(')');
                 break;
         }
     }

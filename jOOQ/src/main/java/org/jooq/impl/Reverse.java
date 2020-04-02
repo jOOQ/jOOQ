@@ -37,9 +37,8 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Keywords.F_REVERSE;
-import static org.jooq.impl.Keywords.F_STRREVERSE;
 import static org.jooq.impl.Names.N_REVERSE;
+import static org.jooq.impl.Names.N_STRREVERSE;
 
 import org.jooq.Context;
 import org.jooq.Field;
@@ -85,7 +84,7 @@ final class Reverse extends AbstractField<String> {
             case MARIADB:
             case MYSQL:
             default:
-                ctx.visit(F_REVERSE).sql('(').visit(field).sql(')');
+                ctx.visit(N_REVERSE).sql('(').visit(field).sql(')');
                 break;
         }
     }

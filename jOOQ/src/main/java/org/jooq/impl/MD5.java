@@ -37,14 +37,13 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Keywords.F_CONVERT;
-import static org.jooq.impl.Keywords.F_HASHBYTES;
-import static org.jooq.impl.Keywords.F_LOWER;
-import static org.jooq.impl.Keywords.F_MD5;
-import static org.jooq.impl.Keywords.F_RAWTOHEX;
-import static org.jooq.impl.Keywords.F_STANDARD_HASH;
 import static org.jooq.impl.Keywords.K_VARCHAR;
+import static org.jooq.impl.Names.N_CONVERT;
+import static org.jooq.impl.Names.N_HASHBYTES;
+import static org.jooq.impl.Names.N_LOWER;
 import static org.jooq.impl.Names.N_MD5;
+import static org.jooq.impl.Names.N_RAWTOHEX;
+import static org.jooq.impl.Names.N_STANDARD_HASH;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 
 import org.jooq.Context;
@@ -105,7 +104,7 @@ final class MD5 extends AbstractField<String> {
 
 
             default:
-                ctx.visit(F_MD5).sql('(').visit(argument).sql(')');
+                ctx.visit(N_MD5).sql('(').visit(argument).sql(')');
                 break;
         }
     }

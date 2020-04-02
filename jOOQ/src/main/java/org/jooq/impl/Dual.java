@@ -191,7 +191,7 @@ final class Dual extends AbstractTable<Record> {
 
 
                 default:
-                    // [#7421] must not use Names.N_DUAL as quoting doesn't work in e.g. MySQL
+                    // [#7421] must not use N_DUAL as quoting doesn't work in e.g. MySQL
                     ctx.sql("dual");
                     break;
             }

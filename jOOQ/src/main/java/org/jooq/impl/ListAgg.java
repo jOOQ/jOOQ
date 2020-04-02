@@ -52,18 +52,18 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
-import static org.jooq.impl.Keywords.F_CONCAT;
-import static org.jooq.impl.Keywords.F_SUBSTR;
-import static org.jooq.impl.Keywords.F_XMLAGG;
-import static org.jooq.impl.Keywords.F_XMLSERIALIZE;
-import static org.jooq.impl.Keywords.F_XMLTEXT;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_DISTINCT;
 import static org.jooq.impl.Keywords.K_SEPARATOR;
+import static org.jooq.impl.Names.N_CONCAT;
 import static org.jooq.impl.Names.N_GROUP_CONCAT;
 import static org.jooq.impl.Names.N_LIST;
 import static org.jooq.impl.Names.N_LISTAGG;
 import static org.jooq.impl.Names.N_STRING_AGG;
+import static org.jooq.impl.Names.N_SUBSTR;
+import static org.jooq.impl.Names.N_XMLAGG;
+import static org.jooq.impl.Names.N_XMLSERIALIZE;
+import static org.jooq.impl.Names.N_XMLTEXT;
 import static org.jooq.impl.Tools.castIfNeeded;
 
 import java.util.Arrays;

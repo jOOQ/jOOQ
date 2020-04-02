@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Keywords.F_TRIM;
 import static org.jooq.impl.Keywords.K_BOTH;
 import static org.jooq.impl.Keywords.K_FROM;
 import static org.jooq.impl.Names.N_TRIM;
@@ -90,7 +89,7 @@ final class Trim extends AbstractField<String> {
 
 
                 default:
-                    ctx.visit(F_TRIM).sql('(').visit(argument).sql(')');
+                    ctx.visit(N_TRIM).sql('(').visit(argument).sql(')');
                     break;
             }
         }
@@ -102,7 +101,7 @@ final class Trim extends AbstractField<String> {
 
 
                 case SQLITE:
-                    ctx.visit(F_TRIM).sql('(').visit(argument).sql(", ").visit(characters).sql(')');
+                    ctx.visit(N_TRIM).sql('(').visit(argument).sql(", ").visit(characters).sql(')');
                     break;
 
 
@@ -112,7 +111,7 @@ final class Trim extends AbstractField<String> {
 
 
                 default:
-                    ctx.visit(F_TRIM).sql('(').visit(K_BOTH).sql(' ').visit(characters).sql(' ').visit(K_FROM).sql(' ').visit(argument).sql(')');
+                    ctx.visit(N_TRIM).sql('(').visit(K_BOTH).sql(' ').visit(characters).sql(' ').visit(K_FROM).sql(' ').visit(argument).sql(')');
                     break;
             }
         }

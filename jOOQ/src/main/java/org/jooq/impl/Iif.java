@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Keywords.F_IIF;
 import static org.jooq.impl.Names.N_IIF;
 
 import org.jooq.Condition;

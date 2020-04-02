@@ -39,7 +39,6 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.two;
-import static org.jooq.impl.Keywords.F_SINH;
 import static org.jooq.impl.Names.N_SINH;
 import static org.jooq.impl.SQLDataType.NUMERIC;
 
@@ -92,7 +91,7 @@ final class Sinh extends AbstractField<BigDecimal> {
                 break;
 
             default:
-                ctx.visit(F_SINH).sql('(').visit(argument).sql(')');
+                ctx.visit(N_SINH).sql('(').visit(argument).sql(')');
                 break;
         }
     }

@@ -39,10 +39,9 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.keyword;
-import static org.jooq.impl.Keywords.F_DATEDIFF;
-import static org.jooq.impl.Keywords.F_STRFTIME;
-import static org.jooq.impl.Keywords.F_TIMESTAMPDIFF;
 import static org.jooq.impl.Keywords.K_MILLISECOND;
+import static org.jooq.impl.Names.N_DATEDIFF;
+import static org.jooq.impl.Names.N_STRFTIME;
 import static org.jooq.impl.Names.N_TIMESTAMPDIFF;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.INTERVALDAYTOSECOND;
@@ -126,7 +125,7 @@ final class TimestampDiff extends AbstractField<DayToSecond> {
                 break;
 
             case DERBY:
-                ctx.sql("1000 * {fn ").visit(F_TIMESTAMPDIFF).sql('(').visit(keyword("sql_tsi_second")).sql(", ").visit(timestamp2).sql(", ").visit(timestamp1).sql(") }");
+                ctx.sql("1000 * {fn ").visit(N_TIMESTAMPDIFF).sql('(').visit(keyword("sql_tsi_second")).sql(", ").visit(timestamp2).sql(", ").visit(timestamp1).sql(") }");
                 break;
 
 
@@ -134,12 +133,12 @@ final class TimestampDiff extends AbstractField<DayToSecond> {
 
 
             case FIREBIRD:
-                ctx.visit(F_DATEDIFF).sql('(').visit(K_MILLISECOND).sql(", ").visit(timestamp2).sql(", ").visit(timestamp1).sql(')');
+                ctx.visit(N_DATEDIFF).sql('(').visit(K_MILLISECOND).sql(", ").visit(timestamp2).sql(", ").visit(timestamp1).sql(')');
                 break;
 
             case H2:
             case HSQLDB:
-                ctx.visit(F_DATEDIFF).sql("('ms', ").visit(timestamp2).sql(", ").visit(timestamp1).sql(')');
+                ctx.visit(N_DATEDIFF).sql("('ms', ").visit(timestamp2).sql(", ").visit(timestamp1).sql(')');
                 break;
 
             // MySQL's datetime operations operate on a microsecond level
@@ -150,11 +149,11 @@ final class TimestampDiff extends AbstractField<DayToSecond> {
 
             case MARIADB:
             case MYSQL:
-                ctx.visit(F_TIMESTAMPDIFF).sql('(').visit(keyword("microsecond")).sql(", ").visit(timestamp2).sql(", ").visit(timestamp1).sql(") / 1000");
+                ctx.visit(N_TIMESTAMPDIFF).sql('(').visit(keyword("microsecond")).sql(", ").visit(timestamp2).sql(", ").visit(timestamp1).sql(") / 1000");
                 break;
 
             case SQLITE:
-                ctx.sql('(').visit(F_STRFTIME).sql("('%s', ").visit(timestamp1).sql(") - ").visit(F_STRFTIME).sql("('%s', ").visit(timestamp2).sql(")) * 1000");
+                ctx.sql('(').visit(N_STRFTIME).sql("('%s', ").visit(timestamp1).sql(") - ").visit(N_STRFTIME).sql("('%s', ").visit(timestamp2).sql(")) * 1000");
                 break;
 
 

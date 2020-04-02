@@ -37,8 +37,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Keywords.F_LCASE;
-import static org.jooq.impl.Keywords.F_LOWER;
+import static org.jooq.impl.Names.N_LCASE;
 import static org.jooq.impl.Names.N_LOWER;
 
 import org.jooq.Context;
@@ -71,7 +70,7 @@ final class Lower extends AbstractField<String> {
 
 
             default:
-                ctx.visit(F_LOWER).sql('(').visit(field).sql(')');
+                ctx.visit(N_LOWER).sql('(').visit(field).sql(')');
                 break;
         }
     }

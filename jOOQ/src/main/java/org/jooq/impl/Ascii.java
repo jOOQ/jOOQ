@@ -37,10 +37,9 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Keywords.F_ASC;
-import static org.jooq.impl.Keywords.F_ASCII;
-import static org.jooq.impl.Keywords.F_ASCII_VAL;
+import static org.jooq.impl.Names.N_ASC;
 import static org.jooq.impl.Names.N_ASCII;
+import static org.jooq.impl.Names.N_ASCII_VAL;
 
 import org.jooq.Context;
 import org.jooq.Field;
@@ -73,7 +72,7 @@ final class Ascii extends AbstractField<Integer> {
 
 
             case FIREBIRD:
-                ctx.visit(F_ASCII_VAL).sql('(').visit(string).sql(')');
+                ctx.visit(N_ASCII_VAL).sql('(').visit(string).sql(')');
                 break;
 
             // TODO [#862] [#864] emulate this for some dialects
@@ -84,7 +83,7 @@ final class Ascii extends AbstractField<Integer> {
             case SQLITE:
 
             default:
-                ctx.visit(F_ASCII).sql('(').visit(string).sql(')');
+                ctx.visit(N_ASCII).sql('(').visit(string).sql(')');
         }
     }
 }

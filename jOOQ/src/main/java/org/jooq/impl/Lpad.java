@@ -38,18 +38,17 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.Keywords.F_HEX;
-import static org.jooq.impl.Keywords.F_LEN;
-import static org.jooq.impl.Keywords.F_LENGTH;
-import static org.jooq.impl.Keywords.F_LPAD;
-import static org.jooq.impl.Keywords.F_REPLACE;
-import static org.jooq.impl.Keywords.F_SPACE;
-import static org.jooq.impl.Keywords.F_SUBSTR;
-import static org.jooq.impl.Keywords.F_ZEROBLOB;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_CAST;
 import static org.jooq.impl.Keywords.K_VARCHAR;
+import static org.jooq.impl.Names.N_HEX;
+import static org.jooq.impl.Names.N_LEN;
+import static org.jooq.impl.Names.N_LENGTH;
 import static org.jooq.impl.Names.N_LPAD;
+import static org.jooq.impl.Names.N_REPLACE;
+import static org.jooq.impl.Names.N_SPACE;
+import static org.jooq.impl.Names.N_SUBSTR;
+import static org.jooq.impl.Names.N_ZEROBLOB;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 
 import org.jooq.Context;
@@ -102,13 +101,13 @@ final class Lpad extends AbstractField<String> {
             // This beautiful expression was contributed by "Ludo", here:
             // http://stackoverflow.com/questions/6576343/how-to-simulate-lpad-rpad-with-sqlite
             case SQLITE: {
-                ctx.visit(F_SUBSTR).sql('(')
-                    .visit(F_REPLACE).sql('(')
-                        .visit(F_HEX).sql('(')
-                            .visit(F_ZEROBLOB).sql('(')
+                ctx.visit(N_SUBSTR).sql('(')
+                    .visit(N_REPLACE).sql('(')
+                        .visit(N_HEX).sql('(')
+                            .visit(N_ZEROBLOB).sql('(')
                                 .visit(length)
                         .sql(")), '00', ").visit(character)
-                    .sql("), 1, ").visit(length).sql(" - ").visit(F_LENGTH).sql('(').visit(field)
+                    .sql("), 1, ").visit(length).sql(" - ").visit(N_LENGTH).sql('(').visit(field)
                 .sql(")) || ").visit(field);
                 break;
             }
@@ -116,12 +115,12 @@ final class Lpad extends AbstractField<String> {
             // According to the Firebird documentation, LPAD outcomes should be
             // cast to truncate large results...
             case FIREBIRD: {
-                ctx.visit(K_CAST).sql('(').visit(F_LPAD).sql('(').visit(field).sql(", ").visit(length).sql(", ").visit(character).sql(") ").visit(K_AS).sql(' ').visit(K_VARCHAR).sql("(4000))");
+                ctx.visit(K_CAST).sql('(').visit(N_LPAD).sql('(').visit(field).sql(", ").visit(length).sql(", ").visit(character).sql(") ").visit(K_AS).sql(' ').visit(K_VARCHAR).sql("(4000))");
                 break;
             }
 
             default: {
-                ctx.visit(F_LPAD).sql('(').visit(field).sql(", ").visit(length).sql(", ").visit(character).sql(')');
+                ctx.visit(N_LPAD).sql('(').visit(field).sql(", ").visit(length).sql(", ").visit(character).sql(')');
                 break;
             }
         }

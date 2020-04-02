@@ -38,9 +38,8 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.Keywords.F_BIT_COUNT;
-import static org.jooq.impl.Keywords.F_COUNTSET;
 import static org.jooq.impl.Names.N_BIT_COUNT;
+import static org.jooq.impl.Names.N_COUNTSET;
 
 import org.jooq.Context;
 import org.jooq.Field;
@@ -72,7 +71,7 @@ final class BitCount extends AbstractField<Integer> {
 
             case MARIADB:
             case MYSQL:
-                ctx.visit(F_BIT_COUNT).sql('(').visit(field).sql(')');
+                ctx.visit(N_BIT_COUNT).sql('(').visit(field).sql(')');
                 return;
 
 
@@ -247,7 +246,7 @@ final class BitCount extends AbstractField<Integer> {
                 }
                 else {
                     // Currently not supported
-                    ctx.visit(F_BIT_COUNT).sql('(').visit(field).sql(')');
+                    ctx.visit(N_BIT_COUNT).sql('(').visit(field).sql(')');
                     return;
                 }
             }
@@ -407,7 +406,7 @@ final class BitCount extends AbstractField<Integer> {
                 }
                 else {
                     // Currently not supported
-                    ctx.visit(F_BIT_COUNT).sql('(').visit(field).sql(')');
+                    ctx.visit(N_BIT_COUNT).sql('(').visit(field).sql(')');
                     return;
                 }
             }

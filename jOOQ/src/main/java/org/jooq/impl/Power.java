@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Keywords.F_POWER;
 import static org.jooq.impl.Names.N_POWER;
 import static org.jooq.impl.SQLDataType.NUMERIC;
 
@@ -81,7 +80,7 @@ final class Power extends AbstractField<BigDecimal> {
                 break;
 
             default:
-                ctx.visit(F_POWER).sql('(').visit(arg1).sql(", ").visit(arg2).sql(')');
+                ctx.visit(N_POWER).sql('(').visit(arg1).sql(", ").visit(arg2).sql(')');
                 break;
         }
     }

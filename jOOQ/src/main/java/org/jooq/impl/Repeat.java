@@ -37,12 +37,12 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Keywords.F_HEX;
-import static org.jooq.impl.Keywords.F_REPEAT;
-import static org.jooq.impl.Keywords.F_REPLACE;
-import static org.jooq.impl.Keywords.F_REPLICATE;
-import static org.jooq.impl.Keywords.F_ZEROBLOB;
+import static org.jooq.impl.Names.N_HEX;
+import static org.jooq.impl.Names.N_REPEAT;
+import static org.jooq.impl.Names.N_REPLACE;
+import static org.jooq.impl.Names.N_REPLICATE;
 import static org.jooq.impl.Names.N_RPAD;
+import static org.jooq.impl.Names.N_ZEROBLOB;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 
 import org.jooq.Context;
@@ -88,7 +88,7 @@ final class Repeat extends AbstractField<String> {
             // Another option is documented here, though:
             // https://stackoverflow.com/a/51792334/521799
             case SQLITE:
-                ctx.visit(F_REPLACE).sql('(').visit(F_HEX).sql('(').visit(F_ZEROBLOB).sql('(').visit(count).sql(")), '00', ").visit(string).sql(')');
+                ctx.visit(N_REPLACE).sql('(').visit(N_HEX).sql('(').visit(N_ZEROBLOB).sql('(').visit(count).sql(")), '00', ").visit(string).sql(')');
                 break;
 
 
@@ -100,7 +100,7 @@ final class Repeat extends AbstractField<String> {
 
 
             default:
-                ctx.visit(F_REPEAT).sql('(').visit(string).sql(", ").visit(count).sql(')');
+                ctx.visit(N_REPEAT).sql('(').visit(string).sql(", ").visit(count).sql(')');
                 break;
         }
     }

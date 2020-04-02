@@ -39,12 +39,11 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.keyword;
-import static org.jooq.impl.Keywords.F_DATEDIFF;
-import static org.jooq.impl.Keywords.F_DAYS_BETWEEN;
-import static org.jooq.impl.Keywords.F_STRFTIME;
-import static org.jooq.impl.Keywords.F_TIMESTAMPDIFF;
 import static org.jooq.impl.Keywords.K_DAY;
 import static org.jooq.impl.Names.N_DATEDIFF;
+import static org.jooq.impl.Names.N_DAYS_BETWEEN;
+import static org.jooq.impl.Names.N_STRFTIME;
+import static org.jooq.impl.Names.N_TIMESTAMPDIFF;
 import static org.jooq.impl.Tools.castIfNeeded;
 
 import org.jooq.Context;
@@ -79,15 +78,15 @@ final class DateDiff<T> extends AbstractField<Integer> {
 
             case MARIADB:
             case MYSQL:
-                ctx.visit(F_DATEDIFF).sql('(').visit(date1).sql(", ").visit(date2).sql(')');
+                ctx.visit(N_DATEDIFF).sql('(').visit(date1).sql(", ").visit(date2).sql(')');
                 break;
 
             case DERBY:
-                ctx.sql("{fn ").visit(F_TIMESTAMPDIFF).sql('(').visit(keyword("sql_tsi_day")).sql(", ").visit(date2).sql(", ").visit(date1).sql(") }");
+                ctx.sql("{fn ").visit(N_TIMESTAMPDIFF).sql('(').visit(keyword("sql_tsi_day")).sql(", ").visit(date2).sql(", ").visit(date1).sql(") }");
                 break;
 
             case FIREBIRD:
-                ctx.visit(F_DATEDIFF).sql('(').visit(K_DAY).sql(", ").visit(date2).sql(", ").visit(date1).sql(')');
+                ctx.visit(N_DATEDIFF).sql('(').visit(K_DAY).sql(", ").visit(date2).sql(", ").visit(date1).sql(')');
                 break;
 
             case H2:
@@ -95,11 +94,11 @@ final class DateDiff<T> extends AbstractField<Integer> {
 
 
 
-                ctx.visit(F_DATEDIFF).sql("('day', ").visit(date2).sql(", ").visit(date1).sql(')');
+                ctx.visit(N_DATEDIFF).sql("('day', ").visit(date2).sql(", ").visit(date1).sql(')');
                 break;
 
             case SQLITE:
-                ctx.sql('(').visit(F_STRFTIME).sql("('%s', ").visit(date1).sql(") - ").visit(F_STRFTIME).sql("('%s', ").visit(date2).sql(")) / 86400");
+                ctx.sql('(').visit(N_STRFTIME).sql("('%s', ").visit(date1).sql(") - ").visit(N_STRFTIME).sql("('%s', ").visit(date2).sql(")) / 86400");
                 break;
 
 

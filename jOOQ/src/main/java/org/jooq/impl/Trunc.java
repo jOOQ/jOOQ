@@ -40,12 +40,11 @@ package org.jooq.impl;
 import static java.math.BigDecimal.TEN;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.zero;
-import static org.jooq.impl.Keywords.F_ROUND;
-import static org.jooq.impl.Keywords.F_ROUND_DOWN;
-import static org.jooq.impl.Keywords.F_TRUNC;
-import static org.jooq.impl.Keywords.F_TRUNCATE;
-import static org.jooq.impl.Keywords.F_TRUNCNUM;
+import static org.jooq.impl.Names.N_ROUND;
+import static org.jooq.impl.Names.N_ROUND_DOWN;
 import static org.jooq.impl.Names.N_TRUNC;
+import static org.jooq.impl.Names.N_TRUNCATE;
+import static org.jooq.impl.Names.N_TRUNCNUM;
 import static org.jooq.impl.Tools.castIfNeeded;
 import static org.jooq.impl.Tools.extractVal;
 
@@ -110,7 +109,7 @@ final class Trunc<T> extends AbstractField<T> {
             case H2:
             case MARIADB:
             case MYSQL:
-                ctx.visit(F_TRUNCATE).sql('(').visit(field).sql(", ").visit(decimals).sql(')');
+                ctx.visit(N_TRUNCATE).sql('(').visit(field).sql(", ").visit(decimals).sql(')');
                 break;
 
             // Postgres TRUNC() only takes NUMERIC arguments, no
@@ -153,7 +152,7 @@ final class Trunc<T> extends AbstractField<T> {
             case CUBRID:
             case HSQLDB:
             default:
-                ctx.visit(F_TRUNC).sql('(').visit(field).sql(", ").visit(decimals).sql(')');
+                ctx.visit(N_TRUNC).sql('(').visit(field).sql(", ").visit(decimals).sql(')');
                 break;
         }
     }

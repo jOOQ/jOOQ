@@ -39,11 +39,10 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.one;
-import static org.jooq.impl.Keywords.F_CHARINDEX;
-import static org.jooq.impl.Keywords.F_INSTR;
-import static org.jooq.impl.Keywords.F_LOCATE;
-import static org.jooq.impl.Keywords.F_POSITION;
 import static org.jooq.impl.Keywords.K_IN;
+import static org.jooq.impl.Names.N_CHARINDEX;
+import static org.jooq.impl.Names.N_INSTR;
+import static org.jooq.impl.Names.N_LOCATE;
 import static org.jooq.impl.Names.N_POSITION;
 import static org.jooq.impl.SQLDataType.INTEGER;
 
@@ -99,7 +98,7 @@ final class Position extends AbstractField<Integer> {
 
 
                 case DERBY:
-                    ctx.visit(F_LOCATE).sql('(').visit(search).sql(", ").visit(in).sql(')');
+                    ctx.visit(N_LOCATE).sql('(').visit(search).sql(", ").visit(in).sql(')');
                     break;
 
 
@@ -119,11 +118,11 @@ final class Position extends AbstractField<Integer> {
 
 
                 case SQLITE:
-                    ctx.visit(F_INSTR).sql('(').visit(in).sql(", ").visit(search).sql(')');
+                    ctx.visit(N_INSTR).sql('(').visit(in).sql(", ").visit(search).sql(')');
                     break;
 
                 default:
-                    ctx.visit(F_POSITION).sql('(').visit(search).sql(' ').visit(K_IN).sql(' ').visit(in).sql(')');
+                    ctx.visit(N_POSITION).sql('(').visit(search).sql(' ').visit(K_IN).sql(' ').visit(in).sql(')');
                     break;
             }
     }

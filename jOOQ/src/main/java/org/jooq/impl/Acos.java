@@ -39,7 +39,6 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.two;
-import static org.jooq.impl.Keywords.F_ACOS;
 import static org.jooq.impl.Names.N_ACOS;
 
 import java.math.BigDecimal;
@@ -74,7 +73,7 @@ final class Acos extends AbstractField<BigDecimal> {
 
 
             default:
-                ctx.visit(F_ACOS).sql('(').visit(arg).sql(')');
+                ctx.visit(N_ACOS).sql('(').visit(arg).sql(')');
                 break;
         }
     }

@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Keywords.F_SPACE;
 import static org.jooq.impl.Names.N_SPACE;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 
@@ -97,7 +96,7 @@ final class Space extends AbstractField<String> {
             case MYSQL:
             case H2:
             default:
-                ctx.visit(F_SPACE).sql('(').visit(count).sql(')');
+                ctx.visit(N_SPACE).sql('(').visit(count).sql(')');
                 break;
         }
     }

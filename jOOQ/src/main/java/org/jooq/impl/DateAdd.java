@@ -39,11 +39,6 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.sql;
-import static org.jooq.impl.Keywords.F_ADD_MONTHS;
-import static org.jooq.impl.Keywords.F_DATEADD;
-import static org.jooq.impl.Keywords.F_DATE_ADD;
-import static org.jooq.impl.Keywords.F_STRFTIME;
-import static org.jooq.impl.Keywords.F_TIMESTAMPADD;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_CAST;
 import static org.jooq.impl.Keywords.K_DAY;
@@ -53,7 +48,11 @@ import static org.jooq.impl.Keywords.K_MINUTE;
 import static org.jooq.impl.Keywords.K_MONTH;
 import static org.jooq.impl.Keywords.K_SECOND;
 import static org.jooq.impl.Keywords.K_YEAR;
+import static org.jooq.impl.Names.N_ADD_MONTHS;
 import static org.jooq.impl.Names.N_DATEADD;
+import static org.jooq.impl.Names.N_DATE_ADD;
+import static org.jooq.impl.Names.N_STRFTIME;
+import static org.jooq.impl.Names.N_TIMESTAMPADD;
 
 import org.jooq.Context;
 import org.jooq.DatePart;
@@ -105,7 +104,7 @@ final class DateAdd<T> extends AbstractField<T> {
                     default: throwUnsupported();
                 }
 
-                ctx.visit(F_DATE_ADD).sql('(').visit(date).sql(", ").visit(K_INTERVAL).sql(' ').visit(interval).sql(' ').visit(keyword).sql(')');
+                ctx.visit(N_DATE_ADD).sql('(').visit(date).sql(", ").visit(K_INTERVAL).sql(' ').visit(interval).sql(' ').visit(keyword).sql(')');
                 break;
             }
 
@@ -121,7 +120,7 @@ final class DateAdd<T> extends AbstractField<T> {
                     default: throwUnsupported();
                 }
 
-                ctx.sql("{fn ").visit(F_TIMESTAMPADD).sql('(').visit(keyword).sql(", ").visit(interval).sql(", ").visit(date).sql(") }");
+                ctx.sql("{fn ").visit(N_TIMESTAMPADD).sql('(').visit(keyword).sql(", ").visit(interval).sql(", ").visit(date).sql(") }");
                 break;
             }
 
@@ -136,7 +135,7 @@ final class DateAdd<T> extends AbstractField<T> {
                     default: throwUnsupported();
                 }
 
-                ctx.visit(F_DATEADD).sql('(').visit(keyword).sql(", ").visit(interval).sql(", ").visit(date).sql(')');
+                ctx.visit(N_DATEADD).sql('(').visit(keyword).sql(", ").visit(interval).sql(", ").visit(date).sql(')');
                 break;
             }
 
@@ -151,7 +150,7 @@ final class DateAdd<T> extends AbstractField<T> {
                     default: throwUnsupported();
                 }
 
-                ctx.visit(F_DATEADD).sql('(').visit(inline(string)).sql(", ").visit(interval).sql(", ").visit(date).sql(')');
+                ctx.visit(N_DATEADD).sql('(').visit(inline(string)).sql(", ").visit(interval).sql(", ").visit(date).sql(')');
                 break;
             }
 
@@ -196,7 +195,7 @@ final class DateAdd<T> extends AbstractField<T> {
                     default: throwUnsupported();
                 }
 
-                ctx.visit(F_STRFTIME).sql("('%Y-%m-%d %H:%M:%f', ").visit(date).sql(", ").visit(interval.concat(inline(string))).sql(')');
+                ctx.visit(N_STRFTIME).sql("('%Y-%m-%d %H:%M:%f', ").visit(date).sql(", ").visit(interval.concat(inline(string))).sql(')');
                 break;
             }
 

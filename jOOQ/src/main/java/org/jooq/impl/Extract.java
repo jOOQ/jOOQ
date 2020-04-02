@@ -42,14 +42,6 @@ import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.one;
-import static org.jooq.impl.Keywords.F_DATEDIFF;
-import static org.jooq.impl.Keywords.F_DATEPART;
-import static org.jooq.impl.Keywords.F_DAYOFWEEK;
-import static org.jooq.impl.Keywords.F_EXTRACT;
-import static org.jooq.impl.Keywords.F_STRFTIME;
-import static org.jooq.impl.Keywords.F_TO_CHAR;
-import static org.jooq.impl.Keywords.F_TO_NUMBER;
-import static org.jooq.impl.Keywords.F_TRUNC;
 import static org.jooq.impl.Keywords.K_DATE;
 import static org.jooq.impl.Keywords.K_DAY;
 import static org.jooq.impl.Keywords.K_FROM;
@@ -59,7 +51,14 @@ import static org.jooq.impl.Keywords.K_MINUTE;
 import static org.jooq.impl.Keywords.K_MONTH;
 import static org.jooq.impl.Keywords.K_SECOND;
 import static org.jooq.impl.Keywords.K_YEAR;
+import static org.jooq.impl.Names.N_DATEDIFF;
+import static org.jooq.impl.Names.N_DATEPART;
+import static org.jooq.impl.Names.N_DAYOFWEEK;
 import static org.jooq.impl.Names.N_EXTRACT;
+import static org.jooq.impl.Names.N_STRFTIME;
+import static org.jooq.impl.Names.N_TO_CHAR;
+import static org.jooq.impl.Names.N_TO_NUMBER;
+import static org.jooq.impl.Names.N_TRUNC;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.castIfNeeded;
@@ -95,36 +94,36 @@ final class Extract extends AbstractField<Integer> {
             case SQLITE:
                 switch (datePart) {
                     case YEAR:
-                        ctx.visit(F_STRFTIME).sql("('%Y', ").visit(field).sql(')');
+                        ctx.visit(N_STRFTIME).sql("('%Y', ").visit(field).sql(')');
                         return;
                     case MONTH:
-                        ctx.visit(F_STRFTIME).sql("('%m', ").visit(field).sql(')');
+                        ctx.visit(N_STRFTIME).sql("('%m', ").visit(field).sql(')');
                         return;
                     case DAY:
-                        ctx.visit(F_STRFTIME).sql("('%d', ").visit(field).sql(')');
+                        ctx.visit(N_STRFTIME).sql("('%d', ").visit(field).sql(')');
                         return;
                     case HOUR:
-                        ctx.visit(F_STRFTIME).sql("('%H', ").visit(field).sql(')');
+                        ctx.visit(N_STRFTIME).sql("('%H', ").visit(field).sql(')');
                         return;
                     case MINUTE:
-                        ctx.visit(F_STRFTIME).sql("('%M', ").visit(field).sql(')');
+                        ctx.visit(N_STRFTIME).sql("('%M', ").visit(field).sql(')');
                         return;
                     case SECOND:
-                        ctx.visit(F_STRFTIME).sql("('%S', ").visit(field).sql(')');
+                        ctx.visit(N_STRFTIME).sql("('%S', ").visit(field).sql(')');
                         return;
 
                     // See: https://www.sqlite.org/lang_datefunc.html
                     case EPOCH:
-                        ctx.visit(F_STRFTIME).sql("('%s', ").visit(field).sql(')');
+                        ctx.visit(N_STRFTIME).sql("('%s', ").visit(field).sql(')');
                         return;
                     case ISO_DAY_OF_WEEK:
                         ctx.visit(dowSun0ToISO(function("strftime", INTEGER, inline("%w"), field)));
                         return;
                     case DAY_OF_WEEK:
-                        ctx.visit(F_STRFTIME).sql("('%w', ").visit(field).sql(") + ").visit(one());
+                        ctx.visit(N_STRFTIME).sql("('%w', ").visit(field).sql(") + ").visit(one());
                         return;
                     case DAY_OF_YEAR:
-                        ctx.visit(F_STRFTIME).sql("('%j', ").visit(field).sql(')');
+                        ctx.visit(N_STRFTIME).sql("('%j', ").visit(field).sql(')');
                         return;
                 }
                 break;
@@ -298,7 +297,7 @@ final class Extract extends AbstractField<Integer> {
             case MYSQL:
                 switch (datePart) {
                     case DAY_OF_WEEK:
-                        ctx.visit(F_DAYOFWEEK).sql('(').visit(field).sql(')');
+                        ctx.visit(N_DAYOFWEEK).sql('(').visit(field).sql(')');
                         return;
                     case DAY_OF_YEAR:
                         ctx.visit(keyword("dayofyear")).sql('(').visit(field).sql(')');
@@ -433,6 +432,6 @@ final class Extract extends AbstractField<Integer> {
     }
 
     private final void acceptNativeFunction(Context<?> ctx, Keyword keyword) {
-        ctx.visit(F_EXTRACT).sql('(').visit(keyword).sql(' ').visit(K_FROM).sql(' ').visit(field).sql(')');
+        ctx.visit(N_EXTRACT).sql('(').visit(keyword).sql(' ').visit(K_FROM).sql(' ').visit(field).sql(')');
     }
 }

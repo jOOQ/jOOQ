@@ -38,13 +38,13 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.Keywords.F_SCHEMA_NAME;
-import static org.jooq.impl.Keywords.F_USER;
 import static org.jooq.impl.Keywords.K_CURRENT;
 import static org.jooq.impl.Keywords.K_CURRENT_SCHEMA;
 import static org.jooq.impl.Keywords.K_DATABASE;
 import static org.jooq.impl.Keywords.K_SCHEMA;
 import static org.jooq.impl.Names.N_CURRENT_SCHEMA;
+import static org.jooq.impl.Names.N_SCHEMA_NAME;
+import static org.jooq.impl.Names.N_USER;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 
 import org.jooq.Context;

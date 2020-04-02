@@ -59,7 +59,6 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.Keywords.F_OVERLAY;
 import static org.jooq.impl.Keywords.K_FOR;
 import static org.jooq.impl.Keywords.K_FROM;
 import static org.jooq.impl.Keywords.K_PLACING;
@@ -116,7 +115,7 @@ final class Overlay extends AbstractField<String> {
                 );
             }
             else {
-                ctx.visit(F_OVERLAY).sql('(').visit(in).sql(' ')
+                ctx.visit(N_OVERLAY).sql('(').visit(in).sql(' ')
                    .visit(K_PLACING).sql(' ').visit(placing).sql(' ')
                    .visit(K_FROM).sql(' ').visit(startIndex).sql(' ')
                    .visit(K_FOR).sql(' ').visit(l).sql(')');
@@ -131,7 +130,7 @@ final class Overlay extends AbstractField<String> {
                 );
             }
             else {
-                ctx.visit(F_OVERLAY).sql('(').visit(in).sql(' ')
+                ctx.visit(N_OVERLAY).sql('(').visit(in).sql(' ')
                    .visit(K_PLACING).sql(' ').visit(placing).sql(' ')
                    .visit(K_FROM).sql(' ').visit(startIndex).sql(')');
             }

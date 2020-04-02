@@ -39,7 +39,6 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.pi;
-import static org.jooq.impl.Keywords.F_DEGREES;
 import static org.jooq.impl.Names.N_DEGREES;
 import static org.jooq.impl.Tools.castIfNeeded;
 
@@ -84,7 +83,7 @@ final class Degrees extends AbstractField<BigDecimal> {
                 break;
 
             default:
-                ctx.visit(F_DEGREES).sql('(').visit(argument).sql(')');
+                ctx.visit(N_DEGREES).sql('(').visit(argument).sql(')');
                 break;
         }
     }

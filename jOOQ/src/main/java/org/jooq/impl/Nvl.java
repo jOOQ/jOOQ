@@ -37,11 +37,10 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Keywords.F_IFNULL;
-import static org.jooq.impl.Keywords.F_IIF;
-import static org.jooq.impl.Keywords.F_NVL;
 import static org.jooq.impl.Keywords.K_COALESCE;
 import static org.jooq.impl.Keywords.K_IS_NULL;
+import static org.jooq.impl.Names.N_IFNULL;
+import static org.jooq.impl.Names.N_IIF;
 import static org.jooq.impl.Names.N_NVL;
 
 import org.jooq.Context;
@@ -82,7 +81,7 @@ final class Nvl<T> extends AbstractField<T> {
 
             case H2:
             case HSQLDB:
-                ctx.visit(F_NVL).sql('(').visit(arg1).sql(", ").visit(arg2).sql(')');
+                ctx.visit(N_NVL).sql('(').visit(arg1).sql(", ").visit(arg2).sql(')');
                 break;
 
 
@@ -101,7 +100,7 @@ final class Nvl<T> extends AbstractField<T> {
             case MARIADB:
             case MYSQL:
             case SQLITE:
-                ctx.visit(F_IFNULL).sql('(').visit(arg1).sql(", ").visit(arg2).sql(')');
+                ctx.visit(N_IFNULL).sql('(').visit(arg1).sql(", ").visit(arg2).sql(')');
                 break;
 
             default:

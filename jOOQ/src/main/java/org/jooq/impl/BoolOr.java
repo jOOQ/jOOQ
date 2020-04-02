@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.zero;
+import static org.jooq.impl.Names.N_BOOL_OR;
 
 import org.jooq.Condition;
 import org.jooq.Context;
@@ -57,7 +58,7 @@ final class BoolOr extends DefaultAggregateFunction<Boolean> {
     private final Condition   condition;
 
     BoolOr(Condition condition) {
-        super("bool_or", SQLDataType.BOOLEAN, DSL.field(condition));
+        super(N_BOOL_OR, SQLDataType.BOOLEAN, DSL.field(condition));
 
         this.condition = condition;
     }

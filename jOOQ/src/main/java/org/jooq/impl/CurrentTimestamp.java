@@ -49,12 +49,11 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
-import static org.jooq.impl.Keywords.F_CURRENT_BIGDATETIME;
-import static org.jooq.impl.Keywords.F_CURRENT_TIMESTAMP;
-import static org.jooq.impl.Keywords.F_NOW;
 import static org.jooq.impl.Keywords.K_CURRENT;
 import static org.jooq.impl.Keywords.K_TIMESTAMP;
+import static org.jooq.impl.Names.N_CURRENT_BIGDATETIME;
 import static org.jooq.impl.Names.N_CURRENT_TIMESTAMP;
+import static org.jooq.impl.Names.N_NOW;
 
 import java.util.Set;
 
@@ -125,15 +124,15 @@ final class CurrentTimestamp<T> extends AbstractField<T> {
             case POSTGRES:
             case SQLITE:
                 if (precision != null && !NO_SUPPORT_PRECISION.contains(ctx.family()))
-                    ctx.visit(F_CURRENT_TIMESTAMP).sql('(').visit(precision).sql(')');
+                    ctx.visit(N_CURRENT_TIMESTAMP).sql('(').visit(precision).sql(')');
                 else
-                    ctx.visit(F_CURRENT_TIMESTAMP);
+                    ctx.visit(N_CURRENT_TIMESTAMP);
                 break;
             default:
                 if (precision != null && !NO_SUPPORT_PRECISION.contains(ctx.family()))
-                    ctx.visit(F_CURRENT_TIMESTAMP).sql('(').visit(precision).sql(')');
+                    ctx.visit(N_CURRENT_TIMESTAMP).sql('(').visit(precision).sql(')');
                 else
-                    ctx.visit(F_CURRENT_TIMESTAMP).sql("()");
+                    ctx.visit(N_CURRENT_TIMESTAMP).sql("()");
                 break;
         }
     }

@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Keywords.F_NVL2;
 import static org.jooq.impl.Names.N_NVL2;
 
 import org.jooq.Context;
@@ -75,7 +74,7 @@ final class Nvl2<T> extends AbstractField<T> {
 
             case H2:
             case HSQLDB:
-                ctx.visit(F_NVL2).sql('(').visit(arg1).sql(", ").visit(arg2).sql(", ").visit(arg3).sql(')');
+                ctx.visit(N_NVL2).sql('(').visit(arg1).sql(", ").visit(arg2).sql(", ").visit(arg3).sql(')');
                 break;
 
             default:

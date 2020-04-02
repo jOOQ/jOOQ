@@ -39,7 +39,6 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.two;
-import static org.jooq.impl.Keywords.F_TANH;
 import static org.jooq.impl.Names.N_TANH;
 import static org.jooq.impl.SQLDataType.NUMERIC;
 
@@ -92,7 +91,7 @@ final class Tanh extends AbstractField<BigDecimal> {
                 break;
 
             default:
-                ctx.visit(F_TANH).sql('(').visit(argument).sql(')');
+                ctx.visit(N_TANH).sql('(').visit(argument).sql(')');
                 break;
         }
     }

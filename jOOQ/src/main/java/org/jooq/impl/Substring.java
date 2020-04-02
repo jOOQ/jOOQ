@@ -38,17 +38,16 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.Keywords.F_MID;
-import static org.jooq.impl.Keywords.F_SUBSTR;
-import static org.jooq.impl.Keywords.F_SUBSTRING;
 import static org.jooq.impl.Keywords.K_FOR;
 import static org.jooq.impl.Keywords.K_FROM;
+import static org.jooq.impl.Names.N_MID;
+import static org.jooq.impl.Names.N_SUBSTR;
 import static org.jooq.impl.Names.N_SUBSTRING;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 
 import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.Keyword;
+import org.jooq.Name;
 
 /**
  * @author Lukas Eder
@@ -78,7 +77,7 @@ final class Substring extends AbstractField<String> {
 
     @Override
     public final void accept(Context<?> ctx) {
-        Keyword functionName = F_SUBSTRING;
+        Name functionName = N_SUBSTRING;
 
         switch (ctx.family()) {
 
@@ -88,9 +87,10 @@ final class Substring extends AbstractField<String> {
 
             case FIREBIRD: {
                 if (length == null)
-                    ctx.visit(F_SUBSTRING).sql('(').visit(field).sql(' ').visit(K_FROM).sql(' ').visit(startingPosition).sql(')');
+                    ctx.visit(N_SUBSTRING).sql('(').visit(field).sql(' ').visit(K_FROM).sql(' ').visit(startingPosition).sql(')');
                 else
-                    ctx.visit(F_SUBSTRING).sql('(').visit(field).sql(' ').visit(K_FROM).sql(' ').visit(startingPosition).sql(' ').visit(K_FOR).sql(' ').visit(length).sql(')');
+                    ctx.visit(N_SUBSTRING).sql('(').visit(field).sql(' ').visit(K_FROM).sql(' ').visit(startingPosition).sql(' ').visit(K_FOR).sql(' ').visit(length).sql(')');
+
                 return;
             }
 
@@ -125,9 +125,10 @@ final class Substring extends AbstractField<String> {
 
 
 
+
             case DERBY:
             case SQLITE:
-                functionName = F_SUBSTR;
+                functionName = N_SUBSTR;
                 break;
         }
 

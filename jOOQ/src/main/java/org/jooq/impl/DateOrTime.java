@@ -37,10 +37,10 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Keywords.F_STRFTIME;
 import static org.jooq.impl.Keywords.K_DATE;
 import static org.jooq.impl.Keywords.K_TIME;
 import static org.jooq.impl.Keywords.K_TIMESTAMP;
+import static org.jooq.impl.Names.N_STRFTIME;
 import static org.jooq.impl.Tools.castIfNeeded;
 
 import org.jooq.Context;
@@ -102,7 +102,7 @@ final class DateOrTime<T> extends AbstractField<T> {
                     // [#8733] No fractional seconds for time literals
                     ctx.visit(K_TIME).sql('(').visit(field).sql(')');
                 else
-                    ctx.visit(F_STRFTIME).sql("('%Y-%m-%d %H:%M:%f', ").visit(field).sql(')');
+                    ctx.visit(N_STRFTIME).sql("('%Y-%m-%d %H:%M:%f', ").visit(field).sql(')');
                 break;
             }
 

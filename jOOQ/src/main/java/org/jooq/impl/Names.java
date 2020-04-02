@@ -163,7 +163,7 @@ final class Names {
     static final Name N_PRODUCT                = unquotedName("product");
     static final Name N_RADIANS                = unquotedName("radians");
     static final Name N_RAND                   = unquotedName("rand");
-    static final Name N_RANDOM                 = unquotedName("rand");
+    static final Name N_RANDOM                 = unquotedName("random");
     static final Name N_RATIO_TO_REPORT        = unquotedName("ratio_to_report");
     static final Name N_RAWTOHEX               = unquotedName("rawtohex");
     static final Name N_REPEAT                 = unquotedName("repeat");

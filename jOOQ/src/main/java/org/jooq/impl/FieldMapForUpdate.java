@@ -55,6 +55,7 @@ import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.RenderContext.CastMode;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 
@@ -68,6 +69,7 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> {
      * Generated UID
      */
     private static final long            serialVersionUID   = -6139709404698673799L;
+    private static final Set<SQLDialect> CASTS_NEEDED       = SQLDialect.supportedBy(POSTGRES);
     private static final Set<SQLDialect> NO_SUPPORT_QUALIFY = SQLDialect.supportedBy(POSTGRES, SQLITE);
 
     private final Table<?>               table;
@@ -93,6 +95,12 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> {
             boolean restoreQualify = ctx.qualify();
             boolean supportsQualify = NO_SUPPORT_QUALIFY.contains(ctx.family()) ? false : restoreQualify;
 
+            // [#2823] [#10034] Few dialects need bind value casts for UPDATE .. SET
+            //                  Some regressions have been observed e.g. in PostgreSQL with JSON types, so let's be careful.
+            CastMode previous = ctx.castMode();
+            if (!CASTS_NEEDED.contains(ctx.dialect()))
+                ctx.castMode(CastMode.NEVER);
+
             for (Entry<Field<?>, Field<?>> entry : flattenEntrySet(entrySet())) {
                 if (!"".equals(separator))
                     ctx.sql(separator)
@@ -115,6 +123,9 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> {
 
                 separator = ",";
             }
+
+            if (!CASTS_NEEDED.contains(ctx.dialect()))
+                ctx.castMode(previous);
         }
         else {
             ctx.sql("[ no fields are updated ]");

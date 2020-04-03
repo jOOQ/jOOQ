@@ -251,8 +251,8 @@ final class FieldMapsForInsert extends AbstractQueryPart {
         boolean indent = (values.size() > 1);
         boolean castFirstRowNumericValues = false ;
 
-        // [#9992] Few dialects need bind value casts for INSERT .. VALUES(?, ?)
-        //         Some regressions have been observed e.g. in PostgreSQL with JSON types, so let's be careful.
+        // [#2823] [#10033] Few dialects need bind value casts for INSERT .. VALUES(?, ?)
+        //                  Some regressions have been observed e.g. in PostgreSQL with JSON types, so let's be careful.
         CastMode previous = ctx.castMode();
         if (!CASTS_NEEDED.contains(ctx.dialect()))
             ctx.castMode(CastMode.NEVER);

@@ -159,7 +159,7 @@ final class LoaderImpl<R extends Record> implements
     private Field<?>[]                   source;
     private Field<?>[]                   fields;
     private LoaderFieldMapper            fieldMapper;
-    private boolean                      fieldsFromSource;
+    private boolean                      fieldsCorresponding;
     private boolean[]                    primaryKey;
 
     // Result data
@@ -552,8 +552,14 @@ final class LoaderImpl<R extends Record> implements
     }
 
     @Override
+    @Deprecated
     public LoaderImpl<R> fieldsFromSource() {
-        fieldsFromSource = true;
+        return fieldsCorresponding();
+    }
+
+    @Override
+    public LoaderImpl<R> fieldsCorresponding() {
+        fieldsCorresponding = true;
         return this;
     }
 
@@ -563,8 +569,8 @@ final class LoaderImpl<R extends Record> implements
         // [#5145] When loading arrays, or when CSV headers are ignored,
         // the source is still null at this stage.
         if (source == null)
-            if (fieldsFromSource)
-                throw new LoaderConfigurationException("Using fieldsFromSource() requires field names to be available in source.");
+            if (fieldsCorresponding)
+                throw new LoaderConfigurationException("Using fieldsCorresponding() requires field names to be available in source.");
             else
                 source = Tools.fields(row.length);
 
@@ -585,7 +591,7 @@ final class LoaderImpl<R extends Record> implements
                 });
             }
 
-        else if (fieldsFromSource)
+        else if (fieldsCorresponding)
             for (int i = 0; i < row.length; i++) {
                 f[i] = table.field(source[i]);
                 if (f[i] == null)
@@ -743,7 +749,7 @@ final class LoaderImpl<R extends Record> implements
                         row = Arrays.copyOf(row, row.length, Object[].class);
 
                     // [#5145][#8755] Lazy initialisation of fields from the first row
-                    // in case fields(LoaderFieldMapper) or fieldsFromSource() was used
+                    // in case fields(LoaderFieldMapper) or fieldsCorresponding() was used
                     if (fields == null)
                         fields0(row);
 

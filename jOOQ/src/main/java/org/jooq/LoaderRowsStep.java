@@ -107,12 +107,24 @@ public interface LoaderRowsStep<R extends Record> {
     /**
      * Indicate that all input fields which have a corresponding field in the
      * target table (with the same name) should be loaded.
-     * <p>
-     * When {@link LoaderLoadStep#execute() executing the loader} input fields
-     * for which there is no match in the target table will be logged and if no
-     * field names can be derived for the input data a
-     * {@link LoaderConfigurationException} will be reported.
+     *
+     * @throws LoaderConfigurationException When the source data does not expose
+     *             field names.
+     * @deprecated - 3.14.0 - [#10010] - Use {@link #fieldsCorresponding()}
+     *             instead.
+     */
+    @Deprecated
+    @Support
+    LoaderCSVOptionsStep<R> fieldsFromSource();
+
+    /**
+     * Indicate that all input fields which have a corresponding field in the
+     * target table (with the same name) should be loaded.
+     *
+     * @throws LoaderConfigurationException When the source data does not expose
+     *             field names.
      */
     @Support
-    LoaderListenerStep<R> fieldsFromSource();
+    LoaderCSVOptionsStep<R> fieldsCorresponding();
+
 }

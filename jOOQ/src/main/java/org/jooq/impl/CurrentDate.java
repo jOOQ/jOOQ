@@ -104,8 +104,9 @@ final class CurrentDate<T> extends AbstractField<T> {
             case HSQLDB:
             case POSTGRES:
             case SQLITE:
-                ctx.visit(N_CURRENT_DATE);
+                ctx.visit(K_CURRENT).sql('_').visit(K_DATE);
                 break;
+
             default:
                 ctx.visit(N_CURRENT_DATE).sql("()");
                 break;

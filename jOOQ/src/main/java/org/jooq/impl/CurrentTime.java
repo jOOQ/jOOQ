@@ -91,8 +91,9 @@ final class CurrentTime<T> extends AbstractField<T> {
             case HSQLDB:
             case POSTGRES:
             case SQLITE:
-                ctx.visit(N_CURRENT_TIME);
+                ctx.visit(K_CURRENT).sql('_').visit(K_TIME);
                 break;
+
 
 
 

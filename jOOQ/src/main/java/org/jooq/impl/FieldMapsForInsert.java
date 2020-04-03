@@ -41,6 +41,7 @@ import static java.lang.Boolean.TRUE;
 import static org.jooq.Clause.FIELD_ROW;
 import static org.jooq.Clause.INSERT_SELECT;
 import static org.jooq.Clause.INSERT_VALUES;
+import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.table;
@@ -67,6 +68,8 @@ import org.jooq.Field;
 import org.jooq.Param;
 // ...
 import org.jooq.Record;
+import org.jooq.RenderContext.CastMode;
+import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.impl.AbstractStoreQuery.UnknownField;
@@ -79,13 +82,14 @@ final class FieldMapsForInsert extends AbstractQueryPart {
     /**
      * Generated UID
      */
-    private static final long           serialVersionUID = -6227074228534414225L;
+    private static final long            serialVersionUID = -6227074228534414225L;
+    private static final Set<SQLDialect> CASTS_NEEDED     = SQLDialect.supportedBy(POSTGRES);
 
-    final Table<?>                      table;
-    final Map<Field<?>, Field<?>>       empty;
-    final Map<Field<?>, List<Field<?>>> values;
-    int                                 rows;
-    int                                 nextRow          = -1;
+    final Table<?>                       table;
+    final Map<Field<?>, Field<?>>        empty;
+    final Map<Field<?>, List<Field<?>>>  values;
+    int                                  rows;
+    int                                  nextRow          = -1;
 
     FieldMapsForInsert(Table<?> table) {
         this.table = table;
@@ -247,6 +251,12 @@ final class FieldMapsForInsert extends AbstractQueryPart {
         boolean indent = (values.size() > 1);
         boolean castFirstRowNumericValues = false ;
 
+        // [#9992] Few dialects need bind value casts for INSERT .. VALUES(?, ?)
+        //         Some regressions have been observed e.g. in PostgreSQL with JSON types, so let's be careful.
+        CastMode previous = ctx.castMode();
+        if (!CASTS_NEEDED.contains(ctx.dialect()))
+            ctx.castMode(CastMode.NEVER);
+
         for (int row = 0; row < rows ; row++) {
             if (row > 0)
                 ctx.sql(", ");
@@ -259,6 +269,7 @@ final class FieldMapsForInsert extends AbstractQueryPart {
 
             String separator = "";
             int i = 0;
+
             for (List<Field<?>> list : values.values()) {
                 ctx.sql(separator);
 
@@ -290,6 +301,9 @@ final class FieldMapsForInsert extends AbstractQueryPart {
             ctx.sql(')')
                .end(FIELD_ROW);
         }
+
+        if (!CASTS_NEEDED.contains(ctx.dialect()))
+            ctx.castMode(previous);
     }
 
     // -------------------------------------------------------------------------

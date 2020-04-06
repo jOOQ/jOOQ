@@ -3144,7 +3144,6 @@ final class Tools {
     /**
      * Add primary key conditions to a query
      */
-    @SuppressWarnings("deprecation")
     static final void addConditions(org.jooq.ConditionProvider query, Record record, Field<?>... keys) {
         for (Field<?> field : keys)
             addCondition(query, record, field);
@@ -3153,7 +3152,6 @@ final class Tools {
     /**
      * Add a field condition to a query
      */
-    @SuppressWarnings("deprecation")
     static final <T> void addCondition(org.jooq.ConditionProvider provider, Record record, Field<T> field) {
 
         // [#2764] If primary keys are allowed to be changed, the

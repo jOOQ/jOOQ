@@ -79,7 +79,7 @@ import java.util.Map;
  * @param <R> The record type of the table being inserted into
  * @author Lukas Eder
  */
-public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> {
+public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R>, ConditionProvider {
 
     /**
      * Adds a new Record to the insert statement for multi-record inserts
@@ -260,6 +260,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      *
      * @param condition The condition
      */
+    @Override
     @Support({ CUBRID, DERBY, H2, MARIADB, POSTGRES, SQLITE })
     void addConditions(Condition condition);
 
@@ -272,6 +273,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      *
      * @param conditions The condition
      */
+    @Override
     @Support({ CUBRID, DERBY, H2, MARIADB, POSTGRES, SQLITE })
     void addConditions(Condition... conditions);
 
@@ -284,6 +286,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      *
      * @param conditions The condition
      */
+    @Override
     @Support({ CUBRID, DERBY, H2, MARIADB, POSTGRES, SQLITE })
     void addConditions(Collection<? extends Condition> conditions);
 
@@ -296,6 +299,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      *
      * @param condition The condition
      */
+    @Override
     @Support({ CUBRID, DERBY, H2, MARIADB, POSTGRES, SQLITE })
     void addConditions(Operator operator, Condition condition);
 
@@ -308,6 +312,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      *
      * @param conditions The condition
      */
+    @Override
     @Support({ CUBRID, DERBY, H2, MARIADB, POSTGRES, SQLITE })
     void addConditions(Operator operator, Condition... conditions);
 
@@ -320,6 +325,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      *
      * @param conditions The condition
      */
+    @Override
     @Support({ CUBRID, DERBY, H2, MARIADB, POSTGRES, SQLITE })
     void addConditions(Operator operator, Collection<? extends Condition> conditions);
 

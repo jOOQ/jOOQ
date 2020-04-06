@@ -129,6 +129,26 @@ public interface RecordListener extends EventListener {
     void updateEnd(RecordContext ctx);
 
     /**
+     * Called before merging an <code>UpdatableRecord</code>.
+     * <p>
+     * Implementations are allowed to modify {@link RecordContext#record()}
+     * prior to merging.
+     *
+     * @see UpdatableRecord#merge()
+     */
+    void mergeStart(RecordContext ctx);
+
+    /**
+     * Called after merging an <code>UpdatableRecord</code>.
+     * <p>
+     * Implementations are allowed to modify {@link RecordContext#record()}
+     * after merging.
+     *
+     * @see UpdatableRecord#merge()
+     */
+    void mergeEnd(RecordContext ctx);
+
+    /**
      * Called before deleting an <code>UpdatableRecord</code>.
      * <p>
      * Implementations are allowed to modify {@link RecordContext#record()}

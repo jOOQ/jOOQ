@@ -37,6 +37,25 @@
  */
 package org.jooq;
 
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.CUBRID;
+// ...
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HSQLDB;
+// ...
+import static org.jooq.SQLDialect.MARIADB;
+// ...
+import static org.jooq.SQLDialect.MYSQL;
+// ...
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLITE;
+// ...
+// ...
+// ...
+
 import java.sql.Statement;
 import java.util.Collection;
 
@@ -349,6 +368,62 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      */
     @Support
     int update(Collection<? extends Field<?>> fields) throws DataAccessException, DataChangedException;
+
+    /**
+     * Store this record back to the database using a <code>MERGE</code>
+     * statement.
+     * <p>
+     * Unlike {@link #store()}, the statement produced by this operation does
+     * not depend on whether the record has been previously fetched from the
+     * database or created afresh. It implements the semantics of an
+     * <code>INSERT .. ON DUPLICATE KEY UPDATE</code> statement, which will
+     * update the row regardless of which (unique) key value is already present.
+     * See {@link InsertOnDuplicateStep#onDuplicateKeyUpdate()}.
+     * <p>
+     * Optimistic locking only works if the underlying dialect supports
+     * {@link InsertOnConflictWhereStep#where(Condition)}. Otherwise, the
+     * <code>UPDATE</code> path of the statement will not be able to update the
+     * row conditionally.
+     * <p>
+     * If you want to enforce statement execution, regardless if the values in
+     * this record were changed, you can explicitly set the changed flags for
+     * all values with {@link #changed(boolean)} or for single values with
+     * {@link #changed(Field, boolean)}, prior to insertion.
+     * <p>
+     * This is the same as calling <code>record.merge(record.fields())</code>
+     *
+     * @return <code>1</code> if the record was merged to the database. <code>0
+     *         </code> if merging was not necessary.
+     * @throws DataAccessException if something went wrong executing the query
+     * @see #store()
+     * @see InsertOnDuplicateStep#onDuplicateKeyUpdate()
+     */
+    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    int merge() throws DataAccessException;
+
+    /**
+     * Store parts of this record to the database using a <code>MERGE</code>
+     * statement.
+     *
+     * @return <code>1</code> if the record was merged to the database. <code>0
+     *         </code> if merging was not necessary.
+     * @throws DataAccessException if something went wrong executing the query
+     * @see #merge()
+     */
+    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    int merge(Field<?>... fields) throws DataAccessException;
+
+    /**
+     * Store parts of this record to the database using a <code>MERGE</code>
+     * statement.
+     *
+     * @return <code>1</code> if the record was merged to the database. <code>0
+     *         </code> if merging was not necessary.
+     * @throws DataAccessException if something went wrong executing the query
+     * @see #merge()
+     */
+    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    int merge(Collection<? extends Field<?>> fields) throws DataAccessException;
 
     /**
      * Deletes this record from the database, based on the value of the primary

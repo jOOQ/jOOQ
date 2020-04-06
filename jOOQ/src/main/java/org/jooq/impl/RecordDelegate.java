@@ -114,6 +114,7 @@ final class RecordDelegate<R extends Record> {
                     case STORE:   listener.storeStart(ctx);   break;
                     case INSERT:  listener.insertStart(ctx);  break;
                     case UPDATE:  listener.updateStart(ctx);  break;
+                    case MERGE:   listener.mergeStart(ctx);   break;
                     case DELETE:  listener.deleteStart(ctx);  break;
                     default:
                         throw new IllegalStateException("Type not supported: " + type);
@@ -158,6 +159,7 @@ final class RecordDelegate<R extends Record> {
                     case STORE:   listener.storeEnd(ctx);   break;
                     case INSERT:  listener.insertEnd(ctx);  break;
                     case UPDATE:  listener.updateEnd(ctx);  break;
+                    case MERGE:   listener.mergeEnd(ctx);   break;
                     case DELETE:  listener.deleteEnd(ctx);  break;
                     default:
                         throw new IllegalStateException("Type not supported: " + type);
@@ -181,6 +183,7 @@ final class RecordDelegate<R extends Record> {
         STORE,
         INSERT,
         UPDATE,
+        MERGE,
         DELETE
     }
 }

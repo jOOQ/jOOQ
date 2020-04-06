@@ -69,6 +69,12 @@ public class DefaultRecordListener implements RecordListener {
     public void updateEnd(RecordContext ctx) {}
 
     @Override
+    public void mergeStart(RecordContext ctx) {}
+
+    @Override
+    public void mergeEnd(RecordContext ctx) {}
+
+    @Override
     public void deleteStart(RecordContext ctx) {}
 
     @Override

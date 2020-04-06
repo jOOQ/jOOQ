@@ -185,7 +185,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
     final int storeInsert0(Field<?>[] storeFields) {
         DSLContext create = create();
         InsertQuery<R> insert = create.insertQuery(getTable());
-        addChangedValues(storeFields, insert);
+        addChangedValues(storeFields, insert, false);
 
         // Don't store records if no value was set by client code
         if (!insert.isExecutable()) {
@@ -196,8 +196,8 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
         }
 
         // [#1596] Set timestamp and/or version columns to appropriate values
-        BigInteger version = addRecordVersion(insert);
-        Timestamp timestamp = addRecordTimestamp(insert);
+        BigInteger version = addRecordVersion(insert, false);
+        Timestamp timestamp = addRecordTimestamp(insert, false);
 
         // [#814] Refresh identity and/or main unique key values
         // [#1002] Consider also identity columns of non-updatable records
@@ -292,34 +292,37 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
     }
 
     /**
-     * Set all changed values of this record to a store query
+     * Set all changed values of this record to a store query.
      */
-    final void addChangedValues(Field<?>[] storeFields, StoreQuery<R> query) {
+    final void addChangedValues(Field<?>[] storeFields, StoreQuery<R> query, boolean forUpdate) {
         Fields<Record> f = new Fields<>(storeFields);
 
         for (Field<?> field : fields.fields.fields)
             if (changed(field) && f.field(field) != null)
-                addValue(query, field);
+                addValue(query, field, forUpdate);
     }
 
     /**
      * Extracted method to ensure generic type safety.
      */
-    final <T> void addValue(StoreQuery<?> store, Field<T> field, Object value) {
+    final <T> void addValue(StoreQuery<?> store, Field<T> field, Object value, boolean forUpdate) {
         store.addValue(field, Tools.field(value, field));
+
+        if (forUpdate)
+            ((InsertQuery<?>) store).addValueForUpdate(field, Tools.field(value, field));
     }
 
     /**
      * Extracted method to ensure generic type safety.
      */
-    final <T> void addValue(StoreQuery<?> store, Field<T> field) {
-        addValue(store, field, get(field));
+    final <T> void addValue(StoreQuery<?> store, Field<T> field, boolean forUpdate) {
+        addValue(store, field, get(field), forUpdate);
     }
 
     /**
      * Set an updated timestamp value to a store query
      */
-    final Timestamp addRecordTimestamp(StoreQuery<?> store) {
+    final Timestamp addRecordTimestamp(StoreQuery<?> store, boolean forUpdate) {
         Timestamp result = null;
         TableField<R, ?> timestamp = getTable().getRecordTimestamp();
 
@@ -334,7 +337,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
 
 
             // [#9933] Truncate timestamp to column precision, if needed
-            addValue(store, timestamp, result = truncate(result, timestamp.getDataType()));
+            addValue(store, timestamp, result = truncate(result, timestamp.getDataType()), forUpdate);
         }
 
         return result;
@@ -354,7 +357,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
     /**
      * Set an updated version value to a store query
      */
-    final BigInteger addRecordVersion(StoreQuery<?> store) {
+    final BigInteger addRecordVersion(StoreQuery<?> store, boolean forUpdate) {
         BigInteger result = null;
         TableField<R, ?> version = getTable().getRecordVersion();
 
@@ -367,7 +370,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
             else
                 result = new BigInteger(value.toString()).add(BigInteger.ONE);
 
-            addValue(store, version, result);
+            addValue(store, version, result, forUpdate);
         }
 
         return result;

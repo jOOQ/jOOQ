@@ -603,7 +603,6 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         return visit(part);
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     protected final void visit0(QueryPartInternal internal) {
         int before = bindValues.size();

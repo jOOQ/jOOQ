@@ -43,6 +43,7 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
 import static org.jooq.impl.RecordDelegate.delegate;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.DELETE;
+import static org.jooq.impl.RecordDelegate.RecordLifecycleType.MERGE;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.REFRESH;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.STORE;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.UPDATE;
@@ -59,16 +60,17 @@ import org.jooq.Configuration;
 import org.jooq.DeleteQuery;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.InsertQuery;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.SelectQuery;
+import org.jooq.StoreQuery;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableRecord;
 import org.jooq.UniqueKey;
 import org.jooq.UpdatableRecord;
-import org.jooq.UpdateQuery;
 import org.jooq.exception.DataChangedException;
 import org.jooq.exception.NoDataFoundException;
 import org.jooq.tools.JooqLogger;
@@ -160,6 +162,21 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         return update(storeFields.toArray(EMPTY_FIELD));
     }
 
+    @Override
+    public final int merge() {
+        return merge(fields.fields.fields);
+    }
+
+    @Override
+    public int merge(Field<?>... storeFields) {
+        return storeMerge(storeFields, getPrimaryKey().getFieldsArray());
+    }
+
+    @Override
+    public final int merge(Collection<? extends Field<?>> storeFields) {
+        return merge(storeFields.toArray(EMPTY_FIELD));
+    }
+
     private final int store0(Field<?>[] storeFields) {
         TableField<R, ?>[] keys = getPrimaryKey().getFieldsArray();
         boolean executeUpdate = false;
@@ -188,12 +205,10 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
         int result = 0;
 
-        if (executeUpdate) {
+        if (executeUpdate)
             result = storeUpdate(storeFields, keys);
-        }
-        else {
+        else
             result = storeInsert(storeFields);
-        }
 
         return result;
     }
@@ -212,32 +227,57 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         });
 
         return result[0];
-
     }
 
     private final int storeUpdate0(Field<?>[] storeFields, TableField<R, ?>[] keys) {
-        UpdateQuery<R> update = create().updateQuery(getTable());
-        addChangedValues(storeFields, update);
-        Tools.addConditions(update, this, keys);
+        return storeMergeOrUpdate0(storeFields, keys, create().updateQuery(getTable()), false);
+    }
+
+    private final int storeMerge(final Field<?>[] storeFields, final TableField<R, ?>[] keys) {
+        final int[] result = new int[1];
+
+        delegate(configuration(), (Record) this, MERGE)
+        .operate(new RecordOperation<Record, RuntimeException>() {
+
+            @Override
+            public Record operate(Record record) throws RuntimeException {
+                result[0] = storeMerge0(storeFields, keys);
+                return record;
+            }
+        });
+
+        // MySQL returns 0 when nothing was updated, 1 when something was inserted, and 2 if something was updated
+        return Math.min(result[0], 1);
+    }
+
+    private final int storeMerge0(Field<?>[] storeFields, TableField<R, ?>[] keys) {
+        InsertQuery<R> merge = create().insertQuery(getTable());
+        merge.onDuplicateKeyUpdate(true);
+        return storeMergeOrUpdate0(storeFields, keys, merge, true);
+    }
+
+    private final <Q extends StoreQuery<R> & org.jooq.ConditionProvider> int storeMergeOrUpdate0(Field<?>[] storeFields, TableField<R, ?>[] keys, Q query, boolean merge) {
+        addChangedValues(storeFields, query, merge);
+        Tools.addConditions(query, this, keys);
 
         // Don't store records if no value was set by client code
-        if (!update.isExecutable()) {
+        if (!query.isExecutable()) {
             if (log.isDebugEnabled())
-                log.debug("Query is not executable", update);
+                log.debug("Query is not executable", query);
 
             return 0;
         }
 
         // [#1596] Set timestamp and/or version columns to appropriate values
         // [#8924] Allow for overriding this using a setting
-        BigInteger version = addRecordVersion(update);
-        Timestamp timestamp = addRecordTimestamp(update);
+        BigInteger version = addRecordVersion(query, merge);
+        Timestamp timestamp = addRecordTimestamp(query, merge);
 
         if (isExecuteWithOptimisticLocking())
 
             // [#1596] Add additional conditions for version and/or timestamp columns
             if (isTimestampOrVersionAvailable())
-                addConditionForVersionAndTimestamp(update);
+                addConditionForVersionAndTimestamp(query);
 
             // [#1547] Try fetching the Record again first, and compare this
             // Record's original values with the ones in the database
@@ -247,8 +287,8 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
         // [#1596] Check if the record was really changed in the database
         // [#1859] Specify the returning clause if needed
-        Collection<Field<?>> key = setReturningIfNeeded(update);
-        int result = update.execute();
+        Collection<Field<?>> key = setReturningIfNeeded(query);
+        int result = query.execute();
         checkIfChanged(result, version, timestamp);
 
         if (result > 0) {
@@ -256,7 +296,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
                 changed(storeField, false);
 
             // [#1859] If an update was successful try fetching the generated
-            getReturningIfNeeded(update, key);
+            getReturningIfNeeded(query, key);
         }
 
         return result;

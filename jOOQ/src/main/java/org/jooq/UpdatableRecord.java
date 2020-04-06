@@ -216,6 +216,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * @see #insert()
      * @see #update()
      */
+    @Support
     int store() throws DataAccessException, DataChangedException;
 
     /**
@@ -230,6 +231,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * @see #insert(Field...)
      * @see #update(Field...)
      */
+    @Support
     int store(Field<?>... fields) throws DataAccessException, DataChangedException;
 
     /**
@@ -244,6 +246,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * @see #insert(Field...)
      * @see #update(Field...)
      */
+    @Support
     int store(Collection<? extends Field<?>> fields) throws DataAccessException, DataChangedException;
 
     /**
@@ -265,6 +268,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * @throws DataAccessException if something went wrong executing the query
      * @see #store()
      */
+    @Support
     @Override
     int insert() throws DataAccessException;
 
@@ -277,6 +281,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * @throws DataAccessException if something went wrong executing the query
      * @see #insert()
      */
+    @Support
     @Override
     int insert(Field<?>... fields) throws DataAccessException;
 
@@ -289,6 +294,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * @throws DataAccessException if something went wrong executing the query
      * @see #insert()
      */
+    @Support
     @Override
     int insert(Collection<? extends Field<?>> fields) throws DataAccessException;
 
@@ -313,6 +319,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      *             record has already been changed/deleted in the database
      * @see #store()
      */
+    @Support
     int update() throws DataAccessException, DataChangedException;
 
     /**
@@ -326,6 +333,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      *             record has already been changed/deleted in the database
      * @see #update()
      */
+    @Support
     int update(Field<?>... fields) throws DataAccessException, DataChangedException;
 
     /**
@@ -339,6 +347,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      *             record has already been changed/deleted in the database
      * @see #update()
      */
+    @Support
     int update(Collection<? extends Field<?>> fields) throws DataAccessException, DataChangedException;
 
     /**
@@ -394,6 +403,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * @throws DataChangedException If optimistic locking is enabled and the
      *             record has already been changed/deleted in the database
      */
+    @Support
     int delete() throws DataAccessException, DataChangedException;
 
     /**
@@ -421,6 +431,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * @throws NoDataFoundException If the record does not exist anymore in the
      *             database
      */
+    @Support
     void refresh() throws DataAccessException;
 
     /**
@@ -448,6 +459,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * @throws NoDataFoundException If the record does not exist anymore in the
      *             database
      */
+    @Support
     void refresh(Field<?>... fields) throws DataAccessException, NoDataFoundException;
 
     /**
@@ -475,6 +487,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * @throws NoDataFoundException If the record does not exist anymore in the
      *             database
      */
+    @Support
     void refresh(Collection<? extends Field<?>> fields) throws DataAccessException, NoDataFoundException;
 
     /**
@@ -498,6 +511,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * @see ForeignKey#fetchChildren(Record)
      * @see ForeignKey#fetchChildren(Record...)
      */
+    @Support
     <O extends TableRecord<O>> O fetchChild(ForeignKey<O, R> key) throws TooManyRowsException, DataAccessException;
 
     /**
@@ -511,5 +525,6 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * @see ForeignKey#fetchChildren(Record)
      * @see ForeignKey#fetchChildren(Record...)
      */
+    @Support
     <O extends TableRecord<O>> Result<O> fetchChildren(ForeignKey<O, R> key) throws DataAccessException;
 }

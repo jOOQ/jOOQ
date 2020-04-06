@@ -70,6 +70,7 @@ public interface TableRecord<R extends TableRecord<R>> extends Record {
      *         </code> if storing was not necessary.
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     int insert() throws DataAccessException;
 
     /**
@@ -81,6 +82,7 @@ public interface TableRecord<R extends TableRecord<R>> extends Record {
      * @throws DataAccessException if something went wrong executing the query
      * @see #insert()
      */
+    @Support
     int insert(Field<?>... fields) throws DataAccessException;
 
     /**
@@ -92,6 +94,7 @@ public interface TableRecord<R extends TableRecord<R>> extends Record {
      * @throws DataAccessException if something went wrong executing the query
      * @see #insert()
      */
+    @Support
     int insert(Collection<? extends Field<?>> fields) throws DataAccessException;
 
     /**
@@ -106,6 +109,7 @@ public interface TableRecord<R extends TableRecord<R>> extends Record {
      * @see ForeignKey#fetchParents(java.util.Collection)
      * @see ForeignKey#fetchParents(Record...)
      */
+    @Support
     <O extends UpdatableRecord<O>> O fetchParent(ForeignKey<R, O> key) throws DataAccessException;
 
     @Override

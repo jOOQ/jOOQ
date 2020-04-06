@@ -106,6 +106,7 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      * @param object The POJO to be inserted
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     void insert(P object) throws DataAccessException;
 
     /**
@@ -115,6 +116,7 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      * @throws DataAccessException if something went wrong executing the query
      * @see #insert(Collection)
      */
+    @Support
     void insert(P... objects) throws DataAccessException;
 
     /**
@@ -124,6 +126,7 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      * @throws DataAccessException if something went wrong executing the query
      * @see #insert(Object...)
      */
+    @Support
     void insert(Collection<P> objects) throws DataAccessException;
 
     /**
@@ -132,6 +135,7 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      * @param object The POJO to be updated
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     void update(P object) throws DataAccessException;
 
     /**
@@ -141,6 +145,7 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      * @throws DataAccessException if something went wrong executing the query
      * @see #update(Collection)
      */
+    @Support
     void update(P... objects) throws DataAccessException;
 
     /**
@@ -150,6 +155,7 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      * @throws DataAccessException if something went wrong executing the query
      * @see #update(Object...)
      */
+    @Support
     void update(Collection<P> objects) throws DataAccessException;
 
     /**
@@ -159,6 +165,7 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      * @throws DataAccessException if something went wrong executing the query
      * @see #delete(Collection)
      */
+    @Support
     void delete(P object) throws DataAccessException;
 
     /**
@@ -168,6 +175,7 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      * @throws DataAccessException if something went wrong executing the query
      * @see #delete(Collection)
      */
+    @Support
     void delete(P... objects) throws DataAccessException;
 
     /**
@@ -177,6 +185,7 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      * @throws DataAccessException if something went wrong executing the query
      * @see #delete(Object...)
      */
+    @Support
     void delete(Collection<P> objects) throws DataAccessException;
 
     /**
@@ -186,6 +195,7 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      * @throws DataAccessException if something went wrong executing the query
      * @see #delete(Collection)
      */
+    @Support
     void deleteById(T... ids) throws DataAccessException;
 
     /**
@@ -195,6 +205,7 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      * @throws DataAccessException if something went wrong executing the query
      * @see #delete(Object...)
      */
+    @Support
     void deleteById(Collection<T> ids) throws DataAccessException;
 
     /**
@@ -204,6 +215,7 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      * @return Whether the POJO already exists
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     boolean exists(P object) throws DataAccessException;
 
     /**
@@ -213,6 +225,7 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      * @return Whether the ID already exists
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     boolean existsById(T id) throws DataAccessException;
 
     /**
@@ -221,6 +234,7 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      * @return The number of records of the underlying table
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     long count() throws DataAccessException;
 
     /**
@@ -229,6 +243,7 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      * @return All records of the underlying table
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     List<P> findAll() throws DataAccessException;
 
     /**
@@ -239,6 +254,7 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      *         <code>null</code> if no record was found.
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     P findById(T id) throws DataAccessException;
 
     /**
@@ -249,6 +265,7 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      * @return A list of records fulfilling <code>field IN (values)</code>
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     <Z> List<P> fetch(Field<Z> field, Z... values) throws DataAccessException;
 
     /**
@@ -263,6 +280,7 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      *         <code>field BETWEEN lowerInclusive AND upperInclusive</code>
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     <Z> List<P> fetchRange(Field<Z> field, Z lowerInclusive, Z upperInclusive) throws DataAccessException;
 
     /**
@@ -278,6 +296,7 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      *             <li>if the query returned more than one value</li>
      *             </ul>
      */
+    @Support
     <Z> P fetchOne(Field<Z> field, Z value) throws DataAccessException;
 
 
@@ -293,6 +312,7 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      *             <li>if the query returned more than one value</li>
      *             </ul>
      */
+    @Support
     <Z> Optional<P> fetchOptional(Field<Z> field, Z value) throws DataAccessException;
 
 

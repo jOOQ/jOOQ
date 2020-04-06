@@ -210,6 +210,36 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
     }
 
     @Override
+    public /* non-final */ void merge(P object) {
+        merge(singletonList(object));
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public /* non-final */ void merge(P... objects) {
+        merge(asList(objects));
+    }
+
+    @Override
+    public /* non-final */ void merge(Collection<P> objects) {
+
+        // Execute a batch MERGE
+        if (objects.size() > 1)
+
+            // [#2536] [#3327] We cannot batch MERGE RETURNING calls yet
+            if (!FALSE.equals(settings().isReturnRecordToPojo()) &&
+                 TRUE.equals(settings().isReturnAllOnUpdatableRecord()))
+                for (R record : records(objects, false))
+                    record.merge();
+            else
+                ctx().batchMerge(records(objects, false)).execute();
+
+        // Execute a regular MERGE
+        else if (objects.size() == 1)
+            records(objects, false).get(0).merge();
+    }
+
+    @Override
     public /* non-final */ void delete(P object) {
         delete(singletonList(object));
     }

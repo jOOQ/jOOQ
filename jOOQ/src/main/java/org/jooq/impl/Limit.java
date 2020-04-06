@@ -165,6 +165,7 @@ final class Limit extends AbstractQueryPart {
 
 
 
+
             case FIREBIRD:
             case H2:
             case DERBY: {

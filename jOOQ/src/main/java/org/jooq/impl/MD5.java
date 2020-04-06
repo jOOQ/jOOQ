@@ -103,6 +103,7 @@ final class MD5 extends AbstractField<String> {
 
 
 
+
             default:
                 ctx.visit(N_MD5).sql('(').visit(argument).sql(')');
                 break;

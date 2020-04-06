@@ -457,7 +457,6 @@ import org.jooq.LikeEscapeStep;
 import org.jooq.Merge;
 import org.jooq.MergeFinalStep;
 import org.jooq.MergeMatchedStep;
-import org.jooq.MergeNotMatchedStep;
 import org.jooq.MergeUsingStep;
 import org.jooq.Meta;
 import org.jooq.Name;
@@ -2047,18 +2046,30 @@ final class ParserImpl implements Parser {
         List<Field<?>> insertValues = null;
         Condition insertWhere = null;
         Map<Field<?>, Object> updateSet = null;
+        Condition updateAnd = null;
         Condition updateWhere = null;
 
+        MergeUsingStep<?> s1 = (with == null ? ctx.dsl.mergeInto(target) : with.mergeInto(target));
+        MergeMatchedStep<?> s2 = s1.using(usingTable).on(on);
+
         for (;;) {
-            if (!update && (update = parseKeywordIf(ctx, "WHEN MATCHED"))) {
+            if (parseKeywordIf(ctx, "WHEN MATCHED")) {
+                update = true;
+
                 if (parseKeywordIf(ctx, "AND"))
-                    updateWhere = parseCondition(ctx);
+                    updateAnd = parseCondition(ctx);
 
                 parseKeyword(ctx, "THEN UPDATE SET");
                 updateSet = parseSetClauseList(ctx);
 
-                if (updateWhere == null && parseKeywordIf(ctx, "WHERE"))
+                if (updateAnd == null && parseKeywordIf(ctx, "WHERE"))
                     updateWhere = parseCondition(ctx);
+
+                s2 = updateAnd != null
+                   ? s2.whenMatchedAnd(updateAnd).thenUpdate().set(updateSet)
+                   : updateWhere != null
+                   ? s2.whenMatchedThenUpdate().set(updateSet).where(updateWhere)
+                   : s2.whenMatchedThenUpdate().set(updateSet);
             }
             else if (!insert && (insert = parseKeywordIf(ctx, "WHEN NOT MATCHED"))) {
                 if (parseKeywordIf(ctx, "AND"))
@@ -2093,21 +2104,13 @@ final class ParserImpl implements Parser {
 
         // TODO support multi clause MERGE
         // TODO support DELETE
-
-        MergeUsingStep<?> s1 = (with == null ? ctx.dsl.mergeInto(target) : with.mergeInto(target));
-        MergeMatchedStep<?> s2 = s1.using(usingTable).on(on);
-        MergeNotMatchedStep<?> s3 = update
-            ? updateWhere != null
-                ? s2.whenMatchedThenUpdate().set(updateSet).where(updateWhere)
-                : s2.whenMatchedThenUpdate().set(updateSet)
-            : s2;
-        MergeFinalStep<?> s4 = insert
+        MergeFinalStep<?> s3 = insert
             ? insertWhere != null
-                ? s3.whenNotMatchedThenInsert(insertColumns).values(insertValues).where(insertWhere)
-                : s3.whenNotMatchedThenInsert(insertColumns).values(insertValues)
-            : s3;
+                ? s2.whenNotMatchedThenInsert(insertColumns).values(insertValues).where(insertWhere)
+                : s2.whenNotMatchedThenInsert(insertColumns).values(insertValues)
+            : s2;
 
-        return s4;
+        return s3;
     }
 
     private static final Query parseSet(ParserContext ctx) {

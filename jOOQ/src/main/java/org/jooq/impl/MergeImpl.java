@@ -119,6 +119,7 @@ import org.jooq.MergeKeyStep8;
 import org.jooq.MergeKeyStep9;
 import org.jooq.MergeMatchedDeleteStep;
 import org.jooq.MergeMatchedSetMoreStep;
+import org.jooq.MergeMatchedThenStep;
 import org.jooq.MergeNotMatchedSetMoreStep;
 import org.jooq.MergeNotMatchedValuesStep1;
 import org.jooq.MergeNotMatchedValuesStep10;
@@ -203,6 +204,7 @@ implements
     MergeOnStep<R>,
     MergeOnConditionStep<R>,
     MergeMatchedSetMoreStep<R>,
+    MergeMatchedThenStep<R>,
     MergeNotMatchedSetMoreStep<R>,
 
 
@@ -254,7 +256,8 @@ implements
 
     // Flags to keep track of DSL object creation state
     private boolean                      matchedClause;
-    private FieldMapForUpdate            matchedUpdate;
+    private List<FieldMapForUpdate>      matchedUpdate;
+    private List<Condition>              matchedUpdateAnd;
     private boolean                      notMatchedClause;
     private FieldMapsForInsert           notMatchedInsert;
 
@@ -275,6 +278,8 @@ implements
         this.with = with;
         this.table = table;
         this.on = new ConditionProviderImpl();
+        this.matchedUpdate = new ArrayList<>();
+        this.matchedUpdateAnd = new ArrayList<>();
 
         if (fields != null)
             columns(fields);
@@ -303,6 +308,10 @@ implements
             upsertValues = new QueryPartList<>();
 
         return upsertValues;
+    }
+
+    FieldMapForUpdate getLastMatchedUpdate() {
+        return matchedUpdate.get(matchedUpdate.size() - 1);
     }
 
     @Override
@@ -917,9 +926,47 @@ implements
     @Override
     public final MergeImpl whenMatchedThenUpdate() {
         matchedClause = true;
-        matchedUpdate = new FieldMapForUpdate(table, MERGE_SET_ASSIGNMENT);
+        matchedUpdate.add(new FieldMapForUpdate(table, MERGE_SET_ASSIGNMENT));
+        matchedUpdateAnd.add(null);
 
         notMatchedClause = false;
+        return this;
+    }
+
+    @Override
+    public final MergeImpl whenMatchedAnd(Condition condition) {
+        whenMatchedThenUpdate();
+        matchedUpdateAnd.set(matchedUpdateAnd.size() - 1, condition);
+        return this;
+    }
+
+    @Override
+    public final MergeImpl whenMatchedAnd(Field<Boolean> condition) {
+        return whenMatchedAnd(condition(condition));
+    }
+
+    @Override
+    public final MergeImpl whenMatchedAnd(SQL sql) {
+        return whenMatchedAnd(condition(sql));
+    }
+
+    @Override
+    public final MergeImpl whenMatchedAnd(String sql) {
+        return whenMatchedAnd(condition(sql));
+    }
+
+    @Override
+    public final MergeImpl whenMatchedAnd(String sql, Object... bindings) {
+        return whenMatchedAnd(condition(sql, bindings));
+    }
+
+    @Override
+    public final MergeImpl whenMatchedAnd(String sql, QueryPart... parts) {
+        return whenMatchedAnd(condition(sql, parts));
+    }
+
+    @Override
+    public final MergeImpl thenUpdate() {
         return this;
     }
 
@@ -931,7 +978,7 @@ implements
     @Override
     public final <T> MergeImpl set(Field<T> field, Field<T> value) {
         if (matchedClause)
-            matchedUpdate.put(field, nullSafe(value));
+            getLastMatchedUpdate().put(field, nullSafe(value));
         else if (notMatchedClause)
             notMatchedInsert.set(field, nullSafe(value));
         else
@@ -956,7 +1003,7 @@ implements
     @Override
     public final MergeImpl set(Map<?, ?> map) {
         if (matchedClause)
-            matchedUpdate.set(map);
+            getLastMatchedUpdate().set(map);
         else if (notMatchedClause)
             notMatchedInsert.set(map);
         else
@@ -1525,18 +1572,25 @@ implements
            .start(MERGE_SET);
 
         // [#999] WHEN MATCHED clause is optional
-        if (matchedUpdate != null) {
+        for (int i = 0; i < matchedUpdate.size(); i++) {
+            FieldMapForUpdate map = matchedUpdate.get(i);
+            Condition condition = matchedUpdateAnd.get(i);
+
             ctx.formatSeparator()
                .visit(K_WHEN).sql(' ').visit(K_MATCHED);
 
-            // [#5110] Standard SQL "WHERE" clause in updates
-            if (matchedWhere != null && NO_SUPPORT_WHERE.contains(ctx.family()))
+            // [#7291] Standard SQL AND clause in updates
+            if (condition != null)
+                ctx.sql(' ').visit(K_AND).sql(' ').visit(condition);
+
+            // [#5110] Oracle style "WHERE" clause in updates
+            else if (matchedWhere != null && NO_SUPPORT_WHERE.contains(ctx.family()))
                 ctx.sql(' ').visit(K_AND).sql(' ').visit(matchedWhere);
 
             ctx.sql(' ').visit(K_THEN).sql(' ').visit(K_UPDATE).sql(' ').visit(K_SET)
                .formatIndentStart()
                .formatSeparator()
-               .visit(matchedUpdate)
+               .visit(map)
                .formatIndentEnd();
         }
 

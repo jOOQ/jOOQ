@@ -70,24 +70,35 @@ import java.util.Collection;
  * </pre></code>
  *
  * @author Lukas Eder
+ * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link DSLContext#mergeInto(Table)}
  */
+@Deprecated
 public interface MergeValuesStep2<R extends Record, T1, T2> {
 
     /**
-     * Specify a <code>VALUES</code> clause
+     * Specify a <code>VALUES</code> clause.
+     *
+     * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link DSLContext#mergeInto(Table)}
      */
+    @Deprecated
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Merge<R> values(T1 value1, T2 value2);
 
     /**
-     * Specify a <code>VALUES</code> clause
+     * Specify a <code>VALUES</code> clause.
+     *
+     * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link DSLContext#mergeInto(Table)}
      */
+    @Deprecated
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Merge<R> values(Field<T1> value1, Field<T2> value2);
 
     /**
-     * Specify a <code>VALUES</code> clause
+     * Specify a <code>VALUES</code> clause.
+     *
+     * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link DSLContext#mergeInto(Table)}
      */
+    @Deprecated
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Merge<R> values(Collection<?> values);
 
@@ -98,8 +109,11 @@ public interface MergeValuesStep2<R extends Record, T1, T2> {
      * This variant of the <code>MERGE .. SELECT</code> statement expects a
      * select returning exactly as many fields as specified previously in the
      * <code>INTO</code> clause:
-     * {@link DSLContext#mergeInto(Table, Field, Field)}
+     * {@link DSLContext#mergeInto(Table, Field, Field)}.
+     *
+     * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link DSLContext#mergeInto(Table)}
      */
+    @Deprecated
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB })
     Merge<R> select(Select<? extends Record2<T1, T2>> select);
 }

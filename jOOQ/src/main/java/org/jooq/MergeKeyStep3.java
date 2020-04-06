@@ -67,7 +67,9 @@ import java.util.Collection;
  * </pre></code>
  *
  * @author Lukas Eder
+ * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link DSLContext#mergeInto(Table)}
  */
+@Deprecated
 public interface MergeKeyStep3<R extends Record, T1, T2, T3> extends MergeValuesStep3<R, T1, T2, T3> {
 
     /**
@@ -75,7 +77,10 @@ public interface MergeKeyStep3<R extends Record, T1, T2, T3> extends MergeValues
      * <p>
      * Use this optional clause in order to override using the underlying
      * <code>PRIMARY KEY</code>.
+     *
+     * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link DSLContext#mergeInto(Table)}
      */
+    @Deprecated
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeValuesStep3<R, T1, T2, T3> key(Field<?>... keys);
 
@@ -84,7 +89,10 @@ public interface MergeKeyStep3<R extends Record, T1, T2, T3> extends MergeValues
      * <p>
      * Use this optional clause in order to override using the underlying
      * <code>PRIMARY KEY</code>.
+     *
+     * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link DSLContext#mergeInto(Table)}
      */
+    @Deprecated
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeValuesStep3<R, T1, T2, T3> key(Collection<? extends Field<?>> keys);
 }

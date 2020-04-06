@@ -8439,6 +8439,28 @@ public interface DSLContext extends Scope , AutoCloseable {
     Batch batchUpdate(Collection<? extends UpdatableRecord<?>> records);
 
     /**
+     * Create a batch statement to execute a set of <code>MERGE</code> queries
+     * in batch mode (with bind values) according to
+     * {@link UpdatableRecord#merge()} semantics.
+     *
+     * @see UpdatableRecord#merge()
+     * @see java.sql.Statement#executeBatch()
+     */
+    @Support
+    Batch batchMerge(UpdatableRecord<?>... records);
+
+    /**
+     * Create a batch statement to execute a set of <code>MERGE</code> queries
+     * in batch mode (with bind values) according to
+     * {@link UpdatableRecord#merge()} semantics.
+     *
+     * @see UpdatableRecord#merge()
+     * @see java.sql.Statement#executeBatch()
+     */
+    @Support
+    Batch batchMerge(Collection<? extends UpdatableRecord<?>> records);
+
+    /**
      * Create a batch statement to execute a set of <code>DELETE</code> queries
      * in batch mode (with bind values) according to
      * {@link UpdatableRecord#delete()} sematics.

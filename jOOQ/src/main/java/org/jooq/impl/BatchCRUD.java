@@ -202,6 +202,9 @@ final class BatchCRUD extends AbstractBatch {
             case UPDATE:
                 ((UpdatableRecord<?>) records[i]).update();
                 break;
+            case MERGE:
+                ((UpdatableRecord<?>) records[i]).merge();
+                break;
             case DELETE:
                 ((UpdatableRecord<?>) records[i]).delete();
                 break;
@@ -223,27 +226,32 @@ final class BatchCRUD extends AbstractBatch {
     }
 
     /**
-     * The action to be performed by this operation
+     * The action to be performed by this operation.
      */
     enum Action {
 
         /**
-         * Corresponds to {@link UpdatableRecord#store()}
+         * Corresponds to {@link UpdatableRecord#store()}.
          */
         STORE,
 
         /**
-         * Corresponds to {@link UpdatableRecord#insert()}
+         * Corresponds to {@link UpdatableRecord#insert()}.
          */
         INSERT,
 
         /**
-         * Corresponds to {@link UpdatableRecord#update()}
+         * Corresponds to {@link UpdatableRecord#update()}.
          */
         UPDATE,
 
         /**
-         * Corresponds to {@link UpdatableRecord#delete()}
+         * Corresponds to {@link UpdatableRecord#merge()}.
+         */
+        MERGE,
+
+        /**
+         * Corresponds to {@link UpdatableRecord#delete()}.
          */
         DELETE
     }

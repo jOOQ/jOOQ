@@ -2894,6 +2894,16 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
+    public Batch batchMerge(UpdatableRecord<?>... records) {
+        return new BatchCRUD(configuration(), Action.MERGE, records);
+    }
+
+    @Override
+    public Batch batchMerge(Collection<? extends UpdatableRecord<?>> records) {
+        return batchMerge(records.toArray(EMPTY_UPDATABLE_RECORD));
+    }
+
+    @Override
     public Batch batchDelete(UpdatableRecord<?>... records) {
         return new BatchCRUD(configuration(), Action.DELETE, records);
     }

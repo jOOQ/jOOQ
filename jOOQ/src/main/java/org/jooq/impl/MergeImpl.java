@@ -39,7 +39,6 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.FALSE;
 import static org.jooq.Clause.MERGE;
-import static org.jooq.Clause.MERGE_DELETE_WHERE;
 import static org.jooq.Clause.MERGE_MERGE_INTO;
 import static org.jooq.Clause.MERGE_ON;
 import static org.jooq.Clause.MERGE_SET;
@@ -48,8 +47,8 @@ import static org.jooq.Clause.MERGE_USING;
 import static org.jooq.Clause.MERGE_VALUES;
 import static org.jooq.Clause.MERGE_WHEN_MATCHED_THEN_UPDATE;
 import static org.jooq.Clause.MERGE_WHEN_NOT_MATCHED_THEN_INSERT;
-import static org.jooq.Clause.MERGE_WHERE;
-import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
 // ...
@@ -58,9 +57,10 @@ import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.insertInto;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.nullSafe;
+import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.Keywords.K_AND;
 import static org.jooq.impl.Keywords.K_AS;
-import static org.jooq.impl.Keywords.K_DELETE_WHERE;
+import static org.jooq.impl.Keywords.K_DELETE;
 import static org.jooq.impl.Keywords.K_INSERT;
 import static org.jooq.impl.Keywords.K_KEY;
 import static org.jooq.impl.Keywords.K_MATCHED;
@@ -80,6 +80,7 @@ import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -88,6 +89,7 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.jooq.Clause;
@@ -241,7 +243,8 @@ implements
      */
     private static final long            serialVersionUID = -8835479296876774391L;
     private static final Clause[]        CLAUSES          = { MERGE };
-    private static final Set<SQLDialect> NO_SUPPORT_WHERE = SQLDialect.supportedBy(DERBY);
+    private static final Set<SQLDialect> NO_SUPPORT_AND   = SQLDialect.supportedBy(FIREBIRD);
+    private static final Set<SQLDialect> NO_SUPPORT_MULTI = SQLDialect.supportedBy(FIREBIRD, HSQLDB);
 
     private final WithImpl               with;
     private final Table<R>               table;
@@ -249,17 +252,11 @@ implements
     private TableLike<?>                 using;
     private boolean                      usingDual;
 
-    // [#998] Oracle extensions to the MERGE statement
-    private Condition                    matchedWhere;
-    private Condition                    matchedDeleteWhere;
-    private Condition                    notMatchedWhere;
-
     // Flags to keep track of DSL object creation state
     private boolean                      matchedClause;
-    private List<FieldMapForUpdate>      matchedUpdate;
-    private List<Condition>              matchedUpdateAnd;
+    private List<MatchedClause>          matched;
     private boolean                      notMatchedClause;
-    private FieldMapsForInsert           notMatchedInsert;
+    private List<NotMatchedClause>       notMatched;
 
     // Objects for the UPSERT syntax (including H2 MERGE, HANA UPSERT, etc.)
     private boolean                      upsertStyle;
@@ -278,8 +275,8 @@ implements
         this.with = with;
         this.table = table;
         this.on = new ConditionProviderImpl();
-        this.matchedUpdate = new ArrayList<>();
-        this.matchedUpdateAnd = new ArrayList<>();
+        this.matched = new ArrayList<>();
+        this.notMatched = new ArrayList<>();
 
         if (fields != null)
             columns(fields);
@@ -310,8 +307,12 @@ implements
         return upsertValues;
     }
 
-    FieldMapForUpdate getLastMatchedUpdate() {
-        return matchedUpdate.get(matchedUpdate.size() - 1);
+    MatchedClause getLastMatched() {
+        return matched.get(matched.size() - 1);
+    }
+
+    NotMatchedClause getLastNotMatched() {
+        return notMatched.get(notMatched.size() - 1);
     }
 
     @Override
@@ -721,8 +722,7 @@ implements
             getUpsertValues().addAll(Tools.fields(values, getUpsertFields().toArray(EMPTY_FIELD)));
         }
         else {
-            Field<?>[] fields = notMatchedInsert.fields().toArray(EMPTY_FIELD);
-            notMatchedInsert.set(Tools.fields(values, fields));
+            getLastNotMatched().insertMap.set(Tools.fields(values, getLastNotMatched().insertMap.fields().toArray(EMPTY_FIELD)));
         }
 
         return this;
@@ -925,18 +925,20 @@ implements
 
     @Override
     public final MergeImpl whenMatchedThenUpdate() {
-        matchedClause = true;
-        matchedUpdate.add(new FieldMapForUpdate(table, MERGE_SET_ASSIGNMENT));
-        matchedUpdateAnd.add(null);
+        return whenMatchedAnd((Condition) null).thenUpdate();
+    }
 
-        notMatchedClause = false;
-        return this;
+    @Override
+    public final MergeImpl whenMatchedThenDelete() {
+        return whenMatchedAnd((Condition) null).thenDelete();
     }
 
     @Override
     public final MergeImpl whenMatchedAnd(Condition condition) {
-        whenMatchedThenUpdate();
-        matchedUpdateAnd.set(matchedUpdateAnd.size() - 1, condition);
+        matchedClause = true;
+        matched.add(new MatchedClause(condition));
+
+        notMatchedClause = false;
         return this;
     }
 
@@ -971,6 +973,12 @@ implements
     }
 
     @Override
+    public final MergeImpl thenDelete() {
+        getLastMatched().delete = true;
+        return this;
+    }
+
+    @Override
     public final <T> MergeImpl set(Field<T> field, T value) {
         return set(field, Tools.field(value, field));
     }
@@ -978,9 +986,9 @@ implements
     @Override
     public final <T> MergeImpl set(Field<T> field, Field<T> value) {
         if (matchedClause)
-            getLastMatchedUpdate().put(field, nullSafe(value));
+            getLastMatched().updateMap.put(field, nullSafe(value));
         else if (notMatchedClause)
-            notMatchedInsert.set(field, nullSafe(value));
+            getLastNotMatched().insertMap.set(field, nullSafe(value));
         else
             throw new IllegalStateException("Cannot call where() on the current state of the MERGE statement");
 
@@ -1003,9 +1011,9 @@ implements
     @Override
     public final MergeImpl set(Map<?, ?> map) {
         if (matchedClause)
-            getLastMatchedUpdate().set(map);
+            getLastMatched().updateMap.set(map);
         else if (notMatchedClause)
-            notMatchedInsert.set(map);
+            getLastNotMatched().insertMap.set(map);
         else
             throw new IllegalStateException("Cannot call where() on the current state of the MERGE statement");
 
@@ -1167,8 +1175,8 @@ implements
     @Override
     public final MergeImpl whenNotMatchedThenInsert(Collection<? extends Field<?>> fields) {
         notMatchedClause = true;
-        notMatchedInsert = new FieldMapsForInsert(table);
-        notMatchedInsert.addFields(fields);
+        notMatched.add(new NotMatchedClause(null));
+        getLastNotMatched().insertMap.addFields(fields);
 
         matchedClause = false;
         return this;
@@ -1176,15 +1184,12 @@ implements
 
     @Override
     public final MergeImpl where(Condition condition) {
-        if (matchedClause) {
-            matchedWhere = condition;
-        }
-        else if (notMatchedClause) {
-            notMatchedWhere = condition;
-        }
-        else {
+        if (matchedClause)
+            getLastMatched().condition = condition;
+        else if (notMatchedClause)
+            getLastNotMatched().condition = condition;
+        else
             throw new IllegalStateException("Cannot call where() on the current state of the MERGE statement");
-        }
 
         return this;
     }
@@ -1202,7 +1207,11 @@ implements
 
     @Override
     public final MergeImpl deleteWhere(Condition condition) {
-        matchedDeleteWhere = condition;
+        if (matchedClause)
+            matched.add(new MatchedClause(condition, true));
+        else
+            throw new IllegalStateException("Cannot call where() on the current state of the MERGE statement");
+
         return this;
     }
 
@@ -1274,12 +1283,10 @@ implements
                 for (int i = 0; i < key.getFields().size(); i++) {
                     Condition rhs = key.getFields().get(i).equal((Field) srcFields.get(i));
 
-                    if (condition == null) {
+                    if (condition == null)
                         condition = rhs;
-                    }
-                    else {
+                    else
                         condition = condition.and(rhs);
-                    }
                 }
             }
 
@@ -1571,83 +1578,110 @@ implements
            .start(MERGE_WHEN_MATCHED_THEN_UPDATE)
            .start(MERGE_SET);
 
-        // [#999] WHEN MATCHED clause is optional
-        for (int i = 0; i < matchedUpdate.size(); i++) {
-            FieldMapForUpdate map = matchedUpdate.get(i);
-            Condition condition = matchedUpdateAnd.get(i);
+        // [#7291] Multi MATCHED emulation
+        boolean emulate = false;
 
-            ctx.formatSeparator()
-               .visit(K_WHEN).sql(' ').visit(K_MATCHED);
+        emulateCheck:
+        if (NO_SUPPORT_MULTI.contains(ctx.dialect()) && matched.size() > 1) {
+            boolean matchUpdate = false;
+            boolean matchDelete = false;
 
-            // [#7291] Standard SQL AND clause in updates
-            if (condition != null)
-                ctx.sql(' ').visit(K_AND).sql(' ').visit(condition);
+            for (MatchedClause m : matched) {
+                if (m.delete) {
+                    if (emulate |= matchDelete)
+                        break emulateCheck;
 
-            // [#5110] Oracle style "WHERE" clause in updates
-            else if (matchedWhere != null && NO_SUPPORT_WHERE.contains(ctx.family()))
-                ctx.sql(' ').visit(K_AND).sql(' ').visit(matchedWhere);
+                    matchDelete = true;
+                }
+                else {
+                    if (emulate |= matchUpdate)
+                        break emulateCheck;
 
-            ctx.sql(' ').visit(K_THEN).sql(' ').visit(K_UPDATE).sql(' ').visit(K_SET)
-               .formatIndentStart()
-               .formatSeparator()
-               .visit(map)
-               .formatIndentEnd();
+                    matchUpdate = true;
+                }
+            }
+        }
+
+        if (emulate) {
+            MatchedClause update = null;
+            MatchedClause delete = null;
+
+            for (MatchedClause input : matched) {
+                MatchedClause output;
+
+                if (input.delete) {
+                    if (delete == null)
+                        delete = new MatchedClause(null, true);
+
+                    output = delete;
+                }
+                else {
+                    if (update == null)
+                        update = new MatchedClause(null);
+
+                    output = update;
+
+                    // TODO: What if there are conflicts between condition-less clauses and pre-existing clauses containing a condition?
+                    // TODO: What happens if both UPDATE and DELETE match?
+                    if (input.condition == null) {
+                        update.updateMap.putAll(input.updateMap);
+                    }
+                    else {
+                        for (Entry<Field<?>, Field<?>> e : input.updateMap.entrySet()) {
+                            Field<?> exp = update.updateMap.get(e.getKey());
+
+                            if (exp instanceof CaseConditionStepImpl)
+                                ((CaseConditionStepImpl) exp).when(input.condition, e.getValue());
+                            else
+                                update.updateMap.put(e.getKey(), when(input.condition, (Field) e.getValue()).else_(e.getKey()));
+
+                            // TODO: Are there other cases?
+                        }
+                    }
+                }
+
+                if (input.condition != null)
+                    output.condition = output.condition == null ? input.condition : output.condition.or(input.condition);
+            }
+
+            if (update != null)
+                toSQLMatched(ctx, update);
+
+            if (delete != null)
+                toSQLMatched(ctx, delete);
+        }
+        else {
+            for (MatchedClause m : matched)
+                toSQLMatched(ctx, m);
         }
 
         ctx.end(MERGE_SET)
-           .start(MERGE_WHERE);
-
-        // [#998] Oracle MERGE extension: WHEN MATCHED THEN UPDATE .. WHERE
-        if (matchedWhere != null)
-            if (!NO_SUPPORT_WHERE.contains(ctx.family()))
-                ctx.formatSeparator()
-                   .visit(K_WHERE).sql(' ')
-                   .visit(matchedWhere);
-
-        ctx.end(MERGE_WHERE)
-           .start(MERGE_DELETE_WHERE);
-
-        // [#998] Oracle MERGE extension: WHEN MATCHED THEN UPDATE .. DELETE WHERE
-        if (matchedDeleteWhere != null)
-            ctx.formatSeparator()
-               .visit(K_DELETE_WHERE).sql(' ')
-               .visit(matchedDeleteWhere);
-
-        ctx.end(MERGE_DELETE_WHERE)
            .end(MERGE_WHEN_MATCHED_THEN_UPDATE)
            .start(MERGE_WHEN_NOT_MATCHED_THEN_INSERT);
 
-        // [#999] WHEN NOT MATCHED clause is optional
-        if (notMatchedInsert != null) {
+        for (NotMatchedClause m : notMatched) {
             ctx.formatSeparator()
                .visit(K_WHEN).sql(' ')
                .visit(K_NOT).sql(' ')
                .visit(K_MATCHED).sql(' ');
 
-            if (notMatchedWhere != null && NO_SUPPORT_WHERE.contains(ctx.family()))
-                ctx.visit(K_AND).sql(' ').visit(notMatchedWhere).sql(' ');
+            if (m.condition != null && !NO_SUPPORT_AND.contains(ctx.dialect()))
+                ctx.visit(K_AND).sql(' ').visit(m.condition).sql(' ');
 
             ctx.visit(K_THEN).sql(' ')
                .visit(K_INSERT);
-            notMatchedInsert.toSQLReferenceKeys(ctx);
+            m.insertMap.toSQLReferenceKeys(ctx);
             ctx.formatSeparator()
                .start(MERGE_VALUES)
                .visit(K_VALUES).sql(' ');
-            notMatchedInsert.toSQL92Values(ctx);
+            m.insertMap.toSQL92Values(ctx);
             ctx.end(MERGE_VALUES);
+
+            if (m.condition != null && NO_SUPPORT_AND.contains(ctx.dialect()))
+                ctx.sql(' ').visit(K_WHERE).sql(' ').visit(m.condition);
         }
 
-        ctx.start(MERGE_WHERE);
-
-        // [#998] Oracle MERGE extension: WHEN NOT MATCHED THEN INSERT .. WHERE
-        if (notMatchedWhere != null && !NO_SUPPORT_WHERE.contains(ctx.family()))
-            ctx.formatSeparator()
-               .visit(K_WHERE).sql(' ')
-               .visit(notMatchedWhere);
-
-        ctx.end(MERGE_WHERE)
-           .end(MERGE_WHEN_NOT_MATCHED_THEN_INSERT);
-
+        ctx.end(MERGE_WHEN_NOT_MATCHED_THEN_INSERT);
 
 
 
@@ -1670,8 +1704,66 @@ implements
 
     }
 
+    private void toSQLMatched(Context<?> ctx, MatchedClause m) {
+        ctx.formatSeparator()
+           .visit(K_WHEN).sql(' ').visit(K_MATCHED);
+
+        // [#7291] Standard SQL AND clause in updates
+        if (m.condition != null)
+            ctx.sql(' ').visit(K_AND).sql(' ').visit(m.condition);
+
+        ctx.sql(' ').visit(K_THEN).sql(' ');
+
+        if (m.delete)
+            ctx.visit(K_DELETE);
+        else
+            ctx.visit(K_UPDATE).sql(' ').visit(K_SET)
+               .formatIndentStart()
+               .formatSeparator()
+               .visit(m.updateMap)
+               .formatIndentEnd();
+    }
+
     @Override
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
+    }
+
+    private final class MatchedClause implements Serializable {
+
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = -7885112480794078253L;
+
+        FieldMapForUpdate         updateMap;
+        boolean                   delete;
+        Condition                 condition;
+
+        MatchedClause(Condition condition) {
+            this(condition, false);
+        }
+
+        MatchedClause(Condition condition, boolean delete) {
+            this.updateMap = new FieldMapForUpdate(table, MERGE_SET_ASSIGNMENT);
+            this.condition = condition;
+            this.delete = delete;
+        }
+    }
+
+    private final class NotMatchedClause implements Serializable {
+
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = -7885112480794078253L;
+
+        FieldMapsForInsert        insertMap;
+        Condition                 condition;
+
+        NotMatchedClause(Condition condition) {
+            this.insertMap = new FieldMapsForInsert(table);
+            this.condition = condition;
+        }
     }
 }

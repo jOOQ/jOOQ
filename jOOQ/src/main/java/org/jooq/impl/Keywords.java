@@ -122,7 +122,6 @@ final class Keywords {
     static final Keyword K_DEFAULT                          = keyword("default");
     static final Keyword K_DEFAULT_VALUES                   = keyword("default values");
     static final Keyword K_DELETE                           = keyword("delete");
-    static final Keyword K_DELETE_WHERE                     = keyword("delete where");
     static final Keyword K_DENSE_RANK                       = keyword("dense_rank");
     static final Keyword K_DISABLE                          = keyword("disable");
     static final Keyword K_DISTINCT                         = keyword("distinct");

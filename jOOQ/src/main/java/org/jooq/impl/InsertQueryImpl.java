@@ -101,7 +101,6 @@ import org.jooq.Field;
 import org.jooq.Identity;
 import org.jooq.InsertQuery;
 import org.jooq.Merge;
-import org.jooq.MergeMatchedSetMoreStep;
 import org.jooq.MergeNotMatchedStep;
 import org.jooq.MergeOnConditionStep;
 import org.jooq.Name;
@@ -800,16 +799,10 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
             // [#1295] Use UPDATE clause only when with ON DUPLICATE KEY UPDATE,
             //         not with ON DUPLICATE KEY IGNORE
             MergeNotMatchedStep<R> notMatched = on;
-            if (onDuplicateKeyUpdate) {
-                MergeMatchedSetMoreStep<R> set =
-                    on.whenMatchedThenUpdate()
-                      .set(updateMap);
-
-                if (condition.hasWhere())
-                    notMatched = condition != null
-                        ? set.where(condition)
-                        : set;
-            }
+            if (onDuplicateKeyUpdate)
+                notMatched = condition.hasWhere()
+                    ? on.whenMatchedAnd(condition.getWhere()).thenUpdate().set(updateMap)
+                    : on.whenMatchedThenUpdate().set(updateMap);
 
             return select == null
                 ? notMatched.whenNotMatchedThenInsert(insertMaps.fields())

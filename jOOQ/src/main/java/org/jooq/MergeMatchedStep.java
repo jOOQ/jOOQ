@@ -98,21 +98,28 @@ public interface MergeMatchedStep<R extends Record> extends MergeNotMatchedStep<
     MergeMatchedSetStep<R> whenMatchedThenUpdate();
 
     /**
-     * Add the <code>WHEN MATCHED AND .. THEN UPDATE</code> clause to the
+     * Add the <code>WHEN MATCHED THEN DELETE</code> clause to the
      * <code>MERGE</code> statement.
      */
     @Support({ DERBY, H2, HSQLDB })
+    MergeMatchedStep<R> whenMatchedThenDelete();
+
+    /**
+     * Add the <code>WHEN MATCHED AND</code> clause to the
+     * <code>MERGE</code> statement.
+     */
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB })
     MergeMatchedThenStep<R> whenMatchedAnd(Condition condition);
 
     /**
-     * Add the <code>WHEN MATCHED AND .. THEN UPDATE</code> clause to the
+     * Add the <code>WHEN MATCHED AND</code> clause to the
      * <code>MERGE</code> statement.
      */
-    @Support({ DERBY, H2, HSQLDB })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB })
     MergeMatchedThenStep<R> whenMatchedAnd(Field<Boolean> condition);
 
     /**
-     * Add the <code>WHEN MATCHED AND .. THEN UPDATE</code> clause to the
+     * Add the <code>WHEN MATCHED AND</code> clause to the
      * <code>MERGE</code> statement.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
@@ -124,11 +131,11 @@ public interface MergeMatchedStep<R extends Record> extends MergeNotMatchedStep<
      * @see SQL
      */
     @PlainSQL
-    @Support({ DERBY, H2, HSQLDB })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB })
     MergeMatchedThenStep<R> whenMatchedAnd(SQL sql);
 
     /**
-     * Add the <code>WHEN MATCHED AND .. THEN UPDATE</code> clause to the
+     * Add the <code>WHEN MATCHED AND</code> clause to the
      * <code>MERGE</code> statement.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
@@ -140,11 +147,11 @@ public interface MergeMatchedStep<R extends Record> extends MergeNotMatchedStep<
      * @see SQL
      */
     @PlainSQL
-    @Support({ DERBY, H2, HSQLDB })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB })
     MergeMatchedThenStep<R> whenMatchedAnd(String sql);
 
     /**
-     * Add the <code>WHEN MATCHED AND .. THEN UPDATE</code> clause to the
+     * Add the <code>WHEN MATCHED AND</code> clause to the
      * <code>MERGE</code> statement.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
@@ -157,12 +164,12 @@ public interface MergeMatchedStep<R extends Record> extends MergeNotMatchedStep<
      * @see SQL
      */
     @PlainSQL
-    @Support({ DERBY, H2, HSQLDB })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB })
     MergeMatchedThenStep<R> whenMatchedAnd(String sql, Object... bindings);
 
     /**
-     * Add the <code>WHEN MATCHED AND .. THEN UPDATE</code> clause to the
-     * <code>MERGE</code> statement.
+     * Add the <code>WHEN MATCHED AND</code> clause to the <code>MERGE</code>
+     * statement.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -174,7 +181,7 @@ public interface MergeMatchedStep<R extends Record> extends MergeNotMatchedStep<
      * @see SQL
      */
     @PlainSQL
-    @Support({ DERBY, H2, HSQLDB })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB })
     MergeMatchedThenStep<R> whenMatchedAnd(String sql, QueryPart... parts);
 
 }

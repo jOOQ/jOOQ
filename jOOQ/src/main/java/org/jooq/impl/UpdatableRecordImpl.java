@@ -285,9 +285,10 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
             else if (isExecuteWithOptimisticLockingIncludeUnversioned())
                 checkIfChanged(keys);
 
-        // [#1596] Check if the record was really changed in the database
-        // [#1859] Specify the returning clause if needed
-        Collection<Field<?>> key = setReturningIfNeeded(query);
+        // [#1596]  Check if the record was really changed in the database
+        // [#1859]  Specify the returning clause if needed
+        // [#10051] See if we can return keys also on MERGE
+        Collection<Field<?>> key = merge ? null : setReturningIfNeeded(query);
         int result = query.execute();
         checkIfChanged(result, version, timestamp);
 

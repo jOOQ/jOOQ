@@ -251,9 +251,31 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
     }
 
     private final int storeMerge0(Field<?>[] storeFields, TableField<R, ?>[] keys) {
-        InsertQuery<R> merge = create().insertQuery(getTable());
-        merge.onDuplicateKeyUpdate(true);
-        return storeMergeOrUpdate0(storeFields, keys, merge, true);
+
+        // [#10050] No need for MERGE with optimistic locking being active.
+        if (lockingActive()) {
+            if (lockValuePresent())
+                return storeUpdate0(storeFields, keys);
+            else
+                return storeInsert0(storeFields);
+        }
+        else {
+            InsertQuery<R> merge = create().insertQuery(getTable());
+            merge.onDuplicateKeyUpdate(true);
+            return storeMergeOrUpdate0(storeFields, keys, merge, true);
+        }
+    }
+
+    private final boolean lockingActive() {
+        return isExecuteWithOptimisticLocking() && (isTimestampOrVersionAvailable() || isExecuteWithOptimisticLockingIncludeUnversioned());
+    }
+
+    private final boolean lockValuePresent() {
+
+        // [#10050] A lock value is present if we either have locking columns or if the record was fetched from the database
+        return getRecordVersion() != null
+            || getRecordTimestamp() != null
+            || getTable().getRecordVersion() == null && getTable().getRecordTimestamp() == null && fetched;
     }
 
     private final <Q extends StoreQuery<R> & org.jooq.ConditionProvider> int storeMergeOrUpdate0(Field<?>[] storeFields, TableField<R, ?>[] keys, Q query, boolean merge) {

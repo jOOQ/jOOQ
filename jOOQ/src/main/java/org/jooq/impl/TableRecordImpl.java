@@ -376,6 +376,16 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
         return result;
     }
 
+    final Object getRecordVersion() {
+        TableField<R, ?> field = getTable().getRecordVersion();
+        return field != null ? get(field) : null;
+    }
+
+    final Object getRecordTimestamp() {
+        TableField<R, ?> field = getTable().getRecordTimestamp();
+        return field != null ? get(field) : null;
+    }
+
     final boolean isUpdateRecordVersion() {
         Configuration configuration = configuration();
 

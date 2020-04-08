@@ -47,6 +47,7 @@ import static org.jooq.Clause.MERGE_USING;
 import static org.jooq.Clause.MERGE_VALUES;
 import static org.jooq.Clause.MERGE_WHEN_MATCHED_THEN_UPDATE;
 import static org.jooq.Clause.MERGE_WHEN_NOT_MATCHED_THEN_INSERT;
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
@@ -243,14 +244,15 @@ implements
     /**
      * Generated UID
      */
-    private static final long            serialVersionUID = -8835479296876774391L;
-    private static final Clause[]        CLAUSES          = { MERGE };
+    private static final long            serialVersionUID                        = -8835479296876774391L;
+    private static final Clause[]        CLAUSES                                 = { MERGE };
 
 
 
 
-    private static final Set<SQLDialect> NO_SUPPORT_MULTI = SQLDialect.supportedBy(HSQLDB);
-    private static final Set<SQLDialect> REQUIRE_NEGATION = SQLDialect.supportedBy(H2);
+    private static final Set<SQLDialect> NO_SUPPORT_MULTI                        = SQLDialect.supportedBy(HSQLDB);
+    private static final Set<SQLDialect> REQUIRE_NEGATION                        = SQLDialect.supportedBy(H2);
+    private static final Set<SQLDialect> NO_SUPPORT_CONDITION_AFTER_NO_CONDITION = SQLDialect.supportedBy(FIREBIRD);
 
     private final WithImpl               with;
     private final Table<R>               table;
@@ -1591,21 +1593,21 @@ implements
         boolean emulate = false;
         boolean requireMatchedConditions = false;
 
+        // Prevent error 5324 "In a MERGE statement, a 'WHEN MATCHED' clause with a search condition
+        // cannot appear after a 'WHEN MATCHED' clause with no search condition."
+        // This can also happen in Firebird: http://tracker.firebirdsql.org/browse/JDBC-621
 
+        // [#10054] TODO: Skip all WHEN MATCHED clauses after a WHEN MATCHED clause with no search condition
+        if (NO_SUPPORT_CONDITION_AFTER_NO_CONDITION.contains(ctx.family())) {
+            boolean withoutMatchedConditionFound = false;
 
+            for (MatchedClause m : matched) {
+                if (requireMatchedConditions |= withoutMatchedConditionFound)
+                    break;
 
-
-
-
-
-
-
-
-
-
-
-
-
+                withoutMatchedConditionFound |= m.condition instanceof NoCondition;
+            }
+        }
 
         emulateCheck:
         if (NO_SUPPORT_MULTI.contains(ctx.dialect()) && matched.size() > 1) {

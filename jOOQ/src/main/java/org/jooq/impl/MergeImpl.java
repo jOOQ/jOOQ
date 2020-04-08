@@ -1207,8 +1207,11 @@ implements
 
     @Override
     public final MergeImpl deleteWhere(Condition condition) {
+        // The ordering is to run deletions *before* updates in order to prevent
+        // constraint violations that may occur from updates, otherwise.
+        // See https://github.com/jOOQ/jOOQ/issues/7291#issuecomment-610833303
         if (matchedClause)
-            matched.add(new MatchedClause(condition, true));
+            matched.add(matched.size() - 1, new MatchedClause(condition, true));
         else
             throw new IllegalStateException("Cannot call where() on the current state of the MERGE statement");
 

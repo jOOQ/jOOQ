@@ -245,7 +245,10 @@ implements
      */
     private static final long            serialVersionUID = -8835479296876774391L;
     private static final Clause[]        CLAUSES          = { MERGE };
-    private static final Set<SQLDialect> NO_SUPPORT_AND   = SQLDialect.supportedBy();
+
+
+
+
     private static final Set<SQLDialect> NO_SUPPORT_MULTI = SQLDialect.supportedBy(HSQLDB);
     private static final Set<SQLDialect> REQUIRE_NEGATION = SQLDialect.supportedBy(H2);
 
@@ -1691,7 +1694,9 @@ implements
                .visit(K_NOT).sql(' ')
                .visit(K_MATCHED).sql(' ');
 
-            if (!(m.condition instanceof NoCondition) && !NO_SUPPORT_AND.contains(ctx.dialect()))
+
+
+
                 ctx.visit(K_AND).sql(' ').visit(m.condition).sql(' ');
 
             ctx.visit(K_THEN).sql(' ')
@@ -1703,8 +1708,10 @@ implements
             m.insertMap.toSQL92Values(ctx);
             ctx.end(MERGE_VALUES);
 
-            if (!(m.condition instanceof NoCondition) && NO_SUPPORT_AND.contains(ctx.dialect()))
-                ctx.sql(' ').visit(K_WHERE).sql(' ').visit(m.condition);
+
+
+
+
         }
 
         ctx.end(MERGE_WHEN_NOT_MATCHED_THEN_INSERT);

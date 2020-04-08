@@ -1616,7 +1616,7 @@ implements
 
             for (MatchedClause m : matched) {
                 if (m.delete) {
-                    if (emulate |= matchDelete)
+                    if (emulate |= matchDelete )
                         break emulateCheck;
 
                     matchDelete = true;
@@ -1665,11 +1665,19 @@ implements
                     negate = negate.andNot(m.condition instanceof NoCondition ? trueCondition() : m.condition);
             }
 
-            if (delete != null)
-                toSQLMatched(ctx, delete, requireMatchedConditions);
 
-            if (update != null)
-                toSQLMatched(ctx, update, requireMatchedConditions);
+
+
+
+
+
+            {
+                if (delete != null)
+                    toSQLMatched(ctx, delete, requireMatchedConditions);
+
+                if (update != null)
+                    toSQLMatched(ctx, update, requireMatchedConditions);
+            }
         }
 
         // [#7291] Workaround for https://github.com/h2database/h2database/issues/2552
@@ -1690,31 +1698,8 @@ implements
            .end(MERGE_WHEN_MATCHED_THEN_UPDATE)
            .start(MERGE_WHEN_NOT_MATCHED_THEN_INSERT);
 
-        for (NotMatchedClause m : notMatched) {
-            ctx.formatSeparator()
-               .visit(K_WHEN).sql(' ')
-               .visit(K_NOT).sql(' ')
-               .visit(K_MATCHED).sql(' ');
-
-
-
-
-                ctx.visit(K_AND).sql(' ').visit(m.condition).sql(' ');
-
-            ctx.visit(K_THEN).sql(' ')
-               .visit(K_INSERT);
-            m.insertMap.toSQLReferenceKeys(ctx);
-            ctx.formatSeparator()
-               .start(MERGE_VALUES)
-               .visit(K_VALUES).sql(' ');
-            m.insertMap.toSQL92Values(ctx);
-            ctx.end(MERGE_VALUES);
-
-
-
-
-
-        }
+        for (NotMatchedClause m : notMatched)
+            toSQLNotMatched(ctx, m);
 
         ctx.end(MERGE_WHEN_NOT_MATCHED_THEN_INSERT);
 
@@ -1739,24 +1724,78 @@ implements
 
     }
 
-    private void toSQLMatched(Context<?> ctx, MatchedClause m, boolean requireMatchedConditions) {
+    private final void toSQLMatched(Context<?> ctx, MatchedClause m, boolean requireMatchedConditions) {
+        if (m.delete)
+            toSQLMatched(ctx, null, m, requireMatchedConditions);
+        else
+            toSQLMatched(ctx, m, null, requireMatchedConditions);
+    }
+
+    private final void toSQLMatched(Context<?> ctx, MatchedClause update, MatchedClause delete, boolean requireMatchedConditions) {
         ctx.formatSeparator()
            .visit(K_WHEN).sql(' ').visit(K_MATCHED);
 
+        MatchedClause m = update != null ? update : delete;
+
         // [#7291] Standard SQL AND clause in updates
-        if (requireMatchedConditions || !(m.condition instanceof NoCondition))
+        if ((requireMatchedConditions || !(m.condition instanceof NoCondition)) && !NO_SUPPORT_AND.contains(ctx.dialect()))
             ctx.sql(' ').visit(K_AND).sql(' ').visit(m.condition);
 
-        ctx.sql(' ').visit(K_THEN).sql(' ');
+        ctx.sql(' ').visit(K_THEN);
 
-        if (m.delete)
-            ctx.visit(K_DELETE);
-        else
-            ctx.visit(K_UPDATE).sql(' ').visit(K_SET)
+        if (update != null) {
+            ctx.sql(' ').visit(K_UPDATE).sql(' ').visit(K_SET)
                .formatIndentStart()
                .formatSeparator()
-               .visit(m.updateMap)
+               .visit(update.updateMap)
                .formatIndentEnd();
+
+
+
+
+        }
+
+        if (delete != null) {
+            ctx.sql(' ').visit(K_DELETE);
+
+
+
+
+        }
+    }
+
+
+
+
+
+
+
+
+
+    private final void toSQLNotMatched(Context<?> ctx, NotMatchedClause m) {
+        ctx.formatSeparator()
+           .visit(K_WHEN).sql(' ')
+           .visit(K_NOT).sql(' ')
+           .visit(K_MATCHED).sql(' ');
+
+
+
+
+            ctx.visit(K_AND).sql(' ').visit(m.condition).sql(' ');
+
+        ctx.visit(K_THEN).sql(' ')
+           .visit(K_INSERT);
+        m.insertMap.toSQLReferenceKeys(ctx);
+        ctx.formatSeparator()
+           .start(MERGE_VALUES)
+           .visit(K_VALUES).sql(' ');
+        m.insertMap.toSQL92Values(ctx);
+        ctx.end(MERGE_VALUES);
+
+
+
+
+
     }
 
     @Override

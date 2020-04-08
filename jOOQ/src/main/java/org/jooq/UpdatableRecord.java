@@ -380,10 +380,9 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * update the row regardless of which (unique) key value is already present.
      * See {@link InsertOnDuplicateStep#onDuplicateKeyUpdate()}.
      * <p>
-     * Optimistic locking only works if the underlying dialect supports
-     * {@link InsertOnConflictWhereStep#where(Condition)}. Otherwise, the
-     * <code>UPDATE</code> path of the statement will not be able to update the
-     * row conditionally.
+     * When optimistic locking is active for this record, then this operation
+     * will execute {@link #insert()} or {@link #update()} explicitly, depending
+     * on whether the lock values are present already in the record.
      * <p>
      * If you want to enforce statement execution, regardless if the values in
      * this record were changed, you can explicitly set the changed flags for

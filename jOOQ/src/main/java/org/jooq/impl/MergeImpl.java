@@ -248,6 +248,7 @@ implements
     private static final Clause[]        CLAUSES          = { MERGE };
     private static final Set<SQLDialect> NO_SUPPORT_AND   = SQLDialect.supportedBy(FIREBIRD);
     private static final Set<SQLDialect> NO_SUPPORT_MULTI = SQLDialect.supportedBy(FIREBIRD, HSQLDB);
+    private static final Set<SQLDialect> REQUIRE_NEGATION = SQLDialect.supportedBy(H2);
 
     private final WithImpl               with;
     private final Table<R>               table;
@@ -928,12 +929,12 @@ implements
 
     @Override
     public final MergeImpl whenMatchedThenUpdate() {
-        return whenMatchedAnd((Condition) null).thenUpdate();
+        return whenMatchedAnd(noCondition()).thenUpdate();
     }
 
     @Override
     public final MergeImpl whenMatchedThenDelete() {
-        return whenMatchedAnd((Condition) null).thenDelete();
+        return whenMatchedAnd(noCondition()).thenDelete();
     }
 
     @Override
@@ -1586,6 +1587,23 @@ implements
 
         // [#7291] Multi MATCHED emulation
         boolean emulate = false;
+        boolean requireMatchedConditions = false;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         emulateCheck:
         if (NO_SUPPORT_MULTI.contains(ctx.dialect()) && matched.size() > 1) {
@@ -1612,63 +1630,56 @@ implements
             MatchedClause update = null;
             MatchedClause delete = null;
 
-            for (MatchedClause input : matched) {
-                MatchedClause output;
-
-                if (input.delete) {
-                    if (delete == null)
-                        delete = new MatchedClause(null, true);
-
-                    output = delete;
-                }
-                else {
-                    if (update == null)
-                        update = new MatchedClause(null);
-
-                    output = update;
-
-                    // TODO: What if there are conflicts between condition-less clauses and pre-existing clauses containing a condition?
-                    // TODO: What happens if both UPDATE and DELETE match?
-                    if (input.condition == null) {
-                        update.updateMap.putAll(input.updateMap);
-                    }
-                    else {
-                        for (Entry<Field<?>, Field<?>> e : input.updateMap.entrySet()) {
-                            Field<?> exp = update.updateMap.get(e.getKey());
-
-                            if (exp instanceof CaseConditionStepImpl)
-                                ((CaseConditionStepImpl) exp).when(input.condition, e.getValue());
-                            else
-                                update.updateMap.put(e.getKey(), when(input.condition, (Field) e.getValue()).else_(e.getKey()));
-
-                            // TODO: Are there other cases?
-                        }
-                    }
-                }
-
-                if (input.condition != null)
-                    output.condition = output.condition == null ? input.condition : output.condition.or(input.condition);
-            }
-
-            if (update != null)
-                toSQLMatched(ctx, update);
-
-            if (delete != null)
-                toSQLMatched(ctx, delete);
-        }
-
-        // [#7291] Workaround for https://github.com/h2database/h2database/issues/2552
-        else if (ctx.family() == H2) {
             Condition negate = noCondition();
 
             for (MatchedClause m : matched) {
-                toSQLMatched(ctx, new MatchedClause(m.condition == null ? negate : negate.and(m.condition), m.delete, m.updateMap));
-                negate = negate.andNot(m.condition != null ? m.condition : trueCondition());
+                Condition condition = negate.and(m.condition);
+
+                if (m.delete) {
+                    if (delete == null)
+                        delete = new MatchedClause(noCondition(), true);
+
+                    delete.condition = delete.condition.or(condition);
+                }
+                else {
+                    if (update == null)
+                        update = new MatchedClause(noCondition());
+
+                    for (Entry<Field<?>, Field<?>> e : m.updateMap.entrySet()) {
+                        Field<?> exp = update.updateMap.get(e.getKey());
+
+                        if (exp instanceof CaseConditionStepImpl)
+                            ((CaseConditionStepImpl) exp).when(negate.and(condition), e.getValue());
+                        else
+                            update.updateMap.put(e.getKey(), when(negate.and(condition), (Field) e.getValue()).else_(e.getKey()));
+                    }
+
+                    update.condition = update.condition.or(condition);
+                }
+
+                if (REQUIRE_NEGATION.contains(ctx.family()))
+                    negate = negate.andNot(m.condition instanceof NoCondition ? trueCondition() : m.condition);
+            }
+
+            if (delete != null)
+                toSQLMatched(ctx, delete, requireMatchedConditions);
+
+            if (update != null)
+                toSQLMatched(ctx, update, requireMatchedConditions);
+        }
+
+        // [#7291] Workaround for https://github.com/h2database/h2database/issues/2552
+        else if (REQUIRE_NEGATION.contains(ctx.family())) {
+            Condition negate = noCondition();
+
+            for (MatchedClause m : matched) {
+                toSQLMatched(ctx, new MatchedClause(negate.and(m.condition), m.delete, m.updateMap), requireMatchedConditions);
+                negate = negate.andNot(m.condition instanceof NoCondition ? trueCondition() : m.condition);
             }
         }
         else {
             for (MatchedClause m : matched)
-                toSQLMatched(ctx, m);
+                toSQLMatched(ctx, m, requireMatchedConditions);
         }
 
         ctx.end(MERGE_SET)
@@ -1681,7 +1692,7 @@ implements
                .visit(K_NOT).sql(' ')
                .visit(K_MATCHED).sql(' ');
 
-            if (m.condition != null && !NO_SUPPORT_AND.contains(ctx.dialect()))
+            if (m.condition != null && !(m.condition instanceof NoCondition) && !NO_SUPPORT_AND.contains(ctx.dialect()))
                 ctx.visit(K_AND).sql(' ').visit(m.condition).sql(' ');
 
             ctx.visit(K_THEN).sql(' ')
@@ -1693,7 +1704,7 @@ implements
             m.insertMap.toSQL92Values(ctx);
             ctx.end(MERGE_VALUES);
 
-            if (m.condition != null && NO_SUPPORT_AND.contains(ctx.dialect()))
+            if (!(m.condition instanceof NoCondition) && NO_SUPPORT_AND.contains(ctx.dialect()))
                 ctx.sql(' ').visit(K_WHERE).sql(' ').visit(m.condition);
         }
 
@@ -1720,12 +1731,12 @@ implements
 
     }
 
-    private void toSQLMatched(Context<?> ctx, MatchedClause m) {
+    private void toSQLMatched(Context<?> ctx, MatchedClause m, boolean requireMatchedConditions) {
         ctx.formatSeparator()
            .visit(K_WHEN).sql(' ').visit(K_MATCHED);
 
         // [#7291] Standard SQL AND clause in updates
-        if (m.condition != null)
+        if (requireMatchedConditions || !(m.condition instanceof NoCondition))
             ctx.sql(' ').visit(K_AND).sql(' ').visit(m.condition);
 
         ctx.sql(' ').visit(K_THEN).sql(' ');
@@ -1766,7 +1777,7 @@ implements
 
         MatchedClause(Condition condition, boolean delete, FieldMapForUpdate updateMap) {
             this.updateMap = updateMap;
-            this.condition = condition;
+            this.condition = condition == null ? noCondition() : condition;
             this.delete = delete;
         }
     }

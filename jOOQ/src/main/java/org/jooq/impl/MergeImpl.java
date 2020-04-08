@@ -48,6 +48,7 @@ import static org.jooq.Clause.MERGE_VALUES;
 import static org.jooq.Clause.MERGE_WHEN_MATCHED_THEN_UPDATE;
 import static org.jooq.Clause.MERGE_WHEN_NOT_MATCHED_THEN_INSERT;
 import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
@@ -55,8 +56,10 @@ import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.insertInto;
+import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.nullSafe;
+import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.Keywords.K_AND;
 import static org.jooq.impl.Keywords.K_AS;
@@ -1653,6 +1656,16 @@ implements
             if (delete != null)
                 toSQLMatched(ctx, delete);
         }
+
+        // [#7291] Workaround for https://github.com/h2database/h2database/issues/2552
+        else if (ctx.family() == H2) {
+            Condition negate = noCondition();
+
+            for (MatchedClause m : matched) {
+                toSQLMatched(ctx, new MatchedClause(m.condition == null ? negate : negate.and(m.condition), m.delete, m.updateMap));
+                negate = negate.andNot(m.condition != null ? m.condition : trueCondition());
+            }
+        }
         else {
             for (MatchedClause m : matched)
                 toSQLMatched(ctx, m);
@@ -1748,7 +1761,11 @@ implements
         }
 
         MatchedClause(Condition condition, boolean delete) {
-            this.updateMap = new FieldMapForUpdate(table, MERGE_SET_ASSIGNMENT);
+            this(condition, delete, new FieldMapForUpdate(table, MERGE_SET_ASSIGNMENT));
+        }
+
+        MatchedClause(Condition condition, boolean delete, FieldMapForUpdate updateMap) {
+            this.updateMap = updateMap;
             this.condition = condition;
             this.delete = delete;
         }

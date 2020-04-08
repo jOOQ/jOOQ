@@ -47,7 +47,6 @@ import static org.jooq.Clause.MERGE_USING;
 import static org.jooq.Clause.MERGE_VALUES;
 import static org.jooq.Clause.MERGE_WHEN_MATCHED_THEN_UPDATE;
 import static org.jooq.Clause.MERGE_WHEN_NOT_MATCHED_THEN_INSERT;
-import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
@@ -246,8 +245,8 @@ implements
      */
     private static final long            serialVersionUID = -8835479296876774391L;
     private static final Clause[]        CLAUSES          = { MERGE };
-    private static final Set<SQLDialect> NO_SUPPORT_AND   = SQLDialect.supportedBy(FIREBIRD);
-    private static final Set<SQLDialect> NO_SUPPORT_MULTI = SQLDialect.supportedBy(FIREBIRD, HSQLDB);
+    private static final Set<SQLDialect> NO_SUPPORT_AND   = SQLDialect.supportedBy();
+    private static final Set<SQLDialect> NO_SUPPORT_MULTI = SQLDialect.supportedBy(HSQLDB);
     private static final Set<SQLDialect> REQUIRE_NEGATION = SQLDialect.supportedBy(H2);
 
     private final WithImpl               with;
@@ -1179,7 +1178,7 @@ implements
     @Override
     public final MergeImpl whenNotMatchedThenInsert(Collection<? extends Field<?>> fields) {
         notMatchedClause = true;
-        notMatched.add(new NotMatchedClause(null));
+        notMatched.add(new NotMatchedClause(noCondition()));
         getLastNotMatched().insertMap.addFields(fields);
 
         matchedClause = false;
@@ -1692,7 +1691,7 @@ implements
                .visit(K_NOT).sql(' ')
                .visit(K_MATCHED).sql(' ');
 
-            if (m.condition != null && !(m.condition instanceof NoCondition) && !NO_SUPPORT_AND.contains(ctx.dialect()))
+            if (!(m.condition instanceof NoCondition) && !NO_SUPPORT_AND.contains(ctx.dialect()))
                 ctx.visit(K_AND).sql(' ').visit(m.condition).sql(' ');
 
             ctx.visit(K_THEN).sql(' ')
@@ -1794,7 +1793,7 @@ implements
 
         NotMatchedClause(Condition condition) {
             this.insertMap = new FieldMapsForInsert(table);
-            this.condition = condition;
+            this.condition = condition == null ? noCondition() : condition;
         }
     }
 }

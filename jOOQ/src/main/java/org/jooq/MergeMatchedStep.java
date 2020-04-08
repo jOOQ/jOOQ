@@ -101,7 +101,7 @@ public interface MergeMatchedStep<R extends Record> extends MergeNotMatchedStep<
      * Add the <code>WHEN MATCHED THEN DELETE</code> clause to the
      * <code>MERGE</code> statement.
      */
-    @Support({ DERBY, H2, HSQLDB })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB })
     MergeMatchedStep<R> whenMatchedThenDelete();
 
     /**

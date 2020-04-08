@@ -37,9 +37,13 @@
  */
 package org.jooq;
 
-import static org.jooq.SQLDialect.CUBRID;
+// ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HSQLDB;
+// ...
+// ...
+// ...
 // ...
 
 import org.jooq.impl.DSL;
@@ -92,7 +96,7 @@ public interface MergeMatchedDeleteStep<R extends Record> extends MergeMatchedSt
      * >http://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_9016.
      * htm</a> for a full definition of the Oracle <code>MERGE</code> statement
      */
-    @Support({ CUBRID, DERBY, H2 })
+    @Support({ DERBY, H2, HSQLDB })
     MergeNotMatchedStep<R> deleteWhere(Condition condition);
 
     /**
@@ -104,7 +108,7 @@ public interface MergeMatchedDeleteStep<R extends Record> extends MergeMatchedSt
      * >http://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_9016.
      * htm</a> for a full definition of the Oracle <code>MERGE</code> statement
      */
-    @Support({ CUBRID, DERBY, H2 })
+    @Support({ DERBY, H2, HSQLDB })
     MergeNotMatchedStep<R> deleteWhere(Field<Boolean> condition);
 
     /**
@@ -126,6 +130,6 @@ public interface MergeMatchedDeleteStep<R extends Record> extends MergeMatchedSt
      *             method will be removed in the future.
      */
     @Deprecated
-    @Support({ CUBRID, DERBY, H2 })
+    @Support({ DERBY, H2, HSQLDB })
     MergeNotMatchedStep<R> deleteWhere(Boolean condition);
 }

@@ -1610,7 +1610,7 @@ implements
         }
 
         emulateCheck:
-        if (NO_SUPPORT_MULTI.contains(ctx.dialect()) && matched.size() > 1) {
+        if ((NO_SUPPORT_MULTI.contains(ctx.dialect()) && matched.size() > 1)) {
             boolean matchUpdate = false;
             boolean matchDelete = false;
 
@@ -1664,6 +1664,13 @@ implements
                 if (REQUIRE_NEGATION.contains(ctx.family()))
                     negate = negate.andNot(m.condition instanceof NoCondition ? trueCondition() : m.condition);
             }
+
+
+
+
+
+
+
 
 
 
@@ -1753,24 +1760,19 @@ implements
 
 
 
+
         }
 
         if (delete != null) {
+
+
+
+
+
+
             ctx.sql(' ').visit(K_DELETE);
-
-
-
-
         }
     }
-
-
-
-
-
-
-
-
 
     private final void toSQLNotMatched(Context<?> ctx, NotMatchedClause m) {
         ctx.formatSeparator()

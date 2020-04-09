@@ -2059,17 +2059,24 @@ final class ParserImpl implements Parser {
                 if (parseKeywordIf(ctx, "AND"))
                     updateAnd = parseCondition(ctx);
 
-                parseKeyword(ctx, "THEN UPDATE SET");
-                updateSet = parseSetClauseList(ctx);
+                if (parseKeywordIf(ctx, "THEN DELETE")) {
+                    s2 = updateAnd != null
+                       ? s2.whenMatchedAnd(updateAnd).thenDelete()
+                       : s2.whenMatchedThenDelete();
+                }
+                else {
+                    parseKeyword(ctx, "THEN UPDATE SET");
+                    updateSet = parseSetClauseList(ctx);
 
-                if (updateAnd == null && parseKeywordIf(ctx, "WHERE"))
-                    updateWhere = parseCondition(ctx);
+                    if (updateAnd == null && parseKeywordIf(ctx, "WHERE"))
+                        updateWhere = parseCondition(ctx);
 
-                s2 = updateAnd != null
-                   ? s2.whenMatchedAnd(updateAnd).thenUpdate().set(updateSet)
-                   : updateWhere != null
-                   ? s2.whenMatchedThenUpdate().set(updateSet).where(updateWhere)
-                   : s2.whenMatchedThenUpdate().set(updateSet);
+                    s2 = updateAnd != null
+                       ? s2.whenMatchedAnd(updateAnd).thenUpdate().set(updateSet)
+                       : updateWhere != null
+                       ? s2.whenMatchedThenUpdate().set(updateSet).where(updateWhere)
+                       : s2.whenMatchedThenUpdate().set(updateSet);
+                }
             }
             else if (!insert && (insert = parseKeywordIf(ctx, "WHEN NOT MATCHED"))) {
                 if (parseKeywordIf(ctx, "AND"))

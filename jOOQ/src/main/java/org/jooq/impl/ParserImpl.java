@@ -456,7 +456,9 @@ import org.jooq.LikeEscapeStep;
 // ...
 import org.jooq.Merge;
 import org.jooq.MergeFinalStep;
+import org.jooq.MergeMatchedDeleteStep;
 import org.jooq.MergeMatchedStep;
+import org.jooq.MergeMatchedWhereStep;
 import org.jooq.MergeUsingStep;
 import org.jooq.Meta;
 import org.jooq.Name;
@@ -2048,6 +2050,7 @@ final class ParserImpl implements Parser {
         Map<Field<?>, Object> updateSet = null;
         Condition updateAnd = null;
         Condition updateWhere = null;
+        Condition deleteWhere = null;
 
         MergeUsingStep<?> s1 = (with == null ? ctx.dsl.mergeInto(target) : with.mergeInto(target));
         MergeMatchedStep<?> s2 = s1.using(usingTable).on(on);
@@ -2071,11 +2074,17 @@ final class ParserImpl implements Parser {
                     if (updateAnd == null && parseKeywordIf(ctx, "WHERE"))
                         updateWhere = parseCondition(ctx);
 
-                    s2 = updateAnd != null
-                       ? s2.whenMatchedAnd(updateAnd).thenUpdate().set(updateSet)
-                       : updateWhere != null
-                       ? s2.whenMatchedThenUpdate().set(updateSet).where(updateWhere)
-                       : s2.whenMatchedThenUpdate().set(updateSet);
+                    if (updateAnd == null && parseKeywordIf(ctx, "DELETE WHERE"))
+                        deleteWhere = parseCondition(ctx);
+
+                    if (updateAnd != null) {
+                        s2.whenMatchedAnd(updateAnd).thenUpdate().set(updateSet);
+                    }
+                    else {
+                        MergeMatchedWhereStep<?> s3 = s2.whenMatchedThenUpdate().set(updateSet);
+                        MergeMatchedDeleteStep<?> s4 = updateWhere != null ? s3.where(updateWhere) : s3;
+                        s2 = deleteWhere != null ? s4.deleteWhere(deleteWhere) : s3;
+                    }
                 }
             }
             else if (!insert && (insert = parseKeywordIf(ctx, "WHEN NOT MATCHED"))) {

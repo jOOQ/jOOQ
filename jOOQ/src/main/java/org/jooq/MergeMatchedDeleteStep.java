@@ -98,7 +98,7 @@ public interface MergeMatchedDeleteStep<R extends Record> extends MergeMatchedSt
      * htm</a> for a full definition of the Oracle <code>MERGE</code> statement
      */
     @Support({ DERBY, FIREBIRD, H2, HSQLDB })
-    MergeNotMatchedStep<R> deleteWhere(Condition condition);
+    MergeMatchedStep<R> deleteWhere(Condition condition);
 
     /**
      * Add an additional <code>DELETE WHERE</code> clause to the preceding
@@ -110,7 +110,7 @@ public interface MergeMatchedDeleteStep<R extends Record> extends MergeMatchedSt
      * htm</a> for a full definition of the Oracle <code>MERGE</code> statement
      */
     @Support({ DERBY, FIREBIRD, H2, HSQLDB })
-    MergeNotMatchedStep<R> deleteWhere(Field<Boolean> condition);
+    MergeMatchedStep<R> deleteWhere(Field<Boolean> condition);
 
     /**
      * Add an additional <code>DELETE WHERE</code> clause to the preceding
@@ -132,5 +132,5 @@ public interface MergeMatchedDeleteStep<R extends Record> extends MergeMatchedSt
      */
     @Deprecated
     @Support({ DERBY, FIREBIRD, H2, HSQLDB })
-    MergeNotMatchedStep<R> deleteWhere(Boolean condition);
+    MergeMatchedStep<R> deleteWhere(Boolean condition);
 }

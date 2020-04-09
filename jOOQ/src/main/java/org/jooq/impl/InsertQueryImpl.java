@@ -56,6 +56,7 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.impl.DSL.constraint;
 import static org.jooq.impl.DSL.dual;
+import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.row;

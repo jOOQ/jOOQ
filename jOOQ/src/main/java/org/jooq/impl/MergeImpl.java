@@ -251,7 +251,7 @@ implements
 
 
     private static final Set<SQLDialect> NO_SUPPORT_MULTI                        = SQLDialect.supportedBy(HSQLDB);
-    private static final Set<SQLDialect> REQUIRE_NEGATION                        = SQLDialect.supportedBy(H2);
+    private static final Set<SQLDialect> REQUIRE_NEGATION                        = SQLDialect.supportedBy(H2, HSQLDB);
     private static final Set<SQLDialect> NO_SUPPORT_CONDITION_AFTER_NO_CONDITION = SQLDialect.supportedBy(FIREBIRD);
 
     private final WithImpl               with;

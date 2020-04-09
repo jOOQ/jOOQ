@@ -1616,7 +1616,7 @@ implements
 
             for (MatchedClause m : matched) {
                 if (m.delete) {
-                    if (emulate |= matchDelete )
+                    if (emulate |= matchDelete)
                         break emulateCheck;
 
                     matchDelete = true;
@@ -1738,7 +1738,7 @@ implements
         MatchedClause m = update != null ? update : delete;
 
         // [#7291] Standard SQL AND clause in updates
-        if ((requireMatchedConditions || !(m.condition instanceof NoCondition)) && !NO_SUPPORT_AND.contains(ctx.dialect()))
+        if ((requireMatchedConditions || !(m.condition instanceof NoCondition)))
             ctx.sql(' ').visit(K_AND).sql(' ').visit(m.condition);
 
         ctx.sql(' ').visit(K_THEN);

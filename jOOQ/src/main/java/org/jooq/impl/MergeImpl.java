@@ -1778,9 +1778,7 @@ implements
            .visit(K_NOT).sql(' ')
            .visit(K_MATCHED).sql(' ');
 
-
-
-
+        if (!(m.condition instanceof NoCondition))
             ctx.visit(K_AND).sql(' ').visit(m.condition).sql(' ');
 
         ctx.visit(K_THEN).sql(' ')

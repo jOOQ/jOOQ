@@ -41,7 +41,6 @@ import org.jooq.conf.ParamType;
 import org.jooq.conf.Settings;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.DSL;
-import org.jooq.tools.Convert;
 
 /**
  * A named parameter and/or bind value.
@@ -134,8 +133,6 @@ public interface Param<T> extends Field<T> {
      * Sets a converted value, using this {@link Param}'s underlying
      * {@link DataType}, obtained from {@link #getDataType()}
      *
-     * @see DataType#convert(Object)
-     * @see Convert#convert(Object, Class)
      * @throws DataTypeException If <code>value</code> cannot be converted into
      *             this parameter's data type.
      * @deprecated - 3.8.0 - [#4991] In jOOQ 4.0, {@link Param} will be made

@@ -198,8 +198,8 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
     }
 
     @Override
-    public final <T> List<T> getValues(Field<?> field, Class<? extends T> type) {
-        return Convert.convert(getValues(field), type);
+    public final <U> List<U> getValues(Field<?> field, Class<? extends U> type) {
+        return getValues(indexOrFail(fieldsRow(), field), type);
     }
 
     @Override
@@ -218,8 +218,14 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
     }
 
     @Override
-    public final <T> List<T> getValues(int fieldIndex, Class<? extends T> type) {
-        return Convert.convert(getValues(fieldIndex), type);
+    public final <U> List<U> getValues(int fieldIndex, Class<? extends U> type) {
+        List<U> result = new ArrayList<>(size());
+        Converter converter = Tools.configuration(this).converterProvider().provide(field(safeIndex(fieldIndex)).getType(), (Class) type);
+
+        for (R record : this)
+            result.add((U) converter.from(record.get(fieldIndex)));
+
+        return result;
     }
 
     @Override
@@ -233,8 +239,8 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
     }
 
     @Override
-    public final <T> List<T> getValues(String fieldName, Class<? extends T> type) {
-        return Convert.convert(getValues(fieldName), type);
+    public final <U> List<U> getValues(String fieldName, Class<? extends U> type) {
+        return getValues(indexOrFail(fieldsRow(), fieldName), type);
     }
 
     @Override
@@ -248,8 +254,8 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
     }
 
     @Override
-    public final <T> List<T> getValues(Name fieldName, Class<? extends T> type) {
-        return Convert.convert(getValues(fieldName), type);
+    public final <U> List<U> getValues(Name fieldName, Class<? extends U> type) {
+        return getValues(indexOrFail(fieldsRow(), fieldName), type);
     }
 
     @Override
@@ -1017,14 +1023,12 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
     @Override
     public final Object[] intoArray(int fieldIndex) {
-        Class<?> type = fields.fields[fieldIndex].getType();
-        List<?> list = getValues(fieldIndex);
-        return list.toArray((Object[]) Array.newInstance(type, list.size()));
+        return getValues(fieldIndex).toArray((Object[]) Array.newInstance(field(safeIndex(fieldIndex)).getType(), size()));
     }
 
     @Override
-    public final <T> T[] intoArray(int fieldIndex, Class<? extends T> type) {
-        return (T[]) Convert.convertArray(intoArray(fieldIndex), type);
+    public final <U> U[] intoArray(int fieldIndex, Class<? extends U> type) {
+        return getValues(fieldIndex, type).toArray((U[]) Array.newInstance(type, size()));
     }
 
     @Override
@@ -1034,14 +1038,12 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
     @Override
     public final Object[] intoArray(String fieldName) {
-        Class<?> type = field(fieldName).getType();
-        List<?> list = getValues(fieldName);
-        return list.toArray((Object[]) Array.newInstance(type, list.size()));
+        return intoArray(indexOrFail(fieldsRow(), fieldName));
     }
 
     @Override
-    public final <T> T[] intoArray(String fieldName, Class<? extends T> type) {
-        return (T[]) Convert.convertArray(intoArray(fieldName), type);
+    public final <U> U[] intoArray(String fieldName, Class<? extends U> type) {
+        return intoArray(indexOrFail(fieldsRow(), fieldName), type);
     }
 
     @Override
@@ -1051,14 +1053,12 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
     @Override
     public final Object[] intoArray(Name fieldName) {
-        Class<?> type = field(fieldName).getType();
-        List<?> list = getValues(fieldName);
-        return list.toArray((Object[]) Array.newInstance(type, list.size()));
+        return intoArray(indexOrFail(fieldsRow(), fieldName));
     }
 
     @Override
-    public final <T> T[] intoArray(Name fieldName, Class<? extends T> type) {
-        return (T[]) Convert.convertArray(intoArray(fieldName), type);
+    public final <U> U[] intoArray(Name fieldName, Class<? extends U> type) {
+        return intoArray(indexOrFail(fieldsRow(), fieldName), type);
     }
 
     @Override
@@ -1068,12 +1068,12 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
 
     @Override
     public final <T> T[] intoArray(Field<T> field) {
-        return getValues(field).toArray((T[]) Array.newInstance(field.getType(), 0));
+        return getValues(field).toArray((T[]) Array.newInstance(field.getType(), size()));
     }
 
     @Override
-    public final <T> T[] intoArray(Field<?> field, Class<? extends T> type) {
-        return (T[]) Convert.convertArray(intoArray(field), type);
+    public final <U> U[] intoArray(Field<?> field, Class<? extends U> type) {
+        return getValues(field, type).toArray((U[]) Array.newInstance(type, size()));
     }
 
     @Override
@@ -1097,7 +1097,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
     }
 
     @Override
-    public final <T> Set<T> intoSet(int fieldIndex, Class<? extends T> type) {
+    public final <U> Set<U> intoSet(int fieldIndex, Class<? extends U> type) {
         return new LinkedHashSet<>(getValues(fieldIndex, type));
     }
 
@@ -1112,7 +1112,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
     }
 
     @Override
-    public final <T> Set<T> intoSet(String fieldName, Class<? extends T> type) {
+    public final <U> Set<U> intoSet(String fieldName, Class<? extends U> type) {
         return new LinkedHashSet<>(getValues(fieldName, type));
     }
 
@@ -1127,7 +1127,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
     }
 
     @Override
-    public final <T> Set<T> intoSet(Name fieldName, Class<? extends T> type) {
+    public final <U> Set<U> intoSet(Name fieldName, Class<? extends U> type) {
         return new LinkedHashSet<>(getValues(fieldName, type));
     }
 
@@ -1142,7 +1142,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
     }
 
     @Override
-    public final <T> Set<T> intoSet(Field<?> field, Class<? extends T> type) {
+    public final <U> Set<U> intoSet(Field<?> field, Class<? extends U> type) {
         return new LinkedHashSet<>(getValues(field, type));
     }
 
@@ -1472,6 +1472,13 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
             }
             return o1.compareTo(o2);
         }
+    }
+
+    final int safeIndex(int index) {
+        if (index >= 0 && index < fields.fields.length)
+            return index;
+
+        throw new IllegalArgumentException("No field at index " + index + " in Record type " + fieldsRow());
     }
 
     // -------------------------------------------------------------------------

@@ -465,12 +465,16 @@ extends
      * <p>
      * This is the same as calling {@link #fetch()} and then
      * {@link Result#getValues(Field, Class)}
+     * <p>
+     * The {@link Converter} that is provided by
+     * {@link Configuration#converterProvider()} will be used to convert the
+     * value to <code>U</code>
      *
      * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Record#get(Field, Class)
      */
-    <T> List<T> fetch(Field<?> field, Class<? extends T> type) throws DataAccessException;
+    <U> List<U> fetch(Field<?> field, Class<? extends U> type) throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field from the generated
@@ -503,12 +507,16 @@ extends
      * <p>
      * This is the same as calling {@link #fetch()} and then
      * {@link Result#getValues(int, Class)}
+     * <p>
+     * The {@link Converter} that is provided by
+     * {@link Configuration#converterProvider()} will be used to convert the
+     * value to <code>U</code>
      *
      * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Record#get(int, Class)
      */
-    <T> List<T> fetch(int fieldIndex, Class<? extends T> type) throws DataAccessException;
+    <U> List<U> fetch(int fieldIndex, Class<? extends U> type) throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field index from the
@@ -541,12 +549,16 @@ extends
      * <p>
      * This is the same as calling {@link #fetch()} and then
      * {@link Result#getValues(String, Class)}
+     * <p>
+     * The {@link Converter} that is provided by
+     * {@link Configuration#converterProvider()} will be used to convert the
+     * value to <code>U</code>
      *
      * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Record#get(String, Class)
      */
-    <T> List<T> fetch(String fieldName, Class<? extends T> type) throws DataAccessException;
+    <U> List<U> fetch(String fieldName, Class<? extends U> type) throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field name from the
@@ -579,12 +591,16 @@ extends
      * <p>
      * This is the same as calling {@link #fetch()} and then
      * {@link Result#getValues(Name, Class)}
+     * <p>
+     * The {@link Converter} that is provided by
+     * {@link Configuration#converterProvider()} will be used to convert the
+     * value to <code>U</code>
      *
      * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Record#get(Name, Class)
      */
-    <T> List<T> fetch(Name fieldName, Class<? extends T> type) throws DataAccessException;
+    <U> List<U> fetch(Name fieldName, Class<? extends U> type) throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field name from the
@@ -619,13 +635,17 @@ extends
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
      * {@link Record#get(Field, Class)}
+     * <p>
+     * The {@link Converter} that is provided by
+     * {@link Configuration#converterProvider()} will be used to convert the
+     * value to <code>U</code>
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
-    <T> T fetchOne(Field<?> field, Class<? extends T> type) throws DataAccessException, TooManyRowsException;
+    <U> U fetchOne(Field<?> field, Class<? extends U> type) throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute the query and return at most one resulting value for a
@@ -661,13 +681,17 @@ extends
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
      * {@link Record#get(int, Class)}
+     * <p>
+     * The {@link Converter} that is provided by
+     * {@link Configuration#converterProvider()} will be used to convert the
+     * value to <code>U</code>
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
-    <T> T fetchOne(int fieldIndex, Class<? extends T> type) throws DataAccessException, TooManyRowsException;
+    <U> U fetchOne(int fieldIndex, Class<? extends U> type) throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute the query and return at most one resulting value for a
@@ -703,13 +727,17 @@ extends
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
      * {@link Record#get(String, Class)}
+     * <p>
+     * The {@link Converter} that is provided by
+     * {@link Configuration#converterProvider()} will be used to convert the
+     * value to <code>U</code>
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
-    <T> T fetchOne(String fieldName, Class<? extends T> type) throws DataAccessException, TooManyRowsException;
+    <U> U fetchOne(String fieldName, Class<? extends U> type) throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute the query and return at most one resulting value for a
@@ -740,18 +768,22 @@ extends
     Object fetchOne(Name fieldName) throws DataAccessException, TooManyRowsException;
 
     /**
-     * Execute the query and return at most one resulting value for a
-     * field name from the generated result.
+     * Execute the query and return at most one resulting value for a field name
+     * from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
      * {@link Record#get(Name, Class)}
+     * <p>
+     * The {@link Converter} that is provided by
+     * {@link Configuration#converterProvider()} will be used to convert the
+     * value to <code>U</code>
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
-    <T> T fetchOne(Name fieldName, Class<? extends T> type) throws DataAccessException, TooManyRowsException;
+    <U> U fetchOne(Name fieldName, Class<? extends U> type) throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute the query and return at most one resulting value for a
@@ -889,13 +921,17 @@ extends
      * <p>
      * This is the same as calling {@link #fetchSingle()} and then
      * {@link Record#get(Field, Class)}
+     * <p>
+     * The {@link Converter} that is provided by
+     * {@link Configuration#converterProvider()} will be used to convert the
+     * value to <code>U</code>
      *
      * @return The resulting value. This is never <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
      */
-    <T> T fetchSingle(Field<?> field, Class<? extends T> type) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+    <U> U fetchSingle(Field<?> field, Class<? extends U> type) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
      * Execute the query and return exactly one resulting value for a
@@ -931,13 +967,17 @@ extends
      * <p>
      * This is the same as calling {@link #fetchSingle()} and then
      * {@link Record#get(int, Class)}
+     * <p>
+     * The {@link Converter} that is provided by
+     * {@link Configuration#converterProvider()} will be used to convert the
+     * value to <code>U</code>
      *
      * @return The resulting value. This is never <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
      */
-    <T> T fetchSingle(int fieldIndex, Class<? extends T> type) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+    <U> U fetchSingle(int fieldIndex, Class<? extends U> type) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
      * Execute the query and return exactly one resulting value for a
@@ -973,13 +1013,17 @@ extends
      * <p>
      * This is the same as calling {@link #fetchSingle()} and then
      * {@link Record#get(String, Class)}
+     * <p>
+     * The {@link Converter} that is provided by
+     * {@link Configuration#converterProvider()} will be used to convert the
+     * value to <code>U</code>
      *
      * @return The resulting value. This is never <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
      */
-    <T> T fetchSingle(String fieldName, Class<? extends T> type) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+    <U> U fetchSingle(String fieldName, Class<? extends U> type) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
      * Execute the query and return exactly one resulting value for a
@@ -1015,13 +1059,17 @@ extends
      * <p>
      * This is the same as calling {@link #fetchSingle()} and then
      * {@link Record#get(Name, Class)}
+     * <p>
+     * The {@link Converter} that is provided by
+     * {@link Configuration#converterProvider()} will be used to convert the
+     * value to <code>U</code>
      *
      * @return The resulting value. This is never <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
      */
-    <T> T fetchSingle(Name fieldName, Class<? extends T> type) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+    <U> U fetchSingle(Name fieldName, Class<? extends U> type) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
      * Execute the query and return exactly one resulting value for a
@@ -1159,12 +1207,16 @@ extends
      * <p>
      * This is the same as calling {@link #fetchOptional()} and then
      * {@link Record#get(Field, Class)}
+     * <p>
+     * The {@link Converter} that is provided by
+     * {@link Configuration#converterProvider()} will be used to convert the
+     * value to <code>U</code>
      *
      * @return The resulting value
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
-    <T> Optional<T> fetchOptional(Field<?> field, Class<? extends T> type) throws DataAccessException, TooManyRowsException;
+    <U> Optional<U> fetchOptional(Field<?> field, Class<? extends U> type) throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute the query and return at most one resulting value for a
@@ -1198,12 +1250,16 @@ extends
      * <p>
      * This is the same as calling {@link #fetchOptional()} and then
      * {@link Record#get(int, Class)}
+     * <p>
+     * The {@link Converter} that is provided by
+     * {@link Configuration#converterProvider()} will be used to convert the
+     * value to <code>U</code>
      *
      * @return The resulting value
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
-    <T> Optional<T> fetchOptional(int fieldIndex, Class<? extends T> type) throws DataAccessException, TooManyRowsException;
+    <U> Optional<U> fetchOptional(int fieldIndex, Class<? extends U> type) throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute the query and return at most one resulting value for a
@@ -1237,12 +1293,16 @@ extends
      * <p>
      * This is the same as calling {@link #fetchOptional()} and then
      * {@link Record#get(String, Class)}
+     * <p>
+     * The {@link Converter} that is provided by
+     * {@link Configuration#converterProvider()} will be used to convert the
+     * value to <code>U</code>
      *
      * @return The resulting value
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
-    <T> Optional<T> fetchOptional(String fieldName, Class<? extends T> type) throws DataAccessException, TooManyRowsException;
+    <U> Optional<U> fetchOptional(String fieldName, Class<? extends U> type) throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute the query and return at most one resulting value for a
@@ -1276,12 +1336,16 @@ extends
      * <p>
      * This is the same as calling {@link #fetchOptional()} and then
      * {@link Record#get(Name, Class)}
+     * <p>
+     * The {@link Converter} that is provided by
+     * {@link Configuration#converterProvider()} will be used to convert the
+     * value to <code>U</code>
      *
      * @return The resulting value
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
-    <T> Optional<T> fetchOptional(Name fieldName, Class<? extends T> type) throws DataAccessException, TooManyRowsException;
+    <U> Optional<U> fetchOptional(Name fieldName, Class<? extends U> type) throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute the query and return at most one resulting value for a
@@ -1396,17 +1460,21 @@ extends
     <T> T fetchAny(Field<T> field) throws DataAccessException;
 
     /**
-     * Execute the query and return at most one resulting value for a
-     * field from the generated result.
+     * Execute the query and return at most one resulting value for a field from
+     * the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
      * {@link Record#get(Field, Class)}
+     * <p>
+     * The {@link Converter} that is provided by
+     * {@link Configuration#converterProvider()} will be used to convert the
+     * value to <code>U</code>
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
      * @throws DataAccessException if something went wrong executing the query
      */
-    <T> T fetchAny(Field<?> field, Class<? extends T> type) throws DataAccessException;
+    <U> U fetchAny(Field<?> field, Class<? extends U> type) throws DataAccessException;
 
     /**
      * Execute the query and return at most one resulting value for a
@@ -1435,17 +1503,21 @@ extends
     Object fetchAny(int fieldIndex) throws DataAccessException;
 
     /**
-     * Execute the query and return at most one resulting value for a
-     * field index from the generated result.
+     * Execute the query and return at most one resulting value for a field
+     * index from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
      * {@link Record#get(int, Class)}
+     * <p>
+     * The {@link Converter} that is provided by
+     * {@link Configuration#converterProvider()} will be used to convert the
+     * value to <code>U</code>
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
      * @throws DataAccessException if something went wrong executing the query
      */
-    <T> T fetchAny(int fieldIndex, Class<? extends T> type) throws DataAccessException;
+    <U> U fetchAny(int fieldIndex, Class<? extends U> type) throws DataAccessException;
 
     /**
      * Execute the query and return at most one resulting value for a
@@ -1479,12 +1551,16 @@ extends
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
      * {@link Record#get(String, Class)}
+     * <p>
+     * The {@link Converter} that is provided by
+     * {@link Configuration#converterProvider()} will be used to convert the
+     * value to <code>U</code>
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
      * @throws DataAccessException if something went wrong executing the query
      */
-    <T> T fetchAny(String fieldName, Class<? extends T> type) throws DataAccessException;
+    <U> U fetchAny(String fieldName, Class<? extends U> type) throws DataAccessException;
 
     /**
      * Execute the query and return at most one resulting value for a
@@ -1518,12 +1594,16 @@ extends
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
      * {@link Record#get(Name, Class)}
+     * <p>
+     * The {@link Converter} that is provided by
+     * {@link Configuration#converterProvider()} will be used to convert the
+     * value to <code>U</code>
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
      * @throws DataAccessException if something went wrong executing the query
      */
-    <T> T fetchAny(Name fieldName, Class<? extends T> type) throws DataAccessException;
+    <U> U fetchAny(Name fieldName, Class<? extends U> type) throws DataAccessException;
 
     /**
      * Execute the query and return at most one resulting value for a
@@ -3416,12 +3496,16 @@ extends
      * <p>
      * You can access data like this
      * <code><pre>query.fetchArray(fieldIndex)[recordIndex]</pre></code>
+     * <p>
+     * The {@link Converter} that is provided by
+     * {@link Configuration#converterProvider()} will be used to convert the
+     * value to <code>U</code>
      *
      * @return The resulting values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(int, Class)
      */
-    <T> T[] fetchArray(int fieldIndex, Class<? extends T> type) throws DataAccessException;
+    <U> U[] fetchArray(int fieldIndex, Class<? extends U> type) throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field index from the
@@ -3458,12 +3542,16 @@ extends
      * <p>
      * You can access data like this
      * <code><pre>query.fetchArray(fieldName)[recordIndex]</pre></code>
+     * <p>
+     * The {@link Converter} that is provided by
+     * {@link Configuration#converterProvider()} will be used to convert the
+     * value to <code>U</code>
      *
      * @return The resulting values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(String, Converter)
      */
-    <T> T[] fetchArray(String fieldName, Class<? extends T> type) throws DataAccessException;
+    <U> U[] fetchArray(String fieldName, Class<? extends U> type) throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field name from the
@@ -3500,12 +3588,16 @@ extends
      * <p>
      * You can access data like this
      * <code><pre>query.fetchArray(fieldName)[recordIndex]</pre></code>
+     * <p>
+     * The {@link Converter} that is provided by
+     * {@link Configuration#converterProvider()} will be used to convert the
+     * value to <code>U</code>
      *
      * @return The resulting values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(Name, Converter)
      */
-    <T> T[] fetchArray(Name fieldName, Class<? extends T> type) throws DataAccessException;
+    <U> U[] fetchArray(Name fieldName, Class<? extends U> type) throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field name from the
@@ -3539,12 +3631,16 @@ extends
      * <p>
      * You can access data like this
      * <code><pre>query.fetchArray(field)[recordIndex]</pre></code>
+     * <p>
+     * The {@link Converter} that is provided by
+     * {@link Configuration#converterProvider()} will be used to convert the
+     * value to <code>U</code>
      *
      * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(Field, Class)
      */
-    <T> T[] fetchArray(Field<?> field, Class<? extends T> type) throws DataAccessException;
+    <U> U[] fetchArray(Field<?> field, Class<? extends U> type) throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field from the generated
@@ -3581,12 +3677,16 @@ extends
     /**
      * Execute the query and return all values for a field index from the
      * generated result.
+     * <p>
+     * The {@link Converter} that is provided by
+     * {@link Configuration#converterProvider()} will be used to convert the
+     * value to <code>U</code>
      *
      * @return The resulting values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(int, Class)
      */
-    <T> Set<T> fetchSet(int fieldIndex, Class<? extends T> type) throws DataAccessException;
+    <U> Set<U> fetchSet(int fieldIndex, Class<? extends U> type) throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field index from the
@@ -3611,12 +3711,16 @@ extends
     /**
      * Execute the query and return all values for a field name from the
      * generated result.
+     * <p>
+     * The {@link Converter} that is provided by
+     * {@link Configuration#converterProvider()} will be used to convert the
+     * value to <code>U</code>
      *
      * @return The resulting values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(String, Converter)
      */
-    <T> Set<T> fetchSet(String fieldName, Class<? extends T> type) throws DataAccessException;
+    <U> Set<U> fetchSet(String fieldName, Class<? extends U> type) throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field name from the
@@ -3641,12 +3745,16 @@ extends
     /**
      * Execute the query and return all values for a field name from the
      * generated result.
+     * <p>
+     * The {@link Converter} that is provided by
+     * {@link Configuration#converterProvider()} will be used to convert the
+     * value to <code>U</code>
      *
      * @return The resulting values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(Name, Converter)
      */
-    <T> Set<T> fetchSet(Name fieldName, Class<? extends T> type) throws DataAccessException;
+    <U> Set<U> fetchSet(Name fieldName, Class<? extends U> type) throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field name from the
@@ -3671,12 +3779,16 @@ extends
     /**
      * Execute the query and return all values for a field from the generated
      * result.
+     * <p>
+     * The {@link Converter} that is provided by
+     * {@link Configuration#converterProvider()} will be used to convert the
+     * value to <code>U</code>
      *
      * @return The resulting values. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(Field, Class)
      */
-    <T> Set<T> fetchSet(Field<?> field, Class<? extends T> type) throws DataAccessException;
+    <U> Set<U> fetchSet(Field<?> field, Class<? extends U> type) throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field from the generated

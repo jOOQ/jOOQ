@@ -244,21 +244,17 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final <T> T get(Field<T> field) {
-        if (field instanceof EmbeddableTableField) {
-            Field<?>[] f = embeddedFields(field);
-
+        if (field instanceof EmbeddableTableField)
             return (T) Tools
                 .newRecord(fetched, ((EmbeddableTableField<?, ?>) field).recordType)
-                .operate(new TransferRecordState<Record>(f));
-        }
-        else {
+                .operate(new TransferRecordState<Record>(embeddedFields(field)));
+        else
             return (T) get(indexOrFail(fieldsRow(), field));
-        }
     }
 
     @Override
     public final <T> T get(Field<?> field, Class<? extends T> type) {
-        return Convert.convert(get(field), type);
+        return (T) Tools.configuration(this).converterProvider().provide(field.getType(), (Class) type).from(get(field));
     }
 
     @Override
@@ -273,7 +269,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final <T> T get(int index, Class<? extends T> type) {
-        return Convert.convert(get(index), type);
+        return (T) Tools.configuration(this).converterProvider().provide(field(safeIndex(index)).getType(), (Class) type).from(get(index));
     }
 
     @Override
@@ -288,7 +284,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final <T> T get(String fieldName, Class<? extends T> type) {
-        return Convert.convert(get(fieldName), type);
+        return get(indexOrFail(fieldsRow(), fieldName), type);
     }
 
     @Override
@@ -303,7 +299,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final <T> T get(Name fieldName, Class<? extends T> type) {
-        return Convert.convert(get(fieldName), type);
+        return get(indexOrFail(fieldsRow(), fieldName), type);
     }
 
     @Override

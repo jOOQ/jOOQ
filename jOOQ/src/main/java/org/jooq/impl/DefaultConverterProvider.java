@@ -39,15 +39,43 @@ package org.jooq.impl;
 
 import org.jooq.Converter;
 import org.jooq.ConverterProvider;
+import org.jooq.tools.Convert;
 
 /**
+ * A default converter provider offering the functionality of {@link Convert}.
+ *
  * @author Lukas Eder
- * @deprecated - This API is still EXPERIMENTAL. Do not use yet
  */
-@Deprecated
 public class DefaultConverterProvider implements ConverterProvider {
+
     @Override
-    public <T, U> Converter<T, U> provide(Class<T> tType, Class<U> uType) {
-        throw new UnsupportedOperationException();
+    public <T, U> Converter<T, U> provide(final Class<T> tType, final Class<U> uType) {
+        return new Converter<T, U>() {
+
+            /**
+             * Generated UID.
+             */
+            private static final long serialVersionUID = 8011099590775678430L;
+
+            @Override
+            public U from(T t) {
+                return Convert.convert(t, uType);
+            }
+
+            @Override
+            public T to(U u) {
+                return Convert.convert(u, tType);
+            }
+
+            @Override
+            public Class<T> fromType() {
+                return tType;
+            }
+
+            @Override
+            public Class<U> toType() {
+                return uType;
+            }
+        };
     }
 }

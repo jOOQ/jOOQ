@@ -49,7 +49,6 @@ import org.jooq.exception.DataTypeException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
 import org.jooq.impl.DefaultRecordMapper;
-import org.jooq.tools.Convert;
 
 /**
  * A wrapper for database results returned by <code>{@link SelectQuery}</code>
@@ -327,16 +326,19 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
+     * <p>
+     * The {@link Converter} that is provided by
+     * {@link Configuration#converterProvider()} will be used to convert the
+     * value to <code>U</code>
      *
      * @param field The values' field
      * @param type The type used for type conversion
      * @return The values
      * @see Record#get(Field, Class)
-     * @see Convert#convert(Object, Class)
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #fieldsRow()}
      */
-    <T> List<T> getValues(Field<?> field, Class<? extends T> type) throws IllegalArgumentException;
+    <U> List<U> getValues(Field<?> field, Class<? extends U> type) throws IllegalArgumentException;
 
     /**
      * Convenience method to fetch all values for a given field. This is
@@ -346,7 +348,6 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @param converter The data type converter used for type conversion
      * @return The values
      * @see Record#get(Field, Converter)
-     * @see Convert#convert(Object, Converter)
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #fieldsRow()}
      */
@@ -366,18 +367,21 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
+     * <p>
+     * The {@link Converter} that is provided by
+     * {@link Configuration#converterProvider()} will be used to convert the
+     * value to <code>U</code>
      *
      * @param fieldIndex The values' field index
      * @param type The type used for type conversion
      * @return The values
      * @see Record#get(int, Class)
-     * @see Convert#convert(Object, Class)
      * @throws IllegalArgumentException If the argument fieldIndex is not
      *             contained in {@link #fieldsRow()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
-    <T> List<T> getValues(int fieldIndex, Class<? extends T> type) throws IllegalArgumentException, DataTypeException;
+    <U> List<U> getValues(int fieldIndex, Class<? extends U> type) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Convenience method to fetch all values for a given field. This is
@@ -387,7 +391,6 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @param converter The data type converter used for type conversion
      * @return The values
      * @see Record#get(int, Converter)
-     * @see Convert#convert(Object, Converter)
      * @throws IllegalArgumentException If the argument fieldIndex is not
      *             contained in {@link #fieldsRow()}
      * @throws DataTypeException wrapping any data type conversion exception
@@ -409,18 +412,21 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
+     * <p>
+     * The {@link Converter} that is provided by
+     * {@link Configuration#converterProvider()} will be used to convert the
+     * value to <code>U</code>
      *
      * @param fieldName The values' field name
      * @param type The type used for type conversion
      * @return The values
      * @see Record#get(String, Class)
-     * @see Convert#convert(Object, Class)
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in {@link #fieldsRow()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
-    <T> List<T> getValues(String fieldName, Class<? extends T> type) throws IllegalArgumentException, DataTypeException;
+    <U> List<U> getValues(String fieldName, Class<? extends U> type) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Convenience method to fetch all values for a given field. This is
@@ -430,14 +436,12 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @param converter The data type converter used for type conversion
      * @return The values
      * @see Record#get(String, Converter)
-     * @see Convert#convert(Object, Converter)
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in {@link #fieldsRow()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
-    <U> List<U> getValues(String fieldName, Converter<?, ? extends U> converter) throws IllegalArgumentException,
-        DataTypeException;
+    <U> List<U> getValues(String fieldName, Converter<?, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Convenience method to fetch all values for a given field. This is
@@ -453,18 +457,21 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
+     * <p>
+     * The {@link Converter} that is provided by
+     * {@link Configuration#converterProvider()} will be used to convert the
+     * value to <code>U</code>
      *
      * @param fieldName The values' field name
      * @param type The type used for type conversion
      * @return The values
      * @see Record#get(Name, Class)
-     * @see Convert#convert(Object, Class)
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in {@link #fieldsRow()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
-    <T> List<T> getValues(Name fieldName, Class<? extends T> type) throws IllegalArgumentException, DataTypeException;
+    <U> List<U> getValues(Name fieldName, Class<? extends U> type) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Convenience method to fetch all values for a given field. This is
@@ -474,14 +481,12 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @param converter The data type converter used for type conversion
      * @return The values
      * @see Record#get(Name, Converter)
-     * @see Convert#convert(Object, Converter)
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in {@link #fieldsRow()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
-    <U> List<U> getValues(Name fieldName, Converter<?, ? extends U> converter) throws IllegalArgumentException,
-        DataTypeException;
+    <U> List<U> getValues(Name fieldName, Converter<?, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Whether there are any records contained in this <code>Result</code>.
@@ -2171,7 +2176,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
-    <T> T[] intoArray(int fieldIndex, Class<? extends T> type) throws IllegalArgumentException, DataTypeException;
+    <U> U[] intoArray(int fieldIndex, Class<? extends U> type) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Return all values for a field index from the result.
@@ -2216,7 +2221,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
-    <T> T[] intoArray(String fieldName, Class<? extends T> type) throws IllegalArgumentException, DataTypeException;
+    <U> U[] intoArray(String fieldName, Class<? extends U> type) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Return all values for a field name from the result.
@@ -2261,7 +2266,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
-    <T> T[] intoArray(Name fieldName, Class<? extends T> type) throws IllegalArgumentException, DataTypeException;
+    <U> U[] intoArray(Name fieldName, Class<? extends U> type) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Return all values for a field name from the result.
@@ -2304,7 +2309,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
-    <T> T[] intoArray(Field<?> field, Class<? extends T> type) throws IllegalArgumentException, DataTypeException;
+    <U> U[] intoArray(Field<?> field, Class<? extends U> type) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Return all values for a field from the result.
@@ -2352,7 +2357,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
-    <T> Set<T> intoSet(int fieldIndex, Class<? extends T> type) throws IllegalArgumentException, DataTypeException;
+    <U> Set<U> intoSet(int fieldIndex, Class<? extends U> type) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Return all values for a field index from the result.
@@ -2388,7 +2393,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
-    <T> Set<T> intoSet(String fieldName, Class<? extends T> type) throws IllegalArgumentException, DataTypeException;
+    <U> Set<U> intoSet(String fieldName, Class<? extends U> type) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Return all values for a field name from the result.
@@ -2424,7 +2429,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
-    <T> Set<T> intoSet(Name fieldName, Class<? extends T> type) throws IllegalArgumentException, DataTypeException;
+    <U> Set<U> intoSet(Name fieldName, Class<? extends U> type) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Return all values for a field name from the result.
@@ -2458,7 +2463,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
-    <T> Set<T> intoSet(Field<?> field, Class<? extends T> type) throws IllegalArgumentException, DataTypeException;
+    <U> Set<U> intoSet(Field<?> field, Class<? extends U> type) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Return all values for a field from the result.

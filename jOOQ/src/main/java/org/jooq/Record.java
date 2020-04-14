@@ -53,7 +53,6 @@ import org.jooq.exception.DataTypeException;
 import org.jooq.exception.MappingException;
 import org.jooq.impl.DefaultRecordMapper;
 import org.jooq.impl.DefaultRecordMapperProvider;
-import org.jooq.tools.Convert;
 
 /**
  * A database result record.
@@ -238,10 +237,14 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
     /**
      * Get a converted value from this Record, providing a field.
      * <p>
+     * The {@link Converter} that is provided by
+     * {@link Configuration#converterProvider()} will be used to convert the
+     * value to <code>U</code>
+     * <p>
      * If this record contains a field with the same {@link Field#getName()} as
      * the argument field, that value is retrieved.
      *
-     * @param <T> The conversion type parameter
+     * @param <U> The conversion type parameter
      * @param field The field
      * @param type The conversion type
      * @return The value of a field contained in this record
@@ -249,11 +252,8 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      *             in {@link #fieldsRow()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
-     * @throws DataTypeException wrapping any data type conversion exception
-     *             that might have occurred
-     * @see Convert#convert(Object, Class)
      */
-    <T> T get(Field<?> field, Class<? extends T> type) throws IllegalArgumentException, DataTypeException;
+    <U> U get(Field<?> field, Class<? extends U> type) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a converted value from this Record, providing a field.
@@ -270,10 +270,8 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      *             in {@link #fieldsRow()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
-     * @see Convert#convert(Object, Converter)
      */
-    <T, U> U get(Field<T> field, Converter<? super T, ? extends U> converter) throws IllegalArgumentException,
-        DataTypeException;
+    <T, U> U get(Field<T> field, Converter<? super T, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this Record, providing a field name.
@@ -287,8 +285,12 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
 
     /**
      * Get a converted value from this Record, providing a field name.
+     * <p>
+     * The {@link Converter} that is provided by
+     * {@link Configuration#converterProvider()} will be used to convert the
+     * value to <code>U</code>
      *
-     * @param <T> The conversion type parameter
+     * @param <U> The conversion type parameter
      * @param fieldName The field's name
      * @param type The conversion type
      * @return The value of a field's name contained in this record
@@ -296,9 +298,8 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      *             contained in the record
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
-     * @see Convert#convert(Object, Class)
      */
-    <T> T get(String fieldName, Class<? extends T> type) throws IllegalArgumentException, DataTypeException;
+    <U> U get(String fieldName, Class<? extends U> type) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a converted value from this Record, providing a field name.
@@ -311,7 +312,6 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      *             contained in the record
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
-     * @see Convert#convert(Object, Converter)
      */
     <U> U get(String fieldName, Converter<?, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
 
@@ -327,8 +327,12 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
 
     /**
      * Get a converted value from this Record, providing a field name.
+     * <p>
+     * The {@link Converter} that is provided by
+     * {@link Configuration#converterProvider()} will be used to convert the
+     * value to <code>U</code>
      *
-     * @param <T> The conversion type parameter
+     * @param <U> The conversion type parameter
      * @param fieldName The field's name
      * @param type The conversion type
      * @return The value of a field's name contained in this record
@@ -336,9 +340,8 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      *             contained in the record
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
-     * @see Convert#convert(Object, Class)
      */
-    <T> T get(Name fieldName, Class<? extends T> type) throws IllegalArgumentException, DataTypeException;
+    <U> U get(Name fieldName, Class<? extends U> type) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a converted value from this Record, providing a field name.
@@ -351,7 +354,6 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      *             contained in the record
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
-     * @see Convert#convert(Object, Converter)
      */
     <U> U get(Name fieldName, Converter<?, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
 
@@ -367,8 +369,12 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
 
     /**
      * Get a converted value from this record, providing a field index.
+     * <p>
+     * The {@link Converter} that is provided by
+     * {@link Configuration#converterProvider()} will be used to convert the
+     * value to <code>U</code>
      *
-     * @param <T> The conversion type parameter
+     * @param <U> The conversion type parameter
      * @param index The field's index
      * @param type The conversion type
      * @return The value of a field's index contained in this record
@@ -376,9 +382,8 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      *             in the record
      * @throws DataTypeException wrapping data type conversion exception that
      *             might have occurred
-     * @see Convert#convert(Object, Class)
      */
-    <T> T get(int index, Class<? extends T> type) throws IllegalArgumentException, DataTypeException;
+    <U> U get(int index, Class<? extends U> type) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a converted value from this record, providing a field index.
@@ -391,7 +396,6 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      *             in the record
      * @throws DataTypeException wrapping data type conversion exception that
      *             might have occurred
-     * @see Convert#convert(Object, Converter)
      */
     <U> U get(int index, Converter<?, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
 
@@ -1502,8 +1506,12 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
 
     /**
      * Get a converted value from this record, providing a field.
+     * <p>
+     * The {@link Converter} that is provided by
+     * {@link Configuration#converterProvider()} will be used to convert the
+     * value to <code>U</code>
      *
-     * @param <T> The conversion type parameter
+     * @param <U> The conversion type parameter
      * @param field The field
      * @param type The conversion type
      * @param defaultValue The default value instead of <code>null</code>
@@ -1513,12 +1521,10 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      *             in {@link #fieldsRow()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
-     * @see Convert#convert(Object, Class)
      * @deprecated - 3.3.0 - [#2878] - This method will be removed in jOOQ 4.0
      */
     @Deprecated
-    <T> T getValue(Field<?> field, Class<? extends T> type, T defaultValue) throws IllegalArgumentException,
-        DataTypeException;
+    <U> U getValue(Field<?> field, Class<? extends U> type, U defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a converted value from this Record, providing a field.
@@ -1528,8 +1534,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      *
      * @see #get(Field, Converter)
      */
-    <T, U> U getValue(Field<T> field, Converter<? super T, ? extends U> converter) throws IllegalArgumentException,
-        DataTypeException;
+    <T, U> U getValue(Field<T> field, Converter<? super T, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a converted value from this record, providing a field.
@@ -1545,12 +1550,10 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      *             in {@link #fieldsRow()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
-     * @see Convert#convert(Object, Converter)
      * @deprecated - 3.3.0 - [#2878] - This method will be removed in jOOQ 4.0
      */
     @Deprecated
-    <T, U> U getValue(Field<T> field, Converter<? super T, ? extends U> converter, U defaultValue)
-        throws IllegalArgumentException, DataTypeException;
+    <T, U> U getValue(Field<T> field, Converter<? super T, ? extends U> converter, U defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this Record, providing a field name.
@@ -1588,8 +1591,12 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
 
     /**
      * Get a converted value from this record, providing a field name.
+     * <p>
+     * The {@link Converter} that is provided by
+     * {@link Configuration#converterProvider()} will be used to convert the
+     * value to <code>U</code>
      *
-     * @param <T> The conversion type parameter
+     * @param <U> The conversion type parameter
      * @param fieldName The field's name
      * @param type The conversion type
      * @param defaultValue The default value instead of <code>null</code>
@@ -1599,12 +1606,10 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      *             contained in the record
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
-     * @see Convert#convert(Object, Class)
      * @deprecated - 3.3.0 - [#2878] - This method will be removed in jOOQ 4.0
      */
     @Deprecated
-    <T> T getValue(String fieldName, Class<? extends T> type, T defaultValue) throws IllegalArgumentException,
-        DataTypeException;
+    <U> U getValue(String fieldName, Class<? extends U> type, U defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a converted value from this Record, providing a field name.
@@ -1629,12 +1634,10 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      *             contained in the record
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
-     * @see Convert#convert(Object, Converter)
      * @deprecated - 3.3.0 - [#2878] - This method will be removed in jOOQ 4.0
      */
     @Deprecated
-    <U> U getValue(String fieldName, Converter<?, ? extends U> converter, U defaultValue) throws IllegalArgumentException,
-        DataTypeException;
+    <U> U getValue(String fieldName, Converter<?, ? extends U> converter, U defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this Record, providing a field name.
@@ -1702,8 +1705,12 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
 
     /**
      * Get a converted value from this record, providing a field index.
+     * <p>
+     * The {@link Converter} that is provided by
+     * {@link Configuration#converterProvider()} will be used to convert the
+     * value to <code>U</code>
      *
-     * @param <T> The conversion type parameter
+     * @param <U> The conversion type parameter
      * @param index The field's index
      * @param type The conversion type
      * @param defaultValue The default value instead of <code>null</code>
@@ -1713,12 +1720,10 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      *             in the record
      * @throws DataTypeException wrapping data type conversion exception that
      *             might have occurred
-     * @see Convert#convert(Object, Class)
      * @deprecated - 3.3.0 - [#2878] - This method will be removed in jOOQ 4.0
      */
     @Deprecated
-    <T> T getValue(int index, Class<? extends T> type, T defaultValue) throws IllegalArgumentException,
-        DataTypeException;
+    <U> U getValue(int index, Class<? extends U> type, U defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a converted value from this record, providing a field index.
@@ -1743,12 +1748,10 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      *             in the record
      * @throws DataTypeException wrapping data type conversion exception that
      *             might have occurred
-     * @see Convert#convert(Object, Converter)
      * @deprecated - 3.3.0 - [#2878] - This method will be removed in jOOQ 4.0
      */
     @Deprecated
-    <U> U getValue(int index, Converter<?, ? extends U> converter, U defaultValue) throws IllegalArgumentException,
-        DataTypeException;
+    <U> U getValue(int index, Converter<?, ? extends U> converter, U defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Set a value into this record.

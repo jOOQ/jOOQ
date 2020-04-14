@@ -40,10 +40,7 @@ package org.jooq.impl;
 import static java.util.concurrent.Executors.newSingleThreadExecutor;
 // ...
 // ...
-import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.POSTGRES;
-// ...
-// ...
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Tools.blocking;
@@ -111,7 +108,6 @@ import org.jooq.Results;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.conf.SettingsTools;
-import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.MockResultSet;
 
@@ -128,7 +124,6 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     private static final long                serialVersionUID                  = -5588344253566055707L;
     private static final JooqLogger          log                               = JooqLogger.getLogger(AbstractResultQuery.class);
 
-    private static final Set<SQLDialect>     NO_SUPPORT_FOR_UPDATE             = SQLDialect.supportedBy(CUBRID);
     private static final Set<SQLDialect>     REPORT_FETCH_SIZE_WITH_AUTOCOMMIT = SQLDialect.supportedBy(POSTGRES);
 
     private int                              maxRows;
@@ -516,7 +511,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final <T> List<T> fetch(Field<?> field, Class<? extends T> type) {
+    public final <U> List<U> fetch(Field<?> field, Class<? extends U> type) {
         return fetch().getValues(field, type);
     }
 
@@ -531,7 +526,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final <T> List<T> fetch(int fieldIndex, Class<? extends T> type) {
+    public final <U> List<U> fetch(int fieldIndex, Class<? extends U> type) {
         return fetch().getValues(fieldIndex, type);
     }
 
@@ -546,7 +541,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final <T> List<T> fetch(String fieldName, Class<? extends T> type) {
+    public final <U> List<U> fetch(String fieldName, Class<? extends U> type) {
         return fetch().getValues(fieldName, type);
     }
 
@@ -561,7 +556,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final <T> List<T> fetch(Name fieldName, Class<? extends T> type) {
+    public final <U> List<U> fetch(Name fieldName, Class<? extends U> type) {
         return fetch().getValues(fieldName, type);
     }
 
@@ -577,13 +572,15 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final <T> T fetchOne(Field<?> field, Class<? extends T> type) {
-        return Convert.convert(fetchOne(field), type);
+    public final <U> U fetchOne(Field<?> field, Class<? extends U> type) {
+        R record = fetchOne();
+        return record == null ? null : record.get(field, type);
     }
 
     @Override
     public final <T, U> U fetchOne(Field<T> field, Converter<? super T, ? extends U> converter) {
-        return Convert.convert(fetchOne(field), converter);
+        R record = fetchOne();
+        return record == null ? null : record.get(field, converter);
     }
 
     @Override
@@ -593,13 +590,15 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final <T> T fetchOne(int fieldIndex, Class<? extends T> type) {
-        return Convert.convert(fetchOne(fieldIndex), type);
+    public final <U> U fetchOne(int fieldIndex, Class<? extends U> type) {
+        R record = fetchOne();
+        return record == null ? null : record.get(fieldIndex, type);
     }
 
     @Override
     public final <U> U fetchOne(int fieldIndex, Converter<?, ? extends U> converter) {
-        return Convert.convert(fetchOne(fieldIndex), converter);
+        R record = fetchOne();
+        return record == null ? null : record.get(fieldIndex, converter);
     }
 
     @Override
@@ -609,13 +608,15 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final <T> T fetchOne(String fieldName, Class<? extends T> type) {
-        return Convert.convert(fetchOne(fieldName), type);
+    public final <U> U fetchOne(String fieldName, Class<? extends U> type) {
+        R record = fetchOne();
+        return record == null ? null : record.get(fieldName, type);
     }
 
     @Override
     public final <U> U fetchOne(String fieldName, Converter<?, ? extends U> converter) {
-        return Convert.convert(fetchOne(fieldName), converter);
+        R record = fetchOne();
+        return record == null ? null : record.get(fieldName, converter);
     }
 
     @Override
@@ -625,13 +626,15 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final <T> T fetchOne(Name fieldName, Class<? extends T> type) {
-        return Convert.convert(fetchOne(fieldName), type);
+    public final <U> U fetchOne(Name fieldName, Class<? extends U> type) {
+        R record = fetchOne();
+        return record == null ? null : record.get(fieldName, type);
     }
 
     @Override
     public final <U> U fetchOne(Name fieldName, Converter<?, ? extends U> converter) {
-        return Convert.convert(fetchOne(fieldName), converter);
+        R record = fetchOne();
+        return record == null ? null : record.get(fieldName, converter);
     }
 
     @Override
@@ -675,13 +678,13 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final <T> T fetchSingle(Field<?> field, Class<? extends T> type) {
-        return Convert.convert(fetchSingle(field), type);
+    public final <U> U fetchSingle(Field<?> field, Class<? extends U> type) {
+        return fetchSingle().get(field, type);
     }
 
     @Override
     public final <T, U> U fetchSingle(Field<T> field, Converter<? super T, ? extends U> converter) {
-        return Convert.convert(fetchSingle(field), converter);
+        return fetchSingle().get(field, converter);
     }
 
     @Override
@@ -690,13 +693,13 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final <T> T fetchSingle(int fieldIndex, Class<? extends T> type) {
-        return Convert.convert(fetchSingle(fieldIndex), type);
+    public final <U> U fetchSingle(int fieldIndex, Class<? extends U> type) {
+        return fetchSingle().get(fieldIndex, type);
     }
 
     @Override
     public final <U> U fetchSingle(int fieldIndex, Converter<?, ? extends U> converter) {
-        return Convert.convert(fetchSingle(fieldIndex), converter);
+        return fetchSingle().get(fieldIndex, converter);
     }
 
     @Override
@@ -705,13 +708,13 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final <T> T fetchSingle(String fieldName, Class<? extends T> type) {
-        return Convert.convert(fetchSingle(fieldName), type);
+    public final <U> U fetchSingle(String fieldName, Class<? extends U> type) {
+        return fetchSingle().get(fieldName, type);
     }
 
     @Override
     public final <U> U fetchSingle(String fieldName, Converter<?, ? extends U> converter) {
-        return Convert.convert(fetchSingle(fieldName), converter);
+        return fetchSingle().get(fieldName, converter);
     }
 
     @Override
@@ -720,13 +723,13 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final <T> T fetchSingle(Name fieldName, Class<? extends T> type) {
-        return Convert.convert(fetchSingle(fieldName), type);
+    public final <U> U fetchSingle(Name fieldName, Class<? extends U> type) {
+        return fetchSingle().get(fieldName, type);
     }
 
     @Override
     public final <U> U fetchSingle(Name fieldName, Converter<?, ? extends U> converter) {
-        return Convert.convert(fetchSingle(fieldName), converter);
+        return fetchSingle().get(fieldName, converter);
     }
 
     @Override
@@ -766,7 +769,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final <T> Optional<T> fetchOptional(Field<?> field, Class<? extends T> type) {
+    public final <U> Optional<U> fetchOptional(Field<?> field, Class<? extends U> type) {
         return Optional.ofNullable(fetchOne(field, type));
     }
 
@@ -781,7 +784,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final <T> Optional<T> fetchOptional(int fieldIndex, Class<? extends T> type) {
+    public final <U> Optional<U> fetchOptional(int fieldIndex, Class<? extends U> type) {
         return Optional.ofNullable(fetchOne(fieldIndex, type));
     }
 
@@ -796,7 +799,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final <T> Optional<T> fetchOptional(String fieldName, Class<? extends T> type) {
+    public final <U> Optional<U> fetchOptional(String fieldName, Class<? extends U> type) {
         return Optional.ofNullable(fetchOne(fieldName, type));
     }
 
@@ -811,7 +814,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final <T> Optional<T> fetchOptional(Name fieldName, Class<? extends T> type) {
+    public final <U> Optional<U> fetchOptional(Name fieldName, Class<? extends U> type) {
         return Optional.ofNullable(fetchOne(fieldName, type));
     }
 
@@ -858,13 +861,15 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final <T> T fetchAny(Field<?> field, Class<? extends T> type) {
-        return Convert.convert(fetchAny(field), type);
+    public final <U> U fetchAny(Field<?> field, Class<? extends U> type) {
+        R record = fetchAny();
+        return record == null ? null : record.get(field, type);
     }
 
     @Override
     public final <T, U> U fetchAny(Field<T> field, Converter<? super T, ? extends U> converter) {
-        return Convert.convert(fetchAny(field), converter);
+        R record = fetchAny();
+        return record == null ? null : record.get(field, converter);
     }
 
     @Override
@@ -874,13 +879,15 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final <T> T fetchAny(int fieldIndex, Class<? extends T> type) {
-        return Convert.convert(fetchAny(fieldIndex), type);
+    public final <U> U fetchAny(int fieldIndex, Class<? extends U> type) {
+        R record = fetchAny();
+        return record == null ? null : record.get(fieldIndex, type);
     }
 
     @Override
     public final <U> U fetchAny(int fieldIndex, Converter<?, ? extends U> converter) {
-        return Convert.convert(fetchAny(fieldIndex), converter);
+        R record = fetchAny();
+        return record == null ? null : record.get(fieldIndex, converter);
     }
 
     @Override
@@ -890,13 +897,15 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final <T> T fetchAny(String fieldName, Class<? extends T> type) {
-        return Convert.convert(fetchAny(fieldName), type);
+    public final <U> U fetchAny(String fieldName, Class<? extends U> type) {
+        R record = fetchAny();
+        return record == null ? null : record.get(fieldName, type);
     }
 
     @Override
     public final <U> U fetchAny(String fieldName, Converter<?, ? extends U> converter) {
-        return Convert.convert(fetchAny(fieldName), converter);
+        R record = fetchAny();
+        return record == null ? null : record.get(fieldName, converter);
     }
 
     @Override
@@ -906,13 +915,15 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final <T> T fetchAny(Name fieldName, Class<? extends T> type) {
-        return Convert.convert(fetchAny(fieldName), type);
+    public final <U> U fetchAny(Name fieldName, Class<? extends U> type) {
+        R record = fetchAny();
+        return record == null ? null : record.get(fieldName, type);
     }
 
     @Override
     public final <U> U fetchAny(Name fieldName, Converter<?, ? extends U> converter) {
-        return Convert.convert(fetchAny(fieldName), converter);
+        R record = fetchAny();
+        return record == null ? null : record.get(fieldName, converter);
     }
 
     @Override
@@ -1400,7 +1411,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final <T> T[] fetchArray(int fieldIndex, Class<? extends T> type) {
+    public final <U> U[] fetchArray(int fieldIndex, Class<? extends U> type) {
         return fetch().intoArray(fieldIndex, type);
     }
 
@@ -1415,7 +1426,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final <T> T[] fetchArray(String fieldName, Class<? extends T> type) {
+    public final <U> U[] fetchArray(String fieldName, Class<? extends U> type) {
         return fetch().intoArray(fieldName, type);
     }
 
@@ -1430,7 +1441,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final <T> T[] fetchArray(Name fieldName, Class<? extends T> type) {
+    public final <U> U[] fetchArray(Name fieldName, Class<? extends U> type) {
         return fetch().intoArray(fieldName, type);
     }
 
@@ -1445,7 +1456,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final <T> T[] fetchArray(Field<?> field, Class<? extends T> type) {
+    public final <U> U[] fetchArray(Field<?> field, Class<? extends U> type) {
         return fetch().intoArray(field, type);
     }
 
@@ -1465,7 +1476,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final <T> Set<T> fetchSet(int fieldIndex, Class<? extends T> type) {
+    public final <U> Set<U> fetchSet(int fieldIndex, Class<? extends U> type) {
         return fetch().intoSet(fieldIndex, type);
     }
 
@@ -1480,7 +1491,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final <T> Set<T> fetchSet(String fieldName, Class<? extends T> type) {
+    public final <U> Set<U> fetchSet(String fieldName, Class<? extends U> type) {
         return fetch().intoSet(fieldName, type);
     }
 
@@ -1495,7 +1506,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final <T> Set<T> fetchSet(Name fieldName, Class<? extends T> type) {
+    public final <U> Set<U> fetchSet(Name fieldName, Class<? extends U> type) {
         return fetch().intoSet(fieldName, type);
     }
 
@@ -1510,7 +1521,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final <T> Set<T> fetchSet(Field<?> field, Class<? extends T> type) {
+    public final <U> Set<U> fetchSet(Field<?> field, Class<? extends U> type) {
         return fetch().intoSet(field, type);
     }
 
@@ -1531,7 +1542,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     abstract Class<? extends R> getRecordType0();
 
     @Override
-    public final <T> List<T> fetchInto(Class<? extends T> type) {
+    public final <U> List<U> fetchInto(Class<? extends U> type) {
         return fetch().into(type);
     }
 
@@ -1743,7 +1754,6 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> ResultQuery<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> coerce(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22) {
         return (ResultQuery) coerce(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
     }
-
 
 
 }

@@ -38,13 +38,17 @@
 package org.jooq;
 
 /**
- * A <code>ConverterProvider</code> providers {@link Converter} implementations
- * for any combination of types <code>&lt;T&gt;</code> and <code>&lt;U&gt;</code>.
+ * A <code>ConverterProvider</code> provides {@link Converter} implementations
+ * for any combination of types <code>&lt;T&gt;</code> and
+ * <code>&lt;U&gt;</code>.
+ * <p>
+ * <code>ConverterProvider</code> can be used together with
+ * {@link RecordMapper}, e.g. when mapping {@link JSON} or {@link XML} data
+ * types onto POJO types using third party libraries like Jackson, Gson, JAXB,
+ * or others.
  *
  * @author Lukas Eder
- * @deprecated - This API is still EXPERIMENTAL. Do not use yet
  */
-@Deprecated
 @FunctionalInterface
 public interface ConverterProvider {
 

@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.DSL.groupConcat;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.JSONNullClause.ABSENT_ON_NULL;
 import static org.jooq.impl.JSONNullClause.NULL_ON_NULL;
 import static org.jooq.impl.JSONObject.acceptJSONNullClause;
@@ -77,6 +79,19 @@ implements JSONArrayAggOrderByStep<J> {
     @Override
     public void accept(Context<?> ctx) {
         switch (ctx.family()) {
+            case MARIADB:
+            case MYSQL:
+
+                // Workaround for https://jira.mariadb.org/browse/MDEV-21914
+                if (!Tools.isEmpty(withinGroupOrderBy))
+                    ctx.visit(DSL.concat(inline('['), groupConcat(arguments.get(0)).orderBy(withinGroupOrderBy), inline(']')));
+
+                // Workaround for https://jira.mariadb.org/browse/MDEV-21912
+                else
+                    ctx.visit(DSL.concat(inline('['), groupConcat(arguments.get(0)), inline(']')));
+
+                break;
+
 
 
 
@@ -95,13 +110,17 @@ implements JSONArrayAggOrderByStep<J> {
                 break;
 
             default:
-                ctx.visit(N_JSON_ARRAYAGG).sql('(');
-                ctx.visit(arguments.get(0));
-                acceptOrderBy(ctx);
-                acceptJSONNullClause(ctx, nullClause);
-                ctx.sql(')');
+                acceptStandard(ctx);
                 break;
         }
+    }
+
+    private final void acceptStandard(Context<?> ctx) {
+        ctx.visit(N_JSON_ARRAYAGG).sql('(');
+        ctx.visit(arguments.get(0));
+        acceptOrderBy(ctx);
+        acceptJSONNullClause(ctx, nullClause);
+        ctx.sql(')');
     }
 
     @Override

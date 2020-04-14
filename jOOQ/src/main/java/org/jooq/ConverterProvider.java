@@ -37,6 +37,8 @@
  */
 package org.jooq;
 
+import org.jooq.impl.DefaultConverterProvider;
+
 /**
  * A <code>ConverterProvider</code> provides {@link Converter} implementations
  * for any combination of types <code>&lt;T&gt;</code> and
@@ -46,6 +48,10 @@ package org.jooq;
  * {@link RecordMapper}, e.g. when mapping {@link JSON} or {@link XML} data
  * types onto POJO types using third party libraries like Jackson, Gson, JAXB,
  * or others.
+ * <p>
+ * It is recommended to delegate all calls to
+ * {@link DefaultConverterProvider#provide(Class, Class)} for pairs of classes
+ * that are not handled by this converter provider.
  *
  * @author Lukas Eder
  */

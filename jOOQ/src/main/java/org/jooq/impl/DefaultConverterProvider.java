@@ -46,10 +46,10 @@ import org.jooq.tools.Convert;
  *
  * @author Lukas Eder
  */
-public class DefaultConverterProvider implements ConverterProvider {
+public final class DefaultConverterProvider implements ConverterProvider {
 
     @Override
-    public <T, U> Converter<T, U> provide(final Class<T> tType, final Class<U> uType) {
+    public final <T, U> Converter<T, U> provide(final Class<T> tType, final Class<U> uType) {
         return new Converter<T, U>() {
 
             /**

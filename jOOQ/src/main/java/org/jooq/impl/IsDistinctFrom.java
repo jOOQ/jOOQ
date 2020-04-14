@@ -70,7 +70,6 @@ import static org.jooq.impl.Tools.isEmbeddable;
 import java.util.Set;
 
 import org.jooq.Comparator;
-import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.QueryPartInternal;
@@ -86,16 +85,12 @@ final class IsDistinctFrom<T> extends AbstractCondition {
      * Generated UID
      */
     private static final long            serialVersionUID            = 4568269684824736461L;
-    private static final Set<SQLDialect> EMULATE_DISTINCT_PREDICATE  = SQLDialect.supportedBy(CUBRID, DERBY);
+    private static final Set<SQLDialect> EMULATE_DISTINCT_PREDICATE  = SQLDialect.supportedUntil(CUBRID, DERBY);
     private static final Set<SQLDialect> SUPPORT_DISTINCT_WITH_ARROW = SQLDialect.supportedBy(MARIADB, MYSQL);
 
     private final Field<T>               lhs;
     private final Field<T>               rhs;
     private final Comparator             comparator;
-
-    private transient QueryPartInternal  mySQLCondition;
-    private transient QueryPartInternal  sqliteCondition;
-    private transient QueryPartInternal  compareCondition;
 
     IsDistinctFrom(Field<T> lhs, Field<T> rhs, Comparator comparator) {
         this.lhs = lhs;
@@ -105,47 +100,29 @@ final class IsDistinctFrom<T> extends AbstractCondition {
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(delegate(ctx.configuration()));
-    }
-
-    /**
-     * Get a delegate <code>CompareCondition</code>, in case the context
-     * {@link SQLDialect} natively supports the <code>IS DISTINCT FROM</code>
-     * clause.
-     */
-    private final QueryPartInternal delegate(Configuration configuration) {
-        if (isEmbeddable(lhs) && isEmbeddable(rhs)) {
-            return (QueryPartInternal) row(embeddedFields(lhs)).compare(comparator, row(embeddedFields(rhs)));
-        }
+        if (isEmbeddable(lhs) && isEmbeddable(rhs))
+            ctx.visit(row(embeddedFields(lhs)).compare(comparator, row(embeddedFields(rhs))));
 
         // [#3511]         These dialects need to emulate the IS DISTINCT FROM predicate,
         //                 optimally using INTERSECT...
         // [#7222] [#7224] Make sure the columns are aliased
-        else if (EMULATE_DISTINCT_PREDICATE.contains(configuration.family())) {
-            return (comparator == IS_DISTINCT_FROM)
+        else if (EMULATE_DISTINCT_PREDICATE.contains(ctx.dialect()))
+            ctx.visit(comparator == IS_DISTINCT_FROM
                 ? (QueryPartInternal) notExists(select(lhs.as("x")).intersect(select(rhs.as("x"))))
-                : (QueryPartInternal) exists(select(lhs.as("x")).intersect(select(rhs.as("x"))));
-        }
+                : (QueryPartInternal) exists(select(lhs.as("x")).intersect(select(rhs.as("x")))));
 
         // MySQL knows the <=> operator
-        else if (SUPPORT_DISTINCT_WITH_ARROW.contains(configuration.family())) {
-            if (mySQLCondition == null)
-                mySQLCondition = (QueryPartInternal) ((comparator == IS_DISTINCT_FROM)
-                    ? condition("{not}({0} <=> {1})", lhs, rhs)
-                    : condition("{0} <=> {1}", lhs, rhs));
-
-            return mySQLCondition;
+        else if (SUPPORT_DISTINCT_WITH_ARROW.contains(ctx.dialect())) {
+            ctx.visit(comparator == IS_DISTINCT_FROM
+                ? condition("{not}({0} <=> {1})", lhs, rhs)
+                : condition("{0} <=> {1}", lhs, rhs));
         }
 
         // SQLite knows the IS / IS NOT predicate
-        else if (SQLITE == configuration.family()) {
-            if (sqliteCondition == null)
-                sqliteCondition = (QueryPartInternal) ((comparator == IS_DISTINCT_FROM)
-                    ? condition("{0} {is not} {1}", lhs, rhs)
-                    : condition("{0} {is} {1}", lhs, rhs));
-
-            return sqliteCondition;
-        }
+        else if (SQLITE == ctx.family())
+            ctx.visit(comparator == IS_DISTINCT_FROM
+                ? condition("{0} {is not} {1}", lhs, rhs)
+                : condition("{0} {is} {1}", lhs, rhs));
 
 
 
@@ -156,18 +133,7 @@ final class IsDistinctFrom<T> extends AbstractCondition {
 
 
 
-
-
-
-
-
-        // These dialects natively support the IS DISTINCT FROM predicate:
-        // H2, Postgres
-        else {
-            if (compareCondition == null)
-                compareCondition = new CompareCondition(lhs, rhs, comparator);
-
-            return compareCondition;
-        }
+        else
+            ctx.visit(new CompareCondition(lhs, rhs, comparator));
     }
 }

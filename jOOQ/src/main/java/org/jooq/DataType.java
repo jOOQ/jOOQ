@@ -185,7 +185,9 @@ public interface DataType<T> extends Serializable {
     /**
      * Convert an arbitrary object into <code>&lt;T&gt;</code>.
      * <p>
-     * See {@link Convert#convert(Object, Class)} for details about conversion rules.
+     * See {@link Convert#convert(Object, Class)} for details about conversion
+     * rules. Notice this does not pass through any
+     * {@link Configuration#converterProvider()}.
      *
      * @param object The object to be converted
      * @return The converted object
@@ -196,7 +198,9 @@ public interface DataType<T> extends Serializable {
     /**
      * Convert an arbitrary set of objects into <code>&lt;T&gt;</code>.
      * <p>
-     * See {@link Convert#convert(Object, Class)} for details about conversion rules.
+     * See {@link Convert#convert(Object, Class)} for details about conversion
+     * rules. Notice this does not pass through any
+     * {@link Configuration#converterProvider()}.
      *
      * @param objects The objects to be converted
      * @return The converted objects
@@ -207,7 +211,9 @@ public interface DataType<T> extends Serializable {
     /**
      * Convert an arbitrary set of objects into <code>&lt;T&gt;</code>.
      * <p>
-     * See {@link Convert#convert(Object, Class)} for details about conversion rules.
+     * See {@link Convert#convert(Object, Class)} for details about conversion
+     * rules. Notice this does not pass through any
+     * {@link Configuration#converterProvider()}.
      *
      * @param objects The objects to be converted
      * @return The converted objects

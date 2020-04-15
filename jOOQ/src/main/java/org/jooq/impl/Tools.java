@@ -219,6 +219,7 @@ import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Converter;
+import org.jooq.ConverterProvider;
 import org.jooq.Cursor;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
@@ -248,6 +249,7 @@ import org.jooq.Row;
 import org.jooq.RowN;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
+import org.jooq.Scope;
 import org.jooq.Select;
 import org.jooq.SelectFieldOrAsterisk;
 import org.jooq.SortField;
@@ -1069,6 +1071,28 @@ final class Tools {
      */
     static final Configuration configuration(Configuration configuration) {
         return configuration != null ? configuration : new DefaultConfiguration();
+    }
+
+    /**
+     * Get a configuration or a new {@link DefaultConfiguration} if
+     * <code>null</code>.
+     */
+    static final Configuration configuration(Scope scope) {
+        return configuration(scope != null ? scope.configuration() : null);
+    }
+
+    /**
+     * Get a converter from a {@link ConverterProvider}.
+     */
+    static final <T, U> Converter<T, U> converter(Attachable attachable, Class<T> tType, Class<U> uType) {
+        return configuration(attachable).converterProvider().provide(tType, uType);
+    }
+
+    /**
+     * Get a converter from a {@link ConverterProvider}.
+     */
+    static final <T, U> Converter<T, U> converter(Scope scope, Class<T> tType, Class<U> uType) {
+        return configuration(scope).converterProvider().provide(tType, uType);
     }
 
     /**

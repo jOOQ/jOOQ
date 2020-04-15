@@ -60,7 +60,6 @@ import static org.jooq.impl.Tools.EMPTY_TABLE_RECORD;
 import static org.jooq.impl.Tools.EMPTY_UPDATABLE_RECORD;
 import static org.jooq.impl.Tools.blocking;
 import static org.jooq.impl.Tools.list;
-import static org.jooq.tools.Convert.convert;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -3902,17 +3901,13 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public BigInteger lastID() {
-        switch (configuration().family()) {
-            case DERBY: {
-                Field<BigInteger> field = field("identity_val_local()", BigInteger.class);
-                return select(field).fetchOne(field);
-            }
+        switch (family()) {
+            case DERBY:
+                return fetchValue(field("identity_val_local()", BigInteger.class));
 
             case H2:
-            case HSQLDB: {
-                Field<BigInteger> field = field("identity()", BigInteger.class);
-                return select(field).fetchOne(field);
-            }
+            case HSQLDB:
+                return fetchValue(field("identity()", BigInteger.class));
 
 
 
@@ -3922,30 +3917,19 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
             case CUBRID:
             case MARIADB:
-            case MYSQL: {
-                Field<BigInteger> field = field("last_insert_id()", BigInteger.class);
-                return select(field).fetchOne(field);
-            }
+            case MYSQL:
+                return fetchValue(field("last_insert_id()", BigInteger.class));
 
-            case SQLITE: {
-                Field<BigInteger> field = field("last_insert_rowid()", BigInteger.class);
-                return select(field).fetchOne(field);
-            }
+            case SQLITE:
+                return fetchValue(field("last_insert_rowid()", BigInteger.class));
 
 
 
 
 
 
-            case POSTGRES: {
-                Field<BigInteger> field = field("lastval()", BigInteger.class);
-                return select(field).fetchOne(field);
-            }
-
-
-
-
-
+            case POSTGRES:
+                return fetchValue(field("lastval()", BigInteger.class));
 
 
 

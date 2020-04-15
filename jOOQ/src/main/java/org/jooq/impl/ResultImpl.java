@@ -220,7 +220,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
     @Override
     public final <U> List<U> getValues(int fieldIndex, Class<? extends U> type) {
         List<U> result = new ArrayList<>(size());
-        Converter converter = Tools.configuration(this).converterProvider().provide(field(safeIndex(fieldIndex)).getType(), (Class) type);
+        Converter converter = Tools.converter(this, field(safeIndex(fieldIndex)).getType(), (Class) type);
 
         for (R record : this)
             result.add((U) converter.from(record.get(fieldIndex)));

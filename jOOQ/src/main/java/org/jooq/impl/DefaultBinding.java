@@ -3964,7 +3964,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final UByte get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-            return Convert.convert(ctx.resultSet().getString(ctx.index()), UByte.class);
+            String string = ctx.resultSet().getString(ctx.index());
+            return string == null ? null : UByte.valueOf(string);
         }
 
         @Override
@@ -4018,7 +4019,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final UInteger get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-            return Convert.convert(ctx.resultSet().getString(ctx.index()), UInteger.class);
+            String string = ctx.resultSet().getString(ctx.index());
+            return string == null ? null : UInteger.valueOf(string);
         }
 
         @Override
@@ -4072,7 +4074,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final ULong get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-            return Convert.convert(ctx.resultSet().getString(ctx.index()), ULong.class);
+            String string = ctx.resultSet().getString(ctx.index());
+            return string == null ? null : ULong.valueOf(string);
         }
 
         @Override
@@ -4121,7 +4124,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final UShort get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-            return Convert.convert(ctx.resultSet().getString(ctx.index()), UShort.class);
+            String string = ctx.resultSet().getString(ctx.index());
+            return string == null ? null : UShort.valueOf(string);
         }
 
         @Override

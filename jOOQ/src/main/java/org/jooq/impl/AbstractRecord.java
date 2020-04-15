@@ -254,7 +254,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final <T> T get(Field<?> field, Class<? extends T> type) {
-        return (T) Tools.configuration(this).converterProvider().provide(field.getType(), (Class) type).from(get(field));
+        return (T) Tools.converter(this, field.getType(), (Class) type).from(get(field));
     }
 
     @Override
@@ -269,7 +269,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final <T> T get(int index, Class<? extends T> type) {
-        return (T) Tools.configuration(this).converterProvider().provide(field(safeIndex(index)).getType(), (Class) type).from(get(index));
+        return (T) Tools.converter(this, field(safeIndex(index)).getType(), (Class) type).from(get(index));
     }
 
     @Override

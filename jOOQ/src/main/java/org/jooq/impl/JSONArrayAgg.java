@@ -45,6 +45,7 @@ import static org.jooq.impl.JSONObject.acceptJSONNullClause;
 import static org.jooq.impl.Names.N_JSONB_AGG;
 import static org.jooq.impl.Names.N_JSON_AGG;
 import static org.jooq.impl.Names.N_JSON_ARRAYAGG;
+import static org.jooq.impl.Names.N_JSON_MERGE;
 import static org.jooq.impl.SQLDataType.JSON;
 
 import java.util.Collection;
@@ -80,17 +81,16 @@ implements JSONArrayAggOrderByStep<J> {
     public void accept(Context<?> ctx) {
         switch (ctx.family()) {
             case MARIADB:
-            case MYSQL:
+            case MYSQL: {
+                // Workaround for https://jira.mariadb.org/browse/MDEV-21912,
+                // https://jira.mariadb.org/browse/MDEV-21914, and other issues
+                Field<?> concat = Tools.isEmpty(withinGroupOrderBy)
+                    ? DSL.concat(inline('['), groupConcat(arguments.get(0)), inline(']'))
+                    : DSL.concat(inline('['), groupConcat(arguments.get(0)).orderBy(withinGroupOrderBy), inline(']'));
 
-                // Workaround for https://jira.mariadb.org/browse/MDEV-21914
-                if (!Tools.isEmpty(withinGroupOrderBy))
-                    ctx.visit(DSL.concat(inline('['), groupConcat(arguments.get(0)).orderBy(withinGroupOrderBy), inline(']')));
-
-                // Workaround for https://jira.mariadb.org/browse/MDEV-21912
-                else
-                    ctx.visit(DSL.concat(inline('['), groupConcat(arguments.get(0)), inline(']')));
-
+                ctx.visit(N_JSON_MERGE).sql('(').visit(inline("[]")).sql(", ").visit(concat).sql(')');
                 break;
+            }
 
 
 

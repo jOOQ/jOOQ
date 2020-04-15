@@ -44,6 +44,7 @@ import static org.jooq.Clause.CONDITION_OVERLAPS;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
+// ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
@@ -64,11 +65,9 @@ import static org.jooq.impl.Tools.castIfNeeded;
 import java.util.Set;
 
 import org.jooq.Clause;
-import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
-import org.jooq.QueryPartInternal;
 import org.jooq.Row2;
 import org.jooq.SQLDialect;
 
@@ -82,7 +81,7 @@ final class RowOverlapsCondition<T1, T2> extends AbstractCondition {
      */
     private static final long            serialVersionUID              = 85887551884667824L;
     private static final Clause[]        CLAUSES                       = { CONDITION, CONDITION_OVERLAPS };
-    private static final Set<SQLDialect> EMULATE_NON_STANDARD_OVERLAPS = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, MARIADB, MYSQL, SQLITE);
+    private static final Set<SQLDialect> EMULATE_NON_STANDARD_OVERLAPS = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD, H2, MARIADB, MYSQL, SQLITE);
     private static final Set<SQLDialect> EMULATE_INTERVAL_OVERLAPS     = SQLDialect.supportedBy(HSQLDB);
 
     private final Row2<T1, T2>           left;
@@ -95,15 +94,6 @@ final class RowOverlapsCondition<T1, T2> extends AbstractCondition {
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(delegate(ctx.configuration()));
-    }
-
-    @Override // Avoid AbstractCondition implementation
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
-    }
-
-    private final QueryPartInternal delegate(Configuration configuration) {
         Field<T1> left1 = left.field1();
         Field<T2> left2 = left.field2();
         Field<T1> right1 = right.field1();
@@ -119,54 +109,31 @@ final class RowOverlapsCondition<T1, T2> extends AbstractCondition {
         boolean intervalOverlaps = type0.isDateTime() && (type1.isInterval() || type1.isNumeric());
 
         // The non-standard OVERLAPS predicate is always emulated
-        if (!standardOverlaps || EMULATE_NON_STANDARD_OVERLAPS.contains(configuration.family())) {
+        if (!standardOverlaps || EMULATE_NON_STANDARD_OVERLAPS.contains(ctx.family())) {
 
             // Interval OVERLAPS predicates need some additional arithmetic
-            if (intervalOverlaps) {
-                return (QueryPartInternal)
-                       right1.le(left1.add(left2)).and(
-                       left1.le(right1.add(right2)));
-            }
+            if (intervalOverlaps)
+                ctx.visit(right1.le(left1.add(left2)).and(left1.le(right1.add(right2))));
 
             // All other OVERLAPS predicates can be emulated simply
-            else {
-                return (QueryPartInternal)
-                       right1.le(castIfNeeded(left2, right1)).and(
-                       left1.le(castIfNeeded(right2, left1)));
-            }
+            else
+                ctx.visit(right1.le(castIfNeeded(left2, right1)).and(left1.le(castIfNeeded(right2, left1))));
         }
 
         // These dialects seem to have trouble with INTERVAL OVERLAPS predicates
-        else if (intervalOverlaps && EMULATE_INTERVAL_OVERLAPS.contains(configuration.family())) {
-                return (QueryPartInternal)
-                        right1.le(left1.add(left2)).and(
-                        left1.le(right1.add(right2)));
-        }
+        else if (intervalOverlaps && EMULATE_INTERVAL_OVERLAPS.contains(ctx.family()))
+            ctx.visit(right1.le(left1.add(left2)).and(left1.le(right1.add(right2))));
 
-        // Everyone else can handle OVERLAPS (Postgres, Oracle)
-        else {
-            return new Native();
-        }
-    }
-
-    private class Native extends AbstractCondition {
-
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = -1552476981094856727L;
-
-        @Override
-        public final void accept(Context<?> ctx) {
+        // Everyone else can handle OVERLAPS
+        else
             ctx.sql('(').visit(left)
                .sql(' ').visit(K_OVERLAPS)
                .sql(' ').visit(right)
                .sql(')');
-        }
+    }
 
-        @Override
-        public final Clause[] clauses(Context<?> ctx) {
-            return CLAUSES;
-        }
+    @Override // Avoid AbstractCondition implementation
+    public final Clause[] clauses(Context<?> ctx) {
+        return null;
     }
 }

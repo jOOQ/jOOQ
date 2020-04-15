@@ -5510,9 +5510,17 @@ final class ParserImpl implements Parser {
     }
 
     private static final Table<?> parseJoinUsing(ParserContext ctx, TableOnStep<?> join) {
+        Table<?> result;
+
         parse(ctx, '(');
-        Table result = join.using(Tools.fieldsByName(parseIdentifiers(ctx).toArray(EMPTY_NAME)));
-        parse(ctx, ')');
+
+        if (parseIf(ctx, ')')) {
+            result = join.using();
+        }
+        else {
+            result = join.using(Tools.fieldsByName(parseIdentifiers(ctx).toArray(EMPTY_NAME)));
+            parse(ctx, ')');
+        }
 
         return result;
     }

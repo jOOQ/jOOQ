@@ -38,6 +38,7 @@
 
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.converterOrFail;
 import static org.jooq.impl.Tools.indexOrFail;
 
 import java.lang.reflect.Array;
@@ -220,7 +221,7 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
     @Override
     public final <U> List<U> getValues(int fieldIndex, Class<? extends U> type) {
         List<U> result = new ArrayList<>(size());
-        Converter converter = Tools.converter(this, field(safeIndex(fieldIndex)).getType(), (Class) type);
+        Converter converter = converterOrFail(this, field(safeIndex(fieldIndex)).getType(), (Class) type);
 
         for (R record : this)
             result.add((U) converter.from(record.get(fieldIndex)));

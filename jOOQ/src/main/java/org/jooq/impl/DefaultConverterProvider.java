@@ -37,8 +37,27 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.tools.reflect.Reflect.wrapper;
+
+import java.io.File;
+import java.net.URI;
+import java.net.URL;
+import java.sql.Struct;
+import java.time.temporal.Temporal;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Optional;
+import java.util.UUID;
+
+import javax.persistence.EnumType;
+
+// ...
 import org.jooq.Converter;
 import org.jooq.ConverterProvider;
+import org.jooq.JSON;
+import org.jooq.JSONB;
+import org.jooq.Record;
+import org.jooq.UDTRecord;
 import org.jooq.tools.Convert;
 
 /**
@@ -50,32 +69,101 @@ public final class DefaultConverterProvider implements ConverterProvider {
 
     @Override
     public final <T, U> Converter<T, U> provide(final Class<T> tType, final Class<U> uType) {
-        return new Converter<T, U>() {
+        Class<?> tWrapper = wrapper(tType);
+        Class<?> uWrapper = wrapper(uType);
 
-            /**
-             * Generated UID.
-             */
-            private static final long serialVersionUID = 8011099590775678430L;
+        // TODO: [#10071] These checks are required to be able to return null in
+        //                case this implementation cannot produce a Converter.
+        //                It corresponds to a super set of what org.jooq.tools.Convert
+        //                can do. There is certainly room for refactoring the two
+        //                classes.
+        if (tWrapper == uWrapper
+            || uWrapper.isAssignableFrom(tWrapper)
+            || isCollection(tWrapper) && isCollection(uWrapper)
+            || tWrapper == Optional.class
+            || uWrapper == Optional.class
+            || uWrapper == String.class
+            || uWrapper == byte[].class
+            || Number.class.isAssignableFrom(uWrapper) // No fail-fast implemented yet!
+            || Boolean.class.isAssignableFrom(uWrapper) // No fail-fast implemented yet!
+            || Character.class.isAssignableFrom(uWrapper)
+            || uWrapper == URI.class && tWrapper == String.class
+            || uWrapper == URL.class && tWrapper == String.class
+            || uWrapper == File.class && tWrapper == String.class
+            || isDate(tWrapper) && isDate(uWrapper)
+            || isEnum(tWrapper) && isEnum(uWrapper)
+            || isUUID(tWrapper) && isUUID(uWrapper)
+            || isJSON(tWrapper) && isJSON(uWrapper)
+            || Record.class.isAssignableFrom(tWrapper)
+            || Struct.class.isAssignableFrom(tWrapper) && UDTRecord.class.isAssignableFrom(uWrapper)
+        ) {
+            return new Converter<T, U>() {
 
-            @Override
-            public U from(T t) {
-                return Convert.convert(t, uType);
-            }
+                /**
+                 * Generated UID.
+                 */
+                private static final long serialVersionUID = 8011099590775678430L;
 
-            @Override
-            public T to(U u) {
-                return Convert.convert(u, tType);
-            }
+                @Override
+                public U from(T t) {
+                    return Convert.convert(t, uType);
+                }
 
-            @Override
-            public Class<T> fromType() {
-                return tType;
-            }
+                @Override
+                public T to(U u) {
+                    return Convert.convert(u, tType);
+                }
 
-            @Override
-            public Class<U> toType() {
-                return uType;
-            }
-        };
+                @Override
+                public Class<T> fromType() {
+                    return tType;
+                }
+
+                @Override
+                public Class<U> toType() {
+                    return uType;
+                }
+            };
+        }
+        else
+            return null;
+    }
+
+    private final boolean isJSON(Class<?> type) {
+        return type == JSON.class
+            || type == JSONB.class
+            || type == String.class;
+    }
+
+    private final boolean isUUID(Class<?> type) {
+        return type == String.class
+            || type == byte[].class
+            || type == UUID.class;
+    }
+
+    private final boolean isEnum(Class<?> type) {
+        return Enum.class.isAssignableFrom(type)
+            || type == String.class
+            || EnumType.class.isAssignableFrom(type);
+    }
+
+    private final boolean isDate(Class<?> type) {
+        return java.util.Date.class.isAssignableFrom(type)
+            || Calendar.class.isAssignableFrom(type)
+
+            || Temporal.class.isAssignableFrom(type)
+
+            || type == Long.class
+            || type == String.class;
+    }
+
+    private final boolean isCollection(Class<?> type) {
+        return type.isArray()
+            || Collection.class.isAssignableFrom(type)
+
+
+
+            // [#3443] Conversion from Object[] to JDBC Array
+            || type == java.sql.Array.class;
     }
 }

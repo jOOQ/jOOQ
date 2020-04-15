@@ -1082,17 +1082,59 @@ final class Tools {
     }
 
     /**
-     * Get a converter from a {@link ConverterProvider}.
+     * Get a converter from a {@link ConverterProvider} or <code>null</code> if
+     * no converter could be provided.
+     */
+    static final <T, U> Converter<T, U> converter(Configuration configuration, Class<T> tType, Class<U> uType) {
+        Converter<T, U> result = configuration(configuration).converterProvider().provide(tType, uType);
+
+        if (result == null)
+            result = CTX.configuration().converterProvider().provide(tType, uType);
+
+        return result;
+    }
+
+    /**
+     * Get a converter from a {@link ConverterProvider} or <code>null</code> if
+     * no converter could be provided.
+     */
+    static final <T, U> Converter<T, U> converter(Scope scope, Class<T> tType, Class<U> uType) {
+        return converter(configuration(scope), tType, uType);
+    }
+
+    /**
+     * Get a converter from a {@link ConverterProvider} or <code>null</code> if
+     * no converter could be provided.
      */
     static final <T, U> Converter<T, U> converter(Attachable attachable, Class<T> tType, Class<U> uType) {
-        return configuration(attachable).converterProvider().provide(tType, uType);
+        return converter(configuration(attachable), tType, uType);
+    }
+
+    /**
+     * Get a converter from a {@link ConverterProvider} or <code>null</code> if
+     * no converter could be provided.
+     */
+    static final <T, U> Converter<T, U> converterOrFail(Configuration configuration, Class<T> tType, Class<U> uType) {
+        Converter<T, U> result = converter(configuration, tType, uType);
+
+        if (result == null)
+            throw new DataTypeException("No Converter found for types " + tType.getName() + " and " + uType.getName());
+
+        return result;
     }
 
     /**
      * Get a converter from a {@link ConverterProvider}.
      */
-    static final <T, U> Converter<T, U> converter(Scope scope, Class<T> tType, Class<U> uType) {
-        return configuration(scope).converterProvider().provide(tType, uType);
+    static final <T, U> Converter<T, U> converterOrFail(Scope scope, Class<T> tType, Class<U> uType) {
+        return converterOrFail(configuration(scope), tType, uType);
+    }
+
+    /**
+     * Get a converter from a {@link ConverterProvider}.
+     */
+    static final <T, U> Converter<T, U> converterOrFail(Attachable attachable, Class<T> tType, Class<U> uType) {
+        return converterOrFail(configuration(attachable), tType, uType);
     }
 
     /**

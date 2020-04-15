@@ -48,10 +48,6 @@ import org.jooq.impl.DefaultConverterProvider;
  * {@link RecordMapper}, e.g. when mapping {@link JSON} or {@link XML} data
  * types onto POJO types using third party libraries like Jackson, Gson, JAXB,
  * or others.
- * <p>
- * It is recommended to delegate all calls to
- * {@link DefaultConverterProvider#provide(Class, Class)} for pairs of classes
- * that are not handled by this converter provider.
  *
  * @author Lukas Eder
  */
@@ -61,6 +57,10 @@ public interface ConverterProvider {
     /**
      * Provide a converter that can convert between <code>&lt;T&gt;</code> and
      * <code>&lt;U&gt;</code> types.
+     *
+     * @return The converter for <code>&lt;T, U&gt;</code>, or <code>null</code>
+     *         if no such converter could be provided, in case of which jOOQ's
+     *         {@link DefaultConverterProvider} applies.
      */
     <T, U> Converter<T, U> provide(Class<T> tType, Class<U> uType);
 }

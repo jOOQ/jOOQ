@@ -337,11 +337,8 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         }
 
 
-        // [#3212] [#5154] "Value types" can be mapped from single-field Record1
-        //                 types for convenience
-        if (type.isPrimitive()
-                || DefaultDataType.types().contains(type)
-                || Enum.class.isAssignableFrom(type)) {
+        // [#10071] Single-field Record1 types can be mapped if there is a ConverterProvider allowing for this mapping
+        if (fields.length == 1 && Tools.converter(configuration, fields[0].getType(), type) != null) {
             delegate = new ValueTypeMapper();
             return;
         }

@@ -41,6 +41,7 @@ package org.jooq.impl;
 import static java.util.Arrays.asList;
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.impl.Tools.converterOrFail;
 import static org.jooq.impl.Tools.embeddedFields;
 import static org.jooq.impl.Tools.indexOrFail;
 import static org.jooq.impl.Tools.isEmbeddable;
@@ -254,7 +255,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final <T> T get(Field<?> field, Class<? extends T> type) {
-        return (T) Tools.converter(this, field.getType(), (Class) type).from(get(field));
+        return (T) converterOrFail(this, field.getType(), (Class) type).from(get(field));
     }
 
     @Override
@@ -269,7 +270,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final <T> T get(int index, Class<? extends T> type) {
-        return (T) Tools.converter(this, field(safeIndex(index)).getType(), (Class) type).from(get(index));
+        return (T) converterOrFail(this, field(safeIndex(index)).getType(), (Class) type).from(get(index));
     }
 
     @Override

@@ -84,11 +84,11 @@ implements JSONArrayAggOrderByStep<J> {
 
                 // Workaround for https://jira.mariadb.org/browse/MDEV-21914
                 if (!Tools.isEmpty(withinGroupOrderBy))
-                    ctx.visit(DSL.concat(inline('['), DSL.coalesce(groupConcat(arguments.get(0)).orderBy(withinGroupOrderBy), inline("")), inline(']')));
+                    ctx.visit(DSL.concat(inline('['), groupConcat(arguments.get(0)).orderBy(withinGroupOrderBy), inline(']')));
 
                 // Workaround for https://jira.mariadb.org/browse/MDEV-21912
                 else
-                    ctx.visit(DSL.concat(inline('['), DSL.coalesce(groupConcat(arguments.get(0)), inline("")), inline(']')));
+                    ctx.visit(DSL.concat(inline('['), groupConcat(arguments.get(0)), inline(']')));
 
                 break;
 

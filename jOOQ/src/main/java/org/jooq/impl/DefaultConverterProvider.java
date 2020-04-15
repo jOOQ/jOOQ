@@ -49,11 +49,10 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
 
-import javax.persistence.EnumType;
-
 // ...
 import org.jooq.Converter;
 import org.jooq.ConverterProvider;
+import org.jooq.EnumType;
 import org.jooq.JSON;
 import org.jooq.JSONB;
 import org.jooq.Record;

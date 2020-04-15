@@ -80,8 +80,10 @@ public final class DefaultConverterProvider implements ConverterProvider {
         if (tWrapper == uWrapper
             || uWrapper.isAssignableFrom(tWrapper)
             || isCollection(tWrapper) && isCollection(uWrapper)
+
             || tWrapper == Optional.class
             || uWrapper == Optional.class
+
             || uWrapper == String.class
             || uWrapper == byte[].class
             || Number.class.isAssignableFrom(uWrapper) // No fail-fast implemented yet!
@@ -93,7 +95,7 @@ public final class DefaultConverterProvider implements ConverterProvider {
             || isDate(tWrapper) && isDate(uWrapper)
             || isEnum(tWrapper) && isEnum(uWrapper)
             || isUUID(tWrapper) && isUUID(uWrapper)
-            || isJSON(tWrapper) && isJSON(uWrapper)
+            || isJSON(tWrapper) // && isJSON(uWrapper)
             || Record.class.isAssignableFrom(tWrapper)
             || Struct.class.isAssignableFrom(tWrapper) && UDTRecord.class.isAssignableFrom(uWrapper)
         ) {

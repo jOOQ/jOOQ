@@ -48,6 +48,7 @@ import static org.jooq.types.Unsigned.ushort;
 
 import java.io.File;
 import java.lang.reflect.Array;
+import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.net.URI;
@@ -109,6 +110,8 @@ import org.jooq.types.UShort;
  */
 public final class Convert {
 
+    private static final JooqLogger log          = JooqLogger.getLogger(Convert.class);
+
     /**
      * All string values that can be transformed into a boolean <code>true</code> value.
      */
@@ -123,6 +126,16 @@ public final class Convert {
      * A UUID pattern for UUIDs with or without hyphens
      */
     private static final Pattern UUID_PATTERN = Pattern.compile("(\\p{XDigit}{8})-?(\\p{XDigit}{4})-?(\\p{XDigit}{4})-?(\\p{XDigit}{4})-?(\\p{XDigit}{12})");
+
+    /**
+     * The Jackson ObjectMapper or Gson instance, if available.
+     */
+    private static final Object JSON_MAPPER;
+
+    /**
+     * The Jackson ObjectMapper::readValue or Gson::fromJson method, if available.
+     */
+    private static final Method JSON_READ_METHOD;
 
     static {
         Set<String> trueValues = new HashSet<>();
@@ -160,6 +173,32 @@ public final class Convert {
 
         TRUE_VALUES = Collections.unmodifiableSet(trueValues);
         FALSE_VALUES = Collections.unmodifiableSet(falseValues);
+
+        Object jsonMapper = null;
+        Method jsonReadMethod = null;
+
+        try {
+            Class<?> klass = Class.forName("com.fasterxml.jackson.databind.ObjectMapper");
+
+            jsonMapper = klass.getConstructor().newInstance();
+            jsonReadMethod = klass.getMethod("readValue", String.class, Class.class);
+        }
+        catch (Exception e1) {
+            log.debug("Jackson not found on the classpath");
+
+            try {
+                Class<?> klass = Class.forName("com.google.gson.Gson");
+
+                jsonMapper = klass.getConstructor().newInstance();
+                jsonReadMethod = klass.getMethod("fromJson", String.class, Class.class);
+            }
+            catch (Exception e2) {
+                log.debug("Gson not found on the classpath");
+            }
+        }
+
+        JSON_MAPPER = jsonMapper;
+        JSON_READ_METHOD = jsonReadMethod;
     }
 
     /**
@@ -1017,6 +1056,26 @@ public final class Convert {
                 // [#8943] JSONB data types can be read from Strings
                 else if (fromClass == String.class && toClass == JSONB.class) {
                     return (U) JSONB.valueOf((String) from);
+                }
+
+                // [#10072] Out of the box Jackson JSON mapping support
+                else if (fromClass == JSON.class && JSON_MAPPER != null) {
+                    try {
+                        return (U) JSON_READ_METHOD.invoke(JSON_MAPPER, ((JSON) from).data(), toClass);
+                    }
+                    catch (Exception e) {
+                        throw new DataTypeException("Error while mapping JSON to POJO using Jackson", e);
+                    }
+                }
+
+                // [#10072] Out of the box Jackson JSON mapping support
+                else if (fromClass == JSONB.class && JSON_MAPPER != null) {
+                    try {
+                        return (U) JSON_READ_METHOD.invoke(JSON_MAPPER, ((JSONB) from).data(), toClass);
+                    }
+                    catch (Exception e) {
+                        throw new DataTypeException("Error while mapping JSON to POJO using Jackson", e);
+                    }
                 }
 
                 // [#3023] Record types can be converted using the supplied Configuration's

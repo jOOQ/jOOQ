@@ -58,6 +58,7 @@ import org.jooq.JSON;
 import org.jooq.JSONB;
 import org.jooq.Record;
 import org.jooq.UDTRecord;
+import org.jooq.XML;
 import org.jooq.tools.Convert;
 
 /**
@@ -95,7 +96,13 @@ public final class DefaultConverterProvider implements ConverterProvider {
             || isDate(tWrapper) && isDate(uWrapper)
             || isEnum(tWrapper) && isEnum(uWrapper)
             || isUUID(tWrapper) && isUUID(uWrapper)
-            || isJSON(tWrapper) // && isJSON(uWrapper)
+
+            // [#10072] out of the box JSON binding is supported via Jackson or Gson
+            || isJSON(tWrapper)
+
+            // [#10072] out of the box XML binding is supported via JAXB
+            || isXML(tWrapper)
+
             || Record.class.isAssignableFrom(tWrapper)
             || Struct.class.isAssignableFrom(tWrapper) && UDTRecord.class.isAssignableFrom(uWrapper)
         ) {
@@ -133,8 +140,11 @@ public final class DefaultConverterProvider implements ConverterProvider {
 
     private final boolean isJSON(Class<?> type) {
         return type == JSON.class
-            || type == JSONB.class
-            || type == String.class;
+            || type == JSONB.class;
+    }
+
+    private final boolean isXML(Class<?> type) {
+        return type == XML.class;
     }
 
     private final boolean isUUID(Class<?> type) {

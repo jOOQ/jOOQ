@@ -47,6 +47,8 @@ import static org.jooq.types.Unsigned.ulong;
 import static org.jooq.types.Unsigned.ushort;
 
 import java.io.File;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
@@ -80,6 +82,8 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
+import javax.xml.bind.JAXB;
+
 // ...
 import org.jooq.Converter;
 import org.jooq.EnumType;
@@ -89,6 +93,7 @@ import org.jooq.JSONB;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.UDTRecord;
+import org.jooq.XML;
 import org.jooq.exception.DataTypeException;
 import org.jooq.tools.jdbc.MockArray;
 import org.jooq.tools.reflect.Reflect;
@@ -96,6 +101,7 @@ import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
 import org.jooq.types.UShort;
+import org.jooq.util.xml.jaxb.InformationSchema;
 
 /**
  * Utility methods for type conversions
@@ -137,6 +143,11 @@ public final class Convert {
      */
     private static final Method JSON_READ_METHOD;
 
+    /**
+     * Whether a JAXB implementation is available.
+     */
+    private static final boolean JAXB_AVAILABLE;
+
     static {
         Set<String> trueValues = new HashSet<>();
         Set<String> falseValues = new HashSet<>();
@@ -176,29 +187,43 @@ public final class Convert {
 
         Object jsonMapper = null;
         Method jsonReadMethod = null;
+        boolean jaxbAvailable = false;
 
         try {
             Class<?> klass = Class.forName("com.fasterxml.jackson.databind.ObjectMapper");
 
             jsonMapper = klass.getConstructor().newInstance();
             jsonReadMethod = klass.getMethod("readValue", String.class, Class.class);
+            log.debug("Jackson is available");
         }
         catch (Exception e1) {
-            log.debug("Jackson not found on the classpath");
+            log.debug("Jackson not available", e1.getMessage());
 
             try {
                 Class<?> klass = Class.forName("com.google.gson.Gson");
 
                 jsonMapper = klass.getConstructor().newInstance();
                 jsonReadMethod = klass.getMethod("fromJson", String.class, Class.class);
+                log.debug("Gson is available");
             }
             catch (Exception e2) {
-                log.debug("Gson not found on the classpath");
+                log.debug("Gson not available", e2.getMessage());
             }
         }
 
         JSON_MAPPER = jsonMapper;
         JSON_READ_METHOD = jsonReadMethod;
+
+        try {
+            JAXB.marshal(new InformationSchema(), new StringWriter());
+            jaxbAvailable = true;
+            log.debug("JAXB is available");
+        }
+        catch (Exception e) {
+            log.debug("JAXB not available", e.getMessage());
+        }
+
+        JAXB_AVAILABLE = jaxbAvailable;
     }
 
     /**
@@ -1075,6 +1100,16 @@ public final class Convert {
                     }
                     catch (Exception e) {
                         throw new DataTypeException("Error while mapping JSON to POJO using Jackson", e);
+                    }
+                }
+
+                // [#10072] Out of the box JAXB mapping support
+                else if (fromClass == XML.class && JAXB_AVAILABLE) {
+                    try {
+                        return JAXB.unmarshal(new StringReader(((XML) from).data()), toClass);
+                    }
+                    catch (Exception e) {
+                        throw new DataTypeException("Error while mapping XML to POJO using JAXB", e);
                     }
                 }
 

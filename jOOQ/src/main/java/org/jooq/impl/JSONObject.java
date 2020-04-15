@@ -43,6 +43,7 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.impl.DSL.asterisk;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.jsonObject;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.unquotedName;
@@ -53,6 +54,7 @@ import static org.jooq.impl.Keywords.K_ABSENT;
 import static org.jooq.impl.Keywords.K_JSON_OBJECT;
 import static org.jooq.impl.Keywords.K_NULL;
 import static org.jooq.impl.Keywords.K_ON;
+import static org.jooq.impl.Names.N_JSON_MERGE;
 import static org.jooq.impl.Names.N_JSON_OBJECT;
 import static org.jooq.impl.Names.N_T;
 
@@ -173,23 +175,46 @@ final class JSONObject<J> extends AbstractField<J> implements JSONObjectNullStep
 
 
 
-            default:
-                ctx.visit(K_JSON_OBJECT).sql('(').visit(args);
+            case MARIADB:
 
-                // Workaround for https://github.com/h2database/h2database/issues/2496
-                if (args.isEmpty() && ctx.family() == H2)
-                    ctx.visit(K_NULL).sql(' ').visit(K_ON).sql(' ').visit(K_NULL);
+                // Workaround for https://jira.mariadb.org/browse/MDEV-13701
+                if (args.size() > 1) {
+                    ctx.visit(N_JSON_MERGE).sql('(').visit(inline("{}"))
+                       .formatIndentStart();
 
+                    for (JSONEntry<?> entry : args)
+                        ctx.sql(',').formatSeparator().visit(jsonObject(entry));
 
-
-
-
+                    ctx.formatIndentEnd()
+                       .formatNewLine()
+                       .sql(')');
+                }
                 else
-                    acceptJSONNullClause(ctx, nullClause);
+                    acceptStandard(ctx);
 
-                ctx.sql(')');
+                break;
+
+            default:
+                acceptStandard(ctx);
                 break;
         }
+    }
+
+    private final void acceptStandard(Context<?> ctx) {
+        ctx.visit(K_JSON_OBJECT).sql('(').visit(args);
+
+        // Workaround for https://github.com/h2database/h2database/issues/2496
+        if (args.isEmpty() && ctx.family() == H2)
+            ctx.visit(K_NULL).sql(' ').visit(K_ON).sql(' ').visit(K_NULL);
+
+
+
+
+
+        else
+            acceptJSONNullClause(ctx, nullClause);
+
+        ctx.sql(')');
     }
 
     static final void acceptJSONNullClause(Context<?> ctx, JSONNullClause nullClause) {

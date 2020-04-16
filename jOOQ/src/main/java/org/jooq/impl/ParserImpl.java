@@ -835,6 +835,7 @@ final class ParserImpl implements Parser {
         if (ctx.done())
             return null;
 
+        ctx.scopeStart();
         boolean metaLookupsForceIgnore = ctx.metaLookupsForceIgnore();
         try {
             switch (ctx.character()) {
@@ -964,7 +965,15 @@ final class ParserImpl implements Parser {
 
             throw ctx.exception("Unsupported query type");
         }
+        catch (ParserException e) {
+
+            // [#9061] Don't hide this pre-existing exceptions in scopeResolve()
+            ctx.scopeClear();
+            throw e;
+        }
         finally {
+            ctx.scopeEnd();
+            ctx.scopeResolve();
             ctx.metaLookupsForceIgnore(metaLookupsForceIgnore);
         }
     }
@@ -1047,6 +1056,7 @@ final class ParserImpl implements Parser {
     }
 
     private static final SelectQueryImpl<Record> parseSelect(ParserContext ctx, Integer degree, WithImpl with) {
+        ctx.scopeStart();
         SelectQueryImpl<Record> result = parseQueryExpressionBody(ctx, degree, with, null);
         List<SortField<?>> orderBy = null;
 
@@ -1108,6 +1118,7 @@ final class ParserImpl implements Parser {
                 result.setForUpdateSkipLocked();
         }
 
+        ctx.scopeEnd();
         return result;
     }
 
@@ -1316,6 +1327,12 @@ final class ParserImpl implements Parser {
         // TODO is there a better way?
         if (from != null && from.size() == 1 && from.get(0).getName().equalsIgnoreCase("dual"))
             from = null;
+
+        // [#9061] Register tables in scope as early as possible
+        // TODO: Move this into parseTables() so lateral joins can profit from lookups (?)
+        if (from != null)
+            for (Table<?> table : from)
+                ctx.tableScope.set(table.getName(), table);
 
         if (parseKeywordIf(ctx, "WHERE"))
             where = parseCondition(ctx);
@@ -10930,19 +10947,22 @@ final class ParserImpl implements Parser {
 }
 
 final class ParserContext {
-    private static final boolean          PRO_EDITION     = false ;
+    private static final boolean            PRO_EDITION     = false ;
 
-    final DSLContext                      dsl;
-    final Locale                          locale;
-    final Meta                            meta;
-    final char[]                          sql;
-    private final ParseWithMetaLookups    metaLookups;
-    private boolean                       metaLookupsForceIgnore;
-    private int                           position        = 0;
-    private boolean                       ignoreHints     = true;
-    private final Object[]                bindings;
-    private int                           bindIndex       = 0;
-    private String                        delimiter       = ";";
+    final DSLContext                        dsl;
+    final Locale                            locale;
+    final Meta                              meta;
+    final char[]                            sql;
+    private final ParseWithMetaLookups      metaLookups;
+    private boolean                         metaLookupsForceIgnore;
+    private int                             position        = 0;
+    private boolean                         ignoreHints     = true;
+    private final Object[]                  bindings;
+    private int                             bindIndex       = 0;
+    private String                          delimiter       = ";";
+    final ScopeStack<String, Table<?>>      tableScope      = new ScopeStack<>(null);
+    final ScopeStack<String, FieldProxy<?>> lookupFields    = new ScopeStack<>(null);
+    private boolean                         scopeClear      = false;
 
 
 
@@ -11175,6 +11195,66 @@ final class ParserContext {
               + (sql.length > position + 80 ? "..." : "");
     }
 
+    void scopeStart() {
+        tableScope.scopeStart();
+        lookupFields.scopeStart();
+        lookupFields.setAll(null);
+    }
+
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    void scopeEnd() {
+        List<FieldProxy<?>> retain = new ArrayList<>();
+
+        for (FieldProxy<?> f : lookupFields) {
+            Field<?> f1 = null;
+
+            for (Table<?> t : tableScope) {
+                Field<?> f2;
+                if ((f2 = t.field(f.getName())) != null) {
+                    if (f1 != null) {
+                        position(f.position);
+                        throw exception("Ambiguous field identifier");
+                    }
+
+                    f1 = f2;
+                }
+            }
+
+            if (f1 != null) {
+                f.delegate = (AbstractField) f1;
+                f.sql = null;
+            }
+            else
+                retain.add(f);
+        }
+
+        lookupFields.scopeEnd();
+        tableScope.scopeEnd();
+
+        for (FieldProxy<?> r : retain)
+            if (lookupFields.get(r.getName()) == null)
+                if (lookupFields.inScope())
+                    lookupFields.set(r.getName(), r);
+                else
+                    unknownField(r);
+    }
+
+    void scopeClear() {
+        scopeClear = true;
+    }
+
+    void scopeResolve() {
+        if (!lookupFields.isEmpty())
+            unknownField(lookupFields.iterator().next());
+    }
+
+    void unknownField(FieldProxy<?> field) {
+        if (!scopeClear && !metaLookupsForceIgnore && metaLookups == THROW_ON_FAILURE) {
+            position(field.position);
+            throw exception("Unknown field identifier");
+        }
+    }
+
     Table<?> lookupTable(Name name) {
         if (meta != null) {
             List<Table<?>> tables;
@@ -11211,10 +11291,14 @@ final class ParserContext {
             }
         }
 
-        if (!metaLookupsForceIgnore && metaLookups == THROW_ON_FAILURE)
-            throw exception("Unknown field identifier");
+        if (metaLookups == ParseWithMetaLookups.OFF)
+            return field(name);
 
-        return field(name);
+        FieldProxy<?> field = lookupFields.get(name.last());
+        if (field == null)
+            lookupFields.set(name.last(), field = new FieldProxy<>((AbstractField<Object>) field(name), sql, position));
+
+        return field;
     }
 
     @Override

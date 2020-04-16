@@ -762,7 +762,7 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     }
 
     @Override
-    public LikeEscapeStep like(QuantifiedSelect<Record1<String>> query) {
+    public final LikeEscapeStep like(QuantifiedSelect<Record1<String>> query) {
         return new QuantifiedComparisonCondition(query, this, LIKE);
     }
 
@@ -817,7 +817,7 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     }
 
     @Override
-    public LikeEscapeStep notLike(QuantifiedSelect<Record1<String>> query) {
+    public final LikeEscapeStep notLike(QuantifiedSelect<Record1<String>> query) {
         return new QuantifiedComparisonCondition(query, this, NOT_LIKE);
     }
 

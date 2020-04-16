@@ -89,6 +89,11 @@ final class ScopeStack<K, V> implements Iterable<V> {
             }
         }
     }
+
+    final boolean isEmpty() {
+        return !iterator().hasNext();
+    }
+
     @Override
     public final Iterator<V> iterator() {
         return new Iterator<V>() {
@@ -130,6 +135,11 @@ final class ScopeStack<K, V> implements Iterable<V> {
                 throw new UnsupportedOperationException("remove");
             }
         };
+    }
+
+    final void setAll(V value) {
+        for (K key : stack().keySet())
+            set(key, value);
     }
 
     final void set(K key, V value) {
@@ -195,5 +205,10 @@ final class ScopeStack<K, V> implements Iterable<V> {
 
     interface Constructor<V> {
         V create(int scopeLevel);
+    }
+
+    @Override
+    public String toString() {
+        return stack().toString();
     }
 }

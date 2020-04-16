@@ -284,16 +284,6 @@ final class ArrayTable extends AbstractTable<Record> {
         }
 
         @Override
-        public final Table<Record> as(Name as) {
-            return new TableAlias<>(this, as);
-        }
-
-        @Override
-        public final Table<Record> as(Name as, Name... fields) {
-            return new TableAlias<>(this, as, fields);
-        }
-
-        @Override
         final Fields<Record> fields0() {
             return ArrayTable.this.fields0();
         }

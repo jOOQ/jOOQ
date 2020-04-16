@@ -366,12 +366,12 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
 
     @Override
     public /* non-final for covariant overriding */ Table<R> as(Name alias) {
-        throw new UnsupportedOperationException("Subtypes should override this method. If using the jOOQ code generator, please re-generate your code");
+        return new TableAlias<>(this, alias);
     }
 
     @Override
     public /* non-final for covariant overriding */ Table<R> as(Name alias, Name... fieldAliases) {
-        throw new UnsupportedOperationException("Subtypes should override this method. If using the jOOQ code generator, please re-generate your code");
+        return new TableAlias<>(this, alias, fieldAliases);
     }
 
 

@@ -38,10 +38,8 @@
 package org.jooq.impl;
 
 import org.jooq.Context;
-import org.jooq.Name;
 import org.jooq.QueryPart;
 import org.jooq.Record;
-import org.jooq.Table;
 import org.jooq.TableOptions;
 
 /**
@@ -66,16 +64,6 @@ final class SQLTable extends AbstractTable<Record> {
     @Override
     public final Class<? extends Record> getRecordType() {
         return RecordImplN.class;
-    }
-
-    @Override
-    public final Table<Record> as(Name alias) {
-        return new TableAlias<>(this, alias);
-    }
-
-    @Override
-    public final Table<Record> as(Name alias, Name... fieldAliases) {
-        return new TableAlias<>(this, alias, fieldAliases);
     }
 
     @Override

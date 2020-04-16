@@ -46,7 +46,6 @@ import java.util.List;
 
 import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableOptions;
@@ -73,16 +72,6 @@ final class RowsFrom extends AbstractTable<Record> {
     public final Class<? extends Record> getRecordType() {
         // TODO: [#4695] Calculate the correct Record[B] type
         return RecordImplN.class;
-    }
-
-    @Override
-    public final Table<Record> as(Name alias) {
-        return new TableAlias<>(this, alias);
-    }
-
-    @Override
-    public final Table<Record> as(Name alias, Name... fieldAliases) {
-        return new TableAlias<>(this, alias, fieldAliases);
     }
 
     @Override

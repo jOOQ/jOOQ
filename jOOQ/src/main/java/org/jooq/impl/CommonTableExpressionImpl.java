@@ -44,10 +44,8 @@ import java.util.List;
 import org.jooq.CommonTableExpression;
 import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Select;
-import org.jooq.Table;
 import org.jooq.TableOptions;
 
 /**
@@ -75,16 +73,6 @@ final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R>
     @Override
     public final Class<? extends R> getRecordType() {
         return select.getRecordType();
-    }
-
-    @Override
-    public final Table<R> as(Name alias) {
-        return new TableAlias<>(this, alias);
-    }
-
-    @Override
-    public final Table<R> as(Name alias, Name... fieldAliases) {
-        return new TableAlias<>(this, alias, fieldAliases);
     }
 
     @Override

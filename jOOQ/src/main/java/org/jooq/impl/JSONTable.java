@@ -70,7 +70,6 @@ import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.SelectField;
-import org.jooq.Table;
 import org.jooq.TableOptions;
 import org.jooq.conf.ParamType;
 
@@ -270,11 +269,6 @@ implements
 
 
         ctx.visit(path);
-    }
-
-    @Override
-    public final Table<Record> as(Name alias) {
-        return new TableAlias<>(this, alias);
     }
 
     @Override

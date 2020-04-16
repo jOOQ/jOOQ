@@ -1332,7 +1332,7 @@ final class ParserImpl implements Parser {
         // TODO: Move this into parseTables() so lateral joins can profit from lookups (?)
         if (from != null)
             for (Table<?> table : from)
-                ctx.tableScope.set(table.getName(), table);
+                ctx.scope(table);
 
         if (parseKeywordIf(ctx, "WHERE"))
             where = parseCondition(ctx);
@@ -1714,6 +1714,8 @@ final class ParserImpl implements Parser {
                 table = table.as(parseIdentifierIf(ctx));
         }
 
+        ctx.scope(table);
+
         DeleteUsingStep<?> s1 = with == null ? ctx.dsl.delete(table) : with.delete(table);
         DeleteWhereStep<?> s2 = parseKeywordIf(ctx, "USING") ? s1.using(parseTables(ctx)) : s1;
         DeleteOrderByStep<?> s3 = parseKeywordIf(ctx, "WHERE") ? s2.where(parseCondition(ctx)) : s2;
@@ -1727,6 +1729,7 @@ final class ParserImpl implements Parser {
     }
 
     private static final Insert<?> parseInsert(ParserContext ctx, WithImpl with) {
+        ctx.scopeStart();
         if (!parseKeywordIf(ctx, "INS"))
             parseKeyword(ctx, "INSERT");
 
@@ -1742,130 +1745,139 @@ final class ParserImpl implements Parser {
             && (alias = parseIdentifierIf(ctx)) != null)
             table = table.as(alias);
 
+        ctx.scope(table);
+
         InsertSetStep<?> s1 = (with == null ? ctx.dsl.insertInto(table) : with.insertInto(table));
         Field<?>[] fields = null;
 
         if (parseIf(ctx, '(')) {
-            fields = Tools.fieldsByName(parseIdentifiers(ctx).toArray(EMPTY_NAME));
+            fields = parseFieldNames(ctx).toArray(EMPTY_FIELD);
             parse(ctx, ')');
         }
 
         InsertOnDuplicateStep<?> onDuplicate;
         InsertReturningStep<?> returning;
 
-        if (parseKeywordIf(ctx, "VALUES")) {
-            List<List<Field<?>>> allValues = new ArrayList<>();
+        ctx.scopeEnd();
+        ctx.scopeStart();
+        try {
+            if (parseKeywordIf(ctx, "VALUES")) {
+                List<List<Field<?>>> allValues = new ArrayList<>();
 
-            valuesLoop:
-            do {
-                parse(ctx, '(');
-
-                // [#6936] MySQL treats an empty VALUES() clause as the same thing as the standard DEFAULT VALUES
-                if (fields == null && parseIf(ctx, ')'))
-                    break valuesLoop;
-
-                List<Field<?>> values = new ArrayList<>();
+                valuesLoop:
                 do {
-                    Field<?> value = parseKeywordIf(ctx, "DEFAULT") ? default_() : parseField(ctx);
-                    values.add(value);
+                    parse(ctx, '(');
+
+                    // [#6936] MySQL treats an empty VALUES() clause as the same thing as the standard DEFAULT VALUES
+                    if (fields == null && parseIf(ctx, ')'))
+                        break valuesLoop;
+
+                    List<Field<?>> values = new ArrayList<>();
+                    do {
+                        Field<?> value = parseKeywordIf(ctx, "DEFAULT") ? default_() : parseField(ctx);
+                        values.add(value);
+                    }
+                    while (parseIf(ctx, ','));
+
+                    if (fields != null && fields.length != values.size())
+                        throw ctx.exception("Insert field size (" + fields.length + ") must match values size (" + values.size() + ")");
+
+                    allValues.add(values);
+                    parse(ctx, ')');
                 }
                 while (parseIf(ctx, ','));
 
-                if (fields != null && fields.length != values.size())
-                    throw ctx.exception("Insert field size (" + fields.length + ") must match values size (" + values.size() + ")");
-
-                allValues.add(values);
-                parse(ctx, ')');
-            }
-            while (parseIf(ctx, ','));
-
-            if (allValues.isEmpty()) {
-                returning = onDuplicate = s1.defaultValues();
-            }
-            else {
-                InsertValuesStepN<?> step2 = (fields != null)
-                    ? s1.columns(fields)
-                    : (InsertValuesStepN<?>) s1;
-
-                for (List<Field<?>> values : allValues)
-                    step2 = step2.values(values);
-
-                returning = onDuplicate = step2;
-            }
-        }
-        else if (parseKeywordIf(ctx, "SET")) {
-            Map<Field<?>, Object> map = parseSetClauseList(ctx);
-
-            returning = onDuplicate =  s1.set(map);
-        }
-        else if (peekKeyword(ctx, "SELECT", false, true, false)
-              || peekKeyword(ctx, "SEL", false, true, false)){
-            SelectQueryImpl<Record> select = parseSelect(ctx);
-
-            returning = onDuplicate = (fields == null)
-                ? s1.select(select)
-                : s1.columns(fields).select(select);
-        }
-        else if (parseKeywordIf(ctx, "DEFAULT VALUES")) {
-            if (fields != null)
-                throw ctx.notImplemented("DEFAULT VALUES without INSERT field list");
-            else
-                returning = onDuplicate = s1.defaultValues();
-        }
-        else
-            throw ctx.expected("DEFAULT VALUES", "SELECT", "SET", "VALUES");
-
-        if (parseKeywordIf(ctx, "ON")) {
-            if (parseKeywordIf(ctx, "DUPLICATE KEY UPDATE")) {
-                parseKeywordIf(ctx, "SET");
-
-                InsertOnConflictWhereStep<?> where = onDuplicate.onDuplicateKeyUpdate().set(parseSetClauseList(ctx));
-
-                if (parseKeywordIf(ctx, "WHERE"))
-                    returning = where.where(parseCondition(ctx));
-                else
-                    returning = where;
-            }
-            else if (parseKeywordIf(ctx, "DUPLICATE KEY IGNORE")) {
-                returning = onDuplicate.onDuplicateKeyIgnore();
-            }
-            else if (parseKeywordIf(ctx, "CONFLICT")) {
-                InsertOnConflictDoUpdateStep<?> doUpdate;
-
-                if (parseKeywordIf(ctx, "ON CONSTRAINT")) {
-                    doUpdate = onDuplicate.onConflictOnConstraint(parseName(ctx));
-                }
-                else if (parseIf(ctx, '(')) {
-                    doUpdate = onDuplicate.onConflict(parseFieldNames(ctx));
-                    parse(ctx, ')');
+                if (allValues.isEmpty()) {
+                    returning = onDuplicate = s1.defaultValues();
                 }
                 else {
-                    doUpdate = onDuplicate.onConflict();
-                }
+                    InsertValuesStepN<?> step2 = (fields != null)
+                        ? s1.columns(fields)
+                        : (InsertValuesStepN<?>) s1;
 
-                parseKeyword(ctx, "DO");
-                if (parseKeywordIf(ctx, "NOTHING")) {
-                    returning = doUpdate.doNothing();
+                    for (List<Field<?>> values : allValues)
+                        step2 = step2.values(values);
+
+                    returning = onDuplicate = step2;
                 }
-                else if (parseKeywordIf(ctx, "UPDATE SET")) {
-                    InsertOnConflictWhereStep<?> where = doUpdate.doUpdate().set(parseSetClauseList(ctx));
+            }
+            else if (parseKeywordIf(ctx, "SET")) {
+                Map<Field<?>, Object> map = parseSetClauseList(ctx);
+
+                returning = onDuplicate =  s1.set(map);
+            }
+            else if (peekKeyword(ctx, "SELECT", false, true, false)
+                  || peekKeyword(ctx, "SEL", false, true, false)){
+                SelectQueryImpl<Record> select = parseSelect(ctx);
+
+                returning = onDuplicate = (fields == null)
+                    ? s1.select(select)
+                    : s1.columns(fields).select(select);
+            }
+            else if (parseKeywordIf(ctx, "DEFAULT VALUES")) {
+                if (fields != null)
+                    throw ctx.notImplemented("DEFAULT VALUES without INSERT field list");
+                else
+                    returning = onDuplicate = s1.defaultValues();
+            }
+            else
+                throw ctx.expected("DEFAULT VALUES", "SELECT", "SET", "VALUES");
+
+            if (parseKeywordIf(ctx, "ON")) {
+                if (parseKeywordIf(ctx, "DUPLICATE KEY UPDATE")) {
+                    parseKeywordIf(ctx, "SET");
+
+                    InsertOnConflictWhereStep<?> where = onDuplicate.onDuplicateKeyUpdate().set(parseSetClauseList(ctx));
 
                     if (parseKeywordIf(ctx, "WHERE"))
                         returning = where.where(parseCondition(ctx));
                     else
                         returning = where;
                 }
-                else
-                    throw ctx.expected("NOTHING", "UPDATE");
-            }
-            else
-                throw ctx.expected("CONFLICT", "DUPLICATE");
-        }
+                else if (parseKeywordIf(ctx, "DUPLICATE KEY IGNORE")) {
+                    returning = onDuplicate.onDuplicateKeyIgnore();
+                }
+                else if (parseKeywordIf(ctx, "CONFLICT")) {
+                    InsertOnConflictDoUpdateStep<?> doUpdate;
 
-        if (parseKeywordIf(ctx, "RETURNING"))
-            return returning.returning(parseSelectList(ctx));
-        else
-            return returning;
+                    if (parseKeywordIf(ctx, "ON CONSTRAINT")) {
+                        doUpdate = onDuplicate.onConflictOnConstraint(parseName(ctx));
+                    }
+                    else if (parseIf(ctx, '(')) {
+                        doUpdate = onDuplicate.onConflict(parseFieldNames(ctx));
+                        parse(ctx, ')');
+                    }
+                    else {
+                        doUpdate = onDuplicate.onConflict();
+                    }
+
+                    parseKeyword(ctx, "DO");
+                    if (parseKeywordIf(ctx, "NOTHING")) {
+                        returning = doUpdate.doNothing();
+                    }
+                    else if (parseKeywordIf(ctx, "UPDATE SET")) {
+                        InsertOnConflictWhereStep<?> where = doUpdate.doUpdate().set(parseSetClauseList(ctx));
+
+                        if (parseKeywordIf(ctx, "WHERE"))
+                            returning = where.where(parseCondition(ctx));
+                        else
+                            returning = where;
+                    }
+                    else
+                        throw ctx.expected("NOTHING", "UPDATE");
+                }
+                else
+                    throw ctx.expected("CONFLICT", "DUPLICATE");
+            }
+
+            if (parseKeywordIf(ctx, "RETURNING"))
+                return returning.returning(parseSelectList(ctx));
+            else
+                return returning;
+        }
+        finally {
+            ctx.scopeEnd();
+        }
     }
 
     private static final Update<?> parseUpdate(ParserContext ctx, WithImpl with) {
@@ -1890,6 +1902,8 @@ final class ParserImpl implements Parser {
             table = table.as(parseIdentifier(ctx));
         else if (!peekKeyword(ctx, "SET"))
             table = table.as(parseIdentifierIf(ctx));
+
+        ctx.scope(table);
 
         UpdateSetFirstStep<?> s1 = (with == null ? ctx.dsl.update(table) : with.update(table));
 
@@ -9098,7 +9112,7 @@ final class ParserImpl implements Parser {
         if (name == null)
             return null;
 
-        return table(name);
+        return ctx.lookupTable(name);
     }
 
     private static final Field<?> parseFieldNameOrSequenceExpression(ParserContext ctx) {
@@ -9142,7 +9156,7 @@ final class ParserImpl implements Parser {
     }
 
     private static final TableField<?, ?> parseFieldName(ParserContext ctx) {
-        return (TableField<?, ?>) field(parseName(ctx));
+        return (TableField<?, ?>) ctx.lookupField(parseName(ctx));
     }
 
     private static final List<Field<?>> parseFieldNames(ParserContext ctx) {
@@ -10947,22 +10961,22 @@ final class ParserImpl implements Parser {
 }
 
 final class ParserContext {
-    private static final boolean            PRO_EDITION     = false ;
+    private static final boolean                    PRO_EDITION     = false ;
 
-    final DSLContext                        dsl;
-    final Locale                            locale;
-    final Meta                              meta;
-    final char[]                            sql;
-    private final ParseWithMetaLookups      metaLookups;
-    private boolean                         metaLookupsForceIgnore;
-    private int                             position        = 0;
-    private boolean                         ignoreHints     = true;
-    private final Object[]                  bindings;
-    private int                             bindIndex       = 0;
-    private String                          delimiter       = ";";
-    final ScopeStack<String, Table<?>>      tableScope      = new ScopeStack<>(null);
-    final ScopeStack<String, FieldProxy<?>> lookupFields    = new ScopeStack<>(null);
-    private boolean                         scopeClear      = false;
+    final DSLContext                                dsl;
+    final Locale                                    locale;
+    final Meta                                      meta;
+    final char[]                                    sql;
+    private final ParseWithMetaLookups              metaLookups;
+    private boolean                                 metaLookupsForceIgnore;
+    private int                                     position        = 0;
+    private boolean                                 ignoreHints     = true;
+    private final Object[]                          bindings;
+    private int                                     bindIndex       = 0;
+    private String                                  delimiter       = ";";
+    private final ScopeStack<String, Table<?>>      tableScope      = new ScopeStack<>(null);
+    private final ScopeStack<String, FieldProxy<?>> lookupFields    = new ScopeStack<>(null);
+    private boolean                                 scopeClear      = false;
 
 
 
@@ -11193,6 +11207,10 @@ final class ParserContext {
               + "[*]"
               + substring(position, Math.min(sql.length, position + 80))
               + (sql.length > position + 80 ? "..." : "");
+    }
+
+    void scope(Table<?> table) {
+        tableScope.set(table.getName(), table);
     }
 
     void scopeStart() {

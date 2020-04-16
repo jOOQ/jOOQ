@@ -560,16 +560,6 @@ final class FieldProxy<T> implements Field<T>, QueryPartInternal {
     }
 
     @Override
-    public final Condition isDocument() {
-        return delegate.isDocument();
-    }
-
-    @Override
-    public final Condition isNotDocument() {
-        return delegate.isNotDocument();
-    }
-
-    @Override
     public final Condition isJson() {
         return delegate.isJson();
     }

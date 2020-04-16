@@ -250,10 +250,12 @@ final class FieldProxy<T> implements Field<T>, QueryPartInternal {
         return delegate.as(otherField);
     }
 
+
     @Override
     public final Field<T> as(Function<? super Field<T>, ? extends String> aliasFunction) {
         return delegate.as(aliasFunction);
     }
+
 
     @Override
     public final <Z> Field<Z> cast(Field<Z> field) {

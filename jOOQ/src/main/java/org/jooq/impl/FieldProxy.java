@@ -67,6 +67,8 @@ import org.jooq.Result;
 import org.jooq.Select;
 import org.jooq.SortField;
 import org.jooq.SortOrder;
+import org.jooq.Table;
+import org.jooq.TableField;
 import org.jooq.WindowIgnoreNullsStep;
 import org.jooq.WindowPartitionByStep;
 import org.jooq.exception.DataAccessException;
@@ -78,7 +80,7 @@ import org.jooq.exception.DataAccessException;
  * @author Lukas Eder
  */
 @SuppressWarnings("unchecked")
-final class FieldProxy<T> implements Field<T>, QueryPartInternal {
+final class FieldProxy<T> implements TableField<Record, T>, QueryPartInternal {
 
     /**
      * Generated UID
@@ -1830,5 +1832,10 @@ final class FieldProxy<T> implements Field<T>, QueryPartInternal {
     @Override
     public final Field<T> coalesce(Field<T> option, Field<?>... options) {
         return delegate.coalesce(option, options);
+    }
+
+    @Override
+    public final Table<Record> getTable() {
+        return delegate instanceof TableField ? ((TableField<Record, ?>) delegate).getTable() : null;
     }
 }

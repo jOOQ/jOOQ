@@ -57,6 +57,7 @@ import org.jooq.DatePart;
 import org.jooq.Field;
 import org.jooq.LikeEscapeStep;
 import org.jooq.Name;
+// ...
 import org.jooq.QuantifiedSelect;
 import org.jooq.QueryPartInternal;
 import org.jooq.Record;
@@ -1249,10 +1250,15 @@ final class FieldProxy<T> implements Field<T>, QueryPartInternal {
         return delegate.compare(comparator, query);
     }
 
-    @Override
-    public final Field<T> plus() {
-        return delegate.plus();
-    }
+
+
+
+
+
+
+
+
+
 
     @Override
     public final Field<Integer> sign() {

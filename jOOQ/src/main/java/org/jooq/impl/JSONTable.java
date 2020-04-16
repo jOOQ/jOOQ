@@ -37,13 +37,16 @@
  */
 package org.jooq.impl;
 
+// ...
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.Keywords.K_COLUMNS;
+import static org.jooq.impl.Keywords.K_ERROR;
 import static org.jooq.impl.Keywords.K_FOR;
 import static org.jooq.impl.Keywords.K_JSON_TABLE;
+import static org.jooq.impl.Keywords.K_ON;
 import static org.jooq.impl.Keywords.K_ORDINALITY;
 import static org.jooq.impl.Keywords.K_PATH;
 import static org.jooq.impl.Names.N_JSON_TABLE;
@@ -205,8 +208,13 @@ implements
 
 
 
+            ctx.formatIndentEnd()
+               .formatNewLine()
+               .sql(')');
+        }
+    }
 
-
+    private void acceptJSONPath(Context<?> ctx) {
 
 
 

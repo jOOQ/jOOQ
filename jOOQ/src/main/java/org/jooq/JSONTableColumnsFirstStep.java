@@ -40,6 +40,7 @@ package org.jooq;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
 // ...
+import static org.jooq.SQLDialect.POSTGRES;
 
 /**
  * A step in the construction of an <code>JSON_TABLE</code> expression.
@@ -52,42 +53,42 @@ public interface JSONTableColumnsFirstStep {
      * Add a column to the <code>COLUMNS</code> clause of the
      * <code>JSON_TABLE</code> expression.
      */
-    @Support({ MYSQL })
+    @Support({ MYSQL, POSTGRES })
     JSONTableColumnForOrdinalityStep column(String name);
 
     /**
      * Add a column to the <code>COLUMNS</code> clause of the
      * <code>JSON_TABLE</code> expression.
      */
-    @Support({ MYSQL })
+    @Support({ MYSQL, POSTGRES })
     JSONTableColumnForOrdinalityStep column(Name name);
 
     /**
      * Add a column to the <code>COLUMNS</code> clause of the
      * <code>JSON_TABLE</code> expression.
      */
-    @Support({ MYSQL })
+    @Support({ MYSQL, POSTGRES })
     JSONTableColumnPathStep column(Field<?> name);
 
     /**
      * Add a column to the <code>COLUMNS</code> clause of the
      * <code>JSON_TABLE</code> expression.
      */
-    @Support({ MYSQL })
+    @Support({ MYSQL, POSTGRES })
     JSONTableColumnPathStep column(String name, DataType<?> type);
 
     /**
      * Add a column to the <code>COLUMNS</code> clause of the
      * <code>JSON_TABLE</code> expression.
      */
-    @Support({ MYSQL })
+    @Support({ MYSQL, POSTGRES })
     JSONTableColumnPathStep column(Name name, DataType<?> type);
 
     /**
      * Add a column to the <code>COLUMNS</code> clause of the
      * <code>JSON_TABLE</code> expression.
      */
-    @Support({ MYSQL })
+    @Support({ MYSQL, POSTGRES })
     JSONTableColumnPathStep column(Field<?> name, DataType<?> type);
 
 }

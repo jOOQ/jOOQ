@@ -40,6 +40,7 @@ package org.jooq;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
 // ...
+import static org.jooq.SQLDialect.POSTGRES;
 
 /**
  * A step in the construction of an <code>JSON_TABLE</code> expression.
@@ -52,7 +53,7 @@ public interface JSONTableColumnPathStep extends JSONTableColumnForOrdinalitySte
      * Specify the <code>PATH</code> of a column in the <code>COLUMNS</code>
      * clause of the <code>JSON_TABLE</code> predicate.
      */
-    @Support({ MYSQL })
+    @Support({ MYSQL, POSTGRES })
     JSONTableColumnsStep path(String path);
 
 }

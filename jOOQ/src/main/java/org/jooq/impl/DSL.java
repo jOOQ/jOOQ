@@ -240,6 +240,7 @@ import org.jooq.JSONEntry;
 import org.jooq.JSONExistsOnStep;
 import org.jooq.JSONObjectAggNullStep;
 import org.jooq.JSONObjectNullStep;
+import org.jooq.JSONTableColumnsFirstStep;
 import org.jooq.JSONValueOnStep;
 import org.jooq.Keyword;
 // ...
@@ -18763,6 +18764,38 @@ public class DSL {
     @Support({ MARIADB, MYSQL, POSTGRES })
     public static JSONExistsOnStep jsonbExists(Field<JSONB> field, Field<String> path) {
         return new JSONExists(field, nullSafe(path));
+    }
+
+    /**
+     * The JSON table function.
+     */
+    @Support({ MYSQL })
+    public static JSONTableColumnsFirstStep jsonTable(JSON json, String path) {
+        return jsonTable(Tools.field(json), Tools.field(path));
+    }
+
+    /**
+     * The JSON table function.
+     */
+    @Support({ MYSQL })
+    public static JSONTableColumnsFirstStep jsonTable(Field<JSON> json, Field<String> path) {
+        return new JSONTable(nullSafe(json), nullSafe(path));
+    }
+
+    /**
+     * The JSON table function.
+     */
+    @Support({ MYSQL })
+    public static JSONTableColumnsFirstStep jsonbTable(JSONB json, String path) {
+        return jsonbTable(Tools.field(json), Tools.field(path));
+    }
+
+    /**
+     * The JSON table function.
+     */
+    @Support({ MYSQL })
+    public static JSONTableColumnsFirstStep jsonbTable(Field<JSONB> json, Field<String> path) {
+        return new JSONTable(nullSafe(json), nullSafe(path));
     }
 
     // -------------------------------------------------------------------------

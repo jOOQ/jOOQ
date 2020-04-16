@@ -140,7 +140,7 @@ implements
 
     @Override
     public final XMLTable column(String name) {
-        return column(DSL.field(name));
+        return column(DSL.name(name));
     }
 
     @Override
@@ -155,7 +155,7 @@ implements
 
     @Override
     public final XMLTable column(String name, DataType<?> type) {
-        return column(DSL.field(name), type);
+        return column(DSL.name(name), type);
     }
 
     @Override

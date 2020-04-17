@@ -47,6 +47,7 @@ import static org.jooq.impl.Names.N_JSON_AGG;
 import static org.jooq.impl.Names.N_JSON_ARRAYAGG;
 import static org.jooq.impl.Names.N_JSON_MERGE;
 import static org.jooq.impl.SQLDataType.JSON;
+import static org.jooq.impl.SQLDataType.VARCHAR;
 
 import java.util.Collection;
 
@@ -84,13 +85,16 @@ implements JSONArrayAggOrderByStep<J> {
             case MYSQL: {
                 // Workaround for https://jira.mariadb.org/browse/MDEV-21912,
                 // https://jira.mariadb.org/browse/MDEV-21914, and other issues
-                Field<?> concat = Tools.isEmpty(withinGroupOrderBy)
-                    ? DSL.concat(inline('['), groupConcat(arguments.get(0)), inline(']'))
-                    : DSL.concat(inline('['), groupConcat(arguments.get(0)).orderBy(withinGroupOrderBy), inline(']'));
-
-                ctx.visit(N_JSON_MERGE).sql('(').visit(inline("[]")).sql(", ").visit(concat).sql(')');
+                ctx.visit(N_JSON_MERGE).sql('(').visit(inline("[]")).sql(", ").visit(groupConcatEmulation()).sql(')');
                 break;
             }
+
+
+
+
+
+
+
 
 
 
@@ -113,6 +117,12 @@ implements JSONArrayAggOrderByStep<J> {
                 acceptStandard(ctx);
                 break;
         }
+    }
+
+    private final Field<?> groupConcatEmulation() {
+        return Tools.isEmpty(withinGroupOrderBy)
+            ? DSL.concat(inline('['), groupConcat(arguments.get(0)), inline(']'))
+            : DSL.concat(inline('['), groupConcat(arguments.get(0)).orderBy(withinGroupOrderBy), inline(']'));
     }
 
     private final void acceptStandard(Context<?> ctx) {

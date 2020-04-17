@@ -64,6 +64,7 @@ import static org.jooq.Operator.OR;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
+// ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
@@ -98,6 +99,7 @@ import static org.jooq.impl.CombineOperator.UNION_ALL;
 import static org.jooq.impl.DSL.asterisk;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.jsonArrayAgg;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.orderBy;
@@ -166,6 +168,7 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.GroupField;
 import org.jooq.JSON;
+import org.jooq.JSONArrayAggOrderByStep;
 import org.jooq.JSONEntry;
 import org.jooq.JSONObjectNullStep;
 import org.jooq.JoinType;
@@ -529,6 +532,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             && containsTable(dmlTable)) {
             context.visit(DSL.select(asterisk()).from(DSL.table(this).as("t")));
         }
+
 
 
 

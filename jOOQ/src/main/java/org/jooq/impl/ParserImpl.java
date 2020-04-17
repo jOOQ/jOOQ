@@ -155,6 +155,7 @@ import static org.jooq.impl.DSL.isnull;
 import static org.jooq.impl.DSL.isoDayOfWeek;
 import static org.jooq.impl.DSL.jsonEntry;
 import static org.jooq.impl.DSL.jsonExists;
+import static org.jooq.impl.DSL.jsonTable;
 import static org.jooq.impl.DSL.jsonValue;
 import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.lag;
@@ -447,6 +448,8 @@ import org.jooq.JSONArrayNullStep;
 import org.jooq.JSONEntry;
 import org.jooq.JSONObjectAggNullStep;
 import org.jooq.JSONObjectNullStep;
+import org.jooq.JSONTableColumnPathStep;
+import org.jooq.JSONTableColumnsStep;
 import org.jooq.JSONValueDefaultStep;
 import org.jooq.JSONValueOnStep;
 import org.jooq.JoinType;
@@ -5112,6 +5115,33 @@ final class ParserImpl implements Parser {
             result = step == null
                 ? generateSeries(from, to)
                 : generateSeries(from, to, step);
+        }
+        else if (parseFunctionNameIf(ctx, "JSON_TABLE")) {
+            parse(ctx, '(');
+
+            Field json = parseField(ctx);
+            parse(ctx, ',');
+            Field path = toField(ctx, parseConcat(ctx, Type.S));
+            JSONTableColumnsStep s1 = (JSONTableColumnsStep) jsonTable(json, path);
+            parseKeyword(ctx, "COLUMNS");
+            parse(ctx, '(');
+
+            do {
+                Name fieldName = parseIdentifier(ctx);
+
+                if (parseKeywordIf(ctx, "FOR ORDINALITY")) {
+                    s1 = s1.column(fieldName).forOrdinality();
+                }
+                else {
+                    JSONTableColumnPathStep s2 = s1.column(fieldName, parseDataType(ctx));
+                    s1 = parseKeywordIf(ctx, "PATH") ? s2.path(parseStringLiteral(ctx)) : s2;
+                }
+            }
+            while (parseIf(ctx, ','));
+
+            parse(ctx, ')');
+            parse(ctx, ')');
+            result = s1;
         }
         else if (parseFunctionNameIf(ctx, "XMLTABLE")) {
             parse(ctx, '(');

@@ -44,7 +44,6 @@ import static org.jooq.impl.Keywords.K_VALUE;
 
 import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.JSON;
 import org.jooq.JSONEntry;
 
 
@@ -80,7 +79,6 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T> {
     @Override
     public void accept(Context<?> ctx) {
         switch (ctx.family()) {
-
 
 
 

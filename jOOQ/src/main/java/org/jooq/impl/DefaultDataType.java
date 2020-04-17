@@ -74,12 +74,15 @@ import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.EnumType;
 import org.jooq.Field;
+import org.jooq.JSON;
+import org.jooq.JSONB;
 import org.jooq.Nullability;
 // ...
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.TableRecord;
 import org.jooq.UDTRecord;
+import org.jooq.XML;
 import org.jooq.exception.MappingException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.Convert;
@@ -1088,6 +1091,16 @@ public class DefaultDataType<T> implements DataType<T> {
     @Override
     public final boolean isEnum() {
         return EnumType.class.isAssignableFrom(tType);
+    }
+
+    @Override
+    public final boolean isJSON() {
+        return tType == JSON.class || tType == JSONB.class;
+    }
+
+    @Override
+    public final boolean isXML() {
+        return tType == XML.class;
     }
 
     // ------------------------------------------------------------------------

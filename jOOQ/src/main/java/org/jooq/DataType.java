@@ -705,4 +705,14 @@ public interface DataType<T> extends Serializable {
      * Whether this data type is an enum type.
      */
     boolean isEnum();
+
+    /**
+     * Whether this data type is a JSON type.
+     */
+    boolean isJSON();
+
+    /**
+     * Whether this data type is an XML type.
+     */
+    boolean isXML();
 }

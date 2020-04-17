@@ -61,7 +61,20 @@ public final class XML implements Serializable {
         return data;
     }
 
+    /**
+     * Create a new {@link XML} instance from string data input.
+     */
     public static final XML valueOf(String data) {
+        return new XML(data);
+    }
+
+    /**
+     * Create a new {@link XML} instance from string data input.
+     * <p>
+     * This is the same as {@link #valueOf(String)}, but it can be static
+     * imported.
+     */
+    public static final XML xml(String data) {
         return new XML(data);
     }
 

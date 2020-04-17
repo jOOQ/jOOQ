@@ -61,7 +61,20 @@ public final class JSONB implements Serializable {
         return data;
     }
 
+    /**
+     * Create a new {@link JSONB} instance from string data input.
+     */
     public static final JSONB valueOf(String data) {
+        return new JSONB(data);
+    }
+
+    /**
+     * Create a new {@link JSONB} instance from string data input.
+     * <p>
+     * This is the same as {@link #valueOf(String)}, but it can be static
+     * imported.
+     */
+    public static final JSONB json(String data) {
         return new JSONB(data);
     }
 

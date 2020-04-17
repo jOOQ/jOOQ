@@ -61,7 +61,20 @@ public final class JSON implements Serializable {
         return data;
     }
 
+    /**
+     * Create a new {@link JSON} instance from string data input.
+     */
     public static final JSON valueOf(String data) {
+        return new JSON(data);
+    }
+
+    /**
+     * Create a new {@link JSON} instance from string data input.
+     * <p>
+     * This is the same as {@link #valueOf(String)}, but it can be static
+     * imported.
+     */
+    public static final JSON json(String data) {
         return new JSON(data);
     }
 

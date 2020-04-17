@@ -74,7 +74,7 @@ public final class JSONB implements Serializable {
      * This is the same as {@link #valueOf(String)}, but it can be static
      * imported.
      */
-    public static final JSONB json(String data) {
+    public static final JSONB jsonb(String data) {
         return new JSONB(data);
     }
 

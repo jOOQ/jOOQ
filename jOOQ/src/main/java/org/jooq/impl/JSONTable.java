@@ -43,7 +43,6 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.keyword;
-import static org.jooq.impl.DSL.rowNumber;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.Keywords.K_COLUMNS;
@@ -209,23 +208,30 @@ implements
     private final void acceptPostgres(Context<?> ctx) {
         List<SelectField<?>> cols = new ArrayList<>();
 
-        for (JSONTableColumn col : columns)
-            if (col.forOrdinality)
-                cols.add(rowNumber().over().as(col.field));
-            else
+        boolean requireOrdinality = false;
+        for (JSONTableColumn col : columns) {
+            if (col.forOrdinality) {
+                requireOrdinality = true;
+                cols.add(DSL.field("o").as(col.field));
+            }
+            else {
                 cols.add(
                     DSL.field("(jsonb_path_query_first(j, {0}::jsonpath)->>0)::{1}",
                         col.path != null ? val(col.path) : inline("$." + col.field.getName()),
                         keyword(col.type.getCastTypeName(ctx.configuration()))
                     ).as(col.field)
                 );
+            }
+        }
 
         ctx.sql('(')
            .formatIndentStart()
            .formatNewLine()
            .subquery(true)
            .visit(
-                select(cols).from("jsonb_path_query({0}, {1}::jsonpath) as t(j)",
+                select(cols).from(requireOrdinality
+                        ? "jsonb_path_query({0}, {1}::jsonpath) {with} {ordinality} {as} t(j, o)"
+                        : "jsonb_path_query({0}, {1}::jsonpath) {as} t(j)",
                     json.getType() == JSONB.class ? json : json.cast(JSONB),
                     path
                 )

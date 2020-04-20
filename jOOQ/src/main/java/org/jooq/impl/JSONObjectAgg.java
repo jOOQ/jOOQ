@@ -119,7 +119,7 @@ implements JSONObjectAggNullStep<J> {
         }
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({ "unchecked", "rawtypes", "serial" })
     private final void acceptGroupConcat(Context<?> ctx) {
         Field<?> value;
 
@@ -133,12 +133,19 @@ implements JSONObjectAggNullStep<J> {
                 value = when(entry.value().isNull(), inline((String) null)).else_((Field) value);
         }
 
-        Field<?> listagg = groupConcat(DSL.concat(
-            inline('"'),
-            DSL.replace(entry.key(), inline('"'), inline("\\\"")),
-            inline("\":"),
-            nullClause == ABSENT_ON_NULL ? value : DSL.coalesce(value, inline("null"))
-        ));
+        final Field<?> value1 = value;
+        final Field<String> listagg = DSL.field("{0}", String.class, new CustomQueryPart() {
+            @Override
+            public void accept(Context<?> c) {
+                c.visit(groupConcat(DSL.concat(
+                    inline('"'),
+                    DSL.replace(entry.key(), inline('"'), inline("\\\"")),
+                    inline("\":"),
+                    nullClause == ABSENT_ON_NULL ? value1 : DSL.coalesce(value1, inline("null"))
+                )));
+                acceptOverClause(c);
+            }
+        });
 
         ctx.sql('(').visit(DSL.concat(inline('{'), listagg, inline('}'))).sql(')');
     }
@@ -148,6 +155,8 @@ implements JSONObjectAggNullStep<J> {
         ctx.visit(entry);
         acceptJSONNullClause(ctx, nullClause);
         ctx.sql(')');
+
+        acceptOverClause(ctx);
     }
 
     @Override

@@ -120,6 +120,3 @@ package org.jooq;
 
 
 
-
-
-

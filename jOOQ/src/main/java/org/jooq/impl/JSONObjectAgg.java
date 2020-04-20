@@ -37,6 +37,11 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.DSL.groupConcat;
+import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.jsonObject;
+import static org.jooq.impl.DSL.jsonValue;
+import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.JSONNullClause.ABSENT_ON_NULL;
 import static org.jooq.impl.JSONNullClause.NULL_ON_NULL;
 import static org.jooq.impl.JSONObject.acceptJSONNullClause;
@@ -47,6 +52,7 @@ import static org.jooq.impl.SQLDataType.JSON;
 
 import org.jooq.Context;
 import org.jooq.DataType;
+import org.jooq.Field;
 import org.jooq.JSONEntry;
 import org.jooq.JSONObjectAggNullStep;
 
@@ -82,8 +88,21 @@ implements JSONObjectAggNullStep<J> {
 
 
 
-            case POSTGRES:
 
+
+
+
+            // [#10089] These dialects support non-standard JSON_OBJECTAGG without ABSENT ON NULL support
+            case MARIADB:
+            case MYSQL:
+                if (nullClause == ABSENT_ON_NULL)
+                    acceptGroupConcat(ctx);
+                else
+                    acceptStandard(ctx);
+
+                break;
+
+            case POSTGRES:
                 ctx.visit(getDataType() == JSON ? N_JSON_OBJECT_AGG : N_JSONB_OBJECT_AGG).sql('(');
                 ctx.visit(entry);
                 ctx.sql(')');
@@ -95,12 +114,40 @@ implements JSONObjectAggNullStep<J> {
                 break;
 
             default:
-                ctx.visit(N_JSON_OBJECTAGG).sql('(');
-                ctx.visit(entry);
-                acceptJSONNullClause(ctx, nullClause);
-                ctx.sql(')');
+                acceptStandard(ctx);
                 break;
         }
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    private final void acceptGroupConcat(Context<?> ctx) {
+        Field<?> value;
+
+        if (entry.value().getDataType().isJSON()) {
+            value = entry.value();
+        }
+        else {
+            value = jsonValue(jsonObject(inline("x"), entry.value()), inline("$.x"));
+
+            if (nullClause == ABSENT_ON_NULL)
+                value = when(entry.value().isNull(), inline((String) null)).else_((Field) value);
+        }
+
+        Field<?> listagg = groupConcat(DSL.concat(
+            inline('"'),
+            DSL.replace(entry.key(), inline('"'), inline("\\\"")),
+            inline("\":"),
+            nullClause == ABSENT_ON_NULL ? value : DSL.coalesce(value, inline("null"))
+        ));
+
+        ctx.sql('(').visit(DSL.concat(inline('{'), listagg, inline('}'))).sql(')');
+    }
+
+    private final void acceptStandard(Context<?> ctx) {
+        ctx.visit(N_JSON_OBJECTAGG).sql('(');
+        ctx.visit(entry);
+        acceptJSONNullClause(ctx, nullClause);
+        ctx.sql(')');
     }
 
     @Override

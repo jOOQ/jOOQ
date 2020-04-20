@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+/**
+ * @author Lukas Eder
+ */
 enum JSONNullClause {
     NULL_ON_NULL, ABSENT_ON_NULL
 }

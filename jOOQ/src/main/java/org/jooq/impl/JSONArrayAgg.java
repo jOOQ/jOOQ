@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+// ...
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.impl.DSL.groupConcat;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.JSONNullClause.ABSENT_ON_NULL;
@@ -50,12 +53,14 @@ import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 
 import java.util.Collection;
+import java.util.Set;
 
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.JSONArrayAggOrderByStep;
 import org.jooq.OrderField;
+import org.jooq.SQLDialect;
 
 
 /**
@@ -70,9 +75,10 @@ implements JSONArrayAggOrderByStep<J> {
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = 1772007627336725780L;
+    private static final long    serialVersionUID          = 1772007627336725780L;
+    static final Set<SQLDialect> EMULATE_WITH_GROUP_CONCAT = SQLDialect.supportedBy(MARIADB, MYSQL);
 
-    private JSONNullClause    nullClause;
+    private JSONNullClause       nullClause;
 
     JSONArrayAgg(DataType<J> type, Field<?> arg) {
         super(false, N_JSON_ARRAYAGG, type, arg);
@@ -120,9 +126,13 @@ implements JSONArrayAggOrderByStep<J> {
     }
 
     private final Field<?> groupConcatEmulation() {
-        return Tools.isEmpty(withinGroupOrderBy)
-            ? DSL.concat(inline('['), groupConcat(arguments.get(0)), inline(']'))
-            : DSL.concat(inline('['), groupConcat(arguments.get(0)).orderBy(withinGroupOrderBy), inline(']'));
+        return DSL.concat(inline('['), groupConcatEmulationWithoutArrayWrappers(arguments.get(0), withinGroupOrderBy), inline(']'));
+    }
+
+    static final Field<?> groupConcatEmulationWithoutArrayWrappers(Field<?> field, SortFieldList orderBy) {
+        return Tools.isEmpty(orderBy)
+             ? groupConcat(field)
+             : groupConcat(field).orderBy(orderBy);
     }
 
     private final void acceptStandard(Context<?> ctx) {

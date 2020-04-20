@@ -168,7 +168,6 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.GroupField;
 import org.jooq.JSON;
-import org.jooq.JSONArrayAggOrderByStep;
 import org.jooq.JSONEntry;
 import org.jooq.JSONObjectNullStep;
 import org.jooq.JoinType;
@@ -532,6 +531,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             && containsTable(dmlTable)) {
             context.visit(DSL.select(asterisk()).from(DSL.table(this).as("t")));
         }
+
+
 
 
 

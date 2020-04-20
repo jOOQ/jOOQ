@@ -128,34 +128,57 @@ public interface Generator {
     void setGenerateTableValuedFunctions(boolean generateTableValuedFunctions);
 
     /**
-     * Whether instance fields should be generated (as opposed to static fields)
+     * Whether instance fields should be generated (as opposed to static fields).
      */
     boolean generateInstanceFields();
 
     /**
-     * Whether instance fields should be generated (as opposed to static fields)
+     * Whether instance fields should be generated (as opposed to static
+     * fields).
      */
     void setGenerateInstanceFields(boolean generateInstanceFields);
 
     /**
-     * Whether the {@link javax.annotation.Generated} or {@link javax.annotation.processing.Generated} annotation should be generated
+     * Whether the {@link javax.annotation.Generated} or
+     * {@link javax.annotation.processing.Generated} annotation should be
+     * generated.
      */
     boolean generateGeneratedAnnotation();
 
     /**
-     * Whether the {@link javax.annotation.Generated} or {@link javax.annotation.processing.Generated} annotation should be generated
+     * Whether the {@link javax.annotation.Generated} or
+     * {@link javax.annotation.processing.Generated} annotation should be
+     * generated.
      */
     void setGenerateGeneratedAnnotation(boolean generateGeneratedAnnotation);
 
     /**
-     * Whether the {@link javax.annotation.Generated} or {@link javax.annotation.processing.Generated} annotation should be generated
+     * Whether the {@link javax.annotation.Generated} or
+     * {@link javax.annotation.processing.Generated} annotation should be
+     * generated.
      */
     GeneratedAnnotationType generateGeneratedAnnotationType();
 
     /**
-     * Whether the {@link javax.annotation.Generated} or {@link javax.annotation.processing.Generated} annotation should be generated
+     * Whether the {@link javax.annotation.Generated} or
+     * {@link javax.annotation.processing.Generated} annotation should be
+     * generated.
      */
     void setGenerateGeneratedAnnotationType(GeneratedAnnotationType generateGeneratedAnnotationType);
+
+    /**
+     * Whether the {@link javax.annotation.Generated} or
+     * {@link javax.annotation.processing.Generated} annotation should include
+     * the <code>date</code> attribute.
+     */
+    boolean generateGeneratedAnnotationDate();
+
+    /**
+     * Whether the {@link javax.annotation.Generated} or
+     * {@link javax.annotation.processing.Generated} annotation should include
+     * the <code>date</code> attribute.
+     */
+    void setGenerateGeneratedAnnotationDate(boolean generateGeneratedAnnotationDate);
 
     /**
      * Whether Nonnull annotations should be generated.

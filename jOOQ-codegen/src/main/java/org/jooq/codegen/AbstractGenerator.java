@@ -68,6 +68,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateInstanceFields                  = true;
     boolean                            generateGeneratedAnnotation             = false;
     GeneratedAnnotationType            generatedGeneratedAnnotationType        = GeneratedAnnotationType.DETECT_FROM_JDK;
+    boolean                            generateGeneratedAnnotationDate         = true;
     boolean                            generateNonnullAnnotation               = false;
     String                             generatedNonnullAnnotationType          = "javax.annotation.Nonnull";
     boolean                            generateNullableAnnotation              = false;
@@ -305,6 +306,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateGeneratedAnnotationType(GeneratedAnnotationType generateGeneratedAnnotationType) {
         this.generatedGeneratedAnnotationType = generateGeneratedAnnotationType;
+    }
+
+    @Override
+    public boolean generateGeneratedAnnotationDate() {
+        return generateGeneratedAnnotationDate;
+    }
+
+    @Override
+    public void setGenerateGeneratedAnnotationDate(boolean generateGeneratedAnnotationDate) {
+        this.generateGeneratedAnnotationDate = generateGeneratedAnnotationDate;
     }
 
     @Override

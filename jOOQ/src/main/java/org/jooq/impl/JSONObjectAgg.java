@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.impl.DSL.groupConcat;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.jsonObject;
@@ -102,6 +103,10 @@ implements JSONObjectAggNullStep<J> {
             case MYSQL:
                 if (nullClause == ABSENT_ON_NULL)
                     acceptGroupConcat(ctx);
+
+
+
+
                 else
                     acceptStandard(ctx);
 

@@ -182,6 +182,9 @@ implements
                 ctx.visit(N_JSON_EXTRACT).sql('(').visit(json).sql(", ").visit(path).sql(')');
                 break;
 
+
+
+
             case POSTGRES:
                 ctx.visit(N_JSONB_PATH_QUERY_FIRST).sql('(').visit(castIfNeeded(json, JSONB)).sql(", ").visit(path).sql("::jsonpath)");
                 break;

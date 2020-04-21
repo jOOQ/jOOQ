@@ -53,6 +53,7 @@ import static org.jooq.impl.SQLDataType.JSON;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.JSON;
 import org.jooq.JSONEntry;
 import org.jooq.JSONObjectAggNullStep;
 
@@ -132,7 +133,19 @@ implements JSONObjectAggNullStep<J> {
             value = entry.value();
         }
         else {
-            value = jsonValue(jsonObject(inline("x"), entry.value()), inline("$.x"));
+            Field<JSON> x = jsonObject(inline("x"), entry.value());
+
+            switch (ctx.family()) {
+
+
+
+
+
+
+                default:
+                    value = jsonValue(x, inline("$.x"));
+                    break;
+            }
 
             if (nullClause == ABSENT_ON_NULL)
                 value = when(entry.value().isNull(), inline((String) null)).else_((Field) value);

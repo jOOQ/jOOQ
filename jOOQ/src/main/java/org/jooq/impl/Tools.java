@@ -5166,6 +5166,18 @@ final class Tools {
         return DSL.field(DSL.name(name), field.getDataType());
     }
 
+    static final <T> Field<T> unalias(Field<T> field) {
+        Field<T> result = aliased(field);
+        return result != null ? result : field;
+    }
+
+    static final <T> Field<T> aliased(Field<T> field) {
+        if (field instanceof FieldAlias)
+            return ((FieldAlias<T>) field).getAliasedField();
+        else
+            return null;
+    }
+
     static final <R extends Record> Table<R> aliased(Table<R> table) {
         if (table instanceof TableImpl)
             return ((TableImpl<R>) table).getAliasedTable();

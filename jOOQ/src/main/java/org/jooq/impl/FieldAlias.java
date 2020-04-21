@@ -76,4 +76,14 @@ final class FieldAlias<T> extends AbstractField<T> {
     public final boolean declaresFields() {
         return true;
     }
+
+    /**
+     * Get the aliased field wrapped by this field.
+     */
+    Field<T> getAliasedField() {
+        if (alias != null)
+            return alias.wrapped();
+
+        return null;
+    }
 }

@@ -104,12 +104,11 @@ final class TableAlias<R extends Record> extends AbstractTable<R> {
     }
 
     /**
-     * Get the aliased table wrapped by this table
+     * Get the aliased table wrapped by this table.
      */
     Table<R> getAliasedTable() {
-        if (alias != null) {
+        if (alias != null)
             return alias.wrapped();
-        }
 
         return null;
     }

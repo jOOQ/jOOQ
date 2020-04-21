@@ -92,6 +92,10 @@ implements JSONObjectAggNullStep<J> {
 
 
 
+            case POSTGRES:
+                acceptPostgres(ctx);
+                break;
+
             // [#10089] These dialects support non-standard JSON_OBJECTAGG without ABSENT ON NULL support
             case MARIADB:
             case MYSQL:
@@ -102,21 +106,22 @@ implements JSONObjectAggNullStep<J> {
 
                 break;
 
-            case POSTGRES:
-                ctx.visit(getDataType() == JSON ? N_JSON_OBJECT_AGG : N_JSONB_OBJECT_AGG).sql('(');
-                ctx.visit(entry);
-                ctx.sql(')');
-
-                // TODO: What about a user-defined filter clause?
-                if (nullClause == ABSENT_ON_NULL)
-                    acceptFilterClause(ctx, entry.value().isNotNull());
-
-                break;
-
             default:
                 acceptStandard(ctx);
                 break;
         }
+    }
+
+    private final void acceptPostgres(Context<?> ctx) {
+        ctx.visit(getDataType() == JSON ? N_JSON_OBJECT_AGG : N_JSONB_OBJECT_AGG).sql('(');
+        ctx.visit(entry);
+        ctx.sql(')');
+
+        // TODO: What about a user-defined filter clause?
+        if (nullClause == ABSENT_ON_NULL)
+            acceptFilterClause(ctx, entry.value().isNotNull());
+
+        acceptOverClause(ctx);
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes", "serial" })

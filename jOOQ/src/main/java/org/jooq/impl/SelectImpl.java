@@ -1975,6 +1975,13 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
 
 
 
+
+
+
+
+
+
+
     @Override
     public final SelectImpl union(Select<? extends R> select) {
         return new SelectImpl(getDelegate().union(select));

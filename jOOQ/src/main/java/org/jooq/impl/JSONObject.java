@@ -64,6 +64,7 @@ import java.util.Set;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.JSONB;
 import org.jooq.JSONEntry;
 import org.jooq.JSONObjectNullStep;
 import org.jooq.Name;
@@ -126,9 +127,9 @@ final class JSONObject<J> extends AbstractField<J> implements JSONObjectNullStep
 
             case POSTGRES:
                 if (nullClause == ABSENT_ON_NULL)
-                    ctx.visit(unquotedName("json_strip_nulls")).sql('(');
+                    ctx.visit(unquotedName(getDataType().getType() == JSONB.class ? "jsonb_strip_nulls" : "json_strip_nulls")).sql('(');
 
-                ctx.visit(unquotedName("json_build_object")).sql('(').visit(args).sql(')');
+                ctx.visit(unquotedName(getDataType().getType() == JSONB.class ? "jsonb_build_object" : "json_build_object")).sql('(').visit(args).sql(')');
 
                 if (nullClause == ABSENT_ON_NULL)
                     ctx.sql(')');

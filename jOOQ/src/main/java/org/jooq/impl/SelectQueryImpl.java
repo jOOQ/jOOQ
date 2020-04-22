@@ -102,6 +102,8 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.jsonArrayAgg;
 import static org.jooq.impl.DSL.jsonEntry;
 import static org.jooq.impl.DSL.jsonObject;
+import static org.jooq.impl.DSL.jsonbArrayAgg;
+import static org.jooq.impl.DSL.jsonbObject;
 import static org.jooq.impl.DSL.length;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
@@ -137,6 +139,7 @@ import static org.jooq.impl.Keywords.K_WINDOW;
 import static org.jooq.impl.Keywords.K_WITH_CHECK_OPTION;
 import static org.jooq.impl.Keywords.K_WITH_READ_ONLY;
 import static org.jooq.impl.SQLDataType.JSON;
+import static org.jooq.impl.SQLDataType.JSONB;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.SQLDataType.XML;
 import static org.jooq.impl.ScopeMarkers.AFTER_LAST_TOP_LEVEL_CTE;
@@ -183,8 +186,8 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.GroupField;
-import org.jooq.JSON;
 import org.jooq.JSONEntry;
+import org.jooq.JSONObjectNullStep;
 import org.jooq.JoinType;
 import org.jooq.Name;
 import org.jooq.Operator;
@@ -521,6 +524,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
+
+
             fields = getSelect();
 
         // If no projection was specified explicitly, create fields from result
@@ -535,6 +541,18 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2354,6 +2372,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private final void initLockMode() {
         forLock().forLockMode = forLock().forLockMode == null ? ForLockMode.UPDATE : forLock().forLockMode;
     }
+
+
+
+
+
 
 
 

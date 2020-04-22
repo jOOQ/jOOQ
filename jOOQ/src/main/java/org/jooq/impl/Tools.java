@@ -5166,6 +5166,19 @@ final class Tools {
         return DSL.field(DSL.name(name), field.getDataType());
     }
 
+    static final <T> Field<T> field(SortField<T> sortField) {
+        return ((SortFieldImpl<T>) sortField).getField();
+    }
+
+    static final <T> Field<?>[] fields(SortField<?>[] sortFields) {
+        Field<?>[] result = new Field[sortFields.length];
+
+        for (int i = 0; i < result.length; i++)
+            result[i] = field(sortFields[i]);
+
+        return result;
+    }
+
     static final <T> Field<T> unalias(Field<T> field) {
         Field<T> result = aliased(field);
         return result != null ? result : field;

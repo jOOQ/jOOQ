@@ -221,6 +221,7 @@ final class Keywords {
     static final Keyword K_JSON_OBJECT                      = keyword("json_object");
     static final Keyword K_KEEP                             = keyword("keep");
     static final Keyword K_KEY                              = keyword("key");
+    static final Keyword K_KEYS                             = keyword("keys");
     static final Keyword K_LAST                             = keyword("last");
     static final Keyword K_LATERAL                          = keyword("lateral");
     static final Keyword K_LEADING                          = keyword("leading");

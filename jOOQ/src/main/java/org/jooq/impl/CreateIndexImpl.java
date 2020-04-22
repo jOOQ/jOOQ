@@ -55,11 +55,15 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.Keywords.K_CREATE;
+import static org.jooq.impl.Keywords.K_EXCLUDE;
 import static org.jooq.impl.Keywords.K_IF_NOT_EXISTS;
 import static org.jooq.impl.Keywords.K_INCLUDE;
 import static org.jooq.impl.Keywords.K_INDEX;
+import static org.jooq.impl.Keywords.K_KEYS;
+import static org.jooq.impl.Keywords.K_NULL;
 import static org.jooq.impl.Keywords.K_ON;
 import static org.jooq.impl.Keywords.K_STORING;
 import static org.jooq.impl.Keywords.K_UNIQUE;
@@ -69,6 +73,8 @@ import static org.jooq.impl.Tools.EMPTY_NAME;
 import static org.jooq.impl.Tools.EMPTY_ORDERFIELD;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 import static org.jooq.impl.Tools.EMPTY_STRING;
+import static org.jooq.impl.Tools.field;
+import static org.jooq.impl.Tools.fields;
 
 import java.util.Collection;
 import java.util.Set;
@@ -102,19 +108,20 @@ final class CreateIndexImpl extends AbstractRowCountQuery implements
     /**
      * Generated UID
      */
-    private static final long                serialVersionUID         = 8904572826501186329L;
-    private static final Clause[]            CLAUSES                  = { CREATE_INDEX };
-    private static final Set<SQLDialect>     NO_SUPPORT_IF_NOT_EXISTS = SQLDialect.supportedBy(DERBY, FIREBIRD);
-    private static final Set<SQLDialect>     SUPPORT_UNNAMED_INDEX    = SQLDialect.supportedBy(POSTGRES);
-    private static final Set<SQLDialect>     SUPPORT_INCLUDE          = SQLDialect.supportedBy(POSTGRES);
+    private static final long            serialVersionUID         = 8904572826501186329L;
+    private static final Clause[]        CLAUSES                  = { CREATE_INDEX };
+    private static final Set<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS = SQLDialect.supportedBy(DERBY, FIREBIRD);
+    private static final Set<SQLDialect> SUPPORT_UNNAMED_INDEX    = SQLDialect.supportedBy(POSTGRES);
+    private static final Set<SQLDialect> SUPPORT_INCLUDE          = SQLDialect.supportedBy(POSTGRES);
 
-    private final Index                      index;
-    private final boolean                    unique;
-    private final boolean                    ifNotExists;
-    private Table<?>                         table;
-    private SortField<?>[]                   sortFields;
-    private Field<?>[]                       include;
-    private Condition                        where;
+    private final Index                  index;
+    private final boolean                unique;
+    private final boolean                ifNotExists;
+    private Table<?>                     table;
+    private SortField<?>[]               sortFields;
+    private Field<?>[]                   include;
+    private Condition                    where;
+    private boolean                      excludeNullKeys;
 
     CreateIndexImpl(Configuration configuration, Index index, boolean unique, boolean ifNotExists) {
         super(configuration);
@@ -238,6 +245,12 @@ final class CreateIndexImpl extends AbstractRowCountQuery implements
         return where(DSL.condition(sql, parts));
     }
 
+    @Override
+    public final CreateIndexImpl excludeNullKeys() {
+        excludeNullKeys = true;
+        return this;
+    }
+
     // ------------------------------------------------------------------------
     // XXX: QueryPart API
     // ------------------------------------------------------------------------
@@ -328,13 +341,26 @@ final class CreateIndexImpl extends AbstractRowCountQuery implements
                .sql(')');
         }
 
-        if (where != null && ctx.configuration().data("org.jooq.ddl.ignore-storage-clauses") == null)
+        Condition c = where;
+
+        if (excludeNullKeys && c == null)
+
+
+
+                c = sortFields.length == 1 ? field(sortFields[0]).isNotNull() : row(fields(sortFields)).isNotNull();
+
+        if (c != null && ctx.configuration().data("org.jooq.ddl.ignore-storage-clauses") == null)
             ctx.formatSeparator()
                .visit(K_WHERE)
                .sql(' ')
                .qualify(false)
-               .visit(where)
+               .visit(c)
                .qualify(true);
+
+
+
+
+
     }
 
     private final Name generatedName() {

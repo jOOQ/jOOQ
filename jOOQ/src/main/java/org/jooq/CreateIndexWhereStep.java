@@ -38,6 +38,7 @@
 package org.jooq;
 
 // ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
@@ -159,4 +160,11 @@ public interface CreateIndexWhereStep extends CreateIndexFinalStep {
     @Support({ POSTGRES, SQLITE })
     @PlainSQL
     CreateIndexFinalStep where(String sql, QueryPart... parts);
+
+    /**
+     * Add a DB2 style <code>EXCLUDE NULL KEYS</code> clause to create a partial
+     * index.
+     */
+    @Support({ POSTGRES, SQLITE })
+    CreateIndexFinalStep excludeNullKeys();
 }

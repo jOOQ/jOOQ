@@ -39,7 +39,11 @@ package org.jooq.impl;
 
 // ...
 import static org.jooq.conf.ParamType.INLINED;
+import static org.jooq.impl.DSL.cast;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.rowNumber;
+import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.Keywords.K_BY;
 import static org.jooq.impl.Keywords.K_COLUMNS;
 import static org.jooq.impl.Keywords.K_FOR;
@@ -50,6 +54,7 @@ import static org.jooq.impl.Keywords.K_REF;
 import static org.jooq.impl.Keywords.K_VALUE;
 import static org.jooq.impl.Keywords.K_XMLTABLE;
 import static org.jooq.impl.Names.N_XMLTABLE;
+import static org.jooq.impl.SQLDataType.XML;
 import static org.jooq.impl.XMLPassingMechanism.BY_REF;
 import static org.jooq.impl.XMLPassingMechanism.BY_VALUE;
 
@@ -60,6 +65,7 @@ import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Name;
+// ...
 import org.jooq.Record;
 import org.jooq.TableOptions;
 import org.jooq.XML;
@@ -84,17 +90,19 @@ implements
     private final Field<XML>                    passing;
     private final XMLPassingMechanism           passingMechanism;
     private final QueryPartList<XMLTableColumn> columns;
+    private final boolean                       hasOrdinality;
     private transient Fields<Record>            fields;
 
     XMLTable(Field<String> xpath) {
-        this(xpath, null, null, null);
+        this(xpath, null, null, null, false);
     }
 
     private XMLTable(
         Field<String> xpath,
         Field<XML> passing,
         XMLPassingMechanism passingMechanism,
-        QueryPartList<XMLTableColumn> columns
+        QueryPartList<XMLTableColumn> columns,
+        boolean hasOrdinality
     ) {
         super(TableOptions.expression(), N_XMLTABLE);
 
@@ -102,6 +110,7 @@ implements
         this.passing = passing;
         this.passingMechanism = passingMechanism;
         this.columns = columns == null ? new QueryPartList<>() : columns;
+        this.hasOrdinality = hasOrdinality;
     }
 
     // -------------------------------------------------------------------------
@@ -115,7 +124,7 @@ implements
 
     @Override
     public final XMLTable passing(Field<XML> xml) {
-        return new XMLTable(xpath, xml, null, columns);
+        return new XMLTable(xpath, xml, null, columns, hasOrdinality);
     }
 
     @Override
@@ -125,7 +134,7 @@ implements
 
     @Override
     public final XMLTable passingByRef(Field<XML> xml) {
-        return new XMLTable(xpath, xml, BY_REF, columns);
+        return new XMLTable(xpath, xml, BY_REF, columns, hasOrdinality);
     }
 
     @Override
@@ -135,7 +144,7 @@ implements
 
     @Override
     public final XMLTable passingByValue(Field<XML> xml) {
-        return new XMLTable(xpath, xml, BY_VALUE, columns);
+        return new XMLTable(xpath, xml, BY_VALUE, columns, hasOrdinality);
     }
 
     @Override
@@ -167,7 +176,7 @@ implements
     public final XMLTable column(Field<?> name, DataType<?> type) {
         QueryPartList<XMLTableColumn> c = new QueryPartList<>(columns);
         c.add(new XMLTableColumn(name, type, false, null));
-        return new XMLTable(xpath, passing, passingMechanism, c);
+        return new XMLTable(xpath, passing, passingMechanism, c, hasOrdinality);
     }
 
     @Override
@@ -185,7 +194,7 @@ implements
         int i = c.size() - 1;
         XMLTableColumn last = c.get(i);
         c.set(i, new XMLTableColumn(last.field, last.type, forOrdinality, path));
-        return new XMLTable(xpath, passing, passingMechanism, c);
+        return new XMLTable(xpath, passing, passingMechanism, c, hasOrdinality || forOrdinality);
     }
 
     // -------------------------------------------------------------------------
@@ -203,7 +212,7 @@ implements
             List<Field<?>> f = new ArrayList<>();
 
             for (XMLTableColumn c : columns)
-                f.add(c.field.getDataType() == c.type ? c.field : field(c.field.getQualifiedName(), c.type));
+                f.add(c.field.getDataType() == c.type ? c.field : DSL.field(c.field.getQualifiedName(), c.type));
 
             fields = new Fields<>(f);
         }
@@ -217,6 +226,60 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
+
+
+
+
+
+
+            default:
+                acceptStandard(ctx);
+                break;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private final void acceptStandard(Context<?> ctx) {
         ctx.visit(K_XMLTABLE).sql('(')
            .formatIndentStart()
            .formatNewLine();

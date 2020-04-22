@@ -187,7 +187,7 @@ implements
             List<Field<?>> f = new ArrayList<>();
 
             for (JSONTableColumn c : columns)
-                f.add(c.field.getDataType() == c.type ? c.field : field(c.field.getQualifiedName(), c.type));
+                f.add(c.field.getDataType() == c.type ? c.field : DSL.field(c.field.getQualifiedName(), c.type));
 
             fields = new Fields<>(f);
         }

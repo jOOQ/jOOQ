@@ -156,6 +156,7 @@ final class Names {
     static final Name N_NUMTODSINTERVAL        = unquotedName("numtodsinterval");
     static final Name N_NVL                    = unquotedName("nvl");
     static final Name N_NVL2                   = unquotedName("nvl2");
+    static final Name N_OPENJSON               = unquotedName("openjson");
     static final Name N_OVERLAY                = unquotedName("overlay");
     static final Name N_PI                     = unquotedName("pi");
     static final Name N_PIVOT                  = unquotedName("pivot");

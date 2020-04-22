@@ -41,6 +41,7 @@ package org.jooq;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+// ...
 
 /**
  * A step in the construction of an <code>JSON_TABLE</code> expression.

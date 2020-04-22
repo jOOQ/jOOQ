@@ -40,9 +40,11 @@ package org.jooq.impl;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
 // ...
+// ...
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.keyword;
+import static org.jooq.impl.DSL.rowNumber;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.Keywords.K_COLUMNS;
@@ -52,7 +54,9 @@ import static org.jooq.impl.Keywords.K_JSON_TABLE;
 import static org.jooq.impl.Keywords.K_ON;
 import static org.jooq.impl.Keywords.K_ORDINALITY;
 import static org.jooq.impl.Keywords.K_PATH;
+import static org.jooq.impl.Keywords.K_WITH;
 import static org.jooq.impl.Names.N_JSON_TABLE;
+import static org.jooq.impl.Names.N_OPENJSON;
 import static org.jooq.impl.SQLDataType.JSONB;
 
 import java.util.ArrayList;
@@ -93,22 +97,25 @@ implements
     private final Field<String>                  path;
     private final Field<?>                       json;
     private final QueryPartList<JSONTableColumn> columns;
+    private final boolean                        hasOrdinality;
     private transient Fields<Record>             fields;
 
     JSONTable(Field<?> json, Field<String> path) {
-        this(json, path, null);
+        this(json, path, null, false);
     }
 
     private JSONTable(
         Field<?> json,
         Field<String> path,
-        QueryPartList<JSONTableColumn> columns
+        QueryPartList<JSONTableColumn> columns,
+        boolean hasOrdinality
     ) {
         super(TableOptions.expression(), N_JSON_TABLE);
 
         this.json = json;
         this.path = path;
         this.columns = columns == null ? new QueryPartList<>() : columns;
+        this.hasOrdinality = hasOrdinality;
     }
 
     // -------------------------------------------------------------------------
@@ -144,7 +151,7 @@ implements
     public final JSONTable column(Field<?> name, DataType<?> type) {
         QueryPartList<JSONTableColumn> c = new QueryPartList<>(columns);
         c.add(new JSONTableColumn(name, type, false, null));
-        return new JSONTable(json, path, c);
+        return new JSONTable(json, path, c, hasOrdinality);
     }
 
     @Override
@@ -162,7 +169,7 @@ implements
         int i = c.size() - 1;
         JSONTableColumn last = c.get(i);
         c.set(i, new JSONTableColumn(last.field, last.type, forOrdinality, p));
-        return new JSONTable(json, path, c);
+        return new JSONTable(json, path, c, hasOrdinality || forOrdinality);
     }
 
     // -------------------------------------------------------------------------
@@ -199,6 +206,12 @@ implements
                 acceptPostgres(ctx);
                 break;
 
+
+
+
+
+
+
             default:
                 acceptStandard(ctx);
                 break;
@@ -208,28 +221,23 @@ implements
     private final void acceptPostgres(Context<?> ctx) {
         List<SelectField<?>> cols = new ArrayList<>();
 
-        boolean requireOrdinality = false;
-        for (JSONTableColumn col : columns) {
-            if (col.forOrdinality) {
-                requireOrdinality = true;
+        for (JSONTableColumn col : columns)
+            if (col.forOrdinality)
                 cols.add(DSL.field("o").as(col.field));
-            }
-            else {
+            else
                 cols.add(
                     DSL.field("(jsonb_path_query_first(j, {0}::jsonpath)->>0)::{1}",
                         col.path != null ? val(col.path) : inline("$." + col.field.getName()),
                         keyword(col.type.getCastTypeName(ctx.configuration()))
                     ).as(col.field)
                 );
-            }
-        }
 
         ctx.sql('(')
            .formatIndentStart()
            .formatNewLine()
            .subquery(true)
            .visit(
-                select(cols).from(requireOrdinality
+                select(cols).from(hasOrdinality
                         ? "jsonb_path_query({0}, {1}::jsonpath) {with} {ordinality} {as} t(j, o)"
                         : "jsonb_path_query({0}, {1}::jsonpath) {as} t(j)",
                     json.getType() == JSONB.class ? json : json.cast(JSONB),
@@ -241,6 +249,42 @@ implements
            .formatNewLine()
            .sql(')');
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private final void acceptStandard(Context<?> ctx) {
         ctx.visit(K_JSON_TABLE).sql('(')
@@ -315,10 +359,20 @@ implements
             else
                 Tools.toSQLDDLTypeDeclaration(ctx, type);
 
-            if (path != null)
-                ctx.sql(' ').visit(K_PATH).sql(' ').visit(inline(path));
-            else if (!forOrdinality && REQUIRES_COLUMN_PATH.contains(ctx.dialect()))
-                ctx.sql(' ').visit(K_PATH).sql(' ').visit(inline("$." + field.getName()));
+            String p =
+                  path != null
+                ? path
+                : !forOrdinality && REQUIRES_COLUMN_PATH.contains(ctx.dialect())
+                ? "$." + field.getName()
+                : null;
+
+            if (p != null)
+
+
+
+
+
+                    ctx.sql(' ').visit(K_PATH).sql(' ').visit(inline(p));
         }
     }
 }

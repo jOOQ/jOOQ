@@ -286,6 +286,11 @@ implements
 
 
 
+
+
+
+
+
     private final void acceptStandard(Context<?> ctx) {
         ctx.visit(K_JSON_TABLE).sql('(')
            .formatIndentStart()

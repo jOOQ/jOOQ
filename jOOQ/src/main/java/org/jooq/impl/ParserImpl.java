@@ -4592,6 +4592,8 @@ final class ParserImpl implements Parser {
             ? parseCondition(ctx)
             : null;
 
+        boolean excludeNullKeys = condition == null && parseKeywordIf(ctx, "EXCLUDE NULL KEYS");
+
         CreateIndexStep s1 = ifNotExists
             ? unique
                 ? ctx.dsl.createUniqueIndexIfNotExists(indexName)
@@ -4610,6 +4612,8 @@ final class ParserImpl implements Parser {
             : s2;
         CreateIndexFinalStep s4 = condition != null
             ? s3.where(condition)
+            : excludeNullKeys
+            ? s3.excludeNullKeys()
             : s3;
 
         return s4;

@@ -107,12 +107,12 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.orderBy;
 import static org.jooq.impl.DSL.row;
-import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.substring;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.xmlagg;
 import static org.jooq.impl.DSL.xmlattributes;
 import static org.jooq.impl.DSL.xmlelement;
+import static org.jooq.impl.JSONArrayAgg.EMULATE_WITH_GROUP_CONCAT;
 import static org.jooq.impl.JSONObject.NO_SUPPORT_ABSENT_ON_NULL;
 import static org.jooq.impl.Keywords.K_AND;
 import static org.jooq.impl.Keywords.K_BY;
@@ -136,6 +136,7 @@ import static org.jooq.impl.Keywords.K_WHERE;
 import static org.jooq.impl.Keywords.K_WINDOW;
 import static org.jooq.impl.Keywords.K_WITH_CHECK_OPTION;
 import static org.jooq.impl.Keywords.K_WITH_READ_ONLY;
+import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.SQLDataType.XML;
 import static org.jooq.impl.ScopeMarkers.AFTER_LAST_TOP_LEVEL_CTE;
@@ -184,7 +185,6 @@ import org.jooq.ForeignKey;
 import org.jooq.GroupField;
 import org.jooq.JSON;
 import org.jooq.JSONEntry;
-import org.jooq.JSONObjectNullStep;
 import org.jooq.JoinType;
 import org.jooq.Name;
 import org.jooq.Operator;
@@ -536,6 +536,206 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         return CLAUSES;
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @Override
     public final void accept(Context<?> context) {
         Table<?> dmlTable;
@@ -547,136 +747,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             && containsTable(dmlTable)) {
             context.visit(DSL.select(asterisk()).from(DSL.table(this).as("t")));
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

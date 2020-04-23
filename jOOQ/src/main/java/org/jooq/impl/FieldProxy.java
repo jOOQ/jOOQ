@@ -188,6 +188,11 @@ final class FieldProxy<T> implements TableField<Record, T>, QueryPartInternal {
     }
 
     @Override
+    public final boolean rendersContent(Context<?> ctx) {
+        return delegate.rendersContent(ctx);
+    }
+
+    @Override
     public final void accept(Context<?> ctx) {
         delegate.accept(ctx);
     }

@@ -43,12 +43,9 @@ import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.DSL.values;
-import static org.jooq.impl.JSONNullClause.ABSENT_ON_NULL;
-import static org.jooq.impl.JSONNullClause.NULL_ON_NULL;
-import static org.jooq.impl.JSONObject.acceptJSONNullClause;
+import static org.jooq.impl.JSONNull.JSONNullType.ABSENT_ON_NULL;
+import static org.jooq.impl.JSONNull.JSONNullType.NULL_ON_NULL;
 import static org.jooq.impl.Keywords.K_JSON_ARRAY;
-import static org.jooq.impl.Keywords.K_NULL;
-import static org.jooq.impl.Keywords.K_ON;
 import static org.jooq.impl.Names.N_JSON_ARRAY;
 
 import java.util.Collection;
@@ -59,6 +56,7 @@ import org.jooq.Field;
 import org.jooq.JSONArrayNullStep;
 import org.jooq.Row1;
 import org.jooq.Table;
+import org.jooq.impl.JSONNull.JSONNullType;
 
 
 /**
@@ -73,17 +71,17 @@ final class JSONArray<J> extends AbstractField<J> implements JSONArrayNullStep<J
      */
     private static final long             serialVersionUID = 1772007627336725780L;
     private final QueryPartList<Field<?>> args;
-    private final JSONNullClause          nullClause;
+    private final JSONNullType            nullType;
 
     JSONArray(DataType<J> type, Collection<? extends Field<?>> args) {
         this(type, args, null);
     }
 
-    JSONArray(DataType<J> type, Collection<? extends Field<?>> args, JSONNullClause nullClause) {
+    JSONArray(DataType<J> type, Collection<? extends Field<?>> args, JSONNullType nullType) {
         super(N_JSON_ARRAY, type);
 
         this.args = new QueryPartList<>(args);
-        this.nullClause = nullClause;
+        this.nullType = nullType;
     }
 
     // -------------------------------------------------------------------------
@@ -114,7 +112,7 @@ final class JSONArray<J> extends AbstractField<J> implements JSONArrayNullStep<J
 
 
             case POSTGRES:
-                if (nullClause == ABSENT_ON_NULL) {
+                if (nullType == ABSENT_ON_NULL) {
                     Row1[] rows = new Row1[args.size()];
                     for (int i = 0; i < rows.length; i++)
                         rows[i] = row(args.get(i));
@@ -128,17 +126,18 @@ final class JSONArray<J> extends AbstractField<J> implements JSONArrayNullStep<J
 
                 break;
 
-            default:
-                ctx.visit(K_JSON_ARRAY).sql('(').visit(args);
+            default: {
+                JSONNull jsonNull;
 
                 // Workaround for https://github.com/h2database/h2database/issues/2496
                 if (ctx.family() == H2 && args.isEmpty())
-                    ctx.visit(K_NULL).sql(' ').visit(K_ON).sql(' ').visit(K_NULL);
+                    jsonNull = new JSONNull(NULL_ON_NULL);
                 else
-                    acceptJSONNullClause(ctx, nullClause);
+                    jsonNull = new JSONNull(nullType);
 
-                ctx.sql(')');
+                ctx.visit(K_JSON_ARRAY).sql('(').visit(new QueryPartList<>(args, jsonNull).separator("")).sql(')');
                 break;
+            }
         }
     }
 }

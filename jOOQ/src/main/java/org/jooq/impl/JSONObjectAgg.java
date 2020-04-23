@@ -43,9 +43,8 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.jsonObject;
 import static org.jooq.impl.DSL.jsonValue;
 import static org.jooq.impl.DSL.when;
-import static org.jooq.impl.JSONNullClause.ABSENT_ON_NULL;
-import static org.jooq.impl.JSONNullClause.NULL_ON_NULL;
-import static org.jooq.impl.JSONObject.acceptJSONNullClause;
+import static org.jooq.impl.JSONNull.JSONNullType.ABSENT_ON_NULL;
+import static org.jooq.impl.JSONNull.JSONNullType.NULL_ON_NULL;
 import static org.jooq.impl.Names.N_JSONB_OBJECT_AGG;
 import static org.jooq.impl.Names.N_JSON_OBJECTAGG;
 import static org.jooq.impl.Names.N_JSON_OBJECT_AGG;
@@ -57,6 +56,7 @@ import org.jooq.Field;
 import org.jooq.JSON;
 import org.jooq.JSONEntry;
 import org.jooq.JSONObjectAggNullStep;
+import org.jooq.impl.JSONNull.JSONNullType;
 
 
 /**
@@ -74,7 +74,7 @@ implements JSONObjectAggNullStep<J> {
     private static final long  serialVersionUID = 1772007627336725780L;
 
     private final JSONEntry<?> entry;
-    private JSONNullClause     nullClause;
+    private JSONNullType       nullType;
 
     JSONObjectAgg(DataType<J> type, JSONEntry<?> entry) {
         super(false, N_JSON_OBJECTAGG, type, entry.key(), entry.value());
@@ -101,7 +101,7 @@ implements JSONObjectAggNullStep<J> {
             // [#10089] These dialects support non-standard JSON_OBJECTAGG without ABSENT ON NULL support
             case MARIADB:
             case MYSQL:
-                if (nullClause == ABSENT_ON_NULL)
+                if (nullType == ABSENT_ON_NULL)
                     acceptGroupConcat(ctx);
 
 
@@ -124,7 +124,7 @@ implements JSONObjectAggNullStep<J> {
         ctx.sql(')');
 
         // TODO: What about a user-defined filter clause?
-        if (nullClause == ABSENT_ON_NULL)
+        if (nullType == ABSENT_ON_NULL)
             acceptFilterClause(ctx, entry.value().isNotNull());
 
         acceptOverClause(ctx);
@@ -152,7 +152,7 @@ implements JSONObjectAggNullStep<J> {
                     break;
             }
 
-            if (nullClause == ABSENT_ON_NULL)
+            if (nullType == ABSENT_ON_NULL)
                 value = when(entry.value().isNull(), inline((String) null)).else_((Field) value);
         }
 
@@ -164,7 +164,7 @@ implements JSONObjectAggNullStep<J> {
                     inline('"'),
                     DSL.replace(entry.key(), inline('"'), inline("\\\"")),
                     inline("\":"),
-                    nullClause == ABSENT_ON_NULL ? value1 : DSL.coalesce(value1, inline("null"))
+                    nullType == ABSENT_ON_NULL ? value1 : DSL.coalesce(value1, inline("null"))
                 )));
                 acceptOverClause(c);
             }
@@ -174,23 +174,25 @@ implements JSONObjectAggNullStep<J> {
     }
 
     private final void acceptStandard(Context<?> ctx) {
-        ctx.visit(N_JSON_OBJECTAGG).sql('(');
-        ctx.visit(entry);
-        acceptJSONNullClause(ctx, nullClause);
-        ctx.sql(')');
+        ctx.visit(N_JSON_OBJECTAGG).sql('(').visit(entry);
 
+        JSONNull jsonNull = new JSONNull(nullType);
+        if (jsonNull.rendersContent(ctx))
+            ctx.sql(' ').visit(jsonNull);
+
+        ctx.sql(')');
         acceptOverClause(ctx);
     }
 
     @Override
     public final JSONObjectAgg<J> nullOnNull() {
-        nullClause = NULL_ON_NULL;
+        nullType = NULL_ON_NULL;
         return this;
     }
 
     @Override
     public final JSONObjectAgg<J> absentOnNull() {
-        nullClause = ABSENT_ON_NULL;
+        nullType = ABSENT_ON_NULL;
         return this;
     }
 }

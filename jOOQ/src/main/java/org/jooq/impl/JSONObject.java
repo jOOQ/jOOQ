@@ -38,8 +38,6 @@
 package org.jooq.impl;
 
 import static org.jooq.SQLDialect.H2;
-import static org.jooq.SQLDialect.MARIADB;
-import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.impl.DSL.asterisk;
 import static org.jooq.impl.DSL.inline;
@@ -48,18 +46,14 @@ import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.DSL.values;
-import static org.jooq.impl.JSONNullClause.ABSENT_ON_NULL;
-import static org.jooq.impl.JSONNullClause.NULL_ON_NULL;
-import static org.jooq.impl.Keywords.K_ABSENT;
+import static org.jooq.impl.JSONNull.JSONNullType.ABSENT_ON_NULL;
+import static org.jooq.impl.JSONNull.JSONNullType.NULL_ON_NULL;
 import static org.jooq.impl.Keywords.K_JSON_OBJECT;
-import static org.jooq.impl.Keywords.K_NULL;
-import static org.jooq.impl.Keywords.K_ON;
 import static org.jooq.impl.Names.N_JSON_MERGE;
 import static org.jooq.impl.Names.N_JSON_OBJECT;
 import static org.jooq.impl.Names.N_T;
 
 import java.util.Collection;
-import java.util.Set;
 
 import org.jooq.Context;
 import org.jooq.DataType;
@@ -68,8 +62,8 @@ import org.jooq.JSONB;
 import org.jooq.JSONEntry;
 import org.jooq.JSONObjectNullStep;
 import org.jooq.Name;
-import org.jooq.SQLDialect;
 // ...
+import org.jooq.impl.JSONNull.JSONNullType;
 
 
 /**
@@ -83,20 +77,19 @@ final class JSONObject<J> extends AbstractField<J> implements JSONObjectNullStep
      * Generated UID
      */
     private static final long                 serialVersionUID          = 1772007627336725780L;
-    static final Set<SQLDialect>              NO_SUPPORT_ABSENT_ON_NULL = SQLDialect.supportedBy(MARIADB, MYSQL);
 
     private final QueryPartList<JSONEntry<?>> args;
-    private final JSONNullClause              nullClause;
+    private final JSONNullType                nullType;
 
     JSONObject(DataType<J> type, Collection<? extends JSONEntry<?>> args) {
         this(type, args, null);
     }
 
-    JSONObject(DataType<J> type, Collection<? extends JSONEntry<?>> args, JSONNullClause nullClause) {
+    JSONObject(DataType<J> type, Collection<? extends JSONEntry<?>> args, JSONNullType nullType) {
         super(N_JSON_OBJECT, type);
 
         this.args = new QueryPartList<>(args);
-        this.nullClause = nullClause;
+        this.nullType = nullType;
     }
 
     // -------------------------------------------------------------------------
@@ -126,12 +119,12 @@ final class JSONObject<J> extends AbstractField<J> implements JSONObjectNullStep
 
 
             case POSTGRES:
-                if (nullClause == ABSENT_ON_NULL)
+                if (nullType == ABSENT_ON_NULL)
                     ctx.visit(unquotedName(getDataType().getType() == JSONB.class ? "jsonb_strip_nulls" : "json_strip_nulls")).sql('(');
 
                 ctx.visit(unquotedName(getDataType().getType() == JSONB.class ? "jsonb_build_object" : "json_build_object")).sql('(').visit(args).sql(')');
 
-                if (nullClause == ABSENT_ON_NULL)
+                if (nullType == ABSENT_ON_NULL)
                     ctx.sql(')');
 
                 break;
@@ -202,27 +195,19 @@ final class JSONObject<J> extends AbstractField<J> implements JSONObjectNullStep
     }
 
     private final void acceptStandard(Context<?> ctx) {
-        ctx.visit(K_JSON_OBJECT).sql('(').visit(args);
+        JSONNull jsonNull;
 
         // Workaround for https://github.com/h2database/h2database/issues/2496
         if (args.isEmpty() && ctx.family() == H2)
-            ctx.visit(K_NULL).sql(' ').visit(K_ON).sql(' ').visit(K_NULL);
+            jsonNull = new JSONNull(NULL_ON_NULL);
 
 
 
 
 
         else
-            acceptJSONNullClause(ctx, nullClause);
+            jsonNull = new JSONNull(nullType);
 
-        ctx.sql(')');
-    }
-
-    static final void acceptJSONNullClause(Context<?> ctx, JSONNullClause nullClause) {
-        if (!NO_SUPPORT_ABSENT_ON_NULL.contains(ctx.dialect()))
-            if (nullClause == NULL_ON_NULL)
-                ctx.sql(' ').visit(K_NULL).sql(' ').visit(K_ON).sql(' ').visit(K_NULL);
-            else if (nullClause == ABSENT_ON_NULL)
-                ctx.sql(' ').visit(K_ABSENT).sql(' ').visit(K_ON).sql(' ').visit(K_NULL);
+        ctx.visit(K_JSON_OBJECT).sql('(').visit(new QueryPartList<>(args, jsonNull).separator("")).sql(')');
     }
 }

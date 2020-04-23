@@ -56,7 +56,8 @@ class QueryPartList<T extends QueryPart> extends QueryPartListView<T> {
         this((Collection<T>) null);
     }
 
-    QueryPartList(T[] wrappedList) {
+    @SafeVarargs
+    QueryPartList(T... wrappedList) {
         this(asList(wrappedList));
     }
 
@@ -76,5 +77,10 @@ class QueryPartList<T extends QueryPart> extends QueryPartListView<T> {
     @Override
     QueryPartList<T> qualify(boolean newQualify) {
         return (QueryPartList<T>) super.qualify(newQualify);
+    }
+
+    @Override
+    QueryPartList<T> separator(String newSeparator) {
+        return (QueryPartList<T>) super.separator(newSeparator);
     }
 }

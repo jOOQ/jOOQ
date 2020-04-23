@@ -5125,12 +5125,17 @@ final class Tools {
     static final QueryPartList<SelectFieldOrAsterisk> qualify(final Table<?> table, SelectFieldList<SelectFieldOrAsterisk> fields) {
         QueryPartList<SelectFieldOrAsterisk> result = new QueryPartList<SelectFieldOrAsterisk>() {
             @Override
-            protected void toSQLEmptyList(Context<?> context) {
+            public final boolean rendersContent(Context<?> ctx) {
+                return super.rendersContent(ctx);
+            }
+
+            @Override
+            protected final void toSQLEmptyList(Context<?> context) {
                 table.asterisk();
             }
 
             @Override
-            public boolean declaresFields() {
+            public final boolean declaresFields() {
                 return true;
             }
         };

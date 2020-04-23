@@ -70,6 +70,11 @@ final class TableList extends QueryPartList<Table<?>> {
     }
 
     @Override
+    public final boolean rendersContent(Context<?> ctx) {
+        return true;
+    }
+
+    @Override
     protected void toSQLEmptyList(Context<?> ctx) {
         ctx.visit(new Dual());
     }

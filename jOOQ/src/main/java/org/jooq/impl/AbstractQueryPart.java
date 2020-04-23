@@ -106,6 +106,14 @@ abstract class AbstractQueryPart implements QueryPartInternal {
      * Subclasses may override this
      */
     @Override
+    public boolean rendersContent(Context<?> ctx) {
+        return true;
+    }
+
+    /**
+     * Subclasses may override this
+     */
+    @Override
     public boolean declaresFields() {
         return false;
     }

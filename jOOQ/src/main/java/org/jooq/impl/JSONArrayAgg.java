@@ -42,9 +42,8 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.impl.DSL.groupConcat;
 import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.JSONNullClause.ABSENT_ON_NULL;
-import static org.jooq.impl.JSONNullClause.NULL_ON_NULL;
-import static org.jooq.impl.JSONObject.acceptJSONNullClause;
+import static org.jooq.impl.JSONNull.JSONNullType.ABSENT_ON_NULL;
+import static org.jooq.impl.JSONNull.JSONNullType.NULL_ON_NULL;
 import static org.jooq.impl.Names.N_JSONB_AGG;
 import static org.jooq.impl.Names.N_JSON_AGG;
 import static org.jooq.impl.Names.N_JSON_ARRAYAGG;
@@ -61,6 +60,7 @@ import org.jooq.Field;
 import org.jooq.JSONArrayAggOrderByStep;
 import org.jooq.OrderField;
 import org.jooq.SQLDialect;
+import org.jooq.impl.JSONNull.JSONNullType;
 
 
 /**
@@ -78,7 +78,7 @@ implements JSONArrayAggOrderByStep<J> {
     private static final long    serialVersionUID          = 1772007627336725780L;
     static final Set<SQLDialect> EMULATE_WITH_GROUP_CONCAT = SQLDialect.supportedBy(MARIADB, MYSQL);
 
-    private JSONNullClause       nullClause;
+    private JSONNullType         nullType;
 
     JSONArrayAgg(DataType<J> type, Field<?> arg) {
         super(false, N_JSON_ARRAYAGG, type, arg);
@@ -114,7 +114,7 @@ implements JSONArrayAggOrderByStep<J> {
                 ctx.sql(')');
 
                 // TODO: What about a user-defined filter clause?
-                if (nullClause == ABSENT_ON_NULL)
+                if (nullType == ABSENT_ON_NULL)
                     acceptFilterClause(ctx, arguments.get(0).isNotNull());
 
                 break;
@@ -139,19 +139,23 @@ implements JSONArrayAggOrderByStep<J> {
         ctx.visit(N_JSON_ARRAYAGG).sql('(');
         ctx.visit(arguments.get(0));
         acceptOrderBy(ctx);
-        acceptJSONNullClause(ctx, nullClause);
+
+        JSONNull jsonNull = new JSONNull(nullType);
+        if (jsonNull.rendersContent(ctx))
+            ctx.sql(' ').visit(jsonNull);
+
         ctx.sql(')');
     }
 
     @Override
     public final JSONArrayAgg<J> nullOnNull() {
-        nullClause = NULL_ON_NULL;
+        nullType = NULL_ON_NULL;
         return this;
     }
 
     @Override
     public final JSONArrayAgg<J> absentOnNull() {
-        nullClause = ABSENT_ON_NULL;
+        nullType = ABSENT_ON_NULL;
         return this;
     }
 

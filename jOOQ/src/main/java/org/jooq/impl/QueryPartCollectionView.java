@@ -42,12 +42,14 @@ import static java.lang.Boolean.TRUE;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
 
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
 import org.jooq.Context;
 import org.jooq.QueryPart;
+import org.jooq.QueryPartInternal;
 import org.jooq.Statement;
 
 /**
@@ -62,6 +64,7 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
     final Collection<T>       wrapped;
     int                       indentSize;
     Boolean                   qualify;
+    String                    separator;
 
     static <T extends QueryPart> QueryPartCollectionView<T> wrap(Collection<T> wrapped) {
         return new QueryPartCollectionView<>(wrapped);
@@ -70,6 +73,7 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
     QueryPartCollectionView(Collection<T> wrapped) {
         this.wrapped = wrapped;
         this.indentSize = 2;
+        this.separator = ",";
     }
 
     /**
@@ -85,13 +89,29 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
         return this;
     }
 
+    QueryPartCollectionView<T> separator(String newSeparator) {
+        this.separator = newSeparator;
+        return this;
+    }
+
     Collection<T> wrapped() {
         return wrapped;
     }
 
     @Override
+    public boolean rendersContent(Context<?> ctx) {
+        return !isEmpty();
+    }
+
+    @Override
     public /* non-final */ void accept(Context<?> ctx) {
-        int size = size();
+        BitSet rendersContent = new BitSet(size());
+        int i = 0;
+
+        for (T e : this)
+            rendersContent.set(i++, ((QueryPartInternal) e).rendersContent(ctx));
+
+        int size = rendersContent.cardinality();
         boolean format = size >= indentSize;
         boolean previousQualify = ctx.qualify();
 
@@ -110,18 +130,23 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
         }
 
         else {
-            boolean indent = format && !TRUE.equals(ctx.data(DATA_LIST_ALREADY_INDENTED));
+            Object previousIndented = ctx.data(DATA_LIST_ALREADY_INDENTED);
+            boolean indent = format && !TRUE.equals(previousIndented);
 
             if (indent)
                 ctx.formatIndentStart();
 
-            int i = 0;
+            int j = 0;
+            int k = 0;
             for (T part : this) {
-                if (i++ > 0) {
+                if (!rendersContent.get(j++))
+                    continue;
+
+                if (k++ > 0) {
 
                     // [#3607] Procedures and functions are not separated by comma
                     if (!(part instanceof Statement))
-                        ctx.sql(',');
+                        ctx.sql(separator);
 
                     if (format)
                         ctx.formatSeparator();
@@ -131,7 +156,13 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
                 else if (indent)
                     ctx.formatNewLine();
 
-                ctx.visit(part);
+                if (indent) {
+                    ctx.data(DATA_LIST_ALREADY_INDENTED, part instanceof QueryPartCollectionView);
+                    ctx.visit(part);
+                    ctx.data(DATA_LIST_ALREADY_INDENTED, previousIndented);
+                }
+                else
+                    ctx.visit(part);
             }
 
             if (indent)

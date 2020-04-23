@@ -52,6 +52,11 @@ enum ScopeMarkers implements QueryPartInternal {
     AFTER_LAST_TOP_LEVEL_CTE;
 
     @Override
+    public boolean rendersContent(Context<?> ctx) {
+        return false;
+    }
+
+    @Override
     public final void accept(Context<?> ctx) {}
 
     @Override

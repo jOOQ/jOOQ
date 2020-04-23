@@ -51,6 +51,15 @@ import org.jooq.exception.DataAccessException;
 public interface QueryPartInternal extends QueryPart {
 
     /**
+     * Whether a call to {@link #accept(Context)} would render content.
+     *
+     * @deprecated - Calling {@link #rendersContent(Context)} directly on a
+     *             {@link QueryPart} is almost always a mistake.
+     */
+    @Deprecated
+    boolean rendersContent(Context<?> ctx);
+
+    /**
      * This {@link QueryPart} can <code>accept</code> a {@link Context} object
      * in order to render a SQL string or to bind its variables.
      *

@@ -309,8 +309,8 @@ import static org.jooq.impl.DSL.xmlquery;
 import static org.jooq.impl.DSL.xmltable;
 import static org.jooq.impl.DSL.year;
 import static org.jooq.impl.DSL.zero;
-import static org.jooq.impl.JSONNullClause.ABSENT_ON_NULL;
-import static org.jooq.impl.JSONNullClause.NULL_ON_NULL;
+import static org.jooq.impl.JSONNull.JSONNullType.ABSENT_ON_NULL;
+import static org.jooq.impl.JSONNull.JSONNullType.NULL_ON_NULL;
 import static org.jooq.impl.Keywords.K_DELETE;
 import static org.jooq.impl.Keywords.K_INSERT;
 import static org.jooq.impl.Keywords.K_SELECT;
@@ -540,6 +540,7 @@ import org.jooq.conf.RenderNameCase;
 import org.jooq.conf.RenderQuotedNames;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
+import org.jooq.impl.JSONNull.JSONNullType;
 import org.jooq.impl.XMLParse.DocumentOrContent;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.reflect.Reflect;
@@ -7196,19 +7197,19 @@ final class ParserImpl implements Parser {
                 return DSL.jsonArray();
 
             List<Field<?>> result = null;
-            JSONNullClause nullClause = parseJSONObjectNullClauseIf(ctx);
+            JSONNullType nullType = parseJSONNullTypeIf(ctx);
 
-            if (nullClause == null) {
+            if (nullType == null) {
                 result = parseFields(ctx);
-                nullClause = parseJSONObjectNullClauseIf(ctx);
+                nullType = parseJSONNullTypeIf(ctx);
             }
 
             parse(ctx, ')');
 
             JSONArrayNullStep<JSON> a = result == null ? DSL.jsonArray() : DSL.jsonArray(result);
-            return nullClause == NULL_ON_NULL
+            return nullType == NULL_ON_NULL
                  ? a.nullOnNull()
-                 : nullClause == ABSENT_ON_NULL
+                 : nullType == ABSENT_ON_NULL
                  ? a.absentOnNull()
                  : a;
         }
@@ -7221,7 +7222,7 @@ final class ParserImpl implements Parser {
             Field<?> result;
             JSONArrayAggOrderByStep<JSON> s1;
             JSONArrayAggNullStep<JSON> s2;
-            JSONNullClause nullClause;
+            JSONNullType nullType;
 
             parse(ctx, '(');
             result = s2 = s1 = DSL.jsonArrayAgg(parseField(ctx));
@@ -7229,8 +7230,8 @@ final class ParserImpl implements Parser {
             if (parseKeywordIf(ctx, "ORDER BY"))
                 result = s2 = s1.orderBy(parseSortSpecification(ctx));
 
-            if ((nullClause = parseJSONObjectNullClauseIf(ctx)) != null)
-                result = nullClause == ABSENT_ON_NULL ? s2.absentOnNull() : s2.nullOnNull();
+            if ((nullType = parseJSONNullTypeIf(ctx)) != null)
+                result = nullType == ABSENT_ON_NULL ? s2.absentOnNull() : s2.nullOnNull();
 
             parse(ctx, ')');
             return result;
@@ -7246,22 +7247,22 @@ final class ParserImpl implements Parser {
                 return DSL.jsonObject();
 
             List<JSONEntry<?>> result = new ArrayList<>();
-            JSONNullClause nullClause = parseJSONObjectNullClauseIf(ctx);
+            JSONNullType nullType = parseJSONNullTypeIf(ctx);
 
-            if (nullClause == null) {
+            if (nullType == null) {
                 do {
                     result.add(parseJSONEntry(ctx));
                 }
                 while (parseIf(ctx, ','));
 
-                nullClause = parseJSONObjectNullClauseIf(ctx);
+                nullType = parseJSONNullTypeIf(ctx);
             }
             parse(ctx, ')');
 
             JSONObjectNullStep<JSON> o = DSL.jsonObject(result);
-            return nullClause == NULL_ON_NULL
+            return nullType == NULL_ON_NULL
                  ? o.nullOnNull()
-                 : nullClause == ABSENT_ON_NULL
+                 : nullType == ABSENT_ON_NULL
                  ? o.absentOnNull()
                  : o;
         }
@@ -7273,13 +7274,13 @@ final class ParserImpl implements Parser {
         if (parseFunctionNameIf(ctx, "JSON_OBJECTAGG")) {
             Field<?> result;
             JSONObjectAggNullStep<JSON> s1;
-            JSONNullClause nullClause;
+            JSONNullType nullType;
 
             parse(ctx, '(');
             result = s1 = DSL.jsonObjectAgg(parseJSONEntry(ctx));
 
-            if ((nullClause = parseJSONObjectNullClauseIf(ctx)) != null)
-                result = nullClause == ABSENT_ON_NULL ? s1.absentOnNull() : s1.nullOnNull();
+            if ((nullType = parseJSONNullTypeIf(ctx)) != null)
+                result = nullType == ABSENT_ON_NULL ? s1.absentOnNull() : s1.nullOnNull();
 
             parse(ctx, ')');
             return result;
@@ -7288,7 +7289,7 @@ final class ParserImpl implements Parser {
         return null;
     }
 
-    private static final JSONNullClause parseJSONObjectNullClauseIf(ParserContext ctx) {
+    private static final JSONNullType parseJSONNullTypeIf(ParserContext ctx) {
         if (parseKeywordIf(ctx, "NULL ON NULL"))
             return NULL_ON_NULL;
         else if (parseKeywordIf(ctx, "ABSENT ON NULL"))

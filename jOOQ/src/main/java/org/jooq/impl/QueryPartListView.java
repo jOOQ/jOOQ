@@ -84,6 +84,11 @@ class QueryPartListView<T extends QueryPart> extends QueryPartCollectionView<T> 
     }
 
     @Override
+    QueryPartListView<T> separator(String newSeparator) {
+        return (QueryPartListView<T>) super.separator(newSeparator);
+    }
+
+    @Override
     List<T> wrapped() {
         return (List<T>) super.wrapped();
     }

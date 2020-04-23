@@ -839,6 +839,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
     @Override
     public final void accept(Context<?> context) {
         Table<?> dmlTable;

@@ -39,7 +39,6 @@ package org.jooq.impl;
 
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.SettingsTools.executeStaticStatements;
-import static org.jooq.impl.Tools.dataTypes;
 import static org.jooq.impl.Tools.fields;
 import static org.jooq.impl.Tools.visitAll;
 
@@ -54,7 +53,6 @@ import java.util.Map.Entry;
 
 import org.jooq.BatchBindStep;
 import org.jooq.Configuration;
-import org.jooq.DataType;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Param;
@@ -197,8 +195,6 @@ final class BatchSingle extends AbstractBatch implements BatchBindStep {
         for (int i = 0; it.hasNext(); i++)
             params[i] = it.next().getValue();
 
-        DataType<?>[] paramTypes = dataTypes(params);
-
         try {
             // [#8968] Keep start() event inside of lifecycle management
             listener.start(ctx);
@@ -225,8 +221,8 @@ final class BatchSingle extends AbstractBatch implements BatchBindStep {
                 // [#3547]         The original query may have no Params specified - e.g. when it was constructed with
                 //                 plain SQL. In that case, infer the bind value type directly from the bind value
                 visitAll(new DefaultBindContext(configuration, ctx.statement()),
-                    (paramTypes.length > 0)
-                        ? fields(bindValues, paramTypes)
+                    (params.length > 0)
+                        ? fields(bindValues, params)
                         : fields(bindValues));
 
                 listener.bindEnd(ctx);

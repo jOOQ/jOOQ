@@ -1198,18 +1198,12 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // AUTHOR.ID, BOOK.ID, BOOK.TITLE
         final Field<?>[] originalFields = Tools.fieldArray(getSelect());
 
-        // ID, ID, TITLE
-        final Name[] originalNames = Tools.fieldNames(originalFields);
-
-        // v1, v2, v3
-        final Name[] alternativeNames = Tools.fieldNames(originalFields.length);
-
         // AUTHOR.ID as v1, BOOK.ID as v2, BOOK.TITLE as v3
         // Enforce x.* or just * if we have no known field names (e.g. when plain SQL tables are involved)
         final Field<?>[] alternativeFields = Tools.combine(
-            alternativeNames.length == 0
+            originalFields.length == 0
                 ? new Field[] { DSL.field("*") }
-                : Tools.aliasedFields(originalFields, alternativeNames),
+                : Tools.aliasedFields(originalFields),
 
             null
         );
@@ -1257,7 +1251,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             }.as("rn");
 
         // v1 as ID, v2 as ID, v3 as TITLE
-        final Field<?>[] unaliasedFields = Tools.aliasedFields(Tools.fields(originalFields.length), originalNames);
+        final Field<?>[] unaliasedFields = Tools.unaliasedFields(originalFields);
 
         ctx.visit(K_SELECT).separatorRequired(true)
            .declareFields(true)
@@ -1301,12 +1295,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                .sql(' ')
                .visit(name("rn"));
     }
-
-
-
-
-
-
 
 
 

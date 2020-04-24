@@ -83,7 +83,6 @@ import static org.jooq.impl.Tools.isEmbeddable;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.util.AbstractList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -99,18 +98,18 @@ import org.jooq.SQLDialect;
  */
 final class InCondition<T> extends AbstractCondition {
 
-    private static final long            serialVersionUID       = -1653924248576930761L;
-    private static final int             IN_LIMIT               = 1000;
-    private static final Clause[]        CLAUSES_IN             = { CONDITION, CONDITION_IN };
-    private static final Clause[]        CLAUSES_IN_NOT         = { CONDITION, CONDITION_NOT_IN };
-    private static final Set<SQLDialect> REQUIRES_IN_LIMIT      = SQLDialect.supportedBy(FIREBIRD);
-    private static final Set<SQLDialect> NO_SUPPORT_EMPTY_LISTS = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES);
+    private static final long              serialVersionUID       = -1653924248576930761L;
+    private static final int               IN_LIMIT               = 1000;
+    private static final Clause[]          CLAUSES_IN             = { CONDITION, CONDITION_IN };
+    private static final Clause[]          CLAUSES_IN_NOT         = { CONDITION, CONDITION_NOT_IN };
+    private static final Set<SQLDialect>   REQUIRES_IN_LIMIT      = SQLDialect.supportedBy(FIREBIRD);
+    private static final Set<SQLDialect>   NO_SUPPORT_EMPTY_LISTS = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES);
 
-    private final Field<T>               field;
-    private final Field<?>[]             values;
-    private final Comparator             comparator;
+    private final Field<T>                 field;
+    private final List<? extends Field<?>> values;
+    private final Comparator               comparator;
 
-    InCondition(Field<T> field, Field<?>[] values, Comparator comparator) {
+    InCondition(Field<T> field, List<? extends Field<?>> values, Comparator comparator) {
         this.field = field;
         this.values = values;
         this.comparator = comparator;
@@ -133,24 +132,22 @@ final class InCondition<T> extends AbstractCondition {
     }
 
     private final RowN[] rows() {
-        RowN[] result = new RowN[values.length];
+        RowN[] result = new RowN[values.size()];
 
-        for (int i = 0; i < values.length; i++)
-            result[i] = row(embeddedFields(values[i]));
+        for (int i = 0; i < result.length; i++)
+            result[i] = row(embeddedFields(values.get(i)));
 
         return result;
     }
 
     private final void accept0(Context<?> ctx) {
-        List<Field<?>> list = Arrays.asList(values);
-
-        if (list.size() == 0 && NO_SUPPORT_EMPTY_LISTS.contains(ctx.family())) {
+        if (values.size() == 0 && NO_SUPPORT_EMPTY_LISTS.contains(ctx.family())) {
             if (comparator == IN)
                 ctx.visit(falseCondition());
             else
                 ctx.visit(trueCondition());
         }
-        else if (list.size() > IN_LIMIT) {
+        else if (values.size() > IN_LIMIT) {
             // [#798] Oracle and some other dialects can only hold 1000 values
             // in an IN (...) clause
             switch (ctx.family()) {
@@ -165,7 +162,7 @@ final class InCondition<T> extends AbstractCondition {
                        .formatIndentStart()
                        .formatNewLine();
 
-                    for (int i = 0; i < list.size(); i += IN_LIMIT) {
+                    for (int i = 0; i < values.size(); i += IN_LIMIT) {
                         if (i > 0) {
 
                             // [#1515] The connector depends on the IN / NOT IN
@@ -182,7 +179,7 @@ final class InCondition<T> extends AbstractCondition {
                             }
                         }
 
-                        toSQLSubValues(ctx, padded(ctx, list.subList(i, Math.min(i + IN_LIMIT, list.size()))));
+                        toSQLSubValues(ctx, padded(ctx, values.subList(i, Math.min(i + IN_LIMIT, values.size()))));
                     }
 
                     ctx.formatIndentEnd()
@@ -193,13 +190,13 @@ final class InCondition<T> extends AbstractCondition {
 
                 // Most dialects can handle larger lists
                 default: {
-                    toSQLSubValues(ctx, list);
+                    toSQLSubValues(ctx, values);
                     break;
                 }
             }
         }
         else {
-            toSQLSubValues(ctx, padded(ctx, list));
+            toSQLSubValues(ctx, padded(ctx, values));
         }
     }
 
@@ -215,7 +212,7 @@ final class InCondition<T> extends AbstractCondition {
     /**
      * Render the SQL for a sub-set of the <code>IN</code> clause's values
      */
-    private void toSQLSubValues(Context<?> ctx, List<Field<?>> subValues) {
+    private void toSQLSubValues(Context<?> ctx, List<? extends Field<?>> subValues) {
         ctx.visit(field)
            .sql(' ')
            .visit(comparator.toKeyword())

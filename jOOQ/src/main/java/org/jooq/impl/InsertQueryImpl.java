@@ -80,7 +80,6 @@ import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.aliasedFields;
 import static org.jooq.impl.Tools.fieldNameStrings;
-import static org.jooq.impl.Tools.fieldNames;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_CONSTRAINT_REFERENCE;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST;
 import static org.jooq.impl.Tools.DataKey.DATA_ON_DUPLICATE_KEY_WHERE;
@@ -752,11 +751,9 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
             //         re-used.
 
             Select<Record> rows = null;
-            Name[] aliases = fieldNames(insertMaps.fields().toArray(EMPTY_FIELD));
-
             for (Map<Field<?>, Field<?>> map : insertMaps.maps()) {
                 Select<Record> row =
-                    select(aliasedFields(map.values().toArray(EMPTY_FIELD), aliases))
+                    select(aliasedFields(map.values().toArray(EMPTY_FIELD)))
                     .whereNotExists(
                         selectOne()
                         .from(table())

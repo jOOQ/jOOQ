@@ -60,7 +60,7 @@ final class UnqualifiedName extends AbstractName {
     private static final long serialVersionUID = 8562325639223483938L;
 
     private final String      name;
-    private final Quoted     quoted;
+    private final Quoted      quoted;
 
     UnqualifiedName(String name) {
         this(name, DEFAULT);

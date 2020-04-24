@@ -246,7 +246,6 @@ import org.jooq.Result;
 import org.jooq.ResultOrRows;
 import org.jooq.Results;
 import org.jooq.Row;
-import org.jooq.RowN;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Scope;
@@ -295,7 +294,6 @@ final class Tools {
     // ------------------------------------------------------------------------
 
     static final byte[]                     EMPTY_BYTE                     = {};
-    static final Class<?>[]                 EMPTY_CLASS                    = {};
     static final Clause[]                   EMPTY_CLAUSE                   = {};
     static final Collection<?>[]            EMPTY_COLLECTION               = {};
     static final CommonTableExpression<?>[] EMPTY_COMMON_TABLE_EXPRESSION  = {};
@@ -309,9 +307,6 @@ final class Tools {
     static final QueryPart[]                EMPTY_QUERYPART                = {};
     static final Record[]                   EMPTY_RECORD                   = {};
     static final Row[]                      EMPTY_ROW                      = {};
-    static final RowN[]                     EMPTY_ROWN                     = {};
-    static final Schema[]                   EMPTY_SCHEMA                   = {};
-    static final SelectFieldOrAsterisk[]    EMPTY_SELECT_FIELD_OR_ASTERISK = {};
     static final SortField<?>[]             EMPTY_SORTFIELD                = {};
     static final String[]                   EMPTY_STRING                   = {};
     static final Table<?>[]                 EMPTY_TABLE                    = {};
@@ -1173,82 +1168,6 @@ final class Tools {
     // XXX: Data-type related methods
     // ------------------------------------------------------------------------
 
-    /**
-     * Useful conversion method
-     */
-    static final Class<?>[] types(Field<?>[] fields) {
-        return types(dataTypes(fields));
-    }
-
-    /**
-     * Useful conversion method
-     */
-    static final Class<?>[] types(DataType<?>[] types) {
-        if (types == null)
-            return null;
-
-        Class<?>[] result = new Class<?>[types.length];
-
-        for (int i = 0; i < types.length; i++) {
-            if (types[i] != null) {
-                result[i] = types[i].getType();
-            }
-            else {
-                result[i] = Object.class;
-            }
-        }
-
-        return result;
-    }
-
-    /**
-     * Useful conversion method
-     */
-    static final Class<?>[] types(Object[] values) {
-        if (values == null)
-            return null;
-
-        Class<?>[] result = new Class<?>[values.length];
-
-        for (int i = 0; i < values.length; i++) {
-            if (values[i] instanceof Field<?>) {
-                result[i] = ((Field<?>) values[i]).getType();
-            }
-            else if (values[i] != null) {
-                result[i] = values[i].getClass();
-            }
-            else {
-                result[i] = Object.class;
-            }
-        }
-
-        return result;
-    }
-
-    /**
-     * Useful conversion method
-     */
-    static final DataType<?>[] dataTypes(Field<?>[] fields) {
-        if (fields == null)
-            return null;
-
-        DataType<?>[] result = new DataType<?>[fields.length];
-
-        for (int i = 0; i < fields.length; i++) {
-            if (fields[i] != null) {
-                result[i] = fields[i].getDataType();
-            }
-            else {
-                result[i] = getDataType(Object.class);
-            }
-        }
-
-        return result;
-    }
-
-    /**
-     * Useful conversion method
-     */
     static final DataType<?>[] dataTypes(Class<?>[] types) {
         if (types == null)
             return null;
@@ -1262,13 +1181,6 @@ final class Tools {
                 result[i] = getDataType(Object.class);
 
         return result;
-    }
-
-    /**
-     * Useful conversion method
-     */
-    static final DataType<?>[] dataTypes(Object[] values) {
-        return dataTypes(types(values));
     }
 
     // ------------------------------------------------------------------------
@@ -1310,11 +1222,19 @@ final class Tools {
         return result;
     }
 
+    static final String fieldNameString(int index) {
+        return "v" + index;
+    }
+
+    static final Name fieldName(int index) {
+        return name(fieldNameString(index));
+    }
+
     static final Name[] fieldNames(int length) {
         Name[] result = new Name[length];
 
         for (int i = 0; i < length; i++)
-            result[i] = name("v" + i);
+            result[i] = fieldName(i);
 
         return result;
     }
@@ -1323,7 +1243,7 @@ final class Tools {
         String[] result = new String[length];
 
         for (int i = 0; i < length; i++)
-            result[i] = "v" + i;
+            result[i] = fieldNameString(i);
 
         return result;
     }
@@ -1371,10 +1291,9 @@ final class Tools {
     @SuppressWarnings("unchecked")
     static final <T> Field<T>[] fields(int length, DataType<T> type) {
         Field<T>[] result = new Field[length];
-        Name[] names = fieldNames(length);
 
         for (int i = 0; i < length; i++)
-            result[i] = DSL.field(name(names[i]), type);
+            result[i] = DSL.field(fieldName(i), type);
 
         return result;
     }
@@ -1403,28 +1322,45 @@ final class Tools {
         return result;
     }
 
-    static final Field<?>[] aliasedFields(Field<?>[] fields, Name[] aliases) {
+    static final Field<?>[] unaliasedFields(Field<?>[] fields) {
         if (fields == null)
             return null;
 
         Field<?>[] result = new Field[fields.length];
 
         for (int i = 0; i < fields.length; i++)
-            result[i] = fields[i].as(aliases[i]);
+            result[i] = DSL.field(fieldName(i), fields[i].getDataType()).as(fields[i]);
 
         return result;
     }
 
-    static final Field<?>[] fieldsByName(Collection<String> fieldNames) {
-        return fieldsByName(null, fieldNames.toArray(EMPTY_STRING));
+    static final Field<?>[] aliasedFields(Field<?>[] fields) {
+        if (fields == null)
+            return null;
+
+        Field<?>[] result = new Field[fields.length];
+
+        for (int i = 0; i < fields.length; i++)
+            result[i] = fields[i].as(fieldName(i));
+
+        return result;
     }
 
     static final Field<?>[] fieldsByName(String[] fieldNames) {
         return fieldsByName(null, fieldNames);
     }
 
-    static final Field<?>[] fieldsByName(String tableName, Collection<String> fieldNames) {
-        return fieldsByName(tableName, fieldNames.toArray(EMPTY_STRING));
+    static final Field<?>[] fieldsByName(Name tableName, int length) {
+        Field<?>[] result = new Field[length];
+
+        if (tableName == null)
+            for (int i = 0; i < length; i++)
+                result[i] = DSL.field(fieldName(i));
+        else
+            for (int i = 0; i < length; i++)
+                result[i] = DSL.field(name(tableName, fieldName(i)));
+
+        return result;
     }
 
     static final Field<?>[] fieldsByName(Name tableName, Name[] fieldNames) {
@@ -1724,14 +1660,6 @@ final class Tools {
         return DSL.field(name);
     }
 
-    /**
-     * Be sure that a given object is a field.
-     *
-     * @param value The argument object
-     * @param field The field to take the bind value type from
-     * @return The argument object itself, if it is a {@link Field}, or a bind
-     *         value created from the argument object.
-     */
     @SuppressWarnings("unchecked")
     static final <T> Field<T> field(Object value, Field<T> field) {
 
@@ -1747,14 +1675,6 @@ final class Tools {
             return val(value, field);
     }
 
-    /**
-     * Be sure that a given object is a field.
-     *
-     * @param value The argument object
-     * @param type The type to take the bind value type from
-     * @return The argument object itself, if it is a {@link Field}, or a bind
-     *         value created from the argument object.
-     */
     @SuppressWarnings("unchecked")
     static final <T> Field<T> field(Object value, Class<T> type) {
 
@@ -1770,14 +1690,6 @@ final class Tools {
             return val(value, type);
     }
 
-    /**
-     * Be sure that a given object is a field.
-     *
-     * @param value The argument object
-     * @param type The type to take the bind value type from
-     * @return The argument object itself, if it is a {@link Field}, or a bind
-     *         value created from the argument object.
-     */
     @SuppressWarnings("unchecked")
     static final <T> Field<T> field(Object value, DataType<T> type) {
 
@@ -1793,53 +1705,28 @@ final class Tools {
             return val(value, type);
     }
 
-    /**
-     * Be sure that a given set of objects are fields.
-     *
-     * @param values The argument objects
-     * @return The argument objects themselves, if they are {@link Field}s, or a bind
-     *         values created from the argument objects.
-     */
     static final <T> List<Field<T>> fields(T[] values) {
         if (values == null)
             return new ArrayList<>();
 
         List<Field<T>> result = new ArrayList<>(values.length);
-
         for (int i = 0; i < values.length; i++)
             result.add(field(values[i]));
 
         return result;
     }
 
-    /**
-     * Be sure that a given set of objects are fields.
-     *
-     * @param values The argument objects
-     * @param field The field to take the bind value types from
-     * @return The argument objects themselves, if they are {@link Field}s, or a bind
-     *         values created from the argument objects.
-     */
     static final <T> List<Field<T>> fields(Object[] values, Field<T> field) {
         if (values == null || field == null)
             return new ArrayList<>();
 
         List<Field<T>> result = new ArrayList<>(values.length);
-
         for (int i = 0; i < values.length; i++)
             result.add(field(values[i], field));
 
         return result;
     }
 
-    /**
-     * Be sure that a given set of objects are fields.
-     *
-     * @param values The argument objects
-     * @param fields The fields to take the bind value types from
-     * @return The argument objects themselves, if they are {@link Field}s, or a bind
-     *         values created from the argument objects.
-     */
     static final List<Field<?>> fields(Object[] values, Field<?>[] fields) {
         if (values == null || fields == null)
             return new ArrayList<>();
@@ -1853,14 +1740,6 @@ final class Tools {
         return result;
     }
 
-    /**
-     * Be sure that a given set of objects are fields.
-     *
-     * @param values The argument objects
-     * @param fields The fields to take the bind value types from
-     * @return The argument objects themselves, if they are {@link Field}s, or a bind
-     *         values created from the argument objects.
-     */
     static final Field<?>[] fieldsArray(Object[] values, Field<?>[] fields) {
         if (values == null || fields == null)
             return EMPTY_FIELD;
@@ -1874,34 +1753,17 @@ final class Tools {
         return result;
     }
 
-    /**
-     * Be sure that a given set of objects are fields.
-     *
-     * @param values The argument objects
-     * @param type The type to take the bind value types from
-     * @return The argument objects themselves, if they are {@link Field}s, or a bind
-     *         values created from the argument objects.
-     */
     static final <T> List<Field<T>> fields(Object[] values, Class<T> type) {
         if (values == null || type == null)
             return new ArrayList<>();
 
         List<Field<T>> result = new ArrayList<>(values.length);
-
         for (int i = 0; i < values.length; i++)
             result.add(field(values[i], type));
 
         return result;
     }
 
-    /**
-     * Be sure that a given set of objects are fields.
-     *
-     * @param values The argument objects
-     * @param types The types to take the bind value types from
-     * @return The argument objects themselves, if they are {@link Field}s, or a bind
-     *         values created from the argument objects.
-     */
     static final List<Field<?>> fields(Object[] values, Class<?>[] types) {
         if (values == null || types == null)
             return new ArrayList<>();
@@ -1915,54 +1777,28 @@ final class Tools {
         return result;
     }
 
-    /**
-     * Be sure that a given set of objects are fields.
-     *
-     * @param values The argument objects
-     * @param type The type to take the bind value types from
-     * @return The argument objects themselves, if they are {@link Field}s, or a bind
-     *         values created from the argument objects.
-     */
     static final <T> List<Field<T>> fields(Object[] values, DataType<T> type) {
         if (values == null || type == null)
             return new ArrayList<>();
 
         List<Field<T>> result = new ArrayList<>(values.length);
-
         for (Object value : values)
             result.add(field(value, type));
 
         return result;
     }
 
-    /**
-     * Be sure that a given set of objects are fields.
-     *
-     * @param values The argument objects
-     * @param type The type to take the bind value types from
-     * @return The argument objects themselves, if they are {@link Field}s, or a bind
-     *         values created from the argument objects.
-     */
     static final <T> List<Field<T>> fields(Collection<?> values, DataType<T> type) {
         if (values == null || type == null)
             return new ArrayList<>();
 
         List<Field<T>> result = new ArrayList<>(values.size());
-
         for (Object value : values)
             result.add(field(value, type));
 
         return result;
     }
 
-    /**
-     * Be sure that a given set of objects are fields.
-     *
-     * @param values The argument objects
-     * @param types The types to take the bind value types from
-     * @return The argument objects themselves, if they are {@link Field}s, or a bind
-     *         values created from the argument objects.
-     */
     static final List<Field<?>> fields(Object[] values, DataType<?>[] types) {
         if (values == null || types == null)
             return new ArrayList<>();
@@ -1976,14 +1812,18 @@ final class Tools {
         return result;
     }
 
-    /**
-     * Be sure that a given set of objects are fields.
-     *
-     * @param values The argument objects
-     * @param types The types to take the bind value types from
-     * @return The argument objects themselves, if they are {@link Field}s, or a bind
-     *         values created from the argument objects.
-     */
+    @SuppressWarnings("unchecked")
+    static final <T> Field<T>[] fieldsArray(T[] values) {
+        if (values == null)
+            return (Field<T>[]) EMPTY_FIELD;
+
+        Field<T>[] result = new Field[values.length];
+        for (int i = 0; i < values.length; i++)
+            result[i] = field(values[i]);
+
+        return result;
+    }
+
     static final Field<?>[] fieldsArray(Object[] values, DataType<?>[] types) {
         if (values == null || types == null)
             return EMPTY_FIELD;
@@ -2002,7 +1842,6 @@ final class Tools {
             return new ArrayList<>();
 
         List<Field<T>> result = new ArrayList<>(values.length);
-
         for (int i = 0; i < values.length; i++)
             result.add(DSL.inline(values[i]));
 
@@ -2015,7 +1854,6 @@ final class Tools {
             return (Field<Integer>[]) EMPTY_FIELD;
 
         Field<Integer>[] result = new Field[fieldIndexes.length];
-
         for (int i = 0; i < fieldIndexes.length; i++)
             result[i] = DSL.inline(fieldIndexes[i]);
 
@@ -2098,14 +1936,6 @@ final class Tools {
             throw new IllegalArgumentException("Field (" + fieldName + ") is not contained in RecordType " + row);
 
         return result;
-    }
-
-    /**
-     * Create a new array
-     */
-    @SafeVarargs
-    static final <T> T[] array(T... array) {
-        return array;
     }
 
     /**

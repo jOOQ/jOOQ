@@ -333,9 +333,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
     }
 
     private final void toSQLDerivedColumnList(Context<?> ctx) {
-        ctx.sql(" (")
-           .visit(wrap(fieldAliases).indentSize(0))
-           .sql(')');
+        ctx.sql(" (").visit(wrap(fieldAliases).indentSize(0)).sql(')');
     }
 
     @Override

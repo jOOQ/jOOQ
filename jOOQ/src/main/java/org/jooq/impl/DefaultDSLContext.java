@@ -1342,9 +1342,8 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
             ResultSetMetaData meta = rs.getMetaData();
             int columns = meta.getColumnCount();
 
-            for (int i = 0; i < types.length && i < columns; i++) {
+            for (int i = 0; i < types.length && i < columns; i++)
                 fields[i] = field(meta.getColumnLabel(i + 1), types[i]);
-            }
 
             return fetchLazy(rs, fields);
         }
@@ -1548,23 +1547,24 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
             return new ResultImpl<>(configuration());
         }
         else {
-            List<Field<?>> fields = new ArrayList<>(strings.get(0).length);
-            int firstRow = header ? 1 : 0;
+            String[] firstRow = strings.get(0);
+            Field<?>[] fields = new Field[firstRow.length];
+            int firstRowIndex = header ? 1 : 0;
 
             if (header)
-                for (String name : strings.get(0))
-                    fields.add(field(name(name), String.class));
+                for (int i = 0; i < fields.length; i++)
+                    fields[i] = field(name(firstRow[i]), String.class);
             else
-                for (int i = 0; i < strings.get(0).length; i++)
-                    fields.add(field(name("COL" + (i + 1)), String.class));
+                for (int i = 0; i < fields.length; i++)
+                    fields[i] = field(name("COL" + (i + 1)), String.class);
 
             Result<Record> result = new ResultImpl<>(configuration(), fields);
 
-            if (strings.size() > firstRow) {
-                for (String[] values : strings.subList(firstRow, strings.size())) {
+            if (strings.size() > firstRowIndex) {
+                for (String[] values : strings.subList(firstRowIndex, strings.size())) {
                     RecordImplN record = new RecordImplN(fields);
 
-                    for (int i = 0; i < Math.min(values.length, fields.size()); i++) {
+                    for (int i = 0; i < Math.min(values.length, fields.length); i++) {
                         record.values[i] = values[i];
                         record.originals[i] = values[i];
                     }

@@ -132,6 +132,11 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     final BitSet                    changed;
     boolean                         fetched;
 
+    /**
+     * @deprecated - 3.14.0 - [#8495] - Prevent the array copy and call
+     *             {@link #RecordImplN(Field...)} instead.
+     */
+    @Deprecated
     AbstractRecord(Collection<? extends Field<?>> fields) {
         this(Tools.row0(fields.toArray(EMPTY_FIELD)));
     }

@@ -57,11 +57,16 @@ class RecordImplN extends AbstractRecord implements InternalRecord {
      * Generated UID
      */
     private static final long serialVersionUID = -2201346180421463830L;
-    
+
     RecordImplN(Field<?>... values) {
         super(values);
     }
 
+    /**
+     * @deprecated - 3.14.0 - [#8495] - Prevent the array copy and call
+     *             {@link #RecordImplN(Field...)} instead.
+     */
+    @Deprecated
     RecordImplN(Collection<? extends Field<?>> fields) {
         super(fields);
     }

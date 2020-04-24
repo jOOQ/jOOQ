@@ -118,6 +118,7 @@ import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.OffsetTime;
 import java.time.temporal.Temporal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -12687,7 +12688,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> choose(int index, T... values) {
-        return choose(val(index), (Field<T>[]) Tools.fields(values).toArray(EMPTY_FIELD));
+        return choose(val(index), Tools.fieldsArray(values));
     }
 
     /**
@@ -12704,7 +12705,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> choose(Field<Integer> index, T... values) {
-        return choose(index, (Field<T>[]) Tools.fields(values).toArray(EMPTY_FIELD));
+        return choose(index, Tools.fieldsArray(values));
     }
 
     /**
@@ -12839,7 +12840,7 @@ public class DSL {
      */
     @Support
     public static <Z, T> Field<Z> decode(T value, T search, Z result, Object... more) {
-        return decode(Tools.field(value), Tools.field(search), Tools.field(result), Tools.fields(more).toArray(EMPTY_FIELD));
+        return decode(Tools.field(value), Tools.field(search), Tools.field(result), Tools.fieldsArray(more));
     }
 
     /**
@@ -13178,7 +13179,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> coalesce(T value, T... values) {
-        return coalesce0(Tools.field(value), Tools.fields(values).toArray(EMPTY_FIELD));
+        return coalesce0(Tools.field(value), Tools.fieldsArray(values));
     }
 
     /**
@@ -14215,7 +14216,7 @@ public class DSL {
      */
     @Support
     public static Field<String> concat(String... values) {
-        return concat(Tools.fields(values).toArray(EMPTY_FIELD));
+        return concat(Tools.fieldsArray(values));
     }
 
     /**
@@ -17427,7 +17428,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> greatest(T value, T... values) {
-        return greatest(Tools.field(value), Tools.fields(values).toArray(EMPTY_FIELD));
+        return greatest(Tools.field(value), Tools.fieldsArray(values));
     }
 
     /**
@@ -17457,7 +17458,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> least(T value, T... values) {
-        return least(Tools.field(value), Tools.fields(values).toArray(EMPTY_FIELD));
+        return least(Tools.field(value), Tools.fieldsArray(values));
     }
 
     /**
@@ -22472,7 +22473,7 @@ public class DSL {
      */
     @Support
     public static RowN row(Object... values) {
-        return row(Tools.fields(values).toArray(EMPTY_FIELD));
+        return row(Tools.fieldsArray(values));
     }
 
 
@@ -23582,10 +23583,22 @@ public class DSL {
             return EMPTY_FIELD;
 
         Field<?>[] result = new Field<?>[fields.length];
-
-        for (int i = 0; i < fields.length; i++) {
+        for (int i = 0; i < fields.length; i++)
             result[i] = nullSafe(fields[i]);
-        }
+
+        return result;
+    }
+
+    /**
+     * Null-safety of a field.
+     */
+    protected static List<Field<?>> nullSafeList(Field<?>... fields) {
+        if (fields == null)
+            return asList(EMPTY_FIELD);
+
+        List<Field<?>> result = new ArrayList<>(fields.length);
+        for (Field<?> f : fields)
+            result.add(nullSafe(f));
 
         return result;
     }

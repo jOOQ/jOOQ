@@ -56,6 +56,7 @@ import static org.jooq.Comparator.NOT_SIMILAR_TO;
 import static org.jooq.Comparator.SIMILAR_TO;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.nullSafe;
+import static org.jooq.impl.DSL.nullSafeList;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.ExpressionOperator.ADD;
 import static org.jooq.impl.ExpressionOperator.DIVIDE;
@@ -64,8 +65,6 @@ import static org.jooq.impl.ExpressionOperator.SUBTRACT;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_STRING;
 import static org.jooq.impl.Tools.castIfNeeded;
-import static org.jooq.tools.Convert.FALSE_VALUES;
-import static org.jooq.tools.Convert.TRUE_VALUES;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -73,6 +72,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.Function;
@@ -102,6 +102,7 @@ import org.jooq.SortField;
 import org.jooq.SortOrder;
 import org.jooq.WindowIgnoreNullsStep;
 import org.jooq.WindowPartitionByStep;
+import org.jooq.tools.Convert;
 
 /**
  * @author Lukas Eder
@@ -111,8 +112,10 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     /**
      * Generated UID
      */
-    private static final long     serialVersionUID = 2884811923648354905L;
-    private static final Clause[] CLAUSES          = { FIELD };
+    private static final long                serialVersionUID = 2884811923648354905L;
+    private static final Clause[]            CLAUSES          = { FIELD };
+    private static final List<Field<String>> TRUE_VALUES      = Tools.inline(Convert.TRUE_VALUES.toArray(EMPTY_STRING));
+    private static final List<Field<String>> FALSE_VALUES     = Tools.inline(Convert.FALSE_VALUES.toArray(EMPTY_STRING));
 
     AbstractField(Name name, DataType<T> type) {
         this(name, type, null);
@@ -683,7 +686,7 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
         Class<?> type = getType();
 
         if (type == String.class)
-            return ((Field<String>) this).in(Tools.inline(TRUE_VALUES.toArray(EMPTY_STRING)));
+            return ((Field<String>) this).in(TRUE_VALUES);
         else if (Number.class.isAssignableFrom(type))
             return ((Field<Number>) this).equal(inline((Number) getDataType().convert(1)));
         else if (Boolean.class.isAssignableFrom(type))
@@ -698,13 +701,13 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
         Class<?> type = getType();
 
         if (type == String.class)
-            return ((Field<String>) this).in(Tools.inline(FALSE_VALUES.toArray(EMPTY_STRING)));
+            return ((Field<String>) this).in(FALSE_VALUES);
         else if (Number.class.isAssignableFrom(type))
             return ((Field<Number>) this).equal(inline((Number) getDataType().convert(0)));
         else if (Boolean.class.isAssignableFrom(type))
             return ((Field<Boolean>) this).equal(inline(false, (DataType<Boolean>) getDataType()));
         else
-            return castIfNeeded(this, String.class).in(Tools.inline(FALSE_VALUES.toArray(EMPTY_STRING)));
+            return castIfNeeded(this, String.class).in(FALSE_VALUES);
     }
 
     @Override
@@ -963,12 +966,12 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
         if (isAccidentalCollection(values))
             return in((Collection<?>) values[0]);
 
-        return in(Tools.fields(values, this).toArray(EMPTY_FIELD));
+        return new InCondition<>(this, Tools.fields(values, this), IN);
     }
 
     @Override
     public final Condition in(Field<?>... values) {
-        return new InCondition<>(this, nullSafe(values), IN);
+        return new InCondition<>(this, nullSafeList(values), IN);
     }
 
     @Override
@@ -1004,12 +1007,12 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
         if (isAccidentalCollection(values))
             return notIn((Collection<?>) values[0]);
 
-        return notIn(Tools.fields(values, this).toArray(EMPTY_FIELD));
+        return new InCondition<>(this, Tools.fields(values, this), NOT_IN);
     }
 
     @Override
     public final Condition notIn(Field<?>... values) {
-        return new InCondition<>(this, nullSafe(values), NOT_IN);
+        return new InCondition<>(this, nullSafeList(values), NOT_IN);
     }
 
     @Override
@@ -1949,7 +1952,7 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     @Override
     @Deprecated
     public final Field<String> concat(String... values) {
-        return DSL.concat(Tools.combine(this, Tools.fields(values).toArray(EMPTY_FIELD)));
+        return DSL.concat(Tools.combine(this, Tools.fieldsArray(values)));
     }
 
     @Override
@@ -2015,7 +2018,7 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     @Deprecated
     @SafeVarargs
     public final Field<T> greatest(T... others) {
-        return DSL.greatest(this, Tools.fields(others).toArray(EMPTY_FIELD));
+        return DSL.greatest(this, Tools.fieldsArray(others));
     }
 
     @Override
@@ -2028,7 +2031,7 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     @Deprecated
     @SafeVarargs
     public final Field<T> least(T... others) {
-        return DSL.least(this, Tools.fields(others).toArray(EMPTY_FIELD));
+        return DSL.least(this, Tools.fieldsArray(others));
     }
 
     @Override
@@ -2094,7 +2097,7 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
             types[types.length - 1] = r.getDataType();
         }
 
-        return DSL.decode(this, Tools.field(search, this), r, Tools.fieldArray(Tools.fields(more, types)));
+        return DSL.decode(this, Tools.field(search, this), r, Tools.fieldsArray(more, types));
     }
 
     @Override

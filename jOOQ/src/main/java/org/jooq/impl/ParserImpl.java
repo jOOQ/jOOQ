@@ -4263,7 +4263,7 @@ final class ParserImpl implements Parser {
             do {
                 parseAlterTableAddFieldsOrConstraints(ctx, list);
             }
-            while (parseIf(ctx, ',') && parseKeyword(ctx, "ADD"));
+            while (parseIf(ctx, ',') && (parseKeywordIf(ctx, "ADD") || !peekKeyword(ctx, "ALTER", "COMMENT", "DROP", "MODIFY", "OWNER TO", "RENAME")));
         }
 
         if (list.size() == 1)

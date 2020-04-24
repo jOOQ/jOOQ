@@ -3049,14 +3049,20 @@ final class ParserImpl implements Parser {
     private static final DDLQuery parseAlterView(ParserContext ctx) {
         boolean ifExists = parseKeywordIf(ctx, "IF EXISTS");
         Table<?> oldName = parseTableName(ctx);
-        parseKeyword(ctx, "RENAME");
-        if (!parseKeywordIf(ctx, "AS"))
-            parseKeyword(ctx, "TO");
-        Table<?> newName = parseTableName(ctx);
 
-        return ifExists
-            ? ctx.dsl.alterViewIfExists(oldName).renameTo(newName)
-            : ctx.dsl.alterView(oldName).renameTo(newName);
+        if (parseKeywordIf(ctx, "RENAME")) {
+            if (!parseKeywordIf(ctx, "AS"))
+                parseKeyword(ctx, "TO");
+            Table<?> newName = parseTableName(ctx);
+
+            return ifExists
+                ? ctx.dsl.alterViewIfExists(oldName).renameTo(newName)
+                : ctx.dsl.alterView(oldName).renameTo(newName);
+        }
+        else if (parseKeywordIf(ctx, "OWNER TO") && parseUser(ctx) != null)
+            return IGNORE;
+        else
+            throw ctx.expected("OWNER TO", "RENAME");
     }
 
     private static final DDLQuery parseDropView(ParserContext ctx) {
@@ -3125,6 +3131,9 @@ final class ParserImpl implements Parser {
                 parseKeyword(ctx, "TO");
             return s.renameTo(parseSequenceName(ctx));
         }
+        else if (parseKeywordIf(ctx, "OWNER TO") && parseUser(ctx) != null) {
+            return IGNORE;
+        }
         else {
             boolean found = false;
             AlterSequenceFlagsStep s1 = s;
@@ -3161,8 +3170,24 @@ final class ParserImpl implements Parser {
                     break;
                 found = true;
             }
+
             if (!found)
-                throw ctx.expected("CACHE", "CYCLE", "INCREMENT BY", "MAXVALUE", "MINVALUE", "NO CACHE", "NO CYCLE", "NO MAXVALUE", "NO MINVALUE", "RENAME TO", "RESTART", "START WITH");
+                throw ctx.expected(
+                    "CACHE",
+                    "CYCLE",
+                    "INCREMENT BY",
+                    "MAXVALUE",
+                    "MINVALUE",
+                    "NO CACHE",
+                    "NO CYCLE",
+                    "NO MAXVALUE",
+                    "NO MINVALUE",
+                    "OWNER TO",
+                    "RENAME TO",
+                    "RESTART",
+                    "START WITH"
+                );
+
             return s1;
         }
     }
@@ -4019,6 +4044,13 @@ final class ParserImpl implements Parser {
 
                 break;
 
+            case 'o':
+            case 'O':
+                if (parseKeywordIf(ctx, "OWNER TO") && parseUser(ctx) != null)
+                    return IGNORE;
+
+                break;
+
             case 'r':
             case 'R':
                 if (parseKeywordIf(ctx, "RENAME")) {
@@ -4056,7 +4088,7 @@ final class ParserImpl implements Parser {
                 break;
         }
 
-        throw ctx.expected("ADD", "ALTER", "COMMENT", "DROP", "MODIFY", "RENAME");
+        throw ctx.expected("ADD", "ALTER", "COMMENT", "DROP", "MODIFY", "OWNER TO", "RENAME");
     }
 
     private static final AlterTableFinalStep parseCascadeRestrictIf(ParserContext ctx, AlterTableDropStep step) {
@@ -4230,6 +4262,8 @@ final class ParserImpl implements Parser {
 
         if (parseKeywordIf(ctx, "ADD VALUE"))
             return s1.addValue(parseStringLiteral(ctx));
+        else if (parseKeywordIf(ctx, "OWNER TO") && parseUser(ctx) != null)
+            return IGNORE;
         else if (parseKeywordIf(ctx, "RENAME TO"))
             return s1.renameTo(parseIdentifier(ctx));
         else if (parseKeywordIf(ctx, "RENAME VALUE"))
@@ -4237,8 +4271,7 @@ final class ParserImpl implements Parser {
         else if (parseKeywordIf(ctx, "SET SCHEMA"))
             return s1.setSchema(parseIdentifier(ctx));
 
-
-        throw ctx.expected("ADD VALUE", "RENAME TO", "RENAME VALUE", "SET SCHEMA");
+        throw ctx.expected("ADD VALUE", "OWNER TO", "RENAME TO", "RENAME VALUE", "SET SCHEMA");
     }
 
     private static final DDLQuery parseRename(ParserContext ctx) {
@@ -4412,10 +4445,8 @@ final class ParserImpl implements Parser {
             AlterSchemaFinalStep s2 = s1.renameTo(newName);
             return s2;
         }
-        else if (parseKeywordIf(ctx, "OWNER TO")) {
-            parseUser(ctx);
+        else if (parseKeywordIf(ctx, "OWNER TO") && parseUser(ctx) != null)
             return IGNORE;
-        }
         else if (parseAlterDatabaseFlags(ctx, false))
             return IGNORE;
         else

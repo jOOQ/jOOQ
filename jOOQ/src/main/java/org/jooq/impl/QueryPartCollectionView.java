@@ -66,7 +66,7 @@ class QueryPartCollectionView<T extends QueryPart> extends AbstractQueryPart imp
     Boolean                   qualify;
     String                    separator;
 
-    static <T extends QueryPart> QueryPartCollectionView<T> wrap(Collection<T> wrapped) {
+    static final <T extends QueryPart> QueryPartCollectionView<T> wrap(Collection<T> wrapped) {
         return new QueryPartCollectionView<>(wrapped);
     }
 

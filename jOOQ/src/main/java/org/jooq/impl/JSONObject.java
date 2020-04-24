@@ -208,6 +208,6 @@ final class JSONObject<J> extends AbstractField<J> implements JSONObjectNullStep
         else
             jsonNull = new JSONNull(nullType);
 
-        ctx.visit(K_JSON_OBJECT).sql('(').visit(new QueryPartList<>(args, jsonNull).separator("")).sql(')');
+        ctx.visit(K_JSON_OBJECT).sql('(').visit(new QueryPartListView<>(args, jsonNull).separator("")).sql(')');
     }
 }

@@ -271,10 +271,10 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
 
             // [#2925] Some dialects don't like empty parameter lists
             if (ctx.family() == FIREBIRD && parameters.length == 0)
-                ctx.visit(new QueryPartList<>(parameters));
+                ctx.visit(new QueryPartListView<>(parameters));
             else
                 ctx.sql('(')
-                   .visit(new QueryPartList<>(parameters))
+                   .visit(new QueryPartListView<>(parameters))
                    .sql(')');
         }
 

@@ -336,7 +336,7 @@ final class CreateIndexImpl extends AbstractRowCountQuery implements
                .visit(keyword)
                .sql(" (")
                .qualify(false)
-               .visit(new QueryPartList<>(include))
+               .visit(new QueryPartListView<>(include))
                .qualify(true)
                .sql(')');
         }

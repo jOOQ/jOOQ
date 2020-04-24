@@ -76,7 +76,7 @@ final class EmbeddableTableField<R extends Record, T extends Record> extends Abs
         Object previous = ctx.data(DATA_LIST_ALREADY_INDENTED);
 
         ctx.data(DATA_LIST_ALREADY_INDENTED, true);
-        ctx.visit(new QueryPartList<>(fields));
+        ctx.visit(new QueryPartListView<>(fields));
         ctx.data(DATA_LIST_ALREADY_INDENTED, previous);
     }
 

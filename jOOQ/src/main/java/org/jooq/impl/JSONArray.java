@@ -135,7 +135,7 @@ final class JSONArray<J> extends AbstractField<J> implements JSONArrayNullStep<J
                 else
                     jsonNull = new JSONNull(nullType);
 
-                ctx.visit(K_JSON_ARRAY).sql('(').visit(new QueryPartList<>(args, jsonNull).separator("")).sql(')');
+                ctx.visit(K_JSON_ARRAY).sql('(').visit(new QueryPartListView<>(args, jsonNull).separator("")).sql(')');
                 break;
             }
         }

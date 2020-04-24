@@ -520,7 +520,7 @@ final class FieldMapsForInsert extends AbstractQueryPart {
         // [#989] Avoid qualifying fields in INSERT field declaration
         boolean qualify = ctx.qualify();
         ctx.qualify(false)
-           .visit(new QueryPartList<>(values.keySet()))
+           .visit(new QueryPartCollectionView<>(values.keySet()))
            .qualify(qualify);
 
         ctx.sql(')');

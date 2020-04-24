@@ -122,7 +122,7 @@ implements
         acceptArguments1(ctx, arguments);
     }
 
-    final void acceptArguments1(Context<?> ctx, QueryPartList<Field<?>> args) {
+    final void acceptArguments1(Context<?> ctx, QueryPartCollectionView<Field<?>> args) {
         if (distinct) {
             ctx.visit(K_DISTINCT).sql(' ');
 

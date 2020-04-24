@@ -57,15 +57,17 @@ class QueryPartListView<T extends QueryPart> extends QueryPartCollectionView<T> 
 
     private static final long serialVersionUID = -2936922742534009564L;
 
-    static <T extends QueryPart> QueryPartListView<T> wrap(T[] wrappedList) {
+    @SafeVarargs
+    static final <T extends QueryPart> QueryPartListView<T> wrap(T... wrappedList) {
         return new QueryPartListView<>(wrappedList);
     }
 
-    static <T extends QueryPart> QueryPartListView<T> wrap(List<T> wrappedList) {
+    static final <T extends QueryPart> QueryPartListView<T> wrap(List<T> wrappedList) {
         return new QueryPartListView<>(wrappedList);
     }
 
-    QueryPartListView(T[] wrappedList) {
+    @SafeVarargs
+    QueryPartListView(T... wrappedList) {
         this(asList(wrappedList));
     }
 

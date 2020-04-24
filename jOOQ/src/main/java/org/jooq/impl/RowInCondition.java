@@ -146,9 +146,7 @@ final class RowInCondition extends AbstractCondition {
                 ctx.visit(left)
                    .sql(' ')
                    .visit((not ? NOT_IN : IN).toKeyword())
-                   .sql(" (")
-                   .visit(new QueryPartList<>(padded(ctx, right)))
-                   .sql(')');
+                   .sql(" (").visit(new QueryPartListView<>(padded(ctx, right))).sql(')');
             }
         }
 

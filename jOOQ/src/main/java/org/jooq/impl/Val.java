@@ -77,7 +77,7 @@ final class Val<T> extends AbstractParam<T> {
             Object previous = ctx.data(DATA_LIST_ALREADY_INDENTED);
 
             ctx.data(DATA_LIST_ALREADY_INDENTED, true);
-            ctx.visit(new QueryPartList<>(embeddedFields(this)));
+            ctx.visit(new QueryPartListView<>(embeddedFields(this)));
             ctx.data(DATA_LIST_ALREADY_INDENTED, previous);
         }
         else if (ctx instanceof RenderContext) {

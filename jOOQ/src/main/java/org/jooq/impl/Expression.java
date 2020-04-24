@@ -91,7 +91,6 @@ import static org.jooq.impl.Names.N_TIMESTAMPADD;
 import static org.jooq.impl.Tools.castIfNeeded;
 
 import java.sql.Timestamp;
-import java.util.Arrays;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -574,7 +573,7 @@ final class Expression<T> extends AbstractField<T> {
 
                 case POSTGRES:
                 default:
-                    ctx.visit(new DefaultExpression<>(lhs, operator, new QueryPartList<>(Arrays.asList(rhs))));
+                    ctx.visit(new DefaultExpression<>(lhs, operator, new QueryPartListView<>(rhs)));
                     break;
             }
         }
@@ -712,7 +711,7 @@ final class Expression<T> extends AbstractField<T> {
 
                 case H2:
                 default:
-                    ctx.visit(new DefaultExpression<>(lhs, operator, new QueryPartList<>(Arrays.asList(rhs))));
+                    ctx.visit(new DefaultExpression<>(lhs, operator, new QueryPartListView<>(rhs)));
                     break;
             }
         }
@@ -771,13 +770,13 @@ final class Expression<T> extends AbstractField<T> {
         /**
          * Generated UID
          */
-        private static final long             serialVersionUID = -5105004317793995419L;
+        private static final long                       serialVersionUID = -5105004317793995419L;
 
-        private final Field<T>                lhs;
-        private final ExpressionOperator      operator;
-        private final QueryPartList<Field<?>> rhs;
+        private final Field<T>                          lhs;
+        private final ExpressionOperator                operator;
+        private final QueryPartCollectionView<Field<?>> rhs;
 
-        DefaultExpression(Field<T> lhs, ExpressionOperator operator, QueryPartList<Field<?>> rhs) {
+        DefaultExpression(Field<T> lhs, ExpressionOperator operator, QueryPartCollectionView<Field<?>> rhs) {
             super(operator.toName(), lhs.getDataType());
 
             this.lhs = lhs;

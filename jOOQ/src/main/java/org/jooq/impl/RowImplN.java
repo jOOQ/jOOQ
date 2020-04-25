@@ -50,9 +50,9 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.QuantifiedSelect;
 import org.jooq.Record;
+import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.RowN;
-import org.jooq.Result;
 import org.jooq.Select;
 
 /**
@@ -64,7 +64,7 @@ final class RowImplN extends AbstractRow implements RowN {
      * Generated UID
      */
     private static final long serialVersionUID = -929427349071556318L;
-    
+
     RowImplN(Field<?>... values) {
         super(values);
     }

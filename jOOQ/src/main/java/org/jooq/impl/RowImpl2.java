@@ -51,22 +51,22 @@ import org.jooq.Field;
 import org.jooq.QuantifiedSelect;
 import org.jooq.Record;
 import org.jooq.Record2;
+import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.Row2;
-import org.jooq.Result;
 import org.jooq.Select;
 
 /**
  * @author Lukas Eder
  */
-@SuppressWarnings({ "rawtypes", "unchecked" }) 
+@SuppressWarnings({ "rawtypes", "unchecked" })
 final class RowImpl2<T1, T2> extends AbstractRow implements Row2<T1, T2> {
 
     /**
      * Generated UID
      */
     private static final long serialVersionUID = -929427349071556318L;
-    
+
     RowImpl2(Field<T1> t1, Field<T2> t2) {
         super(t1, t2);
     }
@@ -101,7 +101,7 @@ final class RowImpl2<T1, T2> extends AbstractRow implements Row2<T1, T2> {
 
     @Override
     public final Condition compare(Comparator comparator, T1 t1, T2 t2) {
-        return compare(comparator, row(val(t1, (DataType<T1>) dataType(0)), val(t2, (DataType<T2>) dataType(1))));
+        return compare(comparator, row(val(t1, (DataType) dataType(0)), val(t2, (DataType) dataType(1))));
     }
 
     @Override
@@ -507,7 +507,7 @@ final class RowImpl2<T1, T2> extends AbstractRow implements Row2<T1, T2> {
 
     @Override
     public final Condition isNotDistinctFrom(T1 t1, T2 t2) {
-        return isNotDistinctFrom(val(t1, (DataType<T1>) dataType(0)), val(t2, (DataType<T2>) dataType(1)));
+        return isNotDistinctFrom(val(t1, (DataType) dataType(0)), val(t2, (DataType) dataType(1)));
     }
 
     @Override
@@ -527,7 +527,7 @@ final class RowImpl2<T1, T2> extends AbstractRow implements Row2<T1, T2> {
 
     @Override
     public final Condition isDistinctFrom(T1 t1, T2 t2) {
-        return isDistinctFrom(val(t1, (DataType<T1>) dataType(0)), val(t2, (DataType<T2>) dataType(1)));
+        return isDistinctFrom(val(t1, (DataType) dataType(0)), val(t2, (DataType) dataType(1)));
     }
 
     @Override

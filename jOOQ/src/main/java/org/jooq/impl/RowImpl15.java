@@ -51,22 +51,22 @@ import org.jooq.Field;
 import org.jooq.QuantifiedSelect;
 import org.jooq.Record;
 import org.jooq.Record15;
+import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.Row15;
-import org.jooq.Result;
 import org.jooq.Select;
 
 /**
  * @author Lukas Eder
  */
-@SuppressWarnings({ "rawtypes", "unchecked" }) 
+@SuppressWarnings({ "rawtypes", "unchecked" })
 final class RowImpl15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> extends AbstractRow implements Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> {
 
     /**
      * Generated UID
      */
     private static final long serialVersionUID = -929427349071556318L;
-    
+
     RowImpl15(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15) {
         super(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15);
     }
@@ -166,7 +166,7 @@ final class RowImpl15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T1
 
     @Override
     public final Condition compare(Comparator comparator, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15) {
-        return compare(comparator, row(val(t1, (DataType<T1>) dataType(0)), val(t2, (DataType<T2>) dataType(1)), val(t3, (DataType<T3>) dataType(2)), val(t4, (DataType<T4>) dataType(3)), val(t5, (DataType<T5>) dataType(4)), val(t6, (DataType<T6>) dataType(5)), val(t7, (DataType<T7>) dataType(6)), val(t8, (DataType<T8>) dataType(7)), val(t9, (DataType<T9>) dataType(8)), val(t10, (DataType<T10>) dataType(9)), val(t11, (DataType<T11>) dataType(10)), val(t12, (DataType<T12>) dataType(11)), val(t13, (DataType<T13>) dataType(12)), val(t14, (DataType<T14>) dataType(13)), val(t15, (DataType<T15>) dataType(14))));
+        return compare(comparator, row(val(t1, (DataType) dataType(0)), val(t2, (DataType) dataType(1)), val(t3, (DataType) dataType(2)), val(t4, (DataType) dataType(3)), val(t5, (DataType) dataType(4)), val(t6, (DataType) dataType(5)), val(t7, (DataType) dataType(6)), val(t8, (DataType) dataType(7)), val(t9, (DataType) dataType(8)), val(t10, (DataType) dataType(9)), val(t11, (DataType) dataType(10)), val(t12, (DataType) dataType(11)), val(t13, (DataType) dataType(12)), val(t14, (DataType) dataType(13)), val(t15, (DataType) dataType(14))));
     }
 
     @Override
@@ -572,7 +572,7 @@ final class RowImpl15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T1
 
     @Override
     public final Condition isNotDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15) {
-        return isNotDistinctFrom(val(t1, (DataType<T1>) dataType(0)), val(t2, (DataType<T2>) dataType(1)), val(t3, (DataType<T3>) dataType(2)), val(t4, (DataType<T4>) dataType(3)), val(t5, (DataType<T5>) dataType(4)), val(t6, (DataType<T6>) dataType(5)), val(t7, (DataType<T7>) dataType(6)), val(t8, (DataType<T8>) dataType(7)), val(t9, (DataType<T9>) dataType(8)), val(t10, (DataType<T10>) dataType(9)), val(t11, (DataType<T11>) dataType(10)), val(t12, (DataType<T12>) dataType(11)), val(t13, (DataType<T13>) dataType(12)), val(t14, (DataType<T14>) dataType(13)), val(t15, (DataType<T15>) dataType(14)));
+        return isNotDistinctFrom(val(t1, (DataType) dataType(0)), val(t2, (DataType) dataType(1)), val(t3, (DataType) dataType(2)), val(t4, (DataType) dataType(3)), val(t5, (DataType) dataType(4)), val(t6, (DataType) dataType(5)), val(t7, (DataType) dataType(6)), val(t8, (DataType) dataType(7)), val(t9, (DataType) dataType(8)), val(t10, (DataType) dataType(9)), val(t11, (DataType) dataType(10)), val(t12, (DataType) dataType(11)), val(t13, (DataType) dataType(12)), val(t14, (DataType) dataType(13)), val(t15, (DataType) dataType(14)));
     }
 
     @Override
@@ -592,7 +592,7 @@ final class RowImpl15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T1
 
     @Override
     public final Condition isDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15) {
-        return isDistinctFrom(val(t1, (DataType<T1>) dataType(0)), val(t2, (DataType<T2>) dataType(1)), val(t3, (DataType<T3>) dataType(2)), val(t4, (DataType<T4>) dataType(3)), val(t5, (DataType<T5>) dataType(4)), val(t6, (DataType<T6>) dataType(5)), val(t7, (DataType<T7>) dataType(6)), val(t8, (DataType<T8>) dataType(7)), val(t9, (DataType<T9>) dataType(8)), val(t10, (DataType<T10>) dataType(9)), val(t11, (DataType<T11>) dataType(10)), val(t12, (DataType<T12>) dataType(11)), val(t13, (DataType<T13>) dataType(12)), val(t14, (DataType<T14>) dataType(13)), val(t15, (DataType<T15>) dataType(14)));
+        return isDistinctFrom(val(t1, (DataType) dataType(0)), val(t2, (DataType) dataType(1)), val(t3, (DataType) dataType(2)), val(t4, (DataType) dataType(3)), val(t5, (DataType) dataType(4)), val(t6, (DataType) dataType(5)), val(t7, (DataType) dataType(6)), val(t8, (DataType) dataType(7)), val(t9, (DataType) dataType(8)), val(t10, (DataType) dataType(9)), val(t11, (DataType) dataType(10)), val(t12, (DataType) dataType(11)), val(t13, (DataType) dataType(12)), val(t14, (DataType) dataType(13)), val(t15, (DataType) dataType(14)));
     }
 
     @Override

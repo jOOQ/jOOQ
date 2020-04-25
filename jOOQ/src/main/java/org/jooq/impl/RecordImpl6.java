@@ -58,7 +58,7 @@ class RecordImpl6<T1, T2, T3, T4, T5, T6> extends AbstractRecord implements Inte
      * Generated UID
      */
     private static final long serialVersionUID = -2201346180421463830L;
-    
+
     RecordImpl6(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6) {
         super(t1, t2, t3, t4, t5, t6);
     }

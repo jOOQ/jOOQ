@@ -51,22 +51,22 @@ import org.jooq.Field;
 import org.jooq.QuantifiedSelect;
 import org.jooq.Record;
 import org.jooq.Record3;
+import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.Row3;
-import org.jooq.Result;
 import org.jooq.Select;
 
 /**
  * @author Lukas Eder
  */
-@SuppressWarnings({ "rawtypes", "unchecked" }) 
+@SuppressWarnings({ "rawtypes", "unchecked" })
 final class RowImpl3<T1, T2, T3> extends AbstractRow implements Row3<T1, T2, T3> {
 
     /**
      * Generated UID
      */
     private static final long serialVersionUID = -929427349071556318L;
-    
+
     RowImpl3(Field<T1> t1, Field<T2> t2, Field<T3> t3) {
         super(t1, t2, t3);
     }
@@ -106,7 +106,7 @@ final class RowImpl3<T1, T2, T3> extends AbstractRow implements Row3<T1, T2, T3>
 
     @Override
     public final Condition compare(Comparator comparator, T1 t1, T2 t2, T3 t3) {
-        return compare(comparator, row(val(t1, (DataType<T1>) dataType(0)), val(t2, (DataType<T2>) dataType(1)), val(t3, (DataType<T3>) dataType(2))));
+        return compare(comparator, row(val(t1, (DataType) dataType(0)), val(t2, (DataType) dataType(1)), val(t3, (DataType) dataType(2))));
     }
 
     @Override
@@ -512,7 +512,7 @@ final class RowImpl3<T1, T2, T3> extends AbstractRow implements Row3<T1, T2, T3>
 
     @Override
     public final Condition isNotDistinctFrom(T1 t1, T2 t2, T3 t3) {
-        return isNotDistinctFrom(val(t1, (DataType<T1>) dataType(0)), val(t2, (DataType<T2>) dataType(1)), val(t3, (DataType<T3>) dataType(2)));
+        return isNotDistinctFrom(val(t1, (DataType) dataType(0)), val(t2, (DataType) dataType(1)), val(t3, (DataType) dataType(2)));
     }
 
     @Override
@@ -532,7 +532,7 @@ final class RowImpl3<T1, T2, T3> extends AbstractRow implements Row3<T1, T2, T3>
 
     @Override
     public final Condition isDistinctFrom(T1 t1, T2 t2, T3 t3) {
-        return isDistinctFrom(val(t1, (DataType<T1>) dataType(0)), val(t2, (DataType<T2>) dataType(1)), val(t3, (DataType<T3>) dataType(2)));
+        return isDistinctFrom(val(t1, (DataType) dataType(0)), val(t2, (DataType) dataType(1)), val(t3, (DataType) dataType(2)));
     }
 
     @Override

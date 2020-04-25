@@ -58,7 +58,7 @@ class RecordImpl2<T1, T2> extends AbstractRecord implements InternalRecord, Reco
      * Generated UID
      */
     private static final long serialVersionUID = -2201346180421463830L;
-    
+
     RecordImpl2(Field<T1> t1, Field<T2> t2) {
         super(t1, t2);
     }

@@ -51,22 +51,22 @@ import org.jooq.Field;
 import org.jooq.QuantifiedSelect;
 import org.jooq.Record;
 import org.jooq.Record5;
+import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.Row5;
-import org.jooq.Result;
 import org.jooq.Select;
 
 /**
  * @author Lukas Eder
  */
-@SuppressWarnings({ "rawtypes", "unchecked" }) 
+@SuppressWarnings({ "rawtypes", "unchecked" })
 final class RowImpl5<T1, T2, T3, T4, T5> extends AbstractRow implements Row5<T1, T2, T3, T4, T5> {
 
     /**
      * Generated UID
      */
     private static final long serialVersionUID = -929427349071556318L;
-    
+
     RowImpl5(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5) {
         super(t1, t2, t3, t4, t5);
     }
@@ -116,7 +116,7 @@ final class RowImpl5<T1, T2, T3, T4, T5> extends AbstractRow implements Row5<T1,
 
     @Override
     public final Condition compare(Comparator comparator, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5) {
-        return compare(comparator, row(val(t1, (DataType<T1>) dataType(0)), val(t2, (DataType<T2>) dataType(1)), val(t3, (DataType<T3>) dataType(2)), val(t4, (DataType<T4>) dataType(3)), val(t5, (DataType<T5>) dataType(4))));
+        return compare(comparator, row(val(t1, (DataType) dataType(0)), val(t2, (DataType) dataType(1)), val(t3, (DataType) dataType(2)), val(t4, (DataType) dataType(3)), val(t5, (DataType) dataType(4))));
     }
 
     @Override
@@ -522,7 +522,7 @@ final class RowImpl5<T1, T2, T3, T4, T5> extends AbstractRow implements Row5<T1,
 
     @Override
     public final Condition isNotDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5) {
-        return isNotDistinctFrom(val(t1, (DataType<T1>) dataType(0)), val(t2, (DataType<T2>) dataType(1)), val(t3, (DataType<T3>) dataType(2)), val(t4, (DataType<T4>) dataType(3)), val(t5, (DataType<T5>) dataType(4)));
+        return isNotDistinctFrom(val(t1, (DataType) dataType(0)), val(t2, (DataType) dataType(1)), val(t3, (DataType) dataType(2)), val(t4, (DataType) dataType(3)), val(t5, (DataType) dataType(4)));
     }
 
     @Override
@@ -542,7 +542,7 @@ final class RowImpl5<T1, T2, T3, T4, T5> extends AbstractRow implements Row5<T1,
 
     @Override
     public final Condition isDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5) {
-        return isDistinctFrom(val(t1, (DataType<T1>) dataType(0)), val(t2, (DataType<T2>) dataType(1)), val(t3, (DataType<T3>) dataType(2)), val(t4, (DataType<T4>) dataType(3)), val(t5, (DataType<T5>) dataType(4)));
+        return isDistinctFrom(val(t1, (DataType) dataType(0)), val(t2, (DataType) dataType(1)), val(t3, (DataType) dataType(2)), val(t4, (DataType) dataType(3)), val(t5, (DataType) dataType(4)));
     }
 
     @Override

@@ -37,7 +37,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.zero;
 import static org.jooq.impl.Names.N_SGN;
 import static org.jooq.impl.Names.N_SIGN;
@@ -76,9 +76,9 @@ final class Sign extends AbstractField<Integer> {
 
             case SQLITE:
                 ctx.visit(DSL
-                    .when(((Field<Integer>) argument).greaterThan(zero()), one())
-                    .when(((Field<Integer>) argument).lessThan(zero()), one().neg())
-                    .otherwise(zero()));
+                    .when(((Field<Integer>) argument).gt(zero()), inline(1))
+                    .when(((Field<Integer>) argument).lt(zero()), inline(-1))
+                    .when(((Field<Integer>) argument).eq(zero()), inline(0)));
                 break;
 
             default:

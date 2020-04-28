@@ -38,9 +38,6 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.Keywords.K_AS;
-import static org.jooq.impl.Keywords.K_CAST;
-import static org.jooq.impl.Keywords.K_VARCHAR;
 import static org.jooq.impl.Names.N_HEX;
 import static org.jooq.impl.Names.N_LEN;
 import static org.jooq.impl.Names.N_LENGTH;
@@ -107,12 +104,6 @@ final class Rpad extends AbstractField<String> {
                         .sql(")), '00', ").visit(character)
                     .sql("), 1, ").visit(length).sql(" - ").visit(N_LENGTH).sql('(').visit(field).sql(')')
                 .sql(')');
-                break;
-
-            // According to the Firebird documentation, RPAD outcomes should be
-            // cast to truncate large results...
-            case FIREBIRD:
-                ctx.visit(K_CAST).sql('(').visit(N_RPAD).sql('(').visit(field).sql(", ").visit(length).sql(", ").visit(character).sql(") ").visit(K_AS).sql(' ').visit(K_VARCHAR).sql("(4000))");
                 break;
 
             default:

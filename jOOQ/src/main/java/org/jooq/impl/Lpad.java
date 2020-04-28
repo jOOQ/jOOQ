@@ -38,9 +38,6 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.Keywords.K_AS;
-import static org.jooq.impl.Keywords.K_CAST;
-import static org.jooq.impl.Keywords.K_VARCHAR;
 import static org.jooq.impl.Names.N_HEX;
 import static org.jooq.impl.Names.N_LEN;
 import static org.jooq.impl.Names.N_LENGTH;
@@ -96,11 +93,9 @@ final class Lpad extends AbstractField<String> {
 
 
 
-
-
             // This beautiful expression was contributed by "Ludo", here:
             // http://stackoverflow.com/questions/6576343/how-to-simulate-lpad-rpad-with-sqlite
-            case SQLITE: {
+            case SQLITE:
                 ctx.visit(N_SUBSTR).sql('(')
                     .visit(N_REPLACE).sql('(')
                         .visit(N_HEX).sql('(')
@@ -110,19 +105,10 @@ final class Lpad extends AbstractField<String> {
                     .sql("), 1, ").visit(length).sql(" - ").visit(N_LENGTH).sql('(').visit(field)
                 .sql(")) || ").visit(field);
                 break;
-            }
 
-            // According to the Firebird documentation, LPAD outcomes should be
-            // cast to truncate large results...
-            case FIREBIRD: {
-                ctx.visit(K_CAST).sql('(').visit(N_LPAD).sql('(').visit(field).sql(", ").visit(length).sql(", ").visit(character).sql(") ").visit(K_AS).sql(' ').visit(K_VARCHAR).sql("(4000))");
-                break;
-            }
-
-            default: {
+            default:
                 ctx.visit(N_LPAD).sql('(').visit(field).sql(", ").visit(length).sql(", ").visit(character).sql(')');
                 break;
-            }
         }
     }
 }

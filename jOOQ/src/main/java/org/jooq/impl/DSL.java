@@ -17476,6 +17476,24 @@ public class DSL {
     }
 
     /**
+     * Get the <code>WIDTH_BUCKET</code> function which divides a range (low,
+     * high) in buckets of equal size.
+     */
+    @Support
+    public static <T extends Number> Field<T> widthBucket(Field<T> field, T low, T high, int buckets) {
+        return widthBucket(field, Tools.field(low, field), Tools.field(high, field), Tools.field(buckets));
+    }
+
+    /**
+     * Get the <code>WIDTH_BUCKET</code> function which divides a range (low,
+     * high) in buckets of equal size.
+     */
+    @Support
+    public static <T extends Number> Field<T> widthBucket(Field<T> field, Field<T> low, Field<T> high, Field<Integer> buckets) {
+        return new WidthBucket<>(field, low, high, buckets);
+    }
+
+    /**
      * Negate a field to get its negative value.
      *
      * @see Field#neg()
@@ -23698,7 +23716,7 @@ public class DSL {
     }
 
     // -------------------------------------------------------------------------
-    // XXX other functions
+    // XXX System functions
     // -------------------------------------------------------------------------
 
     /**
@@ -23715,16 +23733,6 @@ public class DSL {
     @Support
     public static Field<String> currentSchema() {
         return new CurrentSchema();
-    }
-
-    @Support
-    public static <T extends Number> Field<T> widthBucket(Field<T> field, T low, T high, int buckets) {
-        return widthBucket(field, Tools.field(low, field), Tools.field(high, field), Tools.field(buckets));
-    }
-
-    @Support
-    public static <T extends Number> Field<T> widthBucket(Field<T> field, Field<T> low, Field<T> high, Field<Integer> buckets) {
-        return new WidthBucket<>(field, low, high, buckets);
     }
 
     // -------------------------------------------------------------------------

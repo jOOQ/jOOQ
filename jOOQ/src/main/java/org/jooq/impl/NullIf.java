@@ -74,7 +74,7 @@ final class NullIf<T> extends AbstractField<T> {
 
 
             default:
-                ctx.visit(N_NULLIF).sql('(').visit(arg1).sql(",").visit(arg2).sql(')');
+                ctx.visit(N_NULLIF).sql('(').visit(arg1).sql(", ").visit(arg2).sql(')');
                 break;
         }
     }

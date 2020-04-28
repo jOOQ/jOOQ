@@ -62,10 +62,20 @@ final class Space extends AbstractField<String> {
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
 
+            // [#10135] Avoid REPEAT() emulation that is too complicated for SPACE(N)
 
 
 
 
+
+
+
+
+
+            case FIREBIRD:
+            case SQLITE:
+                ctx.visit(DSL.rpad(DSL.inline(' '), count));
+                break;
 
 
 
@@ -74,10 +84,8 @@ final class Space extends AbstractField<String> {
 
 
             case DERBY:
-            case FIREBIRD:
             case HSQLDB:
             case POSTGRES:
-            case SQLITE:
                 ctx.visit(DSL.repeat(DSL.inline(" "), count));
                 break;
 

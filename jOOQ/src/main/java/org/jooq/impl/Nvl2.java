@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.DSL.iif;
 import static org.jooq.impl.Names.N_NVL2;
 
 import org.jooq.Context;
@@ -67,6 +68,11 @@ final class Nvl2<T> extends AbstractField<T> {
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
+
+
+
+
+
 
 
 

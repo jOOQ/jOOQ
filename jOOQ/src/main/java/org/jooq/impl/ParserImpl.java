@@ -1136,6 +1136,8 @@ final class ParserImpl implements Parser {
 
         forClause:
         if (parseKeywordIf(ctx, "FOR")) {
+            boolean jsonb;
+
             if (parseKeywordIf(ctx, "KEY SHARE"))
                 result.setForKeyShare(true);
             else if (parseKeywordIf(ctx, "NO KEY UPDATE"))
@@ -1180,7 +1182,8 @@ final class ParserImpl implements Parser {
 
 
             }
-            else if (parseKeywordIf(ctx, "JSON") && ctx.requireProEdition()) {
+            else if ((jsonb = parseKeywordIf(ctx, "JSONB") || parseKeywordIf(ctx, "JSON")) && ctx.requireProEdition()) {
+
 
 
 

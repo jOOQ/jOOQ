@@ -88,6 +88,7 @@ import static org.jooq.impl.Names.N_DATEADD;
 import static org.jooq.impl.Names.N_DATE_ADD;
 import static org.jooq.impl.Names.N_STRFTIME;
 import static org.jooq.impl.Names.N_TIMESTAMPADD;
+import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.Tools.castIfNeeded;
 
 import java.sql.Timestamp;
@@ -573,7 +574,7 @@ final class Expression<T> extends AbstractField<T> {
 
                 case POSTGRES:
                 default:
-                    ctx.visit(new DefaultExpression<>(lhs, operator, new QueryPartListView<>(rhs)));
+                    ctx.visit(new DefaultExpression<>(lhs, operator, wrap(rhs)));
                     break;
             }
         }
@@ -711,7 +712,7 @@ final class Expression<T> extends AbstractField<T> {
 
                 case H2:
                 default:
-                    ctx.visit(new DefaultExpression<>(lhs, operator, new QueryPartListView<>(rhs)));
+                    ctx.visit(new DefaultExpression<>(lhs, operator, wrap(rhs)));
                     break;
             }
         }

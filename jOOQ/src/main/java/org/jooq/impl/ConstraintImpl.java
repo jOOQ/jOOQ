@@ -63,6 +63,7 @@ import static org.jooq.impl.Keywords.K_ON_UPDATE;
 import static org.jooq.impl.Keywords.K_PRIMARY_KEY;
 import static org.jooq.impl.Keywords.K_REFERENCES;
 import static org.jooq.impl.Keywords.K_UNIQUE;
+import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.fieldsByName;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_CONSTRAINT_REFERENCE;
@@ -219,7 +220,7 @@ implements
                 ctx.visit(K_UNIQUE)
                    .sql(" (")
                    .qualify(false)
-                   .visit(new QueryPartListView<>(unique))
+                   .visit(wrap(unique))
                    .qualify(qualify)
                    .sql(')');
 
@@ -238,7 +239,7 @@ implements
 
                 ctx.sql(" (")
                    .qualify(false)
-                   .visit(new QueryPartListView<>(primaryKey))
+                   .visit(wrap(primaryKey))
                    .qualify(qualify)
                    .sql(')');
 
@@ -251,7 +252,7 @@ implements
                 ctx.visit(K_FOREIGN_KEY)
                    .sql(" (")
                    .qualify(false)
-                   .visit(new QueryPartListView<>(foreignKey))
+                   .visit(wrap(foreignKey))
                    .qualify(qualify)
                    .sql(')')
                    .formatSeparator()
@@ -262,7 +263,7 @@ implements
                 if (references.length > 0)
                     ctx.sql(" (")
                        .qualify(false)
-                       .visit(new QueryPartListView<>(references))
+                       .visit(wrap(references))
                        .qualify(qualify)
                        .sql(')');
 

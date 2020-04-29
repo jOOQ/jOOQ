@@ -52,6 +52,7 @@ import static org.jooq.impl.Keywords.K_JSON_OBJECT;
 import static org.jooq.impl.Names.N_JSON_MERGE;
 import static org.jooq.impl.Names.N_JSON_OBJECT;
 import static org.jooq.impl.Names.N_T;
+import static org.jooq.impl.QueryPartListView.wrap;
 
 import java.util.Collection;
 
@@ -208,6 +209,6 @@ final class JSONObject<J> extends AbstractField<J> implements JSONObjectNullStep
         else
             jsonNull = new JSONNull(nullType);
 
-        ctx.visit(K_JSON_OBJECT).sql('(').visit(new QueryPartListView<>(args, jsonNull).separator("")).sql(')');
+        ctx.visit(K_JSON_OBJECT).sql('(').visit(wrap(args, jsonNull).separator("")).sql(')');
     }
 }

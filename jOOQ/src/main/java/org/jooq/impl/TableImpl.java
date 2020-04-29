@@ -48,6 +48,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.Internal.createPathAlias;
 import static org.jooq.impl.Keywords.K_TABLE;
+import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.Tools.getMappedTable;
 
 import java.util.Arrays;
@@ -271,10 +272,10 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
 
             // [#2925] Some dialects don't like empty parameter lists
             if (ctx.family() == FIREBIRD && parameters.length == 0)
-                ctx.visit(new QueryPartListView<>(parameters));
+                ctx.visit(wrap(parameters));
             else
                 ctx.sql('(')
-                   .visit(new QueryPartListView<>(parameters))
+                   .visit(wrap(parameters))
                    .sql(')');
         }
 

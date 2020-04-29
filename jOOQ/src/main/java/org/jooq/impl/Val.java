@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.conf.ParamType.NAMED_OR_INLINED;
+import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.Tools.embeddedFields;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
 
@@ -77,7 +78,7 @@ final class Val<T> extends AbstractParam<T> {
             Object previous = ctx.data(DATA_LIST_ALREADY_INDENTED);
 
             ctx.data(DATA_LIST_ALREADY_INDENTED, true);
-            ctx.visit(new QueryPartListView<>(embeddedFields(this)));
+            ctx.visit(wrap(embeddedFields(this)));
             ctx.data(DATA_LIST_ALREADY_INDENTED, previous);
         }
         else if (ctx instanceof RenderContext) {

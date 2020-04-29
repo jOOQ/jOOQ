@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
 
 import org.jooq.Context;
@@ -76,7 +77,7 @@ final class EmbeddableTableField<R extends Record, T extends Record> extends Abs
         Object previous = ctx.data(DATA_LIST_ALREADY_INDENTED);
 
         ctx.data(DATA_LIST_ALREADY_INDENTED, true);
-        ctx.visit(new QueryPartListView<>(fields));
+        ctx.visit(wrap(fields));
         ctx.data(DATA_LIST_ALREADY_INDENTED, previous);
     }
 

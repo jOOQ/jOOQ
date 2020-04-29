@@ -66,6 +66,7 @@ import static org.jooq.impl.Keywords.K_IF_NOT_EXISTS;
 import static org.jooq.impl.Keywords.K_OR;
 import static org.jooq.impl.Keywords.K_REPLACE;
 import static org.jooq.impl.Keywords.K_VIEW;
+import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 
 import java.util.List;
@@ -271,7 +272,7 @@ final class CreateViewImpl<R extends Record> extends AbstractRowCountQuery imple
 
             ctx.sql('(')
                .qualify(false)
-               .visit(new QueryPartListView<>(f))
+               .visit(wrap(f))
                .qualify(qualify)
                .sql(')');
         }

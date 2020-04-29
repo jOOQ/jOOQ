@@ -47,6 +47,7 @@ import static org.jooq.impl.JSONNull.JSONNullType.ABSENT_ON_NULL;
 import static org.jooq.impl.JSONNull.JSONNullType.NULL_ON_NULL;
 import static org.jooq.impl.Keywords.K_JSON_ARRAY;
 import static org.jooq.impl.Names.N_JSON_ARRAY;
+import static org.jooq.impl.QueryPartListView.wrap;
 
 import java.util.Collection;
 
@@ -135,7 +136,7 @@ final class JSONArray<J> extends AbstractField<J> implements JSONArrayNullStep<J
                 else
                     jsonNull = new JSONNull(nullType);
 
-                ctx.visit(K_JSON_ARRAY).sql('(').visit(new QueryPartListView<>(args, jsonNull).separator("")).sql(')');
+                ctx.visit(K_JSON_ARRAY).sql('(').visit(wrap(args, jsonNull).separator("")).sql(')');
                 break;
             }
         }

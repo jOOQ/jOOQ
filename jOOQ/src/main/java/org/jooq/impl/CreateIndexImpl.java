@@ -68,6 +68,7 @@ import static org.jooq.impl.Keywords.K_ON;
 import static org.jooq.impl.Keywords.K_STORING;
 import static org.jooq.impl.Keywords.K_UNIQUE;
 import static org.jooq.impl.Keywords.K_WHERE;
+import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_NAME;
 import static org.jooq.impl.Tools.EMPTY_ORDERFIELD;
@@ -336,7 +337,7 @@ final class CreateIndexImpl extends AbstractRowCountQuery implements
                .visit(keyword)
                .sql(" (")
                .qualify(false)
-               .visit(new QueryPartListView<>(include))
+               .visit(wrap(include))
                .qualify(true)
                .sql(')');
         }

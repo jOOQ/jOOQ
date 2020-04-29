@@ -38,6 +38,7 @@
 
 package org.jooq.impl;
 
+import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.indexOrFail;
 
@@ -391,7 +392,7 @@ final class Fields<R extends Record> extends AbstractQueryPart implements Record
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(new QueryPartListView<>(fields));
+        ctx.visit(wrap(fields));
     }
 
     // -------------------------------------------------------------------------

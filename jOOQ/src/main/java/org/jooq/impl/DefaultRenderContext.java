@@ -712,12 +712,9 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("rendering    [");
-        sb.append(render());
-        sb.append("]\n");
-        sb.append("parameters   [");
-        sb.append(paramType);
-        sb.append("]\n");
+        sb.append("rendering    [").append(render()).append("]\n");
+        sb.append("formatting   [").append(format()).append("]\n");
+        sb.append("parameters   [").append(paramType).append("]\n");
 
         toString(sb);
         return sb.toString();

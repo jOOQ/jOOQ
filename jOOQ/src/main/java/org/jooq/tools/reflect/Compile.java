@@ -71,10 +71,13 @@ class Compile {
                 if (!options.contains("-classpath")) {
                     StringBuilder classpath = new StringBuilder();
                     String separator = System.getProperty("path.separator");
-                    String prop = System.getProperty("java.class.path");
+                    String cp = System.getProperty("java.class.path");
+                    String mp = System.getProperty("jdk.module.path");
 
-                    if (prop != null && !"".equals(prop))
-                        classpath.append(prop);
+                    if (cp != null && !"".equals(cp))
+                        classpath.append(cp);
+                    if (mp != null && !"".equals(mp))
+                        classpath.append(mp);
 
                     if (cl instanceof URLClassLoader) {
                         for (URL url : ((URLClassLoader) cl).getURLs()) {

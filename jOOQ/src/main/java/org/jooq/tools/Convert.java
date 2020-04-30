@@ -219,8 +219,11 @@ public final class Convert {
             jaxbAvailable = true;
             log.debug("JAXB is available");
         }
-        catch (Exception e) {
-            log.debug("JAXB not available", e.getMessage());
+
+        // [#10145] Depending on whether jOOQ is modularised or not, this can also
+        //          be a NoClassDefFoundError.
+        catch (Throwable t) {
+            log.debug("JAXB not available", t.getMessage());
         }
 
         JAXB_AVAILABLE = jaxbAvailable;

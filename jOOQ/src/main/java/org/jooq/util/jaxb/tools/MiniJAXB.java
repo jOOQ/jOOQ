@@ -52,7 +52,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -409,10 +408,7 @@ public final class MiniJAXB {
                 return schema;
             }
         }
-        catch (MalformedURLException e) {
-            log.warn("Failed to load schema for namespace " + namespace, e);
-        }
-        catch (SAXException e) {
+        catch (Exception e) {
             log.warn("Failed to load schema for namespace " + namespace, e);
         }
         return null;

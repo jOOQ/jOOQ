@@ -206,7 +206,16 @@ public final class FilePattern {
      */
     public final void load(Loader loader) {
         boolean loaded = false;
-        URL url = FilePattern.class.getResource(pattern);
+        URL url = null;
+
+        try {
+            url = FilePattern.class.getResource(pattern);
+        }
+
+        // [#10143] Starting with Java 7, and especially when running on the module path,
+        //          there could be an InvalidPathException here.
+        catch (Exception ignore) {}
+
         File file = null;
 
         try {

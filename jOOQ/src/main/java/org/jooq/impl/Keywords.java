@@ -112,6 +112,7 @@ final class Keywords {
     static final Keyword K_DATABASE                         = keyword("database");
     static final Keyword K_DATE                             = keyword("date");
     static final Keyword K_DATETIME                         = keyword("datetime");
+    static final Keyword K_DATETIME2                        = keyword("datetime2");
     static final Keyword K_DATETIMEOFFSET                   = keyword("datetimeoffset");
     static final Keyword K_DAY                              = keyword("day");
     static final Keyword K_DAY_MICROSECOND                  = keyword("day_microsecond");

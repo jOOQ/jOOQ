@@ -86,6 +86,7 @@ import static org.jooq.impl.Keywords.K_BLOB;
 import static org.jooq.impl.Keywords.K_CAST;
 import static org.jooq.impl.Keywords.K_DATE;
 import static org.jooq.impl.Keywords.K_DATETIME;
+import static org.jooq.impl.Keywords.K_DATETIME2;
 import static org.jooq.impl.Keywords.K_DATETIMEOFFSET;
 import static org.jooq.impl.Keywords.K_FALSE;
 import static org.jooq.impl.Keywords.K_HOUR_TO_SECOND;

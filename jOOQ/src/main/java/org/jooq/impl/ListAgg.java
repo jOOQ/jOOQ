@@ -64,7 +64,6 @@ import static org.jooq.impl.Names.N_SUBSTR;
 import static org.jooq.impl.Names.N_XMLAGG;
 import static org.jooq.impl.Names.N_XMLSERIALIZE;
 import static org.jooq.impl.Names.N_XMLTEXT;
-import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.Tools.castIfNeeded;
 
 import java.util.Set;
@@ -132,7 +131,7 @@ final class ListAgg extends DefaultAggregateFunction<String> {
      */
     private final void acceptGroupConcat(Context<?> ctx) {
         ctx.visit(N_GROUP_CONCAT).sql('(');
-        acceptArguments1(ctx, wrap(arguments.get(0)));
+        acceptArguments1(ctx, new QueryPartListView<>(arguments.get(0)));
         acceptOrderBy(ctx);
 
         if (arguments.size() > 1)

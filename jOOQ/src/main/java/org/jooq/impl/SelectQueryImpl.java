@@ -104,12 +104,11 @@ import static org.jooq.impl.DSL.jsonEntry;
 import static org.jooq.impl.DSL.jsonObject;
 import static org.jooq.impl.DSL.jsonbArrayAgg;
 import static org.jooq.impl.DSL.jsonbObject;
-import static org.jooq.impl.DSL.length;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.orderBy;
+import static org.jooq.impl.DSL.regexpReplaceAll;
 import static org.jooq.impl.DSL.row;
-import static org.jooq.impl.DSL.substring;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.xmlagg;
 import static org.jooq.impl.DSL.xmlattributes;
@@ -541,6 +540,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
+
+
+
+
 
 
 

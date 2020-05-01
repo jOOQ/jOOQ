@@ -38,7 +38,7 @@
 
         <!-- DefaultRecordMapper and jOOQ-meta-extensions can read JPA annotations -->
         <javax.persistence-api.version>2.2</javax.persistence-api.version>
-        
+
         <!-- Examples and/or extension modules use these dependencies -->
         <hibernate.version>5.4.10.Final</hibernate.version>
         <liquibase.version>3.8.8</liquibase.version>
@@ -456,7 +456,7 @@
                     <artifactId>spring-boot-maven-plugin</artifactId>
                     <version>${spring.boot.version}</version>
                 </plugin>
-                
+
                 <plugin>
                     <groupId>net.alchim31.maven</groupId>
                     <artifactId>scala-maven-plugin</artifactId>

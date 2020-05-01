@@ -14002,6 +14002,38 @@ public class DSL {
     }
 
     /**
+     * Get the <code>REGEXP_REPLACE_ALL</code> function.
+     */
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<String> regexpReplaceAll(Field<String> field, String pattern, String replacement) {
+        return regexpReplaceAll(field, Tools.field(pattern), Tools.field(replacement));
+    }
+
+    /**
+     * Get the <code>REGEXP_REPLACE_ALL</code> function.
+     */
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static Field<String> regexpReplaceAll(Field<String> field, Field<String> pattern, Field<String> replacement) {
+        return new RegexpReplace(field, nullSafe(pattern), nullSafe(replacement), true);
+    }
+
+    /**
+     * Get the <code>REGEXP_REPLACE_ALL</code> function.
+     */
+    @Support({ MYSQL, POSTGRES })
+    public static Field<String> regexpReplaceFirst(Field<String> field, String pattern, String replacement) {
+        return regexpReplaceFirst(field, Tools.field(pattern), Tools.field(replacement));
+    }
+
+    /**
+     * Get the <code>REGEXP_REPLACE_ALL</code> function.
+     */
+    @Support({ MYSQL, POSTGRES })
+    public static Field<String> regexpReplaceFirst(Field<String> field, Field<String> pattern, Field<String> replacement) {
+        return new RegexpReplace(field, nullSafe(pattern), nullSafe(replacement), false);
+    }
+
+    /**
      * Get the position(in, search) function.
      *
      * @see #position(Field, Field)

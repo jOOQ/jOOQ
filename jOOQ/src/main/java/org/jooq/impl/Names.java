@@ -170,6 +170,8 @@ final class Names {
     static final Name N_RANDOM                 = unquotedName("random");
     static final Name N_RATIO_TO_REPORT        = unquotedName("ratio_to_report");
     static final Name N_RAWTOHEX               = unquotedName("rawtohex");
+    static final Name N_REGEX_REPLACE          = unquotedName("regex_replace");
+    static final Name N_REGEXP_REPLACE         = unquotedName("regexp_replace");
     static final Name N_REPEAT                 = unquotedName("repeat");
     static final Name N_REPLACE                = unquotedName("replace");
     static final Name N_REPLICATE              = unquotedName("replicate");

@@ -224,6 +224,8 @@ import static org.jooq.impl.DSL.rangeUnboundedFollowing;
 import static org.jooq.impl.DSL.rangeUnboundedPreceding;
 import static org.jooq.impl.DSL.rank;
 import static org.jooq.impl.DSL.ratioToReport;
+import static org.jooq.impl.DSL.regexpReplaceAll;
+import static org.jooq.impl.DSL.regexpReplaceFirst;
 import static org.jooq.impl.DSL.regrAvgX;
 import static org.jooq.impl.DSL.regrAvgY;
 import static org.jooq.impl.DSL.regrCount;
@@ -6478,6 +6480,8 @@ final class ParserImpl implements Parser {
                 if (S.is(type))
                     if ((field = parseFieldReplaceIf(ctx)) != null)
                         return field;
+                    else if ((field = parseFieldRegexpReplaceIf(ctx)) != null)
+                        return field;
                     else if ((field = parseFieldRepeatIf(ctx)) != null)
                         return field;
                     else if ((field = parseFieldReverseIf(ctx)) != null)
@@ -8302,6 +8306,71 @@ final class ParserImpl implements Parser {
             return f3 == null
                 ? replace(f1, f2)
                 : replace(f1, f2, f3);
+        }
+
+        return null;
+    }
+
+    private static final Field<?> parseFieldRegexpReplaceIf(ParserContext ctx) {
+        boolean all = parseFunctionNameIf(ctx, "REGEXP_REPLACE_ALL");
+        boolean first = !all && parseFunctionNameIf(ctx, "REGEXP_REPLACE_FIRST");
+        boolean ifx = !all && !first && parseFunctionNameIf(ctx, "REGEX_REPLACE");
+
+        if (all || first || ifx || parseFunctionNameIf(ctx, "REGEXP_REPLACE")) {
+            parse(ctx, '(');
+            Field field = parseField(ctx, S);
+            parse(ctx, ',');
+            Field pattern = parseField(ctx, S);
+            Field replacement = parseIf(ctx, ',') ? parseField(ctx, S) : null;
+            Long i1;
+            Long i2;
+
+            if (replacement == null) {
+                replacement = inline("");
+            }
+            else if (ifx) {
+                if (parseIf(ctx, ','))
+                    if (1L == parseUnsignedInteger(ctx))
+                        first = true;
+                    else
+                        throw ctx.expected("Only a limit of 1 is currently supported");
+            }
+            else if (!all && !first) {
+                if (parseIf(ctx, ',')) {
+                    String s = parseStringLiteralIf(ctx);
+
+                    if (s != null) {
+                        if (s.contains("g"))
+                            all = true;
+                    }
+                    else {
+                        i1 = parseUnsignedInteger(ctx);
+                        parse(ctx, ',');
+                        i2 = parseUnsignedInteger(ctx);
+
+                        if (Long.valueOf(1L).equals(i1) && Long.valueOf(1L).equals(i2))
+                            all = true;
+                        else
+                            throw ctx.expected("Only start and occurence values of 1 are currently supported");
+                    }
+                }
+
+                if (!all) switch (ctx.family()) {
+
+
+
+
+
+                    case POSTGRES:
+                        first = true;
+                        break;
+                }
+            }
+
+            parse(ctx, ')');
+            return first
+                ? regexpReplaceFirst(field, pattern, replacement)
+                : regexpReplaceAll(field, pattern, replacement);
         }
 
         return null;

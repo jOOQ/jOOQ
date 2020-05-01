@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 // ...
+// ...
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.cast;
 import static org.jooq.impl.DSL.inline;
@@ -320,6 +321,17 @@ implements
         else if (passingMechanism == BY_VALUE)
             ctx.sql(' ').visit(K_BY).sql(' ').visit(K_VALUE);
 
+
+
+
+
+
+
+
+
+
+
+
         ctx.sql(' ').visit(passing);
     }
 
@@ -358,6 +370,10 @@ implements
 
             if (path != null)
                 ctx.sql(' ').visit(K_PATH).sql(' ').visit(inline(path));
+
+
+
+
         }
     }
 }

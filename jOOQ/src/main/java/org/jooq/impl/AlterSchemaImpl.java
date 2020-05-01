@@ -40,10 +40,16 @@ package org.jooq.impl;
 import static org.jooq.Clause.ALTER_SCHEMA;
 import static org.jooq.Clause.ALTER_SCHEMA_RENAME;
 import static org.jooq.Clause.ALTER_SCHEMA_SCHEMA;
+// ...
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Keywords.K_ALTER_SCHEMA;
 import static org.jooq.impl.Keywords.K_IF_EXISTS;
+import static org.jooq.impl.Keywords.K_RENAME;
 import static org.jooq.impl.Keywords.K_RENAME_TO;
+import static org.jooq.impl.Keywords.K_SCHEMA;
+import static org.jooq.impl.Keywords.K_TO;
+
+import java.util.Set;
 
 import org.jooq.AlterSchemaFinalStep;
 import org.jooq.AlterSchemaStep;
@@ -51,6 +57,8 @@ import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Name;
+// ...
+import org.jooq.SQLDialect;
 import org.jooq.Schema;
 
 /**
@@ -65,12 +73,16 @@ final class AlterSchemaImpl extends AbstractRowCountQuery implements
     /**
      * Generated UID
      */
-    private static final long     serialVersionUID = 8904572826501186329L;
-    private static final Clause[] CLAUSES          = { ALTER_SCHEMA };
+    private static final long            serialVersionUID      = 8904572826501186329L;
+    private static final Clause[]        CLAUSES               = { ALTER_SCHEMA };
 
-    private final Schema          schema;
-    private final boolean         ifExists;
-    private Schema                renameTo;
+
+
+
+
+    private final Schema                 schema;
+    private final boolean                ifExists;
+    private Schema                       renameTo;
 
     AlterSchemaImpl(Configuration configuration, Schema schema) {
         this(configuration, schema, false);
@@ -113,8 +125,14 @@ final class AlterSchemaImpl extends AbstractRowCountQuery implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.start(ALTER_SCHEMA_SCHEMA)
-           .visit(K_ALTER_SCHEMA);
+        ctx.start(ALTER_SCHEMA_SCHEMA);
+
+        boolean supportRename = false;
+
+        if (supportRename)
+            ctx.visit(K_RENAME).sql(' ').visit(K_SCHEMA);
+        else
+            ctx.visit(K_ALTER_SCHEMA);
 
         if (ifExists)
             ctx.sql(' ').visit(K_IF_EXISTS);
@@ -129,7 +147,7 @@ final class AlterSchemaImpl extends AbstractRowCountQuery implements
 
             ctx.start(ALTER_SCHEMA_RENAME)
                .qualify(false)
-               .visit(K_RENAME_TO).sql(' ').visit(renameTo)
+               .visit(supportRename ? K_TO : K_RENAME_TO).sql(' ').visit(renameTo)
                .qualify(qualify)
                .end(ALTER_SCHEMA_RENAME);
         }

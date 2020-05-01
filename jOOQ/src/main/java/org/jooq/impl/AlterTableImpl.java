@@ -1480,8 +1480,14 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
                     break;
             }
 
-            ctx.sql(' ')
-               .qualify(false)
+
+
+
+
+
+            ctx.sql(' ');
+
+            ctx.qualify(false)
                .visit(alterColumn)
                .qualify(true);
 
@@ -1593,6 +1599,11 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
                         break;
                 }
             }
+
+
+
+
+
 
             ctx.end(ALTER_TABLE_ALTER);
         }

@@ -37,7 +37,11 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.SQLDialect.FIREBIRD;
+
+
+
+
+
 
 
 

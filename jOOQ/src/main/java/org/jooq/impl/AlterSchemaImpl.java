@@ -80,6 +80,8 @@ final class AlterSchemaImpl extends AbstractRowCountQuery implements
 
 
 
+
+
     private final Schema                 schema;
     private final boolean                ifExists;
     private Schema                       renameTo;
@@ -123,8 +125,27 @@ final class AlterSchemaImpl extends AbstractRowCountQuery implements
     // XXX: QueryPart API
     // ------------------------------------------------------------------------
 
+
+
+
+
+
+
+
     @Override
     public final void accept(Context<?> ctx) {
+
+
+
+
+
+
+
+
+            accept0(ctx);
+    }
+
+    private final void accept0(Context<?> ctx) {
         ctx.start(ALTER_SCHEMA_SCHEMA);
 
         boolean supportRename = false;
@@ -135,7 +156,10 @@ final class AlterSchemaImpl extends AbstractRowCountQuery implements
             ctx.visit(K_ALTER_SCHEMA);
 
         if (ifExists)
-            ctx.sql(' ').visit(K_IF_EXISTS);
+
+
+
+                ctx.sql(' ').visit(K_IF_EXISTS);
 
         ctx.sql(' ').visit(schema)
            .end(ALTER_SCHEMA_SCHEMA)

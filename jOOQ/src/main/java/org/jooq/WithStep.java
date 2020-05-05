@@ -42,6 +42,7 @@ package org.jooq;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
+// ...
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MARIADB;
 // ...
@@ -1329,7 +1330,7 @@ public interface WithStep extends QueryPart {
      *
      * @see DSL#selectDistinct(Collection)
      */
-    @Support({ FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     SelectSelectStep<Record> selectDistinct(Collection<? extends SelectFieldOrAsterisk> fields);
 
     /**
@@ -1353,7 +1354,7 @@ public interface WithStep extends QueryPart {
      *
      * @see DSL#selectDistinct(SelectFieldOrAsterisk...)
      */
-    @Support({ FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     SelectSelectStep<Record> selectDistinct(SelectFieldOrAsterisk... fields);
 
 

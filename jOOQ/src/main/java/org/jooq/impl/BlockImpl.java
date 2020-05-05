@@ -42,6 +42,7 @@ package org.jooq.impl;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
+// ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
@@ -121,8 +122,7 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
             case FIREBIRD: {
                 if (increment(ctx.data(), DATA_BLOCK_NESTING)) {
                     ctx.paramType(INLINED)
-                       .visit(K_EXECUTE_BLOCK).sql(' ').visit(K_AS).sql(' ')
-                       .formatSeparator();
+                       .visit(K_EXECUTE_BLOCK).sql(' ').visit(K_AS).sql(' ');
 
                     ctx.data(DATA_FORCE_STATIC_STATEMENT, true);
                 }
@@ -181,6 +181,21 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
 
                 break;
             }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             case MYSQL: {
                 String name = randomName();
@@ -395,6 +410,8 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
                     continue statementLoop;
 
                 ctx.formatSeparator();
+
+
 
 
 

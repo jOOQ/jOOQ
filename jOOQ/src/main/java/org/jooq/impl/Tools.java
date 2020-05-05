@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static java.lang.Character.isJavaIdentifierPart;
+import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 // ...
 // ...
@@ -72,6 +73,7 @@ import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
 import static org.jooq.conf.ThrowExceptions.THROW_FIRST;
 import static org.jooq.conf.ThrowExceptions.THROW_NONE;
 import static org.jooq.impl.DDLStatementType.ALTER_INDEX;
+import static org.jooq.impl.DDLStatementType.ALTER_SCHEMA;
 import static org.jooq.impl.DDLStatementType.ALTER_SEQUENCE;
 import static org.jooq.impl.DDLStatementType.ALTER_TABLE;
 import static org.jooq.impl.DDLStatementType.ALTER_VIEW;
@@ -4193,6 +4195,11 @@ final class Tools {
 
 
 
+
+
+
+
+
             case FIREBIRD: {
                 ctx.visit(K_EXECUTE_BLOCK).formatSeparator()
                    .visit(K_AS).formatSeparator()
@@ -4223,6 +4230,7 @@ final class Tools {
      */
     static final void end(Context<?> ctx) {
         switch (ctx.family()) {
+
 
 
 
@@ -4266,6 +4274,7 @@ final class Tools {
 
 
 
+
             case FIREBIRD: {
                 ctx.visit(K_EXECUTE_STATEMENT).sql(" '").stringLiteral(true).formatIndentStart().formatSeparator();
                 break;
@@ -4291,6 +4300,52 @@ final class Tools {
 
     static final void beginTryCatch(Context<?> ctx, DDLStatementType type, Boolean container, Boolean element) {
         switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -4422,6 +4477,7 @@ final class Tools {
 
     static final void endTryCatch(Context<?> ctx, DDLStatementType type, Boolean container, Boolean element) {
         switch (ctx.family()) {
+
 
 
 

@@ -198,10 +198,12 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
                   ? ((DerivedTable<?>) wrapped).query()
                   : select(asterisk()).from(((Table<?>) wrapped).as(alias));
 
+                List<Field<?>> select = wrappedAsSelect.getSelect();
+
                 // [#9486] H2 cannot handle duplicate column names in derived tables, despite derived column lists
                 //         See: https://github.com/h2database/h2database/issues/2532
                 if (SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL3.contains(family)) {
-                    List<Name> names = fieldNames(wrappedAsSelect.getSelect());
+                    List<Name> names = fieldNames(select);
 
                     if (names.size() > 0 && names.size() == new HashSet<>(names).size()) {
                         toSQLWrapped(context);
@@ -211,7 +213,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
 
                 if (emulatedDerivedColumnList) {
                     SelectFieldList<Field<?>> fields = new SelectFieldList<>();
-                    for (Name fieldAlias : fieldAliases) {
+                    for (int i = 0; i < fieldAliases.length; i++) {
                         switch (family) {
 
 
@@ -223,10 +225,17 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
 
 
 
-                            default: {
-                                fields.add(field("null").as(fieldAlias));
+
+
+
+
+
+
+
+
+                            default:
+                                fields.add(field("null").as(fieldAliases[i]));
                                 break;
-                            }
                         }
                     }
 

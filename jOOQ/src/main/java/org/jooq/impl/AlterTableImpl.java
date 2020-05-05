@@ -220,6 +220,8 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
     private static final Clause[]            CLAUSES                               = { ALTER_TABLE };
     private static final Set<SQLDialect>     NO_SUPPORT_IF_EXISTS                  = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, MARIADB);
     private static final Set<SQLDialect>     NO_SUPPORT_IF_EXISTS_COLUMN           = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
+    private static final Set<SQLDialect>     NO_SUPPORT_IF_EXISTS_CONSTRAINT       = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
+    private static final Set<SQLDialect>     NO_SUPPORT_IF_NOT_EXISTS_COLUMN       = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
     private static final Set<SQLDialect>     SUPPORT_RENAME_COLUMN                 = SQLDialect.supportedBy(DERBY);
     private static final Set<SQLDialect>     SUPPORT_RENAME_TABLE                  = SQLDialect.supportedBy(DERBY);
     private static final Set<SQLDialect>     NO_SUPPORT_RENAME_QUALIFIED_TABLE     = SQLDialect.supportedBy(POSTGRES);
@@ -972,12 +974,16 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
         return !NO_SUPPORT_IF_EXISTS_COLUMN.contains(ctx.family());
     }
 
+    private final boolean supportsIfNotExistsColumn(Context<?> ctx) {
+        return !NO_SUPPORT_IF_NOT_EXISTS_COLUMN.contains(ctx.family());
+    }
+
     @Override
     public final void accept(Context<?> ctx) {
-        if ((ifExists && !supportsIfExists(ctx)) || ((ifExistsColumn || ifNotExistsColumn) && !supportsIfExistsColumn(ctx))) {
-            beginTryCatch(ctx, DDLStatementType.ALTER_TABLE, ifExists ? TRUE : null, ifExistsColumn ? TRUE : ifNotExistsColumn ? FALSE : null);
+        if ((ifExists && !supportsIfExists(ctx)) || ((ifExistsColumn || ifExistsConstraint || ifNotExistsColumn) && !supportsIfExistsColumn(ctx))) {
+            beginTryCatch(ctx, DDLStatementType.ALTER_TABLE, ifExists ? TRUE : null, ifExistsColumn || ifExistsConstraint ? TRUE : ifNotExistsColumn ? FALSE : null);
             accept0(ctx);
-            endTryCatch(ctx, DDLStatementType.ALTER_TABLE, ifExists ? TRUE : null, ifExistsColumn ? TRUE : ifNotExistsColumn ? FALSE : null);
+            endTryCatch(ctx, DDLStatementType.ALTER_TABLE, ifExists ? TRUE : null, ifExistsColumn || ifExistsConstraint ? TRUE : ifNotExistsColumn ? FALSE : null);
         }
         else {
             accept0(ctx);
@@ -1185,6 +1191,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
 
 
+
                 case DERBY:
                     ctx.visit(K_RENAME_COLUMN).sql(' ')
                        .visit(renameColumn)
@@ -1343,28 +1350,8 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
             ctx.start(ALTER_TABLE_ADD)
                .visit(K_ADD).sql(' ');
 
-            if (ifNotExistsColumn) {
-                switch (ctx.family()) {
-
-
-
-
-
-
-
-
-
-
-
-
-                    case H2:
-                    case MARIADB:
-                    case POSTGRES:
-                    default:
-                        ctx.visit(K_IF_NOT_EXISTS).sql(' ');
-                        break;
-                }
-            }
+            if (ifNotExistsColumn && supportsIfNotExistsColumn(ctx))
+                ctx.visit(K_IF_NOT_EXISTS).sql(' ');
 
 
 
@@ -1618,7 +1605,8 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
                        .qualify(false);
 
                     acceptDropColumn(ctx);
-                    acceptIfExistsColumn(ctx);
+                    if (ifExistsColumn && supportsIfExistsColumn(ctx))
+                        ctx.sql(' ').visit(K_IF_EXISTS);
 
                     ctx.sql(' ')
                        .visit(dropColumn)
@@ -1635,7 +1623,8 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
             }
             else {
                 acceptDropColumn(ctx);
-                acceptIfExistsColumn(ctx);
+                if (ifExistsColumn && supportsIfExistsColumn(ctx))
+                    ctx.sql(' ').visit(K_IF_EXISTS);
 
 
 
@@ -1684,7 +1673,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
                 //         dropped by dropping their declarations.
                 ctx.visit(dropConstraint.getUnqualifiedName().empty() ? K_DROP : K_DROP_CONSTRAINT).sql(' ');
 
-                if (ifExistsConstraint)
+                if (ifExistsConstraint && !NO_SUPPORT_IF_EXISTS_CONSTRAINT.contains(ctx.family()))
                     ctx.visit(K_IF_EXISTS).sql(' ');
 
                 ctx.visit(dropConstraint);
@@ -1774,31 +1763,6 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
             default:
                 ctx.visit(K_DROP);
                 break;
-        }
-    }
-
-    private final void acceptIfExistsColumn(Context<?> ctx) {
-        if (ifExistsColumn) {
-            switch (ctx.family()) {
-
-
-
-
-
-
-
-
-
-
-
-
-                case H2:
-                case MARIADB:
-                case POSTGRES:
-                default:
-                    ctx.sql(' ').visit(K_IF_EXISTS);
-                    break;
-            }
         }
     }
 

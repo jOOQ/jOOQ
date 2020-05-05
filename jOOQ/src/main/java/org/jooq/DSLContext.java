@@ -8150,7 +8150,9 @@ public interface DSLContext extends Scope , AutoCloseable {
      * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
      * </tr>
      * </table>
+     * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
+    @Deprecated
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     <R extends Record> MergeKeyStepN<R> mergeInto(Table<R> table, Field<?>... fields);
 
@@ -8158,7 +8160,9 @@ public interface DSLContext extends Scope , AutoCloseable {
      * Create a new DSL merge statement (H2-specific syntax).
      *
      * @see #mergeInto(Table, Field...)
+     * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
+    @Deprecated
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     <R extends Record> MergeKeyStepN<R> mergeInto(Table<R> table, Collection<? extends Field<?>> fields);
 

@@ -5939,7 +5939,9 @@ public class DSL {
      * </table>
      *
      * @see DSLContext#mergeInto(Table, Field...)
+     * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
+    @Deprecated
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record> MergeKeyStepN<R> mergeInto(Table<R> table, Field<?>... fields) {
         return dsl().mergeInto(table, fields);
@@ -5953,7 +5955,9 @@ public class DSL {
      * <code>MERGE</code> statement.
      *
      * @see DSLContext#mergeInto(Table, Collection)
+     * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
+    @Deprecated
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record> MergeKeyStepN<R> mergeInto(Table<R> table, Collection<? extends Field<?>> fields) {
         return dsl().mergeInto(table, fields);

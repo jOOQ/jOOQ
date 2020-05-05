@@ -869,7 +869,14 @@ public class DSL {
      * This works in a similar way as {@link #with(String, String...)}, except
      * that all column names are produced by a function that receives the CTE's
      * {@link Select} columns as input.
+     *
+     * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
+     *             replacement from a future jOOQ. They offer convenience that
+     *             is unidiomatic for jOOQ's DSL, without offering functionality
+     *             that would not be possible otherwise - yet they add
+     *             complexity in jOOQ's internals.
      */
+    @Deprecated
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep with(String alias, Function<? super Field<?>, ? extends String> fieldNameFunction) {
         return new WithImpl(null, false).with(alias, fieldNameFunction);
@@ -1864,7 +1871,14 @@ public class DSL {
      * This works in a similar way as {@link #with(String, String...)}, except
      * that all column names are produced by a function that receives the CTE's
      * {@link Select} columns as input.
+     *
+     * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
+     *             replacement from a future jOOQ. They offer convenience that
+     *             is unidiomatic for jOOQ's DSL, without offering functionality
+     *             that would not be possible otherwise - yet they add
+     *             complexity in jOOQ's internals.
      */
+    @Deprecated
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep withRecursive(String alias, Function<? super Field<?>, ? extends String> fieldNameFunction) {
         return new WithImpl(null, true).with(alias, fieldNameFunction);
@@ -7046,7 +7060,13 @@ public class DSL {
      * using a function.
      *
      * @see DSLContext#createView(String, String...)
+     * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
+     *             replacement from a future jOOQ. They offer convenience that
+     *             is unidiomatic for jOOQ's DSL, without offering functionality
+     *             that would not be possible otherwise - yet they add
+     *             complexity in jOOQ's internals.
      */
+    @Deprecated
     @Support
     public static CreateViewAsStep createView(String view, Function<? super Field<?>, ? extends String> fieldNameFunction) {
         return dsl().createView(view, fieldNameFunction);
@@ -7060,7 +7080,13 @@ public class DSL {
      * using a function.
      *
      * @see DSLContext#createView(Name, Name...)
+     * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
+     *             replacement from a future jOOQ. They offer convenience that
+     *             is unidiomatic for jOOQ's DSL, without offering functionality
+     *             that would not be possible otherwise - yet they add
+     *             complexity in jOOQ's internals.
      */
+    @Deprecated
     @Support
     public static CreateViewAsStep createView(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction) {
         return dsl().createView(view, fieldNameFunction);
@@ -7074,7 +7100,13 @@ public class DSL {
      * using a function.
      *
      * @see DSLContext#createView(Table, Field...)
+     * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
+     *             replacement from a future jOOQ. They offer convenience that
+     *             is unidiomatic for jOOQ's DSL, without offering functionality
+     *             that would not be possible otherwise - yet they add
+     *             complexity in jOOQ's internals.
      */
+    @Deprecated
     @Support
     public static CreateViewAsStep createView(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction) {
         return dsl().createView(view, fieldNameFunction);
@@ -7120,7 +7152,13 @@ public class DSL {
      * using a function.
      *
      * @see DSLContext#createOrReplaceView(String, String...)
+     * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
+     *             replacement from a future jOOQ. They offer convenience that
+     *             is unidiomatic for jOOQ's DSL, without offering functionality
+     *             that would not be possible otherwise - yet they add
+     *             complexity in jOOQ's internals.
      */
+    @Deprecated
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     public static CreateViewAsStep createOrReplaceView(String view, Function<? super Field<?>, ? extends String> fieldNameFunction) {
         return dsl().createOrReplaceView(view, fieldNameFunction);
@@ -7134,7 +7172,13 @@ public class DSL {
      * using a function.
      *
      * @see DSLContext#createOrReplaceView(Name, Name...)
+     * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
+     *             replacement from a future jOOQ. They offer convenience that
+     *             is unidiomatic for jOOQ's DSL, without offering functionality
+     *             that would not be possible otherwise - yet they add
+     *             complexity in jOOQ's internals.
      */
+    @Deprecated
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     public static CreateViewAsStep createOrReplaceView(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction) {
         return dsl().createOrReplaceView(view, fieldNameFunction);
@@ -7148,7 +7192,13 @@ public class DSL {
      * using a function.
      *
      * @see DSLContext#createOrReplaceView(Table, Field...)
+     * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
+     *             replacement from a future jOOQ. They offer convenience that
+     *             is unidiomatic for jOOQ's DSL, without offering functionality
+     *             that would not be possible otherwise - yet they add
+     *             complexity in jOOQ's internals.
      */
+    @Deprecated
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     public static CreateViewAsStep createOrReplaceView(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction) {
         return dsl().createOrReplaceView(view, fieldNameFunction);
@@ -7194,7 +7244,13 @@ public class DSL {
      * using a function.
      *
      * @see DSLContext#createViewIfNotExists(String, String...)
+     * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
+     *             replacement from a future jOOQ. They offer convenience that
+     *             is unidiomatic for jOOQ's DSL, without offering functionality
+     *             that would not be possible otherwise - yet they add
+     *             complexity in jOOQ's internals.
      */
+    @Deprecated
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateViewAsStep createViewIfNotExists(String view, Function<? super Field<?>, ? extends String> fieldNameFunction) {
         return dsl().createViewIfNotExists(view, fieldNameFunction);
@@ -7208,7 +7264,13 @@ public class DSL {
      * using a function.
      *
      * @see DSLContext#createViewIfNotExists(Name, Name...)
+     * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
+     *             replacement from a future jOOQ. They offer convenience that
+     *             is unidiomatic for jOOQ's DSL, without offering functionality
+     *             that would not be possible otherwise - yet they add
+     *             complexity in jOOQ's internals.
      */
+    @Deprecated
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateViewAsStep createViewIfNotExists(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction) {
         return dsl().createViewIfNotExists(view, fieldNameFunction);
@@ -7222,7 +7284,13 @@ public class DSL {
      * using a function.
      *
      * @see DSLContext#createViewIfNotExists(Table, Field...)
+     * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
+     *             replacement from a future jOOQ. They offer convenience that
+     *             is unidiomatic for jOOQ's DSL, without offering functionality
+     *             that would not be possible otherwise - yet they add
+     *             complexity in jOOQ's internals.
      */
+    @Deprecated
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateViewAsStep createViewIfNotExists(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction) {
         return dsl().createViewIfNotExists(view, fieldNameFunction);

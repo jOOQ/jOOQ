@@ -460,7 +460,13 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @param alias The alias name
      * @param aliasFunction The function providing field aliases.
      * @return The table alias
+     * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
+     *             replacement from a future jOOQ. They offer convenience that
+     *             is unidiomatic for jOOQ's DSL, without offering functionality
+     *             that would not be possible otherwise - yet they add
+     *             complexity in jOOQ's internals.
      */
+    @Deprecated
     @Support
     Table<R> as(String alias, Function<? super Field<?>, ? extends String> aliasFunction);
 
@@ -478,7 +484,13 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @param alias The alias name
      * @param aliasFunction The function providing field aliases.
      * @return The table alias
+     * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
+     *             replacement from a future jOOQ. They offer convenience that
+     *             is unidiomatic for jOOQ's DSL, without offering functionality
+     *             that would not be possible otherwise - yet they add
+     *             complexity in jOOQ's internals.
      */
+    @Deprecated
     @Support
     Table<R> as(String alias, BiFunction<? super Field<?>, ? super Integer, ? extends String> aliasFunction);
 
@@ -573,7 +585,13 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @param alias The alias name
      * @param aliasFunction The function providing field aliases.
      * @return The table alias
+     * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
+     *             replacement from a future jOOQ. They offer convenience that
+     *             is unidiomatic for jOOQ's DSL, without offering functionality
+     *             that would not be possible otherwise - yet they add
+     *             complexity in jOOQ's internals.
      */
+    @Deprecated
     @Support
     Table<R> as(Name alias, Function<? super Field<?>, ? extends Name> aliasFunction);
 
@@ -591,7 +609,13 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @param alias The alias name
      * @param aliasFunction The function providing field aliases.
      * @return The table alias
+     * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
+     *             replacement from a future jOOQ. They offer convenience that
+     *             is unidiomatic for jOOQ's DSL, without offering functionality
+     *             that would not be possible otherwise - yet they add
+     *             complexity in jOOQ's internals.
      */
+    @Deprecated
     @Support
     Table<R> as(Name alias, BiFunction<? super Field<?>, ? super Integer, ? extends Name> aliasFunction);
 
@@ -631,7 +655,13 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @param otherTable The other table whose name is used as alias name
      * @param aliasFunction The function providing field aliases.
      * @return The table alias
+     * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
+     *             replacement from a future jOOQ. They offer convenience that
+     *             is unidiomatic for jOOQ's DSL, without offering functionality
+     *             that would not be possible otherwise - yet they add
+     *             complexity in jOOQ's internals.
      */
+    @Deprecated
     @Support
     Table<R> as(Table<?> otherTable, Function<? super Field<?>, ? extends Field<?>> aliasFunction);
 
@@ -649,7 +679,13 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @param otherTable The other table whose name is used as alias name
      * @param aliasFunction The function providing field aliases.
      * @return The table alias
+     * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
+     *             replacement from a future jOOQ. They offer convenience that
+     *             is unidiomatic for jOOQ's DSL, without offering functionality
+     *             that would not be possible otherwise - yet they add
+     *             complexity in jOOQ's internals.
      */
+    @Deprecated
     @Support
     Table<R> as(Table<?> otherTable, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> aliasFunction);
 

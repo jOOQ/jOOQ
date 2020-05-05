@@ -260,7 +260,13 @@ public interface TableLike<R extends Record> extends QueryPart {
      * The underlying aliased table representation of this object.
      *
      * @see Table#as(String, Function)
+     * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
+     *             replacement from a future jOOQ. They offer convenience that
+     *             is unidiomatic for jOOQ's DSL, without offering functionality
+     *             that would not be possible otherwise - yet they add
+     *             complexity in jOOQ's internals.
      */
+    @Deprecated
     @Support
     Table<R> asTable(String alias, Function<? super Field<?>, ? extends String> aliasFunction);
 
@@ -268,7 +274,13 @@ public interface TableLike<R extends Record> extends QueryPart {
      * The underlying aliased table representation of this object.
      *
      * @see Table#as(String, BiFunction)
+     * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
+     *             replacement from a future jOOQ. They offer convenience that
+     *             is unidiomatic for jOOQ's DSL, without offering functionality
+     *             that would not be possible otherwise - yet they add
+     *             complexity in jOOQ's internals.
      */
+    @Deprecated
     @Support
     Table<R> asTable(String alias, BiFunction<? super Field<?>, ? super Integer, ? extends String> aliasFunction);
 

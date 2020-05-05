@@ -98,7 +98,14 @@ public interface FieldLike {
      * <code><pre>
      * MY_TABLE.MY_COLUMN.as(f -&gt; "prefix_" + f.getName());
      * </pre></code>
+     *
+     * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
+     *             replacement from a future jOOQ. They offer convenience that
+     *             is unidiomatic for jOOQ's DSL, without offering functionality
+     *             that would not be possible otherwise - yet they add
+     *             complexity in jOOQ's internals.
      */
+    @Deprecated
     @Support
     <T> Field<T> asField(Function<? super Field<T>, ? extends String> aliasFunction);
 

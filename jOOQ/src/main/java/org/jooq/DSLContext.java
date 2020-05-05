@@ -3979,7 +3979,14 @@ public interface DSLContext extends Scope , AutoCloseable {
      * This works in a similar way as {@link #with(String, String...)}, except
      * that all column names are produced by a function that receives the CTE's
      * {@link Select} columns as input.
+     *
+     * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
+     *             replacement from a future jOOQ. They offer convenience that
+     *             is unidiomatic for jOOQ's DSL, without offering functionality
+     *             that would not be possible otherwise - yet they add
+     *             complexity in jOOQ's internals.
      */
+    @Deprecated
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep with(String alias, Function<? super Field<?>, ? extends String> fieldNameFunction);
 
@@ -3998,7 +4005,14 @@ public interface DSLContext extends Scope , AutoCloseable {
      * This works in a similar way as {@link #with(String, String...)}, except
      * that all column names are produced by a function that receives the CTE's
      * {@link Select} columns and their column indexes as input.
+     *
+     * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
+     *             replacement from a future jOOQ. They offer convenience that
+     *             is unidiomatic for jOOQ's DSL, without offering functionality
+     *             that would not be possible otherwise - yet they add
+     *             complexity in jOOQ's internals.
      */
+    @Deprecated
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep with(String alias, BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction);
 
@@ -4872,7 +4886,14 @@ public interface DSLContext extends Scope , AutoCloseable {
      * This works in a similar way as {@link #with(String, String...)}, except
      * that all column names are produced by a function that receives the CTE's
      * {@link Select} columns as input.
+     *
+     * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
+     *             replacement from a future jOOQ. They offer convenience that
+     *             is unidiomatic for jOOQ's DSL, without offering functionality
+     *             that would not be possible otherwise - yet they add
+     *             complexity in jOOQ's internals.
      */
+    @Deprecated
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep withRecursive(String alias, Function<? super Field<?>, ? extends String> fieldNameFunction);
 
@@ -4892,7 +4913,14 @@ public interface DSLContext extends Scope , AutoCloseable {
      * This works in a similar way as {@link #with(String, String...)}, except
      * that all column names are produced by a function that receives the CTE's
      * {@link Select} columns and their column indexes as input.
+     *
+     * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
+     *             replacement from a future jOOQ. They offer convenience that
+     *             is unidiomatic for jOOQ's DSL, without offering functionality
+     *             that would not be possible otherwise - yet they add
+     *             complexity in jOOQ's internals.
      */
+    @Deprecated
     @Support({ FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep withRecursive(String alias, BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction);
 
@@ -8977,7 +9005,13 @@ public interface DSLContext extends Scope , AutoCloseable {
      * using a function.
      *
      * @see DSL#createView(String, String...)
+     * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
+     *             replacement from a future jOOQ. They offer convenience that
+     *             is unidiomatic for jOOQ's DSL, without offering functionality
+     *             that would not be possible otherwise - yet they add
+     *             complexity in jOOQ's internals.
      */
+    @Deprecated
     @Support
     CreateViewAsStep<Record> createView(String view, Function<? super Field<?>, ? extends String> fieldNameFunction);
 
@@ -8989,7 +9023,13 @@ public interface DSLContext extends Scope , AutoCloseable {
      * using a function.
      *
      * @see DSL#createView(String, String...)
+     * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
+     *             replacement from a future jOOQ. They offer convenience that
+     *             is unidiomatic for jOOQ's DSL, without offering functionality
+     *             that would not be possible otherwise - yet they add
+     *             complexity in jOOQ's internals.
      */
+    @Deprecated
     @Support
     CreateViewAsStep<Record> createView(String view, BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction);
 
@@ -9001,7 +9041,13 @@ public interface DSLContext extends Scope , AutoCloseable {
      * using a function.
      *
      * @see DSL#createView(String, String...)
+     * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
+     *             replacement from a future jOOQ. They offer convenience that
+     *             is unidiomatic for jOOQ's DSL, without offering functionality
+     *             that would not be possible otherwise - yet they add
+     *             complexity in jOOQ's internals.
      */
+    @Deprecated
     @Support
     CreateViewAsStep<Record> createView(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction);
 
@@ -9013,7 +9059,13 @@ public interface DSLContext extends Scope , AutoCloseable {
      * using a function.
      *
      * @see DSL#createView(String, String...)
+     * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
+     *             replacement from a future jOOQ. They offer convenience that
+     *             is unidiomatic for jOOQ's DSL, without offering functionality
+     *             that would not be possible otherwise - yet they add
+     *             complexity in jOOQ's internals.
      */
+    @Deprecated
     @Support
     CreateViewAsStep<Record> createView(Name view, BiFunction<? super Field<?>, ? super Integer, ? extends Name> fieldNameFunction);
 
@@ -9025,7 +9077,13 @@ public interface DSLContext extends Scope , AutoCloseable {
      * using a function.
      *
      * @see DSL#createView(String, String...)
+     * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
+     *             replacement from a future jOOQ. They offer convenience that
+     *             is unidiomatic for jOOQ's DSL, without offering functionality
+     *             that would not be possible otherwise - yet they add
+     *             complexity in jOOQ's internals.
      */
+    @Deprecated
     @Support
     CreateViewAsStep<Record> createView(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction);
 
@@ -9037,7 +9095,13 @@ public interface DSLContext extends Scope , AutoCloseable {
      * using a function.
      *
      * @see DSL#createView(String, String...)
+     * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
+     *             replacement from a future jOOQ. They offer convenience that
+     *             is unidiomatic for jOOQ's DSL, without offering functionality
+     *             that would not be possible otherwise - yet they add
+     *             complexity in jOOQ's internals.
      */
+    @Deprecated
     @Support
     CreateViewAsStep<Record> createView(Table<?> view, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction);
 
@@ -9075,19 +9139,31 @@ public interface DSLContext extends Scope , AutoCloseable {
      * using a function.
      *
      * @see DSL#createOrReplaceView(String, String...)
+     * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
+     *             replacement from a future jOOQ. They offer convenience that
+     *             is unidiomatic for jOOQ's DSL, without offering functionality
+     *             that would not be possible otherwise - yet they add
+     *             complexity in jOOQ's internals.
      */
+    @Deprecated
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     CreateViewAsStep<Record> createOrReplaceView(String view, Function<? super Field<?>, ? extends String> fieldNameFunction);
 
     /**
      * Create a new DSL <code>CREATE OR REPLACE VIEW</code> statement.
      * <p>
-     * This works like {@link #createOrReplaceView(String, String...)} except that the
-     * view's field names are derived from the view's {@link Select} statement
-     * using a function.
+     * This works like {@link #createOrReplaceView(String, String...)} except
+     * that the view's field names are derived from the view's {@link Select}
+     * statement using a function.
      *
      * @see DSL#createOrReplaceView(String, String...)
+     * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
+     *             replacement from a future jOOQ. They offer convenience that
+     *             is unidiomatic for jOOQ's DSL, without offering functionality
+     *             that would not be possible otherwise - yet they add
+     *             complexity in jOOQ's internals.
      */
+    @Deprecated
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     CreateViewAsStep<Record> createOrReplaceView(String view, BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction);
 
@@ -9099,7 +9175,13 @@ public interface DSLContext extends Scope , AutoCloseable {
      * using a function.
      *
      * @see DSL#createOrReplaceView(String, String...)
+     * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
+     *             replacement from a future jOOQ. They offer convenience that
+     *             is unidiomatic for jOOQ's DSL, without offering functionality
+     *             that would not be possible otherwise - yet they add
+     *             complexity in jOOQ's internals.
      */
+    @Deprecated
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     CreateViewAsStep<Record> createOrReplaceView(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction);
 
@@ -9111,7 +9193,13 @@ public interface DSLContext extends Scope , AutoCloseable {
      * using a function.
      *
      * @see DSL#createOrReplaceView(String, String...)
+     * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
+     *             replacement from a future jOOQ. They offer convenience that
+     *             is unidiomatic for jOOQ's DSL, without offering functionality
+     *             that would not be possible otherwise - yet they add
+     *             complexity in jOOQ's internals.
      */
+    @Deprecated
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     CreateViewAsStep<Record> createOrReplaceView(Name view, BiFunction<? super Field<?>, ? super Integer, ? extends Name> fieldNameFunction);
 
@@ -9123,7 +9211,13 @@ public interface DSLContext extends Scope , AutoCloseable {
      * using a function.
      *
      * @see DSL#createOrReplaceView(String, String...)
+     * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
+     *             replacement from a future jOOQ. They offer convenience that
+     *             is unidiomatic for jOOQ's DSL, without offering functionality
+     *             that would not be possible otherwise - yet they add
+     *             complexity in jOOQ's internals.
      */
+    @Deprecated
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     CreateViewAsStep<Record> createOrReplaceView(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction);
 
@@ -9135,7 +9229,13 @@ public interface DSLContext extends Scope , AutoCloseable {
      * using a function.
      *
      * @see DSL#createOrReplaceView(String, String...)
+     * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
+     *             replacement from a future jOOQ. They offer convenience that
+     *             is unidiomatic for jOOQ's DSL, without offering functionality
+     *             that would not be possible otherwise - yet they add
+     *             complexity in jOOQ's internals.
      */
+    @Deprecated
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     CreateViewAsStep<Record> createOrReplaceView(Table<?> view, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction);
 
@@ -9173,7 +9273,13 @@ public interface DSLContext extends Scope , AutoCloseable {
      * using a function.
      *
      * @see DSL#createViewIfNotExists(String, String...)
+     * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
+     *             replacement from a future jOOQ. They offer convenience that
+     *             is unidiomatic for jOOQ's DSL, without offering functionality
+     *             that would not be possible otherwise - yet they add
+     *             complexity in jOOQ's internals.
      */
+    @Deprecated
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateViewAsStep<Record> createViewIfNotExists(String view, Function<? super Field<?>, ? extends String> fieldNameFunction);
 
@@ -9185,7 +9291,13 @@ public interface DSLContext extends Scope , AutoCloseable {
      * using a function.
      *
      * @see DSL#createViewIfNotExists(String, String...)
+     * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
+     *             replacement from a future jOOQ. They offer convenience that
+     *             is unidiomatic for jOOQ's DSL, without offering functionality
+     *             that would not be possible otherwise - yet they add
+     *             complexity in jOOQ's internals.
      */
+    @Deprecated
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateViewAsStep<Record> createViewIfNotExists(String view, BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction);
 
@@ -9197,7 +9309,13 @@ public interface DSLContext extends Scope , AutoCloseable {
      * using a function.
      *
      * @see DSL#createViewIfNotExists(String, String...)
+     * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
+     *             replacement from a future jOOQ. They offer convenience that
+     *             is unidiomatic for jOOQ's DSL, without offering functionality
+     *             that would not be possible otherwise - yet they add
+     *             complexity in jOOQ's internals.
      */
+    @Deprecated
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateViewAsStep<Record> createViewIfNotExists(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction);
 
@@ -9209,7 +9327,13 @@ public interface DSLContext extends Scope , AutoCloseable {
      * using a function.
      *
      * @see DSL#createViewIfNotExists(String, String...)
+     * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
+     *             replacement from a future jOOQ. They offer convenience that
+     *             is unidiomatic for jOOQ's DSL, without offering functionality
+     *             that would not be possible otherwise - yet they add
+     *             complexity in jOOQ's internals.
      */
+    @Deprecated
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateViewAsStep<Record> createViewIfNotExists(Name view, BiFunction<? super Field<?>, ? super Integer, ? extends Name> fieldNameFunction);
 
@@ -9221,7 +9345,13 @@ public interface DSLContext extends Scope , AutoCloseable {
      * using a function.
      *
      * @see DSL#createViewIfNotExists(String, String...)
+     * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
+     *             replacement from a future jOOQ. They offer convenience that
+     *             is unidiomatic for jOOQ's DSL, without offering functionality
+     *             that would not be possible otherwise - yet they add
+     *             complexity in jOOQ's internals.
      */
+    @Deprecated
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction);
 
@@ -9233,7 +9363,13 @@ public interface DSLContext extends Scope , AutoCloseable {
      * using a function.
      *
      * @see DSL#createViewIfNotExists(String, String...)
+     * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
+     *             replacement from a future jOOQ. They offer convenience that
+     *             is unidiomatic for jOOQ's DSL, without offering functionality
+     *             that would not be possible otherwise - yet they add
+     *             complexity in jOOQ's internals.
      */
+    @Deprecated
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction);
 

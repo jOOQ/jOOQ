@@ -147,7 +147,14 @@ public interface WithStep extends QueryPart {
      * This works in a similar way as {@link #with(String, String...)}, except
      * that all column names are produced by a function that receives the CTE's
      * {@link Select} columns as input.
+     *
+     * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
+     *             replacement from a future jOOQ. They offer convenience that
+     *             is unidiomatic for jOOQ's DSL, without offering functionality
+     *             that would not be possible otherwise - yet they add
+     *             complexity in jOOQ's internals.
      */
+    @Deprecated
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep with(String alias, Function<? super Field<?>, ? extends String> fieldNameFunction);
 
@@ -157,7 +164,14 @@ public interface WithStep extends QueryPart {
      * This works in a similar way as {@link #with(String, String...)}, except
      * that all column names are produced by a function that receives the CTE's
      * {@link Select} columns and their column indexes as input.
+     *
+     * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
+     *             replacement from a future jOOQ. They offer convenience that
+     *             is unidiomatic for jOOQ's DSL, without offering functionality
+     *             that would not be possible otherwise - yet they add
+     *             complexity in jOOQ's internals.
      */
+    @Deprecated
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithAsStep with(String alias, BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction);
 

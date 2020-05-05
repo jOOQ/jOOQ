@@ -3609,10 +3609,14 @@ final class ParserImpl implements Parser {
                 }
                 else if (parseKeywordIf(ctx, "DEFAULT")) {
 
-                    // TODO: Ignored keyword from Oracle
+                    // TODO: [#10116] Support this clause also in the jOOQ API
                     parseKeywordIf(ctx, "ON NULL");
 
                     type = type.defaultValue((Field) toField(ctx, parseConcat(ctx, null)));
+
+                    // TODO: [#10115] Support this clause also in the jOOQ API
+                    parseKeywordIf(ctx, "WITH VALUES");
+
                     defaultValue = true;
                     identity = true;
                     continue;
@@ -4132,7 +4136,7 @@ final class ParserImpl implements Parser {
             do {
                 parseAlterTableAddFieldsOrConstraints(ctx, list);
             }
-            while (parseIf(ctx, ',') && parseKeyword(ctx, "ADD"));
+            while (parseIf(ctx, ',') && (parseKeywordIf(ctx, "ADD") || !peekKeyword(ctx, "ALTER", "COMMENT", "DROP", "MODIFY", "OWNER TO", "RENAME")));
         }
 
         if (list.size() == 1)

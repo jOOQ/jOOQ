@@ -5472,6 +5472,7 @@ final class Tools {
 
 
 
+                case MARIADB:
                 case MYSQL:
                 case SQLITE:
                     return ParseNameCase.AS_IS;

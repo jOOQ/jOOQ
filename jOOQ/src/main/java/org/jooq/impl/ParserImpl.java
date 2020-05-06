@@ -11945,6 +11945,9 @@ final class ParserContext {
         for (int i = 0; i < objects.length; i++)
             if (i == 0)
                 sb.append(objects[i]);
+            // [#10169] Correct application of Oxford comma 🧐
+            else if (i == 1 && objects.length == 2)
+                sb.append(" or ").append(objects[i]);
             else if (i == objects.length - 1)
                 sb.append(", or ").append(objects[i]);
             else

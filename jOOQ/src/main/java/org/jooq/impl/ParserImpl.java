@@ -4562,7 +4562,11 @@ final class ParserImpl implements Parser {
 
     private static final DDLQuery parseCreateSchema(ParserContext ctx) {
         boolean ifNotExists = parseKeywordIf(ctx, "IF NOT EXISTS");
+        boolean authorization = parseKeywordIf(ctx, "AUTHORIZATION");
         Schema schemaName = parseSchemaName(ctx);
+
+        if (!authorization && parseKeywordIf(ctx, "AUTHORIZATION"))
+            parseUser(ctx);
 
         return ifNotExists
             ? ctx.dsl.createSchemaIfNotExists(schemaName)

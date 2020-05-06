@@ -595,7 +595,7 @@ final class ParserImpl implements Parser {
 
         do {
             parseDelimiterSpecifications(ctx);
-            while (parseDelimiterIf(ctx));
+            while (parseDelimiterIf(ctx, false));
 
             query = patchParsedQuery(ctx, parseQuery(ctx, false, false));
             if (query == IGNORE || query == IGNORE_NO_DELIMITER)
@@ -603,7 +603,7 @@ final class ParserImpl implements Parser {
             if (query != null)
                 result.add(query);
         }
-        while (query == IGNORE_NO_DELIMITER || parseDelimiterIf(ctx));
+        while (parseDelimiterIf(ctx, true) && !ctx.done());
 
         ctx.done("Unexpected token or missing query delimiter");
         return dsl.queries(result);
@@ -857,7 +857,7 @@ final class ParserImpl implements Parser {
             ctx.delimiter(parseUntilEOL(ctx).trim());
     }
 
-    private static final boolean parseDelimiterIf(ParserContext ctx) {
+    private static final boolean parseDelimiterIf(ParserContext ctx, boolean optional) {
         if (parseIf(ctx, ctx.delimiter()))
             return true;
 
@@ -872,7 +872,7 @@ final class ParserImpl implements Parser {
             return true;
         }
 
-        return false;
+        return optional;
     }
 
     private static final Query parseQuery(ParserContext ctx, boolean parseResultQuery, boolean parseSelect) {
@@ -3581,7 +3581,9 @@ final class ParserImpl implements Parser {
                 parseIf(ctx, '=');
                 storage.add(sql("{0} {1}", keyword, parseIdentifier(ctx)));
             }
-            else if ((keyword = parseAndGetKeywordIf(ctx, "COMMENT")) != null) {
+
+            // [#10164] In a statement batch, this could already be the next statement
+            else if (!peekKeyword(ctx, "COMMENT ON") && (keyword = parseAndGetKeywordIf(ctx, "COMMENT")) != null) {
                 parseIf(ctx, '=');
                 comment = parseComment(ctx);
             }
@@ -3884,7 +3886,9 @@ final class ParserImpl implements Parser {
             }
 
             if (!comment) {
-                if (parseKeywordIf(ctx, "COMMENT")) {
+
+                // [#10164] In a statement batch, this could already be the next statement
+                if (!peekKeyword(ctx, "COMMENT ON") && parseKeywordIf(ctx, "COMMENT")) {
                     fieldComment = parseComment(ctx);
                     continue;
                 }
@@ -5433,14 +5437,20 @@ final class ParserImpl implements Parser {
                 result = t(result, true).as(alias);
         }
 
-        if (parseKeywordIf(ctx, "WITH") && ctx.requireProEdition()) {
+        int position = ctx.position();
+        if (parseKeywordIf(ctx, "WITH")) {
+            if (parseIf(ctx, '(') && ctx.requireProEdition()) {
 
 
 
 
 
 
+            }
 
+            // [#10164] Without parens, WITH is part of the next statement in delimiter free statement batches
+            else
+                ctx.position(position);
         }
 
         return t(result);
@@ -11679,8 +11689,15 @@ final class ParserImpl implements Parser {
     }
 
     private static final String[] KEYWORDS_IN_SELECT  = {
+        "ALTER",
+        "BEGIN",
+        "COMMENT",
         "CONNECT BY",
-        "END", // In T-SQL, semicolons are optional, so a T-SQL END clause might appear
+        "CREATE",
+        "DECLARE",
+        "DELETE",
+        "DROP",
+        "END",
         "EXCEPT",
         "FETCH FIRST",
         "FETCH NEXT",
@@ -11691,29 +11708,47 @@ final class ParserImpl implements Parser {
         "FOR UPDATE",
         "FOR XML",
         "FROM",
-        "GO", // The T-SQL statement batch delimiter, not a SELECT keyword
+        "GO",
+        "GRANT",
         "GROUP BY",
         "HAVING",
+        "INSERT",
         "INTERSECT",
         "INTO",
         "LIMIT",
+        "MERGE",
         "MINUS",
         "OFFSET",
         "ORDER BY",
         "PARTITION BY",
         "QUALIFY",
+        "RENAME",
         "RETURNING",
+        "REVOKE",
+        "SELECT",
+        "SET",
         "START WITH",
+        "TRUNCATE",
         "UNION",
+        "UPDATE",
+        "USE",
+        "VALUES",
         "WHERE",
         "WINDOW",
         "WITH",
     };
 
     private static final String[] KEYWORDS_IN_FROM    = {
+        "ALTER",
+        "BEGIN",
+        "COMMENT",
         "CONNECT BY",
+        "CREATE",
         "CROSS APPLY",
         "CROSS JOIN",
+        "DECLARE",
+        "DELETE",
+        "DROP",
         "END", // In T-SQL, semicolons are optional, so a T-SQL END clause might appear
         "EXCEPT",
         "FETCH FIRST",
@@ -11727,9 +11762,11 @@ final class ParserImpl implements Parser {
         "FULL JOIN",
         "FULL OUTER JOIN",
         "GO", // The T-SQL statement batch delimiter, not a SELECT keyword
+        "GRANT",
         "GROUP BY",
         "HAVING",
         "INNER JOIN",
+        "INSERT",
         "INTERSECT",
         "INTO",
         "JOIN",
@@ -11738,31 +11775,39 @@ final class ParserImpl implements Parser {
         "LEFT OUTER JOIN",
         "LEFT SEMI JOIN",
         "LIMIT",
+        "MERGE",
         "MINUS",
-        "NATURAL JOIN",
+        "NATURAL FULL JOIN",
+        "NATURAL FULL OUTER JOIN",
         "NATURAL INNER JOIN",
+        "NATURAL JOIN",
         "NATURAL LEFT JOIN",
         "NATURAL LEFT OUTER JOIN",
         "NATURAL RIGHT JOIN",
         "NATURAL RIGHT OUTER JOIN",
-        "NATURAL FULL JOIN",
-        "NATURAL FULL OUTER JOIN",
         "OFFSET",
         "ON",
         "ORDER BY",
         "OUTER APPLY",
         "PARTITION BY",
         "QUALIFY",
+        "RENAME",
         "RETURNING",
+        "REVOKE",
         "RIGHT ANTI JOIN",
         "RIGHT JOIN",
         "RIGHT OUTER JOIN",
         "RIGHT SEMI JOIN",
         "SELECT",
+        "SET",
         "START WITH",
         "STRAIGHT_JOIN",
+        "TRUNCATE",
         "UNION",
+        "UPDATE",
+        "USE",
         "USING",
+        "VALUES",
         "WHERE",
         "WINDOW",
         "WITH",

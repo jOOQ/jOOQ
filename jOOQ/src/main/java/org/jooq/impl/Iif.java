@@ -37,11 +37,10 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Names.N_IIF;
-
 import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Name;
 
 /**
  * @author Lukas Eder
@@ -57,14 +56,13 @@ final class Iif<T> extends AbstractField<T> {
     private final Field<T>    ifTrue;
     private final Field<T>    ifFalse;
 
-    Iif(Condition condition, Field<T> ifTrue, Field<T> ifFalse) {
-        super(N_IIF, ifTrue.getDataType());
+    Iif(Name name, Condition condition, Field<T> ifTrue, Field<T> ifFalse) {
+        super(name, ifTrue.getDataType());
 
         this.condition = condition;
         this.ifTrue = ifTrue;
         this.ifFalse = ifFalse;
     }
-
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -75,9 +73,13 @@ final class Iif<T> extends AbstractField<T> {
 
 
 
+            case MARIADB:
+            case MYSQL:
+                ctx.visit(getUnqualifiedName()).sql('(').visit(condition).sql(", ").visit(ifTrue).sql(", ").visit(ifFalse).sql(')');
+                break;
 
             default:
-                ctx.visit(DSL.choose().when(condition, ifTrue).otherwise(ifFalse));
+                ctx.visit(DSL.when(condition, ifTrue).otherwise(ifFalse));
                 break;
         }
     }

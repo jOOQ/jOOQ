@@ -6330,7 +6330,7 @@ final class ParserImpl implements Parser {
                     return field;
                 else if ((field = parseFieldIsnullIf(ctx)) != null)
                     return field;
-                else if ((field = parseFieldIifIf(ctx)) != null)
+                else if ((field = parseFieldIfIf(ctx)) != null)
                     return field;
                 else
                     break;
@@ -9008,8 +9008,8 @@ final class ParserImpl implements Parser {
         return null;
     }
 
-    private static final Field<?> parseFieldIifIf(ParserContext ctx) {
-        if (parseFunctionNameIf(ctx, "IIF")) {
+    private static final Field<?> parseFieldIfIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "IF") || parseFunctionNameIf(ctx, "IIF")) {
             parse(ctx, '(');
             Condition c = parseCondition(ctx);
             parse(ctx, ',');

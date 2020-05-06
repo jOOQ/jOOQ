@@ -110,6 +110,7 @@ final class Names {
     static final Name N_GROUP_CONCAT           = unquotedName("group_concat");
     static final Name N_HASHBYTES              = unquotedName("hashbytes");
     static final Name N_HEX                    = unquotedName("hex");
+    static final Name N_IF                     = unquotedName("if");
     static final Name N_IFNULL                 = unquotedName("ifnull");
     static final Name N_IIF                    = unquotedName("iif");
     static final Name N_INSTR                  = unquotedName("instr");

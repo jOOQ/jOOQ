@@ -85,6 +85,8 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+import static org.jooq.impl.Names.N_IF;
+import static org.jooq.impl.Names.N_IIF;
 import static org.jooq.impl.Names.N_SYSTEM_TIME;
 import static org.jooq.impl.PositionalWindowFunction.PositionalFunctionType.FIRST_VALUE;
 import static org.jooq.impl.PositionalWindowFunction.PositionalFunctionType.LAG;
@@ -12703,6 +12705,38 @@ public class DSL {
     }
 
     /**
+     * Create a MySQL style <code>IF(condition, ifTrue, ifFalse)</code> function.
+     */
+    @Support
+    public static <T> Field<T> if_(Condition condition, T ifTrue, T ifFalse) {
+        return iif0(N_IF, condition, Tools.field(ifTrue), Tools.field(ifFalse));
+    }
+
+    /**
+     * Create a MySQL style <code>IF(condition, ifTrue, ifFalse)</code> function.
+     */
+    @Support
+    public static <T> Field<T> if_(Condition condition, T ifTrue, Field<T> ifFalse) {
+        return iif0(N_IF, condition, Tools.field(ifTrue), nullSafe(ifFalse));
+    }
+
+    /**
+     * Create a MySQL style <code>IF(condition, ifTrue, ifFalse)</code> function.
+     */
+    @Support
+    public static <T> Field<T> if_(Condition condition, Field<T> ifTrue, T ifFalse) {
+        return iif0(N_IF, condition, nullSafe(ifTrue), Tools.field(ifFalse));
+    }
+
+    /**
+     * Create a MySQL style <code>IF(condition, ifTrue, ifFalse)</code> function.
+     */
+    @Support
+    public static <T> Field<T> if_(Condition condition, Field<T> ifTrue, Field<T> ifFalse) {
+        return iif0(N_IF, condition, nullSafe(ifTrue), nullSafe(ifFalse));
+    }
+
+    /**
      * Initialise a {@link Case} statement.
      * <p>
      * Choose is used as a method name to avoid name clashes with Java's
@@ -13538,7 +13572,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> iif(Condition condition, T ifTrue, T ifFalse) {
-        return iif0(condition, Tools.field(ifTrue), Tools.field(ifFalse));
+        return iif0(N_IIF, condition, Tools.field(ifTrue), Tools.field(ifFalse));
     }
 
     /**
@@ -13548,7 +13582,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> iif(Condition condition, T ifTrue, Field<T> ifFalse) {
-        return iif0(condition, Tools.field(ifTrue, ifFalse), nullSafe(ifFalse));
+        return iif0(N_IIF, condition, Tools.field(ifTrue, ifFalse), nullSafe(ifFalse));
     }
 
     /**
@@ -13558,7 +13592,7 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> iif(Condition condition, Field<T> ifTrue, T ifFalse) {
-        return iif0(condition, nullSafe(ifTrue), Tools.field(ifFalse, ifTrue));
+        return iif0(N_IIF, condition, nullSafe(ifTrue), Tools.field(ifFalse, ifTrue));
     }
 
     /**
@@ -13566,13 +13600,13 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> iif(Condition condition, Field<T> ifTrue, Field<T> ifFalse) {
-        return iif0(condition, ifTrue, ifFalse);
+        return iif0(N_IIF, condition, ifTrue, ifFalse);
     }
 
     // Java 8 is stricter than Java 7 with respect to generics and overload
     // resolution (http://stackoverflow.com/q/5361513/521799)
-    static <T> Field<T> iif0(Condition condition, Field<T> ifTrue, Field<T> ifFalse) {
-        return new Iif<>(condition, nullSafe(ifTrue), nullSafe(ifFalse));
+    static <T> Field<T> iif0(Name name, Condition condition, Field<T> ifTrue, Field<T> ifFalse) {
+        return new Iif<>(name, condition, nullSafe(ifTrue), nullSafe(ifFalse));
     }
 
     // -------------------------------------------------------------------------

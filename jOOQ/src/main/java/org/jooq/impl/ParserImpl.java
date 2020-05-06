@@ -883,22 +883,19 @@ final class ParserImpl implements Parser {
         ctx.scopeStart();
         boolean metaLookupsForceIgnore = ctx.metaLookupsForceIgnore();
         try {
-            switch (ctx.character()) {
-                case 'a':
+            switch (ctx.characterUpper()) {
                 case 'A':
                     if (!parseResultQuery && peekKeyword(ctx, "ALTER"))
                         return parseAlter(ctx.metaLookupsForceIgnore(true));
 
                     break;
 
-                case 'b':
                 case 'B':
                     if (!parseResultQuery && peekKeyword(ctx, "BEGIN"))
                         return parseBlock(ctx);
 
                     break;
 
-                case 'c':
                 case 'C':
                     if (!parseResultQuery && peekKeyword(ctx, "CREATE"))
                         return parseCreate(ctx.metaLookupsForceIgnore(true));
@@ -907,7 +904,6 @@ final class ParserImpl implements Parser {
 
                     break;
 
-                case 'd':
                 case 'D':
                     if (!parseResultQuery && peekKeyword(ctx, "DECLARE") && ctx.requireProEdition())
                         return parseBlock(ctx);
@@ -920,7 +916,6 @@ final class ParserImpl implements Parser {
 
                     break;
 
-                case 'e':
                 case 'E':
                     if (!parseResultQuery && peekKeyword(ctx, "EXECUTE BLOCK AS BEGIN"))
                         return parseBlock(ctx);
@@ -929,28 +924,24 @@ final class ParserImpl implements Parser {
 
                     break;
 
-                case 'g':
                 case 'G':
                     if (!parseResultQuery && peekKeyword(ctx, "GRANT"))
                         return parseGrant(ctx.metaLookupsForceIgnore(true));
 
                     break;
 
-                case 'i':
                 case 'I':
                     if (!parseResultQuery && (peekKeyword(ctx, "INSERT") || peekKeyword(ctx, "INS")))
                         return parseInsert(ctx, null);
 
                     break;
 
-                case 'm':
                 case 'M':
                     if (!parseResultQuery && peekKeyword(ctx, "MERGE"))
                         return parseMerge(ctx, null);
 
                     break;
 
-                case 'r':
                 case 'R':
                     if (!parseResultQuery && peekKeyword(ctx, "RENAME"))
                         return parseRename(ctx.metaLookupsForceIgnore(true));
@@ -959,7 +950,6 @@ final class ParserImpl implements Parser {
 
                     break;
 
-                case 's':
                 case 'S':
                     if (peekKeyword(ctx, "SELECT") || peekKeyword(ctx, "SEL"))
                         return parseSelect(ctx);
@@ -968,14 +958,12 @@ final class ParserImpl implements Parser {
 
                     break;
 
-                case 't':
                 case 'T':
                     if (!parseResultQuery && peekKeyword(ctx, "TRUNCATE"))
                         return parseTruncate(ctx);
 
                     break;
 
-                case 'u':
                 case 'U':
                     if (!parseResultQuery && (peekKeyword(ctx, "UPDATE") || peekKeyword(ctx, "UPD")))
                         return parseUpdate(ctx, null);
@@ -984,12 +972,10 @@ final class ParserImpl implements Parser {
 
                     break;
 
-                case 'v':
                 case 'V':
                     if (!parseSelect && peekKeyword(ctx, "VALUES"))
                         return parseSelect(ctx);
 
-                case 'w':
                 case 'W':
                     if (peekKeyword(ctx, "WITH"))
                         return parseWith(ctx, parseSelect);
@@ -2336,54 +2322,132 @@ final class ParserImpl implements Parser {
     private static final DDLQuery parseCreate(ParserContext ctx) {
         parseKeyword(ctx, "CREATE");
 
-        if (parseKeywordIf(ctx, "TABLE"))
-            return parseCreateTable(ctx, false);
-        else if (parseKeywordIf(ctx, "TEMP TABLE"))
-            return parseCreateTable(ctx, true);
-        else if (parseKeywordIf(ctx, "TEMPORARY TABLE"))
-            return parseCreateTable(ctx, true);
-        else if (parseKeywordIf(ctx, "TYPE"))
-            return parseCreateType(ctx);
-        else if (parseKeywordIf(ctx, "GENERATOR"))
-            return parseCreateSequence(ctx);
-        else if (parseKeywordIf(ctx, "GLOBAL TEMP TABLE"))
-            return parseCreateTable(ctx, true);
-        else if (parseKeywordIf(ctx, "GLOBAL TEMPORARY TABLE"))
-            return parseCreateTable(ctx, true);
-        else if (parseKeywordIf(ctx, "INDEX"))
-            return parseCreateIndex(ctx, false);
-        else if (parseKeywordIf(ctx, "SPATIAL INDEX") && ctx.requireUnsupportedSyntax())
-            return parseCreateIndex(ctx, false);
-        else if (parseKeywordIf(ctx, "FULLTEXT INDEX") && ctx.requireUnsupportedSyntax())
-            return parseCreateIndex(ctx, false);
-        else if (parseKeywordIf(ctx, "UNIQUE INDEX"))
-            return parseCreateIndex(ctx, true);
-        else if (parseKeywordIf(ctx, "SCHEMA"))
-            return parseCreateSchema(ctx);
-        else if (parseKeywordIf(ctx, "SEQUENCE"))
-            return parseCreateSequence(ctx);
-        else if (parseKeywordIf(ctx, "OR REPLACE VIEW") || parseKeywordIf(ctx, "OR REPLACE FORCE VIEW"))
-            return parseCreateView(ctx, true);
-        else if (parseKeywordIf(ctx, "OR ALTER VIEW"))
-            return parseCreateView(ctx, true);
-        else if (parseKeywordIf(ctx, "VIEW") || parseKeywordIf(ctx, "FORCE VIEW"))
-            return parseCreateView(ctx, false);
-        else if (parseKeywordIf(ctx, "EXTENSION"))
-            return parseCreateExtension(ctx);
-        else
-            throw ctx.expected(
-                "GENERATOR",
-                "GLOBAL TEMPORARY TABLE",
-                "INDEX",
-                "OR ALTER VIEW",
-                "OR REPLACE VIEW",
-                "SCHEMA",
-                "SEQUENCE",
-                "TABLE",
-                "TEMPORARY TABLE",
-                "TYPE",
-                "UNIQUE INDEX",
-                "VIEW");
+        switch (ctx.characterUpper()) {
+            case 'D':
+                if (parseKeywordIf(ctx, "DATABASE"))
+                    throw ctx.notImplemented("CREATE DATABASE", "https://github.com/jOOQ/jOOQ/issues/3272");
+
+            case 'E':
+                if (parseKeywordIf(ctx, "EXTENSION"))
+                    return parseCreateExtension(ctx);
+
+                break;
+
+            case 'F':
+                if (parseKeywordIf(ctx, "FORCE VIEW"))
+                    return parseCreateView(ctx, false);
+                else if (parseKeywordIf(ctx, "FULLTEXT INDEX") && ctx.requireUnsupportedSyntax())
+                    return parseCreateIndex(ctx, false);
+                else if (parseKeywordIf(ctx, "FUNCTION"))
+                    throw ctx.notImplemented("CREATE FUNCTION", "https://github.com/jOOQ/jOOQ/issues/9190");
+
+                break;
+
+            case 'G':
+                if (parseKeywordIf(ctx, "GENERATOR"))
+                    return parseCreateSequence(ctx);
+                else if (parseKeywordIf(ctx, "GLOBAL TEMP TABLE"))
+                    return parseCreateTable(ctx, true);
+                else if (parseKeywordIf(ctx, "GLOBAL TEMPORARY TABLE"))
+                    return parseCreateTable(ctx, true);
+
+                break;
+
+            case 'I':
+                if (parseKeywordIf(ctx, "INDEX"))
+                    return parseCreateIndex(ctx, false);
+
+                break;
+
+            case 'O':
+                if (parseKeywordIf(ctx, "OR REPLACE VIEW"))
+                    return parseCreateView(ctx, true);
+                else if (parseKeywordIf(ctx, "OR REPLACE FORCE VIEW"))
+                    return parseCreateView(ctx, true);
+                else if (parseKeywordIf(ctx, "OR ALTER VIEW"))
+                    return parseCreateView(ctx, true);
+                else if (parseKeywordIf(ctx, "OR REPLACE FUNCTION"))
+                    throw ctx.notImplemented("CREATE FUNCTION", "https://github.com/jOOQ/jOOQ/issues/9190");
+                else if (parseKeywordIf(ctx, "OR REPLACE PACKAGE"))
+                    throw ctx.notImplemented("CREATE PACKAGE", "https://github.com/jOOQ/jOOQ/issues/9190");
+                else if (parseKeywordIf(ctx, "OR REPLACE PROCEDURE"))
+                    throw ctx.notImplemented("CREATE PROCEDURE", "https://github.com/jOOQ/jOOQ/issues/9190");
+                else if (parseKeywordIf(ctx, "OR REPLACE TRIGGER"))
+                    throw ctx.notImplemented("CREATE TRIGGER", "https://github.com/jOOQ/jOOQ/issues/6956");
+
+                break;
+
+            case 'P':
+                if (parseKeywordIf(ctx, "PACKAGE"))
+                    throw ctx.notImplemented("CREATE PACKAGE", "https://github.com/jOOQ/jOOQ/issues/9190");
+                else if (parseKeywordIf(ctx, "PROCEDURE"))
+                    throw ctx.notImplemented("CREATE PROCEDURE", "https://github.com/jOOQ/jOOQ/issues/9190");
+
+                break;
+
+            case 'R':
+                if (parseKeywordIf(ctx, "ROLE"))
+                    throw ctx.notImplemented("CREATE ROLE", "https://github.com/jOOQ/jOOQ/issues/10167");
+
+                break;
+
+            case 'S':
+                if (parseKeywordIf(ctx, "SCHEMA"))
+                    return parseCreateSchema(ctx);
+                else if (parseKeywordIf(ctx, "SEQUENCE"))
+                    return parseCreateSequence(ctx);
+                else if (parseKeywordIf(ctx, "SPATIAL INDEX") && ctx.requireUnsupportedSyntax())
+                    return parseCreateIndex(ctx, false);
+                else if (parseKeywordIf(ctx, "SYNONYM"))
+                    throw ctx.notImplemented("CREATE SYNONYM", "https://github.com/jOOQ/jOOQ/issues/9574");
+
+                break;
+
+            case 'T':
+                if (parseKeywordIf(ctx, "TABLE"))
+                    return parseCreateTable(ctx, false);
+                else if (parseKeywordIf(ctx, "TEMP TABLE"))
+                    return parseCreateTable(ctx, true);
+                else if (parseKeywordIf(ctx, "TEMPORARY TABLE"))
+                    return parseCreateTable(ctx, true);
+                else if (parseKeywordIf(ctx, "TYPE"))
+                    return parseCreateType(ctx);
+                else if (parseKeywordIf(ctx, "TABLESPACE"))
+                    throw ctx.notImplemented("CREATE TABLESPACE");
+                else if (parseKeywordIf(ctx, "TRIGGER"))
+                    throw ctx.notImplemented("CREATE TRIGGER", "https://github.com/jOOQ/jOOQ/issues/6956");
+
+                break;
+
+            case 'U':
+                if (parseKeywordIf(ctx, "UNIQUE INDEX"))
+                    return parseCreateIndex(ctx, true);
+                else if (parseKeywordIf(ctx, "USER"))
+                    throw ctx.notImplemented("CREATE USER", "https://github.com/jOOQ/jOOQ/issues/10167");
+
+                break;
+
+            case 'V':
+                if (parseKeywordIf(ctx, "VIEW"))
+                    return parseCreateView(ctx, false);
+
+                break;
+        }
+
+        throw ctx.expected(
+            "GENERATOR",
+            "GLOBAL TEMPORARY TABLE",
+            "INDEX",
+            "OR ALTER VIEW",
+            "OR REPLACE VIEW",
+            "SCHEMA",
+            "SEQUENCE",
+            "TABLE",
+            "TEMPORARY TABLE",
+            "TYPE",
+            "UNIQUE INDEX",
+            "VIEW"
+        );
     }
 
     private static final Query parseAlter(ParserContext ctx) {
@@ -2698,8 +2762,7 @@ final class ParserImpl implements Parser {
     }
 
     private static final Statement parseStatement(ParserContext ctx) {
-        switch (ctx.character()) {
-            case 'c':
+        switch (ctx.characterUpper()) {
             case 'C':
                 if (peekKeyword(ctx, "CONTINUE") && ctx.requireProEdition())
 
@@ -2709,7 +2772,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'd':
             case 'D':
                 if (peekKeyword(ctx, "DECLARE") && ctx.requireProEdition())
 
@@ -2719,7 +2781,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'e':
             case 'E':
                 if (peekKeyword(ctx, "EXIT") && ctx.requireProEdition())
 
@@ -2729,7 +2790,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'f':
             case 'F':
                 if (peekKeyword(ctx, "FOR") && ctx.requireProEdition())
 
@@ -2739,7 +2799,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'g':
             case 'G':
                 if (peekKeyword(ctx, "GOTO") && ctx.requireProEdition())
 
@@ -2749,7 +2808,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'i':
             case 'I':
                 if (peekKeyword(ctx, "IF") && ctx.requireProEdition())
 
@@ -2764,7 +2822,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'l':
             case 'L':
                 if (peekKeyword(ctx, "LEAVE") && ctx.requireProEdition())
 
@@ -2779,14 +2836,12 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'n':
             case 'N':
                 if (peekKeyword(ctx, "NULL"))
                     return parseNullStatement(ctx);
 
                 break;
 
-            case 'r':
             case 'R':
                 if (peekKeyword(ctx, "REPEAT") && ctx.requireProEdition())
 
@@ -2796,7 +2851,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 's':
             case 'S':
                 if (peekKeyword(ctx, "SET") && ctx.requireProEdition())
 
@@ -2806,7 +2860,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'w':
             case 'W':
                 if (peekKeyword(ctx, "WHILE") && ctx.requireProEdition())
 
@@ -4107,8 +4160,7 @@ final class ParserImpl implements Parser {
             ? ctx.dsl.alterTableIfExists(tableName)
             : ctx.dsl.alterTable(tableName);
 
-        switch (ctx.character()) {
-            case 'a':
+        switch (ctx.characterUpper()) {
             case 'A':
                 if (parseKeywordIf(ctx, "ADD"))
                     return parseAlterTableAdd(ctx, s1, tableName);
@@ -4120,7 +4172,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'c':
             case 'C':
 
                 // TODO: support all of the storageLoop from the CREATE TABLE statement
@@ -4131,7 +4182,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'd':
             case 'D':
                 if (parseKeywordIf(ctx, "DROP")) {
                     if (parseKeywordIf(ctx, "CONSTRAINT")) {
@@ -4188,7 +4238,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'm':
             case 'M':
                 if (parseKeywordIf(ctx, "MODIFY"))
                     if (parseKeywordIf(ctx, "CONSTRAINT"))
@@ -4198,14 +4247,12 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'o':
             case 'O':
                 if (parseKeywordIf(ctx, "OWNER TO") && parseUser(ctx) != null)
                     return IGNORE;
 
                 break;
 
-            case 'r':
             case 'R':
                 if (parseKeywordIf(ctx, "RENAME")) {
                     if (parseKeywordIf(ctx, "AS") || parseKeywordIf(ctx, "TO")) {
@@ -4442,8 +4489,7 @@ final class ParserImpl implements Parser {
     private static final DDLQuery parseRename(ParserContext ctx) {
         parseKeyword(ctx, "RENAME");
 
-        switch (ctx.character()) {
-            case 'c':
+        switch (ctx.characterUpper()) {
             case 'C':
                 if (parseKeywordIf(ctx, "COLUMN")) {
                     TableField<?, ?> oldName = parseFieldName(ctx);
@@ -4456,7 +4502,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'i':
             case 'I':
                 if (parseKeywordIf(ctx, "INDEX")) {
                     Name oldName = parseIndexName(ctx);
@@ -4469,7 +4514,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 's':
             case 'S':
                 if (parseKeywordIf(ctx, "SCHEMA")) {
                     Schema oldName = parseSchemaName(ctx);
@@ -4490,7 +4534,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'v':
             case 'V':
                 if (parseKeywordIf(ctx, "VIEW")) {
                     Table<?> oldName = parseTableName(ctx);
@@ -6132,7 +6175,7 @@ final class ParserImpl implements Parser {
         FieldOrRow field;
         Object value;
 
-        switch (ctx.character()) {
+        switch (ctx.characterUpper()) {
             case ':':
             case '?':
                 return parseBindVariable(ctx);
@@ -6154,7 +6197,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'a':
             case 'A':
                 if (N.is(type))
                     if (parseFunctionNameIf(ctx, "ABS"))
@@ -6176,7 +6218,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'b':
             case 'B':
                 if (N.is(type))
                     if ((field = parseFieldBitLengthIf(ctx)) != null)
@@ -6188,7 +6229,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'c':
             case 'C':
                 if (S.is(type))
                     if ((field = parseFieldConcatIf(ctx)) != null)
@@ -6256,7 +6296,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'd':
             case 'D':
                 if (D.is(type))
                     if ((field = parseFieldDateLiteralIf(ctx)) != null)
@@ -6293,7 +6332,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'e':
             case 'E':
 
                 // [#6704] PostgreSQL E'...' escaped string literals
@@ -6313,7 +6351,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'f':
             case 'F':
                 if (N.is(type))
                     if (parseFunctionNameIf(ctx, "FLOOR"))
@@ -6326,7 +6363,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'g':
             case 'G':
                 if (D.is(type))
                     if (parseKeywordIf(ctx, "GETDATE") && parse(ctx, '(') && parse(ctx, ')'))
@@ -6343,7 +6379,6 @@ final class ParserImpl implements Parser {
                 else
                     break;
 
-            case 'h':
             case 'H':
                 if (N.is(type))
                     if ((field = parseFieldHourIf(ctx)) != null)
@@ -6351,7 +6386,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'i':
             case 'I':
                 if (D.is(type))
                     if ((field = parseFieldIntervalLiteralIf(ctx)) != null)
@@ -6376,7 +6410,6 @@ final class ParserImpl implements Parser {
                 else
                     break;
 
-            case 'j':
             case 'J':
                 if (J.is(type))
                     if ((field = parseFieldJSONArrayConstructorIf(ctx)) != null)
@@ -6392,7 +6425,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'l':
             case 'L':
                 if (S.is(type))
                     if ((field = parseFieldLowerIf(ctx)) != null)
@@ -6425,7 +6457,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'm':
             case 'M':
                 if (N.is(type))
                     if ((field = parseFieldModIf(ctx)) != null)
@@ -6449,7 +6480,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'n':
             case 'N':
                 if ((field = parseFieldNvl2If(ctx)) != null)
                     return field;
@@ -6475,7 +6505,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'o':
             case 'O':
                 if (S.is(type))
                     if ((field = parseFieldReplaceIf(ctx)) != null)
@@ -6489,7 +6518,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'p':
             case 'P':
                 if (N.is(type))
                     if ((field = parseFieldPositionIf(ctx)) != null)
@@ -6506,7 +6534,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'q':
             case 'Q':
                 if (S.is(type))
                     if (ctx.characterNext() == '\'')
@@ -6516,7 +6543,6 @@ final class ParserImpl implements Parser {
                     if ((field = parseFieldQuarterIf(ctx)) != null)
                         return field;
 
-            case 'r':
             case 'R':
                 if (S.is(type))
                     if ((field = parseFieldReplaceIf(ctx)) != null)
@@ -6559,7 +6585,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 's':
             case 'S':
                 if (S.is(type))
                     if ((field = parseFieldSubstringIf(ctx)) != null)
@@ -6592,7 +6617,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 't':
             case 'T':
                 if (B.is(type))
                     if ((field = parseBooleanValueExpressionIf(ctx)) != null)
@@ -6638,7 +6662,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'u':
             case 'U':
                 if (S.is(type))
                     if ((field = parseFieldUpperIf(ctx)) != null)
@@ -6650,7 +6673,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'w':
             case 'W':
                 if (N.is(type))
                     if ((field = parseFieldWidthBucketIf(ctx)) != null)
@@ -6660,7 +6682,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'x':
             case 'X':
                 if (Y.is(type))
                     if ((value = parseBinaryLiteralIf(ctx)) != null)
@@ -6686,7 +6707,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'y':
             case 'Y':
                 if (N.is(type))
                     if ((field = parseFieldYearIf(ctx)) != null)
@@ -6714,14 +6734,12 @@ final class ParserImpl implements Parser {
             case '{':
                 parse(ctx, '{', false);
 
-                switch (ctx.character()) {
-                    case 'd':
+                switch (ctx.characterUpper()) {
                     case 'D':
                         parseKeyword(ctx, "D");
                         field = inline(parseDateLiteral(ctx));
                         break;
 
-                    case 'f':
                     case 'F':
                         parseKeyword(ctx, "FN");
 
@@ -6730,7 +6748,6 @@ final class ParserImpl implements Parser {
                         field = parseTerm(ctx, type);
                         break;
 
-                    case 't':
                     case 'T':
                         if (parseKeywordIf(ctx, "TS")) {
                             field = inline(parseTimestampLiteral(ctx));
@@ -7736,9 +7753,8 @@ final class ParserImpl implements Parser {
                 if (n == null)
                     break p;
 
-                switch (ctx.character()) {
+                switch (ctx.characterUpper()) {
                     case 'D':
-                    case 'd':
                         if (parseKeywordIf(ctx, "D") ||
                             parseKeywordIf(ctx, "DAY") ||
                             parseKeywordIf(ctx, "DAYS"))
@@ -7750,7 +7766,6 @@ final class ParserImpl implements Parser {
                         break;
 
                     case 'H':
-                    case 'h':
                         if (parseKeywordIf(ctx, "H") ||
                             parseKeywordIf(ctx, "HOUR") ||
                             parseKeywordIf(ctx, "HOURS"))
@@ -7762,7 +7777,6 @@ final class ParserImpl implements Parser {
                         break;
 
                     case 'M':
-                    case 'm':
                         if (parseKeywordIf(ctx, "M") ||
                             parseKeywordIf(ctx, "MIN") ||
                             parseKeywordIf(ctx, "MINS") ||
@@ -7785,7 +7799,6 @@ final class ParserImpl implements Parser {
                         break;
 
                     case 'S':
-                    case 's':
                         if (parseKeywordIf(ctx, "S") ||
                             parseKeywordIf(ctx, "SEC") ||
                             parseKeywordIf(ctx, "SECS") ||
@@ -7799,7 +7812,6 @@ final class ParserImpl implements Parser {
                         break;
 
                     case 'Y':
-                    case 'y':
                         if (parseKeywordIf(ctx, "Y") ||
                             parseKeywordIf(ctx, "YEAR") ||
                             parseKeywordIf(ctx, "YEARS"))
@@ -7979,17 +7991,15 @@ final class ParserImpl implements Parser {
     }
 
     private static final DatePart parseDatePart(ParserContext ctx) {
-        char character = ctx.character();
+        char character = ctx.characterUpper();
 
         switch (character) {
-            case 'c':
             case 'C':
                 if (parseKeywordIf(ctx, "CENTURY"))
                     return DatePart.CENTURY;
 
                 break;
 
-            case 'd':
             case 'D':
                 if (parseKeywordIf(ctx, "DAYOFYEAR") ||
                     parseKeywordIf(ctx, "DAY_OF_YEAR") ||
@@ -8009,14 +8019,12 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'e':
             case 'E':
                 if (parseKeywordIf(ctx, "EPOCH"))
                     return DatePart.EPOCH;
 
                 break;
 
-            case 'h':
             case 'H':
                 if (parseKeywordIf(ctx, "HOUR") ||
                     parseKeywordIf(ctx, "HH"))
@@ -8024,13 +8032,11 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'i':
             case 'I':
                 if (parseKeywordIf(ctx, "ISODOW") ||
                     parseKeywordIf(ctx, "ISO_DAY_OF_WEEK"))
                     return DatePart.ISO_DAY_OF_WEEK;
 
-            case 'm':
             case 'M':
                 if (parseKeywordIf(ctx, "MINUTE") ||
                     parseKeywordIf(ctx, "MI"))
@@ -8050,7 +8056,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'n':
             case 'N':
                 if (parseKeywordIf(ctx, "N"))
                     return DatePart.MINUTE;
@@ -8060,7 +8065,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'q':
             case 'Q':
                 if (parseKeywordIf(ctx, "QUARTER") ||
                     parseKeywordIf(ctx, "QQ") ||
@@ -8069,7 +8073,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 's':
             case 'S':
                 if (parseKeywordIf(ctx, "SECOND") ||
                     parseKeywordIf(ctx, "SS") ||
@@ -8078,7 +8081,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 't':
             case 'T':
                 if (parseKeywordIf(ctx, "TIMEZONE"))
                     return DatePart.TIMEZONE;
@@ -8089,7 +8091,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'w':
             case 'W':
                 if (parseKeywordIf(ctx, "WEEK") ||
                     parseKeywordIf(ctx, "WK") ||
@@ -8101,7 +8102,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'y':
             case 'Y':
                 if (parseKeywordIf(ctx, "YEAR") ||
                     parseKeywordIf(ctx, "YYYY") ||
@@ -8117,10 +8117,9 @@ final class ParserImpl implements Parser {
     }
 
     private static final DatePart parseIntervalDatePart(ParserContext ctx) {
-        char character = ctx.character();
+        char character = ctx.characterUpper();
 
         switch (character) {
-            case 'd':
             case 'D':
                 if (parseKeywordIf(ctx, "DAY") ||
                     parseKeywordIf(ctx, "DAYS"))
@@ -8128,7 +8127,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'h':
             case 'H':
                 if (parseKeywordIf(ctx, "HOUR") ||
                     parseKeywordIf(ctx, "HOURS"))
@@ -8136,7 +8134,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'm':
             case 'M':
                 if (parseKeywordIf(ctx, "MINUTE") ||
                     parseKeywordIf(ctx, "MINUTES"))
@@ -8153,7 +8150,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'n':
             case 'N':
                 if (parseKeywordIf(ctx, "NANOSECOND") ||
                     parseKeywordIf(ctx, "NANOSECONDS"))
@@ -8161,7 +8157,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'q':
             case 'Q':
                 if (parseKeywordIf(ctx, "QUARTER") ||
                     parseKeywordIf(ctx, "QUARTERS"))
@@ -8169,7 +8164,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 's':
             case 'S':
                 if (parseKeywordIf(ctx, "SECOND") ||
                     parseKeywordIf(ctx, "SECONDS"))
@@ -8177,7 +8171,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'w':
             case 'W':
                 if (parseKeywordIf(ctx, "WEEK") ||
                     parseKeywordIf(ctx, "WEEKS"))
@@ -8185,7 +8178,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'y':
             case 'Y':
                 if (parseKeywordIf(ctx, "YEAR") ||
                     parseKeywordIf(ctx, "YEARS"))
@@ -10147,17 +10139,15 @@ final class ParserImpl implements Parser {
     }
 
     private static final DataType<?> parseCastDataType(ParserContext ctx) {
-        char character = ctx.character();
+        char character = ctx.characterUpper();
 
         switch (character) {
-            case 's':
             case 'S':
                 if (parseKeywordIf(ctx, "SIGNED") && (parseKeywordIf(ctx, "INTEGER") || true))
                     return SQLDataType.BIGINT;
 
                 break;
 
-            case 'u':
             case 'U':
                 if (parseKeywordIf(ctx, "UNSIGNED") && (parseKeywordIf(ctx, "INTEGER") || true))
                     return SQLDataType.BIGINTUNSIGNED;
@@ -10189,20 +10179,18 @@ final class ParserImpl implements Parser {
     }
 
     private static final DataType<?> parseDataTypePrefix(ParserContext ctx) {
-        char character = ctx.character();
+        char character = ctx.characterUpper();
 
         if (character == '[' || character == '"' || character == '`')
-            character = ctx.characterNext();
+            character = ctx.characterNextUpper();
 
         switch (character) {
-            case 'a':
             case 'A':
                 if (parseKeywordOrIdentifierIf(ctx, "ARRAY"))
                     return SQLDataType.OTHER.getArrayDataType();
 
                 break;
 
-            case 'b':
             case 'B':
                 if (parseKeywordOrIdentifierIf(ctx, "BIGINT"))
                     return parseUnsigned(ctx, parseAndIgnoreDataTypeLength(ctx, SQLDataType.BIGINT));
@@ -10222,7 +10210,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'c':
             case 'C':
                 if (parseKeywordOrIdentifierIf(ctx, "CHARACTER VARYING"))
                     return parseDataTypeCollation(ctx, parseDataTypeLength(ctx, SQLDataType.VARCHAR));
@@ -10234,7 +10221,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'd':
             case 'D':
                 if (parseKeywordOrIdentifierIf(ctx, "DATE"))
                     return SQLDataType.DATE;
@@ -10248,21 +10234,18 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'e':
             case 'E':
                 if (parseKeywordOrIdentifierIf(ctx, "ENUM"))
                     return parseDataTypeCollation(ctx, parseDataTypeEnum(ctx));
 
                 break;
 
-            case 'f':
             case 'F':
                 if (parseKeywordOrIdentifierIf(ctx, "FLOAT"))
                     return parseAndIgnoreDataTypePrecisionScale(ctx, SQLDataType.FLOAT);
 
                 break;
 
-            case 'i':
             case 'I':
                 if (parseKeywordOrIdentifierIf(ctx, "INTEGER") ||
                     parseKeywordOrIdentifierIf(ctx, "INT") ||
@@ -10275,7 +10258,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'l':
             case 'L':
                 if (parseKeywordOrIdentifierIf(ctx, "LONGBLOB"))
                     return SQLDataType.BLOB;
@@ -10290,7 +10272,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'm':
             case 'M':
                 if (parseKeywordOrIdentifierIf(ctx, "MEDIUMBLOB"))
                     return SQLDataType.BLOB;
@@ -10301,7 +10282,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'n':
             case 'N':
                 if (parseKeywordOrIdentifierIf(ctx, "NCHAR"))
                     return parseDataTypeCollation(ctx, parseDataTypeLength(ctx, SQLDataType.NCHAR));
@@ -10316,21 +10296,18 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'o':
             case 'O':
                 if (parseKeywordOrIdentifierIf(ctx, "OTHER"))
                     return SQLDataType.OTHER;
 
                 break;
 
-            case 'r':
             case 'R':
                 if (parseKeywordOrIdentifierIf(ctx, "REAL"))
                     return parseAndIgnoreDataTypePrecisionScale(ctx, SQLDataType.REAL);
 
                 break;
 
-            case 's':
             case 'S':
                 if (parseKeywordOrIdentifierIf(ctx, "SERIAL4") ||
                     parseKeywordOrIdentifierIf(ctx, "SERIAL"))
@@ -10347,7 +10324,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 't':
             case 'T':
                 if (parseKeywordOrIdentifierIf(ctx, "TEXT"))
                     return parseDataTypeCollation(ctx, parseAndIgnoreDataTypeLength(ctx, SQLDataType.CLOB));
@@ -10390,7 +10366,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'u':
             case 'U':
                 if (parseKeywordOrIdentifierIf(ctx, "UUID"))
                     return SQLDataType.UUID;
@@ -10399,7 +10374,6 @@ final class ParserImpl implements Parser {
 
                 break;
 
-            case 'v':
             case 'V':
                 if (parseKeywordOrIdentifierIf(ctx, "VARCHAR") ||
                     parseKeywordOrIdentifierIf(ctx, "VARCHAR2"))
@@ -11957,7 +11931,11 @@ final class ParserContext {
     }
 
     ParserException notImplemented(String feature) {
-        return init(new ParserException(mark(), feature + " not yet implemented"));
+        return notImplemented(feature, "https://github.com/jOOQ/jOOQ/issues/10171");
+    }
+
+    ParserException notImplemented(String feature, String link) {
+        return init(new ParserException(mark(), feature + " not yet implemented. If you're interested in this feature, please comment on " + link));
     }
 
     ParserException unsupportedClause() {
@@ -12006,12 +11984,24 @@ final class ParserContext {
         return new int[] { line, column };
     }
 
+    char characterUpper() {
+        return Character.toUpperCase(character());
+    }
+
     char character() {
         return character(position);
     }
 
+    char characterUpper(int pos) {
+        return Character.toUpperCase(character(pos));
+    }
+
     char character(int pos) {
         return pos >= 0 && pos < sql.length ? sql[pos] : ' ';
+    }
+
+    char characterNextUpper() {
+        return Character.toUpperCase(characterNext());
     }
 
     char characterNext() {

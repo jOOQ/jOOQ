@@ -3718,7 +3718,7 @@ final class ParserImpl implements Parser {
                     nullable = true;
                     continue;
                 }
-                else if (parseKeywordIf(ctx, "NOT NULL") && (parseKeywordIf(ctx, "ENABLE") || true)) {
+                else if (parseNotNullOptionalEnable(ctx)) {
                     type = type.nullable(false);
                     nullable = true;
                     continue;
@@ -3858,8 +3858,21 @@ final class ParserImpl implements Parser {
                 continue;
             }
 
+            if (!nullable) {
+                if (parseKeywordIf(ctx, "NULL")) {
+                    type = type.nullable(true);
+                    nullable = true;
+                    continue;
+                }
+                else if (parseNotNullOptionalEnable(ctx)) {
+                    type = type.nullable(false);
+                    nullable = true;
+                    continue;
+                }
+            }
+
             if (inlineConstraint != null)
-                throw ctx.expected("CHECK", "PRIMARY KEY", "REFERENCES", "UNIQUE");
+                throw ctx.expected("CHECK", "NOT NULL", "NULL", "PRIMARY KEY", "REFERENCES", "UNIQUE");
 
             if (!identity) {
                 if (parseKeywordIf(ctx, "AUTO_INCREMENT") ||
@@ -4351,11 +4364,18 @@ final class ParserImpl implements Parser {
         TableField<?, ?> field = parseFieldName(ctx);
 
         if (!paren)
-            if (parseKeywordIf(ctx, "DROP NOT NULL") || parseKeywordIf(ctx, "SET NULL") || parseKeywordIf(ctx, "NULL"))
+            if (parseKeywordIf(ctx, "CONSTRAINT") && parseIdentifier(ctx) != null)
+                if (parseKeywordIf(ctx, "NULL"))
+                    return s1.alter(field).dropNotNull();
+                else if (parseNotNullOptionalEnable(ctx))
+                    return s1.alter(field).setNotNull();
+                else
+                    throw ctx.expected("NOT NULL", "NULL");
+            else if (parseKeywordIf(ctx, "DROP NOT NULL") || parseKeywordIf(ctx, "SET NULL") || parseKeywordIf(ctx, "NULL"))
                 return s1.alter(field).dropNotNull();
             else if (parseKeywordIf(ctx, "DROP DEFAULT"))
                 return s1.alter(field).dropDefault();
-            else if (parseKeywordIf(ctx, "SET NOT NULL") || parseKeywordIf(ctx, "NOT NULL"))
+            else if (parseKeywordIf(ctx, "SET NOT NULL") || parseNotNullOptionalEnable(ctx))
                 return s1.alter(field).setNotNull();
             else if (parseKeywordIf(ctx, "SET DEFAULT"))
                 return s1.alter(field).default_((Field) toField(ctx, parseConcat(ctx, null)));
@@ -4368,13 +4388,17 @@ final class ParserImpl implements Parser {
 
         if (parseKeywordIf(ctx, "NULL"))
             type = type.nullable(true);
-        else if (parseKeywordIf(ctx, "NOT NULL") && (parseKeywordIf(ctx, "ENABLE") || true))
+        else if (parseNotNullOptionalEnable(ctx))
             type = type.nullable(false);
 
         if (paren)
             parse(ctx, ')');
 
         return s1.alter(field).set(type);
+    }
+
+    private static final boolean parseNotNullOptionalEnable(ParserContext ctx) {
+        return parseKeywordIf(ctx, "NOT NULL") && (parseKeywordIf(ctx, "ENABLE") || true);
     }
 
     private static final DDLQuery parseAlterTableAlterConstraint(ParserContext ctx, AlterTableStep s1) {

@@ -151,6 +151,7 @@ import static org.jooq.impl.DSL.hour;
 import static org.jooq.impl.DSL.ifnull;
 import static org.jooq.impl.DSL.iif;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.insert;
 import static org.jooq.impl.DSL.isnull;
 import static org.jooq.impl.DSL.isoDayOfWeek;
 import static org.jooq.impl.DSL.jsonEntry;
@@ -5669,10 +5670,8 @@ final class ParserImpl implements Parser {
         List<SelectFieldOrAsterisk> result = new ArrayList<>();
 
         do {
-            if (peekKeyword(ctx, KEYWORDS_IN_SELECT))
-                throw ctx.exception("Select keywords must be quoted");
-
             QualifiedAsterisk qa;
+
             if (parseIf(ctx, '*')) {
                 if (parseKeywordIf(ctx, "EXCEPT")) {
                     parse(ctx, '(');
@@ -6358,6 +6357,10 @@ final class ParserImpl implements Parser {
 
                 if (N.is(type))
                     if ((field = parseFieldInstrIf(ctx)) != null)
+                        return field;
+
+                if (S.is(type))
+                    if ((field = parseFieldInsertIf(ctx)) != null)
                         return field;
 
                 if ((field = parseFieldIfnullIf(ctx)) != null)
@@ -8269,6 +8272,24 @@ final class ParserImpl implements Parser {
             return f3 == null
                 ? rpad(f1, f2)
                 : rpad(f1, f2, f3);
+        }
+
+        return null;
+    }
+
+    private static final Field<?> parseFieldInsertIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "INSERT")) {
+            parse(ctx, '(');
+            Field<String> f1 = (Field) parseField(ctx, S);
+            parse(ctx, ',');
+            Field<Number> f2 = (Field) parseField(ctx, N);
+            parse(ctx, ',');
+            Field<Number> f3 = (Field) parseField(ctx, N);
+            parse(ctx, ',');
+            Field<String> f4 = (Field) parseField(ctx, S);
+            parse(ctx, ')');
+
+            return insert(f1, f2, f3, f4);
         }
 
         return null;

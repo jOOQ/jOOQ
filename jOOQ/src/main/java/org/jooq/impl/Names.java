@@ -113,6 +113,7 @@ final class Names {
     static final Name N_IF                     = unquotedName("if");
     static final Name N_IFNULL                 = unquotedName("ifnull");
     static final Name N_IIF                    = unquotedName("iif");
+    static final Name N_INSERT                 = unquotedName("insert");
     static final Name N_INSTR                  = unquotedName("instr");
     static final Name N_JOIN                   = unquotedName("join");
     static final Name N_JSON_AGG               = unquotedName("json_agg");

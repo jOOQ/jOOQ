@@ -14307,6 +14307,22 @@ public class DSL {
     }
 
     /**
+     * Get the insert(in, startIndex, length, placing) function.
+     */
+    @Support
+    public static Field<String> insert(Field<String> in, Number startIndex, Number length, String placing) {
+        return insert(nullSafe(in), Tools.field(startIndex), Tools.field(length), Tools.field(placing));
+    }
+
+    /**
+     * Get the insert(in, startIndex, length, placing) function.
+     */
+    @Support
+    public static Field<String> insert(Field<String> in, Field<? extends Number> startIndex, Field<? extends Number> length, Field<String> placing) {
+        return overlay(in, placing, startIndex, length);
+    }
+
+    /**
      * Get the ascii(field) function.
      *
      * @see #ascii(Field)

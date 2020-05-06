@@ -62,6 +62,7 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.Keywords.K_FOR;
 import static org.jooq.impl.Keywords.K_FROM;
 import static org.jooq.impl.Keywords.K_PLACING;
+import static org.jooq.impl.Names.N_INSERT;
 import static org.jooq.impl.Names.N_OVERLAY;
 
 import java.util.Set;
@@ -77,6 +78,7 @@ final class Overlay extends AbstractField<String> {
 
     private static final long             serialVersionUID = 3544690069533526544L;
     private static final Set<SQLDialect>  NO_SUPPORT       = SQLDialect.supportedBy(DERBY, H2, HSQLDB, MARIADB, MYSQL, SQLITE);
+    private static final Set<SQLDialect>  SUPPORT_INSERT   = SQLDialect.supportedBy(MARIADB, MYSQL);
 
     private final Field<String>           in;
     private final Field<String>           placing;
@@ -107,7 +109,10 @@ final class Overlay extends AbstractField<String> {
 
 
         if (l != null) {
-            if (NO_SUPPORT.contains(ctx.family())) {
+            if (SUPPORT_INSERT.contains(ctx.dialect())) {
+                ctx.visit(N_INSERT).sql('(').visit(in).sql(", ").visit(startIndex).sql(", ").visit(l).sql(", ").visit(placing).sql(')');
+            }
+            else if (NO_SUPPORT.contains(ctx.dialect())) {
                 ctx.visit(
                     DSL.substring(in, inline(1), startIndex.minus(inline(1)))
                        .concat(placing)
@@ -122,7 +127,10 @@ final class Overlay extends AbstractField<String> {
             }
         }
         else {
-            if (NO_SUPPORT.contains(ctx.family())) {
+            if (SUPPORT_INSERT.contains(ctx.dialect())) {
+                ctx.visit(N_INSERT).sql('(').visit(in).sql(", ").visit(startIndex).sql(", ").visit(DSL.length(placing)).sql(", ").visit(placing).sql(')');
+            }
+            else if (NO_SUPPORT.contains(ctx.dialect())) {
                 ctx.visit(
                     DSL.substring(in, inline(1), startIndex.minus(inline(1)))
                        .concat(placing)

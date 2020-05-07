@@ -838,7 +838,6 @@ public class DefaultDataType<T> implements DataType<T> {
         return asConvertedDataType(DefaultBinding.newBinding(converter, this, null));
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public /* non-final */ <U> DataType<U> asConvertedDataType(Binding<? super T, U> newBinding) {
         if (binding == newBinding)

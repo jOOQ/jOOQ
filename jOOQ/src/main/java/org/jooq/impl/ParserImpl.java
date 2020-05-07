@@ -901,6 +901,12 @@ final class ParserImpl implements Parser {
                         return parseCreate(ctx.metaLookupsForceIgnore(true));
                     else if (!parseResultQuery && peekKeyword(ctx, "COMMENT ON"))
                         return parseCommentOn(ctx.metaLookupsForceIgnore(true));
+                    else if (parseKeywordIf(ctx, "CALL"))
+                        throw ctx.notImplemented("CALL");
+                    else if (parseKeywordIf(ctx, "COMMIT"))
+                        throw ctx.notImplemented("COMMIT");
+                    else if (parseKeywordIf(ctx, "CONNECT"))
+                        throw ctx.notImplemented("CONNECT");
 
                     break;
 
@@ -936,6 +942,12 @@ final class ParserImpl implements Parser {
 
                     break;
 
+                case 'L':
+                    if (parseKeywordIf(ctx, "LOAD"))
+                        throw ctx.notImplemented("LOAD");
+
+                    break;
+
                 case 'M':
                     if (!parseResultQuery && peekKeyword(ctx, "MERGE"))
                         return parseMerge(ctx, null);
@@ -947,6 +959,10 @@ final class ParserImpl implements Parser {
                         return parseRename(ctx.metaLookupsForceIgnore(true));
                     else if (!parseResultQuery && peekKeyword(ctx, "REVOKE"))
                         return parseRevoke(ctx.metaLookupsForceIgnore(true));
+                    else if (parseKeywordIf(ctx, "REPLACE"))
+                        throw ctx.notImplemented("REPLACE");
+                    else if (parseKeywordIf(ctx, "ROLLBACK"))
+                        throw ctx.notImplemented("ROLLBACK");
 
                     break;
 
@@ -955,6 +971,8 @@ final class ParserImpl implements Parser {
                         return parseSelect(ctx);
                     else if (!parseResultQuery && peekKeyword(ctx, "SET"))
                         return parseSet(ctx);
+                    else if (parseKeywordIf(ctx, "SAVEPOINT"))
+                        throw ctx.notImplemented("SAVEPOINT");
 
                     break;
 
@@ -969,6 +987,8 @@ final class ParserImpl implements Parser {
                         return parseUpdate(ctx, null);
                     else if (!parseResultQuery && peekKeyword(ctx, "USE"))
                         return parseUse(ctx);
+                    else if (parseKeywordIf(ctx, "UPSERT"))
+                        throw ctx.notImplemented("UPSERT");
 
                     break;
 
@@ -2453,51 +2473,171 @@ final class ParserImpl implements Parser {
     private static final Query parseAlter(ParserContext ctx) {
         parseKeyword(ctx, "ALTER");
 
-        if (parseKeywordIf(ctx, "DATABASE"))
-            return parseAlterDatabase(ctx);
-        else if (parseKeywordIf(ctx, "DOMAIN"))
-            return parseAlterDomain(ctx);
-        else if (parseKeywordIf(ctx, "INDEX"))
-            return parseAlterIndex(ctx);
-        else if (parseKeywordIf(ctx, "SCHEMA"))
-            return parseAlterSchema(ctx);
-        else if (parseKeywordIf(ctx, "SEQUENCE"))
-            return parseAlterSequence(ctx);
-        else if (parseKeywordIf(ctx, "SESSION"))
-            return parseAlterSession(ctx);
-        else if (parseKeywordIf(ctx, "TABLE"))
-            return parseAlterTable(ctx);
-        else if (parseKeywordIf(ctx, "TYPE"))
-            return parseAlterType(ctx);
-        else if (parseKeywordIf(ctx, "VIEW"))
-            return parseAlterView(ctx);
-        else
-            throw ctx.expected("DOMAIN", "INDEX", "SCHEMA", "SEQUENCE", "SESSION", "TABLE", "TYPE", "VIEW");
+        switch (ctx.characterUpper()) {
+            case 'D':
+                if (parseKeywordIf(ctx, "DATABASE"))
+                    return parseAlterDatabase(ctx);
+                else if (parseKeywordIf(ctx, "DOMAIN"))
+                    return parseAlterDomain(ctx);
+
+                break;
+
+            case 'E':
+                if (parseKeywordIf(ctx, "EXTENSION"))
+                    throw ctx.notImplemented("ALTER EXTENSION");
+
+                break;
+
+            case 'F':
+                if (parseKeywordIf(ctx, "FUNCTION"))
+                    throw ctx.notImplemented("ALTER FUNCTION", "https://github.com/jOOQ/jOOQ/issues/9190");
+
+                break;
+
+            case 'I':
+                if (parseKeywordIf(ctx, "INDEX"))
+                    return parseAlterIndex(ctx);
+
+                break;
+
+            case 'P':
+                if (parseKeywordIf(ctx, "PACKAGE"))
+                    throw ctx.notImplemented("ALTER PACKAGE", "https://github.com/jOOQ/jOOQ/issues/9190");
+                else if (parseKeywordIf(ctx, "PROCEDURE"))
+                    throw ctx.notImplemented("ALTER PROCEDURE", "https://github.com/jOOQ/jOOQ/issues/9190");
+
+                break;
+
+            case 'R':
+                if (parseKeywordIf(ctx, "ROLE"))
+                    throw ctx.notImplemented("ALTER ROLE", "https://github.com/jOOQ/jOOQ/issues/10167");
+
+                break;
+
+            case 'S':
+                if (parseKeywordIf(ctx, "SCHEMA"))
+                    return parseAlterSchema(ctx);
+                else if (parseKeywordIf(ctx, "SEQUENCE"))
+                    return parseAlterSequence(ctx);
+                else if (parseKeywordIf(ctx, "SESSION"))
+                    return parseAlterSession(ctx);
+                else if (parseKeywordIf(ctx, "SYNONYM"))
+                    throw ctx.notImplemented("ALTER SYNONYM", "https://github.com/jOOQ/jOOQ/issues/9574");
+
+                break;
+
+            case 'T':
+                if (parseKeywordIf(ctx, "TABLE"))
+                    return parseAlterTable(ctx);
+                else if (parseKeywordIf(ctx, "TYPE"))
+                    return parseAlterType(ctx);
+                else if (parseKeywordIf(ctx, "TABLESPACE"))
+                    throw ctx.notImplemented("ALTER TABLESPACE");
+                else if (parseKeywordIf(ctx, "TRIGGER"))
+                    throw ctx.notImplemented("ALTER TRIGGER", "https://github.com/jOOQ/jOOQ/issues/6956");
+
+                break;
+
+            case 'U':
+                if (parseKeywordIf(ctx, "USER"))
+                    throw ctx.notImplemented("ALTER USER", "https://github.com/jOOQ/jOOQ/issues/10167");
+
+                break;
+
+            case 'V':
+                if (parseKeywordIf(ctx, "VIEW"))
+                    return parseAlterView(ctx);
+
+                break;
+        }
+
+        throw ctx.expected("DOMAIN", "INDEX", "SCHEMA", "SEQUENCE", "SESSION", "TABLE", "TYPE", "VIEW");
     }
 
     private static final DDLQuery parseDrop(ParserContext ctx) {
         parseKeyword(ctx, "DROP");
 
-        if (parseKeywordIf(ctx, "TABLE"))
-            return parseDropTable(ctx, false);
-        else if (parseKeywordIf(ctx, "TEMPORARY TABLE"))
-            return parseDropTable(ctx, true);
-        else if (parseKeywordIf(ctx, "TYPE"))
-            return parseDropType(ctx);
-        else if (parseKeywordIf(ctx, "INDEX"))
-            return parseDropIndex(ctx);
-        else if (parseKeywordIf(ctx, "VIEW"))
-            return parseDropView(ctx);
-        else if (parseKeywordIf(ctx, "GENERATOR"))
-            return parseDropSequence(ctx);
-        else if (parseKeywordIf(ctx, "SEQUENCE"))
-            return parseDropSequence(ctx);
-        else if (parseKeywordIf(ctx, "SCHEMA"))
-            return parseDropSchema(ctx);
-        else if (parseKeywordIf(ctx, "EXTENSION"))
-            return parseDropExtension(ctx);
-        else
-            throw ctx.expected("GENERATOR", "INDEX", "SCHEMA", "SEQUENCE", "TABLE", "TEMPORARY TABLE", "TYPE", "VIEW");
+        switch (ctx.characterUpper()) {
+            case 'D':
+                if (parseKeywordIf(ctx, "DATABASE"))
+                    throw ctx.notImplemented("DROP DATABASE", "https://github.com/jOOQ/jOOQ/issues/3272");
+
+                break;
+
+            case 'E':
+                if (parseKeywordIf(ctx, "EXTENSION"))
+                    return parseDropExtension(ctx);
+
+                break;
+
+            case 'F':
+                if (parseKeywordIf(ctx, "FUNCTION"))
+                    throw ctx.notImplemented("DROP FUNCTION", "https://github.com/jOOQ/jOOQ/issues/9190");
+
+                break;
+
+            case 'G':
+                if (parseKeywordIf(ctx, "GENERATOR"))
+                    return parseDropSequence(ctx);
+
+                break;
+
+            case 'I':
+                if (parseKeywordIf(ctx, "INDEX"))
+                    return parseDropIndex(ctx);
+
+                break;
+
+            case 'P':
+                if (parseKeywordIf(ctx, "PACKAGE"))
+                    throw ctx.notImplemented("DROP PACKAGE", "https://github.com/jOOQ/jOOQ/issues/9190");
+                else if (parseKeywordIf(ctx, "PROCEDURE"))
+                    throw ctx.notImplemented("DROP PROCEDURE", "https://github.com/jOOQ/jOOQ/issues/9190");
+
+                break;
+
+            case 'R':
+                if (parseKeywordIf(ctx, "ROLE"))
+                    throw ctx.notImplemented("DROP ROLE", "https://github.com/jOOQ/jOOQ/issues/10167");
+
+                break;
+
+            case 'S':
+                if (parseKeywordIf(ctx, "SEQUENCE"))
+                    return parseDropSequence(ctx);
+                else if (parseKeywordIf(ctx, "SCHEMA"))
+                    return parseDropSchema(ctx);
+
+                break;
+
+            case 'T':
+                if (parseKeywordIf(ctx, "TABLE"))
+                    return parseDropTable(ctx, false);
+                else if (parseKeywordIf(ctx, "TEMPORARY TABLE"))
+                    return parseDropTable(ctx, true);
+                else if (parseKeywordIf(ctx, "TYPE"))
+                    return parseDropType(ctx);
+                else if (parseKeywordIf(ctx, "TABLESPACE"))
+                    throw ctx.notImplemented("DROP TABLESPACE");
+                else if (parseKeywordIf(ctx, "TRIGGER"))
+                    throw ctx.notImplemented("DROP TRIGGER", "https://github.com/jOOQ/jOOQ/issues/6956");
+
+                break;
+
+            case 'U':
+                if (parseKeywordIf(ctx, "USER"))
+                    throw ctx.notImplemented("DROP USER", "https://github.com/jOOQ/jOOQ/issues/10167");
+
+                break;
+
+            case 'V':
+                if (parseKeywordIf(ctx, "VIEW"))
+                    return parseDropView(ctx);
+
+                break;
+        }
+
+        throw ctx.expected("GENERATOR", "INDEX", "SCHEMA", "SEQUENCE", "TABLE", "TEMPORARY TABLE", "TYPE", "VIEW");
     }
 
     private static final Truncate<?> parseTruncate(ParserContext ctx) {
@@ -2887,6 +3027,13 @@ final class ParserImpl implements Parser {
         parseKeyword(ctx, "NULL");
         return new NullStatement();
     }
+
+
+
+
+
+
+
 
 
 

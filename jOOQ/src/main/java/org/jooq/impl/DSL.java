@@ -464,7 +464,7 @@ import org.jooq.types.UShort;
  * @see DSLContext
  * @author Lukas Eder
  */
-@SuppressWarnings({ "unchecked", "rawtypes" })
+@SuppressWarnings({ "unchecked", "rawtypes", "deprecation" })
 public class DSL {
 
     // -------------------------------------------------------------------------

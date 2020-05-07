@@ -4236,17 +4236,26 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
 
     @Override
     public final Condition compare(Comparator comparator, R record) {
-        return null;
+        if (getSelect().size() == 1)
+            return DSL.field((Select) this).compare(comparator, record.get(0, field(0).getType()));
+        else
+            throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override
     public final Condition compare(Comparator comparator, Select<? extends R> select) {
-        return null;
+        if (getSelect().size() == 1)
+            return DSL.field((Select) this).compare(comparator, select);
+        else
+            throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override
     public final Condition compare(Comparator comparator, QuantifiedSelect<? extends R> select) {
-        return null;
+        if (getSelect().size() == 1)
+            return DSL.field((Select) this).compare(comparator, select);
+        else
+            throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override
@@ -4429,24 +4438,46 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
         return compare(Comparator.GREATER_OR_EQUAL, select);
     }
 
+    private final Object[] values(int index, R... records) {
+        Object[] array = new Object[records.length];
+        Class<?> type = field(0).getType();
+
+        for (int i = 0; i < records.length; i++)
+            array[i] = records[i].get(index, type);
+
+        return array;
+    }
+
     @Override
     public final Condition in(R... records) {
-        return null;
+        if (getSelect().size() == 1)
+            return DSL.field((Select) this).in(values(0, records));
+        else
+            throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override
     public final Condition in(Select<? extends R> select) {
-        return null;
+        if (getSelect().size() == 1)
+            return DSL.field((Select) this).in(select);
+        else
+            throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override
     public final Condition notIn(R... records) {
-        return null;
+        if (getSelect().size() == 1)
+            return DSL.field((Select) this).notIn(values(0, records));
+        else
+            throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override
     public final Condition notIn(Select<? extends R> select) {
-        return null;
+        if (getSelect().size() == 1)
+            return DSL.field((Select) this).notIn(select);
+        else
+            throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override

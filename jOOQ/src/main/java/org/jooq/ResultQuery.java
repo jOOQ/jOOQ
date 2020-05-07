@@ -908,7 +908,9 @@ extends
      * This is the same as calling {@link #fetchSingle()} and then
      * {@link Record#get(Field)}
      *
-     * @return The resulting value. This is never <code>null</code>.
+     * @return The resulting value. Unlike other {@link #fetchSingle()} methods,
+     *         which never produce <code>null</code> records, this can be null
+     *         if the resulting value in the record is <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
@@ -916,8 +918,8 @@ extends
     <T> T fetchSingle(Field<T> field) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
-     * Execute the query and return exactly one resulting value for a
-     * field from the generated result.
+     * Execute the query and return exactly one resulting value for a field from
+     * the generated result.
      * <p>
      * This is the same as calling {@link #fetchSingle()} and then
      * {@link Record#get(Field, Class)}
@@ -926,7 +928,9 @@ extends
      * {@link Configuration#converterProvider()} will be used to convert the
      * value to <code>U</code>
      *
-     * @return The resulting value. This is never <code>null</code>.
+     * @return The resulting value. Unlike other {@link #fetchSingle()} methods,
+     *         which never produce <code>null</code> records, this can be null
+     *         if the resulting value in the record is <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
@@ -934,13 +938,15 @@ extends
     <U> U fetchSingle(Field<?> field, Class<? extends U> type) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
-     * Execute the query and return exactly one resulting value for a
-     * field from the generated result.
+     * Execute the query and return exactly one resulting value for a field from
+     * the generated result.
      * <p>
      * This is the same as calling {@link #fetchSingle()} and then
      * {@link Record#get(Field, Converter)}
      *
-     * @return The resulting value. This is never <code>null</code>.
+     * @return The resulting value. Unlike other {@link #fetchSingle()} methods,
+     *         which never produce <code>null</code> records, this can be null
+     *         if the resulting value in the record is <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
@@ -948,13 +954,15 @@ extends
     <T, U> U fetchSingle(Field<T> field, Converter<? super T, ? extends U> converter) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
-     * Execute the query and return exactly one resulting value for a
-     * field index from the generated result.
+     * Execute the query and return exactly one resulting value for a field
+     * index from the generated result.
      * <p>
      * This is the same as calling {@link #fetchSingle()} and then
      * {@link Record#get(int)}
      *
-     * @return The resulting value. This is never <code>null</code>.
+     * @return The resulting value. Unlike other {@link #fetchSingle()} methods,
+     *         which never produce <code>null</code> records, this can be null
+     *         if the resulting value in the record is <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
@@ -962,8 +970,8 @@ extends
     Object fetchSingle(int fieldIndex) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
-     * Execute the query and return exactly one resulting value for a
-     * field index from the generated result.
+     * Execute the query and return exactly one resulting value for a field
+     * index from the generated result.
      * <p>
      * This is the same as calling {@link #fetchSingle()} and then
      * {@link Record#get(int, Class)}
@@ -972,7 +980,9 @@ extends
      * {@link Configuration#converterProvider()} will be used to convert the
      * value to <code>U</code>
      *
-     * @return The resulting value. This is never <code>null</code>.
+     * @return The resulting value. Unlike other {@link #fetchSingle()} methods,
+     *         which never produce <code>null</code> records, this can be null
+     *         if the resulting value in the record is <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
@@ -980,13 +990,15 @@ extends
     <U> U fetchSingle(int fieldIndex, Class<? extends U> type) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
-     * Execute the query and return exactly one resulting value for a
-     * field index from the generated result.
+     * Execute the query and return exactly one resulting value for a field
+     * index from the generated result.
      * <p>
      * This is the same as calling {@link #fetchSingle()} and then
      * {@link Record#get(int, Converter)}
      *
-     * @return The resulting value. This is never <code>null</code>.
+     * @return The resulting value. Unlike other {@link #fetchSingle()} methods,
+     *         which never produce <code>null</code> records, this can be null
+     *         if the resulting value in the record is <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
@@ -994,13 +1006,15 @@ extends
     <U> U fetchSingle(int fieldIndex, Converter<?, ? extends U> converter) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
-     * Execute the query and return exactly one resulting value for a
-     * field name from the generated result.
+     * Execute the query and return exactly one resulting value for a field name
+     * from the generated result.
      * <p>
      * This is the same as calling {@link #fetchSingle()} and then
      * {@link Record#get(String)}
      *
-     * @return The resulting value. This is never <code>null</code>.
+     * @return The resulting value. Unlike other {@link #fetchSingle()} methods,
+     *         which never produce <code>null</code> records, this can be null
+     *         if the resulting value in the record is <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
@@ -1008,8 +1022,8 @@ extends
     Object fetchSingle(String fieldName) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
-     * Execute the query and return exactly one resulting value for a
-     * field name from the generated result.
+     * Execute the query and return exactly one resulting value for a field name
+     * from the generated result.
      * <p>
      * This is the same as calling {@link #fetchSingle()} and then
      * {@link Record#get(String, Class)}
@@ -1018,7 +1032,9 @@ extends
      * {@link Configuration#converterProvider()} will be used to convert the
      * value to <code>U</code>
      *
-     * @return The resulting value. This is never <code>null</code>.
+     * @return The resulting value. Unlike other {@link #fetchSingle()} methods,
+     *         which never produce <code>null</code> records, this can be null
+     *         if the resulting value in the record is <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
@@ -1026,13 +1042,15 @@ extends
     <U> U fetchSingle(String fieldName, Class<? extends U> type) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
-     * Execute the query and return exactly one resulting value for a
-     * field name from the generated result.
+     * Execute the query and return exactly one resulting value for a field name
+     * from the generated result.
      * <p>
      * This is the same as calling {@link #fetchSingle()} and then
      * {@link Record#get(String, Converter)}
      *
-     * @return The resulting value. This is never <code>null</code>.
+     * @return The resulting value. Unlike other {@link #fetchSingle()} methods,
+     *         which never produce <code>null</code> records, this can be null
+     *         if the resulting value in the record is <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
@@ -1040,13 +1058,15 @@ extends
     <U> U fetchSingle(String fieldName, Converter<?, ? extends U> converter) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
-     * Execute the query and return exactly one resulting value for a
-     * field name from the generated result.
+     * Execute the query and return exactly one resulting value for a field name
+     * from the generated result.
      * <p>
      * This is the same as calling {@link #fetchSingle()} and then
      * {@link Record#get(Name)}
      *
-     * @return The resulting value. This is never <code>null</code>.
+     * @return The resulting value. Unlike other {@link #fetchSingle()} methods,
+     *         which never produce <code>null</code> records, this can be null
+     *         if the resulting value in the record is <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
@@ -1054,8 +1074,8 @@ extends
     Object fetchSingle(Name fieldName) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
-     * Execute the query and return exactly one resulting value for a
-     * field name from the generated result.
+     * Execute the query and return exactly one resulting value for a field name
+     * from the generated result.
      * <p>
      * This is the same as calling {@link #fetchSingle()} and then
      * {@link Record#get(Name, Class)}
@@ -1064,7 +1084,9 @@ extends
      * {@link Configuration#converterProvider()} will be used to convert the
      * value to <code>U</code>
      *
-     * @return The resulting value. This is never <code>null</code>.
+     * @return The resulting value. Unlike other {@link #fetchSingle()} methods,
+     *         which never produce <code>null</code> records, this can be null
+     *         if the resulting value in the record is <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
@@ -1072,13 +1094,15 @@ extends
     <U> U fetchSingle(Name fieldName, Class<? extends U> type) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
-     * Execute the query and return exactly one resulting value for a
-     * field name from the generated result.
+     * Execute the query and return exactly one resulting value for a field name
+     * from the generated result.
      * <p>
      * This is the same as calling {@link #fetchSingle()} and then
      * {@link Record#get(Name, Converter)}
      *
-     * @return The resulting value. This is never <code>null</code>.
+     * @return The resulting value. Unlike other {@link #fetchSingle()} methods,
+     *         which never produce <code>null</code> records, this can be null
+     *         if the resulting value in the record is <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
@@ -1100,10 +1124,12 @@ extends
     R fetchSingle() throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
-     * Execute the query and return exactly one resulting value into a
-     * custom mapper callback.
+     * Execute the query and return exactly one resulting value into a custom
+     * mapper callback.
      *
-     * @return The resulting value. This is never <code>null</code>.
+     * @return The resulting value. Unlike other {@link #fetchSingle()} methods,
+     *         which never produce <code>null</code> records, this can be null
+     *         if the resulting value in the record is <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
@@ -1149,7 +1175,9 @@ extends
      *
      * @param <E> The generic entity type.
      * @param type The entity type.
-     * @return The resulting value. This is never <code>null</code>.
+     * @return The resulting value. Unlike other {@link #fetchSingle()} methods,
+     *         which never produce <code>null</code> records, this can be null
+     *         if the resulting value in the record is <code>null</code>.
      * @see Record#into(Class)
      * @see Result#into(Class)
      * @throws DataAccessException if something went wrong executing the query
@@ -1178,7 +1206,9 @@ extends
      *
      * @param <Z> The generic table record type.
      * @param table The table type.
-     * @return The resulting value. This is never <code>null</code>.
+     * @return The resulting value. Unlike other {@link #fetchSingle()} methods,
+     *         which never produce <code>null</code> records, this can be null
+     *         if the resulting value in the record is <code>null</code>.
      * @see Record#into(Table)
      * @see Result#into(Table)
      * @throws DataAccessException if something went wrong executing the query

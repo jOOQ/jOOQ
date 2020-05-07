@@ -37,7 +37,7 @@
         <javax.activation.version>1.2.0</javax.activation.version>
 
         <!-- Kotlin versions -->
-        <kotlin.version>1.3.72</kotlin.version>
+        <kotlin.version>1.3.71</kotlin.version>
 
         <!-- DefaultRecordMapper and jOOQ-meta-extensions can read JPA annotations -->
         <javax.persistence-api.version>2.2</javax.persistence-api.version>

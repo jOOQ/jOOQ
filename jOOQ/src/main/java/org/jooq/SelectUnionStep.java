@@ -123,7 +123,7 @@ import static org.jooq.SQLDialect.SQLITE;
  *
  * @author Lukas Eder
  */
-public interface SelectUnionStep<R extends Record> extends SelectFinalStep<R> {
+public interface SelectUnionStep<R extends Record> extends SelectCorrelatedSubqueryStep<R> {
 
     /**
      * Apply the <code>UNION</code> set operation.

@@ -43,6 +43,7 @@ import static org.jooq.Clause.CONDITION_IS_NULL;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
@@ -55,13 +56,18 @@ import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
 // ...
+import static org.jooq.SQLDialect.POSTGRES;
+// ...
 // ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.selectCount;
 import static org.jooq.impl.Keywords.K_IS_NOT_NULL;
 import static org.jooq.impl.Keywords.K_IS_NULL;
+import static org.jooq.impl.Tools.fieldNameStrings;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,12 +75,12 @@ import java.util.Set;
 
 import org.jooq.Clause;
 import org.jooq.Condition;
-import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.QueryPartInternal;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
+import org.jooq.Select;
+import org.jooq.Table;
 
 /**
  * @author Lukas Eder
@@ -84,71 +90,76 @@ final class RowIsNull extends AbstractCondition {
     /**
      * Generated UID
      */
-    private static final long            serialVersionUID = -1806139685201770706L;
-    private static final Clause[]        CLAUSES_NULL     = { CONDITION, CONDITION_IS_NULL };
-    private static final Clause[]        CLAUSES_NOT_NULL = { CONDITION, CONDITION_IS_NOT_NULL };
+    private static final long            serialVersionUID   = -1806139685201770706L;
+    private static final Clause[]        CLAUSES_NULL       = { CONDITION, CONDITION_IS_NULL };
+    private static final Clause[]        CLAUSES_NOT_NULL   = { CONDITION, CONDITION_IS_NOT_NULL };
 
     // Currently not yet supported in SQLite:
     // https://www.sqlite.org/rowvalue.html
-    private static final Set<SQLDialect> EMULATE_NULL     = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, SQLITE);
+    private static final Set<SQLDialect> EMULATE_NULL_ROW   = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, SQLITE);
+    private static final Set<SQLDialect> EMULATE_NULL_QUERY = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE);
 
     private final Row                    row;
+    private final Select<?>              select;
     private final boolean                isNull;
 
     RowIsNull(Row row, boolean isNull) {
         this.row = row;
+        this.select = null;
+        this.isNull = isNull;
+    }
+
+    RowIsNull(Select<?> select, boolean isNull) {
+        this.row = null;
+        this.select = select;
         this.isNull = isNull;
     }
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(delegate(ctx.configuration()));
+
+
+
+
+
+
+        if (row != null && EMULATE_NULL_ROW.contains(ctx.family()))
+            ctx.visit(condition(row.fields()));
+        else if (select != null && EMULATE_NULL_QUERY.contains(ctx.family())) {
+            Table<?> t = select.asTable("t", fieldNameStrings(select.getSelect().size()));
+            ctx.visit(inline(1).eq(selectCount().from(t).where(condition(t.fields()))));
+        }
+        else
+            acceptStandard(ctx);
+    }
+
+    private final Condition condition(Field<?>[] fields) {
+        List<Condition> conditions = new ArrayList<>(fields.length);
+
+        for (Field<?> field : fields)
+            conditions.add(isNull ? field.isNull() : field.isNotNull());
+
+        return DSL.and(conditions);
+    }
+
+    private final void acceptStandard(Context<?> ctx) {
+        if (row != null)
+            ctx.visit(row);
+        else
+            ctx.sql('(')
+               .formatIndentStart().formatNewLine()
+               .subquery(true)
+               .visit(select)
+               .subquery(false)
+               .formatIndentEnd().formatNewLine()
+               .sql(')');
+
+        ctx.sql(' ')
+           .visit(isNull ? K_IS_NULL : K_IS_NOT_NULL);
     }
 
     @Override // Avoid AbstractCondition implementation
     public final Clause[] clauses(Context<?> ctx) {
         return null;
-    }
-
-    private final QueryPartInternal delegate(Configuration configuration) {
-
-
-
-
-
-
-        if (EMULATE_NULL.contains(configuration.family())) {
-            Field<?>[] fields = row.fields();
-            List<Condition> conditions = new ArrayList<>(fields.length);
-
-            for (Field<?> field : fields)
-                conditions.add(isNull ? field.isNull() : field.isNotNull());
-
-            Condition result = DSL.and(conditions);
-            return (QueryPartInternal) result;
-        }
-        else {
-            return new Native();
-        }
-    }
-
-    private class Native extends AbstractCondition {
-
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = -2977241780111574353L;
-
-        @Override
-        public final void accept(Context<?> ctx) {
-            ctx.visit(row)
-               .sql(' ')
-               .visit(isNull ? K_IS_NULL : K_IS_NOT_NULL);
-        }
-
-        @Override
-        public final Clause[] clauses(Context<?> ctx) {
-            return isNull ? CLAUSES_NULL : CLAUSES_NOT_NULL;
-        }
     }
 }

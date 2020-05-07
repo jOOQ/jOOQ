@@ -60,6 +60,9 @@ import java.util.function.Function;
 import java.util.stream.Collector;
 import java.util.stream.Stream;
 
+import org.jooq.BetweenAndStep;
+import org.jooq.BetweenAndStepR;
+import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Converter;
@@ -74,6 +77,7 @@ import org.jooq.Operator;
 import org.jooq.OrderField;
 import org.jooq.Param;
 // ...
+import org.jooq.QuantifiedSelect;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Record1;
@@ -4229,6 +4233,341 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
 
+
+    @Override
+    public final Condition compare(Comparator comparator, R record) {
+        return null;
+    }
+
+    @Override
+    public final Condition compare(Comparator comparator, Select<? extends R> select) {
+        return null;
+    }
+
+    @Override
+    public final Condition compare(Comparator comparator, QuantifiedSelect<? extends R> select) {
+        return null;
+    }
+
+    @Override
+    public final Condition eq(R record) {
+        return compare(Comparator.EQUALS, record);
+    }
+
+    @Override
+    public final Condition eq(Select<? extends R> select) {
+        return compare(Comparator.EQUALS, select);
+    }
+
+    @Override
+    public final Condition eq(QuantifiedSelect<? extends R> select) {
+        return compare(Comparator.EQUALS, select);
+    }
+
+    @Override
+    public final Condition equal(R record) {
+        return compare(Comparator.EQUALS, record);
+    }
+
+    @Override
+    public final Condition equal(Select<? extends R> select) {
+        return compare(Comparator.EQUALS, select);
+    }
+
+    @Override
+    public final Condition equal(QuantifiedSelect<? extends R> select) {
+        return compare(Comparator.EQUALS, select);
+    }
+
+    @Override
+    public final Condition ne(R record) {
+        return compare(Comparator.NOT_EQUALS, record);
+    }
+
+    @Override
+    public final Condition ne(Select<? extends R> select) {
+        return compare(Comparator.NOT_EQUALS, select);
+    }
+
+    @Override
+    public final Condition ne(QuantifiedSelect<? extends R> select) {
+        return compare(Comparator.NOT_EQUALS, select);
+    }
+
+    @Override
+    public final Condition notEqual(R record) {
+        return compare(Comparator.NOT_EQUALS, record);
+    }
+
+    @Override
+    public final Condition notEqual(Select<? extends R> select) {
+        return compare(Comparator.NOT_EQUALS, select);
+    }
+
+    @Override
+    public final Condition notEqual(QuantifiedSelect<? extends R> select) {
+        return compare(Comparator.NOT_EQUALS, select);
+    }
+
+    @Override
+    public final Condition lt(R record) {
+        return compare(Comparator.LESS, record);
+    }
+
+    @Override
+    public final Condition lt(Select<? extends R> select) {
+        return compare(Comparator.LESS, select);
+    }
+
+    @Override
+    public final Condition lt(QuantifiedSelect<? extends R> select) {
+        return compare(Comparator.LESS, select);
+    }
+
+    @Override
+    public final Condition lessThan(R record) {
+        return compare(Comparator.LESS, record);
+    }
+
+    @Override
+    public final Condition lessThan(Select<? extends R> select) {
+        return compare(Comparator.LESS, select);
+    }
+
+    @Override
+    public final Condition lessThan(QuantifiedSelect<? extends R> select) {
+        return compare(Comparator.LESS, select);
+    }
+
+    @Override
+    public final Condition le(R record) {
+        return compare(Comparator.LESS_OR_EQUAL, record);
+    }
+
+    @Override
+    public final Condition le(Select<? extends R> select) {
+        return compare(Comparator.LESS_OR_EQUAL, select);
+    }
+
+    @Override
+    public final Condition le(QuantifiedSelect<? extends R> select) {
+        return compare(Comparator.LESS_OR_EQUAL, select);
+    }
+
+    @Override
+    public final Condition lessOrEqual(R record) {
+        return compare(Comparator.LESS_OR_EQUAL, record);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Select<? extends R> select) {
+        return compare(Comparator.LESS_OR_EQUAL, select);
+    }
+
+    @Override
+    public final Condition lessOrEqual(QuantifiedSelect<? extends R> select) {
+        return compare(Comparator.LESS_OR_EQUAL, select);
+    }
+
+    @Override
+    public final Condition gt(R record) {
+        return compare(Comparator.GREATER, record);
+    }
+
+    @Override
+    public final Condition gt(Select<? extends R> select) {
+        return compare(Comparator.GREATER, select);
+    }
+
+    @Override
+    public final Condition gt(QuantifiedSelect<? extends R> select) {
+        return compare(Comparator.GREATER, select);
+    }
+
+    @Override
+    public final Condition greaterThan(R record) {
+        return compare(Comparator.GREATER, record);
+    }
+
+    @Override
+    public final Condition greaterThan(Select<? extends R> select) {
+        return compare(Comparator.GREATER, select);
+    }
+
+    @Override
+    public final Condition greaterThan(QuantifiedSelect<? extends R> select) {
+        return compare(Comparator.GREATER, select);
+    }
+
+    @Override
+    public final Condition ge(R record) {
+        return compare(Comparator.GREATER_OR_EQUAL, record);
+    }
+
+    @Override
+    public final Condition ge(Select<? extends R> select) {
+        return compare(Comparator.GREATER_OR_EQUAL, select);
+    }
+
+    @Override
+    public final Condition ge(QuantifiedSelect<? extends R> select) {
+        return compare(Comparator.GREATER_OR_EQUAL, select);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(R record) {
+        return compare(Comparator.GREATER_OR_EQUAL, record);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Select<? extends R> select) {
+        return compare(Comparator.GREATER_OR_EQUAL, select);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(QuantifiedSelect<? extends R> select) {
+        return compare(Comparator.GREATER_OR_EQUAL, select);
+    }
+
+    @Override
+    public final Condition in(R... records) {
+        return null;
+    }
+
+    @Override
+    public final Condition in(Select<? extends R> select) {
+        return null;
+    }
+
+    @Override
+    public final Condition notIn(R... records) {
+        return null;
+    }
+
+    @Override
+    public final Condition notIn(Select<? extends R> select) {
+        return null;
+    }
+
+    @Override
+    public final Condition isDistinctFrom(R record) {
+        return null;
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Select<? extends R> select) {
+        return null;
+    }
+
+    @Override
+    public final Condition isDistinctFrom(QuantifiedSelect<? extends R> select) {
+        return null;
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(R record) {
+        return null;
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Select<? extends R> select) {
+        return null;
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(QuantifiedSelect<? extends R> select) {
+        return null;
+    }
+
+    @Override
+    public final BetweenAndStep<R> between(R minValue) {
+        return null;
+    }
+
+    @Override
+    public final Condition between(R minValue, R maxValue) {
+        return null;
+    }
+
+    @Override
+    public final BetweenAndStep<R> between(Select<? extends R> minValue) {
+        return null;
+    }
+
+    @Override
+    public final Condition between(Select<? extends R> minValue, Select<? extends R> maxValue) {
+        return null;
+    }
+
+    @Override
+    public final BetweenAndStepR<R> betweenSymmetric(R minValue) {
+        return null;
+    }
+
+    @Override
+    public final Condition betweenSymmetric(R minValue, R maxValue) {
+        return null;
+    }
+
+    @Override
+    public final BetweenAndStepR<R> betweenSymmetric(Select<? extends R> minValue) {
+        return null;
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Select<? extends R> minValue, Select<? extends R> maxValue) {
+        return null;
+    }
+
+    @Override
+    public final BetweenAndStepR<R> notBetween(R minValue) {
+        return null;
+    }
+
+    @Override
+    public final Condition notBetween(R minValue, R maxValue) {
+        return null;
+    }
+
+    @Override
+    public final BetweenAndStepR<R> notBetween(Select<? extends R> minValue) {
+        return null;
+    }
+
+    @Override
+    public final Condition notBetween(Select<? extends R> minValue, Select<? extends R> maxValue) {
+        return null;
+    }
+
+    @Override
+    public final BetweenAndStepR<R> notBetweenSymmetric(R minValue) {
+        return null;
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(R minValue, R maxValue) {
+        return null;
+    }
+
+    @Override
+    public final BetweenAndStepR<R> notBetweenSymmetric(Select<? extends R> minValue) {
+        return null;
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Select<? extends R> minValue, Select<? extends R> maxValue) {
+        return null;
+    }
+
+    @Override
+    public final Condition isNull() {
+        return new RowIsNull(this, true);
+    }
+
+    @Override
+    public final Condition isNotNull() {
+        return new RowIsNull(this, false);
+    }
 
     /**
      * The {@link SelectImpl} current condition step

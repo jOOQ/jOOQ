@@ -78,6 +78,7 @@ final class Names {
     static final Name N_CONVERT                = unquotedName("convert");
     static final Name N_COSH                   = unquotedName("cosh");
     static final Name N_COT                    = unquotedName("cot");
+    static final Name N_COUNT                  = unquotedName("count");
     static final Name N_COUNTSET               = unquotedName("countset");
     static final Name N_CURRENT_BIGDATETIME    = unquotedName("current_bigdatetime");
     static final Name N_CURRENT_DATE           = unquotedName("current_date");

@@ -40,7 +40,14 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.Keywords.K_AS;
+import static org.jooq.impl.Keywords.K_FROM;
+import static org.jooq.impl.Keywords.K_LIMIT;
+import static org.jooq.impl.Keywords.K_SELECT;
+import static org.jooq.impl.Keywords.K_WHERE;
+import static org.jooq.impl.Names.N_COUNT;
 import static org.jooq.impl.Names.N_DUAL;
+import static org.jooq.impl.SQLDataType.INTEGER;
 
 import org.jooq.Context;
 import org.jooq.Field;
@@ -66,17 +73,13 @@ final class Dual extends AbstractTable<Record> {
 
 
 
-    static final String                DUAL_HSQLDB      = "select 1 as dual from information_schema.system_users limit 1";
 
 
 
-
-
-
-
-    static final Name                  DUAL_FIREBIRD    = DSL.unquotedName("RDB$DATABASE");
-    static final Name                  DUAL_CUBRID      = DSL.unquotedName("db_root");
-    static final Name                  DUAL_DERBY       = DSL.unquotedName("SYSIBM", "SYSDUMMY1");
+    private static final Name          DUAL_FIREBIRD    = DSL.unquotedName("RDB$DATABASE");
+    private static final Name          DUAL_CUBRID      = DSL.unquotedName("db_root");
+    private static final Name          DUAL_DERBY       = DSL.unquotedName("SYSIBM", "SYSDUMMY1");
+    private static final Name          DUAL_HSQLDB      = DSL.unquotedName("INFORMATION_SCHEMA", "SYSTEM_USERS");
 
     private final boolean              force;
 
@@ -142,7 +145,12 @@ final class Dual extends AbstractTable<Record> {
                     break;
 
                 case HSQLDB:
-                    ctx.sql('(').sql(DUAL_HSQLDB).sql(") as dual");
+                    ctx.sql('(').formatIndentStart().formatNewLine()
+                       .visit(K_SELECT).sql(" 1 ").visit(K_AS).sql(' ').visit(N_DUAL).formatSeparator()
+                       .visit(K_FROM).sql(' ').visit(DUAL_HSQLDB).formatSeparator()
+                       .visit(K_LIMIT).sql(" 1").formatIndentEnd().formatNewLine()
+                       .sql(") ").visit(K_AS).sql(' ').visit(N_DUAL);
+
                     break;
 
                 case CUBRID:
@@ -151,6 +159,15 @@ final class Dual extends AbstractTable<Record> {
 
                 // These dialects don't have a DUAL table. But emulation is needed
                 // for queries like SELECT 1 WHERE 1 = 1
+
+
+
+
+
+
+
+
+
 
 
 
@@ -191,8 +208,7 @@ final class Dual extends AbstractTable<Record> {
 
 
                 default:
-                    // [#7421] must not use N_DUAL as quoting doesn't work in e.g. MySQL
-                    ctx.sql("dual");
+                    ctx.visit(N_DUAL);
                     break;
             }
         }

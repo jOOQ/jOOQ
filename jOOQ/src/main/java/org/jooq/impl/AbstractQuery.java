@@ -157,6 +157,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
      * <p>
      * {@inheritDoc}
      */
+    @SuppressWarnings("deprecation")
     @Override
     public Query bind(String param, Object value) {
         Integer index = Ints.tryParse(param);
@@ -183,6 +184,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
      * <p>
      * {@inheritDoc}
      */
+    @SuppressWarnings("deprecation")
     @Override
     public Query bind(int index, Object value) {
         Param<?>[] params = getParams().values().toArray(EMPTY_PARAM);

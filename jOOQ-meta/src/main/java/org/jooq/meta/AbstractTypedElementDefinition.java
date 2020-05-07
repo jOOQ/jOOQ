@@ -172,6 +172,7 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
         return result;
     }
 
+    @SuppressWarnings("deprecation")
     public static final DataTypeDefinition mapDefinedType(Definition container, Definition child, DataTypeDefinition definedType, JavaTypeResolver resolver) {
         DataTypeDefinition result = definedType;
         Database db = container.getDatabase();
@@ -310,6 +311,7 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
         return result;
     }
 
+    @SuppressWarnings("deprecation")
     public static final CustomType customType(Database db, ForcedType forcedType) {
         String name = forcedType.getName();
 

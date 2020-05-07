@@ -1,18 +1,13 @@
 package org.jooq.kotlin
 
-import org.jooq.SQLDialect
 import org.jooq.SQLDialect.H2
 import org.jooq.impl.DSL
 import org.jooq.impl.DSL.*
-import org.jooq.impl.SQLDataType
 import org.jooq.impl.SQLDataType.INTEGER
-import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.FixMethodOrder
 import org.junit.Test
 import org.junit.runners.MethodSorters
-
-import kotlin.io.*
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 class ExtensionsTest {

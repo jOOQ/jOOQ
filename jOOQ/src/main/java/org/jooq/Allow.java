@@ -150,6 +150,7 @@ public @interface Allow {
      * A list of jOOQ {@link SQLDialect} which are required on any jOOQ API
      * method that is annotated with {@link Support}.
      */
+    @SuppressWarnings("deprecation")
     SQLDialect[] value() default {
 
 

@@ -2818,6 +2818,7 @@ final class Tools {
     /**
      * Map a {@link Catalog} according to the configured {@link org.jooq.SchemaMapping}
      */
+    @SuppressWarnings("deprecation")
     static final Catalog getMappedCatalog(Configuration configuration, Catalog catalog) {
         if (configuration != null) {
             org.jooq.SchemaMapping mapping = configuration.schemaMapping();
@@ -2832,6 +2833,7 @@ final class Tools {
     /**
      * Map a {@link Schema} according to the configured {@link org.jooq.SchemaMapping}
      */
+    @SuppressWarnings("deprecation")
     static final Schema getMappedSchema(Configuration configuration, Schema schema) {
         if (configuration != null) {
             org.jooq.SchemaMapping mapping = configuration.schemaMapping();
@@ -2846,6 +2848,7 @@ final class Tools {
     /**
      * Map a {@link Table} according to the configured {@link org.jooq.SchemaMapping}
      */
+    @SuppressWarnings("deprecation")
     static final <R extends Record> Table<R> getMappedTable(Configuration configuration, Table<R> table) {
         if (configuration != null) {
             org.jooq.SchemaMapping mapping = configuration.schemaMapping();

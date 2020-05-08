@@ -255,6 +255,38 @@ public interface TableLike<R extends Record> extends QueryPart {
     @Support
     Table<R> asTable(String alias, String... fieldAliases);
 
+    /**
+     * The underlying aliased table representation of this object.
+     *
+     * @see Table#as(Name)
+     */
+    @Support
+    Table<R> asTable(Name alias);
+
+    /**
+     * The underlying aliased table representation of this object.
+     *
+     * @see Table#as(String, String...)
+     */
+    @Support
+    Table<R> asTable(Name alias, Name... fieldAliases);
+
+    /**
+     * The underlying aliased table representation of this object.
+     *
+     * @see Table#as(Name)
+     */
+    @Support
+    Table<R> asTable(Table<?> alias);
+
+    /**
+     * The underlying aliased table representation of this object.
+     *
+     * @see Table#as(String, String...)
+     */
+    @Support
+    Table<R> asTable(Table<?> alias, Field<?>... fieldAliases);
+
 
     /**
      * The underlying aliased table representation of this object.

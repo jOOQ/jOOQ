@@ -495,6 +495,26 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         return new DerivedTable<>(this).as(alias, fieldAliases);
     }
 
+    @Override
+    public final Table<R> asTable(Name alias) {
+        return new DerivedTable<>(this).as(alias);
+    }
+
+    @Override
+    public final Table<R> asTable(Name alias, Name... fieldAliases) {
+        return new DerivedTable<>(this).as(alias, fieldAliases);
+    }
+
+    @Override
+    public final Table<R> asTable(Table<?> alias) {
+        return new DerivedTable<>(this).as(alias);
+    }
+
+    @Override
+    public final Table<R> asTable(Table<?> alias, Field<?>... fieldAliases) {
+        return new DerivedTable<>(this).as(alias, fieldAliases);
+    }
+
 
     @Override
     public final Table<R> asTable(String alias, Function<? super Field<?>, ? extends String> aliasFunction) {

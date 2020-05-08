@@ -326,6 +326,26 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
         return as(alias, fieldAliases);
     }
 
+    @Override
+    public final Table<R> asTable(Name alias) {
+        return as(alias);
+    }
+
+    @Override
+    public final Table<R> asTable(Name alias, Name... fieldAliases) {
+        return as(alias, fieldAliases);
+    }
+
+    @Override
+    public final Table<R> asTable(Table<?> alias) {
+        return as(alias);
+    }
+
+    @Override
+    public final Table<R> asTable(Table<?> alias, Field<?>... fieldAliases) {
+        return as(alias, fieldAliases);
+    }
+
 
     @Override
     public final Table<R> asTable(String alias, Function<? super Field<?>, ? extends String> aliasFunction) {

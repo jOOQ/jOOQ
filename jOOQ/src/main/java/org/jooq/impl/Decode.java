@@ -82,7 +82,9 @@ final class Decode<T, Z> extends AbstractField<Z> {
 
 
 
-
+            case H2:
+                ctx.visit(function("decode", getDataType(), Tools.combine(field, search, result, more)));
+                return;
 
             // Other dialects emulate it with a CASE ... WHEN expression
             default:

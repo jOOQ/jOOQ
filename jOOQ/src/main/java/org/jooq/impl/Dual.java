@@ -47,7 +47,6 @@ import static org.jooq.impl.Keywords.K_SELECT;
 import static org.jooq.impl.Keywords.K_WHERE;
 import static org.jooq.impl.Names.N_COUNT;
 import static org.jooq.impl.Names.N_DUAL;
-import static org.jooq.impl.SQLDataType.INTEGER;
 
 import org.jooq.Context;
 import org.jooq.Field;

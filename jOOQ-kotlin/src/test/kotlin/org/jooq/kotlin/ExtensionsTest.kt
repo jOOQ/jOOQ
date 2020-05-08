@@ -3,6 +3,7 @@ package org.jooq.kotlin
 import org.jooq.SQLDialect.H2
 import org.jooq.impl.DSL
 import org.jooq.impl.DSL.*
+import org.jooq.impl.SQLDataType.BOOLEAN
 import org.jooq.impl.SQLDataType.INTEGER
 import org.junit.Assert.assertEquals
 import org.junit.FixMethodOrder
@@ -14,7 +15,18 @@ class ExtensionsTest {
 
     val i = field(unquotedName("i"), INTEGER)
     val j = field(unquotedName("j"), INTEGER)
+    val b1 = field(unquotedName("b1"), BOOLEAN)
+    val b2 = field(unquotedName("b2"), BOOLEAN)
     val dsl = DSL.using(H2)
+
+    @Test
+    fun testBooleanFields() {
+        assertEquals(condition(b1).and(b2), b1.and(b2))
+        assertEquals(condition(b1).andNot(b2), b1.andNot(b2))
+        assertEquals(condition(b1).or(b2), b1.or(b2))
+        assertEquals(condition(b1).orNot(b2), b1.orNot(b2))
+        assertEquals(condition(b1).not(), b1.not())
+    }
 
     @Test
     fun testScalarSubqueries() {

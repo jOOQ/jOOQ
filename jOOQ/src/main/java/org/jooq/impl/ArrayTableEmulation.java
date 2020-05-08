@@ -138,20 +138,17 @@ final class ArrayTableEmulation extends AbstractTable<Record> {
                 Field<?> val = DSL.val(element, field.fields[0].getDataType());
                 Select<Record> subselect = using(configuration).select(val.as("COLUMN_VALUE")).select();
 
-                if (select == null) {
+                if (select == null)
                     select = subselect;
-                }
-                else {
+                else
                     select = select.unionAll(subselect);
-                }
             }
 
             // Empty arrays should result in empty tables
-            if (select == null) {
+            if (select == null)
                 select = using(configuration).select(one().as("COLUMN_VALUE")).select().where(falseCondition());
-            }
 
-            table = DSL.table(select).as(alias);
+            table = select.asTable(alias);
         }
 
         return table;

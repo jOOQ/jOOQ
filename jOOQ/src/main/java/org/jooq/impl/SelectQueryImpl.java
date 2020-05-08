@@ -872,7 +872,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             && REQUIRES_DERIVED_TABLE_DML.contains(context.family())
             && (dmlTable = (Table<?>) context.data(DATA_DML_TARGET_TABLE)) != null
             && containsTable(dmlTable)) {
-            context.visit(DSL.select(asterisk()).from(DSL.table(this).as("t")));
+            context.visit(DSL.select(asterisk()).from(asTable("t")));
         }
 
 

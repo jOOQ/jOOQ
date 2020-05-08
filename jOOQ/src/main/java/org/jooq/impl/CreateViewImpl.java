@@ -58,7 +58,6 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.selectFrom;
-import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.Keywords.K_ALTER;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_CREATE;
@@ -285,7 +284,7 @@ final class CreateViewImpl<R extends Record> extends AbstractRowCountQuery imple
            .paramType(INLINED)
            .visit(
                rename && !renameSupported
-             ? selectFrom(table(parsed()).as(name("t"), Tools.fieldNames(f)))
+             ? selectFrom(parsed().asTable(name("t"), Tools.fieldNames(f)))
              : select)
            .paramType(paramType)
            .end(CREATE_VIEW_AS);

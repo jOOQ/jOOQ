@@ -769,7 +769,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
             return configuration.dsl()
                 .insertInto(table())
                 .columns(insertMaps.fields())
-                .select(selectFrom(DSL.table(rows).as("t")));
+                .select(selectFrom(rows.asTable("t")));
         }
         else {
             throw new IllegalStateException("The ON DUPLICATE KEY IGNORE/UPDATE clause cannot be emulated when inserting into tables without any known keys : " + table());
@@ -784,7 +784,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
             // [#6375] INSERT .. VALUES and INSERT .. SELECT distinction also in MERGE
             Table<?> t = select == null
                 ? dual()
-                : DSL.table(select).as("t", fieldNameStrings(insertMaps.fields().toArray(EMPTY_FIELD)));
+                : select.asTable("t", fieldNameStrings(insertMaps.fields().toArray(EMPTY_FIELD)));
 
             MergeOnConditionStep<R> on = select == null
                 ? configuration.dsl().mergeInto(table())

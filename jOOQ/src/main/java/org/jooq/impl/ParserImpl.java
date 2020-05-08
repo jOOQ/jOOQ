@@ -2063,6 +2063,7 @@ final class ParserImpl implements Parser {
         return map;
     }
 
+    @SuppressWarnings("null")
     private static final Merge<?> parseMerge(ParserContext ctx, WithImpl with) {
         parseKeyword(ctx, "MERGE");
         parseKeywordIf(ctx, "INTO");
@@ -2085,7 +2086,7 @@ final class ParserImpl implements Parser {
 
         TableLike<?> usingTable = (table != null ? table : using);
         if (parseKeywordIf(ctx, "AS") || !peekKeyword(ctx, "ON"))
-            usingTable = (table != null ? table : DSL.table(using)).as(parseIdentifier(ctx));
+            usingTable = usingTable.asTable(parseIdentifier(ctx));
 
         parseKeyword(ctx, "ON");
         Condition on = parseCondition(ctx);

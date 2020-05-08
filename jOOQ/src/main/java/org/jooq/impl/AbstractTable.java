@@ -1093,17 +1093,17 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
 
     @Override
     public /* non-final */ Table<R> where(Condition condition) {
-        return table(selectFrom(this).where(condition)).as(this);
+        return selectFrom(this).where(condition).asTable(this);
     }
 
     @Override
     public /* non-final */ Table<R> where(Condition... conditions) {
-        return table(selectFrom(this).where(conditions)).as(this);
+        return selectFrom(this).where(conditions).asTable(this);
     }
 
     @Override
     public /* non-final */ Table<R> where(Collection<? extends Condition> conditions) {
-        return table(selectFrom(this).where(conditions)).as(this);
+        return selectFrom(this).where(conditions).asTable(this);
     }
 
     @Override

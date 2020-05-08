@@ -44,7 +44,6 @@ import static org.jooq.Clause.INSERT_VALUES;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.impl.DSL.name;
-import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.Keywords.K_DEFAULT_VALUES;
 import static org.jooq.impl.Keywords.K_VALUES;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_EMULATE_BULK_INSERT_RETURNING;

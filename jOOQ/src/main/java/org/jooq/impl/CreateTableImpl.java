@@ -575,7 +575,7 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
         ctx.start(CREATE_TABLE_AS);
 
         if (!columnFields.isEmpty() && NO_SUPPORT_CTAS_COLUMN_NAMES.contains(ctx.family()))
-            ctx.visit(select(asterisk()).from(table(select).as(table(name("t")), columnFields.toArray(EMPTY_FIELD))));
+            ctx.visit(select(asterisk()).from(select.asTable(table(name("t")), columnFields.toArray(EMPTY_FIELD))));
         else
             ctx.visit(select);
 

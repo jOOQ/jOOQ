@@ -35,34 +35,12 @@
  *
  *
  */
-
 package org.jooq.impl;
 
-import static org.jooq.impl.Keywords.K_IS_DOCUMENT;
-import static org.jooq.impl.Keywords.K_IS_NOT_DOCUMENT;
-
-import org.jooq.Context;
-import org.jooq.Field;
-
 /**
+ * A marker interface for conditions that can only be <code>TRUE</code> or
+ * <code>FALSE</code>, never <code>NULL</code>.
+ *
  * @author Lukas Eder
  */
-final class IsDocument extends AbstractCondition implements NotNullCondition {
-
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 5667086904534664235L;
-    private final Field<?>    field;
-    private final boolean     isDocument;
-
-    IsDocument(Field<?> field, boolean isDocument) {
-        this.field = field;
-        this.isDocument = isDocument;
-    }
-
-    @Override
-    public final void accept(Context<?> ctx) {
-        ctx.visit(field).sql(' ').visit(isDocument ? K_IS_DOCUMENT : K_IS_NOT_DOCUMENT);
-    }
-}
+interface NotNullCondition {}

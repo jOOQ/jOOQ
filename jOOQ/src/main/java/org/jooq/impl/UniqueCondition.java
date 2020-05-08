@@ -54,7 +54,7 @@ import org.jooq.Table;
 /**
  * @author Knut Wannheden
  */
-final class UniqueCondition extends AbstractCondition {
+final class UniqueCondition extends AbstractCondition implements NotNullCondition {
 
     private static final long     serialVersionUID   = -5560973283201522844L;
 

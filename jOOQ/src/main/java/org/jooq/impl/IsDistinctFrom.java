@@ -81,7 +81,7 @@ import org.jooq.SQLDialect;
 /**
  * @author Lukas Eder
  */
-final class IsDistinctFrom<T> extends AbstractCondition {
+final class IsDistinctFrom<T> extends AbstractCondition implements NotNullCondition {
 
 
     /**

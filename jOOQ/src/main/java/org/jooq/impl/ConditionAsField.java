@@ -66,23 +66,30 @@ final class ConditionAsField extends AbstractField<Boolean> {
 
             // Some databases don't accept predicates where column expressions
             // are expected.
-
-
-
-
-
-
-
-
-
-
             case CUBRID:
             case FIREBIRD:
 
-                // [#3206] Correct implementation of three-valued logic is important here
-                ctx.visit(DSL.when(condition, inline(true))
-                             .when(not(condition), inline(false))
-                             .otherwise(inline((Boolean) null)));
+
+
+
+
+
+
+
+
+
+
+
+                // [#10179] Avoid 3VL when not necessary
+                if (condition instanceof NotNullCondition)
+                    ctx.visit(DSL.when(condition, inline(true))
+                                 .else_(inline(false)));
+
+                // [#3206] Implement 3VL if necessary or unknown
+                else
+                    ctx.visit(DSL.when(condition, inline(true))
+                                 .when(not(condition), inline(false))
+                                 .else_(inline((Boolean) null)));
                 break;
 
             // These databases can inline predicates in column expression contexts

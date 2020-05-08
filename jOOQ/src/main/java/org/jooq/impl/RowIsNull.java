@@ -37,9 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.CONDITION;
-import static org.jooq.Clause.CONDITION_IS_NOT_NULL;
-import static org.jooq.Clause.CONDITION_IS_NULL;
 // ...
 // ...
 // ...
@@ -85,14 +82,12 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-final class RowIsNull extends AbstractCondition {
+final class RowIsNull extends AbstractCondition implements NotNullCondition {
 
     /**
      * Generated UID
      */
     private static final long            serialVersionUID   = -1806139685201770706L;
-    private static final Clause[]        CLAUSES_NULL       = { CONDITION, CONDITION_IS_NULL };
-    private static final Clause[]        CLAUSES_NOT_NULL   = { CONDITION, CONDITION_IS_NOT_NULL };
 
     // Currently not yet supported in SQLite:
     // https://www.sqlite.org/rowvalue.html

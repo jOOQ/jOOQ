@@ -60,7 +60,9 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 import static org.jooq.impl.DSL.condition;
+import static org.jooq.impl.DSL.decode;
 import static org.jooq.impl.DSL.exists;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
@@ -72,6 +74,7 @@ import java.util.Set;
 import org.jooq.Comparator;
 import org.jooq.Context;
 import org.jooq.Field;
+// ...
 import org.jooq.QueryPartInternal;
 import org.jooq.SQLDialect;
 
@@ -88,6 +91,10 @@ final class IsDistinctFrom<T> extends AbstractCondition {
     private static final Set<SQLDialect> EMULATE_DISTINCT_PREDICATE  = SQLDialect.supportedUntil(CUBRID, DERBY);
     private static final Set<SQLDialect> SUPPORT_DISTINCT_WITH_ARROW = SQLDialect.supportedBy(MARIADB, MYSQL);
 
+
+
+
+
     private final Field<T>               lhs;
     private final Field<T>               rhs;
     private final Comparator             comparator;
@@ -103,6 +110,13 @@ final class IsDistinctFrom<T> extends AbstractCondition {
         if (isEmbeddable(lhs) && isEmbeddable(rhs))
             ctx.visit(row(embeddedFields(lhs)).compare(comparator, row(embeddedFields(rhs))));
 
+
+
+
+
+
+
+
         // [#3511]         These dialects need to emulate the IS DISTINCT FROM predicate,
         //                 optimally using INTERSECT...
         // [#7222] [#7224] Make sure the columns are aliased
@@ -112,11 +126,10 @@ final class IsDistinctFrom<T> extends AbstractCondition {
                 : (QueryPartInternal) exists(select(lhs.as("x")).intersect(select(rhs.as("x")))));
 
         // MySQL knows the <=> operator
-        else if (SUPPORT_DISTINCT_WITH_ARROW.contains(ctx.dialect())) {
+        else if (SUPPORT_DISTINCT_WITH_ARROW.contains(ctx.dialect()))
             ctx.visit(comparator == IS_DISTINCT_FROM
                 ? condition("{not}({0} <=> {1})", lhs, rhs)
                 : condition("{0} <=> {1}", lhs, rhs));
-        }
 
         // SQLite knows the IS / IS NOT predicate
         else if (SQLITE == ctx.family())

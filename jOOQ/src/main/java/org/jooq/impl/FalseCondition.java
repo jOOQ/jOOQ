@@ -54,6 +54,11 @@ final class FalseCondition extends AbstractCondition implements False {
     static final FalseCondition   INSTANCE         = new FalseCondition();
 
     @Override
+    final boolean isNullable() {
+        return false;
+    }
+
+    @Override
     public final void accept(Context<?> ctx) {
         ctx.sql("1 = 0");
     }

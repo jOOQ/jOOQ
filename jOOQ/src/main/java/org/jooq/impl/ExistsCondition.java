@@ -51,7 +51,7 @@ import org.jooq.Select;
 /**
  * @author Lukas Eder
  */
-final class ExistsCondition extends AbstractCondition implements NotNullCondition {
+final class ExistsCondition extends AbstractCondition {
 
     private static final long     serialVersionUID   = 5678338161136603292L;
     private static final Clause[] CLAUSES_EXISTS     = { CONDITION, CONDITION_EXISTS };
@@ -63,6 +63,11 @@ final class ExistsCondition extends AbstractCondition implements NotNullConditio
     ExistsCondition(Select<?> query, boolean exists) {
         this.query = query;
         this.exists = exists;
+    }
+
+    @Override
+    final boolean isNullable() {
+        return false;
     }
 
     @Override

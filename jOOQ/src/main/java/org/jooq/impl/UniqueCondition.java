@@ -54,7 +54,7 @@ import org.jooq.Table;
 /**
  * @author Knut Wannheden
  */
-final class UniqueCondition extends AbstractCondition implements NotNullCondition {
+final class UniqueCondition extends AbstractCondition {
 
     private static final long     serialVersionUID   = -5560973283201522844L;
 
@@ -64,6 +64,11 @@ final class UniqueCondition extends AbstractCondition implements NotNullConditio
     UniqueCondition(Select<?> query, boolean unique) {
         this.query = query;
         this.unique = unique;
+    }
+
+    @Override
+    final boolean isNullable() {
+        return false;
     }
 
     @Override

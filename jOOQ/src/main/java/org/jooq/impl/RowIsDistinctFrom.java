@@ -75,7 +75,7 @@ import org.jooq.SQLDialect;
 /**
  * @author Lukas Eder
  */
-final class RowIsDistinctFrom extends AbstractCondition implements NotNullCondition {
+final class RowIsDistinctFrom extends AbstractCondition {
 
     /**
      * Generated UID
@@ -96,6 +96,11 @@ final class RowIsDistinctFrom extends AbstractCondition implements NotNullCondit
         this.lhs = lhs;
         this.rhs = rhs;
         this.not = not;
+    }
+
+    @Override
+    final boolean isNullable() {
+        return false;
     }
 
     @Override

@@ -54,7 +54,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-final class IsNull extends AbstractCondition implements NotNullCondition {
+final class IsNull extends AbstractCondition {
 
     private static final long     serialVersionUID = -747240442279619486L;
     private static final Clause[] CLAUSES_NULL     = { CONDITION, CONDITION_IS_NULL };
@@ -66,6 +66,11 @@ final class IsNull extends AbstractCondition implements NotNullCondition {
     IsNull(Field<?> field, boolean isNull) {
         this.field = field;
         this.isNull = isNull;
+    }
+
+    @Override
+    final boolean isNullable() {
+        return false;
     }
 
     @Override

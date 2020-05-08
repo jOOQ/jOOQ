@@ -51,7 +51,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-final class IsJSON extends AbstractCondition implements NotNullCondition {
+final class IsJSON extends AbstractCondition {
 
     /**
      * Generated UID
@@ -63,6 +63,11 @@ final class IsJSON extends AbstractCondition implements NotNullCondition {
     IsJSON(Field<?> field, boolean isJSON) {
         this.field = field;
         this.isJSON = isJSON;
+    }
+
+    @Override
+    final boolean isNullable() {
+        return false;
     }
 
     @Override

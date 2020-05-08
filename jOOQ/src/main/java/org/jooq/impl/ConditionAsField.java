@@ -81,15 +81,14 @@ final class ConditionAsField extends AbstractField<Boolean> {
 
 
                 // [#10179] Avoid 3VL when not necessary
-                if (condition instanceof NotNullCondition)
+                if (condition instanceof AbstractCondition && !((AbstractCondition) condition).isNullable())
                     ctx.visit(DSL.when(condition, inline(true))
                                  .else_(inline(false)));
 
                 // [#3206] Implement 3VL if necessary or unknown
                 else
                     ctx.visit(DSL.when(condition, inline(true))
-                                 .when(not(condition), inline(false))
-                                 .else_(inline((Boolean) null)));
+                                 .when(not(condition), inline(false)));
                 break;
 
             // These databases can inline predicates in column expression contexts

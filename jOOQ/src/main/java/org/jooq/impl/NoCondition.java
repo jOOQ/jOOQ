@@ -54,6 +54,11 @@ final class NoCondition extends AbstractCondition {
     static final NoCondition      INSTANCE         = new NoCondition();
 
     @Override
+    final boolean isNullable() {
+        return false;
+    }
+
+    @Override
     public final void accept(Context<?> ctx) {
         ctx.sql("1 = 1");
     }

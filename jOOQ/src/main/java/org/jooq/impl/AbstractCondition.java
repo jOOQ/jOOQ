@@ -63,6 +63,15 @@ abstract class AbstractCondition extends AbstractQueryPart implements Condition 
 
     AbstractCondition() {}
 
+    /**
+     * [#10179] Subclasses may override this method to indicate that the
+     * condition may produce <code>TRUE</code>, <code>FALSE</code>, or
+     * <code>NULL</code>.
+     */
+    boolean isNullable() {
+        return true;
+    }
+
     @Override
     public Clause[] clauses(Context<?> ctx) {
         return CLAUSES;

@@ -57,8 +57,13 @@ final class NotCondition extends AbstractCondition {
     }
 
     @Override
+    boolean isNullable() {
+        return !(condition instanceof AbstractCondition) || ((AbstractCondition) condition).isNullable();
+    }
+
+    @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(K_NOT).sql('(').visit(condition).sql(')');
+        ctx.visit(K_NOT).sql(" (").visit(condition).sql(')');
     }
 
     @Override

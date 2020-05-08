@@ -82,7 +82,7 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-final class RowIsNull extends AbstractCondition implements NotNullCondition {
+final class RowIsNull extends AbstractCondition {
 
     /**
      * Generated UID
@@ -108,6 +108,11 @@ final class RowIsNull extends AbstractCondition implements NotNullCondition {
         this.row = null;
         this.select = select;
         this.isNull = isNull;
+    }
+
+    @Override
+    final boolean isNullable() {
+        return false;
     }
 
     @Override

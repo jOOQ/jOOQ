@@ -47,7 +47,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-final class IsDocument extends AbstractCondition implements NotNullCondition {
+final class IsDocument extends AbstractCondition {
 
     /**
      * Generated UID
@@ -59,6 +59,11 @@ final class IsDocument extends AbstractCondition implements NotNullCondition {
     IsDocument(Field<?> field, boolean isDocument) {
         this.field = field;
         this.isDocument = isDocument;
+    }
+
+    @Override
+    final boolean isNullable() {
+        return false;
     }
 
     @Override

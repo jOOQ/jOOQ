@@ -55,6 +55,11 @@ final class TrueCondition extends AbstractCondition implements True {
     static final TrueCondition    INSTANCE         = new TrueCondition();
 
     @Override
+    final boolean isNullable() {
+        return false;
+    }
+
+    @Override
     public final void accept(Context<?> ctx) {
         ctx.sql("1 = 1");
     }

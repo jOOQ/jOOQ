@@ -110,6 +110,15 @@ final class CombinedCondition extends AbstractCondition {
             return falseCondition();
     }
 
+    @Override
+    final boolean isNullable() {
+        for (Condition condition : conditions)
+            if (!(condition instanceof AbstractCondition) || ((AbstractCondition) condition).isNullable())
+                return true;
+
+        return false;
+    }
+
     private CombinedCondition(Operator operator, int size) {
         if (operator == null)
             throw new IllegalArgumentException("The argument 'operator' must not be null");

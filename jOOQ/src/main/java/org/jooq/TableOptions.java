@@ -54,12 +54,18 @@ public final class TableOptions implements Serializable {
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -4840043541516260827L;
+    private static final long         serialVersionUID    = -4840043541516260827L;
+    private static final TableOptions C_EXPRESSION        = new TableOptions(TableType.EXPRESSION);
+    private static final TableOptions C_FUNCTION          = new TableOptions(TableType.FUNCTION);
+    private static final TableOptions C_MATERIALIZED_VIEW = materializedView(null);
+    private static final TableOptions C_TABLE             = new TableOptions(TableType.TABLE);
+    private static final TableOptions C_TEMPORARY         = new TableOptions(TableType.TEMPORARY);
+    private static final TableOptions C_VIEW              = view((String) null);
 
-    private final TableType   type;
-    private final OnCommit    onCommit;
-    private final Select<?>   select;
-    private final String      source;
+    private final TableType           type;
+    private final OnCommit            onCommit;
+    private final Select<?>           select;
+    private final String              source;
 
     private TableOptions(TableType type) {
         this.type = type;
@@ -115,14 +121,14 @@ public final class TableOptions implements Serializable {
      * Create a new {@link TableOptions} object for a {@link TableType#TABLE}.
      */
     public static final TableOptions table() {
-        return new TableOptions(TableType.TABLE);
+        return C_TABLE;
     }
 
     /**
      * Create a new {@link TableOptions} object for a {@link TableType#TEMPORARY}.
      */
     public static final TableOptions temporaryTable() {
-        return new TableOptions(TableType.TEMPORARY);
+        return C_TEMPORARY;
     }
 
     /**
@@ -137,7 +143,7 @@ public final class TableOptions implements Serializable {
      * unknown content.
      */
     public static final TableOptions view() {
-        return view((String) null);
+        return C_VIEW;
     }
 
     /**
@@ -159,7 +165,7 @@ public final class TableOptions implements Serializable {
      * {@link TableType#MATERIALIZED_VIEW} of unknown content.
      */
     public static final TableOptions materializedView() {
-        return materializedView(null);
+        return C_MATERIALIZED_VIEW;
     }
 
     /**
@@ -173,14 +179,14 @@ public final class TableOptions implements Serializable {
      * Create a new {@link TableOptions} object for a {@link TableType#EXPRESSION}.
      */
     public static final TableOptions expression() {
-        return new TableOptions(TableType.EXPRESSION);
+        return C_EXPRESSION;
     }
 
     /**
      * Create a new {@link TableOptions} object for a {@link TableType#FUNCTION}.
      */
     public static final TableOptions function() {
-        return new TableOptions(TableType.FUNCTION);
+        return C_FUNCTION;
     }
 
     /**

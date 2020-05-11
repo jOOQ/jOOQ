@@ -544,6 +544,11 @@ implements
 
     @Override
     public final Class<? extends Record> getRecordType() {
+
+        // [#10183] The RHS does not contribute to the projection in these cases
+        if (type == LEFT_SEMI_JOIN || type == LEFT_ANTI_JOIN)
+            return lhs.getRecordType();
+
         // TODO: [#4695] Calculate the correct Record[B] type
         return RecordImplN.class;
     }

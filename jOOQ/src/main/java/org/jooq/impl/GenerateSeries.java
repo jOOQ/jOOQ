@@ -37,7 +37,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.level;
+// ...
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.table;
@@ -89,26 +89,24 @@ final class GenerateSeries extends AbstractTable<Record1<Integer>> {
 
     private final QueryPart delegate(Configuration configuration) {
         switch (configuration.family()) {
-            case CUBRID:
 
 
 
 
-                // There is a bug in CUBRID preventing reuse of "level" in the
-                // predicate http://jira.cubrid.org/browse/ENGINE-119
-                if (step == null)
-                    return table("({select} {0} {as} {1} {from} {2} {connect by} {level} <= {3})",
-                        from.add(level()).sub(one()),
-                        name("generate_series"),
-                        new Dual(),
-                        to.add(one()).sub(from));
-                else
-                    return table("({select} {0} {as} {1} {from} {2} {connect by} {level} * {3} <= {4})",
-                        from.add(level().mul(step)).sub(step),
-                        name("generate_series"),
-                        new Dual(),
-                        step,
-                        to.add(step).sub(from));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

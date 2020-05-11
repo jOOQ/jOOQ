@@ -89,9 +89,9 @@ import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.DSL.collation;
 import static org.jooq.impl.DSL.concat;
 import static org.jooq.impl.DSL.condition;
-import static org.jooq.impl.DSL.connectByIsCycle;
-import static org.jooq.impl.DSL.connectByIsLeaf;
-import static org.jooq.impl.DSL.connectByRoot;
+// ...
+// ...
+// ...
 import static org.jooq.impl.DSL.constraint;
 // ...
 // ...
@@ -166,7 +166,7 @@ import static org.jooq.impl.DSL.lead;
 import static org.jooq.impl.DSL.least;
 import static org.jooq.impl.DSL.left;
 import static org.jooq.impl.DSL.length;
-import static org.jooq.impl.DSL.level;
+// ...
 import static org.jooq.impl.DSL.list;
 import static org.jooq.impl.DSL.listAgg;
 import static org.jooq.impl.DSL.ln;
@@ -206,7 +206,7 @@ import static org.jooq.impl.DSL.percentileDisc;
 import static org.jooq.impl.DSL.pi;
 import static org.jooq.impl.DSL.position;
 import static org.jooq.impl.DSL.primaryKey;
-import static org.jooq.impl.DSL.prior;
+// ...
 import static org.jooq.impl.DSL.privilege;
 import static org.jooq.impl.DSL.product;
 import static org.jooq.impl.DSL.productDistinct;
@@ -244,7 +244,7 @@ import static org.jooq.impl.DSL.rollup;
 import static org.jooq.impl.DSL.round;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.rowNumber;
-import static org.jooq.impl.DSL.rownum;
+// ...
 import static org.jooq.impl.DSL.rowsBetweenCurrentRow;
 import static org.jooq.impl.DSL.rowsBetweenFollowing;
 import static org.jooq.impl.DSL.rowsBetweenPreceding;
@@ -273,7 +273,7 @@ import static org.jooq.impl.DSL.stddevSamp;
 import static org.jooq.impl.DSL.substring;
 import static org.jooq.impl.DSL.sum;
 import static org.jooq.impl.DSL.sumDistinct;
-import static org.jooq.impl.DSL.sysConnectByPath;
+// ...
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.tan;
 import static org.jooq.impl.DSL.tanh;
@@ -1112,9 +1112,11 @@ final class ParserImpl implements Parser {
         List<SortField<?>> orderBy = null;
 
         if (parseKeywordIf(ctx, "ORDER")) {
-            if (parseKeywordIf(ctx, "SIBLINGS BY")) {
-                result.addOrderBy(parseSortSpecification(ctx));
-                result.setOrderBySiblings(true);
+            if (parseKeywordIf(ctx, "SIBLINGS BY") && ctx.requireProEdition()) {
+
+
+
+
             }
             else if (parseKeywordIf(ctx, "BY"))
                 result.addOrderBy(orderBy = parseSortSpecification(ctx));
@@ -1430,9 +1432,11 @@ final class ParserImpl implements Parser {
 
         Table<?> into = null;
         List<Table<?>> from = null;
-        Condition startWith = null;
-        Condition connectBy = null;
-        boolean connectByNoCycle = false;
+
+
+
+
+
         Condition where = null;
         List<GroupField> groupBy = null;
         Condition having = null;
@@ -1458,18 +1462,22 @@ final class ParserImpl implements Parser {
         if (parseKeywordIf(ctx, "WHERE"))
             where = parseCondition(ctx);
 
-        if (parseKeywordIf(ctx, "START WITH")) {
-            startWith = parseCondition(ctx);
-            parseKeyword(ctx, "CONNECT BY");
-            connectByNoCycle = parseKeywordIf(ctx, "NOCYCLE");
-            connectBy = parseCondition(ctx);
-        }
-        else if (parseKeywordIf(ctx, "CONNECT BY")) {
-            connectByNoCycle = parseKeywordIf(ctx, "NOCYCLE");
-            connectBy = parseCondition(ctx);
+        if (parseKeywordIf(ctx, "START WITH") && ctx.requireProEdition()) {
 
-            if (parseKeywordIf(ctx, "START WITH"))
-                startWith = parseCondition(ctx);
+
+
+
+
+
+        }
+        else if (parseKeywordIf(ctx, "CONNECT BY") && ctx.requireProEdition()) {
+
+
+
+
+
+
+
         }
 
         if (parseKeywordIf(ctx, "GROUP BY")) {
@@ -1533,14 +1541,16 @@ final class ParserImpl implements Parser {
         if (from != null)
             result.addFrom(from);
 
-        if (connectBy != null)
-            if (connectByNoCycle)
-                result.addConnectByNoCycle(connectBy);
-            else
-                result.addConnectBy(connectBy);
 
-        if (startWith != null)
-            result.setConnectByStartWith(startWith);
+
+
+
+
+
+
+
+
+
 
         if (where != null)
             result.addConditions(where);
@@ -6262,8 +6272,11 @@ final class ParserImpl implements Parser {
     }
 
     private static final FieldOrRow parseUnaryOps(ParserContext ctx, Type type) {
-        if (parseKeywordIf(ctx, "CONNECT_BY_ROOT"))
-            return connectByRoot(toField(ctx, parseTerm(ctx, type)));
+        if (parseKeywordIf(ctx, "CONNECT_BY_ROOT") && ctx.requireProEdition()) {
+
+
+
+        }
 
         FieldOrRow r;
         Sign sign = parseSign(ctx);
@@ -6437,10 +6450,16 @@ final class ParserImpl implements Parser {
                     return field;
                 else if ((field = parseFieldChooseIf(ctx)) != null)
                     return field;
-                else if (parseKeywordIf(ctx, "CONNECT_BY_ISCYCLE"))
-                    return connectByIsCycle();
-                else if (parseKeywordIf(ctx, "CONNECT_BY_ISLEAF"))
-                    return connectByIsLeaf();
+                else if (parseKeywordIf(ctx, "CONNECT_BY_ISCYCLE") && ctx.requireProEdition()) {
+
+
+
+                }
+                else if (parseKeywordIf(ctx, "CONNECT_BY_ISLEAF") && ctx.requireProEdition()) {
+
+
+
+                }
 
                 break;
 
@@ -6591,8 +6610,11 @@ final class ParserImpl implements Parser {
                         return ln((Field) parseFieldNumericOpParenthesised(ctx));
                     else if ((field = parseFieldLogIf(ctx)) != null)
                         return field;
-                    else if (parseKeywordIf(ctx, "LEVEL"))
-                        return level();
+                    else if (parseKeywordIf(ctx, "LEVEL") && ctx.requireProEdition()) {
+
+
+
+                    }
                     else if ((field = parseFieldShlIf(ctx)) != null)
                         return field;
 
@@ -6677,8 +6699,11 @@ final class ParserImpl implements Parser {
                     else if (parseFunctionNameIf(ctx, "PI") && parse(ctx, '(') && parse(ctx, ')'))
                         return pi();
 
-                if (parseKeywordIf(ctx, "PRIOR"))
-                    return prior(toField(ctx, parseConcat(ctx, type)));
+                if (parseKeywordIf(ctx, "PRIOR") && ctx.requireProEdition()) {
+
+
+
+                }
 
                 break;
 
@@ -6715,8 +6740,11 @@ final class ParserImpl implements Parser {
                         return field;
                     else if ((field = parseFieldRoundIf(ctx)) != null)
                         return field;
-                    else if (parseKeywordIf(ctx, "ROWNUM"))
-                        return rownum();
+                    else if (parseKeywordIf(ctx, "ROWNUM") && ctx.requireProEdition()) {
+
+
+
+                    }
                     else if (parseFunctionNameIf(ctx, "RADIANS")
                           || parseFunctionNameIf(ctx, "RADIAN")
                           || parseFunctionNameIf(ctx, "RAD"))
@@ -7001,13 +7029,15 @@ final class ParserImpl implements Parser {
     }
 
     private static final Field<?> parseFieldSysConnectByPathIf(ParserContext ctx) {
-        if (parseFunctionNameIf(ctx, "SYS_CONNECT_BY_PATH")) {
-            parse(ctx, '(');
-            Field<?> x = parseField(ctx);
-            parse(ctx, ',');
-            String y = parseStringLiteral(ctx);
-            parse(ctx, ')');
-            return sysConnectByPath(x, y);
+        if (parseFunctionNameIf(ctx, "SYS_CONNECT_BY_PATH") && ctx.requireProEdition()) {
+
+
+
+
+
+
+
+
         }
 
         return null;

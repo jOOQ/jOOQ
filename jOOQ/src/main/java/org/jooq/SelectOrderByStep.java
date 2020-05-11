@@ -265,39 +265,46 @@ public interface SelectOrderByStep<R extends Record> extends SelectLimitStep<R> 
     @Support
     SelectLimitStep<R> orderBy(int... fieldIndexes);
 
-    /**
-     * Add an <code>ORDER SIBLINGS BY</code> clause to the query
-     * <p>
-     * This clause can be used only along with Oracle's <code>CONNECT BY</code>
-     * clause, to indicate that the hierarchical ordering should be preserved
-     * and elements of each hierarchy should be ordered among themselves.
-     */
-    @Support({ CUBRID })
-    SelectLimitStep<R> orderSiblingsBy(OrderField<?>... fields);
 
-    /**
-     * Add an <code>ORDER SIBLINGS BY</code> clause to the query
-     * <p>
-     * This clause can be used only along with Oracle's <code>CONNECT BY</code>
-     * clause, to indicate that the hierarchical ordering should be preserved
-     * and elements of each hierarchy should be ordered among themselves.
-     */
-    @Support({ CUBRID })
-    SelectLimitStep<R> orderSiblingsBy(Collection<? extends OrderField<?>> fields);
 
-    /**
-     * Add an <code>ORDER SIBLINGS BY</code> clause to the query
-     * <p>
-     * This clause can be used only along with Oracle's <code>CONNECT BY</code>
-     * clause, to indicate that the hierarchical ordering should be preserved
-     * and elements of each hierarchy should be ordered among themselves.
-     * <p>
-     * Indexes start at <code>1</code> in SQL!
-     * <p>
-     * Note, you can use <code>orderSiblingsBy(DSL.val(1).desc())</code> or
-     * <code>orderBy(DSL.literal(1).desc())</code> to apply descending
-     * ordering
-     */
-    @Support({ CUBRID })
-    SelectLimitStep<R> orderSiblingsBy(int... fieldIndexes);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

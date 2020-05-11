@@ -18375,76 +18375,87 @@ public class DSL {
         return new Radians(nullSafe(field));
     }
 
-    // -------------------------------------------------------------------------
-    // Pseudo-fields and functions for use in the context of a CONNECT BY clause
-    // -------------------------------------------------------------------------
 
-    /**
-     * Retrieve the Oracle-specific <code>LEVEL</code> pseudo-field (to be used
-     * along with <code>CONNECT BY</code> clauses).
-     */
-    @Support({ CUBRID })
-    public static Field<Integer> level() {
-        return field("level", Integer.class);
-    }
 
-    /**
-     * Retrieve the Oracle-specific <code>CONNECT_BY_ISCYCLE</code> pseudo-field
-     * (to be used along with <code>CONNECT BY</code> clauses).
-     */
-    @Support({ CUBRID })
-    public static Field<Boolean> connectByIsCycle() {
-        return field("connect_by_iscycle", Boolean.class);
-    }
 
-    /**
-     * Retrieve the Oracle-specific <code>CONNECT_BY_ISLEAF</code> pseudo-field
-     * (to be used along with <code>CONNECT BY</code> clauses).
-     */
-    @Support({ CUBRID })
-    public static Field<Boolean> connectByIsLeaf() {
-        return field("connect_by_isleaf", Boolean.class);
-    }
 
-    /**
-     * Retrieve the Oracle-specific <code>CONNECT_BY_ROOT</code> pseudo-column
-     * (to be used along with <code>CONNECT BY</code> clauses).
-     */
-    @Support({ CUBRID })
-    public static <T> Field<T> connectByRoot(Field<T> field) {
-        return field("{connect_by_root} {0}", nullSafeDataType(field), field);
-    }
 
-    /**
-     * Retrieve the Oracle-specific
-     * <code>SYS_CONNECT_BY_PATH(field, separator)</code> function (to be used
-     * along with <code>CONNECT BY</code> clauses).
-     */
-    @Support({ CUBRID })
-    public static Field<String> sysConnectByPath(Field<?> field, String separator) {
-        return function("sys_connect_by_path", String.class, field, inline(separator));
-    }
 
-    /**
-     * Add the Oracle-specific <code>PRIOR</code> unary operator before a field
-     * (to be used along with <code>CONNECT BY</code> clauses).
-     */
-    @Support({ CUBRID })
-    public static <T> Field<T> prior(Field<T> field) {
-        return new Prior<>(field);
-    }
 
-    // -------------------------------------------------------------------------
-    // Other pseudo-fields and functions
-    // -------------------------------------------------------------------------
 
-    /**
-     * Retrieve the Oracle-specific <code>ROWNUM</code> pseudo-field.
-     */
-    @Support({ CUBRID })
-    public static Field<Integer> rownum() {
-        return field("rownum", Integer.class);
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // -------------------------------------------------------------------------
     // XXX XML functions

@@ -288,25 +288,34 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
+
+
+
+
+
     private final TableList                              from;
     private final ConditionProviderImpl                  condition;
-    private final ConditionProviderImpl                  connectBy;
-    private boolean                                      connectByNoCycle;
-    private final ConditionProviderImpl                  connectByStartWith;
     private boolean                                      grouping;
     private QueryPartList<GroupField>                    groupBy;
     private final ConditionProviderImpl                  having;
     private WindowList                                   window;
     private final ConditionProviderImpl                  qualify;
     private final SortFieldList                          orderBy;
-    private boolean                                      orderBySiblings;
+
+
+
+
     private final QueryPartList<Field<?>>                seek;
     private boolean                                      seekBefore;
     private final Limit                                  limit;
     private final List<CombineOperator>                  unionOp;
     private final List<QueryPartList<Select<?>>>         union;
     private final SortFieldList                          unionOrderBy;
-    private boolean                                      unionOrderBySiblings; // [#3579] TODO
+
+
+
+
     private final QueryPartList<Field<?>>                unionSeek;
     private boolean                                      unionSeekBefore;      // [#3579] TODO
     private final Limit                                  unionLimit;
@@ -331,8 +340,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         this.select = new SelectFieldList<>();
         this.from = new TableList();
         this.condition = new ConditionProviderImpl();
-        this.connectBy = new ConditionProviderImpl();
-        this.connectByStartWith = new ConditionProviderImpl();
+
+
+
+
         this.having = new ConditionProviderImpl();
         this.qualify = new ConditionProviderImpl();
         this.orderBy = new SortFieldList();
@@ -1688,34 +1699,36 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         context.end(SELECT_WHERE);
 
-        // CONNECT BY clause
-        // -----------------
 
-        // CUBRID supports this clause only as [ START WITH .. ] CONNECT BY
-        // Oracle also knows the CONNECT BY .. [ START WITH ] alternative
-        // syntax
-        context.start(SELECT_START_WITH);
 
-        if (getConnectByStartWith().hasWhere())
-            context.formatSeparator()
-                   .visit(K_START_WITH)
-                   .sql(' ')
-                   .visit(getConnectByStartWith());
 
-        context.end(SELECT_START_WITH);
-        context.start(SELECT_CONNECT_BY);
 
-        if (getConnectBy().hasWhere()) {
-            context.formatSeparator()
-                   .visit(K_CONNECT_BY);
 
-            if (connectByNoCycle)
-                context.sql(' ').visit(K_NOCYCLE);
 
-            context.sql(' ').visit(getConnectBy());
-        }
 
-        context.end(SELECT_CONNECT_BY);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         // GROUP BY and HAVING clause
         // --------------------------
@@ -1993,8 +2006,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 ctx.formatSeparator()
                    .visit(K_ORDER);
 
-                if (orderBySiblings)
-                    ctx.sql(' ').visit(K_SIBLINGS);
+
+
+
+
 
                 ctx.sql(' ').visit(K_BY).separatorRequired(true);
 
@@ -2823,13 +2838,19 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         return c;
     }
 
-    final ConditionProviderImpl getConnectBy() {
-        return connectBy;
-    }
 
-    final ConditionProviderImpl getConnectByStartWith() {
-        return connectByStartWith;
-    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     final ConditionProviderImpl getHaving() {
         return having;
@@ -2903,13 +2924,18 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         addOrderBy(Tools.inline(fieldIndexes));
     }
 
-    @Override
-    public final void setOrderBySiblings(boolean orderBySiblings) {
-        if (unionOp.size() == 0)
-            this.orderBySiblings = orderBySiblings;
-        else
-            this.unionOrderBySiblings = orderBySiblings;
-    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public final void addSeekAfter(Field<?>... fields) {
@@ -2973,13 +2999,19 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         condition.addConditions(operator, conditions);
     }
 
-    final void setConnectByNoCycle(boolean connectByNoCycle) {
-        this.connectByNoCycle = connectByNoCycle;
-    }
 
-    final void setStartWith(Condition condition) {
-        connectByStartWith.addConditions(condition);
-    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     final void setHint(String hint) {
         this.hint = hint;
@@ -3006,21 +3038,28 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             getFrom().add(provider.asTable());
     }
 
-    @Override
-    public final void addConnectBy(Condition c) {
-        getConnectBy().addConditions(c);
-    }
 
-    @Override
-    public final void addConnectByNoCycle(Condition c) {
-        getConnectBy().addConditions(c);
-        setConnectByNoCycle(true);
-    }
 
-    @Override
-    public final void setConnectByStartWith(Condition c) {
-        setStartWith(c);
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public final void addGroupBy(Collection<? extends GroupField> fields) {

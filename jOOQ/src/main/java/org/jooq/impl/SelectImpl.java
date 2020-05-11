@@ -111,9 +111,9 @@ import org.jooq.Row;
 import org.jooq.SQL;
 import org.jooq.Select;
 import org.jooq.SelectConditionStep;
-import org.jooq.SelectConnectByAfterStartWithConditionStep;
-import org.jooq.SelectConnectByAfterStartWithStep;
-import org.jooq.SelectConnectByConditionStep;
+// ...
+// ...
+// ...
 import org.jooq.SelectFieldOrAsterisk;
 import org.jooq.SelectFinalStep;
 // ...
@@ -176,9 +176,11 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     SelectOptionalOnStep<R>,
     SelectOnConditionStep<R>,
     SelectConditionStep<R>,
-    SelectConnectByConditionStep<R>,
-    SelectConnectByAfterStartWithConditionStep<R>,
-    SelectConnectByAfterStartWithStep<R>,
+
+
+
+
+
     SelectHavingConditionStep<R>,
     SelectQualifyConditionStep<R>,
 
@@ -464,9 +466,11 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
             case WHERE:
                 getQuery().addConditions(condition);
                 break;
-            case CONNECT_BY:
-                getQuery().addConnectBy(condition);
-                break;
+
+
+
+
+
             case HAVING:
                 getQuery().addHaving(condition);
                 break;
@@ -544,8 +548,10 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
             case WHERE:
                 getQuery().addConditions(Operator.OR, condition);
                 break;
-            case CONNECT_BY:
-                throw new IllegalStateException("Cannot connect conditions for the CONNECT BY clause using the OR operator");
+
+
+
+
             case HAVING:
                 getQuery().addHaving(Operator.OR, condition);
                 break;
@@ -617,118 +623,143 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
         return or(notExists(select));
     }
 
-    @Override
-    public final SelectImpl connectBy(Condition condition) {
-        conditionStep = ConditionStep.CONNECT_BY;
-        getQuery().addConnectBy(condition);
-        return this;
-    }
 
-    @Override
-    public final SelectImpl connectBy(Field<Boolean> condition) {
-        return connectBy(condition(condition));
-    }
 
-    @Override
-    @Deprecated
-    public final SelectImpl connectBy(Boolean condition) {
-        return connectBy(condition(condition));
-    }
 
-    @Override
-    public final SelectImpl connectBy(SQL sql) {
-        return connectBy(condition(sql));
-    }
 
-    @Override
-    public final SelectImpl connectBy(String sql) {
-        return connectBy(condition(sql));
-    }
 
-    @Override
-    public final SelectImpl connectBy(String sql, Object... bindings) {
-        return connectBy(condition(sql, bindings));
-    }
 
-    @Override
-    public final SelectImpl connectBy(String sql, QueryPart... parts) {
-        return connectBy(condition(sql, parts));
-    }
 
-    @Override
-    public final SelectImpl connectByNoCycle(Condition condition) {
-        conditionStep = ConditionStep.CONNECT_BY;
-        getQuery().addConnectByNoCycle(condition);
-        return this;
-    }
 
-    @Override
-    public final SelectImpl connectByNoCycle(Field<Boolean> condition) {
-        return connectByNoCycle(condition(condition));
-    }
 
-    @Override
-    @Deprecated
-    public final SelectImpl connectByNoCycle(Boolean condition) {
-        return connectByNoCycle(condition(condition));
-    }
 
-    @Override
-    public final SelectImpl connectByNoCycle(SQL sql) {
-        return connectByNoCycle(condition(sql));
-    }
 
-    @Override
-    public final SelectImpl connectByNoCycle(String sql) {
-        return connectByNoCycle(condition(sql));
-    }
 
-    @Override
-    public final SelectImpl connectByNoCycle(String sql, Object... bindings) {
-        return connectByNoCycle(condition(sql, bindings));
-    }
 
-    @Override
-    public final SelectImpl connectByNoCycle(String sql, QueryPart... parts) {
-        return connectByNoCycle(condition(sql, parts));
-    }
 
-    @Override
-    public final SelectImpl startWith(Condition condition) {
-        getQuery().setConnectByStartWith(condition);
-        return this;
-    }
 
-    @Override
-    public final SelectImpl startWith(Field<Boolean> condition) {
-        return startWith(condition(condition));
-    }
 
-    @Override
-    @Deprecated
-    public final SelectImpl startWith(Boolean condition) {
-        return startWith(condition(condition));
-    }
 
-    @Override
-    public final SelectImpl startWith(SQL sql) {
-        return startWith(condition(sql));
-    }
 
-    @Override
-    public final SelectImpl startWith(String sql) {
-        return startWith(condition(sql));
-    }
 
-    @Override
-    public final SelectImpl startWith(String sql, Object... bindings) {
-        return startWith(condition(sql, bindings));
-    }
 
-    @Override
-    public final SelectImpl startWith(String sql, QueryPart... parts) {
-        return startWith(condition(sql, parts));
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public final SelectImpl groupBy(GroupField... fields) {
@@ -874,26 +905,33 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
         return this;
     }
 
-    @Override
-    public final SelectImpl orderSiblingsBy(OrderField<?>... fields) {
-        getQuery().addOrderBy(fields);
-        getQuery().setOrderBySiblings(true);
-        return this;
-    }
 
-    @Override
-    public final SelectImpl orderSiblingsBy(Collection<? extends OrderField<?>> fields) {
-        getQuery().addOrderBy(fields);
-        getQuery().setOrderBySiblings(true);
-        return this;
-    }
 
-    @Override
-    public final SelectImpl orderSiblingsBy(int... fieldIndexes) {
-        getQuery().addOrderBy(fieldIndexes);
-        getQuery().setOrderBySiblings(true);
-        return this;
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -4643,11 +4681,16 @@ final class SelectImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
          */
         WHERE,
 
-        /**
-         * Additional conditions go to the <code>CONNECT BY</code> clause that
-         * is currently being added.
-         */
-        CONNECT_BY,
+
+
+
+
+
+
+
+
+
+
 
         /**
          * Additional conditions go to the <code>HAVING</code> clause that is

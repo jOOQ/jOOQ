@@ -520,25 +520,32 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     @Support
     void addOption(String option);
 
-    /**
-     * Add an Oracle-specific <code>CONNECT BY</code> clause to the query.
-     */
-    @Support({ CUBRID })
-    void addConnectBy(Condition condition);
 
-    /**
-     * Add an Oracle-specific <code>CONNECT BY NOCYCLE</code> clause to the
-     * query.
-     */
-    @Support({ CUBRID })
-    void addConnectByNoCycle(Condition condition);
 
-    /**
-     * Add an Oracle-specific <code>START WITH</code> clause to the query's
-     * <code>CONNECT BY</code> clause.
-     */
-    @Support({ CUBRID })
-    void setConnectByStartWith(Condition condition);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // ------------------------------------------------------------------------
     // Methods from ConditionProvider, OrderProvider, LockProvider
@@ -598,19 +605,24 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     @Support
     void addOrderBy(int... fieldIndexes);
 
-    /**
-     * Indicate whether the <code>SIBLINGS</code> keyword should be used in an
-     * <code>ORDER BY</code> clause to form an <code>ORDER SIBLINGS BY</code>
-     * clause.
-     * <p>
-     * This clause can be used only along with Oracle's <code>CONNECT BY</code>
-     * clause, to indicate that the hierarchical ordering should be preserved
-     * and elements of each hierarchy should be ordered among themselves.
-     *
-     * @param orderBySiblings
-     */
-    @Support({ CUBRID })
-    void setOrderBySiblings(boolean orderBySiblings);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Adds seeking fields.

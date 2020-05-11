@@ -62,11 +62,6 @@ final class IsDocument extends AbstractCondition {
     }
 
     @Override
-    final boolean isNullable() {
-        return false;
-    }
-
-    @Override
     public final void accept(Context<?> ctx) {
         ctx.visit(field).sql(' ').visit(isDocument ? K_IS_DOCUMENT : K_IS_NOT_DOCUMENT);
     }

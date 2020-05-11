@@ -66,11 +66,6 @@ final class IsJSON extends AbstractCondition {
     }
 
     @Override
-    final boolean isNullable() {
-        return false;
-    }
-
-    @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
             case MYSQL:

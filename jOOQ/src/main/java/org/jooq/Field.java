@@ -1171,6 +1171,35 @@ extends
     Condition isDistinctFrom(Field<T> field);
 
     /**
+     * Create a condition to check if this field is <code>DISTINCT</code> from
+     * another field.
+     * <p>
+     * In {@link SQLDialect#MYSQL} and {@link SQLDialect#MARIADB}, this can be
+     * emulated through <code><pre>not([this] &lt;=&gt; [value])</pre></code>
+     * <p>
+     * In {@link SQLDialect#SQLITE}, this can be emulated through
+     * <code><pre>[this] IS NOT [value]</pre></code>
+     * <p>
+     * In databases that support <code>INTERSECT</code> (see
+     * {@link Select#intersect(Select)}, this predicate can be emulated as
+     * follows: <code><pre>
+     * NOT EXISTS (SELECT [this] INTERSECT SELECT [value])
+     * </pre></code>
+     * <p>
+     * If this is not supported by the underlying database, jOOQ will render
+     * this instead: <code><pre>
+     * CASE WHEN [this] IS     NULL AND [field] IS     NULL THEN FALSE
+     *      WHEN [this] IS     NULL AND [field] IS NOT NULL THEN TRUE
+     *      WHEN [this] IS NOT NULL AND [field] IS     NULL THEN TRUE
+     *      WHEN [this] =               [field]             THEN FALSE
+     *      ELSE                                                 TRUE
+     * END
+     * </pre></code> SQL: <code>this is distinct from field</code>
+     */
+    @Support
+    Condition isDistinctFrom(Select<? extends Record1<T>> select);
+
+    /**
      * Create a condition to check if this field is <code>NOT DISTINCT</code>
      * from another value.
      * <p>
@@ -1227,6 +1256,35 @@ extends
      */
     @Support
     Condition isNotDistinctFrom(Field<T> field);
+
+    /**
+     * Create a condition to check if this field is <code>NOT DISTINCT</code>
+     * from another field.
+     * <p>
+     * In {@link SQLDialect#MYSQL} and {@link SQLDialect#MARIADB}, this can be
+     * emulated through <code><pre>[this] &lt;=&gt; [value]</pre></code>
+     * <p>
+     * In {@link SQLDialect#SQLITE}, this can be emulated through
+     * <code><pre>[this] IS [value]</pre></code>
+     * <p>
+     * In databases that support <code>INTERSECT</code> (see
+     * {@link Select#intersect(Select)}, this predicate can be emulated as
+     * follows: <code><pre>
+     * EXISTS (SELECT [this] INTERSECT SELECT [value])
+     * </pre></code>
+     * <p>
+     * If this is not supported by the underlying database, jOOQ will render
+     * this instead: <code><pre>
+     * CASE WHEN [this] IS     NULL AND [field] IS     NULL THEN TRUE
+     *      WHEN [this] IS     NULL AND [field] IS NOT NULL THEN FALSE
+     *      WHEN [this] IS NOT NULL AND [field] IS     NULL THEN FALSE
+     *      WHEN [this] =               [value]             THEN TRUE
+     *      ELSE                                                 FALSE
+     * END
+     * </pre></code> SQL: <code>this is not distinct from field</code>
+     */
+    @Support
+    Condition isNotDistinctFrom(Select<? extends Record1<T>> select);
 
     // ------------------------------------------------------------------------
     // LIKE_REGEX predicates

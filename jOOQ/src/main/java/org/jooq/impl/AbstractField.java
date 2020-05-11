@@ -671,6 +671,11 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     }
 
     @Override
+    public final Condition isDistinctFrom(Select<? extends Record1<T>> select) {
+        return isDistinctFrom(DSL.field(select));
+    }
+
+    @Override
     public final Condition isNotDistinctFrom(T value) {
         return isNotDistinctFrom(Tools.field(value, this));
     }
@@ -678,6 +683,11 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     @Override
     public final Condition isNotDistinctFrom(Field<T> field) {
         return compare(IS_NOT_DISTINCT_FROM, field);
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Select<? extends Record1<T>> select) {
+        return isNotDistinctFrom(DSL.field(select));
     }
 
     @SuppressWarnings({ "unchecked" })

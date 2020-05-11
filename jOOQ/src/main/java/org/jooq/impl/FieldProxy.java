@@ -610,6 +610,11 @@ final class FieldProxy<T> implements TableField<Record, T>, QueryPartInternal {
     }
 
     @Override
+    public final Condition isDistinctFrom(Select<? extends Record1<T>> select) {
+        return delegate.isDistinctFrom(select);
+    }
+
+    @Override
     public final Condition isNotDistinctFrom(T value) {
         return delegate.isNotDistinctFrom(value);
     }
@@ -617,6 +622,11 @@ final class FieldProxy<T> implements TableField<Record, T>, QueryPartInternal {
     @Override
     public final Condition isNotDistinctFrom(Field<T> field) {
         return delegate.isNotDistinctFrom(field);
+    }
+
+    @Override
+    public final Condition isNotDistinctFrom(Select<? extends Record1<T>> select) {
+        return delegate.isNotDistinctFrom(select);
     }
 
     @Override

@@ -473,7 +473,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     public final boolean separatorRequired() {
-        return separatorRequired;
+        return separatorRequired && !separator && !newline;
     }
 
     @Override

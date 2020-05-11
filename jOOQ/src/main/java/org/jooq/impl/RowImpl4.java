@@ -526,6 +526,11 @@ final class RowImpl4<T1, T2, T3, T4> extends AbstractRow implements Row4<T1, T2,
     }
 
     @Override
+    public final Condition isNotDistinctFrom(Select<? extends Record4<T1, T2, T3, T4>> select) {
+        return new RowIsDistinctFrom(this, select, true);
+    }
+
+    @Override
     public final Condition isDistinctFrom(Row4<T1, T2, T3, T4> row) {
         return new RowIsDistinctFrom(this, row, false);
     }
@@ -543,6 +548,11 @@ final class RowImpl4<T1, T2, T3, T4> extends AbstractRow implements Row4<T1, T2,
     @Override
     public final Condition isDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4) {
         return isDistinctFrom(row(t1, t2, t3, t4));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Select<? extends Record4<T1, T2, T3, T4>> select) {
+        return new RowIsDistinctFrom(this, select, false);
     }
 
     // ------------------------------------------------------------------------

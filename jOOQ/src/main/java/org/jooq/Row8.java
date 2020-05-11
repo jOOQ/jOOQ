@@ -517,6 +517,13 @@ public interface Row8<T1, T2, T3, T4, T5, T6, T7, T8> extends Row {
      * distinctness.
      */
     @Support
+    Condition isDistinctFrom(Select<? extends Record8<T1, T2, T3, T4, T5, T6, T7, T8>> select);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * distinctness.
+     */
+    @Support
     Condition isNotDistinctFrom(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row);
 
     /**
@@ -539,6 +546,13 @@ public interface Row8<T1, T2, T3, T4, T5, T6, T7, T8> extends Row {
      */
     @Support
     Condition isNotDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * distinctness.
+     */
+    @Support
+    Condition isNotDistinctFrom(Select<? extends Record8<T1, T2, T3, T4, T5, T6, T7, T8>> select);
 
     // ------------------------------------------------------------------------
     // Ordering comparison predicates

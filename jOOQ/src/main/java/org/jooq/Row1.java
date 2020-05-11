@@ -482,6 +482,13 @@ public interface Row1<T1> extends Row {
      * distinctness.
      */
     @Support
+    Condition isDistinctFrom(Select<? extends Record1<T1>> select);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * distinctness.
+     */
+    @Support
     Condition isNotDistinctFrom(Row1<T1> row);
 
     /**
@@ -504,6 +511,13 @@ public interface Row1<T1> extends Row {
      */
     @Support
     Condition isNotDistinctFrom(Field<T1> t1);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * distinctness.
+     */
+    @Support
+    Condition isNotDistinctFrom(Select<? extends Record1<T1>> select);
 
     // ------------------------------------------------------------------------
     // Ordering comparison predicates

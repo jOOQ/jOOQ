@@ -508,6 +508,11 @@ final class RowImplN extends AbstractRow implements RowN {
     }
 
     @Override
+    public final Condition isNotDistinctFrom(Select<? extends Record> select) {
+        return new RowIsDistinctFrom(this, select, true);
+    }
+
+    @Override
     public final Condition isDistinctFrom(RowN row) {
         return new RowIsDistinctFrom(this, row, false);
     }
@@ -525,6 +530,11 @@ final class RowImplN extends AbstractRow implements RowN {
     @Override
     public final Condition isDistinctFrom(Field<?>... values) {
         return isDistinctFrom(row(values));
+    }
+
+    @Override
+    public final Condition isDistinctFrom(Select<? extends Record> select) {
+        return new RowIsDistinctFrom(this, select, false);
     }
 
     // ------------------------------------------------------------------------

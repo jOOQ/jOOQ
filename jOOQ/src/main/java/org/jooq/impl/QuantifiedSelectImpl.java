@@ -42,6 +42,7 @@ import static java.lang.Boolean.TRUE;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.val;
+import static org.jooq.impl.Tools.visitSubquery;
 
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -92,21 +93,11 @@ final class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart imp
 
     @Override
     public final void accept(Context<?> ctx) {
-
-        ctx.visit(quantifier.toKeyword());
-
         boolean extraParentheses = false ;
 
+        ctx.visit(quantifier.toKeyword());
         ctx.sql(extraParentheses ? " ((" : " (");
-
-        ctx.subquery(true)
-           .formatIndentStart()
-           .formatNewLine()
-           .visit(delegate(ctx.configuration()))
-           .formatIndentEnd()
-           .formatNewLine()
-           .subquery(false);
-
+        visitSubquery(ctx, delegate(ctx.configuration()));
         ctx.sql(extraParentheses ? "))" : ")");
     }
 

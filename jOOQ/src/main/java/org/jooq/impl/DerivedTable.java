@@ -39,6 +39,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Names.N_SELECT;
+import static org.jooq.impl.Tools.visitSubquery;
 
 import org.jooq.Clause;
 import org.jooq.Context;
@@ -89,13 +90,7 @@ final class DerivedTable<R extends Record> extends AbstractTable<R> {
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.subquery(true)
-           .formatIndentStart()
-           .formatNewLine()
-           .visit(query)
-           .formatIndentEnd()
-           .formatNewLine()
-           .subquery(false);
+        visitSubquery(ctx, query);
     }
 
     @Override // Avoid AbstractTable implementation

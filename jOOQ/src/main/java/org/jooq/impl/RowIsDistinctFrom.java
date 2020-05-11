@@ -63,6 +63,7 @@ import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.K_IS;
 import static org.jooq.impl.Keywords.K_NOT;
+import static org.jooq.impl.Tools.visitSubquery;
 
 import java.util.Set;
 
@@ -130,15 +131,7 @@ final class RowIsDistinctFrom extends AbstractCondition {
             if (rhsRow != null)
                 ctx.visit(rhsRow);
             else
-                ctx.sql('(')
-                   .subquery(true)
-                   .formatIndentStart()
-                   .formatNewLine()
-                   .visit(rhsSelect)
-                   .formatIndentEnd()
-                   .formatNewLine()
-                   .subquery(false)
-                   .sql(')');
+                visitSubquery(ctx, rhsSelect, true);
 
             if (!not)
                 ctx.sql(')');
@@ -154,15 +147,7 @@ final class RowIsDistinctFrom extends AbstractCondition {
             if (rhsRow != null)
                 ctx.visit(rhsRow);
             else
-                ctx.sql('(')
-                   .subquery(true)
-                   .formatIndentStart()
-                   .formatNewLine()
-                   .visit(rhsSelect)
-                   .formatIndentEnd()
-                   .formatNewLine()
-                   .subquery(false)
-                   .sql(')');
+                visitSubquery(ctx, rhsSelect, true);
         }
 
 

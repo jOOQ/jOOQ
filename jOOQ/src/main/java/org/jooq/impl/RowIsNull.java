@@ -65,6 +65,7 @@ import static org.jooq.impl.DSL.selectCount;
 import static org.jooq.impl.Keywords.K_IS_NOT_NULL;
 import static org.jooq.impl.Keywords.K_IS_NULL;
 import static org.jooq.impl.Tools.fieldNameStrings;
+import static org.jooq.impl.Tools.visitSubquery;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -146,13 +147,7 @@ final class RowIsNull extends AbstractCondition {
         if (row != null)
             ctx.visit(row);
         else
-            ctx.sql('(')
-               .formatIndentStart().formatNewLine()
-               .subquery(true)
-               .visit(select)
-               .subquery(false)
-               .formatIndentEnd().formatNewLine()
-               .sql(')');
+            visitSubquery(ctx, select, true);
 
         ctx.sql(' ')
            .visit(isNull ? K_IS_NULL : K_IS_NOT_NULL);

@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Keywords.K_AS;
+import static org.jooq.impl.Tools.visitSubquery;
 
 import java.util.List;
 
@@ -82,19 +83,10 @@ final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R>
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (ctx.declareCTE())
-            ctx.visit(name)
-               .sql(' ')
-               .visit(K_AS)
-               .sql(" (")
-               .subquery(true)
-               .formatIndentStart()
-               .formatNewLine()
-               .visit(select)
-               .formatIndentEnd()
-               .formatNewLine()
-               .subquery(false)
-               .sql(')');
+        if (ctx.declareCTE()) {
+            ctx.visit(name).sql(' ').visit(K_AS).sql(' ');
+            visitSubquery(ctx, select, true);
+        }
         else
             ctx.visit(DSL.name(name.name));
     }

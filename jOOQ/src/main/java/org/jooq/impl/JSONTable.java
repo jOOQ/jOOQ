@@ -59,6 +59,7 @@ import static org.jooq.impl.Keywords.K_WITH;
 import static org.jooq.impl.Names.N_JSON_TABLE;
 import static org.jooq.impl.Names.N_OPENJSON;
 import static org.jooq.impl.SQLDataType.JSONB;
+import static org.jooq.impl.Tools.visitSubquery;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -233,31 +234,17 @@ implements
                     ).as(col.field)
                 );
 
-        ctx.sql('(')
-           .formatIndentStart()
-           .formatNewLine()
-           .subquery(true)
-           .visit(
-                select(cols).from(hasOrdinality
-                        ? "jsonb_path_query({0}, {1}::jsonpath) {with} {ordinality} {as} t(j, o)"
-                        : "jsonb_path_query({0}, {1}::jsonpath) {as} t(j)",
-                    json.getType() == JSONB.class ? json : json.cast(JSONB),
-                    path
-                )
-           )
-           .subquery(false)
-           .formatIndentEnd()
-           .formatNewLine()
-           .sql(')');
+        visitSubquery(
+            ctx,
+            select(cols).from(hasOrdinality
+                    ? "jsonb_path_query({0}, {1}::jsonpath) {with} {ordinality} {as} t(j, o)"
+                    : "jsonb_path_query({0}, {1}::jsonpath) {as} t(j)",
+                json.getType() == JSONB.class ? json : json.cast(JSONB),
+                path
+            ),
+            true
+        );
     }
-
-
-
-
-
-
-
-
 
 
 

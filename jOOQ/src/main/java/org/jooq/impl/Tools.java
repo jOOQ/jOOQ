@@ -2206,15 +2206,33 @@ final class Tools {
         return cursor.ctx.exception();
     }
 
+    static final void visitSubquery(Context<?> ctx, QueryPart query) {
+        visitSubquery(ctx, query, false);
+    }
+
+    static final void visitSubquery(Context<?> ctx, QueryPart query, boolean parentheses) {
+        if (parentheses)
+            ctx.sql('(');
+
+        ctx.subquery(true)
+           .formatIndentStart()
+           .formatNewLine()
+           .visit(query)
+           .formatIndentEnd()
+           .formatNewLine()
+           .subquery(false);
+
+        if (parentheses)
+            ctx.sql(')');
+    }
+
     /**
      * Visit each query part from a collection, given a context.
      */
     static final <C extends Context<? super C>> C visitAll(C ctx, Collection<? extends QueryPart> parts) {
-        if (parts != null) {
-            for (QueryPart part : parts) {
+        if (parts != null)
+            for (QueryPart part : parts)
                 ctx.visit(part);
-            }
-        }
 
         return ctx;
     }
@@ -2223,11 +2241,9 @@ final class Tools {
      * Visit each query part from an array, given a context.
      */
     static final <C extends Context<? super C>> C visitAll(C ctx, QueryPart[] parts) {
-        if (parts != null) {
-            for (QueryPart part : parts) {
+        if (parts != null)
+            for (QueryPart part : parts)
                 ctx.visit(part);
-            }
-        }
 
         return ctx;
     }

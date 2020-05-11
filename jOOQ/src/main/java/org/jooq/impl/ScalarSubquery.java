@@ -39,6 +39,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Names.N_SELECT;
+import static org.jooq.impl.Tools.visitSubquery;
 
 import org.jooq.Context;
 import org.jooq.DataType;
@@ -60,14 +61,6 @@ final class ScalarSubquery<T> extends AbstractField<T> {
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.sql('(')
-           .subquery(true)
-           .formatIndentStart()
-           .formatNewLine()
-           .visit(query)
-           .formatIndentEnd()
-           .formatNewLine()
-           .subquery(false)
-           .sql(')');
+        visitSubquery(ctx, query, true);
     }
 }

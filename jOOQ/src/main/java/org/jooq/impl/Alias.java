@@ -76,6 +76,7 @@ import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.Tools.fieldNames;
+import static org.jooq.impl.Tools.visitSubquery;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_AS_REQUIRED;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_UNALIAS_ALIASED_EXPRESSIONS;
 
@@ -168,16 +169,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
                     && SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL1.contains(dialect)
                     && (wrapped instanceof TableImpl || wrapped instanceof CommonTableExpressionImpl)) {
 
-                Select<Record> select =
-                    select(asterisk()).from(((Table<?>) wrapped).as(alias));
-
-                context.sql('(')
-                       .formatIndentStart().formatNewLine()
-                       .subquery(true)
-                       .visit(select)
-                       .subquery(false)
-                       .formatIndentEnd().formatNewLine()
-                       .sql(')');
+                visitSubquery(context, select(asterisk()).from(((Table<?>) wrapped).as(alias)), true);
             }
 
             // [#1801] Some databases do not support "derived column names".
@@ -239,13 +231,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
                         }
                     }
 
-                    context.sql('(')
-                           .formatIndentStart().formatNewLine()
-                           .subquery(true)
-                           .visit(select(fields).where(falseCondition()).unionAll(wrappedAsSelect))
-                           .subquery(false)
-                           .formatIndentEnd().formatNewLine()
-                           .sql(')');
+                    visitSubquery(context, select(fields).where(falseCondition()).unionAll(wrappedAsSelect), true);
                 }
             }
 

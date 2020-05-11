@@ -60,6 +60,7 @@ import static org.jooq.impl.Keywords.K_ROW;
 import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.Keywords.K_VALUES;
 import static org.jooq.impl.Names.N_VALUES;
+import static org.jooq.impl.Tools.visitSubquery;
 
 import java.util.Set;
 
@@ -133,13 +134,7 @@ final class Values<R extends Record> extends AbstractTable<R> {
                     selects = selects.unionAll(select);
             }
 
-            ctx.formatIndentStart()
-               .formatNewLine()
-               .subquery(true)
-               .visit(selects)
-               .subquery(false)
-               .formatIndentEnd()
-               .formatNewLine();
+            visitSubquery(ctx, selects);
         }
 
         // [#915] Native support of VALUES(..)

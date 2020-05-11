@@ -60,6 +60,7 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.Tools.visitSubquery;
 
 import java.util.Set;
 
@@ -219,13 +220,7 @@ final class RowSubqueryCondition extends AbstractCondition {
 
 
 
-                ctx.subquery(true)
-                   .formatIndentStart()
-                   .formatNewLine()
-                   .visit(right)
-                   .formatIndentEnd()
-                   .formatNewLine()
-                   .subquery(false);
+                visitSubquery(ctx, right);
 
 
 

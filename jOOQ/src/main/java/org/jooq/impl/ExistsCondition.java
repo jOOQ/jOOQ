@@ -43,6 +43,7 @@ import static org.jooq.Clause.CONDITION_EXISTS;
 import static org.jooq.Clause.CONDITION_NOT_EXISTS;
 import static org.jooq.impl.Keywords.K_EXISTS;
 import static org.jooq.impl.Keywords.K_NOT_EXISTS;
+import static org.jooq.impl.Tools.visitSubquery;
 
 import org.jooq.Clause;
 import org.jooq.Context;
@@ -72,16 +73,8 @@ final class ExistsCondition extends AbstractCondition {
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(exists ? K_EXISTS : K_NOT_EXISTS)
-           .sql(" (")
-           .subquery(true)
-           .formatIndentStart()
-           .formatNewLine()
-           .visit(query)
-           .formatIndentEnd()
-           .formatNewLine()
-           .subquery(false)
-           .sql(')');
+        ctx.visit(exists ? K_EXISTS : K_NOT_EXISTS).sql(' ');
+        visitSubquery(ctx, query, true);
     }
 
     @Override

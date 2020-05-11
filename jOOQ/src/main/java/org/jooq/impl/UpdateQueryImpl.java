@@ -79,6 +79,7 @@ import static org.jooq.impl.Keywords.K_ROW;
 import static org.jooq.impl.Keywords.K_SET;
 import static org.jooq.impl.Keywords.K_UPDATE;
 import static org.jooq.impl.Keywords.K_WHERE;
+import static org.jooq.impl.Tools.visitSubquery;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -600,15 +601,7 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                     if (multiValue != null)
                         select = select(multiValue.fields());
 
-                    ctx.sql('(')
-                       .formatIndentStart()
-                       .formatNewLine()
-                       .subquery(true)
-                       .visit(select)
-                       .subquery(false)
-                       .formatIndentEnd()
-                       .formatNewLine()
-                       .sql(')');
+                    visitSubquery(ctx, select, true);
                 }
 
                 ctx.end(UPDATE_SET_ASSIGNMENT);

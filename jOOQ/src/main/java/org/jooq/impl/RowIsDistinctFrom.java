@@ -46,6 +46,7 @@ import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
 // ...
+import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
 import static org.jooq.SQLDialect.MARIADB;
@@ -83,7 +84,11 @@ final class RowIsDistinctFrom extends AbstractCondition {
      * Generated UID
      */
     private static final long            serialVersionUID            = 4568269684824736461L;
-    private static final Set<SQLDialect> EMULATE_DISTINCT_PREDICATE  = SQLDialect.supportedBy(CUBRID, DERBY);
+    private static final Set<SQLDialect> EMULATE_DISTINCT            = SQLDialect.supportedBy(CUBRID, DERBY);
+
+    // An emulation may be required only for the version where a subquery is used
+    // E.g. in HSQLDB: https://sourceforge.net/p/hsqldb/bugs/1579/
+    private static final Set<SQLDialect> EMULATE_DISTINCT_SELECT     = SQLDialect.supportedBy(HSQLDB);
     private static final Set<SQLDialect> SUPPORT_DISTINCT_WITH_ARROW = SQLDialect.supportedBy(MARIADB, MYSQL);
 
     private final Row                    lhs;
@@ -116,13 +121,14 @@ final class RowIsDistinctFrom extends AbstractCondition {
         // [#3511]         These dialects need to emulate the IS DISTINCT FROM predicate,
         //                 optimally using INTERSECT...
         // [#7222] [#7224] Make sure the columns are aliased
-        if (EMULATE_DISTINCT_PREDICATE.contains(ctx.family())) {
+        // [#10178]        Special treatment for DISTINCT with subqueries
+        if (EMULATE_DISTINCT.contains(ctx.dialect()) || rhsSelect != null && EMULATE_DISTINCT_SELECT.contains(ctx.dialect())) {
             Select<Record> intersect = select(lhs.fields()).intersect(rhsSelect != null ? rhsSelect : select(rhsRow.fields()));
             ctx.visit(not ? exists(intersect) : notExists(intersect));
         }
 
         // MySQL knows the <=> operator
-        else if (SUPPORT_DISTINCT_WITH_ARROW.contains(ctx.family())) {
+        else if (SUPPORT_DISTINCT_WITH_ARROW.contains(ctx.dialect())) {
             if (!not)
                 ctx.visit(K_NOT).sql('(');
 

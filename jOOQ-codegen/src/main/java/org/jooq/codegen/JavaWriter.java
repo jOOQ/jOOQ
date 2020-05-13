@@ -162,7 +162,7 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
     public void printPackageSpecification(String packageName) {
         this.packageName = packageName;
 
-        if (isScala)
+        if (isScala || isKotlin)
             println("package %s", packageName);
         else
             println("package %s;", packageName);
@@ -217,7 +217,7 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
 
             importString.append("import ")
                         .append(imp)
-                        .append(isScala ? "" : ";").append(newlineString());
+                        .append(isScala || isKotlin ? "" : ";").append(newlineString());
 
             previous = topLevelPackage;
         }

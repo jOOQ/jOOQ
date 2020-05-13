@@ -1345,8 +1345,7 @@ public class JavaGenerator extends AbstractGenerator {
             else
                 out.println("class %s extends %s[%s](%s)[[before= with ][separator= with ][%s]] {", className, baseClass, className, tableIdentifier, interfaces);
         else if (kotlin)
-            out.println("@Suppress(\"UNCHECKED_CAST\")")
-               .println("class %s() : %s<%s>(%s)[[before=, ][%s]] {", className, baseClass, className, tableIdentifier, interfaces);
+            out.println("class %s() : %s<%s>(%s)[[before=, ][%s]] {", className, baseClass, className, tableIdentifier, interfaces);
         else
             out.println("public class %s extends %s<%s>[[before= implements ][%s]] {", className, baseClass, className, interfaces);
 
@@ -5403,19 +5402,12 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         if (generateGlobalTableReferences()) {
-            Set<String> fieldNames = new HashSet<>();
-            fieldNames.add(schemaId);
-            for (TableDefinition table : schema.getTables()) {
-                fieldNames.add(getStrategy().getJavaIdentifier(table));
-            }
+            Set<String> memberNames = getMemberNames(schema);
 
             for (TableDefinition table : schema.getTables()) {
                 final String tableClassName = out.ref(getStrategy().getFullJavaClassName(table));
                 final String tableId = getStrategy().getJavaIdentifier(table);
-                final String tableFullId = getStrategy().getFullJavaIdentifier(table);
-                String tableShortId = out.ref(getStrategy().getFullJavaIdentifier(table), 2);
-                if (fieldNames.contains(tableShortId.substring(0, tableShortId.indexOf('.'))))
-                    tableShortId = tableFullId;
+                final String tableShortId = getTableShortId(out, memberNames, table);
                 final String tableComment = !StringUtils.isBlank(table.getComment()) && generateCommentsOnTables()
                     ? escapeEntities(table.getComment())
                     : "The table <code>" + table.getQualifiedOutputName() + "</code>.";
@@ -5469,6 +5461,25 @@ public class JavaGenerator extends AbstractGenerator {
 
         generateSchemaClassFooter(schema, out);
         out.println("}");
+    }
+
+    private Set<String> getMemberNames(SchemaDefinition schema) {
+        Set<String> members = new HashSet<>();
+        members.add(getStrategy().getJavaIdentifier(schema));
+
+        for (TableDefinition table : schema.getTables())
+            members.add(getStrategy().getJavaIdentifier(table));
+
+        return members;
+    }
+
+    private String getTableShortId(JavaWriter out, Set<String> memberNames, TableDefinition table) {
+        String tableShortId = out.ref(getStrategy().getFullJavaIdentifier(table), 2);
+
+        if (memberNames.contains(tableShortId.substring(0, tableShortId.indexOf('.'))))
+            tableShortId = getStrategy().getFullJavaIdentifier(table);
+
+        return tableShortId;
     }
 
     /**
@@ -5555,7 +5566,20 @@ public class JavaGenerator extends AbstractGenerator {
     protected void printReferences(JavaWriter out, List<? extends Definition> definitions, Class<?> type, boolean isGeneric) {
         if (out != null && !definitions.isEmpty()) {
             final String generic = isGeneric ? (scala ? "[_]" : kotlin ? "<*>" : "<?>") : "";
-            final List<String> references = out.ref(getStrategy().getFullJavaIdentifiers(definitions), 2);
+            final List<String> references = new ArrayList<>();
+            final Definition first = definitions.get(0);
+
+            // TODO: Is there a better way to do this?
+            if (first instanceof TableDefinition) {
+                final SchemaDefinition schema = first.getSchema();
+                final Set<String> memberNames = getMemberNames(schema);
+
+                for (TableDefinition table : schema.getTables())
+                    references.add(getTableShortId(out, memberNames, table));
+            }
+            else {
+                references.addAll(out.ref(getStrategy().getFullJavaIdentifiers(definitions), 2));
+            }
 
             out.println();
 
@@ -6773,7 +6797,10 @@ public class JavaGenerator extends AbstractGenerator {
             out.println(")");
         }
 
-        if (!scala && !kotlin)
+        if (scala) {}
+        if (kotlin)
+            out.println("@Suppress(\"UNCHECKED_CAST\")");
+        else
             out.println("@%s({ \"all\", \"unchecked\", \"rawtypes\" })", out.ref("java.lang.SuppressWarnings"));
     }
 

@@ -438,9 +438,23 @@ public final class SQLDataType {
     public static final DataType<LocalTime> LOCALTIME = new DefaultDataType<>(null, LocalTime.class, "time");
 
     /**
+     * The {@link Types#TIME} type.
+     */
+    public static final DataType<LocalTime> LOCALTIME(int precision) {
+        return LOCALTIME.precision(precision);
+    }
+
+    /**
      * The {@link Types#TIMESTAMP} type.
      */
     public static final DataType<LocalDateTime> LOCALDATETIME = new DefaultDataType<>(null, LocalDateTime.class, "timestamp");
+
+    /**
+     * The {@link Types#TIMESTAMP} type.
+     */
+    public static final DataType<LocalDateTime> LOCALDATETIME(int precision) {
+        return LOCALDATETIME.precision(precision);
+    }
 
     /**
      * The {@link Types#TIME_WITH_TIMEZONE} type.

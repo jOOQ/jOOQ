@@ -57,6 +57,8 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.sql.Types;
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.OffsetTime;
 import java.util.Collection;
@@ -538,6 +540,8 @@ public class DefaultDataType<T> implements DataType<T> {
             || tType == Timestamp.class
             || tType == Time.class
 
+            || tType == LocalDateTime.class
+            || tType == LocalTime.class
             || tType == OffsetDateTime.class
             || tType == OffsetTime.class
             || tType == Instant.class

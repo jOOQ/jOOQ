@@ -357,8 +357,15 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
         // [#1340] Allow for using non-public default constructors
         try {
-            delegate = new MutablePOJOMapper(new ConstructorCall<>(accessible(type.getDeclaredConstructor())), instance);
-            return;
+            MutablePOJOMapper m = new MutablePOJOMapper(new ConstructorCall<>(accessible(type.getDeclaredConstructor())), instance);
+
+            // [#10194] Check if the POJO is really mutable. There might as well
+            //          be a no-args constructor for other reasons, e.g. when
+            //          using an immutable Kotlin data class with defaulted parameters
+            if (m.isMutable()) {
+                delegate = m;
+                return;
+            }
         }
         catch (NoSuchMethodException ignore) {}
 
@@ -764,6 +771,19 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                     nestedMappers.put(prefix, list);
                 }
             }
+        }
+
+        final boolean isMutable() {
+            for (List<Method> m : methods)
+                if (!m.isEmpty())
+                    return true;
+
+            for (List<java.lang.reflect.Field> m1 : members)
+                for (java.lang.reflect.Field m2 : m1)
+                    if ((m2.getModifiers() & Modifier.FINAL) == 0)
+                        return true;
+
+            return false;
         }
 
         @SuppressWarnings("rawtypes")

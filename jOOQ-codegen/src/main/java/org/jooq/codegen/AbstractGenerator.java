@@ -152,7 +152,7 @@ abstract class AbstractGenerator implements Generator {
     }
 
     enum Language {
-        JAVA, SCALA, XML;
+        JAVA, SCALA, KOTLIN, XML;
     }
 
     void logDatabaseParameters(Database db) {

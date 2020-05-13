@@ -79,7 +79,8 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
     private final File           file;
     private final String         encoding;
     private final StringBuilder  sb;
-    private int                  indentTabs;
+    private int                  indentTabsThisLine;
+    private int                  indentTabsAllLines;
     private String               tabString     = "    ";
     private String               newlineString = "\n";
     private boolean              newline       = true;
@@ -147,12 +148,12 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
     public W print(String string, Object... args) {
         string = string.replace("\n", newlineString).replace("\t", tabString);
 
-        if (newline && indentTabs > 0) {
-            for (int i = 0; i < indentTabs; i++)
+        if (newline && indentTabsThisLine + indentTabsAllLines > 0) {
+            for (int i = 0; i < indentTabsThisLine + indentTabsAllLines; i++)
                 sb.append(tabString);
 
             newline = false;
-            indentTabs = 0;
+            indentTabsThisLine = 0;
         }
 
         if (args.length > 0) {
@@ -258,13 +259,23 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
     }
 
     @SuppressWarnings("unchecked")
+    public W indent(int tabs) {
+        this.indentTabsAllLines = tabs;
+        return (W) this;
+    }
+
+    public int indent() {
+        return indentTabsAllLines;
+    }
+
+    @SuppressWarnings("unchecked")
     public W tab(int tabs) {
-        this.indentTabs = tabs;
+        this.indentTabsThisLine = tabs;
         return (W) this;
     }
 
     public int tab() {
-        return indentTabs;
+        return indentTabsThisLine;
     }
 
     public boolean close() {

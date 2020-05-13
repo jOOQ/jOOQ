@@ -39,6 +39,7 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
     private String                    packageName;
     private final boolean             isJava;
     private final boolean             isScala;
+    private final boolean             isKotlin;
 
     public JavaWriter(File file, String fullyQualifiedTypes) {
         this(file, fullyQualifiedTypes, null);
@@ -49,18 +50,7 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
     }
 
     public JavaWriter(File file, String fullyQualifiedTypes, String encoding, boolean javadoc) {
-        super(file, encoding, null);
-
-        this.className = file.getName().replaceAll("\\.(java|scala)$", "");
-        this.isJava = file.getName().endsWith(".java");
-        this.isScala = file.getName().endsWith(".scala");
-        this.fullyQualifiedTypes = fullyQualifiedTypes == null ? null : Pattern.compile(fullyQualifiedTypes);
-        this.javadoc = javadoc;
-
-        if (isJava)
-            tabString("    ");
-        else if (isScala)
-            tabString("  ");
+        this(file, fullyQualifiedTypes, encoding, javadoc, null);
     }
 
     public JavaWriter(File file, String fullyQualifiedTypes, String encoding, boolean javadoc, Files files) {
@@ -69,10 +59,11 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
         this.className = file.getName().replaceAll("\\.(java|scala)$", "");
         this.isJava = file.getName().endsWith(".java");
         this.isScala = file.getName().endsWith(".scala");
+        this.isKotlin = file.getName().endsWith(".kt");
         this.fullyQualifiedTypes = fullyQualifiedTypes == null ? null : Pattern.compile(fullyQualifiedTypes);
         this.javadoc = javadoc;
 
-        if (isJava)
+        if (isJava || isKotlin)
             tabString("    ");
         else if (isScala)
             tabString("  ");
@@ -204,7 +195,11 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
 
             // [#4021] For Scala interoperability, we better also import
             // java.lang types
-            if (isJava && imp.startsWith("java.lang."))
+            if ((isJava || isKotlin) && imp.startsWith("java.lang."))
+                continue;
+
+            // [#6248] java.lang.Integer is converted to kotlin.Int, and shouldn't be imported
+            if (isKotlin && imp.startsWith("kotlin.") && !imp.substring("kotlin.".length()).contains("."))
                 continue;
 
             // Don't import the class itself
@@ -241,6 +236,8 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
 
                 // Skip unqualified and primitive types
                 if (c.contains(".")) {
+                    if (isKotlin && Integer.class.getName().equals(c))
+                        c = "kotlin.Int";
 
                     // com.example.Table.TABLE.COLUMN (with keepSegments = 3)
                     if (fullyQualifiedTypes == null || !fullyQualifiedTypes.matcher(c).matches()) {

@@ -148,6 +148,20 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
     public W print(String string, Object... args) {
         string = string.replace("\n", newlineString).replace("\t", tabString);
 
+        // [#10196] The following auto-indentation logic works well in most cases
+        // There are known caveats:
+        //
+        // - When formatting is done outside of the GeneratorWriter (e.g. currently
+        //   for JPA annotations, then it may fail, e.g. by producing an indentation of -1
+        // - When a single line is printed in steps, and a step contains such characters,
+        //   the character is interpreted erroneously as being semantic.
+        if (string.startsWith("}") || string.startsWith("]") || string.startsWith(")"))
+            indentTabsAllLines--;
+
+        if (indentTabsAllLines < 0 && !Boolean.getBoolean("mute-indentation-error"))
+            new IllegalStateException("A formatting error has been produced by https://github.com/jOOQ/jOOQ/issues/10196").printStackTrace(System.err);
+
+        int indentTabsThisLine0 = indentTabsThisLine;
         if (newline && indentTabsThisLine + indentTabsAllLines > 0) {
             for (int i = 0; i < indentTabsThisLine + indentTabsAllLines; i++)
                 sb.append(tabString);
@@ -155,6 +169,11 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
             newline = false;
             indentTabsThisLine = 0;
         }
+
+        if (string.endsWith("{") || string.endsWith("[") || string.endsWith("("))
+            indentTabsAllLines++;
+        else if (string.startsWith("if") || string.startsWith("else") || string.startsWith("for") || string.startsWith("while"))
+            indentTabsThisLine = indentTabsThisLine0 + 1;
 
         if (args.length > 0) {
             List<Object> originals = Arrays.asList(args);

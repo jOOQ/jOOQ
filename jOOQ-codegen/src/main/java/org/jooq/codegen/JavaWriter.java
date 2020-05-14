@@ -80,8 +80,7 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
     }
 
     public JavaWriter javadoc(String string, Object... args) {
-        int t = tab();
-        tab(t).println();
+        println();
 
         if (javadoc) {
 
@@ -92,9 +91,9 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
                 if (escapedArgs[i] instanceof String)
                     escapedArgs[i] = escapeJavadoc((String) escapedArgs[i]);
 
-            tab(t).println("/**");
-            tab(t).println(" * " + escaped, escapedArgs);
-            tab(t).println(" */");
+            println("/**");
+            println(" * " + escaped, escapedArgs);
+            println(" */");
         }
 
         return this;
@@ -112,12 +111,10 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
     }
 
     public JavaWriter header(String header, Object... args) {
-        int t = tab();
-
-        tab(t).println();
-        tab(t).println("// -------------------------------------------------------------------------");
-        tab(t).println("// " + header, args);
-        tab(t).println("// -------------------------------------------------------------------------");
+        println();
+        println("// -------------------------------------------------------------------------");
+        println("// " + header, args);
+        println("// -------------------------------------------------------------------------");
 
         return this;
     }
@@ -135,18 +132,15 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
     }
 
     public JavaWriter overrideInherit() {
-        final int t = tab();
-        tab(t).println();
-        tab(t).override();
+        println();
+        override();
         return this;
     }
 
     public JavaWriter overrideInheritIf(boolean override) {
-        final int t = tab();
-
-        tab(t).println();
+        println();
         if (override)
-            tab(t).override();
+            override();
 
         return this;
     }
@@ -154,7 +148,7 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
     public void printSerial() {
         if (isJava) {
             println();
-            println("\tprivate static final long serialVersionUID = %s;", SERIAL_STATEMENT);
+            println("private static final long serialVersionUID = %s;", SERIAL_STATEMENT);
         }
     }
 
@@ -236,8 +230,7 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
 
                 // Skip unqualified and primitive types
                 if (c.contains(".")) {
-                    if (isKotlin && Integer.class.getName().equals(c))
-                        c = "kotlin.Int";
+                    c = patchKotlinClasses(c);
 
                     // com.example.Table.TABLE.COLUMN (with keepSegments = 3)
                     if (fullyQualifiedTypes == null || !fullyQualifiedTypes.matcher(c).matches()) {
@@ -282,5 +275,18 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
         }
 
         return result;
+    }
+
+    private String patchKotlinClasses(String c) {
+        if (isKotlin) {
+            if (c.endsWith("[]"))
+                c = "kotlin.Array<" + patchKotlinClasses(c.substring(0, c.length() - 2)) + "?>";
+            else if (Integer.class.getName().equals(c))
+                c = "kotlin.Int";
+            else if (Object.class.getName().equals(c))
+                c = "kotlin.Any";
+        }
+
+        return c;
     }
 }

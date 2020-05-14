@@ -40,6 +40,7 @@ package org.jooq.codegen;
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableSet;
 import static org.jooq.codegen.AbstractGenerator.Language.JAVA;
+import static org.jooq.codegen.AbstractGenerator.Language.KOTLIN;
 import static org.jooq.codegen.AbstractGenerator.Language.SCALA;
 import static org.jooq.codegen.GenerationUtil.ExpressionType.CONSTRUCTOR_REFERENCE;
 import static org.jooq.codegen.GenerationUtil.ExpressionType.EXPRESSION;
@@ -171,6 +172,37 @@ class GenerationUtil {
         "@"*/
     )));
 
+    private static Set<String> KOTLIN_KEYWORDS = unmodifiableSet(new HashSet<>(asList(
+        "as",
+        "break",
+        "class",
+        "continue",
+        "do",
+        "else",
+        "false",
+        "for",
+        "fun",
+        "if",
+        "in",
+        "interface",
+        "is",
+        "null",
+        "object",
+        "package",
+        "return",
+        "super",
+        "this",
+        "throw",
+        "true",
+        "try",
+        "typealias",
+        "typeof",
+        "val",
+        "var",
+        "when",
+        "while"
+    )));
+
     private static Set<Character> SCALA_WHITESPACE = unmodifiableSet(new HashSet<>(asList(
         (char)0x0020,
         (char)0x0009,
@@ -299,11 +331,15 @@ class GenerationUtil {
             return literal + "_";
         if (language == SCALA && SCALA_KEYWORDS.contains(literal))
             return "`" + literal + "`";
+        if (language == KOTLIN && KOTLIN_KEYWORDS.contains(literal))
+            return "`" + literal + "`";
 
         StringBuilder sb = new StringBuilder();
 
         if ("".equals(literal))
             if (language == SCALA)
+                return "`_`";
+            else if (language == KOTLIN)
                 return "`_`";
             else
                 return "_";
@@ -313,15 +349,21 @@ class GenerationUtil {
 
             // [#5424] Scala setters, by convention, end in "property_=", where "=" is an operator and "_" precedes it
             if (language == SCALA && i == literal.length() - 1 && literal.length() >= 2 && literal.charAt(i - 1) == '_' && isScalaOperator(c))
-                    sb.append(c);
+                sb.append(c);
             else if (language == SCALA && !isScalaIdentifierPart(c))
                 sb.append(escape(c));
             else if (language == JAVA && !Character.isJavaIdentifierPart(c))
-                    sb.append(escape(c));
+                sb.append(escape(c));
             else if (language == SCALA && i == 0 && !isScalaIdentifierStart(c))
                 sb.append("_").append(c);
             else if (language == JAVA && i == 0 && !Character.isJavaIdentifierStart(c))
                 sb.append("_").append(c);
+
+            // TODO: Should we do this for Scala as well?
+            else if (language == KOTLIN && !Character.isJavaIdentifierPart(c))
+                return "`" + literal + "`";
+            else if (language == KOTLIN && i == 0 && !Character.isJavaIdentifierStart(c))
+                return "`" + literal + "`";
             else
                 sb.append(c);
         }

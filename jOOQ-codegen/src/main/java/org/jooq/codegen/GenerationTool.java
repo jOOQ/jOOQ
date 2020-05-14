@@ -39,6 +39,7 @@ package org.jooq.codegen;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
+import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 import static org.jooq.tools.StringUtils.defaultString;
 import static org.jooq.tools.StringUtils.isBlank;
@@ -61,7 +62,9 @@ import java.util.Properties;
 import javax.sql.DataSource;
 
 import org.jooq.Constants;
+import org.jooq.DSLContext;
 import org.jooq.Log.Level;
+import org.jooq.impl.DSL;
 import org.jooq.meta.CatalogVersionProvider;
 import org.jooq.meta.Database;
 import org.jooq.meta.Databases;
@@ -109,6 +112,7 @@ public class GenerationTool {
     private ClassLoader             loader;
     private DataSource              dataSource;
     private Connection              connection;
+    private DSLContext              ctx;
     private Boolean                 autoCommit;
     private boolean                 close;
 
@@ -129,6 +133,7 @@ public class GenerationTool {
      */
     public void setConnection(Connection connection) {
         this.connection = connection;
+        this.ctx = DSL.using(connection);
     }
 
     /**
@@ -314,7 +319,7 @@ public class GenerationTool {
                 close = true;
 
                 if (dataSource != null) {
-                    connection = dataSource.getConnection();
+                    setConnection(dataSource.getConnection());
                 }
                 else {
                     String url = System.getProperty("jooq.codegen.jdbc.url");
@@ -351,7 +356,7 @@ public class GenerationTool {
                             if (!properties.containsKey("password"))
                                 properties.put("password", defaultString(j.getPassword()));
 
-                            connection = driver.newInstance().connect(defaultString(j.getUrl()), properties);
+                            setConnection(driver.newInstance().connect(defaultString(j.getUrl()), properties));
                         }
                         catch (Exception e) {
                             if (databaseName != null)
@@ -870,10 +875,15 @@ public class GenerationTool {
 
             // Close connection only if it was created by the GenerationTool
             if (connection != null) {
-                if (close)
+                if (close) {
+                    if (ctx.family() == HSQLDB && dataSource == null)
+                        ctx.execute("shutdown");
+
                     connection.close();
-                else if (autoCommit != null)
+                }
+                else if (autoCommit != null) {
                     connection.setAutoCommit(autoCommit);
+                }
             }
         }
     }

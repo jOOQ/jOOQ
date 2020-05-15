@@ -402,6 +402,7 @@ public class HSQLDBDatabase extends AbstractDatabase {
                 .select(
                     SYSTEM_TABLES.TABLE_SCHEM,
                     SYSTEM_TABLES.TABLE_NAME,
+                    inline("").as(ROUTINES.SPECIFIC_NAME),
                     SYSTEM_TABLES.REMARKS,
                     when(SYSTEM_TABLES.TABLE_TYPE.eq(inline("VIEW")), inline(TableType.VIEW.name()))
                         .else_(inline(TableType.TABLE.name())).trim().as("table_type"),
@@ -413,17 +414,36 @@ public class HSQLDBDatabase extends AbstractDatabase {
                     .on(SYSTEM_TABLES.TABLE_SCHEM.eq(VIEWS.TABLE_SCHEMA))
                     .and(SYSTEM_TABLES.TABLE_NAME.eq(VIEWS.TABLE_NAME))
                 .where(SYSTEM_TABLES.TABLE_SCHEM.in(getInputSchemata()))
+                .unionAll(tableValuedFunctions()
+                    ? select(
+                        ROUTINES.ROUTINE_SCHEMA,
+                        ROUTINES.ROUTINE_NAME,
+                        ROUTINES.SPECIFIC_NAME,
+                        inline(""),
+                        inline(TableType.FUNCTION.name()),
+                        ROUTINES.ROUTINE_DEFINITION)
+                      .from(ROUTINES)
+                      .where(ROUTINES.ROUTINE_SCHEMA.in(getInputSchemata()))
+                      .and(ROUTINES.ROUTINE_TYPE.eq(inline("FUNCTION")))
+                      .and(ROUTINES.DATA_TYPE.startsWith(inline("ROW(")))
+                    : select(inline(""), inline(""), inline(""), inline(""), inline(TableType.FUNCTION.name()), inline(""))
+                )
                 .orderBy(
                     SYSTEM_TABLES.TABLE_SCHEM,
                     SYSTEM_TABLES.TABLE_NAME).fetch()) {
 
             SchemaDefinition schema = getSchema(record.get(SYSTEM_TABLES.TABLE_SCHEM));
             String name = record.get(SYSTEM_TABLES.TABLE_NAME);
+            String specificName = record.get(ROUTINES.SPECIFIC_NAME);
             String comment = record.get(SYSTEM_TABLES.REMARKS);
             TableType tableType = record.get("table_type", TableType.class);
             String source = record.get(VIEWS.VIEW_DEFINITION);
 
-            result.add(new HSQLDBTableDefinition(schema, name, comment, tableType, source));
+
+            if (tableType == TableType.FUNCTION)
+                result.add(new HSQLDBTableValuedFunction(schema, name, specificName, comment, source));
+            else
+                result.add(new HSQLDBTableDefinition(schema, name, comment, tableType, source));
         }
 
         return result;
@@ -472,6 +492,9 @@ public class HSQLDBDatabase extends AbstractDatabase {
                 .and(ROUTINES.ROUTINE_NAME.equal(ELEMENT_TYPES.OBJECT_NAME))
                 .and(ROUTINES.DTD_IDENTIFIER.equal(ELEMENT_TYPES.COLLECTION_TYPE_IDENTIFIER))
                 .where(ROUTINES.ROUTINE_SCHEMA.in(getInputSchemata()))
+                .and(tableValuedFunctions()
+                    ? ROUTINES.DATA_TYPE.isNull().or(ROUTINES.DATA_TYPE.notLike(inline("ROW(%")))
+                    : noCondition())
                 .orderBy(
                     ROUTINES.ROUTINE_SCHEMA,
                     ROUTINES.ROUTINE_NAME)

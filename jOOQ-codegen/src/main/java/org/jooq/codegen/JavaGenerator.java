@@ -1334,8 +1334,11 @@ public class JavaGenerator extends AbstractGenerator {
                 final String typeFull = getJavaType(column.getType(resolver(Mode.INTERFACE)), Mode.INTERFACE);
                 final String type = out.ref(typeFull);
 
-                out.println("%svar %s: %s? get() = get(%s) as %s? set(value) = set(%s, value)",
-                    (generateInterfaces() ? "override " : ""), member, type, i, type, i);
+                out.println();
+                out.println("%svar %s: %s?",
+                    (generateInterfaces() ? "override " : ""), member, type);
+                out.tab(1).println("get() = get(%s) as %s?", i, type);
+                out.tab(1).println("set(value) = set(%s, value)", i);
             }
             else {
                 if (tableUdtOrEmbeddable instanceof TableDefinition) {
@@ -1958,7 +1961,10 @@ public class JavaGenerator extends AbstractGenerator {
         if (scala) {
             out.println("def %s : %s = {", getter, type);
             out.println("val r = get(%s)", index);
-            out.println("if (r == null) null else r.asInstanceOf[%s]", type);
+            out.println("if (r == null)");
+            out.println("null");
+            out.println("else");
+            out.println("r.asInstanceOf[%s]", type);
             out.println("}");
         }
         else if (kotlin) {
@@ -5983,7 +5989,7 @@ public class JavaGenerator extends AbstractGenerator {
                     out.javadoc("The parameter <code>%s</code>.%s", parameter.getQualifiedOutputName(), parameterComment(paramComment));
 
                 out.println("val %s : %s[%s] = %s.createParameter(\"%s\", %s, %s, %s" + converterTemplate(converter) + converterTemplate(binding) + ")",
-                        paramId, Parameter.class, paramType, Internal.class, paramName, paramTypeRef, isDefaulted, isUnnamed, converter, binding);
+                    paramId, Parameter.class, paramType, Internal.class, escapeString(paramName), paramTypeRef, isDefaulted, isUnnamed, converter, binding);
             }
 
             out.println("}");
@@ -5997,18 +6003,28 @@ public class JavaGenerator extends AbstractGenerator {
 
         if (scala) {
             out.println("class %s extends %s[%s](\"%s\", %s[[before=, ][%s]][[before=, ][%s]]" + converterTemplate(returnConverter) + converterTemplate(returnBinding) + ")[[before= with ][separator= with ][%s]] {",
-                    className, AbstractRoutine.class, returnType, routine.getName(), schemaId, packageId, returnTypeRef, returnConverter, returnBinding, interfaces);
+                className, AbstractRoutine.class, returnType, escapeString(routine.getName()), schemaId, packageId, returnTypeRef, returnConverter, returnBinding, interfaces);
         }
         else {
-            out.println("public class %s extends %s<%s>[[before= implements ][%s]] {",
+
+            if (kotlin) {
+                out.println("class %s : %s<%s>(\"%s\", %s[[before=, ][%s]][[before=, ][%s]]" + converterTemplate(returnConverter) + converterTemplate(returnBinding) + ")[[before=, ][%s]] {",
+                    className, AbstractRoutine.class, returnType, escapeString(routine.getName()), schemaId, packageId, returnTypeRef, returnConverter, returnBinding, interfaces);
+            }
+            else {
+                out.println("public class %s extends %s<%s>[[before= implements ][%s]] {",
                     className, AbstractRoutine.class, returnType, interfaces);
-            out.printSerial();
+                out.printSerial();
+            }
+
+            if (kotlin)
+                out.println("companion object {");
 
             for (ParameterDefinition parameter : routine.getAllParameters()) {
                 final String paramTypeFull = getJavaType(parameter.getType(resolver()));
                 final String paramType = out.ref(paramTypeFull);
                 final String paramTypeRef = getJavaTypeReference(parameter.getDatabase(), parameter.getType(resolver()));
-                final String paramId = out.ref(getStrategy().getJavaIdentifier(parameter), 2);
+                final String paramId = getStrategy().getJavaIdentifier(parameter);
                 final String paramName = parameter.getName();
                 final String paramComment = StringUtils.defaultString(parameter.getComment());
                 final String isDefaulted = parameter.isDefaulted() ? "true" : "false";
@@ -6019,14 +6035,65 @@ public class JavaGenerator extends AbstractGenerator {
                 if (!printDeprecationIfUnknownType(out, paramTypeFull))
                     out.javadoc("The parameter <code>%s</code>.%s", parameter.getQualifiedOutputName(), parameterComment(paramComment));
 
-                out.println("public static final %s<%s> %s = %s.createParameter(\"%s\", %s, %s, %s" + converterTemplate(converter) + converterTemplate(binding) + ");",
-                        Parameter.class, paramType, paramId, Internal.class, paramName, paramTypeRef, isDefaulted, isUnnamed, converter, binding);
+                if (kotlin)
+                    out.println("val %s: %s<%s?> = %s.createParameter(\"%s\", %s, %s, %s" + converterTemplate(converter) + converterTemplate(binding) + ")",
+                        paramId, Parameter.class, paramType, Internal.class, escapeString(paramName), paramTypeRef, isDefaulted, isUnnamed, converter, binding);
+                else
+                    out.println("public static final %s<%s> %s = %s.createParameter(\"%s\", %s, %s, %s" + converterTemplate(converter) + converterTemplate(binding) + ");",
+                        Parameter.class, paramType, paramId, Internal.class, escapeString(paramName), paramTypeRef, isDefaulted, isUnnamed, converter, binding);
             }
+
+            if (kotlin)
+                out.println("}").println();
         }
 
+        if (kotlin) {
+            out.println("class In {");
+            out.println("internal val delegate = %s()", className);
+
+            for (ParameterDefinition parameter : routine.getInParameters()) {
+                final String paramTypeFull = getJavaType(parameter.getType(resolver()));
+                final String paramType = out.ref(paramTypeFull);
+                final String paramId = getStrategy().getJavaIdentifier(parameter);
+                final String paramArgName = getStrategy().getJavaMemberName(parameter);
+
+                out.println();
+                out.println("var %s: %s?", paramArgName, paramType);
+                out.tab(1).println("get() = delegate.get(%s)", paramId);
+                out.tab(1).println("set(value) { delegate.set(%s, value) }", paramId);
+            }
+
+            out.println("}");
+            out.println();
+
+            if (routine.getOutParameters().isEmpty()) {
+                out.println("object Out");
+            }
+            else {
+                out.println("data class Out (");
+
+                String separator = "  ";
+                for (ParameterDefinition parameter : routine.getOutParameters()) {
+                    final String paramTypeFull = getJavaType(parameter.getType(resolver()));
+                    final String paramType = out.ref(paramTypeFull);
+                    final String paramArgName = getStrategy().getJavaMemberName(parameter);
+
+                    out.println("%sval %s: %s?", separator, paramArgName, paramType);
+
+                    separator = ", ";
+                }
+
+                out.println(")");
+            }
+
+            out.println();
+        }
 
         if (scala) {
             out.println("{");
+        }
+        else if (kotlin) {
+            out.println("init {");
         }
         else {
             out.javadoc("Create a new routine call instance");
@@ -6034,9 +6101,8 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("super(\"%s\", %s[[before=, ][%s]][[before=, ][%s]]" + converterTemplate(returnConverter) + converterTemplate(returnBinding) + ");", routine.getName(), schemaId, packageId, returnTypeRef, returnConverter, returnBinding);
 
 
-            if (routine.getAllParameters().size() > 0) {
+            if (routine.getAllParameters().size() > 0)
                 out.println();
-            }
         }
 
         for (ParameterDefinition parameter : routine.getAllParameters()) {
@@ -6045,6 +6111,8 @@ public class JavaGenerator extends AbstractGenerator {
             if (parameter.equals(routine.getReturnValue())) {
                 if (scala)
                     out.println("setReturnParameter(%s.%s)", className, paramId);
+                else if (kotlin)
+                    out.println("returnParameter = %s", paramId);
                 else
                     out.println("setReturnParameter(%s);", paramId);
             }
@@ -6052,12 +6120,16 @@ public class JavaGenerator extends AbstractGenerator {
                 if (routine.getOutParameters().contains(parameter)) {
                     if (scala)
                         out.println("addInOutParameter(%s.%s)", className, paramId);
+                    else if (kotlin)
+                        out.println("addInOutParameter(%s)", paramId);
                     else
                         out.println("addInOutParameter(%s);", paramId);
                 }
                 else {
                     if (scala)
                         out.println("addInParameter(%s.%s)", className, paramId);
+                    else if (kotlin)
+                        out.println("addInParameter(%s)", paramId);
                     else
                         out.println("addInParameter(%s);", paramId);
                 }
@@ -6065,9 +6137,13 @@ public class JavaGenerator extends AbstractGenerator {
             else {
                 if (scala)
                     out.println("addOutParameter(%s.%s)", className, paramId);
+                else if (kotlin)
+                    out.println("addOutParameter(%s)", paramId);
                 else
                     out.println("addOutParameter(%s);", paramId);
             }
+
+
 
 
 
@@ -6084,9 +6160,13 @@ public class JavaGenerator extends AbstractGenerator {
         if (routine.getOverload() != null) {
             if (scala)
                 out.println("setOverloaded(true)");
+            else if (kotlin)
+                out.println("overloaded = true");
             else
                 out.println("setOverloaded(true);");
         }
+
+
 
 
 
@@ -6114,6 +6194,10 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("set%s(%s.%s, %s)", numberValue, className, paramId, paramName);
                 out.println("}");
             }
+            else if (kotlin) {
+                out.println("fun %s(%s: %s?) = set%s(%s, %s)",
+                    setter, paramName, refNumberType(out, parameter.getType(resolver())), numberValue, paramId, paramName);
+            }
             else {
                 out.println("public void %s(%s %s) {", setter, varargsIfArray(refNumberType(out, parameter.getType(resolver()))), paramName);
                 out.println("set%s(%s, %s);", numberValue, paramId, paramName);
@@ -6126,15 +6210,28 @@ public class JavaGenerator extends AbstractGenerator {
                 if (scala) {
                     out.println("def %s(field : %s[%s]) : %s = {", setter, Field.class, refExtendsNumberType(out, parameter.getType(resolver())), setterReturnType);
                     out.println("set%s(%s.%s, field)", numberField, className, paramId);
+
                     if (generateFluentSetters())
                         out.println("this");
+
+                    out.println("}");
+                }
+                else if (kotlin) {
+                    out.println("fun %s(field: %s<%s?>): %s {", setter, Field.class, refExtendsNumberType(out, parameter.getType(resolver())), setterReturnType);
+                    out.println("set%s(%s, field)", numberField, paramId);
+
+                    if (generateFluentSetters())
+                        out.println("return this");
+
                     out.println("}");
                 }
                 else {
                     out.println("public %s %s(%s<%s> field) {", setterReturnType, setter, Field.class, refExtendsNumberType(out, parameter.getType(resolver())));
                     out.println("set%s(%s, field);", numberField, paramId);
+
                     if (generateFluentSetters())
                         out.println("return this;");
+
                     out.println("}");
                 }
             }
@@ -6158,6 +6255,9 @@ public class JavaGenerator extends AbstractGenerator {
                     out.println("def %s : %s = {", paramGetter, paramType);
                     out.println("get(%s.%s)", className, paramId);
                     out.println("}");
+                }
+                else if (kotlin) {
+                    out.println("fun %s(): %s? = get(%s)", paramGetter, paramType, paramId);
                 }
                 else {
                     out.println("public %s %s() {", paramType, paramGetter);
@@ -6479,76 +6579,94 @@ public class JavaGenerator extends AbstractGenerator {
         final String configurationArgument = disambiguateJavaMemberName(procedure.getInParameters(), "configuration");
         final String localVar = disambiguateJavaMemberName(procedure.getInParameters(), "p");
         final List<ParameterDefinition> outParams = list(procedure.getReturnValue(), procedure.getOutParameters());
+        final String methodName = getStrategy().getJavaMethodName(procedure, Mode.DEFAULT);
+        final String firstOutParamType = outParams.size() == 1 ? out.ref(getJavaType(outParams.get(0).getType(resolver()))) : "";
+
+        if (kotlin) {
+            if (!printDeprecationIfUnknownTypes(out, procedure.getAllParameters()))
+                out.javadoc("Call <code>%s</code>", procedure.getQualifiedOutputName());
+
+            out.println("fun %s(configuration: %s, params: %s.In.() -> Unit): %s.Out {", methodName, Configuration.class, className, className);
+            out.println("val i = %s.In()", className);
+            out.println("params(i)");
+            out.println("i.delegate.execute(configuration)");
+            out.println();
+
+            if (procedure.getOutParameters().isEmpty()) {
+                out.println("return %s.Out", className);
+            }
+            else {
+                out.println("return %s.Out(", className);
+
+                String separator = "  ";
+                for (ParameterDefinition parameter : procedure.getOutParameters()) {
+                    final String paramArgName = getStrategy().getJavaMemberName(parameter);
+                    final String paramGetter = getStrategy().getJavaGetterName(parameter);
+
+                    out.println("%s%s = i.delegate.%s()", separator, paramArgName, paramGetter);
+
+                    separator = ", ";
+                }
+
+                out.println(")");
+            }
+
+            out.println("}");
+        }
 
         if (!printDeprecationIfUnknownTypes(out, procedure.getAllParameters()))
             out.javadoc("Call <code>%s</code>", procedure.getQualifiedOutputName());
 
-        if (scala) {
-            out.print("def ");
-        }
+        if (scala)
+            out.println("def %s(", methodName);
+        else if (kotlin)
+            out.println("fun %s(", methodName);
         else {
-            out.print("public ");
-
-            if (!instance)
-                out.print("static ");
-
-            if (outParams.size() == 0) {
-                out.print("void ");
-            }
-            else if (outParams.size() == 1) {
-                out.print(out.ref(getJavaType(outParams.get(0).getType(resolver()))));
-                out.print(" ");
-            }
-            else {
-                out.print(className + " ");
-            }
+            out.println("public %s%s %s(",
+                !instance ? "static " : "",
+                outParams.size() == 0 ? "void" : outParams.size() == 1 ? firstOutParamType : className,
+                methodName
+            );
         }
 
-        out.print(getStrategy().getJavaMethodName(procedure, Mode.DEFAULT));
-        out.print("(");
-
-        String glue = "";
+        String separator = "  ";
         if (!instance) {
             if (scala)
-                out.print("%s : %s", configurationArgument, Configuration.class);
+                out.println("%s%s : %s", separator, configurationArgument, Configuration.class);
+            else if (kotlin)
+                out.println("%s%s: %s", separator, configurationArgument, Configuration.class);
             else
-                out.print("%s %s", Configuration.class, configurationArgument);
+                out.println("%s%s %s", separator, Configuration.class, configurationArgument);
 
-            glue = ", ";
+            separator = ", ";
         }
 
         for (ParameterDefinition parameter : procedure.getInParameters()) {
-            // Skip SELF parameter
-            if (instance && parameter.equals(procedure.getInParameters().get(0))) {
-                continue;
-            }
 
-            out.print(glue);
+            // Skip SELF parameter
+            if (instance && parameter.equals(procedure.getInParameters().get(0)))
+                continue;
+
+            final String memberName = getStrategy().getJavaMemberName(parameter);
+            final String typeName = refNumberType(out, parameter.getType(resolver()));
 
             if (scala)
-                out.print("%s : %s", getStrategy().getJavaMemberName(parameter), refNumberType(out, parameter.getType(resolver())));
+                out.println("%s%s : %s", separator, memberName, typeName);
+            else if (kotlin)
+                out.println("%s%s: %s?", separator, memberName, typeName);
             else
-                out.print("%s %s", refNumberType(out, parameter.getType(resolver())), getStrategy().getJavaMemberName(parameter));
+                out.println("%s%s %s", separator, typeName, memberName);
 
-            glue = ", ";
+            separator = ", ";
         }
 
         if (scala) {
-            out.print(") : ");
-
-            if (outParams.size() == 0) {
-                out.print("Unit");
-            }
-            else if (outParams.size() == 1) {
-                out.print(out.ref(getJavaType(outParams.get(0).getType(resolver()))));
-            }
-            else {
-                out.print(className);
-            }
-
-
-            out.println(" = {");
+            out.println(") : %s = {", outParams.size() == 0 ? "Unit" : outParams.size() == 1 ? firstOutParamType : className);
             out.println("val %s = new %s", localVar, className);
+        }
+        else if (kotlin) {
+            out.println("): %s%s {", outParams.size() == 0 ? "Unit" : outParams.size() == 1 ? firstOutParamType : className, outParams.size() == 1 ? "?" : "");
+            out.println("val %s = %s()", localVar, className);
         }
         else {
             out.println(") {");
@@ -6561,7 +6679,7 @@ public class JavaGenerator extends AbstractGenerator {
                 ? "this"
                 : getStrategy().getJavaMemberName(parameter);
 
-            if (scala)
+            if (scala || kotlin)
                 out.println("%s.%s(%s)", localVar, setter, arg);
             else
                 out.println("%s.%s(%s);", localVar, setter, arg);
@@ -6569,7 +6687,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         out.println();
 
-        if (scala)
+        if (scala || kotlin)
             out.println("%s.execute(%s)", localVar, instance ? "configuration()" : configurationArgument);
         else
             out.println("%s.execute(%s);", localVar, instance ? "configuration()" : configurationArgument);
@@ -6591,12 +6709,16 @@ public class JavaGenerator extends AbstractGenerator {
 
                     if (scala)
                         out.println("from(%s.%s.asInstanceOf[%s])", localVar, getter, columnTypeInterface);
+                    else if (kotlin)
+                        out.println("from(%s.%s() as %s);", localVar, getter, columnTypeInterface);
                     else
                         out.println("from((%s) %s.%s());", columnTypeInterface, localVar, getter);
                 }
                 else {
                     if (scala)
                         out.println("from(%s.%s)", localVar, getter);
+                    else if (kotlin)
+                        out.println("from(%s.%s())", localVar, getter);
                     else
                         out.println("from(%s.%s());", localVar, getter);
                 }
@@ -6605,11 +6727,13 @@ public class JavaGenerator extends AbstractGenerator {
             if (outParams.size() == 1) {
                 if (scala)
                     out.println("return %s.%s", localVar, getter);
+                else if (kotlin)
+                    out.println("return %s.%s()", localVar, getter);
                 else
                     out.println("return %s.%s();", localVar, getter);
             }
             else if (outParams.size() > 1) {
-                if (scala)
+                if (scala || kotlin)
                     out.println("return %s", localVar);
                 else
                     out.println("return %s;", localVar);

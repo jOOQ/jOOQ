@@ -44,6 +44,7 @@ import static org.jooq.Clause.TABLE_REFERENCE;
 // ...
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.Internal.createPathAlias;
@@ -81,7 +82,8 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
     private static final long            serialVersionUID               = 261033315221985068L;
     private static final Clause[]        CLAUSES_TABLE_REFERENCE        = { TABLE, TABLE_REFERENCE };
     private static final Clause[]        CLAUSES_TABLE_ALIAS            = { TABLE, TABLE_ALIAS };
-    private static final Set<SQLDialect> NO_SUPPORT_QUALIFIED_TVF_CALLS = SQLDialect.supportedBy(POSTGRES);
+    private static final Set<SQLDialect> NO_SUPPORT_QUALIFIED_TVF_CALLS = SQLDialect.supportedBy(HSQLDB, POSTGRES);
+    private static final Set<SQLDialect> REQUIRES_TVF_TABLE_CONSTRUCTOR = SQLDialect.supportedBy(HSQLDB);
 
     final Fields<R>                      fields;
     final Alias<Table<R>>                alias;

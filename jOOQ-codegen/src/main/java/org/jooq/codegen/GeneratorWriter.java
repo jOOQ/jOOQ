@@ -349,6 +349,9 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
     }
 
     protected String beforeClose(String string) {
+        if (indentTabsAllLines > 0 && !Boolean.getBoolean("mute-indentation-error"))
+            new IllegalStateException("A formatting error has been produced by https://github.com/jOOQ/jOOQ/issues/10196").printStackTrace(System.err);
+
         return string;
     }
 

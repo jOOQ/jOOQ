@@ -175,6 +175,8 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
 
     @Override
     protected String beforeClose(String string) {
+        string = super.beforeClose(string);
+
         StringBuilder importString = new StringBuilder();
         String pkg = "";
 

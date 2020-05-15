@@ -2372,9 +2372,8 @@ public class JavaGenerator extends AbstractGenerator {
                 else {
 
                     // Static execute() convenience method
-                    if (!routine.isAggregate()) {
+                    if (!routine.isAggregate())
                         printConvenienceMethodFunction(out, routine, false);
-                    }
 
                     // Static asField() convenience method
                     printConvenienceMethodFunctionAsField(out, routine, false);
@@ -3051,9 +3050,8 @@ public class JavaGenerator extends AbstractGenerator {
 
             // Static execute() convenience method
             // [#457] This doesn't make any sense for user-defined aggregates
-            if (!routine.isAggregate()) {
+            if (!routine.isAggregate())
                 printConvenienceMethodFunction(out, routine, false);
-            }
 
             // Static asField() convenience method
             printConvenienceMethodFunctionAsField(out, routine, false);
@@ -4232,7 +4230,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("child: %s<out %s>?,", Table.class, Record.class);
             out.println("path: %s<out %s, %s>?,", ForeignKey.class, Record.class, recordType);
             out.println("aliased: %s<%s>?,", Table.class, recordType);
-            out.println("parameters: %s<%s<*>>?", out.ref("Array"), Field.class);
+            out.println("parameters: Array<%s<*>?>?", Field.class);
             out.println("): %s<%s>(", TableImpl.class, recordType);
             out.println("alias,");
             out.println("%s,", schemaId);
@@ -4386,14 +4384,19 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("this(alias, null, null, aliased, null)");
 
             out.println("}");
+
+            // TODO: Add the private constructor being called from above!
         }
         else if (kotlin) {
             if (table.isTableValuedFunction())
-                out.println("private constructor(alias: %s, aliased: %s<%s>?): this(alias, null, null, aliased, %s<%s<*>>(%s)) {",
-                    Name.class, Table.class, recordType, out.ref("Array"), Field.class, table.getParameters().size());
+                out.println("private constructor(alias: %s, aliased: %s<%s>?): this(alias, null, null, aliased, Array<%s<*>?>(%s) { null })",
+                    Name.class, Table.class, recordType, Field.class, table.getParameters().size());
             else
                 out.println("private constructor(alias: %s, aliased: %s<%s>?): this(alias, null, null, aliased, null)",
                     Name.class, Table.class, recordType);
+
+            out.println("private constructor(alias: %s, aliased: %s<%s>?, parameters: Array<%s<*>?>?): this(alias, null, null, aliased, parameters)",
+                Name.class, Table.class, recordType, Field.class);
         }
         else {
             out.println("private %s(%s alias, %s<%s> aliased) {", className, Name.class, Table.class, recordType);
@@ -5018,8 +5021,8 @@ public class JavaGenerator extends AbstractGenerator {
                 out.javadoc("Call this table-valued function");
 
                 if (scala) {
-                    out.print("def call(");
-                    printParameterDeclarations(out, table, parametersAsField);
+                    out.println("def call(");
+                    printParameterDeclarations(out, table.getParameters(), parametersAsField, "  ");
                     out.println(") : %s = {", className);
 
                     out.println("return new %s(%s.name(getName()), null, %s(", className, DSL.class, out.ref("scala.Array"));
@@ -5044,11 +5047,30 @@ public class JavaGenerator extends AbstractGenerator {
                     out.println("}");
                 }
                 else if (kotlin) {
-                    // TODO
+                    out.println("fun call(");
+                    printParameterDeclarations(out, table.getParameters(), parametersAsField, "  ");
+                    out.println("): %s = %s(%s.name(name), null, arrayOf(", className, className, DSL.class, Field.class);
+
+                    String separator = "  ";
+                    for (ParameterDefinition parameter : table.getParameters()) {
+                        final String paramArgName = getStrategy().getJavaMemberName(parameter);
+                        final String paramTypeRef = getJavaTypeReference(parameter.getDatabase(), parameter.getType(resolver()));
+                        final List<String> converter = out.ref(list(parameter.getType(resolver()).getConverter()));
+                        final List<String> binding = out.ref(list(parameter.getType(resolver()).getBinding()));
+
+                        if (parametersAsField)
+                            out.println("%s%s", separator, paramArgName);
+                        else
+                            out.println("%s%s.value(%s, %s" + converterTemplateForTableValuedFunction(converter) + converterTemplateForTableValuedFunction(binding) + ")", separator, DSL.class, paramArgName, paramTypeRef, converter, binding);
+
+                        separator = ", ";
+                    }
+
+                    out.println("))");
                 }
                 else {
-                    out.print("public %s call(", className);
-                    printParameterDeclarations(out, table, parametersAsField);
+                    out.println("public %s call(", className);
+                    printParameterDeclarations(out, table.getParameters(), parametersAsField, "  ");
                     out.println(") {");
 
                     out.println("return new %s(%s.name(getName()), null, new %s[] {", className, DSL.class, Field.class);
@@ -6072,48 +6094,6 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("}").println();
         }
 
-        if (kotlin) {
-            out.println("class In {");
-            out.println("internal val delegate = %s()", className);
-
-            for (ParameterDefinition parameter : routine.getInParameters()) {
-                final String paramTypeFull = getJavaType(parameter.getType(resolver()));
-                final String paramType = out.ref(paramTypeFull);
-                final String paramId = getStrategy().getJavaIdentifier(parameter);
-                final String paramArgName = getStrategy().getJavaMemberName(parameter);
-
-                out.println();
-                out.println("var %s: %s?", paramArgName, paramType);
-                out.tab(1).println("get() = delegate.get(%s)", paramId);
-                out.tab(1).println("set(value) { delegate.set(%s, value) }", paramId);
-            }
-
-            out.println("}");
-            out.println();
-
-            if (routine.getOutParameters().isEmpty()) {
-                out.println("object Out");
-            }
-            else {
-                out.println("data class Out (");
-
-                String separator = "  ";
-                for (ParameterDefinition parameter : routine.getOutParameters()) {
-                    final String paramTypeFull = getJavaType(parameter.getType(resolver()));
-                    final String paramType = out.ref(paramTypeFull);
-                    final String paramArgName = getStrategy().getJavaMemberName(parameter);
-
-                    out.println("%sval %s: %s?", separator, paramArgName, paramType);
-
-                    separator = ", ";
-                }
-
-                out.println(")");
-            }
-
-            out.println();
-        }
-
         if (scala) {
             out.println("{");
         }
@@ -6322,59 +6302,42 @@ public class JavaGenerator extends AbstractGenerator {
         // Do not generate separate convenience methods, if there are no IN
         // parameters. They would have the same signature and no additional
         // meaning
-        if (parametersAsField && function.getInParameters().isEmpty()) {
+        if (parametersAsField && function.getInParameters().isEmpty())
             return;
-        }
 
         final String functionTypeFull = getJavaType(function.getReturnType(resolver()));
         final String functionType = out.ref(functionTypeFull);
         final String className = out.ref(getStrategy().getFullJavaClassName(function));
         final String localVar = disambiguateJavaMemberName(function.getInParameters(), "f");
+        final String methodName = getStrategy().getJavaMethodName(function, Mode.DEFAULT);
 
         if (!printDeprecationIfUnknownType(out, functionTypeFull) &&
             !printDeprecationIfUnknownTypes(out, function.getInParameters()))
             out.javadoc("Get <code>%s</code> as a field.", function.getQualifiedOutputName());
 
         if (scala)
-            out.print("def %s(",
-                getStrategy().getJavaMethodName(function, Mode.DEFAULT));
+            out.println("def %s(", methodName);
+        else if (kotlin)
+            out.println("fun %s(", methodName);
         else
-            out.print("public static %s<%s> %s(",
+            out.println("public static %s<%s> %s(",
                 function.isAggregate() ? AggregateFunction.class : Field.class,
                 functionType,
-                getStrategy().getJavaMethodName(function, Mode.DEFAULT));
+                methodName);
 
-        String separator = "";
-        for (ParameterDefinition parameter : function.getInParameters()) {
-            out.print(separator);
-
-            if (scala) {
-                out.print("%s : ", getStrategy().getJavaMemberName(parameter));
-
-                if (parametersAsField) {
-                    out.print("%s[%s]", Field.class, refExtendsNumberType(out, parameter.getType(resolver())));
-                } else {
-                    out.print(refNumberType(out, parameter.getType(resolver())));
-                }
-            }
-            else {
-                if (parametersAsField) {
-                    out.print("%s<%s>", Field.class, refExtendsNumberType(out, parameter.getType(resolver())));
-                } else {
-                    out.print(refNumberType(out, parameter.getType(resolver())));
-                }
-
-                out.print(" %s", getStrategy().getJavaMemberName(parameter));
-            }
-
-            separator = ", ";
-        }
+        printParameterDeclarations(out, function.getInParameters(), parametersAsField, "  ");
 
         if (scala) {
             out.println(") : %s[%s] = {",
                 function.isAggregate() ? AggregateFunction.class : Field.class,
                 functionType);
             out.println("val %s = new %s", localVar, className);
+        }
+        else if (kotlin) {
+            out.println("): %s<%s?> {",
+                function.isAggregate() ? AggregateFunction.class : Field.class,
+                functionType);
+            out.println("val %s = %s()", localVar, className);
         }
         else {
             out.println(") {");
@@ -6385,7 +6348,7 @@ public class JavaGenerator extends AbstractGenerator {
             final String paramSetter = getStrategy().getJavaSetterName(parameter, Mode.DEFAULT);
             final String paramMember = getStrategy().getJavaMemberName(parameter);
 
-            if (scala)
+            if (scala || kotlin)
                 out.println("%s.%s(%s)", localVar, paramSetter, paramMember);
             else
                 out.println("%s.%s(%s);", localVar, paramSetter, paramMember);
@@ -6395,13 +6358,15 @@ public class JavaGenerator extends AbstractGenerator {
 
         if (scala)
             out.println("return %s.as%s", localVar, function.isAggregate() ? "AggregateFunction" : "Field");
+        else if (kotlin)
+            out.println("return %s.as%s()", localVar, function.isAggregate() ? "AggregateFunction" : "Field");
         else
             out.println("return %s.as%s();", localVar, function.isAggregate() ? "AggregateFunction" : "Field");
 
         out.println("}");
     }
 
-    protected void printConvenienceMethodTableValuedFunctionAsField(JavaWriter out, TableDefinition function, boolean parametersAsField, String javaMethodName) {
+    protected void printConvenienceMethodTableValuedFunctionAsField(JavaWriter out, TableDefinition function, boolean parametersAsField, String methodName) {
         // [#281] - Java can't handle more than 255 method parameters
         if (function.getParameters().size() > 254) {
             log.warn("Too many parameters", "Function " + function + " has more than 254 in parameters. Skipping generation of convenience method.");
@@ -6411,76 +6376,79 @@ public class JavaGenerator extends AbstractGenerator {
         // Do not generate separate convenience methods, if there are no IN
         // parameters. They would have the same signature and no additional
         // meaning
-        if (parametersAsField && function.getParameters().isEmpty()) {
+        if (parametersAsField && function.getParameters().isEmpty())
             return;
-        }
 
         final String className = out.ref(getStrategy().getFullJavaClassName(function));
+
+        // [#5765] To prevent name clashes, this identifier is not imported
+        final String functionIdentifier = getStrategy().getFullJavaIdentifier(function);
 
         if (!printDeprecationIfUnknownTypes(out, function.getParameters()))
             out.javadoc("Get <code>%s</code> as a table.", function.getQualifiedOutputName());
 
         if (scala)
-            out.print("def %s(", javaMethodName);
+            out.println("def %s(", methodName);
+        else if (kotlin)
+            out.println("fun %s(", methodName);
         else
-            out.print("public static %s %s(", className, javaMethodName);
+            out.println("public static %s %s(", className, methodName);
 
-        printParameterDeclarations(out, function, parametersAsField);
+        printParameterDeclarations(out, function.getParameters(), parametersAsField, "  ");
 
         if (scala) {
             out.println(") : %s = {", className);
-            // [#5765] To prevent name clashes, this identifier is not imported
-            out.print("%s.call(", getStrategy().getFullJavaIdentifier(function));
+            out.println("%s.call(", functionIdentifier);
+        }
+        else if (kotlin) {
+            out.println("): %s = %s.call(", className, functionIdentifier);
         }
         else {
             out.println(") {");
-            // [#5765] To prevent name clashes, this identifier is not imported
-            out.print("return %s.call(", getStrategy().getFullJavaIdentifier(function));
+            out.println("return %s.call(", functionIdentifier);
         }
 
-        String separator = "";
+        String separator = "  ";
         for (ParameterDefinition parameter : function.getParameters()) {
-            out.print(separator);
-            out.print("%s", getStrategy().getJavaMemberName(parameter));
+            out.println("%s%s", separator, getStrategy().getJavaMemberName(parameter));
 
             separator = ", ";
         }
 
-        if (scala)
+        if (scala || kotlin)
             out.println(")");
         else
             out.println(");");
 
-        out.println("}");
+        if (kotlin) {}
+        else
+            out.println("}");
     }
 
-    private void printParameterDeclarations(JavaWriter out, TableDefinition function, boolean parametersAsField) {
-        String sep1 = "";
-        for (ParameterDefinition parameter : function.getParameters()) {
-            out.print(sep1);
+    private void printParameterDeclarations(JavaWriter out, List<ParameterDefinition> parameters, boolean parametersAsField, String separator) {
+        for (ParameterDefinition parameter : parameters) {
+            final String memberName = getStrategy().getJavaMemberName(parameter);
 
             if (scala) {
-                out.print("%s : ", getStrategy().getJavaMemberName(parameter));
-
-                if (parametersAsField) {
-                    out.print("%s[%s]", Field.class, refExtendsNumberType(out, parameter.getType(resolver())));
-                }
-                else {
-                    out.print(refNumberType(out, parameter.getType(resolver())));
-                }
+                if (parametersAsField)
+                    out.println("%s%s : %s[%s]", separator, memberName, Field.class, refExtendsNumberType(out, parameter.getType(resolver())));
+                else
+                    out.println("%s%s : %s", separator, memberName, refNumberType(out, parameter.getType(resolver())));
+            }
+            else if (kotlin) {
+                if (parametersAsField)
+                    out.println("%s%s: %s<%s?>", separator, memberName, Field.class, refExtendsNumberType(out, parameter.getType(resolver())));
+                else
+                    out.println("%s%s: %s?", separator, memberName, refNumberType(out, parameter.getType(resolver())));
             }
             else {
-                if (parametersAsField) {
-                    out.print("%s<%s>", Field.class, refExtendsNumberType(out, parameter.getType(resolver())));
-                }
-                else {
-                    out.print(refNumberType(out, parameter.getType(resolver())));
-                }
-
-                out.print(" %s", getStrategy().getJavaMemberName(parameter));
+                if (parametersAsField)
+                    out.println("%s%s<%s> %s", separator, Field.class, refExtendsNumberType(out, parameter.getType(resolver())), memberName);
+                else
+                    out.println("%s%s %s", separator, refNumberType(out, parameter.getType(resolver())), memberName);
             }
 
-            sep1 = ", ";
+            separator = ", ";
         }
     }
 
@@ -6523,40 +6491,50 @@ public class JavaGenerator extends AbstractGenerator {
             out.javadoc("Call <code>%s</code>", functionName);
 
         if (scala)
-            out.print("def %s(", methodName);
+            out.println("def %s(", methodName);
+        else if (kotlin)
+            out.println("fun %s(", methodName);
         else
-            out.print("public %s%s %s(", !instance ? "static " : "", functionType, methodName);
+            out.println("public %s%s %s(", !instance ? "static " : "", functionType, methodName);
 
-        String glue = "";
+        String separator = "  ";
         if (!instance) {
             if (scala)
-                out.print("%s : %s", configurationArgument, Configuration.class);
+                out.println("%s%s : %s", separator, configurationArgument, Configuration.class);
+            else if (kotlin)
+                out.println("%s%s: %s", separator, configurationArgument, Configuration.class);
             else
-                out.print("%s %s", Configuration.class, configurationArgument);
+                out.println("%s %s", separator, Configuration.class, configurationArgument);
 
-            glue = ", ";
+            separator = ", ";
         }
 
         for (ParameterDefinition parameter : function.getInParameters()) {
+
             // Skip SELF parameter
-            if (instance && parameter.equals(function.getInParameters().get(0))) {
+            if (instance && parameter.equals(function.getInParameters().get(0)))
                 continue;
-            }
 
             final String paramType = refNumberType(out, parameter.getType(resolver()));
             final String paramMember = getStrategy().getJavaMemberName(parameter);
 
             if (scala)
-                out.print("%s%s : %s", glue, paramMember, paramType);
+                out.print("%s%s : %s", separator, paramMember, paramType);
+            else if (kotlin)
+                out.print("%s%s: %s?", separator, paramMember, paramType);
             else
-                out.print("%s%s %s", glue, paramType, paramMember);
+                out.print("%s%s %s", separator, paramType, paramMember);
 
-            glue = ", ";
+            separator = ", ";
         }
 
         if (scala) {
             out.println(") : %s = {", functionType);
             out.println("val %s = new %s()", localVar, className);
+        }
+        else if (kotlin) {
+            out.println("): %s? {", functionType);
+            out.println("val %s = %s()", localVar, className);
         }
         else {
             out.println(") {");
@@ -6569,7 +6547,9 @@ public class JavaGenerator extends AbstractGenerator {
                 ? "this"
                 : getStrategy().getJavaMemberName(parameter);
 
-            if (scala)
+            if (scala || kotlin)
+                out.println("%s.%s(%s)", localVar, paramSetter, paramMember);
+            else if (kotlin)
                 out.println("%s.%s(%s)", localVar, paramSetter, paramMember);
             else
                 out.println("%s.%s(%s);", localVar, paramSetter, paramMember);
@@ -6577,7 +6557,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         out.println();
 
-        if (scala)
+        if (scala || kotlin)
             out.println("%s.execute(%s)", localVar, instance ? "configuration()" : configurationArgument);
         else
             out.println("%s.execute(%s);", localVar, instance ? "configuration()" : configurationArgument);
@@ -6587,6 +6567,8 @@ public class JavaGenerator extends AbstractGenerator {
 
         if (scala)
             out.println("%s.getReturnValue", localVar);
+        else if (kotlin)
+            out.println("return %s.returnValue", localVar);
         else
             out.println("return %s.getReturnValue();", localVar);
 
@@ -6606,38 +6588,6 @@ public class JavaGenerator extends AbstractGenerator {
         final List<ParameterDefinition> outParams = list(procedure.getReturnValue(), procedure.getOutParameters());
         final String methodName = getStrategy().getJavaMethodName(procedure, Mode.DEFAULT);
         final String firstOutParamType = outParams.size() == 1 ? out.ref(getJavaType(outParams.get(0).getType(resolver()))) : "";
-
-        if (kotlin) {
-            if (!printDeprecationIfUnknownTypes(out, procedure.getAllParameters()))
-                out.javadoc("Call <code>%s</code>", procedure.getQualifiedOutputName());
-
-            out.println("fun %s(configuration: %s, params: %s.In.() -> Unit): %s.Out {", methodName, Configuration.class, className, className);
-            out.println("val i = %s.In()", className);
-            out.println("params(i)");
-            out.println("i.delegate.execute(configuration)");
-            out.println();
-
-            if (procedure.getOutParameters().isEmpty()) {
-                out.println("return %s.Out", className);
-            }
-            else {
-                out.println("return %s.Out(", className);
-
-                String separator = "  ";
-                for (ParameterDefinition parameter : procedure.getOutParameters()) {
-                    final String paramArgName = getStrategy().getJavaMemberName(parameter);
-                    final String paramGetter = getStrategy().getJavaGetterName(parameter);
-
-                    out.println("%s%s = i.delegate.%s()", separator, paramArgName, paramGetter);
-
-                    separator = ", ";
-                }
-
-                out.println(")");
-            }
-
-            out.println("}");
-        }
 
         if (!printDeprecationIfUnknownTypes(out, procedure.getAllParameters()))
             out.javadoc("Call <code>%s</code>", procedure.getQualifiedOutputName());
@@ -6768,7 +6718,7 @@ public class JavaGenerator extends AbstractGenerator {
         out.println("}");
     }
 
-    protected void printConvenienceMethodTableValuedFunction(JavaWriter out, TableDefinition function, String javaMethodName) {
+    protected void printConvenienceMethodTableValuedFunction(JavaWriter out, TableDefinition function, String methodName) {
         // [#281] - Java can't handle more than 255 method parameters
         if (function.getParameters().size() > 254) {
             log.warn("Too many parameters", "Function " + function + " has more than 254 in parameters. Skipping generation of convenience method.");
@@ -6780,50 +6730,55 @@ public class JavaGenerator extends AbstractGenerator {
         // [#3456] Local variables should not collide with actual function arguments
         final String configurationArgument = disambiguateJavaMemberName(function.getParameters(), "configuration");
 
+        // [#5765] To prevent name clashes, this identifier is not imported
+        final String functionName = getStrategy().getFullJavaIdentifier(function);
+
         if (!printDeprecationIfUnknownTypes(out, function.getParameters()))
             out.javadoc("Call <code>%s</code>.", function.getQualifiedOutputName());
 
         if (scala)
-            out.print("def %s(%s : %s", javaMethodName, configurationArgument, Configuration.class);
+            out.println("def %s(", methodName);
+        else if (kotlin)
+            out.println("fun %s(", methodName);
         else
-            out.print("public static %s<%s> %s(%s %s", Result.class, recordClassName, javaMethodName, Configuration.class, configurationArgument);
+            out.println("public static %s<%s> %s(", Result.class, recordClassName, methodName);
 
-        if (!function.getParameters().isEmpty())
-            out.print(", ");
+        String separator = "  ";
+        if (scala)
+            out.println("%s%s : %s", separator, configurationArgument, Configuration.class);
+        else if (kotlin)
+            out.println("%s%s: %s", separator, configurationArgument, Configuration.class);
+        else
+            out.println("%s%s %s", separator, Configuration.class, configurationArgument);
 
-        printParameterDeclarations(out, function, false);
+        printParameterDeclarations(out, function.getParameters(), false, ", ");
 
         if (scala) {
-            out.println("%s : %s[%s] = {", ")", Result.class, recordClassName);
-            out.print("%s.dsl().selectFrom(%s.call(",
-                configurationArgument,
-                // [#5765] To prevent name clashes, this identifier is not imported
-                getStrategy().getFullJavaIdentifier(function));
+            out.println(") : %s[%s] = {", Result.class, recordClassName);
+            out.println("%s.dsl().selectFrom(%s.call(", configurationArgument, functionName);
+        }
+        else if (kotlin) {
+            out.println("): %s<%s> = %s.dsl().selectFrom(%s.call(", Result.class, recordClassName, configurationArgument, functionName);
         }
         else {
-            out.println("%s {", ")");
-            out.print("return %s.dsl().selectFrom(%s.call(",
-                configurationArgument,
-                // [#5765] To prevent name clashes, this identifier is not imported
-                getStrategy().getFullJavaIdentifier(function));
+            out.println(") {");
+            out.println("return %s.dsl().selectFrom(%s.call(", configurationArgument, functionName);
         }
 
-        String separator = "";
+        separator = "  ";
         for (ParameterDefinition parameter : function.getParameters()) {
-            out.print(separator);
-            out.print("%s", getStrategy().getJavaMemberName(parameter));
+            out.println("%s%s", separator, getStrategy().getJavaMemberName(parameter));
 
             separator = ", ";
         }
 
-        out.print(")).fetch()");
-
-        if (scala)
-            out.println();
+        if (scala || kotlin)
+            out.println(")).fetch()");
         else
-            out.println(";");
+            out.println(")).fetch();");
 
-        out.println("}");
+        if (!kotlin)
+            out.println("}");
     }
 
     protected void printRecordTypeMethod(JavaWriter out, Definition definition) {

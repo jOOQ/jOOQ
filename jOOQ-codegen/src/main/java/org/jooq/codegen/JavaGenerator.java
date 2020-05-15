@@ -4319,7 +4319,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
         else if (kotlin) {
             out.javadoc("Create a <code>%s</code> table reference", table.getQualifiedOutputName());
-            out.println("constructor(): this(%s.name(\"%s\"), null, null, null, null)", DSL.class, table.getOutputName());
+            out.println("constructor(): this(%s.name(\"%s\"))", DSL.class, table.getOutputName());
         }
         else {
             // [#1255] With instance fields, the table constructor may
@@ -4351,10 +4351,10 @@ public class JavaGenerator extends AbstractGenerator {
         }
         else if (kotlin) {
             out.javadoc("Create an aliased <code>%s</code> table reference", table.getQualifiedOutputName());
-            out.println("constructor(alias: %s): this(%s.name(alias), null, null, %s, null)", String.class, DSL.class, tableId);
+            out.println("constructor(alias: %s): this(%s.name(alias))", String.class, DSL.class);
 
             out.javadoc("Create an aliased <code>%s</code> table reference", table.getQualifiedOutputName());
-            out.println("constructor(alias: %s): this(alias, null, null, %s, null)", Name.class, tableId);
+            out.println("constructor(alias: %s): this(alias, null)", Name.class, tableId);
         }
 
         // [#117] With instance fields, it makes sense to create a
@@ -4389,7 +4389,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
         else if (kotlin) {
             if (table.isTableValuedFunction())
-                out.println("private constructor(alias: %s, aliased: %s<%s>?): this(alias, null, null, aliased, Array<%s<*>?>(%s) { null })",
+                out.println("private constructor(alias: %s, aliased: %s<%s>?): this(alias, null, null, aliased, arrayOf())",
                     Name.class, Table.class, recordType, Field.class, table.getParameters().size());
             else
                 out.println("private constructor(alias: %s, aliased: %s<%s>?): this(alias, null, null, aliased, null)",

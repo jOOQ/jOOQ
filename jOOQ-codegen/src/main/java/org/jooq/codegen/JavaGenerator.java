@@ -5449,7 +5449,7 @@ public class JavaGenerator extends AbstractGenerator {
             for (TableDefinition table : schema.getTables()) {
                 final String tableClassName = out.ref(getStrategy().getFullJavaClassName(table));
                 final String tableId = getStrategy().getJavaIdentifier(table);
-                final String tableShortId = getTableShortId(out, memberNames, table);
+                final String tableShortId = getShortId(out, memberNames, table);
                 final String tableComment = !StringUtils.isBlank(table.getComment()) && generateCommentsOnTables()
                     ? escapeEntities(table.getComment())
                     : "The table <code>" + table.getQualifiedOutputName() + "</code>.";
@@ -5507,6 +5507,16 @@ public class JavaGenerator extends AbstractGenerator {
         out.println("}");
     }
 
+    private Set<String> getMemberNames(CatalogDefinition catalog) {
+        Set<String> members = new HashSet<>();
+        members.add(getStrategy().getJavaIdentifier(catalog));
+
+        for (SchemaDefinition table : catalog.getSchemata())
+            members.add(getStrategy().getJavaIdentifier(table));
+
+        return members;
+    }
+
     private Set<String> getMemberNames(SchemaDefinition schema) {
         Set<String> members = new HashSet<>();
         members.add(getStrategy().getJavaIdentifier(schema));
@@ -5517,13 +5527,13 @@ public class JavaGenerator extends AbstractGenerator {
         return members;
     }
 
-    private String getTableShortId(JavaWriter out, Set<String> memberNames, TableDefinition table) {
-        String tableShortId = out.ref(getStrategy().getFullJavaIdentifier(table), 2);
+    private String getShortId(JavaWriter out, Set<String> memberNames, Definition table) {
+        String shortId = out.ref(getStrategy().getFullJavaIdentifier(table), 2);
 
-        if (memberNames.contains(tableShortId.substring(0, tableShortId.indexOf('.'))))
-            tableShortId = getStrategy().getFullJavaIdentifier(table);
+        if (memberNames.contains(shortId.substring(0, shortId.indexOf('.'))))
+            shortId = getStrategy().getFullJavaIdentifier(table);
 
-        return tableShortId;
+        return shortId;
     }
 
     /**
@@ -5613,12 +5623,27 @@ public class JavaGenerator extends AbstractGenerator {
             final List<String> references = new ArrayList<>();
             final Definition first = definitions.get(0);
 
-            if (first instanceof SchemaDefinition && generateGlobalSchemaReferences() ||
-                first instanceof TableDefinition && generateGlobalTableReferences())
-                references.addAll(getStrategy().getJavaIdentifiers(definitions));
-            else
-                references.addAll(out.ref(getStrategy().getFullJavaIdentifiers(definitions), 2));
+            // [#6248] We cannot use the members in this class because:
+            //         - They are not always available (global object references)
+            //         - They may not have been initialised yet!
+            //         Referencing the singleton identifier with 2 identifier segments
+            //         doesn't work in Kotlin if the identifier conflicts with the
+            //         members in this class. Java can resolve the ambiguity.
+            if ((scala || kotlin) && first instanceof TableDefinition) {
+                final Set<String> memberNames = getMemberNames(first.getSchema());
 
+                for (Definition table : definitions)
+                    references.add(getShortId(out, memberNames, table));
+            }
+            else if ((scala || kotlin) && first instanceof SchemaDefinition) {
+                final Set<String> memberNames = getMemberNames(first.getCatalog());
+
+                for (Definition schema : definitions)
+                    references.add(getShortId(out, memberNames, schema));
+            }
+            else {
+                references.addAll(out.ref(getStrategy().getFullJavaIdentifiers(definitions), 2));
+            }
             out.println();
 
             if (scala) {

@@ -38,6 +38,7 @@
 
 package org.jooq.meta.hsqldb;
 
+import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
@@ -427,6 +428,7 @@ public class HSQLDBDatabase extends AbstractDatabase {
                       .and(ROUTINES.ROUTINE_TYPE.eq(inline("FUNCTION")))
                       .and(ROUTINES.DATA_TYPE.startsWith(inline("ROW(")))
                     : select(inline(""), inline(""), inline(""), inline(""), inline(TableType.FUNCTION.name()), inline(""))
+                      .where(falseCondition())
                 )
                 .orderBy(
                     SYSTEM_TABLES.TABLE_SCHEM,

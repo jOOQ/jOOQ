@@ -4418,7 +4418,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("}");
         }
 
-        if (generateImplicitJoinPathsToOne() && generateGlobalKeyReferences()) {
+        if (generateImplicitJoinPathsToOne() && generateGlobalKeyReferences() && !table.isTableValuedFunction()) {
             out.println();
 
             if (scala) {

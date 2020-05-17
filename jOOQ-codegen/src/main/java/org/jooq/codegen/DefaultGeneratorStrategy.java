@@ -18,36 +18,14 @@
  * database integrations.
  *
  * For more information, please visit: http://www.jooq.org/licenses
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
  */
 package org.jooq.codegen;
 
 import static java.util.Arrays.asList;
-// ...
-// ...
-// ...
-// ...
+
 import static org.jooq.SQLDialect.MARIADB;
-// ...
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
-// ...
-// ...
 
 import java.util.ArrayList;
 import java.util.List;
@@ -176,7 +154,7 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
             return new String(chars);
         }
         else
-            return getJavaClassName0(definition, Mode.DEFAULT);
+            return StringUtils.toUC(getJavaClassName0(definition, Mode.DEFAULT));
     }
 
     @Override
@@ -271,12 +249,6 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
                 else if (mode == Mode.INTERFACE) {
                     sb.append(".interfaces");
                 }
-
-
-
-
-
-
             }
         }
 
@@ -289,8 +261,7 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
     }
 
     private String getJavaClassName0LC(Definition definition, Mode mode) {
-        String result = getJavaClassName0(definition, mode);
-        return result.substring(0, 1).toLowerCase() + result.substring(1);
+        return StringUtils.toLC(getJavaClassName0(definition, mode));
     }
 
     private String getJavaClassName0(Definition definition, Mode mode) {

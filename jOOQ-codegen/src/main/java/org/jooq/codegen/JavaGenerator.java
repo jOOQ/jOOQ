@@ -6316,14 +6316,17 @@ public class JavaGenerator extends AbstractGenerator {
             out.javadoc("Get <code>%s</code> as a field.", function.getQualifiedOutputName());
 
         if (scala)
-            out.println("def %s(", methodName);
+            out.print("def %s(", methodName);
         else if (kotlin)
-            out.println("fun %s(", methodName);
+            out.print("fun %s(", methodName);
         else
-            out.println("public static %s<%s> %s(",
+            out.print("public static %s<%s> %s(",
                 function.isAggregate() ? AggregateFunction.class : Field.class,
                 functionType,
                 methodName);
+
+        if (!function.getInParameters().isEmpty())
+            out.println();
 
         printParameterDeclarations(out, function.getInParameters(), parametersAsField, "  ");
 
@@ -6388,11 +6391,14 @@ public class JavaGenerator extends AbstractGenerator {
             out.javadoc("Get <code>%s</code> as a table.", function.getQualifiedOutputName());
 
         if (scala)
-            out.println("def %s(", methodName);
+            out.print("def %s(", methodName);
         else if (kotlin)
-            out.println("fun %s(", methodName);
+            out.print("fun %s(", methodName);
         else
-            out.println("public static %s %s(", className, methodName);
+            out.print("public static %s %s(", className, methodName);
+
+        if (!function.getParameters().isEmpty())
+            out.println();
 
         printParameterDeclarations(out, function.getParameters(), parametersAsField, "  ");
 
@@ -6504,7 +6510,7 @@ public class JavaGenerator extends AbstractGenerator {
             else if (kotlin)
                 out.println("%s%s: %s", separator, configurationArgument, Configuration.class);
             else
-                out.println("%s %s", separator, Configuration.class, configurationArgument);
+                out.println("%s%s %s", separator, Configuration.class, configurationArgument);
 
             separator = ", ";
         }
@@ -6519,11 +6525,11 @@ public class JavaGenerator extends AbstractGenerator {
             final String paramMember = getStrategy().getJavaMemberName(parameter);
 
             if (scala)
-                out.print("%s%s : %s", separator, paramMember, paramType);
+                out.println("%s%s : %s", separator, paramMember, paramType);
             else if (kotlin)
-                out.print("%s%s: %s?", separator, paramMember, paramType);
+                out.println("%s%s: %s?", separator, paramMember, paramType);
             else
-                out.print("%s%s %s", separator, paramType, paramMember);
+                out.println("%s%s %s", separator, paramType, paramMember);
 
             separator = ", ";
         }

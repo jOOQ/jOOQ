@@ -1309,9 +1309,28 @@ public class JavaGenerator extends AbstractGenerator {
         if (generateInterfaces())
             interfaces.add(out.ref(getStrategy().getFullJavaClassName(tableUdtOrEmbeddable, Mode.INTERFACE)));
 
+        if (scala) {
+            if (tableUdtOrEmbeddable instanceof EmbeddableDefinition) {
+                out.println("private object %s {", className);
+                out.println("val FIELDS: Array[%s [_] ] = Array(", Field.class);
+
+                String separator = "  ";
+                for (EmbeddableColumnDefinition column : ((EmbeddableDefinition) tableUdtOrEmbeddable).getColumns()) {
+                    final String colIdentifier = out.ref(getStrategy().getFullJavaIdentifier(column.getColumn()), colRefSegments(column));
+
+                    out.println("%s%s.field(%s.name(\"%s\"), %s.getDataType)", separator, DSL.class, DSL.class, column.getOutputName(), colIdentifier);
+                    separator = ", ";
+                }
+
+                out.println(")");
+                out.println("}");
+                out.println();
+            }
+        }
+
         if (scala)
             if (tableUdtOrEmbeddable instanceof EmbeddableDefinition)
-                out.println("class %s extends %s[%s]()[[before= with ][separator= with ][%s]] {", className, baseClass, className, interfaces);
+                out.println("class %s extends %s[%s](%s.FIELDS:_*)[[before= with ][separator= with ][%s]] {", className, baseClass, className, className, interfaces);
             else
                 out.println("class %s extends %s[%s](%s)[[before= with ][separator= with ][%s]] {", className, baseClass, className, tableIdentifier, interfaces);
         else if (kotlin)
@@ -1475,7 +1494,11 @@ public class JavaGenerator extends AbstractGenerator {
 
                 if (scala) {
                     printDeprecationIfUnknownType(out, colTypeFull);
-                    out.println("override def field%s : %s[%s] = %s", i, Field.class, colType, colIdentifier);
+
+                    if (tableUdtOrEmbeddable instanceof EmbeddableDefinition)
+                        out.println("override def field%s : %s[%s] = %s.FIELDS(%s).asInstanceOf[%s [%s] ]", i, Field.class, colType, i - 1, className, Field.class, colType);
+                    else
+                        out.println("override def field%s : %s[%s] = %s", i, Field.class, colType, colIdentifier);
                 }
                 else if (kotlin) {
                     printDeprecationIfUnknownType(out, colTypeFull);
@@ -1663,8 +1686,7 @@ public class JavaGenerator extends AbstractGenerator {
             printFromAndInto(out, tableUdtOrEmbeddable, Mode.RECORD);
 
 
-        if (scala) {
-        }
+        if (scala) {}
         else if (kotlin) {
             if (tableUdtOrEmbeddable instanceof EmbeddableDefinition) {
                 out.println();

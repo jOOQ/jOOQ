@@ -242,6 +242,14 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
     }
 
     @SuppressWarnings("unchecked")
+    public W printlnIf(boolean condition) {
+        if (condition)
+            println();
+
+        return (W) this;
+    }
+
+    @SuppressWarnings("unchecked")
     public W println() {
 
         // Don't add empty lines at the beginning of files

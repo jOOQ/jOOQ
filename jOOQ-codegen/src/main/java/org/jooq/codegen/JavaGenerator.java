@@ -4181,6 +4181,7 @@ public class JavaGenerator extends AbstractGenerator {
             : table.isTableValuedFunction()
             ? "function"
             : "table";
+        final List<ParameterDefinition> parameters = table.getParameters();
 
         log.info("Generating table", out.file().getName() +
             " [input=" + table.getInputName() +
@@ -4311,42 +4312,62 @@ public class JavaGenerator extends AbstractGenerator {
                     TableField.class, recordType, columnType, columnId, Internal.class, DSL.class, embeddable.getName(), columnType, columnIds);
         }
 
+        out.println();
+
+        // [#10191] This constructor must be generated first in Scala to prevent
+        // "called constructor's definition must precede calling constructor's definition"
         if (scala) {
-            out.javadoc("Create a <code>%s</code> table reference", table.getQualifiedOutputName());
-            out.println("def this() = {");
-            out.println("this(%s.name(\"%s\"), null, null, null, null)", DSL.class, table.getOutputName());
+            out.println("private def this(alias : %s, aliased : %s[%s]) = {", Name.class, Table.class, recordType);
+
+            if (table.isTableValuedFunction())
+                out.println("this(alias, null, null, aliased, new %s[ %s[_] ](%s))", out.ref("scala.Array"), Field.class, parameters.size());
+            else
+                out.println("this(alias, null, null, aliased, null)");
+
             out.println("}");
+
+            // TODO: Add the private constructor being called from above!
         }
         else if (kotlin) {
-            out.javadoc("Create a <code>%s</code> table reference", table.getQualifiedOutputName());
-            out.println("constructor(): this(%s.name(\"%s\"))", DSL.class, table.getOutputName());
+            if (table.isTableValuedFunction())
+                out.println("private constructor(alias: %s, aliased: %s<%s>?): this(alias, null, null, aliased, arrayOf())",
+                    Name.class, Table.class, recordType, Field.class, parameters.size());
+            else
+                out.println("private constructor(alias: %s, aliased: %s<%s>?): this(alias, null, null, aliased, null)",
+                    Name.class, Table.class, recordType);
+
+            out.println("private constructor(alias: %s, aliased: %s<%s>?, parameters: Array<%s<*>?>?): this(alias, null, null, aliased, parameters)",
+                Name.class, Table.class, recordType, Field.class);
         }
         else {
-            // [#1255] With instance fields, the table constructor may
-            // be public, as tables are no longer singletons
-            if (generateInstanceFields()) {
-                out.javadoc("Create a <code>%s</code> table reference", table.getQualifiedOutputName());
-                out.println("public %s() {", className);
-            }
-            else {
-                out.javadoc(NO_FURTHER_INSTANCES_ALLOWED);
-                out.println("private %s() {", className);
-            }
+            out.println("private %s(%s alias, %s<%s> aliased) {", className, Name.class, Table.class, recordType);
+            if (table.isTableValuedFunction())
+                out.println("this(alias, aliased, new %s[%s]);", Field.class, parameters.size());
+            else
+                out.println("this(alias, aliased, null);");
 
-            out.println("this(%s.name(\"%s\"), null);", DSL.class, table.getOutputName());
+            out.println("}");
+
+            out.println();
+            out.println("private %s(%s alias, %s<%s> aliased, %s<?>[] parameters) {", className, Name.class, Table.class, recordType, Field.class);
+
+            if (generateSourcesOnViews() && table.isView() && table.getSource() != null)
+                out.println("super(alias, null, aliased, parameters, %s.comment(\"%s\"), %s.%s(\"%s\"));", DSL.class, escapeString(comment), TableOptions.class, tableType, escapeString(table.getSource()));
+            else
+                out.println("super(alias, null, aliased, parameters, %s.comment(\"%s\"), %s.%s());", DSL.class, escapeString(comment), TableOptions.class, tableType);
+
             out.println("}");
         }
-
 
         if (scala) {
             out.javadoc("Create an aliased <code>%s</code> table reference", table.getQualifiedOutputName());
             out.println("def this(alias : %s) = {", String.class);
-            out.println("this(%s.name(alias), null, null, %s, null)", DSL.class, tableId);
+            out.println("this(%s.name(alias), %s)", DSL.class, tableId);
             out.println("}");
 
             out.javadoc("Create an aliased <code>%s</code> table reference", table.getQualifiedOutputName());
             out.println("def this(alias : %s) = {", Name.class);
-            out.println("this(alias, null, null, %s, null)", tableId);
+            out.println("this(alias, %s)", tableId);
             out.println("}");
         }
         else if (kotlin) {
@@ -4373,48 +4394,29 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("}");
         }
 
-        out.println();
-
         if (scala) {
-            out.println("private def this(alias : %s, aliased : %s[%s]) = {", Name.class, Table.class, recordType);
-
-            if (table.isTableValuedFunction())
-                out.println("this(alias, null, null, aliased, new %s[ %s[_] ](%s))", out.ref("scala.Array"), Field.class, table.getParameters().size());
-            else
-                out.println("this(alias, null, null, aliased, null)");
-
+            out.javadoc("Create a <code>%s</code> table reference", table.getQualifiedOutputName());
+            out.println("def this() = {");
+            out.println("this(%s.name(\"%s\"))", DSL.class, table.getOutputName());
             out.println("}");
-
-            // TODO: Add the private constructor being called from above!
         }
         else if (kotlin) {
-            if (table.isTableValuedFunction())
-                out.println("private constructor(alias: %s, aliased: %s<%s>?): this(alias, null, null, aliased, arrayOf())",
-                    Name.class, Table.class, recordType, Field.class, table.getParameters().size());
-            else
-                out.println("private constructor(alias: %s, aliased: %s<%s>?): this(alias, null, null, aliased, null)",
-                    Name.class, Table.class, recordType);
-
-            out.println("private constructor(alias: %s, aliased: %s<%s>?, parameters: Array<%s<*>?>?): this(alias, null, null, aliased, parameters)",
-                Name.class, Table.class, recordType, Field.class);
+            out.javadoc("Create a <code>%s</code> table reference", table.getQualifiedOutputName());
+            out.println("constructor(): this(%s.name(\"%s\"))", DSL.class, table.getOutputName());
         }
         else {
-            out.println("private %s(%s alias, %s<%s> aliased) {", className, Name.class, Table.class, recordType);
-            if (table.isTableValuedFunction())
-                out.println("this(alias, aliased, new %s[%s]);", Field.class, table.getParameters().size());
-            else
-                out.println("this(alias, aliased, null);");
+            // [#1255] With instance fields, the table constructor may
+            // be public, as tables are no longer singletons
+            if (generateInstanceFields()) {
+                out.javadoc("Create a <code>%s</code> table reference", table.getQualifiedOutputName());
+                out.println("public %s() {", className);
+            }
+            else {
+                out.javadoc(NO_FURTHER_INSTANCES_ALLOWED);
+                out.println("private %s() {", className);
+            }
 
-            out.println("}");
-
-            out.println();
-            out.println("private %s(%s alias, %s<%s> aliased, %s<?>[] parameters) {", className, Name.class, Table.class, recordType, Field.class);
-
-            if (generateSourcesOnViews() && table.isView() && table.getSource() != null)
-                out.println("super(alias, null, aliased, parameters, %s.comment(\"%s\"), %s.%s(\"%s\"));", DSL.class, escapeString(comment), TableOptions.class, tableType, escapeString(table.getSource()));
-            else
-                out.println("super(alias, null, aliased, parameters, %s.comment(\"%s\"), %s.%s());", DSL.class, escapeString(comment), TableOptions.class, tableType);
-
+            out.println("this(%s.name(\"%s\"), null);", DSL.class, table.getOutputName());
             out.println("}");
         }
 
@@ -4861,7 +4863,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("override def as(alias : %s) : %s = {", String.class, className);
 
             if (table.isTableValuedFunction())
-                out.println("new %s(%s.name(alias), this, parameters)", className, DSL.class);
+                out.println("new %s(%s.name(alias), this, null, null, parameters)", className, DSL.class);
             else
                 out.println("new %s(%s.name(alias), this)", className, DSL.class);
 
@@ -4872,7 +4874,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("override def as(alias : %s) : %s = {", Name.class, className);
 
             if (table.isTableValuedFunction())
-                out.println("new %s(alias, this, parameters)", className);
+                out.println("new %s(alias, this, null, null, parameters)", className);
             else
                 out.println("new %s(alias, this)", className);
 
@@ -4924,7 +4926,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("override def rename(name : %s) : %s = {", String.class, className);
 
             if (table.isTableValuedFunction())
-                out.println("new %s(%s.name(name), null, parameters)", className, DSL.class);
+                out.println("new %s(%s.name(name), null, null, null, parameters)", className, DSL.class);
             else
                 out.println("new %s(%s.name(name), null)", className, DSL.class);
 
@@ -4934,7 +4936,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("override def rename(name : %s) : %s = {", Name.class, className);
 
             if (table.isTableValuedFunction())
-                out.println("new %s(name, null, parameters)", className);
+                out.println("new %s(name, null, null, null, parameters)", className);
             else
                 out.println("new %s(name, null)", className);
 
@@ -5015,19 +5017,19 @@ public class JavaGenerator extends AbstractGenerator {
             for (boolean parametersAsField : new boolean[] { false, true }) {
 
                 // Don't overload no-args call() methods
-                if (parametersAsField && table.getParameters().size() == 0)
+                if (parametersAsField && parameters.size() == 0)
                     break;
 
                 out.javadoc("Call this table-valued function");
 
                 if (scala) {
-                    out.println("def call(");
-                    printParameterDeclarations(out, table.getParameters(), parametersAsField, "  ");
+                    out.print("def call(").printlnIf(!parameters.isEmpty());
+                    printParameterDeclarations(out, parameters, parametersAsField, "  ");
                     out.println(") : %s = {", className);
 
-                    out.println("return new %s(%s.name(getName()), null, %s(", className, DSL.class, out.ref("scala.Array"));
+                    out.print("new %s(%s.name(getName()), null, null, null, %s(", className, DSL.class, out.ref("scala.Array")).printlnIf(!parameters.isEmpty());
                     String separator = "  ";
-                    for (ParameterDefinition parameter : table.getParameters()) {
+                    for (ParameterDefinition parameter : parameters) {
                         final String paramArgName = getStrategy().getJavaMemberName(parameter);
                         final String paramTypeRef = getJavaTypeReference(parameter.getDatabase(), parameter.getType(resolver()));
                         final List<String> converter = out.ref(list(parameter.getType(resolver()).getConverter()));
@@ -5047,12 +5049,12 @@ public class JavaGenerator extends AbstractGenerator {
                     out.println("}");
                 }
                 else if (kotlin) {
-                    out.println("fun call(");
-                    printParameterDeclarations(out, table.getParameters(), parametersAsField, "  ");
-                    out.println("): %s = %s(%s.name(name), null, arrayOf(", className, className, DSL.class, Field.class);
+                    out.print("fun call(").printlnIf(!parameters.isEmpty());
+                    printParameterDeclarations(out, parameters, parametersAsField, "  ");
+                    out.print("): %s = %s(%s.name(name), null, arrayOf(", className, className, DSL.class, Field.class).printlnIf(!parameters.isEmpty());
 
                     String separator = "  ";
-                    for (ParameterDefinition parameter : table.getParameters()) {
+                    for (ParameterDefinition parameter : parameters) {
                         final String paramArgName = getStrategy().getJavaMemberName(parameter);
                         final String paramTypeRef = getJavaTypeReference(parameter.getDatabase(), parameter.getType(resolver()));
                         final List<String> converter = out.ref(list(parameter.getType(resolver()).getConverter()));
@@ -5069,13 +5071,13 @@ public class JavaGenerator extends AbstractGenerator {
                     out.println("))");
                 }
                 else {
-                    out.println("public %s call(", className);
-                    printParameterDeclarations(out, table.getParameters(), parametersAsField, "  ");
+                    out.print("public %s call(", className).printlnIf(!parameters.isEmpty());
+                    printParameterDeclarations(out, parameters, parametersAsField, "  ");
                     out.println(") {");
 
-                    out.println("return new %s(%s.name(getName()), null, new %s[] {", className, DSL.class, Field.class);
+                    out.print("return new %s(%s.name(getName()), null, new %s[] {", className, DSL.class, Field.class).printlnIf(!parameters.isEmpty());
                     String separator = "  ";
-                    for (ParameterDefinition parameter : table.getParameters()) {
+                    for (ParameterDefinition parameter : parameters) {
                         final String paramArgName = getStrategy().getJavaMemberName(parameter);
                         final String paramTypeRef = getJavaTypeReference(parameter.getDatabase(), parameter.getType(resolver()));
                         final List<String> converter = out.ref(list(parameter.getType(resolver()).getConverter()));
@@ -5469,6 +5471,15 @@ public class JavaGenerator extends AbstractGenerator {
             Set<String> memberNames = getMemberNames(schema);
 
             for (TableDefinition table : schema.getTables()) {
+
+                // [#10191] In Scala, methods and attributes are in the same
+                //          namespace because parentheses can be omitted. This
+                //          means that parameter-less table valued functions
+                //          produce a clash if we generate both the global table
+                //          reference in the schema, and the function call
+                if (scala && table.isTableValuedFunction() && table.getParameters().isEmpty())
+                    continue;
+
                 final String tableClassName = out.ref(getStrategy().getFullJavaClassName(table));
                 final String tableId = getStrategy().getJavaIdentifier(table);
                 final String tableShortId = getShortId(out, memberNames, table);

@@ -734,11 +734,13 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         return (E) Tools.configuration(this).recordMapperProvider().provide((Fields) fields.fields, type).map(this);
     }
 
+    // [#10191] Java and Kotlin can produce overloads for this method despite
+    // generic type erasure, but Scala cannot, see
+    // https://twitter.com/lukaseder/status/1262652304773259264
     @Override
-    public final <E> E into(E object) {
-        if (object == null) {
+    public /* final */ <E> E into(E object) {
+        if (object == null)
             throw new NullPointerException("Cannot copy Record into null");
-        }
 
         Class<E> type = (Class<E>) object.getClass();
 

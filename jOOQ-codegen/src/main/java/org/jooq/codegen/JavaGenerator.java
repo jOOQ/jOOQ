@@ -1395,7 +1395,7 @@ public class JavaGenerator extends AbstractGenerator {
                 if (scala) {
                     out.println();
                     out.println("override def key : %s[%s] = {", out.ref(Record.class.getName() + keyDegree), keyType);
-                    out.println("return super.key.asInstanceOf[ %s[%s] ]", out.ref(Record.class.getName() + keyDegree), keyType);
+                    out.println("super.key.asInstanceOf[ %s[%s] ]", out.ref(Record.class.getName() + keyDegree), keyType);
                     out.println("}");
                 }
                 else if (kotlin) {
@@ -5618,7 +5618,8 @@ public class JavaGenerator extends AbstractGenerator {
         boolean override = generateInterfaces() && !generateImmutableInterfaces();
 
         if (scala) {
-            // TODO
+            out.println();
+            out.println("%sdef from(from : %s) {", (override ? "override " : ""), qualified);
         }
         else if (kotlin) {
             out.println();
@@ -5648,11 +5649,10 @@ public class JavaGenerator extends AbstractGenerator {
 
         if (generateInterfaces() && !generateImmutableInterfaces()) {
             if (scala) {
-                // TODO
                 out.println();
-                out.println("public <E extends %s> E into(E into) {", qualified);
+                out.println("%sdef into [E <: %s](into : E) : E = {", (override ? "override " : ""), qualified);
                 out.println("into.from(this)");
-                out.println("return into");
+                out.println("into");
                 out.println("}");
             }
             else if (kotlin) {

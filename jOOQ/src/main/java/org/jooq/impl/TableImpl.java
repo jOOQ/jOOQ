@@ -230,22 +230,20 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
             ctx.visit(alias);
         }
         else {
+            if (parameters != null && REQUIRES_TVF_TABLE_CONSTRUCTOR.contains(ctx.dialect()) && ctx.declareTables()) {
+                ctx.visit(K_TABLE)
+                   .sql('(');
 
+                accept0(ctx);
+                ctx.sql(')');
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-            accept0(ctx);
+                // [#4834] Generate alias only if allowed to do so
+                if (ctx.declareAliases())
+                    ctx.sql(' ')
+                       .visit(Tools.getMappedTable(ctx.configuration(), this).getUnqualifiedName());
+            }
+            else
+                accept0(ctx);
         }
 
 

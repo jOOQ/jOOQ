@@ -3182,7 +3182,7 @@ public class JavaGenerator extends AbstractGenerator {
         printPackage(out, schema);
 
         if (!kotlin) {
-            printClassJavadoc(out, "Convenience access to all tables in " + schema.getOutputName());
+            printClassJavadoc(out, "Convenience access to all tables in " + (StringUtils.isEmpty(schema.getOutputName()) ? "the default schema" : schema.getOutputName()));
             printClassAnnotations(out, schema);
         }
 

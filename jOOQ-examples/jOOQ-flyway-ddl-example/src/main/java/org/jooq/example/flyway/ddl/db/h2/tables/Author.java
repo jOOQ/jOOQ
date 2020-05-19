@@ -31,7 +31,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Author extends TableImpl<AuthorRecord> {
 
-    private static final long serialVersionUID = 615226003;
+    private static final long serialVersionUID = 1852277325;
 
     /**
      * The reference instance of <code>FLYWAY_TEST.AUTHOR</code>
@@ -76,11 +76,12 @@ public class Author extends TableImpl<AuthorRecord> {
      */
     public final TableField<AuthorRecord, String> ADDRESS = createField(DSL.name("ADDRESS"), org.jooq.impl.SQLDataType.VARCHAR(50), this, "");
 
-    /**
-     * Create a <code>FLYWAY_TEST.AUTHOR</code> table reference
-     */
-    public Author() {
-        this(DSL.name("AUTHOR"), null);
+    private Author(Name alias, Table<AuthorRecord> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private Author(Name alias, Table<AuthorRecord> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -97,12 +98,11 @@ public class Author extends TableImpl<AuthorRecord> {
         this(alias, AUTHOR);
     }
 
-    private Author(Name alias, Table<AuthorRecord> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private Author(Name alias, Table<AuthorRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    /**
+     * Create a <code>FLYWAY_TEST.AUTHOR</code> table reference
+     */
+    public Author() {
+        this(DSL.name("AUTHOR"), null);
     }
 
     public <O extends Record> Author(Table<O> child, ForeignKey<O, AuthorRecord> key) {

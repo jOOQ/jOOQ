@@ -30,7 +30,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FilmActor extends TableImpl<FilmActorRecord> {
 
-    private static final long serialVersionUID = 1747205121;
+    private static final long serialVersionUID = 1729998951;
 
     /**
      * The reference instance of <code>FILM_ACTOR</code>
@@ -55,11 +55,12 @@ public class FilmActor extends TableImpl<FilmActorRecord> {
      */
     public final TableField<FilmActorRecord, Integer> ACTORS_ACTORID = createField(DSL.name("ACTORS_ACTORID"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
-    /**
-     * Create a <code>FILM_ACTOR</code> table reference
-     */
-    public FilmActor() {
-        this(DSL.name("FILM_ACTOR"), null);
+    private FilmActor(Name alias, Table<FilmActorRecord> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private FilmActor(Name alias, Table<FilmActorRecord> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -76,12 +77,11 @@ public class FilmActor extends TableImpl<FilmActorRecord> {
         this(alias, FILM_ACTOR);
     }
 
-    private FilmActor(Name alias, Table<FilmActorRecord> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private FilmActor(Name alias, Table<FilmActorRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    /**
+     * Create a <code>FILM_ACTOR</code> table reference
+     */
+    public FilmActor() {
+        this(DSL.name("FILM_ACTOR"), null);
     }
 
     public <O extends Record> FilmActor(Table<O> child, ForeignKey<O, FilmActorRecord> key) {

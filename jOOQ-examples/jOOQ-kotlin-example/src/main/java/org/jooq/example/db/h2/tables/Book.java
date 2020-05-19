@@ -32,7 +32,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Book extends TableImpl<BookRecord> {
 
-    private static final long serialVersionUID = 359588588;
+    private static final long serialVersionUID = -925238409;
 
     /**
      * The reference instance of <code>PUBLIC.BOOK</code>
@@ -100,13 +100,14 @@ public class Book extends TableImpl<BookRecord> {
     /**
      * The column <code>PUBLIC.BOOK.REC_TIMESTAMP</code>.
      */
-    public final TableField<BookRecord, LocalDateTime> REC_TIMESTAMP = createField(DSL.name("REC_TIMESTAMP"), org.jooq.impl.SQLDataType.LOCALDATETIME, this, "");
+    public final TableField<BookRecord, LocalDateTime> REC_TIMESTAMP = createField(DSL.name("REC_TIMESTAMP"), org.jooq.impl.SQLDataType.LOCALDATETIME(6), this, "");
 
-    /**
-     * Create a <code>PUBLIC.BOOK</code> table reference
-     */
-    public Book() {
-        this(DSL.name("BOOK"), null);
+    private Book(Name alias, Table<BookRecord> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private Book(Name alias, Table<BookRecord> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -123,12 +124,11 @@ public class Book extends TableImpl<BookRecord> {
         this(alias, BOOK);
     }
 
-    private Book(Name alias, Table<BookRecord> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private Book(Name alias, Table<BookRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    /**
+     * Create a <code>PUBLIC.BOOK</code> table reference
+     */
+    public Book() {
+        this(DSL.name("BOOK"), null);
     }
 
     public <O extends Record> Book(Table<O> child, ForeignKey<O, BookRecord> key) {

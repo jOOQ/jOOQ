@@ -31,7 +31,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Language extends TableImpl<LanguageRecord> {
 
-    private static final long serialVersionUID = 1073752323;
+    private static final long serialVersionUID = 888214397;
 
     /**
      * The reference instance of <code>LANGUAGE</code>
@@ -56,11 +56,12 @@ public class Language extends TableImpl<LanguageRecord> {
      */
     public final TableField<LanguageRecord, String> NAME = createField(DSL.name("NAME"), org.jooq.impl.SQLDataType.VARCHAR(255), this, "");
 
-    /**
-     * Create a <code>LANGUAGE</code> table reference
-     */
-    public Language() {
-        this(DSL.name("LANGUAGE"), null);
+    private Language(Name alias, Table<LanguageRecord> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private Language(Name alias, Table<LanguageRecord> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -77,12 +78,11 @@ public class Language extends TableImpl<LanguageRecord> {
         this(alias, LANGUAGE);
     }
 
-    private Language(Name alias, Table<LanguageRecord> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private Language(Name alias, Table<LanguageRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    /**
+     * Create a <code>LANGUAGE</code> table reference
+     */
+    public Language() {
+        this(DSL.name("LANGUAGE"), null);
     }
 
     public <O extends Record> Language(Table<O> child, ForeignKey<O, LanguageRecord> key) {

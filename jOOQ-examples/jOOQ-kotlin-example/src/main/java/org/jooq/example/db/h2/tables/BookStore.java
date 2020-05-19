@@ -30,7 +30,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class BookStore extends TableImpl<BookStoreRecord> {
 
-    private static final long serialVersionUID = -490084615;
+    private static final long serialVersionUID = -133334503;
 
     /**
      * The reference instance of <code>PUBLIC.BOOK_STORE</code>
@@ -50,11 +50,12 @@ public class BookStore extends TableImpl<BookStoreRecord> {
      */
     public final TableField<BookStoreRecord, String> NAME = createField(DSL.name("NAME"), org.jooq.impl.SQLDataType.VARCHAR(400).nullable(false), this, "");
 
-    /**
-     * Create a <code>PUBLIC.BOOK_STORE</code> table reference
-     */
-    public BookStore() {
-        this(DSL.name("BOOK_STORE"), null);
+    private BookStore(Name alias, Table<BookStoreRecord> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private BookStore(Name alias, Table<BookStoreRecord> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -71,12 +72,11 @@ public class BookStore extends TableImpl<BookStoreRecord> {
         this(alias, BOOK_STORE);
     }
 
-    private BookStore(Name alias, Table<BookStoreRecord> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private BookStore(Name alias, Table<BookStoreRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    /**
+     * Create a <code>PUBLIC.BOOK_STORE</code> table reference
+     */
+    public BookStore() {
+        this(DSL.name("BOOK_STORE"), null);
     }
 
     public <O extends Record> BookStore(Table<O> child, ForeignKey<O, BookStoreRecord> key) {

@@ -30,7 +30,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Book extends TableImpl<BookRecord> {
 
-    private static final long serialVersionUID = 830463937;
+    private static final long serialVersionUID = -40744821;
 
     /**
      * The reference instance of <code>FLYWAY_TEST.BOOK</code>
@@ -60,11 +60,12 @@ public class Book extends TableImpl<BookRecord> {
      */
     public final TableField<BookRecord, String> TITLE = createField(DSL.name("TITLE"), org.jooq.impl.SQLDataType.VARCHAR(400).nullable(false), this, "");
 
-    /**
-     * Create a <code>FLYWAY_TEST.BOOK</code> table reference
-     */
-    public Book() {
-        this(DSL.name("BOOK"), null);
+    private Book(Name alias, Table<BookRecord> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private Book(Name alias, Table<BookRecord> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -81,12 +82,11 @@ public class Book extends TableImpl<BookRecord> {
         this(alias, BOOK);
     }
 
-    private Book(Name alias, Table<BookRecord> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private Book(Name alias, Table<BookRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    /**
+     * Create a <code>FLYWAY_TEST.BOOK</code> table reference
+     */
+    public Book() {
+        this(DSL.name("BOOK"), null);
     }
 
     public <O extends Record> Book(Table<O> child, ForeignKey<O, BookRecord> key) {

@@ -9,7 +9,7 @@ import org.jooq.example.flyway.ddl.db.h2.tables.Book;
 
 
 /**
- * Convenience access to all tables in FLYWAY_TEST
+ * Convenience access to all tables in FLYWAY_TEST.
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables {

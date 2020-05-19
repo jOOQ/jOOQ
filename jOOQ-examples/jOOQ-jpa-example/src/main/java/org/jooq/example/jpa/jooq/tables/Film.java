@@ -32,7 +32,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Film extends TableImpl<FilmRecord> {
 
-    private static final long serialVersionUID = 1375443672;
+    private static final long serialVersionUID = 313776890;
 
     /**
      * The reference instance of <code>FILM</code>
@@ -77,11 +77,12 @@ public class Film extends TableImpl<FilmRecord> {
      */
     public final TableField<FilmRecord, Integer> ORIGINALLANGUAGE_LANGUAGEID = createField(DSL.name("ORIGINALLANGUAGE_LANGUAGEID"), org.jooq.impl.SQLDataType.INTEGER, this, "");
 
-    /**
-     * Create a <code>FILM</code> table reference
-     */
-    public Film() {
-        this(DSL.name("FILM"), null);
+    private Film(Name alias, Table<FilmRecord> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private Film(Name alias, Table<FilmRecord> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -98,12 +99,11 @@ public class Film extends TableImpl<FilmRecord> {
         this(alias, FILM);
     }
 
-    private Film(Name alias, Table<FilmRecord> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private Film(Name alias, Table<FilmRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    /**
+     * Create a <code>FILM</code> table reference
+     */
+    public Film() {
+        this(DSL.name("FILM"), null);
     }
 
     public <O extends Record> Film(Table<O> child, ForeignKey<O, FilmRecord> key) {

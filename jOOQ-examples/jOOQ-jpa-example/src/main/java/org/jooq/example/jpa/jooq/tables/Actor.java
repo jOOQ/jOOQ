@@ -31,7 +31,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Actor extends TableImpl<ActorRecord> {
 
-    private static final long serialVersionUID = -676325822;
+    private static final long serialVersionUID = -1488770024;
 
     /**
      * The reference instance of <code>ACTOR</code>
@@ -61,11 +61,12 @@ public class Actor extends TableImpl<ActorRecord> {
      */
     public final TableField<ActorRecord, String> LASTNAME = createField(DSL.name("LASTNAME"), org.jooq.impl.SQLDataType.VARCHAR(255), this, "");
 
-    /**
-     * Create a <code>ACTOR</code> table reference
-     */
-    public Actor() {
-        this(DSL.name("ACTOR"), null);
+    private Actor(Name alias, Table<ActorRecord> aliased) {
+        this(alias, aliased, null);
+    }
+
+    private Actor(Name alias, Table<ActorRecord> aliased, Field<?>[] parameters) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
     /**
@@ -82,12 +83,11 @@ public class Actor extends TableImpl<ActorRecord> {
         this(alias, ACTOR);
     }
 
-    private Actor(Name alias, Table<ActorRecord> aliased) {
-        this(alias, aliased, null);
-    }
-
-    private Actor(Name alias, Table<ActorRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    /**
+     * Create a <code>ACTOR</code> table reference
+     */
+    public Actor() {
+        this(DSL.name("ACTOR"), null);
     }
 
     public <O extends Record> Actor(Table<O> child, ForeignKey<O, ActorRecord> key) {

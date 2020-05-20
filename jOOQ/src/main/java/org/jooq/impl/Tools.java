@@ -77,6 +77,7 @@ import static org.jooq.impl.DDLStatementType.ALTER_SCHEMA;
 import static org.jooq.impl.DDLStatementType.ALTER_SEQUENCE;
 import static org.jooq.impl.DDLStatementType.ALTER_TABLE;
 import static org.jooq.impl.DDLStatementType.ALTER_VIEW;
+import static org.jooq.impl.DDLStatementType.CREATE_DATABASE;
 import static org.jooq.impl.DDLStatementType.CREATE_INDEX;
 import static org.jooq.impl.DDLStatementType.CREATE_SCHEMA;
 import static org.jooq.impl.DDLStatementType.CREATE_SEQUENCE;
@@ -4493,6 +4494,8 @@ final class Tools {
 
     static final void endTryCatch(Context<?> ctx, DDLStatementType type, Boolean container, Boolean element) {
         switch (ctx.family()) {
+
+
 
 
 

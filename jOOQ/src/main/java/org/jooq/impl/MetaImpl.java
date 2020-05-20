@@ -831,6 +831,8 @@ final class MetaImpl extends AbstractMeta {
 
         @SuppressWarnings({ "rawtypes", "unchecked" })
         private final void init(Result<Record> columns) {
+            boolean hasAutoIncrement = false;
+
             for (Record column : columns) {
                 String columnName = column.get(3, String.class);         // COLUMN_NAME
                 String typeName = column.get(5, String.class);           // TYPE_NAME
@@ -861,7 +863,12 @@ final class MetaImpl extends AbstractMeta {
                     else if (type.hasLength())
                         type = type.length(precision);
 
-                    type = type.identity(isAutoIncrement);
+                    // [#10207] Ignore secondary identity columns, as allowed e.g. in PostgreSQL
+                    if (isAutoIncrement)
+                        if (!hasAutoIncrement)
+                            type = type.identity(hasAutoIncrement = isAutoIncrement);
+                        else
+                            log.info("Multiple identities", "jOOQ does not support tables with multiple identities. Identity is ignored on column: " + columnName);
 
                     if (nullable == DatabaseMetaData.columnNoNulls)
                         type = type.nullable(false);

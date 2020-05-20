@@ -362,9 +362,9 @@ import java.util.regex.Pattern;
 
 import org.jooq.AggregateFilterStep;
 import org.jooq.AggregateFunction;
+import org.jooq.AlterDatabaseStep;
 import org.jooq.AlterIndexFinalStep;
 import org.jooq.AlterIndexStep;
-import org.jooq.AlterSchemaFinalStep;
 import org.jooq.AlterSchemaStep;
 import org.jooq.AlterSequenceFlagsStep;
 import org.jooq.AlterSequenceStep;
@@ -1309,6 +1309,18 @@ final class ParserImpl implements Parser {
                 result.setWithTies(true);
             else
                 parseKeyword(ctx, "ONLY");
+        }
+        else if (!offsetStandard && !offsetPostgres && parseKeywordIf(ctx, "ROWS")) {
+            Long from = parseUnsignedInteger(ctx);
+
+            if (parseKeywordIf(ctx, "TO")) {
+                Long to = parseUnsignedInteger(ctx);
+                result.addLimit(to - from);
+                result.addOffset(from - 1);
+            }
+            else {
+                result.addLimit(from);
+            }
         }
     }
 
@@ -2356,7 +2368,9 @@ final class ParserImpl implements Parser {
         switch (ctx.characterUpper()) {
             case 'D':
                 if (parseKeywordIf(ctx, "DATABASE"))
-                    throw ctx.notImplemented("CREATE DATABASE", "https://github.com/jOOQ/jOOQ/issues/3272");
+                    return parseCreateDatabase(ctx);
+
+                break;
 
             case 'E':
                 if (parseKeywordIf(ctx, "EXTENSION"))
@@ -2571,7 +2585,7 @@ final class ParserImpl implements Parser {
         switch (ctx.characterUpper()) {
             case 'D':
                 if (parseKeywordIf(ctx, "DATABASE"))
-                    throw ctx.notImplemented("DROP DATABASE", "https://github.com/jOOQ/jOOQ/issues/3272");
+                    return parseDropDatabase(ctx);
 
                 break;
 
@@ -4653,9 +4667,19 @@ final class ParserImpl implements Parser {
                     TableField<?, ?> oldName = parseFieldName(ctx);
                     if (!parseKeywordIf(ctx, "AS"))
                         parseKeyword(ctx, "TO");
-                    Field<?> newName = parseFieldName(ctx);
 
-                    return ctx.dsl.alterTable(oldName.getTable()).renameColumn(oldName).to(newName);
+                    return ctx.dsl.alterTable(oldName.getTable()).renameColumn(oldName).to(parseFieldName(ctx));
+                }
+
+                break;
+
+            case 'D':
+                if (parseKeywordIf(ctx, "DATABASE")) {
+                    Catalog oldName = parseCatalogName(ctx);
+                    if (!parseKeywordIf(ctx, "AS"))
+                        parseKeyword(ctx, "TO");
+
+                    return ctx.dsl.alterDatabase(oldName).renameTo(parseCatalogName(ctx));
                 }
 
                 break;
@@ -4665,9 +4689,8 @@ final class ParserImpl implements Parser {
                     Name oldName = parseIndexName(ctx);
                     if (!parseKeywordIf(ctx, "AS"))
                         parseKeyword(ctx, "TO");
-                    Name newName = parseIndexName(ctx);
 
-                    return ctx.dsl.alterIndex(oldName).renameTo(newName);
+                    return ctx.dsl.alterIndex(oldName).renameTo(parseIndexName(ctx));
                 }
 
                 break;
@@ -4677,17 +4700,15 @@ final class ParserImpl implements Parser {
                     Schema oldName = parseSchemaName(ctx);
                     if (!parseKeywordIf(ctx, "AS"))
                         parseKeyword(ctx, "TO");
-                    Schema newName = parseSchemaName(ctx);
 
-                    return ctx.dsl.alterSchema(oldName).renameTo(newName);
+                    return ctx.dsl.alterSchema(oldName).renameTo(parseSchemaName(ctx));
                 }
                 else if (parseKeywordIf(ctx, "SEQUENCE")) {
                     Sequence<?> oldName = parseSequenceName(ctx);
                     if (!parseKeywordIf(ctx, "AS"))
                         parseKeyword(ctx, "TO");
-                    Sequence<?> newName = parseSequenceName(ctx);
 
-                    return ctx.dsl.alterSequence(oldName).renameTo(newName);
+                    return ctx.dsl.alterSequence(oldName).renameTo(parseSequenceName(ctx));
                 }
 
                 break;
@@ -4697,9 +4718,8 @@ final class ParserImpl implements Parser {
                     Table<?> oldName = parseTableName(ctx);
                     if (!parseKeywordIf(ctx, "AS"))
                         parseKeyword(ctx, "TO");
-                    Table<?> newName = parseTableName(ctx);
 
-                    return ctx.dsl.alterView(oldName).renameTo(newName);
+                    return ctx.dsl.alterView(oldName).renameTo(parseTableName(ctx));
                 }
 
                 break;
@@ -4710,9 +4730,8 @@ final class ParserImpl implements Parser {
         Table<?> oldName = parseTableName(ctx);
         if (!parseKeywordIf(ctx, "AS"))
             parseKeyword(ctx, "TO");
-        Table<?> newName = parseTableName(ctx);
 
-        return ctx.dsl.alterTable(oldName).renameTo(newName);
+        return ctx.dsl.alterTable(oldName).renameTo(parseTableName(ctx));
     }
 
     private static final DDLQuery parseDropTable(ParserContext ctx, boolean temporary) {
@@ -4761,23 +4780,35 @@ final class ParserImpl implements Parser {
         return s2;
     }
 
-    private static final DDLQuery parseCreateSchema(ParserContext ctx) {
+    private static final DDLQuery parseCreateDatabase(ParserContext ctx) {
         boolean ifNotExists = parseKeywordIf(ctx, "IF NOT EXISTS");
-        boolean authorization = parseKeywordIf(ctx, "AUTHORIZATION");
-        Schema schemaName = parseSchemaName(ctx);
-
-        if (!authorization && parseKeywordIf(ctx, "AUTHORIZATION"))
-            parseUser(ctx);
+        Catalog catalogName = parseCatalogName(ctx);
 
         return ifNotExists
-            ? ctx.dsl.createSchemaIfNotExists(schemaName)
-            : ctx.dsl.createSchema(schemaName);
+            ? ctx.dsl.createDatabaseIfNotExists(catalogName)
+            : ctx.dsl.createDatabase(catalogName);
     }
 
     private static final DDLQuery parseAlterDatabase(ParserContext ctx) {
-        parseSchemaName(ctx);
-        parseAlterDatabaseFlags(ctx, true);
-        return IGNORE;
+        boolean ifExists = parseKeywordIf(ctx, "IF EXISTS");
+        Catalog catalogName = parseCatalogName(ctx);
+
+        AlterDatabaseStep s1 = ifExists
+            ? ctx.dsl.alterDatabaseIfExists(catalogName)
+            : ctx.dsl.alterDatabase(catalogName);
+
+        if (parseKeywordIf(ctx, "RENAME")) {
+            if (!parseKeywordIf(ctx, "AS"))
+                parseKeyword(ctx, "TO");
+
+            return s1.renameTo(parseCatalogName(ctx));
+        }
+        else if (parseKeywordIf(ctx, "OWNER TO") && parseUser(ctx) != null)
+            return IGNORE;
+        else if (parseAlterDatabaseFlags(ctx, true))
+            return IGNORE;
+        else
+            throw ctx.expected("OWNER TO", "RENAME TO");
     }
 
     private static final boolean parseAlterDatabaseFlags(ParserContext ctx, boolean throwOnFail) {
@@ -4801,6 +4832,28 @@ final class ParserImpl implements Parser {
             return false;
     }
 
+    private static final DDLQuery parseDropDatabase(ParserContext ctx) {
+        boolean ifExists = parseKeywordIf(ctx, "IF EXISTS");
+        Catalog catalogName = parseCatalogName(ctx);
+
+        return ifExists
+            ? ctx.dsl.dropDatabaseIfExists(catalogName)
+            : ctx.dsl.dropDatabase(catalogName);
+    }
+
+    private static final DDLQuery parseCreateSchema(ParserContext ctx) {
+        boolean ifNotExists = parseKeywordIf(ctx, "IF NOT EXISTS");
+        boolean authorization = parseKeywordIf(ctx, "AUTHORIZATION");
+        Schema schemaName = parseSchemaName(ctx);
+
+        if (!authorization && parseKeywordIf(ctx, "AUTHORIZATION"))
+            parseUser(ctx);
+
+        return ifNotExists
+            ? ctx.dsl.createSchemaIfNotExists(schemaName)
+            : ctx.dsl.createSchema(schemaName);
+    }
+
     private static final DDLQuery parseAlterSchema(ParserContext ctx) {
         boolean ifExists = parseKeywordIf(ctx, "IF EXISTS");
         Schema schemaName = parseSchemaName(ctx);
@@ -4811,9 +4864,8 @@ final class ParserImpl implements Parser {
         if (parseKeywordIf(ctx, "RENAME")) {
             if (!parseKeywordIf(ctx, "AS"))
                 parseKeyword(ctx, "TO");
-            Schema newName = parseSchemaName(ctx);
-            AlterSchemaFinalStep s2 = s1.renameTo(newName);
-            return s2;
+
+            return s1.renameTo(parseSchemaName(ctx));
         }
         else if (parseKeywordIf(ctx, "OWNER TO") && parseUser(ctx) != null)
             return IGNORE;

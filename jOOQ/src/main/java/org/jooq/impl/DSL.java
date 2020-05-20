@@ -132,6 +132,7 @@ import java.util.function.Function;
 import javax.sql.DataSource;
 
 import org.jooq.AggregateFunction;
+import org.jooq.AlterDatabaseStep;
 import org.jooq.AlterIndexOnStep;
 import org.jooq.AlterIndexStep;
 import org.jooq.AlterSchemaStep;
@@ -181,6 +182,7 @@ import org.jooq.ConstraintForeignKeyReferencesStep9;
 import org.jooq.ConstraintForeignKeyReferencesStepN;
 import org.jooq.ConstraintTypeStep;
 // ...
+import org.jooq.CreateDatabaseFinalStep;
 import org.jooq.CreateIndexStep;
 import org.jooq.CreateSchemaFinalStep;
 import org.jooq.CreateSequenceFlagsStep;
@@ -194,6 +196,7 @@ import org.jooq.DatePart;
 import org.jooq.Delete;
 import org.jooq.DeleteUsingStep;
 import org.jooq.DerivedColumnList;
+import org.jooq.DropDatabaseFinalStep;
 import org.jooq.DropIndexOnStep;
 import org.jooq.DropSchemaStep;
 import org.jooq.DropSequenceFinalStep;
@@ -6817,6 +6820,66 @@ public class DSL {
     // -------------------------------------------------------------------------
 
     /**
+     * Create a new DSL <code>CREATE DATABASE</code> statement.
+     *
+     * @see DSLContext#createDatabase(String)
+     */
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    public static CreateDatabaseFinalStep createDatabase(String database) {
+        return dsl().createDatabase(database);
+    }
+
+    /**
+     * Create a new DSL <code>CREATE DATABASE</code> statement.
+     *
+     * @see DSLContext#createDatabase(Name)
+     */
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    public static CreateDatabaseFinalStep createDatabase(Name database) {
+        return dsl().createDatabase(database);
+    }
+
+    /**
+     * Create a new DSL <code>CREATE DATABASE</code> statement.
+     *
+     * @see DSLContext#createDatabase(Catalog)
+     */
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    public static CreateDatabaseFinalStep createDatabase(Catalog database) {
+        return dsl().createDatabase(database);
+    }
+
+    /**
+     * Create a new DSL <code>CREATE DATABASE</code> statement.
+     *
+     * @see DSLContext#createDatabaseIfNotExists(String)
+     */
+    @Support({ MARIADB, MYSQL })
+    public static CreateDatabaseFinalStep createDatabaseIfNotExists(String database) {
+        return dsl().createDatabaseIfNotExists(database);
+    }
+
+    /**
+     * Create a new DSL <code>CREATE DATABASE</code> statement.
+     *
+     * @see DSLContext#createDatabaseIfNotExists(Name)
+     */
+    @Support({ MARIADB, MYSQL })
+    public static CreateDatabaseFinalStep createDatabaseIfNotExists(Name database) {
+        return dsl().createDatabaseIfNotExists(database);
+    }
+
+    /**
+     * Create a new DSL <code>CREATE DATABASE</code> statement.
+     *
+     * @see DSLContext#createDatabaseIfNotExists(Catalog)
+     */
+    @Support({ MARIADB, MYSQL })
+    public static CreateDatabaseFinalStep createDatabaseIfNotExists(Catalog database) {
+        return dsl().createDatabaseIfNotExists(database);
+    }
+
+    /**
      * Create a new DSL <code>CREATE SCHEMA</code> statement.
      *
      * @see DSLContext#createSchema(String)
@@ -6862,8 +6925,8 @@ public class DSL {
      * @see DSLContext#createSchemaIfNotExists(Name)
      */
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
-    public static CreateSchemaFinalStep createSchemaIfNotExists(Name table) {
-        return dsl().createSchemaIfNotExists(table);
+    public static CreateSchemaFinalStep createSchemaIfNotExists(Name schema) {
+        return dsl().createSchemaIfNotExists(schema);
     }
 
     /**
@@ -6875,7 +6938,6 @@ public class DSL {
     public static CreateSchemaFinalStep createSchemaIfNotExists(Schema schema) {
         return dsl().createSchemaIfNotExists(schema);
     }
-
 
     /**
      * Create a new DSL <code>CREATE TABLE</code> statement.
@@ -7764,6 +7826,66 @@ public class DSL {
     }
 
     /**
+     * Create a new DSL <code>ALTER DATABASE</code> statement.
+     *
+     * @see DSLContext#alterDatabase(String)
+     */
+    @Support({ POSTGRES })
+    public static AlterDatabaseStep alterDatabase(String database) {
+        return dsl().alterDatabase(database);
+    }
+
+    /**
+     * Create a new DSL <code>ALTER DATABASE</code> statement.
+     *
+     * @see DSLContext#alterDatabase(Name)
+     */
+    @Support({ POSTGRES })
+    public static AlterDatabaseStep alterDatabase(Name database) {
+        return dsl().alterDatabase(database);
+    }
+
+    /**
+     * Create a new DSL <code>ALTER DATABASE</code> statement.
+     *
+     * @see DSLContext#alterDatabase(Catalog)
+     */
+    @Support({ POSTGRES })
+    public static AlterDatabaseStep alterDatabase(Catalog database) {
+        return dsl().alterDatabase(database);
+    }
+
+    /**
+     * Create a new DSL <code>ALTER DATABASE</code> statement.
+     *
+     * @see DSLContext#alterDatabaseIfExists(String)
+     */
+    @Support({ POSTGRES })
+    public static AlterDatabaseStep alterDatabaseIfExists(String database) {
+        return dsl().alterDatabaseIfExists(database);
+    }
+
+    /**
+     * Create a new DSL <code>ALTER DATABASE</code> statement.
+     *
+     * @see DSLContext#alterDatabaseIfExists(Name)
+     */
+    @Support({ POSTGRES })
+    public static AlterDatabaseStep alterDatabaseIfExists(Name database) {
+        return dsl().alterDatabaseIfExists(database);
+    }
+
+    /**
+     * Create a new DSL <code>ALTER DATABASE</code> statement.
+     *
+     * @see DSLContext#alterDatabaseIfExists(Catalog)
+     */
+    @Support({ POSTGRES })
+    public static AlterDatabaseStep alterDatabaseIfExists(Catalog database) {
+        return dsl().alterDatabaseIfExists(database);
+    }
+
+    /**
      * Create a new DSL <code>ALTER SCHEMA</code> statement.
      *
      * @see DSLContext#alterSchema(String)
@@ -7941,6 +8063,66 @@ public class DSL {
     @Support({ H2, POSTGRES })
     public static AlterIndexStep alterIndexIfExists(Index index) {
         return dsl().alterIndexIfExists(index);
+    }
+
+    /**
+     * Create a new DSL <code>DROP DATABASE</code> statement.
+     *
+     * @see DSLContext#dropDatabase(String)
+     */
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    public static DropDatabaseFinalStep dropDatabase(String database) {
+        return dsl().dropDatabase(database);
+    }
+
+    /**
+     * Create a new DSL <code>DROP DATABASE</code> statement.
+     *
+     * @see DSLContext#dropDatabase(Name)
+     */
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    public static DropDatabaseFinalStep dropDatabase(Name database) {
+        return dsl().dropDatabase(database);
+    }
+
+    /**
+     * Create a new DSL <code>DROP DATABASE</code> statement.
+     *
+     * @see DSLContext#dropDatabase(Catalog)
+     */
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    public static DropDatabaseFinalStep dropDatabase(Catalog database) {
+        return dsl().dropDatabase(database);
+    }
+
+    /**
+     * Create a new DSL <code>DROP DATABASE</code> statement.
+     *
+     * @see DSLContext#dropDatabaseIfExists(String)
+     */
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    public static DropDatabaseFinalStep dropDatabaseIfExists(String database) {
+        return dsl().dropDatabaseIfExists(database);
+    }
+
+    /**
+     * Create a new DSL <code>DROP DATABASE</code> statement.
+     *
+     * @see DSLContext#dropDatabaseIfExists(Name)
+     */
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    public static DropDatabaseFinalStep dropDatabaseIfExists(Name database) {
+        return dsl().dropDatabaseIfExists(database);
+    }
+
+    /**
+     * Create a new DSL <code>DROP DATABASE</code> statement.
+     *
+     * @see DSLContext#dropDatabaseIfExists(Catalog)
+     */
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    public static DropDatabaseFinalStep dropDatabaseIfExists(Catalog database) {
+        return dsl().dropDatabaseIfExists(database);
     }
 
     /**

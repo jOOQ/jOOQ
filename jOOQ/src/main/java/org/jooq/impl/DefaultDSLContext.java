@@ -92,6 +92,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import org.jooq.AlterDatabaseStep;
 import org.jooq.AlterIndexOnStep;
 import org.jooq.AlterIndexStep;
 import org.jooq.AlterSchemaStep;
@@ -114,6 +115,7 @@ import org.jooq.ConnectionProvider;
 import org.jooq.ConnectionRunnable;
 import org.jooq.ContextTransactionalCallable;
 import org.jooq.ContextTransactionalRunnable;
+import org.jooq.CreateDatabaseFinalStep;
 import org.jooq.CreateIndexStep;
 import org.jooq.CreateSchemaFinalStep;
 import org.jooq.CreateSequenceFlagsStep;
@@ -127,6 +129,7 @@ import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.DeleteQuery;
 import org.jooq.DeleteUsingStep;
+import org.jooq.DropDatabaseFinalStep;
 import org.jooq.DropIndexOnStep;
 import org.jooq.DropSchemaStep;
 import org.jooq.DropSequenceFinalStep;
@@ -3212,6 +3215,36 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
 
     @Override
+    public CreateDatabaseFinalStep createDatabase(String database) {
+        return createDatabase(name(database));
+    }
+
+    @Override
+    public CreateDatabaseFinalStep createDatabase(Name database) {
+        return createDatabase(catalog(database));
+    }
+
+    @Override
+    public CreateDatabaseFinalStep createDatabase(Catalog database) {
+        return new CreateDatabaseImpl(configuration(), database, false);
+    }
+
+    @Override
+    public CreateDatabaseFinalStep createDatabaseIfNotExists(String database) {
+        return createDatabaseIfNotExists(name(database));
+    }
+
+    @Override
+    public CreateDatabaseFinalStep createDatabaseIfNotExists(Name database) {
+        return createDatabaseIfNotExists(catalog(database));
+    }
+
+    @Override
+    public CreateDatabaseFinalStep createDatabaseIfNotExists(Catalog database) {
+        return new CreateDatabaseImpl(configuration(), database, true);
+    }
+
+    @Override
     public CreateSchemaFinalStep createSchema(String schema) {
         return createSchema(name(schema));
     }
@@ -3547,6 +3580,36 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
+    public AlterDatabaseStep alterDatabase(String database) {
+        return alterDatabase(name(database));
+    }
+
+    @Override
+    public AlterDatabaseStep alterDatabase(Name database) {
+        return alterDatabase(catalog(database));
+    }
+
+    @Override
+    public AlterDatabaseStep alterDatabase(Catalog database) {
+        return new AlterDatabaseImpl(configuration(), database);
+    }
+
+    @Override
+    public AlterDatabaseStep alterDatabaseIfExists(String database) {
+        return alterDatabaseIfExists(name(database));
+    }
+
+    @Override
+    public AlterDatabaseStep alterDatabaseIfExists(Name database) {
+        return alterDatabaseIfExists(catalog(database));
+    }
+
+    @Override
+    public AlterDatabaseStep alterDatabaseIfExists(Catalog database) {
+        return new AlterDatabaseImpl(configuration(), database, true);
+    }
+
+    @Override
     public AlterSchemaStep alterSchema(String schema) {
         return alterSchema(name(schema));
     }
@@ -3634,6 +3697,36 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public AlterIndexStep alterIndexIfExists(Index index) {
         return new AlterIndexImpl(configuration(), index, true);
+    }
+
+    @Override
+    public DropDatabaseFinalStep dropDatabase(String database) {
+        return dropDatabase(name(database));
+    }
+
+    @Override
+    public DropDatabaseFinalStep dropDatabase(Name database) {
+        return dropDatabase(catalog(database));
+    }
+
+    @Override
+    public DropDatabaseFinalStep dropDatabase(Catalog database) {
+        return new DropDatabaseImpl(configuration(), database);
+    }
+
+    @Override
+    public DropDatabaseFinalStep dropDatabaseIfExists(String database) {
+        return dropDatabaseIfExists(name(database));
+    }
+
+    @Override
+    public DropDatabaseFinalStep dropDatabaseIfExists(Name database) {
+        return dropDatabaseIfExists(catalog(database));
+    }
+
+    @Override
+    public DropDatabaseFinalStep dropDatabaseIfExists(Catalog database) {
+        return new DropDatabaseImpl(configuration(), database, true);
     }
 
     @Override

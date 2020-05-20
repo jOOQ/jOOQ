@@ -4652,9 +4652,17 @@ final class Tools {
 
 
             case POSTGRES: {
+                String sqlstate;
+
+                switch (type) {
+                    case ALTER_DATABASE: sqlstate = "3D000"; break;
+                    default            : sqlstate = "42P07"; break;
+                }
+
                 ctx.sql(';').formatIndentEnd().formatSeparator()
                    .visit(K_EXCEPTION).formatIndentStart().formatSeparator()
-                   .visit(K_WHEN).sql(' ').visit(K_SQLSTATE).sql(" '42P07' ").visit(K_THEN).sql(' ').visit(K_NULL).sql(';').formatIndentEnd();
+                   .visit(K_WHEN).sql(' ').visit(K_SQLSTATE).sql(' ').visit(DSL.inline(sqlstate)).sql(' ').visit(K_THEN).sql(' ').visit(K_NULL).sql(';').formatIndentEnd();
+
                 end(ctx);
                 break;
             }

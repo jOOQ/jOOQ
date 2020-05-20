@@ -73,7 +73,7 @@ import org.jooq.Schema;
  */
 final class DropSchemaImpl extends AbstractRowCountQuery implements
 
-    // Cascading interface implementations for DROP VIEW behaviour
+    // Cascading interface implementations for DROP SCHEMA behaviour
     DropSchemaStep {
 
     /**

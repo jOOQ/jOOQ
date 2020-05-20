@@ -38,7 +38,7 @@
 package org.jooq;
 
 /**
- * The final step in the <code>DROP SCHEMA</code> DSL.
+ * The final step in the <code>DROP DATABASE</code> DSL.
  * <p>
  * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
  * <p>

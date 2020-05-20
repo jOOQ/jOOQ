@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
+import static java.util.Arrays.asList;
 import static org.jooq.Name.Quoted.QUOTED;
 import static org.jooq.conf.SettingsTools.interpreterLocale;
 import static org.jooq.impl.AbstractName.NO_NAME;
@@ -57,7 +58,6 @@ import static org.jooq.tools.StringUtils.defaultIfNull;
 import java.util.AbstractList;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -799,10 +799,10 @@ final class Interpreter {
         }
 
         List<DataType<?>> columnTypes = new ArrayList<>();
-        for (Field<?> f : query.$select().getSelect())
+        for (Field<?> f : (query.$select() != null ? query.$select().getSelect() : asList(query.$fields())))
             columnTypes.add(f.getDataType());
 
-        newTable(table, schema, Arrays.asList(query.$fields()), columnTypes, query.$select(), null, TableOptions.view(query.$select()));
+        newTable(table, schema, asList(query.$fields()), columnTypes, query.$select(), null, TableOptions.view(query.$select()));
     }
 
     private final void accept0(AlterViewImpl query) {

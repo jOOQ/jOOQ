@@ -967,7 +967,7 @@ final class ParserImpl implements Parser {
                     break;
 
                 case 'S':
-                    if (peekKeyword(ctx, "SELECT") || peekKeyword(ctx, "SEL"))
+                    if (peekSelect(ctx, false))
                         return parseSelect(ctx);
                     else if (!parseResultQuery && peekKeyword(ctx, "SET"))
                         return parseSet(ctx);
@@ -1074,8 +1074,7 @@ final class ParserImpl implements Parser {
             result = parseInsert(ctx, with);
         else if (!parseSelect && peekKeyword(ctx, "MERGE"))
             result = parseMerge(ctx, with);
-        else if (peekKeyword(ctx, "SELECT", false, true, false)
-              || peekKeyword(ctx, "SEL", false, true, false))
+        else if (peekSelect(ctx, true))
             result = parseSelect(ctx, degree, with);
         else if (!parseSelect && (peekKeyword(ctx, "UPDATE") || peekKeyword(ctx, "UPD")))
             result = parseUpdate(ctx, with);
@@ -1949,8 +1948,7 @@ final class ParserImpl implements Parser {
 
                 returning = onDuplicate =  s1.set(map);
             }
-            else if (peekKeyword(ctx, "SELECT", false, true, false)
-                  || peekKeyword(ctx, "SEL", false, true, false)){
+            else if (peekSelect(ctx, true)){
                 SelectQueryImpl<Record> select = parseSelect(ctx);
 
                 returning = onDuplicate = (fields == null)
@@ -5169,12 +5167,22 @@ final class ParserImpl implements Parser {
                 Condition result =
                       all
                     ? left instanceof Field
-                        ? ((Field) left).compare(comp, DSL.all(parseWithOrSelect(ctx, 1)))
+                        ? peekSelectOrWith(ctx, true)
+                            ? ((Field) left).compare(comp, DSL.all(parseWithOrSelect(ctx, 1)))
+                            : ((Field) left).compare(comp, DSL.all(parseFields(ctx).toArray(EMPTY_FIELD)))
+
+                        // TODO: Support quantifiers also for rows
                         : new RowSubqueryCondition((Row) left, DSL.all(parseWithOrSelect(ctx, ((Row) left).size())), comp)
+
                     : any
                     ? left instanceof Field
-                        ? ((Field) left).compare(comp, DSL.any(parseWithOrSelect(ctx, 1)))
+                        ? peekSelectOrWith(ctx, true)
+                            ? ((Field) left).compare(comp, DSL.any(parseWithOrSelect(ctx, 1)))
+                            : ((Field) left).compare(comp, DSL.any(parseFields(ctx).toArray(EMPTY_FIELD)))
+
+                        // TODO: Support quantifiers also for rows
                         : new RowSubqueryCondition((Row) left, DSL.any(parseWithOrSelect(ctx, ((Row) left).size())), comp)
+
                     : left instanceof Field
                         ? ((Field) left).compare(comp, toField(ctx, parseConcat(ctx, null)))
                         : new RowCondition((Row) left, parseRow(ctx, ((Row) left).size(), true), comp);
@@ -7003,11 +7011,10 @@ final class ParserImpl implements Parser {
                 // - A combination of the above:                E.g. ((select 1) + 2, ((select 1) except (select 2)) + 2)
                 int position = ctx.position();
                 try {
-                    if (peekKeyword(ctx, "SELECT", false, true, false) ||
-                        peekKeyword(ctx, "SEL", false, true, false)) {
+                    if (peekSelect(ctx, true)) {
                         SelectQueryImpl<Record> select = parseSelect(ctx);
-                        if (select.getSelect().size() > 1)
-                            throw ctx.exception("Select list must contain at most one column");
+                        if (select.getSelect().size() != 1)
+                            throw ctx.exception("Select list must contain exactly one column");
 
                         field = field((Select) select);
                         return field;
@@ -7050,6 +7057,15 @@ final class ParserImpl implements Parser {
 
         else
             return parseFieldNameOrSequenceExpression(ctx);
+    }
+
+    private static final boolean peekSelectOrWith(ParserContext ctx, boolean peekIntoParens) {
+        return peekKeyword(ctx, "WITH", false, peekIntoParens, false) || peekSelect(ctx, peekIntoParens);
+    }
+
+    private static final boolean peekSelect(ParserContext ctx, boolean peekIntoParens) {
+        return peekKeyword(ctx, "SELECT", false, peekIntoParens, false) ||
+               peekKeyword(ctx, "SEL", false, peekIntoParens, false);
     }
 
     private static final Field<?> parseFieldShlIf(ParserContext ctx) {

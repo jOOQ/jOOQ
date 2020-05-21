@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.Clause.FIELD;
 import static org.jooq.Clause.FIELD_VALUE;
+// ...
 import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.ParamType.NAMED;
@@ -158,10 +159,15 @@ abstract class AbstractParam<T> extends AbstractField<T> implements Param<T> {
         return inline;
     }
 
-    final boolean isInline(Context<?> context) {
+    final boolean isInline(Context<?> ctx) {
         return isInline()
-            || (context.paramType() == INLINED)
-            || (context.paramType() == NAMED_OR_INLINED && StringUtils.isBlank(paramName));
+            || (ctx.paramType() == INLINED)
+            || (ctx.paramType() == NAMED_OR_INLINED && StringUtils.isBlank(paramName))
+
+
+
+
+        ;
     }
 
     @Override

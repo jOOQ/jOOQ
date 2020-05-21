@@ -125,6 +125,9 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
 
     private static String getArrayType(Configuration configuration, String dataType) {
         switch (configuration.family()) {
+
+
+
             case HSQLDB:
                 return dataType + " array";
 

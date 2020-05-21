@@ -1033,8 +1033,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // By default, render HSQLDB syntax
             else {
+                boolean squareBrackets = true;
+
                 ctx.render().visit(K_ARRAY);
-                ctx.render().sql('[');
+                ctx.render().sql(squareBrackets ? '[' : '(');
 
                 for (Object o : value) {
                     ctx.render().sql(separator);
@@ -1042,7 +1044,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     separator = ", ";
                 }
 
-                ctx.render().sql(']');
+                ctx.render().sql(squareBrackets ? ']' : ')');
 
                 // [#3214] Some PostgreSQL array type literals need explicit casting
                 // TODO: This seems mutually exclusive with the previous branch. Still needed?

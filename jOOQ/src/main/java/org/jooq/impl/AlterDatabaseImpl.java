@@ -71,9 +71,8 @@ final class AlterDatabaseImpl extends AbstractRowCountQuery implements
     /**
      * Generated UID
      */
-    private static final long            serialVersionUID      = 8904572826501186329L;
-
-
+    private static final long            serialVersionUID        = 8904572826501186329L;
+    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS    = SQLDialect.supportedBy(POSTGRES);
 
 
 
@@ -122,23 +121,18 @@ final class AlterDatabaseImpl extends AbstractRowCountQuery implements
     // XXX: QueryPart API
     // ------------------------------------------------------------------------
 
-
-
-
-
-
-
+    private final boolean supportsIfExists(Context<?> ctx) {
+        return !NO_SUPPORT_IF_EXISTS.contains(ctx.family());
+    }
 
     @Override
     public final void accept(Context<?> ctx) {
-
-
-
-
-
-
-
-
+        if (ifExists && !supportsIfExists(ctx)) {
+            Tools.beginTryCatch(ctx, DDLStatementType.ALTER_DATABASE);
+            accept0(ctx);
+            Tools.endTryCatch(ctx, DDLStatementType.ALTER_DATABASE);
+        }
+        else
             accept0(ctx);
     }
 
@@ -152,11 +146,8 @@ final class AlterDatabaseImpl extends AbstractRowCountQuery implements
 
         ctx.sql(' ').visit(K_DATABASE);
 
-        if (ifExists)
-
-
-
-                ctx.sql(' ').visit(K_IF_EXISTS);
+        if (ifExists && supportsIfExists(ctx))
+            ctx.sql(' ').visit(K_IF_EXISTS);
 
         ctx.sql(' ').visit(database);
 

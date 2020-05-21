@@ -99,6 +99,7 @@ import static org.jooq.impl.CombineOperator.UNION;
 import static org.jooq.impl.CombineOperator.UNION_ALL;
 import static org.jooq.impl.DSL.asterisk;
 import static org.jooq.impl.DSL.falseCondition;
+import static org.jooq.impl.DSL.groupingSets;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.jsonArrayAgg;
 import static org.jooq.impl.DSL.jsonEntry;
@@ -1753,6 +1754,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 // [#4447] CUBRID can't handle subqueries in GROUP BY
                 else if (family == CUBRID)
                     context.sql("1 + 0");
+
+
+
+
 
 
 

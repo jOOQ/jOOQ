@@ -85,6 +85,8 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+import static org.jooq.impl.Keywords.K_CUBE;
+import static org.jooq.impl.Keywords.K_GROUPING_SETS;
 import static org.jooq.impl.Names.N_IF;
 import static org.jooq.impl.Names.N_IIF;
 import static org.jooq.impl.Names.N_SYSTEM_TIME;
@@ -17140,7 +17142,7 @@ public class DSL {
      */
     @Support({ POSTGRES })
     public static GroupField cube(FieldOrRow... fields) {
-        return field("{cube}({0})", Object.class, new QueryPartList<>(fields));
+        return field("{0} ({1})", Object.class, K_CUBE, new QueryPartList<>(fields));
     }
 
     /**
@@ -17239,7 +17241,7 @@ public class DSL {
         for (Collection<? extends Field<?>> fieldsSet : fieldSets)
             arg.add(new WrappedList(new QueryPartList<>(fieldsSet)));
 
-        return field("grouping sets({0})", SQLDataType.OTHER, arg);
+        return field("{0} ({1})", SQLDataType.OTHER, K_GROUPING_SETS, arg);
     }
 
 

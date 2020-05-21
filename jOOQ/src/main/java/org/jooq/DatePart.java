@@ -44,6 +44,7 @@ package org.jooq;
 // ...
 // ...
 import static org.jooq.SQLDialect.H2;
+// ...
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MARIADB;
 // ...
@@ -210,10 +211,12 @@ public enum DatePart {
 
     private final String  sql;
     private final Keyword keyword;
+    private final Name    name;
 
     private DatePart(String sql) {
         this.sql = sql;
         this.keyword = DSL.keyword(sql);
+        this.name = DSL.unquotedName(sql);
     }
 
     public final String toSQL() {
@@ -222,5 +225,9 @@ public enum DatePart {
 
     public final Keyword toKeyword() {
         return keyword;
+    }
+
+    public final Name toName() {
+        return name;
     }
 }

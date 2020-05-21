@@ -40,6 +40,7 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.isoDayOfWeek;
 import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.Keywords.K_DATE;
@@ -54,11 +55,14 @@ import static org.jooq.impl.Keywords.K_YEAR;
 import static org.jooq.impl.Names.N_DATEDIFF;
 import static org.jooq.impl.Names.N_DATEPART;
 import static org.jooq.impl.Names.N_DAYOFWEEK;
+import static org.jooq.impl.Names.N_DAYOFYEAR;
 import static org.jooq.impl.Names.N_EXTRACT;
+import static org.jooq.impl.Names.N_SECONDS_BETWEEN;
 import static org.jooq.impl.Names.N_STRFTIME;
 import static org.jooq.impl.Names.N_TO_CHAR;
 import static org.jooq.impl.Names.N_TO_NUMBER;
 import static org.jooq.impl.Names.N_TRUNC;
+import static org.jooq.impl.Names.N_WEEKDAY;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.castIfNeeded;
@@ -293,6 +297,31 @@ final class Extract extends AbstractField<Integer> {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             case MARIADB:
             case MYSQL:
                 switch (datePart) {
@@ -300,16 +329,16 @@ final class Extract extends AbstractField<Integer> {
                         ctx.visit(N_DAYOFWEEK).sql('(').visit(field).sql(')');
                         return;
                     case DAY_OF_YEAR:
-                        ctx.visit(keyword("dayofyear")).sql('(').visit(field).sql(')');
+                        ctx.visit(N_DAYOFYEAR).sql('(').visit(field).sql(')');
                         return;
                     case EPOCH:
                         ctx.visit(keyword("unix_timestamp")).sql('(').visit(field).sql(')');
                         return;
                     case ISO_DAY_OF_WEEK:
-                        ctx.visit(keyword("weekday")).sql('(').visit(field).sql(") + 1");
+                        ctx.visit(N_WEEKDAY).sql('(').visit(field).sql(") + 1");
                         return;
                     case QUARTER:
-                        ctx.visit(datePart.toKeyword()).sql('(').visit(field).sql(')');
+                        ctx.visit(datePart.toName()).sql('(').visit(field).sql(')');
                         return;
                 }
                 break;
@@ -365,7 +394,7 @@ final class Extract extends AbstractField<Integer> {
                         return;
                     case QUARTER:
                     case WEEK:
-                        ctx.visit(datePart.toKeyword()).sql('(').visit(field).sql(')');
+                        ctx.visit(datePart.toName()).sql('(').visit(field).sql(')');
                         return;
                 }
                 break;
@@ -373,7 +402,7 @@ final class Extract extends AbstractField<Integer> {
             case H2:
                 switch (datePart) {
                     case QUARTER:
-                        ctx.visit(datePart.toKeyword()).sql('(').visit(field).sql(')');
+                        ctx.visit(datePart.toName()).sql('(').visit(field).sql(')');
                         return;
                     case WEEK:
                         ctx.visit(keyword("iso_week")).sql('(').visit(field).sql(')');
@@ -415,7 +444,7 @@ final class Extract extends AbstractField<Integer> {
                        .div(inline(1000)), INTEGER));
                 break;
             case QUARTER:
-                ctx.visit(DSL.month(field).add(inline(2)).div(inline(3)));
+                ctx.visit(DSL.floor(DSL.month(field).add(inline(2)).div(inline(3))));
                 break;
             case TIMEZONE:
                 ctx.visit(DSL.extract(field, DatePart.TIMEZONE_HOUR).mul(inline(3600))

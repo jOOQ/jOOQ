@@ -95,6 +95,7 @@ final class Names {
     static final Name N_DATEDIFF               = unquotedName("datediff");
     static final Name N_DATEPART               = unquotedName("datepart");
     static final Name N_DAYOFWEEK              = unquotedName("dayofweek");
+    static final Name N_DAYOFYEAR              = unquotedName("dayofyear");
     static final Name N_DAYS_BETWEEN           = unquotedName("days_between");
     static final Name N_DECODE                 = unquotedName("decode");
     static final Name N_DEGREES                = unquotedName("degrees");
@@ -116,6 +117,7 @@ final class Names {
     static final Name N_IIF                    = unquotedName("iif");
     static final Name N_INSERT                 = unquotedName("insert");
     static final Name N_INSTR                  = unquotedName("instr");
+    static final Name N_ISOWEEK                = unquotedName("isoweek");
     static final Name N_JOIN                   = unquotedName("join");
     static final Name N_JSON_AGG               = unquotedName("json_agg");
     static final Name N_JSON_ARRAY             = unquotedName("json_array");
@@ -191,6 +193,7 @@ final class Names {
     static final Name N_RPAD                   = unquotedName("rpad");
     static final Name N_RTRIM                  = unquotedName("rtrim");
     static final Name N_SCHEMA_NAME            = unquotedName("schema_name");
+    static final Name N_SECONDS_BETWEEN        = unquotedName("seconds_between");
     static final Name N_SELECT                 = unquotedName("select");
     static final Name N_SGN                    = unquotedName("sgn");
     static final Name N_SIGN                   = unquotedName("sign");
@@ -225,6 +228,7 @@ final class Names {
     static final Name N_UPPER                  = unquotedName("upper");
     static final Name N_USER                   = unquotedName("user");
     static final Name N_VALUES                 = unquotedName("values");
+    static final Name N_WEEKDAY                = unquotedName("weekday");
     static final Name N_WIDTH_BUCKET           = unquotedName("width_bucket");
     static final Name N_XMLAGG                 = unquotedName("xmlagg");
     static final Name N_XMLATTRIBUTES          = unquotedName("xmlattributes");

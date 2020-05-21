@@ -53,7 +53,9 @@ final class Names {
     static final Name N_COLUMN_VALUE           = name("COLUMN_VALUE");
 
     static final Name N_ACOS                   = unquotedName("acos");
+    static final Name N_ADD_DAYS               = unquotedName("add_days");
     static final Name N_ADD_MONTHS             = unquotedName("add_months");
+    static final Name N_ADD_SECONDS            = unquotedName("add_seconds");
     static final Name N_ARRAY                  = unquotedName("array");
     static final Name N_ARRAY_AGG              = unquotedName("array_agg");
     static final Name N_ASC                    = unquotedName("asc");
@@ -153,6 +155,7 @@ final class Names {
     static final Name N_MID                    = unquotedName("mid");
     static final Name N_MOD                    = unquotedName("mod");
     static final Name N_MODE                   = unquotedName("mode");
+    static final Name N_NANO100_BETWEEN        = unquotedName("nano100_between");
     static final Name N_NEXTVAL                = unquotedName("nextval");
     static final Name N_NOT                    = unquotedName("not");
     static final Name N_NOW                    = unquotedName("now");

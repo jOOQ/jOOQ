@@ -84,6 +84,9 @@ import static org.jooq.impl.Keywords.K_MILLISECOND;
 import static org.jooq.impl.Keywords.K_MONTH;
 import static org.jooq.impl.Keywords.K_YEAR_MONTH;
 import static org.jooq.impl.Keywords.K_YEAR_TO_MONTH;
+import static org.jooq.impl.Names.N_ADD_DAYS;
+import static org.jooq.impl.Names.N_ADD_MONTHS;
+import static org.jooq.impl.Names.N_ADD_SECONDS;
 import static org.jooq.impl.Names.N_DATEADD;
 import static org.jooq.impl.Names.N_DATE_ADD;
 import static org.jooq.impl.Names.N_STRFTIME;
@@ -572,6 +575,32 @@ final class Expression<T> extends AbstractField<T> {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 case POSTGRES:
                 default:
                     ctx.visit(new DefaultExpression<>(lhs, operator, wrap(rhs)));
@@ -607,11 +636,14 @@ final class Expression<T> extends AbstractField<T> {
 
 
 
+
+
                 case FIREBIRD: {
                     if (operator == ADD)
                         ctx.visit(N_DATEADD).sql('(').visit(K_DAY).sql(", ").visit(rhsAsNumber()).sql(", ").visit(lhs).sql(')');
                     else
                         ctx.visit(N_DATEADD).sql('(').visit(K_DAY).sql(", ").visit(rhsAsNumber().neg()).sql(", ").visit(lhs).sql(')');
+
                     break;
                 }
 
@@ -623,6 +655,7 @@ final class Expression<T> extends AbstractField<T> {
                         ctx.visit(lhs.add(DSL.field("{0} day", rhsAsNumber())));
                     else
                         ctx.visit(lhs.sub(DSL.field("{0} day", rhsAsNumber())));
+
                     break;
                 }
 
@@ -655,8 +688,11 @@ final class Expression<T> extends AbstractField<T> {
                         ctx.visit(N_DATE_ADD).sql('(').visit(lhs).sql(", ").visit(K_INTERVAL).sql(' ').visit(rhsAsNumber()).sql(' ').visit(K_DAY).sql(')');
                     else
                         ctx.visit(N_DATE_ADD).sql('(').visit(lhs).sql(", ").visit(K_INTERVAL).sql(' ').visit(rhsAsNumber().neg()).sql(' ').visit(K_DAY).sql(')');
+
                     break;
                 }
+
+
 
 
 
@@ -689,6 +725,7 @@ final class Expression<T> extends AbstractField<T> {
                         ctx.visit(new DateAdd(lhs, rhsAsNumber(), DatePart.DAY));
                     else
                         ctx.visit(new DateAdd(lhs, rhsAsNumber().neg(), DatePart.DAY));
+
                     break;
                 }
 
@@ -697,7 +734,9 @@ final class Expression<T> extends AbstractField<T> {
                         ctx.visit(N_STRFTIME).sql("('%Y-%m-%d %H:%M:%f', ").visit(lhs).sql(", ").visit(rhsAsNumber().concat(inline(" day"))).sql(')');
                     else
                         ctx.visit(N_STRFTIME).sql("('%Y-%m-%d %H:%M:%f', ").visit(lhs).sql(", ").visit(rhsAsNumber().neg().concat(inline(" day"))).sql(')');
+
                     break;
+
 
 
 

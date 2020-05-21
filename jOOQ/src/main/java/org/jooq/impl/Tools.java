@@ -4714,6 +4714,7 @@ final class Tools {
 
 
 
+
                 case CUBRID:    ctx.sql(' ').visit(K_AUTO_INCREMENT); break;
                 case DERBY:     ctx.sql(' ').visit(K_GENERATED_BY_DEFAULT_AS_IDENTITY); break;
                 case HSQLDB:    ctx.sql(' ').visit(K_GENERATED_BY_DEFAULT_AS_IDENTITY).sql('(').visit(K_START_WITH).sql(" 1)"); break;

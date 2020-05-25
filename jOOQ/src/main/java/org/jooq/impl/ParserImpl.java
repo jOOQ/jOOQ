@@ -3618,7 +3618,6 @@ final class ParserImpl implements Parser {
                     parseKeywordIf(ctx, "WITH VALUES");
 
                     defaultValue = true;
-                    identity = true;
                     continue;
                 }
                 else if (!identity && parseKeywordIf(ctx, "GENERATED")) {

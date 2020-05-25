@@ -3845,9 +3845,10 @@ final class ParserImpl implements Parser {
     }
 
     private static final Constraint parseCheckSpecification(ParserContext ctx, ConstraintTypeStep constraint) {
-        parse(ctx, '(');
+        boolean parens = parseIf(ctx, '(');
         Condition condition = parseCondition(ctx);
-        parse(ctx, ')');
+        if (parens)
+            parse(ctx, ')');
 
         ConstraintEnforcementStep e = constraint == null
             ? check(condition)

@@ -49,7 +49,7 @@ import java.util.*;
 /**
  * The <code>CREATE DATABASE IF NOT EXISTS</code> statement.
  */
-@SuppressWarnings({ "hiding", "rawtypes", "unchecked", "unused" })
+@SuppressWarnings({ "unused" })
 final class CreateDatabaseImpl
 extends
     AbstractRowCountQuery

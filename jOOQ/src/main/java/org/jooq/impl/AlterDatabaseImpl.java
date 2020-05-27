@@ -49,7 +49,7 @@ import java.util.*;
 /**
  * The <code>ALTER DATABASE IF EXISTS</code> statement.
  */
-@SuppressWarnings({ "hiding", "rawtypes", "unchecked", "unused" })
+@SuppressWarnings({ "hiding", "unused" })
 final class AlterDatabaseImpl
 extends
     AbstractRowCountQuery

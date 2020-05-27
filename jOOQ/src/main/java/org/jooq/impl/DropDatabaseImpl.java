@@ -49,7 +49,7 @@ import java.util.*;
 /**
  * The <code>DROP DATABASE IF EXISTS</code> statement.
  */
-@SuppressWarnings({ "hiding", "rawtypes", "unchecked", "unused" })
+@SuppressWarnings({ "unused" })
 final class DropDatabaseImpl
 extends
     AbstractRowCountQuery

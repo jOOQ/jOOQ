@@ -49,7 +49,7 @@ import java.util.*;
 /**
  * The <code>DROP DOMAIN IF EXISTS</code> statement.
  */
-@SuppressWarnings({ "hiding", "rawtypes", "unchecked", "unused" })
+@SuppressWarnings({ "rawtypes", "unused" })
 final class DropDomainImpl
 extends
     AbstractRowCountQuery

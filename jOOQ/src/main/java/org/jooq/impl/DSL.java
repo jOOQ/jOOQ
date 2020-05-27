@@ -185,7 +185,6 @@ import org.jooq.ConstraintForeignKeyReferencesStep9;
 import org.jooq.ConstraintForeignKeyReferencesStepN;
 import org.jooq.ConstraintTypeStep;
 // ...
-import org.jooq.CreateDatabaseFinalStep;
 import org.jooq.CreateIndexStep;
 import org.jooq.CreateSchemaFinalStep;
 import org.jooq.CreateSequenceFlagsStep;
@@ -6826,6 +6825,66 @@ public class DSL {
 
 
     /**
+     * The <code>CREATE DATABASE</code> statement.
+     *
+     * @see DSLContext#createDatabase(String)
+     */
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.CreateDatabaseFinalStep createDatabase(String database) {
+        return dsl().createDatabase(database);
+    }
+
+    /**
+     * The <code>CREATE DATABASE</code> statement.
+     *
+     * @see DSLContext#createDatabase(Name)
+     */
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.CreateDatabaseFinalStep createDatabase(Name database) {
+        return dsl().createDatabase(database);
+    }
+
+    /**
+     * The <code>CREATE DATABASE</code> statement.
+     *
+     * @see DSLContext#createDatabase(Catalog)
+     */
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.CreateDatabaseFinalStep createDatabase(Catalog database) {
+        return dsl().createDatabase(database);
+    }
+
+    /**
+     * The <code>CREATE DATABASE IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createDatabaseIfNotExists(String)
+     */
+    @Support({ MARIADB, MYSQL })
+    public static org.jooq.CreateDatabaseFinalStep createDatabaseIfNotExists(String database) {
+        return dsl().createDatabaseIfNotExists(database);
+    }
+
+    /**
+     * The <code>CREATE DATABASE IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createDatabaseIfNotExists(Name)
+     */
+    @Support({ MARIADB, MYSQL })
+    public static org.jooq.CreateDatabaseFinalStep createDatabaseIfNotExists(Name database) {
+        return dsl().createDatabaseIfNotExists(database);
+    }
+
+    /**
+     * The <code>CREATE DATABASE IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createDatabaseIfNotExists(Catalog)
+     */
+    @Support({ MARIADB, MYSQL })
+    public static org.jooq.CreateDatabaseFinalStep createDatabaseIfNotExists(Catalog database) {
+        return dsl().createDatabaseIfNotExists(database);
+    }
+
+    /**
      * The <code>CREATE DOMAIN</code> statement.
      *
      * @see DSLContext#createDomain(String)
@@ -7006,66 +7065,6 @@ public class DSL {
     }
 
 
-
-    /**
-     * Create a new DSL <code>CREATE DATABASE</code> statement.
-     *
-     * @see DSLContext#createDatabase(String)
-     */
-    @Support({ MARIADB, MYSQL, POSTGRES })
-    public static CreateDatabaseFinalStep createDatabase(String database) {
-        return dsl().createDatabase(database);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE DATABASE</code> statement.
-     *
-     * @see DSLContext#createDatabase(Name)
-     */
-    @Support({ MARIADB, MYSQL, POSTGRES })
-    public static CreateDatabaseFinalStep createDatabase(Name database) {
-        return dsl().createDatabase(database);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE DATABASE</code> statement.
-     *
-     * @see DSLContext#createDatabase(Catalog)
-     */
-    @Support({ MARIADB, MYSQL, POSTGRES })
-    public static CreateDatabaseFinalStep createDatabase(Catalog database) {
-        return dsl().createDatabase(database);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE DATABASE</code> statement.
-     *
-     * @see DSLContext#createDatabaseIfNotExists(String)
-     */
-    @Support({ MARIADB, MYSQL })
-    public static CreateDatabaseFinalStep createDatabaseIfNotExists(String database) {
-        return dsl().createDatabaseIfNotExists(database);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE DATABASE</code> statement.
-     *
-     * @see DSLContext#createDatabaseIfNotExists(Name)
-     */
-    @Support({ MARIADB, MYSQL })
-    public static CreateDatabaseFinalStep createDatabaseIfNotExists(Name database) {
-        return dsl().createDatabaseIfNotExists(database);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE DATABASE</code> statement.
-     *
-     * @see DSLContext#createDatabaseIfNotExists(Catalog)
-     */
-    @Support({ MARIADB, MYSQL })
-    public static CreateDatabaseFinalStep createDatabaseIfNotExists(Catalog database) {
-        return dsl().createDatabaseIfNotExists(database);
-    }
 
     /**
      * Create a new DSL <code>CREATE SCHEMA</code> statement.
@@ -10197,6 +10196,24 @@ public class DSL {
     @Support
     public static Schema schemaByName(String name) {
         return new SchemaImpl(name);
+    }
+
+    /**
+     * Create a qualified catalog, given its catalog name.
+     * <p>
+     * This constructs a catalog reference given the catalog's qualified name.
+     * <p>
+     * Example: <code><pre>
+     * // This catalog...
+     * catalog(name("MY_CATALOG"));
+     *
+     * // ... will render this SQL by default, using the SQL Server dialect
+     * [MY_CATALOG]
+     * </pre></code>
+     */
+    @Support
+    public static Catalog catalog(String name) {
+        return catalog(name(name));
     }
 
     /**

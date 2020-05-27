@@ -8741,6 +8741,54 @@ public interface DSLContext extends Scope , AutoCloseable {
 
 
     /**
+     * The <code>CREATE DATABASE</code> statement.
+     *
+     * @see DSL#createDatabase(String)
+     */
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    CreateDatabaseFinalStep createDatabase(String database);
+
+    /**
+     * The <code>CREATE DATABASE</code> statement.
+     *
+     * @see DSL#createDatabase(Name)
+     */
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    CreateDatabaseFinalStep createDatabase(Name database);
+
+    /**
+     * The <code>CREATE DATABASE</code> statement.
+     *
+     * @see DSL#createDatabase(Catalog)
+     */
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    CreateDatabaseFinalStep createDatabase(Catalog database);
+
+    /**
+     * The <code>CREATE DATABASE IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createDatabaseIfNotExists(String)
+     */
+    @Support({ MARIADB, MYSQL })
+    CreateDatabaseFinalStep createDatabaseIfNotExists(String database);
+
+    /**
+     * The <code>CREATE DATABASE IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createDatabaseIfNotExists(Name)
+     */
+    @Support({ MARIADB, MYSQL })
+    CreateDatabaseFinalStep createDatabaseIfNotExists(Name database);
+
+    /**
+     * The <code>CREATE DATABASE IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createDatabaseIfNotExists(Catalog)
+     */
+    @Support({ MARIADB, MYSQL })
+    CreateDatabaseFinalStep createDatabaseIfNotExists(Catalog database);
+
+    /**
      * The <code>CREATE DOMAIN</code> statement.
      *
      * @see DSL#createDomain(String)
@@ -8955,54 +9003,6 @@ public interface DSLContext extends Scope , AutoCloseable {
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     CommentOnIsStep commentOnColumn(Field<?> field);
-
-    /**
-     * Create a new DSL <code>CREATE DATABASE</code> statement.
-     *
-     * @see DSL#createDatabase(String)
-     */
-    @Support({ MARIADB, MYSQL, POSTGRES })
-    CreateDatabaseFinalStep createDatabase(String database);
-
-    /**
-     * Create a new DSL <code>CREATE DATABASE</code> statement.
-     *
-     * @see DSL#createDatabase(Name)
-     */
-    @Support({ MARIADB, MYSQL, POSTGRES })
-    CreateDatabaseFinalStep createDatabase(Name database);
-
-    /**
-     * Create a new DSL <code>CREATE DATABASE</code> statement.
-     *
-     * @see DSL#createDatabase(Catalog)
-     */
-    @Support({ MARIADB, MYSQL, POSTGRES })
-    CreateDatabaseFinalStep createDatabase(Catalog database);
-
-    /**
-     * Create a new DSL <code>CREATE DATABASE</code> statement.
-     *
-     * @see DSL#createDatabaseIfNotExists(String)
-     */
-    @Support({ MARIADB, MYSQL })
-    CreateDatabaseFinalStep createDatabaseIfNotExists(String database);
-
-    /**
-     * Create a new DSL <code>CREATE DATABASE</code> statement.
-     *
-     * @see DSL#createDatabaseIfNotExists(Name)
-     */
-    @Support({ MARIADB, MYSQL })
-    CreateDatabaseFinalStep createDatabaseIfNotExists(Name database);
-
-    /**
-     * Create a new DSL <code>CREATE DATABASE</code> statement.
-     *
-     * @see DSL#createDatabaseIfNotExists(Catalog)
-     */
-    @Support({ MARIADB, MYSQL })
-    CreateDatabaseFinalStep createDatabaseIfNotExists(Catalog database);
 
     /**
      * Create a new DSL <code>CREATE SCHEMA</code> statement.

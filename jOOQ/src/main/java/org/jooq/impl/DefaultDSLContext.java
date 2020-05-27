@@ -115,7 +115,6 @@ import org.jooq.ConnectionProvider;
 import org.jooq.ConnectionRunnable;
 import org.jooq.ContextTransactionalCallable;
 import org.jooq.ContextTransactionalRunnable;
-import org.jooq.CreateDatabaseFinalStep;
 import org.jooq.CreateIndexStep;
 import org.jooq.CreateSchemaFinalStep;
 import org.jooq.CreateSequenceFlagsStep;
@@ -2923,6 +2922,36 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
 
     @Override
+    public org.jooq.CreateDatabaseFinalStep createDatabase(String database) {
+        return new CreateDatabaseImpl(configuration(), DSL.catalog(database), false);
+    }
+
+    @Override
+    public org.jooq.CreateDatabaseFinalStep createDatabase(Name database) {
+        return new CreateDatabaseImpl(configuration(), DSL.catalog(database), false);
+    }
+
+    @Override
+    public org.jooq.CreateDatabaseFinalStep createDatabase(Catalog database) {
+        return new CreateDatabaseImpl(configuration(), database, false);
+    }
+
+    @Override
+    public org.jooq.CreateDatabaseFinalStep createDatabaseIfNotExists(String database) {
+        return new CreateDatabaseImpl(configuration(), DSL.catalog(database), true);
+    }
+
+    @Override
+    public org.jooq.CreateDatabaseFinalStep createDatabaseIfNotExists(Name database) {
+        return new CreateDatabaseImpl(configuration(), DSL.catalog(database), true);
+    }
+
+    @Override
+    public org.jooq.CreateDatabaseFinalStep createDatabaseIfNotExists(Catalog database) {
+        return new CreateDatabaseImpl(configuration(), database, true);
+    }
+
+    @Override
     public org.jooq.CreateDomainAsStep createDomain(String domain) {
         return new CreateDomainImpl<>(configuration(), DSL.domain(domain), false);
     }
@@ -3308,36 +3337,6 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return new CreateViewImpl<>(configuration(), view, fieldNameFunction, true, false);
     }
 
-
-    @Override
-    public CreateDatabaseFinalStep createDatabase(String database) {
-        return createDatabase(name(database));
-    }
-
-    @Override
-    public CreateDatabaseFinalStep createDatabase(Name database) {
-        return createDatabase(catalog(database));
-    }
-
-    @Override
-    public CreateDatabaseFinalStep createDatabase(Catalog database) {
-        return new CreateDatabaseImpl(configuration(), database, false);
-    }
-
-    @Override
-    public CreateDatabaseFinalStep createDatabaseIfNotExists(String database) {
-        return createDatabaseIfNotExists(name(database));
-    }
-
-    @Override
-    public CreateDatabaseFinalStep createDatabaseIfNotExists(Name database) {
-        return createDatabaseIfNotExists(catalog(database));
-    }
-
-    @Override
-    public CreateDatabaseFinalStep createDatabaseIfNotExists(Catalog database) {
-        return new CreateDatabaseImpl(configuration(), database, true);
-    }
 
     @Override
     public CreateSchemaFinalStep createSchema(String schema) {

@@ -37,64 +37,54 @@
  */
 package org.jooq.impl;
 
-// ...
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.FIREBIRD;
-// ...
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-// ...
-// ...
-import static org.jooq.impl.Keywords.K_CREATE;
-import static org.jooq.impl.Keywords.K_DATABASE;
-import static org.jooq.impl.Keywords.K_IF_NOT_EXISTS;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import java.util.Set;
+import org.jooq.*;
+import org.jooq.impl.*;
 
-import org.jooq.Catalog;
-import org.jooq.Configuration;
-import org.jooq.Context;
-import org.jooq.CreateDatabaseFinalStep;
-import org.jooq.SQLDialect;
+import java.util.*;
 
 /**
- * @author Lukas Eder
+ * The <code>CREATE DATABASE IF NOT EXISTS</code> statement.
  */
-final class CreateDatabaseImpl extends AbstractRowCountQuery implements
+@SuppressWarnings({ "hiding", "rawtypes", "unchecked", "unused" })
+final class CreateDatabaseImpl
+extends
+    AbstractRowCountQuery
+implements
+    CreateDatabaseFinalStep
+{
+    
+    private static final long serialVersionUID = 1L;
 
-    // Cascading interface implementations for CREATE DATABASE behaviour
-    CreateDatabaseFinalStep {
-
-
-    /**
-     * Generated UID
-     */
-    private static final long            serialVersionUID           = 8904572826501186329L;
-    private static final Set<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS   = SQLDialect.supportedBy(DERBY, FIREBIRD, POSTGRES);
-
-    private final Catalog                database;
-    private final boolean                ifNotExists;
-
-    CreateDatabaseImpl(Configuration configuration, Catalog database, boolean ifNotExists) {
+    private final Catalog database;
+    private final boolean ifNotExists;
+    
+    
+    CreateDatabaseImpl(
+        Configuration configuration,
+        Catalog database,
+        boolean ifNotExists
+    ) {
         super(configuration);
 
         this.database = database;
         this.ifNotExists = ifNotExists;
     }
 
-    final Catalog $database()    { return database; }
-    final boolean $ifNotExists() { return ifNotExists; }
+    // -------------------------------------------------------------------------
+    // XXX DSL API
+    // -------------------------------------------------------------------------
 
-    // ------------------------------------------------------------------------
-    // XXX: DSL API
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // XXX QueryPart API
+    // -------------------------------------------------------------------------
 
-    // ------------------------------------------------------------------------
-    // XXX: QueryPart API
-    // ------------------------------------------------------------------------
+
+
+    private static final Set<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS = SQLDialect.supportedBy(DERBY, FIREBIRD, POSTGRES);
 
     private final boolean supportsIfNotExists(Context<?> ctx) {
         return !NO_SUPPORT_IF_NOT_EXISTS.contains(ctx.family());
@@ -120,4 +110,6 @@ final class CreateDatabaseImpl extends AbstractRowCountQuery implements
 
         ctx.sql(' ').visit(database);
     }
+
+
 }

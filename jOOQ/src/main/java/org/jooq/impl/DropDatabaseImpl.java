@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.DROP_SCHEMA;
 // ...
 // ...
 // ...
@@ -54,48 +53,50 @@ import static org.jooq.impl.Keywords.K_IF_EXISTS;
 import java.util.Set;
 
 import org.jooq.Catalog;
-import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DropDatabaseFinalStep;
 import org.jooq.SQLDialect;
 
-
 /**
- * @author Lukas Eder
+ * The <code>DROP DATABASE IF EXISTS</code> statement.
  */
-final class DropDatabaseImpl extends AbstractRowCountQuery implements
+@SuppressWarnings({ "hiding", "rawtypes", "unchecked", "unused" })
+final class DropDatabaseImpl
+extends
+    AbstractRowCountQuery
+implements
+    DropDatabaseFinalStep
+{
 
-    // Cascading interface implementations for DROP DATABASE behaviour
-    DropDatabaseFinalStep {
+    private static final long serialVersionUID = 1L;
 
-    /**
-     * Generated UID
-     */
-    private static final long            serialVersionUID           = 8904572826501186329L;
-    private static final Clause[]        CLAUSES                    = { DROP_SCHEMA };
-    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS       = SQLDialect.supportedBy(DERBY, FIREBIRD);
+    private final Catalog database;
+    private final boolean ifExists;
 
-    private final Catalog                database;
-    private final boolean                ifExists;
 
-    DropDatabaseImpl(Configuration configuration, Catalog database) {
-        this(configuration, database, false);
-    }
-
-    DropDatabaseImpl(Configuration configuration, Catalog database, boolean ifExists) {
+    DropDatabaseImpl(
+        Configuration configuration,
+        Catalog database,
+        boolean ifExists
+    ) {
         super(configuration);
 
         this.database = database;
         this.ifExists = ifExists;
     }
 
-    final Catalog $database()    { return database; }
-    final boolean $ifExists()    { return ifExists; }
+    // -------------------------------------------------------------------------
+    // XXX DSL API
+    // -------------------------------------------------------------------------
 
-    // ------------------------------------------------------------------------
-    // XXX: QueryPart API
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // XXX QueryPart API
+    // -------------------------------------------------------------------------
+
+
+
+    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS = SQLDialect.supportedBy(DERBY, FIREBIRD);
 
     private final boolean supportsIfExists(Context<?> ctx) {
         return !NO_SUPPORT_IF_EXISTS.contains(ctx.family());
@@ -121,4 +122,6 @@ final class DropDatabaseImpl extends AbstractRowCountQuery implements
 
         ctx.sql(' ').visit(database);
     }
+
+
 }

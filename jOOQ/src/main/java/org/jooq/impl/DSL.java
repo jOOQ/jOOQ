@@ -198,7 +198,6 @@ import org.jooq.Delete;
 import org.jooq.DeleteUsingStep;
 import org.jooq.DerivedColumnList;
 import org.jooq.Domain;
-import org.jooq.DropDatabaseFinalStep;
 import org.jooq.DropIndexOnStep;
 import org.jooq.DropSchemaStep;
 import org.jooq.DropSequenceFinalStep;
@@ -7064,6 +7063,66 @@ public class DSL {
     }
 
     /**
+     * The <code>DROP DATABASE</code> statement.
+     *
+     * @see DSLContext#dropDatabase(String)
+     */
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.DropDatabaseFinalStep dropDatabase(String database) {
+        return dsl().dropDatabase(database);
+    }
+
+    /**
+     * The <code>DROP DATABASE</code> statement.
+     *
+     * @see DSLContext#dropDatabase(Name)
+     */
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.DropDatabaseFinalStep dropDatabase(Name database) {
+        return dsl().dropDatabase(database);
+    }
+
+    /**
+     * The <code>DROP DATABASE</code> statement.
+     *
+     * @see DSLContext#dropDatabase(Catalog)
+     */
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.DropDatabaseFinalStep dropDatabase(Catalog database) {
+        return dsl().dropDatabase(database);
+    }
+
+    /**
+     * The <code>DROP DATABASE IF EXISTS</code> statement.
+     *
+     * @see DSLContext#dropDatabaseIfExists(String)
+     */
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.DropDatabaseFinalStep dropDatabaseIfExists(String database) {
+        return dsl().dropDatabaseIfExists(database);
+    }
+
+    /**
+     * The <code>DROP DATABASE IF EXISTS</code> statement.
+     *
+     * @see DSLContext#dropDatabaseIfExists(Name)
+     */
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.DropDatabaseFinalStep dropDatabaseIfExists(Name database) {
+        return dsl().dropDatabaseIfExists(database);
+    }
+
+    /**
+     * The <code>DROP DATABASE IF EXISTS</code> statement.
+     *
+     * @see DSLContext#dropDatabaseIfExists(Catalog)
+     */
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.DropDatabaseFinalStep dropDatabaseIfExists(Catalog database) {
+        return dsl().dropDatabaseIfExists(database);
+    }
+
+    /**
      * The <code>DROP DOMAIN</code> statement.
      *
      * @see DSLContext#dropDomain(String)
@@ -8249,66 +8308,6 @@ public class DSL {
     @Support({ H2, POSTGRES })
     public static AlterIndexStep alterIndexIfExists(Index index) {
         return dsl().alterIndexIfExists(index);
-    }
-
-    /**
-     * Create a new DSL <code>DROP DATABASE</code> statement.
-     *
-     * @see DSLContext#dropDatabase(String)
-     */
-    @Support({ MARIADB, MYSQL, POSTGRES })
-    public static DropDatabaseFinalStep dropDatabase(String database) {
-        return dsl().dropDatabase(database);
-    }
-
-    /**
-     * Create a new DSL <code>DROP DATABASE</code> statement.
-     *
-     * @see DSLContext#dropDatabase(Name)
-     */
-    @Support({ MARIADB, MYSQL, POSTGRES })
-    public static DropDatabaseFinalStep dropDatabase(Name database) {
-        return dsl().dropDatabase(database);
-    }
-
-    /**
-     * Create a new DSL <code>DROP DATABASE</code> statement.
-     *
-     * @see DSLContext#dropDatabase(Catalog)
-     */
-    @Support({ MARIADB, MYSQL, POSTGRES })
-    public static DropDatabaseFinalStep dropDatabase(Catalog database) {
-        return dsl().dropDatabase(database);
-    }
-
-    /**
-     * Create a new DSL <code>DROP DATABASE</code> statement.
-     *
-     * @see DSLContext#dropDatabaseIfExists(String)
-     */
-    @Support({ MARIADB, MYSQL, POSTGRES })
-    public static DropDatabaseFinalStep dropDatabaseIfExists(String database) {
-        return dsl().dropDatabaseIfExists(database);
-    }
-
-    /**
-     * Create a new DSL <code>DROP DATABASE</code> statement.
-     *
-     * @see DSLContext#dropDatabaseIfExists(Name)
-     */
-    @Support({ MARIADB, MYSQL, POSTGRES })
-    public static DropDatabaseFinalStep dropDatabaseIfExists(Name database) {
-        return dsl().dropDatabaseIfExists(database);
-    }
-
-    /**
-     * Create a new DSL <code>DROP DATABASE</code> statement.
-     *
-     * @see DSLContext#dropDatabaseIfExists(Catalog)
-     */
-    @Support({ MARIADB, MYSQL, POSTGRES })
-    public static DropDatabaseFinalStep dropDatabaseIfExists(Catalog database) {
-        return dsl().dropDatabaseIfExists(database);
     }
 
     /**

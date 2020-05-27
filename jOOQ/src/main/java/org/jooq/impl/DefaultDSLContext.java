@@ -128,7 +128,6 @@ import org.jooq.DataType;
 import org.jooq.DeleteQuery;
 import org.jooq.DeleteUsingStep;
 import org.jooq.Domain;
-import org.jooq.DropDatabaseFinalStep;
 import org.jooq.DropIndexOnStep;
 import org.jooq.DropSchemaStep;
 import org.jooq.DropSequenceFinalStep;
@@ -3041,6 +3040,36 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
+    public org.jooq.DropDatabaseFinalStep dropDatabase(String database) {
+        return new DropDatabaseImpl(configuration(), DSL.catalog(database), false);
+    }
+
+    @Override
+    public org.jooq.DropDatabaseFinalStep dropDatabase(Name database) {
+        return new DropDatabaseImpl(configuration(), DSL.catalog(database), false);
+    }
+
+    @Override
+    public org.jooq.DropDatabaseFinalStep dropDatabase(Catalog database) {
+        return new DropDatabaseImpl(configuration(), database, false);
+    }
+
+    @Override
+    public org.jooq.DropDatabaseFinalStep dropDatabaseIfExists(String database) {
+        return new DropDatabaseImpl(configuration(), DSL.catalog(database), true);
+    }
+
+    @Override
+    public org.jooq.DropDatabaseFinalStep dropDatabaseIfExists(Name database) {
+        return new DropDatabaseImpl(configuration(), DSL.catalog(database), true);
+    }
+
+    @Override
+    public org.jooq.DropDatabaseFinalStep dropDatabaseIfExists(Catalog database) {
+        return new DropDatabaseImpl(configuration(), database, true);
+    }
+
+    @Override
     public org.jooq.DropDomainCascadeStep dropDomain(String domain) {
         return new DropDomainImpl(configuration(), DSL.domain(domain), false);
     }
@@ -3790,36 +3819,6 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public AlterIndexStep alterIndexIfExists(Index index) {
         return new AlterIndexImpl(configuration(), index, true);
-    }
-
-    @Override
-    public DropDatabaseFinalStep dropDatabase(String database) {
-        return dropDatabase(name(database));
-    }
-
-    @Override
-    public DropDatabaseFinalStep dropDatabase(Name database) {
-        return dropDatabase(catalog(database));
-    }
-
-    @Override
-    public DropDatabaseFinalStep dropDatabase(Catalog database) {
-        return new DropDatabaseImpl(configuration(), database);
-    }
-
-    @Override
-    public DropDatabaseFinalStep dropDatabaseIfExists(String database) {
-        return dropDatabaseIfExists(name(database));
-    }
-
-    @Override
-    public DropDatabaseFinalStep dropDatabaseIfExists(Name database) {
-        return dropDatabaseIfExists(catalog(database));
-    }
-
-    @Override
-    public DropDatabaseFinalStep dropDatabaseIfExists(Catalog database) {
-        return new DropDatabaseImpl(configuration(), database, true);
     }
 
     @Override

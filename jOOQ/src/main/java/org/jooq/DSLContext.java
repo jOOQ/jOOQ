@@ -8933,6 +8933,54 @@ public interface DSLContext extends Scope , AutoCloseable {
     <T> AlterDomainStep<T> alterDomainIfExists(Domain<T> domain);
 
     /**
+     * The <code>DROP DATABASE</code> statement.
+     *
+     * @see DSL#dropDatabase(String)
+     */
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    DropDatabaseFinalStep dropDatabase(String database);
+
+    /**
+     * The <code>DROP DATABASE</code> statement.
+     *
+     * @see DSL#dropDatabase(Name)
+     */
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    DropDatabaseFinalStep dropDatabase(Name database);
+
+    /**
+     * The <code>DROP DATABASE</code> statement.
+     *
+     * @see DSL#dropDatabase(Catalog)
+     */
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    DropDatabaseFinalStep dropDatabase(Catalog database);
+
+    /**
+     * The <code>DROP DATABASE IF EXISTS</code> statement.
+     *
+     * @see DSL#dropDatabaseIfExists(String)
+     */
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    DropDatabaseFinalStep dropDatabaseIfExists(String database);
+
+    /**
+     * The <code>DROP DATABASE IF EXISTS</code> statement.
+     *
+     * @see DSL#dropDatabaseIfExists(Name)
+     */
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    DropDatabaseFinalStep dropDatabaseIfExists(Name database);
+
+    /**
+     * The <code>DROP DATABASE IF EXISTS</code> statement.
+     *
+     * @see DSL#dropDatabaseIfExists(Catalog)
+     */
+    @Support({ MARIADB, MYSQL, POSTGRES })
+    DropDatabaseFinalStep dropDatabaseIfExists(Catalog database);
+
+    /**
      * The <code>DROP DOMAIN</code> statement.
      *
      * @see DSL#dropDomain(String)
@@ -10133,54 +10181,6 @@ public interface DSLContext extends Scope , AutoCloseable {
      */
     @Support({ H2, POSTGRES })
     AlterIndexStep alterIndexIfExists(Index index);
-
-    /**
-     * Create a new DSL <code>DROP DATABASE</code> statement.
-     *
-     * @see DSL#dropDatabase(String)
-     */
-    @Support({ MARIADB, MYSQL, POSTGRES })
-    DropDatabaseFinalStep dropDatabase(String database);
-
-    /**
-     * Create a new DSL <code>DROP DATABASE</code> statement.
-     *
-     * @see DSL#dropDatabase(Name)
-     */
-    @Support({ MARIADB, MYSQL, POSTGRES })
-    DropDatabaseFinalStep dropDatabase(Name database);
-
-    /**
-     * Create a new DSL <code>DROP DATABASE</code> statement.
-     *
-     * @see DSL#dropDatabase(Catalog)
-     */
-    @Support({ MARIADB, MYSQL, POSTGRES })
-    DropDatabaseFinalStep dropDatabase(Catalog database);
-
-    /**
-     * Create a new DSL <code>DROP DATABASE</code> statement.
-     *
-     * @see DSL#dropDatabaseIfExists(String)
-     */
-    @Support({ MARIADB, MYSQL, POSTGRES })
-    DropDatabaseFinalStep dropDatabaseIfExists(String database);
-
-    /**
-     * Create a new DSL <code>DROP DATABASE</code> statement.
-     *
-     * @see DSL#dropDatabaseIfExists(Name)
-     */
-    @Support({ MARIADB, MYSQL, POSTGRES })
-    DropDatabaseFinalStep dropDatabaseIfExists(Name database);
-
-    /**
-     * Create a new DSL <code>DROP DATABASE</code> statement.
-     *
-     * @see DSL#dropDatabaseIfExists(Catalog)
-     */
-    @Support({ MARIADB, MYSQL, POSTGRES })
-    DropDatabaseFinalStep dropDatabaseIfExists(Catalog database);
 
     /**
      * Create a new DSL <code>DROP SCHEMA</code> statement.

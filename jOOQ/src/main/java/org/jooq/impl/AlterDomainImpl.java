@@ -62,19 +62,19 @@ implements
     
     private static final long serialVersionUID = 1L;
 
-    private final Domain<T> domain;
-    private final boolean ifExists;
+    private final Domain<T>  domain;
+    private final boolean    ifExists;
     private final Constraint addConstraint;
-    private final boolean dropDefault;
-    private final boolean setNotNull;
-    private final boolean dropNotNull;
+    private final boolean    dropDefault;
+    private final boolean    setNotNull;
+    private final boolean    dropNotNull;
     private final Constraint dropConstraint;
-    private final boolean dropConstraintIfExists;
-    private final Domain<?> renameTo;
+    private final boolean    dropConstraintIfExists;
+    private final Domain<?>  renameTo;
     private final Constraint renameConstraint;
-    private final boolean renameConstraintIfExists;
-    private final Field<T> setDefault;
-    private final Boolean cascade;
+    private final boolean    renameConstraintIfExists;
+    private final Field<T>   setDefault;
+    private final Boolean    cascade;
     private final Constraint renameConstraintTo;
     
     AlterDomainImpl(

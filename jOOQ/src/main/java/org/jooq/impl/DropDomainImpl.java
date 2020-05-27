@@ -61,8 +61,8 @@ implements
     private static final long serialVersionUID = 1L;
 
     private final Domain<?> domain;
-    private final boolean ifExists;
-    private final Boolean cascade;
+    private final boolean   ifExists;
+    private final Boolean   cascade;
     
     DropDomainImpl(
         Configuration configuration,

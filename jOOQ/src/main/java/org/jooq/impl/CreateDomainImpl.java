@@ -62,10 +62,10 @@ implements
     
     private static final long serialVersionUID = 1L;
 
-    private final Domain<?> domain;
-    private final boolean ifNotExists;
-    private final DataType<T> dataType;
-    private final Field<T> default_;
+    private final Domain<?>                        domain;
+    private final boolean                          ifNotExists;
+    private final DataType<T>                      dataType;
+    private final Field<T>                         default_;
     private final Collection<? extends Constraint> constraints;
     
     CreateDomainImpl(

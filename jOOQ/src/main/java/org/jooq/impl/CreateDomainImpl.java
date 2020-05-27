@@ -64,9 +64,9 @@ implements
 
     private final Domain<?>                        domain;
     private final boolean                          ifNotExists;
-    private final DataType<T>                      dataType;
-    private final Field<T>                         default_;
-    private final Collection<? extends Constraint> constraints;
+    private       DataType<T>                      dataType;
+    private       Field<T>                         default_;
+    private       Collection<? extends Constraint> constraints;
     
     CreateDomainImpl(
         Configuration configuration,
@@ -100,6 +100,12 @@ implements
         this.constraints = constraints;
     }
 
+    final Domain<?>                        $domain()      { return domain; }
+    final boolean                          $ifNotExists() { return ifNotExists; }
+    final DataType<T>                      $dataType()    { return dataType; }
+    final Field<T>                         $default_()    { return default_; }
+    final Collection<? extends Constraint> $constraints() { return constraints; }
+
     // -------------------------------------------------------------------------
     // XXX: DSL API
     // -------------------------------------------------------------------------
@@ -111,14 +117,8 @@ implements
 
     @Override
     public final <T> CreateDomainImpl<T> as(DataType<T> dataType) {
-        return new CreateDomainImpl<>(
-            configuration(),
-            this.domain,
-            this.ifNotExists,
-            dataType,
-            this.default_,
-            this.constraints
-        );
+        this.dataType = (DataType) dataType;
+        return (CreateDomainImpl) this;
     }
 
     @Override
@@ -128,14 +128,8 @@ implements
 
     @Override
     public final CreateDomainImpl<T> default_(Field<T> default_) {
-        return new CreateDomainImpl<>(
-            configuration(),
-            this.domain,
-            this.ifNotExists,
-            this.dataType,
-            default_,
-            this.constraints
-        );
+        this.default_ = default_;
+        return this;
     }
 
     @Override
@@ -145,14 +139,8 @@ implements
 
     @Override
     public final CreateDomainImpl<T> constraints(Collection<? extends Constraint> constraints) {
-        return new CreateDomainImpl<>(
-            configuration(),
-            this.domain,
-            this.ifNotExists,
-            this.dataType,
-            this.default_,
-            constraints
-        );
+        this.constraints = constraints;
+        return this;
     }
 
     // -------------------------------------------------------------------------

@@ -74,6 +74,9 @@ implements
         this.ifNotExists = ifNotExists;
     }
 
+    final Catalog $database()    { return database; }
+    final boolean $ifNotExists() { return ifNotExists; }
+
     // -------------------------------------------------------------------------
     // XXX: QueryPart API
     // -------------------------------------------------------------------------

@@ -115,7 +115,6 @@ import org.jooq.ConnectionRunnable;
 import org.jooq.ContextTransactionalCallable;
 import org.jooq.ContextTransactionalRunnable;
 import org.jooq.CreateIndexStep;
-import org.jooq.CreateSchemaFinalStep;
 import org.jooq.CreateSequenceFlagsStep;
 import org.jooq.CreateTableColumnStep;
 import org.jooq.CreateTypeStep;
@@ -2980,6 +2979,36 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
+    public org.jooq.CreateSchemaFinalStep createSchema(String schema) {
+        return new CreateSchemaImpl(configuration(), DSL.schema(schema), false);
+    }
+
+    @Override
+    public org.jooq.CreateSchemaFinalStep createSchema(Name schema) {
+        return new CreateSchemaImpl(configuration(), DSL.schema(schema), false);
+    }
+
+    @Override
+    public org.jooq.CreateSchemaFinalStep createSchema(Schema schema) {
+        return new CreateSchemaImpl(configuration(), schema, false);
+    }
+
+    @Override
+    public org.jooq.CreateSchemaFinalStep createSchemaIfNotExists(String schema) {
+        return new CreateSchemaImpl(configuration(), DSL.schema(schema), true);
+    }
+
+    @Override
+    public org.jooq.CreateSchemaFinalStep createSchemaIfNotExists(Name schema) {
+        return new CreateSchemaImpl(configuration(), DSL.schema(schema), true);
+    }
+
+    @Override
+    public org.jooq.CreateSchemaFinalStep createSchemaIfNotExists(Schema schema) {
+        return new CreateSchemaImpl(configuration(), schema, true);
+    }
+
+    @Override
     public org.jooq.AlterDatabaseStep alterDatabase(String database) {
         return new AlterDatabaseImpl(configuration(), DSL.catalog(database), false);
     }
@@ -3395,36 +3424,6 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return new CreateViewImpl<>(configuration(), view, fieldNameFunction, true, false);
     }
 
-
-    @Override
-    public CreateSchemaFinalStep createSchema(String schema) {
-        return createSchema(name(schema));
-    }
-
-    @Override
-    public CreateSchemaFinalStep createSchema(Name schema) {
-        return createSchema(schema(schema));
-    }
-
-    @Override
-    public CreateSchemaFinalStep createSchema(Schema schema) {
-        return new CreateSchemaImpl(configuration(), schema, false);
-    }
-
-    @Override
-    public CreateSchemaFinalStep createSchemaIfNotExists(String schema) {
-        return createSchemaIfNotExists(name(schema));
-    }
-
-    @Override
-    public CreateSchemaFinalStep createSchemaIfNotExists(Name schema) {
-        return createSchemaIfNotExists(schema(schema));
-    }
-
-    @Override
-    public CreateSchemaFinalStep createSchemaIfNotExists(Schema schema) {
-        return new CreateSchemaImpl(configuration(), schema, true);
-    }
 
     @Override
     public CreateTableColumnStep createTable(String table) {

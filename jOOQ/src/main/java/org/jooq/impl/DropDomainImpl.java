@@ -62,7 +62,7 @@ implements
 
     private final Domain<?> domain;
     private final boolean   ifExists;
-    private final Boolean   cascade;
+    private       Boolean   cascade;
     
     DropDomainImpl(
         Configuration configuration,
@@ -90,28 +90,24 @@ implements
         this.cascade = cascade;
     }
 
+    final Domain<?> $domain()   { return domain; }
+    final boolean   $ifExists() { return ifExists; }
+    final Boolean   $cascade()  { return cascade; }
+
     // -------------------------------------------------------------------------
     // XXX: DSL API
     // -------------------------------------------------------------------------
     
     @Override
     public final DropDomainImpl cascade() {
-        return new DropDomainImpl(
-            configuration(),
-            this.domain,
-            this.ifExists,
-            true
-        );
+        this.cascade = true;
+        return this;
     }
 
     @Override
     public final DropDomainImpl restrict() {
-        return new DropDomainImpl(
-            configuration(),
-            this.domain,
-            this.ifExists,
-            false
-        );
+        this.cascade = false;
+        return this;
     }
 
     // -------------------------------------------------------------------------

@@ -185,7 +185,6 @@ import org.jooq.ConstraintForeignKeyReferencesStepN;
 import org.jooq.ConstraintTypeStep;
 // ...
 import org.jooq.CreateIndexStep;
-import org.jooq.CreateSchemaFinalStep;
 import org.jooq.CreateSequenceFlagsStep;
 import org.jooq.CreateTableColumnStep;
 import org.jooq.CreateTypeStep;
@@ -6943,6 +6942,66 @@ public class DSL {
     }
 
     /**
+     * The <code>CREATE SCHEMA</code> statement.
+     *
+     * @see DSLContext#createSchema(String)
+     */
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.CreateSchemaFinalStep createSchema(String schema) {
+        return dsl().createSchema(schema);
+    }
+
+    /**
+     * The <code>CREATE SCHEMA</code> statement.
+     *
+     * @see DSLContext#createSchema(Name)
+     */
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.CreateSchemaFinalStep createSchema(Name schema) {
+        return dsl().createSchema(schema);
+    }
+
+    /**
+     * The <code>CREATE SCHEMA</code> statement.
+     *
+     * @see DSLContext#createSchema(Schema)
+     */
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.CreateSchemaFinalStep createSchema(Schema schema) {
+        return dsl().createSchema(schema);
+    }
+
+    /**
+     * The <code>CREATE SCHEMA IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createSchemaIfNotExists(String)
+     */
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.CreateSchemaFinalStep createSchemaIfNotExists(String schema) {
+        return dsl().createSchemaIfNotExists(schema);
+    }
+
+    /**
+     * The <code>CREATE SCHEMA IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createSchemaIfNotExists(Name)
+     */
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.CreateSchemaFinalStep createSchemaIfNotExists(Name schema) {
+        return dsl().createSchemaIfNotExists(schema);
+    }
+
+    /**
+     * The <code>CREATE SCHEMA IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createSchemaIfNotExists(Schema)
+     */
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.CreateSchemaFinalStep createSchemaIfNotExists(Schema schema) {
+        return dsl().createSchemaIfNotExists(schema);
+    }
+
+    /**
      * The <code>ALTER DATABASE</code> statement.
      *
      * @see DSLContext#alterDatabase(String)
@@ -7183,66 +7242,6 @@ public class DSL {
     }
 
 
-
-    /**
-     * Create a new DSL <code>CREATE SCHEMA</code> statement.
-     *
-     * @see DSLContext#createSchema(String)
-     */
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static CreateSchemaFinalStep createSchema(String schema) {
-        return dsl().createSchema(schema);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE SCHEMA</code> statement.
-     *
-     * @see DSLContext#createSchema(Name)
-     */
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static CreateSchemaFinalStep createSchema(Name schema) {
-        return dsl().createSchema(schema);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE SCHEMA</code> statement.
-     *
-     * @see DSLContext#createSchema(Schema)
-     */
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static CreateSchemaFinalStep createSchema(Schema schema) {
-        return dsl().createSchema(schema);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE SCHEMA</code> statement.
-     *
-     * @see DSLContext#createSchemaIfNotExists(String)
-     */
-    @Support({ H2, MARIADB, MYSQL, POSTGRES })
-    public static CreateSchemaFinalStep createSchemaIfNotExists(String schema) {
-        return dsl().createSchemaIfNotExists(schema);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE SCHEMA</code> statement.
-     *
-     * @see DSLContext#createSchemaIfNotExists(Name)
-     */
-    @Support({ H2, MARIADB, MYSQL, POSTGRES })
-    public static CreateSchemaFinalStep createSchemaIfNotExists(Name schema) {
-        return dsl().createSchemaIfNotExists(schema);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE SCHEMA</code> statement.
-     *
-     * @see DSLContext#createSchemaIfNotExists(Schema)
-     */
-    @Support({ H2, MARIADB, MYSQL, POSTGRES })
-    public static CreateSchemaFinalStep createSchemaIfNotExists(Schema schema) {
-        return dsl().createSchemaIfNotExists(schema);
-    }
 
     /**
      * Create a new DSL <code>CREATE TABLE</code> statement.
@@ -10230,6 +10229,24 @@ public class DSL {
     @Support
     public static Catalog catalog(Name name) {
         return new CatalogImpl(name);
+    }
+
+    /**
+     * Create a qualified schema, given its schema name.
+     * <p>
+     * This constructs a schema reference given the schema's qualified name.
+     * <p>
+     * Example: <code><pre>
+     * // This schema...
+     * schema(name("MY_CATALOG", "MY_SCHEMA"));
+     *
+     * // ... will render this SQL by default, using the SQL Server dialect
+     * [MY_CATALOG].[MY_SCHEMA]
+     * </pre></code>
+     */
+    @Support
+    public static Schema schema(String name) {
+        return schema(name(name));
     }
 
     /**

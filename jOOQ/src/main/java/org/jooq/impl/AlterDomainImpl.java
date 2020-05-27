@@ -64,18 +64,18 @@ implements
 
     private final Domain<T>  domain;
     private final boolean    ifExists;
-    private final Constraint addConstraint;
-    private final boolean    dropDefault;
-    private final boolean    setNotNull;
-    private final boolean    dropNotNull;
-    private final Constraint dropConstraint;
-    private final boolean    dropConstraintIfExists;
-    private final Domain<?>  renameTo;
-    private final Constraint renameConstraint;
-    private final boolean    renameConstraintIfExists;
-    private final Field<T>   setDefault;
-    private final Boolean    cascade;
-    private final Constraint renameConstraintTo;
+    private       Constraint addConstraint;
+    private       boolean    dropDefault;
+    private       boolean    setNotNull;
+    private       boolean    dropNotNull;
+    private       Constraint dropConstraint;
+    private       boolean    dropConstraintIfExists;
+    private       Domain<?>  renameTo;
+    private       Constraint renameConstraint;
+    private       boolean    renameConstraintIfExists;
+    private       Field<T>   setDefault;
+    private       Boolean    cascade;
+    private       Constraint renameConstraintTo;
     
     AlterDomainImpl(
         Configuration configuration,
@@ -136,92 +136,47 @@ implements
         this.renameConstraintTo = renameConstraintTo;
     }
 
+    final Domain<T>  $domain()                   { return domain; }
+    final boolean    $ifExists()                 { return ifExists; }
+    final Constraint $addConstraint()            { return addConstraint; }
+    final boolean    $dropDefault()              { return dropDefault; }
+    final boolean    $setNotNull()               { return setNotNull; }
+    final boolean    $dropNotNull()              { return dropNotNull; }
+    final Constraint $dropConstraint()           { return dropConstraint; }
+    final boolean    $dropConstraintIfExists()   { return dropConstraintIfExists; }
+    final Domain<?>  $renameTo()                 { return renameTo; }
+    final Constraint $renameConstraint()         { return renameConstraint; }
+    final boolean    $renameConstraintIfExists() { return renameConstraintIfExists; }
+    final Field<T>   $setDefault()               { return setDefault; }
+    final Boolean    $cascade()                  { return cascade; }
+    final Constraint $renameConstraintTo()       { return renameConstraintTo; }
+
     // -------------------------------------------------------------------------
     // XXX: DSL API
     // -------------------------------------------------------------------------
     
     @Override
     public final AlterDomainImpl<T> add(Constraint addConstraint) {
-        return new AlterDomainImpl<>(
-            configuration(),
-            this.domain,
-            this.ifExists,
-            addConstraint,
-            this.dropDefault,
-            this.setNotNull,
-            this.dropNotNull,
-            this.dropConstraint,
-            this.dropConstraintIfExists,
-            this.renameTo,
-            this.renameConstraint,
-            this.renameConstraintIfExists,
-            this.setDefault,
-            this.cascade,
-            this.renameConstraintTo
-        );
+        this.addConstraint = addConstraint;
+        return this;
     }
 
     @Override
     public final AlterDomainImpl<T> dropDefault() {
-        return new AlterDomainImpl<>(
-            configuration(),
-            this.domain,
-            this.ifExists,
-            this.addConstraint,
-            true,
-            this.setNotNull,
-            this.dropNotNull,
-            this.dropConstraint,
-            this.dropConstraintIfExists,
-            this.renameTo,
-            this.renameConstraint,
-            this.renameConstraintIfExists,
-            this.setDefault,
-            this.cascade,
-            this.renameConstraintTo
-        );
+        this.dropDefault = true;
+        return this;
     }
 
     @Override
     public final AlterDomainImpl<T> setNotNull() {
-        return new AlterDomainImpl<>(
-            configuration(),
-            this.domain,
-            this.ifExists,
-            this.addConstraint,
-            this.dropDefault,
-            true,
-            this.dropNotNull,
-            this.dropConstraint,
-            this.dropConstraintIfExists,
-            this.renameTo,
-            this.renameConstraint,
-            this.renameConstraintIfExists,
-            this.setDefault,
-            this.cascade,
-            this.renameConstraintTo
-        );
+        this.setNotNull = true;
+        return this;
     }
 
     @Override
     public final AlterDomainImpl<T> dropNotNull() {
-        return new AlterDomainImpl<>(
-            configuration(),
-            this.domain,
-            this.ifExists,
-            this.addConstraint,
-            this.dropDefault,
-            this.setNotNull,
-            true,
-            this.dropConstraint,
-            this.dropConstraintIfExists,
-            this.renameTo,
-            this.renameConstraint,
-            this.renameConstraintIfExists,
-            this.setDefault,
-            this.cascade,
-            this.renameConstraintTo
-        );
+        this.dropNotNull = true;
+        return this;
     }
 
     @Override
@@ -236,23 +191,9 @@ implements
 
     @Override
     public final AlterDomainImpl<T> dropConstraint(Constraint dropConstraint) {
-        return new AlterDomainImpl<>(
-            configuration(),
-            this.domain,
-            this.ifExists,
-            this.addConstraint,
-            this.dropDefault,
-            this.setNotNull,
-            this.dropNotNull,
-            dropConstraint,
-            false,
-            this.renameTo,
-            this.renameConstraint,
-            this.renameConstraintIfExists,
-            this.setDefault,
-            this.cascade,
-            this.renameConstraintTo
-        );
+        this.dropConstraint = dropConstraint;
+        this.dropConstraintIfExists = false;
+        return this;
     }
 
     @Override
@@ -267,23 +208,9 @@ implements
 
     @Override
     public final AlterDomainImpl<T> dropConstraintIfExists(Constraint dropConstraint) {
-        return new AlterDomainImpl<>(
-            configuration(),
-            this.domain,
-            this.ifExists,
-            this.addConstraint,
-            this.dropDefault,
-            this.setNotNull,
-            this.dropNotNull,
-            dropConstraint,
-            true,
-            this.renameTo,
-            this.renameConstraint,
-            this.renameConstraintIfExists,
-            this.setDefault,
-            this.cascade,
-            this.renameConstraintTo
-        );
+        this.dropConstraint = dropConstraint;
+        this.dropConstraintIfExists = true;
+        return this;
     }
 
     @Override
@@ -298,23 +225,8 @@ implements
 
     @Override
     public final AlterDomainImpl<T> renameTo(Domain<?> renameTo) {
-        return new AlterDomainImpl<>(
-            configuration(),
-            this.domain,
-            this.ifExists,
-            this.addConstraint,
-            this.dropDefault,
-            this.setNotNull,
-            this.dropNotNull,
-            this.dropConstraint,
-            this.dropConstraintIfExists,
-            renameTo,
-            this.renameConstraint,
-            this.renameConstraintIfExists,
-            this.setDefault,
-            this.cascade,
-            this.renameConstraintTo
-        );
+        this.renameTo = renameTo;
+        return this;
     }
 
     @Override
@@ -329,23 +241,9 @@ implements
 
     @Override
     public final AlterDomainImpl<T> renameConstraint(Constraint renameConstraint) {
-        return new AlterDomainImpl<>(
-            configuration(),
-            this.domain,
-            this.ifExists,
-            this.addConstraint,
-            this.dropDefault,
-            this.setNotNull,
-            this.dropNotNull,
-            this.dropConstraint,
-            this.dropConstraintIfExists,
-            this.renameTo,
-            renameConstraint,
-            false,
-            this.setDefault,
-            this.cascade,
-            this.renameConstraintTo
-        );
+        this.renameConstraint = renameConstraint;
+        this.renameConstraintIfExists = false;
+        return this;
     }
 
     @Override
@@ -360,23 +258,9 @@ implements
 
     @Override
     public final AlterDomainImpl<T> renameConstraintIfExists(Constraint renameConstraint) {
-        return new AlterDomainImpl<>(
-            configuration(),
-            this.domain,
-            this.ifExists,
-            this.addConstraint,
-            this.dropDefault,
-            this.setNotNull,
-            this.dropNotNull,
-            this.dropConstraint,
-            this.dropConstraintIfExists,
-            this.renameTo,
-            renameConstraint,
-            true,
-            this.setDefault,
-            this.cascade,
-            this.renameConstraintTo
-        );
+        this.renameConstraint = renameConstraint;
+        this.renameConstraintIfExists = true;
+        return this;
     }
 
     @Override
@@ -386,65 +270,20 @@ implements
 
     @Override
     public final AlterDomainImpl<T> setDefault(Field<T> setDefault) {
-        return new AlterDomainImpl<>(
-            configuration(),
-            this.domain,
-            this.ifExists,
-            this.addConstraint,
-            this.dropDefault,
-            this.setNotNull,
-            this.dropNotNull,
-            this.dropConstraint,
-            this.dropConstraintIfExists,
-            this.renameTo,
-            this.renameConstraint,
-            this.renameConstraintIfExists,
-            setDefault,
-            this.cascade,
-            this.renameConstraintTo
-        );
+        this.setDefault = setDefault;
+        return this;
     }
 
     @Override
     public final AlterDomainImpl<T> cascade() {
-        return new AlterDomainImpl<>(
-            configuration(),
-            this.domain,
-            this.ifExists,
-            this.addConstraint,
-            this.dropDefault,
-            this.setNotNull,
-            this.dropNotNull,
-            this.dropConstraint,
-            this.dropConstraintIfExists,
-            this.renameTo,
-            this.renameConstraint,
-            this.renameConstraintIfExists,
-            this.setDefault,
-            true,
-            this.renameConstraintTo
-        );
+        this.cascade = true;
+        return this;
     }
 
     @Override
     public final AlterDomainImpl<T> restrict() {
-        return new AlterDomainImpl<>(
-            configuration(),
-            this.domain,
-            this.ifExists,
-            this.addConstraint,
-            this.dropDefault,
-            this.setNotNull,
-            this.dropNotNull,
-            this.dropConstraint,
-            this.dropConstraintIfExists,
-            this.renameTo,
-            this.renameConstraint,
-            this.renameConstraintIfExists,
-            this.setDefault,
-            false,
-            this.renameConstraintTo
-        );
+        this.cascade = false;
+        return this;
     }
 
     @Override
@@ -459,23 +298,8 @@ implements
 
     @Override
     public final AlterDomainImpl<T> to(Constraint renameConstraintTo) {
-        return new AlterDomainImpl<>(
-            configuration(),
-            this.domain,
-            this.ifExists,
-            this.addConstraint,
-            this.dropDefault,
-            this.setNotNull,
-            this.dropNotNull,
-            this.dropConstraint,
-            this.dropConstraintIfExists,
-            this.renameTo,
-            this.renameConstraint,
-            this.renameConstraintIfExists,
-            this.setDefault,
-            this.cascade,
-            renameConstraintTo
-        );
+        this.renameConstraintTo = renameConstraintTo;
+        return this;
     }
 
     // -------------------------------------------------------------------------

@@ -8837,6 +8837,54 @@ public interface DSLContext extends Scope , AutoCloseable {
     CreateDomainAsStep createDomainIfNotExists(Domain<?> domain);
 
     /**
+     * The <code>CREATE SCHEMA</code> statement.
+     *
+     * @see DSL#createSchema(String)
+     */
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    CreateSchemaFinalStep createSchema(String schema);
+
+    /**
+     * The <code>CREATE SCHEMA</code> statement.
+     *
+     * @see DSL#createSchema(Name)
+     */
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    CreateSchemaFinalStep createSchema(Name schema);
+
+    /**
+     * The <code>CREATE SCHEMA</code> statement.
+     *
+     * @see DSL#createSchema(Schema)
+     */
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    CreateSchemaFinalStep createSchema(Schema schema);
+
+    /**
+     * The <code>CREATE SCHEMA IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createSchemaIfNotExists(String)
+     */
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    CreateSchemaFinalStep createSchemaIfNotExists(String schema);
+
+    /**
+     * The <code>CREATE SCHEMA IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createSchemaIfNotExists(Name)
+     */
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    CreateSchemaFinalStep createSchemaIfNotExists(Name schema);
+
+    /**
+     * The <code>CREATE SCHEMA IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createSchemaIfNotExists(Schema)
+     */
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
+    CreateSchemaFinalStep createSchemaIfNotExists(Schema schema);
+
+    /**
      * The <code>ALTER DATABASE</code> statement.
      *
      * @see DSL#alterDatabase(String)
@@ -9099,54 +9147,6 @@ public interface DSLContext extends Scope , AutoCloseable {
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     CommentOnIsStep commentOnColumn(Field<?> field);
-
-    /**
-     * Create a new DSL <code>CREATE SCHEMA</code> statement.
-     *
-     * @see DSL#createSchema(String)
-     */
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    CreateSchemaFinalStep createSchema(String schema);
-
-    /**
-     * Create a new DSL <code>CREATE SCHEMA</code> statement.
-     *
-     * @see DSL#createSchema(Name)
-     */
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    CreateSchemaFinalStep createSchema(Name schema);
-
-    /**
-     * Create a new DSL <code>CREATE SCHEMA</code> statement.
-     *
-     * @see DSL#createSchema(Schema)
-     */
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    CreateSchemaFinalStep createSchema(Schema schema);
-
-    /**
-     * Create a new DSL <code>CREATE SCHEMA</code> statement.
-     *
-     * @see DSL#createSchemaIfNotExists(String)
-     */
-    @Support({ H2, MARIADB, MYSQL, POSTGRES })
-    CreateSchemaFinalStep createSchemaIfNotExists(String schema);
-
-    /**
-     * Create a new DSL <code>CREATE SCHEMA</code> statement.
-     *
-     * @see DSL#createSchemaIfNotExists(Name)
-     */
-    @Support({ H2, MARIADB, MYSQL, POSTGRES })
-    CreateSchemaFinalStep createSchemaIfNotExists(Name schema);
-
-    /**
-     * Create a new DSL <code>CREATE SCHEMA</code> statement.
-     *
-     * @see DSL#createSchemaIfNotExists(Schema)
-     */
-    @Support({ H2, MARIADB, MYSQL, POSTGRES })
-    CreateSchemaFinalStep createSchemaIfNotExists(Schema schema);
 
     /**
      * Create a new DSL <code>CREATE TABLE</code> statement.

@@ -37,59 +37,37 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.CREATE_SCHEMA;
-import static org.jooq.Clause.CREATE_SCHEMA_NAME;
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.FIREBIRD;
-// ...
-// ...
-// ...
-// ...
-// ...
-import static org.jooq.impl.Keywords.K_CREATE;
-import static org.jooq.impl.Keywords.K_DATABASE;
-import static org.jooq.impl.Keywords.K_EXEC;
-import static org.jooq.impl.Keywords.K_IF_NOT_EXISTS;
-import static org.jooq.impl.Keywords.K_SCHEMA;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import java.util.Set;
+import org.jooq.*;
+import org.jooq.impl.*;
 
-import org.jooq.Clause;
-import org.jooq.Configuration;
-import org.jooq.Context;
-import org.jooq.CreateSchemaFinalStep;
-// ...
-import org.jooq.SQLDialect;
-import org.jooq.Schema;
+import java.util.*;
 
 /**
- * @author Lukas Eder
+ * The <code>CREATE SCHEMA IF NOT EXISTS</code> statement.
  */
-final class CreateSchemaImpl extends AbstractRowCountQuery implements
+@SuppressWarnings({ "unused" })
+final class CreateSchemaImpl
+extends
+    AbstractRowCountQuery
+implements
+    CreateSchemaFinalStep
+{
+    
+    private static final long serialVersionUID = 1L;
 
-    // Cascading interface implementations for CREATE SCHEMA behaviour
-    CreateSchemaFinalStep {
-
-
-    /**
-     * Generated UID
-     */
-    private static final long                serialVersionUID           = 8904572826501186329L;
-    private static final Clause[]            CLAUSES                    = { CREATE_SCHEMA };
-    private static final Set<SQLDialect>     NO_SUPPORT_IF_NOT_EXISTS   = SQLDialect.supportedBy(DERBY, FIREBIRD);
-
-
-
-
-
-
-    private final Schema                     schema;
-    private final boolean                    ifNotExists;
-
-    CreateSchemaImpl(Configuration configuration, Schema schema, boolean ifNotExists) {
+    private final Schema  schema;
+    private final boolean ifNotExists;
+    
+    
+    CreateSchemaImpl(
+        Configuration configuration,
+        Schema schema,
+        boolean ifNotExists
+    ) {
         super(configuration);
 
         this.schema = schema;
@@ -99,13 +77,19 @@ final class CreateSchemaImpl extends AbstractRowCountQuery implements
     final Schema  $schema()      { return schema; }
     final boolean $ifNotExists() { return ifNotExists; }
 
-    // ------------------------------------------------------------------------
-    // XXX: DSL API
-    // ------------------------------------------------------------------------
-
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // XXX: QueryPart API
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
+
+
+    private static final Clause[]            CLAUSES                    = { Clause.CREATE_SCHEMA };
+    private static final Set<SQLDialect>     NO_SUPPORT_IF_NOT_EXISTS   = SQLDialect.supportedBy(DERBY, FIREBIRD);
+
+
+
+
+
 
     private final boolean supportsIfNotExists(Context<?> ctx) {
         return !NO_SUPPORT_IF_NOT_EXISTS.contains(ctx.family());
@@ -141,7 +125,7 @@ final class CreateSchemaImpl extends AbstractRowCountQuery implements
     }
 
     private final void accept1(Context<?> ctx) {
-        ctx.start(CREATE_SCHEMA_NAME)
+        ctx.start(Clause.CREATE_SCHEMA_NAME)
            .visit(K_CREATE);
 
 
@@ -155,11 +139,13 @@ final class CreateSchemaImpl extends AbstractRowCountQuery implements
             ctx.sql(' ').visit(K_IF_NOT_EXISTS);
 
         ctx.sql(' ').visit(schema)
-           .end(CREATE_SCHEMA_NAME);
+           .end(Clause.CREATE_SCHEMA_NAME);
     }
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
+
+
 }

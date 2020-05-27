@@ -62,7 +62,7 @@ implements
 
     private final Catalog database;
     private final boolean ifExists;
-    private final Catalog renameTo;
+    private       Catalog renameTo;
     
     AlterDatabaseImpl(
         Configuration configuration,
@@ -90,6 +90,10 @@ implements
         this.renameTo = renameTo;
     }
 
+    final Catalog $database() { return database; }
+    final boolean $ifExists() { return ifExists; }
+    final Catalog $renameTo() { return renameTo; }
+
     // -------------------------------------------------------------------------
     // XXX: DSL API
     // -------------------------------------------------------------------------
@@ -106,12 +110,8 @@ implements
 
     @Override
     public final AlterDatabaseImpl renameTo(Catalog renameTo) {
-        return new AlterDatabaseImpl(
-            configuration(),
-            this.database,
-            this.ifExists,
-            renameTo
-        );
+        this.renameTo = renameTo;
+        return this;
     }
 
     // -------------------------------------------------------------------------

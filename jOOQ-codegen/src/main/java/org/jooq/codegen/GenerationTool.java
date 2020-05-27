@@ -739,6 +739,8 @@ public class GenerationTool {
                 generator.setGenerateGlobalObjectReferences(g.getGenerate().isGlobalObjectReferences());
             if (g.getGenerate().isGlobalCatalogReferences() != null)
                 generator.setGenerateGlobalCatalogReferences(g.getGenerate().isGlobalCatalogReferences());
+            if (g.getGenerate().isGlobalDomainReferences() != null)
+                generator.setGenerateGlobalDomainReferences(g.getGenerate().isGlobalDomainReferences());
             if (g.getGenerate().isGlobalSchemaReferences() != null)
                 generator.setGenerateGlobalSchemaReferences(g.getGenerate().isGlobalSchemaReferences());
             if (g.getGenerate().isGlobalRoutineReferences() != null)

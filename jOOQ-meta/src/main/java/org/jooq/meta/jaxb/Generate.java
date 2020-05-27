@@ -118,6 +118,8 @@ public class Generate implements Serializable, XMLAppendable
     @XmlElement(defaultValue = "true")
     protected Boolean globalSchemaReferences = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean globalDomainReferences = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean globalTableReferences = true;
     @XmlElement(defaultValue = "true")
     protected Boolean globalSequenceReferences = true;
@@ -1199,6 +1201,30 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
+     * Turn off generation of global domain references.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isGlobalDomainReferences() {
+        return globalDomainReferences;
+    }
+
+    /**
+     * Sets the value of the globalDomainReferences property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setGlobalDomainReferences(Boolean value) {
+        this.globalDomainReferences = value;
+    }
+
+    /**
      * Turn off generation of global table references.
      * 
      * @return
@@ -2276,6 +2302,11 @@ public class Generate implements Serializable, XMLAppendable
         return this;
     }
 
+    public Generate withGlobalDomainReferences(Boolean value) {
+        setGlobalDomainReferences(value);
+        return this;
+    }
+
     public Generate withGlobalTableReferences(Boolean value) {
         setGlobalTableReferences(value);
         return this;
@@ -2512,6 +2543,7 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("globalObjectReferences", globalObjectReferences);
         builder.append("globalCatalogReferences", globalCatalogReferences);
         builder.append("globalSchemaReferences", globalSchemaReferences);
+        builder.append("globalDomainReferences", globalDomainReferences);
         builder.append("globalTableReferences", globalTableReferences);
         builder.append("globalSequenceReferences", globalSequenceReferences);
         builder.append("globalUDTReferences", globalUDTReferences);
@@ -2955,6 +2987,15 @@ public class Generate implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (globalDomainReferences == null) {
+            if (other.globalDomainReferences!= null) {
+                return false;
+            }
+        } else {
+            if (!globalDomainReferences.equals(other.globalDomainReferences)) {
+                return false;
+            }
+        }
         if (globalTableReferences == null) {
             if (other.globalTableReferences!= null) {
                 return false;
@@ -3320,6 +3361,7 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((globalObjectReferences == null)? 0 :globalObjectReferences.hashCode()));
         result = ((prime*result)+((globalCatalogReferences == null)? 0 :globalCatalogReferences.hashCode()));
         result = ((prime*result)+((globalSchemaReferences == null)? 0 :globalSchemaReferences.hashCode()));
+        result = ((prime*result)+((globalDomainReferences == null)? 0 :globalDomainReferences.hashCode()));
         result = ((prime*result)+((globalTableReferences == null)? 0 :globalTableReferences.hashCode()));
         result = ((prime*result)+((globalSequenceReferences == null)? 0 :globalSequenceReferences.hashCode()));
         result = ((prime*result)+((globalUDTReferences == null)? 0 :globalUDTReferences.hashCode()));

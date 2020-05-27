@@ -130,6 +130,7 @@ final class Keywords {
     static final Keyword K_DISTINCT_ON                      = keyword("distinct on");
     static final Keyword K_DO                               = keyword("do");
     static final Keyword K_DOCUMENT                         = keyword("document");
+    static final Keyword K_DOMAIN                           = keyword("domain");
     static final Keyword K_DO_NOTHING                       = keyword("do nothing");
     static final Keyword K_DO_UPDATE                        = keyword("do update");
     static final Keyword K_DROP                             = keyword("drop");

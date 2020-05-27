@@ -8738,6 +8738,154 @@ public interface DSLContext extends Scope , AutoCloseable {
     // XXX DDL Statements
     // -------------------------------------------------------------------------
 
+
+
+    /**
+     * The <code>CREATE DOMAIN</code> statement.
+     *
+     * @see DSL#createDomain(String)
+     */
+    @Support({ H2, POSTGRES })
+    CreateDomainAsStep createDomain(String domain);
+
+    /**
+     * The <code>CREATE DOMAIN</code> statement.
+     *
+     * @see DSL#createDomain(Name)
+     */
+    @Support({ H2, POSTGRES })
+    CreateDomainAsStep createDomain(Name domain);
+
+    /**
+     * The <code>CREATE DOMAIN</code> statement.
+     *
+     * @see DSL#createDomain(Domain)
+     */
+    @Support({ H2, POSTGRES })
+    CreateDomainAsStep createDomain(Domain<?> domain);
+
+    /**
+     * The <code>CREATE DOMAIN IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createDomainIfNotExists(String)
+     */
+    @Support({ H2, POSTGRES })
+    CreateDomainAsStep createDomainIfNotExists(String domain);
+
+    /**
+     * The <code>CREATE DOMAIN IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createDomainIfNotExists(Name)
+     */
+    @Support({ H2, POSTGRES })
+    CreateDomainAsStep createDomainIfNotExists(Name domain);
+
+    /**
+     * The <code>CREATE DOMAIN IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createDomainIfNotExists(Domain)
+     */
+    @Support({ H2, POSTGRES })
+    CreateDomainAsStep createDomainIfNotExists(Domain<?> domain);
+
+    /**
+     * The <code>ALTER DOMAIN</code> statement.
+     *
+     * @see DSL#alterDomain(String)
+     */
+    @Support({ POSTGRES })
+    <T> AlterDomainStep<T> alterDomain(String domain);
+
+    /**
+     * The <code>ALTER DOMAIN</code> statement.
+     *
+     * @see DSL#alterDomain(Name)
+     */
+    @Support({ POSTGRES })
+    <T> AlterDomainStep<T> alterDomain(Name domain);
+
+    /**
+     * The <code>ALTER DOMAIN</code> statement.
+     *
+     * @see DSL#alterDomain(Domain)
+     */
+    @Support({ POSTGRES })
+    <T> AlterDomainStep<T> alterDomain(Domain<T> domain);
+
+    /**
+     * The <code>ALTER DOMAIN IF EXISTS</code> statement.
+     *
+     * @see DSL#alterDomainIfExists(String)
+     */
+    @Support({ POSTGRES })
+    <T> AlterDomainStep<T> alterDomainIfExists(String domain);
+
+    /**
+     * The <code>ALTER DOMAIN IF EXISTS</code> statement.
+     *
+     * @see DSL#alterDomainIfExists(Name)
+     */
+    @Support({ POSTGRES })
+    <T> AlterDomainStep<T> alterDomainIfExists(Name domain);
+
+    /**
+     * The <code>ALTER DOMAIN IF EXISTS</code> statement.
+     *
+     * @see DSL#alterDomainIfExists(Domain)
+     */
+    @Support({ POSTGRES })
+    <T> AlterDomainStep<T> alterDomainIfExists(Domain<T> domain);
+
+    /**
+     * The <code>DROP DOMAIN</code> statement.
+     *
+     * @see DSL#dropDomain(String)
+     */
+    @Support({ H2, POSTGRES })
+    DropDomainCascadeStep dropDomain(String domain);
+
+    /**
+     * The <code>DROP DOMAIN</code> statement.
+     *
+     * @see DSL#dropDomain(Name)
+     */
+    @Support({ H2, POSTGRES })
+    DropDomainCascadeStep dropDomain(Name domain);
+
+    /**
+     * The <code>DROP DOMAIN</code> statement.
+     *
+     * @see DSL#dropDomain(Domain)
+     */
+    @Support({ H2, POSTGRES })
+    DropDomainCascadeStep dropDomain(Domain<?> domain);
+
+    /**
+     * The <code>DROP DOMAIN IF EXISTS</code> statement.
+     *
+     * @see DSL#dropDomainIfExists(String)
+     */
+    @Support({ H2, POSTGRES })
+    DropDomainCascadeStep dropDomainIfExists(String domain);
+
+    /**
+     * The <code>DROP DOMAIN IF EXISTS</code> statement.
+     *
+     * @see DSL#dropDomainIfExists(Name)
+     */
+    @Support({ H2, POSTGRES })
+    DropDomainCascadeStep dropDomainIfExists(Name domain);
+
+    /**
+     * The <code>DROP DOMAIN IF EXISTS</code> statement.
+     *
+     * @see DSL#dropDomainIfExists(Domain)
+     */
+    @Support({ H2, POSTGRES })
+    DropDomainCascadeStep dropDomainIfExists(Domain<?> domain);
+
+
+
     /**
      * Create a new DSL <code>COMMENT ON TABLE</code> statement.
      *

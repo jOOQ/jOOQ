@@ -88,6 +88,7 @@ import org.jooq.Check;
 import org.jooq.Configuration;
 import org.jooq.Constants;
 import org.jooq.DataType;
+import org.jooq.Domain;
 import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -594,7 +595,7 @@ public class JavaGenerator extends AbstractGenerator {
             generateEnums(schema);
 
         if (generateUDTs() && database.getDomains(schema).size() > 0)
-            generateDomains(schema);
+            generateDomainReferences(schema);
 
         if (generateRoutines() && (database.getRoutines(schema).size() > 0 || hasTableValuedFunctions(schema)))
             generateRoutines(schema);
@@ -741,7 +742,7 @@ public class JavaGenerator extends AbstractGenerator {
         JavaWriter out = newJavaWriter(new File(getFile(schema).getParentFile(), "Keys.java"));
         printPackage(out, schema);
         printClassJavadoc(out,
-            "A class modelling foreign key relationships and constraints of tables of the <code>" + schema.getOutputName() + "</code> schema.");
+            "A class modelling foreign key relationships and constraints of tables in " + schemaNameOrDefault(schema) + ".");
         printClassAnnotations(out, schema);
 
         if (scala || kotlin)
@@ -905,7 +906,7 @@ public class JavaGenerator extends AbstractGenerator {
         JavaWriter out = newJavaWriter(new File(getFile(schema).getParentFile(), "Indexes.java"));
         printPackage(out, schema);
         printClassJavadoc(out,
-            "A class modelling indexes of tables of the <code>" + schema.getOutputName() + "</code> schema.");
+            "A class modelling indexes of tables in "  + schemaNameOrDefault(schema) + ".");
         printClassAnnotations(out, schema);
 
         if (scala || kotlin)
@@ -2565,7 +2566,7 @@ public class JavaGenerator extends AbstractGenerator {
         JavaWriter out = newJavaWriter(new File(getFile(schema).getParentFile(), "UDTs.java"));
 
         printPackage(out, schema);
-        printClassJavadoc(out, "Convenience access to all UDTs in " + schema.getOutputName());
+        printClassJavadoc(out, "Convenience access to all UDTs in " + schemaNameOrDefault(schema) + ".");
         printClassAnnotations(out, schema);
 
         if (scala)
@@ -2590,6 +2591,72 @@ public class JavaGenerator extends AbstractGenerator {
         closeJavaWriter(out);
 
         watch.splitInfo("UDT references generated");
+    }
+
+    /**
+     * Generating central static domain access
+     */
+    protected void generateDomainReferences(SchemaDefinition schema) {
+        log.info("Generating DOMAIN references");
+        JavaWriter out = newJavaWriter(new File(getFile(schema).getParentFile(), "Domains.java"));
+
+        printPackage(out, schema);
+        printClassJavadoc(out, "Convenience access to all Domains in " + schemaNameOrDefault(schema) + ".");
+        printClassAnnotations(out, schema);
+
+        if (scala || kotlin)
+            out.println("object Domains {");
+        else
+            out.println("public class Domains {");
+
+        for (DomainDefinition domain : database.getDomains(schema)) {
+            final String id = getStrategy().getJavaIdentifier(domain);
+            final String schemaId = out.ref(getStrategy().getFullJavaIdentifier(schema), 2);
+            final String domainTypeFull = getJavaType(domain.getType(resolver()));
+            final String domainType = out.ref(domainTypeFull);
+            final String domainTypeRef = getJavaTypeReference(domain.getDatabase(), domain.getType(resolver()));
+
+            out.javadoc("The domain <code>%s</code>.", domain.getQualifiedOutputName());
+
+            if (scala) {
+                out.println("val %s: %s[%s] = %s.createDomain(", id, Domain.class, domainType, Internal.class);
+                out.println("  %s", schemaId);
+                out.println(", %s.name(\"%s\")", DSL.class, escapeString(domain.getOutputName()));
+                out.println(", %s", domainTypeRef);
+
+                for (String check : domain.getCheckClauses())
+                    out.println(", %s.createCheck(null, null, \"%s\")", Internal.class, escapeString(check));
+
+                out.println(")");
+            }
+            else if (kotlin) {
+                out.println("val %s: %s<%s> = %s.createDomain(", id, Domain.class, domainType, Internal.class);
+                out.println("  %s", schemaId);
+                out.println(", %s.name(\"%s\")", DSL.class, escapeString(domain.getOutputName()));
+                out.println(", %s", domainTypeRef);
+
+                for (String check : domain.getCheckClauses())
+                    out.println(", %s.createCheck<%s>(null, null, \"%s\")", Internal.class, Record.class, escapeString(check));
+
+                out.println(")");
+            }
+            else {
+                out.println("public static final %s<%s> %s = %s.createDomain(", Domain.class, domainType, id, Internal.class);
+                out.println("  %s", schemaId);
+                out.println(", %s.name(\"%s\")", DSL.class, escapeString(domain.getOutputName()));
+                out.println(", %s", domainTypeRef);
+
+                for (String check : domain.getCheckClauses())
+                    out.println(", %s.createCheck(null, null, \"%s\")", Internal.class, escapeString(check));
+
+                out.println(");");
+            }
+        }
+
+        out.println("}");
+        closeJavaWriter(out);
+
+        watch.splitInfo("DOMAIN references generated");
     }
 
     protected void generateArrays(SchemaDefinition schema) {
@@ -2746,19 +2813,11 @@ public class JavaGenerator extends AbstractGenerator {
         watch.splitInfo("Enums generated");
     }
 
-    protected void generateDomains(SchemaDefinition schema) {
-        log.info("Generating DOMAINs");
-
-        for (DomainDefinition d : database.getDomains(schema)) {
-            try {
-                generateDomain(d);
-            } catch (Exception ex) {
-                log.error("Error while generating domain " + d, ex);
-            }
-        }
-
-        watch.splitInfo("Domains generated");
-    }
+    /**
+     * @deprecated - [#681] - 3.14.0 - This method is no longer being called
+     */
+    @Deprecated
+    protected void generateDomains(SchemaDefinition schema) {}
 
     protected void generateEnum(EnumDefinition e) {
         JavaWriter out = newJavaWriter(getFile(e, Mode.ENUM));
@@ -2936,50 +2995,30 @@ public class JavaGenerator extends AbstractGenerator {
             printClassJavadoc(out, "The enum <code>" + e.getQualifiedInputName() + "</code>.");
     }
 
-    protected void generateDomain(DomainDefinition d) {
-        JavaWriter out = newJavaWriter(getFile(d, Mode.DOMAIN));
-        log.info("Generating DOMAIN", out.file().getName());
-        generateDomain(d, out);
-        closeJavaWriter(out);
-    }
-
-    protected void generateDomain(DomainDefinition d, JavaWriter out) {
-        final String className = getStrategy().getJavaClassName(d, Mode.DOMAIN);
-        final String superName = out.ref(getStrategy().getJavaClassExtends(d, Mode.DOMAIN));
-        final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(d, Mode.DOMAIN));
-        final List<String> superTypes = list(superName, interfaces);
-
-        printPackage(out, d);
-        generateDomainClassJavadoc(d, out);
-        printClassAnnotations(out, d.getSchema());
-
-        for (String clause : d.getCheckClauses())
-            out.println("// " + clause);
-
-        if (scala)
-            out.println("class %s[[before= extends ][%s]][[before= with ][separator= with ][%s]] {", className, first(superTypes), remaining(superTypes));
-        else
-            out.println("public class %s[[before= extends ][%s]][[before= implements ][%s]] {", className, list(superName), interfaces);
-
-        generateDomainClassFooter(d, out);
-        out.println("}");
-    }
+    /**
+     * @deprecated - [#681] - 3.14.0 - This method is no longer being called
+     */
+    @Deprecated
+    protected void generateDomain(DomainDefinition d) {}
 
     /**
-     * Subclasses may override this method to provide enum class footer code.
+     * @deprecated - [#681] - 3.14.0 - This method is no longer being called
      */
+    @Deprecated
+    protected void generateDomain(DomainDefinition d, JavaWriter out) {}
+
+    /**
+     * @deprecated - [#681] - 3.14.0 - This method is no longer being called
+     */
+    @Deprecated
     @SuppressWarnings("unused")
     protected void generateDomainClassFooter(DomainDefinition d, JavaWriter out) {}
 
     /**
-     * Subclasses may override this method to provide their own Javadoc.
+     * @deprecated - [#681] - 3.14.0 - This method is no longer being called
      */
-    protected void generateDomainClassJavadoc(DomainDefinition e, JavaWriter out) {
-        if (generateCommentsOnUDTs())
-            printClassJavadoc(out, e);
-        else
-            printClassJavadoc(out, "The domain <code>" + e.getQualifiedInputName() + "</code>.");
-    }
+    @Deprecated
+    protected void generateDomainClassJavadoc(DomainDefinition e, JavaWriter out) {}
 
     protected void generateRoutines(SchemaDefinition schema) {
         log.info("Generating routines and table-valued functions");
@@ -2989,7 +3028,7 @@ public class JavaGenerator extends AbstractGenerator {
             printPackage(out, schema);
 
             if (!kotlin) {
-                printClassJavadoc(out, "Convenience access to all stored procedures and functions in " + schema.getOutputName());
+                printClassJavadoc(out, "Convenience access to all stored procedures and functions in " + schemaNameOrDefault(schema) + ".");
                 printClassAnnotations(out, schema);
             }
 
@@ -3182,7 +3221,7 @@ public class JavaGenerator extends AbstractGenerator {
         printPackage(out, schema);
 
         if (!kotlin) {
-            printClassJavadoc(out, "Convenience access to all tables in " + (StringUtils.isEmpty(schema.getOutputName()) ? "the default schema" : schema.getOutputName()) + ".");
+            printClassJavadoc(out, "Convenience access to all tables in " + schemaNameOrDefault(schema) + ".");
             printClassAnnotations(out, schema);
         }
 
@@ -3235,6 +3274,10 @@ public class JavaGenerator extends AbstractGenerator {
         closeJavaWriter(out);
 
         watch.splitInfo("Table refs generated");
+    }
+
+    private String schemaNameOrDefault(SchemaDefinition schema) {
+        return StringUtils.isEmpty(schema.getOutputName()) ? "the default schema" : schema.getOutputName();
     }
 
     protected void generateDaos(SchemaDefinition schema) {
@@ -5161,7 +5204,7 @@ public class JavaGenerator extends AbstractGenerator {
         JavaWriter out = newJavaWriter(new File(getFile(schema).getParentFile(), "Sequences.java"));
 
         printPackage(out, schema);
-        printClassJavadoc(out, "Convenience access to all sequences in " + schema.getOutputName());
+        printClassJavadoc(out, "Convenience access to all sequences in " + schemaNameOrDefault(schema) + ".");
         printClassAnnotations(out, schema);
 
         if (scala || kotlin)

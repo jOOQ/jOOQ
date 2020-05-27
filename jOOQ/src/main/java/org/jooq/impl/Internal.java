@@ -41,6 +41,7 @@ import org.jooq.Binding;
 import org.jooq.Check;
 import org.jooq.Converter;
 import org.jooq.DataType;
+import org.jooq.Domain;
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.Index;
@@ -186,6 +187,13 @@ public final class Internal {
      */
     public static final <R extends Record> Check<R> createCheck(Table<R> table, Name name, String condition, boolean enforced) {
         return new CheckImpl<>(table, name, DSL.condition(condition), enforced);
+    }
+
+    /**
+     * Factory method for domain specifications.
+     */
+    public static final <T> Domain<T> createDomain(Schema schema, Name name, DataType<T> type, Check<?>... checks) {
+        return new DomainImpl<>(schema, name, type, checks);
     }
 
     /**

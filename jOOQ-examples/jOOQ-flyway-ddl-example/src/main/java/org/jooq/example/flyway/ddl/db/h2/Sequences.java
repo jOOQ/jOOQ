@@ -9,7 +9,7 @@ import org.jooq.impl.Internal;
 
 
 /**
- * Convenience access to all sequences in FLYWAY_TEST
+ * Convenience access to all sequences in FLYWAY_TEST.
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sequences {

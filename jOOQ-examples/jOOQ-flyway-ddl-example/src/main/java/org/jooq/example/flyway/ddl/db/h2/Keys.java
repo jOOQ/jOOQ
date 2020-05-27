@@ -15,8 +15,8 @@ import org.jooq.impl.Internal;
 
 
 /**
- * A class modelling foreign key relationships and constraints of tables of 
- * the <code>FLYWAY_TEST</code> schema.
+ * A class modelling foreign key relationships and constraints of tables in 
+ * FLYWAY_TEST.
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Keys {

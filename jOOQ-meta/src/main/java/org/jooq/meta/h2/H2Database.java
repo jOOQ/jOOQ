@@ -51,6 +51,7 @@ import static org.jooq.impl.DSL.when;
 import static org.jooq.meta.h2.information_schema.Tables.COLUMNS;
 import static org.jooq.meta.h2.information_schema.Tables.CONSTRAINTS;
 import static org.jooq.meta.h2.information_schema.Tables.CROSS_REFERENCES;
+import static org.jooq.meta.h2.information_schema.Tables.DOMAINS;
 import static org.jooq.meta.h2.information_schema.Tables.FUNCTION_ALIASES;
 import static org.jooq.meta.h2.information_schema.Tables.INDEXES;
 import static org.jooq.meta.h2.information_schema.Tables.SCHEMATA;
@@ -83,8 +84,10 @@ import org.jooq.meta.AbstractIndexDefinition;
 import org.jooq.meta.ArrayDefinition;
 import org.jooq.meta.CatalogDefinition;
 import org.jooq.meta.ColumnDefinition;
+import org.jooq.meta.DataTypeDefinition;
 import org.jooq.meta.DefaultCheckConstraintDefinition;
 import org.jooq.meta.DefaultDataTypeDefinition;
+import org.jooq.meta.DefaultDomainDefinition;
 import org.jooq.meta.DefaultEnumDefinition;
 import org.jooq.meta.DefaultIndexColumnDefinition;
 import org.jooq.meta.DefaultRelations;
@@ -110,6 +113,7 @@ import org.jooq.meta.h2.information_schema.tables.Sequences;
 import org.jooq.meta.h2.information_schema.tables.Tables;
 import org.jooq.meta.h2.information_schema.tables.TypeInfo;
 import org.jooq.meta.h2.information_schema.tables.Views;
+import org.jooq.tools.StringUtils;
 import org.jooq.tools.csv.CSVReader;
 import org.jooq.util.h2.H2DataType;
 
@@ -653,6 +657,50 @@ public class H2Database extends AbstractDatabase {
     @Override
     protected List<DomainDefinition> getDomains0() throws SQLException {
         List<DomainDefinition> result = new ArrayList<>();
+
+        for (Record record : create()
+            .select(
+                Domains.DOMAIN_SCHEMA,
+                Domains.DOMAIN_NAME,
+                Domains.TYPE_NAME,
+                Domains.PRECISION,
+                Domains.SCALE,
+                Domains.IS_NULLABLE,
+                Domains.COLUMN_DEFAULT,
+                Domains.CHECK_CONSTRAINT)
+            .from(DOMAINS)
+            .where(Domains.DOMAIN_SCHEMA.in(getInputSchemata()))
+            .orderBy(Domains.DOMAIN_SCHEMA, Domains.DOMAIN_NAME)
+        ) {
+            SchemaDefinition schema = getSchema(record.get(Domains.DOMAIN_SCHEMA));
+
+            DataTypeDefinition baseType = new DefaultDataTypeDefinition(
+                this,
+                schema,
+                record.get(Domains.TYPE_NAME),
+                record.get(Domains.PRECISION),
+                record.get(Domains.PRECISION),
+                record.get(Domains.SCALE),
+               !record.get(Domains.IS_NULLABLE, boolean.class),
+                record.get(Domains.COLUMN_DEFAULT),
+                name(
+                    record.get(Domains.DOMAIN_SCHEMA),
+                    record.get(Domains.TYPE_NAME)
+                )
+            );
+
+            DefaultDomainDefinition domain = new DefaultDomainDefinition(
+                schema,
+                record.get(Domains.DOMAIN_NAME),
+                baseType
+            );
+
+            if (!StringUtils.isBlank(record.get(Domains.CHECK_CONSTRAINT)))
+                domain.addCheckClause(record.get(Domains.CHECK_CONSTRAINT));
+
+            result.add(domain);
+        }
+
         return result;
     }
 

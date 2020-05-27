@@ -129,6 +129,7 @@ import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.DeleteQuery;
 import org.jooq.DeleteUsingStep;
+import org.jooq.Domain;
 import org.jooq.DropDatabaseFinalStep;
 import org.jooq.DropIndexOnStep;
 import org.jooq.DropSchemaStep;
@@ -2919,6 +2920,100 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     // XXX DDL Statements from existing meta data
     // -------------------------------------------------------------------------
 
+
+
+    @Override
+    public org.jooq.CreateDomainAsStep createDomain(String domain) {
+        return new CreateDomainImpl<>(configuration(), DSL.domain(domain), false);
+    }
+
+    @Override
+    public org.jooq.CreateDomainAsStep createDomain(Name domain) {
+        return new CreateDomainImpl<>(configuration(), DSL.domain(domain), false);
+    }
+
+    @Override
+    public org.jooq.CreateDomainAsStep createDomain(Domain<?> domain) {
+        return new CreateDomainImpl<>(configuration(), domain, false);
+    }
+
+    @Override
+    public org.jooq.CreateDomainAsStep createDomainIfNotExists(String domain) {
+        return new CreateDomainImpl<>(configuration(), DSL.domain(domain), true);
+    }
+
+    @Override
+    public org.jooq.CreateDomainAsStep createDomainIfNotExists(Name domain) {
+        return new CreateDomainImpl<>(configuration(), DSL.domain(domain), true);
+    }
+
+    @Override
+    public org.jooq.CreateDomainAsStep createDomainIfNotExists(Domain<?> domain) {
+        return new CreateDomainImpl<>(configuration(), domain, true);
+    }
+
+    @Override
+    public <T> org.jooq.AlterDomainStep<T> alterDomain(String domain) {
+        return new AlterDomainImpl<>(configuration(), DSL.domain(domain), false);
+    }
+
+    @Override
+    public <T> org.jooq.AlterDomainStep<T> alterDomain(Name domain) {
+        return new AlterDomainImpl<>(configuration(), DSL.domain(domain), false);
+    }
+
+    @Override
+    public <T> org.jooq.AlterDomainStep<T> alterDomain(Domain<T> domain) {
+        return new AlterDomainImpl<>(configuration(), domain, false);
+    }
+
+    @Override
+    public <T> org.jooq.AlterDomainStep<T> alterDomainIfExists(String domain) {
+        return new AlterDomainImpl<>(configuration(), DSL.domain(domain), true);
+    }
+
+    @Override
+    public <T> org.jooq.AlterDomainStep<T> alterDomainIfExists(Name domain) {
+        return new AlterDomainImpl<>(configuration(), DSL.domain(domain), true);
+    }
+
+    @Override
+    public <T> org.jooq.AlterDomainStep<T> alterDomainIfExists(Domain<T> domain) {
+        return new AlterDomainImpl<>(configuration(), domain, true);
+    }
+
+    @Override
+    public org.jooq.DropDomainCascadeStep dropDomain(String domain) {
+        return new DropDomainImpl(configuration(), DSL.domain(domain), false);
+    }
+
+    @Override
+    public org.jooq.DropDomainCascadeStep dropDomain(Name domain) {
+        return new DropDomainImpl(configuration(), DSL.domain(domain), false);
+    }
+
+    @Override
+    public org.jooq.DropDomainCascadeStep dropDomain(Domain<?> domain) {
+        return new DropDomainImpl(configuration(), domain, false);
+    }
+
+    @Override
+    public org.jooq.DropDomainCascadeStep dropDomainIfExists(String domain) {
+        return new DropDomainImpl(configuration(), DSL.domain(domain), true);
+    }
+
+    @Override
+    public org.jooq.DropDomainCascadeStep dropDomainIfExists(Name domain) {
+        return new DropDomainImpl(configuration(), DSL.domain(domain), true);
+    }
+
+    @Override
+    public org.jooq.DropDomainCascadeStep dropDomainIfExists(Domain<?> domain) {
+        return new DropDomainImpl(configuration(), domain, true);
+    }
+
+
+
     @Override
     public Queries ddl(Catalog catalog) {
         return ddl(catalog, new DDLExportConfiguration());
@@ -4500,7 +4595,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <T> T fetchValue(Field<T> field) {
-        return fetchValue(select(field));
+        return field instanceof TableField ? fetchValue((TableField<?, T>) field) : fetchValue(select(field));
     }
 
 

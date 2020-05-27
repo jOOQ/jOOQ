@@ -44,14 +44,14 @@ import java.util.List;
 /**
  * @author Lukas Eder
  */
-public class DefaultDomainDefinition extends AbstractDefinition implements DomainDefinition {
+public class DefaultDomainDefinition
+extends AbstractTypedElementDefinition<SchemaDefinition>
+implements DomainDefinition {
 
-    private final List<String>       checkClauses;
-    private final DataTypeDefinition baseType;
+    private final List<String> checkClauses;
 
     public DefaultDomainDefinition(SchemaDefinition schema, String name, DataTypeDefinition baseType) {
-        super(schema.getDatabase(), schema, name, "");
-        this.baseType = baseType;
+        super(schema, name, -1, baseType, "");
 
         this.checkClauses = new ArrayList<>();
     }
@@ -81,6 +81,6 @@ public class DefaultDomainDefinition extends AbstractDefinition implements Domai
 
     @Override
     public DataTypeDefinition getBaseType() {
-        return baseType;
+        return getDefinedType();
     }
 }

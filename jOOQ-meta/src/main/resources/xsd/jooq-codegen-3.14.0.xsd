@@ -1276,6 +1276,10 @@ jOOQ version used for source code.]]></jxb:javadoc></jxb:property></appinfo></an
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of global schema references.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="globalDomainReferences" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of global domain references.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="globalTableReferences" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of global table references.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

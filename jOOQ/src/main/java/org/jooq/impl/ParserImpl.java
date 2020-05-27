@@ -118,6 +118,7 @@ import static org.jooq.impl.DSL.defaultValue;
 import static org.jooq.impl.DSL.default_;
 import static org.jooq.impl.DSL.deg;
 import static org.jooq.impl.DSL.denseRank;
+import static org.jooq.impl.DSL.domain;
 import static org.jooq.impl.DSL.epoch;
 import static org.jooq.impl.DSL.every;
 import static org.jooq.impl.DSL.exists;
@@ -363,6 +364,9 @@ import java.util.regex.Pattern;
 import org.jooq.AggregateFilterStep;
 import org.jooq.AggregateFunction;
 import org.jooq.AlterDatabaseStep;
+import org.jooq.AlterDomainDropConstraintCascadeStep;
+import org.jooq.AlterDomainRenameConstraintStep;
+import org.jooq.AlterDomainStep;
 import org.jooq.AlterIndexFinalStep;
 import org.jooq.AlterIndexStep;
 import org.jooq.AlterSchemaStep;
@@ -391,6 +395,8 @@ import org.jooq.Constraint;
 import org.jooq.ConstraintEnforcementStep;
 import org.jooq.ConstraintForeignKeyOnStep;
 import org.jooq.ConstraintTypeStep;
+import org.jooq.CreateDomainConstraintStep;
+import org.jooq.CreateDomainDefaultStep;
 import org.jooq.CreateIndexFinalStep;
 import org.jooq.CreateIndexIncludeStep;
 import org.jooq.CreateIndexStep;
@@ -414,10 +420,11 @@ import org.jooq.DeleteReturningStep;
 import org.jooq.DeleteUsingStep;
 import org.jooq.DeleteWhereStep;
 import org.jooq.DerivedColumnList;
+import org.jooq.Domain;
+import org.jooq.DropDomainCascadeStep;
 import org.jooq.DropIndexCascadeStep;
 import org.jooq.DropIndexFinalStep;
 import org.jooq.DropIndexOnStep;
-import org.jooq.DropSchemaFinalStep;
 import org.jooq.DropSchemaStep;
 import org.jooq.DropTableFinalStep;
 import org.jooq.DropTableStep;
@@ -2367,6 +2374,8 @@ final class ParserImpl implements Parser {
             case 'D':
                 if (parseKeywordIf(ctx, "DATABASE"))
                     return parseCreateDatabase(ctx);
+                else if (parseKeywordIf(ctx, "DOMAIN"))
+                    return parseCreateDomain(ctx);
 
                 break;
 
@@ -2584,6 +2593,8 @@ final class ParserImpl implements Parser {
             case 'D':
                 if (parseKeywordIf(ctx, "DATABASE"))
                     return parseDropDatabase(ctx);
+                else if (parseKeywordIf(ctx, "DOMAIN"))
+                    return parseDropDomain(ctx);
 
                 break;
 
@@ -4778,6 +4789,127 @@ final class ParserImpl implements Parser {
         return s2;
     }
 
+    private static final DDLQuery parseCreateDomain(ParserContext ctx) {
+        boolean ifNotExists = parseKeywordIf(ctx, "IF NOT EXISTS");
+        Domain<?> domainName = parseDomainName(ctx);
+        parseKeyword(ctx, "AS");
+        DataType<?> dataType = parseDataType(ctx);
+
+        CreateDomainDefaultStep<?> s1 = ifNotExists
+           ? ctx.dsl.createDomainIfNotExists(domainName).as(dataType)
+           : ctx.dsl.createDomain(domainName).as(dataType);
+
+        CreateDomainConstraintStep s2 = parseKeywordIf(ctx, "DEFAULT")
+           ? s1.default_((Field) parseField(ctx))
+           : s1;
+
+        List<Constraint> constraints = new ArrayList<>();
+
+        constraintLoop:
+        for (;;) {
+            ConstraintTypeStep constraint = parseConstraintNameSpecification(ctx);
+
+            // TODO: NOT NULL constraints
+            if (parseKeywordIf(ctx, "CHECK")) {
+                constraints.add(parseCheckSpecification(ctx, constraint));
+                continue constraintLoop;
+            }
+            else if (constraint != null)
+                throw ctx.expected("CHECK", "CONSTRAINT");
+
+            break;
+        }
+
+        if (!constraints.isEmpty())
+            s2 = s2.constraints(constraints);
+
+        return s2;
+    }
+
+    private static final DDLQuery parseAlterDomain(ParserContext ctx) {
+        boolean ifExists = parseKeywordIf(ctx, "IF EXISTS");
+        Domain<?> domainName = parseDomainName(ctx);
+
+        AlterDomainStep s1 = ifExists
+            ? ctx.dsl.alterDomainIfExists(domainName)
+            : ctx.dsl.alterDomain(domainName);
+
+        if (parseKeywordIf(ctx, "ADD")) {
+            ConstraintTypeStep constraint = parseConstraintNameSpecification(ctx);
+
+            // TODO: NOT NULL constraints
+            if (parseKeywordIf(ctx, "CHECK"))
+                return s1.add(parseCheckSpecification(ctx, constraint));
+            else
+                throw ctx.expected("CHECK", "CONSTRAINT");
+        }
+        else if (parseKeywordIf(ctx, "DROP CONSTRAINT")) {
+            boolean ifConstraintExists = parseKeywordIf(ctx, "IF EXISTS");
+            Constraint constraint = constraint(parseIdentifier(ctx));
+
+            AlterDomainDropConstraintCascadeStep s2 = ifConstraintExists
+                ? s1.dropConstraintIfExists(constraint)
+                : s1.dropConstraint(constraint);
+
+            return parseKeywordIf(ctx, "CASCADE")
+                ? s2.cascade()
+                : parseKeywordIf(ctx, "RESTRICT")
+                ? s2.restrict()
+                : s2;
+        }
+        else if (parseKeywordIf(ctx, "RENAME")) {
+            if (parseKeywordIf(ctx, "TO") || parseKeywordIf(ctx, "AS")) {
+                return s1.renameTo(parseDomainName(ctx));
+            }
+            else if (parseKeywordIf(ctx, "CONSTRAINT")) {
+                boolean ifConstraintExists = parseKeywordIf(ctx, "IF EXISTS");
+                Constraint oldName = constraint(parseIdentifier(ctx));
+
+                AlterDomainRenameConstraintStep s2 = ifConstraintExists
+                    ? s1.renameConstraintIfExists(oldName)
+                    : s1.renameConstraint(oldName);
+
+                if (!parseKeywordIf(ctx, "TO"))
+                    parseKeyword(ctx, "AS");
+
+                return s2.to(constraint(parseIdentifier(ctx)));
+            }
+            else
+                throw ctx.expected("CONSTRAINT", "TO", "AS");
+        }
+        else if (parseKeywordIf(ctx, "SET DEFAULT"))
+            return s1.setDefault(parseField(ctx));
+        else if (parseKeywordIf(ctx, "DROP DEFAULT"))
+            return s1.dropDefault();
+        else if (parseKeywordIf(ctx, "SET NOT NULL"))
+            return s1.setNotNull();
+        else if (parseKeywordIf(ctx, "DROP NOT NULL"))
+            return s1.dropNotNull();
+        else if (parseKeywordIf(ctx, "OWNER TO")) {
+            parseUser(ctx);
+            return IGNORE;
+        }
+        else
+            throw ctx.expected("ADD", "DROP", "RENAME", "SET", "OWNER TO");
+    }
+
+    private static final DDLQuery parseDropDomain(ParserContext ctx) {
+        boolean ifExists = parseKeywordIf(ctx, "IF EXISTS");
+        Domain<?> domainName = parseDomainName(ctx);
+        boolean cascade = parseKeywordIf(ctx, "CASCADE");
+        boolean restrict = !cascade && parseKeywordIf(ctx, "RESTRICT");
+
+        DropDomainCascadeStep s1 = ifExists
+            ? ctx.dsl.dropDomainIfExists(domainName)
+            : ctx.dsl.dropDomain(domainName);
+
+        return cascade
+            ? s1.cascade()
+            : restrict
+            ? s1.restrict()
+            : s1;
+    }
+
     private static final DDLQuery parseCreateDatabase(ParserContext ctx) {
         boolean ifNotExists = parseKeywordIf(ctx, "IF NOT EXISTS");
         Catalog catalogName = parseCatalogName(ctx);
@@ -4879,20 +5011,15 @@ final class ParserImpl implements Parser {
         boolean cascade = parseKeywordIf(ctx, "CASCADE");
         boolean restrict = !cascade && parseKeywordIf(ctx, "RESTRICT");
 
-        DropSchemaStep s1;
-        DropSchemaFinalStep s2;
-
-        s1 = ifExists
+        DropSchemaStep s1 = ifExists
             ? ctx.dsl.dropSchemaIfExists(schemaName)
             : ctx.dsl.dropSchema(schemaName);
 
-        s2 = cascade
+        return cascade
             ? s1.cascade()
             : restrict
             ? s1.restrict()
             : s1;
-
-        return s2;
     }
 
     private static final DDLQuery parseCreateIndex(ParserContext ctx, boolean unique) {
@@ -4949,51 +5076,6 @@ final class ParserImpl implements Parser {
             ;
 
         return true;
-    }
-
-    private static final DDLQuery parseAlterDomain(ParserContext ctx) {
-        parseIdentifier(ctx);
-
-        // Some known PostgreSQL no-arg ALTER DOMAIN statements:
-        // https://www.postgresql.org/docs/current/static/sql-alterdomain.html
-        if (parseAndGetKeywordIf(ctx,
-            "DROP DEFAULT",
-            "DROP NOT NULL",
-            "SET NOT NULL"
-        ) != null)
-            return IGNORE;
-
-        // ALTER DOMAIN statements with arguments:
-        else if (parseKeywordIf(ctx, "SET DEFAULT")) {
-            parseConcat(ctx, null);
-            return IGNORE;
-        }
-        else if (parseKeywordIf(ctx, "DROP CONSTRAINT")) {
-            parseKeywordIf(ctx, "IF EXISTS");
-            parseIdentifier(ctx);
-            if (parseKeywordIf(ctx, "RESTRICT") || parseKeywordIf(ctx, "CASCADE"));
-            return IGNORE;
-        }
-        else if (parseKeywordIf(ctx, "RENAME CONSTRAINT")) {
-            parseIdentifier(ctx);
-            if (!parseKeywordIf(ctx, "AS"))
-                parseKeyword(ctx, "TO");
-            parseIdentifier(ctx);
-            return IGNORE;
-        }
-        else if (parseAndGetKeywordIf(ctx,
-            "OWNER TO",
-            "RENAME TO",
-            "SET SCHEMA",
-            "VALIDATE CONSTRAINT"
-        ) != null) {
-            parseIdentifier(ctx);
-            return IGNORE;
-        }
-
-        // TODO (PostgreSQL): ADD
-        else
-            throw ctx.unsupportedClause();
     }
 
     private static final DDLQuery parseAlterIndex(ParserContext ctx) {
@@ -10150,6 +10232,10 @@ final class ParserImpl implements Parser {
     // -----------------------------------------------------------------------------------------------------------------
     // Name parsing
     // -----------------------------------------------------------------------------------------------------------------
+
+    private static final Domain<?> parseDomainName(ParserContext ctx) {
+        return domain(parseName(ctx));
+    }
 
     private static final Catalog parseCatalogName(ParserContext ctx) {
         return catalog(parseName(ctx));

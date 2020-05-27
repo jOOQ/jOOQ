@@ -87,6 +87,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.impl.Keywords.K_CUBE;
 import static org.jooq.impl.Keywords.K_GROUPING_SETS;
+import static org.jooq.impl.Keywords.K_VALUE;
 import static org.jooq.impl.Names.N_IF;
 import static org.jooq.impl.Names.N_IIF;
 import static org.jooq.impl.Names.N_SYSTEM_TIME;
@@ -198,6 +199,7 @@ import org.jooq.DatePart;
 import org.jooq.Delete;
 import org.jooq.DeleteUsingStep;
 import org.jooq.DerivedColumnList;
+import org.jooq.Domain;
 import org.jooq.DropDatabaseFinalStep;
 import org.jooq.DropIndexOnStep;
 import org.jooq.DropSchemaStep;
@@ -6821,6 +6823,190 @@ public class DSL {
     // XXX DDL Statements
     // -------------------------------------------------------------------------
 
+
+
+    /**
+     * The <code>CREATE DOMAIN</code> statement.
+     *
+     * @see DSLContext#createDomain(String)
+     */
+    @Support({ H2, POSTGRES })
+    public static org.jooq.CreateDomainAsStep createDomain(String domain) {
+        return dsl().createDomain(domain);
+    }
+
+    /**
+     * The <code>CREATE DOMAIN</code> statement.
+     *
+     * @see DSLContext#createDomain(Name)
+     */
+    @Support({ H2, POSTGRES })
+    public static org.jooq.CreateDomainAsStep createDomain(Name domain) {
+        return dsl().createDomain(domain);
+    }
+
+    /**
+     * The <code>CREATE DOMAIN</code> statement.
+     *
+     * @see DSLContext#createDomain(Domain)
+     */
+    @Support({ H2, POSTGRES })
+    public static org.jooq.CreateDomainAsStep createDomain(Domain<?> domain) {
+        return dsl().createDomain(domain);
+    }
+
+    /**
+     * The <code>CREATE DOMAIN IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createDomainIfNotExists(String)
+     */
+    @Support({ H2, POSTGRES })
+    public static org.jooq.CreateDomainAsStep createDomainIfNotExists(String domain) {
+        return dsl().createDomainIfNotExists(domain);
+    }
+
+    /**
+     * The <code>CREATE DOMAIN IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createDomainIfNotExists(Name)
+     */
+    @Support({ H2, POSTGRES })
+    public static org.jooq.CreateDomainAsStep createDomainIfNotExists(Name domain) {
+        return dsl().createDomainIfNotExists(domain);
+    }
+
+    /**
+     * The <code>CREATE DOMAIN IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createDomainIfNotExists(Domain)
+     */
+    @Support({ H2, POSTGRES })
+    public static org.jooq.CreateDomainAsStep createDomainIfNotExists(Domain<?> domain) {
+        return dsl().createDomainIfNotExists(domain);
+    }
+
+    /**
+     * The <code>ALTER DOMAIN</code> statement.
+     *
+     * @see DSLContext#alterDomain(String)
+     */
+    @Support({ POSTGRES })
+    public static <T> org.jooq.AlterDomainStep<T> alterDomain(String domain) {
+        return dsl().alterDomain(domain);
+    }
+
+    /**
+     * The <code>ALTER DOMAIN</code> statement.
+     *
+     * @see DSLContext#alterDomain(Name)
+     */
+    @Support({ POSTGRES })
+    public static <T> org.jooq.AlterDomainStep<T> alterDomain(Name domain) {
+        return dsl().alterDomain(domain);
+    }
+
+    /**
+     * The <code>ALTER DOMAIN</code> statement.
+     *
+     * @see DSLContext#alterDomain(Domain)
+     */
+    @Support({ POSTGRES })
+    public static <T> org.jooq.AlterDomainStep<T> alterDomain(Domain<T> domain) {
+        return dsl().alterDomain(domain);
+    }
+
+    /**
+     * The <code>ALTER DOMAIN IF EXISTS</code> statement.
+     *
+     * @see DSLContext#alterDomainIfExists(String)
+     */
+    @Support({ POSTGRES })
+    public static <T> org.jooq.AlterDomainStep<T> alterDomainIfExists(String domain) {
+        return dsl().alterDomainIfExists(domain);
+    }
+
+    /**
+     * The <code>ALTER DOMAIN IF EXISTS</code> statement.
+     *
+     * @see DSLContext#alterDomainIfExists(Name)
+     */
+    @Support({ POSTGRES })
+    public static <T> org.jooq.AlterDomainStep<T> alterDomainIfExists(Name domain) {
+        return dsl().alterDomainIfExists(domain);
+    }
+
+    /**
+     * The <code>ALTER DOMAIN IF EXISTS</code> statement.
+     *
+     * @see DSLContext#alterDomainIfExists(Domain)
+     */
+    @Support({ POSTGRES })
+    public static <T> org.jooq.AlterDomainStep<T> alterDomainIfExists(Domain<T> domain) {
+        return dsl().alterDomainIfExists(domain);
+    }
+
+    /**
+     * The <code>DROP DOMAIN</code> statement.
+     *
+     * @see DSLContext#dropDomain(String)
+     */
+    @Support({ H2, POSTGRES })
+    public static org.jooq.DropDomainCascadeStep dropDomain(String domain) {
+        return dsl().dropDomain(domain);
+    }
+
+    /**
+     * The <code>DROP DOMAIN</code> statement.
+     *
+     * @see DSLContext#dropDomain(Name)
+     */
+    @Support({ H2, POSTGRES })
+    public static org.jooq.DropDomainCascadeStep dropDomain(Name domain) {
+        return dsl().dropDomain(domain);
+    }
+
+    /**
+     * The <code>DROP DOMAIN</code> statement.
+     *
+     * @see DSLContext#dropDomain(Domain)
+     */
+    @Support({ H2, POSTGRES })
+    public static org.jooq.DropDomainCascadeStep dropDomain(Domain<?> domain) {
+        return dsl().dropDomain(domain);
+    }
+
+    /**
+     * The <code>DROP DOMAIN IF EXISTS</code> statement.
+     *
+     * @see DSLContext#dropDomainIfExists(String)
+     */
+    @Support({ H2, POSTGRES })
+    public static org.jooq.DropDomainCascadeStep dropDomainIfExists(String domain) {
+        return dsl().dropDomainIfExists(domain);
+    }
+
+    /**
+     * The <code>DROP DOMAIN IF EXISTS</code> statement.
+     *
+     * @see DSLContext#dropDomainIfExists(Name)
+     */
+    @Support({ H2, POSTGRES })
+    public static org.jooq.DropDomainCascadeStep dropDomainIfExists(Name domain) {
+        return dsl().dropDomainIfExists(domain);
+    }
+
+    /**
+     * The <code>DROP DOMAIN IF EXISTS</code> statement.
+     *
+     * @see DSLContext#dropDomainIfExists(Domain)
+     */
+    @Support({ H2, POSTGRES })
+    public static org.jooq.DropDomainCascadeStep dropDomainIfExists(Domain<?> domain) {
+        return dsl().dropDomainIfExists(domain);
+    }
+
+
+
     /**
      * Create a new DSL <code>CREATE DATABASE</code> statement.
      *
@@ -11720,6 +11906,40 @@ public class DSL {
     @PlainSQL
     public static <T extends Number> Sequence<T> sequence(String sql, DataType<T> type) {
         return new SequenceImpl<>(sql, null, type, true);
+    }
+
+    /**
+     * Create the <code>VALUE</code> pseudo field for usage with
+     * <code>DOMAIN</code> specifications.
+     */
+    @Support({ H2, POSTGRES })
+    public static <T> Field<T> value(Class<T> type) {
+        return value(DefaultDataType.getDataType(null, type));
+    }
+
+    /**
+     * Create the <code>VALUE</code> pseudo field for usage with
+     * <code>DOMAIN</code> specifications.
+     */
+    @Support({ H2, POSTGRES })
+    public static <T> Field<T> value(DataType<T> type) {
+        return field("{0}", type, K_VALUE);
+    }
+
+    /**
+     * Create a <code>DOMAIN</code> reference.
+     */
+    @Support({ H2, POSTGRES })
+    public static Domain<?> domain(String name) {
+        return domain(name(name));
+    }
+
+    /**
+     * Create a <code>DOMAIN</code> reference.
+     */
+    @Support({ H2, POSTGRES })
+    public static Domain<?> domain(Name name) {
+        return new DomainImpl<>(null, name, new DefaultDataType<>(null, SQLDataType.OTHER, name.last()));
     }
 
     /**

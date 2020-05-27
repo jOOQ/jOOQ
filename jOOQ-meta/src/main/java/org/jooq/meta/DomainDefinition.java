@@ -44,7 +44,7 @@ import java.util.List;
  *
  * @author Lukas Eder
  */
-public interface DomainDefinition extends Definition {
+public interface DomainDefinition extends TypedElementDefinition<SchemaDefinition> {
 
     /**
      * @return The check constraints defined in this domain.
@@ -53,6 +53,8 @@ public interface DomainDefinition extends Definition {
 
     /**
      * @return The domain's base type.
+     * @deprecated - [#681] - 3.14.0 - Use {@link #getDefinedType()} instead.
      */
+    @Deprecated
     DataTypeDefinition getBaseType();
 }

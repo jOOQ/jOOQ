@@ -78,6 +78,7 @@ import static org.jooq.impl.DDLStatementType.ALTER_SEQUENCE;
 import static org.jooq.impl.DDLStatementType.ALTER_TABLE;
 import static org.jooq.impl.DDLStatementType.ALTER_VIEW;
 import static org.jooq.impl.DDLStatementType.CREATE_DATABASE;
+import static org.jooq.impl.DDLStatementType.CREATE_DOMAIN;
 import static org.jooq.impl.DDLStatementType.CREATE_INDEX;
 import static org.jooq.impl.DDLStatementType.CREATE_SCHEMA;
 import static org.jooq.impl.DDLStatementType.CREATE_SEQUENCE;
@@ -4636,6 +4637,8 @@ final class Tools {
 
 
 
+
+
             case FIREBIRD: {
                 endExecuteImmediate(ctx);
                 ctx.formatSeparator()
@@ -4659,6 +4662,8 @@ final class Tools {
 
                 switch (type) {
                     case ALTER_DATABASE: sqlstate = "3D000"; break;
+                    case ALTER_DOMAIN  : sqlstate = "42704"; break;
+                    case CREATE_DOMAIN : sqlstate = "42710"; break;
                     default            : sqlstate = "42P07"; break;
                 }
 

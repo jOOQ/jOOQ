@@ -539,6 +539,16 @@ public interface Generator {
     void setGenerateGlobalUDTReferences(boolean globalUDTReferences);
 
     /**
+     * Whether global domain references should be generated
+     */
+    boolean generateGlobalDomainReferences();
+
+    /**
+     * Whether global domain references should be generated
+     */
+    void setGenerateGlobalDomainReferences(boolean globalDomainReferences);
+
+    /**
      * Whether global queue references should be generated
      */
     boolean generateGlobalQueueReferences();

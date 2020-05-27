@@ -92,7 +92,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import org.jooq.AlterDatabaseStep;
 import org.jooq.AlterIndexOnStep;
 import org.jooq.AlterIndexStep;
 import org.jooq.AlterSchemaStep;
@@ -2982,6 +2981,36 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
+    public org.jooq.AlterDatabaseStep alterDatabase(String database) {
+        return new AlterDatabaseImpl(configuration(), DSL.catalog(database), false);
+    }
+
+    @Override
+    public org.jooq.AlterDatabaseStep alterDatabase(Name database) {
+        return new AlterDatabaseImpl(configuration(), DSL.catalog(database), false);
+    }
+
+    @Override
+    public org.jooq.AlterDatabaseStep alterDatabase(Catalog database) {
+        return new AlterDatabaseImpl(configuration(), database, false);
+    }
+
+    @Override
+    public org.jooq.AlterDatabaseStep alterDatabaseIfExists(String database) {
+        return new AlterDatabaseImpl(configuration(), DSL.catalog(database), true);
+    }
+
+    @Override
+    public org.jooq.AlterDatabaseStep alterDatabaseIfExists(Name database) {
+        return new AlterDatabaseImpl(configuration(), DSL.catalog(database), true);
+    }
+
+    @Override
+    public org.jooq.AlterDatabaseStep alterDatabaseIfExists(Catalog database) {
+        return new AlterDatabaseImpl(configuration(), database, true);
+    }
+
+    @Override
     public <T> org.jooq.AlterDomainStep<T> alterDomain(String domain) {
         return new AlterDomainImpl<>(configuration(), DSL.domain(domain), false);
     }
@@ -3671,36 +3700,6 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public AlterTableStep alterTableIfExists(Table<?> table) {
         return new AlterTableImpl(configuration(), table, true);
-    }
-
-    @Override
-    public AlterDatabaseStep alterDatabase(String database) {
-        return alterDatabase(name(database));
-    }
-
-    @Override
-    public AlterDatabaseStep alterDatabase(Name database) {
-        return alterDatabase(catalog(database));
-    }
-
-    @Override
-    public AlterDatabaseStep alterDatabase(Catalog database) {
-        return new AlterDatabaseImpl(configuration(), database);
-    }
-
-    @Override
-    public AlterDatabaseStep alterDatabaseIfExists(String database) {
-        return alterDatabaseIfExists(name(database));
-    }
-
-    @Override
-    public AlterDatabaseStep alterDatabaseIfExists(Name database) {
-        return alterDatabaseIfExists(catalog(database));
-    }
-
-    @Override
-    public AlterDatabaseStep alterDatabaseIfExists(Catalog database) {
-        return new AlterDatabaseImpl(configuration(), database, true);
     }
 
     @Override

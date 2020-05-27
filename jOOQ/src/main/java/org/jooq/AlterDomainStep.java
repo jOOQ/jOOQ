@@ -72,121 +72,121 @@ public interface AlterDomainStep<T> {
     AlterDomainFinalStep add(Constraint addConstraint);
 
     /**
-     * Add the <code>DROPDEFAULT</code> clause to the <code>ALTER DOMAIN</code> statement.
+     * Add the <code>DROP DEFAULT</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
     @Support({ POSTGRES })
     AlterDomainFinalStep dropDefault();
 
     /**
-     * Add the <code>SETNOTNULL</code> clause to the <code>ALTER DOMAIN</code> statement.
+     * Add the <code>SET NOT NULL</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
     @Support({ POSTGRES })
     AlterDomainFinalStep setNotNull();
 
     /**
-     * Add the <code>DROPNOTNULL</code> clause to the <code>ALTER DOMAIN</code> statement.
+     * Add the <code>DROP NOT NULL</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
     @Support({ POSTGRES })
     AlterDomainFinalStep dropNotNull();
 
     /**
-     * Add the <code>DROPCONSTRAINT</code> clause to the <code>ALTER DOMAIN</code> statement.
+     * Add the <code>DROP CONSTRAINT</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
     @Support({ POSTGRES })
     AlterDomainDropConstraintCascadeStep dropConstraint(String dropConstraint);
 
     /**
-     * Add the <code>DROPCONSTRAINT</code> clause to the <code>ALTER DOMAIN</code> statement.
+     * Add the <code>DROP CONSTRAINT</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
     @Support({ POSTGRES })
     AlterDomainDropConstraintCascadeStep dropConstraint(Name dropConstraint);
 
     /**
-     * Add the <code>DROPCONSTRAINT</code> clause to the <code>ALTER DOMAIN</code> statement.
+     * Add the <code>DROP CONSTRAINT</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
     @Support({ POSTGRES })
     AlterDomainDropConstraintCascadeStep dropConstraint(Constraint dropConstraint);
 
     /**
-     * Add the <code>DROPCONSTRAINTIFEXISTS</code> clause to the <code>ALTER DOMAIN</code> statement.
+     * Add the <code>DROP CONSTRAINT IF EXISTS</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
     @Support({ POSTGRES })
     AlterDomainDropConstraintCascadeStep dropConstraintIfExists(String dropConstraint);
 
     /**
-     * Add the <code>DROPCONSTRAINTIFEXISTS</code> clause to the <code>ALTER DOMAIN</code> statement.
+     * Add the <code>DROP CONSTRAINT IF EXISTS</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
     @Support({ POSTGRES })
     AlterDomainDropConstraintCascadeStep dropConstraintIfExists(Name dropConstraint);
 
     /**
-     * Add the <code>DROPCONSTRAINTIFEXISTS</code> clause to the <code>ALTER DOMAIN</code> statement.
+     * Add the <code>DROP CONSTRAINT IF EXISTS</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
     @Support({ POSTGRES })
     AlterDomainDropConstraintCascadeStep dropConstraintIfExists(Constraint dropConstraint);
 
     /**
-     * Add the <code>RENAMETO</code> clause to the <code>ALTER DOMAIN</code> statement.
+     * Add the <code>RENAME TO</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
     @Support({ POSTGRES })
     AlterDomainFinalStep renameTo(String renameTo);
 
     /**
-     * Add the <code>RENAMETO</code> clause to the <code>ALTER DOMAIN</code> statement.
+     * Add the <code>RENAME TO</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
     @Support({ POSTGRES })
     AlterDomainFinalStep renameTo(Name renameTo);
 
     /**
-     * Add the <code>RENAMETO</code> clause to the <code>ALTER DOMAIN</code> statement.
+     * Add the <code>RENAME TO</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
     @Support({ POSTGRES })
     AlterDomainFinalStep renameTo(Domain<?> renameTo);
 
     /**
-     * Add the <code>RENAMECONSTRAINT</code> clause to the <code>ALTER DOMAIN</code> statement.
+     * Add the <code>RENAME CONSTRAINT</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
     @Support({ POSTGRES })
     AlterDomainRenameConstraintStep renameConstraint(String renameConstraint);
 
     /**
-     * Add the <code>RENAMECONSTRAINT</code> clause to the <code>ALTER DOMAIN</code> statement.
+     * Add the <code>RENAME CONSTRAINT</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
     @Support({ POSTGRES })
     AlterDomainRenameConstraintStep renameConstraint(Name renameConstraint);
 
     /**
-     * Add the <code>RENAMECONSTRAINT</code> clause to the <code>ALTER DOMAIN</code> statement.
+     * Add the <code>RENAME CONSTRAINT</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
     @Support({ POSTGRES })
     AlterDomainRenameConstraintStep renameConstraint(Constraint renameConstraint);
 
     /**
-     * Add the <code>RENAMECONSTRAINTIFEXISTS</code> clause to the <code>ALTER DOMAIN</code> statement.
+     * Add the <code>RENAME CONSTRAINT IF EXISTS</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
     @Support({ POSTGRES })
     AlterDomainRenameConstraintStep renameConstraintIfExists(String renameConstraint);
 
     /**
-     * Add the <code>RENAMECONSTRAINTIFEXISTS</code> clause to the <code>ALTER DOMAIN</code> statement.
+     * Add the <code>RENAME CONSTRAINT IF EXISTS</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
     @Support({ POSTGRES })
     AlterDomainRenameConstraintStep renameConstraintIfExists(Name renameConstraint);
 
     /**
-     * Add the <code>RENAMECONSTRAINTIFEXISTS</code> clause to the <code>ALTER DOMAIN</code> statement.
+     * Add the <code>RENAME CONSTRAINT IF EXISTS</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
     @Support({ POSTGRES })
     AlterDomainRenameConstraintStep renameConstraintIfExists(Constraint renameConstraint);
 
     /**
-     * Add the <code>SETDEFAULT</code> clause to the <code>ALTER DOMAIN</code> statement.
+     * Add the <code>SET DEFAULT</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
     @Support({ POSTGRES })
     AlterDomainFinalStep setDefault(T setDefault);
 
     /**
-     * Add the <code>SETDEFAULT</code> clause to the <code>ALTER DOMAIN</code> statement.
+     * Add the <code>SET DEFAULT</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
     @Support({ POSTGRES })
     AlterDomainFinalStep setDefault(Field<T> setDefault);

@@ -66,13 +66,13 @@ import java.util.*;
 public interface CreateDomainAsStep {
 
     /**
-     * Add the <code>AS[T]</code> clause to the <code>CREATE DOMAIN</code> statement.
+     * Add the <code>AS</code> clause to the <code>CREATE DOMAIN</code> statement.
      */
     @Support({ H2, POSTGRES })
     <T> CreateDomainDefaultStep<T> as(Class<T> dataType);
 
     /**
-     * Add the <code>AS[T]</code> clause to the <code>CREATE DOMAIN</code> statement.
+     * Add the <code>AS</code> clause to the <code>CREATE DOMAIN</code> statement.
      */
     @Support({ H2, POSTGRES })
     <T> CreateDomainDefaultStep<T> as(DataType<T> dataType);

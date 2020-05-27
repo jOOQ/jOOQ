@@ -135,7 +135,6 @@ import java.util.function.Function;
 import javax.sql.DataSource;
 
 import org.jooq.AggregateFunction;
-import org.jooq.AlterDatabaseStep;
 import org.jooq.AlterIndexOnStep;
 import org.jooq.AlterIndexStep;
 import org.jooq.AlterSchemaStep;
@@ -6945,6 +6944,66 @@ public class DSL {
     }
 
     /**
+     * The <code>ALTER DATABASE</code> statement.
+     *
+     * @see DSLContext#alterDatabase(String)
+     */
+    @Support({ POSTGRES })
+    public static org.jooq.AlterDatabaseStep alterDatabase(String database) {
+        return dsl().alterDatabase(database);
+    }
+
+    /**
+     * The <code>ALTER DATABASE</code> statement.
+     *
+     * @see DSLContext#alterDatabase(Name)
+     */
+    @Support({ POSTGRES })
+    public static org.jooq.AlterDatabaseStep alterDatabase(Name database) {
+        return dsl().alterDatabase(database);
+    }
+
+    /**
+     * The <code>ALTER DATABASE</code> statement.
+     *
+     * @see DSLContext#alterDatabase(Catalog)
+     */
+    @Support({ POSTGRES })
+    public static org.jooq.AlterDatabaseStep alterDatabase(Catalog database) {
+        return dsl().alterDatabase(database);
+    }
+
+    /**
+     * The <code>ALTER DATABASE IF EXISTS</code> statement.
+     *
+     * @see DSLContext#alterDatabaseIfExists(String)
+     */
+    @Support({ POSTGRES })
+    public static org.jooq.AlterDatabaseStep alterDatabaseIfExists(String database) {
+        return dsl().alterDatabaseIfExists(database);
+    }
+
+    /**
+     * The <code>ALTER DATABASE IF EXISTS</code> statement.
+     *
+     * @see DSLContext#alterDatabaseIfExists(Name)
+     */
+    @Support({ POSTGRES })
+    public static org.jooq.AlterDatabaseStep alterDatabaseIfExists(Name database) {
+        return dsl().alterDatabaseIfExists(database);
+    }
+
+    /**
+     * The <code>ALTER DATABASE IF EXISTS</code> statement.
+     *
+     * @see DSLContext#alterDatabaseIfExists(Catalog)
+     */
+    @Support({ POSTGRES })
+    public static org.jooq.AlterDatabaseStep alterDatabaseIfExists(Catalog database) {
+        return dsl().alterDatabaseIfExists(database);
+    }
+
+    /**
      * The <code>ALTER DOMAIN</code> statement.
      *
      * @see DSLContext#alterDomain(String)
@@ -8010,66 +8069,6 @@ public class DSL {
     @Support({ H2, MARIADB, POSTGRES })
     public static AlterTableStep alterTableIfExists(Table<?> table) {
         return dsl().alterTableIfExists(table);
-    }
-
-    /**
-     * Create a new DSL <code>ALTER DATABASE</code> statement.
-     *
-     * @see DSLContext#alterDatabase(String)
-     */
-    @Support({ POSTGRES })
-    public static AlterDatabaseStep alterDatabase(String database) {
-        return dsl().alterDatabase(database);
-    }
-
-    /**
-     * Create a new DSL <code>ALTER DATABASE</code> statement.
-     *
-     * @see DSLContext#alterDatabase(Name)
-     */
-    @Support({ POSTGRES })
-    public static AlterDatabaseStep alterDatabase(Name database) {
-        return dsl().alterDatabase(database);
-    }
-
-    /**
-     * Create a new DSL <code>ALTER DATABASE</code> statement.
-     *
-     * @see DSLContext#alterDatabase(Catalog)
-     */
-    @Support({ POSTGRES })
-    public static AlterDatabaseStep alterDatabase(Catalog database) {
-        return dsl().alterDatabase(database);
-    }
-
-    /**
-     * Create a new DSL <code>ALTER DATABASE</code> statement.
-     *
-     * @see DSLContext#alterDatabaseIfExists(String)
-     */
-    @Support({ POSTGRES })
-    public static AlterDatabaseStep alterDatabaseIfExists(String database) {
-        return dsl().alterDatabaseIfExists(database);
-    }
-
-    /**
-     * Create a new DSL <code>ALTER DATABASE</code> statement.
-     *
-     * @see DSLContext#alterDatabaseIfExists(Name)
-     */
-    @Support({ POSTGRES })
-    public static AlterDatabaseStep alterDatabaseIfExists(Name database) {
-        return dsl().alterDatabaseIfExists(database);
-    }
-
-    /**
-     * Create a new DSL <code>ALTER DATABASE</code> statement.
-     *
-     * @see DSLContext#alterDatabaseIfExists(Catalog)
-     */
-    @Support({ POSTGRES })
-    public static AlterDatabaseStep alterDatabaseIfExists(Catalog database) {
-        return dsl().alterDatabaseIfExists(database);
     }
 
     /**

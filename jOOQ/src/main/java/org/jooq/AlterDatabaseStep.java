@@ -37,13 +37,12 @@
  */
 package org.jooq;
 
-// ...
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.*;
+
+import java.util.*;
 
 /**
- * The step in the <code>ALTER DATABASE</code> DSL used to specify
- * <code>ALTER</code> behaviour.
+ * A step in the construction of the ALTER DATABASE statement.
  * <p>
  * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
  * <p>
@@ -62,30 +61,25 @@ import static org.jooq.SQLDialect.POSTGRES;
  * <li>They're less readable</li>
  * <li>They might have binary incompatible changes between minor releases</li>
  * </ul>
- *
- * @author Lukas Eder
  */
+@SuppressWarnings({ "unused" })
 public interface AlterDatabaseStep {
 
     /**
-     * Add a <code>RENAME TO</code> clause to the <code>ALTER DATABASE</code>
-     * statement.
+     * Add the <code>RENAME TO</code> clause to the <code>ALTER DATABASE</code> statement.
      */
     @Support({ POSTGRES })
-    AlterDatabaseFinalStep renameTo(Catalog newName);
+    AlterDatabaseFinalStep renameTo(String renameTo);
 
     /**
-     * Add a <code>RENAME TO</code> clause to the <code>ALTER DATABASE</code>
-     * statement.
+     * Add the <code>RENAME TO</code> clause to the <code>ALTER DATABASE</code> statement.
      */
     @Support({ POSTGRES })
-    AlterDatabaseFinalStep renameTo(Name newName);
+    AlterDatabaseFinalStep renameTo(Name renameTo);
 
     /**
-     * Add a <code>RENAME TO</code> clause to the <code>ALTER DATABASE</code>
-     * statement.
+     * Add the <code>RENAME TO</code> clause to the <code>ALTER DATABASE</code> statement.
      */
     @Support({ POSTGRES })
-    AlterDatabaseFinalStep renameTo(String newName);
-
+    AlterDatabaseFinalStep renameTo(Catalog renameTo);
 }

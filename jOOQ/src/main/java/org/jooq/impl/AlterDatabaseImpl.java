@@ -37,89 +37,94 @@
  */
 package org.jooq.impl;
 
-// ...
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.impl.DSL.name;
-import static org.jooq.impl.Keywords.K_ALTER;
-import static org.jooq.impl.Keywords.K_DATABASE;
-import static org.jooq.impl.Keywords.K_IF_EXISTS;
-import static org.jooq.impl.Keywords.K_RENAME;
-import static org.jooq.impl.Keywords.K_RENAME_TO;
-import static org.jooq.impl.Keywords.K_TO;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import java.util.Set;
+import org.jooq.*;
+import org.jooq.impl.*;
 
-import org.jooq.AlterDatabaseFinalStep;
-import org.jooq.AlterDatabaseStep;
-import org.jooq.Catalog;
-import org.jooq.Configuration;
-import org.jooq.Context;
-import org.jooq.Name;
-// ...
-import org.jooq.SQLDialect;
+import java.util.*;
 
 /**
- * @author Lukas Eder
+ * The <code>ALTER DATABASE IF EXISTS</code> statement.
  */
-final class AlterDatabaseImpl extends AbstractRowCountQuery implements
-
-    // Cascading interface implementations for ALTER DATABASE behaviour
+@SuppressWarnings({ "hiding", "rawtypes", "unchecked", "unused" })
+final class AlterDatabaseImpl
+extends
+    AbstractRowCountQuery
+implements
     AlterDatabaseStep,
-    AlterDatabaseFinalStep {
+    AlterDatabaseFinalStep
+{
+    
+    private static final long serialVersionUID = 1L;
 
-    /**
-     * Generated UID
-     */
-    private static final long            serialVersionUID        = 8904572826501186329L;
+    private final Catalog database;
+    private final boolean ifExists;
+    private final Catalog renameTo;
+    
+    AlterDatabaseImpl(
+        Configuration configuration,
+        Catalog database,
+        boolean ifExists
+    ) {
+        this(
+            configuration,
+            database,
+            ifExists,
+            null
+        );
+    }
+    
+    AlterDatabaseImpl(
+        Configuration configuration,
+        Catalog database,
+        boolean ifExists,
+        Catalog renameTo
+    ) {
+        super(configuration);
+
+        this.database = database;
+        this.ifExists = ifExists;
+        this.renameTo = renameTo;
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX DSL API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final AlterDatabaseImpl renameTo(String renameTo) {
+        return renameTo(DSL.catalog(renameTo));
+    }
+
+    @Override
+    public final AlterDatabaseImpl renameTo(Name renameTo) {
+        return renameTo(DSL.catalog(renameTo));
+    }
+
+    @Override
+    public final AlterDatabaseImpl renameTo(Catalog renameTo) {
+        return new AlterDatabaseImpl(
+            configuration(),
+            this.database,
+            this.ifExists,
+            renameTo
+        );
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX QueryPart API
+    // -------------------------------------------------------------------------
+
+
+
     private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS    = SQLDialect.supportedBy(POSTGRES);
 
 
 
 
-
-    private final Catalog                database;
-    private final boolean                ifExists;
-    private Catalog                      renameTo;
-
-    AlterDatabaseImpl(Configuration configuration, Catalog database) {
-        this(configuration, database, false);
-    }
-
-    AlterDatabaseImpl(Configuration configuration, Catalog database, boolean ifExists) {
-        super(configuration);
-
-        this.database = database;
-        this.ifExists = ifExists;
-    }
-
-    final Catalog $database() { return database; }
-    final boolean $ifExists() { return ifExists; }
-    final Catalog $renameTo() { return renameTo; }
-
-    // ------------------------------------------------------------------------
-    // XXX: DSL API
-    // ------------------------------------------------------------------------
-
-    @Override
-    public final AlterDatabaseImpl renameTo(Catalog newName) {
-        this.renameTo = newName;
-        return this;
-    }
-
-    @Override
-    public final AlterDatabaseImpl renameTo(Name newName) {
-        return renameTo(DSL.catalog(newName));
-    }
-
-    @Override
-    public final AlterDatabaseImpl renameTo(String newName) {
-        return renameTo(name(newName));
-    }
-
-    // ------------------------------------------------------------------------
-    // XXX: QueryPart API
-    // ------------------------------------------------------------------------
 
     private final boolean supportsIfExists(Context<?> ctx) {
         return !NO_SUPPORT_IF_EXISTS.contains(ctx.family());
@@ -160,4 +165,6 @@ final class AlterDatabaseImpl extends AbstractRowCountQuery implements
                .qualify(qualify);
         }
     }
+
+
 }

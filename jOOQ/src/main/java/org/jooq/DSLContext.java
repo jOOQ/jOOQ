@@ -8837,6 +8837,54 @@ public interface DSLContext extends Scope , AutoCloseable {
     CreateDomainAsStep createDomainIfNotExists(Domain<?> domain);
 
     /**
+     * The <code>ALTER DATABASE</code> statement.
+     *
+     * @see DSL#alterDatabase(String)
+     */
+    @Support({ POSTGRES })
+    AlterDatabaseStep alterDatabase(String database);
+
+    /**
+     * The <code>ALTER DATABASE</code> statement.
+     *
+     * @see DSL#alterDatabase(Name)
+     */
+    @Support({ POSTGRES })
+    AlterDatabaseStep alterDatabase(Name database);
+
+    /**
+     * The <code>ALTER DATABASE</code> statement.
+     *
+     * @see DSL#alterDatabase(Catalog)
+     */
+    @Support({ POSTGRES })
+    AlterDatabaseStep alterDatabase(Catalog database);
+
+    /**
+     * The <code>ALTER DATABASE IF EXISTS</code> statement.
+     *
+     * @see DSL#alterDatabaseIfExists(String)
+     */
+    @Support({ POSTGRES })
+    AlterDatabaseStep alterDatabaseIfExists(String database);
+
+    /**
+     * The <code>ALTER DATABASE IF EXISTS</code> statement.
+     *
+     * @see DSL#alterDatabaseIfExists(Name)
+     */
+    @Support({ POSTGRES })
+    AlterDatabaseStep alterDatabaseIfExists(Name database);
+
+    /**
+     * The <code>ALTER DATABASE IF EXISTS</code> statement.
+     *
+     * @see DSL#alterDatabaseIfExists(Catalog)
+     */
+    @Support({ POSTGRES })
+    AlterDatabaseStep alterDatabaseIfExists(Catalog database);
+
+    /**
      * The <code>ALTER DOMAIN</code> statement.
      *
      * @see DSL#alterDomain(String)
@@ -9941,54 +9989,6 @@ public interface DSLContext extends Scope , AutoCloseable {
      */
     @Support({ H2, MARIADB, POSTGRES })
     AlterTableStep alterTableIfExists(Table<?> table);
-
-    /**
-     * Create a new DSL <code>ALTER DATABASE</code> statement.
-     *
-     * @see DSL#alterDatabase(String)
-     */
-    @Support({ POSTGRES })
-    AlterDatabaseStep alterDatabase(String database);
-
-    /**
-     * Create a new DSL <code>ALTER DATABASE</code> statement.
-     *
-     * @see DSL#alterDatabase(Name)
-     */
-    @Support({ POSTGRES })
-    AlterDatabaseStep alterDatabase(Name database);
-
-    /**
-     * Create a new DSL <code>ALTER DATABASE</code> statement.
-     *
-     * @see DSL#alterDatabase(Catalog)
-     */
-    @Support({ POSTGRES })
-    AlterDatabaseStep alterDatabase(Catalog database);
-
-    /**
-     * Create a new DSL <code>ALTER DATABASE</code> statement.
-     *
-     * @see DSL#alterDatabaseIfExists(String)
-     */
-    @Support({ POSTGRES })
-    AlterDatabaseStep alterDatabaseIfExists(String database);
-
-    /**
-     * Create a new DSL <code>ALTER DATABASE</code> statement.
-     *
-     * @see DSL#alterDatabaseIfExists(Name)
-     */
-    @Support({ POSTGRES })
-    AlterDatabaseStep alterDatabaseIfExists(Name database);
-
-    /**
-     * Create a new DSL <code>ALTER DATABASE</code> statement.
-     *
-     * @see DSL#alterDatabaseIfExists(Catalog)
-     */
-    @Support({ POSTGRES })
-    AlterDatabaseStep alterDatabaseIfExists(Catalog database);
 
     /**
      * Create a new DSL <code>ALTER SCHEMA</code> statement.

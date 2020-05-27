@@ -91,9 +91,9 @@ implements
     }
 
     // -------------------------------------------------------------------------
-    // XXX DSL API
+    // XXX: DSL API
     // -------------------------------------------------------------------------
-
+    
     @Override
     public final AlterDatabaseImpl renameTo(String renameTo) {
         return renameTo(DSL.catalog(renameTo));
@@ -115,7 +115,7 @@ implements
     }
 
     // -------------------------------------------------------------------------
-    // XXX QueryPart API
+    // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
 

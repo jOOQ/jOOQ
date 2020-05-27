@@ -101,9 +101,9 @@ implements
     }
 
     // -------------------------------------------------------------------------
-    // XXX DSL API
+    // XXX: DSL API
     // -------------------------------------------------------------------------
-
+    
     @Override
     public final <T> CreateDomainImpl<T> as(Class<T> dataType) {
         return as(DefaultDataType.getDataType(null, dataType));
@@ -156,7 +156,7 @@ implements
     }
 
     // -------------------------------------------------------------------------
-    // XXX QueryPart API
+    // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
 

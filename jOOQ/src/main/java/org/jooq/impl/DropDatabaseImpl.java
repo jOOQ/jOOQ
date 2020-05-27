@@ -37,26 +37,14 @@
  */
 package org.jooq.impl;
 
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.FIREBIRD;
-// ...
-// ...
-// ...
-// ...
-import static org.jooq.impl.Keywords.K_DATABASE;
-import static org.jooq.impl.Keywords.K_DROP;
-import static org.jooq.impl.Keywords.K_IF_EXISTS;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import java.util.Set;
+import org.jooq.*;
+import org.jooq.impl.*;
 
-import org.jooq.Catalog;
-import org.jooq.Configuration;
-import org.jooq.Context;
-import org.jooq.DropDatabaseFinalStep;
-import org.jooq.SQLDialect;
+import java.util.*;
 
 /**
  * The <code>DROP DATABASE IF EXISTS</code> statement.
@@ -68,13 +56,13 @@ extends
 implements
     DropDatabaseFinalStep
 {
-
+    
     private static final long serialVersionUID = 1L;
 
     private final Catalog database;
     private final boolean ifExists;
-
-
+    
+    
     DropDatabaseImpl(
         Configuration configuration,
         Catalog database,
@@ -87,11 +75,7 @@ implements
     }
 
     // -------------------------------------------------------------------------
-    // XXX DSL API
-    // -------------------------------------------------------------------------
-
-    // -------------------------------------------------------------------------
-    // XXX QueryPart API
+    // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
 

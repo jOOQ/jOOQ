@@ -42,7 +42,7 @@ import static org.jooq.SQLDialect.*;
 import java.util.*;
 
 /**
- * A step in the construction of the CREATE DATABASE statement.
+ * A step in the construction of the <code>CREATE DATABASE</code> statement.
  * <p>
  * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
  * <p>

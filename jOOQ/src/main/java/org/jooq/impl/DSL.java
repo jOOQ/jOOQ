@@ -137,7 +137,6 @@ import javax.sql.DataSource;
 import org.jooq.AggregateFunction;
 import org.jooq.AlterIndexOnStep;
 import org.jooq.AlterIndexStep;
-import org.jooq.AlterSchemaStep;
 import org.jooq.AlterSequenceStep;
 import org.jooq.AlterTableStep;
 import org.jooq.AlterTypeStep;
@@ -198,7 +197,6 @@ import org.jooq.DeleteUsingStep;
 import org.jooq.DerivedColumnList;
 import org.jooq.Domain;
 import org.jooq.DropIndexOnStep;
-import org.jooq.DropSchemaStep;
 import org.jooq.DropSequenceFinalStep;
 import org.jooq.DropTableStep;
 import org.jooq.DropTypeStep;
@@ -7122,6 +7120,66 @@ public class DSL {
     }
 
     /**
+     * The <code>ALTER SCHEMA</code> statement.
+     *
+     * @see DSLContext#alterSchema(String)
+     */
+    @Support({ H2, HSQLDB, POSTGRES })
+    public static org.jooq.AlterSchemaStep alterSchema(String schema) {
+        return dsl().alterSchema(schema);
+    }
+
+    /**
+     * The <code>ALTER SCHEMA</code> statement.
+     *
+     * @see DSLContext#alterSchema(Name)
+     */
+    @Support({ H2, HSQLDB, POSTGRES })
+    public static org.jooq.AlterSchemaStep alterSchema(Name schema) {
+        return dsl().alterSchema(schema);
+    }
+
+    /**
+     * The <code>ALTER SCHEMA</code> statement.
+     *
+     * @see DSLContext#alterSchema(Schema)
+     */
+    @Support({ H2, HSQLDB, POSTGRES })
+    public static org.jooq.AlterSchemaStep alterSchema(Schema schema) {
+        return dsl().alterSchema(schema);
+    }
+
+    /**
+     * The <code>ALTER SCHEMA IF EXISTS</code> statement.
+     *
+     * @see DSLContext#alterSchemaIfExists(String)
+     */
+    @Support({ H2 })
+    public static org.jooq.AlterSchemaStep alterSchemaIfExists(String schema) {
+        return dsl().alterSchemaIfExists(schema);
+    }
+
+    /**
+     * The <code>ALTER SCHEMA IF EXISTS</code> statement.
+     *
+     * @see DSLContext#alterSchemaIfExists(Name)
+     */
+    @Support({ H2 })
+    public static org.jooq.AlterSchemaStep alterSchemaIfExists(Name schema) {
+        return dsl().alterSchemaIfExists(schema);
+    }
+
+    /**
+     * The <code>ALTER SCHEMA IF EXISTS</code> statement.
+     *
+     * @see DSLContext#alterSchemaIfExists(Schema)
+     */
+    @Support({ H2 })
+    public static org.jooq.AlterSchemaStep alterSchemaIfExists(Schema schema) {
+        return dsl().alterSchemaIfExists(schema);
+    }
+
+    /**
      * The <code>DROP DATABASE</code> statement.
      *
      * @see DSLContext#dropDatabase(String)
@@ -7239,6 +7297,66 @@ public class DSL {
     @Support({ H2, POSTGRES })
     public static org.jooq.DropDomainCascadeStep dropDomainIfExists(Domain<?> domain) {
         return dsl().dropDomainIfExists(domain);
+    }
+
+    /**
+     * The <code>DROP SCHEMA</code> statement.
+     *
+     * @see DSLContext#dropSchema(String)
+     */
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.DropSchemaStep dropSchema(String schema) {
+        return dsl().dropSchema(schema);
+    }
+
+    /**
+     * The <code>DROP SCHEMA</code> statement.
+     *
+     * @see DSLContext#dropSchema(Name)
+     */
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.DropSchemaStep dropSchema(Name schema) {
+        return dsl().dropSchema(schema);
+    }
+
+    /**
+     * The <code>DROP SCHEMA</code> statement.
+     *
+     * @see DSLContext#dropSchema(Schema)
+     */
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.DropSchemaStep dropSchema(Schema schema) {
+        return dsl().dropSchema(schema);
+    }
+
+    /**
+     * The <code>DROP SCHEMA IF EXISTS</code> statement.
+     *
+     * @see DSLContext#dropSchemaIfExists(String)
+     */
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.DropSchemaStep dropSchemaIfExists(String schema) {
+        return dsl().dropSchemaIfExists(schema);
+    }
+
+    /**
+     * The <code>DROP SCHEMA IF EXISTS</code> statement.
+     *
+     * @see DSLContext#dropSchemaIfExists(Name)
+     */
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.DropSchemaStep dropSchemaIfExists(Name schema) {
+        return dsl().dropSchemaIfExists(schema);
+    }
+
+    /**
+     * The <code>DROP SCHEMA IF EXISTS</code> statement.
+     *
+     * @see DSLContext#dropSchemaIfExists(Schema)
+     */
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.DropSchemaStep dropSchemaIfExists(Schema schema) {
+        return dsl().dropSchemaIfExists(schema);
     }
 
 
@@ -8130,66 +8248,6 @@ public class DSL {
     }
 
     /**
-     * Create a new DSL <code>ALTER SCHEMA</code> statement.
-     *
-     * @see DSLContext#alterSchema(String)
-     */
-    @Support({ H2, HSQLDB, POSTGRES })
-    public static AlterSchemaStep alterSchema(String schema) {
-        return dsl().alterSchema(schema);
-    }
-
-    /**
-     * Create a new DSL <code>ALTER SCHEMA</code> statement.
-     *
-     * @see DSLContext#alterSchema(Name)
-     */
-    @Support({ H2, HSQLDB, POSTGRES })
-    public static AlterSchemaStep alterSchema(Name schema) {
-        return dsl().alterSchema(schema);
-    }
-
-    /**
-     * Create a new DSL <code>ALTER SCHEMA</code> statement.
-     *
-     * @see DSLContext#alterSchema(Schema)
-     */
-    @Support({ H2, HSQLDB, POSTGRES })
-    public static AlterSchemaStep alterSchema(Schema schema) {
-        return dsl().alterSchema(schema);
-    }
-
-    /**
-     * Create a new DSL <code>ALTER SCHEMA</code> statement.
-     *
-     * @see DSLContext#alterSchemaIfExists(String)
-     */
-    @Support({ H2 })
-    public static AlterSchemaStep alterSchemaIfExists(String schema) {
-        return dsl().alterSchemaIfExists(schema);
-    }
-
-    /**
-     * Create a new DSL <code>ALTER SCHEMA</code> statement.
-     *
-     * @see DSLContext#alterSchemaIfExists(Name)
-     */
-    @Support({ H2 })
-    public static AlterSchemaStep alterSchemaIfExists(Name schema) {
-        return dsl().alterSchemaIfExists(schema);
-    }
-
-    /**
-     * Create a new DSL <code>ALTER SCHEMA</code> statement.
-     *
-     * @see DSLContext#alterSchemaIfExists(Schema)
-     */
-    @Support({ H2 })
-    public static AlterSchemaStep alterSchemaIfExists(Schema schema) {
-        return dsl().alterSchemaIfExists(schema);
-    }
-
-    /**
      * Create a new DSL <code>ALTER VIEW</code> statement.
      *
      * @see DSLContext#alterView(String)
@@ -8307,66 +8365,6 @@ public class DSL {
     @Support({ H2, POSTGRES })
     public static AlterIndexStep alterIndexIfExists(Index index) {
         return dsl().alterIndexIfExists(index);
-    }
-
-    /**
-     * Create a new DSL <code>DROP SCHEMA</code> statement.
-     *
-     * @see DSLContext#dropSchema(String)
-     */
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static DropSchemaStep dropSchema(String schema) {
-        return dsl().dropSchema(schema);
-    }
-
-    /**
-     * Create a new DSL <code>DROP SCHEMA</code> statement.
-     *
-     * @see DSLContext#dropSchema(Name)
-     */
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static DropSchemaStep dropSchema(Name schema) {
-        return dsl().dropSchema(schema);
-    }
-
-    /**
-     * Create a new DSL <code>DROP SCHEMA</code> statement.
-     *
-     * @see DSLContext#dropSchema(Schema)
-     */
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static DropSchemaStep dropSchema(Schema schema) {
-        return dsl().dropSchema(schema);
-    }
-
-    /**
-     * Create a new DSL <code>DROP SCHEMA</code> statement.
-     *
-     * @see DSLContext#dropSchemaIfExists(String)
-     */
-    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static DropSchemaStep dropSchemaIfExists(String schema) {
-        return dsl().dropSchemaIfExists(schema);
-    }
-
-    /**
-     * Create a new DSL <code>DROP SCHEMA</code> statement.
-     *
-     * @see DSLContext#dropSchemaIfExists(Name)
-     */
-    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static DropSchemaStep dropSchemaIfExists(Name schema) {
-        return dsl().dropSchemaIfExists(schema);
-    }
-
-    /**
-     * Create a new DSL <code>DROP SCHEMA</code> statement.
-     *
-     * @see DSLContext#dropSchemaIfExists(Schema)
-     */
-    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static DropSchemaStep dropSchemaIfExists(Schema schema) {
-        return dsl().dropSchemaIfExists(schema);
     }
 
     /**

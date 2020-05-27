@@ -37,50 +37,86 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.DROP_SCHEMA;
-import static org.jooq.Clause.DROP_SCHEMA_SCHEMA;
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.FIREBIRD;
-// ...
-// ...
-// ...
-// ...
-// ...
-import static org.jooq.impl.Keywords.K_CASCADE;
-import static org.jooq.impl.Keywords.K_DATABASE;
-import static org.jooq.impl.Keywords.K_DROP;
-import static org.jooq.impl.Keywords.K_IF_EXISTS;
-import static org.jooq.impl.Keywords.K_RESTRICT;
-import static org.jooq.impl.Keywords.K_SCHEMA;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import java.util.Set;
+import org.jooq.*;
+import org.jooq.impl.*;
 
-import org.jooq.Clause;
-import org.jooq.Configuration;
-import org.jooq.Context;
-import org.jooq.DropSchemaFinalStep;
-import org.jooq.DropSchemaStep;
-// ...
-import org.jooq.SQLDialect;
-import org.jooq.Schema;
-
+import java.util.*;
 
 /**
- * @author Lukas Eder
+ * The <code>DROP SCHEMA IF EXISTS</code> statement.
  */
-final class DropSchemaImpl extends AbstractRowCountQuery implements
+@SuppressWarnings({ "unused" })
+final class DropSchemaImpl
+extends
+    AbstractRowCountQuery
+implements
+    DropSchemaStep,
+    DropSchemaFinalStep
+{
+    
+    private static final long serialVersionUID = 1L;
 
-    // Cascading interface implementations for DROP SCHEMA behaviour
-    DropSchemaStep {
+    private final Schema  schema;
+    private final boolean ifExists;
+    private       Boolean cascade;
+    
+    DropSchemaImpl(
+        Configuration configuration,
+        Schema schema,
+        boolean ifExists
+    ) {
+        this(
+            configuration,
+            schema,
+            ifExists,
+            null
+        );
+    }
+    
+    DropSchemaImpl(
+        Configuration configuration,
+        Schema schema,
+        boolean ifExists,
+        Boolean cascade
+    ) {
+        super(configuration);
 
-    /**
-     * Generated UID
-     */
-    private static final long            serialVersionUID           = 8904572826501186329L;
-    private static final Clause[]        CLAUSES                    = { DROP_SCHEMA };
+        this.schema = schema;
+        this.ifExists = ifExists;
+        this.cascade = cascade;
+    }
+
+    final Schema  $schema()   { return schema; }
+    final boolean $ifExists() { return ifExists; }
+    final Boolean $cascade()  { return cascade; }
+
+    // -------------------------------------------------------------------------
+    // XXX: DSL API
+    // -------------------------------------------------------------------------
+    
+    @Override
+    public final DropSchemaImpl cascade() {
+        this.cascade = true;
+        return this;
+    }
+
+    @Override
+    public final DropSchemaImpl restrict() {
+        this.cascade = false;
+        return this;
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
+
+    private static final Clause[]        CLAUSES                    = { Clause.DROP_SCHEMA };
     private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS       = SQLDialect.supportedBy(DERBY, FIREBIRD);
     private static final Set<SQLDialect> REQUIRES_RESTRICT          = SQLDialect.supportedBy(DERBY);
 
@@ -88,45 +124,6 @@ final class DropSchemaImpl extends AbstractRowCountQuery implements
 
 
 
-
-    private final Schema                 schema;
-    private final boolean                ifExists;
-    private boolean                      cascade;
-
-    DropSchemaImpl(Configuration configuration, Schema schema) {
-        this(configuration, schema, false);
-    }
-
-    DropSchemaImpl(Configuration configuration, Schema schema, boolean ifExists) {
-        super(configuration);
-
-        this.schema = schema;
-        this.ifExists = ifExists;
-    }
-
-    final Schema  $schema()      { return schema; }
-    final boolean $ifExists()    { return ifExists; }
-    final boolean $cascade()     { return cascade; }
-
-    // ------------------------------------------------------------------------
-    // XXX: DSL API
-    // ------------------------------------------------------------------------
-
-    @Override
-    public final DropSchemaFinalStep cascade() {
-        cascade = true;
-        return this;
-    }
-
-    @Override
-    public final DropSchemaFinalStep restrict() {
-        cascade = false;
-        return this;
-    }
-
-    // ------------------------------------------------------------------------
-    // XXX: QueryPart API
-    // ------------------------------------------------------------------------
 
     private final boolean supportsIfExists(Context<?> ctx) {
         return !NO_SUPPORT_IF_EXISTS.contains(ctx.family());
@@ -145,7 +142,7 @@ final class DropSchemaImpl extends AbstractRowCountQuery implements
     }
 
     private void accept0(Context<?> ctx) {
-        ctx.start(DROP_SCHEMA_SCHEMA)
+        ctx.start(Clause.DROP_SCHEMA_SCHEMA)
            .visit(K_DROP);
 
 
@@ -165,7 +162,7 @@ final class DropSchemaImpl extends AbstractRowCountQuery implements
         else if (REQUIRES_RESTRICT.contains(ctx.family()))
             ctx.sql(' ').visit(K_RESTRICT);
 
-        ctx.end(DROP_SCHEMA_SCHEMA);
+        ctx.end(Clause.DROP_SCHEMA_SCHEMA);
     }
 
 
@@ -173,4 +170,6 @@ final class DropSchemaImpl extends AbstractRowCountQuery implements
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
+
+
 }

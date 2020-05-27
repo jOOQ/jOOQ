@@ -94,7 +94,6 @@ import javax.xml.parsers.SAXParserFactory;
 
 import org.jooq.AlterIndexOnStep;
 import org.jooq.AlterIndexStep;
-import org.jooq.AlterSchemaStep;
 import org.jooq.AlterSequenceStep;
 import org.jooq.AlterTableStep;
 import org.jooq.AlterTypeStep;
@@ -128,7 +127,6 @@ import org.jooq.DeleteQuery;
 import org.jooq.DeleteUsingStep;
 import org.jooq.Domain;
 import org.jooq.DropIndexOnStep;
-import org.jooq.DropSchemaStep;
 import org.jooq.DropSequenceFinalStep;
 import org.jooq.DropTableStep;
 import org.jooq.DropTypeStep;
@@ -3069,6 +3067,36 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
+    public org.jooq.AlterSchemaStep alterSchema(String schema) {
+        return new AlterSchemaImpl(configuration(), DSL.schema(schema), false);
+    }
+
+    @Override
+    public org.jooq.AlterSchemaStep alterSchema(Name schema) {
+        return new AlterSchemaImpl(configuration(), DSL.schema(schema), false);
+    }
+
+    @Override
+    public org.jooq.AlterSchemaStep alterSchema(Schema schema) {
+        return new AlterSchemaImpl(configuration(), schema, false);
+    }
+
+    @Override
+    public org.jooq.AlterSchemaStep alterSchemaIfExists(String schema) {
+        return new AlterSchemaImpl(configuration(), DSL.schema(schema), true);
+    }
+
+    @Override
+    public org.jooq.AlterSchemaStep alterSchemaIfExists(Name schema) {
+        return new AlterSchemaImpl(configuration(), DSL.schema(schema), true);
+    }
+
+    @Override
+    public org.jooq.AlterSchemaStep alterSchemaIfExists(Schema schema) {
+        return new AlterSchemaImpl(configuration(), schema, true);
+    }
+
+    @Override
     public org.jooq.DropDatabaseFinalStep dropDatabase(String database) {
         return new DropDatabaseImpl(configuration(), DSL.catalog(database), false);
     }
@@ -3126,6 +3154,36 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public org.jooq.DropDomainCascadeStep dropDomainIfExists(Domain<?> domain) {
         return new DropDomainImpl(configuration(), domain, true);
+    }
+
+    @Override
+    public org.jooq.DropSchemaStep dropSchema(String schema) {
+        return new DropSchemaImpl(configuration(), DSL.schema(schema), false);
+    }
+
+    @Override
+    public org.jooq.DropSchemaStep dropSchema(Name schema) {
+        return new DropSchemaImpl(configuration(), DSL.schema(schema), false);
+    }
+
+    @Override
+    public org.jooq.DropSchemaStep dropSchema(Schema schema) {
+        return new DropSchemaImpl(configuration(), schema, false);
+    }
+
+    @Override
+    public org.jooq.DropSchemaStep dropSchemaIfExists(String schema) {
+        return new DropSchemaImpl(configuration(), DSL.schema(schema), true);
+    }
+
+    @Override
+    public org.jooq.DropSchemaStep dropSchemaIfExists(Name schema) {
+        return new DropSchemaImpl(configuration(), DSL.schema(schema), true);
+    }
+
+    @Override
+    public org.jooq.DropSchemaStep dropSchemaIfExists(Schema schema) {
+        return new DropSchemaImpl(configuration(), schema, true);
     }
 
 
@@ -3731,36 +3789,6 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public AlterSchemaStep alterSchema(String schema) {
-        return alterSchema(name(schema));
-    }
-
-    @Override
-    public AlterSchemaStep alterSchema(Name schema) {
-        return alterSchema(schema(schema));
-    }
-
-    @Override
-    public AlterSchemaStep alterSchema(Schema schema) {
-        return new AlterSchemaImpl(configuration(), schema);
-    }
-
-    @Override
-    public AlterSchemaStep alterSchemaIfExists(String schema) {
-        return alterSchemaIfExists(name(schema));
-    }
-
-    @Override
-    public AlterSchemaStep alterSchemaIfExists(Name schema) {
-        return alterSchemaIfExists(schema(schema));
-    }
-
-    @Override
-    public AlterSchemaStep alterSchemaIfExists(Schema schema) {
-        return new AlterSchemaImpl(configuration(), schema, true);
-    }
-
-    @Override
     public AlterViewStep alterView(String table) {
         return alterView(name(table));
     }
@@ -3818,36 +3846,6 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public AlterIndexStep alterIndexIfExists(Index index) {
         return new AlterIndexImpl(configuration(), index, true);
-    }
-
-    @Override
-    public DropSchemaStep dropSchema(String schema) {
-        return dropSchema(name(schema));
-    }
-
-    @Override
-    public DropSchemaStep dropSchema(Name schema) {
-        return dropSchema(schema(schema));
-    }
-
-    @Override
-    public DropSchemaStep dropSchema(Schema schema) {
-        return new DropSchemaImpl(configuration(), schema);
-    }
-
-    @Override
-    public DropSchemaStep dropSchemaIfExists(String schema) {
-        return dropSchemaIfExists(name(schema));
-    }
-
-    @Override
-    public DropSchemaStep dropSchemaIfExists(Name schema) {
-        return dropSchemaIfExists(schema(schema));
-    }
-
-    @Override
-    public DropSchemaStep dropSchemaIfExists(Schema schema) {
-        return new DropSchemaImpl(configuration(), schema, true);
     }
 
     @Override

@@ -37,16 +37,12 @@
  */
 package org.jooq;
 
-// ...
-import static org.jooq.SQLDialect.H2;
-// ...
-import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.POSTGRES;
-// ...
+import static org.jooq.SQLDialect.*;
+
+import java.util.*;
 
 /**
- * The step in the <code>DROP SCHEMA</code> DSL used to specify
- * <code>DROP</code> behaviour.
+ * A step in the construction of the <code>DROP SCHEMA</code> statement.
  * <p>
  * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
  * <p>
@@ -65,21 +61,18 @@ import static org.jooq.SQLDialect.POSTGRES;
  * <li>They're less readable</li>
  * <li>They might have binary incompatible changes between minor releases</li>
  * </ul>
- *
- * @author Lukas Eder
  */
+@SuppressWarnings({ "unused" })
 public interface DropSchemaStep extends DropSchemaFinalStep {
 
     /**
-     * Add a <code>CASCADE</code> clause to the <code>DROP SCHEMA</code>
-     * statement.
+     * Add the <code>CASCADE</code> clause to the <code>DROP SCHEMA</code> statement.
      */
     @Support({ H2, HSQLDB, POSTGRES })
     DropSchemaFinalStep cascade();
 
     /**
-     * Add a <code>RESTRICT</code> clause to the <code>DROP SCHEMA</code>
-     * statement.
+     * Add the <code>RESTRICT</code> clause to the <code>DROP SCHEMA</code> statement.
      */
     @Support({ H2, HSQLDB, POSTGRES })
     DropSchemaFinalStep restrict();

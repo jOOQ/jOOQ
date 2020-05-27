@@ -8981,6 +8981,54 @@ public interface DSLContext extends Scope , AutoCloseable {
     <T> AlterDomainStep<T> alterDomainIfExists(Domain<T> domain);
 
     /**
+     * The <code>ALTER SCHEMA</code> statement.
+     *
+     * @see DSL#alterSchema(String)
+     */
+    @Support({ H2, HSQLDB, POSTGRES })
+    AlterSchemaStep alterSchema(String schema);
+
+    /**
+     * The <code>ALTER SCHEMA</code> statement.
+     *
+     * @see DSL#alterSchema(Name)
+     */
+    @Support({ H2, HSQLDB, POSTGRES })
+    AlterSchemaStep alterSchema(Name schema);
+
+    /**
+     * The <code>ALTER SCHEMA</code> statement.
+     *
+     * @see DSL#alterSchema(Schema)
+     */
+    @Support({ H2, HSQLDB, POSTGRES })
+    AlterSchemaStep alterSchema(Schema schema);
+
+    /**
+     * The <code>ALTER SCHEMA IF EXISTS</code> statement.
+     *
+     * @see DSL#alterSchemaIfExists(String)
+     */
+    @Support({ H2 })
+    AlterSchemaStep alterSchemaIfExists(String schema);
+
+    /**
+     * The <code>ALTER SCHEMA IF EXISTS</code> statement.
+     *
+     * @see DSL#alterSchemaIfExists(Name)
+     */
+    @Support({ H2 })
+    AlterSchemaStep alterSchemaIfExists(Name schema);
+
+    /**
+     * The <code>ALTER SCHEMA IF EXISTS</code> statement.
+     *
+     * @see DSL#alterSchemaIfExists(Schema)
+     */
+    @Support({ H2 })
+    AlterSchemaStep alterSchemaIfExists(Schema schema);
+
+    /**
      * The <code>DROP DATABASE</code> statement.
      *
      * @see DSL#dropDatabase(String)
@@ -9075,6 +9123,54 @@ public interface DSLContext extends Scope , AutoCloseable {
      */
     @Support({ H2, POSTGRES })
     DropDomainCascadeStep dropDomainIfExists(Domain<?> domain);
+
+    /**
+     * The <code>DROP SCHEMA</code> statement.
+     *
+     * @see DSL#dropSchema(String)
+     */
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    DropSchemaStep dropSchema(String schema);
+
+    /**
+     * The <code>DROP SCHEMA</code> statement.
+     *
+     * @see DSL#dropSchema(Name)
+     */
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    DropSchemaStep dropSchema(Name schema);
+
+    /**
+     * The <code>DROP SCHEMA</code> statement.
+     *
+     * @see DSL#dropSchema(Schema)
+     */
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    DropSchemaStep dropSchema(Schema schema);
+
+    /**
+     * The <code>DROP SCHEMA IF EXISTS</code> statement.
+     *
+     * @see DSL#dropSchemaIfExists(String)
+     */
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    DropSchemaStep dropSchemaIfExists(String schema);
+
+    /**
+     * The <code>DROP SCHEMA IF EXISTS</code> statement.
+     *
+     * @see DSL#dropSchemaIfExists(Name)
+     */
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    DropSchemaStep dropSchemaIfExists(Name schema);
+
+    /**
+     * The <code>DROP SCHEMA IF EXISTS</code> statement.
+     *
+     * @see DSL#dropSchemaIfExists(Schema)
+     */
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    DropSchemaStep dropSchemaIfExists(Schema schema);
 
 
 
@@ -10039,54 +10135,6 @@ public interface DSLContext extends Scope , AutoCloseable {
     AlterTableStep alterTableIfExists(Table<?> table);
 
     /**
-     * Create a new DSL <code>ALTER SCHEMA</code> statement.
-     *
-     * @see DSL#alterSchema(String)
-     */
-    @Support({ H2, HSQLDB, POSTGRES })
-    AlterSchemaStep alterSchema(String schema);
-
-    /**
-     * Create a new DSL <code>ALTER SCHEMA</code> statement.
-     *
-     * @see DSL#alterSchema(Name)
-     */
-    @Support({ H2, HSQLDB, POSTGRES })
-    AlterSchemaStep alterSchema(Name schema);
-
-    /**
-     * Create a new DSL <code>ALTER SCHEMA</code> statement.
-     *
-     * @see DSL#alterSchema(Schema)
-     */
-    @Support({ H2, HSQLDB, POSTGRES })
-    AlterSchemaStep alterSchema(Schema schema);
-
-    /**
-     * Create a new DSL <code>ALTER SCHEMA</code> statement.
-     *
-     * @see DSL#alterSchemaIfExists(String)
-     */
-    @Support({ H2 })
-    AlterSchemaStep alterSchemaIfExists(String schema);
-
-    /**
-     * Create a new DSL <code>ALTER SCHEMA</code> statement.
-     *
-     * @see DSL#alterSchemaIfExists(Name)
-     */
-    @Support({ H2 })
-    AlterSchemaStep alterSchemaIfExists(Name schema);
-
-    /**
-     * Create a new DSL <code>ALTER SCHEMA</code> statement.
-     *
-     * @see DSL#alterSchemaIfExists(Schema)
-     */
-    @Support({ H2 })
-    AlterSchemaStep alterSchemaIfExists(Schema schema);
-
-    /**
      * Create a new DSL <code>ALTER VIEW</code> statement.
      *
      * @see DSL#alterView(String)
@@ -10181,54 +10229,6 @@ public interface DSLContext extends Scope , AutoCloseable {
      */
     @Support({ H2, POSTGRES })
     AlterIndexStep alterIndexIfExists(Index index);
-
-    /**
-     * Create a new DSL <code>DROP SCHEMA</code> statement.
-     *
-     * @see DSL#dropSchema(String)
-     */
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    DropSchemaStep dropSchema(String schema);
-
-    /**
-     * Create a new DSL <code>DROP SCHEMA</code> statement.
-     *
-     * @see DSL#dropSchema(Name)
-     */
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    DropSchemaStep dropSchema(Name schema);
-
-    /**
-     * Create a new DSL <code>DROP SCHEMA</code> statement.
-     *
-     * @see DSL#dropSchema(Schema)
-     */
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    DropSchemaStep dropSchema(Schema schema);
-
-    /**
-     * Create a new DSL <code>DROP SCHEMA</code> statement.
-     *
-     * @see DSL#dropSchemaIfExists(String)
-     */
-    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    DropSchemaStep dropSchemaIfExists(String schema);
-
-    /**
-     * Create a new DSL <code>DROP SCHEMA</code> statement.
-     *
-     * @see DSL#dropSchemaIfExists(Name)
-     */
-    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    DropSchemaStep dropSchemaIfExists(Name schema);
-
-    /**
-     * Create a new DSL <code>DROP SCHEMA</code> statement.
-     *
-     * @see DSL#dropSchemaIfExists(Schema)
-     */
-    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    DropSchemaStep dropSchemaIfExists(Schema schema);
 
     /**
      * Create a new DSL <code>DROP VIEW</code> statement.

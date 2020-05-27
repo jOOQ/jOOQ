@@ -37,93 +37,96 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.ALTER_SCHEMA;
-import static org.jooq.Clause.ALTER_SCHEMA_RENAME;
-import static org.jooq.Clause.ALTER_SCHEMA_SCHEMA;
-// ...
-import static org.jooq.impl.DSL.name;
-import static org.jooq.impl.Keywords.K_ALTER_SCHEMA;
-import static org.jooq.impl.Keywords.K_IF_EXISTS;
-import static org.jooq.impl.Keywords.K_RENAME;
-import static org.jooq.impl.Keywords.K_RENAME_TO;
-import static org.jooq.impl.Keywords.K_SCHEMA;
-import static org.jooq.impl.Keywords.K_TO;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import java.util.Set;
+import org.jooq.*;
+import org.jooq.impl.*;
 
-import org.jooq.AlterSchemaFinalStep;
-import org.jooq.AlterSchemaStep;
-import org.jooq.Clause;
-import org.jooq.Configuration;
-import org.jooq.Context;
-import org.jooq.Name;
-// ...
-import org.jooq.SQLDialect;
-import org.jooq.Schema;
+import java.util.*;
 
 /**
- * @author Lukas Eder
+ * The <code>ALTER SCHEMA IF EXISTS</code> statement.
  */
-final class AlterSchemaImpl extends AbstractRowCountQuery implements
-
-    // Cascading interface implementations for ALTER SCHEMA behaviour
+@SuppressWarnings({ "hiding", "unused" })
+final class AlterSchemaImpl
+extends
+    AbstractRowCountQuery
+implements
     AlterSchemaStep,
-    AlterSchemaFinalStep {
+    AlterSchemaFinalStep
+{
+    
+    private static final long serialVersionUID = 1L;
 
-    /**
-     * Generated UID
-     */
-    private static final long            serialVersionUID      = 8904572826501186329L;
-    private static final Clause[]        CLAUSES               = { ALTER_SCHEMA };
-
-
-
-
-
-
-
-    private final Schema                 schema;
-    private final boolean                ifExists;
-    private Schema                       renameTo;
-
-    AlterSchemaImpl(Configuration configuration, Schema schema) {
-        this(configuration, schema, false);
+    private final Schema  schema;
+    private final boolean ifExists;
+    private       Schema  renameTo;
+    
+    AlterSchemaImpl(
+        Configuration configuration,
+        Schema schema,
+        boolean ifExists
+    ) {
+        this(
+            configuration,
+            schema,
+            ifExists,
+            null
+        );
     }
-
-    AlterSchemaImpl(Configuration configuration, Schema schema, boolean ifExists) {
+    
+    AlterSchemaImpl(
+        Configuration configuration,
+        Schema schema,
+        boolean ifExists,
+        Schema renameTo
+    ) {
         super(configuration);
 
         this.schema = schema;
         this.ifExists = ifExists;
+        this.renameTo = renameTo;
     }
 
     final Schema  $schema()   { return schema; }
     final boolean $ifExists() { return ifExists; }
     final Schema  $renameTo() { return renameTo; }
 
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // XXX: DSL API
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    
+    @Override
+    public final AlterSchemaImpl renameTo(String renameTo) {
+        return renameTo(DSL.schema(renameTo));
+    }
 
     @Override
-    public final AlterSchemaImpl renameTo(Schema newName) {
-        this.renameTo = newName;
+    public final AlterSchemaImpl renameTo(Name renameTo) {
+        return renameTo(DSL.schema(renameTo));
+    }
+
+    @Override
+    public final AlterSchemaImpl renameTo(Schema renameTo) {
+        this.renameTo = renameTo;
         return this;
     }
 
-    @Override
-    public final AlterSchemaImpl renameTo(Name newName) {
-        return renameTo(DSL.schema(newName));
-    }
-
-    @Override
-    public final AlterSchemaImpl renameTo(String newName) {
-        return renameTo(name(newName));
-    }
-
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // XXX: QueryPart API
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
+
+
+    private static final Clause[]        CLAUSES               = { Clause.ALTER_SCHEMA };
+
+
+
+
+
+
 
 
 
@@ -146,7 +149,7 @@ final class AlterSchemaImpl extends AbstractRowCountQuery implements
     }
 
     private final void accept0(Context<?> ctx) {
-        ctx.start(ALTER_SCHEMA_SCHEMA);
+        ctx.start(Clause.ALTER_SCHEMA_SCHEMA);
 
         boolean supportRename = false;
 
@@ -162,18 +165,18 @@ final class AlterSchemaImpl extends AbstractRowCountQuery implements
                 ctx.sql(' ').visit(K_IF_EXISTS);
 
         ctx.sql(' ').visit(schema)
-           .end(ALTER_SCHEMA_SCHEMA)
+           .end(Clause.ALTER_SCHEMA_SCHEMA)
            .formatIndentStart()
            .formatSeparator();
 
         if (renameTo != null) {
             boolean qualify = ctx.qualify();
 
-            ctx.start(ALTER_SCHEMA_RENAME)
+            ctx.start(Clause.ALTER_SCHEMA_RENAME)
                .qualify(false)
                .visit(supportRename ? K_TO : K_RENAME_TO).sql(' ').visit(renameTo)
                .qualify(qualify)
-               .end(ALTER_SCHEMA_RENAME);
+               .end(Clause.ALTER_SCHEMA_RENAME);
         }
 
         ctx.formatIndentEnd();
@@ -183,4 +186,6 @@ final class AlterSchemaImpl extends AbstractRowCountQuery implements
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
+
+
 }

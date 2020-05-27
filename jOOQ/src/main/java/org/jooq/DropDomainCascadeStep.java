@@ -42,7 +42,7 @@ import static org.jooq.SQLDialect.*;
 import java.util.*;
 
 /**
- * A step in the construction of the DROP DOMAIN statement.
+ * A step in the construction of the <code>DROP DOMAIN</code> statement.
  * <p>
  * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
  * <p>

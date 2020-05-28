@@ -61,18 +61,18 @@ implements
     private static final long serialVersionUID = 1L;
 
     private final Schema  schema;
-    private final boolean ifExists;
+    private final boolean dropSchemaIfExists;
     private       Boolean cascade;
     
     DropSchemaImpl(
         Configuration configuration,
         Schema schema,
-        boolean ifExists
+        boolean dropSchemaIfExists
     ) {
         this(
             configuration,
             schema,
-            ifExists,
+            dropSchemaIfExists,
             null
         );
     }
@@ -80,19 +80,19 @@ implements
     DropSchemaImpl(
         Configuration configuration,
         Schema schema,
-        boolean ifExists,
+        boolean dropSchemaIfExists,
         Boolean cascade
     ) {
         super(configuration);
 
         this.schema = schema;
-        this.ifExists = ifExists;
+        this.dropSchemaIfExists = dropSchemaIfExists;
         this.cascade = cascade;
     }
 
-    final Schema  $schema()   { return schema; }
-    final boolean $ifExists() { return ifExists; }
-    final Boolean $cascade()  { return cascade; }
+    final Schema  $schema()             { return schema; }
+    final boolean $dropSchemaIfExists() { return dropSchemaIfExists; }
+    final Boolean $cascade()            { return cascade; }
 
     // -------------------------------------------------------------------------
     // XXX: DSL API
@@ -131,7 +131,7 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (ifExists && !supportsIfExists(ctx)) {
+        if (dropSchemaIfExists && !supportsIfExists(ctx)) {
             Tools.beginTryCatch(ctx, DDLStatementType.DROP_SCHEMA);
             accept0(ctx);
             Tools.endTryCatch(ctx, DDLStatementType.DROP_SCHEMA);
@@ -152,14 +152,14 @@ implements
 
             ctx.sql(' ').visit(K_SCHEMA);
 
-        if (ifExists && supportsIfExists(ctx))
+        if (dropSchemaIfExists && supportsIfExists(ctx))
             ctx.sql(' ').visit(K_IF_EXISTS);
 
         ctx.sql(' ').visit(schema);
 
-        if (cascade)
+        if (cascade != null && cascade)
             ctx.sql(' ').visit(K_CASCADE);
-        else if (REQUIRES_RESTRICT.contains(ctx.family()))
+        else if (cascade != null && !cascade || REQUIRES_RESTRICT.contains(ctx.family()))
             ctx.sql(' ').visit(K_RESTRICT);
 
         ctx.end(Clause.DROP_SCHEMA_SCHEMA);

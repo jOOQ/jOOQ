@@ -60,22 +60,22 @@ implements
     private static final long serialVersionUID = 1L;
 
     private final Schema  schema;
-    private final boolean ifNotExists;
+    private final boolean createSchemaIfNotExists;
     
     
     CreateSchemaImpl(
         Configuration configuration,
         Schema schema,
-        boolean ifNotExists
+        boolean createSchemaIfNotExists
     ) {
         super(configuration);
 
         this.schema = schema;
-        this.ifNotExists = ifNotExists;
+        this.createSchemaIfNotExists = createSchemaIfNotExists;
     }
 
-    final Schema  $schema()      { return schema; }
-    final boolean $ifNotExists() { return ifNotExists; }
+    final Schema  $schema()                  { return schema; }
+    final boolean $createSchemaIfNotExists() { return createSchemaIfNotExists; }
 
     // -------------------------------------------------------------------------
     // XXX: QueryPart API
@@ -97,7 +97,7 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (ifNotExists && !supportsIfNotExists(ctx)) {
+        if (createSchemaIfNotExists && !supportsIfNotExists(ctx)) {
             Tools.beginTryCatch(ctx, DDLStatementType.CREATE_SCHEMA);
             accept0(ctx);
             Tools.endTryCatch(ctx, DDLStatementType.CREATE_SCHEMA);
@@ -135,7 +135,7 @@ implements
 
             ctx.sql(' ').visit(K_SCHEMA);
 
-        if (ifNotExists && supportsIfNotExists(ctx))
+        if (createSchemaIfNotExists && supportsIfNotExists(ctx))
             ctx.sql(' ').visit(K_IF_NOT_EXISTS);
 
         ctx.sql(' ').visit(schema)

@@ -247,7 +247,7 @@ final class Interpreter {
         Schema schema = query.$schema();
 
         if (getSchema(schema, false) != null) {
-            if (!query.$ifNotExists())
+            if (!query.$createSchemaIfNotExists())
                 throw schemaAlreadyExists(schema);
 
             return;
@@ -262,7 +262,7 @@ final class Interpreter {
 
         MutableSchema oldSchema = getSchema(schema);
         if (oldSchema == null) {
-            if (!query.$ifExists())
+            if (!query.$alterSchemaIfExists())
                 throw schemaNotExists(schema);
 
             return;
@@ -284,13 +284,13 @@ final class Interpreter {
         MutableSchema mutableSchema = getSchema(schema);
 
         if (mutableSchema == null) {
-            if (!query.$ifExists())
+            if (!query.$dropSchemaIfExists())
                 throw schemaNotExists(schema);
 
             return;
         }
 
-        if (mutableSchema.isEmpty() || query.$cascade())
+        if (mutableSchema.isEmpty() || TRUE.equals(query.$cascade()))
             mutableSchema.catalog.schemas.remove(mutableSchema);
         else
             throw schemaNotEmpty(schema);

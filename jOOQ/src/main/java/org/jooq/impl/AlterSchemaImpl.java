@@ -61,18 +61,18 @@ implements
     private static final long serialVersionUID = 1L;
 
     private final Schema  schema;
-    private final boolean ifExists;
+    private final boolean alterSchemaIfExists;
     private       Schema  renameTo;
     
     AlterSchemaImpl(
         Configuration configuration,
         Schema schema,
-        boolean ifExists
+        boolean alterSchemaIfExists
     ) {
         this(
             configuration,
             schema,
-            ifExists,
+            alterSchemaIfExists,
             null
         );
     }
@@ -80,19 +80,19 @@ implements
     AlterSchemaImpl(
         Configuration configuration,
         Schema schema,
-        boolean ifExists,
+        boolean alterSchemaIfExists,
         Schema renameTo
     ) {
         super(configuration);
 
         this.schema = schema;
-        this.ifExists = ifExists;
+        this.alterSchemaIfExists = alterSchemaIfExists;
         this.renameTo = renameTo;
     }
 
-    final Schema  $schema()   { return schema; }
-    final boolean $ifExists() { return ifExists; }
-    final Schema  $renameTo() { return renameTo; }
+    final Schema  $schema()              { return schema; }
+    final boolean $alterSchemaIfExists() { return alterSchemaIfExists; }
+    final Schema  $renameTo()            { return renameTo; }
 
     // -------------------------------------------------------------------------
     // XXX: DSL API
@@ -158,7 +158,7 @@ implements
         else
             ctx.visit(K_ALTER_SCHEMA);
 
-        if (ifExists)
+        if (alterSchemaIfExists)
 
 
 

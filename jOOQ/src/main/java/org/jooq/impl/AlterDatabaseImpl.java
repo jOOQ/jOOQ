@@ -61,18 +61,18 @@ implements
     private static final long serialVersionUID = 1L;
 
     private final Catalog database;
-    private final boolean ifExists;
+    private final boolean alterDatabaseIfExists;
     private       Catalog renameTo;
     
     AlterDatabaseImpl(
         Configuration configuration,
         Catalog database,
-        boolean ifExists
+        boolean alterDatabaseIfExists
     ) {
         this(
             configuration,
             database,
-            ifExists,
+            alterDatabaseIfExists,
             null
         );
     }
@@ -80,19 +80,19 @@ implements
     AlterDatabaseImpl(
         Configuration configuration,
         Catalog database,
-        boolean ifExists,
+        boolean alterDatabaseIfExists,
         Catalog renameTo
     ) {
         super(configuration);
 
         this.database = database;
-        this.ifExists = ifExists;
+        this.alterDatabaseIfExists = alterDatabaseIfExists;
         this.renameTo = renameTo;
     }
 
-    final Catalog $database() { return database; }
-    final boolean $ifExists() { return ifExists; }
-    final Catalog $renameTo() { return renameTo; }
+    final Catalog $database()              { return database; }
+    final boolean $alterDatabaseIfExists() { return alterDatabaseIfExists; }
+    final Catalog $renameTo()              { return renameTo; }
 
     // -------------------------------------------------------------------------
     // XXX: DSL API
@@ -132,7 +132,7 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (ifExists && !supportsIfExists(ctx)) {
+        if (alterDatabaseIfExists && !supportsIfExists(ctx)) {
             Tools.beginTryCatch(ctx, DDLStatementType.ALTER_DATABASE);
             accept0(ctx);
             Tools.endTryCatch(ctx, DDLStatementType.ALTER_DATABASE);
@@ -151,7 +151,7 @@ implements
 
         ctx.sql(' ').visit(K_DATABASE);
 
-        if (ifExists && supportsIfExists(ctx))
+        if (alterDatabaseIfExists && supportsIfExists(ctx))
             ctx.sql(' ').visit(K_IF_EXISTS);
 
         ctx.sql(' ').visit(database);

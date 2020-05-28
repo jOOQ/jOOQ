@@ -61,18 +61,18 @@ implements
     private static final long serialVersionUID = 1L;
 
     private final Domain<?> domain;
-    private final boolean   ifExists;
+    private final boolean   dropDomainIfExists;
     private       Boolean   cascade;
     
     DropDomainImpl(
         Configuration configuration,
         Domain domain,
-        boolean ifExists
+        boolean dropDomainIfExists
     ) {
         this(
             configuration,
             domain,
-            ifExists,
+            dropDomainIfExists,
             null
         );
     }
@@ -80,19 +80,19 @@ implements
     DropDomainImpl(
         Configuration configuration,
         Domain domain,
-        boolean ifExists,
+        boolean dropDomainIfExists,
         Boolean cascade
     ) {
         super(configuration);
 
         this.domain = domain;
-        this.ifExists = ifExists;
+        this.dropDomainIfExists = dropDomainIfExists;
         this.cascade = cascade;
     }
 
-    final Domain<?> $domain()   { return domain; }
-    final boolean   $ifExists() { return ifExists; }
-    final Boolean   $cascade()  { return cascade; }
+    final Domain<?> $domain()             { return domain; }
+    final boolean   $dropDomainIfExists() { return dropDomainIfExists; }
+    final Boolean   $cascade()            { return cascade; }
 
     // -------------------------------------------------------------------------
     // XXX: DSL API
@@ -130,7 +130,7 @@ implements
                 break;
         }
 
-        if (ifExists)
+        if (dropDomainIfExists)
             ctx.sql(' ').visit(K_IF_EXISTS);
 
         ctx.sql(' ').visit(domain);

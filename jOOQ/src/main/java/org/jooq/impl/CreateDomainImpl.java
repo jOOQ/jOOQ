@@ -63,7 +63,7 @@ implements
     private static final long serialVersionUID = 1L;
 
     private final Domain<?>                        domain;
-    private final boolean                          ifNotExists;
+    private final boolean                          createDomainIfNotExists;
     private       DataType<T>                      dataType;
     private       Field<T>                         default_;
     private       Collection<? extends Constraint> constraints;
@@ -71,12 +71,12 @@ implements
     CreateDomainImpl(
         Configuration configuration,
         Domain domain,
-        boolean ifNotExists
+        boolean createDomainIfNotExists
     ) {
         this(
             configuration,
             domain,
-            ifNotExists,
+            createDomainIfNotExists,
             null,
             null,
             null
@@ -86,7 +86,7 @@ implements
     CreateDomainImpl(
         Configuration configuration,
         Domain domain,
-        boolean ifNotExists,
+        boolean createDomainIfNotExists,
         DataType dataType,
         Field default_,
         Collection constraints
@@ -94,17 +94,17 @@ implements
         super(configuration);
 
         this.domain = domain;
-        this.ifNotExists = ifNotExists;
+        this.createDomainIfNotExists = createDomainIfNotExists;
         this.dataType = dataType;
         this.default_ = default_;
         this.constraints = constraints;
     }
 
-    final Domain<?>                        $domain()      { return domain; }
-    final boolean                          $ifNotExists() { return ifNotExists; }
-    final DataType<T>                      $dataType()    { return dataType; }
-    final Field<T>                         $default_()    { return default_; }
-    final Collection<? extends Constraint> $constraints() { return constraints; }
+    final Domain<?>                        $domain()                  { return domain; }
+    final boolean                          $createDomainIfNotExists() { return createDomainIfNotExists; }
+    final DataType<T>                      $dataType()                { return dataType; }
+    final Field<T>                         $default_()                { return default_; }
+    final Collection<? extends Constraint> $constraints()             { return constraints; }
 
     // -------------------------------------------------------------------------
     // XXX: DSL API
@@ -157,7 +157,7 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (ifNotExists && !supportsIfNotExists(ctx)) {
+        if (createDomainIfNotExists && !supportsIfNotExists(ctx)) {
             Tools.beginTryCatch(ctx, DDLStatementType.CREATE_DOMAIN);
             accept0(ctx);
             Tools.endTryCatch(ctx, DDLStatementType.CREATE_DOMAIN);
@@ -177,7 +177,7 @@ implements
             default:
                 ctx.visit(K_CREATE).sql(' ').visit(K_DOMAIN);
 
-                if (ifNotExists && supportsIfNotExists(ctx))
+                if (createDomainIfNotExists && supportsIfNotExists(ctx))
                     ctx.sql(' ').visit(K_IF_NOT_EXISTS);
 
                 ctx.sql(' ').visit(domain).sql(' ').visit(K_AS).sql(' ');

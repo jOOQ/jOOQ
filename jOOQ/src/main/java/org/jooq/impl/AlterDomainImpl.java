@@ -63,39 +63,39 @@ implements
     private static final long serialVersionUID = 1L;
 
     private final Domain<T>  domain;
-    private final boolean    ifExists;
+    private final boolean    alterDomainIfExists;
     private       Constraint addConstraint;
-    private       boolean    dropDefault;
-    private       boolean    setNotNull;
-    private       boolean    dropNotNull;
     private       Constraint dropConstraint;
     private       boolean    dropConstraintIfExists;
     private       Domain<?>  renameTo;
     private       Constraint renameConstraint;
     private       boolean    renameConstraintIfExists;
     private       Field<T>   setDefault;
+    private       boolean    dropDefault;
+    private       boolean    setNotNull;
+    private       boolean    dropNotNull;
     private       Boolean    cascade;
     private       Constraint renameConstraintTo;
     
     AlterDomainImpl(
         Configuration configuration,
         Domain domain,
-        boolean ifExists
+        boolean alterDomainIfExists
     ) {
         this(
             configuration,
             domain,
-            ifExists,
+            alterDomainIfExists,
             null,
-            false,
-            false,
-            false,
             null,
             false,
             null,
             null,
             false,
             null,
+            false,
+            false,
+            false,
             null,
             null
         );
@@ -104,50 +104,50 @@ implements
     AlterDomainImpl(
         Configuration configuration,
         Domain domain,
-        boolean ifExists,
+        boolean alterDomainIfExists,
         Constraint addConstraint,
-        boolean dropDefault,
-        boolean setNotNull,
-        boolean dropNotNull,
         Constraint dropConstraint,
         boolean dropConstraintIfExists,
         Domain renameTo,
         Constraint renameConstraint,
         boolean renameConstraintIfExists,
         Field setDefault,
+        boolean dropDefault,
+        boolean setNotNull,
+        boolean dropNotNull,
         Boolean cascade,
         Constraint renameConstraintTo
     ) {
         super(configuration);
 
         this.domain = domain;
-        this.ifExists = ifExists;
+        this.alterDomainIfExists = alterDomainIfExists;
         this.addConstraint = addConstraint;
-        this.dropDefault = dropDefault;
-        this.setNotNull = setNotNull;
-        this.dropNotNull = dropNotNull;
         this.dropConstraint = dropConstraint;
         this.dropConstraintIfExists = dropConstraintIfExists;
         this.renameTo = renameTo;
         this.renameConstraint = renameConstraint;
         this.renameConstraintIfExists = renameConstraintIfExists;
         this.setDefault = setDefault;
+        this.dropDefault = dropDefault;
+        this.setNotNull = setNotNull;
+        this.dropNotNull = dropNotNull;
         this.cascade = cascade;
         this.renameConstraintTo = renameConstraintTo;
     }
 
     final Domain<T>  $domain()                   { return domain; }
-    final boolean    $ifExists()                 { return ifExists; }
+    final boolean    $alterDomainIfExists()      { return alterDomainIfExists; }
     final Constraint $addConstraint()            { return addConstraint; }
-    final boolean    $dropDefault()              { return dropDefault; }
-    final boolean    $setNotNull()               { return setNotNull; }
-    final boolean    $dropNotNull()              { return dropNotNull; }
     final Constraint $dropConstraint()           { return dropConstraint; }
     final boolean    $dropConstraintIfExists()   { return dropConstraintIfExists; }
     final Domain<?>  $renameTo()                 { return renameTo; }
     final Constraint $renameConstraint()         { return renameConstraint; }
     final boolean    $renameConstraintIfExists() { return renameConstraintIfExists; }
     final Field<T>   $setDefault()               { return setDefault; }
+    final boolean    $dropDefault()              { return dropDefault; }
+    final boolean    $setNotNull()               { return setNotNull; }
+    final boolean    $dropNotNull()              { return dropNotNull; }
     final Boolean    $cascade()                  { return cascade; }
     final Constraint $renameConstraintTo()       { return renameConstraintTo; }
 
@@ -158,24 +158,6 @@ implements
     @Override
     public final AlterDomainImpl<T> add(Constraint addConstraint) {
         this.addConstraint = addConstraint;
-        return this;
-    }
-
-    @Override
-    public final AlterDomainImpl<T> dropDefault() {
-        this.dropDefault = true;
-        return this;
-    }
-
-    @Override
-    public final AlterDomainImpl<T> setNotNull() {
-        this.setNotNull = true;
-        return this;
-    }
-
-    @Override
-    public final AlterDomainImpl<T> dropNotNull() {
-        this.dropNotNull = true;
         return this;
     }
 
@@ -275,6 +257,24 @@ implements
     }
 
     @Override
+    public final AlterDomainImpl<T> dropDefault() {
+        this.dropDefault = true;
+        return this;
+    }
+
+    @Override
+    public final AlterDomainImpl<T> setNotNull() {
+        this.setNotNull = true;
+        return this;
+    }
+
+    @Override
+    public final AlterDomainImpl<T> dropNotNull() {
+        this.dropNotNull = true;
+        return this;
+    }
+
+    @Override
     public final AlterDomainImpl<T> cascade() {
         this.cascade = true;
         return this;
@@ -330,7 +330,7 @@ implements
 
         ctx.visit(K_ALTER).sql(' ').visit(K_DOMAIN).sql(' ');
 
-        if (ifExists)
+        if (alterDomainIfExists)
             ctx.visit(K_IF_EXISTS).sql(' ');
 
         ctx.visit(domain).sql(' ');

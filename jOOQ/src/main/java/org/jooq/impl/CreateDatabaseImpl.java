@@ -60,22 +60,22 @@ implements
     private static final long serialVersionUID = 1L;
 
     private final Catalog database;
-    private final boolean ifNotExists;
+    private final boolean createDatabaseIfNotExists;
     
     
     CreateDatabaseImpl(
         Configuration configuration,
         Catalog database,
-        boolean ifNotExists
+        boolean createDatabaseIfNotExists
     ) {
         super(configuration);
 
         this.database = database;
-        this.ifNotExists = ifNotExists;
+        this.createDatabaseIfNotExists = createDatabaseIfNotExists;
     }
 
-    final Catalog $database()    { return database; }
-    final boolean $ifNotExists() { return ifNotExists; }
+    final Catalog $database()                  { return database; }
+    final boolean $createDatabaseIfNotExists() { return createDatabaseIfNotExists; }
 
     // -------------------------------------------------------------------------
     // XXX: QueryPart API
@@ -91,7 +91,7 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (ifNotExists && !supportsIfNotExists(ctx)) {
+        if (createDatabaseIfNotExists && !supportsIfNotExists(ctx)) {
             Tools.beginTryCatch(ctx, DDLStatementType.CREATE_DATABASE);
             accept0(ctx);
             Tools.endTryCatch(ctx, DDLStatementType.CREATE_DATABASE);
@@ -104,7 +104,7 @@ implements
     private final void accept0(Context<?> ctx) {
         ctx.visit(K_CREATE).sql(' ').visit(K_DATABASE);
 
-        if (ifNotExists && supportsIfNotExists(ctx))
+        if (createDatabaseIfNotExists && supportsIfNotExists(ctx))
             ctx.sql(' ').visit(K_IF_NOT_EXISTS);
 
         ctx.sql(' ').visit(database);

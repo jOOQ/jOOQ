@@ -60,22 +60,22 @@ implements
     private static final long serialVersionUID = 1L;
 
     private final Catalog database;
-    private final boolean ifExists;
+    private final boolean dropDatabaseIfExists;
     
     
     DropDatabaseImpl(
         Configuration configuration,
         Catalog database,
-        boolean ifExists
+        boolean dropDatabaseIfExists
     ) {
         super(configuration);
 
         this.database = database;
-        this.ifExists = ifExists;
+        this.dropDatabaseIfExists = dropDatabaseIfExists;
     }
 
-    final Catalog $database() { return database; }
-    final boolean $ifExists() { return ifExists; }
+    final Catalog $database()             { return database; }
+    final boolean $dropDatabaseIfExists() { return dropDatabaseIfExists; }
 
     // -------------------------------------------------------------------------
     // XXX: QueryPart API
@@ -91,7 +91,7 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (ifExists && !supportsIfExists(ctx)) {
+        if (dropDatabaseIfExists && !supportsIfExists(ctx)) {
             Tools.beginTryCatch(ctx, DDLStatementType.DROP_DATABASE);
             accept0(ctx);
             Tools.endTryCatch(ctx, DDLStatementType.DROP_DATABASE);
@@ -104,7 +104,7 @@ implements
     private void accept0(Context<?> ctx) {
         ctx.visit(K_DROP).sql(' ').visit(K_DATABASE);
 
-        if (ifExists && supportsIfExists(ctx))
+        if (dropDatabaseIfExists && supportsIfExists(ctx))
             ctx.sql(' ').visit(K_IF_EXISTS);
 
         ctx.sql(' ').visit(database);

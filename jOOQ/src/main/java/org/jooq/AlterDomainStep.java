@@ -72,24 +72,6 @@ public interface AlterDomainStep<T> {
     AlterDomainFinalStep add(Constraint addConstraint);
 
     /**
-     * Add the <code>DROP DEFAULT</code> clause to the <code>ALTER DOMAIN</code> statement.
-     */
-    @Support({ POSTGRES })
-    AlterDomainFinalStep dropDefault();
-
-    /**
-     * Add the <code>SET NOT NULL</code> clause to the <code>ALTER DOMAIN</code> statement.
-     */
-    @Support({ POSTGRES })
-    AlterDomainFinalStep setNotNull();
-
-    /**
-     * Add the <code>DROP NOT NULL</code> clause to the <code>ALTER DOMAIN</code> statement.
-     */
-    @Support({ POSTGRES })
-    AlterDomainFinalStep dropNotNull();
-
-    /**
      * Add the <code>DROP CONSTRAINT</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
     @Support({ POSTGRES })
@@ -190,4 +172,22 @@ public interface AlterDomainStep<T> {
      */
     @Support({ POSTGRES })
     AlterDomainFinalStep setDefault(Field<T> setDefault);
+
+    /**
+     * Add the <code>DROP DEFAULT</code> clause to the <code>ALTER DOMAIN</code> statement.
+     */
+    @Support({ POSTGRES })
+    AlterDomainFinalStep dropDefault();
+
+    /**
+     * Add the <code>SET NOT NULL</code> clause to the <code>ALTER DOMAIN</code> statement.
+     */
+    @Support({ POSTGRES })
+    AlterDomainFinalStep setNotNull();
+
+    /**
+     * Add the <code>DROP NOT NULL</code> clause to the <code>ALTER DOMAIN</code> statement.
+     */
+    @Support({ POSTGRES })
+    AlterDomainFinalStep dropNotNull();
 }

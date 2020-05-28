@@ -50,7 +50,6 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 
-import java.io.Serializable;
 import java.sql.Types;
 import java.util.Collection;
 import java.util.List;
@@ -76,7 +75,7 @@ import org.jooq.types.YearToSecond;
  * @param <T> The Java type associated with this SQL data type
  * @author Lukas Eder
  */
-public interface DataType<T> extends Serializable {
+public interface DataType<T> extends Named {
 
     /**
      * Get the standard SQL data type of this (dialect-specific) data type if

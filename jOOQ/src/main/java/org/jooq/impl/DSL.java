@@ -11958,7 +11958,7 @@ public class DSL {
      */
     @Support({ H2, POSTGRES })
     public static Domain<?> domain(Name name) {
-        return new DomainImpl<>(null, name, new DefaultDataType<>(null, SQLDataType.OTHER, name.last()));
+        return new DomainImpl<>(null, name, new DefaultDataType<>(null, Object.class, name));
     }
 
     /**

@@ -1041,6 +1041,9 @@ final class Interpreter {
             return;
         }
 
+        if (!TRUE.equals(query.$cascade()) && !existing.fields.isEmpty())
+            throw new DataDefinitionException("Domain " + domain.getQualifiedName() + " is still being referenced by fields.");
+
         schema.domains.remove(existing);
     }
 
@@ -1530,15 +1533,15 @@ final class Interpreter {
             return tables.isEmpty();
         }
 
-        final MutableTable table(Table<?> t) {
+        final MutableTable table(Named t) {
             return find(tables, t);
         }
 
-        final MutableDomain domain(Domain<?> d) {
+        final MutableDomain domain(Named d) {
             return find(domains, d);
         }
 
-        final MutableSequence sequence(Sequence<?> s) {
+        final MutableSequence sequence(Named s) {
             return find(sequences, s);
         }
 
@@ -1777,9 +1780,10 @@ final class Interpreter {
     }
 
     private final class MutableDomain extends MutableNamed {
-        MutableSchema  schema;
-        DataType<?>    dataType;
-        List<Check<?>> checks;
+        MutableSchema      schema;
+        DataType<?>        dataType;
+        List<Check<?>>     checks;
+        List<MutableField> fields = new MutableNamedList<>();
 
         MutableDomain(UnqualifiedName name, MutableSchema schema, DataType<?> dataType) {
             super(name);
@@ -1791,6 +1795,7 @@ final class Interpreter {
 
         @Override
         final void onDrop() {
+            schema.domains.remove(this);
             // TODO: Cascade
         }
 
@@ -2089,12 +2094,17 @@ final class Interpreter {
 
             this.table = table;
             this.type = type;
+            this.domain = table.schema.domain(type);
 
-            // TODO: Link type to domain
+            if (this.domain != null)
+                this.domain.fields.add(this);
         }
 
         @Override
-        final void onDrop() {}
+        final void onDrop() {
+            if (this.domain != null)
+                this.domain.fields.remove(this);
+        }
 
         @Override
         final MutableNamed parent() {

@@ -76,6 +76,7 @@ final class ConvertedDataType<T, U> extends DefaultDataType<U> {
             null,
             binding.converter().toType(),
             binding,
+            delegate.getQualifiedName(),
             delegate.getTypeName(),
             delegate.getCastTypeName(),
             delegate.precisionDefined() ? delegate.precision() : null,

@@ -42,6 +42,8 @@ import static org.jooq.Nullability.NOT_NULL;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.impl.CommentImpl.NO_COMMENT;
+import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.DefaultBinding.binding;
 import static org.jooq.impl.SQLDataType.BLOB;
 import static org.jooq.impl.SQLDataType.CLOB;
@@ -72,6 +74,7 @@ import org.jooq.Binding;
 import org.jooq.CharacterSet;
 import org.jooq.Collation;
 import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.Domain;
@@ -79,6 +82,7 @@ import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.JSON;
 import org.jooq.JSONB;
+import org.jooq.Name;
 import org.jooq.Nullability;
 // ...
 import org.jooq.Result;
@@ -107,7 +111,7 @@ import org.jooq.types.UShort;
  */
 @SuppressWarnings({"unchecked"})
 @org.jooq.Internal
-public class DefaultDataType<T> implements DataType<T> {
+public class DefaultDataType<T> extends AbstractNamed implements DataType<T> {
 
     /**
      * Generated UID
@@ -265,6 +269,7 @@ public class DefaultDataType<T> implements DataType<T> {
             dialect,
             sqlDataType,
             sqlDataType.getType(),
+            sqlDataType.getQualifiedName(),
             typeName,
             castTypeName,
             sqlDataType.precisionDefined() ? sqlDataType.precision() : null,
@@ -276,30 +281,35 @@ public class DefaultDataType<T> implements DataType<T> {
     }
 
     public DefaultDataType(SQLDialect dialect, Class<T> type, String typeName) {
-        this(dialect, null, type, typeName, typeName, null, null, null, Nullability.DEFAULT, null);
+        this(dialect, null, type, unquotedName(typeName), typeName, typeName, null, null, null, Nullability.DEFAULT, null);
     }
 
     public DefaultDataType(SQLDialect dialect, Class<T> type, String typeName, String castTypeName) {
-        this(dialect, null, type, typeName, castTypeName, null, null, null, Nullability.DEFAULT, null);
+        this(dialect, null, type, unquotedName(typeName), typeName, castTypeName, null, null, null, Nullability.DEFAULT, null);
     }
 
-    DefaultDataType(SQLDialect dialect, Class<T> type, String typeName, String castTypeName, Integer precision, Integer scale, Integer length, Nullability nullability, Field<T> defaultValue) {
-        this(dialect, null, type, typeName, castTypeName, precision, scale, length, nullability, defaultValue);
+    DefaultDataType(SQLDialect dialect, Class<T> type, Name qualifiedTypeName) {
+        this(dialect, null, type, qualifiedTypeName, qualifiedTypeName.last(), qualifiedTypeName.last(), null, null, null, Nullability.DEFAULT, null);
     }
 
-    DefaultDataType(SQLDialect dialect, Class<T> type, Binding<?, T> binding, String typeName, String castTypeName, Integer precision, Integer scale, Integer length, Nullability nullability, Field<T> defaultValue) {
-        this(dialect, null, type, binding, typeName, castTypeName, precision, scale, length, nullability, defaultValue);
+    DefaultDataType(SQLDialect dialect, Class<T> type, Name qualifiedTypeName, String typeName, String castTypeName, Integer precision, Integer scale, Integer length, Nullability nullability, Field<T> defaultValue) {
+        this(dialect, null, type, qualifiedTypeName, typeName, castTypeName, precision, scale, length, nullability, defaultValue);
     }
 
-    DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, String typeName, String castTypeName, Integer precision, Integer scale, Integer length, Nullability nullability, Field<T> defaultValue) {
-        this(dialect, sqlDataType, type, null, typeName, castTypeName, precision, scale, length, nullability, defaultValue);
+    DefaultDataType(SQLDialect dialect, Class<T> type, Binding<?, T> binding, Name qualifiedTypeName, String typeName, String castTypeName, Integer precision, Integer scale, Integer length, Nullability nullability, Field<T> defaultValue) {
+        this(dialect, null, type, binding, qualifiedTypeName, typeName, castTypeName, precision, scale, length, nullability, defaultValue);
     }
 
-    DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, Binding<?, T> binding, String typeName, String castTypeName, Integer precision, Integer scale, Integer length, Nullability nullability, Field<T> defaultValue) {
-        this(dialect, sqlDataType, type, binding, typeName, castTypeName, precision, scale, length, nullability, null, null, false, defaultValue);
+    DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, Name qualifiedTypeName, String typeName, String castTypeName, Integer precision, Integer scale, Integer length, Nullability nullability, Field<T> defaultValue) {
+        this(dialect, sqlDataType, type, null, qualifiedTypeName, typeName, castTypeName, precision, scale, length, nullability, defaultValue);
     }
 
-    DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, Binding<?, T> binding, String typeName, String castTypeName, Integer precision, Integer scale, Integer length, Nullability nullability, Collation collation, CharacterSet characterSet, boolean identity, Field<T> defaultValue) {
+    DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, Binding<?, T> binding, Name qualifiedTypeName, String typeName, String castTypeName, Integer precision, Integer scale, Integer length, Nullability nullability, Field<T> defaultValue) {
+        this(dialect, sqlDataType, type, binding, qualifiedTypeName, typeName, castTypeName, precision, scale, length, nullability, null, null, false, defaultValue);
+    }
+
+    DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, Binding<?, T> binding, Name qualifiedTypeName, String typeName, String castTypeName, Integer precision, Integer scale, Integer length, Nullability nullability, Collation collation, CharacterSet characterSet, boolean identity, Field<T> defaultValue) {
+        super(qualifiedTypeName, NO_COMMENT);
 
         // Initialise final instance members
         // ---------------------------------
@@ -382,6 +392,8 @@ public class DefaultDataType<T> implements DataType<T> {
         boolean identity,
         Field<T> defaultValue
     ) {
+        super(t.getQualifiedName(), NO_COMMENT);
+
         this.dialect = t.dialect;
         this.sqlDataType = t.sqlDataType;
         this.uType = t.uType;
@@ -613,7 +625,7 @@ public class DefaultDataType<T> implements DataType<T> {
     }
 
     @Override
-    public boolean lengthDefined() {
+    public final boolean lengthDefined() {
         return length != null && hasLength();
     }
 
@@ -796,7 +808,7 @@ public class DefaultDataType<T> implements DataType<T> {
     }
 
     @Override
-    public String getTypeName(Configuration configuration) {
+    public /* non-final */ String getTypeName(Configuration configuration) {
         return getDataType(configuration).getTypeName();
     }
 
@@ -819,7 +831,7 @@ public class DefaultDataType<T> implements DataType<T> {
     }
 
     @Override
-    public String getCastTypeName(Configuration configuration) {
+    public /* non-final */ String getCastTypeName(Configuration configuration) {
         return getDataType(configuration).getCastTypeName();
     }
 
@@ -839,8 +851,9 @@ public class DefaultDataType<T> implements DataType<T> {
     @SuppressWarnings("rawtypes")
     @Override
     public final <E extends EnumType> DataType<E> asEnumDataType(Class<E> enumDataType) {
+        // TODO: Make EnumTypes implement Named
         String enumTypeName = Tools.enums(enumDataType)[0].getName();
-        return new DefaultDataType<>(dialect, (DataType<E>) null, enumDataType, enumTypeName, enumTypeName, precision, scale, length, nullability, (Field) defaultValue);
+        return new DefaultDataType<>(dialect, (DataType<E>) null, enumDataType, unquotedName(enumTypeName), enumTypeName, enumTypeName, precision, scale, length, nullability, (Field) defaultValue);
     }
 
     @Override
@@ -1248,5 +1261,10 @@ public class DefaultDataType<T> implements DataType<T> {
 
     private static final boolean eq(Integer i1, Integer i2) {
         return (i1 == i2) || (i1 != null && i2 != null && i1.intValue() == i2.intValue());
+    }
+
+    @Override
+    public final void accept(Context<?> ctx) {
+        ctx.visit(getQualifiedName());
     }
 }

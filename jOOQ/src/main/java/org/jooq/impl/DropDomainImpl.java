@@ -57,7 +57,7 @@ implements
     DropDomainCascadeStep,
     DropDomainFinalStep
 {
-    
+
     private static final long serialVersionUID = 1L;
 
     private final Domain<?> domain;
@@ -76,7 +76,7 @@ implements
             null
         );
     }
-    
+
     DropDomainImpl(
         Configuration configuration,
         Domain domain,

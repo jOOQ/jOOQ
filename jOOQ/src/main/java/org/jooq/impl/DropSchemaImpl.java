@@ -57,7 +57,7 @@ implements
     DropSchemaStep,
     DropSchemaFinalStep
 {
-    
+
     private static final long serialVersionUID = 1L;
 
     private final Schema  schema;
@@ -76,7 +76,7 @@ implements
             null
         );
     }
-    
+
     DropSchemaImpl(
         Configuration configuration,
         Schema schema,

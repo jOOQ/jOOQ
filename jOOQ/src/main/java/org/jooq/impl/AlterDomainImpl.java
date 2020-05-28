@@ -59,7 +59,7 @@ implements
     AlterDomainRenameConstraintStep,
     AlterDomainFinalStep
 {
-    
+
     private static final long serialVersionUID = 1L;
 
     private final Domain<T>  domain;
@@ -100,7 +100,7 @@ implements
             null
         );
     }
-    
+
     AlterDomainImpl(
         Configuration configuration,
         Domain domain,

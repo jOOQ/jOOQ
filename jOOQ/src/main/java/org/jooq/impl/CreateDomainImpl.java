@@ -59,7 +59,7 @@ implements
     CreateDomainConstraintStep,
     CreateDomainFinalStep
 {
-    
+
     private static final long serialVersionUID = 1L;
 
     private final Domain<?>                        domain;
@@ -82,7 +82,7 @@ implements
             null
         );
     }
-    
+
     CreateDomainImpl(
         Configuration configuration,
         Domain domain,

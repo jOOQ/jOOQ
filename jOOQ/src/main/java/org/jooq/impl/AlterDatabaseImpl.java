@@ -57,7 +57,7 @@ implements
     AlterDatabaseStep,
     AlterDatabaseFinalStep
 {
-    
+
     private static final long serialVersionUID = 1L;
 
     private final Catalog database;
@@ -76,7 +76,7 @@ implements
             null
         );
     }
-    
+
     AlterDatabaseImpl(
         Configuration configuration,
         Catalog database,

@@ -56,13 +56,13 @@ extends
 implements
     DropDatabaseFinalStep
 {
-    
+
     private static final long serialVersionUID = 1L;
 
     private final Catalog database;
     private final boolean dropDatabaseIfExists;
     
-    
+
     DropDatabaseImpl(
         Configuration configuration,
         Catalog database,

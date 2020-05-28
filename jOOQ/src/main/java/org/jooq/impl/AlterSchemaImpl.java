@@ -57,7 +57,7 @@ implements
     AlterSchemaStep,
     AlterSchemaFinalStep
 {
-    
+
     private static final long serialVersionUID = 1L;
 
     private final Schema  schema;
@@ -76,7 +76,7 @@ implements
             null
         );
     }
-    
+
     AlterSchemaImpl(
         Configuration configuration,
         Schema schema,

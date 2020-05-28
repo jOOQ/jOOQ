@@ -57,7 +57,7 @@ implements
     CreateSequenceFlagsStep,
     CreateSequenceFinalStep
 {
-    
+
     private static final long serialVersionUID = 1L;
 
     private final Sequence<?>             sequence;
@@ -94,7 +94,7 @@ implements
             false
         );
     }
-    
+
     CreateSequenceImpl(
         Configuration configuration,
         Sequence sequence,

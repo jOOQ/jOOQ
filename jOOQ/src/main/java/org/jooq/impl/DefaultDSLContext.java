@@ -114,7 +114,6 @@ import org.jooq.ConnectionRunnable;
 import org.jooq.ContextTransactionalCallable;
 import org.jooq.ContextTransactionalRunnable;
 import org.jooq.CreateIndexStep;
-import org.jooq.CreateSequenceFlagsStep;
 import org.jooq.CreateTableColumnStep;
 import org.jooq.CreateTypeStep;
 import org.jooq.CreateViewAsStep;
@@ -127,7 +126,6 @@ import org.jooq.DeleteQuery;
 import org.jooq.DeleteUsingStep;
 import org.jooq.Domain;
 import org.jooq.DropIndexOnStep;
-import org.jooq.DropSequenceFinalStep;
 import org.jooq.DropTableStep;
 import org.jooq.DropTypeStep;
 import org.jooq.DropViewFinalStep;
@@ -3007,6 +3005,36 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
+    public org.jooq.CreateSequenceFlagsStep createSequence(String sequence) {
+        return new CreateSequenceImpl(configuration(), DSL.sequence(sequence), false);
+    }
+
+    @Override
+    public org.jooq.CreateSequenceFlagsStep createSequence(Name sequence) {
+        return new CreateSequenceImpl(configuration(), DSL.sequence(sequence), false);
+    }
+
+    @Override
+    public org.jooq.CreateSequenceFlagsStep createSequence(Sequence<?> sequence) {
+        return new CreateSequenceImpl(configuration(), sequence, false);
+    }
+
+    @Override
+    public org.jooq.CreateSequenceFlagsStep createSequenceIfNotExists(String sequence) {
+        return new CreateSequenceImpl(configuration(), DSL.sequence(sequence), true);
+    }
+
+    @Override
+    public org.jooq.CreateSequenceFlagsStep createSequenceIfNotExists(Name sequence) {
+        return new CreateSequenceImpl(configuration(), DSL.sequence(sequence), true);
+    }
+
+    @Override
+    public org.jooq.CreateSequenceFlagsStep createSequenceIfNotExists(Sequence<?> sequence) {
+        return new CreateSequenceImpl(configuration(), sequence, true);
+    }
+
+    @Override
     public org.jooq.AlterDatabaseStep alterDatabase(String database) {
         return new AlterDatabaseImpl(configuration(), DSL.catalog(database), false);
     }
@@ -3184,6 +3212,36 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public org.jooq.DropSchemaStep dropSchemaIfExists(Schema schema) {
         return new DropSchemaImpl(configuration(), schema, true);
+    }
+
+    @Override
+    public org.jooq.DropSequenceFinalStep dropSequence(String sequence) {
+        return new DropSequenceImpl(configuration(), DSL.sequence(sequence), false);
+    }
+
+    @Override
+    public org.jooq.DropSequenceFinalStep dropSequence(Name sequence) {
+        return new DropSequenceImpl(configuration(), DSL.sequence(sequence), false);
+    }
+
+    @Override
+    public org.jooq.DropSequenceFinalStep dropSequence(Sequence<?> sequence) {
+        return new DropSequenceImpl(configuration(), sequence, false);
+    }
+
+    @Override
+    public org.jooq.DropSequenceFinalStep dropSequenceIfExists(String sequence) {
+        return new DropSequenceImpl(configuration(), DSL.sequence(sequence), true);
+    }
+
+    @Override
+    public org.jooq.DropSequenceFinalStep dropSequenceIfExists(Name sequence) {
+        return new DropSequenceImpl(configuration(), DSL.sequence(sequence), true);
+    }
+
+    @Override
+    public org.jooq.DropSequenceFinalStep dropSequenceIfExists(Sequence<?> sequence) {
+        return new DropSequenceImpl(configuration(), sequence, true);
     }
 
 
@@ -3699,36 +3757,6 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public CreateSequenceFlagsStep createSequence(String sequence) {
-        return createSequence(name(sequence));
-    }
-
-    @Override
-    public CreateSequenceFlagsStep createSequence(Name sequence) {
-        return createSequence(sequence(sequence));
-    }
-
-    @Override
-    public CreateSequenceFlagsStep createSequence(Sequence<?> sequence) {
-        return new CreateSequenceImpl(configuration(), sequence, false);
-    }
-
-    @Override
-    public CreateSequenceFlagsStep createSequenceIfNotExists(String sequence) {
-        return createSequenceIfNotExists(name(sequence));
-    }
-
-    @Override
-    public CreateSequenceFlagsStep createSequenceIfNotExists(Name sequence) {
-        return createSequenceIfNotExists(sequence(sequence));
-    }
-
-    @Override
-    public CreateSequenceFlagsStep createSequenceIfNotExists(Sequence<?> sequence) {
-        return new CreateSequenceImpl(configuration(), sequence, true);
-    }
-
-    @Override
     public AlterSequenceStep<BigInteger> alterSequence(String sequence) {
         return alterSequence(name(sequence));
     }
@@ -3966,36 +3994,6 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public DropIndexOnStep dropIndexIfExists(Index index) {
         return new DropIndexImpl(configuration(), index, true);
-    }
-
-    @Override
-    public DropSequenceFinalStep dropSequence(String sequence) {
-        return dropSequence(name(sequence));
-    }
-
-    @Override
-    public DropSequenceFinalStep dropSequence(Name sequence) {
-        return dropSequence(sequence(sequence));
-    }
-
-    @Override
-    public DropSequenceFinalStep dropSequence(Sequence<?> sequence) {
-        return new DropSequenceImpl(configuration(), sequence);
-    }
-
-    @Override
-    public DropSequenceFinalStep dropSequenceIfExists(String sequence) {
-        return dropSequenceIfExists(name(sequence));
-    }
-
-    @Override
-    public DropSequenceFinalStep dropSequenceIfExists(Name sequence) {
-        return dropSequenceIfExists(sequence(sequence));
-    }
-
-    @Override
-    public DropSequenceFinalStep dropSequenceIfExists(Sequence<?> sequence) {
-        return new DropSequenceImpl(configuration(), sequence, true);
     }
 
     @Override

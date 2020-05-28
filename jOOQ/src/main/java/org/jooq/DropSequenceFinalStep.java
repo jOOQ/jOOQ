@@ -37,8 +37,12 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.*;
+
+import java.util.*;
+
 /**
- * A {@link Query} that can drop sequences.
+ * A step in the construction of the <code>DROP SEQUENCE</code> statement.
  * <p>
  * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
  * <p>
@@ -57,9 +61,7 @@ package org.jooq;
  * <li>They're less readable</li>
  * <li>They might have binary incompatible changes between minor releases</li>
  * </ul>
- *
- * @author Lukas Eder
  */
+@SuppressWarnings({ "unused" })
 public interface DropSequenceFinalStep extends DDLQuery {
-
 }

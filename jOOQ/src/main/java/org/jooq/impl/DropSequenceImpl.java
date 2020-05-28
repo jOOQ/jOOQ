@@ -37,8 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.DROP_SEQUENCE;
-import static org.jooq.Clause.DROP_SEQUENCE_SEQUENCE;
 // ...
 // ...
 import static org.jooq.SQLDialect.CUBRID;
@@ -65,40 +63,44 @@ import org.jooq.SQLDialect;
 import org.jooq.Sequence;
 
 /**
- * @author Lukas Eder
+ * The <code>DROP SEQUENCE IF EXISTS</code> statement.
  */
-final class DropSequenceImpl extends AbstractRowCountQuery implements
+@SuppressWarnings({ "rawtypes", "unused" })
+final class DropSequenceImpl
+extends
+    AbstractRowCountQuery
+implements
+    DropSequenceFinalStep
+{
 
-    // Cascading interface implementations for DROP SEQUENCE behaviour
-    DropSequenceFinalStep {
+    private static final long serialVersionUID = 1L;
 
-    /**
-     * Generated UID
-     */
-    private static final long            serialVersionUID     = 8904572826501186329L;
-    private static final Clause[]        CLAUSES              = { DROP_SEQUENCE };
-    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS = SQLDialect.supportedBy(DERBY, FIREBIRD);
+    private final Sequence<?> sequence;
+    private final boolean     dropSequenceIfExists;
 
-    private final Sequence<?>            sequence;
-    private final boolean                ifExists;
 
-    DropSequenceImpl(Configuration configuration, Sequence<?> sequence) {
-        this(configuration, sequence, false);
-    }
-
-    DropSequenceImpl(Configuration configuration, Sequence<?> sequence, boolean ifExists) {
+    DropSequenceImpl(
+        Configuration configuration,
+        Sequence sequence,
+        boolean dropSequenceIfExists
+    ) {
         super(configuration);
 
         this.sequence = sequence;
-        this.ifExists = ifExists;
+        this.dropSequenceIfExists = dropSequenceIfExists;
     }
 
-    final Sequence<?> $sequence() { return sequence; }
-    final boolean     $ifExists() { return ifExists; }
+    final Sequence<?> $sequence()             { return sequence; }
+    final boolean     $dropSequenceIfExists() { return dropSequenceIfExists; }
 
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // XXX: QueryPart API
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
+
+
+    private static final Clause[]        CLAUSES              = { Clause.DROP_SEQUENCE };
+    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS = SQLDialect.supportedBy(DERBY, FIREBIRD);
 
     private final boolean supportsIfExists(Context<?> ctx) {
         return !NO_SUPPORT_IF_EXISTS.contains(ctx.family());
@@ -106,7 +108,7 @@ final class DropSequenceImpl extends AbstractRowCountQuery implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (ifExists && !supportsIfExists(ctx)) {
+        if (dropSequenceIfExists && !supportsIfExists(ctx)) {
             Tools.beginTryCatch(ctx, DDLStatementType.DROP_SEQUENCE);
             accept0(ctx);
             Tools.endTryCatch(ctx, DDLStatementType.DROP_SEQUENCE);
@@ -117,13 +119,13 @@ final class DropSequenceImpl extends AbstractRowCountQuery implements
     }
 
     private void accept0(Context<?> ctx) {
-        ctx.start(DROP_SEQUENCE_SEQUENCE)
+        ctx.start(Clause.DROP_SEQUENCE_SEQUENCE)
            .visit(K_DROP)
            .sql(' ')
            .visit(ctx.family() == CUBRID ? K_SERIAL : K_SEQUENCE)
            .sql(' ');
 
-        if (ifExists && supportsIfExists(ctx))
+        if (dropSequenceIfExists && supportsIfExists(ctx))
             ctx.visit(K_IF_EXISTS).sql(' ');
 
         switch (ctx.family()) {
@@ -148,11 +150,13 @@ final class DropSequenceImpl extends AbstractRowCountQuery implements
         if (ctx.family() == DERBY)
             ctx.sql(' ').visit(K_RESTRICT);
 
-        ctx.end(DROP_SEQUENCE_SEQUENCE);
+        ctx.end(Clause.DROP_SEQUENCE_SEQUENCE);
     }
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
+
+
 }

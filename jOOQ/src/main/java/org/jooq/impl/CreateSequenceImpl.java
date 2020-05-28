@@ -37,8 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.CREATE_SEQUENCE;
-import static org.jooq.Clause.CREATE_SEQUENCE_SEQUENCE;
 // ...
 // ...
 // ...
@@ -71,100 +69,139 @@ import java.util.Set;
 import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
+import org.jooq.CreateSequenceFinalStep;
 import org.jooq.CreateSequenceFlagsStep;
 import org.jooq.Field;
 import org.jooq.SQLDialect;
 import org.jooq.Sequence;
 
 /**
- * @author Lukas Eder
+ * The <code>CREATE SEQUENCE IF NOT EXISTS</code> statement.
  */
-final class CreateSequenceImpl extends AbstractRowCountQuery implements
+@SuppressWarnings({ "hiding", "rawtypes", "unchecked", "unused" })
+final class CreateSequenceImpl
+extends
+    AbstractRowCountQuery
+implements
+    CreateSequenceFlagsStep,
+    CreateSequenceFinalStep
+{
 
-    // Cascading interface implementations for CREATE SEQUENCE behaviour
-    CreateSequenceFlagsStep {
+    private static final long serialVersionUID = 1L;
 
-    /**
-     * Generated UID
-     */
-    private static final long                serialVersionUID         = 8904572826501186329L;
-    private static final Clause[]            CLAUSES                  = { CREATE_SEQUENCE };
-    private static final Set<SQLDialect>     NO_SUPPORT_IF_NOT_EXISTS = SQLDialect.supportedBy(DERBY, FIREBIRD);
-    private static final Set<SQLDialect>     REQUIRES_START_WITH      = SQLDialect.supportedBy(DERBY);
-    private static final Set<SQLDialect>     NO_SUPPORT_CACHE         = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB);
-    private static final Set<SQLDialect>     NO_SEPARATOR             = SQLDialect.supportedBy(CUBRID, MARIADB);
-    private static final Set<SQLDialect>     OMIT_NO_CACHE            = SQLDialect.supportedBy(FIREBIRD, POSTGRES);
-    private static final Set<SQLDialect>     OMIT_NO_CYCLE            = SQLDialect.supportedBy(FIREBIRD);
-    private static final Set<SQLDialect>     OMIT_NO_MINVALUE         = SQLDialect.supportedBy(FIREBIRD);
-    private static final Set<SQLDialect>     OMIT_NO_MAXVALUE         = SQLDialect.supportedBy(FIREBIRD);
+    private final Sequence<?>             sequence;
+    private final boolean                 createSequenceIfNotExists;
+    private       Field<? extends Number> startWith;
+    private       Field<? extends Number> incrementBy;
+    private       Field<? extends Number> minvalue;
+    private       boolean                 noMinvalue;
+    private       Field<? extends Number> maxvalue;
+    private       boolean                 noMaxvalue;
+    private       boolean                 cycle;
+    private       boolean                 noCycle;
+    private       Field<? extends Number> cache;
+    private       boolean                 noCache;
 
-    private final Sequence<?>            sequence;
-    private final boolean                ifNotExists;
-    private Field<? extends Number>      startWith;
-    private Field<? extends Number>      incrementBy;
-    private Field<? extends Number>      minvalue;
-    private boolean                      noMinvalue;
-    private Field<? extends Number>      maxvalue;
-    private boolean                      noMaxvalue;
-    private boolean                      cycle;
-    private boolean                      noCycle;
-    private Field<? extends Number>      cache;
-    private boolean                      noCache;
+    CreateSequenceImpl(
+        Configuration configuration,
+        Sequence sequence,
+        boolean createSequenceIfNotExists
+    ) {
+        this(
+            configuration,
+            sequence,
+            createSequenceIfNotExists,
+            null,
+            null,
+            null,
+            false,
+            null,
+            false,
+            false,
+            false,
+            null,
+            false
+        );
+    }
 
-    CreateSequenceImpl(Configuration configuration, Sequence<?> sequence, boolean ifNotExists) {
+    CreateSequenceImpl(
+        Configuration configuration,
+        Sequence sequence,
+        boolean createSequenceIfNotExists,
+        Field startWith,
+        Field incrementBy,
+        Field minvalue,
+        boolean noMinvalue,
+        Field maxvalue,
+        boolean noMaxvalue,
+        boolean cycle,
+        boolean noCycle,
+        Field cache,
+        boolean noCache
+    ) {
         super(configuration);
 
         this.sequence = sequence;
-        this.ifNotExists = ifNotExists;
+        this.createSequenceIfNotExists = createSequenceIfNotExists;
+        this.startWith = startWith;
+        this.incrementBy = incrementBy;
+        this.minvalue = minvalue;
+        this.noMinvalue = noMinvalue;
+        this.maxvalue = maxvalue;
+        this.noMaxvalue = noMaxvalue;
+        this.cycle = cycle;
+        this.noCycle = noCycle;
+        this.cache = cache;
+        this.noCache = noCache;
     }
 
-    final Sequence<?>             $sequence()    { return sequence; }
-    final boolean                 $ifNotExists() { return ifNotExists; }
-    final Field<? extends Number> $startWith()   { return startWith; }
-    final Field<? extends Number> $incrementBy() { return incrementBy; }
-    final Field<? extends Number> $minvalue()    { return minvalue; }
-    final boolean                 $noMinvalue()  { return noMinvalue; }
-    final Field<? extends Number> $maxvalue()    { return maxvalue; }
-    final boolean                 $noMaxvalue()  { return noMaxvalue; }
-    final boolean                 $cycle()       { return cycle; }
-    final boolean                 $noCycle()     { return noCycle; }
-    final Field<? extends Number> $cache()       { return cache; }
-    final boolean                 $noCache()     { return noCache; }
+    final Sequence<?>             $sequence()                  { return sequence; }
+    final boolean                 $createSequenceIfNotExists() { return createSequenceIfNotExists; }
+    final Field<? extends Number> $startWith()                 { return startWith; }
+    final Field<? extends Number> $incrementBy()               { return incrementBy; }
+    final Field<? extends Number> $minvalue()                  { return minvalue; }
+    final boolean                 $noMinvalue()                { return noMinvalue; }
+    final Field<? extends Number> $maxvalue()                  { return maxvalue; }
+    final boolean                 $noMaxvalue()                { return noMaxvalue; }
+    final boolean                 $cycle()                     { return cycle; }
+    final boolean                 $noCycle()                   { return noCycle; }
+    final Field<? extends Number> $cache()                     { return cache; }
+    final boolean                 $noCache()                   { return noCache; }
 
-    // ------------------------------------------------------------------------
-    // XXX: Sequence API
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // XXX: DSL API
+    // -------------------------------------------------------------------------
 
     @Override
-    public final CreateSequenceImpl startWith(Number value) {
-        return startWith(Tools.field(value, sequence.getDataType()));
+    public final CreateSequenceImpl startWith(Number startWith) {
+        return startWith(Tools.field(startWith, sequence.getDataType()));
     }
 
     @Override
-    public final CreateSequenceImpl startWith(Field<? extends Number> value) {
-        this.startWith = value;
+    public final CreateSequenceImpl startWith(Field<? extends Number> startWith) {
+        this.startWith = startWith;
         return this;
     }
 
     @Override
-    public final CreateSequenceImpl incrementBy(Number value) {
-        return incrementBy(Tools.field(value, sequence.getDataType()));
+    public final CreateSequenceImpl incrementBy(Number incrementBy) {
+        return incrementBy(Tools.field(incrementBy, sequence.getDataType()));
     }
 
     @Override
-    public final CreateSequenceImpl incrementBy(Field<? extends Number> value) {
-        this.incrementBy = value;
+    public final CreateSequenceImpl incrementBy(Field<? extends Number> incrementBy) {
+        this.incrementBy = incrementBy;
         return this;
     }
 
     @Override
-    public final CreateSequenceImpl minvalue(Number value) {
-        return minvalue(Tools.field(value, sequence.getDataType()));
+    public final CreateSequenceImpl minvalue(Number minvalue) {
+        return minvalue(Tools.field(minvalue, sequence.getDataType()));
     }
 
     @Override
-    public final CreateSequenceImpl minvalue(Field<? extends Number> value) {
-        this.minvalue = value;
+    public final CreateSequenceImpl minvalue(Field<? extends Number> minvalue) {
+        this.minvalue = minvalue;
         return this;
     }
 
@@ -175,13 +212,13 @@ final class CreateSequenceImpl extends AbstractRowCountQuery implements
     }
 
     @Override
-    public final CreateSequenceImpl maxvalue(Number value) {
-        return maxvalue(Tools.field(value, sequence.getDataType()));
+    public final CreateSequenceImpl maxvalue(Number maxvalue) {
+        return maxvalue(Tools.field(maxvalue, sequence.getDataType()));
     }
 
     @Override
-    public final CreateSequenceImpl maxvalue(Field<? extends Number> value) {
-        this.maxvalue = value;
+    public final CreateSequenceImpl maxvalue(Field<? extends Number> maxvalue) {
+        this.maxvalue = maxvalue;
         return this;
     }
 
@@ -204,13 +241,13 @@ final class CreateSequenceImpl extends AbstractRowCountQuery implements
     }
 
     @Override
-    public final CreateSequenceImpl cache(Number value) {
-        return cache(Tools.field(value, sequence.getDataType()));
+    public final CreateSequenceImpl cache(Number cache) {
+        return cache(Tools.field(cache, sequence.getDataType()));
     }
 
     @Override
-    public final CreateSequenceImpl cache(Field<? extends Number> value) {
-        this.cache = value;
+    public final CreateSequenceImpl cache(Field<? extends Number> cache) {
+        this.cache = cache;
         return this;
     }
 
@@ -220,9 +257,21 @@ final class CreateSequenceImpl extends AbstractRowCountQuery implements
         return this;
     }
 
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // XXX: QueryPart API
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
+
+
+    private static final Clause[]            CLAUSES                  = { Clause.CREATE_SEQUENCE };
+    private static final Set<SQLDialect>     NO_SUPPORT_IF_NOT_EXISTS = SQLDialect.supportedBy(DERBY, FIREBIRD);
+    private static final Set<SQLDialect>     REQUIRES_START_WITH      = SQLDialect.supportedBy(DERBY);
+    private static final Set<SQLDialect>     NO_SUPPORT_CACHE         = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB);
+    private static final Set<SQLDialect>     NO_SEPARATOR             = SQLDialect.supportedBy(CUBRID, MARIADB);
+    private static final Set<SQLDialect>     OMIT_NO_CACHE            = SQLDialect.supportedBy(FIREBIRD, POSTGRES);
+    private static final Set<SQLDialect>     OMIT_NO_CYCLE            = SQLDialect.supportedBy(FIREBIRD);
+    private static final Set<SQLDialect>     OMIT_NO_MINVALUE         = SQLDialect.supportedBy(FIREBIRD);
+    private static final Set<SQLDialect>     OMIT_NO_MAXVALUE         = SQLDialect.supportedBy(FIREBIRD);
 
     private final boolean supportsIfNotExists(Context<?> ctx) {
         return !NO_SUPPORT_IF_NOT_EXISTS.contains(ctx.family());
@@ -230,7 +279,7 @@ final class CreateSequenceImpl extends AbstractRowCountQuery implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (ifNotExists && !supportsIfNotExists(ctx)) {
+        if (createSequenceIfNotExists && !supportsIfNotExists(ctx)) {
             Tools.beginTryCatch(ctx, DDLStatementType.CREATE_SEQUENCE);
             accept0(ctx);
             Tools.endTryCatch(ctx, DDLStatementType.CREATE_SEQUENCE);
@@ -243,13 +292,13 @@ final class CreateSequenceImpl extends AbstractRowCountQuery implements
     private final void accept0(Context<?> ctx) {
         SQLDialect family = ctx.family();
 
-        ctx.start(CREATE_SEQUENCE_SEQUENCE)
+        ctx.start(Clause.CREATE_SEQUENCE_SEQUENCE)
            .visit(K_CREATE)
            .sql(' ')
            .visit(family == CUBRID ? K_SERIAL : K_SEQUENCE)
            .sql(' ');
 
-        if (ifNotExists && supportsIfNotExists(ctx))
+        if (createSequenceIfNotExists && supportsIfNotExists(ctx))
             ctx.visit(K_IF_NOT_EXISTS)
                .sql(' ');
 
@@ -286,11 +335,13 @@ final class CreateSequenceImpl extends AbstractRowCountQuery implements
             else if (noCache && !OMIT_NO_CACHE.contains(family))
                 ctx.sql(' ').visit(K_NO).sql(noSeparator).visit(K_CACHE);
 
-        ctx.end(CREATE_SEQUENCE_SEQUENCE);
+        ctx.end(Clause.CREATE_SEQUENCE_SEQUENCE);
     }
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
+
+
 }

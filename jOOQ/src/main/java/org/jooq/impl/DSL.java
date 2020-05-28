@@ -184,7 +184,6 @@ import org.jooq.ConstraintForeignKeyReferencesStepN;
 import org.jooq.ConstraintTypeStep;
 // ...
 import org.jooq.CreateIndexStep;
-import org.jooq.CreateSequenceFlagsStep;
 import org.jooq.CreateTableColumnStep;
 import org.jooq.CreateTypeStep;
 import org.jooq.CreateViewAsStep;
@@ -197,7 +196,6 @@ import org.jooq.DeleteUsingStep;
 import org.jooq.DerivedColumnList;
 import org.jooq.Domain;
 import org.jooq.DropIndexOnStep;
-import org.jooq.DropSequenceFinalStep;
 import org.jooq.DropTableStep;
 import org.jooq.DropTypeStep;
 import org.jooq.DropViewFinalStep;
@@ -7000,6 +6998,66 @@ public class DSL {
     }
 
     /**
+     * The <code>CREATE SEQUENCE</code> statement.
+     *
+     * @see DSLContext#createSequence(String)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    public static org.jooq.CreateSequenceFlagsStep createSequence(String sequence) {
+        return dsl().createSequence(sequence);
+    }
+
+    /**
+     * The <code>CREATE SEQUENCE</code> statement.
+     *
+     * @see DSLContext#createSequence(Name)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    public static org.jooq.CreateSequenceFlagsStep createSequence(Name sequence) {
+        return dsl().createSequence(sequence);
+    }
+
+    /**
+     * The <code>CREATE SEQUENCE</code> statement.
+     *
+     * @see DSLContext#createSequence(Sequence)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    public static org.jooq.CreateSequenceFlagsStep createSequence(Sequence<?> sequence) {
+        return dsl().createSequence(sequence);
+    }
+
+    /**
+     * The <code>CREATE SEQUENCE IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createSequenceIfNotExists(String)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    public static org.jooq.CreateSequenceFlagsStep createSequenceIfNotExists(String sequence) {
+        return dsl().createSequenceIfNotExists(sequence);
+    }
+
+    /**
+     * The <code>CREATE SEQUENCE IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createSequenceIfNotExists(Name)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    public static org.jooq.CreateSequenceFlagsStep createSequenceIfNotExists(Name sequence) {
+        return dsl().createSequenceIfNotExists(sequence);
+    }
+
+    /**
+     * The <code>CREATE SEQUENCE IF NOT EXISTS</code> statement.
+     *
+     * @see DSLContext#createSequenceIfNotExists(Sequence)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    public static org.jooq.CreateSequenceFlagsStep createSequenceIfNotExists(Sequence<?> sequence) {
+        return dsl().createSequenceIfNotExists(sequence);
+    }
+
+    /**
      * The <code>ALTER DATABASE</code> statement.
      *
      * @see DSLContext#alterDatabase(String)
@@ -7357,6 +7415,66 @@ public class DSL {
     @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.DropSchemaStep dropSchemaIfExists(Schema schema) {
         return dsl().dropSchemaIfExists(schema);
+    }
+
+    /**
+     * The <code>DROP SEQUENCE</code> statement.
+     *
+     * @see DSLContext#dropSequence(String)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    public static org.jooq.DropSequenceFinalStep dropSequence(String sequence) {
+        return dsl().dropSequence(sequence);
+    }
+
+    /**
+     * The <code>DROP SEQUENCE</code> statement.
+     *
+     * @see DSLContext#dropSequence(Name)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    public static org.jooq.DropSequenceFinalStep dropSequence(Name sequence) {
+        return dsl().dropSequence(sequence);
+    }
+
+    /**
+     * The <code>DROP SEQUENCE</code> statement.
+     *
+     * @see DSLContext#dropSequence(Sequence)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    public static org.jooq.DropSequenceFinalStep dropSequence(Sequence<?> sequence) {
+        return dsl().dropSequence(sequence);
+    }
+
+    /**
+     * The <code>DROP SEQUENCE IF EXISTS</code> statement.
+     *
+     * @see DSLContext#dropSequenceIfExists(String)
+     */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    public static org.jooq.DropSequenceFinalStep dropSequenceIfExists(String sequence) {
+        return dsl().dropSequenceIfExists(sequence);
+    }
+
+    /**
+     * The <code>DROP SEQUENCE IF EXISTS</code> statement.
+     *
+     * @see DSLContext#dropSequenceIfExists(Name)
+     */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    public static org.jooq.DropSequenceFinalStep dropSequenceIfExists(Name sequence) {
+        return dsl().dropSequenceIfExists(sequence);
+    }
+
+    /**
+     * The <code>DROP SEQUENCE IF EXISTS</code> statement.
+     *
+     * @see DSLContext#dropSequenceIfExists(Sequence)
+     */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    public static org.jooq.DropSequenceFinalStep dropSequenceIfExists(Sequence<?> sequence) {
+        return dsl().dropSequenceIfExists(sequence);
     }
 
 
@@ -8068,66 +8186,6 @@ public class DSL {
     }
 
     /**
-     * Create a new DSL <code>CREATE SEQUENCE</code> statement.
-     *
-     * @see DSLContext#createSequence(String)
-     */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    public static CreateSequenceFlagsStep createSequence(String sequence) {
-        return dsl().createSequence(sequence);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE SEQUENCE</code> statement.
-     *
-     * @see DSLContext#createSequence(Name)
-     */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    public static CreateSequenceFlagsStep createSequence(Name sequence) {
-        return dsl().createSequence(sequence);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE SEQUENCE</code> statement.
-     *
-     * @see DSLContext#createSequence(Sequence)
-     */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    public static CreateSequenceFlagsStep createSequence(Sequence<?> sequence) {
-        return dsl().createSequence(sequence);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE SEQUENCE IF NOT EXISTS</code> statement.
-     *
-     * @see DSLContext#createSequenceIfNotExists(String)
-     */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    public static CreateSequenceFlagsStep createSequenceIfNotExists(String sequence) {
-        return dsl().createSequenceIfNotExists(sequence);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE SEQUENCE IF NOT EXISTS</code> statement.
-     *
-     * @see DSLContext#createSequenceIfNotExists(Name)
-     */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    public static CreateSequenceFlagsStep createSequenceIfNotExists(Name sequence) {
-        return dsl().createSequenceIfNotExists(sequence);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE SEQUENCE IF NOT EXISTS</code> statement.
-     *
-     * @see DSLContext#createSequenceIfNotExists(Sequence)
-     */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    public static CreateSequenceFlagsStep createSequenceIfNotExists(Sequence<?> sequence) {
-        return dsl().createSequenceIfNotExists(sequence);
-    }
-
-    /**
      * Create a new DSL <code>ALTER SEQUENCE</code> statement.
      *
      * @see DSLContext#alterSequence(String)
@@ -8632,75 +8690,6 @@ public class DSL {
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
     public static DropIndexOnStep dropIndexIfExists(Index index) {
         return dsl().dropIndexIfExists(index);
-    }
-
-    /**
-     * Create a new DSL <code>DROP SEQUENCE</code> statement.
-     *
-     * @see DSLContext#dropSequence(String)
-     */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    public static <T extends Number> DropSequenceFinalStep dropSequence(String sequence) {
-        return dsl().dropSequence(sequence);
-    }
-
-    /**
-     * Create a new DSL <code>DROP SEQUENCE</code> statement.
-     *
-     * @see DSLContext#dropSequence(Name)
-     */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    public static <T extends Number> DropSequenceFinalStep dropSequence(Name sequence) {
-        return dsl().dropSequence(sequence);
-    }
-
-    /**
-     * Create a new DSL <code>DROP SEQUENCE</code> statement.
-     *
-     * @see DSLContext#dropSequence(Sequence)
-     */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    public static <T extends Number> DropSequenceFinalStep dropSequence(Sequence<?> sequence) {
-        return dsl().dropSequence(sequence);
-    }
-
-    /**
-     * Create a new DSL <code>DROP SEQUENCE IF EXISTS</code> statement.
-     * <p>
-     * If your database doesn't natively support <code>IF EXISTS</code>, this is
-     * emulated by catching (and ignoring) the relevant {@link SQLException}.
-     *
-     * @see DSLContext#dropSequenceIfExists(String)
-     */
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    public static <T extends Number> DropSequenceFinalStep dropSequenceIfExists(String sequence) {
-        return dsl().dropSequenceIfExists(sequence);
-    }
-
-    /**
-     * Create a new DSL <code>DROP SEQUENCE IF EXISTS</code> statement.
-     * <p>
-     * If your database doesn't natively support <code>IF EXISTS</code>, this is
-     * emulated by catching (and ignoring) the relevant {@link SQLException}.
-     *
-     * @see DSLContext#dropSequenceIfExists(Name)
-     */
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    public static <T extends Number> DropSequenceFinalStep dropSequenceIfExists(Name sequence) {
-        return dsl().dropSequenceIfExists(sequence);
-    }
-
-    /**
-     * Create a new DSL <code>DROP SEQUENCE IF EXISTS</code> statement.
-     * <p>
-     * If your database doesn't natively support <code>IF EXISTS</code>, this is
-     * emulated by catching (and ignoring) the relevant {@link SQLException}.
-     *
-     * @see DSLContext#dropSequenceIfExists(Sequence)
-     */
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    public static <T extends Number> DropSequenceFinalStep dropSequenceIfExists(Sequence<?> sequence) {
-        return dsl().dropSequenceIfExists(sequence);
     }
 
     /**

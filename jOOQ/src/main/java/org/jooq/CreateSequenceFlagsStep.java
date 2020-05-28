@@ -37,27 +37,12 @@
  */
 package org.jooq;
 
-// ...
-// ...
-import static org.jooq.SQLDialect.CUBRID;
-// ...
-import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.FIREBIRD;
-// ...
-import static org.jooq.SQLDialect.H2;
-// ...
-import static org.jooq.SQLDialect.HSQLDB;
-// ...
-// ...
-import static org.jooq.SQLDialect.MARIADB;
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-// ...
-// ...
-// ...
+import static org.jooq.SQLDialect.*;
+
+import java.util.*;
 
 /**
- * A {@link Query} that can create sequences.
+ * A step in the construction of the <code>CREATE SEQUENCE</code> statement.
  * <p>
  * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
  * <p>
@@ -76,97 +61,96 @@ import static org.jooq.SQLDialect.POSTGRES;
  * <li>They're less readable</li>
  * <li>They might have binary incompatible changes between minor releases</li>
  * </ul>
- *
- * @author Lukas Eder
  */
+@SuppressWarnings({ "unused" })
 public interface CreateSequenceFlagsStep extends CreateSequenceFinalStep {
 
     /**
-     * Add a <code>START WITH</code> clause to the sequence definition.
+     * Add the <code>START WITH</code> clause to the <code>CREATE SEQUENCE</code> statement.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    CreateSequenceFlagsStep startWith(Number value);
+    CreateSequenceFlagsStep startWith(Number startWith);
 
     /**
-     * Add a <code>START WITH</code> clause to the sequence definition.
+     * Add the <code>START WITH</code> clause to the <code>CREATE SEQUENCE</code> statement.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    CreateSequenceFlagsStep startWith(Field<? extends Number> value);
+    CreateSequenceFlagsStep startWith(Field<? extends Number> startWith);
 
     /**
-     * Add a <code>INCREMENT BY</code> clause to the sequence definition.
+     * Add the <code>INCREMENT BY</code> clause to the <code>CREATE SEQUENCE</code> statement.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    CreateSequenceFlagsStep incrementBy(Number value);
+    CreateSequenceFlagsStep incrementBy(Number incrementBy);
 
     /**
-     * Add a <code>INCREMENT BY</code> clause to the sequence definition.
+     * Add the <code>INCREMENT BY</code> clause to the <code>CREATE SEQUENCE</code> statement.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    CreateSequenceFlagsStep incrementBy(Field<? extends Number> value);
+    CreateSequenceFlagsStep incrementBy(Field<? extends Number> incrementBy);
 
     /**
-     * Add a <code>MINVALUE</code> clause to the sequence definition.
+     * Add the <code>MINVALUE</code> clause to the <code>CREATE SEQUENCE</code> statement.
      */
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, POSTGRES })
-    CreateSequenceFlagsStep minvalue(Number value);
+    CreateSequenceFlagsStep minvalue(Number minvalue);
 
     /**
-     * Add a <code>MINVALUE</code> clause to the sequence definition.
+     * Add the <code>MINVALUE</code> clause to the <code>CREATE SEQUENCE</code> statement.
      */
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, POSTGRES })
-    CreateSequenceFlagsStep minvalue(Field<? extends Number> value);
+    CreateSequenceFlagsStep minvalue(Field<? extends Number> minvalue);
 
     /**
-     * Add a <code>NO MINVALUE</code> clause to the sequence definition.
+     * Add the <code>NO MINVALUE</code> clause to the <code>CREATE SEQUENCE</code> statement.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     CreateSequenceFlagsStep noMinvalue();
 
     /**
-     * Add a <code>MINVALUE</code> clause to the sequence definition.
+     * Add the <code>MAXVALUE</code> clause to the <code>CREATE SEQUENCE</code> statement.
      */
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, POSTGRES })
-    CreateSequenceFlagsStep maxvalue(Number value);
+    CreateSequenceFlagsStep maxvalue(Number maxvalue);
 
     /**
-     * Add a <code>MINVALUE</code> clause to the sequence definition.
+     * Add the <code>MAXVALUE</code> clause to the <code>CREATE SEQUENCE</code> statement.
      */
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, POSTGRES })
-    CreateSequenceFlagsStep maxvalue(Field<? extends Number> value);
+    CreateSequenceFlagsStep maxvalue(Field<? extends Number> maxvalue);
 
     /**
-     * Add a <code>NO MINVALUE</code> clause to the sequence definition.
+     * Add the <code>NO MAXVALUE</code> clause to the <code>CREATE SEQUENCE</code> statement.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     CreateSequenceFlagsStep noMaxvalue();
 
     /**
-     * Add a <code>CYCLE</code> clause to the sequence definition.
+     * Add the <code>CYCLE</code> clause to the <code>CREATE SEQUENCE</code> statement.
      */
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, POSTGRES })
     CreateSequenceFlagsStep cycle();
 
     /**
-     * Add a <code>NO CYCLE</code> clause to the sequence definition.
+     * Add the <code>NO CYCLE</code> clause to the <code>CREATE SEQUENCE</code> statement.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     CreateSequenceFlagsStep noCycle();
 
     /**
-     * Add a <code>CACHE</code> clause to the sequence definition.
+     * Add the <code>CACHE</code> clause to the <code>CREATE SEQUENCE</code> statement.
      */
     @Support({ CUBRID, H2, MARIADB, POSTGRES })
-    CreateSequenceFlagsStep cache(Number value);
+    CreateSequenceFlagsStep cache(Number cache);
 
     /**
-     * Add a <code>CACHE</code> clause to the sequence definition.
+     * Add the <code>CACHE</code> clause to the <code>CREATE SEQUENCE</code> statement.
      */
     @Support({ CUBRID, H2, MARIADB, POSTGRES })
-    CreateSequenceFlagsStep cache(Field<? extends Number> value);
+    CreateSequenceFlagsStep cache(Field<? extends Number> cache);
 
     /**
-     * Add a <code>NO CACHE</code> clause to the sequence definition.
+     * Add the <code>NO CACHE</code> clause to the <code>CREATE SEQUENCE</code> statement.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     CreateSequenceFlagsStep noCache();

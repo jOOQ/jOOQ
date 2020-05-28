@@ -8885,6 +8885,54 @@ public interface DSLContext extends Scope , AutoCloseable {
     CreateSchemaFinalStep createSchemaIfNotExists(Schema schema);
 
     /**
+     * The <code>CREATE SEQUENCE</code> statement.
+     *
+     * @see DSL#createSequence(String)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    CreateSequenceFlagsStep createSequence(String sequence);
+
+    /**
+     * The <code>CREATE SEQUENCE</code> statement.
+     *
+     * @see DSL#createSequence(Name)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    CreateSequenceFlagsStep createSequence(Name sequence);
+
+    /**
+     * The <code>CREATE SEQUENCE</code> statement.
+     *
+     * @see DSL#createSequence(Sequence)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    CreateSequenceFlagsStep createSequence(Sequence<?> sequence);
+
+    /**
+     * The <code>CREATE SEQUENCE IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createSequenceIfNotExists(String)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    CreateSequenceFlagsStep createSequenceIfNotExists(String sequence);
+
+    /**
+     * The <code>CREATE SEQUENCE IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createSequenceIfNotExists(Name)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    CreateSequenceFlagsStep createSequenceIfNotExists(Name sequence);
+
+    /**
+     * The <code>CREATE SEQUENCE IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createSequenceIfNotExists(Sequence)
+     */
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    CreateSequenceFlagsStep createSequenceIfNotExists(Sequence<?> sequence);
+
+    /**
      * The <code>ALTER DATABASE</code> statement.
      *
      * @see DSL#alterDatabase(String)
@@ -9171,6 +9219,54 @@ public interface DSLContext extends Scope , AutoCloseable {
      */
     @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     DropSchemaStep dropSchemaIfExists(Schema schema);
+
+    /**
+     * The <code>DROP SEQUENCE</code> statement.
+     *
+     * @see DSL#dropSequence(String)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    DropSequenceFinalStep dropSequence(String sequence);
+
+    /**
+     * The <code>DROP SEQUENCE</code> statement.
+     *
+     * @see DSL#dropSequence(Name)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    DropSequenceFinalStep dropSequence(Name sequence);
+
+    /**
+     * The <code>DROP SEQUENCE</code> statement.
+     *
+     * @see DSL#dropSequence(Sequence)
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    DropSequenceFinalStep dropSequence(Sequence<?> sequence);
+
+    /**
+     * The <code>DROP SEQUENCE IF EXISTS</code> statement.
+     *
+     * @see DSL#dropSequenceIfExists(String)
+     */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    DropSequenceFinalStep dropSequenceIfExists(String sequence);
+
+    /**
+     * The <code>DROP SEQUENCE IF EXISTS</code> statement.
+     *
+     * @see DSL#dropSequenceIfExists(Name)
+     */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    DropSequenceFinalStep dropSequenceIfExists(Name sequence);
+
+    /**
+     * The <code>DROP SEQUENCE IF EXISTS</code> statement.
+     *
+     * @see DSL#dropSequenceIfExists(Sequence)
+     */
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
+    DropSequenceFinalStep dropSequenceIfExists(Sequence<?> sequence);
 
 
 
@@ -9991,54 +10087,6 @@ public interface DSLContext extends Scope , AutoCloseable {
     CreateIndexStep createUniqueIndexIfNotExists(Index index);
 
     /**
-     * Create a new DSL <code>CREATE SEQUENCE</code> statement.
-     *
-     * @see DSL#createSequence(String)
-     */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    CreateSequenceFlagsStep createSequence(String sequence);
-
-    /**
-     * Create a new DSL <code>CREATE SEQUENCE</code> statement.
-     *
-     * @see DSL#createSequence(Name)
-     */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    CreateSequenceFlagsStep createSequence(Name sequence);
-
-    /**
-     * Create a new DSL <code>CREATE SEQUENCE</code> statement.
-     *
-     * @see DSL#createSequence(String)
-     */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    CreateSequenceFlagsStep createSequence(Sequence<?> sequence);
-
-    /**
-     * Create a new DSL <code>CREATE SEQUENCE</code> statement.
-     *
-     * @see DSL#createSequenceIfNotExists(String)
-     */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    CreateSequenceFlagsStep createSequenceIfNotExists(String sequence);
-
-    /**
-     * Create a new DSL <code>CREATE SEQUENCE</code> statement.
-     *
-     * @see DSL#createSequenceIfNotExists(Name)
-     */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    CreateSequenceFlagsStep createSequenceIfNotExists(Name sequence);
-
-    /**
-     * Create a new DSL <code>CREATE SEQUENCE</code> statement.
-     *
-     * @see DSL#createSequenceIfNotExists(Sequence)
-     */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    CreateSequenceFlagsStep createSequenceIfNotExists(Sequence<?> sequence);
-
-    /**
      * Create a new DSL <code>ALTER SEQUENCE</code> statement.
      *
      * @see DSL#alterSequence(String)
@@ -10448,63 +10496,6 @@ public interface DSLContext extends Scope , AutoCloseable {
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
     DropIndexOnStep dropIndexIfExists(Index index);
-
-    /**
-     * Create a new DSL <code>DROP SEQUENCE</code> statement.
-     *
-     * @see DSL#dropSequence(String)
-     */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    DropSequenceFinalStep dropSequence(String sequence);
-
-    /**
-     * Create a new DSL <code>DROP SEQUENCE</code> statement.
-     *
-     * @see DSL#dropSequence(Name)
-     */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    DropSequenceFinalStep dropSequence(Name sequence);
-
-    /**
-     * Create a new DSL <code>DROP SEQUENCE</code> statement.
-     *
-     * @see DSL#dropSequence(Sequence)
-     */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    DropSequenceFinalStep dropSequence(Sequence<?> sequence);
-
-    /**
-     * Create a new DSL <code>DROP SEQUENCE IF EXISTS</code> statement.
-     * <p>
-     * If your database doesn't natively support <code>IF EXISTS</code>, this is
-     * emulated by catching (and ignoring) the relevant {@link SQLException}.
-     *
-     * @see DSL#dropSequenceIfExists(String)
-     */
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    DropSequenceFinalStep dropSequenceIfExists(String sequence);
-
-    /**
-     * Create a new DSL <code>DROP SEQUENCE IF EXISTS</code> statement.
-     * <p>
-     * If your database doesn't natively support <code>IF EXISTS</code>, this is
-     * emulated by catching (and ignoring) the relevant {@link SQLException}.
-     *
-     * @see DSL#dropSequenceIfExists(Name)
-     */
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    DropSequenceFinalStep dropSequenceIfExists(Name sequence);
-
-    /**
-     * Create a new DSL <code>DROP SEQUENCE IF EXISTS</code> statement.
-     * <p>
-     * If your database doesn't natively support <code>IF EXISTS</code>, this is
-     * emulated by catching (and ignoring) the relevant {@link SQLException}.
-     *
-     * @see DSL#dropSequenceIfExists(Sequence)
-     */
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
-    DropSequenceFinalStep dropSequenceIfExists(Sequence<?> sequence);
 
     /**
      * Create a new DSL truncate statement.

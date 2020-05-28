@@ -1044,6 +1044,9 @@ final class Interpreter {
         if (!TRUE.equals(query.$cascade()) && !existing.fields.isEmpty())
             throw new DataDefinitionException("Domain " + domain.getQualifiedName() + " is still being referenced by fields.");
 
+        for (MutableField mf : new ArrayList<>(existing.fields))
+            dropColumns(mf.table, existing.fields, CASCADE);
+
         schema.domains.remove(existing);
     }
 

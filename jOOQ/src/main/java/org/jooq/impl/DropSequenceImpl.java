@@ -37,30 +37,14 @@
  */
 package org.jooq.impl;
 
-// ...
-// ...
-import static org.jooq.SQLDialect.CUBRID;
-// ...
-import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.FIREBIRD;
-// ...
-// ...
-// ...
-// ...
-import static org.jooq.impl.Keywords.K_DROP;
-import static org.jooq.impl.Keywords.K_IF_EXISTS;
-import static org.jooq.impl.Keywords.K_RESTRICT;
-import static org.jooq.impl.Keywords.K_SEQUENCE;
-import static org.jooq.impl.Keywords.K_SERIAL;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import java.util.Set;
+import org.jooq.*;
+import org.jooq.impl.*;
 
-import org.jooq.Clause;
-import org.jooq.Configuration;
-import org.jooq.Context;
-import org.jooq.DropSequenceFinalStep;
-import org.jooq.SQLDialect;
-import org.jooq.Sequence;
+import java.util.*;
 
 /**
  * The <code>DROP SEQUENCE IF EXISTS</code> statement.
@@ -72,13 +56,13 @@ extends
 implements
     DropSequenceFinalStep
 {
-
+    
     private static final long serialVersionUID = 1L;
 
     private final Sequence<?> sequence;
     private final boolean     dropSequenceIfExists;
-
-
+    
+    
     DropSequenceImpl(
         Configuration configuration,
         Sequence sequence,

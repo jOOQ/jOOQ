@@ -37,43 +37,14 @@
  */
 package org.jooq.impl;
 
-// ...
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.CUBRID;
-// ...
-import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.FIREBIRD;
-// ...
-import static org.jooq.SQLDialect.HSQLDB;
-// ...
-import static org.jooq.SQLDialect.MARIADB;
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-// ...
-import static org.jooq.impl.Keywords.K_CACHE;
-import static org.jooq.impl.Keywords.K_CREATE;
-import static org.jooq.impl.Keywords.K_CYCLE;
-import static org.jooq.impl.Keywords.K_IF_NOT_EXISTS;
-import static org.jooq.impl.Keywords.K_INCREMENT_BY;
-import static org.jooq.impl.Keywords.K_MAXVALUE;
-import static org.jooq.impl.Keywords.K_MINVALUE;
-import static org.jooq.impl.Keywords.K_NO;
-import static org.jooq.impl.Keywords.K_SEQUENCE;
-import static org.jooq.impl.Keywords.K_SERIAL;
-import static org.jooq.impl.Keywords.K_START_WITH;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import java.util.Set;
+import org.jooq.*;
+import org.jooq.impl.*;
 
-import org.jooq.Clause;
-import org.jooq.Configuration;
-import org.jooq.Context;
-import org.jooq.CreateSequenceFinalStep;
-import org.jooq.CreateSequenceFlagsStep;
-import org.jooq.Field;
-import org.jooq.SQLDialect;
-import org.jooq.Sequence;
+import java.util.*;
 
 /**
  * The <code>CREATE SEQUENCE IF NOT EXISTS</code> statement.
@@ -86,7 +57,7 @@ implements
     CreateSequenceFlagsStep,
     CreateSequenceFinalStep
 {
-
+    
     private static final long serialVersionUID = 1L;
 
     private final Sequence<?>             sequence;
@@ -101,7 +72,7 @@ implements
     private       boolean                 noCycle;
     private       Field<? extends Number> cache;
     private       boolean                 noCache;
-
+    
     CreateSequenceImpl(
         Configuration configuration,
         Sequence sequence,
@@ -123,7 +94,7 @@ implements
             false
         );
     }
-
+    
     CreateSequenceImpl(
         Configuration configuration,
         Sequence sequence,
@@ -171,7 +142,7 @@ implements
     // -------------------------------------------------------------------------
     // XXX: DSL API
     // -------------------------------------------------------------------------
-
+    
     @Override
     public final CreateSequenceImpl startWith(Number startWith) {
         return startWith(Tools.field(startWith, sequence.getDataType()));

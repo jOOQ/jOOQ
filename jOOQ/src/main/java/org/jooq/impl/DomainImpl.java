@@ -52,7 +52,7 @@ import org.jooq.Schema;
 /**
  * @author Lukas Eder
  */
-final class DomainImpl<T> extends AbstractTypedNamed<T> implements Domain<T> {
+class DomainImpl<T> extends AbstractTypedNamed<T> implements Domain<T> {
 
     /**
      * Generated UID

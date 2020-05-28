@@ -56,6 +56,7 @@ public final class DDLExportConfiguration {
     private final boolean          createSchemaIfNotExists;
     private final boolean          createTableIfNotExists;
     private final boolean          createIndexIfNotExists;
+    private final boolean          createDomainIfNotExists;
     private final boolean          createSequenceIfNotExists;
     private final boolean          createViewIfNotExists;
     private final boolean          createOrReplaceView;
@@ -66,6 +67,7 @@ public final class DDLExportConfiguration {
     private final boolean          respectColumnOrder;
     private final boolean          respectConstraintOrder;
     private final boolean          respectIndexOrder;
+    private final boolean          respectDomainOrder;
     private final boolean          respectSequenceOrder;
 
     private final boolean          defaultSequenceFlags;
@@ -83,11 +85,13 @@ public final class DDLExportConfiguration {
             false,
             false,
             false,
+            false,
 
             false,
             false,
             false,
             true,
+            false,
             false,
             false,
             false,
@@ -102,6 +106,7 @@ public final class DDLExportConfiguration {
         boolean createSchemaIfNotExists,
         boolean createTableIfNotExists,
         boolean createIndexIfNotExists,
+        boolean createDomainIfNotExists,
         boolean createSequenceIfNotExists,
         boolean createViewIfNotExists,
         boolean createOrReplaceView,
@@ -112,6 +117,7 @@ public final class DDLExportConfiguration {
         boolean respectColumnOrder,
         boolean respectConstraintOrder,
         boolean respectIndexOrder,
+        boolean respectDomainOrder,
         boolean respectSequenceOrder,
 
         boolean defaultSequenceFlags
@@ -121,6 +127,7 @@ public final class DDLExportConfiguration {
         this.createSchemaIfNotExists = createSchemaIfNotExists;
         this.createTableIfNotExists = createTableIfNotExists;
         this.createIndexIfNotExists = createIndexIfNotExists;
+        this.createDomainIfNotExists = createDomainIfNotExists;
         this.createSequenceIfNotExists = createSequenceIfNotExists;
         this.createViewIfNotExists = createViewIfNotExists;
         this.createOrReplaceView = createOrReplaceView;
@@ -131,7 +138,9 @@ public final class DDLExportConfiguration {
         this.respectColumnOrder = respectColumnOrder;
         this.respectConstraintOrder = respectConstraintOrder;
         this.respectIndexOrder = respectIndexOrder;
+        this.respectDomainOrder = respectDomainOrder;
         this.respectSequenceOrder = respectSequenceOrder;
+
         this.defaultSequenceFlags = defaultSequenceFlags;
     }
 
@@ -158,6 +167,7 @@ public final class DDLExportConfiguration {
             createSchemaIfNotExists,
             createTableIfNotExists,
             createIndexIfNotExists,
+            createDomainIfNotExists,
             createSequenceIfNotExists,
             createViewIfNotExists,
             createOrReplaceView,
@@ -167,6 +177,7 @@ public final class DDLExportConfiguration {
             respectColumnOrder,
             respectConstraintOrder,
             respectIndexOrder,
+            respectDomainOrder,
             respectSequenceOrder,
             defaultSequenceFlags
         );
@@ -192,6 +203,7 @@ public final class DDLExportConfiguration {
             newCreateSchemaIfNotExists,
             createTableIfNotExists,
             createIndexIfNotExists,
+            createDomainIfNotExists,
             createSequenceIfNotExists,
             createViewIfNotExists,
             createOrReplaceView,
@@ -201,6 +213,7 @@ public final class DDLExportConfiguration {
             respectColumnOrder,
             respectConstraintOrder,
             respectIndexOrder,
+            respectDomainOrder,
             respectSequenceOrder,
             defaultSequenceFlags
         );
@@ -226,6 +239,7 @@ public final class DDLExportConfiguration {
             createSchemaIfNotExists,
             newCreateTableIfNotExists,
             createIndexIfNotExists,
+            createDomainIfNotExists,
             createSequenceIfNotExists,
             createViewIfNotExists,
             createOrReplaceView,
@@ -235,6 +249,7 @@ public final class DDLExportConfiguration {
             respectColumnOrder,
             respectConstraintOrder,
             respectIndexOrder,
+            respectDomainOrder,
             respectSequenceOrder,
             defaultSequenceFlags
         );
@@ -260,6 +275,7 @@ public final class DDLExportConfiguration {
             createSchemaIfNotExists,
             createTableIfNotExists,
             newCreateIndexIfNotExists,
+            createDomainIfNotExists,
             createSequenceIfNotExists,
             createViewIfNotExists,
             createOrReplaceView,
@@ -269,6 +285,43 @@ public final class DDLExportConfiguration {
             respectColumnOrder,
             respectConstraintOrder,
             respectIndexOrder,
+            respectDomainOrder,
+            respectSequenceOrder,
+            defaultSequenceFlags
+        );
+    }
+
+    /**
+     * Whether to generate <code>CREATE DOMAIN IF NOT EXISTS</code> statements.
+     * <p>
+     * Not all RDBMS support this flag. Check
+     * {@link DSLContext#createDomainIfNotExists(Domain)} to see if your
+     * {@link SQLDialect} supports the clause.
+     */
+    public final boolean createDomainIfNotExists() {
+        return createDomainIfNotExists;
+    }
+
+    /**
+     * Whether to generate <code>CREATE DOMAIN IF NOT EXISTS</code> statements.
+     */
+    public final DDLExportConfiguration createDomainIfNotExists(boolean newCreateDomainIfNotExists) {
+        return new DDLExportConfiguration(
+            flags,
+            createSchemaIfNotExists,
+            createTableIfNotExists,
+            createIndexIfNotExists,
+            newCreateDomainIfNotExists,
+            createSequenceIfNotExists,
+            createViewIfNotExists,
+            createOrReplaceView,
+            respectCatalogOrder,
+            respectSchemaOrder,
+            respectTableOrder,
+            respectColumnOrder,
+            respectConstraintOrder,
+            respectIndexOrder,
+            respectDomainOrder,
             respectSequenceOrder,
             defaultSequenceFlags
         );
@@ -294,6 +347,7 @@ public final class DDLExportConfiguration {
             createSchemaIfNotExists,
             createTableIfNotExists,
             createIndexIfNotExists,
+            createDomainIfNotExists,
             newCreateSequenceIfNotExists,
             createViewIfNotExists,
             createOrReplaceView,
@@ -303,6 +357,7 @@ public final class DDLExportConfiguration {
             respectColumnOrder,
             respectConstraintOrder,
             respectIndexOrder,
+            respectDomainOrder,
             respectSequenceOrder,
             defaultSequenceFlags
         );
@@ -328,6 +383,7 @@ public final class DDLExportConfiguration {
             createSchemaIfNotExists,
             createTableIfNotExists,
             createIndexIfNotExists,
+            createDomainIfNotExists,
             createSequenceIfNotExists,
             newCreateViewIfNotExists,
             createOrReplaceView,
@@ -337,6 +393,7 @@ public final class DDLExportConfiguration {
             respectColumnOrder,
             respectConstraintOrder,
             respectIndexOrder,
+            respectDomainOrder,
             respectSequenceOrder,
             defaultSequenceFlags
         );
@@ -362,6 +419,7 @@ public final class DDLExportConfiguration {
             createSchemaIfNotExists,
             createTableIfNotExists,
             createIndexIfNotExists,
+            createDomainIfNotExists,
             createSequenceIfNotExists,
             createViewIfNotExists,
             newCreateOrReplaceView,
@@ -371,6 +429,7 @@ public final class DDLExportConfiguration {
             respectColumnOrder,
             respectConstraintOrder,
             respectIndexOrder,
+            respectDomainOrder,
             respectSequenceOrder,
             defaultSequenceFlags
         );
@@ -394,6 +453,7 @@ public final class DDLExportConfiguration {
             createSchemaIfNotExists,
             createTableIfNotExists,
             createIndexIfNotExists,
+            createDomainIfNotExists,
             createSequenceIfNotExists,
             createViewIfNotExists,
             createOrReplaceView,
@@ -403,6 +463,7 @@ public final class DDLExportConfiguration {
             respectColumnOrder,
             respectConstraintOrder,
             respectIndexOrder,
+            respectDomainOrder,
             respectSequenceOrder,
             defaultSequenceFlags
         );
@@ -426,6 +487,7 @@ public final class DDLExportConfiguration {
             createSchemaIfNotExists,
             createTableIfNotExists,
             createIndexIfNotExists,
+            createDomainIfNotExists,
             createSequenceIfNotExists,
             createViewIfNotExists,
             createOrReplaceView,
@@ -435,6 +497,7 @@ public final class DDLExportConfiguration {
             respectColumnOrder,
             respectConstraintOrder,
             respectIndexOrder,
+            respectDomainOrder,
             respectSequenceOrder,
             defaultSequenceFlags
         );
@@ -458,6 +521,7 @@ public final class DDLExportConfiguration {
             createSchemaIfNotExists,
             createTableIfNotExists,
             createIndexIfNotExists,
+            createDomainIfNotExists,
             createSequenceIfNotExists,
             createViewIfNotExists,
             createOrReplaceView,
@@ -467,6 +531,7 @@ public final class DDLExportConfiguration {
             respectColumnOrder,
             respectConstraintOrder,
             respectIndexOrder,
+            respectDomainOrder,
             respectSequenceOrder,
             defaultSequenceFlags
         );
@@ -490,6 +555,7 @@ public final class DDLExportConfiguration {
             createSchemaIfNotExists,
             createTableIfNotExists,
             createIndexIfNotExists,
+            createDomainIfNotExists,
             createSequenceIfNotExists,
             createViewIfNotExists,
             createOrReplaceView,
@@ -499,6 +565,7 @@ public final class DDLExportConfiguration {
             newRespectColumnOrder,
             respectConstraintOrder,
             respectIndexOrder,
+            respectDomainOrder,
             respectSequenceOrder,
             defaultSequenceFlags
         );
@@ -522,6 +589,7 @@ public final class DDLExportConfiguration {
             createSchemaIfNotExists,
             createTableIfNotExists,
             createIndexIfNotExists,
+            createDomainIfNotExists,
             createSequenceIfNotExists,
             createViewIfNotExists,
             createOrReplaceView,
@@ -531,6 +599,7 @@ public final class DDLExportConfiguration {
             respectColumnOrder,
             newRespectConstraintOrder,
             respectIndexOrder,
+            respectDomainOrder,
             respectSequenceOrder,
             defaultSequenceFlags
         );
@@ -554,6 +623,7 @@ public final class DDLExportConfiguration {
             createSchemaIfNotExists,
             createTableIfNotExists,
             createIndexIfNotExists,
+            createDomainIfNotExists,
             createSequenceIfNotExists,
             createViewIfNotExists,
             createOrReplaceView,
@@ -563,6 +633,41 @@ public final class DDLExportConfiguration {
             respectColumnOrder,
             respectConstraintOrder,
             newRespectIndexOrder,
+            respectDomainOrder,
+            respectSequenceOrder,
+            defaultSequenceFlags
+        );
+    }
+
+    /**
+     * Whether to respect the domain order produced by the {@link Meta} source
+     * when generated domain DDL.
+     */
+    public final boolean respectDomainOrder() {
+        return respectDomainOrder;
+    }
+
+    /**
+     * Whether to respect the sequence order produced by the {@link Meta} source
+     * when generated sequence DDL.
+     */
+    public final DDLExportConfiguration respectDomainOrder(boolean newRespectDomainOrder) {
+        return new DDLExportConfiguration(
+            flags,
+            createSchemaIfNotExists,
+            createTableIfNotExists,
+            createIndexIfNotExists,
+            createDomainIfNotExists,
+            createSequenceIfNotExists,
+            createViewIfNotExists,
+            createOrReplaceView,
+            respectCatalogOrder,
+            respectSchemaOrder,
+            respectTableOrder,
+            respectColumnOrder,
+            respectConstraintOrder,
+            respectIndexOrder,
+            newRespectDomainOrder,
             respectSequenceOrder,
             defaultSequenceFlags
         );
@@ -586,6 +691,7 @@ public final class DDLExportConfiguration {
             createSchemaIfNotExists,
             createTableIfNotExists,
             createIndexIfNotExists,
+            createDomainIfNotExists,
             createSequenceIfNotExists,
             createViewIfNotExists,
             createOrReplaceView,
@@ -595,6 +701,7 @@ public final class DDLExportConfiguration {
             respectColumnOrder,
             respectConstraintOrder,
             respectIndexOrder,
+            respectDomainOrder,
             newRespectSequenceOrder,
             defaultSequenceFlags
         );
@@ -618,6 +725,7 @@ public final class DDLExportConfiguration {
             createSchemaIfNotExists,
             createTableIfNotExists,
             createIndexIfNotExists,
+            createDomainIfNotExists,
             createSequenceIfNotExists,
             createViewIfNotExists,
             createOrReplaceView,
@@ -627,6 +735,7 @@ public final class DDLExportConfiguration {
             respectColumnOrder,
             respectConstraintOrder,
             respectIndexOrder,
+            respectDomainOrder,
             respectSequenceOrder,
             newDefaultSequenceFlags
         );

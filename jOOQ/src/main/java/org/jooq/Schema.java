@@ -120,6 +120,24 @@ public interface Schema extends Named {
     UDT<?> getUDT(String name);
 
     /**
+     * Stream all domains contained in this schema.
+     */
+
+    Stream<Domain<?>> domainStream();
+
+
+    /**
+     * List all domains contained in this schema.
+     */
+    List<Domain<?>> getDomains();
+
+    /**
+     * Get a domain by its name (case-sensitive) in this schema, or
+     * <code>null</code> if no such domain exists.
+     */
+    Domain<?> getDomain(String name);
+
+    /**
      * Stream all sequences contained in this schema.
      */
 

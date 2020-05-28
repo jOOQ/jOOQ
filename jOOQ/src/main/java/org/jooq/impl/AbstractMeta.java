@@ -51,6 +51,7 @@ import java.util.Map;
 import org.jooq.Catalog;
 import org.jooq.Configuration;
 import org.jooq.DDLExportConfiguration;
+import org.jooq.Domain;
 import org.jooq.Index;
 import org.jooq.Meta;
 import org.jooq.Name;
@@ -74,9 +75,11 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     private Map<Name, Catalog>           cachedCatalogs;
     private Map<Name, Schema>            cachedQualifiedSchemas;
     private Map<Name, Table<?>>          cachedQualifiedTables;
+    private Map<Name, Domain<?>>         cachedQualifiedDomains;
     private Map<Name, Sequence<?>>       cachedQualifiedSequences;
     private Map<Name, List<Schema>>      cachedUnqualifiedSchemas;
     private Map<Name, List<Table<?>>>    cachedUnqualifiedTables;
+    private Map<Name, List<Domain<?>>>   cachedUnqualifiedDomains;
     private Map<Name, List<Sequence<?>>> cachedUnqualifiedSequences;
     private List<UniqueKey<?>>           cachedPrimaryKeys;
     private List<Index>                  cachedIndexes;
@@ -193,6 +196,48 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
         List<Table<?>> result = new ArrayList<>();
         for (Schema schema : getSchemas())
             result.addAll(schema.getTables());
+        return result;
+    }
+
+    @Override
+    public final List<Domain<?>> getDomains(String name) {
+        return getDomains(name(name));
+    }
+
+    @Override
+    public final List<Domain<?>> getDomains(Name name) {
+        initDomains();
+        return get(name, new Iterable<Domain<?>>() {
+            @Override
+            public Iterator<Domain<?>> iterator() {
+                return getDomains().iterator();
+            }
+        }, cachedQualifiedDomains, cachedUnqualifiedDomains);
+    }
+
+    @Override
+    public final List<Domain<?>> getDomains() {
+        initDomains();
+        return Collections.unmodifiableList(new ArrayList<>(cachedQualifiedDomains.values()));
+    }
+
+    private final void initDomains() {
+        if (cachedQualifiedDomains == null) {
+            cachedQualifiedDomains = new LinkedHashMap<>();
+            cachedUnqualifiedDomains = new LinkedHashMap<>();
+            get(name(""), new Iterable<Domain<?>>() {
+                @Override
+                public Iterator<Domain<?>> iterator() {
+                    return getDomains0().iterator();
+                }
+            }, cachedQualifiedDomains, cachedUnqualifiedDomains);
+        }
+    }
+
+    protected List<Domain<?>> getDomains0() {
+        List<Domain<?>> result = new ArrayList<>();
+        for (Schema schema : getSchemas())
+            result.addAll(schema.getDomains());
         return result;
     }
 

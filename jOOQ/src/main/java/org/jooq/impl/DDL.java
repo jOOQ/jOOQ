@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.DDLFlag.CHECK;
 import static org.jooq.DDLFlag.COMMENT;
+import static org.jooq.DDLFlag.DOMAIN;
 import static org.jooq.DDLFlag.FOREIGN_KEY;
 import static org.jooq.DDLFlag.INDEX;
 import static org.jooq.DDLFlag.PRIMARY_KEY;
@@ -59,11 +60,15 @@ import java.util.List;
 import org.jooq.Check;
 import org.jooq.Constraint;
 import org.jooq.ConstraintEnforcementStep;
+import org.jooq.CreateDomainAsStep;
+import org.jooq.CreateDomainConstraintStep;
+import org.jooq.CreateDomainDefaultStep;
 import org.jooq.CreateSequenceFlagsStep;
 import org.jooq.CreateTableOnCommitStep;
 import org.jooq.DDLExportConfiguration;
 import org.jooq.DDLFlag;
 import org.jooq.DSLContext;
+import org.jooq.Domain;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Index;
@@ -169,6 +174,27 @@ final class DDL {
             result = result.noCache();
 
         return result;
+    }
+
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    final Query createDomain(Domain<?> domain) {
+        CreateDomainAsStep s1 = configuration.createDomainIfNotExists()
+                    ? ctx.createDomainIfNotExists(domain)
+                    : ctx.createDomain(domain);
+
+        CreateDomainDefaultStep s2 = s1.as(domain.getDataType());
+        CreateDomainConstraintStep s3 = domain.getDataType().defaulted()
+            ? s2.default_(domain.getDataType().default_())
+            : s2;
+
+        if (domain.checks().isEmpty())
+            return s3;
+
+        List<Constraint> constraints = new ArrayList<>();
+        for (Check check : domain.checks())
+            constraints.add(check.constraint());
+
+        return s3.constraints(constraints);
     }
 
     private final Query createTable(Table<?> table) {
@@ -344,6 +370,11 @@ final class DDL {
                 for (Table<?> table : sortIf(schema.getTables(), !configuration.respectTableOrder()))
                     for (Constraint constraint : foreignKeys(table))
                         queries.add(ctx.alterTable(table).add(constraint));
+
+        if (configuration.flags().contains(DOMAIN))
+            for (Schema schema : schemas)
+                for (Domain<?> domain : sortIf(schema.getDomains(), !configuration.respectDomainOrder()))
+                    queries.add(createDomain(domain));
 
         if (configuration.flags().contains(SEQUENCE))
             for (Schema schema : schemas)

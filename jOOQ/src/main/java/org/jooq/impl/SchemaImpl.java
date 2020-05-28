@@ -49,7 +49,9 @@ import org.jooq.Catalog;
 import org.jooq.Clause;
 import org.jooq.Comment;
 import org.jooq.Context;
+import org.jooq.Domain;
 import org.jooq.Name;
+import org.jooq.Named;
 import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.Table;
@@ -126,31 +128,32 @@ public class SchemaImpl extends AbstractNamed implements Schema {
         return CLAUSES;
     }
 
-    @Override
-    public final Table<?> getTable(String tableName) {
-        for (Table<?> table : getTables())
-            if (table.getName().equals(tableName))
-                return table;
+    private final <N extends Named> N getNamed(List<N> list, String name) {
+        for (N named : list)
+            if (named.getName().equals(name))
+                return named;
 
         return null;
     }
 
     @Override
-    public final UDT<?> getUDT(String udtName) {
-        for (UDT<?> udt : getUDTs())
-            if (udt.getName().equals(udtName))
-                return udt;
-
-        return null;
+    public final Table<?> getTable(String name) {
+        return getNamed(getTables(), name);
     }
 
     @Override
-    public final Sequence<?> getSequence(String sequenceName) {
-        for (Sequence<?> sequence : getSequences())
-            if (sequence.getName().equals(sequenceName))
-                return sequence;
+    public final UDT<?> getUDT(String name) {
+        return getNamed(getUDTs(), name);
+    }
 
-        return null;
+    @Override
+    public final Domain<?> getDomain(String name) {
+        return getNamed(getDomains(), name);
+    }
+
+    @Override
+    public final Sequence<?> getSequence(String name) {
+        return getNamed(getSequences(), name);
     }
 
     /**
@@ -179,6 +182,16 @@ public class SchemaImpl extends AbstractNamed implements Schema {
      * Subclasses should override this method
      */
     @Override
+    public List<Domain<?>> getDomains() {
+        return Collections.emptyList();
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Subclasses should override this method
+     */
+    @Override
     public List<Sequence<?>> getSequences() {
         return Collections.emptyList();
     }
@@ -192,6 +205,11 @@ public class SchemaImpl extends AbstractNamed implements Schema {
     @Override
     public final Stream<UDT<?>> udtStream() {
         return getUDTs().stream();
+    }
+
+    @Override
+    public final Stream<Domain<?>> domainStream() {
+        return getDomains().stream();
     }
 
     @Override

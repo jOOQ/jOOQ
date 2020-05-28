@@ -52,6 +52,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
+// ...
 
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
@@ -168,6 +169,33 @@ public interface Meta extends Scope {
      */
     @Support
     List<Table<?>> getTables(Name name) throws DataAccessException;
+
+    /**
+     * Get all domain objects from the underlying meta data source.
+     *
+     * @throws DataAccessException If something went wrong fetching the meta
+     *             objects
+     */
+    @Support({ H2, POSTGRES })
+    List<Domain<?>> getDomains() throws DataAccessException;
+
+    /**
+     * Get all domain objects by name from the underlying meta data source.
+     *
+     * @throws DataAccessException If something went wrong fetching the meta
+     *             objects
+     */
+    @Support({ H2, POSTGRES })
+    List<Domain<?>> getDomains(String name) throws DataAccessException;
+
+    /**
+     * Get all domain objects by name from the underlying meta data source.
+     *
+     * @throws DataAccessException If something went wrong fetching the meta
+     *             objects
+     */
+    @Support({ H2, POSTGRES })
+    List<Domain<?>> getDomains(Name name) throws DataAccessException;
 
     /**
      * Get all sequence objects from the underlying meta data source.

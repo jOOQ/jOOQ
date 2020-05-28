@@ -217,6 +217,7 @@ import org.jooq.Asterisk;
 import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Catalog;
+import org.jooq.Check;
 import org.jooq.Clause;
 import org.jooq.CommonTableExpression;
 import org.jooq.Condition;
@@ -298,6 +299,7 @@ final class Tools {
     // ------------------------------------------------------------------------
 
     static final byte[]                     EMPTY_BYTE                     = {};
+    static final Check<?>[]                 EMPTY_CHECK                    = {};
     static final Clause[]                   EMPTY_CLAUSE                   = {};
     static final Collection<?>[]            EMPTY_COLLECTION               = {};
     static final CommonTableExpression<?>[] EMPTY_COMMON_TABLE_EXPRESSION  = {};

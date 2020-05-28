@@ -74,6 +74,7 @@ import org.jooq.Collation;
 import org.jooq.Configuration;
 import org.jooq.Converter;
 import org.jooq.DataType;
+import org.jooq.Domain;
 import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.JSON;
@@ -767,6 +768,11 @@ public class DefaultDataType<T> implements DataType<T> {
     @Override
     public final Class<T> getType() {
         return uType;
+    }
+
+    @Override
+    public /* non-final */ Domain<T> getDomain() {
+        return null;
     }
 
     @Override

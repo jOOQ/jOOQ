@@ -209,7 +209,9 @@ final class Interpreter {
             accept0((DropIndexImpl) query);
 
         else if (query instanceof CreateDomainImpl)
-            accept0((CreateDomainImpl) query);
+            accept0((CreateDomainImpl<?>) query);
+        else if (query instanceof DropDomainImpl)
+            accept0((DropDomainImpl) query);
 
         else if (query instanceof CommentOnImpl)
             accept0((CommentOnImpl) query);
@@ -997,7 +999,7 @@ final class Interpreter {
     @SuppressWarnings({ "rawtypes", "unchecked" })
     private final void accept0(CreateDomainImpl<?> query) {
         Domain<?> domain = query.$domain();
-        MutableSchema schema = getSchema(domain.getSchema(), true);
+        MutableSchema schema = getSchema(domain.getSchema());
 
         MutableDomain existing = schema.domain(domain);
         if (existing != null) {
@@ -1025,6 +1027,21 @@ final class Interpreter {
                         true
                     ));
         }
+    }
+
+    private final void accept0(DropDomainImpl query) {
+        Domain<?> domain = query.$domain();
+        MutableSchema schema = getSchema(domain.getSchema());
+
+        MutableDomain existing = schema.domain(domain);
+        if (existing == null) {
+            if (!query.$dropDomainIfExists())
+                throw notExists(domain);
+
+            return;
+        }
+
+        schema.domains.remove(existing);
     }
 
     private final void accept0(CommentOnImpl query) {
@@ -2063,14 +2080,17 @@ final class Interpreter {
     }
 
     private final class MutableField extends MutableNamed {
-        MutableTable table;
-        DataType<?>  type;
+        MutableTable  table;
+        DataType<?>   type;
+        MutableDomain domain;
 
         MutableField(UnqualifiedName name, MutableTable table, DataType<?> type) {
             super(name);
 
             this.table = table;
             this.type = type;
+
+            // TODO: Link type to domain
         }
 
         @Override

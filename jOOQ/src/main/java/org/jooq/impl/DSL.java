@@ -87,10 +87,10 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.impl.Keywords.K_CUBE;
 import static org.jooq.impl.Keywords.K_GROUPING_SETS;
-import static org.jooq.impl.Keywords.K_VALUE;
 import static org.jooq.impl.Names.N_IF;
 import static org.jooq.impl.Names.N_IIF;
 import static org.jooq.impl.Names.N_SYSTEM_TIME;
+import static org.jooq.impl.Names.N_VALUE;
 import static org.jooq.impl.PositionalWindowFunction.PositionalFunctionType.FIRST_VALUE;
 import static org.jooq.impl.PositionalWindowFunction.PositionalFunctionType.LAG;
 import static org.jooq.impl.PositionalWindowFunction.PositionalFunctionType.LAST_VALUE;
@@ -11942,7 +11942,7 @@ public class DSL {
      */
     @Support({ H2, POSTGRES })
     public static <T> Field<T> value(DataType<T> type) {
-        return field("{0}", type, K_VALUE);
+        return field("{0}", type, N_VALUE);
     }
 
     /**

@@ -115,6 +115,12 @@ public interface DataType<T> extends Serializable {
     Class<T> getType();
 
     /**
+     * Get the defining DOMAIN type or <code>NULL</code> if there is no such
+     * type.
+     */
+    Domain<T> getDomain();
+
+    /**
      * Retrieve the Java type associated with ARRAYs of this data type.
      */
     Class<T[]> getArrayType();

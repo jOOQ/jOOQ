@@ -230,6 +230,7 @@ final class Names {
     static final Name N_UCASE                  = unquotedName("ucase");
     static final Name N_UPPER                  = unquotedName("upper");
     static final Name N_USER                   = unquotedName("user");
+    static final Name N_VALUE                  = unquotedName("value");
     static final Name N_VALUES                 = unquotedName("values");
     static final Name N_WEEKDAY                = unquotedName("weekday");
     static final Name N_WIDTH_BUCKET           = unquotedName("width_bucket");

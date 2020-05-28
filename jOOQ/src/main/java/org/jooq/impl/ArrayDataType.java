@@ -81,7 +81,7 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
     ) {
         super(t, precision, scale, length, nullability, collation, characterSet, identity, defaultValue);
 
-        this.elementType= elementType;
+        this.elementType = elementType;
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })

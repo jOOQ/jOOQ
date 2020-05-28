@@ -42,8 +42,11 @@ import static java.util.Collections.unmodifiableList;
 
 import java.util.List;
 
+import org.jooq.Binding;
 import org.jooq.Check;
+import org.jooq.Configuration;
 import org.jooq.Context;
+import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.Domain;
 import org.jooq.Name;
@@ -52,7 +55,7 @@ import org.jooq.Schema;
 /**
  * @author Lukas Eder
  */
-class DomainImpl<T> extends AbstractTypedNamed<T> implements Domain<T> {
+class DomainImpl<T> extends AbstractNamed implements Domain<T> {
 
     /**
      * Generated UID
@@ -60,12 +63,14 @@ class DomainImpl<T> extends AbstractTypedNamed<T> implements Domain<T> {
     private static final long serialVersionUID = 162853300137140844L;
     private final Schema      schema;
     private final Check<?>[]  checks;
+    private final DataType<T> type;
 
-    DomainImpl(Schema schema, Name name, DataType<T> dataType, Check<?>... checks) {
-        super(qualify(schema, name), null, dataType);
+    DomainImpl(Schema schema, Name name, DataType<T> type, Check<?>... checks) {
+        super(qualify(schema, name), null);
 
         this.schema = schema;
         this.checks = checks;
+        this.type = new DomainDataType<>(this, type);
     }
 
     @Override
@@ -76,6 +81,31 @@ class DomainImpl<T> extends AbstractTypedNamed<T> implements Domain<T> {
     @Override
     public final List<Check<?>> checks() {
         return unmodifiableList(asList(checks));
+    }
+
+    @Override
+    public final Converter<?, T> getConverter() {
+        return type.getConverter();
+    }
+
+    @Override
+    public final Binding<?, T> getBinding() {
+        return type.getBinding();
+    }
+
+    @Override
+    public final Class<T> getType() {
+        return type.getType();
+    }
+
+    @Override
+    public final DataType<T> getDataType() {
+        return type;
+    }
+
+    @Override
+    public final DataType<T> getDataType(Configuration configuration) {
+        return type.getDataType(configuration);
     }
 
     @Override

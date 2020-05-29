@@ -984,7 +984,7 @@ public class JavaGenerator extends AbstractGenerator {
                 Index.class
             );
         else
-            out.print("public static %s %s = ",
+            out.print("static final %s %s = ",
                 Index.class,
                 getStrategy().getJavaIdentifier(index)
             );
@@ -1069,7 +1069,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.ref(getStrategy().getFullJavaClassName(identity.getTable(), Mode.RECORD)),
                 identityType);
         else
-            out.print("public static %s<%s, %s> %s = ",
+            out.print("static final %s<%s, %s> %s = ",
                 Identity.class,
                 out.ref(getStrategy().getFullJavaClassName(identity.getTable(), Mode.RECORD)),
                 identityType,
@@ -2584,7 +2584,7 @@ public class JavaGenerator extends AbstractGenerator {
             if (scala)
                 out.println("val %s = %s", id, fullId);
             else
-                out.println("public static %s %s = %s;", className, id, fullId);
+                out.println("public static final %s %s = %s;", className, id, fullId);
         }
 
         out.println("}");

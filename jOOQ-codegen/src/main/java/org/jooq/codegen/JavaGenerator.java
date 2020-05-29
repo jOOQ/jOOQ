@@ -7184,6 +7184,8 @@ public class JavaGenerator extends AbstractGenerator {
 
             if (scala)
                 type = "scala.Array[" + getType(db, schema, baseType.last(), p, s, baseType, javaType, defaultType, udtMode) + "]";
+            else if (kotlin)
+                type = "Array<" + getType(db, schema, baseType.last(), p, s, baseType, javaType, defaultType, udtMode) + ">";
             else
                 type = getType(db, schema, baseType.last(), p, s, baseType, javaType, defaultType, udtMode) + "[]";
         }
@@ -7236,6 +7238,8 @@ public class JavaGenerator extends AbstractGenerator {
                 Class<?> clazz = mapJavaTimeTypes(getDataType(db, t, p, s)).getType();
                 if (scala && clazz == byte[].class)
                     type = "scala.Array[scala.Byte]";
+                else if (kotlin && clazz == byte[].class)
+                    type = "ByteArray";
                 else
                     type = clazz.getCanonicalName();
 

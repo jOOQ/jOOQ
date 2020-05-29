@@ -43,8 +43,7 @@ import org.jooq.*
 import org.jooq.impl.*
 import org.jooq.impl.DSL.*
 
-import org.jooq.example.db.h2.Tables.*
-import java.sql.*
+import org.jooq.example.kotlin.db.h2.*
 
 fun main(args: Array<String>) {
 
@@ -167,7 +166,7 @@ fun main(args: Array<String>) {
            .groupBy(a.FIRST_NAME, a.LAST_NAME, a.ID)
            .fetch()
            .forEach { (first, last, count, id) ->
-               println("Actor ID ${id - 3}: $first $last wrote ${-count} books")
+               println("Actor ID ${id!! - 3}: $first $last wrote ${-count} books")
            }
 
         // jOOQ can fetch into Kotlin data classes by attribute name
@@ -226,23 +225,23 @@ fun header(text : String) {
 // Support for these will be added to jOOQ where not already available:
 //   https://github.com/jOOQ/jOOQ/issues/6246
 // ------------------------------------------------------------
-operator fun <T, F : Field<T>> F.unaryMinus() : F {
+operator fun <T, F : Field<T?>> F.unaryMinus(): F {
     return this.neg() as F;
 }
 
-operator fun <T, F : Field<T>> F.times(n : Number) : F {
+operator fun <T, F : Field<T?>> F.times(n: Number?): F {
     return this.mul(n) as F;
 }
 
 // Conveniently enhance jOOQ with your own custom DSL API
 // ------------------------------------------------------
-inline fun <F : Field<String>> F.ilike(field : String): Condition {
+inline fun <F : Field<String?>> F.ilike(field: String?): Condition {
     return condition("{0} ilike {1}", this, field);
 }
 
-inline fun <F : Field<String>> F.ilike(field : Field<String>): Condition {
+inline fun <F : Field<String?>> F.ilike(field: Field<String?>): Condition {
     return condition("{0} ilike {1}", this, field);
 }
 
 // Kotlin data classes can be used with DefaultRecordMapper
-data class Book(val author: String, val title: String)
+data class Book(val author: String?, val title: String?)

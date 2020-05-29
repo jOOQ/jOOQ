@@ -28,7 +28,6 @@
     </properties>
 
     <dependencies>
-
         <dependency>
             <groupId>org.jooq</groupId>
             <artifactId>jooq</artifactId>
@@ -164,6 +163,7 @@
                                 <password>${db.password}</password>
                             </jdbc>
                             <generator>
+                                <name>org.jooq.codegen.KotlinGenerator</name>
                                 <database>
                                     <inputSchema>PUBLIC</inputSchema>
                                 </database>
@@ -172,8 +172,8 @@
                                     <pojos>true</pojos>
                                 </generate>
                                 <target>
-                                    <packageName>org.jooq.example.db.h2</packageName>
-                                    <directory>src/main/java</directory>
+                                    <packageName>org.jooq.example.kotlin.db.h2</packageName>
+                                    <directory>src/main/kotlin</directory>
                                 </target>
                             </generator>
                         </configuration>

@@ -49,7 +49,6 @@ import static org.jooq.impl.ConstraintType.PRIMARY_KEY;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.schema;
 import static org.jooq.impl.SQLDataType.BIGINT;
-import static org.jooq.impl.Tools.EMPTY_CHECK;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.intersect;
 import static org.jooq.impl.Tools.normaliseNameCase;
@@ -107,7 +106,7 @@ import org.jooq.impl.ConstraintImpl.Action;
 import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
 
-@SuppressWarnings("serial")
+@SuppressWarnings({ "rawtypes", "serial", "unchecked" })
 final class Interpreter {
 
     private static final JooqLogger                              log                    = JooqLogger.getLogger(Interpreter.class);
@@ -210,6 +209,8 @@ final class Interpreter {
 
         else if (query instanceof CreateDomainImpl)
             accept0((CreateDomainImpl<?>) query);
+        else if (query instanceof AlterDomainImpl)
+            accept0((AlterDomainImpl<?>) query);
         else if (query instanceof DropDomainImpl)
             accept0((DropDomainImpl) query);
 
@@ -472,7 +473,6 @@ final class Interpreter {
         }
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     private final void accept0(AlterTableImpl query) {
         Table<?> table = query.$table();
         MutableSchema schema = getSchema(table.getSchema());
@@ -996,7 +996,6 @@ final class Interpreter {
             existing.table.indexes.remove(existing);
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     private final void accept0(CreateDomainImpl<?> query) {
         Domain<?> domain = query.$domain();
         MutableSchema schema = getSchema(domain.getSchema());
@@ -1015,18 +1014,74 @@ final class Interpreter {
             md.dataType = md.dataType.default_((Field) query.$default_());
 
         // TODO: Support NOT NULL constraints
-        if (query.$constraints() != null) {
-            md.checks = new ArrayList<>();
-
+        if (query.$constraints() != null)
             for (Constraint constraint : query.$constraints())
                 if (((ConstraintImpl) constraint).$check() != null)
-                    md.checks.add(new CheckImpl(
-                        null,
-                        constraint.getQualifiedName(),
-                        ((ConstraintImpl) constraint).$check(),
-                        true
-                    ));
+                    md.checks.add(new MutableCheck(constraint));
+    }
+
+    private final void accept0(AlterDomainImpl<?> query) {
+        Domain<?> domain = query.$domain();
+        MutableSchema schema = getSchema(domain.getSchema());
+
+        MutableDomain existing = schema.domain(domain);
+        if (existing == null) {
+            if (!query.$alterDomainIfExists())
+                throw notExists(domain);
+
+            return;
         }
+
+        if (query.$addConstraint() != null) {
+            if (find(existing.checks, query.$addConstraint()) != null)
+                throw alreadyExists(query.$addConstraint());
+
+            existing.checks.add(new MutableCheck(query.$addConstraint()));
+        }
+        else if (query.$dropConstraint() != null) {
+            MutableCheck mc = find(existing.checks, query.$dropConstraint());
+
+            if (mc == null) {
+                if (!query.$dropConstraintIfExists())
+                    throw notExists(query.$dropConstraint());
+
+                return;
+            }
+
+            existing.checks.remove(mc);
+        }
+        else if (query.$renameTo() != null) {
+            if (schema.domain(query.$renameTo()) != null)
+                throw alreadyExists(query.$renameTo());
+
+            existing.name((UnqualifiedName) query.$renameTo().getUnqualifiedName());
+        }
+        else if (query.$renameConstraint() != null) {
+            MutableCheck mc = find(existing.checks, query.$renameConstraint());
+
+            if (mc == null) {
+                if (!query.$renameConstraintIfExists())
+                    throw notExists(query.$renameConstraint());
+
+                return;
+            }
+            else if (find(existing.checks, query.$renameConstraintTo()) != null)
+                throw alreadyExists(query.$renameConstraintTo());
+
+            mc.name((UnqualifiedName) query.$renameConstraintTo().getUnqualifiedName());
+        }
+        else if (query.$setDefault() != null) {
+            existing.dataType = existing.dataType.defaultValue((Field) query.$setDefault());
+        }
+        else if (query.$dropDefault()) {
+            existing.dataType = existing.dataType.defaultValue((Field) null);
+        }
+
+        // TODO: Implement these
+        // else if (query.$setNotNull()) {}
+        // else if (query.$dropNotNull()) {}
+        else
+            throw unsupportedQuery(query);
     }
 
     private final void accept0(DropDomainImpl query) {
@@ -1044,7 +1099,8 @@ final class Interpreter {
         if (!TRUE.equals(query.$cascade()) && !existing.fields.isEmpty())
             throw new DataDefinitionException("Domain " + domain.getQualifiedName() + " is still being referenced by fields.");
 
-        for (MutableField mf : new ArrayList<>(existing.fields))
+        List<MutableField> field = new ArrayList<>(existing.fields);
+        for (MutableField mf : field)
             dropColumns(mf.table, existing.fields, CASCADE);
 
         schema.domains.remove(existing);
@@ -1785,7 +1841,7 @@ final class Interpreter {
     private final class MutableDomain extends MutableNamed {
         MutableSchema      schema;
         DataType<?>        dataType;
-        List<Check<?>>     checks;
+        List<MutableCheck> checks = new MutableNamedList<>();
         List<MutableField> fields = new MutableNamedList<>();
 
         MutableDomain(UnqualifiedName name, MutableSchema schema, DataType<?> dataType) {
@@ -1818,10 +1874,20 @@ final class Interpreter {
             return result;
         }
 
-        @SuppressWarnings({ "rawtypes", "unchecked" })
+        final Check<?>[] interpretedChecks() {
+            Check<?>[] result = new Check[checks.size()];
+
+            for (int i = 0; i < result.length; i++) {
+                MutableCheck c = checks.get(i);
+                result[i] = new CheckImpl<>(null, c.name(), c.condition, c.enforced);
+            }
+
+            return result;
+        }
+
         private final class InterpretedDomain extends DomainImpl {
             InterpretedDomain(Schema schema) {
-                super(schema, MutableDomain.this.name(), dataType, checks != null ? checks.toArray(EMPTY_CHECK) : EMPTY_CHECK);
+                super(schema, MutableDomain.this.name(), dataType, interpretedChecks());
             }
         }
     }
@@ -1861,7 +1927,6 @@ final class Interpreter {
         }
 
         private final class InterpretedSequence extends SequenceImpl<Long> {
-            @SuppressWarnings("unchecked")
             InterpretedSequence(Schema schema) {
                 super(MutableSequence.this.name(), schema, BIGINT, false,
                     (Field<Long>) MutableSequence.this.startWith,
@@ -1915,6 +1980,15 @@ final class Interpreter {
     private final class MutableCheck extends MutableConstraint {
         Condition condition;
 
+        MutableCheck(Constraint constraint) {
+            this(
+                (UnqualifiedName) constraint.getUnqualifiedName(),
+                null,
+                ((ConstraintImpl) constraint).$check(),
+                true
+            );
+        }
+
         MutableCheck(UnqualifiedName name, MutableTable table, Condition condition, boolean enforced) {
             super(name, table, enforced);
 
@@ -1958,7 +2032,6 @@ final class Interpreter {
                 return super.qualifiedName();
         }
 
-        @SuppressWarnings("unchecked")
         final UniqueKeyImpl<Record> interpretedKey() {
             Name qualifiedName = qualifiedName();
             UniqueKeyImpl<Record> result = interpretedUniqueKeys.get(qualifiedName);
@@ -2019,7 +2092,6 @@ final class Interpreter {
                 return super.qualifiedName();
         }
 
-        @SuppressWarnings("unchecked")
         final ReferenceImpl<Record, ?> interpretedKey() {
             Name qualifiedName = qualifiedName();
             ReferenceImpl<Record, ?> result = interpretedForeignKeys.get(qualifiedName);

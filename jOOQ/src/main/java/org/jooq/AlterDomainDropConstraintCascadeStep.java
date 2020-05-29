@@ -74,6 +74,6 @@ public interface AlterDomainDropConstraintCascadeStep extends AlterDomainFinalSt
     /**
      * Add the <code>RESTRICT</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, POSTGRES })
     AlterDomainFinalStep restrict();
 }

@@ -37,22 +37,14 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.impl.Keywords.K_CASCADE;
-import static org.jooq.impl.Keywords.K_DOMAIN;
-import static org.jooq.impl.Keywords.K_DROP;
-import static org.jooq.impl.Keywords.K_IF_EXISTS;
-import static org.jooq.impl.Keywords.K_RESTRICT;
-import static org.jooq.impl.Keywords.K_TYPE;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import java.util.Set;
+import org.jooq.*;
+import org.jooq.impl.*;
 
-import org.jooq.Configuration;
-import org.jooq.Context;
-import org.jooq.Domain;
-import org.jooq.DropDomainCascadeStep;
-import org.jooq.DropDomainFinalStep;
-import org.jooq.SQLDialect;
+import java.util.*;
 
 /**
  * The <code>DROP DOMAIN IF EXISTS</code> statement.
@@ -71,7 +63,7 @@ implements
     private final Domain<?> domain;
     private final boolean   dropDomainIfExists;
     private       Boolean   cascade;
-
+    
     DropDomainImpl(
         Configuration configuration,
         Domain domain,
@@ -105,7 +97,7 @@ implements
     // -------------------------------------------------------------------------
     // XXX: DSL API
     // -------------------------------------------------------------------------
-
+    
     @Override
     public final DropDomainImpl cascade() {
         this.cascade = true;

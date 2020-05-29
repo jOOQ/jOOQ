@@ -37,39 +37,14 @@
  */
 package org.jooq.impl;
 
-// ...
-import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.impl.DSL.check;
-import static org.jooq.impl.Keywords.K_ADD;
-import static org.jooq.impl.Keywords.K_ALTER;
-import static org.jooq.impl.Keywords.K_CASCADE;
-import static org.jooq.impl.Keywords.K_DOMAIN;
-import static org.jooq.impl.Keywords.K_DROP_CONSTRAINT;
-import static org.jooq.impl.Keywords.K_DROP_DEFAULT;
-import static org.jooq.impl.Keywords.K_DROP_NOT_NULL;
-import static org.jooq.impl.Keywords.K_IF_EXISTS;
-import static org.jooq.impl.Keywords.K_RENAME_CONSTRAINT;
-import static org.jooq.impl.Keywords.K_RENAME_TO;
-import static org.jooq.impl.Keywords.K_RESTRICT;
-import static org.jooq.impl.Keywords.K_SET_DEFAULT;
-import static org.jooq.impl.Keywords.K_SET_NOT_NULL;
-import static org.jooq.impl.Keywords.K_TO;
-import static org.jooq.impl.Tools.BooleanDataKey.DATA_CONSTRAINT_REFERENCE;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import java.util.Set;
+import org.jooq.*;
+import org.jooq.impl.*;
 
-import org.jooq.AlterDomainDropConstraintCascadeStep;
-import org.jooq.AlterDomainFinalStep;
-import org.jooq.AlterDomainRenameConstraintStep;
-import org.jooq.AlterDomainStep;
-import org.jooq.Configuration;
-import org.jooq.Constraint;
-import org.jooq.Context;
-import org.jooq.Domain;
-import org.jooq.Field;
-import org.jooq.Name;
-import org.jooq.SQLDialect;
+import java.util.*;
 
 /**
  * The <code>ALTER DOMAIN IF EXISTS</code> statement.
@@ -101,7 +76,7 @@ implements
     private       boolean    dropNotNull;
     private       Boolean    cascade;
     private       Constraint renameConstraintTo;
-
+    
     AlterDomainImpl(
         Configuration configuration,
         Domain domain,
@@ -179,7 +154,7 @@ implements
     // -------------------------------------------------------------------------
     // XXX: DSL API
     // -------------------------------------------------------------------------
-
+    
     @Override
     public final AlterDomainImpl<T> add(Constraint addConstraint) {
         this.addConstraint = addConstraint;
@@ -367,7 +342,7 @@ implements
 
         if (addConstraint != null) {
             if (ctx.family() == FIREBIRD)
-                ctx.visit(K_ADD).sql(' ').visit(check(((ConstraintImpl) addConstraint).$check()));
+                ctx.visit(K_ADD).sql(' ').visit(DSL.check(((ConstraintImpl) addConstraint).$check()));
             else
                 ctx.visit(K_ADD).sql(' ').visit(addConstraint);
         }

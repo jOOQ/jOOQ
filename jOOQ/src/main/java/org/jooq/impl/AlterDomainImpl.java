@@ -37,14 +37,39 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Keywords.*;
-import static org.jooq.impl.Tools.BooleanDataKey.*;
-import static org.jooq.SQLDialect.*;
+// ...
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.impl.DSL.check;
+import static org.jooq.impl.Keywords.K_ADD;
+import static org.jooq.impl.Keywords.K_ALTER;
+import static org.jooq.impl.Keywords.K_CASCADE;
+import static org.jooq.impl.Keywords.K_DOMAIN;
+import static org.jooq.impl.Keywords.K_DROP_CONSTRAINT;
+import static org.jooq.impl.Keywords.K_DROP_DEFAULT;
+import static org.jooq.impl.Keywords.K_DROP_NOT_NULL;
+import static org.jooq.impl.Keywords.K_IF_EXISTS;
+import static org.jooq.impl.Keywords.K_RENAME_CONSTRAINT;
+import static org.jooq.impl.Keywords.K_RENAME_TO;
+import static org.jooq.impl.Keywords.K_RESTRICT;
+import static org.jooq.impl.Keywords.K_SET_DEFAULT;
+import static org.jooq.impl.Keywords.K_SET_NOT_NULL;
+import static org.jooq.impl.Keywords.K_TO;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_CONSTRAINT_REFERENCE;
 
-import org.jooq.*;
-import org.jooq.impl.*;
+import java.util.Set;
 
-import java.util.*;
+import org.jooq.AlterDomainDropConstraintCascadeStep;
+import org.jooq.AlterDomainFinalStep;
+import org.jooq.AlterDomainRenameConstraintStep;
+import org.jooq.AlterDomainStep;
+import org.jooq.Configuration;
+import org.jooq.Constraint;
+import org.jooq.Context;
+import org.jooq.Domain;
+import org.jooq.Field;
+import org.jooq.Name;
+import org.jooq.SQLDialect;
 
 /**
  * The <code>ALTER DOMAIN IF EXISTS</code> statement.
@@ -76,7 +101,7 @@ implements
     private       boolean    dropNotNull;
     private       Boolean    cascade;
     private       Constraint renameConstraintTo;
-    
+
     AlterDomainImpl(
         Configuration configuration,
         Domain domain,
@@ -154,7 +179,7 @@ implements
     // -------------------------------------------------------------------------
     // XXX: DSL API
     // -------------------------------------------------------------------------
-    
+
     @Override
     public final AlterDomainImpl<T> add(Constraint addConstraint) {
         this.addConstraint = addConstraint;
@@ -163,7 +188,7 @@ implements
 
     @Override
     public final AlterDomainImpl<T> dropConstraint(String dropConstraint) {
-        return dropConstraint(DSL.constraint(dropConstraint));
+        return dropConstraint(DSL.constraint(DSL.name(dropConstraint)));
     }
 
     @Override
@@ -180,7 +205,7 @@ implements
 
     @Override
     public final AlterDomainImpl<T> dropConstraintIfExists(String dropConstraint) {
-        return dropConstraintIfExists(DSL.constraint(dropConstraint));
+        return dropConstraintIfExists(DSL.constraint(DSL.name(dropConstraint)));
     }
 
     @Override
@@ -197,7 +222,7 @@ implements
 
     @Override
     public final AlterDomainImpl<T> renameTo(String renameTo) {
-        return renameTo(DSL.domain(renameTo));
+        return renameTo(DSL.domain(DSL.name(renameTo)));
     }
 
     @Override
@@ -213,7 +238,7 @@ implements
 
     @Override
     public final AlterDomainImpl<T> renameConstraint(String renameConstraint) {
-        return renameConstraint(DSL.constraint(renameConstraint));
+        return renameConstraint(DSL.constraint(DSL.name(renameConstraint)));
     }
 
     @Override
@@ -230,7 +255,7 @@ implements
 
     @Override
     public final AlterDomainImpl<T> renameConstraintIfExists(String renameConstraint) {
-        return renameConstraintIfExists(DSL.constraint(renameConstraint));
+        return renameConstraintIfExists(DSL.constraint(DSL.name(renameConstraint)));
     }
 
     @Override
@@ -288,7 +313,7 @@ implements
 
     @Override
     public final AlterDomainImpl<T> to(String renameConstraintTo) {
-        return to(DSL.constraint(renameConstraintTo));
+        return to(DSL.constraint(DSL.name(renameConstraintTo)));
     }
 
     @Override
@@ -308,10 +333,15 @@ implements
 
 
 
-    private static final Set<SQLDialect> NO_SUPPORT_RENAME_CONSTRAINT_IF_EXISTS = SQLDialect.supportedBy(POSTGRES);
+    private static final Set<SQLDialect> NO_SUPPORT_RENAME_CONSTRAINT_IF_EXISTS = SQLDialect.supportedBy(FIREBIRD, POSTGRES);
+    private static final Set<SQLDialect> NO_SUPPORT_DROP_CONSTRAINT_IF_EXISTS   = SQLDialect.supportedBy(FIREBIRD, POSTGRES);
 
     private final boolean supportsRenameConstraintIfExists(Context<?> ctx) {
         return !NO_SUPPORT_RENAME_CONSTRAINT_IF_EXISTS.contains(ctx.family());
+    }
+
+    private final boolean supportsDropConstraintIfExists(Context<?> ctx) {
+        return !NO_SUPPORT_DROP_CONSTRAINT_IF_EXISTS.contains(ctx.family());
     }
 
     @Override
@@ -336,27 +366,32 @@ implements
         ctx.visit(domain).sql(' ');
 
         if (addConstraint != null) {
-            ctx.visit(K_ADD).sql(' ').visit(addConstraint);
+            if (ctx.family() == FIREBIRD)
+                ctx.visit(K_ADD).sql(' ').visit(check(((ConstraintImpl) addConstraint).$check()));
+            else
+                ctx.visit(K_ADD).sql(' ').visit(addConstraint);
         }
         else if (dropConstraint != null) {
-            ctx.visit(K_DROP_CONSTRAINT).sql(' ');
+            ctx.visit(K_DROP_CONSTRAINT);
 
-            if (dropConstraintIfExists)
-                ctx.visit(K_IF_EXISTS).sql(' ');
+            if (dropConstraintIfExists && supportsDropConstraintIfExists(ctx))
+                ctx.sql(' ').visit(K_IF_EXISTS);
 
-            ctx.data(DATA_CONSTRAINT_REFERENCE, true);
-            ctx.visit(dropConstraint);
-            ctx.data(DATA_CONSTRAINT_REFERENCE, previous);
+            if (ctx.family() != FIREBIRD) {
+                ctx.data(DATA_CONSTRAINT_REFERENCE, true);
+                ctx.sql(' ').visit(dropConstraint);
+                ctx.data(DATA_CONSTRAINT_REFERENCE, previous);
 
-            if (cascade != null)
-                if (cascade)
-                    ctx.sql(' ').visit(K_CASCADE);
-                else
-                    ctx.sql(' ').visit(K_RESTRICT);
+                if (cascade != null)
+                    if (cascade)
+                        ctx.sql(' ').visit(K_CASCADE);
+                    else
+                        ctx.sql(' ').visit(K_RESTRICT);
+            }
         }
         else if (renameTo != null) {
             ctx.data(DATA_CONSTRAINT_REFERENCE, true);
-            ctx.visit(K_RENAME_TO).sql(' ').visit(renameTo);
+            ctx.visit(ctx.family() == FIREBIRD ? K_TO : K_RENAME_TO).sql(' ').visit(renameTo);
             ctx.data(DATA_CONSTRAINT_REFERENCE, previous);
         }
         else if (renameConstraint != null) {

@@ -100,7 +100,7 @@ implements
     
     @Override
     public final AlterDatabaseImpl renameTo(String renameTo) {
-        return renameTo(DSL.catalog(renameTo));
+        return renameTo(DSL.catalog(DSL.name(renameTo)));
     }
 
     @Override

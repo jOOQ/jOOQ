@@ -68,61 +68,61 @@ public interface AlterDomainStep<T> {
     /**
      * Add the <code>ADD</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
-    @Support({ POSTGRES })
+    @Support({ FIREBIRD, POSTGRES })
     AlterDomainFinalStep add(Constraint addConstraint);
 
     /**
      * Add the <code>DROP CONSTRAINT</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
-    @Support({ POSTGRES })
+    @Support({ FIREBIRD, POSTGRES })
     AlterDomainDropConstraintCascadeStep dropConstraint(String dropConstraint);
 
     /**
      * Add the <code>DROP CONSTRAINT</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
-    @Support({ POSTGRES })
+    @Support({ FIREBIRD, POSTGRES })
     AlterDomainDropConstraintCascadeStep dropConstraint(Name dropConstraint);
 
     /**
      * Add the <code>DROP CONSTRAINT</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
-    @Support({ POSTGRES })
+    @Support({ FIREBIRD, POSTGRES })
     AlterDomainDropConstraintCascadeStep dropConstraint(Constraint dropConstraint);
 
     /**
      * Add the <code>DROP CONSTRAINT IF EXISTS</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
-    @Support({ POSTGRES })
+    @Support({ FIREBIRD, POSTGRES })
     AlterDomainDropConstraintCascadeStep dropConstraintIfExists(String dropConstraint);
 
     /**
      * Add the <code>DROP CONSTRAINT IF EXISTS</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
-    @Support({ POSTGRES })
+    @Support({ FIREBIRD, POSTGRES })
     AlterDomainDropConstraintCascadeStep dropConstraintIfExists(Name dropConstraint);
 
     /**
      * Add the <code>DROP CONSTRAINT IF EXISTS</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
-    @Support({ POSTGRES })
+    @Support({ FIREBIRD, POSTGRES })
     AlterDomainDropConstraintCascadeStep dropConstraintIfExists(Constraint dropConstraint);
 
     /**
      * Add the <code>RENAME TO</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
-    @Support({ POSTGRES })
+    @Support({ FIREBIRD, POSTGRES })
     AlterDomainFinalStep renameTo(String renameTo);
 
     /**
      * Add the <code>RENAME TO</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
-    @Support({ POSTGRES })
+    @Support({ FIREBIRD, POSTGRES })
     AlterDomainFinalStep renameTo(Name renameTo);
 
     /**
      * Add the <code>RENAME TO</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
-    @Support({ POSTGRES })
+    @Support({ FIREBIRD, POSTGRES })
     AlterDomainFinalStep renameTo(Domain<?> renameTo);
 
     /**
@@ -164,19 +164,19 @@ public interface AlterDomainStep<T> {
     /**
      * Add the <code>SET DEFAULT</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
-    @Support({ POSTGRES })
+    @Support({ FIREBIRD, POSTGRES })
     AlterDomainFinalStep setDefault(T setDefault);
 
     /**
      * Add the <code>SET DEFAULT</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
-    @Support({ POSTGRES })
+    @Support({ FIREBIRD, POSTGRES })
     AlterDomainFinalStep setDefault(Field<T> setDefault);
 
     /**
      * Add the <code>DROP DEFAULT</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
-    @Support({ POSTGRES })
+    @Support({ FIREBIRD, POSTGRES })
     AlterDomainFinalStep dropDefault();
 
     /**

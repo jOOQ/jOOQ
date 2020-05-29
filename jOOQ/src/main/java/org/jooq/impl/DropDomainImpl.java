@@ -37,14 +37,22 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Keywords.*;
-import static org.jooq.impl.Tools.BooleanDataKey.*;
-import static org.jooq.SQLDialect.*;
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.impl.Keywords.K_CASCADE;
+import static org.jooq.impl.Keywords.K_DOMAIN;
+import static org.jooq.impl.Keywords.K_DROP;
+import static org.jooq.impl.Keywords.K_IF_EXISTS;
+import static org.jooq.impl.Keywords.K_RESTRICT;
+import static org.jooq.impl.Keywords.K_TYPE;
 
-import org.jooq.*;
-import org.jooq.impl.*;
+import java.util.Set;
 
-import java.util.*;
+import org.jooq.Configuration;
+import org.jooq.Context;
+import org.jooq.Domain;
+import org.jooq.DropDomainCascadeStep;
+import org.jooq.DropDomainFinalStep;
+import org.jooq.SQLDialect;
 
 /**
  * The <code>DROP DOMAIN IF EXISTS</code> statement.
@@ -63,7 +71,7 @@ implements
     private final Domain<?> domain;
     private final boolean   dropDomainIfExists;
     private       Boolean   cascade;
-    
+
     DropDomainImpl(
         Configuration configuration,
         Domain domain,
@@ -97,7 +105,7 @@ implements
     // -------------------------------------------------------------------------
     // XXX: DSL API
     // -------------------------------------------------------------------------
-    
+
     @Override
     public final DropDomainImpl cascade() {
         this.cascade = true;
@@ -116,8 +124,24 @@ implements
 
 
 
+    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS = SQLDialect.supportedBy(FIREBIRD);
+
+    private final boolean supportsIfExists(Context<?> ctx) {
+        return !NO_SUPPORT_IF_EXISTS.contains(ctx.family());
+    }
+
     @Override
     public final void accept(Context<?> ctx) {
+        if (dropDomainIfExists && !supportsIfExists(ctx)) {
+            Tools.beginTryCatch(ctx, DDLStatementType.DROP_DOMAIN);
+            accept0(ctx);
+            Tools.endTryCatch(ctx, DDLStatementType.DROP_DOMAIN);
+        }
+        else
+            accept0(ctx);
+    }
+
+    private final void accept0(Context<?> ctx) {
         switch (ctx.family()) {
 
 
@@ -130,7 +154,7 @@ implements
                 break;
         }
 
-        if (dropDomainIfExists)
+        if (dropDomainIfExists && supportsIfExists(ctx))
             ctx.sql(' ').visit(K_IF_EXISTS);
 
         ctx.sql(' ').visit(domain);

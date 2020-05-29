@@ -100,7 +100,7 @@ implements
     
     @Override
     public final AlterSchemaImpl renameTo(String renameTo) {
-        return renameTo(DSL.schema(renameTo));
+        return renameTo(DSL.schema(DSL.name(renameTo)));
     }
 
     @Override

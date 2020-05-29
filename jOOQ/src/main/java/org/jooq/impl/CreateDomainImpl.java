@@ -37,14 +37,38 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Keywords.*;
-import static org.jooq.impl.Tools.BooleanDataKey.*;
-import static org.jooq.SQLDialect.*;
+// ...
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.POSTGRES;
+// ...
+import static org.jooq.impl.DSL.and;
+import static org.jooq.impl.DSL.check;
+import static org.jooq.impl.Keywords.K_AS;
+import static org.jooq.impl.Keywords.K_CREATE;
+import static org.jooq.impl.Keywords.K_DEFAULT;
+import static org.jooq.impl.Keywords.K_DOMAIN;
+import static org.jooq.impl.Keywords.K_FROM;
+import static org.jooq.impl.Keywords.K_IF_NOT_EXISTS;
+import static org.jooq.impl.Keywords.K_TYPE;
 
-import org.jooq.*;
-import org.jooq.impl.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
-import java.util.*;
+import org.jooq.Condition;
+import org.jooq.Configuration;
+import org.jooq.Constraint;
+import org.jooq.Context;
+import org.jooq.CreateDomainAsStep;
+import org.jooq.CreateDomainConstraintStep;
+import org.jooq.CreateDomainDefaultStep;
+import org.jooq.CreateDomainFinalStep;
+import org.jooq.DataType;
+import org.jooq.Domain;
+import org.jooq.Field;
+import org.jooq.SQLDialect;
 
 /**
  * The <code>CREATE DOMAIN IF NOT EXISTS</code> statement.
@@ -67,7 +91,7 @@ implements
     private       DataType<T>                      dataType;
     private       Field<T>                         default_;
     private       Collection<? extends Constraint> constraints;
-    
+
     CreateDomainImpl(
         Configuration configuration,
         Domain domain,
@@ -109,7 +133,7 @@ implements
     // -------------------------------------------------------------------------
     // XXX: DSL API
     // -------------------------------------------------------------------------
-    
+
     @Override
     public final <T> CreateDomainImpl<T> as(Class<T> dataType) {
         return as(DefaultDataType.getDataType(null, dataType));
@@ -149,7 +173,7 @@ implements
 
 
 
-    private static final Set<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS = SQLDialect.supportedBy(POSTGRES);
+    private static final Set<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS = SQLDialect.supportedBy(FIREBIRD, POSTGRES);
 
     private final boolean supportsIfNotExists(Context<?> ctx) {
         return !NO_SUPPORT_IF_NOT_EXISTS.contains(ctx.family());
@@ -187,9 +211,20 @@ implements
         if (default_ != null)
             ctx.formatSeparator().visit(K_DEFAULT).sql(' ').visit(default_);
 
-        if (constraints != null)
-            for (Constraint constraint : constraints)
-                ctx.formatSeparator().visit(constraint);
+        if (constraints != null) {
+            if (ctx.family() == FIREBIRD) {
+                List<Condition> conditions = new ArrayList<>();
+
+                for (Constraint constraint : constraints)
+                    conditions.add(((ConstraintImpl) constraint).$check());
+
+                ctx.formatSeparator().visit(check(and(conditions)));
+            }
+            else {
+                for (Constraint constraint : constraints)
+                    ctx.formatSeparator().visit(constraint);
+            }
+        }
     }
 
 

@@ -2916,7 +2916,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public org.jooq.CreateDatabaseFinalStep createDatabase(String database) {
-        return new CreateDatabaseImpl(configuration(), DSL.catalog(database), false);
+        return new CreateDatabaseImpl(configuration(), DSL.catalog(DSL.name(database)), false);
     }
 
     @Override
@@ -2931,7 +2931,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public org.jooq.CreateDatabaseFinalStep createDatabaseIfNotExists(String database) {
-        return new CreateDatabaseImpl(configuration(), DSL.catalog(database), true);
+        return new CreateDatabaseImpl(configuration(), DSL.catalog(DSL.name(database)), true);
     }
 
     @Override
@@ -2946,7 +2946,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public org.jooq.CreateDomainAsStep createDomain(String domain) {
-        return new CreateDomainImpl<>(configuration(), DSL.domain(domain), false);
+        return new CreateDomainImpl<>(configuration(), DSL.domain(DSL.name(domain)), false);
     }
 
     @Override
@@ -2961,7 +2961,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public org.jooq.CreateDomainAsStep createDomainIfNotExists(String domain) {
-        return new CreateDomainImpl<>(configuration(), DSL.domain(domain), true);
+        return new CreateDomainImpl<>(configuration(), DSL.domain(DSL.name(domain)), true);
     }
 
     @Override
@@ -2976,7 +2976,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public org.jooq.CreateSchemaFinalStep createSchema(String schema) {
-        return new CreateSchemaImpl(configuration(), DSL.schema(schema), false);
+        return new CreateSchemaImpl(configuration(), DSL.schema(DSL.name(schema)), false);
     }
 
     @Override
@@ -2991,7 +2991,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public org.jooq.CreateSchemaFinalStep createSchemaIfNotExists(String schema) {
-        return new CreateSchemaImpl(configuration(), DSL.schema(schema), true);
+        return new CreateSchemaImpl(configuration(), DSL.schema(DSL.name(schema)), true);
     }
 
     @Override
@@ -3006,7 +3006,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public org.jooq.CreateSequenceFlagsStep createSequence(String sequence) {
-        return new CreateSequenceImpl(configuration(), DSL.sequence(sequence), false);
+        return new CreateSequenceImpl(configuration(), DSL.sequence(DSL.name(sequence)), false);
     }
 
     @Override
@@ -3021,7 +3021,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public org.jooq.CreateSequenceFlagsStep createSequenceIfNotExists(String sequence) {
-        return new CreateSequenceImpl(configuration(), DSL.sequence(sequence), true);
+        return new CreateSequenceImpl(configuration(), DSL.sequence(DSL.name(sequence)), true);
     }
 
     @Override
@@ -3036,7 +3036,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public org.jooq.AlterDatabaseStep alterDatabase(String database) {
-        return new AlterDatabaseImpl(configuration(), DSL.catalog(database), false);
+        return new AlterDatabaseImpl(configuration(), DSL.catalog(DSL.name(database)), false);
     }
 
     @Override
@@ -3051,7 +3051,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public org.jooq.AlterDatabaseStep alterDatabaseIfExists(String database) {
-        return new AlterDatabaseImpl(configuration(), DSL.catalog(database), true);
+        return new AlterDatabaseImpl(configuration(), DSL.catalog(DSL.name(database)), true);
     }
 
     @Override
@@ -3066,7 +3066,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <T> org.jooq.AlterDomainStep<T> alterDomain(String domain) {
-        return new AlterDomainImpl<>(configuration(), DSL.domain(domain), false);
+        return new AlterDomainImpl<>(configuration(), DSL.domain(DSL.name(domain)), false);
     }
 
     @Override
@@ -3081,7 +3081,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <T> org.jooq.AlterDomainStep<T> alterDomainIfExists(String domain) {
-        return new AlterDomainImpl<>(configuration(), DSL.domain(domain), true);
+        return new AlterDomainImpl<>(configuration(), DSL.domain(DSL.name(domain)), true);
     }
 
     @Override
@@ -3096,7 +3096,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public org.jooq.AlterSchemaStep alterSchema(String schema) {
-        return new AlterSchemaImpl(configuration(), DSL.schema(schema), false);
+        return new AlterSchemaImpl(configuration(), DSL.schema(DSL.name(schema)), false);
     }
 
     @Override
@@ -3111,7 +3111,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public org.jooq.AlterSchemaStep alterSchemaIfExists(String schema) {
-        return new AlterSchemaImpl(configuration(), DSL.schema(schema), true);
+        return new AlterSchemaImpl(configuration(), DSL.schema(DSL.name(schema)), true);
     }
 
     @Override
@@ -3126,7 +3126,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public org.jooq.DropDatabaseFinalStep dropDatabase(String database) {
-        return new DropDatabaseImpl(configuration(), DSL.catalog(database), false);
+        return new DropDatabaseImpl(configuration(), DSL.catalog(DSL.name(database)), false);
     }
 
     @Override
@@ -3141,7 +3141,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public org.jooq.DropDatabaseFinalStep dropDatabaseIfExists(String database) {
-        return new DropDatabaseImpl(configuration(), DSL.catalog(database), true);
+        return new DropDatabaseImpl(configuration(), DSL.catalog(DSL.name(database)), true);
     }
 
     @Override
@@ -3156,7 +3156,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public org.jooq.DropDomainCascadeStep dropDomain(String domain) {
-        return new DropDomainImpl(configuration(), DSL.domain(domain), false);
+        return new DropDomainImpl(configuration(), DSL.domain(DSL.name(domain)), false);
     }
 
     @Override
@@ -3171,7 +3171,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public org.jooq.DropDomainCascadeStep dropDomainIfExists(String domain) {
-        return new DropDomainImpl(configuration(), DSL.domain(domain), true);
+        return new DropDomainImpl(configuration(), DSL.domain(DSL.name(domain)), true);
     }
 
     @Override
@@ -3186,7 +3186,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public org.jooq.DropSchemaStep dropSchema(String schema) {
-        return new DropSchemaImpl(configuration(), DSL.schema(schema), false);
+        return new DropSchemaImpl(configuration(), DSL.schema(DSL.name(schema)), false);
     }
 
     @Override
@@ -3201,7 +3201,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public org.jooq.DropSchemaStep dropSchemaIfExists(String schema) {
-        return new DropSchemaImpl(configuration(), DSL.schema(schema), true);
+        return new DropSchemaImpl(configuration(), DSL.schema(DSL.name(schema)), true);
     }
 
     @Override
@@ -3216,7 +3216,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public org.jooq.DropSequenceFinalStep dropSequence(String sequence) {
-        return new DropSequenceImpl(configuration(), DSL.sequence(sequence), false);
+        return new DropSequenceImpl(configuration(), DSL.sequence(DSL.name(sequence)), false);
     }
 
     @Override
@@ -3231,7 +3231,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public org.jooq.DropSequenceFinalStep dropSequenceIfExists(String sequence) {
-        return new DropSequenceImpl(configuration(), DSL.sequence(sequence), true);
+        return new DropSequenceImpl(configuration(), DSL.sequence(DSL.name(sequence)), true);
     }
 
     @Override

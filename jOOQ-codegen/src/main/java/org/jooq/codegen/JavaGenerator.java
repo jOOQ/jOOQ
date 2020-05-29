@@ -1987,7 +1987,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("public %s %s() {", type, getter);
 
             // [#6705] Avoid generating code with a redundant (Object) cast
-            if ("java.lang.Object".equals(typeFull))
+            if (Object.class.getName().equals(typeFull))
                 out.println("return get(%s);", index);
             else
                 out.println("return (%s) get(%s);", type, index);
@@ -5990,7 +5990,7 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     private boolean printDeprecationIfUnknownType(JavaWriter out, String type) {
-        if (generateDeprecationOnUnknownTypes() && "java.lang.Object".equals(type)) {
+        if (generateDeprecationOnUnknownTypes() && (Object.class.getName().equals(type) || kotlin && "Any".equals(type))) {
             out.javadoc("@deprecated Unknown data type. "
                 + "Please define an explicit {@link org.jooq.Binding} to specify how this "
                 + "type should be handled. Deprecation can be turned off using {@literal <deprecationOnUnknownTypes/>} "
@@ -7185,7 +7185,7 @@ public class JavaGenerator extends AbstractGenerator {
             if (scala)
                 type = "scala.Array[" + getType(db, schema, baseType.last(), p, s, baseType, javaType, defaultType, udtMode) + "]";
             else if (kotlin)
-                type = "Array<" + getType(db, schema, baseType.last(), p, s, baseType, javaType, defaultType, udtMode) + ">";
+                type = "kotlin.Array<" + getType(db, schema, baseType.last(), p, s, baseType, javaType, defaultType, udtMode) + "?>";
             else
                 type = getType(db, schema, baseType.last(), p, s, baseType, javaType, defaultType, udtMode) + "[]";
         }
@@ -7239,7 +7239,7 @@ public class JavaGenerator extends AbstractGenerator {
                 if (scala && clazz == byte[].class)
                     type = "scala.Array[scala.Byte]";
                 else if (kotlin && clazz == byte[].class)
-                    type = "ByteArray";
+                    type = "kotlin.ByteArray";
                 else
                     type = clazz.getCanonicalName();
 
@@ -7263,6 +7263,9 @@ public class JavaGenerator extends AbstractGenerator {
                 }
             }
         }
+
+        if (kotlin && Object.class.getName().equals(type))
+            type = "Any";
 
         return type;
     }

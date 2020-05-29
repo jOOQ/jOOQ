@@ -40,6 +40,7 @@ package org.jooq.tools;
 import static java.time.temporal.ChronoField.INSTANT_SECONDS;
 import static java.time.temporal.ChronoField.MILLI_OF_DAY;
 import static java.time.temporal.ChronoField.MILLI_OF_SECOND;
+import static org.jooq.tools.reflect.Reflect.accessible;
 import static org.jooq.tools.reflect.Reflect.wrapper;
 import static org.jooq.types.Unsigned.ubyte;
 import static org.jooq.types.Unsigned.uint;
@@ -50,11 +51,11 @@ import java.io.File;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.lang.reflect.Array;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.ByteBuffer;
 import java.sql.Date;
@@ -441,6 +442,9 @@ public final class Convert {
      * the platform's default charset</li>
      * <li><code>Object[]</code> can be converted into any other array type, if
      * array elements can be converted, too</li>
+     * <li>All types can be converted into types containing a single argument
+     * constructor whose argument is a type that can be converted to according
+     * to the above rules.</li>
      * <li><b>All other combinations that are not listed above will result in a
      * {@link DataTypeException}</b></li>
      * </ul>
@@ -859,29 +863,9 @@ public final class Convert {
                 }
 
                 // URI types can be converted from strings
-                else if (fromClass == String.class && toClass == URI.class) {
-                    try {
-                        return (U) new URI(from.toString());
-                    }
-                    catch (URISyntaxException e) {
-                        return null;
-                    }
-                }
-
-                // URI types can be converted from strings
                 else if (fromClass == String.class && toClass == URL.class) {
                     try {
                         return (U) new URI(from.toString()).toURL();
-                    }
-                    catch (Exception e) {
-                        return null;
-                    }
-                }
-
-                // File types can be converted from strings
-                else if (fromClass == String.class && toClass == File.class) {
-                    try {
-                        return (U) new File(from.toString());
                     }
                     catch (Exception e) {
                         return null;
@@ -1175,6 +1159,30 @@ public final class Convert {
 
 
                 // TODO [#2520] When RecordUnmappers are supported, they should also be considered here
+
+                // [#10229] Try public, single argument, applicable constructors first
+                for (Constructor<?> constructor : toClass.getConstructors()) {
+                    if (constructor.getParameterCount() == 1) {
+                        try {
+                            return (U) constructor.newInstance(convert(from, constructor.getParameterTypes()[0]));
+                        }
+
+                        // Throw exception further down instead
+                        catch (Exception ignore) {}
+                    }
+                }
+
+                // [#10229] Try private, single argument, applicable constructors
+                for (Constructor<?> constructor : toClass.getDeclaredConstructors()) {
+                    if (constructor.getParameterCount() == 1) {
+                        try {
+                            return (U) accessible(constructor).newInstance(convert(from, constructor.getParameterTypes()[0]));
+                        }
+
+                        // Throw exception further down instead
+                        catch (Exception ignore) {}
+                    }
+                }
             }
 
             throw fail(from, toClass);

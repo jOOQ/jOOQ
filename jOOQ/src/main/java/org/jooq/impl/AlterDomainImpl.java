@@ -309,7 +309,7 @@ implements
 
 
     private static final Set<SQLDialect> NO_SUPPORT_RENAME_CONSTRAINT_IF_EXISTS = SQLDialect.supportedBy(FIREBIRD, POSTGRES);
-    private static final Set<SQLDialect> NO_SUPPORT_DROP_CONSTRAINT_IF_EXISTS   = SQLDialect.supportedBy(FIREBIRD, POSTGRES);
+    private static final Set<SQLDialect> NO_SUPPORT_DROP_CONSTRAINT_IF_EXISTS   = SQLDialect.supportedBy(FIREBIRD);
 
     private final boolean supportsRenameConstraintIfExists(Context<?> ctx) {
         return !NO_SUPPORT_RENAME_CONSTRAINT_IF_EXISTS.contains(ctx.family());
@@ -321,7 +321,8 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (renameConstraintIfExists && !supportsRenameConstraintIfExists(ctx)) {
+        if (renameConstraintIfExists && !supportsRenameConstraintIfExists(ctx) ||
+            dropConstraintIfExists && !supportsDropConstraintIfExists(ctx)) {
             Tools.beginTryCatch(ctx, DDLStatementType.ALTER_DOMAIN);
             accept0(ctx);
             Tools.endTryCatch(ctx, DDLStatementType.ALTER_DOMAIN);

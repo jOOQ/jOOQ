@@ -47,6 +47,11 @@ import java.util.List;
 public interface Domain<T> extends Named, Typed<T> {
 
     /**
+     * The <code>DOMAIN</code>'s catalog.
+     */
+    Catalog getCatalog();
+
+    /**
      * The <code>DOMAIN</code>'s schema.
      */
     Schema getSchema();

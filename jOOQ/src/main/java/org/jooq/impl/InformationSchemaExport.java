@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 
+import static org.jooq.tools.StringUtils.isBlank;
 import static org.jooq.util.xml.jaxb.TableConstraintType.CHECK;
 import static org.jooq.util.xml.jaxb.TableConstraintType.FOREIGN_KEY;
 import static org.jooq.util.xml.jaxb.TableConstraintType.PRIMARY_KEY;
@@ -51,6 +52,7 @@ import java.util.Set;
 import org.jooq.Catalog;
 import org.jooq.Check;
 import org.jooq.Configuration;
+import org.jooq.Domain;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Index;
@@ -63,7 +65,6 @@ import org.jooq.SortOrder;
 import org.jooq.Table;
 import org.jooq.UniqueKey;
 import org.jooq.tools.Convert;
-import org.jooq.tools.StringUtils;
 import org.jooq.util.xml.jaxb.CheckConstraint;
 import org.jooq.util.xml.jaxb.Column;
 import org.jooq.util.xml.jaxb.IndexColumnUsage;
@@ -123,11 +124,14 @@ final class InformationSchemaExport {
         for (Schema s : schemas) {
             exportSchema0(result, s);
 
+            for (Domain<?> d : s.getDomains())
+                exportDomain0(configuration, result, d);
+
             for (Table<?> t : s.getTables())
                 exportTable0(configuration, result, t, includedTables);
 
             for (Sequence<?> q : s.getSequences())
-                exportSequences0(configuration, result, q);
+                exportSequence0(configuration, result, q);
         }
 
         return result;
@@ -149,24 +153,80 @@ final class InformationSchemaExport {
             for (Schema s : c.getSchemas()) {
                 exportSchema0(result, s);
 
+                for (Domain<?> d : s.getDomains())
+                    exportDomain0(configuration, result, d);
+
                 for (Table<?> t : s.getTables())
                     exportTable0(configuration, result, t, includedTables);
 
                 for (Sequence<?> q : s.getSequences())
-                    exportSequences0(configuration, result, q);
+                    exportSequence0(configuration, result, q);
             }
         }
 
         return result;
     }
 
-    private static final void exportSequences0(Configuration configuration, InformationSchema result, Sequence<?> q) {
+    private static final void exportDomain0(Configuration configuration, InformationSchema result, Domain<?> d) {
+        org.jooq.util.xml.jaxb.Domain id = new org.jooq.util.xml.jaxb.Domain();
+
+        String catalogName = d.getCatalog().getName();
+        String schemaName = d.getSchema().getName();
+        String domainName = d.getName();
+
+        if (!isBlank(catalogName))
+            id.setDomainCatalog(catalogName);
+
+        if (!isBlank(schemaName))
+            id.setDomainSchema(schemaName);
+
+        id.setDomainName(domainName);
+        id.setDataType(d.getDataType().getTypeName(configuration));
+
+        if (d.getDataType().lengthDefined())
+            id.setCharacterMaximumLength(d.getDataType().length());
+
+        if (d.getDataType().precisionDefined())
+            id.setNumericPrecision(d.getDataType().precision());
+
+        if (d.getDataType().scaleDefined())
+            id.setNumericScale(d.getDataType().scale());
+
+        result.getDomains().add(id);
+
+        for (Check<?> c : d.checks()) {
+            org.jooq.util.xml.jaxb.DomainConstraint idc = new org.jooq.util.xml.jaxb.DomainConstraint();
+            org.jooq.util.xml.jaxb.CheckConstraint icc = new org.jooq.util.xml.jaxb.CheckConstraint();
+
+            if (!isBlank(catalogName)) {
+                idc.setDomainCatalog(catalogName);
+                idc.setConstraintCatalog(catalogName);
+                icc.setConstraintCatalog(catalogName);
+            }
+
+            if (!isBlank(schemaName)) {
+                idc.setDomainSchema(schemaName);
+                idc.setConstraintSchema(schemaName);
+                icc.setConstraintSchema(schemaName);
+            }
+
+            idc.setDomainName(domainName);
+            idc.setConstraintName(c.getName());
+            icc.setConstraintName(c.getName());
+            icc.setCheckClause(configuration.dsl().render(c.condition()));
+
+            result.getDomainConstraints().add(idc);
+            result.getCheckConstraints().add(icc);
+        }
+    }
+
+    private static final void exportSequence0(Configuration configuration, InformationSchema result, Sequence<?> q) {
         org.jooq.util.xml.jaxb.Sequence iq = new org.jooq.util.xml.jaxb.Sequence();
 
-        if (!StringUtils.isBlank(q.getCatalog().getName()))
+        if (!isBlank(q.getCatalog().getName()))
             iq.setSequenceCatalog(q.getCatalog().getName());
 
-        if (!StringUtils.isBlank(q.getSchema().getName()))
+        if (!isBlank(q.getSchema().getName()))
             iq.setSequenceSchema(q.getSchema().getName());
 
         iq.setSequenceName(q.getName());
@@ -199,7 +259,7 @@ final class InformationSchemaExport {
     private static final void exportCatalog0(InformationSchema result, Catalog c) {
         org.jooq.util.xml.jaxb.Catalog ic = new org.jooq.util.xml.jaxb.Catalog();
 
-        if (!StringUtils.isBlank(c.getName())) {
+        if (!isBlank(c.getName())) {
             ic.setCatalogName(c.getName());
             ic.setComment(c.getComment());
             result.getCatalogs().add(ic);
@@ -209,10 +269,10 @@ final class InformationSchemaExport {
     private static final void exportSchema0(InformationSchema result, Schema s) {
         org.jooq.util.xml.jaxb.Schema is = new org.jooq.util.xml.jaxb.Schema();
 
-        if (!StringUtils.isBlank(s.getCatalog().getName()))
+        if (!isBlank(s.getCatalog().getName()))
             is.setCatalogName(s.getCatalog().getName());
 
-        if (!StringUtils.isBlank(s.getName())) {
+        if (!isBlank(s.getName())) {
             is.setSchemaName(s.getName());
             is.setComment(s.getComment());
             result.getSchemata().add(is);
@@ -222,10 +282,10 @@ final class InformationSchemaExport {
     private static final void exportTable0(Configuration configuration, InformationSchema result, Table<?> t, Set<Table<?>> includedTables) {
         org.jooq.util.xml.jaxb.Table it = new org.jooq.util.xml.jaxb.Table();
 
-        if (!StringUtils.isBlank(t.getCatalog().getName()))
+        if (!isBlank(t.getCatalog().getName()))
             it.setTableCatalog(t.getCatalog().getName());
 
-        if (!StringUtils.isBlank(t.getSchema().getName()))
+        if (!isBlank(t.getSchema().getName()))
             it.setTableSchema(t.getSchema().getName());
 
         switch (t.getOptions().type()) {
@@ -246,10 +306,10 @@ final class InformationSchemaExport {
         if (t.getOptions().type() == org.jooq.TableOptions.TableType.VIEW) {
             org.jooq.util.xml.jaxb.View iv = new org.jooq.util.xml.jaxb.View();
 
-            if (!StringUtils.isBlank(t.getCatalog().getName()))
+            if (!isBlank(t.getCatalog().getName()))
                 iv.setTableCatalog(t.getCatalog().getName());
 
-            if (!StringUtils.isBlank(t.getSchema().getName()))
+            if (!isBlank(t.getSchema().getName()))
                 iv.setTableSchema(t.getSchema().getName());
 
             iv.setTableName(t.getName());
@@ -262,10 +322,10 @@ final class InformationSchemaExport {
             Field<?> f = fields[i];
             Column ic = new Column();
 
-            if (!StringUtils.isBlank(t.getCatalog().getName()))
+            if (!isBlank(t.getCatalog().getName()))
                 ic.setTableCatalog(t.getCatalog().getName());
 
-            if (!StringUtils.isBlank(t.getSchema().getName()))
+            if (!isBlank(t.getSchema().getName()))
                 ic.setTableSchema(t.getSchema().getName());
 
             ic.setTableName(t.getName());
@@ -312,10 +372,10 @@ final class InformationSchemaExport {
         String catalogName = t.getCatalog().getName();
         String schemaName = t.getSchema().getName();
 
-        if (!StringUtils.isBlank(catalogName))
+        if (!isBlank(catalogName))
             c.setConstraintCatalog(catalogName);
 
-        if (!StringUtils.isBlank(schemaName))
+        if (!isBlank(schemaName))
             c.setConstraintSchema(schemaName);
 
         c.setConstraintName(chk.getName());
@@ -329,11 +389,11 @@ final class InformationSchemaExport {
         String catalogName = t.getCatalog().getName();
         String schemaName = t.getSchema().getName();
 
-        if (!StringUtils.isBlank(catalogName))
+        if (!isBlank(catalogName))
             i.withIndexCatalog(catalogName)
              .withTableCatalog(catalogName);
 
-        if (!StringUtils.isBlank(schemaName))
+        if (!isBlank(schemaName))
             i.withIndexSchema(schemaName)
              .withTableSchema(schemaName);
 
@@ -346,11 +406,11 @@ final class InformationSchemaExport {
         for (SortField<?> sortField : index.getFields()) {
             IndexColumnUsage ic = new IndexColumnUsage();
 
-            if (!StringUtils.isBlank(catalogName))
+            if (!isBlank(catalogName))
                 ic.withIndexCatalog(catalogName)
                   .withTableCatalog(catalogName);
 
-            if (!StringUtils.isBlank(schemaName))
+            if (!isBlank(schemaName))
                 ic.withIndexSchema(schemaName)
                   .withTableSchema(schemaName);
 
@@ -375,12 +435,12 @@ final class InformationSchemaExport {
         for (Field<?> f : key.getFields()) {
             KeyColumnUsage kc = new KeyColumnUsage();
 
-            if (!StringUtils.isBlank(catalogName)) {
+            if (!isBlank(catalogName)) {
                 kc.setConstraintCatalog(catalogName);
                 kc.setTableCatalog(catalogName);
             }
 
-            if (!StringUtils.isBlank(schemaName)) {
+            if (!isBlank(schemaName)) {
                 kc.setConstraintSchema(schemaName);
                 kc.setTableSchema(schemaName);
             }
@@ -399,16 +459,16 @@ final class InformationSchemaExport {
             String ukCatalogName = uk.getTable().getCatalog().getName();
             String ukSchemaName = uk.getTable().getSchema().getName();
 
-            if (!StringUtils.isBlank(catalogName))
+            if (!isBlank(catalogName))
                 rc.setConstraintCatalog(catalogName);
 
-            if (!StringUtils.isBlank(ukCatalogName))
+            if (!isBlank(ukCatalogName))
                 rc.setUniqueConstraintCatalog(ukCatalogName);
 
-            if (!StringUtils.isBlank(schemaName))
+            if (!isBlank(schemaName))
                 rc.setConstraintSchema(schemaName);
 
-            if (!StringUtils.isBlank(ukSchemaName))
+            if (!isBlank(ukSchemaName))
                 rc.setUniqueConstraintSchema(ukSchemaName);
 
             rc.setConstraintName(key.getName());
@@ -427,11 +487,11 @@ final class InformationSchemaExport {
         tc.setConstraintName(constraintName);
         tc.setConstraintType(constraintType);
 
-        if (!StringUtils.isBlank(catalogName))
+        if (!isBlank(catalogName))
             tc.withConstraintCatalog(catalogName)
               .withTableCatalog(catalogName);
 
-        if (!StringUtils.isBlank(schemaName))
+        if (!isBlank(schemaName))
             tc.withConstraintSchema(schemaName)
               .withTableSchema(schemaName);
 

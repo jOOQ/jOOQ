@@ -46,6 +46,7 @@ import java.util.Set;
 
 import org.jooq.Catalog;
 import org.jooq.Configuration;
+import org.jooq.Domain;
 import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.Table;
@@ -66,7 +67,7 @@ final class SchemaMetaImpl extends AbstractMeta {
     }
 
     @Override
-    protected final List<Catalog> getCatalogs0() {
+    final List<Catalog> getCatalogs0() {
         Set<Catalog> result = new LinkedHashSet<>();
 
         for (Schema schema : schemas)
@@ -77,12 +78,22 @@ final class SchemaMetaImpl extends AbstractMeta {
     }
 
     @Override
-    protected final List<Schema> getSchemas0() {
+    final List<Schema> getSchemas0() {
         return Collections.unmodifiableList(Arrays.asList(schemas));
     }
 
     @Override
-    protected final List<Table<?>> getTables0() {
+    final List<Domain<?>> getDomains0() {
+        List<Domain<?>> result = new ArrayList<>();
+
+        for (Schema schema : schemas)
+            result.addAll(schema.getDomains());
+
+        return result;
+    }
+
+    @Override
+    final List<Table<?>> getTables0() {
         List<Table<?>> result = new ArrayList<>();
 
         for (Schema schema : schemas)
@@ -92,7 +103,7 @@ final class SchemaMetaImpl extends AbstractMeta {
     }
 
     @Override
-    protected final List<Sequence<?>> getSequences0() {
+    final List<Sequence<?>> getSequences0() {
         List<Sequence<?>> result = new ArrayList<>();
 
         for (Schema schema : schemas)
@@ -102,7 +113,7 @@ final class SchemaMetaImpl extends AbstractMeta {
     }
 
     @Override
-    protected final List<UniqueKey<?>> getPrimaryKeys0() {
+    final List<UniqueKey<?>> getPrimaryKeys0() {
         List<UniqueKey<?>> result = new ArrayList<>();
 
         for (Schema schema : schemas)

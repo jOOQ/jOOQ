@@ -43,6 +43,7 @@ import java.util.List;
 
 import org.jooq.Catalog;
 import org.jooq.Configuration;
+import org.jooq.Domain;
 import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.Table;
@@ -63,12 +64,12 @@ final class CatalogMetaImpl extends AbstractMeta {
     }
 
     @Override
-    protected final List<Catalog> getCatalogs0() {
+    final List<Catalog> getCatalogs0() {
         return Arrays.asList(catalogs);
     }
 
     @Override
-    protected final List<Schema> getSchemas0() {
+    final List<Schema> getSchemas0() {
         List<Schema> result = new ArrayList<>();
 
         for (Catalog catalog : catalogs)
@@ -78,7 +79,18 @@ final class CatalogMetaImpl extends AbstractMeta {
     }
 
     @Override
-    protected final List<Table<?>> getTables0() {
+    final List<Domain<?>> getDomains0() {
+        List<Domain<?>> result = new ArrayList<>();
+
+        for (Catalog catalog : catalogs)
+            for (Schema schema : catalog.getSchemas())
+                result.addAll(schema.getDomains());
+
+        return super.getDomains0();
+    }
+
+    @Override
+    final List<Table<?>> getTables0() {
         List<Table<?>> result = new ArrayList<>();
 
         for (Catalog catalog : catalogs)
@@ -89,7 +101,7 @@ final class CatalogMetaImpl extends AbstractMeta {
     }
 
     @Override
-    protected final List<Sequence<?>> getSequences0() {
+    final List<Sequence<?>> getSequences0() {
         List<Sequence<?>> result = new ArrayList<>();
 
         for (Catalog catalog : catalogs)
@@ -100,7 +112,7 @@ final class CatalogMetaImpl extends AbstractMeta {
     }
 
     @Override
-    protected final List<UniqueKey<?>> getPrimaryKeys0() {
+    final List<UniqueKey<?>> getPrimaryKeys0() {
         List<UniqueKey<?>> result = new ArrayList<>();
 
         for (Catalog catalog : catalogs)

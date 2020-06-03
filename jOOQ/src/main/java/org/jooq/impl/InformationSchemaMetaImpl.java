@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.Tools.EMPTY_CHECK;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 import static org.jooq.util.xml.jaxb.TableConstraintType.PRIMARY_KEY;
@@ -54,6 +55,7 @@ import org.jooq.Catalog;
 import org.jooq.Check;
 import org.jooq.Configuration;
 import org.jooq.DataType;
+import org.jooq.Domain;
 import org.jooq.ForeignKey;
 import org.jooq.Index;
 import org.jooq.Name;
@@ -81,24 +83,27 @@ import org.jooq.util.xml.jaxb.TableConstraint;
  */
 final class InformationSchemaMetaImpl extends AbstractMeta {
 
-    private static final long                               serialVersionUID = -1623783405104005307L;
+    private static final long                                   serialVersionUID = -1623783405104005307L;
 
-    private final InformationSchema                         source;
+    private final InformationSchema                             source;
 
-    private final List<Catalog>                             catalogs;
-    private final Map<Name, Catalog>                        catalogsByName;
-    private final List<Schema>                              schemas;
-    private final Map<Name, Schema>                         schemasByName;
-    private final Map<Catalog, List<Schema>>                schemasPerCatalog;
-    private final List<InformationSchemaTable>              tables;
-    private final Map<Name, InformationSchemaTable>         tablesByName;
-    private final Map<Schema, List<InformationSchemaTable>> tablesPerSchema;
-    private final List<Sequence<?>>                         sequences;
-    private final Map<Schema, List<Sequence<?>>>            sequencesPerSchema;
-    private final List<UniqueKeyImpl<Record>>               primaryKeys;
-    private final Map<Name, UniqueKeyImpl<Record>>          uniqueKeysByName;
-    private final Map<Name, Name>                           referentialKeys;
-    private final Map<Name, IndexImpl>                      indexesByName;
+    private final List<Catalog>                                 catalogs;
+    private final Map<Name, Catalog>                            catalogsByName;
+    private final List<Schema>                                  schemas;
+    private final Map<Name, Schema>                             schemasByName;
+    private final Map<Catalog, List<Schema>>                    schemasPerCatalog;
+    private final List<InformationSchemaTable>                  tables;
+    private final Map<Name, InformationSchemaTable>             tablesByName;
+    private final Map<Schema, List<InformationSchemaTable>>     tablesPerSchema;
+    private final List<InformationSchemaDomain<?>>              domains;
+    private final Map<Name, InformationSchemaDomain<?>>         domainsByName;
+    private final Map<Schema, List<InformationSchemaDomain<?>>> domainsPerSchema;
+    private final List<Sequence<?>>                             sequences;
+    private final Map<Schema, List<Sequence<?>>>                sequencesPerSchema;
+    private final List<UniqueKeyImpl<Record>>                   primaryKeys;
+    private final Map<Name, UniqueKeyImpl<Record>>              uniqueKeysByName;
+    private final Map<Name, Name>                               referentialKeys;
+    private final Map<Name, IndexImpl>                          indexesByName;
 
     InformationSchemaMetaImpl(Configuration configuration, InformationSchema source) {
         super(configuration);
@@ -112,6 +117,9 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
         this.tables = new ArrayList<>();
         this.tablesByName = new HashMap<>();
         this.tablesPerSchema = new HashMap<>();
+        this.domains = new ArrayList<>();
+        this.domainsByName = new HashMap<>();
+        this.domainsPerSchema = new HashMap<>();
         this.sequences = new ArrayList<>();
         this.sequencesPerSchema = new HashMap<>();
         this.primaryKeys = new ArrayList<>();
@@ -122,6 +130,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
         init(source);
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     private final void init(InformationSchema meta) {
         List<String> errors = new ArrayList<>();
 
@@ -162,6 +171,48 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
             schemas.add(is);
             schemasByName.put(name(xs.getCatalogName(), xs.getSchemaName()), is);
         }
+
+        // Domains
+        // -------------------------------------------------------------------------------------------------------------
+        domainLoop:
+        for (org.jooq.util.xml.jaxb.Domain d : meta.getDomains()) {
+            Name schemaName = name(d.getDomainCatalog(), d.getDomainSchema());
+            Schema schema = schemasByName.get(schemaName);
+
+            if (schema == null) {
+                errors.add(String.format("Schema " + schemaName + " not defined for domain " + d.getDomainName()));
+                continue domainLoop;
+            }
+
+            Name domainName = name(d.getDomainCatalog(), d.getDomainSchema(), d.getDomainName());
+            int length = d.getCharacterMaximumLength() == null ? 0 : d.getCharacterMaximumLength();
+            int precision = d.getNumericPrecision() == null ? 0 : d.getNumericPrecision();
+            int scale = d.getNumericScale() == null ? 0 : d.getNumericScale();
+
+            // TODO [#10239] Support NOT NULL constraints
+            boolean nullable = true;
+            List<Check<?>> checks = new ArrayList<>();
+
+            for (org.jooq.util.xml.jaxb.DomainConstraint dc : meta.getDomainConstraints()) {
+                if (domainName.equals(name(dc.getDomainCatalog(), dc.getDomainSchema(), dc.getDomainName()))) {
+                    Name constraintName = name(dc.getConstraintCatalog(), dc.getConstraintSchema(), dc.getConstraintName());
+
+                    for (org.jooq.util.xml.jaxb.CheckConstraint cc : meta.getCheckConstraints())
+                        if (constraintName.equals(name(cc.getConstraintCatalog(), cc.getConstraintSchema(), cc.getConstraintName())))
+                            checks.add(new CheckImpl<>(null, constraintName, DSL.condition(cc.getCheckClause()), true));
+                }
+            }
+
+            InformationSchemaDomain<?> id = new InformationSchemaDomain<Object>(
+                schema,
+                name(d.getDomainName()),
+                (DataType) type(d.getDataType(), length, precision, scale, nullable),
+                checks.toArray(EMPTY_CHECK)
+            );
+            domains.add(id);
+            domainsByName.put(domainName, id);
+        }
+
 
         // Tables
         // -------------------------------------------------------------------------------------------------------------
@@ -503,44 +554,29 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
 
         // Lookups
         // -------------------------------------------------------------------------------------------------------------
-        for (Schema s : schemas) {
-            Catalog c = s.getCatalog();
-            List<Schema> list = schemasPerCatalog.get(c);
+        for (Schema s : schemas)
+            initLookup(schemasPerCatalog, s.getCatalog(), s);
 
-            if (list == null) {
-                list = new ArrayList<>();
-                schemasPerCatalog.put(c, list);
-            }
+        for (InformationSchemaDomain<?> d : domains)
+            initLookup(domainsPerSchema, d.getSchema(), d);
 
-            list.add(s);
-        }
+        for (InformationSchemaTable t : tables)
+            initLookup(tablesPerSchema, t.getSchema(), t);
 
-        for (InformationSchemaTable t : tables) {
-            Schema s = t.getSchema();
-            List<InformationSchemaTable> list = tablesPerSchema.get(s);
-
-            if (list == null) {
-                list = new ArrayList<>();
-                tablesPerSchema.put(s, list);
-            }
-
-            list.add(t);
-        }
-
-        for (Sequence<?> q : sequences) {
-            Schema s = q.getSchema();
-            List<Sequence<?>> list = sequencesPerSchema.get(s);
-
-            if (list == null) {
-                list = new ArrayList<>();
-                sequencesPerSchema.put(s, list);
-            }
-
-            list.add(q);
-        }
+        for (Sequence<?> q : sequences)
+            initLookup(sequencesPerSchema, q.getSchema(), q);
 
         if (!errors.isEmpty())
             throw new IllegalArgumentException(errors.toString());
+    }
+
+    private final <K, V> void initLookup(Map<K, List<V>> lookup, K key, V value) {
+        List<V> list = lookup.get(key);
+
+        if (list == null)
+            lookup.put(key, list = new ArrayList<>());
+
+        list.add(value);
     }
 
     private final DataType<?> type(String typeName, int length, int precision, int scale, boolean nullable) {
@@ -563,29 +599,35 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
     }
 
     @Override
-    protected final List<Catalog> getCatalogs0() {
+    final List<Catalog> getCatalogs0() {
         return catalogs;
     }
 
     @Override
-    protected final List<Schema> getSchemas0() {
+    final List<Schema> getSchemas0() {
         return schemas;
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    protected final List<Table<?>> getTables0() {
+    final List<Table<?>> getTables0() {
         return (List) tables;
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    protected final List<Sequence<?>> getSequences0() {
+    final List<Domain<?>> getDomains0() {
+        return (List) domains;
+    }
+
+    @Override
+    final List<Sequence<?>> getSequences0() {
         return sequences;
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    protected final List<UniqueKey<?>> getPrimaryKeys0() {
+    final List<UniqueKey<?>> getPrimaryKeys0() {
         return (List) primaryKeys;
     }
 
@@ -615,6 +657,11 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
 
         InformationSchemaSchema(String name, Catalog catalog, String comment) {
             super(name, catalog, comment);
+        }
+
+        @Override
+        public final List<Domain<?>> getDomains() {
+            return InformationSchemaMetaImpl.<Domain<?>>unmodifiableList(domainsPerSchema.get(this));
         }
 
         @Override
@@ -668,6 +715,18 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
         @Override
         public List<Check<Record>> getChecks() {
             return InformationSchemaMetaImpl.unmodifiableList(checks);
+        }
+    }
+
+    private final class InformationSchemaDomain<T> extends DomainImpl<T> {
+
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = -6334830117626566343L;
+
+        InformationSchemaDomain(Schema schema, Name name, DataType<T> type, Check<?>[] checks) {
+            super(schema, name, type, checks);
         }
     }
 

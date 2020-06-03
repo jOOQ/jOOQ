@@ -43,6 +43,7 @@ import static java.util.Collections.unmodifiableList;
 import java.util.List;
 
 import org.jooq.Binding;
+import org.jooq.Catalog;
 import org.jooq.Check;
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -71,6 +72,11 @@ class DomainImpl<T> extends AbstractNamed implements Domain<T> {
         this.schema = schema;
         this.checks = checks;
         this.type = new DomainDataType<>(this, type);
+    }
+
+    @Override
+    public final Catalog getCatalog() {
+        return getSchema() == null ? null : getSchema().getCatalog();
     }
 
     @Override

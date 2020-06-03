@@ -150,7 +150,7 @@ final class MetaImpl extends AbstractMeta {
     }
 
     @Override
-    protected final List<Catalog> getCatalogs0() {
+    final List<Catalog> getCatalogs0() {
         List<Catalog> result = new ArrayList<>();
 
 
@@ -184,7 +184,7 @@ final class MetaImpl extends AbstractMeta {
     }
 
     @Override
-    protected final List<Schema> getSchemas0() {
+    final List<Schema> getSchemas0() {
         List<Schema> result = new ArrayList<>();
 
         for (Catalog catalog : getCatalogs())
@@ -194,7 +194,7 @@ final class MetaImpl extends AbstractMeta {
     }
 
     @Override
-    protected final List<Table<?>> getTables0() {
+    final List<Table<?>> getTables0() {
         List<Table<?>> result = new ArrayList<>();
 
         for (Schema schema : getSchemas())
@@ -204,7 +204,7 @@ final class MetaImpl extends AbstractMeta {
     }
 
     @Override
-    protected final List<Sequence<?>> getSequences0() {
+    final List<Sequence<?>> getSequences0() {
         List<Sequence<?>> result = new ArrayList<>();
 
         for (Schema schema : getSchemas())
@@ -214,7 +214,7 @@ final class MetaImpl extends AbstractMeta {
     }
 
     @Override
-    protected final List<UniqueKey<?>> getPrimaryKeys0() {
+    final List<UniqueKey<?>> getPrimaryKeys0() {
         List<UniqueKey<?>> result = new ArrayList<>();
 
         for (Table<?> table : getTables()) {

@@ -149,7 +149,7 @@ final class Interpreter {
             private static final long serialVersionUID = 2052806256506059701L;
 
             @Override
-            protected List<Catalog> getCatalogs0() throws DataAccessException {
+            final List<Catalog> getCatalogs0() throws DataAccessException {
                 List<Catalog> result = new ArrayList<>();
 
                 for (MutableCatalog catalog : catalogs.values())

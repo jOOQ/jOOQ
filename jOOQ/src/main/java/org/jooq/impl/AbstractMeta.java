@@ -84,7 +84,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     private List<UniqueKey<?>>           cachedPrimaryKeys;
     private List<Index>                  cachedIndexes;
 
-    protected AbstractMeta(Configuration configuration) {
+    AbstractMeta(Configuration configuration) {
         super(configuration);
     }
 
@@ -108,12 +108,13 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     private final void initCatalogs() {
         if (cachedCatalogs == null) {
             cachedCatalogs = new LinkedHashMap<>();
+
             for (Catalog catalog : getCatalogs0())
                 cachedCatalogs.put(catalog.getQualifiedName(), catalog);
         }
     }
 
-    protected abstract List<Catalog> getCatalogs0();
+    abstract List<Catalog> getCatalogs0();
 
     @Override
     public final List<Schema> getSchemas(String name) {
@@ -150,10 +151,12 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
         }
     }
 
-    protected List<Schema> getSchemas0() {
+    List<Schema> getSchemas0() {
         List<Schema> result = new ArrayList<>();
+
         for (Catalog catalog : getCatalogs())
             result.addAll(catalog.getSchemas());
+
         return result;
     }
 
@@ -192,7 +195,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
         }
     }
 
-    protected List<Table<?>> getTables0() {
+    List<Table<?>> getTables0() {
         List<Table<?>> result = new ArrayList<>();
         for (Schema schema : getSchemas())
             result.addAll(schema.getTables());
@@ -234,10 +237,12 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
         }
     }
 
-    protected List<Domain<?>> getDomains0() {
+    List<Domain<?>> getDomains0() {
         List<Domain<?>> result = new ArrayList<>();
+
         for (Schema schema : getSchemas())
             result.addAll(schema.getDomains());
+
         return result;
     }
 
@@ -276,7 +281,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
         }
     }
 
-    protected List<Sequence<?>> getSequences0() {
+    List<Sequence<?>> getSequences0() {
         List<Sequence<?>> result = new ArrayList<>();
         for (Schema schema : getSchemas())
             result.addAll(schema.getSequences());
@@ -294,7 +299,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
             cachedPrimaryKeys = new ArrayList<>(getPrimaryKeys0());
     }
 
-    protected List<UniqueKey<?>> getPrimaryKeys0() {
+    List<UniqueKey<?>> getPrimaryKeys0() {
         List<UniqueKey<?>> result = new ArrayList<>();
 
         for (Table<?> table : getTables())
@@ -315,7 +320,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
             cachedIndexes = new ArrayList<>(getIndexes0());
     }
 
-    protected List<Index> getIndexes0() {
+    List<Index> getIndexes0() {
         List<Index> result = new ArrayList<>();
 
         for (Table<?> table : getTables())

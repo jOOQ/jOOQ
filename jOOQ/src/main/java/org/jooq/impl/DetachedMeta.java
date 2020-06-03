@@ -37,13 +37,17 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.EMPTY_CHECK;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import org.jooq.Catalog;
+import org.jooq.Check;
 import org.jooq.Comment;
 import org.jooq.DataType;
+import org.jooq.Domain;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Index;
@@ -92,10 +96,12 @@ final class DetachedMeta extends AbstractMeta {
     }
 
     @Override
-    protected final List<Catalog> getCatalogs0() throws DataAccessException {
+    final List<Catalog> getCatalogs0() throws DataAccessException {
         List<Catalog> result = new ArrayList<>();
+
         for (Catalog catalog : delegate.getCatalogs())
             result.add(DetachedCatalog.copyOf(catalog));
+
         return result;
     }
 
@@ -131,6 +137,7 @@ final class DetachedMeta extends AbstractMeta {
     private static class DetachedSchema extends SchemaImpl {
         private static final long serialVersionUID = -95755926444275258L;
 
+        private final List<Domain<?>> domains = new ArrayList<>();
         private final List<Table<?>> tables = new ArrayList<>();
         private final List<Sequence<?>> sequences = new ArrayList<>();
         private final List<UDT<?>> udts = new ArrayList<>();
@@ -142,6 +149,8 @@ final class DetachedMeta extends AbstractMeta {
         static DetachedSchema copyOf(Schema schema, Catalog owner) {
             DetachedSchema result = new DetachedSchema(schema.getName(), owner, schema.getComment());
 
+            for (Domain<?> domain : schema.getDomains())
+                result.domains.add(DetachedDomain.copyOf(domain, result));
             for (Table<?> table : schema.getTables())
                 result.tables.add(DetachedTable.copyOf(table, result));
             for (Sequence<?> sequence : schema.getSequences())
@@ -158,6 +167,11 @@ final class DetachedMeta extends AbstractMeta {
         }
 
         @Override
+        public final List<Domain<?>> getDomains() {
+            return Collections.unmodifiableList(domains);
+        }
+
+        @Override
         public final List<Table<?>> getTables() {
             return Collections.unmodifiableList(tables);
         }
@@ -170,6 +184,18 @@ final class DetachedMeta extends AbstractMeta {
         @Override
         public final List<UDT<?>> getUDTs() {
             return Collections.unmodifiableList(udts);
+        }
+    }
+
+    private static class DetachedDomain<T> extends DomainImpl<T> {
+        private static final long serialVersionUID = -1607062195966296849L;
+
+        private DetachedDomain(Schema schema, Name name, DataType<T> type, Check<?>... checks) {
+            super(schema, name, type, checks);
+        }
+
+        static DetachedDomain<?> copyOf(Domain<?> domain, Schema owner) {
+            return new DetachedDomain<>(owner, domain.getQualifiedName(), domain.getDataType(), domain.checks().toArray(EMPTY_CHECK));
         }
     }
 

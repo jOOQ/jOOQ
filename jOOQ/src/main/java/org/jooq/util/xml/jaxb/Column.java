@@ -30,6 +30,9 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *         &lt;element name="character_maximum_length" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/&gt;
  *         &lt;element name="numeric_precision" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/&gt;
  *         &lt;element name="numeric_scale" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/&gt;
+ *         &lt;element name="domain_catalog" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="domain_schema" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="domain_name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="udt_catalog" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="udt_schema" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="udt_name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
@@ -56,7 +59,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class Column implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31300L;
+    private final static long serialVersionUID = 31400L;
     @XmlElement(name = "table_catalog")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String tableCatalog;
@@ -78,6 +81,15 @@ public class Column implements Serializable, XMLAppendable
     protected Integer numericPrecision;
     @XmlElement(name = "numeric_scale")
     protected Integer numericScale;
+    @XmlElement(name = "domain_catalog")
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String domainCatalog;
+    @XmlElement(name = "domain_schema")
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String domainSchema;
+    @XmlElement(name = "domain_name")
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String domainName;
     @XmlElement(name = "udt_catalog")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String udtCatalog;
@@ -162,6 +174,30 @@ public class Column implements Serializable, XMLAppendable
 
     public void setNumericScale(Integer value) {
         this.numericScale = value;
+    }
+
+    public String getDomainCatalog() {
+        return domainCatalog;
+    }
+
+    public void setDomainCatalog(String value) {
+        this.domainCatalog = value;
+    }
+
+    public String getDomainSchema() {
+        return domainSchema;
+    }
+
+    public void setDomainSchema(String value) {
+        this.domainSchema = value;
+    }
+
+    public String getDomainName() {
+        return domainName;
+    }
+
+    public void setDomainName(String value) {
+        this.domainName = value;
     }
 
     public String getUdtCatalog() {
@@ -284,6 +320,21 @@ public class Column implements Serializable, XMLAppendable
         return this;
     }
 
+    public Column withDomainCatalog(String value) {
+        setDomainCatalog(value);
+        return this;
+    }
+
+    public Column withDomainSchema(String value) {
+        setDomainSchema(value);
+        return this;
+    }
+
+    public Column withDomainName(String value) {
+        setDomainName(value);
+        return this;
+    }
+
     public Column withUdtCatalog(String value) {
         setUdtCatalog(value);
         return this;
@@ -334,6 +385,9 @@ public class Column implements Serializable, XMLAppendable
         builder.append("character_maximum_length", characterMaximumLength);
         builder.append("numeric_precision", numericPrecision);
         builder.append("numeric_scale", numericScale);
+        builder.append("domain_catalog", domainCatalog);
+        builder.append("domain_schema", domainSchema);
+        builder.append("domain_name", domainName);
         builder.append("udt_catalog", udtCatalog);
         builder.append("udt_schema", udtSchema);
         builder.append("udt_name", udtName);
@@ -435,6 +489,33 @@ public class Column implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (domainCatalog == null) {
+            if (other.domainCatalog!= null) {
+                return false;
+            }
+        } else {
+            if (!domainCatalog.equals(other.domainCatalog)) {
+                return false;
+            }
+        }
+        if (domainSchema == null) {
+            if (other.domainSchema!= null) {
+                return false;
+            }
+        } else {
+            if (!domainSchema.equals(other.domainSchema)) {
+                return false;
+            }
+        }
+        if (domainName == null) {
+            if (other.domainName!= null) {
+                return false;
+            }
+        } else {
+            if (!domainName.equals(other.domainName)) {
+                return false;
+            }
+        }
         if (udtCatalog == null) {
             if (other.udtCatalog!= null) {
                 return false;
@@ -522,6 +603,9 @@ public class Column implements Serializable, XMLAppendable
         result = ((prime*result)+((characterMaximumLength == null)? 0 :characterMaximumLength.hashCode()));
         result = ((prime*result)+((numericPrecision == null)? 0 :numericPrecision.hashCode()));
         result = ((prime*result)+((numericScale == null)? 0 :numericScale.hashCode()));
+        result = ((prime*result)+((domainCatalog == null)? 0 :domainCatalog.hashCode()));
+        result = ((prime*result)+((domainSchema == null)? 0 :domainSchema.hashCode()));
+        result = ((prime*result)+((domainName == null)? 0 :domainName.hashCode()));
         result = ((prime*result)+((udtCatalog == null)? 0 :udtCatalog.hashCode()));
         result = ((prime*result)+((udtSchema == null)? 0 :udtSchema.hashCode()));
         result = ((prime*result)+((udtName == null)? 0 :udtName.hashCode()));

@@ -46,6 +46,94 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link CheckConstraint }
+     * 
+     */
+    public CheckConstraint createCheckConstraint() {
+        return new CheckConstraint();
+    }
+
+    /**
+     * Create an instance of {@link Column }
+     * 
+     */
+    public Column createColumn() {
+        return new Column();
+    }
+
+    /**
+     * Create an instance of {@link DomainConstraint }
+     * 
+     */
+    public DomainConstraint createDomainConstraint() {
+        return new DomainConstraint();
+    }
+
+    /**
+     * Create an instance of {@link Domain }
+     * 
+     */
+    public Domain createDomain() {
+        return new Domain();
+    }
+
+    /**
+     * Create an instance of {@link ElementType }
+     * 
+     */
+    public ElementType createElementType() {
+        return new ElementType();
+    }
+
+    /**
+     * Create an instance of {@link IndexColumnUsage }
+     * 
+     */
+    public IndexColumnUsage createIndexColumnUsage() {
+        return new IndexColumnUsage();
+    }
+
+    /**
+     * Create an instance of {@link Index }
+     * 
+     */
+    public Index createIndex() {
+        return new Index();
+    }
+
+    /**
+     * Create an instance of {@link KeyColumnUsage }
+     * 
+     */
+    public KeyColumnUsage createKeyColumnUsage() {
+        return new KeyColumnUsage();
+    }
+
+    /**
+     * Create an instance of {@link Parameter }
+     * 
+     */
+    public Parameter createParameter() {
+        return new Parameter();
+    }
+
+    /**
+     * Create an instance of {@link ReferentialConstraint }
+     * 
+     */
+    public ReferentialConstraint createReferentialConstraint() {
+        return new ReferentialConstraint();
+    }
+
+    /**
+     * Create an instance of {@link Routine }
+     * 
+     */
+    public Routine createRoutine() {
+        return new Routine();
+    }
+
+    /**
      * Create an instance of {@link Schema }
      * 
      */
@@ -62,6 +150,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link TableConstraint }
+     * 
+     */
+    public TableConstraint createTableConstraint() {
+        return new TableConstraint();
+    }
+
+    /**
      * Create an instance of {@link Table }
      * 
      */
@@ -75,86 +171,6 @@ public class ObjectFactory {
      */
     public View createView() {
         return new View();
-    }
-
-    /**
-     * Create an instance of {@link Column }
-     * 
-     */
-    public Column createColumn() {
-        return new Column();
-    }
-
-    /**
-     * Create an instance of {@link TableConstraint }
-     * 
-     */
-    public TableConstraint createTableConstraint() {
-        return new TableConstraint();
-    }
-
-    /**
-     * Create an instance of {@link KeyColumnUsage }
-     * 
-     */
-    public KeyColumnUsage createKeyColumnUsage() {
-        return new KeyColumnUsage();
-    }
-
-    /**
-     * Create an instance of {@link ReferentialConstraint }
-     * 
-     */
-    public ReferentialConstraint createReferentialConstraint() {
-        return new ReferentialConstraint();
-    }
-
-    /**
-     * Create an instance of {@link CheckConstraint }
-     * 
-     */
-    public CheckConstraint createCheckConstraint() {
-        return new CheckConstraint();
-    }
-
-    /**
-     * Create an instance of {@link Index }
-     * 
-     */
-    public Index createIndex() {
-        return new Index();
-    }
-
-    /**
-     * Create an instance of {@link IndexColumnUsage }
-     * 
-     */
-    public IndexColumnUsage createIndexColumnUsage() {
-        return new IndexColumnUsage();
-    }
-
-    /**
-     * Create an instance of {@link Routine }
-     * 
-     */
-    public Routine createRoutine() {
-        return new Routine();
-    }
-
-    /**
-     * Create an instance of {@link Parameter }
-     * 
-     */
-    public Parameter createParameter() {
-        return new Parameter();
-    }
-
-    /**
-     * Create an instance of {@link ElementType }
-     * 
-     */
-    public ElementType createElementType() {
-        return new ElementType();
     }
 
 }

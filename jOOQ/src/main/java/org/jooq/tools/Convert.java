@@ -1162,9 +1162,11 @@ public final class Convert {
 
                 // [#10229] Try public, single argument, applicable constructors first
                 for (Constructor<?> constructor : toClass.getConstructors()) {
-                    if (constructor.getParameterCount() == 1) {
+                    Class<?>[] types = constructor.getParameterTypes();
+
+                    if (types.length == 1) {
                         try {
-                            return (U) constructor.newInstance(convert(from, constructor.getParameterTypes()[0]));
+                            return (U) constructor.newInstance(convert(from, types[0]));
                         }
 
                         // Throw exception further down instead
@@ -1174,9 +1176,11 @@ public final class Convert {
 
                 // [#10229] Try private, single argument, applicable constructors
                 for (Constructor<?> constructor : toClass.getDeclaredConstructors()) {
-                    if (constructor.getParameterCount() == 1) {
+                    Class<?>[] types = constructor.getParameterTypes();
+
+                    if (types.length == 1) {
                         try {
-                            return (U) accessible(constructor).newInstance(convert(from, constructor.getParameterTypes()[0]));
+                            return (U) accessible(constructor).newInstance(convert(from, types[0]));
                         }
 
                         // Throw exception further down instead

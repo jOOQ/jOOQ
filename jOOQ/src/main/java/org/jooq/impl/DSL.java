@@ -6882,7 +6882,7 @@ public class DSL {
      *
      * @see DSLContext#createDomain(String)
      */
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static org.jooq.CreateDomainAsStep createDomain(String domain) {
         return dsl().createDomain(domain);
     }
@@ -6892,7 +6892,7 @@ public class DSL {
      *
      * @see DSLContext#createDomain(Name)
      */
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static org.jooq.CreateDomainAsStep createDomain(Name domain) {
         return dsl().createDomain(domain);
     }
@@ -6902,7 +6902,7 @@ public class DSL {
      *
      * @see DSLContext#createDomain(Domain)
      */
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static org.jooq.CreateDomainAsStep createDomain(Domain<?> domain) {
         return dsl().createDomain(domain);
     }
@@ -7122,7 +7122,7 @@ public class DSL {
      *
      * @see DSLContext#alterDomain(String)
      */
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
     public static <T> org.jooq.AlterDomainStep<T> alterDomain(String domain) {
         return dsl().alterDomain(domain);
     }
@@ -7132,7 +7132,7 @@ public class DSL {
      *
      * @see DSLContext#alterDomain(Name)
      */
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
     public static <T> org.jooq.AlterDomainStep<T> alterDomain(Name domain) {
         return dsl().alterDomain(domain);
     }
@@ -7142,7 +7142,7 @@ public class DSL {
      *
      * @see DSLContext#alterDomain(Domain)
      */
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
     public static <T> org.jooq.AlterDomainStep<T> alterDomain(Domain<T> domain) {
         return dsl().alterDomain(domain);
     }
@@ -7152,7 +7152,7 @@ public class DSL {
      *
      * @see DSLContext#alterDomainIfExists(String)
      */
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
     public static <T> org.jooq.AlterDomainStep<T> alterDomainIfExists(String domain) {
         return dsl().alterDomainIfExists(domain);
     }
@@ -7162,7 +7162,7 @@ public class DSL {
      *
      * @see DSLContext#alterDomainIfExists(Name)
      */
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
     public static <T> org.jooq.AlterDomainStep<T> alterDomainIfExists(Name domain) {
         return dsl().alterDomainIfExists(domain);
     }
@@ -7172,7 +7172,7 @@ public class DSL {
      *
      * @see DSLContext#alterDomainIfExists(Domain)
      */
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
     public static <T> org.jooq.AlterDomainStep<T> alterDomainIfExists(Domain<T> domain) {
         return dsl().alterDomainIfExists(domain);
     }
@@ -7302,7 +7302,7 @@ public class DSL {
      *
      * @see DSLContext#dropDomain(String)
      */
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static org.jooq.DropDomainCascadeStep dropDomain(String domain) {
         return dsl().dropDomain(domain);
     }
@@ -7312,7 +7312,7 @@ public class DSL {
      *
      * @see DSLContext#dropDomain(Name)
      */
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static org.jooq.DropDomainCascadeStep dropDomain(Name domain) {
         return dsl().dropDomain(domain);
     }
@@ -7322,7 +7322,7 @@ public class DSL {
      *
      * @see DSLContext#dropDomain(Domain)
      */
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static org.jooq.DropDomainCascadeStep dropDomain(Domain<?> domain) {
         return dsl().dropDomain(domain);
     }
@@ -7332,7 +7332,7 @@ public class DSL {
      *
      * @see DSLContext#dropDomainIfExists(String)
      */
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static org.jooq.DropDomainCascadeStep dropDomainIfExists(String domain) {
         return dsl().dropDomainIfExists(domain);
     }
@@ -7342,7 +7342,7 @@ public class DSL {
      *
      * @see DSLContext#dropDomainIfExists(Name)
      */
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static org.jooq.DropDomainCascadeStep dropDomainIfExists(Name domain) {
         return dsl().dropDomainIfExists(domain);
     }
@@ -7352,7 +7352,7 @@ public class DSL {
      *
      * @see DSLContext#dropDomainIfExists(Domain)
      */
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static org.jooq.DropDomainCascadeStep dropDomainIfExists(Domain<?> domain) {
         return dsl().dropDomainIfExists(domain);
     }
@@ -11931,7 +11931,7 @@ public class DSL {
      * Create the <code>VALUE</code> pseudo field for usage with
      * <code>DOMAIN</code> specifications.
      */
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static <T> Field<T> value(Class<T> type) {
         return value(DefaultDataType.getDataType(null, type));
     }
@@ -11940,7 +11940,7 @@ public class DSL {
      * Create the <code>VALUE</code> pseudo field for usage with
      * <code>DOMAIN</code> specifications.
      */
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static <T> Field<T> value(DataType<T> type) {
         return field("{0}", type, N_VALUE);
     }
@@ -11948,7 +11948,7 @@ public class DSL {
     /**
      * Create a <code>DOMAIN</code> reference.
      */
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static Domain<?> domain(String name) {
         return domain(name(name));
     }
@@ -11956,7 +11956,7 @@ public class DSL {
     /**
      * Create a <code>DOMAIN</code> reference.
      */
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static Domain<?> domain(Name name) {
         return new DomainImpl<>(null, name, new DefaultDataType<>(null, Object.class, name));
     }

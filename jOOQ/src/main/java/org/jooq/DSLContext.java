@@ -8793,7 +8793,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      *
      * @see DSL#createDomain(String)
      */
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     CreateDomainAsStep createDomain(String domain);
 
     /**
@@ -8801,7 +8801,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      *
      * @see DSL#createDomain(Name)
      */
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     CreateDomainAsStep createDomain(Name domain);
 
     /**
@@ -8809,7 +8809,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      *
      * @see DSL#createDomain(Domain)
      */
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     CreateDomainAsStep createDomain(Domain<?> domain);
 
     /**
@@ -8985,7 +8985,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      *
      * @see DSL#alterDomain(String)
      */
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
     <T> AlterDomainStep<T> alterDomain(String domain);
 
     /**
@@ -8993,7 +8993,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      *
      * @see DSL#alterDomain(Name)
      */
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
     <T> AlterDomainStep<T> alterDomain(Name domain);
 
     /**
@@ -9001,7 +9001,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      *
      * @see DSL#alterDomain(Domain)
      */
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
     <T> AlterDomainStep<T> alterDomain(Domain<T> domain);
 
     /**
@@ -9009,7 +9009,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      *
      * @see DSL#alterDomainIfExists(String)
      */
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
     <T> AlterDomainStep<T> alterDomainIfExists(String domain);
 
     /**
@@ -9017,7 +9017,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      *
      * @see DSL#alterDomainIfExists(Name)
      */
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
     <T> AlterDomainStep<T> alterDomainIfExists(Name domain);
 
     /**
@@ -9025,7 +9025,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      *
      * @see DSL#alterDomainIfExists(Domain)
      */
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
     <T> AlterDomainStep<T> alterDomainIfExists(Domain<T> domain);
 
     /**
@@ -9129,7 +9129,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      *
      * @see DSL#dropDomain(String)
      */
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     DropDomainCascadeStep dropDomain(String domain);
 
     /**
@@ -9137,7 +9137,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      *
      * @see DSL#dropDomain(Name)
      */
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     DropDomainCascadeStep dropDomain(Name domain);
 
     /**
@@ -9145,7 +9145,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      *
      * @see DSL#dropDomain(Domain)
      */
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     DropDomainCascadeStep dropDomain(Domain<?> domain);
 
     /**
@@ -9153,7 +9153,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      *
      * @see DSL#dropDomainIfExists(String)
      */
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     DropDomainCascadeStep dropDomainIfExists(String domain);
 
     /**
@@ -9161,7 +9161,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      *
      * @see DSL#dropDomainIfExists(Name)
      */
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     DropDomainCascadeStep dropDomainIfExists(Name domain);
 
     /**
@@ -9169,7 +9169,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      *
      * @see DSL#dropDomainIfExists(Domain)
      */
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     DropDomainCascadeStep dropDomainIfExists(Domain<?> domain);
 
     /**

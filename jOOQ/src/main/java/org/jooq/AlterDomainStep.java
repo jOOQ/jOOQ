@@ -68,25 +68,25 @@ public interface AlterDomainStep<T> {
     /**
      * Add the <code>ADD</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
     AlterDomainFinalStep add(Constraint addConstraint);
 
     /**
      * Add the <code>DROP CONSTRAINT</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
     AlterDomainDropConstraintCascadeStep dropConstraint(String dropConstraint);
 
     /**
      * Add the <code>DROP CONSTRAINT</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
     AlterDomainDropConstraintCascadeStep dropConstraint(Name dropConstraint);
 
     /**
      * Add the <code>DROP CONSTRAINT</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
     AlterDomainDropConstraintCascadeStep dropConstraint(Constraint dropConstraint);
 
     /**
@@ -164,19 +164,19 @@ public interface AlterDomainStep<T> {
     /**
      * Add the <code>SET DEFAULT</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
     AlterDomainFinalStep setDefault(T setDefault);
 
     /**
      * Add the <code>SET DEFAULT</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
     AlterDomainFinalStep setDefault(Field<T> setDefault);
 
     /**
      * Add the <code>DROP DEFAULT</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES })
     AlterDomainFinalStep dropDefault();
 
     /**

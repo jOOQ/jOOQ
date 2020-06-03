@@ -64,6 +64,7 @@ import org.jooq.Configuration;
 import org.jooq.DDLExportConfiguration;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
+import org.jooq.Domain;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Index;
@@ -164,6 +165,7 @@ final class Diff {
     private final Merge<Schema> MERGE_SCHEMA = new Merge<Schema>() {
         @Override
         public void merge(DiffResult r, Schema s1, Schema s2) {
+            appendDomains(r, s1.getDomains(), s2.getDomains());
             appendTables(r, s1.getTables(), s2.getTables());
             appendSequences(r, s1.getSequences(), s2.getSequences());
         }
@@ -234,6 +236,42 @@ final class Diff {
 
     private final DiffResult appendSequences(DiffResult result, List<? extends Sequence<?>> l1, List<? extends Sequence<?>> l2) {
         return append(result, l1, l2, null, CREATE_SEQUENCE, DROP_SEQUENCE, MERGE_SEQUENCE);
+    }
+
+    private final Create<Domain<?>> CREATE_DOMAIN = new Create<Domain<?>>() {
+        @Override
+        public void create(DiffResult r, Domain<?> d) {
+            r.queries.add(ddl.createDomain(d));
+        }
+    };
+
+    private final Drop<Domain<?>> DROP_DOMAIN = new Drop<Domain<?>>() {
+        @Override
+        public void drop(DiffResult r, Domain<?> d) {
+            r.queries.add(ctx.dropDomain(d));
+        }
+    };
+
+    private final Merge<Domain<?>> MERGE_DOMAIN = new Merge<Domain<?>>() {
+        @SuppressWarnings({ "unchecked", "rawtypes" })
+        @Override
+        public void merge(DiffResult r, Domain<?> d1, Domain<?> d2) {
+            if (!d1.getDataType().getSQLDataType().equals(d2.getDataType().getSQLDataType())) {
+                r.queries.addAll(Arrays.asList(ctx.dropDomain(d1), ddl.createDomain(d2)));
+            }
+            else {
+                if (d1.getDataType().defaulted() && !d2.getDataType().defaulted())
+                    r.queries.add(ctx.alterDomain(d1).dropDefault());
+                else if (d2.getDataType().defaulted() && !d2.getDataType().defaultValue().equals(d1.getDataType().defaultValue()))
+                    r.queries.add(ctx.alterDomain(d1).setDefault((Field) d2.getDataType().defaultValue()));
+
+                appendChecks(r, d1, d1.checks(), d2.checks());
+            }
+        }
+    };
+
+    private final DiffResult appendDomains(DiffResult result, List<? extends Domain<?>> l1, List<? extends Domain<?>> l2) {
+        return append(result, l1, l2, null, CREATE_DOMAIN, DROP_DOMAIN, MERGE_DOMAIN);
     }
 
     private final Create<Table<?>> CREATE_TABLE = new Create<Table<?>>() {
@@ -308,8 +346,6 @@ final class Diff {
             CREATE_TABLE.create(r, v2);
         }
     };
-
-
 
     private final DiffResult appendTables(DiffResult result, List<? extends Table<?>> l1, List<? extends Table<?>> l2) {
         return append(result, l1, l2, null, CREATE_TABLE, DROP_TABLE, MERGE_TABLE);
@@ -445,7 +481,7 @@ final class Diff {
         );
     }
 
-    private <K extends Named> Merge<K> keyMerge(final Table<?> t1, final Create<K> create, final Drop<K> drop) {
+    private final <K extends Named> Merge<K> keyMerge(final Table<?> t1, final Create<K> create, final Drop<K> drop) {
         return new Merge<K>() {
             @Override
             public void merge(DiffResult r, K k1, K k2) {
@@ -472,6 +508,26 @@ final class Diff {
 
 
 
+            }
+        };
+    }
+
+    private final <K extends Named> Merge<K> keyMerge(final Domain<?> d1, final Create<K> create, final Drop<K> drop) {
+        return new Merge<K>() {
+            @Override
+            public void merge(DiffResult r, K k1, K k2) {
+                Name n1 = k1.getUnqualifiedName();
+                Name n2 = k2.getUnqualifiedName();
+
+                if (n1.empty() ^ n2.empty()) {
+                    drop.drop(r, k1);
+                    create.create(r, k2);
+
+                    return;
+                }
+
+                if (NAMED_COMP.compare(k1, k2) != 0)
+                    r.queries.add(ctx.alterDomain(d1).renameConstraint(n1).to(n2));
             }
         };
     }
@@ -519,6 +575,29 @@ final class Diff {
             create,
             drop,
             keyMerge(t1, create, drop),
+            true
+        );
+    }
+
+    private final DiffResult appendChecks(DiffResult result, final Domain<?> d1, List<? extends Check<?>> c1, List<? extends Check<?>> c2) {
+        final Create<Check<?>> create = new Create<Check<?>>() {
+            @Override
+            public void create(DiffResult r, Check<?> c) {
+                r.queries.add(ctx.alterDomain(d1).add(c.constraint()));
+            }
+        };
+
+        final Drop<Check<?>> drop = new Drop<Check<?>>() {
+            @Override
+            public void drop(DiffResult r, Check<?> c) {
+                r.queries.add(ctx.alterDomain(d1).dropConstraint(c.constraint()));
+            }
+        };
+
+        return append(result, c1, c2, CHECK_COMP,
+            create,
+            drop,
+            keyMerge(d1, create, drop),
             true
         );
     }

@@ -8,22 +8,22 @@
         <complexType>
             <all>
                 <element name="catalogs" type="tns:Catalogs" minOccurs="0" maxOccurs="1" />
-                <element name="check_constraints" type="tns:CheckConstraints" minOccurs="0" maxOccurs="1" />
-                <element name="columns" type="tns:Columns" minOccurs="0" maxOccurs="1" />
-                <element name="domain_constraints" type="tns:DomainConstraints" minOccurs="0" maxOccurs="1" />
-                <element name="domains" type="tns:Domains" minOccurs="0" maxOccurs="1" />
-                <element name="element_types" type="tns:ElementTypes" minOccurs="0" maxOccurs="1" />
-                <element name="index_column_usages" type="tns:IndexColumnUsages" minOccurs="0" maxOccurs="1" />
-                <element name="indexes" type="tns:Indexes" minOccurs="0" maxOccurs="1" />
-                <element name="key_column_usages" type="tns:KeyColumnUsages" minOccurs="0" maxOccurs="1" />
-                <element name="parameters" type="tns:Parameters" minOccurs="0" maxOccurs="1" />
-                <element name="referential_constraints" type="tns:ReferentialConstraints" minOccurs="0" maxOccurs="1" />
-                <element name="routines" type="tns:Routines" minOccurs="0" maxOccurs="1" />
                 <element name="schemata" type="tns:Schemata" minOccurs="0" maxOccurs="1" />
                 <element name="sequences" type="tns:Sequences" minOccurs="0" maxOccurs="1" />
-                <element name="table_constraints" type="tns:TableConstraints" minOccurs="0" maxOccurs="1" />
                 <element name="tables" type="tns:Tables" minOccurs="0" maxOccurs="1" />
                 <element name="views" type="tns:Views" minOccurs="0" maxOccurs="1" />
+                <element name="columns" type="tns:Columns" minOccurs="0" maxOccurs="1" />
+                <element name="table_constraints" type="tns:TableConstraints" minOccurs="0" maxOccurs="1" />
+                <element name="key_column_usages" type="tns:KeyColumnUsages" minOccurs="0" maxOccurs="1" />
+                <element name="referential_constraints" type="tns:ReferentialConstraints" minOccurs="0" maxOccurs="1" />
+                <element name="check_constraints" type="tns:CheckConstraints" minOccurs="0" maxOccurs="1" />
+                <element name="domains" type="tns:Domains" minOccurs="0" maxOccurs="1" />
+                <element name="domain_constraints" type="tns:DomainConstraints" minOccurs="0" maxOccurs="1" />
+                <element name="indexes" type="tns:Indexes" minOccurs="0" maxOccurs="1" />
+                <element name="index_column_usages" type="tns:IndexColumnUsages" minOccurs="0" maxOccurs="1" />
+                <element name="routines" type="tns:Routines" minOccurs="0" maxOccurs="1" />
+                <element name="parameters" type="tns:Parameters" minOccurs="0" maxOccurs="1" />
+                <element name="element_types" type="tns:ElementTypes" minOccurs="0" maxOccurs="1" />
             </all>
         </complexType>
     </element>

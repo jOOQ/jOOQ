@@ -45,7 +45,6 @@ import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.quarter;
-import static org.jooq.impl.Keywords.K_DAY;
 import static org.jooq.impl.Names.N_DATEDIFF;
 import static org.jooq.impl.Names.N_DAYS_BETWEEN;
 import static org.jooq.impl.Names.N_STRFTIME;
@@ -96,6 +95,14 @@ final class DateDiff<T> extends AbstractField<Integer> {
             case DERBY:
                 ctx.sql("{fn ").visit(N_TIMESTAMPDIFF).sql('(').visit(keyword("sql_tsi_day")).sql(", ").visit(date2).sql(", ").visit(date1).sql(") }");
                 return;
+
+
+
+
+
+
+
+
 
             case FIREBIRD:
             case H2:
@@ -150,14 +157,6 @@ final class DateDiff<T> extends AbstractField<Integer> {
                 //         placed in the context of other arithmetic
                 ctx.sql('(').visit(date1).sql(" - ").visit(date2).sql(')');
                 return;
-
-
-
-
-
-
-
-
 
 
 

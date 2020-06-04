@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.DatePart.DAY;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.Keywords.K_DAY;
@@ -47,6 +48,7 @@ import static org.jooq.impl.Names.N_TIMESTAMPDIFF;
 import static org.jooq.impl.Tools.castIfNeeded;
 
 import org.jooq.Context;
+import org.jooq.DatePart;
 import org.jooq.Field;
 
 /**
@@ -59,18 +61,22 @@ final class DateDiff<T> extends AbstractField<Integer> {
      */
     private static final long serialVersionUID = -4813228000332771961L;
 
+    private final DatePart    part;
     private final Field<T>    date1;
     private final Field<T>    date2;
 
-    DateDiff(Field<T> date1, Field<T> date2) {
+    DateDiff(DatePart part, Field<T> date1, Field<T> date2) {
         super(N_DATEDIFF, SQLDataType.INTEGER);
 
+        this.part = part;
         this.date1 = date1;
         this.date2 = date2;
     }
 
     @Override
     public final void accept(Context<?> ctx) {
+        DatePart p = part == null ? DAY : part;
+
         switch (ctx.family()) {
 
 
@@ -91,11 +97,25 @@ final class DateDiff<T> extends AbstractField<Integer> {
 
             case H2:
             case HSQLDB:
+                switch (p) {
+                    case MILLENNIUM:
+                    case CENTURY:
+                    case DECADE:
+                        ctx.visit(DSL.extract(date1, p).sub(DSL.extract(date2, p)));
+                        break;
 
+                    default:
+                        ctx.visit(N_DATEDIFF).sql('(').visit(p.toKeyword()).sql(", ").visit(date2).sql(", ").visit(date1).sql(')');
+                        break;
+                }
 
-
-                ctx.visit(N_DATEDIFF).sql("('day', ").visit(date2).sql(", ").visit(date1).sql(')');
                 break;
+
+
+
+
+
+
 
             case SQLITE:
                 ctx.sql('(').visit(N_STRFTIME).sql("('%s', ").visit(date1).sql(") - ").visit(N_STRFTIME).sql("('%s', ").visit(date2).sql(")) / 86400");

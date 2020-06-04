@@ -15274,9 +15274,8 @@ public class DSL {
 
 
     /**
-     * Get the date difference in number of days.
-     * <p>
-     * This translates into any dialect
+     * Get the date difference between <code>date1 - date2</code> in number of
+     * days.
      *
      * @see Field#sub(Field)
      */
@@ -15286,9 +15285,8 @@ public class DSL {
     }
 
     /**
-     * Get the date difference in number of days.
-     * <p>
-     * This translates into any dialect
+     * Get the date difference between <code>date1 - date2</code> in number of
+     * days.
      *
      * @see Field#sub(Field)
      */
@@ -15298,9 +15296,8 @@ public class DSL {
     }
 
     /**
-     * Get the date difference in number of days.
-     * <p>
-     * This translates into any dialect
+     * Get the date difference between <code>date1 - date2</code> in number of
+     * days.
      *
      * @see Field#sub(Field)
      */
@@ -15310,15 +15307,50 @@ public class DSL {
     }
 
     /**
-     * Get the date difference in number of days.
-     * <p>
-     * This translates into any dialect
+     * Get the date difference between <code>date1 - date2</code> in number of
+     * days.
      *
      * @see Field#sub(Field)
      */
     @Support
     public static Field<Integer> dateDiff(Field<Date> date1, Field<Date> date2) {
-        return new DateDiff<>(nullSafe(date1), nullSafe(date2));
+        return new DateDiff<>(null, nullSafe(date1), nullSafe(date2));
+    }
+
+    /**
+     * Get the date difference between <code>date1 - date2</code> in terms of
+     * <code>part</code>.
+     */
+    @Support({ H2 })
+    public static Field<Integer> dateDiff(DatePart part, Date date1, Date date2) {
+        return dateDiff(part, Tools.field(date1), Tools.field(date2));
+    }
+
+    /**
+     * Get the date difference between <code>date1 - date2</code> in terms of
+     * <code>part</code>.
+     */
+    @Support({ H2 })
+    public static Field<Integer> dateDiff(DatePart part, Field<Date> date1, Date date2) {
+        return dateDiff(part, nullSafe(date1), Tools.field(date2));
+    }
+
+    /**
+     * Get the date difference between <code>date1 - date2</code> in terms of
+     * <code>part</code>.
+     */
+    @Support({ H2 })
+    public static Field<Integer> dateDiff(DatePart part, Date date1, Field<Date> date2) {
+        return dateDiff(part, Tools.field(date1), nullSafe(date2));
+    }
+
+    /**
+     * Get the date difference between <code>date1 - date2</code> in terms of
+     * <code>part</code>.
+     */
+    @Support({ H2 })
+    public static Field<Integer> dateDiff(DatePart part, Field<Date> date1, Field<Date> date2) {
+        return new DateDiff<>(part, nullSafe(date1), nullSafe(date2));
     }
 
     /**
@@ -15632,9 +15664,8 @@ public class DSL {
 
 
     /**
-     * Get the date difference in number of days.
-     * <p>
-     * This translates into any dialect
+     * Get the date difference between <code>date1 - date2</code> in number of
+     * days.
      *
      * @see Field#sub(Field)
      */
@@ -15644,9 +15675,8 @@ public class DSL {
     }
 
     /**
-     * Get the date difference in number of days.
-     * <p>
-     * This translates into any dialect
+     * Get the date difference between <code>date1 - date2</code> in number of
+     * days.
      *
      * @see Field#sub(Field)
      */
@@ -15656,9 +15686,8 @@ public class DSL {
     }
 
     /**
-     * Get the date difference in number of days.
-     * <p>
-     * This translates into any dialect
+     * Get the date difference between <code>date1 - date2</code> in number of
+     * days.
      *
      * @see Field#sub(Field)
      */
@@ -15668,15 +15697,50 @@ public class DSL {
     }
 
     /**
-     * Get the date difference in number of days.
-     * <p>
-     * This translates into any dialect
+     * Get the date difference between <code>date1 - date2</code> in number of
+     * days.
      *
      * @see Field#sub(Field)
      */
     @Support
     public static Field<Integer> localDateDiff(Field<LocalDate> date1, Field<LocalDate> date2) {
-        return new DateDiff<>(nullSafe(date1), nullSafe(date2));
+        return new DateDiff<>(null, nullSafe(date1), nullSafe(date2));
+    }
+
+    /**
+     * Get the date difference between <code>date1 - date2</code> in terms of
+     * <code>part</code>.
+     */
+    @Support({ H2 })
+    public static Field<Integer> localDateDiff(DatePart part, LocalDate date1, LocalDate date2) {
+        return localDateDiff(part, Tools.field(date1), Tools.field(date2));
+    }
+
+    /**
+     * Get the date difference between <code>date1 - date2</code> in terms of
+     * <code>part</code>.
+     */
+    @Support({ H2 })
+    public static Field<Integer> localDateDiff(DatePart part, Field<LocalDate> date1, LocalDate date2) {
+        return localDateDiff(part, nullSafe(date1), Tools.field(date2));
+    }
+
+    /**
+     * Get the date difference between <code>date1 - date2</code> in terms of
+     * <code>part</code>.
+     */
+    @Support({ H2 })
+    public static Field<Integer> localDateDiff(DatePart part, LocalDate date1, Field<LocalDate> date2) {
+        return localDateDiff(part, Tools.field(date1), nullSafe(date2));
+    }
+
+    /**
+     * Get the date difference between <code>date1 - date2</code> in terms of
+     * <code>part</code>.
+     */
+    @Support({ H2 })
+    public static Field<Integer> localDateDiff(DatePart part, Field<LocalDate> date1, Field<LocalDate> date2) {
+        return new DateDiff<>(part, nullSafe(date1), nullSafe(date2));
     }
 
     /**

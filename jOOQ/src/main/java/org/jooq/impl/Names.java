@@ -106,6 +106,7 @@ final class Names {
     static final Name N_E                      = unquotedName("e");
     static final Name N_EXP                    = unquotedName("exp");
     static final Name N_EXTRACT                = unquotedName("extract");
+    static final Name N_EXTRACT_DURATION       = unquotedName("extract_duration");
     static final Name N_FLASHBACK              = unquotedName("flashback");
     static final Name N_FLOOR                  = unquotedName("floor");
     static final Name N_FUNCTION               = unquotedName("function");

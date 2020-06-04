@@ -429,27 +429,32 @@ final class Extract extends AbstractField<Integer> {
     private final void acceptDefaultEmulation(Context<?> ctx) {
         switch (datePart) {
             case DECADE:
-                ctx.visit(castIfNeeded(DSL.year(field).div(inline(10)), INTEGER));
+                ctx.visit(DSL.floor(DSL.year(field).div(inline(10))));
                 break;
+
             case CENTURY:
-                ctx.visit(castIfNeeded(
+                ctx.visit(DSL.floor(
                     DSL.sign(DSL.year(field))
                        .mul(DSL.abs(DSL.year(field)).add(inline(99)))
-                       .div(inline(100)), INTEGER));
+                       .div(inline(100))));
                 break;
+
             case MILLENNIUM:
-                ctx.visit(castIfNeeded(
+                ctx.visit(DSL.floor(
                     DSL.sign(DSL.year(field))
                        .mul(DSL.abs(DSL.year(field)).add(inline(999)))
-                       .div(inline(1000)), INTEGER));
+                       .div(inline(1000))));
                 break;
+
             case QUARTER:
                 ctx.visit(DSL.floor(DSL.month(field).add(inline(2)).div(inline(3))));
                 break;
+
             case TIMEZONE:
                 ctx.visit(DSL.extract(field, DatePart.TIMEZONE_HOUR).mul(inline(3600))
                     .add(DSL.extract(field, DatePart.TIMEZONE_MINUTE).mul(inline(60))));
                 break;
+
             default:
                 acceptNativeFunction(ctx);
                 break;

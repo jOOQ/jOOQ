@@ -85,7 +85,7 @@ class DomainImpl<T> extends AbstractNamed implements Domain<T> {
     }
 
     @Override
-    public final List<Check<?>> checks() {
+    public final List<Check<?>> getChecks() {
         return unmodifiableList(asList(checks));
     }
 

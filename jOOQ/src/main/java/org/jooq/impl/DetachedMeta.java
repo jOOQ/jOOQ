@@ -195,7 +195,7 @@ final class DetachedMeta extends AbstractMeta {
         }
 
         static DetachedDomain<?> copyOf(Domain<?> domain, Schema owner) {
-            return new DetachedDomain<>(owner, domain.getQualifiedName(), domain.getDataType(), domain.checks().toArray(EMPTY_CHECK));
+            return new DetachedDomain<>(owner, domain.getQualifiedName(), domain.getDataType(), domain.getChecks().toArray(EMPTY_CHECK));
         }
     }
 

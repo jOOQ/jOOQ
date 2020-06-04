@@ -194,7 +194,7 @@ final class InformationSchemaExport {
 
         result.getDomains().add(id);
 
-        for (Check<?> c : d.checks()) {
+        for (Check<?> c : d.getChecks()) {
             org.jooq.util.xml.jaxb.DomainConstraint idc = new org.jooq.util.xml.jaxb.DomainConstraint();
             org.jooq.util.xml.jaxb.CheckConstraint icc = new org.jooq.util.xml.jaxb.CheckConstraint();
 

@@ -59,5 +59,5 @@ public interface Domain<T> extends Named, Typed<T> {
     /**
      * The <code>DOMAIN</code>'s condition.
      */
-    List<Check<?>> checks();
+    List<Check<?>> getChecks();
 }

@@ -187,11 +187,11 @@ final class DDL {
             ? s2.default_(domain.getDataType().default_())
             : s2;
 
-        if (domain.checks().isEmpty())
+        if (domain.getChecks().isEmpty())
             return s3;
 
         List<Constraint> constraints = new ArrayList<>();
-        for (Check check : domain.checks())
+        for (Check check : domain.getChecks())
             constraints.add(check.constraint());
 
         return s3.constraints(constraints);

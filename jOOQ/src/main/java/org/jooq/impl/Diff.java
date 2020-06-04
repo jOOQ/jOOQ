@@ -265,7 +265,7 @@ final class Diff {
                 else if (d2.getDataType().defaulted() && !d2.getDataType().defaultValue().equals(d1.getDataType().defaultValue()))
                     r.queries.add(ctx.alterDomain(d1).setDefault((Field) d2.getDataType().defaultValue()));
 
-                appendChecks(r, d1, d1.checks(), d2.checks());
+                appendChecks(r, d1, d1.getChecks(), d2.getChecks());
             }
         }
     };

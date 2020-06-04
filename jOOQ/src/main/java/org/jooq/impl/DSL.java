@@ -15321,7 +15321,7 @@ public class DSL {
      * Get the date difference between <code>date1 - date2</code> in terms of
      * <code>part</code>.
      */
-    @Support({ FIREBIRD, H2, HSQLDB })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static Field<Integer> dateDiff(DatePart part, Date date1, Date date2) {
         return dateDiff(part, Tools.field(date1), Tools.field(date2));
     }
@@ -15330,7 +15330,7 @@ public class DSL {
      * Get the date difference between <code>date1 - date2</code> in terms of
      * <code>part</code>.
      */
-    @Support({ FIREBIRD, H2, HSQLDB })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static Field<Integer> dateDiff(DatePart part, Field<Date> date1, Date date2) {
         return dateDiff(part, nullSafe(date1), Tools.field(date2));
     }
@@ -15339,7 +15339,7 @@ public class DSL {
      * Get the date difference between <code>date1 - date2</code> in terms of
      * <code>part</code>.
      */
-    @Support({ FIREBIRD, H2, HSQLDB })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static Field<Integer> dateDiff(DatePart part, Date date1, Field<Date> date2) {
         return dateDiff(part, Tools.field(date1), nullSafe(date2));
     }
@@ -15348,7 +15348,7 @@ public class DSL {
      * Get the date difference between <code>date1 - date2</code> in terms of
      * <code>part</code>.
      */
-    @Support({ FIREBIRD, H2, HSQLDB })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static Field<Integer> dateDiff(DatePart part, Field<Date> date1, Field<Date> date2) {
         return new DateDiff<>(part, nullSafe(date1), nullSafe(date2));
     }
@@ -15711,7 +15711,7 @@ public class DSL {
      * Get the date difference between <code>date1 - date2</code> in terms of
      * <code>part</code>.
      */
-    @Support({ FIREBIRD, H2, HSQLDB })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static Field<Integer> localDateDiff(DatePart part, LocalDate date1, LocalDate date2) {
         return localDateDiff(part, Tools.field(date1), Tools.field(date2));
     }
@@ -15720,7 +15720,7 @@ public class DSL {
      * Get the date difference between <code>date1 - date2</code> in terms of
      * <code>part</code>.
      */
-    @Support({ FIREBIRD, H2, HSQLDB })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static Field<Integer> localDateDiff(DatePart part, Field<LocalDate> date1, LocalDate date2) {
         return localDateDiff(part, nullSafe(date1), Tools.field(date2));
     }
@@ -15729,7 +15729,7 @@ public class DSL {
      * Get the date difference between <code>date1 - date2</code> in terms of
      * <code>part</code>.
      */
-    @Support({ FIREBIRD, H2, HSQLDB })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static Field<Integer> localDateDiff(DatePart part, LocalDate date1, Field<LocalDate> date2) {
         return localDateDiff(part, Tools.field(date1), nullSafe(date2));
     }
@@ -15738,7 +15738,7 @@ public class DSL {
      * Get the date difference between <code>date1 - date2</code> in terms of
      * <code>part</code>.
      */
-    @Support({ FIREBIRD, H2, HSQLDB })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static Field<Integer> localDateDiff(DatePart part, Field<LocalDate> date1, Field<LocalDate> date2) {
         return new DateDiff<>(part, nullSafe(date1), nullSafe(date2));
     }

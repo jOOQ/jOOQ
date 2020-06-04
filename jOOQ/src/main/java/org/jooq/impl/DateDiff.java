@@ -38,19 +38,33 @@
 package org.jooq.impl;
 
 import static org.jooq.DatePart.DAY;
+import static org.jooq.DatePart.HOUR;
+import static org.jooq.DatePart.MICROSECOND;
+import static org.jooq.DatePart.MILLISECOND;
+import static org.jooq.DatePart.QUARTER;
 import static org.jooq.DatePart.YEAR;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.impl.DSL.epoch;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.keyword;
+import static org.jooq.impl.DSL.month;
 import static org.jooq.impl.DSL.quarter;
+import static org.jooq.impl.DSL.row;
+import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.values;
+import static org.jooq.impl.DSL.year;
+import static org.jooq.impl.Names.N_AGE;
 import static org.jooq.impl.Names.N_DATEDIFF;
+import static org.jooq.impl.Names.N_DATE_TRUNC;
 import static org.jooq.impl.Names.N_DAYS_BETWEEN;
 import static org.jooq.impl.Names.N_STRFTIME;
 import static org.jooq.impl.Names.N_TIMESTAMPDIFF;
+import static org.jooq.impl.SQLDataType.INTERVALYEARTOMONTH;
 import static org.jooq.impl.SQLDataType.TIMESTAMP;
 import static org.jooq.impl.Tools.castIfNeeded;
+import static org.jooq.impl.Tools.visitSubquery;
 
 import org.jooq.Context;
 import org.jooq.DatePart;
@@ -149,9 +163,63 @@ final class DateDiff<T> extends AbstractField<Integer> {
 
 
 
+            case POSTGRES:
+                switch (p) {
+                    case DAY:
+                        // [#4481] Parentheses are important in case this expression is
+                        //         placed in the context of other arithmetic
+                        ctx.sql('(').visit(date1).sql(" - ").visit(date2).sql(')');
+                        return;
+
+                    case MILLENNIUM:
+                    case CENTURY:
+                    case DECADE:
+                    case YEAR:
+                        ctx.visit(DSL.extract(
+                            function(N_AGE, INTERVALYEARTOMONTH,
+                                function(N_DATE_TRUNC, getDataType(), inline(p.toName().last()), date1),
+                                function(N_DATE_TRUNC, getDataType(), inline(p.toName().last()), date2)
+                            ), p
+                        ));
+                        return;
+
+                    case QUARTER:
+                    case MONTH:
+                        Field<?> a = DSL.field(DSL.name("a"));
+                        visitSubquery(ctx,
+                            select(
+                                year(a).times(p == QUARTER ? inline(4) : inline(12))
+                                       .plus(p == QUARTER ? quarter(a).minus(inline(1)) : month(a)))
+                            .from(values(row(function(N_AGE, INTERVALYEARTOMONTH,
+                                function(N_DATE_TRUNC, getDataType(), inline(p.toName().last()), date1),
+                                function(N_DATE_TRUNC, getDataType(), inline(p.toName().last()), date2)
+                            ))).as("t", "a"))
+                            , true
+                        );
+                        return;
+
+                    case HOUR:
+                    case MINUTE:
+                        ctx.visit(epoch(date1).minus(epoch(date2)).div(p == HOUR ? inline(3600) : inline(60)));
+                        return;
+
+                    case SECOND:
+                        ctx.visit(epoch(date1).minus(epoch(date2)));
+                        return;
+
+                    case MILLISECOND:
+                    case MICROSECOND:
+                    case NANOSECOND:
+                        ctx.visit(epoch(date1).minus(epoch(date2)).times(p == MILLISECOND ? inline(1000) : p == MICROSECOND ? inline(1000000) : inline(1000000000)));
+                        return;
+                }
+
+                break;
+
+
+
 
             case CUBRID:
-            case POSTGRES:
 
                 // [#4481] Parentheses are important in case this expression is
                 //         placed in the context of other arithmetic
@@ -172,11 +240,8 @@ final class DateDiff<T> extends AbstractField<Integer> {
 
 
 
-
-
-            default:
-                ctx.visit(castIfNeeded(date1.sub(date2), Integer.class));
-                return;
         }
+
+        ctx.visit(castIfNeeded(date1.sub(date2), Integer.class));
     }
 }

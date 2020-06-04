@@ -56,6 +56,7 @@ final class Names {
     static final Name N_ADD_DAYS               = unquotedName("add_days");
     static final Name N_ADD_MONTHS             = unquotedName("add_months");
     static final Name N_ADD_SECONDS            = unquotedName("add_seconds");
+    static final Name N_AGE                    = unquotedName("age");
     static final Name N_ARRAY                  = unquotedName("array");
     static final Name N_ARRAY_AGG              = unquotedName("array_agg");
     static final Name N_ASC                    = unquotedName("asc");

@@ -38,13 +38,19 @@
 package org.jooq.impl;
 
 import static org.jooq.DatePart.DAY;
+import static org.jooq.DatePart.YEAR;
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.keyword;
+import static org.jooq.impl.DSL.quarter;
 import static org.jooq.impl.Keywords.K_DAY;
 import static org.jooq.impl.Names.N_DATEDIFF;
 import static org.jooq.impl.Names.N_DAYS_BETWEEN;
 import static org.jooq.impl.Names.N_STRFTIME;
 import static org.jooq.impl.Names.N_TIMESTAMPDIFF;
+import static org.jooq.impl.SQLDataType.TIMESTAMP;
 import static org.jooq.impl.Tools.castIfNeeded;
 
 import org.jooq.Context;
@@ -85,16 +91,13 @@ final class DateDiff<T> extends AbstractField<Integer> {
             case MARIADB:
             case MYSQL:
                 ctx.visit(N_DATEDIFF).sql('(').visit(date1).sql(", ").visit(date2).sql(')');
-                break;
+                return;
 
             case DERBY:
                 ctx.sql("{fn ").visit(N_TIMESTAMPDIFF).sql('(').visit(keyword("sql_tsi_day")).sql(", ").visit(date2).sql(", ").visit(date1).sql(") }");
-                break;
+                return;
 
             case FIREBIRD:
-                ctx.visit(N_DATEDIFF).sql('(').visit(K_DAY).sql(", ").visit(date2).sql(", ").visit(date1).sql(')');
-                break;
-
             case H2:
             case HSQLDB:
                 switch (p) {
@@ -102,14 +105,28 @@ final class DateDiff<T> extends AbstractField<Integer> {
                     case CENTURY:
                     case DECADE:
                         ctx.visit(DSL.extract(date1, p).sub(DSL.extract(date2, p)));
-                        break;
+                        return;
 
-                    default:
-                        ctx.visit(N_DATEDIFF).sql('(').visit(p.toKeyword()).sql(", ").visit(date2).sql(", ").visit(date1).sql(')');
-                        break;
+                    case QUARTER:
+                        if (ctx.family() == FIREBIRD) {
+                            ctx.visit(new DateDiff<>(YEAR, date1, date2).times(inline(4)).plus(quarter(date1).minus(quarter(date2))));
+                            return;
+                        }
+
+                    case HOUR:
+                    case MINUTE:
+                    case SECOND:
+                    case MILLISECOND:
+                    case MICROSECOND:
+                    case NANOSECOND:
+                        if (ctx.family() == HSQLDB) {
+                            ctx.visit(N_DATEDIFF).sql('(').visit(p.toKeyword()).sql(", ").visit(date2.cast(TIMESTAMP)).sql(", ").visit(date1.cast(TIMESTAMP)).sql(')');
+                            return;
+                        }
                 }
 
-                break;
+                ctx.visit(N_DATEDIFF).sql('(').visit(p.toKeyword()).sql(", ").visit(date2).sql(", ").visit(date1).sql(')');
+                return;
 
 
 
@@ -132,7 +149,7 @@ final class DateDiff<T> extends AbstractField<Integer> {
                 // [#4481] Parentheses are important in case this expression is
                 //         placed in the context of other arithmetic
                 ctx.sql('(').visit(date1).sql(" - ").visit(date2).sql(')');
-                break;
+                return;
 
 
 
@@ -159,9 +176,8 @@ final class DateDiff<T> extends AbstractField<Integer> {
 
 
             default:
-                // Default implementation for equals() and hashCode()
                 ctx.visit(castIfNeeded(date1.sub(date2), Integer.class));
-                break;
+                return;
         }
     }
 }

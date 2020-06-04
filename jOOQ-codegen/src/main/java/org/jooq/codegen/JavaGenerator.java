@@ -1117,7 +1117,7 @@ public class JavaGenerator extends AbstractGenerator {
                 UniqueKey.class,
                 out.ref(getStrategy().getFullJavaClassName(uniqueKey.getTable(), Mode.RECORD)));
         else
-            out.print("public static final %s<%s> %s = ",
+            out.print("static final %s<%s> %s = ",
                 UniqueKey.class,
                 out.ref(getStrategy().getFullJavaClassName(uniqueKey.getTable(), Mode.RECORD)),
                 getStrategy().getJavaIdentifier(uniqueKey));
@@ -1200,7 +1200,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.ref(getStrategy().getFullJavaIdentifiers(foreignKey.getKeyColumns()), colRefSegments(null)),
                 foreignKey.enforced());
         else
-            out.println("public static final %s<%s, %s> %s = %s.createForeignKey(%s, %s, \"%s\", new %s[] { [[%s]] }, %s);",
+            out.println("static final %s<%s, %s> %s = %s.createForeignKey(%s, %s, \"%s\", new %s[] { [[%s]] }, %s);",
                 ForeignKey.class,
                 out.ref(getStrategy().getFullJavaClassName(foreignKey.getKeyTable(), Mode.RECORD)),
                 out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencedTable(), Mode.RECORD)),

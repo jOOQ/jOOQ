@@ -211,6 +211,7 @@ public abstract class AbstractDatabase implements Database {
     private transient Map<SchemaDefinition, List<EmbeddableDefinition>>      embeddablesBySchema;
     private transient Map<TableDefinition, List<EmbeddableDefinition>>       embeddablesByTable;
     private transient Map<SchemaDefinition, List<EnumDefinition>>            enumsBySchema;
+    private transient Map<SchemaDefinition, List<DomainDefinition>>          domainsBySchema;
     private transient Map<SchemaDefinition, List<UDTDefinition>>             udtsBySchema;
     private transient Map<SchemaDefinition, List<ArrayDefinition>>           arraysBySchema;
     private transient Map<SchemaDefinition, List<RoutineDefinition>>         routinesBySchema;
@@ -1871,7 +1872,10 @@ public abstract class AbstractDatabase implements Database {
             });
         }
 
-        return domains;
+        if (domainsBySchema == null)
+            domainsBySchema = new LinkedHashMap<>();
+
+        return filterSchema(domains, schema, domainsBySchema);
     }
 
     @Override

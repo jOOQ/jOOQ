@@ -127,6 +127,8 @@ final class DateDiff<T> extends AbstractField<Integer> {
                             return;
                         }
 
+                        break;
+
                     case HOUR:
                     case MINUTE:
                     case SECOND:
@@ -137,6 +139,8 @@ final class DateDiff<T> extends AbstractField<Integer> {
                             ctx.visit(N_DATEDIFF).sql('(').visit(p.toKeyword()).sql(", ").visit(date2.cast(TIMESTAMP)).sql(", ").visit(date1.cast(TIMESTAMP)).sql(')');
                             return;
                         }
+
+                        break;
                 }
 
                 ctx.visit(N_DATEDIFF).sql('(').visit(p.toKeyword()).sql(", ").visit(date2).sql(", ").visit(date1).sql(')');
@@ -150,7 +154,7 @@ final class DateDiff<T> extends AbstractField<Integer> {
 
             case SQLITE:
                 ctx.sql('(').visit(N_STRFTIME).sql("('%s', ").visit(date1).sql(") - ").visit(N_STRFTIME).sql("('%s', ").visit(date2).sql(")) / 86400");
-                break;
+                return;
 
 
 

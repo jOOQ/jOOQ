@@ -15274,83 +15274,99 @@ public class DSL {
 
 
     /**
-     * Get the date difference between <code>date1 - date2</code> in number of
-     * days.
+     * Get the date difference between <code>endDate - startDate</code> in
+     * number of days.
      *
      * @see Field#sub(Field)
      */
     @Support
-    public static Field<Integer> dateDiff(Date date1, Date date2) {
-        return dateDiff(Tools.field(date1), Tools.field(date2));
+    public static Field<Integer> dateDiff(Date endDate, Date startDate) {
+        return dateDiff(Tools.field(endDate), Tools.field(startDate));
     }
 
     /**
-     * Get the date difference between <code>date1 - date2</code> in number of
-     * days.
+     * Get the date difference between <code>endDate - startDate</code> in
+     * number of days.
      *
      * @see Field#sub(Field)
      */
     @Support
-    public static Field<Integer> dateDiff(Field<Date> date1, Date date2) {
-        return dateDiff(nullSafe(date1), Tools.field(date2));
+    public static Field<Integer> dateDiff(Field<Date> endDate, Date startDate) {
+        return dateDiff(nullSafe(endDate), Tools.field(startDate));
     }
 
     /**
-     * Get the date difference between <code>date1 - date2</code> in number of
-     * days.
+     * Get the date difference between <code>endDate - startDate</code> in
+     * number of days.
      *
      * @see Field#sub(Field)
      */
     @Support
-    public static Field<Integer> dateDiff(Date date1, Field<Date> date2) {
-        return dateDiff(Tools.field(date1), nullSafe(date2));
+    public static Field<Integer> dateDiff(Date endDate, Field<Date> startDate) {
+        return dateDiff(Tools.field(endDate), nullSafe(startDate));
     }
 
     /**
-     * Get the date difference between <code>date1 - date2</code> in number of
-     * days.
+     * Get the date difference between <code>endDate - startDate</code> in
+     * number of days.
      *
      * @see Field#sub(Field)
      */
     @Support
-    public static Field<Integer> dateDiff(Field<Date> date1, Field<Date> date2) {
-        return new DateDiff<>(null, nullSafe(date1), nullSafe(date2));
+    public static Field<Integer> dateDiff(Field<Date> endDate, Field<Date> startDate) {
+        return new DateDiff<>(null, nullSafe(startDate), nullSafe(endDate));
     }
 
     /**
-     * Get the date difference between <code>date1 - date2</code> in terms of
-     * <code>part</code>.
+     * Get the date difference between <code>endDate - startDate</code> in terms
+     * of <code>part</code>.
+     * <p>
+     * For example, <code>DATEDIFF(YEAR, '2000-03-01', '2002-01-01') = 2</code>,
+     * despite there being less than 2 years between the two days. The behaviour
+     * replicates that of SQL Server.
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<Integer> dateDiff(DatePart part, Date date1, Date date2) {
-        return dateDiff(part, Tools.field(date1), Tools.field(date2));
+    public static Field<Integer> dateDiff(DatePart part, Date startDate, Date endDate) {
+        return dateDiff(part, Tools.field(startDate), Tools.field(endDate));
     }
 
     /**
-     * Get the date difference between <code>date1 - date2</code> in terms of
-     * <code>part</code>.
+     * Get the date difference between <code>endDate - startDate</code> in terms
+     * of <code>part</code>.
+     * <p>
+     * For example, <code>DATEDIFF(YEAR, '2000-03-01', '2002-01-01') = 2</code>,
+     * despite there being less than 2 years between the two days. The behaviour
+     * replicates that of SQL Server.
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<Integer> dateDiff(DatePart part, Field<Date> date1, Date date2) {
-        return dateDiff(part, nullSafe(date1), Tools.field(date2));
+    public static Field<Integer> dateDiff(DatePart part, Field<Date> startDate, Date endDate) {
+        return dateDiff(part, nullSafe(startDate), Tools.field(endDate));
     }
 
     /**
-     * Get the date difference between <code>date1 - date2</code> in terms of
-     * <code>part</code>.
+     * Get the date difference between <code>endDate - startDate</code> in terms
+     * of <code>part</code>.
+     * <p>
+     * For example, <code>DATEDIFF(YEAR, '2000-03-01', '2002-01-01') = 2</code>,
+     * despite there being less than 2 years between the two days. The behaviour
+     * replicates that of SQL Server.
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<Integer> dateDiff(DatePart part, Date date1, Field<Date> date2) {
-        return dateDiff(part, Tools.field(date1), nullSafe(date2));
+    public static Field<Integer> dateDiff(DatePart part, Date startDate, Field<Date> endDate) {
+        return dateDiff(part, Tools.field(startDate), nullSafe(endDate));
     }
 
     /**
-     * Get the date difference between <code>date1 - date2</code> in terms of
-     * <code>part</code>.
+     * Get the date difference between <code>endDate - startDate</code> in terms
+     * of <code>part</code>.
+     * <p>
+     * For example, <code>DATEDIFF(YEAR, '2000-03-01', '2002-01-01') = 2</code>,
+     * despite there being less than 2 years between the two days. The behaviour
+     * replicates that of SQL Server.
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<Integer> dateDiff(DatePart part, Field<Date> date1, Field<Date> date2) {
-        return new DateDiff<>(part, nullSafe(date1), nullSafe(date2));
+    public static Field<Integer> dateDiff(DatePart part, Field<Date> startDate, Field<Date> endDate) {
+        return new DateDiff<>(part, nullSafe(startDate), nullSafe(endDate));
     }
 
     /**
@@ -15664,83 +15680,99 @@ public class DSL {
 
 
     /**
-     * Get the date difference between <code>date1 - date2</code> in number of
-     * days.
+     * Get the date difference between <code>endDate - startDate</code> in
+     * number of days.
      *
      * @see Field#sub(Field)
      */
     @Support
-    public static Field<Integer> localDateDiff(LocalDate date1, LocalDate date2) {
-        return localDateDiff(Tools.field(date1), Tools.field(date2));
+    public static Field<Integer> localDateDiff(LocalDate endDate, LocalDate startDate) {
+        return localDateDiff(Tools.field(endDate), Tools.field(startDate));
     }
 
     /**
-     * Get the date difference between <code>date1 - date2</code> in number of
-     * days.
+     * Get the date difference between <code>endDate - startDate</code> in
+     * number of days.
      *
      * @see Field#sub(Field)
      */
     @Support
-    public static Field<Integer> localDateDiff(Field<LocalDate> date1, LocalDate date2) {
-        return localDateDiff(nullSafe(date1), Tools.field(date2));
+    public static Field<Integer> localDateDiff(Field<LocalDate> endDate, LocalDate startDate) {
+        return localDateDiff(nullSafe(endDate), Tools.field(startDate));
     }
 
     /**
-     * Get the date difference between <code>date1 - date2</code> in number of
-     * days.
+     * Get the date difference between <code>endDate - startDate</code> in
+     * number of days.
      *
      * @see Field#sub(Field)
      */
     @Support
-    public static Field<Integer> localDateDiff(LocalDate date1, Field<LocalDate> date2) {
-        return localDateDiff(Tools.field(date1), nullSafe(date2));
+    public static Field<Integer> localDateDiff(LocalDate endDate, Field<LocalDate> startDate) {
+        return localDateDiff(Tools.field(endDate), nullSafe(startDate));
     }
 
     /**
-     * Get the date difference between <code>date1 - date2</code> in number of
-     * days.
+     * Get the date difference between <code>endDate - startDate</code> in
+     * number of days.
      *
      * @see Field#sub(Field)
      */
     @Support
-    public static Field<Integer> localDateDiff(Field<LocalDate> date1, Field<LocalDate> date2) {
-        return new DateDiff<>(null, nullSafe(date1), nullSafe(date2));
+    public static Field<Integer> localDateDiff(Field<LocalDate> endDate, Field<LocalDate> startDate) {
+        return new DateDiff<>(null, nullSafe(startDate), nullSafe(endDate));
     }
 
     /**
-     * Get the date difference between <code>date1 - date2</code> in terms of
-     * <code>part</code>.
+     * Get the date difference between <code>endDate - startDate</code> in terms
+     * of <code>part</code>.
+     * <p>
+     * For example, <code>DATEDIFF(YEAR, '2000-03-01', '2002-01-01') = 2</code>,
+     * despite there being less than 2 years between the two days. The behaviour
+     * replicates that of SQL Server.
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<Integer> localDateDiff(DatePart part, LocalDate date1, LocalDate date2) {
-        return localDateDiff(part, Tools.field(date1), Tools.field(date2));
+    public static Field<Integer> localDateDiff(DatePart part, LocalDate startDate, LocalDate endDate) {
+        return localDateDiff(part, Tools.field(startDate), Tools.field(endDate));
     }
 
     /**
-     * Get the date difference between <code>date1 - date2</code> in terms of
-     * <code>part</code>.
+     * Get the date difference between <code>endDate - startDate</code> in terms
+     * of <code>part</code>.
+     * <p>
+     * For example, <code>DATEDIFF(YEAR, '2000-03-01', '2002-01-01') = 2</code>,
+     * despite there being less than 2 years between the two days. The behaviour
+     * replicates that of SQL Server.
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<Integer> localDateDiff(DatePart part, Field<LocalDate> date1, LocalDate date2) {
-        return localDateDiff(part, nullSafe(date1), Tools.field(date2));
+    public static Field<Integer> localDateDiff(DatePart part, Field<LocalDate> startDate, LocalDate endDate) {
+        return localDateDiff(part, nullSafe(startDate), Tools.field(endDate));
     }
 
     /**
-     * Get the date difference between <code>date1 - date2</code> in terms of
-     * <code>part</code>.
+     * Get the date difference between <code>endDate - startDate</code> in terms
+     * of <code>part</code>.
+     * <p>
+     * For example, <code>DATEDIFF(YEAR, '2000-03-01', '2002-01-01') = 2</code>,
+     * despite there being less than 2 years between the two days. The behaviour
+     * replicates that of SQL Server.
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<Integer> localDateDiff(DatePart part, LocalDate date1, Field<LocalDate> date2) {
-        return localDateDiff(part, Tools.field(date1), nullSafe(date2));
+    public static Field<Integer> localDateDiff(DatePart part, LocalDate startDate, Field<LocalDate> endDate) {
+        return localDateDiff(part, Tools.field(startDate), nullSafe(endDate));
     }
 
     /**
-     * Get the date difference between <code>date1 - date2</code> in terms of
-     * <code>part</code>.
+     * Get the date difference between <code>endDate - startDate</code> in terms
+     * of <code>part</code>.
+     * <p>
+     * For example, <code>DATEDIFF(YEAR, '2000-03-01', '2002-01-01') = 2</code>,
+     * despite there being less than 2 years between the two days. The behaviour
+     * replicates that of SQL Server.
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static Field<Integer> localDateDiff(DatePart part, Field<LocalDate> date1, Field<LocalDate> date2) {
-        return new DateDiff<>(part, nullSafe(date1), nullSafe(date2));
+    public static Field<Integer> localDateDiff(DatePart part, Field<LocalDate> startDate, Field<LocalDate> endDate) {
+        return new DateDiff<>(part, nullSafe(startDate), nullSafe(endDate));
     }
 
     /**

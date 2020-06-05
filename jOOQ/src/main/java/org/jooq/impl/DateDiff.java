@@ -72,15 +72,15 @@ final class DateDiff<T> extends AbstractField<Integer> {
     private static final long serialVersionUID = -4813228000332771961L;
 
     private final DatePart    part;
-    private final Field<T>    date1;
-    private final Field<T>    date2;
+    private final Field<T>    startDate;
+    private final Field<T>    endDate;
 
-    DateDiff(DatePart part, Field<T> date1, Field<T> date2) {
+    DateDiff(DatePart part, Field<T> startDate, Field<T> endDate) {
         super(N_DATEDIFF, SQLDataType.INTEGER);
 
         this.part = part;
-        this.date1 = date1;
-        this.date2 = date2;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
     @Override
@@ -108,23 +108,23 @@ final class DateDiff<T> extends AbstractField<Integer> {
                         return;
 
                     case DAY:
-                        ctx.visit(N_DATEDIFF).sql('(').visit(date1).sql(", ").visit(date2).sql(')');
+                        ctx.visit(N_DATEDIFF).sql('(').visit(endDate).sql(", ").visit(startDate).sql(')');
                         return;
 
                     case MILLISECOND:
-                        ctx.visit(new DateDiff<>(MICROSECOND, date1, date2).div(inline(1000)));
+                        ctx.visit(new DateDiff<>(MICROSECOND, startDate, endDate).div(inline(1000)));
                         return;
 
                     case NANOSECOND:
-                        ctx.visit(new DateDiff<>(MICROSECOND, date1, date2).times(inline(1000)));
+                        ctx.visit(new DateDiff<>(MICROSECOND, startDate, endDate).times(inline(1000)));
                         return;
                 }
 
-                ctx.visit(N_TIMESTAMPDIFF).sql('(').visit(p.toName()).sql(", ").visit(date2).sql(", ").visit(date1).sql(')');
+                ctx.visit(N_TIMESTAMPDIFF).sql('(').visit(p.toName()).sql(", ").visit(startDate).sql(", ").visit(endDate).sql(')');
                 return;
 
             case DERBY:
-                ctx.sql("{fn ").visit(N_TIMESTAMPDIFF).sql('(').visit(keyword("sql_tsi_day")).sql(", ").visit(date2).sql(", ").visit(date1).sql(") }");
+                ctx.sql("{fn ").visit(N_TIMESTAMPDIFF).sql('(').visit(keyword("sql_tsi_day")).sql(", ").visit(startDate).sql(", ").visit(endDate).sql(") }");
                 return;
 
 
@@ -160,14 +160,14 @@ final class DateDiff<T> extends AbstractField<Integer> {
                     case MICROSECOND:
                     case NANOSECOND:
                         if (ctx.family() == HSQLDB) {
-                            ctx.visit(N_DATEDIFF).sql('(').visit(p.toKeyword()).sql(", ").visit(date2.cast(TIMESTAMP)).sql(", ").visit(date1.cast(TIMESTAMP)).sql(')');
+                            ctx.visit(N_DATEDIFF).sql('(').visit(p.toKeyword()).sql(", ").visit(startDate.cast(TIMESTAMP)).sql(", ").visit(endDate.cast(TIMESTAMP)).sql(')');
                             return;
                         }
 
                         break;
                 }
 
-                ctx.visit(N_DATEDIFF).sql('(').visit(p.toKeyword()).sql(", ").visit(date2).sql(", ").visit(date1).sql(')');
+                ctx.visit(N_DATEDIFF).sql('(').visit(p.toKeyword()).sql(", ").visit(startDate).sql(", ").visit(endDate).sql(')');
                 return;
 
 
@@ -177,7 +177,7 @@ final class DateDiff<T> extends AbstractField<Integer> {
 
 
             case SQLITE:
-                ctx.sql('(').visit(N_STRFTIME).sql("('%s', ").visit(date1).sql(") - ").visit(N_STRFTIME).sql("('%s', ").visit(date2).sql(")) / 86400");
+                ctx.sql('(').visit(N_STRFTIME).sql("('%s', ").visit(endDate).sql(") - ").visit(N_STRFTIME).sql("('%s', ").visit(startDate).sql(")) / 86400");
                 return;
 
 
@@ -218,7 +218,7 @@ final class DateDiff<T> extends AbstractField<Integer> {
 
                                 // [#4481] Parentheses are important in case this expression is
                                 //         placed in the context of other arithmetic
-                                ctx.sql('(').visit(date1).sql(" - ").visit(date2).sql(')');
+                                ctx.sql('(').visit(endDate).sql(" - ").visit(startDate).sql(')');
                                 return;
                         }
 
@@ -248,11 +248,11 @@ final class DateDiff<T> extends AbstractField<Integer> {
 
         }
 
-        ctx.visit(castIfNeeded(date1.minus(date2), Integer.class));
+        ctx.visit(castIfNeeded(endDate.minus(startDate), Integer.class));
     }
 
     private final Field<Integer> partDiff(DatePart p) {
-        return DSL.extract(date1, p).minus(DSL.extract(date2, p));
+        return DSL.extract(endDate, p).minus(DSL.extract(startDate, p));
     }
 
     /**

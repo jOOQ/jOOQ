@@ -186,6 +186,7 @@ final class DateDiff<T> extends AbstractField<Integer> {
 
 
 
+
             case CUBRID:
             case POSTGRES:
                 switch (p) {
@@ -202,6 +203,7 @@ final class DateDiff<T> extends AbstractField<Integer> {
                         return;
 
                     case DAY:
+                        switch (ctx.family()) {
 
 
 
@@ -210,10 +212,15 @@ final class DateDiff<T> extends AbstractField<Integer> {
 
 
 
-                        // [#4481] Parentheses are important in case this expression is
-                        //         placed in the context of other arithmetic
-                        ctx.sql('(').visit(date1).sql(" - ").visit(date2).sql(')');
-                        return;
+
+
+                            default:
+
+                                // [#4481] Parentheses are important in case this expression is
+                                //         placed in the context of other arithmetic
+                                ctx.sql('(').visit(date1).sql(" - ").visit(date2).sql(')');
+                                return;
+                        }
 
                     case HOUR:
                     case MINUTE:
@@ -232,10 +239,6 @@ final class DateDiff<T> extends AbstractField<Integer> {
                 }
 
                 break;
-
-
-
-
 
 
 

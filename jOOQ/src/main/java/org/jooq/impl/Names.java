@@ -205,6 +205,15 @@ final class Names {
     static final Name N_SIGN                   = unquotedName("sign");
     static final Name N_SINH                   = unquotedName("sinh");
     static final Name N_SPACE                  = unquotedName("space");
+    static final Name N_SQL_TSI_DAY            = unquotedName("sql_tsi_day");
+    static final Name N_SQL_TSI_FRAC_SECOND    = unquotedName("sql_tsi_frac_second");
+    static final Name N_SQL_TSI_HOUR           = unquotedName("sql_tsi_hour");
+    static final Name N_SQL_TSI_MINUTE         = unquotedName("sql_tsi_minute");
+    static final Name N_SQL_TSI_MONTH          = unquotedName("sql_tsi_month");
+    static final Name N_SQL_TSI_QUARTER        = unquotedName("sql_tsi_quarter");
+    static final Name N_SQL_TSI_SECOND         = unquotedName("sql_tsi_second");
+    static final Name N_SQL_TSI_WEEK           = unquotedName("sql_tsi_week");
+    static final Name N_SQL_TSI_YEAR           = unquotedName("sql_tsi_year");
     static final Name N_SQR                    = unquotedName("sqr");
     static final Name N_SQRT                   = unquotedName("sqrt");
     static final Name N_STANDARD_HASH          = unquotedName("standard_hash");

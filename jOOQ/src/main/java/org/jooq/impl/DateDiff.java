@@ -42,16 +42,21 @@ import static org.jooq.DatePart.EPOCH;
 import static org.jooq.DatePart.HOUR;
 import static org.jooq.DatePart.MICROSECOND;
 import static org.jooq.DatePart.MILLISECOND;
+import static org.jooq.DatePart.NANOSECOND;
 import static org.jooq.DatePart.QUARTER;
 import static org.jooq.DatePart.YEAR;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.Names.N_DATEDIFF;
 import static org.jooq.impl.Names.N_DAYS;
 import static org.jooq.impl.Names.N_DAYS_BETWEEN;
+import static org.jooq.impl.Names.N_SQL_TSI_DAY;
+import static org.jooq.impl.Names.N_SQL_TSI_FRAC_SECOND;
+import static org.jooq.impl.Names.N_SQL_TSI_HOUR;
+import static org.jooq.impl.Names.N_SQL_TSI_MINUTE;
+import static org.jooq.impl.Names.N_SQL_TSI_SECOND;
 import static org.jooq.impl.Names.N_STRFTIME;
 import static org.jooq.impl.Names.N_TIMESTAMPDIFF;
 import static org.jooq.impl.SQLDataType.TIMESTAMP;
@@ -60,6 +65,7 @@ import static org.jooq.impl.Tools.castIfNeeded;
 import org.jooq.Context;
 import org.jooq.DatePart;
 import org.jooq.Field;
+import org.jooq.Name;
 
 /**
  * @author Lukas Eder
@@ -123,9 +129,40 @@ final class DateDiff<T> extends AbstractField<Integer> {
                 ctx.visit(N_TIMESTAMPDIFF).sql('(').visit(p.toName()).sql(", ").visit(startDate).sql(", ").visit(endDate).sql(')');
                 return;
 
-            case DERBY:
-                ctx.sql("{fn ").visit(N_TIMESTAMPDIFF).sql('(').visit(keyword("sql_tsi_day")).sql(", ").visit(startDate).sql(", ").visit(endDate).sql(") }");
+            case DERBY: {
+                Name name = N_SQL_TSI_DAY;
+
+                switch (p) {
+                    case MILLENNIUM:
+                    case CENTURY:
+                    case DECADE:
+                    case YEAR:
+                        ctx.visit(partDiff(p));
+                        return;
+
+                    case QUARTER:
+                    case MONTH:
+                        ctx.visit(monthDiff(p));
+                        return;
+
+                    case DAY:        name = N_SQL_TSI_DAY;         break;
+                    case HOUR:       name = N_SQL_TSI_HOUR;        break;
+                    case MINUTE:     name = N_SQL_TSI_MINUTE;      break;
+                    case SECOND:     name = N_SQL_TSI_SECOND;      break;
+                    case NANOSECOND: name = N_SQL_TSI_FRAC_SECOND; break;
+
+                    case MILLISECOND:
+                        ctx.visit(new DateDiff<>(NANOSECOND, startDate, endDate).div(inline(1000000L)));
+                        return;
+
+                    case MICROSECOND:
+                        ctx.visit(new DateDiff<>(NANOSECOND, startDate, endDate).div(inline(1000L)));
+                        return;
+                }
+
+                ctx.sql("{fn ").visit(N_TIMESTAMPDIFF).sql('(').visit(name).sql(", ").visit(startDate).sql(", ").visit(endDate).sql(") }");
                 return;
+            }
 
 
 

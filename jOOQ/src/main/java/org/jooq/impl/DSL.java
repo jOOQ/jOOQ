@@ -15325,7 +15325,7 @@ public class DSL {
      * despite there being less than 2 years between the two days. The behaviour
      * replicates that of SQL Server.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<Integer> dateDiff(DatePart part, Date startDate, Date endDate) {
         return dateDiff(part, Tools.field(startDate), Tools.field(endDate));
     }
@@ -15338,7 +15338,7 @@ public class DSL {
      * despite there being less than 2 years between the two days. The behaviour
      * replicates that of SQL Server.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<Integer> dateDiff(DatePart part, Field<Date> startDate, Date endDate) {
         return dateDiff(part, nullSafe(startDate), Tools.field(endDate));
     }
@@ -15351,7 +15351,7 @@ public class DSL {
      * despite there being less than 2 years between the two days. The behaviour
      * replicates that of SQL Server.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<Integer> dateDiff(DatePart part, Date startDate, Field<Date> endDate) {
         return dateDiff(part, Tools.field(startDate), nullSafe(endDate));
     }
@@ -15364,7 +15364,7 @@ public class DSL {
      * despite there being less than 2 years between the two days. The behaviour
      * replicates that of SQL Server.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<Integer> dateDiff(DatePart part, Field<Date> startDate, Field<Date> endDate) {
         return new DateDiff<>(part, nullSafe(startDate), nullSafe(endDate));
     }
@@ -15731,7 +15731,7 @@ public class DSL {
      * despite there being less than 2 years between the two days. The behaviour
      * replicates that of SQL Server.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<Integer> localDateDiff(DatePart part, LocalDate startDate, LocalDate endDate) {
         return localDateDiff(part, Tools.field(startDate), Tools.field(endDate));
     }
@@ -15744,7 +15744,7 @@ public class DSL {
      * despite there being less than 2 years between the two days. The behaviour
      * replicates that of SQL Server.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<Integer> localDateDiff(DatePart part, Field<LocalDate> startDate, LocalDate endDate) {
         return localDateDiff(part, nullSafe(startDate), Tools.field(endDate));
     }
@@ -15757,7 +15757,7 @@ public class DSL {
      * despite there being less than 2 years between the two days. The behaviour
      * replicates that of SQL Server.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<Integer> localDateDiff(DatePart part, LocalDate startDate, Field<LocalDate> endDate) {
         return localDateDiff(part, Tools.field(startDate), nullSafe(endDate));
     }
@@ -15770,7 +15770,7 @@ public class DSL {
      * despite there being less than 2 years between the two days. The behaviour
      * replicates that of SQL Server.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<Integer> localDateDiff(DatePart part, Field<LocalDate> startDate, Field<LocalDate> endDate) {
         return new DateDiff<>(part, nullSafe(startDate), nullSafe(endDate));
     }

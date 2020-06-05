@@ -44,12 +44,14 @@ import static org.jooq.DatePart.MICROSECOND;
 import static org.jooq.DatePart.MILLISECOND;
 import static org.jooq.DatePart.QUARTER;
 import static org.jooq.DatePart.YEAR;
+// ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.Names.N_DATEDIFF;
+import static org.jooq.impl.Names.N_DAYS;
 import static org.jooq.impl.Names.N_DAYS_BETWEEN;
 import static org.jooq.impl.Names.N_STRFTIME;
 import static org.jooq.impl.Names.N_TIMESTAMPDIFF;
@@ -94,10 +96,6 @@ final class DateDiff<T> extends AbstractField<Integer> {
             case MARIADB:
             case MYSQL:
                 switch (p) {
-                    case DAY:
-                        ctx.visit(N_DATEDIFF).sql('(').visit(date1).sql(", ").visit(date2).sql(')');
-                        return;
-
                     case MILLENNIUM:
                     case CENTURY:
                     case DECADE:
@@ -108,6 +106,10 @@ final class DateDiff<T> extends AbstractField<Integer> {
                     case QUARTER:
                     case MONTH:
                         ctx.visit(monthDiff(p));
+                        return;
+
+                    case DAY:
+                        ctx.visit(N_DATEDIFF).sql('(').visit(date1).sql(", ").visit(date2).sql(')');
                         return;
 
                     case MILLISECOND:
@@ -183,14 +185,9 @@ final class DateDiff<T> extends AbstractField<Integer> {
 
 
 
+
             case POSTGRES:
                 switch (p) {
-                    case DAY:
-                        // [#4481] Parentheses are important in case this expression is
-                        //         placed in the context of other arithmetic
-                        ctx.sql('(').visit(date1).sql(" - ").visit(date2).sql(')');
-                        return;
-
                     case MILLENNIUM:
                     case CENTURY:
                     case DECADE:
@@ -201,6 +198,19 @@ final class DateDiff<T> extends AbstractField<Integer> {
                     case QUARTER:
                     case MONTH:
                         ctx.visit(monthDiff(p));
+                        return;
+
+                    case DAY:
+
+
+
+
+
+
+
+                        // [#4481] Parentheses are important in case this expression is
+                        //         placed in the context of other arithmetic
+                        ctx.sql('(').visit(date1).sql(" - ").visit(date2).sql(')');
                         return;
 
                     case HOUR:
@@ -215,7 +225,7 @@ final class DateDiff<T> extends AbstractField<Integer> {
                     case MILLISECOND:
                     case MICROSECOND:
                     case NANOSECOND:
-                        ctx.visit(partDiff(EPOCH).times(p == MILLISECOND ? inline(1_000) : p == MICROSECOND ? inline(1000000) : inline(1_000_000_000)));
+                        ctx.visit(partDiff(EPOCH).times(p == MILLISECOND ? inline(1000) : p == MICROSECOND ? inline(1000000) : inline(1000000000)));
                         return;
                 }
 
@@ -230,10 +240,6 @@ final class DateDiff<T> extends AbstractField<Integer> {
                 //         placed in the context of other arithmetic
                 ctx.sql('(').visit(date1).sql(" - ").visit(date2).sql(')');
                 return;
-
-
-
-
 
 
 

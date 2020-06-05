@@ -97,6 +97,7 @@ final class Names {
     static final Name N_DATEADD                = unquotedName("dateadd");
     static final Name N_DATEDIFF               = unquotedName("datediff");
     static final Name N_DATEPART               = unquotedName("datepart");
+    static final Name N_DAYS                   = unquotedName("days");
     static final Name N_DAYOFWEEK              = unquotedName("dayofweek");
     static final Name N_DAYOFYEAR              = unquotedName("dayofyear");
     static final Name N_DAYS_BETWEEN           = unquotedName("days_between");

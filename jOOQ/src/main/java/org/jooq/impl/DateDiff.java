@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.DatePart.DAY;
+import static org.jooq.DatePart.EPOCH;
 import static org.jooq.DatePart.HOUR;
 import static org.jooq.DatePart.MICROSECOND;
 import static org.jooq.DatePart.MILLISECOND;
@@ -45,13 +46,9 @@ import static org.jooq.DatePart.QUARTER;
 import static org.jooq.DatePart.YEAR;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.impl.DSL.epoch;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.keyword;
-import static org.jooq.impl.DSL.month;
-import static org.jooq.impl.DSL.quarter;
-import static org.jooq.impl.DSL.year;
 import static org.jooq.impl.Names.N_DATEDIFF;
 import static org.jooq.impl.Names.N_DAYS_BETWEEN;
 import static org.jooq.impl.Names.N_STRFTIME;
@@ -96,7 +93,33 @@ final class DateDiff<T> extends AbstractField<Integer> {
 
             case MARIADB:
             case MYSQL:
-                ctx.visit(N_DATEDIFF).sql('(').visit(date1).sql(", ").visit(date2).sql(')');
+                switch (p) {
+                    case DAY:
+                        ctx.visit(N_DATEDIFF).sql('(').visit(date1).sql(", ").visit(date2).sql(')');
+                        return;
+
+                    case MILLENNIUM:
+                    case CENTURY:
+                    case DECADE:
+                    case YEAR:
+                        ctx.visit(partDiff(p));
+                        return;
+
+                    case QUARTER:
+                    case MONTH:
+                        ctx.visit(monthDiff(p));
+                        return;
+
+                    case MILLISECOND:
+                        ctx.visit(new DateDiff<>(MICROSECOND, date1, date2).div(inline(1000)));
+                        return;
+
+                    case NANOSECOND:
+                        ctx.visit(new DateDiff<>(MICROSECOND, date1, date2).times(inline(1000)));
+                        return;
+                }
+
+                ctx.visit(N_TIMESTAMPDIFF).sql('(').visit(p.toName()).sql(", ").visit(date2).sql(", ").visit(date1).sql(')');
                 return;
 
             case DERBY:
@@ -118,12 +141,12 @@ final class DateDiff<T> extends AbstractField<Integer> {
                     case MILLENNIUM:
                     case CENTURY:
                     case DECADE:
-                        ctx.visit(DSL.extract(date1, p).sub(DSL.extract(date2, p)));
+                        ctx.visit(partDiff(p));
                         return;
 
                     case QUARTER:
                         if (ctx.family() == FIREBIRD) {
-                            ctx.visit(new DateDiff<>(YEAR, date1, date2).times(inline(4)).plus(quarter(date1).minus(quarter(date2))));
+                            ctx.visit(monthDiff(QUARTER));
                             return;
                         }
 
@@ -172,28 +195,27 @@ final class DateDiff<T> extends AbstractField<Integer> {
                     case CENTURY:
                     case DECADE:
                     case YEAR:
-                        ctx.visit(DSL.extract(date1, p).minus(DSL.extract(date2, p)));
+                        ctx.visit(partDiff(p));
                         return;
 
                     case QUARTER:
                     case MONTH:
-                        ctx.visit(year(date1).minus(year(date2)).times(p == QUARTER ? inline(4) : inline(12))
-                            .plus(p == QUARTER ? quarter(date1).minus(quarter(date2)) : month(date1).minus(month(date2))));
+                        ctx.visit(monthDiff(p));
                         return;
 
                     case HOUR:
                     case MINUTE:
-                        ctx.visit(epoch(date1).minus(epoch(date2)).div(p == HOUR ? inline(3600) : inline(60)));
+                        ctx.visit(partDiff(EPOCH).div(p == HOUR ? inline(3600) : inline(60)));
                         return;
 
                     case SECOND:
-                        ctx.visit(epoch(date1).minus(epoch(date2)));
+                        ctx.visit(partDiff(EPOCH));
                         return;
 
                     case MILLISECOND:
                     case MICROSECOND:
                     case NANOSECOND:
-                        ctx.visit(epoch(date1).minus(epoch(date2)).times(p == MILLISECOND ? inline(1000) : p == MICROSECOND ? inline(1000000) : inline(1000000000)));
+                        ctx.visit(partDiff(EPOCH).times(p == MILLISECOND ? inline(1_000) : p == MICROSECOND ? inline(1000000) : inline(1_000_000_000)));
                         return;
                 }
 
@@ -225,6 +247,18 @@ final class DateDiff<T> extends AbstractField<Integer> {
 
         }
 
-        ctx.visit(castIfNeeded(date1.sub(date2), Integer.class));
+        ctx.visit(castIfNeeded(date1.minus(date2), Integer.class));
+    }
+
+    private final Field<Integer> partDiff(DatePart p) {
+        return DSL.extract(date1, p).minus(DSL.extract(date2, p));
+    }
+
+    /**
+     * Calculate the difference for {@link DatePart#MONTH} or month-based date
+     * parts like {@link DatePart#QUARTER}.
+     */
+    private final Field<Integer> monthDiff(DatePart p) {
+        return partDiff(YEAR).times(p == QUARTER ? inline(4) : inline(12)).plus(partDiff(p));
     }
 }

@@ -8270,12 +8270,29 @@ final class ParserImpl implements Parser {
     private static final Field<?> parseFieldDateDiffIf(ParserContext ctx) {
         if (parseFunctionNameIf(ctx, "DATEDIFF")) {
             parse(ctx, '(');
+            DatePart datePart = parseDatePartIf(ctx);
+
+            if (datePart != null)
+                parse(ctx, ',');
+
             Field<Date> d1 = (Field<Date>) parseField(ctx, Type.D);
-            parse(ctx, ',');
-            Field<Date> d2 = (Field<Date>) parseField(ctx, Type.D);
+
+            if (parseIf(ctx, ',')) {
+                Field<Date> d2 = (Field<Date>) parseField(ctx, Type.D);
+                parse(ctx, ')');
+
+                if (datePart != null)
+                    return DSL.dateDiff(datePart, d1, d2);
+                else
+                    return DSL.dateDiff(d1, d2);
+            }
+
             parse(ctx, ')');
 
-            return DSL.dateDiff(d1, d2);
+            if (datePart != null)
+                return DSL.dateDiff((Field) field(datePart.toName()), d1);
+            else
+                throw ctx.unsupportedClause();
         }
 
         return null;
@@ -8319,6 +8336,15 @@ final class ParserImpl implements Parser {
     }
 
     private static final DatePart parseDatePart(ParserContext ctx) {
+        DatePart result = parseDatePartIf(ctx);
+
+        if (result == null)
+            throw ctx.expected("DatePart");
+
+        return result;
+    }
+
+    private static final DatePart parseDatePartIf(ParserContext ctx) {
         char character = ctx.characterUpper();
 
         switch (character) {
@@ -8441,7 +8467,7 @@ final class ParserImpl implements Parser {
                 break;
         }
 
-        throw ctx.expected("DatePart");
+        return null;
     }
 
     private static final DatePart parseIntervalDatePart(ParserContext ctx) {

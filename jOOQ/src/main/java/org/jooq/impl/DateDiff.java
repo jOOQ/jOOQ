@@ -44,7 +44,6 @@ import static org.jooq.DatePart.MICROSECOND;
 import static org.jooq.DatePart.MILLISECOND;
 import static org.jooq.DatePart.QUARTER;
 import static org.jooq.DatePart.YEAR;
-// ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.impl.DSL.function;
@@ -186,6 +185,8 @@ final class DateDiff<T> extends AbstractField<Integer> {
 
 
 
+
+            case CUBRID:
             case POSTGRES:
                 switch (p) {
                     case MILLENNIUM:
@@ -201,6 +202,7 @@ final class DateDiff<T> extends AbstractField<Integer> {
                         return;
 
                     case DAY:
+
 
 
 
@@ -230,16 +232,6 @@ final class DateDiff<T> extends AbstractField<Integer> {
                 }
 
                 break;
-
-
-
-
-            case CUBRID:
-
-                // [#4481] Parentheses are important in case this expression is
-                //         placed in the context of other arithmetic
-                ctx.sql('(').visit(date1).sql(" - ").visit(date2).sql(')');
-                return;
 
 
 

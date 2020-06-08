@@ -44,6 +44,7 @@ import static org.jooq.DatePart.SECOND;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
+import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
@@ -368,8 +369,8 @@ final class Expression<T> extends AbstractField<T> {
                     else
                         ctx.sql("{fn ").visit(F_TIMESTAMPADD).sql('(').visit(keyword("sql_tsi_second")).sql(", ")
                             .visit(p(sign * (long) rhsAsDTS().getTotalSeconds())).sql(", {fn ")
-                            .visit(F_TIMESTAMPADD).sql('(').visit(keyword("sql_tsi_milli_second")).sql(", ")
-                            .visit(p(sign * (long) rhsAsDTS().getMilli())).sql(", ").visit(lhs).sql(") }) }");
+                            .visit(F_TIMESTAMPADD).sql('(').visit(ctx.family() == DERBY ? keyword("sql_tsi_frac_second") : keyword("sql_tsi_milli_second")).sql(", ")
+                            .visit(p(sign * (long) rhsAsDTS().getMilli() * (ctx.family() == DERBY ? 1000000L : 1L))).sql(", ").visit(lhs).sql(") }) }");
 
                     // [#1883] TIMESTAMPADD returns TIMESTAMP columns. If this
                     // is a DATE column, cast it to DATE

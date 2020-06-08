@@ -44,6 +44,7 @@ import static org.jooq.DatePart.SECOND;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
+import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
@@ -89,6 +90,10 @@ import static org.jooq.impl.Names.N_ADD_MONTHS;
 import static org.jooq.impl.Names.N_ADD_SECONDS;
 import static org.jooq.impl.Names.N_DATEADD;
 import static org.jooq.impl.Names.N_DATE_ADD;
+import static org.jooq.impl.Names.N_SQL_TSI_FRAC_SECOND;
+import static org.jooq.impl.Names.N_SQL_TSI_MILLI_SECOND;
+import static org.jooq.impl.Names.N_SQL_TSI_MONTH;
+import static org.jooq.impl.Names.N_SQL_TSI_SECOND;
 import static org.jooq.impl.Names.N_STRFTIME;
 import static org.jooq.impl.Names.N_TIMESTAMPADD;
 import static org.jooq.impl.QueryPartListView.wrap;
@@ -366,13 +371,13 @@ final class Expression<T> extends AbstractField<T> {
                         ctx.visit(K_CAST).sql('(');
 
                     if (rhs.getType() == YearToMonth.class)
-                        ctx.sql("{fn ").visit(N_TIMESTAMPADD).sql('(').visit(keyword("sql_tsi_month")).sql(", ")
+                        ctx.sql("{fn ").visit(N_TIMESTAMPADD).sql('(').visit(N_SQL_TSI_MONTH).sql(", ")
                             .visit(p(sign * rhsAsYTM().intValue())).sql(", ").visit(lhs).sql(") }");
                     else
-                        ctx.sql("{fn ").visit(N_TIMESTAMPADD).sql('(').visit(keyword("sql_tsi_second")).sql(", ")
+                        ctx.sql("{fn ").visit(N_TIMESTAMPADD).sql('(').visit(N_SQL_TSI_SECOND).sql(", ")
                             .visit(p(sign * (long) rhsAsDTS().getTotalSeconds())).sql(", {fn ")
-                            .visit(N_TIMESTAMPADD).sql('(').visit(keyword("sql_tsi_milli_second")).sql(", ")
-                            .visit(p(sign * (long) rhsAsDTS().getMilli())).sql(", ").visit(lhs).sql(") }) }");
+                            .visit(N_TIMESTAMPADD).sql('(').visit(ctx.family() == DERBY ? N_SQL_TSI_FRAC_SECOND : N_SQL_TSI_MILLI_SECOND).sql(", ")
+                            .visit(p(sign * (long) rhsAsDTS().getMilli() * (ctx.family() == DERBY ? 1000000L : 1L))).sql(", ").visit(lhs).sql(") }) }");
 
                     // [#1883] TIMESTAMPADD returns TIMESTAMP columns. If this
                     // is a DATE column, cast it to DATE

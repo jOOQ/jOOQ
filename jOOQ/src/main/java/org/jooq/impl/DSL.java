@@ -16173,8 +16173,6 @@ public class DSL {
         return new TruncDate<>(date, part);
     }
 
-    // -------------------------------------------------------------------------
-
     /**
      * Get the extract(field, datePart) function.
      * <p>

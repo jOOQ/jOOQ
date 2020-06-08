@@ -208,6 +208,7 @@ final class Names {
     static final Name N_SQL_TSI_DAY            = unquotedName("sql_tsi_day");
     static final Name N_SQL_TSI_FRAC_SECOND    = unquotedName("sql_tsi_frac_second");
     static final Name N_SQL_TSI_HOUR           = unquotedName("sql_tsi_hour");
+    static final Name N_SQL_TSI_MILLI_SECOND   = unquotedName("sql_tsi_milli_second");
     static final Name N_SQL_TSI_MINUTE         = unquotedName("sql_tsi_minute");
     static final Name N_SQL_TSI_MONTH          = unquotedName("sql_tsi_month");
     static final Name N_SQL_TSI_QUARTER        = unquotedName("sql_tsi_quarter");

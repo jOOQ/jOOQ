@@ -26,7 +26,7 @@ BEFORE UPDATE ON actor
 REFERENCING NEW AS new
 FOR EACH ROW 
 BEGIN
-  SET new.last_update = current_date;
+  SET new.last_update = current_date; --
 END;
 
 CREATE TABLE country (
@@ -41,7 +41,7 @@ BEFORE UPDATE ON country
 REFERENCING NEW AS new
 FOR EACH ROW 
 BEGIN
-  SET new.last_update = current_date;
+  SET new.last_update = current_date; --
 END;
 
 CREATE TABLE city (
@@ -58,7 +58,7 @@ BEFORE UPDATE ON city
 REFERENCING NEW AS new
 FOR EACH ROW 
 BEGIN
-  SET new.last_update = current_date;
+  SET new.last_update = current_date; --
 END;
 
 CREATE TABLE address (
@@ -81,7 +81,7 @@ BEFORE UPDATE ON address
 REFERENCING NEW AS new
 FOR EACH ROW 
 BEGIN
-  SET new.last_update = current_date;
+  SET new.last_update = current_date; --
 END;
 
 CREATE TABLE language (
@@ -96,7 +96,7 @@ BEFORE UPDATE ON language
 REFERENCING NEW AS new
 FOR EACH ROW 
 BEGIN
-  SET new.last_update = current_date;
+  SET new.last_update = current_date; --
 END;
 
 CREATE TABLE category (
@@ -111,7 +111,7 @@ BEFORE UPDATE ON category
 REFERENCING NEW AS new
 FOR EACH ROW 
 BEGIN
-  SET new.last_update = current_date;
+  SET new.last_update = current_date; --
 END;
 
 CREATE TABLE customer (
@@ -137,7 +137,7 @@ BEFORE UPDATE ON customer
 REFERENCING NEW AS new
 FOR EACH ROW 
 BEGIN
-  SET new.last_update = current_date;
+  SET new.last_update = current_date; --
 END;
 
 CREATE TABLE film (
@@ -177,7 +177,7 @@ BEFORE UPDATE ON film
 REFERENCING NEW AS new
 FOR EACH ROW 
 BEGIN
-  SET new.last_update = current_date;
+  SET new.last_update = current_date; --
 END;
 
 CREATE TABLE film_actor (
@@ -197,7 +197,7 @@ BEFORE UPDATE ON film_actor
 REFERENCING NEW AS new
 FOR EACH ROW 
 BEGIN
-  SET new.last_update = current_date;
+  SET new.last_update = current_date; --
 END;
 
 
@@ -218,7 +218,7 @@ BEFORE UPDATE ON film_category
 REFERENCING NEW AS new
 FOR EACH ROW 
 BEGIN
-  SET new.last_update = current_date;
+  SET new.last_update = current_date; --
 END;
 
 
@@ -246,7 +246,7 @@ BEFORE UPDATE ON inventory
 REFERENCING NEW AS new
 FOR EACH ROW 
 BEGIN
-  SET new.last_update = current_date;
+  SET new.last_update = current_date; --
 END;
 
 
@@ -274,7 +274,7 @@ BEFORE UPDATE ON staff
 REFERENCING NEW AS new
 FOR EACH ROW 
 BEGIN
-  SET new.last_update = current_date;
+  SET new.last_update = current_date; --
 END;
 
 CREATE TABLE store (
@@ -295,7 +295,7 @@ BEFORE UPDATE ON store
 REFERENCING NEW AS new
 FOR EACH ROW 
 BEGIN
-  SET new.last_update = current_date;
+  SET new.last_update = current_date; --
 END;
 
 CREATE TABLE payment (
@@ -319,7 +319,7 @@ BEFORE UPDATE ON payment
 REFERENCING NEW AS new
 FOR EACH ROW 
 BEGIN
-  SET new.last_update = current_date;
+  SET new.last_update = current_date; --
 END;
 
 CREATE TABLE rental (
@@ -346,7 +346,7 @@ BEFORE UPDATE ON rental
 REFERENCING NEW AS new
 FOR EACH ROW 
 BEGIN
-  SET new.last_update = current_date;
+  SET new.last_update = current_date; --
 END;
 
 

@@ -56,7 +56,7 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
     public JavaWriter(File file, String fullyQualifiedTypes, String encoding, boolean javadoc, Files files) {
         super(file, encoding, files);
 
-        this.className = file.getName().replaceAll("\\.(java|scala)$", "");
+        this.className = file.getName().replaceAll("\\.(java|scala|kt)$", "");
         this.isJava = file.getName().endsWith(".java");
         this.isScala = file.getName().endsWith(".scala");
         this.isKotlin = file.getName().endsWith(".kt");

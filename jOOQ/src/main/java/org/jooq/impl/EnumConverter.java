@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.tools.Convert.convert;
+import static org.jooq.tools.reflect.Reflect.wrapper;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -60,7 +61,8 @@ public class EnumConverter<T, U extends Enum<U>> extends AbstractConverter<T, U>
     public EnumConverter(Class<T> fromType, Class<U> toType) {
         super(fromType, toType);
 
-        this.enumType = Number.class.isAssignableFrom(fromType) ? EnumType.ORDINAL : EnumType.STRING;
+        // [#8045] Also support Kotlin Int type (which translates to int.class)
+        this.enumType = Number.class.isAssignableFrom(wrapper(fromType)) ? EnumType.ORDINAL : EnumType.STRING;
         this.lookup = new LinkedHashMap<>();
 
         for (U u : toType.getEnumConstants())

@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.DatePart.DAY;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.Keywords.K_AS;
@@ -165,21 +166,27 @@ final class DateAdd<T> extends AbstractField<T> {
 
             case POSTGRES: {
                 switch (datePart) {
-                    case YEAR:   string = " year";   break;
-                    case MONTH:  string = " month";  break;
-                    case DAY:    string = " day";    break;
-                    case HOUR:   string = " hour";   break;
-                    case MINUTE: string = " minute"; break;
-                    case SECOND: string = " second"; break;
+                    case YEAR:   string = "1 year";   break;
+                    case MONTH:  string = "1 month";  break;
+                    case DAY:    string = "1 day";    break;
+                    case HOUR:   string = "1 hour";   break;
+                    case MINUTE: string = "1 minute"; break;
+                    case SECOND: string = "1 second"; break;
                     default: throwUnsupported();
                 }
 
-                // [#3824] Ensure that the output for DATE arithmetic will also
-                // be of type DATE, not TIMESTAMP
                 if (getDataType().isDate())
-                    ctx.sql('(').visit(date).sql(" + (").visit(interval.concat(inline(string))).sql(")::interval)::date");
+
+                    // [#10258] Special case for DATE + INTEGER arithmetic
+                    if (datePart == DAY)
+                        ctx.sql('(').visit(date).sql(" + ").visit(interval).sql(')');
+
+                    // [#3824] Ensure that the output for DATE arithmetic will also be of type DATE, not TIMESTAMP
+                    else
+                        ctx.sql('(').visit(date).sql(" + ").visit(interval).sql(" * ").visit(K_INTERVAL).sql(' ').visit(inline(string)).sql(")::date");
+
                 else
-                    ctx.sql('(').visit(date).sql(" + (").visit(interval.concat(inline(string))).sql(")::interval)");
+                    ctx.sql('(').visit(date).sql(" + ").visit(interval).sql(" * ").visit(K_INTERVAL).sql(' ').visit(inline(string)).sql(")");
 
                 break;
             }

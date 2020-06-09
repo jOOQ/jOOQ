@@ -657,9 +657,9 @@ final class Expression<T> extends AbstractField<T> {
 
                 case HSQLDB: {
                     if (operator == ADD)
-                        ctx.visit(lhs.add(DSL.field("{0} day", rhsAsNumber())));
+                        ctx.visit(lhs.add(DSL.field("({0}) day", rhsAsNumber())));
                     else
-                        ctx.visit(lhs.sub(DSL.field("{0} day", rhsAsNumber())));
+                        ctx.visit(lhs.sub(DSL.field("({0}) day", rhsAsNumber())));
 
                     break;
                 }

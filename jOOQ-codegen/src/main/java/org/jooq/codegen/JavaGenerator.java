@@ -4724,7 +4724,7 @@ public class JavaGenerator extends AbstractGenerator {
             // Foreign keys
             List<ForeignKeyDefinition> foreignKeys = table.getForeignKeys();
 
-            // [#7554] Not yet supported with global key references turned off
+            // [#7554] [#8028] Not yet supported with global key references turned off
             if (foreignKeys.size() > 0 && generateGlobalKeyReferences()) {
                 final List<String> keyFullIds = out.ref(getStrategy().getFullJavaIdentifiers(foreignKeys), 2);
 

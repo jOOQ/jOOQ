@@ -3249,17 +3249,12 @@ public class JavaGenerator extends AbstractGenerator {
                 ? escapeEntities(table.getComment())
                 : "The table <code>" + table.getQualifiedOutputName() + "</code>.";
 
-            // [#4883] Scala doesn't have separate namespaces for val and def
-            if (scala && table.isTableValuedFunction() && table.getParameters().isEmpty())
-                ;
-            else {
-                out.javadoc(comment);
+            out.javadoc(comment);
 
-                if (scala || kotlin)
-                    out.println("val %s = %s", id, referencedId);
-                else
-                    out.println("public static final %s %s = %s;", fullClassName, id, referencedId);
-            }
+            if (scala || kotlin)
+                out.println("val %s = %s", id, referencedId);
+            else
+                out.println("public static final %s %s = %s;", fullClassName, id, referencedId);
 
             // [#3797] Table-valued functions generate two different literals in
             // globalObjectReferences
@@ -4450,7 +4445,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("private %s() {", className);
             }
 
-            out.println("this(%s.name(\"%s\"), null);", DSL.class, table.getOutputName());
+            out.println("this(%s.name(\"%s\"), null);", DSL.class, escapeString(table.getOutputName()));
             out.println("}");
         }
 
@@ -4878,14 +4873,14 @@ public class JavaGenerator extends AbstractGenerator {
             out.print("override def as(alias: %s): %s = ", String.class, className);
 
             if (table.isTableValuedFunction())
-                out.println("new %s(%s.name(alias), this, null, null, parameters)", className, DSL.class);
+                out.println("new %s(%s.name(alias), null, null, this, parameters)", className, DSL.class);
             else
                 out.println("new %s(%s.name(alias), this)", className, DSL.class);
 
             out.print("override def as(alias: %s): %s = ", Name.class, className);
 
             if (table.isTableValuedFunction())
-                out.println("new %s(alias, this, null, null, parameters)", className);
+                out.println("new %s(alias, null, null, this, parameters)", className);
             else
                 out.println("new %s(alias, this)", className);
         }
@@ -5028,7 +5023,7 @@ public class JavaGenerator extends AbstractGenerator {
                     printParameterDeclarations(out, parameters, parametersAsField, "  ");
                     out.print("): %s = ", className);
 
-                    out.print("new %s(%s.name(getName()), null, null, null, %s(", className, DSL.class, out.ref("scala.Array")).printlnIf(!parameters.isEmpty());
+                    out.print("Option(new %s(%s.name(\"%s\"), null, null, null, %s(", className, DSL.class, escapeString(table.getOutputName()), out.ref("scala.Array")).printlnIf(!parameters.isEmpty());
                     String separator = "  ";
                     for (ParameterDefinition parameter : parameters) {
                         final String paramArgName = getStrategy().getJavaMemberName(parameter);
@@ -5046,12 +5041,12 @@ public class JavaGenerator extends AbstractGenerator {
                         separator = ", ";
                     }
 
-                    out.println("))");
+                    out.println("))).map(r => if (aliased()) r.as(getUnqualifiedName) else r).get");
                 }
                 else if (kotlin) {
                     out.print("fun call(").printlnIf(!parameters.isEmpty());
                     printParameterDeclarations(out, parameters, parametersAsField, "  ");
-                    out.print("): %s = %s(%s.name(name), null, arrayOf(", className, className, DSL.class, Field.class).printlnIf(!parameters.isEmpty());
+                    out.print("): %s = %s(%s.name(\"%s\"), null, arrayOf(", className, className, DSL.class, escapeString(table.getOutputName()), Field.class).printlnIf(!parameters.isEmpty());
 
                     String separator = "  ";
                     for (ParameterDefinition parameter : parameters) {
@@ -5068,14 +5063,14 @@ public class JavaGenerator extends AbstractGenerator {
                         separator = ", ";
                     }
 
-                    out.println("))");
+                    out.println(")).let { if (aliased()) it.`as`(unqualifiedName) else it }");
                 }
                 else {
                     out.print("public %s call(", className).printlnIf(!parameters.isEmpty());
                     printParameterDeclarations(out, parameters, parametersAsField, "  ");
                     out.println(") {");
 
-                    out.print("return new %s(%s.name(getName()), null, new %s[] {", className, DSL.class, Field.class).printlnIf(!parameters.isEmpty());
+                    out.print("%s result = new %s(%s.name(\"%s\"), null, new %s[] {", className, className, DSL.class, escapeString(table.getOutputName()), Field.class).printlnIf(!parameters.isEmpty());
                     String separator = "  ";
                     for (ParameterDefinition parameter : parameters) {
                         final String paramArgName = getStrategy().getJavaMemberName(parameter);
@@ -5094,6 +5089,8 @@ public class JavaGenerator extends AbstractGenerator {
                     }
 
                     out.println("});");
+                    out.println();
+                    out.println("return aliased() ? result.as(getUnqualifiedName()) : result;");
                     out.println("}");
                 }
             }
@@ -6392,11 +6389,17 @@ public class JavaGenerator extends AbstractGenerator {
             return;
         }
 
-        // Do not generate separate convenience methods, if there are no IN
-        // parameters. They would have the same signature and no additional
-        // meaning
-        if (parametersAsField && function.getParameters().isEmpty())
-            return;
+        if (function.getParameters().isEmpty())
+
+            // Do not generate separate convenience methods, if there are no IN
+            // parameters. They would have the same signature and no additional
+            // meaning
+            if (parametersAsField)
+                return;
+
+            // [#4883] Scala doesn't have separate namespaces for val and def
+            else if (scala)
+                return;
 
         final String className = out.ref(getStrategy().getFullJavaClassName(function));
 

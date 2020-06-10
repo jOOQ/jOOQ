@@ -202,13 +202,24 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
     }
 
     /**
-     * Get the aliased table wrapped by this table
+     * Get the aliased table wrapped by this table.
      */
     Table<R> getAliasedTable() {
         if (alias != null)
             return alias.wrapped();
 
         return null;
+    }
+
+    /**
+     * Check if this table already aliases another one.
+     * <p>
+     * This method is used by generated code of table valued functions. Do not
+     * call this method directly.
+     */
+    @org.jooq.Internal
+    protected boolean aliased() {
+        return getAliasedTable() != null;
     }
 
     @Override

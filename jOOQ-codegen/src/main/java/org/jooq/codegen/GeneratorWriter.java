@@ -111,7 +111,7 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
     }
 
     public void tabString(String string) {
-        this.tabString = string.replace("\\t", "\t");
+        this.tabString = string.replace("\\t", "\t").replace("\\s", " ");
     }
 
     public String newlineString() {

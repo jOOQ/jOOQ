@@ -230,6 +230,11 @@ public final class TableOptions implements Serializable {
         return source;
     }
 
+    @Override
+    public String toString() {
+        return "TableOptions[" + type + "]";
+    }
+
     /**
      * A description of the type of a {@link Table}.
      */

@@ -1180,7 +1180,7 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
 
         }
 
-        ctx.literal(getName());
+        ctx.visit(getUnqualifiedName());
     }
 
     private final void fetchOutParameters(ExecuteContext ctx) throws SQLException {

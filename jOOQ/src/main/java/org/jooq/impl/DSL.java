@@ -11958,7 +11958,16 @@ public class DSL {
      */
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static Domain<?> domain(Name name) {
-        return new DomainImpl<>(null, name, new DefaultDataType<>(null, Object.class, name));
+        if (name == null)
+            throw new NullPointerException();
+
+        if (name.getName().length < 1 || name.getName().length > 2)
+            throw new IllegalArgumentException("Must provide a qualified name of length 1 or 2 : " + name);
+
+        Name n = name.unqualifiedName();
+        Schema s = name.parts().length == 2 ? schema(name.qualifier()) : null;
+
+        return new DomainImpl<>(s, n, new DefaultDataType<>(null, Object.class, name));
     }
 
     /**

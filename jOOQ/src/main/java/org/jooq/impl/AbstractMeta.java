@@ -197,8 +197,10 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
 
     List<Table<?>> getTables0() {
         List<Table<?>> result = new ArrayList<>();
+
         for (Schema schema : getSchemas())
             result.addAll(schema.getTables());
+
         return result;
     }
 
@@ -283,8 +285,10 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
 
     List<Sequence<?>> getSequences0() {
         List<Sequence<?>> result = new ArrayList<>();
+
         for (Schema schema : getSchemas())
             result.addAll(schema.getSequences());
+
         return result;
     }
 
@@ -356,6 +360,104 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
             return Collections.emptyList();
         else
             return Collections.unmodifiableList(list);
+    }
+
+    @Override
+    public Meta filterCatalogs(Predicate<? super Catalog> filter) {
+        return new FilteredMeta(
+            this,
+            filter,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        );
+    }
+
+    @Override
+    public Meta filterSchemas(Predicate<? super Schema> filter) {
+        return new FilteredMeta(
+            this,
+            null,
+            filter,
+            null,
+            null,
+            null,
+            null,
+            null
+        );
+    }
+
+    @Override
+    public Meta filterTables(Predicate<? super Table<?>> filter) {
+        return new FilteredMeta(
+            this,
+            null,
+            null,
+            filter,
+            null,
+            null,
+            null,
+            null
+        );
+    }
+
+    @Override
+    public Meta filterDomains(Predicate<? super Domain<?>> filter) {
+        return new FilteredMeta(
+            this,
+            null,
+            null,
+            null,
+            filter,
+            null,
+            null,
+            null
+        );
+    }
+
+    @Override
+    public Meta filterSequences(Predicate<? super Sequence<?>> filter) {
+        return new FilteredMeta(
+            this,
+            null,
+            null,
+            null,
+            null,
+            filter,
+            null,
+            null
+        );
+    }
+
+    @Override
+    public Meta filterPrimaryKeys(Predicate<? super UniqueKey<?>> filter) {
+        return new FilteredMeta(
+            this,
+            null,
+            null,
+            null,
+            null,
+            null,
+            filter,
+            null
+        );
+    }
+
+    @Override
+    public Meta filterIndexes(Predicate<? super Index> filter) {
+        return new FilteredMeta(
+            this,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            filter
+        );
     }
 
     @Override

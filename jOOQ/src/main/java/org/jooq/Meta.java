@@ -243,6 +243,51 @@ public interface Meta extends Scope {
     List<Index> getIndexes() throws DataAccessException;
 
     /**
+     * A predicate to filter out query parts of a given type from meta data.
+     */
+    interface Predicate<Q extends QueryPart>extends java.util.function.Predicate<Q> {
+
+        @Override
+
+        boolean test(Q t);
+    }
+
+    /**
+     * Create a wrapper {@link Meta} instance filtering out some catalogs.
+     */
+    Meta filterCatalogs(Predicate<? super Catalog> filter);
+
+    /**
+     * Create a wrapper {@link Meta} instance filtering out some schemas.
+     */
+    Meta filterSchemas(Predicate<? super Schema> filter);
+
+    /**
+     * Create a wrapper {@link Meta} instance filtering out some tables.
+     */
+    Meta filterTables(Predicate<? super Table<?>> filter);
+
+    /**
+     * Create a wrapper {@link Meta} instance filtering out some domains.
+     */
+    Meta filterDomains(Predicate<? super Domain<?>> filter);
+
+    /**
+     * Create a wrapper {@link Meta} instance filtering out some sequences.
+     */
+    Meta filterSequences(Predicate<? super Sequence<?>> filter);
+
+    /**
+     * Create a wrapper {@link Meta} instance filtering out some primary keys.
+     */
+    Meta filterPrimaryKeys(Predicate<? super UniqueKey<?>> filter);
+
+    /**
+     * Create a wrapper {@link Meta} instance filtering out some indexes.
+     */
+    Meta filterIndexes(Predicate<? super Index> filter);
+
+    /**
      * Generate a creation script for the entire meta data.
      *
      * @throws DataAccessException If something went wrong fetching the meta

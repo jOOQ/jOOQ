@@ -101,6 +101,7 @@ final class Names {
     static final Name N_DAYOFWEEK              = unquotedName("dayofweek");
     static final Name N_DAYOFYEAR              = unquotedName("dayofyear");
     static final Name N_DAYS_BETWEEN           = unquotedName("days_between");
+    static final Name N_DB_NAME                = unquotedName("db_name");
     static final Name N_DECODE                 = unquotedName("decode");
     static final Name N_DEGREES                = unquotedName("degrees");
     static final Name N_DUAL                   = unquotedName("dual");

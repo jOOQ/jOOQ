@@ -37,7 +37,10 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.DSL.*;
 import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
 import static org.jooq.impl.Tools.BooleanDataKey.*;
 import static org.jooq.SQLDialect.*;
 
@@ -97,34 +100,52 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (createSchemaIfNotExists && !supportsIfNotExists(ctx)) {
-            Tools.beginTryCatch(ctx, DDLStatementType.CREATE_SCHEMA);
-            accept0(ctx);
-            Tools.endTryCatch(ctx, DDLStatementType.CREATE_SCHEMA);
-        }
-        else {
-            accept0(ctx);
-        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        accept0(ctx);
     }
 
     private final void accept0(Context<?> ctx) {
-
-
-
-
-
-
-
-
-
-
-
-
-
+        if (createSchemaIfNotExists && !supportsIfNotExists(ctx)) {
+            Tools.beginTryCatch(ctx, DDLStatementType.CREATE_SCHEMA);
             accept1(ctx);
+            Tools.endTryCatch(ctx, DDLStatementType.CREATE_SCHEMA);
+        }
+        else {
+            accept1(ctx);
+        }
     }
 
     private final void accept1(Context<?> ctx) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+            accept2(ctx);
+    }
+
+    private final void accept2(Context<?> ctx) {
         ctx.start(Clause.CREATE_SCHEMA_NAME)
            .visit(K_CREATE);
 

@@ -37,7 +37,10 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.DSL.*;
 import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
 import static org.jooq.impl.Tools.BooleanDataKey.*;
 import static org.jooq.SQLDialect.*;
 
@@ -131,17 +134,35 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (dropSchemaIfExists && !supportsIfExists(ctx)) {
-            Tools.beginTryCatch(ctx, DDLStatementType.DROP_SCHEMA);
-            accept0(ctx);
-            Tools.endTryCatch(ctx, DDLStatementType.DROP_SCHEMA);
-        }
-        else {
-            accept0(ctx);
-        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        accept0(ctx);
     }
 
     private void accept0(Context<?> ctx) {
+        if (dropSchemaIfExists && !supportsIfExists(ctx)) {
+            Tools.beginTryCatch(ctx, DDLStatementType.DROP_SCHEMA);
+            accept1(ctx);
+            Tools.endTryCatch(ctx, DDLStatementType.DROP_SCHEMA);
+        }
+        else {
+            accept1(ctx);
+        }
+    }
+
+    private void accept1(Context<?> ctx) {
         ctx.start(Clause.DROP_SCHEMA_SCHEMA)
            .visit(K_DROP);
 

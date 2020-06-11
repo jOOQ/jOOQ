@@ -4890,6 +4890,12 @@ final class Tools {
         else if (type.identity() && ctx.family() == SQLITE && type.isNumeric()) {
             ctx.sql("integer");
         }
+
+
+
+
+
+
         else {
             ctx.sql(typeName);
         }

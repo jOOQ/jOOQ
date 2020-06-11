@@ -59,4 +59,9 @@ public interface ParameterDefinition extends TypedElementDefinition<RoutineDefin
      * @see Parameter#isUnnamed()
      */
     boolean isUnnamed();
+
+    /**
+     * Whether the parameter is synthetic.
+     */
+    boolean isSynthetic();
 }

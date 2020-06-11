@@ -6130,12 +6130,22 @@ public class JavaGenerator extends AbstractGenerator {
             final String paramId = getStrategy().getJavaIdentifier(parameter);
 
             if (parameter.equals(routine.getReturnValue())) {
-                if (scala)
-                    out.println("setReturnParameter(%s.%s)", className, paramId);
-                else if (kotlin)
-                    out.println("returnParameter = %s", paramId);
-                else
-                    out.println("setReturnParameter(%s);", paramId);
+                if (parameter.isSynthetic()) {
+                    if (scala)
+                        out.println("setSyntheticReturnParameter(%s.%s)", className, paramId);
+                    else if (kotlin)
+                        out.println("syntheticReturnParameter = %s", paramId);
+                    else
+                        out.println("setSyntheticReturnParameter(%s);", paramId);
+                }
+                else {
+                    if (scala)
+                        out.println("setReturnParameter(%s.%s)", className, paramId);
+                    else if (kotlin)
+                        out.println("returnParameter = %s", paramId);
+                    else
+                        out.println("setReturnParameter(%s);", paramId);
+                }
             }
             else if (routine.getInParameters().contains(parameter)) {
                 if (routine.getOutParameters().contains(parameter)) {

@@ -51,6 +51,7 @@ public class DefaultParameterDefinition
     private final int     position;
     private final boolean isDefaulted;
     private final boolean isUnnamed;
+    private final boolean isSynthetic;
 
     public DefaultParameterDefinition(RoutineDefinition routine, String name, int position, DataTypeDefinition type) {
         this(routine, name, position, type, false, false);
@@ -69,11 +70,16 @@ public class DefaultParameterDefinition
     }
 
     public DefaultParameterDefinition(RoutineDefinition routine, String name, int position, DataTypeDefinition type, boolean isDefaulted, boolean isUnnamed, String comment, String overload) {
+        this(routine, name, position, type, isDefaulted, isUnnamed, comment, overload, false);
+    }
+
+    public DefaultParameterDefinition(RoutineDefinition routine, String name, int position, DataTypeDefinition type, boolean isDefaulted, boolean isUnnamed, String comment, String overload, boolean isSynthetic) {
         super(routine, name, position, type, comment, overload);
 
         this.position = position;
         this.isDefaulted = isDefaulted;
         this.isUnnamed = isUnnamed;
+        this.isSynthetic = isSynthetic;
     }
 
     @Override
@@ -89,5 +95,10 @@ public class DefaultParameterDefinition
     @Override
     public boolean isUnnamed() {
         return isUnnamed;
+    }
+
+    @Override
+    public boolean isSynthetic() {
+        return isSynthetic;
     }
 }

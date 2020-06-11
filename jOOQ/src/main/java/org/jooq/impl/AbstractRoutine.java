@@ -153,8 +153,13 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
     /**
      * Generated UID
      */
-    private static final long                 serialVersionUID = 6330037113167106443L;
-    private static final Clause[]             CLAUSES          = { FIELD, FIELD_FUNCTION };
+    private static final long                 serialVersionUID                   = 6330037113167106443L;
+    private static final Clause[]             CLAUSES                            = { FIELD, FIELD_FUNCTION };
+
+
+
+
+
 
     // ------------------------------------------------------------------------
     // Meta-data attributes (the same for every call)
@@ -177,6 +182,8 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
     private ResultsImpl                       results;
     private boolean                           overloaded;
     private boolean                           hasUnnamedParameters;
+
+
 
 
 
@@ -361,6 +368,12 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
         else if (type == null) {
             return executeCallableStatement();
         }
+
+
+
+
+
+
 
 
 
@@ -569,6 +582,8 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
     }
 
     final void bind0(BindContext context) {
+        List<Parameter<?>> all = getParameters0(context.configuration());
+        List<Parameter<?>> in = getInParameters0(context.configuration());
 
 
 
@@ -616,13 +631,14 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
 
 
 
-        for (Parameter<?> parameter : getParameters()) {
+
+        for (Parameter<?> parameter : all) {
 
             // [#1183] [#3533] Skip defaulted parameters
-            if (getInParameters().contains(parameter) && inValuesDefaulted.contains(parameter))
+            if (in.contains(parameter) && inValuesDefaulted.contains(parameter))
                 continue;
 
-            bind1(context, parameter, getInValues().get(parameter) != null, resultParameter(parameter));
+            bind1(context, parameter, getInValues().get(parameter) != null, resultParameter(context.configuration(), parameter));
         }
     }
 
@@ -688,25 +704,20 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
         toSQLDeclare(context);
         toSQLBegin(context);
 
-        if (getReturnParameter() != null)
+        if (getReturnParameter0(context.configuration()) != null)
             toSQLAssign(context);
 
         toSQLCall(context);
-        context.sql(' ');
-
-//        
-
-
-        context.sql('(');
+        context.sql(" (");
 
         String separator = "";
-        List<Parameter<?>> parameters = getParameters();
+        List<Parameter<?>> all = getParameters0(context.configuration());
         Map<Integer, Parameter<?>> indexes = new LinkedHashMap<>();
-        for (int i = 0; i < parameters.size(); i++) {
-            Parameter<?> parameter = parameters.get(i);
+        for (int i = 0; i < all.size(); i++) {
+            Parameter<?> parameter = all.get(i);
 
             // The return value has already been written
-            if (parameter.equals(getReturnParameter()))
+            if (parameter.equals(getReturnParameter0(context.configuration())))
                 continue;
 
             // [#1183] [#3533] Omit defaulted parameters
@@ -739,7 +750,7 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
                 context.formatNewLine();
 
             // OUT and IN OUT parameters are always written as a '?' bind variable
-            if (getOutParameters().contains(parameter))
+            if (getOutParameters0(context.configuration()).contains(parameter))
                 toSQLOutParam(context, parameter, index);
 
             // IN parameters are rendered normally
@@ -752,14 +763,13 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
         if (indent)
             context.formatIndentEnd().formatNewLine();
 
-//        
-
-
         context.sql(')');
         toSQLEnd(context);
     }
 
     private final void toSQLEnd(RenderContext context) {
+
+
 
 
 
@@ -868,6 +878,9 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
 
 
 
+
+
+
     }
 
 
@@ -890,6 +903,9 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
 
 
     private final void toSQLBegin(RenderContext context) {
+
+
+
 
 
 
@@ -1184,8 +1200,8 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
     }
 
     private final void fetchOutParameters(ExecuteContext ctx) throws SQLException {
-        for (Parameter<?> parameter : getParameters())
-            if (resultParameter(parameter))
+        for (Parameter<?> parameter : getParameters0(ctx.configuration()))
+            if (resultParameter(ctx.configuration(), parameter))
                 try {
                     fetchOutParameter(ctx, parameter);
                 }
@@ -1229,8 +1245,8 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
 
         // Register all out / inout parameters according to their position
         // Note that some RDBMS do not support binding by name very well
-        for (Parameter<?> parameter : getParameters())
-            if (resultParameter(parameter))
+        for (Parameter<?> parameter : getParameters0(ctx.configuration()))
+            if (resultParameter(c, parameter))
                 registerOutParameter(c, data, statement, parameter);
     }
 
@@ -1295,6 +1311,35 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
         return Collections.unmodifiableList(allParameters);
     }
 
+    private final List<Parameter<?>> getOutParameters0(Configuration c) {
+
+
+
+
+
+
+
+
+        return getOutParameters();
+    }
+
+    @SuppressWarnings("unused")
+    private final List<Parameter<?>> getInParameters0(Configuration c) {
+        return getInParameters();
+    }
+
+    private final List<Parameter<?>> getParameters0(Configuration c) {
+
+
+
+
+
+
+
+
+        return getParameters();
+    }
+
     @Override
     public final Catalog getCatalog() {
         return getSchema() == null ? null : getSchema().getCatalog();
@@ -1316,6 +1361,15 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
     @Override
     public final Parameter<T> getReturnParameter() {
         return returnParameter;
+    }
+
+    private final Parameter<T> getReturnParameter0(Configuration c) {
+
+
+
+
+
+        return getReturnParameter();
     }
 
     protected final void setOverloaded(boolean overloaded) {
@@ -1422,8 +1476,8 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
 
 
 
-    private final boolean resultParameter(Parameter<?> parameter) {
-        return parameter.equals(getReturnParameter()) || getOutParameters().contains(parameter);
+    private final boolean resultParameter(Configuration c, Parameter<?> parameter) {
+        return parameter.equals(getReturnParameter0(c)) || getOutParameters0(c).contains(parameter);
     }
 
     protected final void addInParameter(Parameter<?> parameter) {
@@ -1464,10 +1518,15 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
 
 
 
+
+
+
+
+
+
     public final Field<T> asField() {
-        if (function == null) {
+        if (function == null)
             function = new RoutineField();
-        }
 
         return function;
     }
@@ -1750,6 +1809,7 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
 
 
 
+
         @SuppressWarnings({ "rawtypes", "unchecked" })
         @Override
         public void accept(Context<?> ctx) {
@@ -1757,7 +1817,7 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
 
             String name;
             DataType<?> returnType;
-            List<Field<?>> fields = new ArrayList<>(getInParameters().size());
+            List<Field<?>> fields = new ArrayList<>(getInParameters0(ctx.configuration()).size());
 
 
 
@@ -1790,7 +1850,7 @@ public abstract class AbstractRoutine<T> extends AbstractNamed implements Routin
                 name = local.render();
             }
 
-            for (Parameter<?> parameter : getInParameters()) {
+            for (Parameter<?> parameter : getInParameters0(ctx.configuration())) {
 
                 // [#1183] [#3533] Skip defaulted parameters
                 if (inValuesDefaulted.contains(parameter))

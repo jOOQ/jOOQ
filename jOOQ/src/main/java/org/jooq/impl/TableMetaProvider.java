@@ -60,6 +60,6 @@ public class TableMetaProvider implements MetaProvider {
 
     @Override
     public Meta provide() {
-        return new TableMetaImpl(configuration, tables);
+        return CatalogMetaImpl.filterTables(configuration, tables);
     }
 }

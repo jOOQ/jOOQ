@@ -428,17 +428,17 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public Meta meta(Catalog... catalogs) {
-        return new CatalogMetaImpl(configuration(), catalogs);
+        return CatalogMetaImpl.filterCatalogs(configuration(), catalogs);
     }
 
     @Override
     public Meta meta(Schema... schemas) {
-        return new SchemaMetaImpl(configuration(), schemas);
+        return CatalogMetaImpl.filterSchemas(configuration(), schemas);
     }
 
     @Override
     public Meta meta(Table<?>... tables) {
-        return new TableMetaImpl(configuration(), tables);
+        return CatalogMetaImpl.filterTables(configuration(), tables);
     }
 
     @Override

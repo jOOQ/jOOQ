@@ -42,9 +42,11 @@ import java.util.Collections;
 import java.util.List;
 
 import org.jooq.Catalog;
+import org.jooq.Check;
 import org.jooq.Domain;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Meta;
 import org.jooq.QueryPart;
@@ -319,10 +321,11 @@ final class FilteredMeta extends AbstractMeta {
         private transient List<Index>            indexes;
         private transient List<UniqueKey<R>>     keys;
         private transient UniqueKey<R>           primaryKey;
+        private transient Identity<R, ?>         identity;
         private transient List<ForeignKey<R, ?>> references;
 
         private FilteredTable(FilteredSchema schema, Table<R> delegate) {
-            super(delegate.getQualifiedName(), schema, null, null, DSL.comment(delegate.getComment()));
+            super(delegate.getQualifiedName(), schema, null, null, DSL.comment(delegate.getComment()), delegate.getOptions());
 
             this.delegate = delegate;
 
@@ -344,20 +347,36 @@ final class FilteredMeta extends AbstractMeta {
         }
 
         @Override
+        @SuppressWarnings("unchecked")
         public final List<UniqueKey<R>> getKeys() {
             if (keys == null) {
                 keys = new ArrayList<>();
 
                 for (UniqueKey<R> key : delegate.getKeys())
-                    keys.add(key);
+                    keys.add(key(key));
 
                 UniqueKey<R> pk = delegate.getPrimaryKey();
                 if (pk != null)
                     if (primaryKeyFilter == null || primaryKeyFilter.test(pk))
-                        primaryKey = pk;
+                        primaryKey = key(pk);
+
+                Identity<R, ?> id = delegate.getIdentity();
+                if (id != null)
+                    identity = Internal.createIdentity(this, (TableField<R, Object>) field(id.getField()));
             }
 
             return Collections.unmodifiableList(keys);
+        }
+
+        @SuppressWarnings("unchecked")
+        private final UniqueKey<R> key(UniqueKey<R> key) {
+            TableField<R, ?>[] fields1 = key.getFieldsArray();
+            TableField<R, ?>[] fields2 = new TableField[fields1.length];
+
+            for (int i = 0; i < fields2.length; i++)
+                fields2[i] = (TableField<R, ?>) field(fields1[i]);
+
+            return Internal.createUniqueKey(this, key.getName(), fields2, key.enforced());
         }
 
         @Override
@@ -372,23 +391,42 @@ final class FilteredMeta extends AbstractMeta {
             if (references == null) {
                 references = new ArrayList<>();
 
-                for (ForeignKey<R, ?> key : delegate.getReferences()) {
-                    Table<?> table = lookupTable(key.getKey().getTable());
+                fkLoop:
+                for (ForeignKey<R, ?> fk : delegate.getReferences()) {
+                    Table<?> table = lookupTable(fk.getKey().getTable());
 
-                    // TODO: Support FKs referencing UKs
-                    if (table != null && table.getPrimaryKey() != null) {
-                        TableField<R, ?>[] fields1 = key.getFieldsArray();
-                        TableField<R, ?>[] fields2 = new TableField[fields1.length];
+                    if (table == null)
+                        continue fkLoop;
 
-                        for (int i = 0; i < fields2.length; i++)
-                            fields2[i] = (TableField<R, ?>) field(fields1[i]);
+                    UniqueKey<?> uk = null;
+                    for (UniqueKey<?> k : table.getKeys())
+                        if (k.equals(fk.getKey()))
+                            uk = k;
 
-                        references.add(Internal.createForeignKey(table.getPrimaryKey(), this, key.getName(), fields2));
-                    }
+                    if (uk == null)
+                        continue fkLoop;
+
+                    TableField<R, ?>[] fields1 = fk.getFieldsArray();
+                    TableField<R, ?>[] fields2 = new TableField[fields1.length];
+
+                    for (int i = 0; i < fields2.length; i++)
+                        fields2[i] = (TableField<R, ?>) field(fields1[i]);
+
+                    references.add(Internal.createForeignKey(uk, this, fk.getName(), fields2, fk.enforced()));
                 }
             }
 
             return Collections.unmodifiableList(references);
+        }
+
+        @Override
+        public final Identity<R, ?> getIdentity() {
+            return identity;
+        }
+
+        @Override
+        public final List<Check<R>> getChecks() {
+            return delegate.getChecks();
         }
 
         private final Table<?> lookupTable(Table<?> table) {

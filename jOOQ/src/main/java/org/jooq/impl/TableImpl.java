@@ -364,7 +364,12 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
         if (that instanceof TableImpl) {
             TableImpl<?> other = (TableImpl<?>) that;
             return
-                StringUtils.equals(getSchema(), other.getSchema()) &&
+
+                // [#7172] [#10274] Cannot use getQualifiedName() yet here
+                StringUtils.equals(
+                    getSchema() == null ? "" : getSchema().getName(),
+                    other.getSchema() == null ? "" : other.getSchema().getName()
+                ) &&
                 StringUtils.equals(getName(), other.getName()) &&
                 Arrays.equals(parameters, other.parameters);
         }

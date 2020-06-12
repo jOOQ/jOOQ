@@ -277,7 +277,9 @@ final class Diff {
     private final Create<Table<?>> CREATE_TABLE = new Create<Table<?>>() {
         @Override
         public void create(DiffResult r, Table<?> t) {
-            r.queries.addAll(Arrays.asList(ctx.ddl(t, exportConf).queries()));
+
+            // [#10204] [#10276] DSLContext.ddl(Table) doesn't produce foreign keys
+            r.queries.addAll(Arrays.asList(ddl.queries(t).queries()));
         }
     };
 

@@ -37,27 +37,30 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.EMPTY_CATALOG;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.jooq.Catalog;
 import org.jooq.Configuration;
-import org.jooq.Domain;
+import org.jooq.Meta;
 import org.jooq.Schema;
-import org.jooq.Sequence;
 import org.jooq.Table;
-import org.jooq.UniqueKey;
 
 /**
  * @author Lukas Eder
  */
+@SuppressWarnings("serial")
 final class CatalogMetaImpl extends AbstractMeta {
 
-    private static final long serialVersionUID = 7582210274970452691L;
-    private final Catalog[]   catalogs;
+    private static final long    serialVersionUID = 7582210274970452691L;
+    private final Catalog[]      catalogs;
 
-    CatalogMetaImpl(Configuration configuration, Catalog[] catalogs) {
+    private CatalogMetaImpl(Configuration configuration, Catalog[] catalogs) {
         super(configuration);
 
         this.catalogs = catalogs;
@@ -68,59 +71,73 @@ final class CatalogMetaImpl extends AbstractMeta {
         return Arrays.asList(catalogs);
     }
 
-    @Override
-    final List<Schema> getSchemas0() {
-        List<Schema> result = new ArrayList<>();
-
-        for (Catalog catalog : catalogs)
-            result.addAll(catalog.getSchemas());
-
-        return result;
+    static final Meta filterCatalogs(Configuration configuration, Catalog[] catalogs) {
+        return filterCatalogs0(configuration, catalogs, new HashSet<>(Arrays.asList(catalogs)));
     }
 
-    @Override
-    final List<Domain<?>> getDomains0() {
-        List<Domain<?>> result = new ArrayList<>();
-
-        for (Catalog catalog : catalogs)
-            for (Schema schema : catalog.getSchemas())
-                result.addAll(schema.getDomains());
-
-        return super.getDomains0();
+    static final Meta filterCatalogs(Configuration configuration, Set<Catalog> catalogs) {
+        return filterCatalogs0(configuration, catalogs.toArray(EMPTY_CATALOG), catalogs);
     }
 
-    @Override
-    final List<Table<?>> getTables0() {
-        List<Table<?>> result = new ArrayList<>();
-
-        for (Catalog catalog : catalogs)
-            for (Schema schema : catalog.getSchemas())
-                result.addAll(schema.getTables());
-
-        return result;
+    private static final Meta filterCatalogs0(Configuration configuration, Catalog[] array, Set<Catalog> set) {
+        return new CatalogMetaImpl(configuration, array).filterCatalogs(new Predicate<Catalog>() {
+            @Override
+            public boolean test(Catalog catalog) {
+                return set.contains(catalog);
+            }
+        });
     }
 
-    @Override
-    final List<Sequence<?>> getSequences0() {
-        List<Sequence<?>> result = new ArrayList<>();
-
-        for (Catalog catalog : catalogs)
-            for (Schema schema : catalog.getSchemas())
-                result.addAll(schema.getSequences());
-
-        return result;
+    static final Meta filterSchemas(Configuration configuration, Schema[] schemas) {
+        return filterSchemas(configuration, new HashSet<>(Arrays.asList(schemas)));
     }
 
-    @Override
-    final List<UniqueKey<?>> getPrimaryKeys0() {
-        List<UniqueKey<?>> result = new ArrayList<>();
 
-        for (Catalog catalog : catalogs)
-            for (Schema schema : catalog.getSchemas())
-                for (Table<?> table : schema.getTables())
-                    if (table.getPrimaryKey() != null)
-                        result.add(table.getPrimaryKey());
+    static final Meta filterSchemas(Configuration configuration, Set<Schema> schemas) {
 
-        return result;
+        // TODO: Some schemas may belong to another catalog
+        Catalog defaultCatalog = new CatalogImpl("") {
+            @Override
+            public List<Schema> getSchemas() {
+                return new ArrayList<>(schemas);
+            }
+        };
+
+        Set<Catalog> c = new HashSet<>();
+        for (Schema schema : schemas)
+            c.add(schema.getCatalog() != null ? schema.getCatalog() : defaultCatalog);
+
+        return filterCatalogs(configuration, c).filterSchemas(new Predicate<Schema>() {
+            @Override
+            public boolean test(Schema schema) {
+                return schemas.contains(schema);
+            }
+        });
+    }
+
+    static final Meta filterTables(Configuration configuration, Table<?>[] tables) {
+        return filterTables(configuration, new HashSet<>(Arrays.asList(tables)));
+    }
+
+    static final Meta filterTables(Configuration configuration, Set<Table<?>> tables) {
+
+        // TODO: Some tables may belong to another schema
+        Schema defaultSchema = new SchemaImpl("") {
+            @Override
+            public List<Table<?>> getTables() {
+                return new ArrayList<Table<?>>(tables);
+            }
+        };
+
+        Set<Schema> s = new HashSet<>();
+        for (Table<?> table : tables)
+            s.add(table.getSchema() != null ? table.getSchema() : defaultSchema);
+
+        return filterSchemas(configuration, s).filterTables(new Predicate<Table<?>>() {
+            @Override
+            public boolean test(Table<?> table) {
+                return tables.contains(table);
+            }
+        });
     }
 }

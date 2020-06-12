@@ -299,6 +299,7 @@ final class Tools {
     // ------------------------------------------------------------------------
 
     static final byte[]                     EMPTY_BYTE                     = {};
+    static final Catalog[]                  EMPTY_CATALOG                  = {};
     static final Check<?>[]                 EMPTY_CHECK                    = {};
     static final Clause[]                   EMPTY_CLAUSE                   = {};
     static final Collection<?>[]            EMPTY_COLLECTION               = {};
@@ -313,6 +314,7 @@ final class Tools {
     static final QueryPart[]                EMPTY_QUERYPART                = {};
     static final Record[]                   EMPTY_RECORD                   = {};
     static final Row[]                      EMPTY_ROW                      = {};
+    static final Schema[]                   EMTPY_SCHEMA                   = {};
     static final SortField<?>[]             EMPTY_SORTFIELD                = {};
     static final String[]                   EMPTY_STRING                   = {};
     static final Table<?>[]                 EMPTY_TABLE                    = {};

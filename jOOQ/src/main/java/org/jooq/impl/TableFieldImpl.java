@@ -51,7 +51,6 @@ import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableField;
-import org.jooq.tools.StringUtils;
 
 /**
  * A common base type for table fields.
@@ -112,9 +111,7 @@ final class TableFieldImpl<R extends Record, T> extends AbstractField<T> impleme
         // rather expensive implementation of AbstractQueryPart.equals()
         if (that instanceof TableField) {
             TableField<?, ?> other = (TableField<?, ?>) that;
-            return
-                StringUtils.equals(getTable(), other.getTable()) &&
-                StringUtils.equals(getName(), other.getName());
+            return getQualifiedName().equals(other.getQualifiedName());
         }
 
         return super.equals(that);

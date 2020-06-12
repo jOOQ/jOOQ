@@ -60,6 +60,6 @@ public class SchemaMetaProvider implements MetaProvider {
 
     @Override
     public Meta provide() {
-        return new SchemaMetaImpl(configuration, schemas);
+        return CatalogMetaImpl.filterSchemas(configuration, schemas);
     }
 }

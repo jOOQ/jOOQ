@@ -519,11 +519,6 @@ final class MigrationImpl extends AbstractScope implements Migration {
         }
 
         @Override
-        public Schema getSchema() {
-            return new SchemaImpl("");
-        }
-
-        @Override
         public Identity<JooqMigrationsChangelogRecord, Long> getIdentity() {
             return Internal.createIdentity(JOOQ_MIGRATIONS_CHANGELOG, JOOQ_MIGRATIONS_CHANGELOG.ID);
         }

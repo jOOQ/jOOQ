@@ -197,7 +197,7 @@ final class DDL {
         return s3.constraints(constraints);
     }
 
-    private final Query createTable(Table<?> table) {
+    final Query createTable(Table<?> table) {
         return createTable(table, constraints(table));
     }
 

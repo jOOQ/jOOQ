@@ -329,27 +329,25 @@ final class Interpreter {
         }
     }
 
-    private final void addForeignKey(MutableSchema schema, MutableTable mt, ConstraintImpl impl) {
+    private final void addForeignKey(MutableTable mt, ConstraintImpl impl) {
         if (delayForeignKeyDeclarations)
-            delayForeignKey(schema, mt, impl);
+            delayForeignKey(mt, impl);
         else
-            addForeignKey0(schema, mt, impl);
+            addForeignKey0(mt, impl);
     }
 
     private static class DelayedForeignKey {
-        final MutableSchema schema;
-        final MutableTable table;
+        final MutableTable   table;
         final ConstraintImpl constraint;
 
-        DelayedForeignKey(MutableSchema schema, MutableTable mt, ConstraintImpl constraint) {
-            this.schema = schema;
+        DelayedForeignKey(MutableTable mt, ConstraintImpl constraint) {
             this.table = mt;
             this.constraint = constraint;
         }
     }
 
-    private final void delayForeignKey(MutableSchema schema, MutableTable mt, ConstraintImpl impl) {
-        delayedForeignKeyDeclarations.add(new DelayedForeignKey(schema, mt, impl));
+    private final void delayForeignKey(MutableTable mt, ConstraintImpl impl) {
+        delayedForeignKeyDeclarations.add(new DelayedForeignKey(mt, impl));
     }
 
     private final void applyDelayedForeignKeys() {
@@ -357,13 +355,18 @@ final class Interpreter {
 
         while (it.hasNext()) {
             DelayedForeignKey key = it.next();
-            addForeignKey0(key.schema, key.table, key.constraint);
+            addForeignKey0(key.table, key.constraint);
             it.remove();
         }
     }
 
-    private final void addForeignKey0(MutableSchema schema, MutableTable mt, ConstraintImpl impl) {
-        MutableTable mrf = schema.table(impl.$referencesTable());
+    private final void addForeignKey0(MutableTable mt, ConstraintImpl impl) {
+        MutableSchema ms = getSchema(impl.$referencesTable().getSchema());
+
+        if (ms == null)
+            throw notExists(impl.$referencesTable().getSchema());
+
+        MutableTable mrf = ms.table(impl.$referencesTable());
         MutableUniqueKey mu = null;
 
         if (mrf == null)
@@ -751,7 +754,7 @@ final class Interpreter {
         else if (impl.$unique() != null)
             existing.uniqueKeys.add(new MutableUniqueKey((UnqualifiedName) impl.getUnqualifiedName(), existing, existing.fields(impl.$unique(), true), enforced));
         else if (impl.$foreignKey() != null)
-            addForeignKey(getSchema(impl.$referencesTable().getSchema(), false), existing, impl);
+            addForeignKey(existing, impl);
         else if (impl.$check() != null)
             existing.checks.add(new MutableCheck((UnqualifiedName) impl.getUnqualifiedName(), existing, impl.$check(), enforced));
         else

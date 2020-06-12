@@ -43,12 +43,16 @@ import java.util.List;
 
 import org.jooq.Catalog;
 import org.jooq.Domain;
+import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Index;
 import org.jooq.Meta;
 import org.jooq.QueryPart;
+import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.Table;
+import org.jooq.TableField;
 import org.jooq.UDT;
 import org.jooq.UniqueKey;
 
@@ -239,7 +243,7 @@ final class FilteredMeta extends AbstractMeta {
 
                 for (Schema s : delegate.getSchemas())
                     if (schemaFilter == null || schemaFilter.test(s))
-                        schemas.add(new FilteredSchema(s));
+                        schemas.add(new FilteredSchema(this, s));
             }
 
             return Collections.unmodifiableList(schemas);
@@ -254,8 +258,8 @@ final class FilteredMeta extends AbstractMeta {
         private transient List<Table<?>>    tables;
         private transient List<Sequence<?>> sequences;
 
-        private FilteredSchema(Schema delegate) {
-            super(delegate.getQualifiedName(), delegate.getCatalog(), DSL.comment(delegate.getComment()));
+        private FilteredSchema(FilteredCatalog catalog, Schema delegate) {
+            super(delegate.getQualifiedName(), catalog, DSL.comment(delegate.getComment()));
 
             this.delegate = delegate;
         }
@@ -267,6 +271,7 @@ final class FilteredMeta extends AbstractMeta {
 
                 for (Domain<?> d : delegate.getDomains())
                     if (domainFilter == null || domainFilter.test(d))
+                        // TODO: Schema is wrong here
                         domains.add(d);
             }
 
@@ -280,8 +285,7 @@ final class FilteredMeta extends AbstractMeta {
 
                 for (Table<?> t : delegate.getTables())
                     if (tableFilter == null || tableFilter.test(t))
-                        // TODO create a FilteredTable and filter out primary key and indexes
-                        tables.add(t);
+                        tables.add(new FilteredTable<>(this, t));
             }
 
             return Collections.unmodifiableList(tables);
@@ -294,6 +298,7 @@ final class FilteredMeta extends AbstractMeta {
 
                 for (Sequence<?> t : delegate.getSequences())
                     if (sequenceFilter == null || sequenceFilter.test(t))
+                        // TODO: Schema is wrong here
                         sequences.add(t);
             }
 
@@ -302,7 +307,102 @@ final class FilteredMeta extends AbstractMeta {
 
         @Override
         public final List<UDT<?>> getUDTs() {
+            // TODO: [#8475] Add Meta.getUDTs
             return delegate.getUDTs();
+        }
+    }
+
+    private class FilteredTable<R extends Record> extends TableImpl<R> {
+        private static final long serialVersionUID = -6070726881709997500L;
+
+        private final Table<R>                   delegate;
+        private transient List<Index>            indexes;
+        private transient List<UniqueKey<R>>     keys;
+        private transient UniqueKey<R>           primaryKey;
+        private transient List<ForeignKey<R, ?>> references;
+
+        private FilteredTable(FilteredSchema schema, Table<R> delegate) {
+            super(delegate.getQualifiedName(), schema, null, null, DSL.comment(delegate.getComment()));
+
+            this.delegate = delegate;
+
+            for (Field<?> field : delegate.fields())
+                createField(field.getQualifiedName(), field.getDataType(), this, field.getComment());
+        }
+
+        @Override
+        public final List<Index> getIndexes() {
+            if (indexes == null) {
+                indexes = new ArrayList<>();
+
+                for (Index index : delegate.getIndexes())
+                    if (indexFilter == null || indexFilter.test(index))
+                        indexes.add(index);
+            }
+
+            return Collections.unmodifiableList(indexes);
+        }
+
+        @Override
+        public final List<UniqueKey<R>> getKeys() {
+            if (keys == null) {
+                keys = new ArrayList<>();
+
+                for (UniqueKey<R> key : delegate.getKeys())
+                    keys.add(key);
+
+                UniqueKey<R> pk = delegate.getPrimaryKey();
+                if (pk != null)
+                    if (primaryKeyFilter == null || primaryKeyFilter.test(pk))
+                        primaryKey = pk;
+            }
+
+            return Collections.unmodifiableList(keys);
+        }
+
+        @Override
+        public final UniqueKey<R> getPrimaryKey() {
+            getKeys();
+            return primaryKey;
+        }
+
+        @SuppressWarnings("unchecked")
+        @Override
+        public final List<ForeignKey<R, ?>> getReferences() {
+            if (references == null) {
+                references = new ArrayList<>();
+
+                for (ForeignKey<R, ?> key : delegate.getReferences()) {
+                    Table<?> table = lookupTable(key.getKey().getTable());
+
+                    // TODO: Support FKs referencing UKs
+                    if (table != null && table.getPrimaryKey() != null) {
+                        TableField<R, ?>[] fields1 = key.getFieldsArray();
+                        TableField<R, ?>[] fields2 = new TableField[fields1.length];
+
+                        for (int i = 0; i < fields2.length; i++)
+                            fields2[i] = (TableField<R, ?>) field(fields1[i]);
+
+                        references.add(Internal.createForeignKey(table.getPrimaryKey(), this, key.getName(), fields2));
+                    }
+                }
+            }
+
+            return Collections.unmodifiableList(references);
+        }
+
+        private final Table<?> lookupTable(Table<?> table) {
+
+            // TODO: This is a re-occurring pattern in Meta implementations. Should we have a more generic way to look up objects in a Catalog/Schema?
+            Catalog catalog = getCatalog();
+            if (catalog == null)
+                return null;
+
+            Schema schema = catalog.getSchema(table.getSchema().getName());
+            if (schema == null)
+                return null;
+
+            return schema.getTable(table.getName());
         }
     }
 }

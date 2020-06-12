@@ -137,10 +137,10 @@ final class DetachedMeta extends AbstractMeta {
     private static class DetachedSchema extends SchemaImpl {
         private static final long serialVersionUID = -95755926444275258L;
 
-        private final List<Domain<?>> domains = new ArrayList<>();
-        private final List<Table<?>> tables = new ArrayList<>();
-        private final List<Sequence<?>> sequences = new ArrayList<>();
-        private final List<UDT<?>> udts = new ArrayList<>();
+        private final List<Domain<?>>   domains          = new ArrayList<>();
+        private final List<Table<?>>    tables           = new ArrayList<>();
+        private final List<Sequence<?>> sequences        = new ArrayList<>();
+        private final List<UDT<?>>      udts             = new ArrayList<>();
 
         private DetachedSchema(String name, Catalog owner, String comment) {
             super(name, owner, comment);
@@ -202,10 +202,10 @@ final class DetachedMeta extends AbstractMeta {
     private static class DetachedTable<R extends Record> extends TableImpl<R> {
         private static final long serialVersionUID = -6070726881709997500L;
 
-        private final List<Index> indexes = new ArrayList<>();
-        private final List<UniqueKey<R>> keys = new ArrayList<>();
-        private UniqueKey<R> primaryKey;
-        private final List<ForeignKey<R, ?>> references = new ArrayList<>();
+        private final List<Index>            indexes          = new ArrayList<>();
+        private final List<UniqueKey<R>>     keys             = new ArrayList<>();
+        private UniqueKey<R>                 primaryKey;
+        private final List<ForeignKey<R, ?>> references       = new ArrayList<>();
 
         private DetachedTable(Name name, Schema owner, Comment comment) {
             super(name, owner, null, null, comment);

@@ -79,7 +79,7 @@ final class CatalogMetaImpl extends AbstractMeta {
         return filterCatalogs0(configuration, catalogs.toArray(EMPTY_CATALOG), catalogs);
     }
 
-    private static final Meta filterCatalogs0(Configuration configuration, Catalog[] array, Set<Catalog> set) {
+    private static final Meta filterCatalogs0(Configuration configuration, Catalog[] array, final Set<Catalog> set) {
         return new CatalogMetaImpl(configuration, array).filterCatalogs(new Predicate<Catalog>() {
             @Override
             public boolean test(Catalog catalog) {
@@ -93,7 +93,7 @@ final class CatalogMetaImpl extends AbstractMeta {
     }
 
 
-    static final Meta filterSchemas(Configuration configuration, Set<Schema> schemas) {
+    static final Meta filterSchemas(Configuration configuration, final Set<Schema> schemas) {
 
         // TODO: Some schemas may belong to another catalog
         Catalog defaultCatalog = new CatalogImpl("") {
@@ -119,7 +119,7 @@ final class CatalogMetaImpl extends AbstractMeta {
         return filterTables(configuration, new HashSet<>(Arrays.asList(tables)));
     }
 
-    static final Meta filterTables(Configuration configuration, Set<Table<?>> tables) {
+    static final Meta filterTables(Configuration configuration, final Set<Table<?>> tables) {
 
         // TODO: Some tables may belong to another schema
         Schema defaultSchema = new SchemaImpl("") {

@@ -421,6 +421,7 @@ final class FilteredMeta extends AbstractMeta {
 
         @Override
         public final Identity<R, ?> getIdentity() {
+            getKeys();
             return identity;
         }
 

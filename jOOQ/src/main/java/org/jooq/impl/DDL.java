@@ -58,6 +58,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.jooq.Check;
+import org.jooq.Comment;
 import org.jooq.Constraint;
 import org.jooq.ConstraintEnforcementStep;
 import org.jooq.CreateDomainAsStep;
@@ -303,18 +304,18 @@ final class DDL {
         List<Query> result = new ArrayList<>();
 
         if (configuration.flags().contains(COMMENT)) {
-            String tComment = table.getComment();
+            Comment tComment = table.getCommentPart();
 
-            if (!StringUtils.isEmpty(tComment))
+            if (!StringUtils.isEmpty(tComment.getComment()))
                 if (table.getType().isView())
                     result.add(ctx.commentOnView(table).is(tComment));
                 else
                     result.add(ctx.commentOnTable(table).is(tComment));
 
             for (Field<?> field : sortIf(Arrays.asList(table.fields()), !configuration.respectColumnOrder())) {
-                String fComment = field.getComment();
+                Comment fComment = field.getCommentPart();
 
-                if (!StringUtils.isEmpty(fComment))
+                if (!StringUtils.isEmpty(fComment.getComment()))
                     result.add(ctx.commentOnColumn(field).is(fComment));
             }
         }

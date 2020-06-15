@@ -63,6 +63,14 @@ public interface Named extends QueryPart {
 
     /**
      * The comment on this object.
+     * <p>
+     * This is the same as calling {@link #getCommentPart()} and then
+     * {@link Comment#getComment()}.
      */
     String getComment();
+
+    /**
+     * The comment on this object as a {@link QueryPart}.
+     */
+    Comment getCommentPart();
 }

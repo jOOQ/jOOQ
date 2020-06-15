@@ -2047,7 +2047,7 @@ final class Interpreter {
                     f[i] = (TableField<Record, ?>) t.field(fields.get(i).name());
 
                 // Add to map before adding bi-directionality to avoid StackOverflowErrors
-                interpretedUniqueKeys.put(qualifiedName, result = new UniqueKeyImpl<>(t, name().last(), f, enforced));
+                interpretedUniqueKeys.put(qualifiedName, result = new UniqueKeyImpl<>(t, name(), f, enforced));
                 for (MutableForeignKey referencingKey : referencingKeys)
                     result.references.add((ForeignKey) referencingKey.interpretedKey());
             }
@@ -2106,7 +2106,7 @@ final class Interpreter {
                 for (int i = 0; i < f.length; i++)
                     f[i] = (TableField<Record, ?>) t.field(fields.get(i).name());
 
-                interpretedForeignKeys.put(qualifiedName, result = new ReferenceImpl<>(referencedKey.interpretedKey(), t, name().last(), f, enforced));
+                interpretedForeignKeys.put(qualifiedName, result = new ReferenceImpl<>(referencedKey.interpretedKey(), t, name(), f, enforced));
             }
 
             return result;

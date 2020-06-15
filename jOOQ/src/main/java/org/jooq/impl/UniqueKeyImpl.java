@@ -43,6 +43,7 @@ import java.util.List;
 
 import org.jooq.ConstraintEnforcementStep;
 import org.jooq.ForeignKey;
+import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -64,7 +65,7 @@ final class UniqueKeyImpl<R extends Record> extends AbstractKey<R> implements Un
         this(table, null, fields, enforced);
     }
 
-    UniqueKeyImpl(Table<R> table, String name, TableField<R, ?>[] fields, boolean enforced) {
+    UniqueKeyImpl(Table<R> table, Name name, TableField<R, ?>[] fields, boolean enforced) {
         super(table, name, fields, enforced);
 
         this.references = new ArrayList<>();

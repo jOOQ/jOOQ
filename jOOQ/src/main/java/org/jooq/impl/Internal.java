@@ -81,13 +81,6 @@ public final class Internal {
     /**
      * Factory method for indexes.
      */
-    public static final Index createIndex(String name, Table<?> table, OrderField<?>[] sortFields, boolean unique) {
-        return createIndex(DSL.name(name), table, sortFields, unique);
-    }
-
-    /**
-     * Factory method for indexes.
-     */
     public static final Index createIndex(Name name, Table<?> table, OrderField<?>[] sortFields, boolean unique) {
         return new IndexImpl(name, table, sortFields, null, unique);
     }
@@ -104,21 +97,21 @@ public final class Internal {
      */
     @SafeVarargs
     public static final <R extends Record> UniqueKey<R> createUniqueKey(Table<R> table, TableField<R, ?>... fields) {
-        return createUniqueKey(table, null, fields, true);
+        return createUniqueKey(table, (Name) null, fields, true);
     }
 
     /**
      * Factory method for unique keys.
      */
     @SafeVarargs
-    public static final <R extends Record> UniqueKey<R> createUniqueKey(Table<R> table, String name, TableField<R, ?>... fields) {
+    public static final <R extends Record> UniqueKey<R> createUniqueKey(Table<R> table, Name name, TableField<R, ?>... fields) {
         return createUniqueKey(table, name, fields, true);
     }
 
     /**
      * Factory method for unique keys.
      */
-    public static final <R extends Record> UniqueKey<R> createUniqueKey(Table<R> table, String name, TableField<R, ?>[] fields, boolean enforced) {
+    public static final <R extends Record> UniqueKey<R> createUniqueKey(Table<R> table, Name name, TableField<R, ?>[] fields, boolean enforced) {
         return new UniqueKeyImpl<>(table, name, fields, enforced);
     }
 
@@ -127,21 +120,21 @@ public final class Internal {
      */
     @SafeVarargs
     public static final <R extends Record, U extends Record> ForeignKey<R, U> createForeignKey(UniqueKey<U> key, Table<R> table, TableField<R, ?>... fields) {
-        return createForeignKey(key, table, null, fields);
+        return createForeignKey(key, table, (Name) null, fields);
     }
 
     /**
      * Factory method for foreign keys.
      */
     @SafeVarargs
-    public static final <R extends Record, U extends Record> ForeignKey<R, U> createForeignKey(UniqueKey<U> key, Table<R> table, String name, TableField<R, ?>... fields) {
+    public static final <R extends Record, U extends Record> ForeignKey<R, U> createForeignKey(UniqueKey<U> key, Table<R> table, Name name, TableField<R, ?>... fields) {
         return createForeignKey(key, table, name, fields, true);
     }
 
     /**
      * Factory method for foreign keys.
      */
-    public static final <R extends Record, U extends Record> ForeignKey<R, U> createForeignKey(UniqueKey<U> key, Table<R> table, String name, TableField<R, ?>[] fields, boolean enforced) {
+    public static final <R extends Record, U extends Record> ForeignKey<R, U> createForeignKey(UniqueKey<U> key, Table<R> table, Name name, TableField<R, ?>[] fields, boolean enforced) {
         ForeignKey<R, U> result = new ReferenceImpl<>(key, table, name, fields, enforced);
 
         if (key instanceof UniqueKeyImpl)
@@ -256,4 +249,56 @@ public final class Internal {
 
 
     private Internal() {}
+
+    /**
+     * Factory method for indexes.
+     *
+     * @deprecated - 3.14.0 - [#9404] - Please re-generate your code.
+     */
+    @Deprecated
+    public static final Index createIndex(String name, Table<?> table, OrderField<?>[] sortFields, boolean unique) {
+        return createIndex(DSL.name(name), table, sortFields, unique);
+    }
+
+    /**
+     * Factory method for unique keys.
+     *
+     * @deprecated - 3.14.0 - [#9404] - Please re-generate your code.
+     */
+    @Deprecated
+    @SafeVarargs
+    public static final <R extends Record> UniqueKey<R> createUniqueKey(Table<R> table, String name, TableField<R, ?>... fields) {
+        return createUniqueKey(table, name, fields, true);
+    }
+
+    /**
+     * Factory method for unique keys.
+     *
+     * @deprecated - 3.14.0 - [#9404] - Please re-generate your code.
+     */
+    @Deprecated
+    public static final <R extends Record> UniqueKey<R> createUniqueKey(Table<R> table, String name, TableField<R, ?>[] fields, boolean enforced) {
+        return createUniqueKey(table, DSL.name(name), fields, enforced);
+    }
+
+    /**
+     * Factory method for foreign keys.
+     *
+     * @deprecated - 3.14.0 - [#9404] - Please re-generate your code.
+     */
+    @Deprecated
+    @SafeVarargs
+    public static final <R extends Record, U extends Record> ForeignKey<R, U> createForeignKey(UniqueKey<U> key, Table<R> table, String name, TableField<R, ?>... fields) {
+        return createForeignKey(key, table, name, fields, true);
+    }
+
+    /**
+     * Factory method for foreign keys.
+     *
+     * @deprecated - 3.14.0 - [#9404] - Please re-generate your code.
+     */
+    @Deprecated
+    public static final <R extends Record, U extends Record> ForeignKey<R, U> createForeignKey(UniqueKey<U> key, Table<R> table, String name, TableField<R, ?>[] fields, boolean enforced) {
+        return createForeignKey(key, table, DSL.name(name), fields, enforced);
+    }
 }

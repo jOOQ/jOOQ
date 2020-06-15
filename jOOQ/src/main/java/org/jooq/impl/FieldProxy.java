@@ -47,6 +47,7 @@ import org.jooq.BindContext;
 import org.jooq.Binding;
 import org.jooq.Clause;
 import org.jooq.Collation;
+import org.jooq.Comment;
 import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Configuration;
@@ -145,6 +146,11 @@ final class FieldProxy<T> implements TableField<Record, T>, QueryPartInternal {
     @Override
     public final String getComment() {
         return delegate.getComment();
+    }
+
+    @Override
+    public final Comment getCommentPart() {
+        return delegate.getCommentPart();
     }
 
     @Override

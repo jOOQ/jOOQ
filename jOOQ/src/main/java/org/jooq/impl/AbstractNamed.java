@@ -82,6 +82,11 @@ abstract class AbstractNamed extends AbstractQueryPart implements Named {
         return comment.getComment();
     }
 
+    @Override
+    public final Comment getCommentPart() {
+        return comment;
+    }
+
     // -------------------------------------------------------------------------
     // The Object API
     // -------------------------------------------------------------------------

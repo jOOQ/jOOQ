@@ -44,6 +44,7 @@ import org.jooq.Constraint;
 import org.jooq.ConstraintEnforcementStep;
 import org.jooq.Context;
 import org.jooq.Key;
+import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -68,8 +69,8 @@ abstract class AbstractKey<R extends Record> extends AbstractNamed implements Ke
         this(table, null, fields, enforced);
     }
 
-    AbstractKey(Table<R> table, String name, TableField<R, ?>[] fields, boolean enforced) {
-        super(name == null ? null : DSL.name(name), null);
+    AbstractKey(Table<R> table, Name name, TableField<R, ?>[] fields, boolean enforced) {
+        super(name, null);
 
         this.table = table;
         this.fields = fields;

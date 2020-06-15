@@ -50,6 +50,7 @@ import org.jooq.ConstraintEnforcementStep;
 import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.RowN;
@@ -70,7 +71,7 @@ final class ReferenceImpl<R extends Record, O extends Record> extends AbstractKe
 
     private final UniqueKey<O> key;
 
-    ReferenceImpl(UniqueKey<O> key, Table<R> table, String name, TableField<R, ?>[] fields, boolean enforced) {
+    ReferenceImpl(UniqueKey<O> key, Table<R> table, Name name, TableField<R, ?>[] fields, boolean enforced) {
         super(table, name, fields, enforced);
 
         this.key = key;

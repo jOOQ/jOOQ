@@ -707,7 +707,7 @@ final class MetaImpl extends AbstractMeta {
                     fkFields[i] = (TableField<Record, ?>)         field(record.get(7, String.class));
                 }
 
-                references.add(new ReferenceImpl<>(new MetaPrimaryKey(pkTable, pkName, pkFields), this, fkName, fkFields, true));
+                references.add(new ReferenceImpl<>(new MetaPrimaryKey(pkTable, pkName, pkFields), this, DSL.name(fkName), fkFields, true));
             }
 
             return references;
@@ -1002,7 +1002,7 @@ final class MetaImpl extends AbstractMeta {
                 for (int i = 0; i < value.size(); i++)
                     fkFields[i] = (TableField<Record, ?>) fkTable.field(value.get(i).get(7, String.class));
 
-                references.add(new ReferenceImpl<>(this, fkTable, fkName, fkFields, true));
+                references.add(new ReferenceImpl<>(this, fkTable, DSL.name(fkName), fkFields, true));
             }
 
             return references;

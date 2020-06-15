@@ -55,7 +55,7 @@ final class CollatedField extends AbstractField<String> {
     private final Collation   collation;
 
     CollatedField(Field<?> field, Collation collation) {
-        super(field.getQualifiedName(), type(field), DSL.comment(field.getComment()), binding(field));
+        super(field.getQualifiedName(), type(field), field.getCommentPart(), binding(field));
 
         this.field = field;
         this.collation = collation;

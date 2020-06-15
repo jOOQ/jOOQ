@@ -52,7 +52,6 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Index;
 import org.jooq.Meta;
-import org.jooq.MetaProvider;
 import org.jooq.Name;
 import org.jooq.Package;
 import org.jooq.Record;
@@ -77,11 +76,7 @@ final class DetachedMeta extends AbstractMeta {
     private static final long serialVersionUID = 5561057000510740144L;
     private Meta              delegate;
 
-    static Meta detach(MetaProvider provider) {
-        return new DetachedMeta(provider.provide());
-    }
-
-    private DetachedMeta(Meta meta) {
+    DetachedMeta(Meta meta) {
         super(meta.configuration());
 
         delegate = meta;
@@ -224,7 +219,7 @@ final class DetachedMeta extends AbstractMeta {
         }
 
         static <R extends Record> DetachedTable<R> copyOf(Table<R> table, Schema owner) {
-            DetachedTable<R> result = new DetachedTable<>(table.getUnqualifiedName(), owner, DSL.comment(table.getComment()));
+            DetachedTable<R> result = new DetachedTable<>(table.getUnqualifiedName(), owner, table.getCommentPart());
 
             for (Field<?> field : table.fields())
                 DetachedTable.createField(field.getName(), field.getDataType(), result, field.getComment());

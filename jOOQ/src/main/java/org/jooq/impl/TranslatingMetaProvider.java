@@ -96,9 +96,9 @@ final class TranslatingMetaProvider implements MetaProvider {
             for (Source script : scripts)
                 initializer.loadScript(script);
 
-            return DetachedMeta.detach(new DefaultMetaProvider(
+            return new DetachedMeta(new DefaultMetaProvider(
                 configuration.derive().set(initializer.connection).set(configuration.settings().getInterpreterDialect())
-            ));
+            ).provide());
         }
         finally {
             JDBCUtils.safeClose(initializer);

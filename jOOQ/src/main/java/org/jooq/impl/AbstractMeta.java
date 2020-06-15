@@ -461,6 +461,11 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     }
 
     @Override
+    public final Meta detach() {
+        return new DetachedMeta(this);
+    }
+
+    @Override
     public final Queries ddl() {
         return ddl(new DDLExportConfiguration());
     }

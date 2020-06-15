@@ -233,7 +233,7 @@ final class FilteredMeta extends AbstractMeta {
         private transient List<Schema> schemas;
 
         private FilteredCatalog(Catalog delegate) {
-            super(delegate.getQualifiedName(), DSL.comment(delegate.getComment()));
+            super(delegate.getQualifiedName(), delegate.getCommentPart());
 
             this.delegate = delegate;
         }
@@ -261,7 +261,7 @@ final class FilteredMeta extends AbstractMeta {
         private transient List<Sequence<?>> sequences;
 
         private FilteredSchema(FilteredCatalog catalog, Schema delegate) {
-            super(delegate.getQualifiedName(), catalog, DSL.comment(delegate.getComment()));
+            super(delegate.getQualifiedName(), catalog, delegate.getCommentPart());
 
             this.delegate = delegate;
         }
@@ -325,7 +325,7 @@ final class FilteredMeta extends AbstractMeta {
         private transient List<ForeignKey<R, ?>> references;
 
         private FilteredTable(FilteredSchema schema, Table<R> delegate) {
-            super(delegate.getQualifiedName(), schema, null, null, DSL.comment(delegate.getComment()), delegate.getOptions());
+            super(delegate.getQualifiedName(), schema, null, null, delegate.getCommentPart(), delegate.getOptions());
 
             this.delegate = delegate;
 

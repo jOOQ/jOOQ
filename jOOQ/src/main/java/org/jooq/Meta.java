@@ -288,6 +288,12 @@ public interface Meta extends Scope {
     Meta filterIndexes(Predicate<? super Index> filter);
 
     /**
+     * Eager-create an in-memory copy of this {@link Meta} instance without any
+     * connection to the original data source.
+     */
+    Meta detach() throws DataAccessException;
+
+    /**
      * Generate a creation script for the entire meta data.
      *
      * @throws DataAccessException If something went wrong fetching the meta

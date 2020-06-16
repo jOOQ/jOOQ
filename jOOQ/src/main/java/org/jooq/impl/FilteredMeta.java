@@ -393,15 +393,7 @@ final class FilteredMeta extends AbstractMeta {
 
                 fkLoop:
                 for (ForeignKey<R, ?> fk : delegate.getReferences()) {
-                    Table<?> table = lookupTable(fk.getKey().getTable());
-
-                    if (table == null)
-                        continue fkLoop;
-
-                    UniqueKey<?> uk = null;
-                    for (UniqueKey<?> k : table.getKeys())
-                        if (k.equals(fk.getKey()))
-                            uk = k;
+                    UniqueKey<?> uk = lookupUniqueKey(fk);
 
                     if (uk == null)
                         continue fkLoop;
@@ -428,20 +420,6 @@ final class FilteredMeta extends AbstractMeta {
         @Override
         public final List<Check<R>> getChecks() {
             return delegate.getChecks();
-        }
-
-        private final Table<?> lookupTable(Table<?> table) {
-
-            // TODO: This is a re-occurring pattern in Meta implementations. Should we have a more generic way to look up objects in a Catalog/Schema?
-            Catalog catalog = getCatalog();
-            if (catalog == null)
-                return null;
-
-            Schema schema = catalog.getSchema(table.getSchema().getName());
-            if (schema == null)
-                return null;
-
-            return schema.getTable(table.getName());
         }
     }
 }

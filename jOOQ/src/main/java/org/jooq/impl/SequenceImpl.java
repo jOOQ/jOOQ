@@ -107,16 +107,16 @@ public class SequenceImpl<T extends Number> extends AbstractTypedNamed<T> implem
     }
 
     SequenceImpl(
-            Name name,
-            Schema schema,
-            DataType<T> type,
-            boolean nameIsPlainSQL,
-            Field<T> startWith,
-            Field<T> incrementBy,
-            Field<T> minvalue,
-            Field<T> maxvalue,
-            boolean cycle,
-            Field<T> cache
+        Name name,
+        Schema schema,
+        DataType<T> type,
+        boolean nameIsPlainSQL,
+        Field<T> startWith,
+        Field<T> incrementBy,
+        Field<T> minvalue,
+        Field<T> maxvalue,
+        boolean cycle,
+        Field<T> cache
     ) {
         super(qualify(schema, name), CommentImpl.NO_COMMENT, type);
 

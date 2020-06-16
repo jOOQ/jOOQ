@@ -57,7 +57,6 @@ import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -71,8 +70,7 @@ import org.jooq.Catalog;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.ConnectionCallable;
-import org.jooq.Constraint;
-import org.jooq.Context;
+import org.jooq.ConstraintEnforcementStep;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -904,45 +902,19 @@ final class MetaImpl extends AbstractMeta {
         }
     }
 
-    private final class MetaPrimaryKey extends AbstractNamed implements UniqueKey<Record> {
+    private final class MetaPrimaryKey extends AbstractKey<Record> implements UniqueKey<Record> {
 
         /**
          * Generated UID
          */
         private static final long             serialVersionUID = 6997258619475953490L;
 
-        private final Table<Record>           pkTable;
-        private final TableField<Record, ?>[] pkFields;
-
         MetaPrimaryKey(Table<Record> table, String pkName, TableField<Record, ?>[] fields) {
-            super(pkName == null ? null : DSL.name(pkName), null);
-
-            this.pkTable = table;
-            this.pkFields = fields;
-        }
-
-        @Override
-        public final Table<Record> getTable() {
-            return pkTable;
-        }
-
-        @Override
-        public final List<TableField<Record, ?>> getFields() {
-            return Collections.unmodifiableList(Arrays.asList(pkFields));
-        }
-
-        @Override
-        public final TableField<Record, ?>[] getFieldsArray() {
-            return pkFields.clone();
+            super(table, pkName == null ? null : DSL.name(pkName), fields, true);
         }
 
         @Override
         public final boolean isPrimary() {
-            return true;
-        }
-
-        @Override
-        public final boolean enforced() {
             return true;
         }
 
@@ -952,7 +924,7 @@ final class MetaImpl extends AbstractMeta {
             Result<Record> result = meta(new MetaFunction() {
                 @Override
                 public Result<Record> run(DatabaseMetaData meta) throws SQLException {
-                    ResultSet rs = meta.getExportedKeys(null, pkTable.getSchema().getName(), pkTable.getName());
+                    ResultSet rs = meta.getExportedKeys(null, getTable().getSchema().getName(), getTable().getName());
 
                     return dsl().fetch(
                         rs,
@@ -1009,16 +981,11 @@ final class MetaImpl extends AbstractMeta {
         }
 
         @Override
-        public final Constraint constraint() {
+        final ConstraintEnforcementStep constraint0() {
             if (isPrimary())
                 return DSL.constraint(getName()).primaryKey(getFieldsArray());
             else
                 return DSL.constraint(getName()).unique(getFieldsArray());
-        }
-
-        @Override
-        public final void accept(Context<?> ctx) {
-            ctx.visit(getUnqualifiedName());
         }
     }
 

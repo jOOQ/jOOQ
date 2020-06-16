@@ -43,11 +43,13 @@ import java.util.List;
 import org.jooq.Constraint;
 import org.jooq.ConstraintEnforcementStep;
 import org.jooq.Context;
+import org.jooq.ForeignKey;
 import org.jooq.Key;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.UniqueKey;
 
 /**
  * Common base class for <code>Key</code>'s
@@ -133,8 +135,16 @@ abstract class AbstractKey<R extends Record> extends AbstractNamed implements Ke
             return true;
         if (obj == null)
             return false;
-        if (getClass() != obj.getClass())
+        if (!(obj instanceof AbstractKey))
             return false;
+        if (this instanceof ForeignKey) {
+            if (!(obj instanceof ForeignKey))
+                return false;
+        }
+        else if (this instanceof UniqueKey) {
+            if (!(obj instanceof UniqueKey))
+                return false;
+        }
         AbstractKey<?> other = (AbstractKey<?>) obj;
         if (!getQualifiedName().equals(other.getQualifiedName()))
             return false;

@@ -52,12 +52,14 @@ import org.jooq.Catalog;
 import org.jooq.Configuration;
 import org.jooq.DDLExportConfiguration;
 import org.jooq.Domain;
+import org.jooq.ForeignKey;
 import org.jooq.Index;
 import org.jooq.Meta;
 import org.jooq.Name;
 import org.jooq.Named;
 import org.jooq.Queries;
 import org.jooq.Query;
+import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.Table;
@@ -512,6 +514,42 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     @Override
     public /* non-final */ InformationSchema informationSchema() {
         return InformationSchemaExport.exportCatalogs(configuration(), getCatalogs());
+    }
+
+    final Table<?> lookupTable(Table<?> table) {
+
+        // TODO: This is a re-occurring pattern in Meta implementations. Should we have a more generic way to look up objects in a Catalog/Schema?
+        Catalog catalog = getCatalog(table.getCatalog().getName());
+        if (catalog == null)
+            return null;
+
+        Schema schema = catalog.getSchema(table.getSchema().getName());
+        if (schema == null)
+            return null;
+
+        return schema.getTable(table.getName());
+    }
+
+    final <R extends Record> UniqueKey<R> lookupKey(Table<R> in, UniqueKey<?> uk) {
+        for (UniqueKey<R> k : in.getKeys())
+
+            // [#10279] [#10281] Cannot use Key::equals here, because that is
+            // name-based. 1) The name is irrelevant for this lookup, 2) some
+            // key implementations (e.g. MetaPrimaryKey for H2) don't produce
+            // the correct key name, but the index name.
+            if (k.getFields().equals(uk.getFields()))
+                return k;
+
+        return null;
+    }
+
+    final UniqueKey<?> lookupUniqueKey(ForeignKey<?, ?> fk) {
+        Table<?> table = lookupTable(fk.getKey().getTable());
+
+        if (table == null)
+            return null;
+
+        return lookupKey(table, fk.getKey());
     }
 
     @Override

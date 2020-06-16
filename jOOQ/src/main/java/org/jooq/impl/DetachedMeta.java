@@ -45,15 +45,11 @@ import java.util.List;
 
 import org.jooq.Catalog;
 import org.jooq.Check;
-import org.jooq.Comment;
-import org.jooq.DataType;
 import org.jooq.Domain;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Index;
 import org.jooq.Meta;
-import org.jooq.Name;
-import org.jooq.Package;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Sequence;
@@ -87,7 +83,7 @@ final class DetachedMeta extends AbstractMeta {
 
     private final void resolveReferences() {
         for (Catalog catalog : getCatalogs())
-            ((DetachedCatalog) catalog).resolveReferences(this);
+            ((DetachedCatalog) catalog).resolveReferences();
     }
 
     @Override
@@ -95,32 +91,27 @@ final class DetachedMeta extends AbstractMeta {
         List<Catalog> result = new ArrayList<>();
 
         for (Catalog catalog : delegate.getCatalogs())
-            result.add(DetachedCatalog.copyOf(catalog));
+            result.add(new DetachedCatalog(catalog));
 
         return result;
     }
 
-    private static class DetachedCatalog extends CatalogImpl {
-        private static final long serialVersionUID = 7979890261252183486L;
+    private class DetachedCatalog extends CatalogImpl {
+        private static final long          serialVersionUID = 7979890261252183486L;
+        private final List<DetachedSchema> schemas;
 
-        private final List<Schema> schemas = new ArrayList<>();
+        DetachedCatalog(Catalog catalog) {
+            super(catalog.getQualifiedName(), catalog.getCommentPart());
 
-        private DetachedCatalog(String name, String comment) {
-            super(name, comment);
-        }
-
-        private final void resolveReferences(Meta meta) {
-            for (Schema schema : schemas)
-                ((DetachedSchema) schema).resolveReferences(meta);
-        }
-
-        static DetachedCatalog copyOf(Catalog catalog) {
-            DetachedCatalog result = new DetachedCatalog(catalog.getName(), catalog.getComment());
+            schemas = new ArrayList<>();
 
             for (Schema schema : catalog.getSchemas())
-                result.schemas.add(DetachedSchema.copyOf(schema, result));
+                schemas.add(new DetachedSchema(this, schema));
+        }
 
-            return result;
+        private final void resolveReferences() {
+            for (DetachedSchema schema : schemas)
+                schema.resolveReferences();
         }
 
         @Override
@@ -129,36 +120,35 @@ final class DetachedMeta extends AbstractMeta {
         }
     }
 
-    private static class DetachedSchema extends SchemaImpl {
-        private static final long serialVersionUID = -95755926444275258L;
+    private class DetachedSchema extends SchemaImpl {
+        private static final long               serialVersionUID = -95755926444275258L;
 
-        private final List<Domain<?>>   domains          = new ArrayList<>();
-        private final List<Table<?>>    tables           = new ArrayList<>();
-        private final List<Sequence<?>> sequences        = new ArrayList<>();
-        private final List<UDT<?>>      udts             = new ArrayList<>();
+        private final List<DetachedDomain<?>>   domains;
+        private final List<DetachedTable<?>>    tables;
+        private final List<DetachedSequence<?>> sequences;
+        private final List<DetachedUDT<?>>      udts;
 
-        private DetachedSchema(String name, Catalog owner, String comment) {
-            super(name, owner, comment);
-        }
+        DetachedSchema(DetachedCatalog catalog, Schema schema) {
+            super(schema.getQualifiedName(), catalog, schema.getCommentPart());
 
-        static DetachedSchema copyOf(Schema schema, Catalog owner) {
-            DetachedSchema result = new DetachedSchema(schema.getName(), owner, schema.getComment());
+            domains = new ArrayList<>();
+            tables = new ArrayList<>();
+            sequences = new ArrayList<>();
+            udts = new ArrayList<>();
 
             for (Domain<?> domain : schema.getDomains())
-                result.domains.add(DetachedDomain.copyOf(domain, result));
+                domains.add(new DetachedDomain<>(this, domain));
             for (Table<?> table : schema.getTables())
-                result.tables.add(DetachedTable.copyOf(table, result));
+                tables.add(new DetachedTable<>(this, table));
             for (Sequence<?> sequence : schema.getSequences())
-                result.sequences.add(DetachedSequence.copyOf(sequence, result));
+                sequences.add(new DetachedSequence<>(this, sequence));
             for (UDT<?> udt : schema.getUDTs())
-                result.udts.add(DetachedUDT.copyOf(udt, result));
-
-            return result;
+                udts.add(new DetachedUDT<>(this, udt));
         }
 
-        final void resolveReferences(Meta meta) {
-            for (Table<?> table : tables)
-                ((DetachedTable<?>) table).resolveReferences(meta);
+        final void resolveReferences() {
+            for (DetachedTable<?> table : tables)
+                table.resolveReferences();
         }
 
         @Override
@@ -182,28 +172,57 @@ final class DetachedMeta extends AbstractMeta {
         }
     }
 
-    private static class DetachedDomain<T> extends DomainImpl<T> {
+    private class DetachedDomain<T> extends DomainImpl<T> {
         private static final long serialVersionUID = -1607062195966296849L;
 
-        private DetachedDomain(Schema schema, Name name, DataType<T> type, Check<?>... checks) {
-            super(schema, name, type, checks);
-        }
-
-        static DetachedDomain<?> copyOf(Domain<?> domain, Schema owner) {
-            return new DetachedDomain<>(owner, domain.getQualifiedName(), domain.getDataType(), domain.getChecks().toArray(EMPTY_CHECK));
+        DetachedDomain(DetachedSchema schema, Domain<T> domain) {
+            super(schema, domain.getQualifiedName(), domain.getDataType(), domain.getChecks().toArray(EMPTY_CHECK));
         }
     }
 
-    private static class DetachedTable<R extends Record> extends TableImpl<R> {
+    private class DetachedTable<R extends Record> extends TableImpl<R> {
         private static final long serialVersionUID = -6070726881709997500L;
 
-        private final List<Index>            indexes          = new ArrayList<>();
-        private final List<UniqueKey<R>>     keys             = new ArrayList<>();
+        private final List<Index>            indexes;
+        private final List<UniqueKey<R>>     uniqueKeys;
         private UniqueKey<R>                 primaryKey;
-        private final List<ForeignKey<R, ?>> references       = new ArrayList<>();
+        private final List<ForeignKey<R, ?>> foreignKeys;
+        private final List<Check<R>>         checks;
 
-        private DetachedTable(Name name, Schema owner, Comment comment) {
-            super(name, owner, null, null, comment);
+        DetachedTable(DetachedSchema schema, Table<R> table) {
+            super(table.getQualifiedName(), schema, null, null, table.getCommentPart(), table.getOptions());
+
+            indexes = new ArrayList<>();
+            uniqueKeys = new ArrayList<>();
+            foreignKeys = new ArrayList<>();
+            checks = new ArrayList<>();
+
+            for (Field<?> field : table.fields())
+                DetachedTable.createField(field.getUnqualifiedName(), field.getDataType(), this, field.getComment());
+
+            for (Index index : table.getIndexes()) {
+                List<SortField<?>> indexFields = index.getFields();
+                SortField<?>[] copiedFields = new SortField[indexFields.size()];
+
+                for (int i = 0; i < indexFields.size(); i++) {
+                    SortField<?> field = indexFields.get(i);
+                    copiedFields[i] = field(field.getName()).sort(field.getOrder());
+                    // [#9009] TODO NULLS FIRST / NULLS LAST
+                }
+
+                indexes.add(Internal.createIndex(index.getQualifiedName(), this, copiedFields, index.getUnique()));
+            }
+
+            for (UniqueKey<R> uk : table.getKeys())
+                uniqueKeys.add(Internal.createUniqueKey(this, uk.getQualifiedName(), fields(uk.getFieldsArray()), uk.enforced()));
+
+            UniqueKey<R> pk = table.getPrimaryKey();
+            for (UniqueKey<R> uk : uniqueKeys)
+                if (uk.equals(pk))
+                    primaryKey = uk;
+
+            foreignKeys.addAll(table.getReferences());
+            checks.addAll(table.getChecks());
         }
 
         @SuppressWarnings("unchecked")
@@ -213,51 +232,28 @@ final class DetachedMeta extends AbstractMeta {
             // TODO: [#9456] This auxiliary method should not be necessary
             //               We should be able to call TableLike.fields instead.
             TableField<R, ?>[] result = new TableField[tableFields.length];
+
             for (int i = 0; i < tableFields.length; i++)
                 result[i] = (TableField<R, ?>) field(tableFields[i].getName());
+
             return result;
         }
 
-        static <R extends Record> DetachedTable<R> copyOf(Table<R> table, Schema owner) {
-            DetachedTable<R> result = new DetachedTable<>(table.getUnqualifiedName(), owner, table.getCommentPart());
-
-            for (Field<?> field : table.fields())
-                DetachedTable.createField(field.getName(), field.getDataType(), result, field.getComment());
-            for (Index index : table.getIndexes()) {
-                List<SortField<?>> indexFields = index.getFields();
-                SortField<?>[] copiedFields = new SortField[indexFields.size()];
-                for (int i = 0; i < indexFields.size(); i++) {
-                    SortField<?> field = indexFields.get(i);
-                    copiedFields[i] = result.field(field.getName()).sort(field.getOrder());
-                    // [#9009] TODO NULLS FIRST / NULLS LAST
-                }
-                result.indexes.add(org.jooq.impl.Internal.createIndex(index.getName(), result, copiedFields, index.getUnique()));
-            }
-            for (UniqueKey<R> key : table.getKeys())
-                result.keys.add(org.jooq.impl.Internal.createUniqueKey(result, key.getName(), result.fields(key.getFieldsArray())));
-            UniqueKey<R> pk = table.getPrimaryKey();
-            if (pk != null)
-                result.primaryKey = org.jooq.impl.Internal.createUniqueKey(result, pk.getName(), result.fields(pk.getFieldsArray()));
-            result.references.addAll(table.getReferences());
-            return result;
-        }
-
-        final void resolveReferences(Meta meta) {
+        final void resolveReferences() {
 
             // TODO: Is there a better way than temporarily keeping the wrong
             //       ReferenceImpl in this list until we "know better"?
-            for (int i = 0; i < references.size(); i++) {
-                ForeignKey<R, ?> ref = references.get(i);
-                Name name = ref.getKey().getTable().getQualifiedName();
-                Table<?> table = resolveTable(name, meta);
-                UniqueKey<?> pk = table == null ? null : table.getPrimaryKey();
-                references.set(i, org.jooq.impl.Internal.createForeignKey(pk, this, ref.getName(), fields(ref.getFieldsArray())));
-            }
-        }
+            for (int i = 0; i < foreignKeys.size(); i++) {
+                ForeignKey<R, ?> fk = foreignKeys.get(i);
 
-        private final Table<?> resolveTable(Name tableName, Meta meta) {
-            List<Table<?>> list = meta.getTables(tableName);
-            return list.isEmpty() ? null : list.get(0);
+                foreignKeys.set(i, org.jooq.impl.Internal.createForeignKey(
+                    lookupUniqueKey(fk),
+                    this,
+                    fk.getQualifiedName(),
+                    fields(fk.getFieldsArray()),
+                    fk.enforced())
+                );
+            }
         }
 
         @Override
@@ -267,7 +263,7 @@ final class DetachedMeta extends AbstractMeta {
 
         @Override
         public final List<UniqueKey<R>> getKeys() {
-            return Collections.unmodifiableList(keys);
+            return Collections.unmodifiableList(uniqueKeys);
         }
 
         @Override
@@ -277,35 +273,39 @@ final class DetachedMeta extends AbstractMeta {
 
         @Override
         public final List<ForeignKey<R, ?>> getReferences() {
-            return Collections.unmodifiableList(references);
+            return Collections.unmodifiableList(foreignKeys);
+        }
+
+        @Override
+        public final List<Check<R>> getChecks() {
+            return Collections.unmodifiableList(checks);
         }
     }
 
-    private static class DetachedSequence<T extends Number> extends SequenceImpl<T> {
+    private class DetachedSequence<T extends Number> extends SequenceImpl<T> {
         private static final long serialVersionUID = -1607062195966296849L;
 
-        private DetachedSequence(String name, Schema owner, DataType<T> dataType) {
-            super(name, owner, dataType);
-        }
-
-        static DetachedSequence<?> copyOf(Sequence<?> sequence, Schema owner) {
-            return new DetachedSequence<>(sequence.getName(), owner, sequence.getDataType());
+        DetachedSequence(DetachedSchema schema, Sequence<T> sequence) {
+            super(
+                sequence.getQualifiedName(),
+                schema,
+                sequence.getDataType(),
+                false,
+                sequence.getStartWith(),
+                sequence.getIncrementBy(),
+                sequence.getMinvalue(),
+                sequence.getMaxvalue(),
+                sequence.getCycle(),
+                sequence.getCache()
+            );
         }
     }
 
-    private static class DetachedUDT<R extends UDTRecord<R>> extends UDTImpl<R> {
+    private class DetachedUDT<R extends UDTRecord<R>> extends UDTImpl<R> {
         private static final long serialVersionUID = -5732449514562314202L;
 
-        private DetachedUDT(String name, Schema owner, Package package_, boolean synthetic) {
-            super(name, owner, package_, synthetic);
-        }
-
-        static DetachedUDT<?> copyOf(UDT<?> udt, Schema owner) {
-            Package package_ = null;
-
-
-
-            return new DetachedUDT<>(udt.getName(), owner, package_, udt.isSynthetic());
+        DetachedUDT(DetachedSchema schema, UDT<R> udt) {
+            super(udt.getName(), schema, udt.isSynthetic());
         }
     }
 }

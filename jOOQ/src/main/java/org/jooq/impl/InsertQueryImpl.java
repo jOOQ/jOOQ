@@ -495,12 +495,12 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                     toSQLInsert(ctx);
                     ctx.formatSeparator()
                        .start(INSERT_ON_DUPLICATE_KEY_UPDATE)
-                       .visit(K_ON_CONFLICT)
-                       .sql(' ');
+                       .visit(K_ON_CONFLICT);
 
                     if (onConstraint != null ) {
                         ctx.data(DATA_CONSTRAINT_REFERENCE, true);
-                        ctx.visit(K_ON_CONSTRAINT)
+                        ctx.sql(' ')
+                           .visit(K_ON_CONSTRAINT)
                            .sql(' ')
                            .visit(onConstraint);
 
@@ -509,12 +509,20 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                     else {
                         boolean qualify = ctx.qualify();
 
-                        if (onConflict != null && onConflict.size() > 0)
-                            ctx.sql('(')
+                        if (onConflict != null && onConflict.size() > 0) {
+                            ctx.sql(" (")
                                .qualify(false)
                                .visit(onConflict)
                                .qualify(qualify)
                                .sql(')');
+
+                            if (onConflictWhere.hasWhere())
+                                ctx.formatSeparator()
+                                   .visit(K_WHERE)
+                                   .sql(' ')
+                                   .visit(onConflictWhere.getWhere());
+                        }
+
 
 
 
@@ -531,7 +539,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
                     }
 
-                    ctx.sql(' ')
+                    ctx.formatSeparator()
                        .visit(K_DO_NOTHING)
                        .end(INSERT_ON_DUPLICATE_KEY_UPDATE);
                     break;

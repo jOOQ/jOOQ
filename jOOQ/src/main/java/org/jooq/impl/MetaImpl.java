@@ -534,7 +534,7 @@ final class MetaImpl extends AbstractMeta {
         private static final long serialVersionUID = 4843841667753000233L;
 
         MetaTable(String name, Schema schema, Result<Record> columns, TableType tableType) {
-            super(DSL.name(name), schema, null, null, null, null, null, TableOptions.of(tableType));
+            super(name(name), schema, null, null, null, null, null, TableOptions.of(tableType));
 
             // Possible scenarios for columns being null:
             // - The "table" is in fact a SYNONYM
@@ -705,7 +705,7 @@ final class MetaImpl extends AbstractMeta {
                     fkFields[i] = (TableField<Record, ?>)         field(record.get(7, String.class));
                 }
 
-                references.add(new ReferenceImpl<>(new MetaPrimaryKey(pkTable, pkName, pkFields), this, DSL.name(fkName), fkFields, true));
+                references.add(new ReferenceImpl<>(new MetaPrimaryKey(pkTable, pkName, pkFields), this, name(fkName), fkFields, true));
             }
 
             return references;
@@ -801,7 +801,7 @@ final class MetaImpl extends AbstractMeta {
                     previousIndexName = indexName;
                     sortFields.clear();
 
-                    name = DSL.name(
+                    name = name(
                         record.get(0, String.class), // TABLE_CAT
                         record.get(1, String.class), // TABLE_SCHEM
                         indexName
@@ -897,7 +897,7 @@ final class MetaImpl extends AbstractMeta {
                     type = SQLDataType.OTHER;
                 }
 
-                createField(columnName, type, this, remarks);
+                createField(name(columnName), type, this, remarks);
             }
         }
     }
@@ -910,7 +910,7 @@ final class MetaImpl extends AbstractMeta {
         private static final long             serialVersionUID = 6997258619475953490L;
 
         MetaPrimaryKey(Table<Record> table, String pkName, TableField<Record, ?>[] fields) {
-            super(table, pkName == null ? null : DSL.name(pkName), fields, true);
+            super(table, pkName == null ? null : name(pkName), fields, true);
         }
 
         @Override
@@ -974,7 +974,7 @@ final class MetaImpl extends AbstractMeta {
                 for (int i = 0; i < value.size(); i++)
                     fkFields[i] = (TableField<Record, ?>) fkTable.field(value.get(i).get(7, String.class));
 
-                references.add(new ReferenceImpl<>(this, fkTable, DSL.name(fkName), fkFields, true));
+                references.add(new ReferenceImpl<>(this, fkTable, name(fkName), fkFields, true));
             }
 
             return references;

@@ -84,7 +84,7 @@ final class Snapshot extends AbstractMeta {
 
     private final void resolveReferences() {
         for (Catalog catalog : getCatalogs())
-            ((DetachedCatalog) catalog).resolveReferences();
+            ((SnapshotCatalog) catalog).resolveReferences();
     }
 
     @Override
@@ -92,26 +92,26 @@ final class Snapshot extends AbstractMeta {
         List<Catalog> result = new ArrayList<>();
 
         for (Catalog catalog : delegate.getCatalogs())
-            result.add(new DetachedCatalog(catalog));
+            result.add(new SnapshotCatalog(catalog));
 
         return result;
     }
 
-    private class DetachedCatalog extends CatalogImpl {
+    private class SnapshotCatalog extends CatalogImpl {
         private static final long          serialVersionUID = 7979890261252183486L;
-        private final List<DetachedSchema> schemas;
+        private final List<SnapshotSchema> schemas;
 
-        DetachedCatalog(Catalog catalog) {
+        SnapshotCatalog(Catalog catalog) {
             super(catalog.getQualifiedName(), catalog.getCommentPart());
 
             schemas = new ArrayList<>();
 
             for (Schema schema : catalog.getSchemas())
-                schemas.add(new DetachedSchema(this, schema));
+                schemas.add(new SnapshotSchema(this, schema));
         }
 
         private final void resolveReferences() {
-            for (DetachedSchema schema : schemas)
+            for (SnapshotSchema schema : schemas)
                 schema.resolveReferences();
         }
 
@@ -121,15 +121,15 @@ final class Snapshot extends AbstractMeta {
         }
     }
 
-    private class DetachedSchema extends SchemaImpl {
+    private class SnapshotSchema extends SchemaImpl {
         private static final long               serialVersionUID = -95755926444275258L;
 
-        private final List<DetachedDomain<?>>   domains;
-        private final List<DetachedTable<?>>    tables;
-        private final List<DetachedSequence<?>> sequences;
-        private final List<DetachedUDT<?>>      udts;
+        private final List<SnapshotDomain<?>>   domains;
+        private final List<SnapshotTable<?>>    tables;
+        private final List<SnapshotSequence<?>> sequences;
+        private final List<SnapshotUDT<?>>      udts;
 
-        DetachedSchema(DetachedCatalog catalog, Schema schema) {
+        SnapshotSchema(SnapshotCatalog catalog, Schema schema) {
             super(schema.getQualifiedName(), catalog, schema.getCommentPart());
 
             domains = new ArrayList<>();
@@ -138,17 +138,17 @@ final class Snapshot extends AbstractMeta {
             udts = new ArrayList<>();
 
             for (Domain<?> domain : schema.getDomains())
-                domains.add(new DetachedDomain<>(this, domain));
+                domains.add(new SnapshotDomain<>(this, domain));
             for (Table<?> table : schema.getTables())
-                tables.add(new DetachedTable<>(this, table));
+                tables.add(new SnapshotTable<>(this, table));
             for (Sequence<?> sequence : schema.getSequences())
-                sequences.add(new DetachedSequence<>(this, sequence));
+                sequences.add(new SnapshotSequence<>(this, sequence));
             for (UDT<?> udt : schema.getUDTs())
-                udts.add(new DetachedUDT<>(this, udt));
+                udts.add(new SnapshotUDT<>(this, udt));
         }
 
         final void resolveReferences() {
-            for (DetachedTable<?> table : tables)
+            for (SnapshotTable<?> table : tables)
                 table.resolveReferences();
         }
 
@@ -173,15 +173,15 @@ final class Snapshot extends AbstractMeta {
         }
     }
 
-    private class DetachedDomain<T> extends DomainImpl<T> {
+    private class SnapshotDomain<T> extends DomainImpl<T> {
         private static final long serialVersionUID = -1607062195966296849L;
 
-        DetachedDomain(DetachedSchema schema, Domain<T> domain) {
+        SnapshotDomain(SnapshotSchema schema, Domain<T> domain) {
             super(schema, domain.getQualifiedName(), domain.getDataType(), domain.getChecks().toArray(EMPTY_CHECK));
         }
     }
 
-    private class DetachedTable<R extends Record> extends TableImpl<R> {
+    private class SnapshotTable<R extends Record> extends TableImpl<R> {
         private static final long serialVersionUID = -6070726881709997500L;
 
         private final List<Index>            indexes;
@@ -191,7 +191,7 @@ final class Snapshot extends AbstractMeta {
         private final List<Check<R>>         checks;
         private Identity<R, ?>               identity;
 
-        DetachedTable(DetachedSchema schema, Table<R> table) {
+        SnapshotTable(SnapshotSchema schema, Table<R> table) {
             super(table.getQualifiedName(), schema, null, null, table.getCommentPart(), table.getOptions());
 
             indexes = new ArrayList<>();
@@ -200,7 +200,7 @@ final class Snapshot extends AbstractMeta {
             checks = new ArrayList<>();
 
             for (Field<?> field : table.fields()) {
-                TableField<R, ?> f = DetachedTable.createField(field.getUnqualifiedName(), field.getDataType(), this, field.getComment());
+                TableField<R, ?> f = createField(field.getUnqualifiedName(), field.getDataType(), this, field.getComment());
 
                 if (field.getDataType().identity() && identity == null)
                     identity = Internal.createIdentity(this, f);
@@ -293,10 +293,10 @@ final class Snapshot extends AbstractMeta {
         }
     }
 
-    private class DetachedSequence<T extends Number> extends SequenceImpl<T> {
+    private class SnapshotSequence<T extends Number> extends SequenceImpl<T> {
         private static final long serialVersionUID = -1607062195966296849L;
 
-        DetachedSequence(DetachedSchema schema, Sequence<T> sequence) {
+        SnapshotSequence(SnapshotSchema schema, Sequence<T> sequence) {
             super(
                 sequence.getQualifiedName(),
                 schema,
@@ -312,10 +312,10 @@ final class Snapshot extends AbstractMeta {
         }
     }
 
-    private class DetachedUDT<R extends UDTRecord<R>> extends UDTImpl<R> {
+    private class SnapshotUDT<R extends UDTRecord<R>> extends UDTImpl<R> {
         private static final long serialVersionUID = -5732449514562314202L;
 
-        DetachedUDT(DetachedSchema schema, UDT<R> udt) {
+        SnapshotUDT(SnapshotSchema schema, UDT<R> udt) {
             super(udt.getName(), schema, udt.getPackage(), udt.isSynthetic());
         }
     }

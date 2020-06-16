@@ -294,7 +294,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
             }
 
             AbstractTable.createField(
-                xc.getColumnName(),
+                name(xc.getColumnName()),
                 type(typeName, length, precision, scale, nullable),
                 table,
                 xc.getComment()

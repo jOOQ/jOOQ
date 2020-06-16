@@ -66,6 +66,7 @@ public class CatalogImpl extends AbstractNamed implements Catalog {
      */
     private static final long     serialVersionUID = -3650318934053960244L;
     private static final Clause[] CLAUSES          = { CATALOG, CATALOG_REFERENCE };
+    static final Catalog          DEFAULT_CATALOG  = new CatalogImpl("");
 
     public CatalogImpl(Name name) {
         this(name, null);

@@ -229,6 +229,12 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
         return fields;
     }
 
+    // [#8489] this override is necessary due to a Scala compiler bug (versions 2.10 and 2.11)
+    @Override
+    public Row fieldsRow() {
+        return super.fieldsRow();
+    }
+
     @Override
     public final Clause[] clauses(Context<?> ctx) {
         return alias != null ? CLAUSES_TABLE_ALIAS : CLAUSES_TABLE_REFERENCE;
@@ -357,9 +363,8 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
 
     @Override
     public boolean equals(Object that) {
-        if (this == that) {
+        if (this == that)
             return true;
-        }
 
         // [#2144] TableImpl equality can be decided without executing the
         // rather expensive implementation of AbstractQueryPart.equals()
@@ -378,11 +383,4 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
 
         return super.equals(that);
     }
-
-    // [#8489] this override is necessary due to a Scala compiler bug (versions 2.10 and 2.11)
-    @Override
-    public Row fieldsRow() {
-        return super.fieldsRow();
-    }
-
 }

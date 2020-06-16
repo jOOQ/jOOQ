@@ -40,6 +40,8 @@ package org.jooq.impl;
 
 import static org.jooq.Clause.SCHEMA;
 import static org.jooq.Clause.SCHEMA_REFERENCE;
+import static org.jooq.impl.CatalogImpl.DEFAULT_CATALOG;
+import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.util.Collections;
 import java.util.List;
@@ -56,6 +58,7 @@ import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.UDT;
+import org.jooq.tools.StringUtils;
 
 /**
  * A common base class for database schemata
@@ -218,4 +221,30 @@ public class SchemaImpl extends AbstractNamed implements Schema {
         return getSequences().stream();
     }
 
+
+    // ------------------------------------------------------------------------
+    // XXX: Object API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that)
+            return true;
+
+        // [#2144] SchemaImpl equality can be decided without executing the
+        // rather expensive implementation of AbstractQueryPart.equals()
+        if (that instanceof SchemaImpl) {
+            SchemaImpl other = (SchemaImpl) that;
+            return
+
+                // [#7172] [#10274] Cannot use getQualifiedName() yet here
+                StringUtils.equals(
+                    defaultIfNull(getCatalog(), DEFAULT_CATALOG),
+                    defaultIfNull(other.getCatalog(), DEFAULT_CATALOG)
+                ) &&
+                StringUtils.equals(getName(), other.getName());
+        }
+
+        return super.equals(that);
+    }
 }

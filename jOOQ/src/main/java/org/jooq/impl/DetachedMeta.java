@@ -48,6 +48,7 @@ import org.jooq.Check;
 import org.jooq.Domain;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Meta;
 import org.jooq.Record;
@@ -188,6 +189,7 @@ final class DetachedMeta extends AbstractMeta {
         private UniqueKey<R>                 primaryKey;
         private final List<ForeignKey<R, ?>> foreignKeys;
         private final List<Check<R>>         checks;
+        private Identity<R, ?>               identity;
 
         DetachedTable(DetachedSchema schema, Table<R> table) {
             super(table.getQualifiedName(), schema, null, null, table.getCommentPart(), table.getOptions());
@@ -197,8 +199,12 @@ final class DetachedMeta extends AbstractMeta {
             foreignKeys = new ArrayList<>();
             checks = new ArrayList<>();
 
-            for (Field<?> field : table.fields())
-                DetachedTable.createField(field.getUnqualifiedName(), field.getDataType(), this, field.getComment());
+            for (Field<?> field : table.fields()) {
+                TableField<R, ?> f = DetachedTable.createField(field.getUnqualifiedName(), field.getDataType(), this, field.getComment());
+
+                if (field.getDataType().identity() && identity == null)
+                    identity = Internal.createIdentity(this, f);
+            }
 
             for (Index index : table.getIndexes()) {
                 List<SortField<?>> indexFields = index.getFields();
@@ -279,6 +285,11 @@ final class DetachedMeta extends AbstractMeta {
         @Override
         public final List<Check<R>> getChecks() {
             return Collections.unmodifiableList(checks);
+        }
+
+        @Override
+        public final Identity<R, ?> getIdentity() {
+            return identity;
         }
     }
 

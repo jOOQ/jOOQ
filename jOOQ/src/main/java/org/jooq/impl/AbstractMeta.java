@@ -463,8 +463,8 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     }
 
     @Override
-    public final Meta detach() {
-        return new DetachedMeta(this);
+    public final Meta snapshot() {
+        return new Snapshot(this);
     }
 
     @Override

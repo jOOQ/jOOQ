@@ -1010,8 +1010,9 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         if (scala)
-            out.print("%s.createIndex(\"%s\", %s, Array[%s [_] ](%s), %s)",
+            out.print("%s.createIndex(%s.name(\"%s\"), %s, Array[%s [_] ](%s), %s)",
                 Internal.class,
+                DSL.class,
                 escapeString(index.getOutputName()),
                 out.ref(getStrategy().getFullJavaIdentifier(index.getTable()), 2),
                 OrderField.class,
@@ -1019,16 +1020,18 @@ public class JavaGenerator extends AbstractGenerator {
                 index.isUnique()
             );
         else if (kotlin)
-            out.print("%s.createIndex(\"%s\", %s, arrayOf(%s), %s)",
+            out.print("%s.createIndex(%s.name(\"%s\"), %s, arrayOf(%s), %s)",
                 Internal.class,
+                DSL.class,
                 escapeString(index.getOutputName()),
                 out.ref(getStrategy().getFullJavaIdentifier(index.getTable()), 2),
                 orderFields,
                 index.isUnique()
             );
         else
-            out.print("%s.createIndex(\"%s\", %s, new %s[] { %s }, %s)",
+            out.print("%s.createIndex(%s.name(\"%s\"), %s, new %s[] { %s }, %s)",
                 Internal.class,
+                DSL.class,
                 escapeString(index.getOutputName()),
                 out.ref(getStrategy().getFullJavaIdentifier(index.getTable()), 2),
                 OrderField.class,
@@ -1132,25 +1135,28 @@ public class JavaGenerator extends AbstractGenerator {
 
     private void printCreateUniqueKey(JavaWriter out, UniqueKeyDefinition uniqueKey) {
         if (scala)
-            out.print("%s.createUniqueKey(%s, \"%s\", Array([[%s]]).asInstanceOf[Array[%s[%s, _] ] ], %s)",
+            out.print("%s.createUniqueKey(%s, %s.name(\"%s\"), Array([[%s]]).asInstanceOf[Array[%s[%s, _] ] ], %s)",
                 Internal.class,
                 out.ref(getStrategy().getFullJavaIdentifier(uniqueKey.getTable()), 2),
+                DSL.class,
                 escapeString(uniqueKey.getOutputName()),
                 out.ref(getStrategy().getFullJavaIdentifiers(uniqueKey.getKeyColumns()), colRefSegments(null)),
                 TableField.class,
                 out.ref(getStrategy().getJavaClassName(uniqueKey.getTable(), Mode.RECORD)),
                 uniqueKey.enforced());
         else if (kotlin)
-            out.print("%s.createUniqueKey(%s, \"%s\", arrayOf([[%s]]), %s)",
+            out.print("%s.createUniqueKey(%s, %s.name(\"%s\"), arrayOf([[%s]]), %s)",
                 Internal.class,
                 out.ref(getStrategy().getFullJavaIdentifier(uniqueKey.getTable()), 2),
+                DSL.class,
                 escapeString(uniqueKey.getOutputName()),
                 out.ref(getStrategy().getFullJavaIdentifiers(uniqueKey.getKeyColumns()), colRefSegments(null)),
                 uniqueKey.enforced());
         else
-            out.print("%s.createUniqueKey(%s, \"%s\", new %s[] { [[%s]] }, %s)",
+            out.print("%s.createUniqueKey(%s, %s.name(\"%s\"), new %s[] { [[%s]] }, %s)",
                 Internal.class,
                 out.ref(getStrategy().getFullJavaIdentifier(uniqueKey.getTable()), 2),
+                DSL.class,
                 escapeString(uniqueKey.getOutputName()),
                 TableField.class,
                 out.ref(getStrategy().getFullJavaIdentifiers(uniqueKey.getKeyColumns()), colRefSegments(null)),
@@ -1174,7 +1180,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         if (scala)
-            out.println("val %s: %s[%s, %s] = %s.createForeignKey(%s, %s, \"%s\", Array([[%s]]).asInstanceOf[Array[%s[%s, _] ] ], %s)",
+            out.println("val %s: %s[%s, %s] = %s.createForeignKey(%s, %s, %s.name(\"%s\"), Array([[%s]]).asInstanceOf[Array[%s[%s, _] ] ], %s)",
                 getStrategy().getJavaIdentifier(foreignKey),
                 ForeignKey.class,
                 out.ref(getStrategy().getFullJavaClassName(foreignKey.getKeyTable(), Mode.RECORD)),
@@ -1182,13 +1188,14 @@ public class JavaGenerator extends AbstractGenerator {
                 Internal.class,
                 out.ref(getStrategy().getFullJavaIdentifier(foreignKey.getReferencedKey()), 2),
                 out.ref(getStrategy().getFullJavaIdentifier(foreignKey.getKeyTable()), 2),
+                DSL.class,
                 escapeString(foreignKey.getOutputName()),
                 out.ref(getStrategy().getFullJavaIdentifiers(foreignKey.getKeyColumns()), colRefSegments(null)),
                 TableField.class,
                 out.ref(getStrategy().getJavaClassName(foreignKey.getTable(), Mode.RECORD)),
                 foreignKey.enforced());
         else if (kotlin)
-            out.println("val %s: %s<%s, %s> = %s.createForeignKey(%s, %s, \"%s\", arrayOf([[%s]]), %s)",
+            out.println("val %s: %s<%s, %s> = %s.createForeignKey(%s, %s, %s.name(\"%s\"), arrayOf([[%s]]), %s)",
                 getStrategy().getJavaIdentifier(foreignKey),
                 ForeignKey.class,
                 out.ref(getStrategy().getFullJavaClassName(foreignKey.getKeyTable(), Mode.RECORD)),
@@ -1196,11 +1203,12 @@ public class JavaGenerator extends AbstractGenerator {
                 Internal.class,
                 out.ref(getStrategy().getFullJavaIdentifier(foreignKey.getReferencedKey()), 2),
                 out.ref(getStrategy().getFullJavaIdentifier(foreignKey.getKeyTable()), 2),
+                DSL.class,
                 escapeString(foreignKey.getOutputName()),
                 out.ref(getStrategy().getFullJavaIdentifiers(foreignKey.getKeyColumns()), colRefSegments(null)),
                 foreignKey.enforced());
         else
-            out.println("static final %s<%s, %s> %s = %s.createForeignKey(%s, %s, \"%s\", new %s[] { [[%s]] }, %s);",
+            out.println("static final %s<%s, %s> %s = %s.createForeignKey(%s, %s, %s.name(\"%s\"), new %s[] { [[%s]] }, %s);",
                 ForeignKey.class,
                 out.ref(getStrategy().getFullJavaClassName(foreignKey.getKeyTable(), Mode.RECORD)),
                 out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencedTable(), Mode.RECORD)),
@@ -1208,6 +1216,7 @@ public class JavaGenerator extends AbstractGenerator {
                 Internal.class,
                 out.ref(getStrategy().getFullJavaIdentifier(foreignKey.getReferencedKey()), 2),
                 out.ref(getStrategy().getFullJavaIdentifier(foreignKey.getKeyTable()), 2),
+                DSL.class,
                 escapeString(foreignKey.getOutputName()),
                 TableField.class,
                 out.ref(getStrategy().getFullJavaIdentifiers(foreignKey.getKeyColumns()), colRefSegments(null)),

@@ -68,12 +68,12 @@ import org.jooq.exception.DataAccessException;
  *
  * @author Knut Wannheden
  */
-final class DetachedMeta extends AbstractMeta {
+final class Snapshot extends AbstractMeta {
 
     private static final long serialVersionUID = 5561057000510740144L;
     private Meta              delegate;
 
-    DetachedMeta(Meta meta) {
+    Snapshot(Meta meta) {
         super(meta.configuration());
 
         delegate = meta;
@@ -117,7 +117,7 @@ final class DetachedMeta extends AbstractMeta {
 
         @Override
         public final List<Schema> getSchemas() {
-            return Collections.unmodifiableList(schemas);
+            return Collections.<Schema>unmodifiableList(schemas);
         }
     }
 
@@ -154,22 +154,22 @@ final class DetachedMeta extends AbstractMeta {
 
         @Override
         public final List<Domain<?>> getDomains() {
-            return Collections.unmodifiableList(domains);
+            return Collections.<Domain<?>>unmodifiableList(domains);
         }
 
         @Override
         public final List<Table<?>> getTables() {
-            return Collections.unmodifiableList(tables);
+            return Collections.<Table<?>>unmodifiableList(tables);
         }
 
         @Override
         public final List<Sequence<?>> getSequences() {
-            return Collections.unmodifiableList(sequences);
+            return Collections.<Sequence<?>>unmodifiableList(sequences);
         }
 
         @Override
         public final List<UDT<?>> getUDTs() {
-            return Collections.unmodifiableList(udts);
+            return Collections.<UDT<?>>unmodifiableList(udts);
         }
     }
 

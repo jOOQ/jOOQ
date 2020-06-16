@@ -291,7 +291,7 @@ public interface Meta extends Scope {
      * Eager-create an in-memory copy of this {@link Meta} instance without any
      * connection to the original data source.
      */
-    Meta detach() throws DataAccessException;
+    Meta snapshot() throws DataAccessException;
 
     /**
      * Generate a creation script for the entire meta data.

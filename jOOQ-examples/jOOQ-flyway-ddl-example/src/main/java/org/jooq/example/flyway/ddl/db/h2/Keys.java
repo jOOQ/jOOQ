@@ -11,6 +11,7 @@ import org.jooq.example.flyway.ddl.db.h2.tables.Author;
 import org.jooq.example.flyway.ddl.db.h2.tables.Book;
 import org.jooq.example.flyway.ddl.db.h2.tables.records.AuthorRecord;
 import org.jooq.example.flyway.ddl.db.h2.tables.records.BookRecord;
+import org.jooq.impl.DSL;
 import org.jooq.impl.Internal;
 
 
@@ -44,11 +45,11 @@ public class Keys {
     // -------------------------------------------------------------------------
 
     private static class UniqueKeys0 {
-        static final UniqueKey<AuthorRecord> PK_T_AUTHOR = Internal.createUniqueKey(Author.AUTHOR, "PK_T_AUTHOR", new TableField[] { Author.AUTHOR.ID }, true);
-        static final UniqueKey<BookRecord> PK_T_BOOK = Internal.createUniqueKey(Book.BOOK, "PK_T_BOOK", new TableField[] { Book.BOOK.ID }, true);
+        static final UniqueKey<AuthorRecord> PK_T_AUTHOR = Internal.createUniqueKey(Author.AUTHOR, DSL.name("PK_T_AUTHOR"), new TableField[] { Author.AUTHOR.ID }, true);
+        static final UniqueKey<BookRecord> PK_T_BOOK = Internal.createUniqueKey(Book.BOOK, DSL.name("PK_T_BOOK"), new TableField[] { Book.BOOK.ID }, true);
     }
 
     private static class ForeignKeys0 {
-        static final ForeignKey<BookRecord, AuthorRecord> FK_T_BOOK_AUTHOR_ID = Internal.createForeignKey(Keys.PK_T_AUTHOR, Book.BOOK, "FK_T_BOOK_AUTHOR_ID", new TableField[] { Book.BOOK.AUTHOR_ID }, true);
+        static final ForeignKey<BookRecord, AuthorRecord> FK_T_BOOK_AUTHOR_ID = Internal.createForeignKey(Keys.PK_T_AUTHOR, Book.BOOK, DSL.name("FK_T_BOOK_AUTHOR_ID"), new TableField[] { Book.BOOK.AUTHOR_ID }, true);
     }
 }

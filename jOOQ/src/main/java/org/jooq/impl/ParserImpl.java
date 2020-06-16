@@ -446,6 +446,7 @@ import org.jooq.GroupField;
 import org.jooq.Index;
 import org.jooq.Insert;
 import org.jooq.InsertOnConflictDoUpdateStep;
+import org.jooq.InsertOnConflictWhereIndexPredicateStep;
 import org.jooq.InsertOnConflictWhereStep;
 import org.jooq.InsertOnDuplicateStep;
 import org.jooq.InsertReturningStep;
@@ -1992,8 +1993,12 @@ final class ParserImpl implements Parser {
                         doUpdate = onDuplicate.onConflictOnConstraint(parseName(ctx));
                     }
                     else if (parseIf(ctx, '(')) {
-                        doUpdate = onDuplicate.onConflict(parseFieldNames(ctx));
+                        InsertOnConflictWhereIndexPredicateStep<?> where = onDuplicate.onConflict(parseFieldNames(ctx));
                         parse(ctx, ')');
+
+                        doUpdate = parseKeywordIf(ctx, "WHERE")
+                            ? where.where(parseCondition(ctx))
+                            : where;
                     }
                     else {
                         doUpdate = onDuplicate.onConflict();

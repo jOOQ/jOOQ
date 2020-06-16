@@ -400,12 +400,12 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                     }
 
                     if (onConflictWhere.hasWhere())
-                        ctx.sql(' ')
+                        ctx.formatSeparator()
                            .visit(K_WHERE)
                            .sql(' ')
                            .visit(onConflictWhere.getWhere());
 
-                    ctx.sql(' ')
+                    ctx.formatSeparator()
                        .visit(K_DO_UPDATE)
                        .formatSeparator()
                        .visit(K_SET)

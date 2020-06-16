@@ -47,7 +47,6 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Package;
-// ...
 import org.jooq.Record;
 import org.jooq.Row;
 import org.jooq.Schema;
@@ -69,10 +68,7 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractNamed implements UD
 
     private final Schema          schema;
     private final Fields<R>       fields;
-
-
-
-
+    private final Package         pkg;
     private final boolean         synthetic;
     private transient DataType<R> type;
 
@@ -89,9 +85,7 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractNamed implements UD
 
         this.fields = new Fields<>();
         this.schema = schema;
-
-
-
+        this.pkg = pkg;
         this.synthetic = synthetic;
     }
 
@@ -111,13 +105,10 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractNamed implements UD
         return s == null ? super.getQualifiedName() : s.getQualifiedName().append(getUnqualifiedName());
     }
 
-
-
-
-
-
-
-
+    @Override
+    public final Package getPackage() {
+        return pkg;
+    }
 
     @Override
     public final Row fieldsRow() {

@@ -316,7 +316,7 @@ final class DetachedMeta extends AbstractMeta {
         private static final long serialVersionUID = -5732449514562314202L;
 
         DetachedUDT(DetachedSchema schema, UDT<R> udt) {
-            super(udt.getName(), schema, udt.isSynthetic());
+            super(udt.getName(), schema, udt.getPackage(), udt.isSynthetic());
         }
     }
 }

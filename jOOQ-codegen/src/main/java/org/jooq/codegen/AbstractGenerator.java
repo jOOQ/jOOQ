@@ -38,9 +38,6 @@
 package org.jooq.codegen;
 
 import static java.lang.Boolean.TRUE;
-import static org.jooq.codegen.AbstractGenerator.Language.JAVA;
-import static org.jooq.codegen.AbstractGenerator.Language.KOTLIN;
-import static org.jooq.codegen.AbstractGenerator.Language.SCALA;
 
 import java.io.File;
 import java.sql.Connection;
@@ -506,13 +503,7 @@ abstract class AbstractGenerator implements Generator {
 
         // [#1339] When immutable POJOs are generated, POJOs must be generated
         // [#1280] When DAOs are generated, POJOs must be generated, too
-        // [#3713] Scala case classes
-        // [#10287] Java records
-        // [#10288] Kotlin data classes
         return generatePojos
-            || generatePojosAsJavaRecordClasses && language == JAVA
-            || generatePojosAsScalaCaseClasses && language == SCALA
-            || generatePojosAsKotlinDataClasses && language == KOTLIN
             || generateImmutablePojos
             || generateDaos;
     }

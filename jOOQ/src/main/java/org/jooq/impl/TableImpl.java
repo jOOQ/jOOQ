@@ -50,7 +50,9 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.Internal.createPathAlias;
 import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.QueryPartListView.wrap;
+import static org.jooq.impl.SchemaImpl.DEFAULT_SCHEMA;
 import static org.jooq.impl.Tools.getMappedTable;
+import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.util.Arrays;
 import java.util.Set;
@@ -367,8 +369,8 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
 
                 // [#7172] [#10274] Cannot use getQualifiedName() yet here
                 StringUtils.equals(
-                    getSchema() == null ? "" : getSchema().getName(),
-                    other.getSchema() == null ? "" : other.getSchema().getName()
+                    defaultIfNull(getSchema(), DEFAULT_SCHEMA),
+                    defaultIfNull(other.getSchema(), DEFAULT_SCHEMA)
                 ) &&
                 StringUtils.equals(getName(), other.getName()) &&
                 Arrays.equals(parameters, other.parameters);

@@ -122,7 +122,7 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertReturning
      * <code>MERGE</code>, if table meta data is available.
      */
     @Support
-    InsertOnConflictDoUpdateStep<R> onConflict(Field<?>... keys);
+    InsertOnConflictWhereIndexPredicateStep<R> onConflict(Field<?>... keys);
 
     /**
      * Add an <code>ON CONFLICT</code> clause to this INSERT statement.
@@ -132,7 +132,7 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertReturning
      * <code>MERGE</code>, if table meta data is available.
      */
     @Support
-    InsertOnConflictDoUpdateStep<R> onConflict(Collection<? extends Field<?>> keys);
+    InsertOnConflictWhereIndexPredicateStep<R> onConflict(Collection<? extends Field<?>> keys);
 
     /**
      * Add an <code>ON CONFLICT DO NOTHING</code> clause to this INSERT statement.

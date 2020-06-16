@@ -252,6 +252,17 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R>,
     void addValuesForUpdate(Map<?, ?> map);
 
     /**
+     * Adds a new condition the {@link #onConflict(Field...)} clause.
+     * <p>
+     * This is for use with {@link SQLDialect#POSTGRES}'s
+     * {@link #onConflict(Field...)} clause.
+     *
+     * @param condition The condition
+     */
+    @Support({ POSTGRES, SQLITE })
+    void onConflictWhere(Condition condition);
+
+    /**
      * Adds a new condition to the query, connecting it to existing conditions
      * with {@link Operator#AND}.
      * <p>

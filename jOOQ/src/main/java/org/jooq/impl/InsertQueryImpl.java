@@ -134,6 +134,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     private Constraint                   onConstraint;
     private UniqueKey<R>                 onConstraintUniqueKey;
     private QueryPartList<Field<?>>      onConflict;
+    private final ConditionProviderImpl  onConflictWhere;
     private final ConditionProviderImpl  condition;
 
     InsertQueryImpl(Configuration configuration, WithImpl with, Table<R> into) {
@@ -141,6 +142,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
         this.updateMap = new FieldMapForUpdate(into, INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT);
         this.insertMaps = new FieldMapsForInsert(into);
+        this.onConflictWhere = new ConditionProviderImpl();
         this.condition = new ConditionProviderImpl();
     }
 
@@ -176,6 +178,11 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
     @Override
     public final void onConflict(Collection<? extends Field<?>> fields) {
         this.onConflict = new QueryPartList<>(fields);
+    }
+
+    @Override
+    public final void onConflictWhere(Condition conditions) {
+        onConflictWhere.addConditions(conditions);
     }
 
     @Override
@@ -391,6 +398,12 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
                         ctx.sql(')');
                     }
+
+                    if (onConflictWhere.hasWhere())
+                        ctx.sql(' ')
+                           .visit(K_WHERE)
+                           .sql(' ')
+                           .visit(onConflictWhere.getWhere());
 
                     ctx.sql(' ')
                        .visit(K_DO_UPDATE)

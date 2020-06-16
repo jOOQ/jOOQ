@@ -55,7 +55,7 @@ import org.jooq.Constraint;
 import org.jooq.Field;
 import org.jooq.FieldLike;
 import org.jooq.InsertOnConflictConditionStep;
-import org.jooq.InsertOnConflictDoUpdateStep;
+import org.jooq.InsertOnConflictWhereIndexPredicateStep;
 import org.jooq.InsertOnDuplicateSetMoreStep;
 import org.jooq.InsertQuery;
 import org.jooq.InsertResultStep;
@@ -122,7 +122,7 @@ import org.jooq.UniqueKey;
  * @author Lukas Eder
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
-class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>
+final class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>
     extends AbstractDelegatingRowCountQuery<InsertQuery<R>>
     implements
 
@@ -153,7 +153,7 @@ class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     InsertSetStep<R>,
     InsertSetMoreStep<R>,
     InsertOnDuplicateSetMoreStep<R>,
-    InsertOnConflictDoUpdateStep<R>,
+    InsertOnConflictWhereIndexPredicateStep<R>,
     InsertOnConflictConditionStep<R>,
     InsertResultStep<R> {
 
@@ -166,6 +166,11 @@ class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
     private Field<?>[]        fields;
     private boolean           onDuplicateKeyUpdate;
     private boolean           returningResult;
+
+    /**
+     * Whether {@link #where(Condition)} adds conditions to the <code>DO UPDATE/code> clause.
+     */
+    private transient boolean doUpdateWhere;
 
     InsertImpl(Configuration configuration, WithImpl with, Table<R> into) {
         super(new InsertQueryImpl<>(configuration, with, into));
@@ -622,11 +627,13 @@ class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
 
     @Override
     public final InsertImpl doUpdate() {
+        doUpdateWhere = true;
         return onDuplicateKeyUpdate();
     }
 
     @Override
     public final InsertImpl doNothing() {
+        doUpdateWhere = true;
         return onDuplicateKeyIgnore();
     }
 
@@ -661,12 +668,14 @@ class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
 
     @Override
     public final InsertImpl onConflictDoNothing() {
+        doUpdateWhere = true;
         onConflict().doNothing();
         return this;
     }
 
     @Override
     public final InsertImpl onDuplicateKeyUpdate() {
+        doUpdateWhere = true;
         onDuplicateKeyUpdate = true;
         getDelegate().onDuplicateKeyUpdate(true);
         return this;
@@ -674,6 +683,7 @@ class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
 
     @Override
     public final InsertImpl onDuplicateKeyIgnore() {
+        doUpdateWhere = true;
         getDelegate().onDuplicateKeyIgnore(true);
         return this;
     }
@@ -827,19 +837,31 @@ class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
 
     @Override
     public final InsertImpl where(Condition condition) {
-        getDelegate().addConditions(condition);
+        if (doUpdateWhere)
+            getDelegate().addConditions(condition);
+        else
+            getDelegate().onConflictWhere(condition);
+
         return this;
     }
 
     @Override
     public final InsertImpl where(Condition... conditions) {
-        getDelegate().addConditions(conditions);
+        if (doUpdateWhere)
+            getDelegate().addConditions(conditions);
+        else
+            getDelegate().onConflictWhere(DSL.and(conditions));
+
         return this;
     }
 
     @Override
     public final InsertImpl where(Collection<? extends Condition> conditions) {
-        getDelegate().addConditions(conditions);
+        if (doUpdateWhere)
+            getDelegate().addConditions(conditions);
+        else
+            getDelegate().onConflictWhere(DSL.and(conditions));
+
         return this;
     }
 

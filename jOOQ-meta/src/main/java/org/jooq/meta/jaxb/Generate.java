@@ -92,6 +92,12 @@ public class Generate implements Serializable, XMLAppendable
     @XmlElement(defaultValue = "true")
     protected Boolean pojosToString = true;
     @XmlElement(defaultValue = "false")
+    protected Boolean pojosAsJavaRecordClasses = false;
+    @XmlElement(defaultValue = "true")
+    protected Boolean pojosAsScalaCaseClasses = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean pojosAsKotlinDataClasses = true;
+    @XmlElement(defaultValue = "false")
     protected Boolean immutablePojos = false;
     @XmlElement(defaultValue = "true")
     protected Boolean serializablePojos = true;
@@ -894,6 +900,78 @@ public class Generate implements Serializable, XMLAppendable
      */
     public void setPojosToString(Boolean value) {
         this.pojosToString = value;
+    }
+
+    /**
+     * Generate POJOs as records, when using the JavaGenerator.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isPojosAsJavaRecordClasses() {
+        return pojosAsJavaRecordClasses;
+    }
+
+    /**
+     * Sets the value of the pojosAsJavaRecordClasses property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setPojosAsJavaRecordClasses(Boolean value) {
+        this.pojosAsJavaRecordClasses = value;
+    }
+
+    /**
+     * Generate POJOs as case classes, when using the ScalaGenerator.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isPojosAsScalaCaseClasses() {
+        return pojosAsScalaCaseClasses;
+    }
+
+    /**
+     * Sets the value of the pojosAsScalaCaseClasses property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setPojosAsScalaCaseClasses(Boolean value) {
+        this.pojosAsScalaCaseClasses = value;
+    }
+
+    /**
+     * Generate POJOs as data classes, when using the KotlinGenerator.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isPojosAsKotlinDataClasses() {
+        return pojosAsKotlinDataClasses;
+    }
+
+    /**
+     * Sets the value of the pojosAsKotlinDataClasses property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setPojosAsKotlinDataClasses(Boolean value) {
+        this.pojosAsKotlinDataClasses = value;
     }
 
     /**
@@ -2233,6 +2311,21 @@ public class Generate implements Serializable, XMLAppendable
         return this;
     }
 
+    public Generate withPojosAsJavaRecordClasses(Boolean value) {
+        setPojosAsJavaRecordClasses(value);
+        return this;
+    }
+
+    public Generate withPojosAsScalaCaseClasses(Boolean value) {
+        setPojosAsScalaCaseClasses(value);
+        return this;
+    }
+
+    public Generate withPojosAsKotlinDataClasses(Boolean value) {
+        setPojosAsKotlinDataClasses(value);
+        return this;
+    }
+
     public Generate withImmutablePojos(Boolean value) {
         setImmutablePojos(value);
         return this;
@@ -2530,6 +2623,9 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("pojos", pojos);
         builder.append("pojosEqualsAndHashCode", pojosEqualsAndHashCode);
         builder.append("pojosToString", pojosToString);
+        builder.append("pojosAsJavaRecordClasses", pojosAsJavaRecordClasses);
+        builder.append("pojosAsScalaCaseClasses", pojosAsScalaCaseClasses);
+        builder.append("pojosAsKotlinDataClasses", pojosAsKotlinDataClasses);
         builder.append("immutablePojos", immutablePojos);
         builder.append("serializablePojos", serializablePojos);
         builder.append("interfaces", interfaces);
@@ -2867,6 +2963,33 @@ public class Generate implements Serializable, XMLAppendable
             }
         } else {
             if (!pojosToString.equals(other.pojosToString)) {
+                return false;
+            }
+        }
+        if (pojosAsJavaRecordClasses == null) {
+            if (other.pojosAsJavaRecordClasses!= null) {
+                return false;
+            }
+        } else {
+            if (!pojosAsJavaRecordClasses.equals(other.pojosAsJavaRecordClasses)) {
+                return false;
+            }
+        }
+        if (pojosAsScalaCaseClasses == null) {
+            if (other.pojosAsScalaCaseClasses!= null) {
+                return false;
+            }
+        } else {
+            if (!pojosAsScalaCaseClasses.equals(other.pojosAsScalaCaseClasses)) {
+                return false;
+            }
+        }
+        if (pojosAsKotlinDataClasses == null) {
+            if (other.pojosAsKotlinDataClasses!= null) {
+                return false;
+            }
+        } else {
+            if (!pojosAsKotlinDataClasses.equals(other.pojosAsKotlinDataClasses)) {
                 return false;
             }
         }
@@ -3348,6 +3471,9 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((pojos == null)? 0 :pojos.hashCode()));
         result = ((prime*result)+((pojosEqualsAndHashCode == null)? 0 :pojosEqualsAndHashCode.hashCode()));
         result = ((prime*result)+((pojosToString == null)? 0 :pojosToString.hashCode()));
+        result = ((prime*result)+((pojosAsJavaRecordClasses == null)? 0 :pojosAsJavaRecordClasses.hashCode()));
+        result = ((prime*result)+((pojosAsScalaCaseClasses == null)? 0 :pojosAsScalaCaseClasses.hashCode()));
+        result = ((prime*result)+((pojosAsKotlinDataClasses == null)? 0 :pojosAsKotlinDataClasses.hashCode()));
         result = ((prime*result)+((immutablePojos == null)? 0 :immutablePojos.hashCode()));
         result = ((prime*result)+((serializablePojos == null)? 0 :serializablePojos.hashCode()));
         result = ((prime*result)+((interfaces == null)? 0 :interfaces.hashCode()));

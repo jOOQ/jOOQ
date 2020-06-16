@@ -709,6 +709,12 @@ public class GenerationTool {
                 generator.setGenerateRecordsImplementingRecordN(g.getGenerate().isRecordsImplementingRecordN());
             if (g.getGenerate().isPojos() != null)
                 generator.setGeneratePojos(g.getGenerate().isPojos());
+            if (g.getGenerate().isPojosAsJavaRecordClasses() != null)
+                generator.setGeneratePojosAsJavaRecordClasses(g.getGenerate().isPojosAsJavaRecordClasses());
+            if (g.getGenerate().isPojosAsScalaCaseClasses() != null)
+                generator.setGeneratePojosAsScalaCaseClasses(g.getGenerate().isPojosAsScalaCaseClasses());
+            if (g.getGenerate().isPojosAsKotlinDataClasses() != null)
+                generator.setGeneratePojosAsKotlinDataClasses(g.getGenerate().isPojosAsKotlinDataClasses());
             if (g.getGenerate().isImmutablePojos() != null)
                 generator.setGenerateImmutablePojos(g.getGenerate().isImmutablePojos());
             if (g.getGenerate().isSerializablePojos() != null)

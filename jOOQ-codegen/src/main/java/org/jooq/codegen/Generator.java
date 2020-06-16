@@ -363,6 +363,42 @@ public interface Generator {
     void setGeneratePojos(boolean generatePojos);
 
     /**
+     * Whether POJOs should be generated as Java records by the
+     * {@link JavaGenerator}.
+     */
+    boolean generatePojosAsJavaRecordClasses();
+
+    /**
+     * Whether POJOs should be generated as Java records by the
+     * {@link JavaGenerator}.
+     */
+    void setGeneratePojosAsJavaRecordClasses(boolean pojosAsJavaRecordClasses);
+
+    /**
+     * Whether POJOs should be generated as Scala case classes by the
+     * {@link ScalaGenerator}.
+     */
+    boolean generatePojosAsScalaCaseClasses();
+
+    /**
+     * Whether POJOs should be generated as Scala case classes by the
+     * {@link ScalaGenerator}.
+     */
+    void setGeneratePojosAsScalaCaseClasses(boolean pojosAsScalaCaseClasses);
+
+    /**
+     * Whether POJOs should be generated as Kotlin data classes by the
+     * {@link KotlinGenerator}.
+     */
+    boolean generatePojosAsKotlinDataClasses();
+
+    /**
+     * Whether POJOs should be generated as Kotlin data classes by the
+     * {@link KotlinGenerator}.
+     */
+    void setGeneratePojosAsKotlinDataClasses(boolean pojosAsKotlinDataClasses);
+
+    /**
      * Whether immutable POJO's should be generated in addition to records
      */
     boolean generateImmutablePojos();

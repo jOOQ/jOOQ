@@ -1223,6 +1223,18 @@ jOOQ version used for source code.]]></jxb:javadoc></jxb:property></appinfo></an
       <element name="pojosToString" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate basic toString() methods in POJOs.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+            
+      <element name="pojosAsJavaRecordClasses" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate POJOs as records, when using the JavaGenerator.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="pojosAsScalaCaseClasses" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate POJOs as case classes, when using the ScalaGenerator.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="pojosAsKotlinDataClasses" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate POJOs as data classes, when using the KotlinGenerator.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
       <element name="immutablePojos" type="boolean" default="false" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate immutable POJOs.]]></jxb:javadoc></jxb:property></appinfo></annotation>

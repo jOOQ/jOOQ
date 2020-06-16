@@ -38,6 +38,9 @@
 package org.jooq.codegen;
 
 import static java.lang.Boolean.TRUE;
+import static org.jooq.codegen.AbstractGenerator.Language.JAVA;
+import static org.jooq.codegen.AbstractGenerator.Language.KOTLIN;
+import static org.jooq.codegen.AbstractGenerator.Language.SCALA;
 
 import java.io.File;
 import java.sql.Connection;
@@ -87,6 +90,9 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateRecords                         = true;
     boolean                            generateRecordsImplementingRecordN      = true;
     boolean                            generatePojos                           = false;
+    boolean                            generatePojosAsJavaRecordClasses        = false;
+    boolean                            generatePojosAsScalaCaseClasses         = true;
+    boolean                            generatePojosAsKotlinDataClasses        = true;
     boolean                            generatePojosEqualsAndHashCode          = false;
     boolean                            generatePojosToString                   = true;
     boolean                            generateImmutablePojos                  = false;
@@ -500,12 +506,50 @@ abstract class AbstractGenerator implements Generator {
 
         // [#1339] When immutable POJOs are generated, POJOs must be generated
         // [#1280] When DAOs are generated, POJOs must be generated, too
-        return generatePojos || generateImmutablePojos || generateDaos;
+        // [#3713] Scala case classes
+        // [#10287] Java records
+        // [#10288] Kotlin data classes
+        return generatePojos
+            || generatePojosAsJavaRecordClasses && language == JAVA
+            || generatePojosAsScalaCaseClasses && language == SCALA
+            || generatePojosAsKotlinDataClasses && language == KOTLIN
+            || generateImmutablePojos
+            || generateDaos;
     }
 
     @Override
     public void setGeneratePojos(boolean generatePojos) {
         this.generatePojos = generatePojos;
+    }
+
+    @Override
+    public boolean generatePojosAsJavaRecordClasses() {
+        return generatePojosAsJavaRecordClasses;
+    }
+
+    @Override
+    public void setGeneratePojosAsJavaRecordClasses(boolean pojosAsJavaRecordClasses) {
+        this.generatePojosAsJavaRecordClasses = pojosAsJavaRecordClasses;
+    }
+
+    @Override
+    public boolean generatePojosAsScalaCaseClasses() {
+        return generatePojosAsScalaCaseClasses;
+    }
+
+    @Override
+    public void setGeneratePojosAsScalaCaseClasses(boolean pojosAsScalaCaseClasses) {
+        this.generatePojosAsScalaCaseClasses = pojosAsScalaCaseClasses;
+    }
+
+    @Override
+    public boolean generatePojosAsKotlinDataClasses() {
+        return generatePojosAsKotlinDataClasses;
+    }
+
+    @Override
+    public void setGeneratePojosAsKotlinDataClasses(boolean pojosAsKotlinDataClasses) {
+        this.generatePojosAsKotlinDataClasses = pojosAsKotlinDataClasses;
     }
 
     @Override

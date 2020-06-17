@@ -272,6 +272,7 @@ public class JavaGenerator extends AbstractGenerator {
      */
     private Set<File>                             directoriesNotForRemoval     = new LinkedHashSet<>();
 
+    private final boolean                         java;
     private final boolean                         scala;
     private final boolean                         kotlin;
     private final String                          tokenVoid;
@@ -319,6 +320,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         this.scala = (language == SCALA);
         this.kotlin = (language == KOTLIN);
+        this.java = (language == JAVA);
         this.tokenVoid = (scala || kotlin ? "Unit" : "void");
         this.fileCache = new Files();
     }
@@ -3600,13 +3602,13 @@ public class JavaGenerator extends AbstractGenerator {
             maxLength = Math.max(maxLength, out.ref(getJavaType(column.getType(resolver(Mode.POJO)), Mode.POJO)).length());
 
         if (scala) {
-            out.println("%sclass %s(", (generateImmutablePojos() ? "case " : ""), className);
+            out.println("%sclass %s(", (generatePojosAsScalaCaseClasses() ? "case " : ""), className);
 
             String separator = "  ";
             for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
-                out.println("%s%s%s: %s",
+                out.println("%s%s %s: %s",
                     separator,
-                    generateImmutablePojos() ? "" : "private var ",
+                    generateImmutablePojos() ? "val" : "var",
                     getStrategy().getJavaMemberName(column, Mode.POJO),
                     out.ref(getJavaType(column.getType(resolver(Mode.POJO)), Mode.POJO)));
 
@@ -3622,10 +3624,10 @@ public class JavaGenerator extends AbstractGenerator {
             for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
                 final String member = getStrategy().getJavaMemberName(column, Mode.POJO);
 
-                out.println("%s%s%s%s: %s? = null",
+                out.println("%s%s%s %s: %s? = null",
                     separator,
                     generateInterfaces() ? "override " : "",
-                    generateImmutablePojos() ? "val " : "var ",
+                    generateImmutablePojos() ? "val" : "var",
                     member,
                     out.ref(getJavaType(column.getType(resolver(Mode.POJO)), Mode.POJO)));
 
@@ -3980,13 +3982,20 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void generatePojoEqualsAndHashCode(Definition tableOrUDT, JavaWriter out) {
+        if (scala && generatePojosAsScalaCaseClasses())
+            return;
+        if (kotlin && generatePojosAsKotlinDataClasses())
+            return;
+        if (java && generatePojosAsJavaRecordClasses())
+            return;
+
         final String className = getStrategy().getJavaClassName(tableOrUDT, Mode.POJO);
 
         out.println();
 
         if (scala) {
             out.println("override def equals(obj: Any): scala.Boolean = {");
-            out.println("if (this == obj)");
+            out.println("if (this eq obj.asInstanceOf[AnyRef])");
             out.println("return true");
             out.println("if (obj == null)");
             out.println("return false");
@@ -4003,17 +4012,15 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("return false");
                 out.println("}");
 
-                if (getJavaType(column.getType(resolver())).endsWith("[]")) {
+                if (getJavaType(column.getType(resolver())).endsWith("[]"))
                     out.println("else if (!%s.equals(%s, other.%s))", Arrays.class, columnMember, columnMember);
-                }
-                else {
+                else
                     out.println("else if (!%s.equals(other.%s))", columnMember, columnMember);
-                }
 
                 out.println("return false");
             }
 
-            out.println("return true");
+            out.println("true");
             out.println("}");
         }
         else {
@@ -4094,6 +4101,13 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void generatePojoToString(Definition tableOrUDT, JavaWriter out) {
+        if (scala && generatePojosAsScalaCaseClasses())
+            return;
+        if (kotlin && generatePojosAsKotlinDataClasses())
+            return;
+        if (java && generatePojosAsJavaRecordClasses())
+            return;
+
         final String className = getStrategy().getJavaClassName(tableOrUDT, Mode.POJO);
 
         out.println();

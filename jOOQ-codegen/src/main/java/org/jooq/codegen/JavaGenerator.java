@@ -67,7 +67,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.IdentityHashMap;
@@ -3618,7 +3617,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println(")[[before= extends ][%s]][[before= with ][separator= with ][%s]] {", first(superTypes), remaining(superTypes));
         }
         else if (kotlin) {
-            out.println("data class %s(", className);
+            out.println("%sclass %s(", (generatePojosAsKotlinDataClasses() ? "data " : ""), className);
 
             String separator = "  ";
             for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
@@ -3683,13 +3682,13 @@ public class JavaGenerator extends AbstractGenerator {
                     else
                         generateUDTPojoSetter(column, i, out);
             }
-
-            if (generatePojosEqualsAndHashCode())
-                generatePojoEqualsAndHashCode(tableOrUDT, out);
-
-            if (generatePojosToString())
-                generatePojoToString(tableOrUDT, out);
         }
+
+        if (generatePojosEqualsAndHashCode())
+            generatePojoEqualsAndHashCode(tableOrUDT, out);
+
+        if (generatePojosToString())
+            generatePojoToString(tableOrUDT, out);
 
         if (generateInterfaces() && !generateImmutablePojos())
             printFromAndInto(out, tableOrUDT, Mode.POJO);
@@ -3825,9 +3824,9 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("def this() = this([[%s]])", nulls);
             }
         }
-        else if (kotlin) {
-            out.println("constructor(): this([[%s]])", Collections.nCopies(size, "null"));
-        }
+
+        // [#6248] [#10288] The no-args constructor isn't needed because we have named, defaulted parameters
+        else if (kotlin) {}
         else {
             out.println("public %s() {}", className);
         }
@@ -4023,6 +4022,36 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("true");
             out.println("}");
         }
+        else if (kotlin) {
+            out.println("override fun equals(obj: Any?): Boolean {");
+            out.println("if (this === obj)");
+            out.println("return true");
+            out.println("if (obj === null)");
+            out.println("return false");
+            out.println("if (this::class != obj::class)");
+            out.println("return false");
+
+            out.println("val other: %s = obj as %s", className, className);
+
+            for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
+                final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
+
+                out.println("if (%s === null) {", columnMember);
+                out.println("if (other.%s !== null)", columnMember);
+                out.println("return false");
+                out.println("}");
+
+                if (getJavaType(column.getType(resolver())).endsWith("[]"))
+                    out.println("else if (!%s.equals(%s, other.%s))", Arrays.class, columnMember, columnMember);
+                else
+                    out.println("else if (%s != other.%s)", columnMember, columnMember);
+
+                out.println("return false");
+            }
+
+            out.println("return true");
+            out.println("}");
+        }
         else {
             out.println("@Override");
             out.println("public boolean equals(%s obj) {", Object.class);
@@ -4043,12 +4072,10 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("return false;");
                 out.println("}");
 
-                if (getJavaType(column.getType(resolver())).endsWith("[]")) {
+                if (getJavaType(column.getType(resolver())).endsWith("[]"))
                     out.println("else if (!%s.equals(%s, other.%s))", Arrays.class, columnMember, columnMember);
-                }
-                else {
+                else
                     out.println("else if (!%s.equals(other.%s))", columnMember, columnMember);
-                }
 
                 out.println("return false;");
             }
@@ -4067,12 +4094,27 @@ public class JavaGenerator extends AbstractGenerator {
             for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
                 final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
 
-                if (getJavaType(column.getType(resolver())).endsWith("[]")) {
+                if (getJavaType(column.getType(resolver())).endsWith("[]"))
                     out.println("result = prime * result + (if (this.%s == null) 0 else %s.hashCode(this.%s))", columnMember, Arrays.class, columnMember);
-                }
-                else {
+                else
                     out.println("result = prime * result + (if (this.%s == null) 0 else this.%s.hashCode())", columnMember, columnMember);
-                }
+            }
+
+            out.println("return result");
+            out.println("}");
+        }
+        else if (kotlin) {
+            out.println("override fun hashCode(): Int {");
+            out.println("val prime = 31");
+            out.println("var result = 1");
+
+            for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
+                final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
+
+                if (getJavaType(column.getType(resolver())).endsWith("[]"))
+                    out.println("result = prime * result + (if (this.%s === null) 0 else %s.hashCode(this.%s))", columnMember, Arrays.class, columnMember);
+                else
+                    out.println("result = prime * result + (if (this.%s === null) 0 else this.%s.hashCode())", columnMember, columnMember);
             }
 
             out.println("return result");
@@ -4087,12 +4129,10 @@ public class JavaGenerator extends AbstractGenerator {
             for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
                 final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
 
-                if (getJavaType(column.getType(resolver())).endsWith("[]")) {
+                if (getJavaType(column.getType(resolver())).endsWith("[]"))
                     out.println("result = prime * result + ((this.%s == null) ? 0 : %s.hashCode(this.%s));", columnMember, Arrays.class, columnMember);
-                }
-                else {
+                else
                     out.println("result = prime * result + ((this.%s == null) ? 0 : this.%s.hashCode());", columnMember, columnMember);
-                }
             }
 
             out.println("return result;");
@@ -4123,12 +4163,10 @@ public class JavaGenerator extends AbstractGenerator {
                 final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
                 final String columnType = getJavaType(column.getType(resolver()));
 
-                if (columnType.equals("scala.Array[scala.Byte]")) {
+                if (columnType.equals("scala.Array[scala.Byte]"))
                     out.println("sb%s.append(\"[binary...]\")", separator);
-                }
-                else {
+                else
                     out.println("sb%s.append(%s)", separator, columnMember);
-                }
 
                 separator = ".append(\", \")";
             }
@@ -4137,6 +4175,32 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("sb.append(\")\")");
 
             out.println("sb.toString");
+            out.println("}");
+        }
+        else if (kotlin) {
+            out.println("override fun toString(): String {");
+            out.println("val sb = %s(\"%s (\")", StringBuilder.class, className);
+            out.println();
+
+            String separator = "";
+            for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
+                final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
+                final String columnType = getJavaType(column.getType(resolver()));
+                final boolean array = columnType.endsWith("[]");
+
+                if (array && columnType.equals("kotlin.ByteArray"))
+                    out.println("sb%s.append(\"[binary...]\")", separator);
+                else if (array)
+                    out.println("sb%s.append(%s.toString(%s))", separator, Arrays.class, columnMember);
+                else
+                    out.println("sb%s.append(%s)", separator, columnMember);
+
+                separator = ".append(\", \")";
+            }
+
+            out.println();
+            out.println("sb.append(\")\")");
+            out.println("return sb.toString()");
             out.println("}");
         }
         else {
@@ -4151,15 +4215,12 @@ public class JavaGenerator extends AbstractGenerator {
                 final String columnType = getJavaType(column.getType(resolver()));
                 final boolean array = columnType.endsWith("[]");
 
-                if (array && columnType.equals("byte[]")) {
+                if (array && columnType.equals("byte[]"))
                     out.println("sb%s.append(\"[binary...]\");", separator);
-                }
-                else if (array) {
+                else if (array)
                     out.println("sb%s.append(%s.toString(%s));", separator, Arrays.class, columnMember);
-                }
-                else {
+                else
                     out.println("sb%s.append(%s);", separator, columnMember);
-                }
 
                 separator = ".append(\", \")";
             }

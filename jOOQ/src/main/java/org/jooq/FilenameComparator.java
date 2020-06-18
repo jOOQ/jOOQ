@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 import java.math.BigInteger;
 import java.util.Comparator;
 import java.util.regex.Pattern;

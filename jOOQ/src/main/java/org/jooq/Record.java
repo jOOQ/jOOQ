@@ -38,6 +38,9 @@
 
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 import java.lang.reflect.Constructor;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

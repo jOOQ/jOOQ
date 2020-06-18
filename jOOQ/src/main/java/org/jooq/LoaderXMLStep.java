@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 /**
  * The <code>Loader</code> API is used for configuring data loads.
  * <p>

@@ -3,3 +3,5 @@
  * {@link org.jooq.SQLDialect#MARIADB} dialect.
  */
 package org.jooq.util.mariadb;
+
+import org.jetbrains.annotations.*;

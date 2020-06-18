@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import static java.util.Arrays.asList;
 import static org.jooq.impl.Comparators.CHECK_COMP;
 import static org.jooq.impl.Comparators.FOREIGN_KEY_COMP;

@@ -39,6 +39,8 @@ package org.jooq;
 
 import java.util.Collection;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * This type is used for the {@link Insert}'s DSL API.
  * <p>
@@ -60,18 +62,21 @@ public interface InsertValuesStep2<R extends Record, T1, T2> extends InsertOnDup
     /**
      * Add values to the insert statement.
      */
+    @NotNull
     @Support
     InsertValuesStep2<R, T1, T2> values(T1 value1, T2 value2);
 
     /**
      * Add values to the insert statement.
      */
+    @NotNull
     @Support
     InsertValuesStep2<R, T1, T2> values(Field<T1> value1, Field<T2> value2);
 
     /**
      * Add values to the insert statement.
      */
+    @NotNull
     @Support
     InsertValuesStep2<R, T1, T2> values(Collection<?> values);
 
@@ -84,6 +89,7 @@ public interface InsertValuesStep2<R extends Record, T1, T2> extends InsertOnDup
      * <code>INTO</code> clause:
      * {@link DSLContext#insertInto(Table, Field, Field)}
      */
+    @NotNull
     @Support
     InsertOnDuplicateStep<R> select(Select<? extends Record2<T1, T2>> select);
 }

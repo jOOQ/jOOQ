@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 // ...
@@ -80,6 +83,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * Add a <code>ROWS UNBOUNDED PRECEDING</code> frame clause to the window
      * function.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowExcludeStep<T> rowsUnboundedPreceding();
 
@@ -87,12 +91,14 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * Add a <code>ROWS [number] PRECEDING</code> frame clause to the window
      * function.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowExcludeStep<T> rowsPreceding(int number);
 
     /**
      * Add a <code>ROWS CURRENT ROW</code> frame clause to the window function.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowExcludeStep<T> rowsCurrentRow();
 
@@ -100,6 +106,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * Add a <code>ROWS UNBOUNDED FOLLOWING</code> frame clause to the window
      * function.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowExcludeStep<T> rowsUnboundedFollowing();
 
@@ -107,6 +114,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * Add a <code>ROWS [number] FOLLOWING</code> frame clause to the window
      * function.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowExcludeStep<T> rowsFollowing(int number);
 
@@ -114,6 +122,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * Add a <code>ROWS BETWEEN UNBOUNDED PRECEDING ...</code> frame clause to
      * the window function.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowRowsAndStep<T> rowsBetweenUnboundedPreceding();
 
@@ -121,6 +130,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * Add a <code>ROWS BETWEEN [number] PRECEDING ...</code> frame clause to
      * the window function.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowRowsAndStep<T> rowsBetweenPreceding(int number);
 
@@ -128,6 +138,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * Add a <code>ROWS BETWEEN CURRENT ROW ...</code> frame clause to
      * the window function.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowRowsAndStep<T> rowsBetweenCurrentRow();
 
@@ -135,6 +146,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * Add a <code>ROWS BETWEEN UNBOUNDED FOLLOWING ...</code> frame clause to
      * the window function.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowRowsAndStep<T> rowsBetweenUnboundedFollowing();
 
@@ -142,6 +154,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * Add a <code>ROWS BETWEEN [number] FOLLOWING ...</code> frame clause to
      * the window function.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowRowsAndStep<T> rowsBetweenFollowing(int number);
 
@@ -149,6 +162,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * Add a <code>RANGE UNBOUNDED PRECEDING</code> frame clause to the window
      * function.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowExcludeStep<T> rangeUnboundedPreceding();
 
@@ -156,12 +170,14 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * Add a <code>RANGE [number] PRECEDING</code> frame clause to the window
      * function.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowExcludeStep<T> rangePreceding(int number);
 
     /**
      * Add a <code>RANGE CURRENT ROW</code> frame clause to the window function.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowExcludeStep<T> rangeCurrentRow();
 
@@ -169,6 +185,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * Add a <code>RANGE UNBOUNDED FOLLOWING</code> frame clause to the window
      * function.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowExcludeStep<T> rangeUnboundedFollowing();
 
@@ -176,6 +193,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * Add a <code>RANGE [number] FOLLOWING</code> frame clause to the window
      * function.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowExcludeStep<T> rangeFollowing(int number);
 
@@ -183,6 +201,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * Add a <code>RANGE BETWEEN UNBOUNDED PRECEDING ...</code> frame clause to
      * the window function.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowRowsAndStep<T> rangeBetweenUnboundedPreceding();
 
@@ -190,6 +209,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * Add a <code>RANGE BETWEEN [number] PRECEDING ...</code> frame clause to
      * the window function.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowRowsAndStep<T> rangeBetweenPreceding(int number);
 
@@ -197,6 +217,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * Add a <code>RANGE BETWEEN CURRENT ROW ...</code> frame clause to
      * the window function.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowRowsAndStep<T> rangeBetweenCurrentRow();
 
@@ -204,6 +225,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * Add a <code>RANGE BETWEEN UNBOUNDED FOLLOWING ...</code> frame clause to
      * the window function.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowRowsAndStep<T> rangeBetweenUnboundedFollowing();
 
@@ -211,6 +233,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * Add a <code>RANGE BETWEEN [number] FOLLOWING ...</code> frame clause to
      * the window function.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowRowsAndStep<T> rangeBetweenFollowing(int number);
 
@@ -218,6 +241,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * Add a <code>GROUPS UNBOUNDED PRECEDING</code> frame clause to the window
      * function.
      */
+    @NotNull
     @Support({ H2, POSTGRES, SQLITE })
     WindowExcludeStep<T> groupsUnboundedPreceding();
 
@@ -225,12 +249,14 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * Add a <code>GROUPS [number] PRECEDING</code> frame clause to the window
      * function.
      */
+    @NotNull
     @Support({ H2, POSTGRES, SQLITE })
     WindowExcludeStep<T> groupsPreceding(int number);
 
     /**
      * Add a <code>GROUPS CURRENT ROW</code> frame clause to the window function.
      */
+    @NotNull
     @Support({ H2, POSTGRES, SQLITE })
     WindowExcludeStep<T> groupsCurrentRow();
 
@@ -238,6 +264,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * Add a <code>GROUPS UNBOUNDED FOLLOWING</code> frame clause to the window
      * function.
      */
+    @NotNull
     @Support({ H2, POSTGRES, SQLITE })
     WindowExcludeStep<T> groupsUnboundedFollowing();
 
@@ -245,6 +272,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * Add a <code>GROUPS [number] FOLLOWING</code> frame clause to the window
      * function.
      */
+    @NotNull
     @Support({ H2, POSTGRES, SQLITE })
     WindowExcludeStep<T> groupsFollowing(int number);
 
@@ -252,6 +280,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * Add a <code>GROUPS BETWEEN UNBOUNDED PRECEDING ...</code> frame clause to
      * the window function.
      */
+    @NotNull
     @Support({ H2, POSTGRES, SQLITE })
     WindowRowsAndStep<T> groupsBetweenUnboundedPreceding();
 
@@ -259,6 +288,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * Add a <code>GROUPS BETWEEN [number] PRECEDING ...</code> frame clause to
      * the window function.
      */
+    @NotNull
     @Support({ H2, POSTGRES, SQLITE })
     WindowRowsAndStep<T> groupsBetweenPreceding(int number);
 
@@ -266,6 +296,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * Add a <code>GROUPS BETWEEN CURRENT ROW ...</code> frame clause to
      * the window function.
      */
+    @NotNull
     @Support({ H2, POSTGRES, SQLITE })
     WindowRowsAndStep<T> groupsBetweenCurrentRow();
 
@@ -273,6 +304,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * Add a <code>GROUPS BETWEEN UNBOUNDED FOLLOWING ...</code> frame clause to
      * the window function.
      */
+    @NotNull
     @Support({ H2, POSTGRES, SQLITE })
     WindowRowsAndStep<T> groupsBetweenUnboundedFollowing();
 
@@ -280,6 +312,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * Add a <code>GROUPS BETWEEN [number] FOLLOWING ...</code> frame clause to
      * the window function.
      */
+    @NotNull
     @Support({ H2, POSTGRES, SQLITE })
     WindowRowsAndStep<T> groupsBetweenFollowing(int number);
 }

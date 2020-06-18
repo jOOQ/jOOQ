@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 /**
  * The <code>TransactionListener</code> SPI is used to intercept the
  * {@link TransactionProvider}'s transaction events.

@@ -41,6 +41,9 @@ import java.util.List;
 
 import org.jooq.exception.DataAccessException;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * A routine is a callable object in your RDBMS.
  * <p>
@@ -87,21 +90,12 @@ import org.jooq.exception.DataAccessException;
  *
  * @author Lukas Eder
  */
-public interface Routine<T> extends Named, Attachable {
+public interface Routine<T> extends Qualified, Attachable {
 
     // -------------------------------------------------------------------------
     // XXX: Meta information
     // -------------------------------------------------------------------------
 
-    /**
-     * Get the routine catalog.
-     */
-    Catalog getCatalog();
-
-    /**
-     * Get the routine schema
-     */
-    Schema getSchema();
 
 
 
@@ -123,6 +117,7 @@ public interface Routine<T> extends Named, Attachable {
      *         have a return value.
      * @see #getParameters()
      */
+    @Nullable
     Parameter<T> getReturnParameter();
 
     /**
@@ -133,6 +128,7 @@ public interface Routine<T> extends Named, Attachable {
      * @return The list of out parameters
      * @see #getParameters()
      */
+    @NotNull
     List<Parameter<?>> getOutParameters();
 
     /**
@@ -143,11 +139,13 @@ public interface Routine<T> extends Named, Attachable {
      * @return The list of in parameters
      * @see #getParameters()
      */
+    @NotNull
     List<Parameter<?>> getInParameters();
 
     /**
      * @return A list of parameters passed to the stored object as argument
      */
+    @NotNull
     List<Parameter<?>> getParameters();
 
     // -------------------------------------------------------------------------
@@ -195,10 +193,12 @@ public interface Routine<T> extends Named, Attachable {
     /**
      * @return The routine's return value (if it is a function)
      */
+    @Nullable
     T getReturnValue();
 
     /**
      * @return The routine's results (if available)
      */
+    @NotNull
     Results getResults();
 }

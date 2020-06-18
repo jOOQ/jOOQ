@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.StringReader;

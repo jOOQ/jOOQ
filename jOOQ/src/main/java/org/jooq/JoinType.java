@@ -38,6 +38,9 @@
 
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 // ...
@@ -77,84 +80,98 @@ public enum JoinType {
     /**
      * <code>INNER JOIN</code> two tables.
      */
+    @NotNull
     @Support
     JOIN("join", "inner join", "join", true),
 
     /**
      * <code>CROSS JOIN</code> two tables.
      */
+    @NotNull
     @Support
     CROSS_JOIN("cross join", false),
 
     /**
      * <code>LEFT OUTER JOIN</code> two tables.
      */
+    @NotNull
     @Support
     LEFT_OUTER_JOIN("left outer join", "left outer join", "left join", true),
 
     /**
      * <code>RIGHT OUTER JOIN</code> two tables.
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     RIGHT_OUTER_JOIN("right outer join", "right outer join", "right join", true),
 
     /**
      * <code>FULL OUTER JOIN</code> two tables.
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     FULL_OUTER_JOIN("full outer join", "full outer join", "full join", true),
 
     /**
      * <code>NATURAL INNER JOIN</code> two tables.
      */
+    @NotNull
     @Support
     NATURAL_JOIN("natural join", "natural inner join", "natural join", false),
 
     /**
      * <code>NATURAL LEFT OUTER JOIN</code> two tables.
      */
+    @NotNull
     @Support
     NATURAL_LEFT_OUTER_JOIN("natural left outer join", "natural left outer join", "natural left join", false),
 
     /**
      * <code>NATURAL RIGHT OUTER JOIN</code> two tables.
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     NATURAL_RIGHT_OUTER_JOIN("natural right outer join", "natural right outer join", "natural right join", false),
 
     /**
      * <code>NATURAL FULL OUTER JOIN</code> two tables.
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     NATURAL_FULL_OUTER_JOIN("natural full outer join", "natural full outer join", "natural full join", false),
 
     /**
      * <code>CROSS APPLY</code> two tables.
      */
+    @NotNull
     @Support({ POSTGRES })
     CROSS_APPLY("cross apply", false),
 
     /**
      * <code>OUTER APPLY</code> two tables.
      */
+    @NotNull
     @Support({ POSTGRES })
     OUTER_APPLY("outer apply", false),
 
     /**
      * <code>STRAIGHT_JOIN</code> two tables.
      */
+    @NotNull
     @Support({ MARIADB, MYSQL })
     STRAIGHT_JOIN("straight_join", true),
 
     /**
      * <code>LEFT SEMI JOIN</code> two tables.
      */
+    @NotNull
     @Support
     LEFT_SEMI_JOIN("left semi join", true),
 
     /**
      * <code>LEFT ANTI JOIN</code> two tables.
      */
+    @NotNull
     @Support
     LEFT_ANTI_JOIN("left anti join", true)
 

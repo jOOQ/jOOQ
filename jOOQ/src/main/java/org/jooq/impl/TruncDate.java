@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.Keywords.K_CAST;
 import static org.jooq.impl.Names.N_DATE_TRUNC;

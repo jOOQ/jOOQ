@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 
 import org.jooq.impl.DSL;
@@ -72,6 +75,31 @@ import org.jooq.impl.DSL;
  * @author Lukas Eder
  */
 public interface TableOuterJoinStep<R extends Record> {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

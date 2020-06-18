@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.tools.reflect.Reflect.wrapper;
 
 import java.io.File;

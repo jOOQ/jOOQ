@@ -37,9 +37,13 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+
 
 
 

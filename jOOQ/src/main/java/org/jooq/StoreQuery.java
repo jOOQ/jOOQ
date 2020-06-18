@@ -40,6 +40,9 @@ package org.jooq;
 import java.util.Collection;
 import java.util.Map;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * A query storing objects to the database. This is either an insert or an
  * update query.
@@ -161,6 +164,7 @@ public interface StoreQuery<R extends Record> extends RowCountQuery {
      *         keys from the JDBC driver.
      * @see #getReturnedRecords()
      */
+    @Nullable
     @Support
     R getReturnedRecord();
 
@@ -201,6 +205,7 @@ public interface StoreQuery<R extends Record> extends RowCountQuery {
      *         could not retrieve any generated keys from the JDBC driver.</li>
      *         </ul>
      */
+    @NotNull
     @Support
     Result<R> getReturnedRecords();
 
@@ -235,6 +240,7 @@ public interface StoreQuery<R extends Record> extends RowCountQuery {
      *         keys from the JDBC driver.</li>
      *         </ul>
      */
+    @NotNull
     @Support
     Result<?> getResult();
 

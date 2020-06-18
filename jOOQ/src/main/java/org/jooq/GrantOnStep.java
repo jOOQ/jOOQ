@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 // ...
@@ -62,12 +65,14 @@ public interface GrantOnStep {
     /**
      * Grant a privilege on a table.
      */
+    @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     GrantToStep on(Table<?> table);
 
     /**
      * Grant a privilege on a table.
      */
+    @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     GrantToStep on(Name table);
 
@@ -80,6 +85,7 @@ public interface GrantOnStep {
      * escape literals when concatenated into SQL clauses!
      */
     @PlainSQL
+    @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     GrantToStep on(String table);
 }

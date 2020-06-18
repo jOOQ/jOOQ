@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.SQLDialect.*;
 
 import java.util.*;
@@ -68,126 +71,147 @@ public interface AlterDomainStep<T> {
     /**
      * Add the <code>ADD</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     AlterDomainFinalStep add(Constraint addConstraint);
 
     /**
      * Add the <code>DROP CONSTRAINT</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     AlterDomainDropConstraintCascadeStep dropConstraint(String dropConstraint);
 
     /**
      * Add the <code>DROP CONSTRAINT</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     AlterDomainDropConstraintCascadeStep dropConstraint(Name dropConstraint);
 
     /**
      * Add the <code>DROP CONSTRAINT</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     AlterDomainDropConstraintCascadeStep dropConstraint(Constraint dropConstraint);
 
     /**
      * Add the <code>DROP CONSTRAINT IF EXISTS</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
+    @NotNull
     @Support({ FIREBIRD, POSTGRES })
     AlterDomainDropConstraintCascadeStep dropConstraintIfExists(String dropConstraint);
 
     /**
      * Add the <code>DROP CONSTRAINT IF EXISTS</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
+    @NotNull
     @Support({ FIREBIRD, POSTGRES })
     AlterDomainDropConstraintCascadeStep dropConstraintIfExists(Name dropConstraint);
 
     /**
      * Add the <code>DROP CONSTRAINT IF EXISTS</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
+    @NotNull
     @Support({ FIREBIRD, POSTGRES })
     AlterDomainDropConstraintCascadeStep dropConstraintIfExists(Constraint dropConstraint);
 
     /**
      * Add the <code>RENAME TO</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
+    @NotNull
     @Support({ FIREBIRD, POSTGRES })
     AlterDomainFinalStep renameTo(String renameTo);
 
     /**
      * Add the <code>RENAME TO</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
+    @NotNull
     @Support({ FIREBIRD, POSTGRES })
     AlterDomainFinalStep renameTo(Name renameTo);
 
     /**
      * Add the <code>RENAME TO</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
+    @NotNull
     @Support({ FIREBIRD, POSTGRES })
     AlterDomainFinalStep renameTo(Domain<?> renameTo);
 
     /**
      * Add the <code>RENAME CONSTRAINT</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
+    @NotNull
     @Support({ POSTGRES })
     AlterDomainRenameConstraintStep renameConstraint(String renameConstraint);
 
     /**
      * Add the <code>RENAME CONSTRAINT</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
+    @NotNull
     @Support({ POSTGRES })
     AlterDomainRenameConstraintStep renameConstraint(Name renameConstraint);
 
     /**
      * Add the <code>RENAME CONSTRAINT</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
+    @NotNull
     @Support({ POSTGRES })
     AlterDomainRenameConstraintStep renameConstraint(Constraint renameConstraint);
 
     /**
      * Add the <code>RENAME CONSTRAINT IF EXISTS</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
+    @NotNull
     @Support({ POSTGRES })
     AlterDomainRenameConstraintStep renameConstraintIfExists(String renameConstraint);
 
     /**
      * Add the <code>RENAME CONSTRAINT IF EXISTS</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
+    @NotNull
     @Support({ POSTGRES })
     AlterDomainRenameConstraintStep renameConstraintIfExists(Name renameConstraint);
 
     /**
      * Add the <code>RENAME CONSTRAINT IF EXISTS</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
+    @NotNull
     @Support({ POSTGRES })
     AlterDomainRenameConstraintStep renameConstraintIfExists(Constraint renameConstraint);
 
     /**
      * Add the <code>SET DEFAULT</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     AlterDomainFinalStep setDefault(T setDefault);
 
     /**
      * Add the <code>SET DEFAULT</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     AlterDomainFinalStep setDefault(Field<T> setDefault);
 
     /**
      * Add the <code>DROP DEFAULT</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     AlterDomainFinalStep dropDefault();
 
     /**
      * Add the <code>SET NOT NULL</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
+    @NotNull
     @Support({ POSTGRES })
     AlterDomainFinalStep setNotNull();
 
     /**
      * Add the <code>DROP NOT NULL</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
+    @NotNull
     @Support({ POSTGRES })
     AlterDomainFinalStep dropNotNull();
 }

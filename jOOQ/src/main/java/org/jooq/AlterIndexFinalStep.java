@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 
 /**
  * The final step in the <code>ALTER INDEX</code> DSL.

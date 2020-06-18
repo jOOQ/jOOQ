@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import static java.beans.Introspector.decapitalize;
 
 import java.io.IOException;

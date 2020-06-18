@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 // ...
@@ -97,6 +100,7 @@ public interface LikeEscapeStep extends Condition {
      * some_column LIKE 'A!%%' ESCAPE '!'
      * </pre></code>
      */
+    @NotNull
     @Support
     Condition escape(char c);
 }

@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 // ...
@@ -93,12 +96,14 @@ public interface DivideByReturningStep {
     /**
      * Specify the fields that you want the division to return from the dividend
      */
+    @NotNull
     @Support
     Table<Record> returning(Field<?>... fields);
 
     /**
      * Specify the fields that you want the division to return from the dividend
      */
+    @NotNull
     @Support
     Table<Record> returning(Collection<? extends Field<?>> fields);
 }

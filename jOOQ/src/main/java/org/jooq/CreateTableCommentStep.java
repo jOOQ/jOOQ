@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 // ...
@@ -77,12 +80,14 @@ public interface CreateTableCommentStep extends CreateTableStorageStep {
     /**
      * Add a comment to the table.
      */
+    @NotNull
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     CreateTableStorageStep comment(String comment);
 
     /**
      * Add a comment to the table.
      */
+    @NotNull
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     CreateTableStorageStep comment(Comment comment);
 

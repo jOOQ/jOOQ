@@ -47,16 +47,6 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface Package extends Named {
-
-    /**
-     * Get the package catalog.
-     */
-    Catalog getCatalog();
-
-    /**
-     * Get the package schema
-     */
-    Schema getSchema();
+public interface Package extends Qualified {
 
 }

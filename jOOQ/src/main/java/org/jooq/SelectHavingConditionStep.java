@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 import org.jooq.impl.DSL;
 
 
@@ -106,6 +109,7 @@ public interface SelectHavingConditionStep<R extends Record> extends SelectWindo
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#AND} operator and proceed to the next step.
      */
+    @NotNull
     @Support
     SelectHavingConditionStep<R> and(Condition condition);
 
@@ -113,6 +117,7 @@ public interface SelectHavingConditionStep<R extends Record> extends SelectWindo
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#AND} operator and proceed to the next step.
      */
+    @NotNull
     @Support
     SelectHavingConditionStep<R> and(Field<Boolean> condition);
 
@@ -130,6 +135,7 @@ public interface SelectHavingConditionStep<R extends Record> extends SelectWindo
      *             method will be removed in the future.
      */
     @Deprecated
+    @NotNull
     @Support
     SelectHavingConditionStep<R> and(Boolean condition);
 
@@ -145,6 +151,7 @@ public interface SelectHavingConditionStep<R extends Record> extends SelectWindo
      * @see DSL#condition(SQL)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     SelectHavingConditionStep<R> and(SQL sql);
@@ -161,6 +168,7 @@ public interface SelectHavingConditionStep<R extends Record> extends SelectWindo
      * @see DSL#condition(String)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     SelectHavingConditionStep<R> and(String sql);
@@ -178,6 +186,7 @@ public interface SelectHavingConditionStep<R extends Record> extends SelectWindo
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     SelectHavingConditionStep<R> and(String sql, Object... bindings);
@@ -195,6 +204,7 @@ public interface SelectHavingConditionStep<R extends Record> extends SelectWindo
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     SelectHavingConditionStep<R> and(String sql, QueryPart... parts);
@@ -203,6 +213,7 @@ public interface SelectHavingConditionStep<R extends Record> extends SelectWindo
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#AND} operator and proceed to the next step.
      */
+    @NotNull
     @Support
     SelectHavingConditionStep<R> andNot(Condition condition);
 
@@ -210,6 +221,7 @@ public interface SelectHavingConditionStep<R extends Record> extends SelectWindo
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#AND} operator and proceed to the next step.
      */
+    @NotNull
     @Support
     SelectHavingConditionStep<R> andNot(Field<Boolean> condition);
 
@@ -227,6 +239,7 @@ public interface SelectHavingConditionStep<R extends Record> extends SelectWindo
      *             method will be removed in the future.
      */
     @Deprecated
+    @NotNull
     @Support
     SelectHavingConditionStep<R> andNot(Boolean condition);
 
@@ -234,6 +247,7 @@ public interface SelectHavingConditionStep<R extends Record> extends SelectWindo
      * Combine the currently assembled conditions with an EXISTS clause using
      * the {@link Operator#AND} operator and proceed to the next step.
      */
+    @NotNull
     @Support
     SelectHavingConditionStep<R> andExists(Select<?> select);
 
@@ -241,6 +255,7 @@ public interface SelectHavingConditionStep<R extends Record> extends SelectWindo
      * Combine the currently assembled conditions with a NOT EXISTS clause using
      * the {@link Operator#AND} operator and proceed to the next step.
      */
+    @NotNull
     @Support
     SelectHavingConditionStep<R> andNotExists(Select<?> select);
 
@@ -248,6 +263,7 @@ public interface SelectHavingConditionStep<R extends Record> extends SelectWindo
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#OR} operator and proceed to the next step.
      */
+    @NotNull
     @Support
     SelectHavingConditionStep<R> or(Condition condition);
 
@@ -255,6 +271,7 @@ public interface SelectHavingConditionStep<R extends Record> extends SelectWindo
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#OR} operator and proceed to the next step.
      */
+    @NotNull
     @Support
     SelectHavingConditionStep<R> or(Field<Boolean> condition);
 
@@ -272,6 +289,7 @@ public interface SelectHavingConditionStep<R extends Record> extends SelectWindo
      *             method will be removed in the future.
      */
     @Deprecated
+    @NotNull
     @Support
     SelectHavingConditionStep<R> or(Boolean condition);
 
@@ -287,6 +305,7 @@ public interface SelectHavingConditionStep<R extends Record> extends SelectWindo
      * @see DSL#condition(SQL)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     SelectHavingConditionStep<R> or(SQL sql);
@@ -303,6 +322,7 @@ public interface SelectHavingConditionStep<R extends Record> extends SelectWindo
      * @see DSL#condition(String)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     SelectHavingConditionStep<R> or(String sql);
@@ -320,6 +340,7 @@ public interface SelectHavingConditionStep<R extends Record> extends SelectWindo
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     SelectHavingConditionStep<R> or(String sql, Object... bindings);
@@ -337,6 +358,7 @@ public interface SelectHavingConditionStep<R extends Record> extends SelectWindo
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     SelectHavingConditionStep<R> or(String sql, QueryPart... parts);
@@ -345,6 +367,7 @@ public interface SelectHavingConditionStep<R extends Record> extends SelectWindo
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#OR} operator and proceed to the next step.
      */
+    @NotNull
     @Support
     SelectHavingConditionStep<R> orNot(Condition condition);
 
@@ -352,6 +375,7 @@ public interface SelectHavingConditionStep<R extends Record> extends SelectWindo
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#OR} operator and proceed to the next step.
      */
+    @NotNull
     @Support
     SelectHavingConditionStep<R> orNot(Field<Boolean> condition);
 
@@ -369,6 +393,7 @@ public interface SelectHavingConditionStep<R extends Record> extends SelectWindo
      *             method will be removed in the future.
      */
     @Deprecated
+    @NotNull
     @Support
     SelectHavingConditionStep<R> orNot(Boolean condition);
 
@@ -376,6 +401,7 @@ public interface SelectHavingConditionStep<R extends Record> extends SelectWindo
      * Combine the currently assembled conditions with an EXISTS clause using
      * the {@link Operator#OR} operator and proceed to the next step.
      */
+    @NotNull
     @Support
     SelectHavingConditionStep<R> orExists(Select<?> select);
 
@@ -383,6 +409,7 @@ public interface SelectHavingConditionStep<R extends Record> extends SelectWindo
      * Combine the currently assembled conditions with a NOT EXISTS clause using
      * the {@link Operator#OR} operator and proceed to the next step.
      */
+    @NotNull
     @Support
     SelectHavingConditionStep<R> orNotExists(Select<?> select);
 }

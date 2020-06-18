@@ -61,6 +61,9 @@ import org.jooq.types.DayToSecond;
 import org.jooq.types.YearToMonth;
 import org.jooq.types.YearToSecond;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * A common interface to all dialect-specific data types.
  * <p>
@@ -81,11 +84,13 @@ public interface DataType<T> extends Named {
      * Get the standard SQL data type of this (dialect-specific) data type if
      * available.
      */
+    @NotNull
     DataType<T> getSQLDataType();
 
     /**
      * The dialect-specific data type representing this data type.
      */
+    @NotNull
     DataType<T> getDataType(Configuration configuration);
 
     /**
@@ -101,33 +106,40 @@ public interface DataType<T> extends Named {
     /**
      * Get the data type binding associated with this data type.
      */
+    @NotNull
     Binding<?, T> getBinding();
 
     /**
      * Get the converter associated with this data type.
      */
+    @NotNull
     Converter<?, T> getConverter();
 
     /**
      * Retrieve the Java type associated with this data type.
      */
+    @NotNull
     Class<T> getType();
 
     /**
      * Get the defining DOMAIN type or <code>NULL</code> if there is no such
      * type.
      */
+    @Nullable
     Domain<T> getDomain();
 
     /**
      * Retrieve the Java type associated with ARRAYs of this data type.
      */
+    @NotNull
     Class<T[]> getArrayType();
 
     /**
      * Retrieve the data type for an ARRAY of this data type.
      */
+    @NotNull
     DataType<T[]> getArrayDataType();
+
 
 
 
@@ -140,26 +152,31 @@ public interface DataType<T> extends Named {
     /**
      * Retrieve the data type for a given enum data type.
      */
+    @NotNull
     <E extends EnumType> DataType<E> asEnumDataType(Class<E> enumDataType);
 
     /**
      * Retrieve the data type for a given converter.
      */
+    @NotNull
     <U> DataType<U> asConvertedDataType(Converter<? super T, U> converter);
 
     /**
      * Retrieve the data type for a given binding.
      */
+    @NotNull
     <U> DataType<U> asConvertedDataType(Binding<? super T, U> binding);
 
     /**
      * Retrieve the dialect-specific type name associated with this data type.
      */
+    @NotNull
     String getTypeName();
 
     /**
      * Retrieve the dialect-specific type name associated with this data type.
      */
+    @NotNull
     String getTypeName(Configuration configuration);
 
     /**
@@ -170,6 +187,7 @@ public interface DataType<T> extends Named {
      * cast expressions. Other dialects require type-length binding when
      * casting, (e.g. VARCHAR(32767))
      */
+    @NotNull
     String getCastTypeName();
 
     /**
@@ -180,11 +198,13 @@ public interface DataType<T> extends Named {
      * cast expressions. Other dialects require type-length binding when
      * casting, (e.g. VARCHAR(32767))
      */
+    @NotNull
     String getCastTypeName(Configuration configuration);
 
     /**
      * Retrieve the underlying {@link SQLDialect}.
      */
+    @NotNull
     SQLDialect getDialect();
 
     /**
@@ -211,6 +231,7 @@ public interface DataType<T> extends Named {
      * @return The converted objects
      * @throws DataTypeException If conversion fails.
      */
+    @NotNull
     T[] convert(Object... objects);
 
     /**
@@ -224,6 +245,7 @@ public interface DataType<T> extends Named {
      * @return The converted objects
      * @throws DataTypeException If conversion fails.
      */
+    @NotNull
     List<T> convert(Collection<?> objects);
 
     /**
@@ -234,6 +256,7 @@ public interface DataType<T> extends Named {
      * @param nullability The new nullability
      * @return The new data type
      */
+    @NotNull
     @Support
     DataType<T> nullability(Nullability nullability);
 
@@ -242,6 +265,7 @@ public interface DataType<T> extends Named {
      *
      * @return The nullability
      */
+    @NotNull
     Nullability nullability();
 
     /**
@@ -256,6 +280,7 @@ public interface DataType<T> extends Named {
      * @param nullable The new nullability
      * @return The new data type
      */
+    @NotNull
     @Support
     DataType<T> nullable(boolean nullable);
 
@@ -272,6 +297,7 @@ public interface DataType<T> extends Named {
     /**
      * Return a new data type like this, with a new collation.
      */
+    @NotNull
     @Support({ HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DataType<T> collation(Collation collation);
 
@@ -279,11 +305,13 @@ public interface DataType<T> extends Named {
      * Get the collation of this data type, or <code>null</code> if there is no
      * collation, or if the default collation applies.
      */
+    @Nullable
     Collation collation();
 
     /**
      * Return a new data type like this, with a new character set.
      */
+    @NotNull
     @Support({ MARIADB, MYSQL })
     DataType<T> characterSet(CharacterSet characterSet);
 
@@ -291,6 +319,7 @@ public interface DataType<T> extends Named {
      * Get the character set of this data type, or <code>null</code> if there is
      * no character set, or if the default character set applies.
      */
+    @Nullable
     CharacterSet characterSet();
 
     /**
@@ -302,6 +331,7 @@ public interface DataType<T> extends Named {
      * @param identity The new identity flag
      * @return The new data type
      */
+    @NotNull
     @Support // TODO: List the correct dialects that support identities
     DataType<T> identity(boolean identity);
 
@@ -322,6 +352,7 @@ public interface DataType<T> extends Named {
      *
      * @see #defaultValue(Field)
      */
+    @NotNull
     @Support
     DataType<T> defaultValue(T defaultValue);
 
@@ -341,6 +372,8 @@ public interface DataType<T> extends Named {
      * <p>
      * This is an alias for {@link #default_(Field)}.
      */
+    @NotNull
+    @Support
     DataType<T> defaultValue(Field<T> defaultValue);
 
     /**
@@ -353,6 +386,7 @@ public interface DataType<T> extends Named {
      *         value is specified for this data type.
      * @see #defaultValue(Field)
      */
+    @Nullable
     Field<T> defaultValue();
 
     /**
@@ -363,6 +397,7 @@ public interface DataType<T> extends Named {
      *
      * @see #defaultValue(Field)
      */
+    @NotNull
     @Support
     DataType<T> default_(T defaultValue);
 
@@ -380,6 +415,7 @@ public interface DataType<T> extends Named {
      * defined by the underlying database. Please refer to your database manual
      * to learn what expressions are possible.
      */
+    @NotNull
     @Support
     DataType<T> default_(Field<T> defaultValue);
 
@@ -391,6 +427,7 @@ public interface DataType<T> extends Named {
      *         value is specified for this data type.
      * @see #defaultValue(Field)
      */
+    @Nullable
     Field<T> default_();
 
     /**
@@ -401,6 +438,7 @@ public interface DataType<T> extends Named {
      *
      * @deprecated - [#3852] - 3.8.0 - Use {@link #defaultValue(Field)} instead.
      */
+    @NotNull
     @Deprecated
     DataType<T> defaulted(boolean defaulted);
 
@@ -422,6 +460,7 @@ public interface DataType<T> extends Named {
      * @param precision The new precision value
      * @return The new data type
      */
+    @NotNull
     @Support
     DataType<T> precision(int precision);
 
@@ -436,6 +475,7 @@ public interface DataType<T> extends Named {
      * @param scale The new scale value
      * @return The new data type
      */
+    @NotNull
     @Support
     DataType<T> precision(int precision, int scale);
 
@@ -471,6 +511,7 @@ public interface DataType<T> extends Named {
      * @param scale The new scale value
      * @return The new data type
      */
+    @NotNull
     @Support
     DataType<T> scale(int scale);
 
@@ -506,6 +547,7 @@ public interface DataType<T> extends Named {
      * @param length The new length value
      * @return The new data type
      */
+    @NotNull
     @Support
     DataType<T> length(int length);
 

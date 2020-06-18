@@ -38,6 +38,9 @@
 
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 import org.jooq.impl.DSL;
 
 
@@ -88,6 +91,7 @@ public interface Condition extends QueryPart {
      * @param other The other condition
      * @return The combined condition
      */
+    @NotNull
     @Support
     Condition and(Condition other);
 
@@ -98,6 +102,7 @@ public interface Condition extends QueryPart {
      * @param other The other condition
      * @return The combined condition
      */
+    @NotNull
     @Support
     Condition and(Field<Boolean> other);
 
@@ -117,6 +122,7 @@ public interface Condition extends QueryPart {
      *             method will be removed in the future.
      */
     @Deprecated
+    @NotNull
     @Support
     Condition and(Boolean other);
 
@@ -134,6 +140,7 @@ public interface Condition extends QueryPart {
      * @see DSL#condition(SQL)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     Condition and(SQL sql);
@@ -152,6 +159,7 @@ public interface Condition extends QueryPart {
      * @see DSL#condition(String)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     Condition and(String sql);
@@ -172,6 +180,7 @@ public interface Condition extends QueryPart {
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     Condition and(String sql, Object... bindings);
@@ -194,6 +203,7 @@ public interface Condition extends QueryPart {
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     Condition and(String sql, QueryPart... parts);
@@ -205,6 +215,7 @@ public interface Condition extends QueryPart {
      * @param other The other condition
      * @return The combined condition
      */
+    @NotNull
     @Support
     Condition andNot(Condition other);
 
@@ -215,6 +226,7 @@ public interface Condition extends QueryPart {
      * @param other The other condition
      * @return The combined condition
      */
+    @NotNull
     @Support
     Condition andNot(Field<Boolean> other);
 
@@ -234,6 +246,7 @@ public interface Condition extends QueryPart {
      *             method will be removed in the future.
      */
     @Deprecated
+    @NotNull
     @Support
     Condition andNot(Boolean other);
 
@@ -244,6 +257,7 @@ public interface Condition extends QueryPart {
      * @param select The EXISTS's subquery
      * @return The combined condition
      */
+    @NotNull
     @Support
     Condition andExists(Select<?> select);
 
@@ -254,6 +268,7 @@ public interface Condition extends QueryPart {
      * @param select The EXISTS's subquery
      * @return The combined condition
      */
+    @NotNull
     @Support
     Condition andNotExists(Select<?> select);
 
@@ -264,6 +279,7 @@ public interface Condition extends QueryPart {
      * @param other The other condition
      * @return The combined condition
      */
+    @NotNull
     @Support
     Condition or(Condition other);
 
@@ -274,6 +290,7 @@ public interface Condition extends QueryPart {
      * @param other The other condition
      * @return The combined condition
      */
+    @NotNull
     @Support
     Condition or(Field<Boolean> other);
 
@@ -293,6 +310,7 @@ public interface Condition extends QueryPart {
      *             method will be removed in the future.
      */
     @Deprecated
+    @NotNull
     @Support
     Condition or(Boolean other);
 
@@ -310,6 +328,7 @@ public interface Condition extends QueryPart {
      * @see DSL#condition(SQL)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     Condition or(SQL sql);
@@ -328,6 +347,7 @@ public interface Condition extends QueryPart {
      * @see DSL#condition(String)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     Condition or(String sql);
@@ -348,6 +368,7 @@ public interface Condition extends QueryPart {
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     Condition or(String sql, Object... bindings);
@@ -370,6 +391,7 @@ public interface Condition extends QueryPart {
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     Condition or(String sql, QueryPart... parts);
@@ -381,6 +403,7 @@ public interface Condition extends QueryPart {
      * @param other The other condition
      * @return The combined condition
      */
+    @NotNull
     @Support
     Condition orNot(Condition other);
 
@@ -391,6 +414,7 @@ public interface Condition extends QueryPart {
      * @param other The other condition
      * @return The combined condition
      */
+    @NotNull
     @Support
     Condition orNot(Field<Boolean> other);
 
@@ -410,6 +434,7 @@ public interface Condition extends QueryPart {
      *             method will be removed in the future.
      */
     @Deprecated
+    @NotNull
     @Support
     Condition orNot(Boolean other);
 
@@ -420,6 +445,7 @@ public interface Condition extends QueryPart {
      * @param select The EXISTS's subquery
      * @return The combined condition
      */
+    @NotNull
     @Support
     Condition orExists(Select<?> select);
 
@@ -430,6 +456,7 @@ public interface Condition extends QueryPart {
      * @param select The EXISTS's subquery
      * @return The combined condition
      */
+    @NotNull
     @Support
     Condition orNotExists(Select<?> select);
 
@@ -440,6 +467,7 @@ public interface Condition extends QueryPart {
      *
      * @return This condition, inverted
      */
+    @NotNull
     @Support
     Condition not();
 }

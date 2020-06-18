@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.schema;
 import static org.jooq.tools.StringUtils.isBlank;

@@ -37,6 +37,9 @@
  */
 package org.jooq.util.mariadb;
 
+import org.jetbrains.annotations.*;
+
+
 import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.SQLDialect;

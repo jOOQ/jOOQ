@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 import java.util.Map;
 
 /**
@@ -63,6 +66,7 @@ public interface CaseWhenStep<V, T> extends Field<T> {
      * @param result The result value if values are equal
      * @return An intermediary step for case statement construction
      */
+    @NotNull
     @Support
     CaseWhenStep<V, T> when(V compareValue, T result);
 
@@ -75,6 +79,7 @@ public interface CaseWhenStep<V, T> extends Field<T> {
      * @param result The result value if values are equal
      * @return An intermediary step for case statement construction
      */
+    @NotNull
     @Support
     CaseWhenStep<V, T> when(V compareValue, Field<T> result);
 
@@ -87,6 +92,7 @@ public interface CaseWhenStep<V, T> extends Field<T> {
      * @param result The result value if values are equal
      * @return An intermediary step for case statement construction
      */
+    @NotNull
     @Support
     CaseWhenStep<V, T> when(Field<V> compareValue, T result);
 
@@ -99,6 +105,7 @@ public interface CaseWhenStep<V, T> extends Field<T> {
      * @param result The result value if values are equal
      * @return An intermediary step for case statement construction
      */
+    @NotNull
     @Support
     CaseWhenStep<V, T> when(Field<V> compareValue, Field<T> result);
 
@@ -108,6 +115,7 @@ public interface CaseWhenStep<V, T> extends Field<T> {
      * This will iterate over the map's entries to create individual
      * <code>WHEN .. THEN</code> expressions for each map entry.
      */
+    @NotNull
     @Support
     CaseWhenStep<V, T> mapValues(Map<V, T> values);
 
@@ -117,6 +125,7 @@ public interface CaseWhenStep<V, T> extends Field<T> {
      * This will iterate over the map's entries to create individual
      * <code>WHEN .. THEN</code> expressions for each map entry.
      */
+    @NotNull
     @Support
     CaseWhenStep<V, T> mapFields(Map<? extends Field<V>, ? extends Field<T>> fields);
 
@@ -126,6 +135,7 @@ public interface CaseWhenStep<V, T> extends Field<T> {
      * @param result The result value if no other value matches the case
      * @return The resulting field from case statement construction
      */
+    @NotNull
     @Support
     Field<T> otherwise(T result);
 
@@ -135,6 +145,7 @@ public interface CaseWhenStep<V, T> extends Field<T> {
      * @param result The result value if no other value matches the case
      * @return The resulting field from case statement construction
      */
+    @NotNull
     @Support
     Field<T> otherwise(Field<T> result);
 
@@ -144,6 +155,7 @@ public interface CaseWhenStep<V, T> extends Field<T> {
      * @param result The result value if no other value matches the case
      * @return The resulting field from case statement construction
      */
+    @NotNull
     @Support
     Field<T> else_(T result);
 
@@ -153,6 +165,7 @@ public interface CaseWhenStep<V, T> extends Field<T> {
      * @param result The result value if no other value matches the case
      * @return The resulting field from case statement construction
      */
+    @NotNull
     @Support
     Field<T> else_(Field<T> result);
 }

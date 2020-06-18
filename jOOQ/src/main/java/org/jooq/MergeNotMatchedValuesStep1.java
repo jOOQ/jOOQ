@@ -52,6 +52,8 @@ import static org.jooq.SQLDialect.HSQLDB;
 
 import java.util.Collection;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * This type is used for the {@link Merge}'s DSL API.
  * <p>
@@ -77,6 +79,7 @@ public interface MergeNotMatchedValuesStep1<R extends Record, T1> {
      * Set <code>VALUES</code> for <code>INSERT</code> in the <code>MERGE</code>
      * statement's <code>WHEN NOT MATCHED THEN INSERT</code> clause.
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB })
     MergeNotMatchedWhereStep<R> values(T1 value1);
 
@@ -84,6 +87,7 @@ public interface MergeNotMatchedValuesStep1<R extends Record, T1> {
      * Set <code>VALUES</code> for <code>INSERT</code> in the <code>MERGE</code>
      * statement's <code>WHEN NOT MATCHED THEN INSERT</code> clause.
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB })
     MergeNotMatchedWhereStep<R> values(Field<T1> value1);
 
@@ -91,6 +95,7 @@ public interface MergeNotMatchedValuesStep1<R extends Record, T1> {
      * Set <code>VALUES</code> for <code>INSERT</code> in the <code>MERGE</code>
      * statement's <code>WHEN NOT MATCHED THEN INSERT</code> clause.
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB })
     MergeNotMatchedWhereStep<R> values(Collection<?> values);
 }

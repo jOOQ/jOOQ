@@ -58,6 +58,8 @@ import java.util.Collection;
 import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * A row value expression.
  * <p>
@@ -103,66 +105,79 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
     /**
      * Get the first field.
      */
+    @NotNull
     Field<T1> field1();
 
     /**
      * Get the second field.
      */
+    @NotNull
     Field<T2> field2();
 
     /**
      * Get the third field.
      */
+    @NotNull
     Field<T3> field3();
 
     /**
      * Get the fourth field.
      */
+    @NotNull
     Field<T4> field4();
 
     /**
      * Get the fifth field.
      */
+    @NotNull
     Field<T5> field5();
 
     /**
      * Get the sixth field.
      */
+    @NotNull
     Field<T6> field6();
 
     /**
      * Get the seventh field.
      */
+    @NotNull
     Field<T7> field7();
 
     /**
      * Get the eighth field.
      */
+    @NotNull
     Field<T8> field8();
 
     /**
      * Get the ninth field.
      */
+    @NotNull
     Field<T9> field9();
 
     /**
      * Get the tenth field.
      */
+    @NotNull
     Field<T10> field10();
 
     /**
      * Get the eleventh field.
      */
+    @NotNull
     Field<T11> field11();
 
     /**
      * Get the twelfth field.
      */
+    @NotNull
     Field<T12> field12();
 
     /**
      * Get the thirteenth field.
      */
+    @NotNull
     Field<T13> field13();
 
     // ------------------------------------------------------------------------
@@ -183,6 +198,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * @see #greaterThan(Row13)
      * @see #greaterOrEqual(Row13)
      */
+    @NotNull
     @Support
     Condition compare(Comparator comparator, Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row);
 
@@ -200,6 +216,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * @see #greaterThan(Record13)
      * @see #greaterOrEqual(Record13)
      */
+    @NotNull
     @Support
     Condition compare(Comparator comparator, Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> record);
 
@@ -217,6 +234,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * @see #greaterThan(Row13)
      * @see #greaterOrEqual(Row13)
      */
+    @NotNull
     @Support
     Condition compare(Comparator comparator, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13);
 
@@ -234,6 +252,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * @see #greaterThan(Row13)
      * @see #greaterOrEqual(Row13)
      */
+    @NotNull
     @Support
     Condition compare(Comparator comparator, Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13);
 
@@ -251,6 +270,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * @see #greaterThan(Select)
      * @see #greaterOrEqual(Select)
      */
+    @NotNull
     @Support
     Condition compare(Comparator comparator, Select<? extends Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select);
 
@@ -268,6 +288,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * @see #greaterThan(Select)
      * @see #greaterOrEqual(Select)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition compare(Comparator comparator, QuantifiedSelect<? extends Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select);
 
@@ -284,6 +305,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * <code>(A, B) = (1, 2)</code> is equivalent to
      * <code>A = 1 AND B = 2</code>
      */
+    @NotNull
     @Support
     Condition equal(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row);
 
@@ -292,6 +314,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #equal(Row13)
      */
+    @NotNull
     @Support
     Condition equal(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> record);
 
@@ -301,6 +324,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #equal(Row13)
      */
+    @NotNull
     @Support
     Condition equal(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13);
 
@@ -310,6 +334,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #equal(Row13)
      */
+    @NotNull
     @Support
     Condition equal(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13);
 
@@ -318,6 +343,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #equal(Row13)
      */
+    @NotNull
     @Support
     Condition equal(Select<? extends Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select);
 
@@ -331,6 +357,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition equal(QuantifiedSelect<? extends Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select);
 
@@ -340,6 +367,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #equal(Row13)
      */
+    @NotNull
     @Support
     Condition eq(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row);
 
@@ -348,6 +376,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #equal(Row13)
      */
+    @NotNull
     @Support
     Condition eq(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> record);
 
@@ -357,6 +386,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #equal(Row13)
      */
+    @NotNull
     @Support
     Condition eq(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13);
 
@@ -366,6 +396,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #equal(Row13)
      */
+    @NotNull
     @Support
     Condition eq(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13);
 
@@ -374,6 +405,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #equal(Row13)
      */
+    @NotNull
     @Support
     Condition eq(Select<? extends Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select);
 
@@ -387,6 +419,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition eq(QuantifiedSelect<? extends Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select);
 
@@ -399,6 +432,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * <code>(A, B) &lt;&gt; (1, 2)</code> is equivalent to
      * <code>NOT(A = 1 AND B = 2)</code>
      */
+    @NotNull
     @Support
     Condition notEqual(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row);
 
@@ -407,6 +441,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #notEqual(Row13)
      */
+    @NotNull
     @Support
     Condition notEqual(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> record);
 
@@ -416,6 +451,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #notEqual(Row13)
      */
+    @NotNull
     @Support
     Condition notEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13);
 
@@ -425,6 +461,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #notEqual(Row13)
      */
+    @NotNull
     @Support
     Condition notEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13);
 
@@ -433,6 +470,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #notEqual(Row13)
      */
+    @NotNull
     @Support
     Condition notEqual(Select<? extends Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select);
 
@@ -446,6 +484,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition notEqual(QuantifiedSelect<? extends Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select);
 
@@ -455,6 +494,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #notEqual(Row13)
      */
+    @NotNull
     @Support
     Condition ne(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row);
 
@@ -463,6 +503,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #notEqual(Row13)
      */
+    @NotNull
     @Support
     Condition ne(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> record);
 
@@ -472,6 +513,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #notEqual(Row13)
      */
+    @NotNull
     @Support
     Condition ne(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13);
 
@@ -481,6 +523,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #notEqual(Row13)
      */
+    @NotNull
     @Support
     Condition ne(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13);
 
@@ -489,6 +532,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #notEqual(Row13)
      */
+    @NotNull
     @Support
     Condition ne(Select<? extends Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select);
 
@@ -502,6 +546,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition ne(QuantifiedSelect<? extends Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select);
 
@@ -513,6 +558,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * Compare this row value expression with another row value expression for
      * distinctness.
      */
+    @NotNull
     @Support
     Condition isDistinctFrom(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row);
 
@@ -520,6 +566,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * Compare this row value expression with another row value expression for
      * distinctness.
      */
+    @NotNull
     @Support
     Condition isDistinctFrom(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> record);
 
@@ -527,6 +574,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * Compare this row value expression with another row value expression for
      * distinctness.
      */
+    @NotNull
     @Support
     Condition isDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13);
 
@@ -534,6 +582,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * Compare this row value expression with another row value expression for
      * distinctness.
      */
+    @NotNull
     @Support
     Condition isDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13);
 
@@ -541,6 +590,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * Compare this row value expression with another row value expression for
      * distinctness.
      */
+    @NotNull
     @Support
     Condition isDistinctFrom(Select<? extends Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select);
 
@@ -548,6 +598,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * Compare this row value expression with another row value expression for
      * distinctness.
      */
+    @NotNull
     @Support
     Condition isNotDistinctFrom(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row);
 
@@ -555,6 +606,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * Compare this row value expression with another row value expression for
      * distinctness.
      */
+    @NotNull
     @Support
     Condition isNotDistinctFrom(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> record);
 
@@ -562,6 +614,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * Compare this row value expression with another row value expression for
      * distinctness.
      */
+    @NotNull
     @Support
     Condition isNotDistinctFrom(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13);
 
@@ -569,6 +622,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * Compare this row value expression with another row value expression for
      * distinctness.
      */
+    @NotNull
     @Support
     Condition isNotDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13);
 
@@ -576,6 +630,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * Compare this row value expression with another row value expression for
      * distinctness.
      */
+    @NotNull
     @Support
     Condition isNotDistinctFrom(Select<? extends Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select);
 
@@ -592,6 +647,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * <code>(A, B, C) &lt; (1, 2, 3)</code> is equivalent to
      * <code>A &lt; 1 OR (A = 1 AND B &lt; 2) OR (A = 1 AND B = 2 AND C &lt; 3)</code>
      */
+    @NotNull
     @Support
     Condition lessThan(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row);
 
@@ -600,6 +656,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #lessThan(Row13)
      */
+    @NotNull
     @Support
     Condition lessThan(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> record);
 
@@ -609,6 +666,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #lessThan(Row13)
      */
+    @NotNull
     @Support
     Condition lessThan(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13);
 
@@ -618,6 +676,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #lessThan(Row13)
      */
+    @NotNull
     @Support
     Condition lessThan(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13);
 
@@ -626,6 +685,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #lessThan(Row13)
      */
+    @NotNull
     @Support
     Condition lessThan(Select<? extends Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select);
 
@@ -639,6 +699,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition lessThan(QuantifiedSelect<? extends Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select);
 
@@ -648,6 +709,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #lessThan(Row13)
      */
+    @NotNull
     @Support
     Condition lt(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row);
 
@@ -656,6 +718,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #lessThan(Row13)
      */
+    @NotNull
     @Support
     Condition lt(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> record);
 
@@ -665,6 +728,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #lessThan(Row13)
      */
+    @NotNull
     @Support
     Condition lt(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13);
 
@@ -674,6 +738,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #lessThan(Row13)
      */
+    @NotNull
     @Support
     Condition lt(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13);
 
@@ -682,6 +747,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #lessThan(Row13)
      */
+    @NotNull
     @Support
     Condition lt(Select<? extends Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select);
 
@@ -695,6 +761,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition lt(QuantifiedSelect<? extends Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select);
 
@@ -707,6 +774,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * <code>(A, B) &lt;= (1, 2)</code> is equivalent to
      * <code>A &lt; 1 OR (A = 1 AND B &lt; 2) OR (A = 1 AND B = 2)</code>
      */
+    @NotNull
     @Support
     Condition lessOrEqual(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row);
 
@@ -715,6 +783,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #lessOrEqual(Row13)
      */
+    @NotNull
     @Support
     Condition lessOrEqual(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> record);
 
@@ -724,6 +793,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #lessOrEqual(Row13)
      */
+    @NotNull
     @Support
     Condition lessOrEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13);
 
@@ -733,6 +803,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #lessOrEqual(Row13)
      */
+    @NotNull
     @Support
     Condition lessOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13);
 
@@ -741,6 +812,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #lessOrEqual(Row13)
      */
+    @NotNull
     @Support
     Condition lessOrEqual(Select<? extends Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select);
 
@@ -754,6 +826,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition lessOrEqual(QuantifiedSelect<? extends Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select);
 
@@ -763,6 +836,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #lessOrEqual(Row13)
      */
+    @NotNull
     @Support
     Condition le(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row);
 
@@ -771,6 +845,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #lessOrEqual(Row13)
      */
+    @NotNull
     @Support
     Condition le(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> record);
 
@@ -780,6 +855,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #lessOrEqual(Row13)
      */
+    @NotNull
     @Support
     Condition le(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13);
 
@@ -789,6 +865,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #lessOrEqual(Row13)
      */
+    @NotNull
     @Support
     Condition le(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13);
 
@@ -797,6 +874,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #lessOrEqual(Row13)
      */
+    @NotNull
     @Support
     Condition le(Select<? extends Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select);
 
@@ -810,6 +888,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition le(QuantifiedSelect<? extends Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select);
 
@@ -822,6 +901,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * <code>(A, B, C) &gt; (1, 2, 3)</code> is equivalent to
      * <code>A &gt; 1 OR (A = 1 AND B &gt; 2) OR (A = 1 AND B = 2 AND C &gt; 3)</code>
      */
+    @NotNull
     @Support
     Condition greaterThan(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row);
 
@@ -830,6 +910,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #greaterThan(Row13)
      */
+    @NotNull
     @Support
     Condition greaterThan(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> record);
 
@@ -839,6 +920,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #greaterThan(Row13)
      */
+    @NotNull
     @Support
     Condition greaterThan(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13);
 
@@ -848,6 +930,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #greaterThan(Row13)
      */
+    @NotNull
     @Support
     Condition greaterThan(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13);
 
@@ -856,6 +939,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #greaterThan(Row13)
      */
+    @NotNull
     @Support
     Condition greaterThan(Select<? extends Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select);
 
@@ -869,6 +953,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition greaterThan(QuantifiedSelect<? extends Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select);
 
@@ -878,6 +963,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #greaterThan(Row13)
      */
+    @NotNull
     @Support
     Condition gt(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row);
 
@@ -886,6 +972,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #greaterThan(Row13)
      */
+    @NotNull
     @Support
     Condition gt(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> record);
 
@@ -895,6 +982,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #greaterThan(Row13)
      */
+    @NotNull
     @Support
     Condition gt(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13);
 
@@ -904,6 +992,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #greaterThan(Row13)
      */
+    @NotNull
     @Support
     Condition gt(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13);
 
@@ -912,6 +1001,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #greaterThan(Row13)
      */
+    @NotNull
     @Support
     Condition gt(Select<? extends Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select);
 
@@ -925,6 +1015,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition gt(QuantifiedSelect<? extends Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select);
 
@@ -937,6 +1028,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * <code>(A, B) &gt;= (1, 2)</code> is equivalent to
      * <code>A &gt; 1 OR (A = 1 AND B &gt; 2) OR (A = 1 AND B = 2)</code>
      */
+    @NotNull
     @Support
     Condition greaterOrEqual(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row);
 
@@ -945,6 +1037,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #greaterOrEqual(Row13)
      */
+    @NotNull
     @Support
     Condition greaterOrEqual(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> record);
 
@@ -954,6 +1047,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #greaterOrEqual(Row13)
      */
+    @NotNull
     @Support
     Condition greaterOrEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13);
 
@@ -963,6 +1057,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #greaterOrEqual(Row13)
      */
+    @NotNull
     @Support
     Condition greaterOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13);
 
@@ -971,6 +1066,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #greaterOrEqual(Row13)
      */
+    @NotNull
     @Support
     Condition greaterOrEqual(Select<? extends Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select);
 
@@ -984,6 +1080,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition greaterOrEqual(QuantifiedSelect<? extends Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select);
 
@@ -993,6 +1090,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #greaterOrEqual(Row13)
      */
+    @NotNull
     @Support
     Condition ge(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row);
 
@@ -1001,6 +1099,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #greaterOrEqual(Row13)
      */
+    @NotNull
     @Support
     Condition ge(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> record);
 
@@ -1010,6 +1109,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #greaterOrEqual(Row13)
      */
+    @NotNull
     @Support
     Condition ge(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13);
 
@@ -1019,6 +1119,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #greaterOrEqual(Row13)
      */
+    @NotNull
     @Support
     Condition ge(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13);
 
@@ -1027,6 +1128,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #greaterOrEqual(Row13)
      */
+    @NotNull
     @Support
     Condition ge(Select<? extends Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select);
 
@@ -1040,6 +1142,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition ge(QuantifiedSelect<? extends Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select);
 
@@ -1053,6 +1156,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #between(Row13, Row13)
      */
+    @NotNull
     @Support
     BetweenAndStep13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> between(T1 minValue1, T2 minValue2, T3 minValue3, T4 minValue4, T5 minValue5, T6 minValue6, T7 minValue7, T8 minValue8, T9 minValue9, T10 minValue10, T11 minValue11, T12 minValue12, T13 minValue13);
 
@@ -1062,6 +1166,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #between(Row13, Row13)
      */
+    @NotNull
     @Support
     BetweenAndStep13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> between(Field<T1> minValue1, Field<T2> minValue2, Field<T3> minValue3, Field<T4> minValue4, Field<T5> minValue5, Field<T6> minValue6, Field<T7> minValue7, Field<T8> minValue8, Field<T9> minValue9, Field<T10> minValue10, Field<T11> minValue11, Field<T12> minValue12, Field<T13> minValue13);
 
@@ -1071,6 +1176,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #between(Row13, Row13)
      */
+    @NotNull
     @Support
     BetweenAndStep13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> between(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> minValue);
 
@@ -1079,6 +1185,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #between(Row13, Row13)
      */
+    @NotNull
     @Support
     BetweenAndStep13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> between(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> minValue);
 
@@ -1093,6 +1200,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * not properly support the <code>BETWEEN</code> predicate for row value
      * expressions
      */
+    @NotNull
     @Support
     Condition between(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> minValue,
                       Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> maxValue);
@@ -1104,6 +1212,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #between(Row13, Row13)
      */
+    @NotNull
     @Support
     Condition between(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> minValue,
                       Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> maxValue);
@@ -1114,6 +1223,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #betweenSymmetric(Row13, Row13)
      */
+    @NotNull
     @Support
     BetweenAndStep13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> betweenSymmetric(T1 minValue1, T2 minValue2, T3 minValue3, T4 minValue4, T5 minValue5, T6 minValue6, T7 minValue7, T8 minValue8, T9 minValue9, T10 minValue10, T11 minValue11, T12 minValue12, T13 minValue13);
 
@@ -1123,6 +1233,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #betweenSymmetric(Row13, Row13)
      */
+    @NotNull
     @Support
     BetweenAndStep13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> betweenSymmetric(Field<T1> minValue1, Field<T2> minValue2, Field<T3> minValue3, Field<T4> minValue4, Field<T5> minValue5, Field<T6> minValue6, Field<T7> minValue7, Field<T8> minValue8, Field<T9> minValue9, Field<T10> minValue10, Field<T11> minValue11, Field<T12> minValue12, Field<T13> minValue13);
 
@@ -1132,6 +1243,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #betweenSymmetric(Row13, Row13)
      */
+    @NotNull
     @Support
     BetweenAndStep13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> betweenSymmetric(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> minValue);
 
@@ -1141,6 +1253,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #betweenSymmetric(Row13, Row13)
      */
+    @NotNull
     @Support
     BetweenAndStep13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> betweenSymmetric(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> minValue);
 
@@ -1155,6 +1268,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * for those SQL dialects that do not properly support the
      * <code>BETWEEN</code> predicate for row value expressions
      */
+    @NotNull
     @Support
     Condition betweenSymmetric(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> minValue,
                                Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> maxValue);
@@ -1167,6 +1281,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #betweenSymmetric(Row13, Row13)
      */
+    @NotNull
     @Support
     Condition betweenSymmetric(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> minValue,
                                Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> maxValue);
@@ -1177,6 +1292,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #between(Row13, Row13)
      */
+    @NotNull
     @Support
     BetweenAndStep13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> notBetween(T1 minValue1, T2 minValue2, T3 minValue3, T4 minValue4, T5 minValue5, T6 minValue6, T7 minValue7, T8 minValue8, T9 minValue9, T10 minValue10, T11 minValue11, T12 minValue12, T13 minValue13);
 
@@ -1186,6 +1302,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #notBetween(Row13, Row13)
      */
+    @NotNull
     @Support
     BetweenAndStep13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> notBetween(Field<T1> minValue1, Field<T2> minValue2, Field<T3> minValue3, Field<T4> minValue4, Field<T5> minValue5, Field<T6> minValue6, Field<T7> minValue7, Field<T8> minValue8, Field<T9> minValue9, Field<T10> minValue10, Field<T11> minValue11, Field<T12> minValue12, Field<T13> minValue13);
 
@@ -1195,6 +1312,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #notBetween(Row13, Row13)
      */
+    @NotNull
     @Support
     BetweenAndStep13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> notBetween(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> minValue);
 
@@ -1203,6 +1321,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #notBetween(Row13, Row13)
      */
+    @NotNull
     @Support
     BetweenAndStep13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> notBetween(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> minValue);
 
@@ -1217,6 +1336,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * not properly support the <code>BETWEEN</code> predicate for row value
      * expressions
      */
+    @NotNull
     @Support
     Condition notBetween(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> minValue,
                          Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> maxValue);
@@ -1228,6 +1348,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #notBetween(Row13, Row13)
      */
+    @NotNull
     @Support
     Condition notBetween(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> minValue,
                          Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> maxValue);
@@ -1238,6 +1359,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #notBetweenSymmetric(Row13, Row13)
      */
+    @NotNull
     @Support
     BetweenAndStep13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> notBetweenSymmetric(T1 minValue1, T2 minValue2, T3 minValue3, T4 minValue4, T5 minValue5, T6 minValue6, T7 minValue7, T8 minValue8, T9 minValue9, T10 minValue10, T11 minValue11, T12 minValue12, T13 minValue13);
 
@@ -1247,6 +1369,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #notBetweenSymmetric(Row13, Row13)
      */
+    @NotNull
     @Support
     BetweenAndStep13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> notBetweenSymmetric(Field<T1> minValue1, Field<T2> minValue2, Field<T3> minValue3, Field<T4> minValue4, Field<T5> minValue5, Field<T6> minValue6, Field<T7> minValue7, Field<T8> minValue8, Field<T9> minValue9, Field<T10> minValue10, Field<T11> minValue11, Field<T12> minValue12, Field<T13> minValue13);
 
@@ -1256,6 +1379,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #notBetweenSymmetric(Row13, Row13)
      */
+    @NotNull
     @Support
     BetweenAndStep13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> notBetweenSymmetric(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> minValue);
 
@@ -1265,6 +1389,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #notBetweenSymmetric(Row13, Row13)
      */
+    @NotNull
     @Support
     BetweenAndStep13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> notBetweenSymmetric(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> minValue);
 
@@ -1279,6 +1404,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * those SQL dialects that do not properly support the <code>BETWEEN</code>
      * predicate for row value expressions
      */
+    @NotNull
     @Support
     Condition notBetweenSymmetric(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> minValue,
                                   Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> maxValue);
@@ -1291,6 +1417,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #notBetweenSymmetric(Row13, Row13)
      */
+    @NotNull
     @Support
     Condition notBetweenSymmetric(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> minValue,
                                   Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> maxValue);
@@ -1326,6 +1453,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * <li><code>IN</code> predicates on unnested array bind variables</li>
      * </ul>
      */
+    @NotNull
     @Support
     Condition in(Collection<? extends Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> rows);
 
@@ -1351,6 +1479,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * <li><code>IN</code> predicates on unnested array bind variables</li>
      * </ul>
      */
+    @NotNull
     @Support
     Condition in(Result<? extends Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> result);
 
@@ -1374,6 +1503,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * @see #in(Collection)
      */
     @SuppressWarnings("unchecked")
+    @NotNull
     @Support
     Condition in(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>... rows);
 
@@ -1396,6 +1526,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * @see #in(Collection)
      */
     @SuppressWarnings("unchecked")
+    @NotNull
     @Support
     Condition in(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>... record);
 
@@ -1404,6 +1535,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #in(Collection)
      */
+    @NotNull
     @Support
     Condition in(Select<? extends Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select);
 
@@ -1430,6 +1562,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * <li><code>NOT IN</code> predicates on unnested array bind variables</li>
      * </ul>
      */
+    @NotNull
     @Support
     Condition notIn(Collection<? extends Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> rows);
 
@@ -1456,6 +1589,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * <li><code>NOT IN</code> predicates on unnested array bind variables</li>
      * </ul>
      */
+    @NotNull
     @Support
     Condition notIn(Result<? extends Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> result);
 
@@ -1479,6 +1613,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * @see #notIn(Collection)
      */
     @SuppressWarnings("unchecked")
+    @NotNull
     @Support
     Condition notIn(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>... rows);
 
@@ -1501,6 +1636,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      * @see #notIn(Collection)
      */
     @SuppressWarnings("unchecked")
+    @NotNull
     @Support
     Condition notIn(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>... record);
 
@@ -1509,6 +1645,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #notIn(Collection)
      */
+    @NotNull
     @Support
     Condition notIn(Select<? extends Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select);
 

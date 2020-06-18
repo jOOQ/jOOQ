@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MARIADB;
@@ -73,6 +76,7 @@ public interface AlterSequenceStep<T extends Number> extends AlterSequenceFlagsS
      * Add a <code>RENAME TO</code> clause to the <code>ALTER SEQUENCE</code>
      * statement.
      */
+    @NotNull
     @Support({ HSQLDB, MARIADB, POSTGRES })
     AlterSequenceFinalStep renameTo(Sequence<?> newName);
 
@@ -80,6 +84,7 @@ public interface AlterSequenceStep<T extends Number> extends AlterSequenceFlagsS
      * Add a <code>RENAME TO</code> clause to the <code>ALTER SEQUENCE</code>
      * statement.
      */
+    @NotNull
     @Support({ HSQLDB, MARIADB, POSTGRES })
     AlterSequenceFinalStep renameTo(Name newName);
 
@@ -87,6 +92,7 @@ public interface AlterSequenceStep<T extends Number> extends AlterSequenceFlagsS
      * Add a <code>RENAME TO</code> clause to the <code>ALTER SEQUENCE</code>
      * statement.
      */
+    @NotNull
     @Support({ HSQLDB, MARIADB, POSTGRES })
     AlterSequenceFinalStep renameTo(String newName);
 

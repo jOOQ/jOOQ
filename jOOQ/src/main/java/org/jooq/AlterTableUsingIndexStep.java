@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 
 /**
@@ -64,6 +67,9 @@ package org.jooq;
  * @author Lukas Eder
  */
 public interface AlterTableUsingIndexStep extends AlterTableFinalStep {
+
+
+
 
 
 

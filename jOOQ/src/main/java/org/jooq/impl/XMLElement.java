@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.impl.Keywords.K_NAME;
 import static org.jooq.impl.Names.N_XMLCONCAT;
 import static org.jooq.impl.Names.N_XMLELEMENT;

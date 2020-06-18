@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 // ...
@@ -101,6 +104,7 @@ public interface AlterTableStep {
      * @see DSL#commentOnTable(Table)
      * @see DSLContext#commentOnTable(Table)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableFinalStep comment(String comment);
 
@@ -110,6 +114,7 @@ public interface AlterTableStep {
      * @see DSL#commentOnTable(Table)
      * @see DSLContext#commentOnTable(Table)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableFinalStep comment(Comment comment);
 
@@ -117,6 +122,7 @@ public interface AlterTableStep {
      * Add a <code>RENAME TO</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
+    @NotNull
     @Support
     AlterTableFinalStep renameTo(Table<?> newName);
 
@@ -124,6 +130,7 @@ public interface AlterTableStep {
      * Add a <code>RENAME TO</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
+    @NotNull
     @Support
     AlterTableFinalStep renameTo(Name newName);
 
@@ -131,6 +138,7 @@ public interface AlterTableStep {
      * Add a <code>RENAME TO</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
+    @NotNull
     @Support
     AlterTableFinalStep renameTo(String newName);
 
@@ -138,6 +146,7 @@ public interface AlterTableStep {
      * Add a <code>RENAME COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
+    @NotNull
     @Support
     AlterTableRenameColumnToStep renameColumn(Field<?> oldName);
 
@@ -145,6 +154,7 @@ public interface AlterTableStep {
      * Add a <code>RENAME COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
+    @NotNull
     @Support
     AlterTableRenameColumnToStep renameColumn(Name oldName);
 
@@ -152,6 +162,7 @@ public interface AlterTableStep {
      * Add a <code>RENAME COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
+    @NotNull
     @Support
     AlterTableRenameColumnToStep renameColumn(String oldName);
 
@@ -159,6 +170,7 @@ public interface AlterTableStep {
      * Add a <code>RENAME INDEX</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
+    @NotNull
     @Support({ DERBY, H2, HSQLDB, MYSQL, POSTGRES })
     AlterTableRenameIndexToStep renameIndex(Name oldName);
 
@@ -166,6 +178,7 @@ public interface AlterTableStep {
      * Add a <code>RENAME INDEX</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
+    @NotNull
     @Support({ DERBY, H2, HSQLDB, MYSQL, POSTGRES })
     AlterTableRenameIndexToStep renameIndex(Index oldName);
 
@@ -173,6 +186,7 @@ public interface AlterTableStep {
      * Add a <code>RENAME INDEX</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
+    @NotNull
     @Support({ DERBY, H2, HSQLDB, MYSQL, POSTGRES })
     AlterTableRenameIndexToStep renameIndex(String oldName);
 
@@ -180,6 +194,7 @@ public interface AlterTableStep {
      * Add a <code>RENAME CONSTRAINT</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableRenameConstraintToStep renameConstraint(Constraint oldName);
 
@@ -187,6 +202,7 @@ public interface AlterTableStep {
      * Add a <code>RENAME CONSTRAINT</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableRenameConstraintToStep renameConstraint(Name oldName);
 
@@ -194,8 +210,10 @@ public interface AlterTableStep {
      * Add a <code>RENAME CONSTRAINT</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableRenameConstraintToStep renameConstraint(String oldName);
+
 
 
 
@@ -217,6 +235,7 @@ public interface AlterTableStep {
      * <p>
      * This is an alias for {@link #alterColumn(Field)}.
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     <T> AlterTableAlterStep<T> alter(Field<T> field);
 
@@ -226,6 +245,7 @@ public interface AlterTableStep {
      * <p>
      * This is an alias for {@link #alterColumn(Name)}
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableAlterStep<Object> alter(Name field);
 
@@ -235,6 +255,7 @@ public interface AlterTableStep {
      * <p>
      * This is an alias for {@link #alterColumn(String)}
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableAlterStep<Object> alter(String field);
 
@@ -242,6 +263,7 @@ public interface AlterTableStep {
      * Add an <code>ALTER COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     <T> AlterTableAlterStep<T> alterColumn(Field<T> field);
 
@@ -249,6 +271,7 @@ public interface AlterTableStep {
      * Add an <code>ALTER COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableAlterStep<Object> alterColumn(Name field);
 
@@ -256,8 +279,12 @@ public interface AlterTableStep {
      * Add an <code>ALTER COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableAlterStep<Object> alterColumn(String field);
+
+
+
 
 
 
@@ -293,6 +320,7 @@ public interface AlterTableStep {
      * <p>
      * This is an alias for {@link #addColumn(Field)}.
      */
+    @NotNull
     @Support
     AlterTableAddStep add(Field<?> field);
 
@@ -300,6 +328,7 @@ public interface AlterTableStep {
      * Add an <code>ADD</code> clause with multiple columns or constraints to
      * the <code>ALTER TABLE</code> statement.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     AlterTableAddStep add(FieldOrConstraint... fields);
 
@@ -307,6 +336,7 @@ public interface AlterTableStep {
      * Add an <code>ADD</code> clause with multiple columns or constraints to
      * the <code>ALTER TABLE</code> statement.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     AlterTableAddStep add(Collection<? extends FieldOrConstraint> fields);
 
@@ -316,6 +346,7 @@ public interface AlterTableStep {
      * <p>
      * This is an alias for {@link #addColumn(Field, DataType)}.
      */
+    @NotNull
     @Support
     <T> AlterTableAddStep add(Field<T> field, DataType<T> type);
 
@@ -325,6 +356,7 @@ public interface AlterTableStep {
      * <p>
      * This is an alias for {@link #addColumn(Name, DataType)}.
      */
+    @NotNull
     @Support
     AlterTableAddStep add(Name field, DataType<?> type);
 
@@ -334,6 +366,7 @@ public interface AlterTableStep {
      * <p>
      * This is an alias for {@link #addColumn(String, DataType)}.
      */
+    @NotNull
     @Support
     AlterTableAddStep add(String field, DataType<?> type);
 
@@ -343,6 +376,7 @@ public interface AlterTableStep {
      * <p>
      * This is an alias for {@link #addColumnIfNotExists(Field)}.
      */
+    @NotNull
     @Support({ H2, MARIADB, POSTGRES })
     AlterTableAddStep addIfNotExists(Field<?> field);
 
@@ -352,6 +386,7 @@ public interface AlterTableStep {
      * <p>
      * This is an alias for {@link #addColumnIfNotExists(Field, DataType)}.
      */
+    @NotNull
     @Support({ H2, MARIADB, POSTGRES })
     <T> AlterTableAddStep addIfNotExists(Field<T> field, DataType<T> type);
 
@@ -361,6 +396,7 @@ public interface AlterTableStep {
      * <p>
      * This is an alias for {@link #addColumnIfNotExists(Name, DataType)}.
      */
+    @NotNull
     @Support({ H2, MARIADB, POSTGRES })
     AlterTableAddStep addIfNotExists(Name field, DataType<?> type);
 
@@ -370,6 +406,7 @@ public interface AlterTableStep {
      * <p>
      * This is an alias for {@link #addColumnIfNotExists(String, DataType)}.
      */
+    @NotNull
     @Support({ H2, MARIADB, POSTGRES })
     AlterTableAddStep addIfNotExists(String field, DataType<?> type);
 
@@ -377,6 +414,7 @@ public interface AlterTableStep {
      * Add an <code>ADD COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
+    @NotNull
     @Support
     AlterTableAddStep addColumn(Field<?> field);
 
@@ -384,6 +422,7 @@ public interface AlterTableStep {
      * Add an <code>ADD COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
+    @NotNull
     @Support
     <T> AlterTableAddStep addColumn(Field<T> field, DataType<T> type);
 
@@ -391,6 +430,7 @@ public interface AlterTableStep {
      * Add an <code>ADD COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
+    @NotNull
     @Support
     AlterTableAddStep addColumn(Name field, DataType<?> type);
 
@@ -398,6 +438,7 @@ public interface AlterTableStep {
      * Add an <code>ADD COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
+    @NotNull
     @Support
     AlterTableAddStep addColumn(String field, DataType<?> type);
 
@@ -405,6 +446,7 @@ public interface AlterTableStep {
      * Add an <code>ADD COLUMN IF NOT EXISTS</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
+    @NotNull
     @Support({ H2, MARIADB, POSTGRES })
     AlterTableAddStep addColumnIfNotExists(Field<?> field);
 
@@ -412,6 +454,7 @@ public interface AlterTableStep {
      * Add an <code>ADD COLUMN IF NOT EXISTS</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
+    @NotNull
     @Support({ H2, MARIADB, POSTGRES })
     <T> AlterTableAddStep addColumnIfNotExists(Field<T> field, DataType<T> type);
 
@@ -419,6 +462,7 @@ public interface AlterTableStep {
      * Add an <code>ADD COLUMN IF NOT EXISTS</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
+    @NotNull
     @Support({ H2, MARIADB, POSTGRES })
     AlterTableAddStep addColumnIfNotExists(Name field, DataType<?> type);
 
@@ -426,6 +470,7 @@ public interface AlterTableStep {
      * Add an <code>ADD COLUMN IF NOT EXISTS</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
+    @NotNull
     @Support({ H2, MARIADB, POSTGRES })
     AlterTableAddStep addColumnIfNotExists(String field, DataType<?> type);
 
@@ -433,6 +478,7 @@ public interface AlterTableStep {
      * Add an <code>ADD CONSTRAINT</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableUsingIndexStep add(Constraint constraint);
 
@@ -442,6 +488,7 @@ public interface AlterTableStep {
      * <p>
      * This is an alias for {@link #dropColumn(Field)}.
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep drop(Field<?> field);
 
@@ -451,6 +498,7 @@ public interface AlterTableStep {
      * <p>
      * This is an alias for {@link #dropColumn(Name)}.
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep drop(Name field);
 
@@ -460,6 +508,7 @@ public interface AlterTableStep {
      * <p>
      * This is an alias for {@link #dropColumn(String)}.
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep drop(String field);
 
@@ -469,6 +518,7 @@ public interface AlterTableStep {
      * <p>
      * This is an alias for {@link #dropColumnIfExists(Field)}.
      */
+    @NotNull
     @Support({ H2, MARIADB, POSTGRES })
     AlterTableDropStep dropIfExists(Field<?> field);
 
@@ -478,6 +528,7 @@ public interface AlterTableStep {
      * <p>
      * This is an alias for {@link #dropColumnIfExists(Name)}.
      */
+    @NotNull
     @Support({ H2, MARIADB, POSTGRES })
     AlterTableDropStep dropIfExists(Name field);
 
@@ -487,6 +538,7 @@ public interface AlterTableStep {
      * <p>
      * This is an alias for {@link #dropColumnIfExists(String)}.
      */
+    @NotNull
     @Support({ H2, MARIADB, POSTGRES })
     AlterTableDropStep dropIfExists(String field);
 
@@ -494,6 +546,7 @@ public interface AlterTableStep {
      * Add an <code>DROP COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep dropColumn(Field<?> field);
 
@@ -501,6 +554,7 @@ public interface AlterTableStep {
      * Add an <code>DROP COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep dropColumn(Name field);
 
@@ -508,6 +562,7 @@ public interface AlterTableStep {
      * Add an <code>DROP COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep dropColumn(String field);
 
@@ -515,6 +570,7 @@ public interface AlterTableStep {
      * Add an <code>DROP COLUMN IF EXISTS</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
+    @NotNull
     @Support({ H2, MARIADB, POSTGRES })
     AlterTableDropStep dropColumnIfExists(Field<?> field);
 
@@ -522,6 +578,7 @@ public interface AlterTableStep {
      * Add an <code>DROP COLUMN IF EXISTS</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
+    @NotNull
     @Support({ H2, MARIADB, POSTGRES })
     AlterTableDropStep dropColumnIfExists(Name field);
 
@@ -529,6 +586,7 @@ public interface AlterTableStep {
      * Add an <code>DROP COLUMN IF EXISTS</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
+    @NotNull
     @Support({ H2, MARIADB, POSTGRES })
     AlterTableDropStep dropColumnIfExists(String field);
 
@@ -538,6 +596,7 @@ public interface AlterTableStep {
      * <p>
      * This is an alias for {@link #dropColumns(Collection)}.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep drop(Field<?>... fields);
 
@@ -547,6 +606,7 @@ public interface AlterTableStep {
      * <p>
      * This is an alias for {@link #dropColumns(Collection)}.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep drop(Name... fields);
 
@@ -556,6 +616,7 @@ public interface AlterTableStep {
      * <p>
      * This is an alias for {@link #dropColumns(Collection)}.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep drop(String... fields);
 
@@ -563,6 +624,7 @@ public interface AlterTableStep {
      * Add an <code>DROP COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep dropColumns(Field<?>... fields);
 
@@ -570,6 +632,7 @@ public interface AlterTableStep {
      * Add an <code>DROP COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep dropColumns(Name... fields);
 
@@ -577,6 +640,7 @@ public interface AlterTableStep {
      * Add an <code>DROP COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep dropColumns(String... fields);
 
@@ -586,6 +650,7 @@ public interface AlterTableStep {
      * <p>
      * This is an alias for {@link #dropColumns(Collection)}.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep drop(Collection<? extends Field<?>> fields);
 
@@ -593,6 +658,7 @@ public interface AlterTableStep {
      * Add an <code>DROP COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep dropColumns(Collection<? extends Field<?>> fields);
 
@@ -600,6 +666,7 @@ public interface AlterTableStep {
      * Add a <code>DROP CONSTRAINT</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     AlterTableDropStep drop(Constraint constraint);
 
@@ -609,6 +676,7 @@ public interface AlterTableStep {
      *
      * @see DSL#constraint(String)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     AlterTableDropStep dropConstraint(Constraint constraint);
 
@@ -618,6 +686,7 @@ public interface AlterTableStep {
      *
      * @see DSL#constraint(String)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     AlterTableDropStep dropConstraint(Name constraint);
 
@@ -627,6 +696,7 @@ public interface AlterTableStep {
      *
      * @see DSL#constraint(String)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     AlterTableDropStep dropConstraint(String constraint);
 
@@ -634,6 +704,7 @@ public interface AlterTableStep {
      * Add a <code>DROP CONSTRAINT IF EXISTS</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
+    @NotNull
     @Support({ H2, POSTGRES })
     AlterTableDropStep dropIfExists(Constraint constraint);
 
@@ -643,6 +714,7 @@ public interface AlterTableStep {
      *
      * @see DSL#constraint(String)
      */
+    @NotNull
     @Support({ H2, POSTGRES })
     AlterTableDropStep dropConstraintIfExists(Constraint constraint);
 
@@ -652,6 +724,7 @@ public interface AlterTableStep {
      *
      * @see DSL#constraint(String)
      */
+    @NotNull
     @Support({ H2, POSTGRES })
     AlterTableDropStep dropConstraintIfExists(Name constraint);
 
@@ -661,6 +734,7 @@ public interface AlterTableStep {
      *
      * @see DSL#constraint(String)
      */
+    @NotNull
     @Support({ H2, POSTGRES })
     AlterTableDropStep dropConstraintIfExists(String constraint);
 
@@ -668,6 +742,7 @@ public interface AlterTableStep {
      * Add a <code>DROP PRIMARY KEY</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
+    @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL })
     AlterTableDropStep dropPrimaryKey();
 
@@ -681,6 +756,7 @@ public interface AlterTableStep {
      * a <code>DROP CONSTRAINT [name]</code> clause, as in
      * {@link #dropConstraint(Constraint)}.
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep dropPrimaryKey(Constraint constraint);
 
@@ -696,6 +772,7 @@ public interface AlterTableStep {
      *
      * @see DSL#constraint(Name)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep dropPrimaryKey(Name constraint);
 
@@ -711,6 +788,7 @@ public interface AlterTableStep {
      *
      * @see DSL#constraint(String)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep dropPrimaryKey(String constraint);
 
@@ -723,6 +801,7 @@ public interface AlterTableStep {
      * <em>and</em> the name, however, then the syntax can be emulated, e.g.
      * using <code>DROP INDEX .. CASCADE</code>.
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep dropUnique(Constraint constraint);
 
@@ -737,6 +816,7 @@ public interface AlterTableStep {
      *
      * @see DSL#constraint(Name)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep dropUnique(Name constraint);
 
@@ -751,6 +831,7 @@ public interface AlterTableStep {
      *
      * @see DSL#constraint(String)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep dropUnique(String constraint);
 
@@ -758,6 +839,7 @@ public interface AlterTableStep {
      * Add a <code>DROP FOREIGN KEY</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep dropForeignKey(Constraint constraint);
 
@@ -767,6 +849,7 @@ public interface AlterTableStep {
      *
      * @see DSL#constraint(Name)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep dropForeignKey(Name constraint);
 
@@ -776,6 +859,7 @@ public interface AlterTableStep {
      *
      * @see DSL#constraint(String)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableDropStep dropForeignKey(String constraint);
 }

@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 import static org.jooq.SQLDialect.H2;
 // ...
@@ -63,6 +66,7 @@ public interface WindowFromFirstLastStep<T> extends WindowIgnoreNullsStep<T> {
      * Add an <code>FROM FIRST</code> clause to the window function. This
      * might not be supported by all dialects.
      */
+    @NotNull
     @Support({ H2 })
     WindowIgnoreNullsStep<T> fromFirst();
 
@@ -70,6 +74,7 @@ public interface WindowFromFirstLastStep<T> extends WindowIgnoreNullsStep<T> {
      * Add a <code>FROM LAST</code> clause to the window function. This
      * might not be supported by all dialects.
      */
+    @NotNull
     @Support({ H2 })
     WindowIgnoreNullsStep<T> fromLast();
 }

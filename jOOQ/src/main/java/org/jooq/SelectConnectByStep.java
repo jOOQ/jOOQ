@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 // ...
@@ -104,6 +107,27 @@ import org.jooq.impl.DSL;
  * @author Lukas Eder
  */
 public interface SelectConnectByStep<R extends Record> extends SelectGroupByStep<R> {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

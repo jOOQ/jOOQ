@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import org.jooq.CharacterSet;
 import org.jooq.Collation;
 import org.jooq.Configuration;

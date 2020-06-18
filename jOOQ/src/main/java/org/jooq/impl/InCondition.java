@@ -38,6 +38,9 @@
 
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import static java.lang.Boolean.TRUE;
 import static java.lang.Math.ceil;
 import static java.lang.Math.log;

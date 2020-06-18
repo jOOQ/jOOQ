@@ -41,6 +41,8 @@ import java.util.function.Function;
 
 import org.jooq.conf.Settings;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * An object that can behave like a field (a field-like object).
  * <p>
@@ -58,6 +60,7 @@ public interface FieldLike {
      *
      * @return This result provider as a Field&lt;?&gt; object
      */
+    @NotNull
     <T> Field<T> asField();
 
     /**
@@ -72,6 +75,7 @@ public interface FieldLike {
      *
      * @return This result provider as a Field&lt;?&gt; object
      */
+    @NotNull
     <T> Field<T> asField(String alias);
 
 
@@ -106,6 +110,7 @@ public interface FieldLike {
      *             complexity in jOOQ's internals.
      */
     @Deprecated
+    @NotNull
     @Support
     <T> Field<T> asField(Function<? super Field<T>, ? extends String> aliasFunction);
 

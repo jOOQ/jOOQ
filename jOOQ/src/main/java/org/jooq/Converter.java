@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 import java.io.Serializable;
 import java.util.function.Function;
 

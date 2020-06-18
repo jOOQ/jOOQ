@@ -7,3 +7,5 @@
  * classes, which hide implementation facts from the public API.
  */
 package org.jooq;
+
+import org.jetbrains.annotations.*;

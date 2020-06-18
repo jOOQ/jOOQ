@@ -56,6 +56,8 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * A derived column list.
  * <p>
@@ -87,6 +89,7 @@ public interface DerivedColumnList22 extends QueryPart {
      * Specify a subselect to refer to by the <code>DerivedColumnList</code> to
      * form a common table expression.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     <R extends Record22<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?>> CommonTableExpression<R> as(Select<R> select);
 

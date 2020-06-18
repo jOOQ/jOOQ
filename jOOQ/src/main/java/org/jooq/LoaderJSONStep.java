@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 import java.util.Collection;
 
 import org.jooq.LoaderFieldMapper.LoaderFieldContext;
@@ -61,6 +64,7 @@ public interface LoaderJSONStep<R extends Record> {
      * <code>fields.length &lt;= i</code>, then the JSON
      * column is skipped.
      */
+    @NotNull
     @Support
     LoaderJSONOptionsStep<R> fields(Field<?>... fields);
 
@@ -73,6 +77,7 @@ public interface LoaderJSONStep<R extends Record> {
      * <code>new ArrayList(fields).size() &lt;= i</code>, then the JSON column
      * is skipped.
      */
+    @NotNull
     @Support
     LoaderJSONOptionsStep<R> fields(Collection<? extends Field<?>> fields);
 
@@ -85,6 +90,7 @@ public interface LoaderJSONStep<R extends Record> {
      * The {@link LoaderFieldContext#index()} property corresponds to the JSON
      * column index in enumeration order.
      */
+    @NotNull
     @Support
     LoaderJSONOptionsStep<R> fields(LoaderFieldMapper mapper);
 
@@ -98,6 +104,7 @@ public interface LoaderJSONStep<R extends Record> {
      *             instead.
      */
     @Deprecated
+    @NotNull
     @Support
     LoaderCSVOptionsStep<R> fieldsFromSource();
 
@@ -108,6 +115,7 @@ public interface LoaderJSONStep<R extends Record> {
      * @throws LoaderConfigurationException When the source data does not expose
      *             field names.
      */
+    @NotNull
     @Support
     LoaderCSVOptionsStep<R> fieldsCorresponding();
 

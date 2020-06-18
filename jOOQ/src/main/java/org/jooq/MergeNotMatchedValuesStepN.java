@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
@@ -77,6 +80,7 @@ public interface MergeNotMatchedValuesStepN<R extends Record> {
      * Set <code>VALUES</code> for <code>INSERT</code> in the <code>MERGE</code>
      * statement's <code>WHEN NOT MATCHED THEN INSERT</code> clause.
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB })
     MergeNotMatchedWhereStep<R> values(Object... values);
 
@@ -84,6 +88,7 @@ public interface MergeNotMatchedValuesStepN<R extends Record> {
      * Set <code>VALUES</code> for <code>INSERT</code> in the <code>MERGE</code>
      * statement's <code>WHEN NOT MATCHED THEN INSERT</code> clause.
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB })
     MergeNotMatchedWhereStep<R> values(Field<?>... values);
 
@@ -91,6 +96,7 @@ public interface MergeNotMatchedValuesStepN<R extends Record> {
      * Set <code>VALUES</code> for <code>INSERT</code> in the <code>MERGE</code>
      * statement's <code>WHEN NOT MATCHED THEN INSERT</code> clause.
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB })
     MergeNotMatchedWhereStep<R> values(Collection<?> values);
 }

@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 /**
  * Results of an {@link DSLContext#explain(Query)} call.
  *

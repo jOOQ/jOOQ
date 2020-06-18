@@ -38,6 +38,9 @@
 
 package org.jooq;
 
+import org.jetbrains.annotations.NotNull;
+
+
 /**
  * A field contained in a table.
  * <p>
@@ -51,7 +54,8 @@ package org.jooq;
 public interface TableField<R extends Record, T> extends Field<T> {
 
     /**
-     * @return The table this field is contained in
+     * @return The table this field is contained in.
      */
+    @NotNull
     Table<R> getTable();
 }

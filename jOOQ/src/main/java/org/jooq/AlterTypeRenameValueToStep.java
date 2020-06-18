@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.SQLDialect.POSTGRES;
 
 /**
@@ -67,12 +70,14 @@ public interface AlterTypeRenameValueToStep {
     /**
      * Add the <code>ALTER TYPE .. RENAME VALUE .. TO ..</code> clause.
      */
+    @NotNull
     @Support({ POSTGRES })
     AlterTypeFinalStep to(String newEnumValue);
 
     /**
      * Add the <code>ALTER TYPE .. RENAME VALUE .. TO ..</code> clause.
      */
+    @NotNull
     @Support({ POSTGRES })
     AlterTypeFinalStep to(Field<String> newEnumValue);
 

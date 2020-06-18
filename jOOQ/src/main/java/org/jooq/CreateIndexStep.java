@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 // ...
@@ -92,36 +95,42 @@ public interface CreateIndexStep {
     /**
      * Specify the table and column expressions on which to create an index.
      */
+    @NotNull
     @Support
     CreateIndexIncludeStep on(Table<?> table, OrderField<?>... fields);
 
     /**
      * Specify the table and column expressions on which to create an index.
      */
+    @NotNull
     @Support
     CreateIndexIncludeStep on(Table<?> table, Collection<? extends OrderField<?>> fields);
 
     /**
      * Specify the table and column expressions on which to create an index.
      */
+    @NotNull
     @Support
     CreateIndexIncludeStep on(Name tableName, Name... fieldNames);
 
     /**
      * Specify the table and column expressions on which to create an index.
      */
+    @NotNull
     @Support
     CreateIndexIncludeStep on(Name tableName, Collection<? extends Name> fieldNames);
 
     /**
      * Specify the table and column expressions on which to create an index.
      */
+    @NotNull
     @Support
     CreateIndexIncludeStep on(String tableName, String... fieldNames);
 
     /**
      * Specify the table and column expressions on which to create an index.
      */
+    @NotNull
     @Support
     CreateIndexIncludeStep on(String tableName, Collection<? extends String> fieldNames);
 }

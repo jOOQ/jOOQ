@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.NotNull;
+
+
 
 /**
  * A sort specification.
@@ -70,22 +73,26 @@ public interface SortField<T> extends OrderField<T> {
     /**
      * The name of this sort field
      */
+    @NotNull
     String getName();
 
     /**
      * Get the underlying sort order of this sort field
      */
+    @NotNull
     SortOrder getOrder();
 
     /**
      * Add a <code>NULLS FIRST</code> clause to this sort field
      */
+    @NotNull
     @Support
     SortField<T> nullsFirst();
 
     /**
      * Add a <code>NULLS LAST</code> clause to this sort field
      */
+    @NotNull
     @Support
     SortField<T> nullsLast();
 

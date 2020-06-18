@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
@@ -85,6 +88,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#AND} operator and proceed to the next step.
      */
+    @NotNull
     @Support({ POSTGRES, SQLITE })
     InsertOnConflictConditionStep<R> and(Condition condition);
 
@@ -92,6 +96,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#AND} operator and proceed to the next step.
      */
+    @NotNull
     @Support({ POSTGRES, SQLITE })
     InsertOnConflictConditionStep<R> and(Field<Boolean> condition);
 
@@ -107,6 +112,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
      * @see DSL#condition(SQL)
      * @see SQL
      */
+    @NotNull
     @Support({ POSTGRES, SQLITE })
     @PlainSQL
     InsertOnConflictConditionStep<R> and(SQL sql);
@@ -123,6 +129,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
      * @see DSL#condition(String)
      * @see SQL
      */
+    @NotNull
     @Support({ POSTGRES, SQLITE })
     @PlainSQL
     InsertOnConflictConditionStep<R> and(String sql);
@@ -140,6 +147,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support({ POSTGRES, SQLITE })
     @PlainSQL
     InsertOnConflictConditionStep<R> and(String sql, Object... bindings);
@@ -157,6 +165,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support({ POSTGRES, SQLITE })
     @PlainSQL
     InsertOnConflictConditionStep<R> and(String sql, QueryPart... parts);
@@ -165,6 +174,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#AND} operator and proceed to the next step.
      */
+    @NotNull
     @Support({ POSTGRES, SQLITE })
     InsertOnConflictConditionStep<R> andNot(Condition condition);
 
@@ -172,6 +182,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#AND} operator and proceed to the next step.
      */
+    @NotNull
     @Support({ POSTGRES, SQLITE })
     InsertOnConflictConditionStep<R> andNot(Field<Boolean> condition);
 
@@ -179,6 +190,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
      * Combine the currently assembled conditions with an EXISTS clause using
      * the {@link Operator#AND} operator and proceed to the next step.
      */
+    @NotNull
     @Support({ POSTGRES, SQLITE })
     InsertOnConflictConditionStep<R> andExists(Select<?> select);
 
@@ -186,6 +198,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
      * Combine the currently assembled conditions with a NOT EXISTS clause using
      * the {@link Operator#AND} operator and proceed to the next step.
      */
+    @NotNull
     @Support({ POSTGRES, SQLITE })
     InsertOnConflictConditionStep<R> andNotExists(Select<?> select);
 
@@ -193,6 +206,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#OR} operator and proceed to the next step.
      */
+    @NotNull
     @Support({ POSTGRES, SQLITE })
     InsertOnConflictConditionStep<R> or(Condition condition);
 
@@ -200,6 +214,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#OR} operator and proceed to the next step.
      */
+    @NotNull
     @Support({ POSTGRES, SQLITE })
     InsertOnConflictConditionStep<R> or(Field<Boolean> condition);
 
@@ -215,6 +230,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
      * @see DSL#condition(SQL)
      * @see SQL
      */
+    @NotNull
     @Support({ POSTGRES, SQLITE })
     @PlainSQL
     InsertOnConflictConditionStep<R> or(SQL sql);
@@ -231,6 +247,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
      * @see DSL#condition(String)
      * @see SQL
      */
+    @NotNull
     @Support({ POSTGRES, SQLITE })
     @PlainSQL
     InsertOnConflictConditionStep<R> or(String sql);
@@ -248,6 +265,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support({ POSTGRES, SQLITE })
     @PlainSQL
     InsertOnConflictConditionStep<R> or(String sql, Object... bindings);
@@ -265,6 +283,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support({ POSTGRES, SQLITE })
     @PlainSQL
     InsertOnConflictConditionStep<R> or(String sql, QueryPart... parts);
@@ -273,6 +292,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#OR} operator and proceed to the next step.
      */
+    @NotNull
     @Support({ POSTGRES, SQLITE })
     InsertOnConflictConditionStep<R> orNot(Condition condition);
 
@@ -280,6 +300,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#OR} operator and proceed to the next step.
      */
+    @NotNull
     @Support({ POSTGRES, SQLITE })
     InsertOnConflictConditionStep<R> orNot(Field<Boolean> condition);
 
@@ -287,6 +308,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
      * Combine the currently assembled conditions with an EXISTS clause using
      * the {@link Operator#OR} operator and proceed to the next step.
      */
+    @NotNull
     @Support({ POSTGRES, SQLITE })
     InsertOnConflictConditionStep<R> orExists(Select<?> select);
 
@@ -294,6 +316,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
      * Combine the currently assembled conditions with a NOT EXISTS clause using
      * the {@link Operator#OR} operator and proceed to the next step.
      */
+    @NotNull
     @Support({ POSTGRES, SQLITE })
     InsertOnConflictConditionStep<R> orNotExists(Select<?> select);
 }

@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import org.jooq.Converter;
 
 public final class IdentityConverter<T> implements Converter<T, T> {

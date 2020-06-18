@@ -57,6 +57,9 @@ import static org.jooq.SQLDialect.POSTGRES;
 
 import org.jooq.impl.DSL;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * A sequence.
  * <p>
@@ -64,40 +67,34 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
-public interface Sequence<T extends Number> extends Named, Typed<T> {
-
-    /**
-     * Get the sequence catalog.
-     */
-    Catalog getCatalog();
-
-    /**
-     * Get the sequence schema.
-     */
-    Schema getSchema();
+public interface Sequence<T extends Number> extends Qualified, Typed<T> {
 
     /**
      * Get the start value for this sequence or <code>null</code>, if no such
      * value is specified.
      */
+    @Nullable
     Field<T> getStartWith();
 
     /**
      * Get the increment for this sequence or <code>null</code>, if no such
      * value is specified.
      */
+    @Nullable
     Field<T> getIncrementBy();
 
     /**
      * Get the minimum value for this sequence or <code>null</code>, if no such
      * value is specified.
      */
+    @Nullable
     Field<T> getMinvalue();
 
     /**
      * Get the maximum value for this sequence or <code>null</code>, if no such
      * value is specified.
      */
+    @Nullable
     Field<T> getMaxvalue();
 
     /**
@@ -110,17 +107,20 @@ public interface Sequence<T extends Number> extends Named, Typed<T> {
      * Get the number of sequence values to cache for this sequence or
      * <code>null</code>, if no such value is specified.
      */
+    @Nullable
     Field<T> getCache();
 
     /**
      * Get the current value of this sequence
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     Field<T> currval();
 
     /**
      * Increment the sequence and get the next value
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     Field<T> nextval();
 }

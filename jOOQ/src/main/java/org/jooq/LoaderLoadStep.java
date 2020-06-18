@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 import java.io.IOException;
 
 /**
@@ -72,6 +75,7 @@ public interface LoaderLoadStep<R extends Record> {
      * <code>Loader</code> object. They can be accessed using
      * {@link Loader#errors()}
      */
+    @NotNull
     @Support
     Loader<R> execute() throws IOException;
 }

@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.conf.ParamType.FORCE_INDEXED;
 
 import java.sql.CallableStatement;

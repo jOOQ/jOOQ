@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 import java.util.Collection;
 
 import org.jooq.exception.DataAccessException;
@@ -74,6 +77,7 @@ public interface TableOnStep<R extends Record> {
      * Add an <code>ON</code> clause to the <code>JOIN</code>, connecting them
      * with each other with {@link Operator#AND}.
      */
+    @NotNull
     @Support
     TableOnConditionStep<R> on(Condition condition);
 
@@ -81,12 +85,14 @@ public interface TableOnStep<R extends Record> {
      * Add an <code>ON</code> clause to the <code>JOIN</code>, connecting them
      * with each other with {@link Operator#AND}.
      */
+    @NotNull
     @Support
     TableOnConditionStep<R> on(Condition... conditions);
 
     /**
      * Add an <code>ON</code> clause to the <code>JOIN</code>.
      */
+    @NotNull
     @Support
     TableOnConditionStep<R> on(Field<Boolean> condition);
 
@@ -103,6 +109,7 @@ public interface TableOnStep<R extends Record> {
      *             method will be removed in the future.
      */
     @Deprecated
+    @NotNull
     @Support
     TableOnConditionStep<R> on(Boolean condition);
 
@@ -117,6 +124,7 @@ public interface TableOnStep<R extends Record> {
      * @see DSL#condition(SQL)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     TableOnConditionStep<R> on(SQL sql);
@@ -132,6 +140,7 @@ public interface TableOnStep<R extends Record> {
      * @see DSL#condition(String)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     TableOnConditionStep<R> on(String sql);
@@ -148,6 +157,7 @@ public interface TableOnStep<R extends Record> {
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     TableOnConditionStep<R> on(String sql, Object... bindings);
@@ -164,6 +174,7 @@ public interface TableOnStep<R extends Record> {
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     TableOnConditionStep<R> on(String sql, QueryPart... parts);
@@ -174,6 +185,7 @@ public interface TableOnStep<R extends Record> {
      * If this is not supported by your RDBMS, then jOOQ will try to emulate
      * this behaviour using the information provided in this query.
      */
+    @NotNull
     @Support
     Table<Record> using(Field<?>... fields);
 
@@ -183,6 +195,7 @@ public interface TableOnStep<R extends Record> {
      * If this is not supported by your RDBMS, then jOOQ will try to emulate
      * this behaviour using the information provided in this query.
      */
+    @NotNull
     @Support
     Table<Record> using(Collection<? extends Field<?>> fields);
 
@@ -196,6 +209,7 @@ public interface TableOnStep<R extends Record> {
      * @throws DataAccessException If there is no non-ambiguous key definition
      *             known to jOOQ
      */
+    @NotNull
     @Support
     TableOnConditionStep<R> onKey() throws DataAccessException;
 
@@ -209,6 +223,7 @@ public interface TableOnStep<R extends Record> {
      * @throws DataAccessException If there is no non-ambiguous key definition
      *             known to jOOQ
      */
+    @NotNull
     @Support
     TableOnConditionStep<R> onKey(TableField<?, ?>... keyFields) throws DataAccessException;
 
@@ -232,6 +247,7 @@ public interface TableOnStep<R extends Record> {
      * A.join(B).onKey(B.A_ID);
      * </pre></code>
      */
+    @NotNull
     @Support
     TableOnConditionStep<R> onKey(ForeignKey<?, ?> key);
 }

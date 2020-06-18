@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.Clause.DROP_TABLE;
 import static org.jooq.Clause.DROP_TABLE_TABLE;
 // ...

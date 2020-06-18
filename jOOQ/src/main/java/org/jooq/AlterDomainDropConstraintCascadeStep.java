@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.SQLDialect.*;
 
 import java.util.*;
@@ -68,12 +71,14 @@ public interface AlterDomainDropConstraintCascadeStep extends AlterDomainFinalSt
     /**
      * Add the <code>CASCADE</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
+    @NotNull
     @Support({ POSTGRES })
     AlterDomainFinalStep cascade();
 
     /**
      * Add the <code>RESTRICT</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
+    @NotNull
     @Support({ FIREBIRD, POSTGRES })
     AlterDomainFinalStep restrict();
 }

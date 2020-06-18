@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 
 /**
  * A context object for {@link QueryPart} traversal passed to registered

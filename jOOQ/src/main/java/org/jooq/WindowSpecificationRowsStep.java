@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 // ...
@@ -95,6 +98,7 @@ public interface WindowSpecificationRowsStep extends WindowSpecificationFinalSte
      * Add a <code>ROWS UNBOUNDED PRECEDING</code> frame clause to the window
      * specification.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowSpecificationExcludeStep rowsUnboundedPreceding();
 
@@ -102,6 +106,7 @@ public interface WindowSpecificationRowsStep extends WindowSpecificationFinalSte
      * Add a <code>ROWS [number] PRECEDING</code> frame clause to the window
      * specification.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowSpecificationExcludeStep rowsPreceding(int number);
 
@@ -109,6 +114,7 @@ public interface WindowSpecificationRowsStep extends WindowSpecificationFinalSte
      * Add a <code>ROWS CURRENT ROW</code> frame clause to the window
      * specification.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowSpecificationExcludeStep rowsCurrentRow();
 
@@ -116,6 +122,7 @@ public interface WindowSpecificationRowsStep extends WindowSpecificationFinalSte
      * Add a <code>ROWS UNBOUNDED FOLLOWING</code> frame clause to the window
      * specification.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowSpecificationExcludeStep rowsUnboundedFollowing();
 
@@ -123,6 +130,7 @@ public interface WindowSpecificationRowsStep extends WindowSpecificationFinalSte
      * Add a <code>ROWS [number] FOLLOWING</code> frame clause to the window
      * specification.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowSpecificationExcludeStep rowsFollowing(int number);
 
@@ -130,6 +138,7 @@ public interface WindowSpecificationRowsStep extends WindowSpecificationFinalSte
      * Add a <code>ROWS BETWEEN UNBOUNDED PRECEDING ...</code> frame clause to
      * the window specification.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowSpecificationRowsAndStep rowsBetweenUnboundedPreceding();
 
@@ -137,6 +146,7 @@ public interface WindowSpecificationRowsStep extends WindowSpecificationFinalSte
      * Add a <code>ROWS BETWEEN [number] PRECEDING ...</code> frame clause to
      * the window specification.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowSpecificationRowsAndStep rowsBetweenPreceding(int number);
 
@@ -144,6 +154,7 @@ public interface WindowSpecificationRowsStep extends WindowSpecificationFinalSte
      * Add a <code>ROWS BETWEEN CURRENT ROW ...</code> frame clause to the
      * window specification.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowSpecificationRowsAndStep rowsBetweenCurrentRow();
 
@@ -151,6 +162,7 @@ public interface WindowSpecificationRowsStep extends WindowSpecificationFinalSte
      * Add a <code>ROWS BETWEEN UNBOUNDED FOLLOWING ...</code> frame clause to
      * the window specification.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowSpecificationRowsAndStep rowsBetweenUnboundedFollowing();
 
@@ -158,6 +170,7 @@ public interface WindowSpecificationRowsStep extends WindowSpecificationFinalSte
      * Add a <code>ROWS BETWEEN [number] FOLLOWING ...</code> frame clause to
      * the window specification.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowSpecificationRowsAndStep rowsBetweenFollowing(int number);
 
@@ -165,6 +178,7 @@ public interface WindowSpecificationRowsStep extends WindowSpecificationFinalSte
      * Add a <code>RANGE UNBOUNDED PRECEDING</code> frame clause to the window
      * specification.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowSpecificationExcludeStep rangeUnboundedPreceding();
 
@@ -172,6 +186,7 @@ public interface WindowSpecificationRowsStep extends WindowSpecificationFinalSte
      * Add a <code>RANGE [number] PRECEDING</code> frame clause to the window
      * specification.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowSpecificationExcludeStep rangePreceding(int number);
 
@@ -179,6 +194,7 @@ public interface WindowSpecificationRowsStep extends WindowSpecificationFinalSte
      * Add a <code>RANGE CURRENT ROW</code> frame clause to the window
      * specification.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowSpecificationExcludeStep rangeCurrentRow();
 
@@ -186,6 +202,7 @@ public interface WindowSpecificationRowsStep extends WindowSpecificationFinalSte
      * Add a <code>RANGE UNBOUNDED FOLLOWING</code> frame clause to the window
      * specification.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowSpecificationExcludeStep rangeUnboundedFollowing();
 
@@ -193,6 +210,7 @@ public interface WindowSpecificationRowsStep extends WindowSpecificationFinalSte
      * Add a <code>RANGE [number] FOLLOWING</code> frame clause to the window
      * specification.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowSpecificationExcludeStep rangeFollowing(int number);
 
@@ -200,6 +218,7 @@ public interface WindowSpecificationRowsStep extends WindowSpecificationFinalSte
      * Add a <code>RANGE BETWEEN UNBOUNDED PRECEDING ...</code> frame clause to
      * the window specification.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowSpecificationRowsAndStep rangeBetweenUnboundedPreceding();
 
@@ -207,6 +226,7 @@ public interface WindowSpecificationRowsStep extends WindowSpecificationFinalSte
      * Add a <code>RANGE BETWEEN [number] PRECEDING ...</code> frame clause to
      * the window specification.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowSpecificationRowsAndStep rangeBetweenPreceding(int number);
 
@@ -214,6 +234,7 @@ public interface WindowSpecificationRowsStep extends WindowSpecificationFinalSte
      * Add a <code>RANGE BETWEEN CURRENT ROW ...</code> frame clause to the
      * window specification.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowSpecificationRowsAndStep rangeBetweenCurrentRow();
 
@@ -221,6 +242,7 @@ public interface WindowSpecificationRowsStep extends WindowSpecificationFinalSte
      * Add a <code>RANGE BETWEEN UNBOUNDED FOLLOWING ...</code> frame clause to
      * the window specification.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowSpecificationRowsAndStep rangeBetweenUnboundedFollowing();
 
@@ -228,6 +250,7 @@ public interface WindowSpecificationRowsStep extends WindowSpecificationFinalSte
      * Add a <code>RANGE BETWEEN [number] FOLLOWING ...</code> frame clause to
      * the window specification.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowSpecificationRowsAndStep rangeBetweenFollowing(int number);
 
@@ -235,6 +258,7 @@ public interface WindowSpecificationRowsStep extends WindowSpecificationFinalSte
      * Add a <code>GROUPS UNBOUNDED PRECEDING</code> frame clause to the window
      * specification.
      */
+    @NotNull
     @Support({ H2, POSTGRES, SQLITE })
     WindowSpecificationExcludeStep groupsUnboundedPreceding();
 
@@ -242,6 +266,7 @@ public interface WindowSpecificationRowsStep extends WindowSpecificationFinalSte
      * Add a <code>GROUPS [number] PRECEDING</code> frame clause to the window
      * specification.
      */
+    @NotNull
     @Support({ H2, POSTGRES, SQLITE })
     WindowSpecificationExcludeStep groupsPreceding(int number);
 
@@ -249,6 +274,7 @@ public interface WindowSpecificationRowsStep extends WindowSpecificationFinalSte
      * Add a <code>GROUPS CURRENT ROW</code> frame clause to the window
      * specification.
      */
+    @NotNull
     @Support({ H2, POSTGRES, SQLITE })
     WindowSpecificationExcludeStep groupsCurrentRow();
 
@@ -256,6 +282,7 @@ public interface WindowSpecificationRowsStep extends WindowSpecificationFinalSte
      * Add a <code>GROUPS UNBOUNDED FOLLOWING</code> frame clause to the window
      * specification.
      */
+    @NotNull
     @Support({ H2, POSTGRES, SQLITE })
     WindowSpecificationExcludeStep groupsUnboundedFollowing();
 
@@ -263,6 +290,7 @@ public interface WindowSpecificationRowsStep extends WindowSpecificationFinalSte
      * Add a <code>GROUPS [number] FOLLOWING</code> frame clause to the window
      * specification.
      */
+    @NotNull
     @Support({ H2, POSTGRES, SQLITE })
     WindowSpecificationExcludeStep groupsFollowing(int number);
 
@@ -270,6 +298,7 @@ public interface WindowSpecificationRowsStep extends WindowSpecificationFinalSte
      * Add a <code>GROUPS BETWEEN UNBOUNDED PRECEDING ...</code> frame clause to
      * the window specification.
      */
+    @NotNull
     @Support({ H2, POSTGRES, SQLITE })
     WindowSpecificationRowsAndStep groupsBetweenUnboundedPreceding();
 
@@ -277,6 +306,7 @@ public interface WindowSpecificationRowsStep extends WindowSpecificationFinalSte
      * Add a <code>GROUPS BETWEEN [number] PRECEDING ...</code> frame clause to
      * the window specification.
      */
+    @NotNull
     @Support({ H2, POSTGRES, SQLITE })
     WindowSpecificationRowsAndStep groupsBetweenPreceding(int number);
 
@@ -284,6 +314,7 @@ public interface WindowSpecificationRowsStep extends WindowSpecificationFinalSte
      * Add a <code>GROUPS BETWEEN CURRENT ROW ...</code> frame clause to the
      * window specification.
      */
+    @NotNull
     @Support({ H2, POSTGRES, SQLITE })
     WindowSpecificationRowsAndStep groupsBetweenCurrentRow();
 
@@ -291,6 +322,7 @@ public interface WindowSpecificationRowsStep extends WindowSpecificationFinalSte
      * Add a <code>GROUPS BETWEEN UNBOUNDED FOLLOWING ...</code> frame clause to
      * the window specification.
      */
+    @NotNull
     @Support({ H2, POSTGRES, SQLITE })
     WindowSpecificationRowsAndStep groupsBetweenUnboundedFollowing();
 
@@ -298,6 +330,7 @@ public interface WindowSpecificationRowsStep extends WindowSpecificationFinalSte
      * Add a <code>GROUPS BETWEEN [number] FOLLOWING ...</code> frame clause to
      * the window specification.
      */
+    @NotNull
     @Support({ H2, POSTGRES, SQLITE })
     WindowSpecificationRowsAndStep groupsBetweenFollowing(int number);
 }

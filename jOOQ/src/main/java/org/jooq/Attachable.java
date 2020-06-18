@@ -42,6 +42,8 @@ import java.sql.Connection;
 
 import javax.sql.DataSource;
 
+import org.jetbrains.annotations.Nullable;
+
 /**
  * An object in jOOQ that can have an underlying {@link Configuration} attached
  * or detached.
@@ -83,5 +85,6 @@ public interface Attachable extends Serializable {
      * Get the currently attached {@link Configuration}, or <code>null</code> if
      * no <code>Configuration</code> is attached.
      */
+    @Nullable
     Configuration configuration();
 }

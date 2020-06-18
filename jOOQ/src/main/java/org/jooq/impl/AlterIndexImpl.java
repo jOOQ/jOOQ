@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.Clause.ALTER_INDEX;
 import static org.jooq.Clause.ALTER_INDEX_INDEX;
 import static org.jooq.Clause.ALTER_INDEX_RENAME;

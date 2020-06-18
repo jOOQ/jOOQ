@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;

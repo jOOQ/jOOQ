@@ -37,6 +37,10 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+
 /**
  * A SQL enum type. This can be any of the following:
  * <ul>
@@ -59,12 +63,14 @@ public interface EnumType {
     /**
      * The literal as defined in the database
      */
+    @NotNull
     String getLiteral();
 
     /**
      * The catalog of the enum type, if applicable. Otherwise, this returns
      * <code>null</code>
      */
+    @Nullable
 
     default
 
@@ -80,6 +86,7 @@ public interface EnumType {
      * The schema of the enum type, if applicable (Postgres schema-scope enum
      * type only). Otherwise, this returns <code>null</code>
      */
+    @Nullable
 
     default
 
@@ -95,5 +102,6 @@ public interface EnumType {
      * The type name as registered in the database, if applicable (Postgres
      * schema-scope enum type only). Otherwise, this returns <code>null</code>
      */
+    @Nullable
     String getName();
 }

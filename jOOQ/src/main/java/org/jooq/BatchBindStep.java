@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 import java.sql.Statement;
 import java.util.Map;
 
@@ -69,6 +72,7 @@ public interface BatchBindStep extends Batch {
      * <li><code>:N+2</code> -&gt; unmodified</li>
      * </ul>
      */
+    @NotNull
     @Support
     BatchBindStep bind(Object... bindValues);
 
@@ -77,6 +81,7 @@ public interface BatchBindStep extends Batch {
      * <p>
      * This is the same as calling {@link #bind(Object...)} several times.
      */
+    @NotNull
     @Support
     BatchBindStep bind(Object[]... bindValues);
 
@@ -98,6 +103,7 @@ public interface BatchBindStep extends Batch {
      * <li><code>:nameN+2</code> -&gt; unmodified</li>
      * </ul>
      */
+    @NotNull
     @Support
     BatchBindStep bind(Map<String, Object> namedBindValues);
 
@@ -106,6 +112,7 @@ public interface BatchBindStep extends Batch {
      * <p>
      * This is the same as calling {@link #bind(Map...)} several times.
      */
+    @NotNull
     @Support
     BatchBindStep bind(Map<String, Object>... namedBindValues);
 }

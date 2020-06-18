@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 // ...
@@ -66,6 +69,7 @@ public interface GroupConcatSeparatorStep extends AggregateFunction<String> {
     /**
      * Specify the separator on the <code>GROUP_CONCAT</code> function.
      */
+    @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     AggregateFunction<String> separator(String separator);
 }

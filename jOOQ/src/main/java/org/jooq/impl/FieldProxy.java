@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Map;

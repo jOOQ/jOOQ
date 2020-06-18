@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 // ...
@@ -138,6 +141,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * {@link SelectOnStep#using(Field...)} clause is required. If it is
      * required but omitted, the JOIN clause will be ignored
      */
+    @NotNull
     @Support
     SelectOptionalOnStep<R> join(TableLike<?> table, JoinType type);
 
@@ -150,6 +154,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#join(TableLike)
      * @see #innerJoin(TableLike)
      */
+    @NotNull
     @Support
     SelectOnStep<R> join(TableLike<?> table);
 
@@ -169,6 +174,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see #innerJoin(SQL)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     SelectOnStep<R> join(SQL sql);
@@ -189,6 +195,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see #innerJoin(String)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     SelectOnStep<R> join(String sql);
@@ -211,6 +218,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see #innerJoin(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     SelectOnStep<R> join(String sql, Object... bindings);
@@ -233,6 +241,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see #innerJoin(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     SelectOnStep<R> join(String sql, QueryPart... parts);
@@ -248,6 +257,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#join(Name)
      * @see #innerJoin(Name)
      */
+    @NotNull
     @Support
     @PlainSQL
     SelectOnStep<R> join(Name name);
@@ -258,6 +268,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      *
      * @see Table#innerJoin(TableLike)
      */
+    @NotNull
     @Support
     SelectOnStep<R> innerJoin(TableLike<?> table);
 
@@ -274,6 +285,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#innerJoin(SQL)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     SelectOnStep<R> innerJoin(SQL sql);
@@ -291,6 +303,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#innerJoin(String)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     SelectOnStep<R> innerJoin(String sql);
@@ -310,6 +323,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#innerJoin(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     SelectOnStep<R> innerJoin(String sql, Object... bindings);
@@ -329,6 +343,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#innerJoin(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     SelectOnStep<R> innerJoin(String sql, QueryPart... parts);
@@ -341,6 +356,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see DSL#table(Name)
      * @see Table#innerJoin(Name)
      */
+    @NotNull
     @Support
     SelectOnStep<R> innerJoin(Name name);
 
@@ -358,6 +374,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      *
      * @see Table#crossJoin(TableLike)
      */
+    @NotNull
     @Support
     SelectJoinStep<R> crossJoin(TableLike<?> table);
 
@@ -382,6 +399,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#crossJoin(SQL)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     SelectJoinStep<R> crossJoin(SQL sql);
@@ -407,6 +425,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#crossJoin(String)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     SelectJoinStep<R> crossJoin(String sql);
@@ -433,6 +452,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#crossJoin(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     SelectJoinStep<R> crossJoin(String sql, Object... bindings);
@@ -459,6 +479,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#crossJoin(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     SelectJoinStep<R> crossJoin(String sql, QueryPart... parts);
@@ -478,6 +499,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see DSL#table(Name)
      * @see Table#crossJoin(Name)
      */
+    @NotNull
     @Support
     SelectJoinStep<R> crossJoin(Name name);
 
@@ -491,6 +513,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#leftOuterJoin(TableLike)
      * @see #leftOuterJoin(TableLike)
      */
+    @NotNull
     @Support
     SelectJoinPartitionByStep<R> leftJoin(TableLike<?> table);
 
@@ -511,6 +534,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see #leftOuterJoin(SQL)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     SelectJoinPartitionByStep<R> leftJoin(SQL sql);
@@ -532,6 +556,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see #leftOuterJoin(String)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     SelectJoinPartitionByStep<R> leftJoin(String sql);
@@ -554,6 +579,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see #leftOuterJoin(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     SelectJoinPartitionByStep<R> leftJoin(String sql, Object... bindings);
@@ -576,6 +602,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see #leftOuterJoin(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     SelectJoinPartitionByStep<R> leftJoin(String sql, QueryPart... parts);
@@ -591,6 +618,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#leftOuterJoin(Name)
      * @see #leftOuterJoin(Name)
      */
+    @NotNull
     @Support
     SelectJoinPartitionByStep<R> leftJoin(Name name);
 
@@ -601,6 +629,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      *
      * @see Table#leftOuterJoin(TableLike)
      */
+    @NotNull
     @Support
     SelectJoinPartitionByStep<R> leftOuterJoin(TableLike<?> table);
 
@@ -618,6 +647,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#leftOuterJoin(SQL)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     SelectJoinPartitionByStep<R> leftOuterJoin(SQL sql);
@@ -636,6 +666,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#leftOuterJoin(String)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     SelectJoinPartitionByStep<R> leftOuterJoin(String sql);
@@ -655,6 +686,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#leftOuterJoin(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     SelectJoinPartitionByStep<R> leftOuterJoin(String sql, Object... bindings);
@@ -674,6 +706,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#leftOuterJoin(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     SelectJoinPartitionByStep<R> leftOuterJoin(String sql, QueryPart... parts);
@@ -686,6 +719,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see DSL#table(Name)
      * @see Table#leftOuterJoin(Name)
      */
+    @NotNull
     @Support
     SelectJoinPartitionByStep<R> leftOuterJoin(Name name);
 
@@ -701,6 +735,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#rightOuterJoin(TableLike)
      * @see #rightOuterJoin(TableLike)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     SelectJoinPartitionByStep<R> rightJoin(TableLike<?> table);
 
@@ -723,6 +758,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see #rightOuterJoin(SQL)
      * @see SQL
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @PlainSQL
     SelectJoinPartitionByStep<R> rightJoin(SQL sql);
@@ -746,6 +782,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see #rightOuterJoin(String)
      * @see SQL
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @PlainSQL
     SelectJoinPartitionByStep<R> rightJoin(String sql);
@@ -770,6 +807,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see #rightOuterJoin(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @PlainSQL
     SelectJoinPartitionByStep<R> rightJoin(String sql, Object... bindings);
@@ -794,6 +832,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see #rightOuterJoin(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @PlainSQL
     SelectJoinPartitionByStep<R> rightJoin(String sql, QueryPart... parts);
@@ -811,6 +850,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#rightOuterJoin(Name)
      * @see #rightOuterJoin(Name)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     SelectJoinPartitionByStep<R> rightJoin(Name name);
 
@@ -823,6 +863,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      *
      * @see Table#rightOuterJoin(TableLike)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     SelectJoinPartitionByStep<R> rightOuterJoin(TableLike<?> table);
 
@@ -842,6 +883,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#rightOuterJoin(SQL)
      * @see SQL
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @PlainSQL
     SelectJoinPartitionByStep<R> rightOuterJoin(SQL sql);
@@ -862,6 +904,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#rightOuterJoin(String)
      * @see SQL
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @PlainSQL
     SelectJoinPartitionByStep<R> rightOuterJoin(String sql);
@@ -883,6 +926,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#rightOuterJoin(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @PlainSQL
     SelectJoinPartitionByStep<R> rightOuterJoin(String sql, Object... bindings);
@@ -904,6 +948,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#rightOuterJoin(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @PlainSQL
     SelectJoinPartitionByStep<R> rightOuterJoin(String sql, QueryPart... parts);
@@ -918,6 +963,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see DSL#table(Name)
      * @see Table#rightOuterJoin(Name)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     SelectJoinPartitionByStep<R> rightOuterJoin(Name name);
 
@@ -928,6 +974,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * <p>
      * A synonym for {@link #fullOuterJoin(TableLike)}.
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     SelectOnStep<R> fullJoin(TableLike<?> table);
 
@@ -943,6 +990,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     @PlainSQL
     SelectOnStep<R> fullJoin(SQL sql);
@@ -959,6 +1007,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     @PlainSQL
     SelectOnStep<R> fullJoin(String sql);
@@ -975,6 +1024,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     @PlainSQL
     SelectOnStep<R> fullJoin(String sql, Object... bindings);
@@ -991,6 +1041,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     @PlainSQL
     SelectOnStep<R> fullJoin(String sql, QueryPart... parts);
@@ -1002,6 +1053,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * <p>
      * A synonym for {@link #fullOuterJoin(Name)}.
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     SelectOnStep<R> fullJoin(Name name);
 
@@ -1014,6 +1066,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      *
      * @see Table#fullOuterJoin(TableLike)
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     SelectOnStep<R> fullOuterJoin(TableLike<?> table);
 
@@ -1033,6 +1086,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#fullOuterJoin(SQL)
      * @see SQL
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     @PlainSQL
     SelectOnStep<R> fullOuterJoin(SQL sql);
@@ -1053,6 +1107,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#fullOuterJoin(String)
      * @see SQL
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     @PlainSQL
     SelectOnStep<R> fullOuterJoin(String sql);
@@ -1074,6 +1129,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#fullOuterJoin(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     @PlainSQL
     SelectOnStep<R> fullOuterJoin(String sql, Object... bindings);
@@ -1095,6 +1151,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#fullOuterJoin(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     @PlainSQL
     SelectOnStep<R> fullOuterJoin(String sql, QueryPart... parts);
@@ -1109,6 +1166,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see DSL#table(Name)
      * @see Table#fullOuterJoin(Name)
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     SelectOnStep<R> fullOuterJoin(Name name);
 
@@ -1122,6 +1180,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      *
      * @see Table#naturalJoin(TableLike)
      */
+    @NotNull
     @Support
     SelectJoinStep<R> naturalJoin(TableLike<?> table);
 
@@ -1142,6 +1201,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#naturalJoin(SQL)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     SelectJoinStep<R> naturalJoin(SQL sql);
@@ -1163,6 +1223,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#naturalJoin(String)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     SelectJoinStep<R> naturalJoin(String sql);
@@ -1185,6 +1246,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#naturalJoin(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     SelectJoinStep<R> naturalJoin(String sql, Object... bindings);
@@ -1207,6 +1269,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#naturalJoin(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     SelectJoinStep<R> naturalJoin(String sql, QueryPart... parts);
@@ -1222,6 +1285,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see DSL#table(Name)
      * @see Table#naturalJoin(Name)
      */
+    @NotNull
     @Support
     SelectJoinStep<R> naturalJoin(Name name);
 
@@ -1235,6 +1299,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      *
      * @see Table#naturalLeftOuterJoin(TableLike)
      */
+    @NotNull
     @Support
     SelectJoinStep<R> naturalLeftOuterJoin(TableLike<?> table);
 
@@ -1255,6 +1320,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#naturalLeftOuterJoin(SQL)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     SelectJoinStep<R> naturalLeftOuterJoin(SQL sql);
@@ -1276,6 +1342,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#naturalLeftOuterJoin(String)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     SelectJoinStep<R> naturalLeftOuterJoin(String sql);
@@ -1298,6 +1365,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#naturalLeftOuterJoin(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     SelectJoinStep<R> naturalLeftOuterJoin(String sql, Object... bindings);
@@ -1320,6 +1388,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#naturalLeftOuterJoin(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     SelectJoinStep<R> naturalLeftOuterJoin(String sql, QueryPart... parts);
@@ -1335,6 +1404,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see DSL#table(Name)
      * @see Table#naturalLeftOuterJoin(Name)
      */
+    @NotNull
     @Support
     SelectJoinStep<R> naturalLeftOuterJoin(Name name);
 
@@ -1348,6 +1418,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      *
      * @see Table#naturalRightOuterJoin(TableLike)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     SelectJoinStep<R> naturalRightOuterJoin(TableLike<?> table);
 
@@ -1368,6 +1439,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#naturalRightOuterJoin(SQL)
      * @see SQL
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @PlainSQL
     SelectJoinStep<R> naturalRightOuterJoin(SQL sql);
@@ -1389,6 +1461,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#naturalRightOuterJoin(String)
      * @see SQL
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @PlainSQL
     SelectJoinStep<R> naturalRightOuterJoin(String sql);
@@ -1411,6 +1484,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#naturalRightOuterJoin(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @PlainSQL
     SelectJoinStep<R> naturalRightOuterJoin(String sql, Object... bindings);
@@ -1433,6 +1507,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#naturalRightOuterJoin(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @PlainSQL
     SelectJoinStep<R> naturalRightOuterJoin(String sql, QueryPart... parts);
@@ -1448,6 +1523,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see DSL#table(Name)
      * @see Table#naturalRightOuterJoin(Name)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     SelectJoinStep<R> naturalRightOuterJoin(Name name);
 
@@ -1461,6 +1537,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      *
      * @see Table#naturalFullOuterJoin(TableLike)
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     SelectJoinStep<R> naturalFullOuterJoin(TableLike<?> table);
 
@@ -1481,6 +1558,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#naturalFullOuterJoin(SQL)
      * @see SQL
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     @PlainSQL
     SelectJoinStep<R> naturalFullOuterJoin(SQL sql);
@@ -1502,6 +1580,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#naturalFullOuterJoin(String)
      * @see SQL
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     @PlainSQL
     SelectJoinStep<R> naturalFullOuterJoin(String sql);
@@ -1524,6 +1603,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#naturalFullOuterJoin(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     @PlainSQL
     SelectJoinStep<R> naturalFullOuterJoin(String sql, Object... bindings);
@@ -1546,6 +1626,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#naturalFullOuterJoin(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     @PlainSQL
     SelectJoinStep<R> naturalFullOuterJoin(String sql, QueryPart... parts);
@@ -1561,6 +1642,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see DSL#table(Name)
      * @see Table#naturalFullOuterJoin(Name)
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     SelectJoinStep<R> naturalFullOuterJoin(Name name);
 
@@ -1595,6 +1677,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      *
      * @see Table#leftSemiJoin(TableLike)
      */
+    @NotNull
     @Support
     SelectOnStep<R> leftSemiJoin(TableLike<?> table);
 
@@ -1625,6 +1708,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      *
      * @see Table#leftAntiJoin(TableLike)
      */
+    @NotNull
     @Support
     SelectOnStep<R> leftAntiJoin(TableLike<?> table);
 
@@ -1637,6 +1721,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      *
      * @see Table#crossApply(TableLike)
      */
+    @NotNull
     @Support({ POSTGRES })
     SelectJoinStep<R> crossApply(TableLike<?> table);
 
@@ -1652,6 +1737,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#crossApply(SQL)
      * @see SQL
      */
+    @NotNull
     @Support({ POSTGRES })
     @PlainSQL
     SelectJoinStep<R> crossApply(SQL sql);
@@ -1668,6 +1754,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#crossApply(String)
      * @see SQL
      */
+    @NotNull
     @Support({ POSTGRES })
     @PlainSQL
     SelectJoinStep<R> crossApply(String sql);
@@ -1685,6 +1772,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#crossApply(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support({ POSTGRES })
     @PlainSQL
     SelectJoinStep<R> crossApply(String sql, Object... bindings);
@@ -1702,6 +1790,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#crossApply(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support({ POSTGRES })
     @PlainSQL
     SelectJoinStep<R> crossApply(String sql, QueryPart... parts);
@@ -1712,6 +1801,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see DSL#table(Name)
      * @see Table#crossApply(Name)
      */
+    @NotNull
     @Support({ POSTGRES })
     SelectJoinStep<R> crossApply(Name name);
 
@@ -1720,6 +1810,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      *
      * @see Table#outerApply(TableLike)
      */
+    @NotNull
     @Support({ POSTGRES })
     SelectJoinStep<R> outerApply(TableLike<?> table);
 
@@ -1735,6 +1826,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#outerApply(SQL)
      * @see SQL
      */
+    @NotNull
     @Support({ POSTGRES })
     @PlainSQL
     SelectJoinStep<R> outerApply(SQL sql);
@@ -1751,6 +1843,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#outerApply(String)
      * @see SQL
      */
+    @NotNull
     @Support({ POSTGRES })
     @PlainSQL
     SelectJoinStep<R> outerApply(String sql);
@@ -1768,6 +1861,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#outerApply(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support({ POSTGRES })
     @PlainSQL
     SelectJoinStep<R> outerApply(String sql, Object... bindings);
@@ -1785,6 +1879,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#outerApply(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support({ POSTGRES })
     @PlainSQL
     SelectJoinStep<R> outerApply(String sql, QueryPart... parts);
@@ -1795,6 +1890,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see DSL#table(Name)
      * @see Table#outerApply(Name)
      */
+    @NotNull
     @Support({ POSTGRES })
     SelectJoinStep<R> outerApply(Name name);
 
@@ -1803,6 +1899,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      *
      * @see Table#straightJoin(TableLike)
      */
+    @NotNull
     @Support({ MYSQL })
     SelectOnStep<R> straightJoin(TableLike<?> table);
 
@@ -1817,6 +1914,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see DSL#table(SQL)
      * @see Table#straightJoin(SQL)
      */
+    @NotNull
     @Support({ MYSQL })
     @PlainSQL
     SelectOnStep<R> straightJoin(SQL sql);
@@ -1832,6 +1930,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see DSL#table(String)
      * @see Table#straightJoin(String)
      */
+    @NotNull
     @Support({ MYSQL })
     @PlainSQL
     SelectOnStep<R> straightJoin(String sql);
@@ -1848,6 +1947,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see DSL#sql(String, Object...)
      * @see Table#straightJoin(String, Object...)
      */
+    @NotNull
     @Support({ MYSQL })
     @PlainSQL
     SelectOnStep<R> straightJoin(String sql, Object... bindings);
@@ -1864,6 +1964,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see DSL#sql(String, QueryPart...)
      * @see Table#straightJoin(String, QueryPart...)
      */
+    @NotNull
     @Support({ MYSQL })
     @PlainSQL
     SelectOnStep<R> straightJoin(String sql, QueryPart... parts);
@@ -1874,6 +1975,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see DSL#table(Name)
      * @see Table#straightJoin(Name)
      */
+    @NotNull
     @Support({ MYSQL })
     SelectOnStep<R> straightJoin(Name name);
 }

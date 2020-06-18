@@ -66,6 +66,9 @@ import org.jooq.conf.RenderQuotedNames;
 import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * An identifier.
  * <p>
@@ -132,11 +135,13 @@ public interface Name extends QueryPart, Comparable<Name> {
     /**
      * Get the first segment of the qualified name (usually a {@link Catalog} or {@link Schema} name).
      */
+    @NotNull
     String first();
 
     /**
      * Get the last segment of the qualified name (usually a {@link Table}, {@link Field}, or {@link Parameter} name).
      */
+    @NotNull
     String last();
 
     /**
@@ -158,46 +163,55 @@ public interface Name extends QueryPart, Comparable<Name> {
     /**
      * This name's qualifier (if it is {@link #qualified()}), or <code>null</code>.
      */
+    @Nullable
     Name qualifier();
 
     /**
      * This name, unqualified.
      */
+    @NotNull
     Name unqualifiedName();
 
     /**
      * Whether this is a quoted name.
      */
+    @NotNull
     Quoted quoted();
 
     /**
      * This name, quoted.
      */
+    @NotNull
     Name quotedName();
 
     /**
      * This name, unquoted.
      */
+    @NotNull
     Name unquotedName();
 
     /**
      * Get the individual, unqualified name parts of this name.
      */
+    @NotNull
     Name[] parts();
 
     /**
      * Appends <code>name</code> to this name.
      */
+    @NotNull
     Name append(String name);
 
     /**
      * Appends <code>name</code> (all of its {@link #parts()}) to this name.
      */
+    @NotNull
     Name append(Name name);
 
     /**
      * The qualified name of this SQL identifier.
      */
+    @NotNull
     String[] getName();
 
     /**
@@ -205,6 +219,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      *
      * @see #as(WindowSpecification)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowDefinition as();
 
@@ -219,6 +234,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * {@link AggregateFunction#over(WindowDefinition)}</li>
      * </ul>
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowDefinition as(WindowSpecification window);
 
@@ -229,6 +245,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * Column names are implicitly inherited from the <code>SELECT</code>
      * statement.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     <R extends Record> CommonTableExpression<R> as(Select<R> select);
 
@@ -240,6 +257,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList fields(String... fieldNames);
 
@@ -251,6 +269,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList fields(Name... fieldNames);
 
@@ -274,6 +293,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      *             complexity in jOOQ's internals.
      */
     @Deprecated
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList fields(Function<? super Field<?>, ? extends String> fieldNameFunction);
 
@@ -296,6 +316,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      *             complexity in jOOQ's internals.
      */
     @Deprecated
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList fields(BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction);
 
@@ -310,6 +331,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList1 fields(String fieldName1);
 
@@ -321,6 +343,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList2 fields(String fieldName1, String fieldName2);
 
@@ -332,6 +355,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList3 fields(String fieldName1, String fieldName2, String fieldName3);
 
@@ -343,6 +367,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList4 fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4);
 
@@ -354,6 +379,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList5 fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5);
 
@@ -365,6 +391,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList6 fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6);
 
@@ -376,6 +403,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList7 fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7);
 
@@ -387,6 +415,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList8 fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7, String fieldName8);
 
@@ -398,6 +427,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList9 fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7, String fieldName8, String fieldName9);
 
@@ -409,6 +439,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList10 fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7, String fieldName8, String fieldName9, String fieldName10);
 
@@ -420,6 +451,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList11 fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7, String fieldName8, String fieldName9, String fieldName10, String fieldName11);
 
@@ -431,6 +463,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList12 fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7, String fieldName8, String fieldName9, String fieldName10, String fieldName11, String fieldName12);
 
@@ -442,6 +475,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList13 fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7, String fieldName8, String fieldName9, String fieldName10, String fieldName11, String fieldName12, String fieldName13);
 
@@ -453,6 +487,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList14 fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7, String fieldName8, String fieldName9, String fieldName10, String fieldName11, String fieldName12, String fieldName13, String fieldName14);
 
@@ -464,6 +499,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList15 fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7, String fieldName8, String fieldName9, String fieldName10, String fieldName11, String fieldName12, String fieldName13, String fieldName14, String fieldName15);
 
@@ -475,6 +511,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList16 fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7, String fieldName8, String fieldName9, String fieldName10, String fieldName11, String fieldName12, String fieldName13, String fieldName14, String fieldName15, String fieldName16);
 
@@ -486,6 +523,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList17 fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7, String fieldName8, String fieldName9, String fieldName10, String fieldName11, String fieldName12, String fieldName13, String fieldName14, String fieldName15, String fieldName16, String fieldName17);
 
@@ -497,6 +535,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList18 fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7, String fieldName8, String fieldName9, String fieldName10, String fieldName11, String fieldName12, String fieldName13, String fieldName14, String fieldName15, String fieldName16, String fieldName17, String fieldName18);
 
@@ -508,6 +547,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList19 fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7, String fieldName8, String fieldName9, String fieldName10, String fieldName11, String fieldName12, String fieldName13, String fieldName14, String fieldName15, String fieldName16, String fieldName17, String fieldName18, String fieldName19);
 
@@ -519,6 +559,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList20 fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7, String fieldName8, String fieldName9, String fieldName10, String fieldName11, String fieldName12, String fieldName13, String fieldName14, String fieldName15, String fieldName16, String fieldName17, String fieldName18, String fieldName19, String fieldName20);
 
@@ -530,6 +571,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList21 fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7, String fieldName8, String fieldName9, String fieldName10, String fieldName11, String fieldName12, String fieldName13, String fieldName14, String fieldName15, String fieldName16, String fieldName17, String fieldName18, String fieldName19, String fieldName20, String fieldName21);
 
@@ -541,6 +583,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList22 fields(String fieldName1, String fieldName2, String fieldName3, String fieldName4, String fieldName5, String fieldName6, String fieldName7, String fieldName8, String fieldName9, String fieldName10, String fieldName11, String fieldName12, String fieldName13, String fieldName14, String fieldName15, String fieldName16, String fieldName17, String fieldName18, String fieldName19, String fieldName20, String fieldName21, String fieldName22);
 
@@ -552,6 +595,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList1 fields(Name fieldName1);
 
@@ -563,6 +607,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList2 fields(Name fieldName1, Name fieldName2);
 
@@ -574,6 +619,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList3 fields(Name fieldName1, Name fieldName2, Name fieldName3);
 
@@ -585,6 +631,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList4 fields(Name fieldName1, Name fieldName2, Name fieldName3, Name fieldName4);
 
@@ -596,6 +643,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList5 fields(Name fieldName1, Name fieldName2, Name fieldName3, Name fieldName4, Name fieldName5);
 
@@ -607,6 +655,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList6 fields(Name fieldName1, Name fieldName2, Name fieldName3, Name fieldName4, Name fieldName5, Name fieldName6);
 
@@ -618,6 +667,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList7 fields(Name fieldName1, Name fieldName2, Name fieldName3, Name fieldName4, Name fieldName5, Name fieldName6, Name fieldName7);
 
@@ -629,6 +679,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList8 fields(Name fieldName1, Name fieldName2, Name fieldName3, Name fieldName4, Name fieldName5, Name fieldName6, Name fieldName7, Name fieldName8);
 
@@ -640,6 +691,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList9 fields(Name fieldName1, Name fieldName2, Name fieldName3, Name fieldName4, Name fieldName5, Name fieldName6, Name fieldName7, Name fieldName8, Name fieldName9);
 
@@ -651,6 +703,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList10 fields(Name fieldName1, Name fieldName2, Name fieldName3, Name fieldName4, Name fieldName5, Name fieldName6, Name fieldName7, Name fieldName8, Name fieldName9, Name fieldName10);
 
@@ -662,6 +715,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList11 fields(Name fieldName1, Name fieldName2, Name fieldName3, Name fieldName4, Name fieldName5, Name fieldName6, Name fieldName7, Name fieldName8, Name fieldName9, Name fieldName10, Name fieldName11);
 
@@ -673,6 +727,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList12 fields(Name fieldName1, Name fieldName2, Name fieldName3, Name fieldName4, Name fieldName5, Name fieldName6, Name fieldName7, Name fieldName8, Name fieldName9, Name fieldName10, Name fieldName11, Name fieldName12);
 
@@ -684,6 +739,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList13 fields(Name fieldName1, Name fieldName2, Name fieldName3, Name fieldName4, Name fieldName5, Name fieldName6, Name fieldName7, Name fieldName8, Name fieldName9, Name fieldName10, Name fieldName11, Name fieldName12, Name fieldName13);
 
@@ -695,6 +751,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList14 fields(Name fieldName1, Name fieldName2, Name fieldName3, Name fieldName4, Name fieldName5, Name fieldName6, Name fieldName7, Name fieldName8, Name fieldName9, Name fieldName10, Name fieldName11, Name fieldName12, Name fieldName13, Name fieldName14);
 
@@ -706,6 +763,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList15 fields(Name fieldName1, Name fieldName2, Name fieldName3, Name fieldName4, Name fieldName5, Name fieldName6, Name fieldName7, Name fieldName8, Name fieldName9, Name fieldName10, Name fieldName11, Name fieldName12, Name fieldName13, Name fieldName14, Name fieldName15);
 
@@ -717,6 +775,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList16 fields(Name fieldName1, Name fieldName2, Name fieldName3, Name fieldName4, Name fieldName5, Name fieldName6, Name fieldName7, Name fieldName8, Name fieldName9, Name fieldName10, Name fieldName11, Name fieldName12, Name fieldName13, Name fieldName14, Name fieldName15, Name fieldName16);
 
@@ -728,6 +787,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList17 fields(Name fieldName1, Name fieldName2, Name fieldName3, Name fieldName4, Name fieldName5, Name fieldName6, Name fieldName7, Name fieldName8, Name fieldName9, Name fieldName10, Name fieldName11, Name fieldName12, Name fieldName13, Name fieldName14, Name fieldName15, Name fieldName16, Name fieldName17);
 
@@ -739,6 +799,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList18 fields(Name fieldName1, Name fieldName2, Name fieldName3, Name fieldName4, Name fieldName5, Name fieldName6, Name fieldName7, Name fieldName8, Name fieldName9, Name fieldName10, Name fieldName11, Name fieldName12, Name fieldName13, Name fieldName14, Name fieldName15, Name fieldName16, Name fieldName17, Name fieldName18);
 
@@ -750,6 +811,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList19 fields(Name fieldName1, Name fieldName2, Name fieldName3, Name fieldName4, Name fieldName5, Name fieldName6, Name fieldName7, Name fieldName8, Name fieldName9, Name fieldName10, Name fieldName11, Name fieldName12, Name fieldName13, Name fieldName14, Name fieldName15, Name fieldName16, Name fieldName17, Name fieldName18, Name fieldName19);
 
@@ -761,6 +823,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList20 fields(Name fieldName1, Name fieldName2, Name fieldName3, Name fieldName4, Name fieldName5, Name fieldName6, Name fieldName7, Name fieldName8, Name fieldName9, Name fieldName10, Name fieldName11, Name fieldName12, Name fieldName13, Name fieldName14, Name fieldName15, Name fieldName16, Name fieldName17, Name fieldName18, Name fieldName19, Name fieldName20);
 
@@ -772,6 +835,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList21 fields(Name fieldName1, Name fieldName2, Name fieldName3, Name fieldName4, Name fieldName5, Name fieldName6, Name fieldName7, Name fieldName8, Name fieldName9, Name fieldName10, Name fieldName11, Name fieldName12, Name fieldName13, Name fieldName14, Name fieldName15, Name fieldName16, Name fieldName17, Name fieldName18, Name fieldName19, Name fieldName20, Name fieldName21);
 
@@ -783,6 +847,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * subselect to form a {@link CommonTableExpression} to be used with
      * <code>WITH</code> clauses.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DerivedColumnList22 fields(Name fieldName1, Name fieldName2, Name fieldName3, Name fieldName4, Name fieldName5, Name fieldName6, Name fieldName7, Name fieldName8, Name fieldName9, Name fieldName10, Name fieldName11, Name fieldName12, Name fieldName13, Name fieldName14, Name fieldName15, Name fieldName16, Name fieldName17, Name fieldName18, Name fieldName19, Name fieldName20, Name fieldName21, Name fieldName22);
 

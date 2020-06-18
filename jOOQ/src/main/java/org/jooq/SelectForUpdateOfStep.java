@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 // ...
@@ -123,6 +126,7 @@ public interface SelectForUpdateOfStep<R extends Record> extends SelectForUpdate
      *
      * @see SelectQuery#setForLockModeOf(Field...)
      */
+    @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB })
     SelectForUpdateWaitStep<R> of(Field<?>... fields);
 
@@ -132,6 +136,7 @@ public interface SelectForUpdateOfStep<R extends Record> extends SelectForUpdate
      *
      * @see SelectQuery#setForLockModeOf(Collection)
      */
+    @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB })
     SelectForUpdateWaitStep<R> of(Collection<? extends Field<?>> fields);
 
@@ -141,6 +146,7 @@ public interface SelectForUpdateOfStep<R extends Record> extends SelectForUpdate
      *
      * @see SelectQuery#setForLockModeOf(Table...)
      */
+    @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MYSQL, POSTGRES })
     SelectForUpdateWaitStep<R> of(Table<?>... tables);
 

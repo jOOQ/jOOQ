@@ -38,6 +38,9 @@
 
 package org.jooq.util.mariadb;
 
+import org.jetbrains.annotations.*;
+
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;

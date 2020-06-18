@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import java.lang.reflect.Method;
 
 import javax.persistence.AttributeConverter;

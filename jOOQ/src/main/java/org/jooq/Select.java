@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 // ...
@@ -98,6 +101,7 @@ public interface Select<R extends Record> extends ResultQuery<R>, TableLike<R>, 
      *             this instance as an set operation argument would lead to a
      *             {@link StackOverflowError} when generating the SQL.
      */
+    @NotNull
     @Support
     Select<R> union(Select<? extends R> select);
 
@@ -110,6 +114,7 @@ public interface Select<R extends Record> extends ResultQuery<R>, TableLike<R>, 
      *             this instance as an set operation argument would lead to a
      *             {@link StackOverflowError} when generating the SQL.
      */
+    @NotNull
     @Support
     Select<R> unionAll(Select<? extends R> select);
 
@@ -122,6 +127,7 @@ public interface Select<R extends Record> extends ResultQuery<R>, TableLike<R>, 
      *             this instance as an set operation argument would lead to a
      *             {@link StackOverflowError} when generating the SQL.
      */
+    @NotNull
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Select<R> except(Select<? extends R> select);
 
@@ -134,6 +140,7 @@ public interface Select<R extends Record> extends ResultQuery<R>, TableLike<R>, 
      *             this instance as an set operation argument would lead to a
      *             {@link StackOverflowError} when generating the SQL.
      */
+    @NotNull
     @Support({ CUBRID, DERBY, HSQLDB, POSTGRES })
     Select<R> exceptAll(Select<? extends R> select);
 
@@ -146,6 +153,7 @@ public interface Select<R extends Record> extends ResultQuery<R>, TableLike<R>, 
      *             this instance as an set operation argument would lead to a
      *             {@link StackOverflowError} when generating the SQL.
      */
+    @NotNull
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Select<R> intersect(Select<? extends R> select);
 
@@ -158,6 +166,7 @@ public interface Select<R extends Record> extends ResultQuery<R>, TableLike<R>, 
      *             this instance as an set operation argument would lead to a
      *             {@link StackOverflowError} when generating the SQL.
      */
+    @NotNull
     @Support({ CUBRID, DERBY, HSQLDB, POSTGRES })
     Select<R> intersectAll(Select<? extends R> select);
 

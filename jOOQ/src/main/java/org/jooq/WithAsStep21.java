@@ -56,6 +56,8 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * This type is part of the jOOQ DSL to create {@link Select}, {@link Insert},
  * {@link Update}, {@link Delete}, {@link Merge} statements prefixed with a
@@ -78,6 +80,7 @@ public interface WithAsStep21 {
     /**
      * Associate a subselect with a common table expression's table and column names.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithStep as(Select<? extends Record21<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?>> select);
 }

@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 // ...
@@ -62,18 +65,21 @@ public interface RevokeFromStep {
     /**
      * Revoke a privilege from a user.
      */
+    @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     RevokeFinalStep from(User user);
 
     /**
      * Revoke a privilege from a role.
      */
+    @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     RevokeFinalStep from(Role role);
 
     /**
      * Revoke a privilege from <code>PUBLIC</code>.
      */
+    @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     RevokeFinalStep fromPublic();
 }

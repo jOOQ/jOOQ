@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 // ...
@@ -66,12 +69,14 @@ public interface GroupConcatOrderByStep extends GroupConcatSeparatorStep {
     /**
      * Add an <code>ORDER BY</code> clause to the function.
      */
+    @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     GroupConcatSeparatorStep orderBy(OrderField<?>... fields);
 
     /**
      * Add an <code>ORDER BY</code> clause to the function.
      */
+    @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     GroupConcatSeparatorStep orderBy(Collection<? extends OrderField<?>> fields);
 }

@@ -42,6 +42,9 @@ import org.jooq.conf.Settings;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.DSL;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * A named parameter and/or bind value.
  * <p>
@@ -109,12 +112,14 @@ public interface Param<T> extends Field<T> {
      * {@link Query#getParam(String)}, {@link Query#getParams()}</li>
      * </ul>
      */
+    @Nullable
     String getParamName();
 
     /**
      * Get the parameter's underlying value. This returns <code>null</code> if
      * no value has been set yet.
      */
+    @Nullable
     T getValue();
 
     /**
@@ -160,10 +165,12 @@ public interface Param<T> extends Field<T> {
     /**
      * The parameter type.
      */
+    @NotNull
     ParamType getParamType();
 
     /**
      * The parameter mode.
      */
+    @NotNull
     ParamMode getParamMode();
 }

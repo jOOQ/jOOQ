@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 /**
  * The final step for the creation of a <code>COMMENT ON [ object type ]</code>
  * statement.

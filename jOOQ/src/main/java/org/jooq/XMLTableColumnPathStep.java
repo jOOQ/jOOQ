@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 // ...
@@ -54,6 +57,7 @@ public interface XMLTableColumnPathStep extends XMLTableColumnForOrdinalityStep,
      * Specify the <code>PATH</code> of a column in the <code>COLUMNS</code>
      * clause of the <code>XMLTABLE</code> predicate.
      */
+    @NotNull
     @Support({ POSTGRES })
     XMLTableColumnsStep path(String path);
 

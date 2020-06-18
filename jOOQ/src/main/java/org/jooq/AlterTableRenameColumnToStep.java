@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 /**
  * The step in the <code>ALTER TABLE</code> DSL used to <code>RENAME</code>
  * columns.
@@ -66,18 +69,21 @@ public interface AlterTableRenameColumnToStep {
     /**
      * Specify a new column name.
      */
+    @NotNull
     @Support
     AlterTableFinalStep to(Field<?> newName);
 
     /**
      * Specify a new column name.
      */
+    @NotNull
     @Support
     AlterTableFinalStep to(Name newName);
 
     /**
      * Specify a new column name.
      */
+    @NotNull
     @Support
     AlterTableFinalStep to(String newName);
 }

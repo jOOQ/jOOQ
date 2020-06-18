@@ -37,7 +37,7 @@
  */
 package org.jooq;
 
-import org.jooq.Record;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * This type is used for the {@link Select}'s DSL API when selecting generic
@@ -132,6 +132,7 @@ public interface SelectSeekStep8<R extends Record, T1, T2, T3, T4, T5, T6, T7, T
      *      href="http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method/">http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method</a>
      * @see #seekAfter(Object, Object, Object, Object, Object, Object, Object, Object)
      */
+    @NotNull
     @Support
     SelectSeekLimitStep<R> seek(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8);
 
@@ -184,6 +185,7 @@ public interface SelectSeekStep8<R extends Record, T1, T2, T3, T4, T5, T6, T7, T
      *      href="http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method/">http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method</a>
      * @see #seekAfter(Field, Field, Field, Field, Field, Field, Field, Field)
      */
+    @NotNull
     @Support
     SelectSeekLimitStep<R> seek(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8);
 
@@ -235,6 +237,7 @@ public interface SelectSeekStep8<R extends Record, T1, T2, T3, T4, T5, T6, T7, T
      * @see <a
      *      href="http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method/">http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method</a>
      */
+    @NotNull
     @Support
     SelectSeekLimitStep<R> seekAfter(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8);
 
@@ -286,6 +289,7 @@ public interface SelectSeekStep8<R extends Record, T1, T2, T3, T4, T5, T6, T7, T
      * @see <a
      *      href="http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method/">http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method</a>
      */
+    @NotNull
     @Support
     SelectSeekLimitStep<R> seekAfter(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8);
 
@@ -339,6 +343,7 @@ public interface SelectSeekStep8<R extends Record, T1, T2, T3, T4, T5, T6, T7, T
      * @deprecated - [#7461] - SEEK BEFORE is not implemented correctly
      */
     @Deprecated
+    @NotNull
     @Support
     SelectSeekLimitStep<R> seekBefore(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8);
 
@@ -392,6 +397,7 @@ public interface SelectSeekStep8<R extends Record, T1, T2, T3, T4, T5, T6, T7, T
      * @deprecated - [#7461] - SEEK BEFORE is not implemented correctly
      */
     @Deprecated
+    @NotNull
     @Support
     SelectSeekLimitStep<R> seekBefore(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8);
 }

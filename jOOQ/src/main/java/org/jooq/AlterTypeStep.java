@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 
@@ -68,54 +71,63 @@ public interface AlterTypeStep {
     /**
      * Add the <code>ALTER TYPE .. RENAME TO ..</code> clause.
      */
+    @NotNull
     @Support({ POSTGRES })
     AlterTypeFinalStep renameTo(String newName);
 
     /**
      * Add the <code>ALTER TYPE .. RENAME TO ..</code> clause.
      */
+    @NotNull
     @Support({ POSTGRES })
     AlterTypeFinalStep renameTo(Name newName);
 
     /**
      * Add the <code>ALTER TYPE .. SET SCHEMA ..</code> clause.
      */
+    @NotNull
     @Support({ POSTGRES })
     AlterTypeFinalStep setSchema(String newSchema);
 
     /**
      * Add the <code>ALTER TYPE .. SET SCHEMA ..</code> clause.
      */
+    @NotNull
     @Support({ POSTGRES })
     AlterTypeFinalStep setSchema(Name newSchema);
 
     /**
      * Add the <code>ALTER TYPE .. SET SCHEMA ..</code> clause.
      */
+    @NotNull
     @Support({ POSTGRES })
     AlterTypeFinalStep setSchema(Schema newSchema);
 
     /**
      * Add the <code>ALTER TYPE .. ADD VALUE ..</code> clause.
      */
+    @NotNull
     @Support({ POSTGRES })
     AlterTypeFinalStep addValue(String newEnumValue);
 
     /**
      * Add the <code>ALTER TYPE .. ADD VALUE ..</code> clause.
      */
+    @NotNull
     @Support({ POSTGRES })
     AlterTypeFinalStep addValue(Field<String> newEnumValue);
 
     /**
      * Add the <code>ALTER TYPE .. RENAME VALUE ..</code> clause.
      */
+    @NotNull
     @Support({ POSTGRES })
     AlterTypeRenameValueToStep renameValue(String existingEnumValue);
 
     /**
      * Add the <code>ALTER TYPE .. RENAME VALUE ..</code> clause.
      */
+    @NotNull
     @Support({ POSTGRES })
     AlterTypeRenameValueToStep renameValue(Field<String> existingEnumValue);
 

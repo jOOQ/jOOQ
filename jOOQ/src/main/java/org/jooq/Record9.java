@@ -37,6 +37,8 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * A model type for a records with degree <code>9</code>
  *
@@ -52,12 +54,14 @@ public interface Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> extends Record {
     /**
      * Get this record's fields as a {@link Row9}.
      */
+    @NotNull
     @Override
     Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> fieldsRow();
 
     /**
      * Get this record's values as a {@link Row9}.
      */
+    @NotNull
     @Override
     Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> valuesRow();
 
@@ -68,46 +72,55 @@ public interface Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> extends Record {
     /**
      * Get the first field.
      */
+    @NotNull
     Field<T1> field1();
 
     /**
      * Get the second field.
      */
+    @NotNull
     Field<T2> field2();
 
     /**
      * Get the third field.
      */
+    @NotNull
     Field<T3> field3();
 
     /**
      * Get the fourth field.
      */
+    @NotNull
     Field<T4> field4();
 
     /**
      * Get the fifth field.
      */
+    @NotNull
     Field<T5> field5();
 
     /**
      * Get the sixth field.
      */
+    @NotNull
     Field<T6> field6();
 
     /**
      * Get the seventh field.
      */
+    @NotNull
     Field<T7> field7();
 
     /**
      * Get the eighth field.
      */
+    @NotNull
     Field<T8> field8();
 
     /**
      * Get the ninth field.
      */
+    @NotNull
     Field<T9> field9();
 
     // ------------------------------------------------------------------------
@@ -162,62 +175,74 @@ public interface Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> extends Record {
     /**
      * Set the first value.
      */
+    @NotNull
     Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> value1(T1 value);
 
     /**
      * Set the second value.
      */
+    @NotNull
     Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> value2(T2 value);
 
     /**
      * Set the third value.
      */
+    @NotNull
     Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> value3(T3 value);
 
     /**
      * Set the fourth value.
      */
+    @NotNull
     Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> value4(T4 value);
 
     /**
      * Set the fifth value.
      */
+    @NotNull
     Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> value5(T5 value);
 
     /**
      * Set the sixth value.
      */
+    @NotNull
     Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> value6(T6 value);
 
     /**
      * Set the seventh value.
      */
+    @NotNull
     Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> value7(T7 value);
 
     /**
      * Set the eighth value.
      */
+    @NotNull
     Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> value8(T8 value);
 
     /**
      * Set the ninth value.
      */
+    @NotNull
     Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> value9(T9 value);
 
     /**
      * Set all values.
      */
+    @NotNull
     Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> values(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9);
 
     /**
      * {@inheritDoc}
      */
+    @NotNull
     @Override
     <T> Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> with(Field<T> field, T value);
 
     /**
      * {@inheritDoc}
      */
+    @NotNull
     @Override
     <T, U> Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> with(Field<T> field, U value, Converter<? extends T, ? super U> converter);
 

@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 // ...
@@ -78,24 +81,28 @@ public interface WindowExcludeStep<T> extends WindowFinalStep<T> {
     /**
      * Add an <code>EXCLUDE CURRENT ROW</code> clause.
      */
+    @NotNull
     @Support({ H2, POSTGRES, SQLITE })
     WindowFinalStep<T> excludeCurrentRow();
 
     /**
      * Add an <code>EXCLUDE GROUP</code> clause.
      */
+    @NotNull
     @Support({ H2, POSTGRES, SQLITE })
     WindowFinalStep<T> excludeGroup();
 
     /**
      * Add an <code>EXCLUDE TIES</code> clause.
      */
+    @NotNull
     @Support({ H2, POSTGRES, SQLITE })
     WindowFinalStep<T> excludeTies();
 
     /**
      * Add an <code>EXCLUDE NO OTHERS</code> clause.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowFinalStep<T> excludeNoOthers();
 }

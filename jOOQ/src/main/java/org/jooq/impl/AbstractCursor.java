@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 import static org.jooq.XMLFormat.RecordFormat.COLUMN_NAME_ELEMENTS;

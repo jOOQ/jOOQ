@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 /**
  * The final step in creating a case statement of the type <code><pre>
  * CASE WHEN x &lt; 1  THEN 'one'
@@ -59,6 +62,7 @@ public interface CaseConditionStep<T> extends Field<T> {
      * @param result The result value if the condition holds true
      * @return An intermediary step for case statement construction
      */
+    @NotNull
     @Support
     CaseConditionStep<T> when(Condition condition, T result);
 
@@ -70,6 +74,7 @@ public interface CaseConditionStep<T> extends Field<T> {
      * @param result The result value if the condition holds true
      * @return An intermediary step for case statement construction
      */
+    @NotNull
     @Support
     CaseConditionStep<T> when(Condition condition, Field<T> result);
 
@@ -81,6 +86,7 @@ public interface CaseConditionStep<T> extends Field<T> {
      * @param result The result value if the condition holds true
      * @return An intermediary step for case statement construction
      */
+    @NotNull
     @Support
     CaseConditionStep<T> when(Condition condition, Select<? extends Record1<T>> result);
 
@@ -90,6 +96,7 @@ public interface CaseConditionStep<T> extends Field<T> {
      * @param result The result value if no other value matches the case
      * @return The resulting field from case statement construction
      */
+    @NotNull
     @Support
     Field<T> otherwise(T result);
 
@@ -99,6 +106,7 @@ public interface CaseConditionStep<T> extends Field<T> {
      * @param result The result value if no other value matches the case
      * @return The resulting field from case statement construction
      */
+    @NotNull
     @Support
     Field<T> otherwise(Field<T> result);
 
@@ -108,6 +116,7 @@ public interface CaseConditionStep<T> extends Field<T> {
      * @param result The result value if no other value matches the case
      * @return The resulting field from case statement construction
      */
+    @NotNull
     @Support
     Field<T> otherwise(Select<? extends Record1<T>> result);
 
@@ -117,6 +126,7 @@ public interface CaseConditionStep<T> extends Field<T> {
      * @param result The result value if no other value matches the case
      * @return The resulting field from case statement construction
      */
+    @NotNull
     @Support
     Field<T> else_(T result);
 
@@ -126,6 +136,7 @@ public interface CaseConditionStep<T> extends Field<T> {
      * @param result The result value if no other value matches the case
      * @return The resulting field from case statement construction
      */
+    @NotNull
     @Support
     Field<T> else_(Field<T> result);
 
@@ -135,6 +146,7 @@ public interface CaseConditionStep<T> extends Field<T> {
      * @param result The result value if no other value matches the case
      * @return The resulting field from case statement construction
      */
+    @NotNull
     @Support
     Field<T> else_(Select<? extends Record1<T>> result);
 }

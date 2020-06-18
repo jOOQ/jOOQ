@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.NotNull;
+
+
 
 /**
  * This type is used for the {@link Select}'s DSL API when selecting generic
@@ -103,6 +106,8 @@ public interface SelectFinalStep<R extends Record> extends Select<R> {
     /**
      * Get the underlying {@link Query} that is being constructed.
      */
+    @NotNull
+    @Support
     SelectQuery<R> getQuery();
 
 }

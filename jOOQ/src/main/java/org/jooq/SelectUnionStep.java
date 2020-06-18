@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 // ...
@@ -129,6 +132,7 @@ public interface SelectUnionStep<R extends Record> extends SelectCorrelatedSubqu
      * Apply the <code>UNION</code> set operation.
      */
     @Override
+    @NotNull
     @Support
     SelectOrderByStep<R> union(Select<? extends R> select);
 
@@ -136,6 +140,7 @@ public interface SelectUnionStep<R extends Record> extends SelectCorrelatedSubqu
      * Apply the <code>UNION ALL</code> set operation.
      */
     @Override
+    @NotNull
     @Support
     SelectOrderByStep<R> unionAll(Select<? extends R> select);
 
@@ -143,6 +148,7 @@ public interface SelectUnionStep<R extends Record> extends SelectCorrelatedSubqu
      * Apply the <code>EXCEPT</code> (or <code>MINUS</code>) set operation.
      */
     @Override
+    @NotNull
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     SelectOrderByStep<R> except(Select<? extends R> select);
 
@@ -150,6 +156,7 @@ public interface SelectUnionStep<R extends Record> extends SelectCorrelatedSubqu
      * Apply the <code>EXCEPT ALL</code> set operation.
      */
     @Override
+    @NotNull
     @Support({ CUBRID, DERBY, HSQLDB, POSTGRES })
     SelectOrderByStep<R> exceptAll(Select<? extends R> select);
 
@@ -157,6 +164,7 @@ public interface SelectUnionStep<R extends Record> extends SelectCorrelatedSubqu
      * Apply the <code>INTERSECT</code> set operation.
      */
     @Override
+    @NotNull
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     SelectOrderByStep<R> intersect(Select<? extends R> select);
 
@@ -164,6 +172,7 @@ public interface SelectUnionStep<R extends Record> extends SelectCorrelatedSubqu
      * Apply the <code>INTERSECT ALL</code> set operation.
      */
     @Override
+    @NotNull
     @Support({ CUBRID, DERBY, HSQLDB, POSTGRES })
     SelectOrderByStep<R> intersectAll(Select<? extends R> select);
 }

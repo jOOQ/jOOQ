@@ -38,6 +38,9 @@
 
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.SortOrder.DESC;
 
 import java.util.ArrayList;

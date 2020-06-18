@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.impl.Names.N_HEX;
 import static org.jooq.impl.Names.N_REPEAT;
 import static org.jooq.impl.Names.N_REPLACE;

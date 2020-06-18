@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.SQLDialect.*;
 
 import java.util.*;
@@ -68,12 +71,14 @@ public interface CreateDomainDefaultStep<T> extends CreateDomainConstraintStep {
     /**
      * Add the <code>DEFAULT_</code> clause to the <code>CREATE DOMAIN</code> statement.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     CreateDomainConstraintStep default_(T default_);
 
     /**
      * Add the <code>DEFAULT_</code> clause to the <code>CREATE DOMAIN</code> statement.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     CreateDomainConstraintStep default_(Field<T> default_);
 }

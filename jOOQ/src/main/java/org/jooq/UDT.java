@@ -39,6 +39,9 @@ package org.jooq;
 
 import java.util.stream.Stream;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * UDT definition.
  * <p>
@@ -48,17 +51,19 @@ import java.util.stream.Stream;
  * @param <R> The record type
  * @author Lukas Eder
  */
-public interface UDT<R extends UDTRecord<R>> extends Named {
+public interface UDT<R extends UDTRecord<R>> extends Qualified {
 
     /**
      * Get this UDT's fields as a {@link Row}.
      */
+    @NotNull
     Row fieldsRow();
 
 
     /**
      * Get this table's fields as a {@link Stream}.
      */
+    @NotNull
     Stream<Field<?>> fieldStream();
 
 
@@ -81,6 +86,7 @@ public interface UDT<R extends UDTRecord<R>> extends Named {
      *
      * @see Row#field(Field)
      */
+    @Nullable
     <T> Field<T> field(Field<T> field);
 
     /**
@@ -88,6 +94,7 @@ public interface UDT<R extends UDTRecord<R>> extends Named {
      *
      * @see Row#field(String)
      */
+    @Nullable
     Field<?> field(String name);
 
     /**
@@ -95,6 +102,7 @@ public interface UDT<R extends UDTRecord<R>> extends Named {
      *
      * @see Row#field(Name)
      */
+    @Nullable
     Field<?> field(Name name);
 
     /**
@@ -102,6 +110,7 @@ public interface UDT<R extends UDTRecord<R>> extends Named {
      *
      * @see Row#field(int)
      */
+    @Nullable
     Field<?> field(int index);
 
     /**
@@ -109,6 +118,7 @@ public interface UDT<R extends UDTRecord<R>> extends Named {
      *
      * @see Row#fields()
      */
+    @Nullable
     Field<?>[] fields();
 
     /**
@@ -117,6 +127,7 @@ public interface UDT<R extends UDTRecord<R>> extends Named {
      * @return All available fields
      * @see Row#fields(Field...)
      */
+    @Nullable
     Field<?>[] fields(Field<?>... fields);
 
     /**
@@ -125,6 +136,7 @@ public interface UDT<R extends UDTRecord<R>> extends Named {
      * @return All available fields
      * @see Row#fields(String...)
      */
+    @Nullable
     Field<?>[] fields(String... fieldNames);
 
     /**
@@ -133,6 +145,7 @@ public interface UDT<R extends UDTRecord<R>> extends Named {
      * @return All available fields
      * @see Row#fields(Name...)
      */
+    @Nullable
     Field<?>[] fields(Name... fieldNames);
 
     /**
@@ -141,6 +154,7 @@ public interface UDT<R extends UDTRecord<R>> extends Named {
      * @return All available fields
      * @see Row#fields(int...)
      */
+    @Nullable
     Field<?>[] fields(int... fieldIndexes);
 
     /**
@@ -171,23 +185,15 @@ public interface UDT<R extends UDTRecord<R>> extends Named {
     int indexOf(Name fieldName);
 
     /**
-     * Get the UDT catalog.
-     */
-    Catalog getCatalog();
-
-    /**
-     * Get the UDT schema.
-     */
-    Schema getSchema();
-
-    /**
      * Get the UDT package.
      */
+    @Nullable
     Package getPackage();
 
     /**
      * @return The record type produced by this table.
      */
+    @NotNull
     Class<R> getRecordType();
 
     /**
@@ -195,11 +201,13 @@ public interface UDT<R extends UDTRecord<R>> extends Named {
      *
      * @see DSLContext#newRecord(UDT)
      */
+    @NotNull
     R newRecord();
 
     /**
      * The UDT's data type as known to the database.
      */
+    @NotNull
     DataType<R> getDataType();
 
     /**

@@ -39,6 +39,8 @@ package org.jooq;
 
 import org.jooq.impl.DSL;
 
+import org.jetbrains.annotations.NotNull;
+
 
 /**
  * This type is used for the {@link Delete}'s DSL API.
@@ -77,6 +79,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteOrderByStep
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#AND} operator
      */
+    @NotNull
     @Support
     DeleteConditionStep<R> and(Condition condition);
 
@@ -84,6 +87,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteOrderByStep
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#AND} operator
      */
+    @NotNull
     @Support
     DeleteConditionStep<R> and(Field<Boolean> condition);
 
@@ -101,6 +105,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteOrderByStep
      *             method will be removed in the future.
      */
     @Deprecated
+    @NotNull
     @Support
     DeleteConditionStep<R> and(Boolean condition);
 
@@ -116,6 +121,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteOrderByStep
      * @see DSL#condition(SQL)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     DeleteConditionStep<R> and(SQL sql);
@@ -132,6 +138,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteOrderByStep
      * @see DSL#condition(String)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     DeleteConditionStep<R> and(String sql);
@@ -149,6 +156,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteOrderByStep
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     DeleteConditionStep<R> and(String sql, Object... bindings);
@@ -166,6 +174,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteOrderByStep
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     DeleteConditionStep<R> and(String sql, QueryPart... parts);
@@ -174,6 +183,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteOrderByStep
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#AND} operator
      */
+    @NotNull
     @Support
     DeleteConditionStep<R> andNot(Condition condition);
 
@@ -181,6 +191,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteOrderByStep
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#AND} operator
      */
+    @NotNull
     @Support
     DeleteConditionStep<R> andNot(Field<Boolean> condition);
 
@@ -198,6 +209,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteOrderByStep
      *             method will be removed in the future.
      */
     @Deprecated
+    @NotNull
     @Support
     DeleteConditionStep<R> andNot(Boolean condition);
 
@@ -205,6 +217,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteOrderByStep
      * Combine the currently assembled conditions with an EXISTS clause using
      * the {@link Operator#AND} operator
      */
+    @NotNull
     @Support
     DeleteConditionStep<R> andExists(Select<?> select);
 
@@ -212,12 +225,15 @@ public interface DeleteConditionStep<R extends Record> extends DeleteOrderByStep
      * Combine the currently assembled conditions with a NOT EXISTS clause using
      * the {@link Operator#AND} operator
      */
+    @NotNull
+    @Support
     DeleteConditionStep<R> andNotExists(Select<?> select);
 
     /**
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#OR} operator
      */
+    @NotNull
     @Support
     DeleteConditionStep<R> or(Condition condition);
 
@@ -225,6 +241,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteOrderByStep
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#OR} operator
      */
+    @NotNull
     @Support
     DeleteConditionStep<R> or(Field<Boolean> condition);
 
@@ -242,6 +259,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteOrderByStep
      *             method will be removed in the future.
      */
     @Deprecated
+    @NotNull
     @Support
     DeleteConditionStep<R> or(Boolean condition);
 
@@ -257,6 +275,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteOrderByStep
      * @see DSL#condition(SQL)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     DeleteConditionStep<R> or(SQL sql);
@@ -273,6 +292,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteOrderByStep
      * @see DSL#condition(String)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     DeleteConditionStep<R> or(String sql);
@@ -290,6 +310,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteOrderByStep
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     DeleteConditionStep<R> or(String sql, Object... bindings);
@@ -307,6 +328,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteOrderByStep
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     DeleteConditionStep<R> or(String sql, QueryPart... parts);
@@ -315,6 +337,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteOrderByStep
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#OR} operator
      */
+    @NotNull
     @Support
     DeleteConditionStep<R> orNot(Condition condition);
 
@@ -322,6 +345,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteOrderByStep
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#OR} operator
      */
+    @NotNull
     @Support
     DeleteConditionStep<R> orNot(Field<Boolean> condition);
 
@@ -339,6 +363,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteOrderByStep
      *             method will be removed in the future.
      */
     @Deprecated
+    @NotNull
     @Support
     DeleteConditionStep<R> orNot(Boolean condition);
 
@@ -346,6 +371,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteOrderByStep
      * Combine the currently assembled conditions with an EXISTS clause using
      * the {@link Operator#OR} operator
      */
+    @NotNull
     @Support
     DeleteConditionStep<R> orExists(Select<?> select);
 
@@ -353,6 +379,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteOrderByStep
      * Combine the currently assembled conditions with a NOT EXISTS clause using
      * the {@link Operator#OR} operator
      */
+    @NotNull
     @Support
     DeleteConditionStep<R> orNotExists(Select<?> select);
 }

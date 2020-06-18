@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.Clause.SEQUENCE;
 import static org.jooq.Clause.SEQUENCE_REFERENCE;
 import static org.jooq.SQLDialect.CUBRID;

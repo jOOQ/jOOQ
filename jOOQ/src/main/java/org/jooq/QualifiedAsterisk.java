@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.NotNull;
+
+
 /**
  * A qualified asterisk.
  * <p>
@@ -67,6 +70,7 @@ public interface QualifiedAsterisk extends SelectFieldOrAsterisk {
     /**
      * The qualifier.
      */
+    @NotNull
     Table<?> qualifier();
 
     /**
@@ -77,6 +81,7 @@ public interface QualifiedAsterisk extends SelectFieldOrAsterisk {
      * dialects (e.g. {@link SQLDialect#H2}) implement this feature natively. In
      * other dialects, jOOQ expands the asterisk if possible.
      */
+    @NotNull
     @Support
     QualifiedAsterisk except(String... fieldNames);
 
@@ -88,6 +93,7 @@ public interface QualifiedAsterisk extends SelectFieldOrAsterisk {
      * dialects (e.g. {@link SQLDialect#H2}) implement this feature natively. In
      * other dialects, jOOQ expands the asterisk if possible.
      */
+    @NotNull
     @Support
     QualifiedAsterisk except(Name... fieldNames);
 
@@ -99,6 +105,7 @@ public interface QualifiedAsterisk extends SelectFieldOrAsterisk {
      * dialects (e.g. {@link SQLDialect#H2}) implement this feature natively. In
      * other dialects, jOOQ expands the asterisk if possible.
      */
+    @NotNull
     @Support
     QualifiedAsterisk except(Field<?>... fields);
 

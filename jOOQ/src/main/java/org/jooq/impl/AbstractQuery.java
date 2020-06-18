@@ -38,6 +38,9 @@
 
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import static java.lang.Boolean.TRUE;
 import static org.jooq.Constants.FULL_VERSION;
 import static org.jooq.ExecuteType.DDL;

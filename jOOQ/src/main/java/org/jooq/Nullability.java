@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.NotNull;
+
+
 /**
  * An enum that specifies the nullability of a {@link DataType}.
  *
@@ -47,12 +50,14 @@ public enum Nullability {
     /**
      * The data type is explicitly nullable.
      */
+    @NotNull
     @Support
     NULL,
 
     /**
      * The data type is explicitly not nullable.
      */
+    @NotNull
     @Support
     NOT_NULL,
 
@@ -71,12 +76,14 @@ public enum Nullability {
      * {@link SQLDialect#SQLSERVER}).</li>
      * </ul>
      */
+    @NotNull
     @Support
     DEFAULT;
 
     /**
      * Get the explicit {@link Nullability} corresponding to a boolean value.
      */
+    @NotNull
     public static Nullability of(boolean nullability) {
         return nullability ? NULL : NOT_NULL;
     }

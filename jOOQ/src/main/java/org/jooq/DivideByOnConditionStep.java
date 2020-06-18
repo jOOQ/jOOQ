@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 // ...
@@ -95,6 +98,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#AND} operator.
      */
+    @NotNull
     @Support
     DivideByOnConditionStep and(Condition condition);
 
@@ -102,6 +106,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#AND} operator.
      */
+    @NotNull
     @Support
     DivideByOnConditionStep and(Field<Boolean> condition);
 
@@ -119,6 +124,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      *             method will be removed in the future.
      */
     @Deprecated
+    @NotNull
     @Support
     DivideByOnConditionStep and(Boolean condition);
 
@@ -134,6 +140,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      * @see DSL#condition(SQL)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     DivideByOnConditionStep and(SQL sql);
@@ -150,6 +157,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      * @see DSL#condition(String)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     DivideByOnConditionStep and(String sql);
@@ -167,6 +175,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     DivideByOnConditionStep and(String sql, Object... bindings);
@@ -184,6 +193,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     DivideByOnConditionStep and(String sql, QueryPart... parts);
@@ -192,6 +202,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#AND} operator.
      */
+    @NotNull
     @Support
     DivideByOnConditionStep andNot(Condition condition);
 
@@ -199,6 +210,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#AND} operator.
      */
+    @NotNull
     @Support
     DivideByOnConditionStep andNot(Field<Boolean> condition);
 
@@ -216,6 +228,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      *             method will be removed in the future.
      */
     @Deprecated
+    @NotNull
     @Support
     DivideByOnConditionStep andNot(Boolean condition);
 
@@ -223,6 +236,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      * Combine the currently assembled conditions with an <code>EXISTS</code>
      * clause using the {@link Operator#AND} operator.
      */
+    @NotNull
     @Support
     DivideByOnConditionStep andExists(Select<?> select);
 
@@ -230,6 +244,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      * Combine the currently assembled conditions with a <code>NOT EXISTS</code>
      * clause using the {@link Operator#AND} operator.
      */
+    @NotNull
     @Support
     DivideByOnConditionStep andNotExists(Select<?> select);
 
@@ -237,6 +252,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#OR} operator.
      */
+    @NotNull
     @Support
     DivideByOnConditionStep or(Condition condition);
 
@@ -244,6 +260,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#OR} operator.
      */
+    @NotNull
     @Support
     DivideByOnConditionStep or(Field<Boolean> condition);
 
@@ -261,6 +278,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      *             method will be removed in the future.
      */
     @Deprecated
+    @NotNull
     @Support
     DivideByOnConditionStep or(Boolean condition);
 
@@ -276,6 +294,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      * @see DSL#condition(SQL)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     DivideByOnConditionStep or(SQL sql);
@@ -292,6 +311,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      * @see DSL#condition(String)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     DivideByOnConditionStep or(String sql);
@@ -309,6 +329,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     DivideByOnConditionStep or(String sql, Object... bindings);
@@ -326,6 +347,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     DivideByOnConditionStep or(String sql, QueryPart... parts);
@@ -334,6 +356,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#OR} operator.
      */
+    @NotNull
     @Support
     DivideByOnConditionStep orNot(Condition condition);
 
@@ -341,6 +364,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#OR} operator.
      */
+    @NotNull
     @Support
     DivideByOnConditionStep orNot(Field<Boolean> condition);
 
@@ -358,6 +382,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      *             method will be removed in the future.
      */
     @Deprecated
+    @NotNull
     @Support
     DivideByOnConditionStep orNot(Boolean condition);
 
@@ -365,6 +390,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      * Combine the currently assembled conditions with an <code>EXISTS</code>
      * clause using the {@link Operator#OR} operator.
      */
+    @NotNull
     @Support
     DivideByOnConditionStep orExists(Select<?> select);
 
@@ -372,6 +398,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      * Combine the currently assembled conditions with a <code>NOT EXISTS</code>
      * clause using the {@link Operator#OR} operator.
      */
+    @NotNull
     @Support
     DivideByOnConditionStep orNotExists(Select<?> select);
 }

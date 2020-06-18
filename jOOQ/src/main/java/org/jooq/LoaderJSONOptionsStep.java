@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 /**
  * The <code>Loader</code> API is used for configuring data loads.
  * <p>
@@ -52,6 +55,7 @@ public interface LoaderJSONOptionsStep<R extends Record> extends LoaderListenerS
      * @deprecated - [#4859] - This is not supported for JSON loading.
      */
     @Deprecated
+    @NotNull
     @Support
     LoaderJSONOptionsStep<R> ignoreRows(int number);
 }

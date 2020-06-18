@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.Clause.FIELD_ROW;
 // ...
 import static org.jooq.impl.Keywords.K_ROW;

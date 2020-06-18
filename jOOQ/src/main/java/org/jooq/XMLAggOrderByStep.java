@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 
@@ -55,12 +58,14 @@ public interface XMLAggOrderByStep<T> extends AggregateFilterStep<T> {
     /**
      * Add an <code>ORDER BY</code> clause to the function.
      */
+    @NotNull
     @Support({ POSTGRES })
     AggregateFilterStep<T> orderBy(OrderField<?>... fields);
 
     /**
      * Add an <code>ORDER BY</code> clause to the function.
      */
+    @NotNull
     @Support({ POSTGRES })
     AggregateFilterStep<T> orderBy(Collection<? extends OrderField<?>> fields);
 }

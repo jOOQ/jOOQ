@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import static java.lang.Boolean.FALSE;
 import static org.jooq.conf.InvocationOrder.REVERSE;
 import static org.jooq.impl.Tools.EMPTY_EXECUTE_LISTENER;

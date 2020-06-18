@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import static java.util.Arrays.asList;
 import static org.jooq.Clause.CREATE_INDEX;
 // ...

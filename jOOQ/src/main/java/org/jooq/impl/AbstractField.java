@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.Clause.FIELD;
 import static org.jooq.Comparator.EQUALS;
 import static org.jooq.Comparator.GREATER;

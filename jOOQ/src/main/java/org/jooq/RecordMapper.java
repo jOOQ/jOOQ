@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 /**
  * A <code>RecordMapper</code> is a mapper that can receive {@link Record}
  * objects, when fetching data from the database, transforming them into a

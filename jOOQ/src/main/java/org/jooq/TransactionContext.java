@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 
 /**
  * A context object that is used to pass arguments to the various methods of

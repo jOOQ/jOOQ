@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
@@ -52,6 +55,7 @@ public interface XMLQueryPassingStep {
      * Add the <code>PASSING</code> clause to the <code>XMLQUERY</code>
      * expression.
      */
+    @NotNull
     @Support({ POSTGRES })
     Field<XML> passing(XML xml);
 
@@ -59,6 +63,7 @@ public interface XMLQueryPassingStep {
      * Add the <code>PASSING</code> clause to the <code>XMLQUERY</code>
      * expression.
      */
+    @NotNull
     @Support({ POSTGRES })
     Field<XML> passing(Field<XML> xml);
 
@@ -66,6 +71,7 @@ public interface XMLQueryPassingStep {
      * Add the <code>PASSING BY REF</code> clause to the <code>XMLQUERY</code>
      * expression.
      */
+    @NotNull
     @Support({ POSTGRES })
     Field<XML> passingByRef(XML xml);
 
@@ -73,8 +79,11 @@ public interface XMLQueryPassingStep {
      * Add the <code>PASSING BY REF</code> clause to the <code>XMLQUERY</code>
      * expression.
      */
+    @NotNull
     @Support({ POSTGRES })
     Field<XML> passingByRef(Field<XML> xml);
+
+
 
 
 

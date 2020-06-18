@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.DatePart.DAY;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.sql;

@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 /**
  * This type is used for the {@link Delete}'s DSL API.
  * <p>
@@ -73,12 +76,14 @@ public interface DeleteLimitStep<R extends Record> extends DeleteReturningStep<R
     /**
      * Add a <code>LIMIT</code> clause to the query.
      */
+    @NotNull
     @Support
     DeleteReturningStep<R> limit(Number numberOfRows);
 
     /**
      * Add a <code>LIMIT</code> clause to the query using named parameters.
      */
+    @NotNull
     @Support
     DeleteReturningStep<R> limit(Param<? extends Number> numberOfRows);
 }

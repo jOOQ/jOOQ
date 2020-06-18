@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import org.jooq.Identity;
 import org.jooq.Record;
 import org.jooq.Table;

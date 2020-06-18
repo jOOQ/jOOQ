@@ -38,6 +38,9 @@
 
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 /**
  * An operator used for combining conditions
  *
@@ -48,12 +51,14 @@ public enum Operator {
     /**
      * The and operator
      */
+    @NotNull
     @Support
     AND("and"),
 
     /**
      * The or operator
      */
+    @NotNull
     @Support
     OR("or");
 

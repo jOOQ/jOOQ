@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 import java.io.File;
 import java.io.InputStream;
 import java.io.Reader;
@@ -68,6 +71,7 @@ public interface LoaderSourceStep<R extends Record> {
      * {@link DataType} via {@link DataType#convert(Object)}. The matching is
      * similar to that of {@link Record#fromArray(Object[], Field...)}.
      */
+    @NotNull
     @Support
     LoaderRowsStep<R> loadArrays(Object[]... arrays);
 
@@ -80,6 +84,7 @@ public interface LoaderSourceStep<R extends Record> {
      * @see #loadArrays(Object[][])
      * @see Record#fromArray(Object[], Field...)
      */
+    @NotNull
     @Support
     LoaderRowsStep<R> loadArrays(Iterable<? extends Object[]> arrays);
 
@@ -92,6 +97,7 @@ public interface LoaderSourceStep<R extends Record> {
      * @see #loadArrays(Object[][])
      * @see Record#fromArray(Object[], Field...)
      */
+    @NotNull
     @Support
     LoaderRowsStep<R> loadArrays(Iterator<? extends Object[]> arrays);
 
@@ -106,6 +112,7 @@ public interface LoaderSourceStep<R extends Record> {
      * @see #loadArrays(Object[][])
      * @see Record#fromArray(Object[], Field...)
      */
+    @NotNull
     @Support
     LoaderRowsStep<R> loadArrays(Stream<? extends Object[]> arrays);
 
@@ -114,6 +121,7 @@ public interface LoaderSourceStep<R extends Record> {
     /**
      * Load in-memory data.
      */
+    @NotNull
     @Support
     LoaderRowsStep<R> loadRecords(Record... records);
 
@@ -122,6 +130,7 @@ public interface LoaderSourceStep<R extends Record> {
      *
      * @see #loadRecords(Record...)
      */
+    @NotNull
     @Support
     LoaderRowsStep<R> loadRecords(Iterable<? extends Record> records);
 
@@ -130,6 +139,7 @@ public interface LoaderSourceStep<R extends Record> {
      *
      * @see #loadRecords(Record...)
      */
+    @NotNull
     @Support
     LoaderRowsStep<R> loadRecords(Iterator<? extends Record> records);
 
@@ -140,6 +150,7 @@ public interface LoaderSourceStep<R extends Record> {
      *
      * @see #loadRecords(Record...)
      */
+    @NotNull
     @Support
     LoaderRowsStep<R> loadRecords(Stream<? extends Record> records);
 
@@ -148,204 +159,238 @@ public interface LoaderSourceStep<R extends Record> {
     /**
      * Load CSV data.
      */
+    @NotNull
     @Support
     LoaderCSVStep<R> loadCSV(File file);
 
     /**
      * Load CSV data.
      */
+    @NotNull
     @Support
     LoaderCSVStep<R> loadCSV(File file, String charsetName);
 
     /**
      * Load CSV data.
      */
+    @NotNull
     @Support
     LoaderCSVStep<R> loadCSV(File file, Charset cs);
 
     /**
      * Load CSV data.
      */
+    @NotNull
     @Support
     LoaderCSVStep<R> loadCSV(File file, CharsetDecoder dec);
 
     /**
      * Load CSV data.
      */
+    @NotNull
     @Support
     LoaderCSVStep<R> loadCSV(String data);
 
     /**
      * Load CSV data.
      */
+    @NotNull
     @Support
     LoaderCSVStep<R> loadCSV(InputStream stream);
 
     /**
      * Load CSV data.
      */
+    @NotNull
     @Support
     LoaderCSVStep<R> loadCSV(InputStream stream, String charsetName);
 
     /**
      * Load CSV data.
      */
+    @NotNull
     @Support
     LoaderCSVStep<R> loadCSV(InputStream stream, Charset cs);
 
     /**
      * Load CSV data.
      */
+    @NotNull
     @Support
     LoaderCSVStep<R> loadCSV(InputStream stream, CharsetDecoder dec);
 
     /**
      * Load CSV data.
      */
+    @NotNull
     @Support
     LoaderCSVStep<R> loadCSV(Reader reader);
 
     /**
      * Load CSV data.
      */
+    @NotNull
     @Support
     LoaderCSVStep<R> loadCSV(Source source);
 
     /**
      * Load XML data.
      */
+    @NotNull
     @Support
     LoaderXMLStep<R> loadXML(File file);
 
     /**
      * Load XML data.
      */
+    @NotNull
     @Support
     LoaderXMLStep<R> loadXML(File file, String charsetName);
 
     /**
      * Load XML data.
      */
+    @NotNull
     @Support
     LoaderXMLStep<R> loadXML(File file, Charset cs);
 
     /**
      * Load XML data.
      */
+    @NotNull
     @Support
     LoaderXMLStep<R> loadXML(File file, CharsetDecoder dec);
 
     /**
      * Load XML data.
      */
+    @NotNull
     @Support
     LoaderXMLStep<R> loadXML(String data);
 
     /**
      * Load XML data.
      */
+    @NotNull
     @Support
     LoaderXMLStep<R> loadXML(InputStream stream);
 
     /**
      * Load XML data.
      */
+    @NotNull
     @Support
     LoaderXMLStep<R> loadXML(InputStream stream, String charsetName);
 
     /**
      * Load XML data.
      */
+    @NotNull
     @Support
     LoaderXMLStep<R> loadXML(InputStream stream, Charset cs);
 
     /**
      * Load XML data.
      */
+    @NotNull
     @Support
     LoaderXMLStep<R> loadXML(InputStream stream, CharsetDecoder dec);
 
     /**
      * Load XML data.
      */
+    @NotNull
     @Support
     LoaderXMLStep<R> loadXML(Reader reader);
 
     /**
      * Load XML data.
      */
+    @NotNull
     @Support
     LoaderXMLStep<R> loadXML(InputSource source);
 
     /**
      * Load XML data.
      */
+    @NotNull
     @Support
     LoaderXMLStep<R> loadXML(Source source);
 
     /**
      * Load JSON data.
      */
+    @NotNull
     @Support
     LoaderJSONStep<R> loadJSON(File file);
 
     /**
      * Load JSON data.
      */
+    @NotNull
     @Support
     LoaderJSONStep<R> loadJSON(File file, String charsetName);
 
     /**
      * Load JSON data.
      */
+    @NotNull
     @Support
     LoaderJSONStep<R> loadJSON(File file, Charset cs);
 
     /**
      * Load JSON data.
      */
+    @NotNull
     @Support
     LoaderJSONStep<R> loadJSON(File file, CharsetDecoder dec);
 
     /**
      * Load JSON data.
      */
+    @NotNull
     @Support
     LoaderJSONStep<R> loadJSON(String data);
 
     /**
      * Load JSON data.
      */
+    @NotNull
     @Support
     LoaderJSONStep<R> loadJSON(InputStream stream);
 
     /**
      * Load JSON data.
      */
+    @NotNull
     @Support
     LoaderJSONStep<R> loadJSON(InputStream stream, String charsetName);
 
     /**
      * Load JSON data.
      */
+    @NotNull
     @Support
     LoaderJSONStep<R> loadJSON(InputStream stream, Charset cs);
 
     /**
      * Load JSON data.
      */
+    @NotNull
     @Support
     LoaderJSONStep<R> loadJSON(InputStream stream, CharsetDecoder dec);
 
     /**
      * Load JSON data.
      */
+    @NotNull
     @Support
     LoaderJSONStep<R> loadJSON(Reader reader);
 
     /**
      * Load JSON data.
      */
+    @NotNull
     @Support
     LoaderJSONStep<R> loadJSON(Source source);
 

@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.impl.Tools.getAnnotatedGetter;
 import static org.jooq.impl.Tools.getAnnotatedMembers;
 import static org.jooq.impl.Tools.getMatchingGetter;

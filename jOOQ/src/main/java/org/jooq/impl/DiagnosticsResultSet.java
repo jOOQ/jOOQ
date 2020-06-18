@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import java.io.InputStream;
 import java.io.Reader;
 import java.math.BigDecimal;

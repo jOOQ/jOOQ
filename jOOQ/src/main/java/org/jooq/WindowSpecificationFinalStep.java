@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 /**
  * An intermediate step in the construction of a {@link WindowSpecification}.
  * <p>

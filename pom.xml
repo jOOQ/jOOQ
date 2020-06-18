@@ -103,6 +103,13 @@
                 <artifactId>jooq-meta-extensions</artifactId>
                 <version>${project.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.jetbrains</groupId>
+                <artifactId>annotations</artifactId>
+                <version>19.0.0</version>
+            </dependency>
+
             <dependency>
                 <groupId>org.jooq</groupId>
                 <artifactId>jooq-kotlin</artifactId>
@@ -645,7 +652,7 @@
         <profile>
             <id>all-modules</id>
             <modules>
-            	<!-- all modules which are not already listed as submodules -->
+                <!-- all modules which are not already listed as submodules -->
                 <module>jOOQ-examples</module>
 
 

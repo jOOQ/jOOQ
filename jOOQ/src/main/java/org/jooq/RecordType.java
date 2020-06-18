@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 /**
  * A record type for {@link Table}, {@link Cursor}, {@link Result} and other
  * objects.

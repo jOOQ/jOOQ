@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.SQLDialect.*;
 
 import java.util.*;
@@ -68,18 +71,21 @@ public interface AlterDatabaseStep {
     /**
      * Add the <code>RENAME TO</code> clause to the <code>ALTER DATABASE</code> statement.
      */
+    @NotNull
     @Support({ POSTGRES })
     AlterDatabaseFinalStep renameTo(String renameTo);
 
     /**
      * Add the <code>RENAME TO</code> clause to the <code>ALTER DATABASE</code> statement.
      */
+    @NotNull
     @Support({ POSTGRES })
     AlterDatabaseFinalStep renameTo(Name renameTo);
 
     /**
      * Add the <code>RENAME TO</code> clause to the <code>ALTER DATABASE</code> statement.
      */
+    @NotNull
     @Support({ POSTGRES })
     AlterDatabaseFinalStep renameTo(Catalog renameTo);
 }

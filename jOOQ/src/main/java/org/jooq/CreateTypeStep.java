@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.POSTGRES;
 
@@ -70,12 +73,14 @@ public interface CreateTypeStep {
     /**
      * Add the <code>AS ENUM</code> clause to the <code>CREATE TYPE</code> statement.
      */
+    @NotNull
     @Support({ H2, POSTGRES })
     CreateTypeFinalStep asEnum();
 
     /**
      * Add the <code>AS ENUM</code> clause to the <code>CREATE TYPE</code> statement.
      */
+    @NotNull
     @Support({ H2, POSTGRES })
     CreateTypeFinalStep asEnum(String... values);
 
@@ -83,12 +88,14 @@ public interface CreateTypeStep {
      * Add the <code>AS ENUM</code> clause to the <code>CREATE TYPE</code> statement.
      */
     @SuppressWarnings("unchecked")
+    @NotNull
     @Support({ H2, POSTGRES })
     CreateTypeFinalStep asEnum(Field<String>... values);
 
     /**
      * Add the <code>AS ENUM</code> clause to the <code>CREATE TYPE</code> statement.
      */
+    @NotNull
     @Support({ H2, POSTGRES })
     CreateTypeFinalStep asEnum(Collection<?> values);
 }

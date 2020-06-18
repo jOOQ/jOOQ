@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import static java.lang.Boolean.TRUE;
 import static org.jooq.impl.Tools.DataCacheKey.DATA_CACHE_RECORD_MAPPERS;
 

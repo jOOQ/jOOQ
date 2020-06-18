@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 // ...
@@ -84,6 +87,7 @@ public interface AlterViewStep {
      * @see DSL#commentOnView(Table)
      * @see DSLContext#commentOnView(Table)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     AlterViewFinalStep comment(String comment);
 
@@ -94,6 +98,7 @@ public interface AlterViewStep {
      * @see DSL#commentOnView(Table)
      * @see DSLContext#commentOnView(Table)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     AlterViewFinalStep comment(Comment comment);
 
@@ -101,6 +106,7 @@ public interface AlterViewStep {
      * Add a <code>RENAME TO</code> clause to the <code>ALTER VIEW</code>
      * statement.
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
     AlterViewFinalStep renameTo(Table<?> newName);
 
@@ -108,6 +114,7 @@ public interface AlterViewStep {
      * Add a <code>RENAME TO</code> clause to the <code>ALTER VIEW</code>
      * statement.
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
     AlterViewFinalStep renameTo(Name newName);
 
@@ -115,6 +122,7 @@ public interface AlterViewStep {
      * Add a <code>RENAME TO</code> clause to the <code>ALTER VIEW</code>
      * statement.
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
     AlterViewFinalStep renameTo(String newName);
 }

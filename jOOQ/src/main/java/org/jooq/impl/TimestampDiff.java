@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.Keywords.K_MILLISECOND;

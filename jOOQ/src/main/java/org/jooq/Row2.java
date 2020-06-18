@@ -58,6 +58,8 @@ import java.util.Collection;
 import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * A row value expression.
  * <p>
@@ -103,11 +105,13 @@ public interface Row2<T1, T2> extends Row {
     /**
      * Get the first field.
      */
+    @NotNull
     Field<T1> field1();
 
     /**
      * Get the second field.
      */
+    @NotNull
     Field<T2> field2();
 
     // ------------------------------------------------------------------------
@@ -128,6 +132,7 @@ public interface Row2<T1, T2> extends Row {
      * @see #greaterThan(Row2)
      * @see #greaterOrEqual(Row2)
      */
+    @NotNull
     @Support
     Condition compare(Comparator comparator, Row2<T1, T2> row);
 
@@ -145,6 +150,7 @@ public interface Row2<T1, T2> extends Row {
      * @see #greaterThan(Record2)
      * @see #greaterOrEqual(Record2)
      */
+    @NotNull
     @Support
     Condition compare(Comparator comparator, Record2<T1, T2> record);
 
@@ -162,6 +168,7 @@ public interface Row2<T1, T2> extends Row {
      * @see #greaterThan(Row2)
      * @see #greaterOrEqual(Row2)
      */
+    @NotNull
     @Support
     Condition compare(Comparator comparator, T1 t1, T2 t2);
 
@@ -179,6 +186,7 @@ public interface Row2<T1, T2> extends Row {
      * @see #greaterThan(Row2)
      * @see #greaterOrEqual(Row2)
      */
+    @NotNull
     @Support
     Condition compare(Comparator comparator, Field<T1> t1, Field<T2> t2);
 
@@ -196,6 +204,7 @@ public interface Row2<T1, T2> extends Row {
      * @see #greaterThan(Select)
      * @see #greaterOrEqual(Select)
      */
+    @NotNull
     @Support
     Condition compare(Comparator comparator, Select<? extends Record2<T1, T2>> select);
 
@@ -213,6 +222,7 @@ public interface Row2<T1, T2> extends Row {
      * @see #greaterThan(Select)
      * @see #greaterOrEqual(Select)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition compare(Comparator comparator, QuantifiedSelect<? extends Record2<T1, T2>> select);
 
@@ -229,6 +239,7 @@ public interface Row2<T1, T2> extends Row {
      * <code>(A, B) = (1, 2)</code> is equivalent to
      * <code>A = 1 AND B = 2</code>
      */
+    @NotNull
     @Support
     Condition equal(Row2<T1, T2> row);
 
@@ -237,6 +248,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #equal(Row2)
      */
+    @NotNull
     @Support
     Condition equal(Record2<T1, T2> record);
 
@@ -246,6 +258,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #equal(Row2)
      */
+    @NotNull
     @Support
     Condition equal(T1 t1, T2 t2);
 
@@ -255,6 +268,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #equal(Row2)
      */
+    @NotNull
     @Support
     Condition equal(Field<T1> t1, Field<T2> t2);
 
@@ -263,6 +277,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #equal(Row2)
      */
+    @NotNull
     @Support
     Condition equal(Select<? extends Record2<T1, T2>> select);
 
@@ -276,6 +291,7 @@ public interface Row2<T1, T2> extends Row {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition equal(QuantifiedSelect<? extends Record2<T1, T2>> select);
 
@@ -285,6 +301,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #equal(Row2)
      */
+    @NotNull
     @Support
     Condition eq(Row2<T1, T2> row);
 
@@ -293,6 +310,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #equal(Row2)
      */
+    @NotNull
     @Support
     Condition eq(Record2<T1, T2> record);
 
@@ -302,6 +320,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #equal(Row2)
      */
+    @NotNull
     @Support
     Condition eq(T1 t1, T2 t2);
 
@@ -311,6 +330,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #equal(Row2)
      */
+    @NotNull
     @Support
     Condition eq(Field<T1> t1, Field<T2> t2);
 
@@ -319,6 +339,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #equal(Row2)
      */
+    @NotNull
     @Support
     Condition eq(Select<? extends Record2<T1, T2>> select);
 
@@ -332,6 +353,7 @@ public interface Row2<T1, T2> extends Row {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition eq(QuantifiedSelect<? extends Record2<T1, T2>> select);
 
@@ -344,6 +366,7 @@ public interface Row2<T1, T2> extends Row {
      * <code>(A, B) &lt;&gt; (1, 2)</code> is equivalent to
      * <code>NOT(A = 1 AND B = 2)</code>
      */
+    @NotNull
     @Support
     Condition notEqual(Row2<T1, T2> row);
 
@@ -352,6 +375,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #notEqual(Row2)
      */
+    @NotNull
     @Support
     Condition notEqual(Record2<T1, T2> record);
 
@@ -361,6 +385,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #notEqual(Row2)
      */
+    @NotNull
     @Support
     Condition notEqual(T1 t1, T2 t2);
 
@@ -370,6 +395,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #notEqual(Row2)
      */
+    @NotNull
     @Support
     Condition notEqual(Field<T1> t1, Field<T2> t2);
 
@@ -378,6 +404,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #notEqual(Row2)
      */
+    @NotNull
     @Support
     Condition notEqual(Select<? extends Record2<T1, T2>> select);
 
@@ -391,6 +418,7 @@ public interface Row2<T1, T2> extends Row {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition notEqual(QuantifiedSelect<? extends Record2<T1, T2>> select);
 
@@ -400,6 +428,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #notEqual(Row2)
      */
+    @NotNull
     @Support
     Condition ne(Row2<T1, T2> row);
 
@@ -408,6 +437,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #notEqual(Row2)
      */
+    @NotNull
     @Support
     Condition ne(Record2<T1, T2> record);
 
@@ -417,6 +447,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #notEqual(Row2)
      */
+    @NotNull
     @Support
     Condition ne(T1 t1, T2 t2);
 
@@ -426,6 +457,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #notEqual(Row2)
      */
+    @NotNull
     @Support
     Condition ne(Field<T1> t1, Field<T2> t2);
 
@@ -434,6 +466,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #notEqual(Row2)
      */
+    @NotNull
     @Support
     Condition ne(Select<? extends Record2<T1, T2>> select);
 
@@ -447,6 +480,7 @@ public interface Row2<T1, T2> extends Row {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition ne(QuantifiedSelect<? extends Record2<T1, T2>> select);
 
@@ -458,6 +492,7 @@ public interface Row2<T1, T2> extends Row {
      * Compare this row value expression with another row value expression for
      * distinctness.
      */
+    @NotNull
     @Support
     Condition isDistinctFrom(Row2<T1, T2> row);
 
@@ -465,6 +500,7 @@ public interface Row2<T1, T2> extends Row {
      * Compare this row value expression with another row value expression for
      * distinctness.
      */
+    @NotNull
     @Support
     Condition isDistinctFrom(Record2<T1, T2> record);
 
@@ -472,6 +508,7 @@ public interface Row2<T1, T2> extends Row {
      * Compare this row value expression with another row value expression for
      * distinctness.
      */
+    @NotNull
     @Support
     Condition isDistinctFrom(T1 t1, T2 t2);
 
@@ -479,6 +516,7 @@ public interface Row2<T1, T2> extends Row {
      * Compare this row value expression with another row value expression for
      * distinctness.
      */
+    @NotNull
     @Support
     Condition isDistinctFrom(Field<T1> t1, Field<T2> t2);
 
@@ -486,6 +524,7 @@ public interface Row2<T1, T2> extends Row {
      * Compare this row value expression with another row value expression for
      * distinctness.
      */
+    @NotNull
     @Support
     Condition isDistinctFrom(Select<? extends Record2<T1, T2>> select);
 
@@ -493,6 +532,7 @@ public interface Row2<T1, T2> extends Row {
      * Compare this row value expression with another row value expression for
      * distinctness.
      */
+    @NotNull
     @Support
     Condition isNotDistinctFrom(Row2<T1, T2> row);
 
@@ -500,6 +540,7 @@ public interface Row2<T1, T2> extends Row {
      * Compare this row value expression with another row value expression for
      * distinctness.
      */
+    @NotNull
     @Support
     Condition isNotDistinctFrom(Record2<T1, T2> record);
 
@@ -507,6 +548,7 @@ public interface Row2<T1, T2> extends Row {
      * Compare this row value expression with another row value expression for
      * distinctness.
      */
+    @NotNull
     @Support
     Condition isNotDistinctFrom(T1 t1, T2 t2);
 
@@ -514,6 +556,7 @@ public interface Row2<T1, T2> extends Row {
      * Compare this row value expression with another row value expression for
      * distinctness.
      */
+    @NotNull
     @Support
     Condition isNotDistinctFrom(Field<T1> t1, Field<T2> t2);
 
@@ -521,6 +564,7 @@ public interface Row2<T1, T2> extends Row {
      * Compare this row value expression with another row value expression for
      * distinctness.
      */
+    @NotNull
     @Support
     Condition isNotDistinctFrom(Select<? extends Record2<T1, T2>> select);
 
@@ -537,6 +581,7 @@ public interface Row2<T1, T2> extends Row {
      * <code>(A, B, C) &lt; (1, 2, 3)</code> is equivalent to
      * <code>A &lt; 1 OR (A = 1 AND B &lt; 2) OR (A = 1 AND B = 2 AND C &lt; 3)</code>
      */
+    @NotNull
     @Support
     Condition lessThan(Row2<T1, T2> row);
 
@@ -545,6 +590,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #lessThan(Row2)
      */
+    @NotNull
     @Support
     Condition lessThan(Record2<T1, T2> record);
 
@@ -554,6 +600,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #lessThan(Row2)
      */
+    @NotNull
     @Support
     Condition lessThan(T1 t1, T2 t2);
 
@@ -563,6 +610,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #lessThan(Row2)
      */
+    @NotNull
     @Support
     Condition lessThan(Field<T1> t1, Field<T2> t2);
 
@@ -571,6 +619,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #lessThan(Row2)
      */
+    @NotNull
     @Support
     Condition lessThan(Select<? extends Record2<T1, T2>> select);
 
@@ -584,6 +633,7 @@ public interface Row2<T1, T2> extends Row {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition lessThan(QuantifiedSelect<? extends Record2<T1, T2>> select);
 
@@ -593,6 +643,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #lessThan(Row2)
      */
+    @NotNull
     @Support
     Condition lt(Row2<T1, T2> row);
 
@@ -601,6 +652,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #lessThan(Row2)
      */
+    @NotNull
     @Support
     Condition lt(Record2<T1, T2> record);
 
@@ -610,6 +662,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #lessThan(Row2)
      */
+    @NotNull
     @Support
     Condition lt(T1 t1, T2 t2);
 
@@ -619,6 +672,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #lessThan(Row2)
      */
+    @NotNull
     @Support
     Condition lt(Field<T1> t1, Field<T2> t2);
 
@@ -627,6 +681,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #lessThan(Row2)
      */
+    @NotNull
     @Support
     Condition lt(Select<? extends Record2<T1, T2>> select);
 
@@ -640,6 +695,7 @@ public interface Row2<T1, T2> extends Row {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition lt(QuantifiedSelect<? extends Record2<T1, T2>> select);
 
@@ -652,6 +708,7 @@ public interface Row2<T1, T2> extends Row {
      * <code>(A, B) &lt;= (1, 2)</code> is equivalent to
      * <code>A &lt; 1 OR (A = 1 AND B &lt; 2) OR (A = 1 AND B = 2)</code>
      */
+    @NotNull
     @Support
     Condition lessOrEqual(Row2<T1, T2> row);
 
@@ -660,6 +717,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #lessOrEqual(Row2)
      */
+    @NotNull
     @Support
     Condition lessOrEqual(Record2<T1, T2> record);
 
@@ -669,6 +727,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #lessOrEqual(Row2)
      */
+    @NotNull
     @Support
     Condition lessOrEqual(T1 t1, T2 t2);
 
@@ -678,6 +737,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #lessOrEqual(Row2)
      */
+    @NotNull
     @Support
     Condition lessOrEqual(Field<T1> t1, Field<T2> t2);
 
@@ -686,6 +746,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #lessOrEqual(Row2)
      */
+    @NotNull
     @Support
     Condition lessOrEqual(Select<? extends Record2<T1, T2>> select);
 
@@ -699,6 +760,7 @@ public interface Row2<T1, T2> extends Row {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition lessOrEqual(QuantifiedSelect<? extends Record2<T1, T2>> select);
 
@@ -708,6 +770,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #lessOrEqual(Row2)
      */
+    @NotNull
     @Support
     Condition le(Row2<T1, T2> row);
 
@@ -716,6 +779,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #lessOrEqual(Row2)
      */
+    @NotNull
     @Support
     Condition le(Record2<T1, T2> record);
 
@@ -725,6 +789,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #lessOrEqual(Row2)
      */
+    @NotNull
     @Support
     Condition le(T1 t1, T2 t2);
 
@@ -734,6 +799,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #lessOrEqual(Row2)
      */
+    @NotNull
     @Support
     Condition le(Field<T1> t1, Field<T2> t2);
 
@@ -742,6 +808,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #lessOrEqual(Row2)
      */
+    @NotNull
     @Support
     Condition le(Select<? extends Record2<T1, T2>> select);
 
@@ -755,6 +822,7 @@ public interface Row2<T1, T2> extends Row {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition le(QuantifiedSelect<? extends Record2<T1, T2>> select);
 
@@ -767,6 +835,7 @@ public interface Row2<T1, T2> extends Row {
      * <code>(A, B, C) &gt; (1, 2, 3)</code> is equivalent to
      * <code>A &gt; 1 OR (A = 1 AND B &gt; 2) OR (A = 1 AND B = 2 AND C &gt; 3)</code>
      */
+    @NotNull
     @Support
     Condition greaterThan(Row2<T1, T2> row);
 
@@ -775,6 +844,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #greaterThan(Row2)
      */
+    @NotNull
     @Support
     Condition greaterThan(Record2<T1, T2> record);
 
@@ -784,6 +854,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #greaterThan(Row2)
      */
+    @NotNull
     @Support
     Condition greaterThan(T1 t1, T2 t2);
 
@@ -793,6 +864,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #greaterThan(Row2)
      */
+    @NotNull
     @Support
     Condition greaterThan(Field<T1> t1, Field<T2> t2);
 
@@ -801,6 +873,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #greaterThan(Row2)
      */
+    @NotNull
     @Support
     Condition greaterThan(Select<? extends Record2<T1, T2>> select);
 
@@ -814,6 +887,7 @@ public interface Row2<T1, T2> extends Row {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition greaterThan(QuantifiedSelect<? extends Record2<T1, T2>> select);
 
@@ -823,6 +897,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #greaterThan(Row2)
      */
+    @NotNull
     @Support
     Condition gt(Row2<T1, T2> row);
 
@@ -831,6 +906,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #greaterThan(Row2)
      */
+    @NotNull
     @Support
     Condition gt(Record2<T1, T2> record);
 
@@ -840,6 +916,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #greaterThan(Row2)
      */
+    @NotNull
     @Support
     Condition gt(T1 t1, T2 t2);
 
@@ -849,6 +926,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #greaterThan(Row2)
      */
+    @NotNull
     @Support
     Condition gt(Field<T1> t1, Field<T2> t2);
 
@@ -857,6 +935,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #greaterThan(Row2)
      */
+    @NotNull
     @Support
     Condition gt(Select<? extends Record2<T1, T2>> select);
 
@@ -870,6 +949,7 @@ public interface Row2<T1, T2> extends Row {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition gt(QuantifiedSelect<? extends Record2<T1, T2>> select);
 
@@ -882,6 +962,7 @@ public interface Row2<T1, T2> extends Row {
      * <code>(A, B) &gt;= (1, 2)</code> is equivalent to
      * <code>A &gt; 1 OR (A = 1 AND B &gt; 2) OR (A = 1 AND B = 2)</code>
      */
+    @NotNull
     @Support
     Condition greaterOrEqual(Row2<T1, T2> row);
 
@@ -890,6 +971,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #greaterOrEqual(Row2)
      */
+    @NotNull
     @Support
     Condition greaterOrEqual(Record2<T1, T2> record);
 
@@ -899,6 +981,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #greaterOrEqual(Row2)
      */
+    @NotNull
     @Support
     Condition greaterOrEqual(T1 t1, T2 t2);
 
@@ -908,6 +991,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #greaterOrEqual(Row2)
      */
+    @NotNull
     @Support
     Condition greaterOrEqual(Field<T1> t1, Field<T2> t2);
 
@@ -916,6 +1000,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #greaterOrEqual(Row2)
      */
+    @NotNull
     @Support
     Condition greaterOrEqual(Select<? extends Record2<T1, T2>> select);
 
@@ -929,6 +1014,7 @@ public interface Row2<T1, T2> extends Row {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition greaterOrEqual(QuantifiedSelect<? extends Record2<T1, T2>> select);
 
@@ -938,6 +1024,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #greaterOrEqual(Row2)
      */
+    @NotNull
     @Support
     Condition ge(Row2<T1, T2> row);
 
@@ -946,6 +1033,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #greaterOrEqual(Row2)
      */
+    @NotNull
     @Support
     Condition ge(Record2<T1, T2> record);
 
@@ -955,6 +1043,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #greaterOrEqual(Row2)
      */
+    @NotNull
     @Support
     Condition ge(T1 t1, T2 t2);
 
@@ -964,6 +1053,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #greaterOrEqual(Row2)
      */
+    @NotNull
     @Support
     Condition ge(Field<T1> t1, Field<T2> t2);
 
@@ -972,6 +1062,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #greaterOrEqual(Row2)
      */
+    @NotNull
     @Support
     Condition ge(Select<? extends Record2<T1, T2>> select);
 
@@ -985,6 +1076,7 @@ public interface Row2<T1, T2> extends Row {
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     Condition ge(QuantifiedSelect<? extends Record2<T1, T2>> select);
 
@@ -998,6 +1090,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #between(Row2, Row2)
      */
+    @NotNull
     @Support
     BetweenAndStep2<T1, T2> between(T1 minValue1, T2 minValue2);
 
@@ -1007,6 +1100,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #between(Row2, Row2)
      */
+    @NotNull
     @Support
     BetweenAndStep2<T1, T2> between(Field<T1> minValue1, Field<T2> minValue2);
 
@@ -1016,6 +1110,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #between(Row2, Row2)
      */
+    @NotNull
     @Support
     BetweenAndStep2<T1, T2> between(Row2<T1, T2> minValue);
 
@@ -1024,6 +1119,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #between(Row2, Row2)
      */
+    @NotNull
     @Support
     BetweenAndStep2<T1, T2> between(Record2<T1, T2> minValue);
 
@@ -1038,6 +1134,7 @@ public interface Row2<T1, T2> extends Row {
      * not properly support the <code>BETWEEN</code> predicate for row value
      * expressions
      */
+    @NotNull
     @Support
     Condition between(Row2<T1, T2> minValue,
                       Row2<T1, T2> maxValue);
@@ -1049,6 +1146,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #between(Row2, Row2)
      */
+    @NotNull
     @Support
     Condition between(Record2<T1, T2> minValue,
                       Record2<T1, T2> maxValue);
@@ -1059,6 +1157,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #betweenSymmetric(Row2, Row2)
      */
+    @NotNull
     @Support
     BetweenAndStep2<T1, T2> betweenSymmetric(T1 minValue1, T2 minValue2);
 
@@ -1068,6 +1167,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #betweenSymmetric(Row2, Row2)
      */
+    @NotNull
     @Support
     BetweenAndStep2<T1, T2> betweenSymmetric(Field<T1> minValue1, Field<T2> minValue2);
 
@@ -1077,6 +1177,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #betweenSymmetric(Row2, Row2)
      */
+    @NotNull
     @Support
     BetweenAndStep2<T1, T2> betweenSymmetric(Row2<T1, T2> minValue);
 
@@ -1086,6 +1187,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #betweenSymmetric(Row2, Row2)
      */
+    @NotNull
     @Support
     BetweenAndStep2<T1, T2> betweenSymmetric(Record2<T1, T2> minValue);
 
@@ -1100,6 +1202,7 @@ public interface Row2<T1, T2> extends Row {
      * for those SQL dialects that do not properly support the
      * <code>BETWEEN</code> predicate for row value expressions
      */
+    @NotNull
     @Support
     Condition betweenSymmetric(Row2<T1, T2> minValue,
                                Row2<T1, T2> maxValue);
@@ -1112,6 +1215,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #betweenSymmetric(Row2, Row2)
      */
+    @NotNull
     @Support
     Condition betweenSymmetric(Record2<T1, T2> minValue,
                                Record2<T1, T2> maxValue);
@@ -1122,6 +1226,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #between(Row2, Row2)
      */
+    @NotNull
     @Support
     BetweenAndStep2<T1, T2> notBetween(T1 minValue1, T2 minValue2);
 
@@ -1131,6 +1236,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #notBetween(Row2, Row2)
      */
+    @NotNull
     @Support
     BetweenAndStep2<T1, T2> notBetween(Field<T1> minValue1, Field<T2> minValue2);
 
@@ -1140,6 +1246,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #notBetween(Row2, Row2)
      */
+    @NotNull
     @Support
     BetweenAndStep2<T1, T2> notBetween(Row2<T1, T2> minValue);
 
@@ -1148,6 +1255,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #notBetween(Row2, Row2)
      */
+    @NotNull
     @Support
     BetweenAndStep2<T1, T2> notBetween(Record2<T1, T2> minValue);
 
@@ -1162,6 +1270,7 @@ public interface Row2<T1, T2> extends Row {
      * not properly support the <code>BETWEEN</code> predicate for row value
      * expressions
      */
+    @NotNull
     @Support
     Condition notBetween(Row2<T1, T2> minValue,
                          Row2<T1, T2> maxValue);
@@ -1173,6 +1282,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #notBetween(Row2, Row2)
      */
+    @NotNull
     @Support
     Condition notBetween(Record2<T1, T2> minValue,
                          Record2<T1, T2> maxValue);
@@ -1183,6 +1293,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #notBetweenSymmetric(Row2, Row2)
      */
+    @NotNull
     @Support
     BetweenAndStep2<T1, T2> notBetweenSymmetric(T1 minValue1, T2 minValue2);
 
@@ -1192,6 +1303,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #notBetweenSymmetric(Row2, Row2)
      */
+    @NotNull
     @Support
     BetweenAndStep2<T1, T2> notBetweenSymmetric(Field<T1> minValue1, Field<T2> minValue2);
 
@@ -1201,6 +1313,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #notBetweenSymmetric(Row2, Row2)
      */
+    @NotNull
     @Support
     BetweenAndStep2<T1, T2> notBetweenSymmetric(Row2<T1, T2> minValue);
 
@@ -1210,6 +1323,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #notBetweenSymmetric(Row2, Row2)
      */
+    @NotNull
     @Support
     BetweenAndStep2<T1, T2> notBetweenSymmetric(Record2<T1, T2> minValue);
 
@@ -1224,6 +1338,7 @@ public interface Row2<T1, T2> extends Row {
      * those SQL dialects that do not properly support the <code>BETWEEN</code>
      * predicate for row value expressions
      */
+    @NotNull
     @Support
     Condition notBetweenSymmetric(Row2<T1, T2> minValue,
                                   Row2<T1, T2> maxValue);
@@ -1236,6 +1351,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #notBetweenSymmetric(Row2, Row2)
      */
+    @NotNull
     @Support
     Condition notBetweenSymmetric(Record2<T1, T2> minValue,
                                   Record2<T1, T2> maxValue);
@@ -1271,6 +1387,7 @@ public interface Row2<T1, T2> extends Row {
      * <li><code>IN</code> predicates on unnested array bind variables</li>
      * </ul>
      */
+    @NotNull
     @Support
     Condition in(Collection<? extends Row2<T1, T2>> rows);
 
@@ -1296,6 +1413,7 @@ public interface Row2<T1, T2> extends Row {
      * <li><code>IN</code> predicates on unnested array bind variables</li>
      * </ul>
      */
+    @NotNull
     @Support
     Condition in(Result<? extends Record2<T1, T2>> result);
 
@@ -1319,6 +1437,7 @@ public interface Row2<T1, T2> extends Row {
      * @see #in(Collection)
      */
     @SuppressWarnings("unchecked")
+    @NotNull
     @Support
     Condition in(Row2<T1, T2>... rows);
 
@@ -1341,6 +1460,7 @@ public interface Row2<T1, T2> extends Row {
      * @see #in(Collection)
      */
     @SuppressWarnings("unchecked")
+    @NotNull
     @Support
     Condition in(Record2<T1, T2>... record);
 
@@ -1349,6 +1469,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #in(Collection)
      */
+    @NotNull
     @Support
     Condition in(Select<? extends Record2<T1, T2>> select);
 
@@ -1375,6 +1496,7 @@ public interface Row2<T1, T2> extends Row {
      * <li><code>NOT IN</code> predicates on unnested array bind variables</li>
      * </ul>
      */
+    @NotNull
     @Support
     Condition notIn(Collection<? extends Row2<T1, T2>> rows);
 
@@ -1401,6 +1523,7 @@ public interface Row2<T1, T2> extends Row {
      * <li><code>NOT IN</code> predicates on unnested array bind variables</li>
      * </ul>
      */
+    @NotNull
     @Support
     Condition notIn(Result<? extends Record2<T1, T2>> result);
 
@@ -1424,6 +1547,7 @@ public interface Row2<T1, T2> extends Row {
      * @see #notIn(Collection)
      */
     @SuppressWarnings("unchecked")
+    @NotNull
     @Support
     Condition notIn(Row2<T1, T2>... rows);
 
@@ -1446,6 +1570,7 @@ public interface Row2<T1, T2> extends Row {
      * @see #notIn(Collection)
      */
     @SuppressWarnings("unchecked")
+    @NotNull
     @Support
     Condition notIn(Record2<T1, T2>... record);
 
@@ -1454,6 +1579,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #notIn(Collection)
      */
+    @NotNull
     @Support
     Condition notIn(Select<? extends Record2<T1, T2>> select);
 
@@ -1480,6 +1606,7 @@ public interface Row2<T1, T2> extends Row {
      * (C &lt;= B) AND (A &lt;= D)
      * </pre></code>
      */
+    @NotNull
     @Support
     Condition overlaps(T1 t1, T2 t2);
 
@@ -1502,6 +1629,7 @@ public interface Row2<T1, T2> extends Row {
      * (C &lt;= B) AND (A &lt;= D)
      * </pre></code>
      */
+    @NotNull
     @Support
     Condition overlaps(Field<T1> t1, Field<T2> t2);
 
@@ -1524,6 +1652,7 @@ public interface Row2<T1, T2> extends Row {
      * (C &lt;= B) AND (A &lt;= D)
      * </pre></code>
      */
+    @NotNull
     @Support
     Condition overlaps(Row2<T1, T2> row);
 

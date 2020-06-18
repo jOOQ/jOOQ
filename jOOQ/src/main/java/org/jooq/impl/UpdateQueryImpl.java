@@ -38,6 +38,9 @@
 
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.Clause.UPDATE;
 import static org.jooq.Clause.UPDATE_FROM;
 import static org.jooq.Clause.UPDATE_RETURNING;

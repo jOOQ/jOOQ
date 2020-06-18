@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 // ...
@@ -97,6 +100,7 @@ public interface DropIndexOnStep extends DropIndexCascadeStep {
      * index. In all other databases, the <code>ON</code> clause will simply be
      * ignored for compatibility reasons.
      */
+    @NotNull
     @Support
     DropIndexCascadeStep on(Table<?> table);
 
@@ -110,6 +114,7 @@ public interface DropIndexOnStep extends DropIndexCascadeStep {
      * index. In all other databases, the <code>ON</code> clause will simply be
      * ignored for compatibility reasons.
      */
+    @NotNull
     @Support
     DropIndexCascadeStep on(String tableName);
 
@@ -123,6 +128,7 @@ public interface DropIndexOnStep extends DropIndexCascadeStep {
      * index. In all other databases, the <code>ON</code> clause will simply be
      * ignored for compatibility reasons.
      */
+    @NotNull
     @Support
     DropIndexCascadeStep on(Name tableName);
 }

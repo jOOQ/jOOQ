@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.impl.Names.N_REGEXP_REPLACE;
 import static org.jooq.impl.Names.N_REGEX_REPLACE;
 

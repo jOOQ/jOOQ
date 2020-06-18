@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.impl.Keywords.K_WITH_ROLLUP;
 import static org.jooq.impl.Names.N_ROLLUP;
 import static org.jooq.impl.SQLDataType.OTHER;

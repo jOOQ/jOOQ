@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 // ...
@@ -96,6 +99,7 @@ public interface CreateIndexIncludeStep extends CreateIndexWhereStep {
      * will simply be put in the index as ordinary columns, making the index a
      * composite index.
      */
+    @NotNull
     @Support
     CreateIndexWhereStep include(Field<?>... fields);
 
@@ -106,6 +110,7 @@ public interface CreateIndexIncludeStep extends CreateIndexWhereStep {
      * will simply be put in the index as ordinary columns, making the index a
      * composite index.
      */
+    @NotNull
     @Support
     CreateIndexWhereStep include(Name... fields);
 
@@ -116,6 +121,7 @@ public interface CreateIndexIncludeStep extends CreateIndexWhereStep {
      * will simply be put in the index as ordinary columns, making the index a
      * composite index.
      */
+    @NotNull
     @Support
     CreateIndexWhereStep include(String... fields);
 
@@ -126,6 +132,7 @@ public interface CreateIndexIncludeStep extends CreateIndexWhereStep {
      * will simply be put in the index as ordinary columns, making the index a
      * composite index.
      */
+    @NotNull
     @Support
     CreateIndexWhereStep include(Collection<? extends Field<?>> fields);
 

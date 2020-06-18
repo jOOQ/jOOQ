@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 import static org.jooq.SQLDialect.CUBRID;
@@ -81,12 +84,14 @@ public interface WindowOrderByStep<T> extends WindowFinalStep<T> {
     /**
      * Add an <code>ORDER BY</code> clause to the window function.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowRowsStep<T> orderBy(OrderField<?>... fields);
 
     /**
      * Add an <code>ORDER BY</code> clause to the window function.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowRowsStep<T> orderBy(Collection<? extends OrderField<?>> fields);
 }

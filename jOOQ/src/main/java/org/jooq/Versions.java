@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 /**
  * A directed, acyclic graph of {@link Version} objects.
  * <p>

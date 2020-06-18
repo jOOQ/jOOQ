@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
@@ -73,42 +76,49 @@ public interface AlterTableAddStep extends AlterTableFinalStep {
     /**
      * Add a <code>FIRST</code> clause to <code>ALTER TABLE .. ADD ..</code>.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, MYSQL })
     AlterTableFinalStep first();
 
     /**
      * Add a <code>BEFORE</code> clause to <code>ALTER TABLE .. ADD ..</code>.
      */
+    @NotNull
     @Support({ H2, HSQLDB })
     AlterTableFinalStep before(String columnName);
 
     /**
      * Add a <code>BEFORE</code> clause to <code>ALTER TABLE .. ADD ..</code>.
      */
+    @NotNull
     @Support({ H2, HSQLDB })
     AlterTableFinalStep before(Name columnName);
 
     /**
      * Add a <code>BEFORE</code> clause to <code>ALTER TABLE .. ADD ..</code>.
      */
+    @NotNull
     @Support({ H2, HSQLDB })
     AlterTableFinalStep before(Field<?> columnName);
 
     /**
      * Add a <code>AFTER</code> clause to <code>ALTER TABLE .. ADD ..</code>.
      */
+    @NotNull
     @Support({ H2, MYSQL })
     AlterTableFinalStep after(String columnName);
 
     /**
      * Add a <code>AFTER</code> clause to <code>ALTER TABLE .. ADD ..</code>.
      */
+    @NotNull
     @Support({ H2, MYSQL })
     AlterTableFinalStep after(Name columnName);
 
     /**
      * Add a <code>AFTER</code> clause to <code>ALTER TABLE .. ADD ..</code>.
      */
+    @NotNull
     @Support({ H2, MYSQL })
     AlterTableFinalStep after(Field<?> columnName);
 }

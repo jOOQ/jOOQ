@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 
 /**
  * This type is used for the {@link Select}'s DSL API when selecting generic
@@ -129,6 +132,7 @@ public interface SelectOptionStep<R extends Record> extends SelectUnionStep<R> {
      * @see Table#with(String)
      * @see SelectQuery#addOption(String)
      */
+    @NotNull
     @Support
     SelectUnionStep<R> option(String string);
 }

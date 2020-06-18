@@ -80,6 +80,9 @@ import org.jooq.TableOptions.TableType;
 import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * A table.
  * <p>
@@ -116,53 +119,37 @@ import org.jooq.impl.DSL;
  * @param <R> The record type associated with this table
  * @author Lukas Eder
  */
-public interface Table<R extends Record> extends TableLike<R>, Named {
-
-    /**
-     * Get the table catalog.
-     */
-    Catalog getCatalog();
-
-    /**
-     * Get the table schema.
-     */
-    Schema getSchema();
+public interface Table<R extends Record> extends TableLike<R>, Qualified {
 
     /**
      * Get the table type.
      */
+    @NotNull
     TableType getType();
 
     /**
      * Get the table options.
      */
+    @NotNull
     TableOptions getOptions();
-
-    /**
-     * The comment given to the table.
-     * <p>
-     * If this <code>Table</code> is a generated table from your database, it
-     * may provide its DDL comment through this method. All other table
-     * expressions return the empty string <code>""</code> here, never
-     * <code>null</code>.
-     */
-    @Override
-    String getComment();
 
     /**
      * The record type produced by this table.
      */
+    @NotNull
     RecordType<R> recordType();
 
     /**
      * The record type produced by this table.
      */
+    @NotNull
     Class<? extends R> getRecordType();
 
     /**
      * The table's record type as a UDT data type, in case the underlying
      * database supports table records as UDT records.
      */
+    @NotNull
     DataType<R> getDataType();
 
     /**
@@ -170,6 +157,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      *
      * @see DSLContext#newRecord(Table)
      */
+    @NotNull
     R newRecord();
 
     /**
@@ -191,13 +179,16 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @return The table's <code>IDENTITY</code> information, or
      *         <code>null</code>, if no such information is available.
      */
+    @Nullable
     Identity<R, ?> getIdentity();
+
     /**
      * Retrieve the table's primary key
      *
      * @return The primary key. This is never <code>null</code> for an updatable
      *         table.
      */
+    @Nullable
     UniqueKey<R> getPrimaryKey();
 
     /**
@@ -223,6 +214,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see UpdatableRecord#delete()
      * @see Settings#isExecuteWithOptimisticLocking()
      */
+    @Nullable
     TableField<R, ?> getRecordVersion();
 
     /**
@@ -248,6 +240,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see UpdatableRecord#delete()
      * @see Settings#isExecuteWithOptimisticLocking()
      */
+    @Nullable
     TableField<R, ?> getRecordTimestamp();
 
     /**
@@ -256,6 +249,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @return All indexes. This is never <code>null</code>. This method returns
      *         an unmodifiable list.
      */
+    @NotNull
     List<Index> getIndexes();
 
     /**
@@ -265,6 +259,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      *         for a {@link Table} with a {@link Table#getPrimaryKey()}. This
      *         method returns an unmodifiable list.
      */
+    @NotNull
     List<UniqueKey<R>> getKeys();
 
     /**
@@ -277,6 +272,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      *         table. This is never <code>null</code>. This method returns an
      *         unmodifiable list.
      */
+    @NotNull
     <O extends Record> List<ForeignKey<O, R>> getReferencesFrom(Table<O> other);
 
     /**
@@ -285,6 +281,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @return This table's <code>FOREIGN KEY</code>'s. This is never
      *         <code>null</code>.
      */
+    @NotNull
     List<ForeignKey<R, ?>> getReferences();
 
     /**
@@ -296,12 +293,17 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @return This table's <code>FOREIGN KEY</code>'s towards an other table.
      *         This is never <code>null</code>.
      */
+    @NotNull
     <O extends Record> List<ForeignKey<R, O>> getReferencesTo(Table<O> other);
 
     /**
      * Get a list of <code>CHECK</code> constraints of this table.
      */
+    @NotNull
     List<Check<R>> getChecks();
+
+
+
 
 
 
@@ -345,6 +347,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      *
      * @see DSL#asterisk()
      */
+    @NotNull
     @Support
     QualifiedAsterisk asterisk();
 
@@ -371,6 +374,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * row to a different physical location at any time, thus changing the rowid
      * value. In general, use primary keys, instead.
      */
+    @NotNull
     @Support({ H2, POSTGRES, SQLITE })
     Field<RowId> rowid();
 
@@ -388,6 +392,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @param alias The alias name
      * @return The table alias
      */
+    @NotNull
     @Support
     Table<R> as(String alias);
 
@@ -442,6 +447,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      *            names.
      * @return The table alias
      */
+    @NotNull
     @Support
     Table<R> as(String alias, String... fieldAliases);
 
@@ -467,6 +473,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      *             complexity in jOOQ's internals.
      */
     @Deprecated
+    @NotNull
     @Support
     Table<R> as(String alias, Function<? super Field<?>, ? extends String> aliasFunction);
 
@@ -491,6 +498,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      *             complexity in jOOQ's internals.
      */
     @Deprecated
+    @NotNull
     @Support
     Table<R> as(String alias, BiFunction<? super Field<?>, ? super Integer, ? extends String> aliasFunction);
 
@@ -509,6 +517,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @param alias The alias name
      * @return The table alias
      */
+    @NotNull
     @Support
     Table<R> as(Name alias);
 
@@ -567,6 +576,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      *            names.
      * @return The table alias
      */
+    @NotNull
     @Support
     Table<R> as(Name alias, Name... fieldAliases);
 
@@ -592,6 +602,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      *             complexity in jOOQ's internals.
      */
     @Deprecated
+    @NotNull
     @Support
     Table<R> as(Name alias, Function<? super Field<?>, ? extends Name> aliasFunction);
 
@@ -616,6 +627,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      *             complexity in jOOQ's internals.
      */
     @Deprecated
+    @NotNull
     @Support
     Table<R> as(Name alias, BiFunction<? super Field<?>, ? super Integer, ? extends Name> aliasFunction);
 
@@ -626,6 +638,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @param otherTable The other table whose name this table is aliased with.
      * @return The table alias.
      */
+    @NotNull
     @Support
     Table<R> as(Table<?> otherTable);
 
@@ -637,6 +650,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      *            are aliased with.
      * @return The table alias.
      */
+    @NotNull
     @Support
     Table<R> as(Table<?> otherTable, Field<?>... otherFields);
 
@@ -662,6 +676,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      *             complexity in jOOQ's internals.
      */
     @Deprecated
+    @NotNull
     @Support
     Table<R> as(Table<?> otherTable, Function<? super Field<?>, ? extends Field<?>> aliasFunction);
 
@@ -686,6 +701,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      *             complexity in jOOQ's internals.
      */
     @Deprecated
+    @NotNull
     @Support
     Table<R> as(Table<?> otherTable, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> aliasFunction);
 
@@ -703,6 +719,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * syntactically reasonable, the derived table may be inlined to the query
      * that selects from the resulting table.
      */
+    @NotNull
     @Support
     Table<R> where(Condition condition);
 
@@ -715,6 +732,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * syntactically reasonable, the derived table may be inlined to the query
      * that selects from the resulting table.
      */
+    @NotNull
     @Support
     Table<R> where(Condition... conditions);
 
@@ -727,6 +745,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * syntactically reasonable, the derived table may be inlined to the query
      * that selects from the resulting table.
      */
+    @NotNull
     @Support
     Table<R> where(Collection<? extends Condition> conditions);
 
@@ -738,6 +757,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * syntactically reasonable, the derived table may be inlined to the query
      * that selects from the resulting table.
      */
+    @NotNull
     @Support
     Table<R> where(Field<Boolean> field);
 
@@ -757,6 +777,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#condition(SQL)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     Table<R> where(SQL sql);
@@ -777,6 +798,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#condition(String)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     Table<R> where(String sql);
@@ -798,6 +820,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     Table<R> where(String sql, Object... bindings);
@@ -819,6 +842,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     Table<R> where(String sql, QueryPart... parts);
@@ -831,6 +855,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * syntactically reasonable, the derived table may be inlined to the query
      * that selects from the resulting table.
      */
+    @NotNull
     @Support
     Table<R> whereExists(Select<?> select);
 
@@ -842,6 +867,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * syntactically reasonable, the derived table may be inlined to the query
      * that selects from the resulting table.
      */
+    @NotNull
     @Support
     Table<R> whereNotExists(Select<?> select);
 
@@ -858,6 +884,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * but omitted, a {@link DSL#trueCondition()}, i.e. <code>1 = 1</code>
      * condition will be rendered
      */
+    @NotNull
     @Support
     TableOptionalOnStep<Record> join(TableLike<?> table, JoinType type);
 
@@ -868,6 +895,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      *
      * @see #innerJoin(TableLike)
      */
+    @NotNull
     @Support
     TableOnStep<Record> join(TableLike<?> table);
 
@@ -885,6 +913,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see #innerJoin(SQL)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     TableOnStep<Record> join(SQL sql);
@@ -903,6 +932,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see #innerJoin(String)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     TableOnStep<Record> join(String sql);
@@ -922,6 +952,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see #innerJoin(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     TableOnStep<Record> join(String sql, Object... bindings);
@@ -941,6 +972,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see #innerJoin(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     TableOnStep<Record> join(String sql, QueryPart... parts);
@@ -953,6 +985,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#table(Name)
      * @see #innerJoin(Name)
      */
+    @NotNull
     @Support
     @PlainSQL
     TableOnStep<Record> join(Name name);
@@ -960,6 +993,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
     /**
      * <code>INNER JOIN</code> a table to this table.
      */
+    @NotNull
     @Support
     TableOnStep<Record> innerJoin(TableLike<?> table);
 
@@ -974,6 +1008,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#table(SQL)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     TableOnStep<Record> innerJoin(SQL sql);
@@ -989,6 +1024,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#table(String)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     TableOnStep<Record> innerJoin(String sql);
@@ -1005,6 +1041,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     TableOnStep<Record> innerJoin(String sql, Object... bindings);
@@ -1021,6 +1058,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     TableOnStep<Record> innerJoin(String sql, QueryPart... parts);
@@ -1030,8 +1068,11 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      *
      * @see DSL#table(Name)
      */
+    @NotNull
     @Support
     TableOnStep<Record> innerJoin(Name name);
+
+
 
 
 
@@ -1058,6 +1099,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      *
      * @see #leftOuterJoin(TableLike)
      */
+    @NotNull
     @Support
     TablePartitionByStep<Record> leftJoin(TableLike<?> table);
 
@@ -1075,6 +1117,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see #leftOuterJoin(SQL)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     TablePartitionByStep<Record> leftJoin(SQL sql);
@@ -1093,6 +1136,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see #leftOuterJoin(String)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     TablePartitionByStep<Record> leftJoin(String sql);
@@ -1112,6 +1156,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see #leftOuterJoin(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     TablePartitionByStep<Record> leftJoin(String sql, Object... bindings);
@@ -1131,6 +1176,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see #leftOuterJoin(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     TablePartitionByStep<Record> leftJoin(String sql, QueryPart... parts);
@@ -1143,12 +1189,14 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#table(Name)
      * @see #leftOuterJoin(Name)
      */
+    @NotNull
     @Support
     TablePartitionByStep<Record> leftJoin(Name name);
 
     /**
      * <code>LEFT OUTER JOIN</code> a table to this table.
      */
+    @NotNull
     @Support
     TablePartitionByStep<Record> leftOuterJoin(TableLike<?> table);
 
@@ -1163,6 +1211,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#table(SQL)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     TablePartitionByStep<Record> leftOuterJoin(SQL sql);
@@ -1178,6 +1227,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#table(String)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     TablePartitionByStep<Record> leftOuterJoin(String sql);
@@ -1194,6 +1244,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     TablePartitionByStep<Record> leftOuterJoin(String sql, Object... bindings);
@@ -1210,6 +1261,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     TablePartitionByStep<Record> leftOuterJoin(String sql, QueryPart... parts);
@@ -1220,6 +1272,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#table(Name)
      * @see SQL
      */
+    @NotNull
     @Support
     TablePartitionByStep<Record> leftOuterJoin(Name name);
 
@@ -1232,6 +1285,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      *
      * @see #rightOuterJoin(TableLike)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     TablePartitionByStep<Record> rightJoin(TableLike<?> table);
 
@@ -1251,6 +1305,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see #rightOuterJoin(SQL)
      * @see SQL
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @PlainSQL
     TablePartitionByStep<Record> rightJoin(SQL sql);
@@ -1271,6 +1326,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see #rightOuterJoin(String)
      * @see SQL
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @PlainSQL
     TablePartitionByStep<Record> rightJoin(String sql);
@@ -1292,6 +1348,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see #rightOuterJoin(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @PlainSQL
     TablePartitionByStep<Record> rightJoin(String sql, Object... bindings);
@@ -1313,6 +1370,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see #rightOuterJoin(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @PlainSQL
     TablePartitionByStep<Record> rightJoin(String sql, QueryPart... parts);
@@ -1327,6 +1385,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#table(Name)
      * @see #rightOuterJoin(Name)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     TablePartitionByStep<Record> rightJoin(Name name);
 
@@ -1335,6 +1394,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * <p>
      * This is only possible where the underlying RDBMS supports it
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     TablePartitionByStep<Record> rightOuterJoin(TableLike<?> table);
 
@@ -1351,6 +1411,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#table(SQL)
      * @see SQL
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @PlainSQL
     TablePartitionByStep<Record> rightOuterJoin(SQL sql);
@@ -1368,6 +1429,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#table(String)
      * @see SQL
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @PlainSQL
     TablePartitionByStep<Record> rightOuterJoin(String sql);
@@ -1386,6 +1448,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @PlainSQL
     TablePartitionByStep<Record> rightOuterJoin(String sql, Object... bindings);
@@ -1404,6 +1467,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @PlainSQL
     TablePartitionByStep<Record> rightOuterJoin(String sql, QueryPart... parts);
@@ -1415,6 +1479,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      *
      * @see DSL#table(Name)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     TablePartitionByStep<Record> rightOuterJoin(Name name);
 
@@ -1423,6 +1488,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * <p>
      * A synonym for {@link #fullOuterJoin(TableLike)}.
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     TableOnStep<Record> fullJoin(TableLike<?> table);
 
@@ -1436,6 +1502,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     @PlainSQL
     TableOnStep<Record> fullJoin(SQL sql);
@@ -1450,6 +1517,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     @PlainSQL
     TableOnStep<Record> fullJoin(String sql);
@@ -1464,6 +1532,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     @PlainSQL
     TableOnStep<Record> fullJoin(String sql, Object... bindings);
@@ -1478,6 +1547,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     @PlainSQL
     TableOnStep<Record> fullJoin(String sql, QueryPart... parts);
@@ -1487,6 +1557,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * <p>
      * A synonym for {@link #fullOuterJoin(Name)}.
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     TableOnStep<Record> fullJoin(Name name);
 
@@ -1495,6 +1566,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * <p>
      * This is only possible where the underlying RDBMS supports it
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     TableOnStep<Record> fullOuterJoin(TableLike<?> table);
 
@@ -1511,6 +1583,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#table(SQL)
      * @see SQL
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     @PlainSQL
     TableOnStep<Record> fullOuterJoin(SQL sql);
@@ -1528,6 +1601,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#table(String)
      * @see SQL
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     @PlainSQL
     TableOnStep<Record> fullOuterJoin(String sql);
@@ -1546,6 +1620,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     @PlainSQL
     TableOnStep<Record> fullOuterJoin(String sql, Object... bindings);
@@ -1564,6 +1639,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     @PlainSQL
     TableOnStep<Record> fullOuterJoin(String sql, QueryPart... parts);
@@ -1575,6 +1651,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      *
      * @see DSL#table(Name)
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     TableOnStep<Record> fullOuterJoin(Name name);
 
@@ -1588,6 +1665,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * A join B on 1 = 1
      * </pre></code>
      */
+    @NotNull
     @Support
     Table<Record> crossJoin(TableLike<?> table);
 
@@ -1609,6 +1687,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#table(SQL)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     Table<Record> crossJoin(SQL sql);
@@ -1631,6 +1710,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#table(String)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     Table<Record> crossJoin(String sql);
@@ -1654,6 +1734,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     Table<Record> crossJoin(String sql, Object... bindings);
@@ -1677,6 +1758,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     Table<Record> crossJoin(String sql, QueryPart... parts);
@@ -1693,6 +1775,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      *
      * @see DSL#table(Name)
      */
+    @NotNull
     @Support
     Table<Record> crossJoin(Name name);
 
@@ -1702,6 +1785,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * If this is not supported by your RDBMS, then jOOQ will try to emulate
      * this behaviour using the information provided in this query.
      */
+    @NotNull
     @Support
     Table<Record> naturalJoin(TableLike<?> table);
 
@@ -1719,6 +1803,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#table(SQL)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     Table<Record> naturalJoin(SQL sql);
@@ -1737,6 +1822,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#table(String)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     Table<Record> naturalJoin(String sql);
@@ -1756,6 +1842,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     Table<Record> naturalJoin(String sql, Object... bindings);
@@ -1768,6 +1855,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      *
      * @see DSL#table(Name)
      */
+    @NotNull
     @Support
     Table<Record> naturalJoin(Name name);
 
@@ -1786,6 +1874,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     Table<Record> naturalJoin(String sql, QueryPart... parts);
@@ -1796,6 +1885,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * If this is not supported by your RDBMS, then jOOQ will try to emulate
      * this behaviour using the information provided in this query.
      */
+    @NotNull
     @Support
     Table<Record> naturalLeftOuterJoin(TableLike<?> table);
 
@@ -1813,6 +1903,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#table(SQL)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     Table<Record> naturalLeftOuterJoin(SQL sql);
@@ -1831,6 +1922,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#table(String)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     Table<Record> naturalLeftOuterJoin(String sql);
@@ -1850,6 +1942,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     Table<Record> naturalLeftOuterJoin(String sql, Object... bindings);
@@ -1869,6 +1962,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     Table<Record> naturalLeftOuterJoin(String sql, QueryPart... parts);
@@ -1881,6 +1975,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      *
      * @see DSL#table(Name)
      */
+    @NotNull
     @Support
     @PlainSQL
     Table<Record> naturalLeftOuterJoin(Name name);
@@ -1891,6 +1986,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * If this is not supported by your RDBMS, then jOOQ will try to emulate
      * this behaviour using the information provided in this query.
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Table<Record> naturalRightOuterJoin(TableLike<?> table);
 
@@ -1908,6 +2004,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#table(SQL)
      * @see SQL
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @PlainSQL
     Table<Record> naturalRightOuterJoin(SQL sql);
@@ -1926,6 +2023,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#table(String)
      * @see SQL
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @PlainSQL
     Table<Record> naturalRightOuterJoin(String sql);
@@ -1945,6 +2043,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @PlainSQL
     Table<Record> naturalRightOuterJoin(String sql, Object... bindings);
@@ -1964,6 +2063,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     @PlainSQL
     Table<Record> naturalRightOuterJoin(String sql, QueryPart... parts);
@@ -1976,6 +2076,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      *
      * @see DSL#table(Name)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Table<Record> naturalRightOuterJoin(Name name);
 
@@ -1985,6 +2086,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * If this is not supported by your RDBMS, then jOOQ will try to emulate
      * this behaviour using the information provided in this query.
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     Table<Record> naturalFullOuterJoin(TableLike<?> table);
 
@@ -2002,6 +2104,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#table(SQL)
      * @see SQL
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     @PlainSQL
     Table<Record> naturalFullOuterJoin(SQL sql);
@@ -2020,6 +2123,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#table(String)
      * @see SQL
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     @PlainSQL
     Table<Record> naturalFullOuterJoin(String sql);
@@ -2039,6 +2143,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     @PlainSQL
     Table<Record> naturalFullOuterJoin(String sql, Object... bindings);
@@ -2058,6 +2163,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     @PlainSQL
     Table<Record> naturalFullOuterJoin(String sql, QueryPart... parts);
@@ -2070,6 +2176,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      *
      * @see DSL#table(Name)
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     Table<Record> naturalFullOuterJoin(Name name);
 
@@ -2080,6 +2187,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
     /**
      * <code>CROSS APPLY</code> a table to this table.
      */
+    @NotNull
     @Support({ POSTGRES })
     Table<Record> crossApply(TableLike<?> table);
 
@@ -2094,6 +2202,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#table(SQL)
      * @see SQL
      */
+    @NotNull
     @Support({ POSTGRES })
     @PlainSQL
     Table<Record> crossApply(SQL sql);
@@ -2109,6 +2218,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#table(String)
      * @see SQL
      */
+    @NotNull
     @Support({ POSTGRES })
     @PlainSQL
     Table<Record> crossApply(String sql);
@@ -2125,6 +2235,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support({ POSTGRES })
     @PlainSQL
     Table<Record> crossApply(String sql, Object... bindings);
@@ -2141,6 +2252,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support({ POSTGRES })
     @PlainSQL
     Table<Record> crossApply(String sql, QueryPart... parts);
@@ -2150,12 +2262,14 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      *
      * @see DSL#table(Name)
      */
+    @NotNull
     @Support({ POSTGRES })
     Table<Record> crossApply(Name name);
 
     /**
      * <code>OUTER APPLY</code> a table to this table.
      */
+    @NotNull
     @Support({ POSTGRES })
     Table<Record> outerApply(TableLike<?> table);
 
@@ -2170,6 +2284,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#table(SQL)
      * @see SQL
      */
+    @NotNull
     @Support({ POSTGRES })
     @PlainSQL
     Table<Record> outerApply(SQL sql);
@@ -2185,6 +2300,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#table(String)
      * @see SQL
      */
+    @NotNull
     @Support({ POSTGRES })
     @PlainSQL
     Table<Record> outerApply(String sql);
@@ -2201,6 +2317,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support({ POSTGRES })
     @PlainSQL
     Table<Record> outerApply(String sql, Object... bindings);
@@ -2217,6 +2334,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support({ POSTGRES })
     @PlainSQL
     Table<Record> outerApply(String sql, QueryPart... parts);
@@ -2226,12 +2344,14 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      *
      * @see DSL#table(Name)
      */
+    @NotNull
     @Support({ POSTGRES })
     Table<Record> outerApply(Name name);
 
     /**
      * <code>STRAIGHT_JOIN</code> a table to this table.
      */
+    @NotNull
     @Support({ MARIADB, MYSQL })
     TableOnStep<Record> straightJoin(TableLike<?> table);
 
@@ -2246,6 +2366,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#table(SQL)
      * @see SQL
      */
+    @NotNull
     @Support({ MARIADB, MYSQL })
     @PlainSQL
     TableOnStep<Record> straightJoin(SQL sql);
@@ -2261,6 +2382,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#table(String)
      * @see SQL
      */
+    @NotNull
     @Support({ MARIADB, MYSQL })
     @PlainSQL
     TableOnStep<Record> straightJoin(String sql);
@@ -2277,6 +2399,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support({ MARIADB, MYSQL })
     @PlainSQL
     TableOnStep<Record> straightJoin(String sql, Object... bindings);
@@ -2293,6 +2416,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support({ MARIADB, MYSQL })
     @PlainSQL
     TableOnStep<Record> straightJoin(String sql, QueryPart... parts);
@@ -2302,6 +2426,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      *
      * @see DSL#table(Name)
      */
+    @NotNull
     @Support({ MARIADB, MYSQL })
     @PlainSQL
     TableOnStep<Record> straightJoin(Name name);
@@ -2328,6 +2453,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      *
      * @see #equal(Table)
      */
+    @NotNull
     @Support
     Condition eq(Table<R> table);
 
@@ -2348,6 +2474,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      *    .join(b).on(a.equal(b));
      * </pre></code>
      */
+    @NotNull
     @Support
     Condition equal(Table<R> table);
 
@@ -2378,6 +2505,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      *
      * @see #notEqual(Table)
      */
+    @NotNull
     @Support
     Condition ne(Table<R> table);
 
@@ -2398,6 +2526,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      *    .join(b).on(a.notEqual(b));
      * </pre></code>
      */
+    @NotNull
     @Support
     Condition notEqual(Table<R> table);
 
@@ -2419,6 +2548,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see <a
      *      href="http://dev.mysql.com/doc/refman/5.7/en/index-hints.html">http://dev.mysql.com/doc/refman/5.7/en/index-hints.html</a>
      */
+    @NotNull
     @Support({ MARIADB, MYSQL })
     Table<R> useIndex(String... indexes);
 
@@ -2436,6 +2566,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see <a
      *      href="http://dev.mysql.com/doc/refman/5.7/en/index-hints.html">http://dev.mysql.com/doc/refman/5.7/en/index-hints.html</a>
      */
+    @NotNull
     @Support({ MARIADB, MYSQL })
     Table<R> useIndexForJoin(String... indexes);
 
@@ -2453,6 +2584,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see <a
      *      href="http://dev.mysql.com/doc/refman/5.7/en/index-hints.html">http://dev.mysql.com/doc/refman/5.7/en/index-hints.html</a>
      */
+    @NotNull
     @Support({ MARIADB, MYSQL })
     Table<R> useIndexForOrderBy(String... indexes);
 
@@ -2470,6 +2602,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see <a
      *      href="http://dev.mysql.com/doc/refman/5.7/en/index-hints.html">http://dev.mysql.com/doc/refman/5.7/en/index-hints.html</a>
      */
+    @NotNull
     @Support({ MARIADB, MYSQL })
     Table<R> useIndexForGroupBy(String... indexes);
 
@@ -2487,6 +2620,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see <a
      *      href="http://dev.mysql.com/doc/refman/5.7/en/index-hints.html">http://dev.mysql.com/doc/refman/5.7/en/index-hints.html</a>
      */
+    @NotNull
     @Support({ MARIADB, MYSQL })
     Table<R> ignoreIndex(String... indexes);
 
@@ -2504,6 +2638,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see <a
      *      href="http://dev.mysql.com/doc/refman/5.7/en/index-hints.html">http://dev.mysql.com/doc/refman/5.7/en/index-hints.html</a>
      */
+    @NotNull
     @Support({ MARIADB, MYSQL })
     Table<R> ignoreIndexForJoin(String... indexes);
 
@@ -2521,6 +2656,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see <a
      *      href="http://dev.mysql.com/doc/refman/5.7/en/index-hints.html">http://dev.mysql.com/doc/refman/5.7/en/index-hints.html</a>
      */
+    @NotNull
     @Support({ MARIADB, MYSQL })
     Table<R> ignoreIndexForOrderBy(String... indexes);
 
@@ -2538,6 +2674,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see <a
      *      href="http://dev.mysql.com/doc/refman/5.7/en/index-hints.html">http://dev.mysql.com/doc/refman/5.7/en/index-hints.html</a>
      */
+    @NotNull
     @Support({ MARIADB, MYSQL })
     Table<R> ignoreIndexForGroupBy(String... indexes);
 
@@ -2555,6 +2692,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see <a
      *      href="http://dev.mysql.com/doc/refman/5.7/en/index-hints.html">http://dev.mysql.com/doc/refman/5.7/en/index-hints.html</a>
      */
+    @NotNull
     @Support({ MARIADB, MYSQL })
     Table<R> forceIndex(String... indexes);
 
@@ -2572,6 +2710,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see <a
      *      href="http://dev.mysql.com/doc/refman/5.7/en/index-hints.html">http://dev.mysql.com/doc/refman/5.7/en/index-hints.html</a>
      */
+    @NotNull
     @Support({ MARIADB, MYSQL })
     Table<R> forceIndexForJoin(String... indexes);
 
@@ -2589,6 +2728,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see <a
      *      href="http://dev.mysql.com/doc/refman/5.7/en/index-hints.html">http://dev.mysql.com/doc/refman/5.7/en/index-hints.html</a>
      */
+    @NotNull
     @Support({ MARIADB, MYSQL })
     Table<R> forceIndexForOrderBy(String... indexes);
 
@@ -2606,8 +2746,15 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * @see <a
      *      href="http://dev.mysql.com/doc/refman/5.7/en/index-hints.html">http://dev.mysql.com/doc/refman/5.7/en/index-hints.html</a>
      */
+    @NotNull
     @Support({ MARIADB, MYSQL })
     Table<R> forceIndexForGroupBy(String... indexes);
+
+
+
+
+
+
 
 
 
@@ -2825,6 +2972,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * <p>
      * This has been observed to work with all dialects
      */
+    @NotNull
     @Support
     DivideByOnStep divideBy(Table<?> divisor);
 
@@ -2853,6 +3001,7 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * <code>WHERE</code> or <code>SELECT</code> or any other clause than
      * <code>ON</code>.
      */
+    @NotNull
     @Support
     TableOnStep<R> leftSemiJoin(TableLike<?> table);
 
@@ -2881,8 +3030,21 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      * <code>WHERE</code> or <code>SELECT</code> or any other clause than
      * <code>ON</code>.
      */
+    @NotNull
     @Support
     TableOnStep<R> leftAntiJoin(TableLike<?> table);
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -3004,5 +3166,6 @@ public interface Table<R extends Record> extends TableLike<R>, Named {
      *    .forEach(System.out::println);
      * </pre></code>
      */
+    @NotNull
     R from(Record record);
 }

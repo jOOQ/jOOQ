@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 import org.jooq.conf.Settings;
 
 /**
@@ -114,6 +117,7 @@ public interface SelectCorrelatedSubqueryStep<R extends Record> extends SelectFi
      * @see #gt(Record)
      * @see #ge(Record)
      */
+    @NotNull
     @Support
     Condition compare(Comparator comparator, R record);
 
@@ -130,6 +134,7 @@ public interface SelectCorrelatedSubqueryStep<R extends Record> extends SelectFi
      * @see #gt(Record)
      * @see #ge(Record)
      */
+    @NotNull
     @Support
     Condition compare(Comparator comparator, Select<? extends R> select);
 
@@ -147,222 +152,259 @@ public interface SelectCorrelatedSubqueryStep<R extends Record> extends SelectFi
      * @see #gt(Record)
      * @see #ge(Record)
      */
+    @NotNull
     @Support
     Condition compare(Comparator comparator, QuantifiedSelect<? extends R> select);
 
     /**
      * Compare this subquery with a record for equality.
      */
+    @NotNull
     @Support
     Condition eq(R record);
 
     /**
      * Compare this subquery with another record for equality.
      */
+    @NotNull
     @Support
     Condition eq(Select<? extends R> select);
 
     /**
      * Compare this subquery with a quanitified subquery for equality.
      */
+    @NotNull
     @Support
     Condition eq(QuantifiedSelect<? extends R> select);
 
     /**
      * Compare this subquery with a record for equality.
      */
+    @NotNull
     @Support
     Condition equal(R record);
 
     /**
      * Compare this subquery with another record for equality.
      */
+    @NotNull
     @Support
     Condition equal(Select<? extends R> select);
 
     /**
      * Compare this subquery with a quanitified subquery for equality.
      */
+    @NotNull
     @Support
     Condition equal(QuantifiedSelect<? extends R> select);
 
     /**
      * Compare this subquery with a record for non-equality.
      */
+    @NotNull
     @Support
     Condition ne(R record);
 
     /**
      * Compare this subquery with another record for non-equality.
      */
+    @NotNull
     @Support
     Condition ne(Select<? extends R> select);
 
     /**
      * Compare this subquery with a quanitified subquery for non-equality.
      */
+    @NotNull
     @Support
     Condition ne(QuantifiedSelect<? extends R> select);
 
     /**
      * Compare this subquery with a record for non-equality.
      */
+    @NotNull
     @Support
     Condition notEqual(R record);
 
     /**
      * Compare this subquery with another record for non-equality.
      */
+    @NotNull
     @Support
     Condition notEqual(Select<? extends R> select);
 
     /**
      * Compare this subquery with a quanitified subquery for non-equality.
      */
+    @NotNull
     @Support
     Condition notEqual(QuantifiedSelect<? extends R> select);
 
     /**
      * Compare this subquery with a record for order.
      */
+    @NotNull
     @Support
     Condition lt(R record);
 
     /**
      * Compare this subquery with another record for order.
      */
+    @NotNull
     @Support
     Condition lt(Select<? extends R> select);
 
     /**
      * Compare this subquery with a quanitified subquery for order.
      */
+    @NotNull
     @Support
     Condition lt(QuantifiedSelect<? extends R> select);
 
     /**
      * Compare this subquery with a record for order.
      */
+    @NotNull
     @Support
     Condition lessThan(R record);
 
     /**
      * Compare this subquery with another record for order.
      */
+    @NotNull
     @Support
     Condition lessThan(Select<? extends R> select);
 
     /**
      * Compare this subquery with a quanitified subquery for order.
      */
+    @NotNull
     @Support
     Condition lessThan(QuantifiedSelect<? extends R> select);
 
     /**
      * Compare this subquery with a record for order.
      */
+    @NotNull
     @Support
     Condition le(R record);
 
     /**
      * Compare this subquery with another record for order.
      */
+    @NotNull
     @Support
     Condition le(Select<? extends R> select);
 
     /**
      * Compare this subquery with a quanitified subquery for order.
      */
+    @NotNull
     @Support
     Condition le(QuantifiedSelect<? extends R> select);
 
     /**
      * Compare this subquery with a record for order.
      */
+    @NotNull
     @Support
     Condition lessOrEqual(R record);
 
     /**
      * Compare this subquery with another record for order.
      */
+    @NotNull
     @Support
     Condition lessOrEqual(Select<? extends R> select);
 
     /**
      * Compare this subquery with a quanitified subquery for order.
      */
+    @NotNull
     @Support
     Condition lessOrEqual(QuantifiedSelect<? extends R> select);
 
     /**
      * Compare this subquery with a record for order.
      */
+    @NotNull
     @Support
     Condition gt(R record);
 
     /**
      * Compare this subquery with another record for order.
      */
+    @NotNull
     @Support
     Condition gt(Select<? extends R> select);
 
     /**
      * Compare this subquery with a quanitified subquery for order.
      */
+    @NotNull
     @Support
     Condition gt(QuantifiedSelect<? extends R> select);
 
     /**
      * Compare this subquery with a record for order.
      */
+    @NotNull
     @Support
     Condition greaterThan(R record);
 
     /**
      * Compare this subquery with another record for order.
      */
+    @NotNull
     @Support
     Condition greaterThan(Select<? extends R> select);
 
     /**
      * Compare this subquery with a quanitified subquery for order.
      */
+    @NotNull
     @Support
     Condition greaterThan(QuantifiedSelect<? extends R> select);
 
     /**
      * Compare this subquery with a record for order.
      */
+    @NotNull
     @Support
     Condition ge(R record);
 
     /**
      * Compare this subquery with another record for order.
      */
+    @NotNull
     @Support
     Condition ge(Select<? extends R> select);
 
     /**
      * Compare this subquery with a quanitified subquery for order.
      */
+    @NotNull
     @Support
     Condition ge(QuantifiedSelect<? extends R> select);
 
     /**
      * Compare this subquery with a record for order.
      */
+    @NotNull
     @Support
     Condition greaterOrEqual(R record);
 
     /**
      * Compare this subquery with another record for order.
      */
+    @NotNull
     @Support
     Condition greaterOrEqual(Select<? extends R> select);
 
     /**
      * Compare this subquery with a quanitified subquery for order.
      */
+    @NotNull
     @Support
     Condition greaterOrEqual(QuantifiedSelect<? extends R> select);
 
@@ -382,12 +424,14 @@ public interface SelectCorrelatedSubqueryStep<R extends Record> extends SelectFi
      * <li><code>IN</code> predicates on unnested array bind variables</li>
      * </ul>
      */
+    @NotNull
     @Support
     Condition in(R... records);
 
     /**
      * Compare this subquery with another subquery for equality.
      */
+    @NotNull
     @Support
     Condition in(Select<? extends R> select);
 
@@ -407,48 +451,56 @@ public interface SelectCorrelatedSubqueryStep<R extends Record> extends SelectFi
      * <li><code>IN</code> predicates on unnested array bind variables</li>
      * </ul>
      */
+    @NotNull
     @Support
     Condition notIn(R... records);
 
     /**
      * Compare this subquery with another subquery for non-equality.
      */
+    @NotNull
     @Support
     Condition notIn(Select<? extends R> select);
 
     /**
      * Compare this subquery with another record for distinctness.
      */
+    @NotNull
     @Support
     Condition isDistinctFrom(R record);
 
     /**
      * Compare this subquery with another record for distinctness.
      */
+    @NotNull
     @Support
     Condition isDistinctFrom(Select<? extends R> select);
 
     /**
      * Compare this subquery with another record for distinctness.
      */
+    @NotNull
     @Support
     Condition isDistinctFrom(QuantifiedSelect<? extends R> select);
 
     /**
      * Compare this subquery with another record for distinctness.
      */
+    @NotNull
     @Support
     Condition isNotDistinctFrom(R record);
 
     /**
      * Compare this subquery with another record for distinctness.
      */
+    @NotNull
     @Support
     Condition isNotDistinctFrom(Select<? extends R> select);
 
     /**
      * Compare this subquery with another record for distinctness.
      */
+    @NotNull
     @Support
     Condition isNotDistinctFrom(QuantifiedSelect<? extends R> select);
 
@@ -457,6 +509,7 @@ public interface SelectCorrelatedSubqueryStep<R extends Record> extends SelectFi
      * <p>
      * This is the same as calling <code>between(minValue).and(maxValue)</code>
      */
+    @NotNull
     @Support
     BetweenAndStep<R> between(R minValue);
 
@@ -465,6 +518,7 @@ public interface SelectCorrelatedSubqueryStep<R extends Record> extends SelectFi
      * <p>
      * This is the same as calling <code>between(minValue).and(maxValue)</code>
      */
+    @NotNull
     @Support
     Condition between(R minValue, R maxValue);
 
@@ -473,6 +527,7 @@ public interface SelectCorrelatedSubqueryStep<R extends Record> extends SelectFi
      * <p>
      * This is the same as calling <code>between(minValue).and(maxValue)</code>
      */
+    @NotNull
     @Support
     BetweenAndStep<R> between(Select<? extends R> minValue);
 
@@ -481,12 +536,14 @@ public interface SelectCorrelatedSubqueryStep<R extends Record> extends SelectFi
      * <p>
      * This is the same as calling <code>between(minValue).and(maxValue)</code>
      */
+    @NotNull
     @Support
     Condition between(Select<? extends R> minValue, Select<? extends R> maxValue);
 
     /**
      * Check if this subquery is within a symmetric range of two records.
      */
+    @NotNull
     @Support
     BetweenAndStepR<R> betweenSymmetric(R minValue);
 
@@ -495,12 +552,14 @@ public interface SelectCorrelatedSubqueryStep<R extends Record> extends SelectFi
      * <p>
      * This is the same as calling <code>between(minValue).and(maxValue)</code>
      */
+    @NotNull
     @Support
     Condition betweenSymmetric(R minValue, R maxValue);
 
     /**
      * Check if this subquery is within a symmetric range of two subqueries.
      */
+    @NotNull
     @Support
     BetweenAndStepR<R> betweenSymmetric(Select<? extends R> minValue);
 
@@ -509,12 +568,14 @@ public interface SelectCorrelatedSubqueryStep<R extends Record> extends SelectFi
      * <p>
      * This is the same as calling <code>between(minValue).and(maxValue)</code>
      */
+    @NotNull
     @Support
     Condition betweenSymmetric(Select<? extends R> minValue, Select<? extends R> maxValue);
 
     /**
      * Check if this subquery is not within a range of two records.
      */
+    @NotNull
     @Support
     BetweenAndStepR<R> notBetween(R minValue);
 
@@ -523,12 +584,14 @@ public interface SelectCorrelatedSubqueryStep<R extends Record> extends SelectFi
      * <p>
      * This is the same as calling <code>between(minValue).and(maxValue)</code>
      */
+    @NotNull
     @Support
     Condition notBetween(R minValue, R maxValue);
 
     /**
      * Check if this subquery is not within a range of two subqueries.
      */
+    @NotNull
     @Support
     BetweenAndStepR<R> notBetween(Select<? extends R> minValue);
 
@@ -537,12 +600,14 @@ public interface SelectCorrelatedSubqueryStep<R extends Record> extends SelectFi
      * <p>
      * This is the same as calling <code>between(minValue).and(maxValue)</code>
      */
+    @NotNull
     @Support
     Condition notBetween(Select<? extends R> minValue, Select<? extends R> maxValue);
 
     /**
      * Check if this subquery is not within a symmetric range of two records.
      */
+    @NotNull
     @Support
     BetweenAndStepR<R> notBetweenSymmetric(R minValue);
 
@@ -551,12 +616,14 @@ public interface SelectCorrelatedSubqueryStep<R extends Record> extends SelectFi
      * <p>
      * This is the same as calling <code>between(minValue).and(maxValue)</code>
      */
+    @NotNull
     @Support
     Condition notBetweenSymmetric(R minValue, R maxValue);
 
     /**
      * Check if this subquery is not within a symmetric range of two subqueries.
      */
+    @NotNull
     @Support
     BetweenAndStepR<R> notBetweenSymmetric(Select<? extends R> minValue);
 
@@ -565,18 +632,21 @@ public interface SelectCorrelatedSubqueryStep<R extends Record> extends SelectFi
      * <p>
      * This is the same as calling <code>between(minValue).and(maxValue)</code>
      */
+    @NotNull
     @Support
     Condition notBetweenSymmetric(Select<? extends R> minValue, Select<? extends R> maxValue);
 
     /**
      * Check if the result of this subquery <code>IS NULL</code>
      */
+    @NotNull
     @Support
     Condition isNull();
 
     /**
      * Check if the result of this subquery <code>IS NOT NULL</code>
      */
+    @NotNull
     @Support
     Condition isNotNull();
 }

@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 // ...
@@ -101,6 +104,7 @@ public interface InsertOnDuplicateSetStep<R extends Record> {
      * <code>ON DUPLICATE KEY UPDATE</code> or
      * <code>ON CONFLICT ... DO UPDATE</code> clause.
      */
+    @NotNull
     @Support
     <T> InsertOnDuplicateSetMoreStep<R> set(Field<T> field, T value);
 
@@ -109,6 +113,7 @@ public interface InsertOnDuplicateSetStep<R extends Record> {
      * <code>ON DUPLICATE KEY UPDATE</code> or
      * <code>ON CONFLICT ... DO UPDATE</code> clause.
      */
+    @NotNull
     @Support
     <T> InsertOnDuplicateSetMoreStep<R> set(Field<T> field, Field<T> value);
 
@@ -117,6 +122,7 @@ public interface InsertOnDuplicateSetStep<R extends Record> {
      * <code>ON DUPLICATE KEY UPDATE</code> or
      * <code>ON CONFLICT ... DO UPDATE</code> clause.
      */
+    @NotNull
     @Support
     <T> InsertOnDuplicateSetMoreStep<R> set(Field<T> field, Select<? extends Record1<T>> value);
 
@@ -129,6 +135,7 @@ public interface InsertOnDuplicateSetStep<R extends Record> {
      * without the necessity of casting the Java <code>null</code> literal to
      * <code>(T)</code>.
      */
+    @NotNull
     @Support
     <T> InsertOnDuplicateSetMoreStep<R> setNull(Field<T> field);
 
@@ -144,6 +151,7 @@ public interface InsertOnDuplicateSetStep<R extends Record> {
      * <code>Field&lt;T&gt;</code>. jOOQ will attempt to convert values to their
      * corresponding field's type.
      */
+    @NotNull
     @Support
     InsertOnDuplicateSetMoreStep<R> set(Map<?, ?> map);
 
@@ -157,6 +165,7 @@ public interface InsertOnDuplicateSetStep<R extends Record> {
      *
      * @see #set(Map)
      */
+    @NotNull
     @Support
     InsertOnDuplicateSetMoreStep<R> set(Record record);
 

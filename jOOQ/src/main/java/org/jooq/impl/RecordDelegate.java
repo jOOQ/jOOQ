@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.ExecuteType.READ;
 import static org.jooq.ExecuteType.WRITE;
 import static org.jooq.conf.InvocationOrder.REVERSE;

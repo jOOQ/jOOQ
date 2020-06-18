@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
@@ -75,6 +78,7 @@ public interface MergeKeyStepN<R extends Record> extends MergeValuesStepN<R> {
      * Use this optional clause in order to override using the underlying
      * <code>PRIMARY KEY</code>.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeValuesStepN<R> key(Field<?>... keys);
 
@@ -84,6 +88,7 @@ public interface MergeKeyStepN<R extends Record> extends MergeValuesStepN<R> {
      * Use this optional clause in order to override using the underlying
      * <code>PRIMARY KEY</code>.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeValuesStepN<R> key(Collection<? extends Field<?>> keys);
 }

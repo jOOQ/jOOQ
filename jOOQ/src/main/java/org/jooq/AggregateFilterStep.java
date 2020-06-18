@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 import java.util.Collection;
 
 import org.jooq.impl.DSL;
@@ -71,6 +74,7 @@ public interface AggregateFilterStep<T> extends WindowBeforeOverStep<T> {
      * Add a <code>FILTER clause</code> to the aggregate function, connecting
      * conditions with each other with {@link Operator#AND}.
      */
+    @NotNull
     @Support
     WindowBeforeOverStep<T> filterWhere(Condition condition);
 
@@ -78,6 +82,7 @@ public interface AggregateFilterStep<T> extends WindowBeforeOverStep<T> {
      * Add a <code>FILTER clause</code> to the aggregate function, connecting
      * conditions with each other with {@link Operator#AND}.
      */
+    @NotNull
     @Support
     WindowBeforeOverStep<T> filterWhere(Condition... conditions);
 
@@ -85,12 +90,14 @@ public interface AggregateFilterStep<T> extends WindowBeforeOverStep<T> {
      * Add a <code>FILTER clause</code> to the aggregate function, connecting
      * conditions with each other with {@link Operator#AND}.
      */
+    @NotNull
     @Support
     WindowBeforeOverStep<T> filterWhere(Collection<? extends Condition> conditions);
 
     /**
      * Add a <code>FILTER clause</code> to the aggregate function.
      */
+    @NotNull
     @Support
     WindowBeforeOverStep<T> filterWhere(Field<Boolean> field);
 
@@ -107,6 +114,7 @@ public interface AggregateFilterStep<T> extends WindowBeforeOverStep<T> {
      *             method will be removed in the future.
      */
     @Deprecated
+    @NotNull
     @Support
     WindowBeforeOverStep<T> filterWhere(Boolean field);
 
@@ -121,6 +129,7 @@ public interface AggregateFilterStep<T> extends WindowBeforeOverStep<T> {
      * @see DSL#condition(SQL)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     WindowBeforeOverStep<T> filterWhere(SQL sql);
@@ -136,6 +145,7 @@ public interface AggregateFilterStep<T> extends WindowBeforeOverStep<T> {
      * @see DSL#condition(String)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     WindowBeforeOverStep<T> filterWhere(String sql);
@@ -152,6 +162,7 @@ public interface AggregateFilterStep<T> extends WindowBeforeOverStep<T> {
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     WindowBeforeOverStep<T> filterWhere(String sql, Object... bindings);
@@ -168,6 +179,7 @@ public interface AggregateFilterStep<T> extends WindowBeforeOverStep<T> {
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     WindowBeforeOverStep<T> filterWhere(String sql, QueryPart... parts);

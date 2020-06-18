@@ -39,25 +39,18 @@ package org.jooq;
 
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * The meta model of a SQL <code>DOMAIN</code>
  *
  * @author Lukas Eder
  */
-public interface Domain<T> extends Named, Typed<T> {
-
-    /**
-     * The <code>DOMAIN</code>'s catalog.
-     */
-    Catalog getCatalog();
-
-    /**
-     * The <code>DOMAIN</code>'s schema.
-     */
-    Schema getSchema();
+public interface Domain<T> extends Qualified, Typed<T> {
 
     /**
      * The <code>DOMAIN</code>'s condition.
      */
+    @NotNull
     List<Check<?>> getChecks();
 }

@@ -38,6 +38,9 @@
 
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.POSTGRES;
@@ -63,50 +66,82 @@ import org.jooq.impl.DSL;
  */
 public enum Comparator {
 
+    @NotNull
+
     @Support
     IN("in", false, true),
+
+    @NotNull
 
     @Support
     NOT_IN("not in", false, true),
 
+    @NotNull
+
     @Support
     EQUALS("=", true, true),
+
+    @NotNull
 
     @Support
     NOT_EQUALS("<>", true, true),
 
+    @NotNull
+
     @Support
     LESS("<", true, true),
+
+    @NotNull
 
     @Support
     LESS_OR_EQUAL("<=", true, true),
 
+    @NotNull
+
     @Support
     GREATER(">", true, true),
+
+    @NotNull
 
     @Support
     GREATER_OR_EQUAL(">=", true, true),
 
+    @NotNull
+
     @Support
     IS_DISTINCT_FROM("is distinct from", false, false),
+
+    @NotNull
 
     @Support
     IS_NOT_DISTINCT_FROM("is not distinct from", false, false),
 
+    @NotNull
+
     @Support
     LIKE("like", false, false),
+
+    @NotNull
 
     @Support
     NOT_LIKE("not like", false, false),
 
+    @NotNull
+
     @Support({ FIREBIRD, POSTGRES })
     SIMILAR_TO("similar to", false, false),
+
+    @NotNull
 
     @Support({ FIREBIRD, POSTGRES })
     NOT_SIMILAR_TO("not similar to", false, false),
 
+    @NotNull
+
     @Support
     LIKE_IGNORE_CASE("ilike", false, false),
+
+    @NotNull
 
     @Support
     NOT_LIKE_IGNORE_CASE("not ilike", false, false),

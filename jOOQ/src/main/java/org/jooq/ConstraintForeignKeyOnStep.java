@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 // ...
@@ -99,6 +102,7 @@ public interface ConstraintForeignKeyOnStep extends ConstraintEnforcementStep {
      * explicit action will be specified and calling this method is equivalent
      * to not calling any method at all.
      */
+    @NotNull
     @Support
     ConstraintForeignKeyOnStep onDeleteNoAction();
 
@@ -106,6 +110,7 @@ public interface ConstraintForeignKeyOnStep extends ConstraintEnforcementStep {
      * Add an <code>ON DELETE RESTRICT</code> clause to the
      * <code>FOREIGN KEY</code> constraint.
      */
+    @NotNull
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     ConstraintForeignKeyOnStep onDeleteRestrict();
 
@@ -113,6 +118,7 @@ public interface ConstraintForeignKeyOnStep extends ConstraintEnforcementStep {
      * Add an <code>ON DELETE CASCADE</code> clause to the
      * <code>FOREIGN KEY</code> constraint.
      */
+    @NotNull
     @Support
     ConstraintForeignKeyOnStep onDeleteCascade();
 
@@ -120,6 +126,7 @@ public interface ConstraintForeignKeyOnStep extends ConstraintEnforcementStep {
      * Add an <code>ON DELETE SET NULL</code> clause to the
      * <code>FOREIGN KEY</code> constraint.
      */
+    @NotNull
     @Support
     ConstraintForeignKeyOnStep onDeleteSetNull();
 
@@ -127,6 +134,7 @@ public interface ConstraintForeignKeyOnStep extends ConstraintEnforcementStep {
      * Add an <code>ON DELETE SET DEFAULT</code> clause to the
      * <code>FOREIGN KEY</code> constraint.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MYSQL, POSTGRES, SQLITE })
     ConstraintForeignKeyOnStep onDeleteSetDefault();
 
@@ -139,6 +147,7 @@ public interface ConstraintForeignKeyOnStep extends ConstraintEnforcementStep {
      * explicit action will be specified and calling this method is equivalent
      * to not calling any method at all.
      */
+    @NotNull
     @Support
     ConstraintForeignKeyOnStep onUpdateNoAction();
 
@@ -146,6 +155,7 @@ public interface ConstraintForeignKeyOnStep extends ConstraintEnforcementStep {
      * Add an <code>ON UPDATE RESTRICT</code> clause to the
      * <code>FOREIGN KEY</code> constraint.
      */
+    @NotNull
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     ConstraintForeignKeyOnStep onUpdateRestrict();
 
@@ -153,6 +163,7 @@ public interface ConstraintForeignKeyOnStep extends ConstraintEnforcementStep {
      * Add an <code>ON UPDATE CASCADE</code> clause to the
      * <code>FOREIGN KEY</code> constraint.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     ConstraintForeignKeyOnStep onUpdateCascade();
 
@@ -160,6 +171,7 @@ public interface ConstraintForeignKeyOnStep extends ConstraintEnforcementStep {
      * Add an <code>ON UPDATE SET NULL</code> clause to the
      * <code>FOREIGN KEY</code> constraint.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     ConstraintForeignKeyOnStep onUpdateSetNull();
 
@@ -167,6 +179,7 @@ public interface ConstraintForeignKeyOnStep extends ConstraintEnforcementStep {
      * Add an <code>ON UPDATE SET DEFAULT</code> clause to the
      * <code>FOREIGN KEY</code> constraint.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MYSQL, POSTGRES, SQLITE })
     ConstraintForeignKeyOnStep onUpdateSetDefault();
 

@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.SQLDialect.H2;
 // ...
 
@@ -110,6 +113,7 @@ public interface SelectQualifyStep<R extends Record> extends SelectOrderByStep<R
      * Add a <code>QUALIFY</code> clause to the query, connecting them with each
      * other with {@link Operator#AND}.
      */
+    @NotNull
     @Support({ H2 })
     SelectQualifyConditionStep<R> qualify(Condition condition);
 
@@ -117,6 +121,7 @@ public interface SelectQualifyStep<R extends Record> extends SelectOrderByStep<R
      * Add a <code>QUALIFY</code> clause to the query, connecting them with each
      * other with {@link Operator#AND}.
      */
+    @NotNull
     @Support({ H2 })
     SelectQualifyConditionStep<R> qualify(Condition... conditions);
 
@@ -124,12 +129,14 @@ public interface SelectQualifyStep<R extends Record> extends SelectOrderByStep<R
      * Add a <code>QUALIFY</code> clause to the query, connecting them with each
      * other with {@link Operator#AND}.
      */
+    @NotNull
     @Support({ H2 })
     SelectQualifyConditionStep<R> qualify(Collection<? extends Condition> conditions);
 
     /**
      * Add a <code>QUALIFY</code> clause to the query.
      */
+    @NotNull
     @Support({ H2 })
     SelectQualifyConditionStep<R> qualify(Field<Boolean> condition);
 
@@ -144,6 +151,7 @@ public interface SelectQualifyStep<R extends Record> extends SelectOrderByStep<R
      * @see DSL#condition(SQL)
      * @see SQL
      */
+    @NotNull
     @Support({ H2 })
     @PlainSQL
     SelectQualifyConditionStep<R> qualify(SQL sql);
@@ -159,6 +167,7 @@ public interface SelectQualifyStep<R extends Record> extends SelectOrderByStep<R
      * @see DSL#condition(String)
      * @see SQL
      */
+    @NotNull
     @Support({ H2 })
     @PlainSQL
     SelectQualifyConditionStep<R> qualify(String sql);
@@ -175,6 +184,7 @@ public interface SelectQualifyStep<R extends Record> extends SelectOrderByStep<R
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support({ H2 })
     @PlainSQL
     SelectQualifyConditionStep<R> qualify(String sql, Object... bindings);
@@ -191,6 +201,7 @@ public interface SelectQualifyStep<R extends Record> extends SelectOrderByStep<R
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support({ H2 })
     @PlainSQL
     SelectQualifyConditionStep<R> qualify(String sql, QueryPart... parts);

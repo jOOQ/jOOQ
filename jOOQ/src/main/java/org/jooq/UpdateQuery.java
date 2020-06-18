@@ -54,6 +54,9 @@ import static org.jooq.SQLDialect.POSTGRES;
 
 import java.util.Collection;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * An <code>UPDATE</code> statement (model API).
  * <p>
@@ -485,6 +488,7 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      * SQL dialects
      */
     @Override
+    @Nullable
     @Support({ FIREBIRD, POSTGRES })
     R getReturnedRecord();
 
@@ -495,6 +499,7 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      * SQL dialects
      */
     @Override
+    @NotNull
     @Support({ FIREBIRD, POSTGRES })
     Result<R> getReturnedRecords();
 

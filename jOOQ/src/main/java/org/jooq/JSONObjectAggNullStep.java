@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 // ...
@@ -60,12 +63,14 @@ public interface JSONObjectAggNullStep<T> extends AggregateFilterStep<T> {
     /**
      * Include <code>NULL</code> values in output JSON.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     AggregateFilterStep<T> nullOnNull();
 
     /**
      * Exclude <code>NULL</code> values in output JSON.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     AggregateFilterStep<T> absentOnNull();
 }

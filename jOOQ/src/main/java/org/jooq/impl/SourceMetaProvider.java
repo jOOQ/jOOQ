@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.SQLDialect.DEFAULT;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 

@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 // ...
@@ -92,6 +95,7 @@ public interface WindowSpecificationRowsAndStep {
      * Add a <code>... AND UNBOUNDED PRECEDING</code> frame clause to the window
      * specification.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowSpecificationExcludeStep andUnboundedPreceding();
 
@@ -99,6 +103,7 @@ public interface WindowSpecificationRowsAndStep {
      * Add a <code>... AND [number] PRECEDING</code> frame clause to the window
      * specification.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowSpecificationExcludeStep andPreceding(int number);
 
@@ -106,6 +111,7 @@ public interface WindowSpecificationRowsAndStep {
      * Add a <code>... AND CURRENT ROW</code> frame clause to the window
      * specification.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowSpecificationExcludeStep andCurrentRow();
 
@@ -113,6 +119,7 @@ public interface WindowSpecificationRowsAndStep {
      * Add a <code>... AND UNBOUNDED FOLLOWING</code> frame clause to the window
      * specification.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowSpecificationExcludeStep andUnboundedFollowing();
 
@@ -120,6 +127,7 @@ public interface WindowSpecificationRowsAndStep {
      * Add a <code>... AND [number] FOLLOWING</code> frame clause to the window
      * specification.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowSpecificationExcludeStep andFollowing(int number);
 

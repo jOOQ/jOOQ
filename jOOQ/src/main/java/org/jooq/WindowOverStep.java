@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 import static org.jooq.SQLDialect.CUBRID;
@@ -89,6 +92,7 @@ public interface WindowOverStep<T> {
      * </code>
      * </pre>
      */
+    @NotNull
     @Support
     WindowPartitionByStep<T> over();
 
@@ -105,6 +109,7 @@ public interface WindowOverStep<T> {
      * {@link SelectWindowStep#window(WindowDefinition...)}, then referenced
      * windows will be inlined.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowFinalStep<T> over(Name name);
 
@@ -121,6 +126,7 @@ public interface WindowOverStep<T> {
      * {@link SelectWindowStep#window(WindowDefinition...)}, then referenced
      * windows will be inlined.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowFinalStep<T> over(String name);
 
@@ -132,6 +138,7 @@ public interface WindowOverStep<T> {
      * </code>
      * </pre>
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowFinalStep<T> over(WindowSpecification specification);
 
@@ -148,6 +155,7 @@ public interface WindowOverStep<T> {
      * {@link SelectWindowStep#window(WindowDefinition...)}, then referenced
      * windows will be inlined.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowFinalStep<T> over(WindowDefinition definition);
 

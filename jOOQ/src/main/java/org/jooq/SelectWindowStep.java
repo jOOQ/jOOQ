@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 import static org.jooq.SQLDialect.CUBRID;
@@ -143,6 +146,7 @@ public interface SelectWindowStep<R extends Record> extends SelectQualifyStep<R>
      * If you are using any other dialect, you can still use this clause. jOOQ
      * will inline window definitions where they are referenced.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     SelectQualifyStep<R> window(WindowDefinition... definitions);
 
@@ -168,6 +172,7 @@ public interface SelectWindowStep<R extends Record> extends SelectQualifyStep<R>
      * If you are using any other dialect, you can still use this clause. jOOQ
      * will inline window definitions where they are referenced.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     SelectQualifyStep<R> window(Collection<? extends WindowDefinition> definitions);
 }

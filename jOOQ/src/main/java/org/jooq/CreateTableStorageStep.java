@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 import org.jooq.impl.DSL;
 
 /**
@@ -95,6 +98,7 @@ public interface CreateTableStorageStep extends CreateTableFinalStep {
      *
      * @param sql The SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     CreateTableFinalStep storage(SQL sql);
@@ -130,6 +134,7 @@ public interface CreateTableStorageStep extends CreateTableFinalStep {
      *
      * @param sql The SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     CreateTableFinalStep storage(String sql);
@@ -166,6 +171,7 @@ public interface CreateTableStorageStep extends CreateTableFinalStep {
      * @param sql The SQL
      * @param bindings The bindings
      */
+    @NotNull
     @Support
     @PlainSQL
     CreateTableFinalStep storage(String sql, Object... bindings);
@@ -204,6 +210,7 @@ public interface CreateTableStorageStep extends CreateTableFinalStep {
      * @param parts The {@link QueryPart} objects that are rendered at the
      *            {numbered placeholder} locations
      */
+    @NotNull
     @Support
     @PlainSQL
     CreateTableFinalStep storage(String sql, QueryPart... parts);

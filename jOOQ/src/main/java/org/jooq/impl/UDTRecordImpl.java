@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.impl.DefaultExecuteContext.localConfiguration;
 import static org.jooq.impl.DefaultExecuteContext.localData;
 

@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import org.jooq.Context;
 import org.jooq.Keyword;
 import org.jooq.Name;

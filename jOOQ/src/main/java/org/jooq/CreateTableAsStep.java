@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 // ...
@@ -89,6 +92,7 @@ public interface CreateTableAsStep<R extends Record> {
     /**
      * Add an <code>AS</code> clause to the <code>CREATE TABLE</code> statement.
      */
+    @NotNull
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateTableWithDataStep as(Select<? extends R> select);
 }

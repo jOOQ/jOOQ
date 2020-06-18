@@ -66,6 +66,9 @@ import static org.jooq.SQLDialect.SQLITE;
 import java.util.Collection;
 import java.util.Map;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * An <code>INSERT</code> statement (model API).
  * <p>
@@ -402,6 +405,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R>,
      * This feature works with <code>INSERT</code> statements for all SQL dialects
      */
     @Override
+    @Nullable
     @Support
     R getReturnedRecord();
 
@@ -411,6 +415,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R>,
      * This feature works with <code>INSERT</code> statements for all SQL dialects
      */
     @Override
+    @NotNull
     @Support
     Result<R> getReturnedRecords();
 

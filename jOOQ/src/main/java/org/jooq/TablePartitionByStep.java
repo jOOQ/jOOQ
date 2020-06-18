@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 
 import java.util.Collection;
@@ -72,6 +75,8 @@ import java.util.Collection;
  * @author Lukas Eder
  */
 public interface TablePartitionByStep<R extends Record> extends TableOnStep<R> {
+
+
 
 
 

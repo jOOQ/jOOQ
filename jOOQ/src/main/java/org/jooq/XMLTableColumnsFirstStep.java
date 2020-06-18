@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 // ...
@@ -54,6 +57,7 @@ public interface XMLTableColumnsFirstStep {
      * Add a column to the <code>COLUMNS</code> clause of the
      * <code>XMLTABLE</code> expression.
      */
+    @NotNull
     @Support({ POSTGRES })
     XMLTableColumnForOrdinalityStep column(String name);
 
@@ -61,6 +65,7 @@ public interface XMLTableColumnsFirstStep {
      * Add a column to the <code>COLUMNS</code> clause of the
      * <code>XMLTABLE</code> expression.
      */
+    @NotNull
     @Support({ POSTGRES })
     XMLTableColumnForOrdinalityStep column(Name name);
 
@@ -68,6 +73,7 @@ public interface XMLTableColumnsFirstStep {
      * Add a column to the <code>COLUMNS</code> clause of the
      * <code>XMLTABLE</code> expression.
      */
+    @NotNull
     @Support({ POSTGRES })
     XMLTableColumnPathStep column(Field<?> name);
 
@@ -75,6 +81,7 @@ public interface XMLTableColumnsFirstStep {
      * Add a column to the <code>COLUMNS</code> clause of the
      * <code>XMLTABLE</code> expression.
      */
+    @NotNull
     @Support({ POSTGRES })
     XMLTableColumnPathStep column(String name, DataType<?> type);
 
@@ -82,6 +89,7 @@ public interface XMLTableColumnsFirstStep {
      * Add a column to the <code>COLUMNS</code> clause of the
      * <code>XMLTABLE</code> expression.
      */
+    @NotNull
     @Support({ POSTGRES })
     XMLTableColumnPathStep column(Name name, DataType<?> type);
 
@@ -89,6 +97,7 @@ public interface XMLTableColumnsFirstStep {
      * Add a column to the <code>COLUMNS</code> clause of the
      * <code>XMLTABLE</code> expression.
      */
+    @NotNull
     @Support({ POSTGRES })
     XMLTableColumnPathStep column(Field<?> name, DataType<?> type);
 

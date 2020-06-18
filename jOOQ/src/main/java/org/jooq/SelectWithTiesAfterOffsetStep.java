@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 import static org.jooq.SQLDialect.CUBRID;
@@ -119,6 +122,7 @@ public interface SelectWithTiesAfterOffsetStep<R extends Record> extends SelectF
     /**
      * Add the <code>WITH TIES</code> clause to a <code>LIMIT</code> clause.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, POSTGRES })
     SelectForUpdateStep<R> withTies();
 }

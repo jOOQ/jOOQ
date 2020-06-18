@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.CSVFormat.Quote.SPECIAL_CHARACTERS;
 
 /**

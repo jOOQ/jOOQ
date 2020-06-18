@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 import org.jooq.impl.DSL;
 
 
@@ -72,6 +75,7 @@ public interface TableOnConditionStep<R extends Record> extends Table<R> {
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#AND} operator.
      */
+    @NotNull
     @Support
     TableOnConditionStep<R> and(Condition condition);
 
@@ -79,6 +83,7 @@ public interface TableOnConditionStep<R extends Record> extends Table<R> {
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#AND} operator.
      */
+    @NotNull
     @Support
     TableOnConditionStep<R> and(Field<Boolean> condition);
 
@@ -96,6 +101,7 @@ public interface TableOnConditionStep<R extends Record> extends Table<R> {
      *             method will be removed in the future.
      */
     @Deprecated
+    @NotNull
     @Support
     TableOnConditionStep<R> and(Boolean condition);
 
@@ -111,6 +117,7 @@ public interface TableOnConditionStep<R extends Record> extends Table<R> {
      * @see DSL#condition(SQL)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     TableOnConditionStep<R> and(SQL sql);
@@ -127,6 +134,7 @@ public interface TableOnConditionStep<R extends Record> extends Table<R> {
      * @see DSL#condition(String)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     TableOnConditionStep<R> and(String sql);
@@ -144,6 +152,7 @@ public interface TableOnConditionStep<R extends Record> extends Table<R> {
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     TableOnConditionStep<R> and(String sql, Object... bindings);
@@ -161,6 +170,7 @@ public interface TableOnConditionStep<R extends Record> extends Table<R> {
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     TableOnConditionStep<R> and(String sql, QueryPart... parts);
@@ -169,6 +179,7 @@ public interface TableOnConditionStep<R extends Record> extends Table<R> {
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#AND} operator.
      */
+    @NotNull
     @Support
     TableOnConditionStep<R> andNot(Condition condition);
 
@@ -176,6 +187,7 @@ public interface TableOnConditionStep<R extends Record> extends Table<R> {
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#AND} operator.
      */
+    @NotNull
     @Support
     TableOnConditionStep<R> andNot(Field<Boolean> condition);
 
@@ -193,6 +205,7 @@ public interface TableOnConditionStep<R extends Record> extends Table<R> {
      *             method will be removed in the future.
      */
     @Deprecated
+    @NotNull
     @Support
     TableOnConditionStep<R> andNot(Boolean condition);
 
@@ -200,6 +213,7 @@ public interface TableOnConditionStep<R extends Record> extends Table<R> {
      * Combine the currently assembled conditions with an <code>EXISTS</code>
      * clause using the {@link Operator#AND} operator.
      */
+    @NotNull
     @Support
     TableOnConditionStep<R> andExists(Select<?> select);
 
@@ -207,6 +221,7 @@ public interface TableOnConditionStep<R extends Record> extends Table<R> {
      * Combine the currently assembled conditions with a <code>NOT EXISTS</code>
      * clause using the {@link Operator#AND} operator.
      */
+    @NotNull
     @Support
     TableOnConditionStep<R> andNotExists(Select<?> select);
 
@@ -214,6 +229,7 @@ public interface TableOnConditionStep<R extends Record> extends Table<R> {
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#OR} operator.
      */
+    @NotNull
     @Support
     TableOnConditionStep<R> or(Condition condition);
 
@@ -221,6 +237,7 @@ public interface TableOnConditionStep<R extends Record> extends Table<R> {
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#OR} operator.
      */
+    @NotNull
     @Support
     TableOnConditionStep<R> or(Field<Boolean> condition);
 
@@ -238,6 +255,7 @@ public interface TableOnConditionStep<R extends Record> extends Table<R> {
      *             method will be removed in the future.
      */
     @Deprecated
+    @NotNull
     @Support
     TableOnConditionStep<R> or(Boolean condition);
 
@@ -253,6 +271,7 @@ public interface TableOnConditionStep<R extends Record> extends Table<R> {
      * @see DSL#condition(SQL)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     TableOnConditionStep<R> or(SQL sql);
@@ -269,6 +288,7 @@ public interface TableOnConditionStep<R extends Record> extends Table<R> {
      * @see DSL#condition(String)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     TableOnConditionStep<R> or(String sql);
@@ -286,6 +306,7 @@ public interface TableOnConditionStep<R extends Record> extends Table<R> {
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     TableOnConditionStep<R> or(String sql, Object... bindings);
@@ -303,6 +324,7 @@ public interface TableOnConditionStep<R extends Record> extends Table<R> {
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     TableOnConditionStep<R> or(String sql, QueryPart... parts);
@@ -311,6 +333,7 @@ public interface TableOnConditionStep<R extends Record> extends Table<R> {
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#OR} operator.
      */
+    @NotNull
     @Support
     TableOnConditionStep<R> orNot(Condition condition);
 
@@ -318,6 +341,7 @@ public interface TableOnConditionStep<R extends Record> extends Table<R> {
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#OR} operator.
      */
+    @NotNull
     @Support
     TableOnConditionStep<R> orNot(Field<Boolean> condition);
 
@@ -335,6 +359,7 @@ public interface TableOnConditionStep<R extends Record> extends Table<R> {
      *             method will be removed in the future.
      */
     @Deprecated
+    @NotNull
     @Support
     TableOnConditionStep<R> orNot(Boolean condition);
 
@@ -342,6 +367,7 @@ public interface TableOnConditionStep<R extends Record> extends Table<R> {
      * Combine the currently assembled conditions with an <code>EXISTS</code>
      * clause using the {@link Operator#OR} operator.
      */
+    @NotNull
     @Support
     TableOnConditionStep<R> orExists(Select<?> select);
 
@@ -349,6 +375,7 @@ public interface TableOnConditionStep<R extends Record> extends Table<R> {
      * Combine the currently assembled conditions with a <code>NOT EXISTS</code>
      * clause using the {@link Operator#OR} operator.
      */
+    @NotNull
     @Support
     TableOnConditionStep<R> orNotExists(Select<?> select);
 }

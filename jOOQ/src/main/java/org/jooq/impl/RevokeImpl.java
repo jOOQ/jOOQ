@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.Clause.REVOKE;
 import static org.jooq.Clause.REVOKE_FROM;
 import static org.jooq.Clause.REVOKE_ON;

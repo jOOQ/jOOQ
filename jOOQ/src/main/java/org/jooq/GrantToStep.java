@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 // ...
@@ -62,18 +65,21 @@ public interface GrantToStep {
     /**
      * Grant a privilege to a user.
      */
+    @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     GrantWithGrantOptionStep to(User user);
 
     /**
      * Grant a privilege to a role.
      */
+    @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     GrantWithGrantOptionStep to(Role role);
 
     /**
      * Grant a privilege to <code>PUBLIC</code>.
      */
+    @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     GrantWithGrantOptionStep toPublic();
 }

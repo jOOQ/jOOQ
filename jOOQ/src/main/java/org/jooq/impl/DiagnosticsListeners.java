@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import org.jooq.Configuration;
 import org.jooq.DiagnosticsContext;
 import org.jooq.DiagnosticsListener;

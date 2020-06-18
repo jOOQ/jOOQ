@@ -414,6 +414,8 @@ import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * A DSL "entry point" providing implementations to the <code>org.jooq</code>
  * interfaces.
@@ -478,6 +480,7 @@ public class DSL {
      *
      * @param dialect The dialect to use with objects created from this executor
      */
+    @NotNull
     public static DSLContext using(SQLDialect dialect) {
         return new DefaultDSLContext(dialect, null);
     }
@@ -492,6 +495,7 @@ public class DSL {
      * @param settings The runtime settings to apply to objects created from
      *            this executor
      */
+    @NotNull
     public static DSLContext using(SQLDialect dialect, Settings settings) {
         return new DefaultDSLContext(dialect, settings);
     }
@@ -515,6 +519,7 @@ public class DSL {
      * @see DefaultConnectionProvider
      * @see JDBCUtils#dialect(String)
      */
+    @NotNull
     public static DSLContext using(String url) {
         try {
             Connection connection = DriverManager.getConnection(url);
@@ -546,6 +551,7 @@ public class DSL {
      * @see DefaultConnectionProvider
      * @see JDBCUtils#dialect(String)
      */
+    @NotNull
     public static DSLContext using(String url, String username, String password) {
         try {
             Connection connection = DriverManager.getConnection(url, username, password);
@@ -576,6 +582,7 @@ public class DSL {
      * @see DefaultConnectionProvider
      * @see JDBCUtils#dialect(String)
      */
+    @NotNull
     public static DSLContext using(String url, Properties properties) {
         try {
             Connection connection = DriverManager.getConnection(url, properties);
@@ -601,6 +608,7 @@ public class DSL {
      * @see DefaultConnectionProvider
      * @see JDBCUtils#dialect(Connection)
      */
+    @NotNull
     public static DSLContext using(Connection connection) {
         return new DefaultDSLContext(connection, JDBCUtils.dialect(connection), null);
     }
@@ -620,6 +628,7 @@ public class DSL {
      * @param dialect The dialect to use with objects created from this executor
      * @see DefaultConnectionProvider
      */
+    @NotNull
     public static DSLContext using(Connection connection, SQLDialect dialect) {
         return new DefaultDSLContext(connection, dialect, null);
     }
@@ -642,6 +651,7 @@ public class DSL {
      * @see DefaultConnectionProvider
      * @see JDBCUtils#dialect(Connection)
      */
+    @NotNull
     public static DSLContext using(Connection connection, Settings settings) {
         return new DefaultDSLContext(connection, JDBCUtils.dialect(connection), settings);
     }
@@ -663,6 +673,7 @@ public class DSL {
      *            this executor
      * @see DefaultConnectionProvider
      */
+    @NotNull
     public static DSLContext using(Connection connection, SQLDialect dialect, Settings settings) {
         return new DefaultDSLContext(connection, dialect, settings);
     }
@@ -682,6 +693,7 @@ public class DSL {
      * @param dialect The dialect to use with objects created from this executor
      * @see DataSourceConnectionProvider
      */
+    @NotNull
     public static DSLContext using(DataSource datasource, SQLDialect dialect) {
         return new DefaultDSLContext(datasource, dialect);
     }
@@ -703,6 +715,7 @@ public class DSL {
      *            this executor
      * @see DataSourceConnectionProvider
      */
+    @NotNull
     public static DSLContext using(DataSource datasource, SQLDialect dialect, Settings settings) {
         return new DefaultDSLContext(datasource, dialect, settings);
     }
@@ -715,6 +728,7 @@ public class DSL {
      *            JDBC connections
      * @param dialect The dialect to use with objects created from this executor
      */
+    @NotNull
     public static DSLContext using(ConnectionProvider connectionProvider, SQLDialect dialect) {
         return new DefaultDSLContext(connectionProvider, dialect);
     }
@@ -729,6 +743,7 @@ public class DSL {
      * @param settings The runtime settings to apply to objects created from
      *            this executor
      */
+    @NotNull
     public static DSLContext using(ConnectionProvider connectionProvider, SQLDialect dialect, Settings settings) {
         return new DefaultDSLContext(connectionProvider, dialect, settings);
     }
@@ -738,6 +753,7 @@ public class DSL {
      *
      * @param configuration The configuration
      */
+    @NotNull
     public static DSLContext using(Configuration configuration) {
         return new DefaultDSLContext(configuration);
     }
@@ -759,6 +775,7 @@ public class DSL {
      * and {@link #withRecursive(String)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep with(String alias) {
         return new WithImpl(null, false).with(alias);
@@ -777,6 +794,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep with(String alias, String... fieldAliases) {
         return new WithImpl(null, false).with(alias, fieldAliases);
@@ -795,6 +813,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep with(String alias, Collection<String> fieldAliases) {
         return new WithImpl(null, false).with(alias, fieldAliases);
@@ -813,6 +832,7 @@ public class DSL {
      * and {@link #withRecursive(Name)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep with(Name alias) {
         return new WithImpl(null, false).with(alias);
@@ -831,6 +851,7 @@ public class DSL {
      * and {@link #withRecursive(Name, Name...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep with(Name alias, Name... fieldAliases) {
         return new WithImpl(null, false).with(alias, fieldAliases);
@@ -849,6 +870,7 @@ public class DSL {
      * and {@link #withRecursive(Name, Name...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep with(Name alias, Collection<? extends Name> fieldAliases) {
         return new WithImpl(null, false).with(alias, fieldAliases);
@@ -878,6 +900,7 @@ public class DSL {
      *             complexity in jOOQ's internals.
      */
     @Deprecated
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep with(String alias, Function<? super Field<?>, ? extends String> fieldNameFunction) {
         return new WithImpl(null, false).with(alias, fieldNameFunction);
@@ -899,6 +922,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep1 with(String alias, String fieldAlias1) {
         return new WithImpl(null, false).with(alias, fieldAlias1);
@@ -917,6 +941,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep2 with(String alias, String fieldAlias1, String fieldAlias2) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2);
@@ -935,6 +960,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep3 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3);
@@ -953,6 +979,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep4 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4);
@@ -971,6 +998,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep5 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5);
@@ -989,6 +1017,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep6 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6);
@@ -1007,6 +1036,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep7 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7);
@@ -1025,6 +1055,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep8 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8);
@@ -1043,6 +1074,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep9 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9);
@@ -1061,6 +1093,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep10 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10);
@@ -1079,6 +1112,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep11 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11);
@@ -1097,6 +1131,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep12 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12);
@@ -1115,6 +1150,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep13 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13);
@@ -1133,6 +1169,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep14 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14);
@@ -1151,6 +1188,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep15 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15);
@@ -1169,6 +1207,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep16 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16);
@@ -1187,6 +1226,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep17 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17);
@@ -1205,6 +1245,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep18 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18);
@@ -1223,6 +1264,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep19 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19);
@@ -1241,6 +1283,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep20 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20);
@@ -1259,6 +1302,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep21 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20, String fieldAlias21) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20, fieldAlias21);
@@ -1277,6 +1321,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep22 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20, String fieldAlias21, String fieldAlias22) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20, fieldAlias21, fieldAlias22);
@@ -1295,6 +1340,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep1 with(Name alias, Name fieldAlias1) {
         return new WithImpl(null, false).with(alias, fieldAlias1);
@@ -1313,6 +1359,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep2 with(Name alias, Name fieldAlias1, Name fieldAlias2) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2);
@@ -1331,6 +1378,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep3 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3);
@@ -1349,6 +1397,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep4 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4);
@@ -1367,6 +1416,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep5 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5);
@@ -1385,6 +1435,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep6 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6);
@@ -1403,6 +1454,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep7 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7);
@@ -1421,6 +1473,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep8 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8);
@@ -1439,6 +1492,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep9 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9);
@@ -1457,6 +1511,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep10 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10);
@@ -1475,6 +1530,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep11 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11);
@@ -1493,6 +1549,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep12 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12);
@@ -1511,6 +1568,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep13 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13);
@@ -1529,6 +1587,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep14 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14);
@@ -1547,6 +1606,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep15 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15);
@@ -1565,6 +1625,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep16 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16);
@@ -1583,6 +1644,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep17 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17);
@@ -1601,6 +1663,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep18 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18);
@@ -1619,6 +1682,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep19 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19);
@@ -1637,6 +1701,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep20 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19, Name fieldAlias20) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20);
@@ -1655,6 +1720,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep21 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19, Name fieldAlias20, Name fieldAlias21) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20, fieldAlias21);
@@ -1673,6 +1739,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep22 with(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19, Name fieldAlias20, Name fieldAlias21, Name fieldAlias22) {
         return new WithImpl(null, false).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20, fieldAlias21, fieldAlias22);
@@ -1701,6 +1768,7 @@ public class DSL {
      * and {@link #withRecursive(CommonTableExpression...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithStep with(CommonTableExpression<?>... tables) {
         return new WithImpl(null, false).with(tables);
@@ -1727,6 +1795,7 @@ public class DSL {
      * and {@link #withRecursive(CommonTableExpression...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithStep with(Collection<? extends CommonTableExpression<?>> tables) {
         return new WithImpl(null, false).with(tables);
@@ -1748,6 +1817,7 @@ public class DSL {
      * Note that the {@link SQLDialect#H2} database only supports single-table,
      * <code>RECURSIVE</code> common table expression lists.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep withRecursive(String alias) {
         return new WithImpl(null, true).with(alias);
@@ -1769,6 +1839,7 @@ public class DSL {
      * Note that the {@link SQLDialect#H2} database only supports single-table,
      * <code>RECURSIVE</code> common table expression lists.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep withRecursive(String alias, String... fieldAliases) {
         return new WithImpl(null, true).with(alias, fieldAliases);
@@ -1790,6 +1861,7 @@ public class DSL {
      * Note that the {@link SQLDialect#H2} database only supports single-table,
      * <code>RECURSIVE</code> common table expression lists.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep withRecursive(String alias, Collection<String> fieldAliases) {
         return new WithImpl(null, true).with(alias, fieldAliases);
@@ -1811,6 +1883,7 @@ public class DSL {
      * Note that the {@link SQLDialect#H2} database only supports single-table,
      * <code>RECURSIVE</code> common table expression lists.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep withRecursive(Name alias) {
         return new WithImpl(null, true).with(alias);
@@ -1829,6 +1902,7 @@ public class DSL {
      * and {@link #withRecursive(Name, Name...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep withRecursive(Name alias, Name... fieldAliases) {
         return new WithImpl(null, true).with(alias, fieldAliases);
@@ -1847,6 +1921,7 @@ public class DSL {
      * and {@link #withRecursive(Name, Name...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep withRecursive(Name alias, Collection<? extends Name> fieldAliases) {
         return new WithImpl(null, true).with(alias, fieldAliases);
@@ -1880,6 +1955,7 @@ public class DSL {
      *             complexity in jOOQ's internals.
      */
     @Deprecated
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep withRecursive(String alias, Function<? super Field<?>, ? extends String> fieldNameFunction) {
         return new WithImpl(null, true).with(alias, fieldNameFunction);
@@ -1901,6 +1977,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep1 withRecursive(String alias, String fieldAlias1) {
         return new WithImpl(null, true).with(alias, fieldAlias1);
@@ -1919,6 +1996,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep2 withRecursive(String alias, String fieldAlias1, String fieldAlias2) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2);
@@ -1937,6 +2015,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep3 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3);
@@ -1955,6 +2034,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep4 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4);
@@ -1973,6 +2053,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep5 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5);
@@ -1991,6 +2072,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep6 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6);
@@ -2009,6 +2091,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep7 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7);
@@ -2027,6 +2110,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep8 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8);
@@ -2045,6 +2129,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep9 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9);
@@ -2063,6 +2148,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep10 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10);
@@ -2081,6 +2167,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep11 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11);
@@ -2099,6 +2186,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep12 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12);
@@ -2117,6 +2205,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep13 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13);
@@ -2135,6 +2224,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep14 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14);
@@ -2153,6 +2243,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep15 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15);
@@ -2171,6 +2262,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep16 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16);
@@ -2189,6 +2281,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep17 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17);
@@ -2207,6 +2300,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep18 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18);
@@ -2225,6 +2319,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep19 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19);
@@ -2243,6 +2338,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep20 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20);
@@ -2261,6 +2357,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep21 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20, String fieldAlias21) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20, fieldAlias21);
@@ -2279,6 +2376,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep22 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20, String fieldAlias21, String fieldAlias22) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20, fieldAlias21, fieldAlias22);
@@ -2297,6 +2395,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep1 withRecursive(Name alias, Name fieldAlias1) {
         return new WithImpl(null, true).with(alias, fieldAlias1);
@@ -2315,6 +2414,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep2 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2);
@@ -2333,6 +2433,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep3 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3);
@@ -2351,6 +2452,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep4 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4);
@@ -2369,6 +2471,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep5 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5);
@@ -2387,6 +2490,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep6 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6);
@@ -2405,6 +2509,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep7 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7);
@@ -2423,6 +2528,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep8 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8);
@@ -2441,6 +2547,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep9 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9);
@@ -2459,6 +2566,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep10 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10);
@@ -2477,6 +2585,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep11 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11);
@@ -2495,6 +2604,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep12 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12);
@@ -2513,6 +2623,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep13 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13);
@@ -2531,6 +2642,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep14 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14);
@@ -2549,6 +2661,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep15 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15);
@@ -2567,6 +2680,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep16 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16);
@@ -2585,6 +2699,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep17 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17);
@@ -2603,6 +2718,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep18 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18);
@@ -2621,6 +2737,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep19 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19);
@@ -2639,6 +2756,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep20 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19, Name fieldAlias20) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20);
@@ -2657,6 +2775,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep21 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19, Name fieldAlias20, Name fieldAlias21) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20, fieldAlias21);
@@ -2675,6 +2794,7 @@ public class DSL {
      * and {@link #withRecursive(String, String...)} for strictly
      * recursive CTE.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithAsStep22 withRecursive(Name alias, Name fieldAlias1, Name fieldAlias2, Name fieldAlias3, Name fieldAlias4, Name fieldAlias5, Name fieldAlias6, Name fieldAlias7, Name fieldAlias8, Name fieldAlias9, Name fieldAlias10, Name fieldAlias11, Name fieldAlias12, Name fieldAlias13, Name fieldAlias14, Name fieldAlias15, Name fieldAlias16, Name fieldAlias17, Name fieldAlias18, Name fieldAlias19, Name fieldAlias20, Name fieldAlias21, Name fieldAlias22) {
         return new WithImpl(null, true).with(alias, fieldAlias1, fieldAlias2, fieldAlias3, fieldAlias4, fieldAlias5, fieldAlias6, fieldAlias7, fieldAlias8, fieldAlias9, fieldAlias10, fieldAlias11, fieldAlias12, fieldAlias13, fieldAlias14, fieldAlias15, fieldAlias16, fieldAlias17, fieldAlias18, fieldAlias19, fieldAlias20, fieldAlias21, fieldAlias22);
@@ -2706,6 +2826,7 @@ public class DSL {
      * Note that the {@link SQLDialect#H2} database only supports single-table,
      * <code>RECURSIVE</code> common table expression lists.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithStep withRecursive(CommonTableExpression<?>... tables) {
         return new WithImpl(null, true).with(tables);
@@ -2735,6 +2856,7 @@ public class DSL {
      * Note that the {@link SQLDialect#H2} database only supports single-table,
      * <code>RECURSIVE</code> common table expression lists.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WithStep withRecursive(Collection<? extends CommonTableExpression<?>> tables) {
         return new WithImpl(null, true).with(tables);
@@ -2764,6 +2886,7 @@ public class DSL {
      * SELECT table.col1, table.col2 FROM table
      * </pre></code>
      */
+    @NotNull
     @Support
     public static <R extends Record> SelectWhereStep<R> selectFrom(Table<R> table) {
         return dsl().selectFrom(table);
@@ -2791,6 +2914,7 @@ public class DSL {
      *
      * @see DSL#table(Name)
      */
+    @NotNull
     @Support
     public static SelectWhereStep<Record> selectFrom(Name table) {
         return dsl().selectFrom(table);
@@ -2824,6 +2948,7 @@ public class DSL {
      * @see DSL#table(SQL)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     public static SelectWhereStep<Record> selectFrom(SQL sql) {
@@ -2859,6 +2984,7 @@ public class DSL {
      * @see DSL#sql(String)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     public static SelectWhereStep<Record> selectFrom(String sql) {
@@ -2894,6 +3020,7 @@ public class DSL {
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     public static SelectWhereStep<Record> selectFrom(String sql, Object... bindings) {
@@ -2929,6 +3056,7 @@ public class DSL {
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     public static SelectWhereStep<Record> selectFrom(String sql, QueryPart... parts) {
@@ -2970,6 +3098,7 @@ public class DSL {
      *
      * @see DSLContext#select(Collection)
      */
+    @NotNull
     @Support
     public static SelectSelectStep<Record> select(Collection<? extends SelectFieldOrAsterisk> fields) {
         return dsl().select(fields);
@@ -3010,6 +3139,7 @@ public class DSL {
      *
      * @see DSLContext#select(SelectFieldOrAsterisk...)
      */
+    @NotNull
     @Support
     public static SelectSelectStep<Record> select(SelectFieldOrAsterisk... fields) {
         return dsl().select(fields);
@@ -3049,6 +3179,7 @@ public class DSL {
      * @see DSLContext#select(SelectFieldOrAsterisk...)
      * @see #select(SelectFieldOrAsterisk...)
      */
+    @NotNull
     @Support
     public static <T1> SelectSelectStep<Record1<T1>> select(SelectField<T1> field1) {
         return (SelectSelectStep) select(new SelectField[] { field1 });
@@ -3086,6 +3217,7 @@ public class DSL {
      * @see DSLContext#select(SelectFieldOrAsterisk...)
      * @see #select(SelectFieldOrAsterisk...)
      */
+    @NotNull
     @Support
     public static <T1, T2> SelectSelectStep<Record2<T1, T2>> select(SelectField<T1> field1, SelectField<T2> field2) {
         return (SelectSelectStep) select(new SelectField[] { field1, field2 });
@@ -3123,6 +3255,7 @@ public class DSL {
      * @see DSLContext#select(SelectFieldOrAsterisk...)
      * @see #select(SelectFieldOrAsterisk...)
      */
+    @NotNull
     @Support
     public static <T1, T2, T3> SelectSelectStep<Record3<T1, T2, T3>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3) {
         return (SelectSelectStep) select(new SelectField[] { field1, field2, field3 });
@@ -3160,6 +3293,7 @@ public class DSL {
      * @see DSLContext#select(SelectFieldOrAsterisk...)
      * @see #select(SelectFieldOrAsterisk...)
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4> SelectSelectStep<Record4<T1, T2, T3, T4>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4) {
         return (SelectSelectStep) select(new SelectField[] { field1, field2, field3, field4 });
@@ -3197,6 +3331,7 @@ public class DSL {
      * @see DSLContext#select(SelectFieldOrAsterisk...)
      * @see #select(SelectFieldOrAsterisk...)
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5> SelectSelectStep<Record5<T1, T2, T3, T4, T5>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5) {
         return (SelectSelectStep) select(new SelectField[] { field1, field2, field3, field4, field5 });
@@ -3234,6 +3369,7 @@ public class DSL {
      * @see DSLContext#select(SelectFieldOrAsterisk...)
      * @see #select(SelectFieldOrAsterisk...)
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6> SelectSelectStep<Record6<T1, T2, T3, T4, T5, T6>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6) {
         return (SelectSelectStep) select(new SelectField[] { field1, field2, field3, field4, field5, field6 });
@@ -3271,6 +3407,7 @@ public class DSL {
      * @see DSLContext#select(SelectFieldOrAsterisk...)
      * @see #select(SelectFieldOrAsterisk...)
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7> SelectSelectStep<Record7<T1, T2, T3, T4, T5, T6, T7>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7) {
         return (SelectSelectStep) select(new SelectField[] { field1, field2, field3, field4, field5, field6, field7 });
@@ -3308,6 +3445,7 @@ public class DSL {
      * @see DSLContext#select(SelectFieldOrAsterisk...)
      * @see #select(SelectFieldOrAsterisk...)
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8> SelectSelectStep<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8) {
         return (SelectSelectStep) select(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8 });
@@ -3345,6 +3483,7 @@ public class DSL {
      * @see DSLContext#select(SelectFieldOrAsterisk...)
      * @see #select(SelectFieldOrAsterisk...)
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9> SelectSelectStep<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9) {
         return (SelectSelectStep) select(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9 });
@@ -3382,6 +3521,7 @@ public class DSL {
      * @see DSLContext#select(SelectFieldOrAsterisk...)
      * @see #select(SelectFieldOrAsterisk...)
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> SelectSelectStep<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10) {
         return (SelectSelectStep) select(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10 });
@@ -3419,6 +3559,7 @@ public class DSL {
      * @see DSLContext#select(SelectFieldOrAsterisk...)
      * @see #select(SelectFieldOrAsterisk...)
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> SelectSelectStep<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11) {
         return (SelectSelectStep) select(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11 });
@@ -3456,6 +3597,7 @@ public class DSL {
      * @see DSLContext#select(SelectFieldOrAsterisk...)
      * @see #select(SelectFieldOrAsterisk...)
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> SelectSelectStep<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12) {
         return (SelectSelectStep) select(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12 });
@@ -3493,6 +3635,7 @@ public class DSL {
      * @see DSLContext#select(SelectFieldOrAsterisk...)
      * @see #select(SelectFieldOrAsterisk...)
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> SelectSelectStep<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13) {
         return (SelectSelectStep) select(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13 });
@@ -3530,6 +3673,7 @@ public class DSL {
      * @see DSLContext#select(SelectFieldOrAsterisk...)
      * @see #select(SelectFieldOrAsterisk...)
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> SelectSelectStep<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14) {
         return (SelectSelectStep) select(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14 });
@@ -3567,6 +3711,7 @@ public class DSL {
      * @see DSLContext#select(SelectFieldOrAsterisk...)
      * @see #select(SelectFieldOrAsterisk...)
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> SelectSelectStep<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15) {
         return (SelectSelectStep) select(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15 });
@@ -3604,6 +3749,7 @@ public class DSL {
      * @see DSLContext#select(SelectFieldOrAsterisk...)
      * @see #select(SelectFieldOrAsterisk...)
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> SelectSelectStep<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16) {
         return (SelectSelectStep) select(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16 });
@@ -3641,6 +3787,7 @@ public class DSL {
      * @see DSLContext#select(SelectFieldOrAsterisk...)
      * @see #select(SelectFieldOrAsterisk...)
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> SelectSelectStep<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17) {
         return (SelectSelectStep) select(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17 });
@@ -3678,6 +3825,7 @@ public class DSL {
      * @see DSLContext#select(SelectFieldOrAsterisk...)
      * @see #select(SelectFieldOrAsterisk...)
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> SelectSelectStep<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18) {
         return (SelectSelectStep) select(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18 });
@@ -3715,6 +3863,7 @@ public class DSL {
      * @see DSLContext#select(SelectFieldOrAsterisk...)
      * @see #select(SelectFieldOrAsterisk...)
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> SelectSelectStep<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19) {
         return (SelectSelectStep) select(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19 });
@@ -3752,6 +3901,7 @@ public class DSL {
      * @see DSLContext#select(SelectFieldOrAsterisk...)
      * @see #select(SelectFieldOrAsterisk...)
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> SelectSelectStep<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20) {
         return (SelectSelectStep) select(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20 });
@@ -3789,6 +3939,7 @@ public class DSL {
      * @see DSLContext#select(SelectFieldOrAsterisk...)
      * @see #select(SelectFieldOrAsterisk...)
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> SelectSelectStep<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20, SelectField<T21> field21) {
         return (SelectSelectStep) select(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21 });
@@ -3826,6 +3977,7 @@ public class DSL {
      * @see DSLContext#select(SelectFieldOrAsterisk...)
      * @see #select(SelectFieldOrAsterisk...)
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> SelectSelectStep<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> select(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20, SelectField<T21> field21, SelectField<T22> field22) {
         return (SelectSelectStep) select(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
@@ -3868,6 +4020,7 @@ public class DSL {
      *
      * @see DSLContext#selectDistinct(Collection)
      */
+    @NotNull
     @Support
     public static SelectSelectStep<Record> selectDistinct(Collection<? extends SelectFieldOrAsterisk> fields) {
         return dsl().selectDistinct(fields);
@@ -3908,6 +4061,7 @@ public class DSL {
      *
      * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
      */
+    @NotNull
     @Support
     public static SelectSelectStep<Record> selectDistinct(SelectFieldOrAsterisk... fields) {
         return dsl().selectDistinct(fields);
@@ -3947,6 +4101,7 @@ public class DSL {
      * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
+    @NotNull
     @Support
     public static <T1> SelectSelectStep<Record1<T1>> selectDistinct(SelectField<T1> field1) {
         return (SelectSelectStep) selectDistinct(new SelectField[] { field1 });
@@ -3984,6 +4139,7 @@ public class DSL {
      * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
+    @NotNull
     @Support
     public static <T1, T2> SelectSelectStep<Record2<T1, T2>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2) {
         return (SelectSelectStep) selectDistinct(new SelectField[] { field1, field2 });
@@ -4021,6 +4177,7 @@ public class DSL {
      * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
+    @NotNull
     @Support
     public static <T1, T2, T3> SelectSelectStep<Record3<T1, T2, T3>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3) {
         return (SelectSelectStep) selectDistinct(new SelectField[] { field1, field2, field3 });
@@ -4058,6 +4215,7 @@ public class DSL {
      * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4> SelectSelectStep<Record4<T1, T2, T3, T4>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4) {
         return (SelectSelectStep) selectDistinct(new SelectField[] { field1, field2, field3, field4 });
@@ -4095,6 +4253,7 @@ public class DSL {
      * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5> SelectSelectStep<Record5<T1, T2, T3, T4, T5>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5) {
         return (SelectSelectStep) selectDistinct(new SelectField[] { field1, field2, field3, field4, field5 });
@@ -4132,6 +4291,7 @@ public class DSL {
      * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6> SelectSelectStep<Record6<T1, T2, T3, T4, T5, T6>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6) {
         return (SelectSelectStep) selectDistinct(new SelectField[] { field1, field2, field3, field4, field5, field6 });
@@ -4169,6 +4329,7 @@ public class DSL {
      * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7> SelectSelectStep<Record7<T1, T2, T3, T4, T5, T6, T7>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7) {
         return (SelectSelectStep) selectDistinct(new SelectField[] { field1, field2, field3, field4, field5, field6, field7 });
@@ -4206,6 +4367,7 @@ public class DSL {
      * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8> SelectSelectStep<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8) {
         return (SelectSelectStep) selectDistinct(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8 });
@@ -4243,6 +4405,7 @@ public class DSL {
      * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9> SelectSelectStep<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9) {
         return (SelectSelectStep) selectDistinct(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9 });
@@ -4280,6 +4443,7 @@ public class DSL {
      * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> SelectSelectStep<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10) {
         return (SelectSelectStep) selectDistinct(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10 });
@@ -4317,6 +4481,7 @@ public class DSL {
      * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> SelectSelectStep<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11) {
         return (SelectSelectStep) selectDistinct(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11 });
@@ -4354,6 +4519,7 @@ public class DSL {
      * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> SelectSelectStep<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12) {
         return (SelectSelectStep) selectDistinct(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12 });
@@ -4391,6 +4557,7 @@ public class DSL {
      * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> SelectSelectStep<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13) {
         return (SelectSelectStep) selectDistinct(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13 });
@@ -4428,6 +4595,7 @@ public class DSL {
      * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> SelectSelectStep<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14) {
         return (SelectSelectStep) selectDistinct(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14 });
@@ -4465,6 +4633,7 @@ public class DSL {
      * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> SelectSelectStep<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15) {
         return (SelectSelectStep) selectDistinct(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15 });
@@ -4502,6 +4671,7 @@ public class DSL {
      * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> SelectSelectStep<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16) {
         return (SelectSelectStep) selectDistinct(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16 });
@@ -4539,6 +4709,7 @@ public class DSL {
      * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> SelectSelectStep<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17) {
         return (SelectSelectStep) selectDistinct(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17 });
@@ -4576,6 +4747,7 @@ public class DSL {
      * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> SelectSelectStep<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18) {
         return (SelectSelectStep) selectDistinct(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18 });
@@ -4613,6 +4785,7 @@ public class DSL {
      * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> SelectSelectStep<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19) {
         return (SelectSelectStep) selectDistinct(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19 });
@@ -4650,6 +4823,7 @@ public class DSL {
      * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> SelectSelectStep<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20) {
         return (SelectSelectStep) selectDistinct(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20 });
@@ -4687,6 +4861,7 @@ public class DSL {
      * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> SelectSelectStep<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20, SelectField<T21> field21) {
         return (SelectSelectStep) selectDistinct(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21 });
@@ -4724,6 +4899,7 @@ public class DSL {
      * @see DSLContext#selectDistinct(SelectFieldOrAsterisk...)
      * @see #selectDistinct(SelectFieldOrAsterisk...)
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> SelectSelectStep<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> selectDistinct(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20, SelectField<T21> field21, SelectField<T22> field22) {
         return (SelectSelectStep) selectDistinct(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
@@ -4759,6 +4935,7 @@ public class DSL {
      * @see DSL#zero()
      * @see DSLContext#selectZero()
      */
+    @NotNull
     @Support
     public static SelectSelectStep<Record1<Integer>> selectZero() {
         return dsl().selectZero();
@@ -4792,6 +4969,7 @@ public class DSL {
      * @see DSL#one()
      * @see DSLContext#selectOne()
      */
+    @NotNull
     @Support
     public static SelectSelectStep<Record1<Integer>> selectOne() {
         return dsl().selectOne();
@@ -4824,6 +5002,7 @@ public class DSL {
      * @see DSL#count()
      * @see DSLContext#selectCount()
      */
+    @NotNull
     @Support
     public static SelectSelectStep<Record1<Integer>> selectCount() {
         return dsl().selectCount();
@@ -4857,6 +5036,7 @@ public class DSL {
      *
      * @see DSLContext#insertInto(Table)
      */
+    @NotNull
     @Support
     public static <R extends Record> InsertSetStep<R> insertInto(Table<R> into) {
         return dsl().insertInto(into);
@@ -4886,6 +5066,7 @@ public class DSL {
      *
      * @see DSLContext#insertInto(Table, Field)
      */
+    @NotNull
     @Support
     public static <R extends Record, T1> InsertValuesStep1<R, T1> insertInto(Table<R> into, Field<T1> field1) {
         return (InsertValuesStep1) insertInto(into, new Field[] { field1 });
@@ -4913,6 +5094,7 @@ public class DSL {
      *
      * @see DSLContext#insertInto(Table, Field, Field)
      */
+    @NotNull
     @Support
     public static <R extends Record, T1, T2> InsertValuesStep2<R, T1, T2> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2) {
         return (InsertValuesStep2) insertInto(into, new Field[] { field1, field2 });
@@ -4940,6 +5122,7 @@ public class DSL {
      *
      * @see DSLContext#insertInto(Table, Field, Field, Field)
      */
+    @NotNull
     @Support
     public static <R extends Record, T1, T2, T3> InsertValuesStep3<R, T1, T2, T3> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3) {
         return (InsertValuesStep3) insertInto(into, new Field[] { field1, field2, field3 });
@@ -4967,6 +5150,7 @@ public class DSL {
      *
      * @see DSLContext#insertInto(Table, Field, Field, Field, Field)
      */
+    @NotNull
     @Support
     public static <R extends Record, T1, T2, T3, T4> InsertValuesStep4<R, T1, T2, T3, T4> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4) {
         return (InsertValuesStep4) insertInto(into, new Field[] { field1, field2, field3, field4 });
@@ -4994,6 +5178,7 @@ public class DSL {
      *
      * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field)
      */
+    @NotNull
     @Support
     public static <R extends Record, T1, T2, T3, T4, T5> InsertValuesStep5<R, T1, T2, T3, T4, T5> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5) {
         return (InsertValuesStep5) insertInto(into, new Field[] { field1, field2, field3, field4, field5 });
@@ -5021,6 +5206,7 @@ public class DSL {
      *
      * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field)
      */
+    @NotNull
     @Support
     public static <R extends Record, T1, T2, T3, T4, T5, T6> InsertValuesStep6<R, T1, T2, T3, T4, T5, T6> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6) {
         return (InsertValuesStep6) insertInto(into, new Field[] { field1, field2, field3, field4, field5, field6 });
@@ -5048,6 +5234,7 @@ public class DSL {
      *
      * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field)
      */
+    @NotNull
     @Support
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7> InsertValuesStep7<R, T1, T2, T3, T4, T5, T6, T7> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7) {
         return (InsertValuesStep7) insertInto(into, new Field[] { field1, field2, field3, field4, field5, field6, field7 });
@@ -5075,6 +5262,7 @@ public class DSL {
      *
      * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field)
      */
+    @NotNull
     @Support
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8> InsertValuesStep8<R, T1, T2, T3, T4, T5, T6, T7, T8> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8) {
         return (InsertValuesStep8) insertInto(into, new Field[] { field1, field2, field3, field4, field5, field6, field7, field8 });
@@ -5102,6 +5290,7 @@ public class DSL {
      *
      * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field)
      */
+    @NotNull
     @Support
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9> InsertValuesStep9<R, T1, T2, T3, T4, T5, T6, T7, T8, T9> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9) {
         return (InsertValuesStep9) insertInto(into, new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9 });
@@ -5129,6 +5318,7 @@ public class DSL {
      *
      * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
      */
+    @NotNull
     @Support
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> InsertValuesStep10<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10) {
         return (InsertValuesStep10) insertInto(into, new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10 });
@@ -5156,6 +5346,7 @@ public class DSL {
      *
      * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
      */
+    @NotNull
     @Support
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> InsertValuesStep11<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11) {
         return (InsertValuesStep11) insertInto(into, new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11 });
@@ -5183,6 +5374,7 @@ public class DSL {
      *
      * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
      */
+    @NotNull
     @Support
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> InsertValuesStep12<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12) {
         return (InsertValuesStep12) insertInto(into, new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12 });
@@ -5210,6 +5402,7 @@ public class DSL {
      *
      * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
      */
+    @NotNull
     @Support
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> InsertValuesStep13<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13) {
         return (InsertValuesStep13) insertInto(into, new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13 });
@@ -5237,6 +5430,7 @@ public class DSL {
      *
      * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
      */
+    @NotNull
     @Support
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> InsertValuesStep14<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14) {
         return (InsertValuesStep14) insertInto(into, new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14 });
@@ -5264,6 +5458,7 @@ public class DSL {
      *
      * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
      */
+    @NotNull
     @Support
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> InsertValuesStep15<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15) {
         return (InsertValuesStep15) insertInto(into, new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15 });
@@ -5291,6 +5486,7 @@ public class DSL {
      *
      * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
      */
+    @NotNull
     @Support
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> InsertValuesStep16<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16) {
         return (InsertValuesStep16) insertInto(into, new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16 });
@@ -5318,6 +5514,7 @@ public class DSL {
      *
      * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
      */
+    @NotNull
     @Support
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> InsertValuesStep17<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17) {
         return (InsertValuesStep17) insertInto(into, new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17 });
@@ -5345,6 +5542,7 @@ public class DSL {
      *
      * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
      */
+    @NotNull
     @Support
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> InsertValuesStep18<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18) {
         return (InsertValuesStep18) insertInto(into, new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18 });
@@ -5372,6 +5570,7 @@ public class DSL {
      *
      * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
      */
+    @NotNull
     @Support
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> InsertValuesStep19<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19) {
         return (InsertValuesStep19) insertInto(into, new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19 });
@@ -5399,6 +5598,7 @@ public class DSL {
      *
      * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
      */
+    @NotNull
     @Support
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> InsertValuesStep20<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20) {
         return (InsertValuesStep20) insertInto(into, new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20 });
@@ -5426,6 +5626,7 @@ public class DSL {
      *
      * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
      */
+    @NotNull
     @Support
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> InsertValuesStep21<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21) {
         return (InsertValuesStep21) insertInto(into, new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21 });
@@ -5453,6 +5654,7 @@ public class DSL {
      *
      * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
      */
+    @NotNull
     @Support
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> InsertValuesStep22<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22) {
         return (InsertValuesStep22) insertInto(into, new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
@@ -5482,6 +5684,7 @@ public class DSL {
      *
      * @see DSLContext#insertInto(Table, Field...)
      */
+    @NotNull
     @Support
     public static <R extends Record> InsertValuesStepN<R> insertInto(Table<R> into, Field<?>... fields) {
         return dsl().insertInto(into, fields);
@@ -5509,6 +5712,7 @@ public class DSL {
      *
      * @see DSLContext#insertInto(Table, Collection)
      */
+    @NotNull
     @Support
     public static <R extends Record> InsertValuesStepN<R> insertInto(Table<R> into, Collection<? extends Field<?>> fields) {
         return dsl().insertInto(into, fields);
@@ -5541,6 +5745,7 @@ public class DSL {
      *   .where(t1.id.eq(10))
      * </pre></code>
      */
+    @NotNull
     @Support
     public static <R extends Record> UpdateSetFirstStep<R> update(Table<R> table) {
         return dsl().update(table);
@@ -5620,6 +5825,7 @@ public class DSL {
      *
      * @see DSLContext#mergeInto(Table)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record> MergeUsingStep<R> mergeInto(Table<R> table) {
         return dsl().mergeInto(table);
@@ -5635,6 +5841,7 @@ public class DSL {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1> MergeKeyStep1<R, T1> mergeInto(Table<R> table, Field<T1> field1) {
         return using(new DefaultConfiguration()).mergeInto(table, field1);
@@ -5648,6 +5855,7 @@ public class DSL {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2> MergeKeyStep2<R, T1, T2> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2);
@@ -5661,6 +5869,7 @@ public class DSL {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3> MergeKeyStep3<R, T1, T2, T3> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3);
@@ -5674,6 +5883,7 @@ public class DSL {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4> MergeKeyStep4<R, T1, T2, T3, T4> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4);
@@ -5687,6 +5897,7 @@ public class DSL {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5> MergeKeyStep5<R, T1, T2, T3, T4, T5> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5);
@@ -5700,6 +5911,7 @@ public class DSL {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6> MergeKeyStep6<R, T1, T2, T3, T4, T5, T6> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6);
@@ -5713,6 +5925,7 @@ public class DSL {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7> MergeKeyStep7<R, T1, T2, T3, T4, T5, T6, T7> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7);
@@ -5726,6 +5939,7 @@ public class DSL {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8> MergeKeyStep8<R, T1, T2, T3, T4, T5, T6, T7, T8> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8);
@@ -5739,6 +5953,7 @@ public class DSL {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9> MergeKeyStep9<R, T1, T2, T3, T4, T5, T6, T7, T8, T9> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9);
@@ -5752,6 +5967,7 @@ public class DSL {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> MergeKeyStep10<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10);
@@ -5765,6 +5981,7 @@ public class DSL {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> MergeKeyStep11<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11);
@@ -5778,6 +5995,7 @@ public class DSL {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> MergeKeyStep12<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12);
@@ -5791,6 +6009,7 @@ public class DSL {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> MergeKeyStep13<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13);
@@ -5804,6 +6023,7 @@ public class DSL {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> MergeKeyStep14<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14);
@@ -5817,6 +6037,7 @@ public class DSL {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> MergeKeyStep15<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15);
@@ -5830,6 +6051,7 @@ public class DSL {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> MergeKeyStep16<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16);
@@ -5843,6 +6065,7 @@ public class DSL {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> MergeKeyStep17<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17);
@@ -5856,6 +6079,7 @@ public class DSL {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> MergeKeyStep18<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18);
@@ -5869,6 +6093,7 @@ public class DSL {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> MergeKeyStep19<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19);
@@ -5882,6 +6107,7 @@ public class DSL {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> MergeKeyStep20<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20);
@@ -5895,6 +6121,7 @@ public class DSL {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> MergeKeyStep21<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21);
@@ -5908,6 +6135,7 @@ public class DSL {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> MergeKeyStep22<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22) {
         return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22);
@@ -5943,6 +6171,7 @@ public class DSL {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record> MergeKeyStepN<R> mergeInto(Table<R> table, Field<?>... fields) {
         return dsl().mergeInto(table, fields);
@@ -5959,6 +6188,7 @@ public class DSL {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link #mergeInto(Table)}
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record> MergeKeyStepN<R> mergeInto(Table<R> table, Collection<? extends Field<?>> fields) {
         return dsl().mergeInto(table, fields);
@@ -5984,6 +6214,7 @@ public class DSL {
      *
      * @see DSLContext#deleteFrom(Table)
      */
+    @NotNull
     @Support
     public static <R extends Record> DeleteUsingStep<R> deleteFrom(Table<R> table) {
         return dsl().deleteFrom(table);
@@ -5994,6 +6225,7 @@ public class DSL {
      * <p>
      * This is an alias for {@link #deleteFrom(Table)}
      */
+    @NotNull
     @Support
     public static <R extends Record> DeleteUsingStep<R> delete(Table<R> table) {
         return dsl().deleteFrom(table);
@@ -6006,6 +6238,7 @@ public class DSL {
     /**
      * Create a comment.
      */
+    @NotNull
     @Support
     public static Comment comment(String comment) {
         return isEmpty(comment) ? CommentImpl.NO_COMMENT : new CommentImpl(comment);
@@ -6021,6 +6254,7 @@ public class DSL {
      * @see DSLContext#commentOnTable(String)
      * @see AlterTableStep#comment(Comment)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static CommentOnIsStep commentOnTable(String tableName) {
         return dsl().commentOnTable(tableName);
@@ -6032,6 +6266,7 @@ public class DSL {
      * @see DSLContext#commentOnTable(Name)
      * @see AlterTableStep#comment(Comment)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static CommentOnIsStep commentOnTable(Name tableName) {
         return dsl().commentOnTable(tableName);
@@ -6043,6 +6278,7 @@ public class DSL {
      * @see DSLContext#commentOnTable(Table)
      * @see AlterTableStep#comment(Comment)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static CommentOnIsStep commentOnTable(Table<?> table) {
         return dsl().commentOnTable(table);
@@ -6054,6 +6290,7 @@ public class DSL {
      * @see DSLContext#commentOnView(String)
      * @see AlterViewStep#comment(Comment)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static CommentOnIsStep commentOnView(String viewName) {
         return dsl().commentOnView(viewName);
@@ -6065,6 +6302,7 @@ public class DSL {
      * @see DSLContext#commentOnView(Name)
      * @see AlterViewStep#comment(Comment)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static CommentOnIsStep commentOnView(Name viewName) {
         return dsl().commentOnView(viewName);
@@ -6076,6 +6314,7 @@ public class DSL {
      * @see DSLContext#commentOnView(Table)
      * @see AlterViewStep#comment(Comment)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static CommentOnIsStep commentOnView(Table<?> view) {
         return dsl().commentOnView(view);
@@ -6086,6 +6325,7 @@ public class DSL {
      *
      * @see DSLContext#commentOnColumn(Name)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static CommentOnIsStep commentOnColumn(Name columnName) {
         return dsl().commentOnColumn(columnName);
@@ -6096,6 +6336,7 @@ public class DSL {
      *
      * @see DSLContext#commentOnColumn(Field)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static CommentOnIsStep commentOnColumn(Field<?> field) {
         return dsl().commentOnColumn(field);
@@ -6104,6 +6345,7 @@ public class DSL {
     /**
      * Create an unnamed (system named) <code>CONSTRAINT</code> specification.
      */
+    @NotNull
     @Support
     public static ConstraintTypeStep constraint() {
         return new ConstraintImpl();
@@ -6112,6 +6354,7 @@ public class DSL {
     /**
      * Create a <code>CONSTRAINT</code> specification.
      */
+    @NotNull
     @Support
     public static ConstraintTypeStep constraint(Name name) {
         return new ConstraintImpl(name);
@@ -6120,6 +6363,7 @@ public class DSL {
     /**
      * Create a <code>CONSTRAINT</code> specification.
      */
+    @NotNull
     @Support
     public static ConstraintTypeStep constraint(String name) {
         return constraint(name(name));
@@ -6128,6 +6372,7 @@ public class DSL {
     /**
      * Create an unnamed (system named) <code>PRIMARY KEY</code> constraint.
      */
+    @NotNull
     @Support
     public static ConstraintEnforcementStep primaryKey(String... fields) {
         return constraint().primaryKey(fields);
@@ -6136,6 +6381,7 @@ public class DSL {
     /**
      * Create an unnamed (system named) <code>PRIMARY KEY</code> constraint.
      */
+    @NotNull
     @Support
     public static ConstraintEnforcementStep primaryKey(Name... fields) {
         return constraint().primaryKey(fields);
@@ -6144,6 +6390,7 @@ public class DSL {
     /**
      * Create an unnamed (system named) <code>PRIMARY KEY</code> constraint.
      */
+    @NotNull
     @Support
     public static ConstraintEnforcementStep primaryKey(Field<?>... fields) {
         return constraint().primaryKey(fields);
@@ -6152,6 +6399,7 @@ public class DSL {
     /**
      * Add a <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStepN foreignKey(String... fields) {
         return constraint().foreignKey(fields);
@@ -6160,6 +6408,7 @@ public class DSL {
     /**
      * Add a <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStepN foreignKey(Name... fields) {
         return constraint().foreignKey(fields);
@@ -6168,6 +6417,7 @@ public class DSL {
     /**
      * Add a <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStepN foreignKey(Field<?>... fields) {
         return constraint().foreignKey(fields);
@@ -6178,6 +6428,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static <T1> ConstraintForeignKeyReferencesStep1<T1> foreignKey(Field<T1> field1) {
         return constraint().foreignKey(field1);
@@ -6186,6 +6437,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static <T1, T2> ConstraintForeignKeyReferencesStep2<T1, T2> foreignKey(Field<T1> field1, Field<T2> field2) {
         return constraint().foreignKey(field1, field2);
@@ -6194,6 +6446,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3> ConstraintForeignKeyReferencesStep3<T1, T2, T3> foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3) {
         return constraint().foreignKey(field1, field2, field3);
@@ -6202,6 +6455,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4> ConstraintForeignKeyReferencesStep4<T1, T2, T3, T4> foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4) {
         return constraint().foreignKey(field1, field2, field3, field4);
@@ -6210,6 +6464,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5> ConstraintForeignKeyReferencesStep5<T1, T2, T3, T4, T5> foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5) {
         return constraint().foreignKey(field1, field2, field3, field4, field5);
@@ -6218,6 +6473,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6> ConstraintForeignKeyReferencesStep6<T1, T2, T3, T4, T5, T6> foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6);
@@ -6226,6 +6482,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7> ConstraintForeignKeyReferencesStep7<T1, T2, T3, T4, T5, T6, T7> foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7);
@@ -6234,6 +6491,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8> ConstraintForeignKeyReferencesStep8<T1, T2, T3, T4, T5, T6, T7, T8> foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8);
@@ -6242,6 +6500,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9> ConstraintForeignKeyReferencesStep9<T1, T2, T3, T4, T5, T6, T7, T8, T9> foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9);
@@ -6250,6 +6509,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> ConstraintForeignKeyReferencesStep10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10);
@@ -6258,6 +6518,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> ConstraintForeignKeyReferencesStep11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11);
@@ -6266,6 +6527,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> ConstraintForeignKeyReferencesStep12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12);
@@ -6274,6 +6536,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> ConstraintForeignKeyReferencesStep13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13);
@@ -6282,6 +6545,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> ConstraintForeignKeyReferencesStep14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14);
@@ -6290,6 +6554,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> ConstraintForeignKeyReferencesStep15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15);
@@ -6298,6 +6563,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> ConstraintForeignKeyReferencesStep16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16);
@@ -6306,6 +6572,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> ConstraintForeignKeyReferencesStep17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17);
@@ -6314,6 +6581,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> ConstraintForeignKeyReferencesStep18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18);
@@ -6322,6 +6590,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> ConstraintForeignKeyReferencesStep19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19);
@@ -6330,6 +6599,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> ConstraintForeignKeyReferencesStep20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20);
@@ -6338,6 +6608,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> ConstraintForeignKeyReferencesStep21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21);
@@ -6346,6 +6617,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> ConstraintForeignKeyReferencesStep22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22);
@@ -6354,6 +6626,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStep1<?> foreignKey(Name field1) {
         return constraint().foreignKey(field1);
@@ -6362,6 +6635,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStep2<?, ?> foreignKey(Name field1, Name field2) {
         return constraint().foreignKey(field1, field2);
@@ -6370,6 +6644,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStep3<?, ?, ?> foreignKey(Name field1, Name field2, Name field3) {
         return constraint().foreignKey(field1, field2, field3);
@@ -6378,6 +6653,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStep4<?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4) {
         return constraint().foreignKey(field1, field2, field3, field4);
@@ -6386,6 +6662,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStep5<?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5) {
         return constraint().foreignKey(field1, field2, field3, field4, field5);
@@ -6394,6 +6671,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStep6<?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6);
@@ -6402,6 +6680,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStep7<?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7);
@@ -6410,6 +6689,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStep8<?, ?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8);
@@ -6418,6 +6698,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStep9<?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9);
@@ -6426,6 +6707,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStep10<?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10);
@@ -6434,6 +6716,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStep11<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11);
@@ -6442,6 +6725,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStep12<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12);
@@ -6450,6 +6734,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStep13<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13);
@@ -6458,6 +6743,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStep14<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13, Name field14) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14);
@@ -6466,6 +6752,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStep15<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13, Name field14, Name field15) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15);
@@ -6474,6 +6761,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStep16<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13, Name field14, Name field15, Name field16) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16);
@@ -6482,6 +6770,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStep17<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13, Name field14, Name field15, Name field16, Name field17) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17);
@@ -6490,6 +6779,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStep18<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13, Name field14, Name field15, Name field16, Name field17, Name field18) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18);
@@ -6498,6 +6788,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStep19<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13, Name field14, Name field15, Name field16, Name field17, Name field18, Name field19) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19);
@@ -6506,6 +6797,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStep20<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13, Name field14, Name field15, Name field16, Name field17, Name field18, Name field19, Name field20) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20);
@@ -6514,6 +6806,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStep21<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13, Name field14, Name field15, Name field16, Name field17, Name field18, Name field19, Name field20, Name field21) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21);
@@ -6522,6 +6815,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStep22<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(Name field1, Name field2, Name field3, Name field4, Name field5, Name field6, Name field7, Name field8, Name field9, Name field10, Name field11, Name field12, Name field13, Name field14, Name field15, Name field16, Name field17, Name field18, Name field19, Name field20, Name field21, Name field22) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22);
@@ -6530,6 +6824,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStep1<?> foreignKey(String field1) {
         return constraint().foreignKey(field1);
@@ -6538,6 +6833,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStep2<?, ?> foreignKey(String field1, String field2) {
         return constraint().foreignKey(field1, field2);
@@ -6546,6 +6842,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStep3<?, ?, ?> foreignKey(String field1, String field2, String field3) {
         return constraint().foreignKey(field1, field2, field3);
@@ -6554,6 +6851,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStep4<?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4) {
         return constraint().foreignKey(field1, field2, field3, field4);
@@ -6562,6 +6860,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStep5<?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5) {
         return constraint().foreignKey(field1, field2, field3, field4, field5);
@@ -6570,6 +6869,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStep6<?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6);
@@ -6578,6 +6878,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStep7<?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7);
@@ -6586,6 +6887,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStep8<?, ?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8);
@@ -6594,6 +6896,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStep9<?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9);
@@ -6602,6 +6905,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStep10<?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10);
@@ -6610,6 +6914,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStep11<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11);
@@ -6618,6 +6923,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStep12<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12);
@@ -6626,6 +6932,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStep13<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13);
@@ -6634,6 +6941,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStep14<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14);
@@ -6642,6 +6950,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStep15<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14, String field15) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15);
@@ -6650,6 +6959,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStep16<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14, String field15, String field16) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16);
@@ -6658,6 +6968,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStep17<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14, String field15, String field16, String field17) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17);
@@ -6666,6 +6977,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStep18<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14, String field15, String field16, String field17, String field18) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18);
@@ -6674,6 +6986,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStep19<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14, String field15, String field16, String field17, String field18, String field19) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19);
@@ -6682,6 +6995,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStep20<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14, String field15, String field16, String field17, String field18, String field19, String field20) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20);
@@ -6690,6 +7004,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStep21<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14, String field15, String field16, String field17, String field18, String field19, String field20, String field21) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21);
@@ -6698,6 +7013,7 @@ public class DSL {
     /**
      * Add an unnamed (system named) <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
+    @NotNull
     @Support
     public static ConstraintForeignKeyReferencesStep22<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14, String field15, String field16, String field17, String field18, String field19, String field20, String field21, String field22) {
         return constraint().foreignKey(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22);
@@ -6708,6 +7024,7 @@ public class DSL {
     /**
      * Create an unnamed (system named) <code>UNIQUE</code> constraint.
      */
+    @NotNull
     @Support
     public static ConstraintEnforcementStep unique(String... fields) {
         return constraint().unique(fields);
@@ -6716,6 +7033,7 @@ public class DSL {
     /**
      * Create an unnamed (system named) <code>UNIQUE</code> constraint.
      */
+    @NotNull
     @Support
     public static ConstraintEnforcementStep unique(Name... fields) {
         return constraint().unique(fields);
@@ -6724,6 +7042,7 @@ public class DSL {
     /**
      * Create an unnamed (system named) <code>UNIQUE</code> constraint.
      */
+    @NotNull
     @Support
     public static ConstraintEnforcementStep unique(Field<?>... fields) {
         return constraint().unique(fields);
@@ -6732,6 +7051,7 @@ public class DSL {
     /**
      * Create an unnamed (system named) <code>CHECK</code> constraint.
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     public static ConstraintEnforcementStep check(Condition condition) {
         return constraint().check(condition);
@@ -6746,6 +7066,7 @@ public class DSL {
      *
      * @see DSL#catalog(Name)
      */
+    @NotNull
     @Support({ MARIADB, MYSQL })
     public static RowCountQuery setCatalog(String catalog) {
         return dsl().setCatalog(catalog);
@@ -6756,6 +7077,7 @@ public class DSL {
      *
      * @see DSL#catalog(Name)
      */
+    @NotNull
     @Support({ MARIADB, MYSQL })
     public static RowCountQuery setCatalog(Name catalog) {
         return dsl().setCatalog(catalog);
@@ -6764,6 +7086,7 @@ public class DSL {
     /**
      * Set the current catalog to a new value.
      */
+    @NotNull
     @Support({ MARIADB, MYSQL })
     public static RowCountQuery setCatalog(Catalog catalog) {
         return dsl().setCatalog(catalog);
@@ -6775,6 +7098,7 @@ public class DSL {
      * @see DSL#schema(Name)
      * @see DSLContext#setSchema(String)
      */
+    @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static RowCountQuery setSchema(String schema) {
         return dsl().setSchema(schema);
@@ -6786,6 +7110,7 @@ public class DSL {
      * @see DSL#schema(Name)
      * @see DSLContext#setSchema(Name)
      */
+    @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static RowCountQuery setSchema(Name schema) {
         return dsl().setSchema(schema);
@@ -6796,6 +7121,7 @@ public class DSL {
      *
      * @see DSLContext#setSchema(Schema)
      */
+    @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static RowCountQuery setSchema(Schema schema) {
         return dsl().setSchema(schema);
@@ -6806,6 +7132,7 @@ public class DSL {
      *
      * @see DSLContext#set(Name, Param)
      */
+    @NotNull
     @Support({ MYSQL })
     public static RowCountQuery set(Name name, Param<?> param) {
         return dsl().set(name, param);
@@ -6822,6 +7149,7 @@ public class DSL {
      *
      * @see DSLContext#createDatabase(String)
      */
+    @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES })
     public static org.jooq.CreateDatabaseFinalStep createDatabase(String database) {
         return dsl().createDatabase(database);
@@ -6832,6 +7160,7 @@ public class DSL {
      *
      * @see DSLContext#createDatabase(Name)
      */
+    @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES })
     public static org.jooq.CreateDatabaseFinalStep createDatabase(Name database) {
         return dsl().createDatabase(database);
@@ -6842,6 +7171,7 @@ public class DSL {
      *
      * @see DSLContext#createDatabase(Catalog)
      */
+    @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES })
     public static org.jooq.CreateDatabaseFinalStep createDatabase(Catalog database) {
         return dsl().createDatabase(database);
@@ -6852,6 +7182,7 @@ public class DSL {
      *
      * @see DSLContext#createDatabaseIfNotExists(String)
      */
+    @NotNull
     @Support({ MARIADB, MYSQL })
     public static org.jooq.CreateDatabaseFinalStep createDatabaseIfNotExists(String database) {
         return dsl().createDatabaseIfNotExists(database);
@@ -6862,6 +7193,7 @@ public class DSL {
      *
      * @see DSLContext#createDatabaseIfNotExists(Name)
      */
+    @NotNull
     @Support({ MARIADB, MYSQL })
     public static org.jooq.CreateDatabaseFinalStep createDatabaseIfNotExists(Name database) {
         return dsl().createDatabaseIfNotExists(database);
@@ -6872,6 +7204,7 @@ public class DSL {
      *
      * @see DSLContext#createDatabaseIfNotExists(Catalog)
      */
+    @NotNull
     @Support({ MARIADB, MYSQL })
     public static org.jooq.CreateDatabaseFinalStep createDatabaseIfNotExists(Catalog database) {
         return dsl().createDatabaseIfNotExists(database);
@@ -6882,6 +7215,7 @@ public class DSL {
      *
      * @see DSLContext#createDomain(String)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static org.jooq.CreateDomainAsStep createDomain(String domain) {
         return dsl().createDomain(domain);
@@ -6892,6 +7226,7 @@ public class DSL {
      *
      * @see DSLContext#createDomain(Name)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static org.jooq.CreateDomainAsStep createDomain(Name domain) {
         return dsl().createDomain(domain);
@@ -6902,6 +7237,7 @@ public class DSL {
      *
      * @see DSLContext#createDomain(Domain)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static org.jooq.CreateDomainAsStep createDomain(Domain<?> domain) {
         return dsl().createDomain(domain);
@@ -6912,6 +7248,7 @@ public class DSL {
      *
      * @see DSLContext#createDomainIfNotExists(String)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, POSTGRES })
     public static org.jooq.CreateDomainAsStep createDomainIfNotExists(String domain) {
         return dsl().createDomainIfNotExists(domain);
@@ -6922,6 +7259,7 @@ public class DSL {
      *
      * @see DSLContext#createDomainIfNotExists(Name)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, POSTGRES })
     public static org.jooq.CreateDomainAsStep createDomainIfNotExists(Name domain) {
         return dsl().createDomainIfNotExists(domain);
@@ -6932,6 +7270,7 @@ public class DSL {
      *
      * @see DSLContext#createDomainIfNotExists(Domain)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, POSTGRES })
     public static org.jooq.CreateDomainAsStep createDomainIfNotExists(Domain<?> domain) {
         return dsl().createDomainIfNotExists(domain);
@@ -6942,6 +7281,7 @@ public class DSL {
      *
      * @see DSLContext#createSchema(String)
      */
+    @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.CreateSchemaFinalStep createSchema(String schema) {
         return dsl().createSchema(schema);
@@ -6952,6 +7292,7 @@ public class DSL {
      *
      * @see DSLContext#createSchema(Name)
      */
+    @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.CreateSchemaFinalStep createSchema(Name schema) {
         return dsl().createSchema(schema);
@@ -6962,6 +7303,7 @@ public class DSL {
      *
      * @see DSLContext#createSchema(Schema)
      */
+    @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.CreateSchemaFinalStep createSchema(Schema schema) {
         return dsl().createSchema(schema);
@@ -6972,6 +7314,7 @@ public class DSL {
      *
      * @see DSLContext#createSchemaIfNotExists(String)
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.CreateSchemaFinalStep createSchemaIfNotExists(String schema) {
         return dsl().createSchemaIfNotExists(schema);
@@ -6982,6 +7325,7 @@ public class DSL {
      *
      * @see DSLContext#createSchemaIfNotExists(Name)
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.CreateSchemaFinalStep createSchemaIfNotExists(Name schema) {
         return dsl().createSchemaIfNotExists(schema);
@@ -6992,6 +7336,7 @@ public class DSL {
      *
      * @see DSLContext#createSchemaIfNotExists(Schema)
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.CreateSchemaFinalStep createSchemaIfNotExists(Schema schema) {
         return dsl().createSchemaIfNotExists(schema);
@@ -7002,6 +7347,7 @@ public class DSL {
      *
      * @see DSLContext#createSequence(String)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static org.jooq.CreateSequenceFlagsStep createSequence(String sequence) {
         return dsl().createSequence(sequence);
@@ -7012,6 +7358,7 @@ public class DSL {
      *
      * @see DSLContext#createSequence(Name)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static org.jooq.CreateSequenceFlagsStep createSequence(Name sequence) {
         return dsl().createSequence(sequence);
@@ -7022,6 +7369,7 @@ public class DSL {
      *
      * @see DSLContext#createSequence(Sequence)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static org.jooq.CreateSequenceFlagsStep createSequence(Sequence<?> sequence) {
         return dsl().createSequence(sequence);
@@ -7032,6 +7380,7 @@ public class DSL {
      *
      * @see DSLContext#createSequenceIfNotExists(String)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static org.jooq.CreateSequenceFlagsStep createSequenceIfNotExists(String sequence) {
         return dsl().createSequenceIfNotExists(sequence);
@@ -7042,6 +7391,7 @@ public class DSL {
      *
      * @see DSLContext#createSequenceIfNotExists(Name)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static org.jooq.CreateSequenceFlagsStep createSequenceIfNotExists(Name sequence) {
         return dsl().createSequenceIfNotExists(sequence);
@@ -7052,6 +7402,7 @@ public class DSL {
      *
      * @see DSLContext#createSequenceIfNotExists(Sequence)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static org.jooq.CreateSequenceFlagsStep createSequenceIfNotExists(Sequence<?> sequence) {
         return dsl().createSequenceIfNotExists(sequence);
@@ -7062,6 +7413,7 @@ public class DSL {
      *
      * @see DSLContext#alterDatabase(String)
      */
+    @NotNull
     @Support({ POSTGRES })
     public static org.jooq.AlterDatabaseStep alterDatabase(String database) {
         return dsl().alterDatabase(database);
@@ -7072,6 +7424,7 @@ public class DSL {
      *
      * @see DSLContext#alterDatabase(Name)
      */
+    @NotNull
     @Support({ POSTGRES })
     public static org.jooq.AlterDatabaseStep alterDatabase(Name database) {
         return dsl().alterDatabase(database);
@@ -7082,6 +7435,7 @@ public class DSL {
      *
      * @see DSLContext#alterDatabase(Catalog)
      */
+    @NotNull
     @Support({ POSTGRES })
     public static org.jooq.AlterDatabaseStep alterDatabase(Catalog database) {
         return dsl().alterDatabase(database);
@@ -7092,6 +7446,7 @@ public class DSL {
      *
      * @see DSLContext#alterDatabaseIfExists(String)
      */
+    @NotNull
     @Support({ POSTGRES })
     public static org.jooq.AlterDatabaseStep alterDatabaseIfExists(String database) {
         return dsl().alterDatabaseIfExists(database);
@@ -7102,6 +7457,7 @@ public class DSL {
      *
      * @see DSLContext#alterDatabaseIfExists(Name)
      */
+    @NotNull
     @Support({ POSTGRES })
     public static org.jooq.AlterDatabaseStep alterDatabaseIfExists(Name database) {
         return dsl().alterDatabaseIfExists(database);
@@ -7112,6 +7468,7 @@ public class DSL {
      *
      * @see DSLContext#alterDatabaseIfExists(Catalog)
      */
+    @NotNull
     @Support({ POSTGRES })
     public static org.jooq.AlterDatabaseStep alterDatabaseIfExists(Catalog database) {
         return dsl().alterDatabaseIfExists(database);
@@ -7122,6 +7479,7 @@ public class DSL {
      *
      * @see DSLContext#alterDomain(String)
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     public static <T> org.jooq.AlterDomainStep<T> alterDomain(String domain) {
         return dsl().alterDomain(domain);
@@ -7132,6 +7490,7 @@ public class DSL {
      *
      * @see DSLContext#alterDomain(Name)
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     public static <T> org.jooq.AlterDomainStep<T> alterDomain(Name domain) {
         return dsl().alterDomain(domain);
@@ -7142,6 +7501,7 @@ public class DSL {
      *
      * @see DSLContext#alterDomain(Domain)
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     public static <T> org.jooq.AlterDomainStep<T> alterDomain(Domain<T> domain) {
         return dsl().alterDomain(domain);
@@ -7152,6 +7512,7 @@ public class DSL {
      *
      * @see DSLContext#alterDomainIfExists(String)
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     public static <T> org.jooq.AlterDomainStep<T> alterDomainIfExists(String domain) {
         return dsl().alterDomainIfExists(domain);
@@ -7162,6 +7523,7 @@ public class DSL {
      *
      * @see DSLContext#alterDomainIfExists(Name)
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     public static <T> org.jooq.AlterDomainStep<T> alterDomainIfExists(Name domain) {
         return dsl().alterDomainIfExists(domain);
@@ -7172,6 +7534,7 @@ public class DSL {
      *
      * @see DSLContext#alterDomainIfExists(Domain)
      */
+    @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES })
     public static <T> org.jooq.AlterDomainStep<T> alterDomainIfExists(Domain<T> domain) {
         return dsl().alterDomainIfExists(domain);
@@ -7182,6 +7545,7 @@ public class DSL {
      *
      * @see DSLContext#alterSchema(String)
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
     public static org.jooq.AlterSchemaStep alterSchema(String schema) {
         return dsl().alterSchema(schema);
@@ -7192,6 +7556,7 @@ public class DSL {
      *
      * @see DSLContext#alterSchema(Name)
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
     public static org.jooq.AlterSchemaStep alterSchema(Name schema) {
         return dsl().alterSchema(schema);
@@ -7202,6 +7567,7 @@ public class DSL {
      *
      * @see DSLContext#alterSchema(Schema)
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
     public static org.jooq.AlterSchemaStep alterSchema(Schema schema) {
         return dsl().alterSchema(schema);
@@ -7212,6 +7578,7 @@ public class DSL {
      *
      * @see DSLContext#alterSchemaIfExists(String)
      */
+    @NotNull
     @Support({ H2 })
     public static org.jooq.AlterSchemaStep alterSchemaIfExists(String schema) {
         return dsl().alterSchemaIfExists(schema);
@@ -7222,6 +7589,7 @@ public class DSL {
      *
      * @see DSLContext#alterSchemaIfExists(Name)
      */
+    @NotNull
     @Support({ H2 })
     public static org.jooq.AlterSchemaStep alterSchemaIfExists(Name schema) {
         return dsl().alterSchemaIfExists(schema);
@@ -7232,6 +7600,7 @@ public class DSL {
      *
      * @see DSLContext#alterSchemaIfExists(Schema)
      */
+    @NotNull
     @Support({ H2 })
     public static org.jooq.AlterSchemaStep alterSchemaIfExists(Schema schema) {
         return dsl().alterSchemaIfExists(schema);
@@ -7242,6 +7611,7 @@ public class DSL {
      *
      * @see DSLContext#dropDatabase(String)
      */
+    @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES })
     public static org.jooq.DropDatabaseFinalStep dropDatabase(String database) {
         return dsl().dropDatabase(database);
@@ -7252,6 +7622,7 @@ public class DSL {
      *
      * @see DSLContext#dropDatabase(Name)
      */
+    @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES })
     public static org.jooq.DropDatabaseFinalStep dropDatabase(Name database) {
         return dsl().dropDatabase(database);
@@ -7262,6 +7633,7 @@ public class DSL {
      *
      * @see DSLContext#dropDatabase(Catalog)
      */
+    @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES })
     public static org.jooq.DropDatabaseFinalStep dropDatabase(Catalog database) {
         return dsl().dropDatabase(database);
@@ -7272,6 +7644,7 @@ public class DSL {
      *
      * @see DSLContext#dropDatabaseIfExists(String)
      */
+    @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES })
     public static org.jooq.DropDatabaseFinalStep dropDatabaseIfExists(String database) {
         return dsl().dropDatabaseIfExists(database);
@@ -7282,6 +7655,7 @@ public class DSL {
      *
      * @see DSLContext#dropDatabaseIfExists(Name)
      */
+    @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES })
     public static org.jooq.DropDatabaseFinalStep dropDatabaseIfExists(Name database) {
         return dsl().dropDatabaseIfExists(database);
@@ -7292,6 +7666,7 @@ public class DSL {
      *
      * @see DSLContext#dropDatabaseIfExists(Catalog)
      */
+    @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES })
     public static org.jooq.DropDatabaseFinalStep dropDatabaseIfExists(Catalog database) {
         return dsl().dropDatabaseIfExists(database);
@@ -7302,6 +7677,7 @@ public class DSL {
      *
      * @see DSLContext#dropDomain(String)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static org.jooq.DropDomainCascadeStep dropDomain(String domain) {
         return dsl().dropDomain(domain);
@@ -7312,6 +7688,7 @@ public class DSL {
      *
      * @see DSLContext#dropDomain(Name)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static org.jooq.DropDomainCascadeStep dropDomain(Name domain) {
         return dsl().dropDomain(domain);
@@ -7322,6 +7699,7 @@ public class DSL {
      *
      * @see DSLContext#dropDomain(Domain)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static org.jooq.DropDomainCascadeStep dropDomain(Domain<?> domain) {
         return dsl().dropDomain(domain);
@@ -7332,6 +7710,7 @@ public class DSL {
      *
      * @see DSLContext#dropDomainIfExists(String)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static org.jooq.DropDomainCascadeStep dropDomainIfExists(String domain) {
         return dsl().dropDomainIfExists(domain);
@@ -7342,6 +7721,7 @@ public class DSL {
      *
      * @see DSLContext#dropDomainIfExists(Name)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static org.jooq.DropDomainCascadeStep dropDomainIfExists(Name domain) {
         return dsl().dropDomainIfExists(domain);
@@ -7352,6 +7732,7 @@ public class DSL {
      *
      * @see DSLContext#dropDomainIfExists(Domain)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static org.jooq.DropDomainCascadeStep dropDomainIfExists(Domain<?> domain) {
         return dsl().dropDomainIfExists(domain);
@@ -7362,6 +7743,7 @@ public class DSL {
      *
      * @see DSLContext#dropSchema(String)
      */
+    @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.DropSchemaStep dropSchema(String schema) {
         return dsl().dropSchema(schema);
@@ -7372,6 +7754,7 @@ public class DSL {
      *
      * @see DSLContext#dropSchema(Name)
      */
+    @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.DropSchemaStep dropSchema(Name schema) {
         return dsl().dropSchema(schema);
@@ -7382,6 +7765,7 @@ public class DSL {
      *
      * @see DSLContext#dropSchema(Schema)
      */
+    @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.DropSchemaStep dropSchema(Schema schema) {
         return dsl().dropSchema(schema);
@@ -7392,6 +7776,7 @@ public class DSL {
      *
      * @see DSLContext#dropSchemaIfExists(String)
      */
+    @NotNull
     @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.DropSchemaStep dropSchemaIfExists(String schema) {
         return dsl().dropSchemaIfExists(schema);
@@ -7402,6 +7787,7 @@ public class DSL {
      *
      * @see DSLContext#dropSchemaIfExists(Name)
      */
+    @NotNull
     @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.DropSchemaStep dropSchemaIfExists(Name schema) {
         return dsl().dropSchemaIfExists(schema);
@@ -7412,6 +7798,7 @@ public class DSL {
      *
      * @see DSLContext#dropSchemaIfExists(Schema)
      */
+    @NotNull
     @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.DropSchemaStep dropSchemaIfExists(Schema schema) {
         return dsl().dropSchemaIfExists(schema);
@@ -7422,6 +7809,7 @@ public class DSL {
      *
      * @see DSLContext#dropSequence(String)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static org.jooq.DropSequenceFinalStep dropSequence(String sequence) {
         return dsl().dropSequence(sequence);
@@ -7432,6 +7820,7 @@ public class DSL {
      *
      * @see DSLContext#dropSequence(Name)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static org.jooq.DropSequenceFinalStep dropSequence(Name sequence) {
         return dsl().dropSequence(sequence);
@@ -7442,6 +7831,7 @@ public class DSL {
      *
      * @see DSLContext#dropSequence(Sequence)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static org.jooq.DropSequenceFinalStep dropSequence(Sequence<?> sequence) {
         return dsl().dropSequence(sequence);
@@ -7452,6 +7842,7 @@ public class DSL {
      *
      * @see DSLContext#dropSequenceIfExists(String)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static org.jooq.DropSequenceFinalStep dropSequenceIfExists(String sequence) {
         return dsl().dropSequenceIfExists(sequence);
@@ -7462,6 +7853,7 @@ public class DSL {
      *
      * @see DSLContext#dropSequenceIfExists(Name)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static org.jooq.DropSequenceFinalStep dropSequenceIfExists(Name sequence) {
         return dsl().dropSequenceIfExists(sequence);
@@ -7472,6 +7864,7 @@ public class DSL {
      *
      * @see DSLContext#dropSequenceIfExists(Sequence)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static org.jooq.DropSequenceFinalStep dropSequenceIfExists(Sequence<?> sequence) {
         return dsl().dropSequenceIfExists(sequence);
@@ -7484,6 +7877,7 @@ public class DSL {
      *
      * @see DSLContext#createTable(String)
      */
+    @NotNull
     @Support
     public static CreateTableColumnStep createTable(String table) {
         return dsl().createTable(table);
@@ -7494,6 +7888,7 @@ public class DSL {
      *
      * @see DSLContext#createTable(Name)
      */
+    @NotNull
     @Support
     public static CreateTableColumnStep createTable(Name table) {
         return dsl().createTable(table);
@@ -7504,6 +7899,7 @@ public class DSL {
      *
      * @see DSLContext#createTable(Table)
      */
+    @NotNull
     @Support
     public static CreateTableColumnStep createTable(Table<?> table) {
         return dsl().createTable(table);
@@ -7514,6 +7910,7 @@ public class DSL {
      *
      * @see DSLContext#createTableIfNotExists(String)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateTableColumnStep createTableIfNotExists(String table) {
         return dsl().createTableIfNotExists(table);
@@ -7524,6 +7921,7 @@ public class DSL {
      *
      * @see DSLContext#createTableIfNotExists(Name)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateTableColumnStep createTableIfNotExists(Name table) {
         return dsl().createTableIfNotExists(table);
@@ -7534,6 +7932,7 @@ public class DSL {
      *
      * @see DSLContext#createTableIfNotExists(Table)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateTableColumnStep createTableIfNotExists(Table<?> table) {
         return dsl().createTableIfNotExists(table);
@@ -7544,6 +7943,7 @@ public class DSL {
      *
      * @see DSLContext#createTemporaryTable(String)
      */
+    @NotNull
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     public static CreateTableColumnStep createTemporaryTable(String table) {
         return dsl().createTemporaryTable(table);
@@ -7554,6 +7954,7 @@ public class DSL {
      *
      * @see DSLContext#createTemporaryTable(Name)
      */
+    @NotNull
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     public static CreateTableColumnStep createTemporaryTable(Name table) {
         return dsl().createTemporaryTable(table);
@@ -7564,6 +7965,7 @@ public class DSL {
      *
      * @see DSLContext#createTemporaryTable(Table)
      */
+    @NotNull
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     public static CreateTableColumnStep createTemporaryTable(Table<?> table) {
         return dsl().createTemporaryTable(table);
@@ -7574,6 +7976,7 @@ public class DSL {
      *
      * @see DSLContext#createTemporaryTableIfNotExists(String)
      */
+    @NotNull
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     public static CreateTableColumnStep createTemporaryTableIfNotExists(String table) {
         return dsl().createTemporaryTableIfNotExists(table);
@@ -7584,6 +7987,7 @@ public class DSL {
      *
      * @see DSLContext#createTemporaryTableIfNotExists(Name)
      */
+    @NotNull
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     public static CreateTableColumnStep createTemporaryTableIfNotExists(Name table) {
         return dsl().createTemporaryTableIfNotExists(table);
@@ -7594,6 +7998,7 @@ public class DSL {
      *
      * @see DSLContext#createTemporaryTableIfNotExists(Table)
      */
+    @NotNull
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     public static CreateTableColumnStep createTemporaryTableIfNotExists(Table<?> table) {
         return dsl().createTemporaryTableIfNotExists(table);
@@ -7604,6 +8009,7 @@ public class DSL {
      *
      * @see DSLContext#createGlobalTemporaryTable(String)
      */
+    @NotNull
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     public static CreateTableColumnStep createGlobalTemporaryTable(String table) {
         return dsl().createGlobalTemporaryTable(table);
@@ -7614,6 +8020,7 @@ public class DSL {
      *
      * @see DSLContext#createGlobalTemporaryTable(Name)
      */
+    @NotNull
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     public static CreateTableColumnStep createGlobalTemporaryTable(Name table) {
         return dsl().createGlobalTemporaryTable(table);
@@ -7624,6 +8031,7 @@ public class DSL {
      *
      * @see DSLContext#createGlobalTemporaryTable(Table)
      */
+    @NotNull
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     public static CreateTableColumnStep createGlobalTemporaryTable(Table<?> table) {
         return dsl().createGlobalTemporaryTable(table);
@@ -7634,6 +8042,7 @@ public class DSL {
      *
      * @see DSLContext#createView(String, String...)
      */
+    @NotNull
     @Support
     public static CreateViewAsStep createView(String view, String... fields) {
         return dsl().createView(view, fields);
@@ -7644,6 +8053,7 @@ public class DSL {
      *
      * @see DSLContext#createView(Name, Name...)
      */
+    @NotNull
     @Support
     public static CreateViewAsStep createView(Name view, Name... fields) {
         return dsl().createView(view, fields);
@@ -7654,6 +8064,7 @@ public class DSL {
      *
      * @see DSLContext#createView(Table, Field...)
      */
+    @NotNull
     @Support
     public static CreateViewAsStep createView(Table<?> view, Field<?>... fields) {
         return dsl().createView(view, fields);
@@ -7675,6 +8086,7 @@ public class DSL {
      *             complexity in jOOQ's internals.
      */
     @Deprecated
+    @NotNull
     @Support
     public static CreateViewAsStep createView(String view, Function<? super Field<?>, ? extends String> fieldNameFunction) {
         return dsl().createView(view, fieldNameFunction);
@@ -7695,6 +8107,7 @@ public class DSL {
      *             complexity in jOOQ's internals.
      */
     @Deprecated
+    @NotNull
     @Support
     public static CreateViewAsStep createView(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction) {
         return dsl().createView(view, fieldNameFunction);
@@ -7715,6 +8128,7 @@ public class DSL {
      *             complexity in jOOQ's internals.
      */
     @Deprecated
+    @NotNull
     @Support
     public static CreateViewAsStep createView(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction) {
         return dsl().createView(view, fieldNameFunction);
@@ -7726,6 +8140,7 @@ public class DSL {
      *
      * @see DSLContext#createOrReplaceView(String, String...)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     public static CreateViewAsStep createOrReplaceView(String view, String... fields) {
         return dsl().createOrReplaceView(view, fields);
@@ -7736,6 +8151,7 @@ public class DSL {
      *
      * @see DSLContext#createOrReplaceView(Name, Name...)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     public static CreateViewAsStep createOrReplaceView(Name view, Name... fields) {
         return dsl().createOrReplaceView(view, fields);
@@ -7746,6 +8162,7 @@ public class DSL {
      *
      * @see DSLContext#createOrReplaceView(Table, Field...)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     public static CreateViewAsStep createOrReplaceView(Table<?> view, Field<?>... fields) {
         return dsl().createOrReplaceView(view, fields);
@@ -7767,6 +8184,7 @@ public class DSL {
      *             complexity in jOOQ's internals.
      */
     @Deprecated
+    @NotNull
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     public static CreateViewAsStep createOrReplaceView(String view, Function<? super Field<?>, ? extends String> fieldNameFunction) {
         return dsl().createOrReplaceView(view, fieldNameFunction);
@@ -7787,6 +8205,7 @@ public class DSL {
      *             complexity in jOOQ's internals.
      */
     @Deprecated
+    @NotNull
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     public static CreateViewAsStep createOrReplaceView(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction) {
         return dsl().createOrReplaceView(view, fieldNameFunction);
@@ -7807,6 +8226,7 @@ public class DSL {
      *             complexity in jOOQ's internals.
      */
     @Deprecated
+    @NotNull
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     public static CreateViewAsStep createOrReplaceView(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction) {
         return dsl().createOrReplaceView(view, fieldNameFunction);
@@ -7818,6 +8238,7 @@ public class DSL {
      *
      * @see DSLContext#createViewIfNotExists(String, String...)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateViewAsStep createViewIfNotExists(String view, String... fields) {
         return dsl().createViewIfNotExists(view, fields);
@@ -7828,6 +8249,7 @@ public class DSL {
      *
      * @see DSLContext#createViewIfNotExists(Name, Name...)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateViewAsStep createViewIfNotExists(Name view, Name... fields) {
         return dsl().createViewIfNotExists(view, fields);
@@ -7838,6 +8260,7 @@ public class DSL {
      *
      * @see DSLContext#createViewIfNotExists(Table, Field...)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateViewAsStep createViewIfNotExists(Table<?> view, Field<?>... fields) {
         return dsl().createViewIfNotExists(view, fields);
@@ -7859,6 +8282,7 @@ public class DSL {
      *             complexity in jOOQ's internals.
      */
     @Deprecated
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateViewAsStep createViewIfNotExists(String view, Function<? super Field<?>, ? extends String> fieldNameFunction) {
         return dsl().createViewIfNotExists(view, fieldNameFunction);
@@ -7879,6 +8303,7 @@ public class DSL {
      *             complexity in jOOQ's internals.
      */
     @Deprecated
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateViewAsStep createViewIfNotExists(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction) {
         return dsl().createViewIfNotExists(view, fieldNameFunction);
@@ -7899,6 +8324,7 @@ public class DSL {
      *             complexity in jOOQ's internals.
      */
     @Deprecated
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static CreateViewAsStep createViewIfNotExists(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction) {
         return dsl().createViewIfNotExists(view, fieldNameFunction);
@@ -7910,6 +8336,7 @@ public class DSL {
      *
      * @see DSLContext#createType(String)
      */
+    @NotNull
     @Support({ H2, POSTGRES })
     public static CreateTypeStep createType(String type) {
         return dsl().createType(type);
@@ -7920,6 +8347,7 @@ public class DSL {
      *
      * @see DSLContext#createType(Name)
      */
+    @NotNull
     @Support({ H2, POSTGRES })
     public static CreateTypeStep createType(Name type) {
         return dsl().createType(type);
@@ -7930,6 +8358,7 @@ public class DSL {
      *
      * @see DSLContext#alterType(String)
      */
+    @NotNull
     @Support({ POSTGRES })
     public static AlterTypeStep alterType(String type) {
         return dsl().alterType(type);
@@ -7940,6 +8369,7 @@ public class DSL {
      *
      * @see DSLContext#alterType(Name)
      */
+    @NotNull
     @Support({ POSTGRES })
     public static AlterTypeStep alterType(Name type) {
         return dsl().alterType(type);
@@ -7950,6 +8380,7 @@ public class DSL {
      *
      * @see DSL#dropType(String)
      */
+    @NotNull
     @Support({ H2, POSTGRES })
     public static DropTypeStep dropType(String type) {
         return dsl().dropType(type);
@@ -7960,6 +8391,7 @@ public class DSL {
      *
      * @see DSL#dropType(Name)
      */
+    @NotNull
     @Support({ H2, POSTGRES })
     public static DropTypeStep dropType(Name type) {
         return dsl().dropType(type);
@@ -7970,6 +8402,7 @@ public class DSL {
      *
      * @see DSL#dropType(String...)
      */
+    @NotNull
     @Support({ H2, POSTGRES })
     public static DropTypeStep dropType(String... type) {
         return dsl().dropType(type);
@@ -7980,6 +8413,7 @@ public class DSL {
      *
      * @see DSL#dropType(Name...)
      */
+    @NotNull
     @Support({ H2, POSTGRES })
     public static DropTypeStep dropType(Name... type) {
         return dsl().dropType(type);
@@ -7990,6 +8424,7 @@ public class DSL {
      *
      * @see DSL#dropType(Collection)
      */
+    @NotNull
     @Support({ H2, POSTGRES })
     public static DropTypeStep dropType(Collection<?> type) {
         return dsl().dropType(type);
@@ -8000,6 +8435,7 @@ public class DSL {
      *
      * @see DSL#dropTypeIfExists(String)
      */
+    @NotNull
     @Support({ H2, POSTGRES })
     public static DropTypeStep dropTypeIfExists(String type) {
         return dsl().dropTypeIfExists(type);
@@ -8010,6 +8446,7 @@ public class DSL {
      *
      * @see DSL#dropTypeIfExists(Name)
      */
+    @NotNull
     @Support({ H2, POSTGRES })
     public static DropTypeStep dropTypeIfExists(Name type) {
         return dsl().dropTypeIfExists(type);
@@ -8020,6 +8457,7 @@ public class DSL {
      *
      * @see DSL#dropTypeIfExists(String...)
      */
+    @NotNull
     @Support({ H2, POSTGRES })
     public static DropTypeStep dropTypeIfExists(String... type) {
         return dsl().dropTypeIfExists(type);
@@ -8030,6 +8468,7 @@ public class DSL {
      *
      * @see DSL#dropTypeIfExists(Name...)
      */
+    @NotNull
     @Support({ H2, POSTGRES })
     public static DropTypeStep dropTypeIfExists(Name... type) {
         return dsl().dropTypeIfExists(type);
@@ -8040,6 +8479,7 @@ public class DSL {
      *
      * @see DSL#dropTypeIfExists(Collection)
      */
+    @NotNull
     @Support({ H2, POSTGRES })
     public static DropTypeStep dropTypeIfExists(Collection<?> type) {
         return dsl().dropTypeIfExists(type);
@@ -8050,6 +8490,7 @@ public class DSL {
      *
      * @see DSLContext#createIndex()
      */
+    @NotNull
     @Support
     public static CreateIndexStep createIndex() {
         return dsl().createIndex();
@@ -8060,6 +8501,7 @@ public class DSL {
      *
      * @see DSLContext#createIndex(String)
      */
+    @NotNull
     @Support
     public static CreateIndexStep createIndex(String index) {
         return dsl().createIndex(index);
@@ -8070,6 +8512,7 @@ public class DSL {
      *
      * @see DSLContext#createIndex(Name)
      */
+    @NotNull
     @Support
     public static CreateIndexStep createIndex(Name index) {
         return dsl().createIndex(index);
@@ -8080,6 +8523,7 @@ public class DSL {
      *
      * @see DSLContext#createIndex(Index)
      */
+    @NotNull
     @Support
     public static CreateIndexStep createIndex(Index index) {
         return dsl().createIndex(index);
@@ -8090,6 +8534,7 @@ public class DSL {
      *
      * @see DSLContext#createIndexIfNotExists(String)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
     public static CreateIndexStep createIndexIfNotExists(String index) {
         return dsl().createIndexIfNotExists(index);
@@ -8100,6 +8545,7 @@ public class DSL {
      *
      * @see DSLContext#createIndexIfNotExists(Name)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
     public static CreateIndexStep createIndexIfNotExists(Name index) {
         return dsl().createIndexIfNotExists(index);
@@ -8110,6 +8556,7 @@ public class DSL {
      *
      * @see DSLContext#createIndexIfNotExists(Index)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
     public static CreateIndexStep createIndexIfNotExists(Index index) {
         return dsl().createIndexIfNotExists(index);
@@ -8120,6 +8567,7 @@ public class DSL {
      *
      * @see DSLContext#createUniqueIndex()
      */
+    @NotNull
     @Support
     public static CreateIndexStep createUniqueIndex() {
         return dsl().createUniqueIndex();
@@ -8130,6 +8578,7 @@ public class DSL {
      *
      * @see DSLContext#createUniqueIndex(String)
      */
+    @NotNull
     @Support
     public static CreateIndexStep createUniqueIndex(String index) {
         return dsl().createUniqueIndex(index);
@@ -8140,6 +8589,7 @@ public class DSL {
      *
      * @see DSLContext#createUniqueIndex(Name)
      */
+    @NotNull
     @Support
     public static CreateIndexStep createUniqueIndex(Name index) {
         return dsl().createUniqueIndex(index);
@@ -8150,6 +8600,7 @@ public class DSL {
      *
      * @see DSLContext#createUniqueIndex(Index)
      */
+    @NotNull
     @Support
     public static CreateIndexStep createUniqueIndex(Index index) {
         return dsl().createUniqueIndex(index);
@@ -8160,6 +8611,7 @@ public class DSL {
      *
      * @see DSLContext#createUniqueIndexIfNotExists(String)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     public static CreateIndexStep createUniqueIndexIfNotExists(String index) {
         return dsl().createUniqueIndexIfNotExists(index);
@@ -8170,6 +8622,7 @@ public class DSL {
      *
      * @see DSLContext#createUniqueIndexIfNotExists(Name)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     public static CreateIndexStep createUniqueIndexIfNotExists(Name index) {
         return dsl().createUniqueIndexIfNotExists(index);
@@ -8180,6 +8633,7 @@ public class DSL {
      *
      * @see DSLContext#createUniqueIndexIfNotExists(Index)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     public static CreateIndexStep createUniqueIndexIfNotExists(Index index) {
         return dsl().createUniqueIndexIfNotExists(index);
@@ -8190,6 +8644,7 @@ public class DSL {
      *
      * @see DSLContext#alterSequence(String)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static AlterSequenceStep<BigInteger> alterSequence(String sequence) {
         return dsl().alterSequence(sequence);
@@ -8200,6 +8655,7 @@ public class DSL {
      *
      * @see DSLContext#alterSequence(Name)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static AlterSequenceStep<BigInteger> alterSequence(Name sequence) {
         return dsl().alterSequence(sequence);
@@ -8210,6 +8666,7 @@ public class DSL {
      *
      * @see DSLContext#alterSequence(Sequence)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static <T extends Number> AlterSequenceStep<T> alterSequence(Sequence<T> sequence) {
         return dsl().alterSequence(sequence);
@@ -8220,6 +8677,7 @@ public class DSL {
      *
      * @see DSLContext#alterSequenceIfExists(String)
      */
+    @NotNull
     @Support({ H2, MARIADB, POSTGRES })
     public static AlterSequenceStep<BigInteger> alterSequenceIfExists(String sequence) {
         return dsl().alterSequenceIfExists(sequence);
@@ -8230,6 +8688,7 @@ public class DSL {
      *
      * @see DSLContext#alterSequenceIfExists(Name)
      */
+    @NotNull
     @Support({ H2, MARIADB, POSTGRES })
     public static AlterSequenceStep<BigInteger> alterSequenceIfExists(Name sequence) {
         return dsl().alterSequenceIfExists(sequence);
@@ -8240,6 +8699,7 @@ public class DSL {
      *
      * @see DSLContext#alterSequenceIfExists(Sequence)
      */
+    @NotNull
     @Support({ H2, MARIADB, POSTGRES })
     public static <T extends Number> AlterSequenceStep<T> alterSequenceIfExists(Sequence<T> sequence) {
         return dsl().alterSequenceIfExists(sequence);
@@ -8250,6 +8710,7 @@ public class DSL {
      *
      * @see DSLContext#alterTable(String)
      */
+    @NotNull
     @Support
     public static AlterTableStep alterTable(String table) {
         return dsl().alterTable(table);
@@ -8260,6 +8721,7 @@ public class DSL {
      *
      * @see DSLContext#alterTable(Name)
      */
+    @NotNull
     @Support
     public static AlterTableStep alterTable(Name table) {
         return dsl().alterTable(table);
@@ -8270,6 +8732,7 @@ public class DSL {
      *
      * @see DSLContext#alterTable(Table)
      */
+    @NotNull
     @Support
     public static AlterTableStep alterTable(Table<?> table) {
         return dsl().alterTable(table);
@@ -8280,6 +8743,7 @@ public class DSL {
      *
      * @see DSLContext#alterTableIfExists(String)
      */
+    @NotNull
     @Support({ H2, MARIADB, POSTGRES })
     public static AlterTableStep alterTableIfExists(String table) {
         return dsl().alterTableIfExists(table);
@@ -8290,6 +8754,7 @@ public class DSL {
      *
      * @see DSLContext#alterTableIfExists(Name)
      */
+    @NotNull
     @Support({ H2, MARIADB, POSTGRES })
     public static AlterTableStep alterTableIfExists(Name table) {
         return dsl().alterTableIfExists(table);
@@ -8300,6 +8765,7 @@ public class DSL {
      *
      * @see DSLContext#alterTableIfExists(Table)
      */
+    @NotNull
     @Support({ H2, MARIADB, POSTGRES })
     public static AlterTableStep alterTableIfExists(Table<?> table) {
         return dsl().alterTableIfExists(table);
@@ -8310,6 +8776,7 @@ public class DSL {
      *
      * @see DSLContext#alterView(String)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static AlterViewStep alterView(String view) {
         return dsl().alterView(view);
@@ -8320,6 +8787,7 @@ public class DSL {
      *
      * @see DSLContext#alterView(Name)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static AlterViewStep alterView(Name view) {
         return dsl().alterView(view);
@@ -8330,6 +8798,7 @@ public class DSL {
      *
      * @see DSLContext#alterView(Table)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static AlterViewStep alterView(Table<?> view) {
         return dsl().alterView(view);
@@ -8340,6 +8809,7 @@ public class DSL {
      *
      * @see DSLContext#alterViewIfExists(String)
      */
+    @NotNull
     @Support({ H2, POSTGRES })
     public static AlterViewStep alterViewIfExists(String view) {
         return dsl().alterViewIfExists(view);
@@ -8350,6 +8820,7 @@ public class DSL {
      *
      * @see DSLContext#alterViewIfExists(Name)
      */
+    @NotNull
     @Support({ H2, POSTGRES })
     public static AlterViewStep alterViewIfExists(Name view) {
         return dsl().alterViewIfExists(view);
@@ -8360,6 +8831,7 @@ public class DSL {
      *
      * @see DSLContext#alterViewIfExists(Table)
      */
+    @NotNull
     @Support({ H2, POSTGRES })
     public static AlterViewStep alterViewIfExists(Table<?> view) {
         return dsl().alterViewIfExists(view);
@@ -8370,6 +8842,7 @@ public class DSL {
      *
      * @see DSLContext#alterIndex(String)
      */
+    @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static AlterIndexOnStep alterIndex(String index) {
         return dsl().alterIndex(index);
@@ -8380,6 +8853,7 @@ public class DSL {
      *
      * @see DSLContext#alterIndex(Name)
      */
+    @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static AlterIndexOnStep alterIndex(Name index) {
         return dsl().alterIndex(index);
@@ -8390,6 +8864,7 @@ public class DSL {
      *
      * @see DSLContext#alterIndex(Index)
      */
+    @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static AlterIndexOnStep alterIndex(Index index) {
         return dsl().alterIndex(index);
@@ -8400,6 +8875,7 @@ public class DSL {
      *
      * @see DSLContext#alterIndexIfExists(String)
      */
+    @NotNull
     @Support({ H2, POSTGRES })
     public static AlterIndexStep alterIndexIfExists(String index) {
         return dsl().alterIndexIfExists(index);
@@ -8410,6 +8886,7 @@ public class DSL {
      *
      * @see DSLContext#alterIndexIfExists(Name)
      */
+    @NotNull
     @Support({ H2, POSTGRES })
     public static AlterIndexStep alterIndexIfExists(Name index) {
         return dsl().alterIndexIfExists(index);
@@ -8420,6 +8897,7 @@ public class DSL {
      *
      * @see DSLContext#alterIndexIfExists(Index)
      */
+    @NotNull
     @Support({ H2, POSTGRES })
     public static AlterIndexStep alterIndexIfExists(Index index) {
         return dsl().alterIndexIfExists(index);
@@ -8430,6 +8908,7 @@ public class DSL {
      *
      * @see DSLContext#dropView(String)
      */
+    @NotNull
     @Support
     public static DropViewFinalStep dropView(String view) {
         return dsl().dropView(view);
@@ -8440,6 +8919,7 @@ public class DSL {
      *
      * @see DSLContext#dropView(Name)
      */
+    @NotNull
     @Support
     public static DropViewFinalStep dropView(Name view) {
         return dsl().dropView(view);
@@ -8450,6 +8930,7 @@ public class DSL {
      *
      * @see DSLContext#dropView(Table)
      */
+    @NotNull
     @Support
     public static DropViewFinalStep dropView(Table<?> view) {
         return dsl().dropView(view);
@@ -8463,6 +8944,7 @@ public class DSL {
      *
      * @see DSLContext#dropViewIfExists(String)
      */
+    @NotNull
     @Support
     public static DropViewFinalStep dropViewIfExists(String view) {
         return dsl().dropViewIfExists(view);
@@ -8476,6 +8958,7 @@ public class DSL {
      *
      * @see DSLContext#dropViewIfExists(Name)
      */
+    @NotNull
     @Support
     public static DropViewFinalStep dropViewIfExists(Name view) {
         return dsl().dropViewIfExists(view);
@@ -8489,6 +8972,7 @@ public class DSL {
      *
      * @see DSLContext#dropViewIfExists(Table)
      */
+    @NotNull
     @Support
     public static DropViewFinalStep dropViewIfExists(Table<?> view) {
         return dsl().dropViewIfExists(view);
@@ -8499,6 +8983,7 @@ public class DSL {
      *
      * @see DSLContext#dropTable(String)
      */
+    @NotNull
     @Support
     public static DropTableStep dropTable(String table) {
         return dsl().dropTable(table);
@@ -8509,6 +8994,7 @@ public class DSL {
      *
      * @see DSLContext#dropTable(Name)
      */
+    @NotNull
     @Support
     public static DropTableStep dropTable(Name table) {
         return dsl().dropTable(table);
@@ -8519,6 +9005,7 @@ public class DSL {
      *
      * @see DSLContext#dropTable(Table)
      */
+    @NotNull
     @Support
     public static DropTableStep dropTable(Table<?> table) {
         return dsl().dropTable(table);
@@ -8529,6 +9016,7 @@ public class DSL {
      *
      * @see DSLContext#dropTemporaryTable(String)
      */
+    @NotNull
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     public static DropTableStep dropTemporaryTable(String table) {
         return dsl().dropTemporaryTable(table);
@@ -8539,6 +9027,7 @@ public class DSL {
      *
      * @see DSLContext#dropTemporaryTable(Name)
      */
+    @NotNull
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     public static DropTableStep dropTemporaryTable(Name table) {
         return dsl().dropTemporaryTable(table);
@@ -8549,6 +9038,7 @@ public class DSL {
      *
      * @see DSLContext#dropTemporaryTable(Table)
      */
+    @NotNull
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     public static DropTableStep dropTemporaryTable(Table<?> table) {
         return dsl().dropTemporaryTable(table);
@@ -8559,6 +9049,7 @@ public class DSL {
      *
      * @see DSLContext#dropTemporaryTableIfExists(String)
      */
+    @NotNull
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     public static DropTableStep dropTemporaryTableIfExists(String table) {
         return dsl().dropTemporaryTableIfExists(table);
@@ -8569,6 +9060,7 @@ public class DSL {
      *
      * @see DSLContext#dropTemporaryTableIfExists(Name)
      */
+    @NotNull
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     public static DropTableStep dropTemporaryTableIfExists(Name table) {
         return dsl().dropTemporaryTableIfExists(table);
@@ -8579,6 +9071,7 @@ public class DSL {
      *
      * @see DSLContext#dropTemporaryTableIfExists(Table)
      */
+    @NotNull
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     public static DropTableStep dropTemporaryTableIfExists(Table<?> table) {
         return dsl().dropTemporaryTableIfExists(table);
@@ -8592,6 +9085,7 @@ public class DSL {
      *
      * @see DSLContext#dropTableIfExists(String)
      */
+    @NotNull
     @Support
     public static DropTableStep dropTableIfExists(String table) {
         return dsl().dropTableIfExists(table);
@@ -8605,6 +9099,7 @@ public class DSL {
      *
      * @see DSLContext#dropTableIfExists(Name)
      */
+    @NotNull
     @Support
     public static DropTableStep dropTableIfExists(Name table) {
         return dsl().dropTableIfExists(table);
@@ -8618,6 +9113,7 @@ public class DSL {
      *
      * @see DSLContext#dropTableIfExists(Table)
      */
+    @NotNull
     @Support
     public static DropTableStep dropTableIfExists(Table<?> table) {
         return dsl().dropTableIfExists(table);
@@ -8628,6 +9124,7 @@ public class DSL {
      *
      * @see DSLContext#dropIndex(String)
      */
+    @NotNull
     @Support
     public static DropIndexOnStep dropIndex(String index) {
         return dsl().dropIndex(index);
@@ -8638,6 +9135,7 @@ public class DSL {
      *
      * @see DSLContext#dropIndex(Name)
      */
+    @NotNull
     @Support
     public static DropIndexOnStep dropIndex(Name index) {
         return dsl().dropIndex(index);
@@ -8648,6 +9146,7 @@ public class DSL {
      *
      * @see DSLContext#dropIndex(Index)
      */
+    @NotNull
     @Support
     public static DropIndexOnStep dropIndex(Index index) {
         return dsl().dropIndex(index);
@@ -8661,6 +9160,7 @@ public class DSL {
      *
      * @see DSLContext#dropIndexIfExists(String)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
     public static DropIndexOnStep dropIndexIfExists(String index) {
         return dsl().dropIndexIfExists(index);
@@ -8674,6 +9174,7 @@ public class DSL {
      *
      * @see DSLContext#dropIndexIfExists(Name)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
     public static DropIndexOnStep dropIndexIfExists(Name index) {
         return dsl().dropIndexIfExists(index);
@@ -8687,6 +9188,7 @@ public class DSL {
      *
      * @see DSLContext#dropIndexIfExists(Index)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
     public static DropIndexOnStep dropIndexIfExists(Index index) {
         return dsl().dropIndexIfExists(index);
@@ -8697,6 +9199,7 @@ public class DSL {
      * <p>
      * Synonym for {@link #truncateTable(String)}
      */
+    @NotNull
     @Support
     public static TruncateIdentityStep<Record> truncate(String table) {
         return truncateTable(table);
@@ -8707,6 +9210,7 @@ public class DSL {
      * <p>
      * Synonym for {@link #truncateTable(Name)}
      */
+    @NotNull
     @Support
     public static TruncateIdentityStep<Record> truncate(Name table) {
         return truncateTable(table);
@@ -8717,6 +9221,7 @@ public class DSL {
      * <p>
      * Synonym for {@link #truncateTable(Table)}
      */
+    @NotNull
     @Support
     public static <R extends Record> TruncateIdentityStep<R> truncate(Table<R> table) {
         return truncateTable(table);
@@ -8764,6 +9269,7 @@ public class DSL {
      *
      * @see DSLContext#truncate(String)
      */
+    @NotNull
     @Support
     public static TruncateIdentityStep<Record> truncateTable(String table) {
         return dsl().truncateTable(table);
@@ -8811,6 +9317,7 @@ public class DSL {
      *
      * @see DSLContext#truncate(Name)
      */
+    @NotNull
     @Support
     public static TruncateIdentityStep<Record> truncateTable(Name table) {
         return dsl().truncateTable(table);
@@ -8858,6 +9365,7 @@ public class DSL {
      *
      * @see DSLContext#truncate(Table)
      */
+    @NotNull
     @Support
     public static <R extends Record> TruncateIdentityStep<R> truncateTable(Table<R> table) {
         return dsl().truncateTable(table);
@@ -8879,6 +9387,7 @@ public class DSL {
      * @see Field#lessOrEqual(QuantifiedSelect)
      * @see Field#like(QuantifiedSelect)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record> QuantifiedSelect<R> all(Select<R> select) {
         return new QuantifiedSelectImpl<>(Quantifier.ALL, select);
@@ -8899,6 +9408,7 @@ public class DSL {
      * @see Field#lessOrEqual(QuantifiedSelect)
      * @see Field#like(QuantifiedSelect)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <T> QuantifiedSelect<Record1<T>> all(T... array) {
         if (array instanceof Field[])
@@ -8921,6 +9431,7 @@ public class DSL {
      * @see Field#lessOrEqual(QuantifiedSelect)
      * @see Field#like(QuantifiedSelect)
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
     public static <T> QuantifiedSelect<Record1<T>> all(Field<T[]> array) {
         return new QuantifiedSelectImpl<>(Quantifier.ALL, array);
@@ -8941,6 +9452,7 @@ public class DSL {
      * @see Field#lessOrEqual(QuantifiedSelect)
      * @see Field#like(QuantifiedSelect)
      */
+    @NotNull
     @Support
     @SafeVarargs
     public static <T> QuantifiedSelect<Record1<T>> all(Field<T>... fields) {
@@ -8959,6 +9471,7 @@ public class DSL {
      * @see Field#lessOrEqual(QuantifiedSelect)
      * @see Field#like(QuantifiedSelect)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <R extends Record> QuantifiedSelect<R> any(Select<R> select) {
         return new QuantifiedSelectImpl<>(Quantifier.ANY, select);
@@ -8979,6 +9492,7 @@ public class DSL {
      * @see Field#lessOrEqual(QuantifiedSelect)
      * @see Field#like(QuantifiedSelect)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <T> QuantifiedSelect<Record1<T>> any(T... array) {
         if (array instanceof Field[])
@@ -9001,6 +9515,7 @@ public class DSL {
      * @see Field#lessOrEqual(QuantifiedSelect)
      * @see Field#like(QuantifiedSelect)
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
     public static <T> QuantifiedSelect<Record1<T>> any(Field<T[]> array) {
         return new QuantifiedSelectImpl<>(Quantifier.ANY, array);
@@ -9021,6 +9536,7 @@ public class DSL {
      * @see Field#lessOrEqual(QuantifiedSelect)
      * @see Field#like(QuantifiedSelect)
      */
+    @NotNull
     @Support
     @SafeVarargs
     public static <T> QuantifiedSelect<Record1<T>> any(Field<T>... fields) {
@@ -9052,6 +9568,7 @@ public class DSL {
      *
      * @see #grant(Collection)
      */
+    @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static GrantOnStep grant(Privilege privilege) {
         return dsl().grant(privilege);
@@ -9078,6 +9595,7 @@ public class DSL {
      *
      * @see #grant(Collection)
      */
+    @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static GrantOnStep grant(Privilege... privileges) {
         return dsl().grant(privileges);
@@ -9104,6 +9622,7 @@ public class DSL {
      *
      * @see #grant(Privilege...)
      */
+    @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static GrantOnStep grant(Collection<? extends Privilege> privileges) {
         return dsl().grant(privileges);
@@ -9130,6 +9649,7 @@ public class DSL {
      *
      * @see #revoke(Collection)
      */
+    @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static RevokeOnStep revoke(Privilege privilege) {
         return dsl().revoke(privilege);
@@ -9156,6 +9676,7 @@ public class DSL {
      *
      * @see #revoke(Collection)
      */
+    @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static RevokeOnStep revoke(Privilege... privileges) {
         return dsl().revoke(privileges);
@@ -9182,6 +9703,7 @@ public class DSL {
      *
      * @see #revoke(Privilege...)
      */
+    @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static RevokeOnStep revoke(Collection<? extends Privilege> privileges) {
         return dsl().revoke(privileges);
@@ -9190,6 +9712,7 @@ public class DSL {
     /**
      * Revoke grant option for a privilege on a table from user or role.
      */
+    @NotNull
     @Support({ HSQLDB, POSTGRES })
     public static RevokeOnStep revokeGrantOptionFor(Privilege privilege) {
         return dsl().revoke(privilege);
@@ -9198,6 +9721,7 @@ public class DSL {
     /**
      * Revoke grant option for some privileges on a table from user or role.
      */
+    @NotNull
     @Support({ HSQLDB, POSTGRES })
     public static RevokeOnStep revokeGrantOptionFor(Privilege... privileges) {
         return dsl().revoke(privileges);
@@ -9206,6 +9730,7 @@ public class DSL {
     /**
      * Revoke grant option for some privileges on a table from user or role.
      */
+    @NotNull
     @Support({ HSQLDB, POSTGRES })
     public static RevokeOnStep revokeGrantOptionFor(Collection<? extends Privilege> privileges) {
         return dsl().revoke(privileges);
@@ -9218,6 +9743,7 @@ public class DSL {
     /**
      * Create a collation by its unqualified name.
      */
+    @NotNull
     @Support({ HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Collation collation(String collation) {
         return collation(name(collation));
@@ -9226,6 +9752,7 @@ public class DSL {
     /**
      * Create a collation by its qualified name.
      */
+    @NotNull
     @Support({ HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Collation collation(Name collation) {
         return new CollationImpl(collation);
@@ -9234,6 +9761,7 @@ public class DSL {
     /**
      * Create a character set by its unqualified name.
      */
+    @NotNull
     @Support({ MARIADB, MYSQL })
     public static CharacterSet characterSet(String characterSet) {
         return characterSet(name(characterSet));
@@ -9242,6 +9770,7 @@ public class DSL {
     /**
      * Create a character set by its qualified name.
      */
+    @NotNull
     @Support({ MARIADB, MYSQL })
     public static CharacterSet characterSet(Name characterSet) {
         return new CharacterSetImpl(characterSet);
@@ -9256,6 +9785,7 @@ public class DSL {
      * escape literals when concatenated into SQL clauses!
      */
     @PlainSQL
+    @NotNull
     @Support
     public static Privilege privilege(String privilege) {
         return privilege(keyword(privilege));
@@ -9264,6 +9794,7 @@ public class DSL {
     /**
      * Create a new privilege reference.
      */
+    @NotNull
     @Support
     static Privilege privilege(Keyword privilege) {
         return new PrivilegeImpl(privilege);
@@ -9274,6 +9805,7 @@ public class DSL {
      *
      * @see #user(Name)
      */
+    @NotNull
     @Support
     public static User user(String name) {
         return user(name(name));
@@ -9282,6 +9814,7 @@ public class DSL {
     /**
      * Create a new user reference.
      */
+    @NotNull
     @Support
     public static User user(Name name) {
         return new UserImpl(name);
@@ -9292,6 +9825,7 @@ public class DSL {
      *
      * @see #role(Name)
      */
+    @NotNull
     @Support
     public static Role role(String name) {
         return role(name(name));
@@ -9300,6 +9834,7 @@ public class DSL {
     /**
      * Create a new role reference.
      */
+    @NotNull
     @Support
     public static Role role(Name name) {
         return new RoleImpl(name);
@@ -9315,6 +9850,7 @@ public class DSL {
      *
      * @see Select#asTable()
      */
+    @NotNull
     @Support
     public static <R extends Record> Table<R> table(Select<R> select) {
         return select.asTable();
@@ -9326,6 +9862,7 @@ public class DSL {
      *
      * @see #values(RowN...)
      */
+    @NotNull
     @Support
     public static <R extends Record> Table<R> table(Result<R> result) {
         int size = result.size();
@@ -9346,6 +9883,7 @@ public class DSL {
     /**
      * Use a previously obtained record as a new Table
      */
+    @NotNull
     @Support
     public static <R extends Record> Table<R> table(R record) {
         return table((R[]) new Record[] { record });
@@ -9354,6 +9892,7 @@ public class DSL {
     /**
      * Use a previously obtained set of records as a new Table
      */
+    @NotNull
     @Support
     public static <R extends Record> Table<R> table(R... records) {
         if (records == null || records.length == 0)
@@ -9370,6 +9909,7 @@ public class DSL {
      *
      * @see #unnest(Collection)
      */
+    @NotNull
     @Support
     public static Table<?> table(Collection<?> list) {
         return table(list.toArray());
@@ -9380,10 +9920,12 @@ public class DSL {
      *
      * @see #unnest(Object[])
      */
+    @NotNull
     @Support
     public static Table<?> table(Object[] array) {
         return unnest0(val(array));
     }
+
 
 
 
@@ -9403,6 +9945,7 @@ public class DSL {
      *
      * @see #unnest(Field)
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
     public static Table<?> table(Field<?> cursor) {
         return unnest0(cursor);
@@ -9420,6 +9963,7 @@ public class DSL {
      * In all other dialects, unnesting of arrays is emulated using several
      * <code>UNION ALL</code> connected subqueries.
      */
+    @NotNull
     @Support
     public static Table<?> unnest(Collection<?> list) {
         return unnest(list.toArray());
@@ -9437,10 +9981,12 @@ public class DSL {
      * In all other dialects, unnesting of arrays is emulated using several
      * <code>UNION ALL</code> connected subqueries.
      */
+    @NotNull
     @Support
     public static Table<?> unnest(Object[] array) {
         return unnest0(val(array));
     }
+
 
 
 
@@ -9477,6 +10023,7 @@ public class DSL {
      * In all dialects where arrays are not supported, unnesting of arrays is
      * emulated using several <code>UNION ALL</code> connected subqueries.
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
     public static Table<?> unnest(Field<?> cursor) {
         return unnest0(cursor);
@@ -9529,6 +10076,7 @@ public class DSL {
      * +-------+
      * </pre></code>
      */
+    @NotNull
     @Support
     public static Table<Record> dual() {
         return new Dual(true);
@@ -9548,6 +10096,7 @@ public class DSL {
      * SELECT * FROM (SELECT a + LEVEL - 1 FROM DUAL CONNECT BY a + LEVEL - 1 &lt;= b)
      * </pre></code>
      */
+    @NotNull
     @Support({ CUBRID, POSTGRES })
     public static Table<Record1<Integer>> generateSeries(int from, int to) {
         return generateSeries(val(from), val(to));
@@ -9567,6 +10116,7 @@ public class DSL {
      * SELECT * FROM (SELECT a + LEVEL - 1 FROM DUAL CONNECT BY a + LEVEL - 1 &lt;= b)
      * </pre></code>
      */
+    @NotNull
     @Support({ CUBRID, POSTGRES })
     public static Table<Record1<Integer>> generateSeries(int from, Field<Integer> to) {
         return generateSeries(val(from), nullSafe(to));
@@ -9586,6 +10136,7 @@ public class DSL {
      * SELECT * FROM (SELECT a + LEVEL - 1 FROM DUAL CONNECT BY a + LEVEL - 1 &lt;= b)
      * </pre></code>
      */
+    @NotNull
     @Support({ CUBRID, POSTGRES })
     public static Table<Record1<Integer>> generateSeries(Field<Integer> from, int to) {
         return new GenerateSeries(nullSafe(from), val(to));
@@ -9605,6 +10156,7 @@ public class DSL {
      * SELECT * FROM (SELECT a + LEVEL - 1 FROM DUAL CONNECT BY a + LEVEL - 1 &lt;= b)
      * </pre></code>
      */
+    @NotNull
     @Support({ CUBRID, POSTGRES })
     public static Table<Record1<Integer>> generateSeries(Field<Integer> from, Field<Integer> to) {
         return new GenerateSeries(nullSafe(from), nullSafe(to));
@@ -9624,6 +10176,7 @@ public class DSL {
      * SELECT * FROM (SELECT a + LEVEL * c- 1 FROM DUAL CONNECT BY a + LEVEL * c - 1 &lt;= b)
      * </pre></code>
      */
+    @NotNull
     @Support({ CUBRID, POSTGRES })
     public static Table<Record1<Integer>> generateSeries(int from, int to, int step) {
         return generateSeries(val(from), val(to), val(step));
@@ -9643,6 +10196,7 @@ public class DSL {
      * SELECT * FROM (SELECT a + LEVEL * c - 1 FROM DUAL CONNECT BY a + LEVEL * c - 1 &lt;= b)
      * </pre></code>
      */
+    @NotNull
     @Support({ CUBRID, POSTGRES })
     public static Table<Record1<Integer>> generateSeries(int from, Field<Integer> to, int step) {
         return generateSeries(val(from), nullSafe(to), val(step));
@@ -9662,6 +10216,7 @@ public class DSL {
      * SELECT * FROM (SELECT a + LEVEL * c - 1 FROM DUAL CONNECT BY a + LEVEL * c - 1 &lt;= b)
      * </pre></code>
      */
+    @NotNull
     @Support({ CUBRID, POSTGRES })
     public static Table<Record1<Integer>> generateSeries(Field<Integer> from, int to, int step) {
         return new GenerateSeries(nullSafe(from), val(to), val(step));
@@ -9681,6 +10236,7 @@ public class DSL {
      * SELECT * FROM (SELECT a + LEVEL * c - 1 FROM DUAL CONNECT BY a + LEVEL * c - 1 &lt;= b)
      * </pre></code>
      */
+    @NotNull
     @Support({ CUBRID, POSTGRES })
     public static Table<Record1<Integer>> generateSeries(Field<Integer> from, Field<Integer> to, int step) {
         return new GenerateSeries(nullSafe(from), nullSafe(to), val(step));
@@ -9700,6 +10256,7 @@ public class DSL {
      * SELECT * FROM (SELECT a + LEVEL * c- 1 FROM DUAL CONNECT BY a + LEVEL * c - 1 &lt;= b)
      * </pre></code>
      */
+    @NotNull
     @Support({ CUBRID, POSTGRES })
     public static Table<Record1<Integer>> generateSeries(int from, int to, Field<Integer> step) {
         return generateSeries(val(from), val(to), nullSafe(step));
@@ -9719,6 +10276,7 @@ public class DSL {
      * SELECT * FROM (SELECT a + LEVEL * c - 1 FROM DUAL CONNECT BY a + LEVEL * c - 1 &lt;= b)
      * </pre></code>
      */
+    @NotNull
     @Support({ CUBRID, POSTGRES })
     public static Table<Record1<Integer>> generateSeries(int from, Field<Integer> to, Field<Integer> step) {
         return generateSeries(val(from), nullSafe(to), nullSafe(step));
@@ -9738,6 +10296,7 @@ public class DSL {
      * SELECT * FROM (SELECT a + LEVEL * c - 1 FROM DUAL CONNECT BY a + LEVEL * c - 1 &lt;= b)
      * </pre></code>
      */
+    @NotNull
     @Support({ CUBRID, POSTGRES })
     public static Table<Record1<Integer>> generateSeries(Field<Integer> from, int to, Field<Integer> step) {
         return new GenerateSeries(nullSafe(from), val(to), nullSafe(step));
@@ -9757,6 +10316,7 @@ public class DSL {
      * SELECT * FROM (SELECT a + LEVEL * c - 1 FROM DUAL CONNECT BY a + LEVEL * c - 1 &lt;= b)
      * </pre></code>
      */
+    @NotNull
     @Support({ CUBRID, POSTGRES })
     public static Table<Record1<Integer>> generateSeries(Field<Integer> from, Field<Integer> to, Field<Integer> step) {
         return new GenerateSeries(nullSafe(from), nullSafe(to), nullSafe(step));
@@ -9773,6 +10333,7 @@ public class DSL {
      *              WHERE e.department_id = d.department_id);
      * </pre></code>
      */
+    @NotNull
     @Support({ MYSQL, POSTGRES })
     public static <R extends Record> Table<R> lateral(TableLike<R> table) {
         return new Lateral<>(table.asTable());
@@ -9789,6 +10350,7 @@ public class DSL {
      * This allows for full outer joining several table-valued functions on the
      * row number of each function's produced rows.
      */
+    @NotNull
     @Support({ POSTGRES })
     public static Table<Record> rowsFrom(Table<?>... tables) {
         return new RowsFrom(tables);
@@ -9814,6 +10376,7 @@ public class DSL {
      * );
      * </pre></code>
      */
+    @NotNull
     @Support
     public static Keyword keyword(String keyword) {
         return new KeywordImpl(keyword);
@@ -9846,6 +10409,7 @@ public class DSL {
      * @param unqualifiedName The SQL identifier's unqualified name
      * @return A {@link QueryPart} that will render the SQL identifier
      */
+    @NotNull
     @Support
     public static Name name(String unqualifiedName) {
         return new UnqualifiedName(unqualifiedName);
@@ -9874,6 +10438,7 @@ public class DSL {
      * @param qualifiedName The SQL identifier's qualified name parts
      * @return A {@link QueryPart} that will render the SQL identifier
      */
+    @NotNull
     @Support
     public static Name name(String... qualifiedName) {
         if (qualifiedName == null || qualifiedName.length != 1)
@@ -9909,6 +10474,7 @@ public class DSL {
      * @param nameParts The SQL identifier's qualified name parts
      * @return A {@link QueryPart} that will render the SQL identifier
      */
+    @NotNull
     @Support
     public static Name name(Name... nameParts) {
         return new QualifiedName(nameParts);
@@ -9937,6 +10503,7 @@ public class DSL {
      * @param qualifiedName The SQL identifier's qualified name parts
      * @return A {@link QueryPart} that will render the SQL identifier
      */
+    @NotNull
     @Support
     public static Name name(Collection<String> qualifiedName) {
         return name(qualifiedName.toArray(Tools.EMPTY_STRING));
@@ -9952,6 +10519,7 @@ public class DSL {
      * @param unqualifiedName The SQL identifier's unqualified name
      * @return A {@link QueryPart} that will render the SQL identifier
      */
+    @NotNull
     @Support
     public static Name quotedName(String unqualifiedName) {
         return new UnqualifiedName(unqualifiedName, Quoted.QUOTED);
@@ -9967,6 +10535,7 @@ public class DSL {
      * @param qualifiedName The SQL identifier's qualified name parts
      * @return A {@link QueryPart} that will render the SQL identifier
      */
+    @NotNull
     @Support
     public static Name quotedName(String... qualifiedName) {
         return new QualifiedName(qualifiedName, Quoted.QUOTED);
@@ -9982,6 +10551,7 @@ public class DSL {
      * @param qualifiedName The SQL identifier's qualified name parts
      * @return A {@link QueryPart} that will render the SQL identifier
      */
+    @NotNull
     @Support
     public static Name quotedName(Collection<String> qualifiedName) {
         return quotedName(qualifiedName.toArray(Tools.EMPTY_STRING));
@@ -9997,6 +10567,7 @@ public class DSL {
      * @param unqualifiedName The SQL identifier's unqualified name
      * @return A {@link QueryPart} that will render the SQL identifier
      */
+    @NotNull
     @Support
     public static Name unquotedName(String unqualifiedName) {
         return new UnqualifiedName(unqualifiedName, Quoted.UNQUOTED);
@@ -10012,6 +10583,7 @@ public class DSL {
      * @param qualifiedName The SQL identifier's qualified name parts
      * @return A {@link QueryPart} that will render the SQL identifier
      */
+    @NotNull
     @Support
     public static Name unquotedName(String... qualifiedName) {
         if (qualifiedName == null || qualifiedName.length != 1)
@@ -10030,6 +10602,7 @@ public class DSL {
      * @param qualifiedName The SQL identifier's qualified name parts
      * @return A {@link QueryPart} that will render the SQL identifier
      */
+    @NotNull
     @Support
     public static Name unquotedName(Collection<String> qualifiedName) {
         return unquotedName(qualifiedName.toArray(Tools.EMPTY_STRING));
@@ -10043,6 +10616,7 @@ public class DSL {
      * Compose a list of <code>QueryParts</code> into a new
      * <code>QueryPart</code>, with individual parts being comma-separated.
      */
+    @NotNull
     @Support
     public static QueryPart list(QueryPart... parts) {
         return list(Arrays.asList(parts));
@@ -10052,6 +10626,7 @@ public class DSL {
      * Compose a list of <code>QueryParts</code> into a new
      * <code>QueryPart</code>, with individual parts being comma-separated.
      */
+    @NotNull
     @Support
     public static QueryPart list(Collection<? extends QueryPart> parts) {
         return new QueryPartList<>(parts);
@@ -10074,6 +10649,7 @@ public class DSL {
      *
      * @see #default_()
      */
+    @NotNull
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<Object> defaultValue() {
         return default_();
@@ -10087,6 +10663,7 @@ public class DSL {
      *
      * @see #default_(Class)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <T> Field<T> defaultValue(Class<T> type) {
         return default_(type);
@@ -10100,6 +10677,7 @@ public class DSL {
      *
      * @see #default_(DataType)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <T> Field<T> defaultValue(DataType<T> type) {
         return default_(type);
@@ -10113,6 +10691,7 @@ public class DSL {
      *
      * @see #default_(Field)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <T> Field<T> defaultValue(Field<T> field) {
         return default_(field);
@@ -10127,6 +10706,7 @@ public class DSL {
      * <code>DEFAULT</code> value. In that case, use
      * {@link #defaultValue(Class)} or {@link #defaultValue(DataType)} instead.
      */
+    @NotNull
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<Object> default_() {
         return default_(Object.class);
@@ -10136,6 +10716,7 @@ public class DSL {
      * Create a <code>DEFAULT</code> keyword for use with <code>INSERT</code>,
      * <code>UPDATE</code>, or <code>MERGE</code> statements.
      */
+    @NotNull
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <T> Field<T> default_(Class<T> type) {
         return default_(getDataType(type));
@@ -10145,6 +10726,7 @@ public class DSL {
      * Create a <code>DEFAULT</code> keyword for use with <code>INSERT</code>,
      * <code>UPDATE</code>, or <code>MERGE</code> statements.
      */
+    @NotNull
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <T> Field<T> default_(DataType<T> type) {
         return new SQLField<>(type, keyword("default"));
@@ -10154,6 +10736,7 @@ public class DSL {
      * Create a <code>DEFAULT</code> keyword for use with <code>INSERT</code>,
      * <code>UPDATE</code>, or <code>MERGE</code> statements.
      */
+    @NotNull
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <T> Field<T> default_(Field<T> field) {
         return new SQLField<>(field.getDataType(), keyword("default"));
@@ -10177,6 +10760,7 @@ public class DSL {
      * @deprecated - [#3843] - 3.6.0 - use {@link #schema(Name)} instead
      */
     @Deprecated
+    @NotNull
     @Support
     public static Schema schemaByName(String name) {
         return new SchemaImpl(name);
@@ -10195,6 +10779,7 @@ public class DSL {
      * [MY_CATALOG]
      * </pre></code>
      */
+    @NotNull
     @Support
     public static Catalog catalog(String name) {
         return catalog(name(name));
@@ -10213,6 +10798,7 @@ public class DSL {
      * [MY_CATALOG]
      * </pre></code>
      */
+    @NotNull
     @Support
     public static Catalog catalog(Name name) {
         return new CatalogImpl(name);
@@ -10231,6 +10817,7 @@ public class DSL {
      * [MY_CATALOG].[MY_SCHEMA]
      * </pre></code>
      */
+    @NotNull
     @Support
     public static Schema schema(String name) {
         return schema(name(name));
@@ -10249,6 +10836,7 @@ public class DSL {
      * [MY_CATALOG].[MY_SCHEMA]
      * </pre></code>
      */
+    @NotNull
     @Support
     public static Schema schema(Name name) {
         return new SchemaImpl(name);
@@ -10273,6 +10861,7 @@ public class DSL {
      * @deprecated - [#3843] - 3.6.0 - use {@link #sequence(Name)} instead
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static Sequence<BigInteger> sequenceByName(String... qualifiedName) {
         return sequenceByName(BigInteger.class, qualifiedName);
@@ -10298,6 +10887,7 @@ public class DSL {
      * @deprecated - [#3843] - 3.6.0 - use {@link #sequence(Name, Class)} instead
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static <T extends Number> Sequence<T> sequenceByName(Class<T> type, String... qualifiedName) {
         return sequenceByName(getDataType(type), qualifiedName);
@@ -10323,6 +10913,7 @@ public class DSL {
      * @deprecated - [#3843] - 3.6.0 - use {@link #sequence(Name, DataType)} instead
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static <T extends Number> Sequence<T> sequenceByName(DataType<T> type, String... qualifiedName) {
         if (qualifiedName == null)
@@ -10350,6 +10941,7 @@ public class DSL {
      * [MY_SCHEMA].[MY_SEQUENCE]
      * </pre></code>
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static Sequence<BigInteger> sequence(Name name) {
         return sequence(name, BigInteger.class);
@@ -10368,6 +10960,7 @@ public class DSL {
      * [MY_SCHEMA].[MY_SEQUENCE]
      * </pre></code>
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static <T extends Number> Sequence<T> sequence(Name name, Class<T> type) {
         return sequence(name, getDataType(type));
@@ -10386,6 +10979,7 @@ public class DSL {
      * [MY_SCHEMA].[MY_SEQUENCE]
      * </pre></code>
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     public static <T extends Number> Sequence<T> sequence(Name name, DataType<T> type) {
         if (name == null)
@@ -10419,6 +11013,7 @@ public class DSL {
      * @deprecated - [#3843] - 3.6.0 - use {@link #table(Name)} instead
      */
     @Deprecated
+    @NotNull
     @Support
     public static Table<Record> tableByName(String... qualifiedName) {
         return table(name(qualifiedName));
@@ -10440,6 +11035,7 @@ public class DSL {
      * The returned table does not know its field references, i.e.
      * {@link Table#fields()} returns an empty array.
      */
+    @NotNull
     @Support
     public static Table<Record> table(Name name) {
         return new TableImpl<>(name);
@@ -10461,6 +11057,7 @@ public class DSL {
      * The returned table does not know its field references, i.e.
      * {@link Table#fields()} returns an empty array.
      */
+    @NotNull
     @Support
     public static Table<Record> table(Name name, Comment comment) {
         return new TableImpl<>(name, null, null, null, comment);
@@ -10494,6 +11091,7 @@ public class DSL {
      * @deprecated - [#3843] - 3.6.0 - use {@link #field(Name)} instead
      */
     @Deprecated
+    @NotNull
     @Support
     public static Field<Object> fieldByName(String... qualifiedName) {
         return fieldByName(Object.class, qualifiedName);
@@ -10528,6 +11126,7 @@ public class DSL {
      * @deprecated - [#3843] - 3.6.0 - use {@link #field(Name, Class)} instead
      */
     @Deprecated
+    @NotNull
     @Support
     public static <T> Field<T> fieldByName(Class<T> type, String... qualifiedName) {
         return fieldByName(getDataType(type), qualifiedName);
@@ -10562,6 +11161,7 @@ public class DSL {
      * @deprecated - [#3843] - 3.6.0 - use {@link #field(Name, DataType)} instead
      */
     @Deprecated
+    @NotNull
     @Support
     public static <T> Field<T> fieldByName(DataType<T> type, String... qualifiedName) {
         return field(name(qualifiedName), type);
@@ -10589,6 +11189,7 @@ public class DSL {
      * select length([TITLE]) from [T_BOOK]
      * </pre></code>
      */
+    @NotNull
     @Support
     public static Field<Object> field(Name name) {
         return field(name, Object.class);
@@ -10616,6 +11217,7 @@ public class DSL {
      * select length([TITLE]) from [T_BOOK]
      * </pre></code>
      */
+    @NotNull
     @Support
     public static <T> Field<T> field(Name name, Class<T> type) {
         return field(name, getDataType(type));
@@ -10643,6 +11245,7 @@ public class DSL {
      * select length([TITLE]) from [T_BOOK]
      * </pre></code>
      */
+    @NotNull
     @Support
     public static <T> Field<T> field(Name name, DataType<T> type) {
         return new QualifiedField<>(name, type);
@@ -10670,6 +11273,7 @@ public class DSL {
      * select length([TITLE]) from [T_BOOK]
      * </pre></code>
      */
+    @NotNull
     @Support
     public static <T> Field<T> field(Name name, DataType<T> type, Comment comment) {
         return new QualifiedField<>(name, type, comment);
@@ -10678,10 +11282,17 @@ public class DSL {
     /**
      * Create a qualified index reference by name.
      */
+    @NotNull
     @Support
     public static Index index(Name name) {
         return new IndexImpl(name);
     }
+
+
+
+
+
+
 
 
 
@@ -10750,6 +11361,7 @@ public class DSL {
      *
      * @see DSLContext#queries(Query...)
      */
+    @NotNull
     @Support
     public static Queries queries(Query... queries) {
         return queries(Arrays.asList(queries));
@@ -10760,6 +11372,7 @@ public class DSL {
      *
      * @see DSLContext#queries(Collection)
      */
+    @NotNull
     @Support
     public static Queries queries(Collection<? extends Query> queries) {
         return DSL.using(new DefaultConfiguration()).queries(queries);
@@ -10770,6 +11383,7 @@ public class DSL {
      *
      * @see DSLContext#begin(Statement...)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     public static Block begin(Statement... statements) {
         return begin(Arrays.asList(statements));
@@ -10780,10 +11394,47 @@ public class DSL {
      *
      * @see DSLContext#begin(Collection)
      */
+    @NotNull
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES })
     public static Block begin(Collection<? extends Statement> statements) {
         return DSL.using(new DefaultConfiguration()).begin(statements);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -11286,6 +11937,7 @@ public class DSL {
      * @return A query part wrapping the plain SQL
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     public static SQL sql(String sql) {
@@ -11323,6 +11975,7 @@ public class DSL {
      * @see SQL
      * @see DSL#sql(String, QueryPart...)
      */
+    @NotNull
     @Support
     @PlainSQL
     public static SQL sql(String sql, QueryPart... parts) {
@@ -11354,6 +12007,7 @@ public class DSL {
      * @see SQL
      * @see DSL#sql(String, Object...)
      */
+    @NotNull
     @Support
     @PlainSQL
     public static SQL sql(String sql, Object... bindings) {
@@ -11378,6 +12032,7 @@ public class DSL {
      * @see SQL
      */
     @Deprecated
+    @NotNull
     @Support
     @PlainSQL
     public static QueryPart queryPart(String sql) {
@@ -11406,6 +12061,7 @@ public class DSL {
      * @see DSL#sql(String, QueryPart...)
      */
     @Deprecated
+    @NotNull
     @Support
     @PlainSQL
     public static QueryPart queryPart(String sql, QueryPart... parts) {
@@ -11432,6 +12088,7 @@ public class DSL {
      * @see DSL#sql(String, Object...)
      */
     @Deprecated
+    @NotNull
     @Support
     @PlainSQL
     public static QueryPart queryPart(String sql, Object... bindings) {
@@ -11460,6 +12117,7 @@ public class DSL {
      * @return A query wrapping the plain SQL
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     public static RowCountQuery query(SQL sql) {
@@ -11484,6 +12142,7 @@ public class DSL {
      * @return A query wrapping the plain SQL
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     public static RowCountQuery query(String sql) {
@@ -11510,6 +12169,7 @@ public class DSL {
      * @see SQL
      * @see DSL#sql(String, Object...)
      */
+    @NotNull
     @Support
     @PlainSQL
     public static RowCountQuery query(String sql, Object... bindings) {
@@ -11544,6 +12204,7 @@ public class DSL {
      * @see SQL
      * @see DSL#sql(String, QueryPart...)
      */
+    @NotNull
     @Support
     @PlainSQL
     public static RowCountQuery query(String sql, QueryPart... parts) {
@@ -11592,6 +12253,7 @@ public class DSL {
      * @return An executable query
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     public static ResultQuery<Record> resultQuery(SQL sql) {
@@ -11640,6 +12302,7 @@ public class DSL {
      * @return An executable query
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     public static ResultQuery<Record> resultQuery(String sql) {
@@ -11691,6 +12354,7 @@ public class DSL {
      * @see SQL
      * @see DSL#sql(String, Object...)
      */
+    @NotNull
     @Support
     @PlainSQL
     public static ResultQuery<Record> resultQuery(String sql, Object... bindings) {
@@ -11725,6 +12389,7 @@ public class DSL {
      * @see SQL
      * @see DSL#sql(String, QueryPart...)
      */
+    @NotNull
     @Support
     @PlainSQL
     public static ResultQuery<Record> resultQuery(String sql, QueryPart... parts) {
@@ -11756,6 +12421,7 @@ public class DSL {
      * @return A table wrapping the plain SQL
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     public static Table<Record> table(SQL sql) {
@@ -11787,6 +12453,7 @@ public class DSL {
      * @return A table wrapping the plain SQL
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     public static Table<Record> table(String sql) {
@@ -11822,6 +12489,7 @@ public class DSL {
      * @see SQL
      * @see DSL#sql(String, Object...)
      */
+    @NotNull
     @Support
     @PlainSQL
     public static Table<Record> table(String sql, Object... bindings) {
@@ -11858,6 +12526,7 @@ public class DSL {
      * @see SQL
      * @see DSL#sql(String, QueryPart...)
      */
+    @NotNull
     @Support
     @PlainSQL
     public static Table<Record> table(String sql, QueryPart... parts) {
@@ -11878,6 +12547,7 @@ public class DSL {
      * @deprecated - 3.10 - [#6162] - Use {@link #sequence(Name)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     @PlainSQL
     public static Sequence<BigInteger> sequence(String sql) {
@@ -11899,6 +12569,7 @@ public class DSL {
      * @deprecated - 3.10 - [#6162] - Use {@link #sequence(Name, Class)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     @PlainSQL
     public static <T extends Number> Sequence<T> sequence(String sql, Class<T> type) {
@@ -11921,6 +12592,7 @@ public class DSL {
      *             instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     @PlainSQL
     public static <T extends Number> Sequence<T> sequence(String sql, DataType<T> type) {
@@ -11931,6 +12603,7 @@ public class DSL {
      * Create the <code>VALUE</code> pseudo field for usage with
      * <code>DOMAIN</code> specifications.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static <T> Field<T> value(Class<T> type) {
         return value(DefaultDataType.getDataType(null, type));
@@ -11940,6 +12613,7 @@ public class DSL {
      * Create the <code>VALUE</code> pseudo field for usage with
      * <code>DOMAIN</code> specifications.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static <T> Field<T> value(DataType<T> type) {
         return field("{0}", type, N_VALUE);
@@ -11948,6 +12622,7 @@ public class DSL {
     /**
      * Create a <code>DOMAIN</code> reference.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static Domain<?> domain(String name) {
         return domain(name(name));
@@ -11956,6 +12631,7 @@ public class DSL {
     /**
      * Create a <code>DOMAIN</code> reference.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     public static Domain<?> domain(Name name) {
         if (name == null)
@@ -11993,6 +12669,7 @@ public class DSL {
      * @return A field wrapping the plain SQL
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     public static Field<Object> field(SQL sql) {
@@ -12022,6 +12699,7 @@ public class DSL {
      * @return A field wrapping the plain SQL
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     public static Field<Object> field(String sql) {
@@ -12053,6 +12731,7 @@ public class DSL {
      * @see SQL
      * @see DSL#sql(String, Object...)
      */
+    @NotNull
     @Support
     @PlainSQL
     public static Field<Object> field(String sql, Object... bindings) {
@@ -12083,6 +12762,7 @@ public class DSL {
      * @return A field wrapping the plain SQL
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     public static <T> Field<T> field(SQL sql, Class<T> type) {
@@ -12113,6 +12793,7 @@ public class DSL {
      * @return A field wrapping the plain SQL
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     public static <T> Field<T> field(String sql, Class<T> type) {
@@ -12145,6 +12826,7 @@ public class DSL {
      * @see SQL
      * @see DSL#sql(String, Object...)
      */
+    @NotNull
     @Support
     @PlainSQL
     public static <T> Field<T> field(String sql, Class<T> type, Object... bindings) {
@@ -12175,6 +12857,7 @@ public class DSL {
      * @return A field wrapping the plain SQL
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     public static <T> Field<T> field(SQL sql, DataType<T> type) {
@@ -12205,6 +12888,7 @@ public class DSL {
      * @return A field wrapping the plain SQL
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     public static <T> Field<T> field(String sql, DataType<T> type) {
@@ -12237,6 +12921,7 @@ public class DSL {
      * @see SQL
      * @see DSL#sql(String, Object...)
      */
+    @NotNull
     @Support
     @PlainSQL
     public static <T> Field<T> field(String sql, DataType<T> type, Object... bindings) {
@@ -12274,6 +12959,7 @@ public class DSL {
      * @see SQL
      * @see DSL#sql(String, QueryPart...)
      */
+    @NotNull
     @Support
     @PlainSQL
     public static <T> Field<T> field(String sql, DataType<T> type, QueryPart... parts) {
@@ -12311,6 +12997,7 @@ public class DSL {
      * @see SQL
      * @see DSL#sql(String, QueryPart...)
      */
+    @NotNull
     @Support
     @PlainSQL
     public static Field<Object> field(String sql, QueryPart... parts) {
@@ -12349,6 +13036,7 @@ public class DSL {
      * @see SQL
      * @see DSL#sql(String, QueryPart...)
      */
+    @NotNull
     @Support
     @PlainSQL
     public static <T> Field<T> field(String sql, Class<T> type, QueryPart... parts) {
@@ -12369,6 +13057,7 @@ public class DSL {
      * @param arguments The function arguments
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     public static <T> Field<T> function(String name, Class<T> type, Field<?>... arguments) {
@@ -12389,6 +13078,7 @@ public class DSL {
      * @param arguments The function arguments
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     public static <T> Field<T> function(String name, DataType<T> type, Field<?>... arguments) {
@@ -12403,6 +13093,7 @@ public class DSL {
      * @param type The function return type
      * @param arguments The function arguments
      */
+    @NotNull
     @Support
     public static <T> Field<T> function(Name name, Class<T> type, Field<?>... arguments) {
         return function(name, getDataType(type), nullSafe(arguments));
@@ -12416,6 +13107,7 @@ public class DSL {
      * @param type The function return type
      * @param arguments The function arguments
      */
+    @NotNull
     @Support
     public static <T> Field<T> function(Name name, DataType<T> type, Field<?>... arguments) {
         return new org.jooq.impl.Function<>(name, type, nullSafe(arguments));
@@ -12440,6 +13132,7 @@ public class DSL {
      * @return A condition wrapping the plain SQL
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     public static Condition condition(SQL sql) {
@@ -12465,6 +13158,7 @@ public class DSL {
      * @return A condition wrapping the plain SQL
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     public static Condition condition(String sql) {
@@ -12494,6 +13188,7 @@ public class DSL {
      * @see SQL
      * @see DSL#sql(String, Object...)
      */
+    @NotNull
     @Support
     @PlainSQL
     public static Condition condition(String sql, Object... bindings) {
@@ -12526,6 +13221,7 @@ public class DSL {
      * @see SQL
      * @see DSL#sql(String, QueryPart...)
      */
+    @NotNull
     @Support
     @PlainSQL
     public static Condition condition(String sql, QueryPart... parts) {
@@ -12546,6 +13242,7 @@ public class DSL {
      * @param value The boolean expression.
      * @return A condition wrapping the boolean expression
      */
+    @NotNull
     @Support
     public static Condition condition(Boolean value) {
         return condition(Tools.field(value));
@@ -12565,6 +13262,7 @@ public class DSL {
      * @param field The boolean expression.
      * @return A condition wrapping the boolean expression
      */
+    @NotNull
     @Support
     public static Condition condition(Field<Boolean> field) {
         return field instanceof ConditionAsField
@@ -12584,6 +13282,7 @@ public class DSL {
      * @param map A map containing keys and values to form predicates.
      * @return A condition comparing keys with values.
      */
+    @NotNull
     @Support
     public static Condition condition(Map<Field<?>, ?> map) {
         return new MapCondition(map);
@@ -12603,6 +13302,7 @@ public class DSL {
      * @see <a href="https://en.wikipedia.org/wiki/Query_by_Example">https://en.
      *      wikipedia.org/wiki/Query_by_Example</a>
      */
+    @NotNull
     @Support
     public static Condition condition(Record record) {
         return new RecordCondition(record);
@@ -12638,6 +13338,7 @@ public class DSL {
      * SELECT * FROM t
      * </pre></code>
      */
+    @NotNull
     @Support
     public static Condition noCondition() {
         return NoCondition.INSTANCE;
@@ -12646,6 +13347,7 @@ public class DSL {
     /**
      * Return a <code>Condition</code> that will always evaluate to true.
      */
+    @NotNull
     @Support
     public static True trueCondition() {
         return TrueCondition.INSTANCE;
@@ -12654,6 +13356,7 @@ public class DSL {
     /**
      * Return a <code>Condition</code> that will always evaluate to false.
      */
+    @NotNull
     @Support
     public static False falseCondition() {
         return FalseCondition.INSTANCE;
@@ -12663,6 +13366,7 @@ public class DSL {
      * Return a <code>Condition</code> that connects all argument
      * <code>conditions</code> with {@link Operator#AND}.
      */
+    @NotNull
     @Support
     public static Condition and(Condition left, Condition right) {
         return condition(AND, left, right);
@@ -12672,6 +13376,7 @@ public class DSL {
      * Return a <code>Condition</code> that connects all argument
      * <code>conditions</code> with {@link Operator#AND}.
      */
+    @NotNull
     @Support
     public static Condition and(Condition... conditions) {
         return condition(AND, conditions);
@@ -12681,6 +13386,7 @@ public class DSL {
      * Return a <code>Condition</code> that connects all argument
      * <code>conditions</code> with {@link Operator#AND}.
      */
+    @NotNull
     @Support
     public static Condition and(Collection<? extends Condition> conditions) {
         return condition(AND, conditions);
@@ -12690,6 +13396,7 @@ public class DSL {
      * Return a <code>Condition</code> that connects all argument
      * <code>conditions</code> with {@link Operator#OR}.
      */
+    @NotNull
     @Support
     public static Condition or(Condition left, Condition right) {
         return condition(OR, left, right);
@@ -12699,6 +13406,7 @@ public class DSL {
      * Return a <code>Condition</code> that connects all argument
      * <code>conditions</code> with {@link Operator#OR}.
      */
+    @NotNull
     @Support
     public static Condition or(Condition... conditions) {
         return condition(OR, conditions);
@@ -12708,6 +13416,7 @@ public class DSL {
      * Return a <code>Condition</code> that connects all argument
      * <code>conditions</code> with {@link Operator#OR}.
      */
+    @NotNull
     @Support
     public static Condition or(Collection<? extends Condition> conditions) {
         return condition(OR, conditions);
@@ -12717,6 +13426,7 @@ public class DSL {
      * Return a <code>Condition</code> that connects all argument
      * <code>conditions</code> with <code>Operator</code>.
      */
+    @NotNull
     @Support
     public static Condition condition(Operator operator, Condition left, Condition right) {
         return CombinedCondition.of(operator, left, right);
@@ -12726,6 +13436,7 @@ public class DSL {
      * Return a <code>Condition</code> that connects all argument
      * <code>conditions</code> with <code>Operator</code>.
      */
+    @NotNull
     @Support
     public static Condition condition(Operator operator, Condition... conditions) {
         return condition(operator, asList(conditions));
@@ -12735,6 +13446,7 @@ public class DSL {
      * Return a <code>Condition</code> that connects all argument
      * <code>conditions</code> with <code>Operator</code>.
      */
+    @NotNull
     @Support
     public static Condition condition(Operator operator, Collection<? extends Condition> conditions) {
         return CombinedCondition.of(operator, conditions);
@@ -12745,6 +13457,7 @@ public class DSL {
      * <p>
      * <code>EXISTS ([query])</code>
      */
+    @NotNull
     @Support
     public static Condition exists(Select<?> query) {
         return new ExistsCondition(query, true);
@@ -12755,6 +13468,7 @@ public class DSL {
      * <p>
      * <code>NOT EXISTS ([query])</code>
      */
+    @NotNull
     @Support
     public static Condition notExists(Select<?> query) {
         return new ExistsCondition(query, false);
@@ -12765,6 +13479,7 @@ public class DSL {
      * <p>
      * <code>UNIQUE ([query])</code>
      */
+    @NotNull
     @Support
     public static Condition unique(Select<?> query) {
         return new UniqueCondition(query, true);
@@ -12775,6 +13490,7 @@ public class DSL {
      * <p>
      * <code>NOT UNIQUE ([query])</code>
      */
+    @NotNull
     @Support
     public static Condition notUnique(Select<?> query) {
         return new UniqueCondition(query, false);
@@ -12785,6 +13501,7 @@ public class DSL {
      * <p>
      * This is the same as calling {@link Condition#not()}
      */
+    @NotNull
     @Support
     public static Condition not(Condition condition) {
         return condition.not();
@@ -12805,6 +13522,7 @@ public class DSL {
      *             method will be removed in the future.
      */
     @Deprecated
+    @NotNull
     @Support
     public static Field<Boolean> not(Boolean value) {
         return not(Tools.field(value));
@@ -12818,6 +13536,7 @@ public class DSL {
      * field(not(condition(field)));
      * </pre></code>
      */
+    @NotNull
     @Support
     public static Field<Boolean> not(Field<Boolean> field) {
         return new NotField(field);
@@ -12826,6 +13545,7 @@ public class DSL {
     /**
      * Transform a condition into a boolean field.
      */
+    @NotNull
     @Support
     public static Field<Boolean> field(Condition condition) {
         return condition instanceof FieldCondition
@@ -12840,6 +13560,7 @@ public class DSL {
     /**
      * Wrap a {@link SelectField} in a general-purpose {@link Field}
      */
+    @NotNull
     @Support
     public static <T> Field<T> field(SelectField<T> field) {
         return field instanceof Field ? (Field<T>) field : field("{0}", field.getDataType(), field);
@@ -12854,6 +13575,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1> Field<Record1<T1>> rowField(Row1<T1> row) {
         return new RowField<>(row);
@@ -12866,6 +13588,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2> Field<Record2<T1, T2>> rowField(Row2<T1, T2> row) {
         return new RowField<>(row);
@@ -12878,6 +13601,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3> Field<Record3<T1, T2, T3>> rowField(Row3<T1, T2, T3> row) {
         return new RowField<>(row);
@@ -12890,6 +13614,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4> Field<Record4<T1, T2, T3, T4>> rowField(Row4<T1, T2, T3, T4> row) {
         return new RowField<>(row);
@@ -12902,6 +13627,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5> Field<Record5<T1, T2, T3, T4, T5>> rowField(Row5<T1, T2, T3, T4, T5> row) {
         return new RowField<>(row);
@@ -12914,6 +13640,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6> Field<Record6<T1, T2, T3, T4, T5, T6>> rowField(Row6<T1, T2, T3, T4, T5, T6> row) {
         return new RowField<>(row);
@@ -12926,6 +13653,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7> Field<Record7<T1, T2, T3, T4, T5, T6, T7>> rowField(Row7<T1, T2, T3, T4, T5, T6, T7> row) {
         return new RowField<>(row);
@@ -12938,6 +13666,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8> Field<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> rowField(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row) {
         return new RowField<>(row);
@@ -12950,6 +13679,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9> Field<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> rowField(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> row) {
         return new RowField<>(row);
@@ -12962,6 +13692,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> Field<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> rowField(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row) {
         return new RowField<>(row);
@@ -12974,6 +13705,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> Field<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> rowField(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row) {
         return new RowField<>(row);
@@ -12986,6 +13718,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> Field<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> rowField(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> row) {
         return new RowField<>(row);
@@ -12998,6 +13731,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> Field<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> rowField(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row) {
         return new RowField<>(row);
@@ -13010,6 +13744,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> Field<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> rowField(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> row) {
         return new RowField<>(row);
@@ -13022,6 +13757,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> Field<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> rowField(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> row) {
         return new RowField<>(row);
@@ -13034,6 +13770,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> Field<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> rowField(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row) {
         return new RowField<>(row);
@@ -13046,6 +13783,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> Field<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> rowField(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> row) {
         return new RowField<>(row);
@@ -13058,6 +13796,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> Field<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> rowField(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row) {
         return new RowField<>(row);
@@ -13070,6 +13809,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> Field<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> rowField(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row) {
         return new RowField<>(row);
@@ -13082,6 +13822,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> Field<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> rowField(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> row) {
         return new RowField<>(row);
@@ -13094,6 +13835,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> Field<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> rowField(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> row) {
         return new RowField<>(row);
@@ -13106,6 +13848,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> Field<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> rowField(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row) {
         return new RowField<>(row);
@@ -13120,6 +13863,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static Field<Record> rowField(RowN row) {
         return new RowField<>(row);
@@ -13128,6 +13872,7 @@ public class DSL {
     /**
      * Transform a subquery into a correlated subquery.
      */
+    @NotNull
     @Support
     public static <T> Field<T> field(Select<? extends Record1<T>> select) {
         if (select == null)
@@ -13139,6 +13884,7 @@ public class DSL {
     /**
      * Create a MySQL style <code>IF(condition, ifTrue, ifFalse)</code> function.
      */
+    @NotNull
     @Support
     public static <T> Field<T> if_(Condition condition, T ifTrue, T ifFalse) {
         return iif0(N_IF, condition, Tools.field(ifTrue), Tools.field(ifFalse));
@@ -13147,6 +13893,7 @@ public class DSL {
     /**
      * Create a MySQL style <code>IF(condition, ifTrue, ifFalse)</code> function.
      */
+    @NotNull
     @Support
     public static <T> Field<T> if_(Condition condition, T ifTrue, Field<T> ifFalse) {
         return iif0(N_IF, condition, Tools.field(ifTrue), nullSafe(ifFalse));
@@ -13155,6 +13902,7 @@ public class DSL {
     /**
      * Create a MySQL style <code>IF(condition, ifTrue, ifFalse)</code> function.
      */
+    @NotNull
     @Support
     public static <T> Field<T> if_(Condition condition, Field<T> ifTrue, T ifFalse) {
         return iif0(N_IF, condition, nullSafe(ifTrue), Tools.field(ifFalse));
@@ -13163,6 +13911,7 @@ public class DSL {
     /**
      * Create a MySQL style <code>IF(condition, ifTrue, ifFalse)</code> function.
      */
+    @NotNull
     @Support
     public static <T> Field<T> if_(Condition condition, Field<T> ifTrue, Field<T> ifFalse) {
         return iif0(N_IF, condition, nullSafe(ifTrue), nullSafe(ifFalse));
@@ -13176,6 +13925,7 @@ public class DSL {
      *
      * @see Case
      */
+    @NotNull
     @Support
     public static Case choose() {
         return decode();
@@ -13196,6 +13946,7 @@ public class DSL {
      *
      * @see Case
      */
+    @NotNull
     @Support
     public static <V> CaseValueStep<V> choose(V value) {
         return decode().value(value);
@@ -13216,6 +13967,7 @@ public class DSL {
      *
      * @see Case
      */
+    @NotNull
     @Support
     public static <V> CaseValueStep<V> choose(Field<V> value) {
         return decode().value(value);
@@ -13224,6 +13976,7 @@ public class DSL {
     /**
      * The T-SQL <code>CHOOSE()</code> function.
      */
+    @NotNull
     @Support
     public static <T> Field<T> choose(int index, T... values) {
         return choose(val(index), Tools.fieldsArray(values));
@@ -13232,6 +13985,7 @@ public class DSL {
     /**
      * The T-SQL <code>CHOOSE()</code> function.
      */
+    @NotNull
     @Support
     @SafeVarargs
     public static <T> Field<T> choose(int index, Field<T>... values) {
@@ -13241,6 +13995,7 @@ public class DSL {
     /**
      * The T-SQL <code>CHOOSE()</code> function.
      */
+    @NotNull
     @Support
     public static <T> Field<T> choose(Field<Integer> index, T... values) {
         return choose(index, Tools.fieldsArray(values));
@@ -13249,6 +14004,7 @@ public class DSL {
     /**
      * The T-SQL <code>CHOOSE()</code> function.
      */
+    @NotNull
     @Support
     @SafeVarargs
     public static <T> Field<T> choose(Field<Integer> index, Field<T>... values) {
@@ -13260,6 +14016,7 @@ public class DSL {
      *
      * @see Case
      */
+    @NotNull
     @Support
     public static Case case_() {
         return decode();
@@ -13277,6 +14034,7 @@ public class DSL {
      *
      * @see Case
      */
+    @NotNull
     @Support
     public static <V> CaseValueStep<V> case_(V value) {
         return decode().value(value);
@@ -13294,6 +14052,7 @@ public class DSL {
      *
      * @see Case
      */
+    @NotNull
     @Support
     public static <V> CaseValueStep<V> case_(Field<V> value) {
         return decode().value(value);
@@ -13309,6 +14068,7 @@ public class DSL {
      * END
      * </pre></code>
      */
+    @NotNull
     @Support
     public static <T> CaseConditionStep<T> when(Condition condition, T result) {
         return decode().when(condition, result);
@@ -13324,6 +14084,7 @@ public class DSL {
      * END
      * </pre></code>
      */
+    @NotNull
     @Support
     public static <T> CaseConditionStep<T> when(Condition condition, Field<T> result) {
         return decode().when(condition, result);
@@ -13339,6 +14100,7 @@ public class DSL {
      * END
      * </pre></code>
      */
+    @NotNull
     @Support
     public static <T> CaseConditionStep<T> when(Condition condition, Select<? extends Record1<T>> result) {
         return decode().when(condition, result);
@@ -13352,6 +14114,7 @@ public class DSL {
      *
      * @see Case
      */
+    @NotNull
     @Support
     public static Case decode() {
         return new CaseImpl();
@@ -13364,6 +14127,7 @@ public class DSL {
      *
      * @see #decode(Field, Field, Field, Field[])
      */
+    @NotNull
     @Support
     public static <Z, T> Field<Z> decode(T value, T search, Z result) {
         return decode(value, search, result, new Object[0]);
@@ -13376,6 +14140,7 @@ public class DSL {
      *
      * @see #decode(Field, Field, Field, Field[])
      */
+    @NotNull
     @Support
     public static <Z, T> Field<Z> decode(T value, T search, Z result, Object... more) {
         return decode(Tools.field(value), Tools.field(search), Tools.field(result), Tools.fieldsArray(more));
@@ -13388,6 +14153,7 @@ public class DSL {
      *
      * @see #decode(Field, Field, Field, Field[])
      */
+    @NotNull
     @Support
     public static <Z, T> Field<Z> decode(Field<T> value, Field<T> search, Field<Z> result) {
         return decode(nullSafe(value), nullSafe(search), nullSafe(result), EMPTY_FIELD);
@@ -13423,6 +14189,7 @@ public class DSL {
      *            If <code>more.length</code> is odd, then it is assumed that it
      *            contains more search/result pairs plus a default at the end.
      */
+    @NotNull
     @Support
     public static <Z, T> Field<Z> decode(Field<T> value, Field<T> search, Field<Z> result, Field<?>... more) {
         return new Decode<>(nullSafe(value), nullSafe(search), nullSafe(result), nullSafe(more));
@@ -13433,6 +14200,7 @@ public class DSL {
      *
      * @see #coerce(Field, Field)
      */
+    @NotNull
     @Support
     public static <T> Field<T> coerce(Object value, Field<T> as) {
         return Tools.field(value).coerce(as);
@@ -13443,6 +14211,7 @@ public class DSL {
      *
      * @see #coerce(Field, Class)
      */
+    @NotNull
     @Support
     public static <T> Field<T> coerce(Object value, Class<T> as) {
         return Tools.field(value).coerce(as);
@@ -13453,6 +14222,7 @@ public class DSL {
      *
      * @see #coerce(Field, DataType)
      */
+    @NotNull
     @Support
     public static <T> Field<T> coerce(Object value, DataType<T> as) {
         return Tools.field(value).coerce(as);
@@ -13487,6 +14257,7 @@ public class DSL {
      * @see Field#coerce(DataType)
      * @see Field#cast(Field)
      */
+    @NotNull
     @Support
     public static <T> Field<T> coerce(Field<?> field, Field<T> as) {
         return nullSafe(field).coerce(as);
@@ -13521,6 +14292,7 @@ public class DSL {
      * @see Field#coerce(DataType)
      * @see Field#cast(Class)
      */
+    @NotNull
     @Support
     public static <T> Field<T> coerce(Field<?> field, Class<T> as) {
         return nullSafe(field).coerce(as);
@@ -13555,10 +14327,13 @@ public class DSL {
      * @see Field#coerce(DataType)
      * @see Field#cast(DataType)
      */
+    @NotNull
     @Support
     public static <T> Field<T> coerce(Field<?> field, DataType<T> as) {
         return nullSafe(field).coerce(as);
     }
+
+
 
 
 
@@ -13604,6 +14379,7 @@ public class DSL {
      * @param as The field whose type is used for the cast
      * @return The cast field
      */
+    @NotNull
     @Support
     public static <T> Field<T> cast(Object value, Field<T> as) {
         return Tools.field(value, as).cast(as);
@@ -13617,6 +14393,7 @@ public class DSL {
      * @param as The field whose type is used for the cast
      * @return The cast field
      */
+    @NotNull
     @Support
     public static <T> Field<T> cast(Field<?> field, Field<T> as) {
         return nullSafe(field).cast(as);
@@ -13629,6 +14406,7 @@ public class DSL {
      * @param as The field whose type is used for the cast
      * @return The cast field
      */
+    @NotNull
     @Support
     public static <T> Field<T> castNull(Field<T> as) {
         return NULL().cast(as);
@@ -13642,6 +14420,7 @@ public class DSL {
      * @param type The type that is used for the cast
      * @return The cast field
      */
+    @NotNull
     @Support
     public static <T> Field<T> cast(Object value, Class<T> type) {
         return Tools.field(value, type).cast(type);
@@ -13655,6 +14434,7 @@ public class DSL {
      * @param type The type that is used for the cast
      * @return The cast field
      */
+    @NotNull
     @Support
     public static <T> Field<T> cast(Field<?> field, Class<T> type) {
         return nullSafe(field).cast(type);
@@ -13667,6 +14447,7 @@ public class DSL {
      * @param type The type that is used for the cast
      * @return The cast field
      */
+    @NotNull
     @Support
     public static <T> Field<T> castNull(DataType<T> type) {
         return NULL().cast(type);
@@ -13680,6 +14461,7 @@ public class DSL {
      * @param type The type that is used for the cast
      * @return The cast field
      */
+    @NotNull
     @Support
     public static <T> Field<T> cast(Object value, DataType<T> type) {
         return Tools.field(value).cast(type);
@@ -13693,6 +14475,7 @@ public class DSL {
      * @param type The type that is used for the cast
      * @return The cast field
      */
+    @NotNull
     @Support
     public static <T> Field<T> cast(Field<?> field, DataType<T> type) {
         return nullSafe(field).cast(type);
@@ -13705,6 +14488,7 @@ public class DSL {
      * @param type The type that is used for the cast
      * @return The cast field
      */
+    @NotNull
     @Support
     public static <T> Field<T> castNull(Class<T> type) {
         return NULL().cast(type);
@@ -13715,6 +14499,7 @@ public class DSL {
      *
      * @see #coalesce(Field, Field...)
      */
+    @NotNull
     @Support
     public static <T> Field<T> coalesce(T value, T... values) {
         return coalesce0(Tools.field(value), Tools.fieldsArray(values));
@@ -13725,6 +14510,7 @@ public class DSL {
      *
      * @see #coalesce(Field, Field...)
      */
+    @NotNull
     @Support
     public static <T> Field<T> coalesce(Field<T> field, T value) {
         return coalesce0(field, Tools.field(value, field));
@@ -13733,6 +14519,7 @@ public class DSL {
     /**
      * The <code>COALESCE(field1, field2, ... , field n)</code> function.
      */
+    @NotNull
     @Support
     public static <T> Field<T> coalesce(Field<T> field, Field<?>... fields) {
         return coalesce0(field, fields);
@@ -13749,6 +14536,7 @@ public class DSL {
      *
      * @see #nvl(Field, Field)
      */
+    @NotNull
     @Support
     public static <T> Field<T> isnull(T value, T defaultValue) {
         return nvl(value, defaultValue);
@@ -13759,6 +14547,7 @@ public class DSL {
      *
      * @see #nvl(Field, Field)
      */
+    @NotNull
     @Support
     public static <T> Field<T> isnull(T value, Field<T> defaultValue) {
         return nvl(value, defaultValue);
@@ -13769,6 +14558,7 @@ public class DSL {
      *
      * @see #nvl(Field, Field)
      */
+    @NotNull
     @Support
     public static <T> Field<T> isnull(Field<T> value, T defaultValue) {
         return nvl(value, defaultValue);
@@ -13779,6 +14569,7 @@ public class DSL {
      *
      * @see #nvl(Field, Field)
      */
+    @NotNull
     @Support
     public static <T> Field<T> isnull(Field<T> value, Field<T> defaultValue) {
         return nvl(value, defaultValue);
@@ -13789,6 +14580,7 @@ public class DSL {
      *
      * @see #nvl(Field, Field)
      */
+    @NotNull
     @Support
     public static <T> Field<T> nvl(T value, T defaultValue) {
         return nvl0(Tools.field(value), Tools.field(defaultValue));
@@ -13799,6 +14591,7 @@ public class DSL {
      *
      * @see #nvl(Field, Field)
      */
+    @NotNull
     @Support
     public static <T> Field<T> nvl(T value, Field<T> defaultValue) {
         return nvl0(Tools.field(value, defaultValue), nullSafe(defaultValue));
@@ -13809,6 +14602,7 @@ public class DSL {
      *
      * @see #nvl(Field, Field)
      */
+    @NotNull
     @Support
     public static <T> Field<T> nvl(Field<T> value, T defaultValue) {
         return nvl0(nullSafe(value), Tools.field(defaultValue, value));
@@ -13842,6 +14636,7 @@ public class DSL {
      * href="http://www.sqlite.org/lang_corefunc.html#ifnull">IFNULL</a></li>
      * </ul>
      */
+    @NotNull
     @Support
     public static <T> Field<T> nvl(Field<T> value, Field<T> defaultValue) {
         return nvl0(value, defaultValue);
@@ -13852,6 +14647,7 @@ public class DSL {
      *
      * @see #nvl(Field, Field)
      */
+    @NotNull
     @Support
     public static <T> Field<T> ifnull(T value, T defaultValue) {
         return nvl(value, defaultValue);
@@ -13862,6 +14658,7 @@ public class DSL {
      *
      * @see #nvl(Field, Field)
      */
+    @NotNull
     @Support
     public static <T> Field<T> ifnull(T value, Field<T> defaultValue) {
         return nvl(value, defaultValue);
@@ -13872,6 +14669,7 @@ public class DSL {
      *
      * @see #nvl(Field, Object)
      */
+    @NotNull
     @Support
     public static <T> Field<T> ifnull(Field<T> value, T defaultValue) {
         return nvl(value, defaultValue);
@@ -13882,6 +14680,7 @@ public class DSL {
      *
      * @see #nvl(Field, Field)
      */
+    @NotNull
     @Support
     public static <T> Field<T> ifnull(Field<T> value, Field<T> defaultValue) {
         return nvl(value, defaultValue);
@@ -13898,6 +14697,7 @@ public class DSL {
      *
      * @see #nvl2(Field, Field, Field)
      */
+    @NotNull
     @Support
     public static <Z> Field<Z> nvl2(Field<?> value, Z valueIfNotNull, Z valueIfNull) {
         return nvl20(nullSafe(value), Tools.field(valueIfNotNull), Tools.field(valueIfNull));
@@ -13908,6 +14708,7 @@ public class DSL {
      *
      * @see #nvl2(Field, Field, Field)
      */
+    @NotNull
     @Support
     public static <Z> Field<Z> nvl2(Field<?> value, Z valueIfNotNull, Field<Z> valueIfNull) {
         return nvl20(nullSafe(value), Tools.field(valueIfNotNull, valueIfNull), nullSafe(valueIfNull));
@@ -13918,6 +14719,7 @@ public class DSL {
      *
      * @see #nvl2(Field, Field, Field)
      */
+    @NotNull
     @Support
     public static <Z> Field<Z> nvl2(Field<?> value, Field<Z> valueIfNotNull, Z valueIfNull) {
         return nvl20(nullSafe(value), nullSafe(valueIfNotNull), Tools.field(valueIfNull, valueIfNotNull));
@@ -13935,6 +14737,7 @@ public class DSL {
      * Other dialects:
      * <code>CASE WHEN [value] IS NULL THEN [valueIfNull] ELSE [valueIfNotNull] END</code>
      */
+    @NotNull
     @Support
     public static <Z> Field<Z> nvl2(Field<?> value, Field<Z> valueIfNotNull, Field<Z> valueIfNull) {
         return nvl20(value, valueIfNotNull, valueIfNull);
@@ -13951,6 +14754,7 @@ public class DSL {
      *
      * @see #nullif(Field, Field)
      */
+    @NotNull
     @Support
     public static <T> Field<T> nullif(T value, T other) {
         return nullif0(Tools.field(value), Tools.field(other));
@@ -13961,6 +14765,7 @@ public class DSL {
      *
      * @see #nullif(Field, Field)
      */
+    @NotNull
     @Support
     public static <T> Field<T> nullif(T value, Field<T> other) {
         return nullif0(Tools.field(value, other), nullSafe(other));
@@ -13971,6 +14776,7 @@ public class DSL {
      *
      * @see #nullif(Field, Field)
      */
+    @NotNull
     @Support
     public static <T> Field<T> nullif(Field<T> value, T other) {
         return nullif0(nullSafe(value), Tools.field(other, value));
@@ -13986,6 +14792,7 @@ public class DSL {
      * </ul>
      * <p>
      */
+    @NotNull
     @Support
     public static <T> Field<T> nullif(Field<T> value, Field<T> other) {
         return nullif0(value, other);
@@ -14002,6 +14809,7 @@ public class DSL {
      *
      * @see #iif(Condition, Field, Field)
      */
+    @NotNull
     @Support
     public static <T> Field<T> iif(Condition condition, T ifTrue, T ifFalse) {
         return iif0(N_IIF, condition, Tools.field(ifTrue), Tools.field(ifFalse));
@@ -14012,6 +14820,7 @@ public class DSL {
      *
      * @see #iif(Condition, Field, Field)
      */
+    @NotNull
     @Support
     public static <T> Field<T> iif(Condition condition, T ifTrue, Field<T> ifFalse) {
         return iif0(N_IIF, condition, Tools.field(ifTrue, ifFalse), nullSafe(ifFalse));
@@ -14022,6 +14831,7 @@ public class DSL {
      *
      * @see #iif(Condition, Field, Field)
      */
+    @NotNull
     @Support
     public static <T> Field<T> iif(Condition condition, Field<T> ifTrue, T ifFalse) {
         return iif0(N_IIF, condition, nullSafe(ifTrue), Tools.field(ifFalse, ifTrue));
@@ -14030,6 +14840,7 @@ public class DSL {
     /**
      * Gets the SQL Server style IIF(condition, ifTrue, ifFalse) function.
      */
+    @NotNull
     @Support
     public static <T> Field<T> iif(Condition condition, Field<T> ifTrue, Field<T> ifFalse) {
         return iif0(N_IIF, condition, ifTrue, ifFalse);
@@ -14050,6 +14861,7 @@ public class DSL {
      *
      * @see #upper(Field)
      */
+    @NotNull
     @Support
     public static Field<String> upper(String value) {
         return upper(Tools.field(value));
@@ -14061,6 +14873,7 @@ public class DSL {
      * This renders the upper function in all dialects:
      * <code><pre>upper([field])</pre></code>
      */
+    @NotNull
     @Support
     public static Field<String> upper(Field<String> field) {
         return new Upper(nullSafe(field));
@@ -14071,6 +14884,7 @@ public class DSL {
      *
      * @see #lower(Field)
      */
+    @NotNull
     @Support
     public static Field<String> lower(String value) {
         return lower(Tools.field(value));
@@ -14082,6 +14896,7 @@ public class DSL {
      * This renders the lower function in all dialects:
      * <code><pre>lower([field])</pre></code>
      */
+    @NotNull
     @Support
     public static Field<String> lower(Field<String> field) {
         return new Lower(nullSafe(field));
@@ -14092,6 +14907,7 @@ public class DSL {
      *
      * @see #trim(Field)
      */
+    @NotNull
     @Support
     public static Field<String> trim(String value) {
         return trim(Tools.field(value));
@@ -14104,6 +14920,7 @@ public class DSL {
      * <code><pre>trim([field])</pre></code> ... or emulates it elsewhere using
      * rtrim and ltrim: <code><pre>ltrim(rtrim([field]))</pre></code>
      */
+    @NotNull
     @Support
     public static Field<String> trim(Field<String> field) {
         return new Trim(nullSafe(field));
@@ -14115,6 +14932,7 @@ public class DSL {
      *
      * @see #trim(Field, Field)
      */
+    @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> trim(String value, String characters) {
         return trim(Tools.field(value), Tools.field(characters));
@@ -14128,6 +14946,7 @@ public class DSL {
      * <code><pre>trim([field])</pre></code> ... or emulates it elsewhere using
      * rtrim and ltrim: <code><pre>ltrim(rtrim([field]))</pre></code>
      */
+    @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> trim(Field<String> field, Field<String> characters) {
         return new Trim(nullSafe(field), nullSafe(characters));
@@ -14138,6 +14957,7 @@ public class DSL {
      *
      * @see #rtrim(Field)
      */
+    @NotNull
     @Support
     public static Field<String> rtrim(String value) {
         return rtrim(Tools.field(value));
@@ -14149,6 +14969,7 @@ public class DSL {
      * This renders the rtrim function in all dialects:
      * <code><pre>rtrim([field])</pre></code>
      */
+    @NotNull
     @Support
     public static Field<String> rtrim(Field<String> field) {
         return new RTrim(nullSafe(field));
@@ -14160,6 +14981,7 @@ public class DSL {
      *
      * @see #rtrim(Field, Field)
      */
+    @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> rtrim(String value, String characters) {
         return rtrim(Tools.field(value), Tools.field(characters));
@@ -14172,6 +14994,7 @@ public class DSL {
      * This renders the rtrim function in all dialects:
      * <code><pre>rtrim([field])</pre></code>
      */
+    @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> rtrim(Field<String> field, Field<String> characters) {
         return new RTrim(nullSafe(field), nullSafe(characters));
@@ -14182,6 +15005,7 @@ public class DSL {
      *
      * @see #ltrim(Field)
      */
+    @NotNull
     @Support
     public static Field<String> ltrim(String value) {
         return ltrim(Tools.field(value));
@@ -14193,6 +15017,7 @@ public class DSL {
      * This renders the ltrim function in all dialects:
      * <code><pre>ltrim([field])</pre></code>
      */
+    @NotNull
     @Support
     public static Field<String> ltrim(Field<String> field) {
         return new LTrim(nullSafe(field));
@@ -14204,6 +15029,7 @@ public class DSL {
      *
      * @see #ltrim(Field, Field)
      */
+    @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> ltrim(String value, String characters) {
         return ltrim(Tools.field(value), Tools.field(characters));
@@ -14216,6 +15042,7 @@ public class DSL {
      * This renders the ltrim function in all dialects:
      * <code><pre>ltrim([field])</pre></code>
      */
+    @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> ltrim(Field<String> field, Field<String> characters) {
         return new LTrim(nullSafe(field), nullSafe(characters));
@@ -14226,6 +15053,7 @@ public class DSL {
      *
      * @see #rpad(Field, Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> rpad(Field<String> field, int length) {
         return rpad(nullSafe(field), Tools.field(length));
@@ -14240,6 +15068,7 @@ public class DSL {
      * well, depending on the RDBMS:
      * <code><pre>concat([field], repeat(' ', [length] - length([field])))</pre></code>
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> rpad(Field<String> field, Field<? extends Number> length) {
         return new Rpad(nullSafe(field), nullSafe(length));
@@ -14250,6 +15079,7 @@ public class DSL {
      *
      * @see #rpad(Field, Field, Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> rpad(Field<String> field, int length, char character) {
         return rpad(field, length, Character.toString(character));
@@ -14260,6 +15090,7 @@ public class DSL {
      *
      * @see #rpad(Field, Field, Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> rpad(Field<String> field, int length, String character) {
         return rpad(nullSafe(field), Tools.field(length), Tools.field(character));
@@ -14277,6 +15108,7 @@ public class DSL {
      * In {@link SQLDialect#SQLITE}, this is emulated as such:
      * <code><pre>[field] || replace(replace(substr(quote(zeroblob(([length] + 1) / 2)), 3, ([length] - length([field]))), '\''', ''), '0', [character])</pre></code>
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> rpad(Field<String> field, Field<? extends Number> length, Field<String> character) {
         return new Rpad(nullSafe(field), nullSafe(length), nullSafe(character));
@@ -14287,6 +15119,7 @@ public class DSL {
      *
      * @see #lpad(Field, Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> lpad(Field<String> field, int length) {
         return lpad(nullSafe(field), Tools.field(length));
@@ -14301,6 +15134,7 @@ public class DSL {
      * well, depending on the RDBMS:
      * <code><pre>concat(repeat(' ', [length] - length([field])), [field])</pre></code>
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> lpad(Field<String> field, Field<? extends Number> length) {
         return new Lpad(nullSafe(field), nullSafe(length));
@@ -14311,6 +15145,7 @@ public class DSL {
      *
      * @see #lpad(Field, Field, Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> lpad(Field<String> field, int length, char character) {
         return lpad(field, length, Character.toString(character));
@@ -14321,6 +15156,7 @@ public class DSL {
      *
      * @see #lpad(Field, Field, Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> lpad(Field<String> field, int length, String character) {
         return lpad(nullSafe(field), Tools.field(length), Tools.field(character));
@@ -14338,6 +15174,7 @@ public class DSL {
      * In {@link SQLDialect#SQLITE}, this is emulated as such:
      * <code><pre>replace(replace(substr(quote(zeroblob(([length] + 1) / 2)), 3, ([length] - length([field]))), '\''', ''), '0', [character]) || [field]</pre></code>
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> lpad(Field<String> field, Field<? extends Number> length, Field<String> character) {
         return new Lpad(nullSafe(field), nullSafe(length), nullSafe(character));
@@ -14348,6 +15185,7 @@ public class DSL {
      *
      * @see #translate(Field, Field, Field)
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
     public static Field<String> translate(Field<String> text, String from, String to) {
         return translate(text, Tools.field(from), Tools.field(to));
@@ -14356,6 +15194,7 @@ public class DSL {
     /**
      * Get the translate(field, from, to) function.
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
     public static Field<String> translate(Field<String> text, Field<String> from, Field<String> to) {
         return new Translate(text, from, to);
@@ -14366,6 +15205,7 @@ public class DSL {
      *
      * @see #repeat(Field, Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> repeat(String field, int count) {
         return repeat(Tools.field(field), Tools.field(count));
@@ -14376,6 +15216,7 @@ public class DSL {
      *
      * @see #repeat(Field, Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> repeat(String field, Field<? extends Number> count) {
         return repeat(Tools.field(field), nullSafe(count));
@@ -14386,6 +15227,7 @@ public class DSL {
      *
      * @see #repeat(Field, Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> repeat(Field<String> field, int count) {
         return repeat(nullSafe(field), Tools.field(count));
@@ -14404,6 +15246,7 @@ public class DSL {
      * In {@link SQLDialect#SQLITE}, this is emulated as such:
      * <code><pre>replace(substr(quote(zeroblob(([count] + 1) / 2)), 3, [count]), '0', [field])</pre></code>
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> repeat(Field<String> field, Field<? extends Number> count) {
         return new Repeat(nullSafe(field), nullSafe(count));
@@ -14418,6 +15261,7 @@ public class DSL {
      * @see <a
      *      href="http://technet.microsoft.com/en-us/library/ms187950.aspx">http://technet.microsoft.com/en-us/library/ms187950.aspx</a>
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> space(int value) {
         return space(val(value));
@@ -14432,6 +15276,7 @@ public class DSL {
      * @see <a
      *      href="http://technet.microsoft.com/en-us/library/ms187950.aspx">http://technet.microsoft.com/en-us/library/ms187950.aspx</a>
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> space(Field<Integer> value) {
         return new Space(nullSafe(value));
@@ -14440,6 +15285,7 @@ public class DSL {
     /**
      * Get the <code>reverse(field)</code> function.
      */
+    @NotNull
     @Support({ CUBRID, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<String> reverse(String value) {
         return reverse(val(value));
@@ -14448,6 +15294,7 @@ public class DSL {
     /**
      * Get the <code>reverse(field)</code> function.
      */
+    @NotNull
     @Support({ CUBRID, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<String> reverse(Field<String> field) {
         return new Reverse(nullSafe(field));
@@ -14462,6 +15309,7 @@ public class DSL {
      * @see #replace(Field, String, String)
      * @see Field#like(Field, char)
      */
+    @NotNull
     @Support
     public static String escape(String value, char escape) {
         String esc = "" + escape;
@@ -14481,6 +15329,7 @@ public class DSL {
      * @see #replace(Field, String, String)
      * @see Field#like(Field, char)
      */
+    @NotNull
     @Support
     public static Field<String> escape(Field<String> field, char escape) {
         Field<String> replace = field;
@@ -14498,6 +15347,7 @@ public class DSL {
      *
      * @see #replace(Field, Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> replace(Field<String> field, String search) {
         return replace(nullSafe(field), Tools.field(search));
@@ -14512,6 +15362,7 @@ public class DSL {
      * using the three-argument replace function:
      * <code><pre>replace([field], [search], '')</pre></code>
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> replace(Field<String> field, Field<String> search) {
         return new Replace(nullSafe(field), nullSafe(search), null);
@@ -14522,6 +15373,7 @@ public class DSL {
      *
      * @see #replace(Field, Field, Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> replace(Field<String> field, String search, String replace) {
         return replace(nullSafe(field), Tools.field(search), Tools.field(replace));
@@ -14534,6 +15386,7 @@ public class DSL {
      * <code><pre>replace([field], [search]) or
      * str_replace([field], [search])</pre></code>
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<String> replace(Field<String> field, Field<String> search, Field<String> replace) {
         return new Replace(nullSafe(field), nullSafe(search), nullSafe(replace));
@@ -14542,6 +15395,7 @@ public class DSL {
     /**
      * Get the <code>REGEXP_REPLACE_ALL</code> function.
      */
+    @NotNull
     @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<String> regexpReplaceAll(Field<String> field, String pattern, String replacement) {
         return regexpReplaceAll(field, Tools.field(pattern), Tools.field(replacement));
@@ -14550,6 +15404,7 @@ public class DSL {
     /**
      * Get the <code>REGEXP_REPLACE_ALL</code> function.
      */
+    @NotNull
     @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<String> regexpReplaceAll(Field<String> field, Field<String> pattern, Field<String> replacement) {
         return new RegexpReplace(field, nullSafe(pattern), nullSafe(replacement), true);
@@ -14558,6 +15413,7 @@ public class DSL {
     /**
      * Get the <code>REGEXP_REPLACE_ALL</code> function.
      */
+    @NotNull
     @Support({ MYSQL, POSTGRES })
     public static Field<String> regexpReplaceFirst(Field<String> field, String pattern, String replacement) {
         return regexpReplaceFirst(field, Tools.field(pattern), Tools.field(replacement));
@@ -14566,6 +15422,7 @@ public class DSL {
     /**
      * Get the <code>REGEXP_REPLACE_ALL</code> function.
      */
+    @NotNull
     @Support({ MYSQL, POSTGRES })
     public static Field<String> regexpReplaceFirst(Field<String> field, Field<String> pattern, Field<String> replacement) {
         return new RegexpReplace(field, nullSafe(pattern), nullSafe(replacement), false);
@@ -14576,6 +15433,7 @@ public class DSL {
      *
      * @see #position(Field, Field)
      */
+    @NotNull
     @Support
     public static Field<Integer> position(String in, String search) {
         return position(Tools.field(in), Tools.field(search));
@@ -14586,6 +15444,7 @@ public class DSL {
      *
      * @see #position(Field, Field)
      */
+    @NotNull
     @Support
     public static Field<Integer> position(String in, Field<String> search) {
         return position(Tools.field(in), nullSafe(search));
@@ -14596,6 +15455,7 @@ public class DSL {
      *
      * @see #position(Field, Field)
      */
+    @NotNull
     @Support
     public static Field<Integer> position(Field<String> in, String search) {
         return position(nullSafe(in), Tools.field(search));
@@ -14611,6 +15471,7 @@ public class DSL {
      * instr([in], [search]) or
      * charindex([search], [in])</pre></code>
      */
+    @NotNull
     @Support
     public static Field<Integer> position(Field<String> in, Field<String> search) {
         return new Position(nullSafe(search), nullSafe(in));
@@ -14621,6 +15482,7 @@ public class DSL {
      *
      * @see #position(Field, Field, Field)
      */
+    @NotNull
     @Support
     public static Field<Integer> position(String in, String search, int startIndex) {
         return position(Tools.field(in), Tools.field(search), Tools.field(startIndex));
@@ -14631,6 +15493,7 @@ public class DSL {
      *
      * @see #position(Field, Field, Field)
      */
+    @NotNull
     @Support
     public static Field<Integer> position(String in, Field<String> search, int startIndex) {
         return position(Tools.field(in), nullSafe(search), Tools.field(startIndex));
@@ -14641,6 +15504,7 @@ public class DSL {
      *
      * @see #position(Field, Field)
      */
+    @NotNull
     @Support
     public static Field<Integer> position(Field<String> in, String search, int startIndex) {
         return position(nullSafe(in), Tools.field(search), Tools.field(startIndex));
@@ -14656,6 +15520,7 @@ public class DSL {
      * instr([in], [search]) or
      * charindex([search], [in])</pre></code>
      */
+    @NotNull
     @Support
     public static Field<Integer> position(Field<String> in, Field<String> search, int startIndex) {
         return position(nullSafe(search), nullSafe(in), Tools.field(startIndex));
@@ -14666,6 +15531,7 @@ public class DSL {
      *
      * @see #position(Field, Field, Field)
      */
+    @NotNull
     @Support
     public static Field<Integer> position(String in, String search, Field<? extends Number> startIndex) {
         return position(Tools.field(in), Tools.field(search), nullSafe(startIndex));
@@ -14676,6 +15542,7 @@ public class DSL {
      *
      * @see #position(Field, Field, Field)
      */
+    @NotNull
     @Support
     public static Field<Integer> position(String in, Field<String> search, Field<? extends Number> startIndex) {
         return position(Tools.field(in), nullSafe(search), nullSafe(startIndex));
@@ -14686,6 +15553,7 @@ public class DSL {
      *
      * @see #position(Field, Field)
      */
+    @NotNull
     @Support
     public static Field<Integer> position(Field<String> in, String search, Field<? extends Number> startIndex) {
         return position(nullSafe(in), Tools.field(search), nullSafe(startIndex));
@@ -14701,6 +15569,7 @@ public class DSL {
      * instr([in], [search]) or
      * charindex([search], [in])</pre></code>
      */
+    @NotNull
     @Support
     public static Field<Integer> position(Field<String> in, Field<String> search, Field<? extends Number> startIndex) {
         return new Position(nullSafe(search), nullSafe(in), nullSafe(startIndex));
@@ -14709,6 +15578,7 @@ public class DSL {
     /**
      * Get the overlay(in, placing, startIndex) function.
      */
+    @NotNull
     @Support
     public static Field<String> overlay(Field<String> in, String placing, Number startIndex) {
         return new Overlay(nullSafe(in), Tools.field(placing), Tools.field(startIndex));
@@ -14717,6 +15587,7 @@ public class DSL {
     /**
      * Get the overlay(in, placing, startIndex) function.
      */
+    @NotNull
     @Support
     public static Field<String> overlay(Field<String> in, Field<String> placing, Field<? extends Number> startIndex) {
         return new Overlay(nullSafe(in), nullSafe(placing), nullSafe(startIndex));
@@ -14725,6 +15596,7 @@ public class DSL {
     /**
      * Get the overlay(in, placing, startIndex, length) function.
      */
+    @NotNull
     @Support
     public static Field<String> overlay(Field<String> in, String placing, Number startIndex, Number length) {
         return new Overlay(nullSafe(in), Tools.field(placing), Tools.field(startIndex), Tools.field(length));
@@ -14733,6 +15605,7 @@ public class DSL {
     /**
      * Get the overlay(in, placing, startIndex, length) function.
      */
+    @NotNull
     @Support
     public static Field<String> overlay(Field<String> in, Field<String> placing, Field<? extends Number> startIndex, Field<? extends Number> length) {
         return new Overlay(nullSafe(in), nullSafe(placing), nullSafe(startIndex), nullSafe(length));
@@ -14741,6 +15614,7 @@ public class DSL {
     /**
      * Get the insert(in, startIndex, length, placing) function.
      */
+    @NotNull
     @Support
     public static Field<String> insert(Field<String> in, Number startIndex, Number length, String placing) {
         return insert(nullSafe(in), Tools.field(startIndex), Tools.field(length), Tools.field(placing));
@@ -14749,6 +15623,7 @@ public class DSL {
     /**
      * Get the insert(in, startIndex, length, placing) function.
      */
+    @NotNull
     @Support
     public static Field<String> insert(Field<String> in, Field<? extends Number> startIndex, Field<? extends Number> length, Field<String> placing) {
         return overlay(in, placing, startIndex, length);
@@ -14759,6 +15634,7 @@ public class DSL {
      *
      * @see #ascii(Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<Integer> ascii(String field) {
         return ascii(Tools.field(field));
@@ -14770,6 +15646,7 @@ public class DSL {
      * This renders the ascii function:
      * <code><pre>ascii([field])</pre></code>
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<Integer> ascii(Field<String> field) {
         return new Ascii(nullSafe(field));
@@ -14780,6 +15657,7 @@ public class DSL {
      *
      * @see #concat(Field...)
      */
+    @NotNull
     @Support
     public static Field<String> concat(Field<String> field, String value) {
         return concat(nullSafe(field), Tools.field(value));
@@ -14790,6 +15668,7 @@ public class DSL {
      *
      * @see #concat(Field...)
      */
+    @NotNull
     @Support
     public static Field<String> concat(String value, Field<String> field) {
         return concat(Tools.field(value), nullSafe(field));
@@ -14800,6 +15679,7 @@ public class DSL {
      *
      * @see #concat(Field...)
      */
+    @NotNull
     @Support
     public static Field<String> concat(String... values) {
         return concat(Tools.fieldsArray(values));
@@ -14815,6 +15695,7 @@ public class DSL {
      * If any of the given fields is not a {@link String} field, they are cast
      * to <code>Field&lt;String&gt;</code> first using {@link #cast(Object, Class)}
      */
+    @NotNull
     @Support
     public static Field<String> concat(Field<?>... fields) {
         return new Concat(nullSafe(fields));
@@ -14825,6 +15706,7 @@ public class DSL {
      *
      * @see #substring(Field, Field)
      */
+    @NotNull
     @Support
     public static Field<String> substring(Field<String> field, int startingPosition) {
         return substring(nullSafe(field), Tools.field(startingPosition));
@@ -14837,6 +15719,7 @@ public class DSL {
      * <code><pre>substr([field], [startingPosition]) or
      * substring([field], [startingPosition])</pre></code>
      */
+    @NotNull
     @Support
     public static Field<String> substring(Field<String> field, Field<? extends Number> startingPosition) {
         return new Substring(nullSafe(field), nullSafe(startingPosition));
@@ -14847,6 +15730,7 @@ public class DSL {
      *
      * @see #substring(Field, Field, Field)
      */
+    @NotNull
     @Support
     public static Field<String> substring(Field<String> field, int startingPosition, int length) {
         return substring(nullSafe(field), Tools.field(startingPosition), Tools.field(length));
@@ -14859,6 +15743,7 @@ public class DSL {
      * <code><pre>substr([field], [startingPosition], [length]) or
      * substring([field], [startingPosition], [length])</pre></code>
      */
+    @NotNull
     @Support
     public static Field<String> substring(Field<String> field, Field<? extends Number> startingPosition, Field<? extends Number> length) {
         return new Substring(nullSafe(field), nullSafe(startingPosition), nullSafe(length));
@@ -14869,6 +15754,7 @@ public class DSL {
      *
      * @see #substring(Field, Field, Field)
      */
+    @NotNull
     @Support
     public static Field<String> mid(Field<String> field, int startingPosition, int length) {
         return substring(nullSafe(field), Tools.field(startingPosition), Tools.field(length));
@@ -14881,6 +15767,7 @@ public class DSL {
      * <code><pre>substr([field], [startingPosition], [length]) or
      * substring([field], [startingPosition], [length])</pre></code>
      */
+    @NotNull
     @Support
     public static Field<String> mid(Field<String> field, Field<? extends Number> startingPosition, Field<? extends Number> length) {
         return substring(nullSafe(field), nullSafe(startingPosition), nullSafe(length));
@@ -14894,6 +15781,7 @@ public class DSL {
      * 'abc' = LEFT('abcde', 3)
      * </pre></code>
      */
+    @NotNull
     @Support
     public static Field<String> left(String field, int length) {
         return left(Tools.field(field), Tools.field(length));
@@ -14907,6 +15795,7 @@ public class DSL {
      * 'abc' = LEFT('abcde', 3)
      * </pre></code>
      */
+    @NotNull
     @Support
     public static Field<String> left(String field, Field<? extends Number> length) {
         return left(Tools.field(field), nullSafe(length));
@@ -14920,6 +15809,7 @@ public class DSL {
      * 'abc' = LEFT('abcde', 3)
      * </pre></code>
      */
+    @NotNull
     @Support
     public static Field<String> left(Field<String> field, int length) {
         return left(nullSafe(field), Tools.field(length));
@@ -14933,6 +15823,7 @@ public class DSL {
      * 'abc' = LEFT('abcde', 3)
      * </pre></code>
      */
+    @NotNull
     @Support
     public static Field<String> left(Field<String> field, Field<? extends Number> length) {
         return new Left(field, length);
@@ -14946,6 +15837,7 @@ public class DSL {
      * 'cde' = RIGHT('abcde', 3)
      * </pre></code>
      */
+    @NotNull
     @Support
     public static Field<String> right(String field, int length) {
         return right(Tools.field(field), Tools.field(length));
@@ -14959,6 +15851,7 @@ public class DSL {
      * 'cde' = RIGHT('abcde', 3)
      * </pre></code>
      */
+    @NotNull
     @Support
     public static Field<String> right(String field, Field<? extends Number> length) {
         return right(Tools.field(field), nullSafe(length));
@@ -14972,6 +15865,7 @@ public class DSL {
      * 'cde' = RIGHT('abcde', 3)
      * </pre></code>
      */
+    @NotNull
     @Support
     public static Field<String> right(Field<String> field, int length) {
         return right(nullSafe(field), Tools.field(length));
@@ -14985,6 +15879,7 @@ public class DSL {
      * 'cde' = RIGHT('abcde', 3)
      * </pre></code>
      */
+    @NotNull
     @Support
     public static Field<String> right(Field<String> field, Field<? extends Number> length) {
         return new Right(field, length);
@@ -14996,6 +15891,7 @@ public class DSL {
      *
      * @see #charLength(String)
      */
+    @NotNull
     @Support
     public static Field<Integer> length(String value) {
         return length(Tools.field(value));
@@ -15007,6 +15903,7 @@ public class DSL {
      *
      * @see #charLength(Field)
      */
+    @NotNull
     @Support
     public static Field<Integer> length(Field<String> field) {
         return charLength(field);
@@ -15017,6 +15914,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<Integer> charLength(String value) {
         return charLength(Tools.field(value));
@@ -15027,6 +15925,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<Integer> charLength(Field<String> field) {
         return new DefaultAggregateFunction<>(Term.CHAR_LENGTH, SQLDataType.INTEGER, nullSafe(field));
@@ -15037,6 +15936,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<Integer> bitLength(String value) {
         return bitLength(Tools.field(value));
@@ -15047,6 +15947,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<Integer> bitLength(Field<String> field) {
         return new DefaultAggregateFunction<>(Term.BIT_LENGTH, SQLDataType.INTEGER, nullSafe(field));
@@ -15057,6 +15958,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<Integer> octetLength(String value) {
         return octetLength(Tools.field(value));
@@ -15067,6 +15969,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<Integer> octetLength(Field<String> field) {
         return new DefaultAggregateFunction<>(Term.OCTET_LENGTH, SQLDataType.INTEGER, nullSafe(field));
@@ -15104,6 +16007,7 @@ public class DSL {
      * </tr>
      * </table>
      */
+    @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES })
     public static Field<String> md5(String string) {
         return md5(Tools.field(string));
@@ -15137,6 +16041,7 @@ public class DSL {
      * </tr>
      * </table>
      */
+    @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES })
     public static Field<String> md5(Field<String> string) {
         return new MD5(nullSafe(string));
@@ -15158,6 +16063,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<Date> currentDate() {
         return new CurrentDate<>(SQLDataType.DATE);
@@ -15169,6 +16075,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<Time> currentTime() {
         return new CurrentTime<>(SQLDataType.TIME);
@@ -15180,6 +16087,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<Timestamp> currentTimestamp() {
         return new CurrentTimestamp<>(SQLDataType.TIMESTAMP);
@@ -15190,6 +16098,7 @@ public class DSL {
      * {@link SQLDataType#TIMESTAMP} type with the specified fractional
      * seconds precision.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<Timestamp> currentTimestamp(Field<Integer> precision) {
         return new CurrentTimestamp<>(SQLDataType.TIMESTAMP, precision);
@@ -15198,6 +16107,7 @@ public class DSL {
     /**
      * Synonym for {@link #currentTimestamp()}.
      */
+    @NotNull
     @Support
     public static Field<Timestamp> now() {
         return currentTimestamp();
@@ -15206,6 +16116,7 @@ public class DSL {
     /**
      * Synonym for {@link #currentTimestamp(Field)}.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<Timestamp> now(Field<Integer> precision) {
         return currentTimestamp(precision);
@@ -15224,6 +16135,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<LocalDate> currentLocalDate() {
         return new CurrentDate<>(SQLDataType.LOCALDATE);
@@ -15235,6 +16147,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<LocalTime> currentLocalTime() {
         return new CurrentTime<>(SQLDataType.LOCALTIME);
@@ -15246,6 +16159,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<LocalDateTime> currentLocalDateTime() {
         return new CurrentTimestamp<>(SQLDataType.LOCALDATETIME);
@@ -15256,6 +16170,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<OffsetTime> currentOffsetTime() {
         return currentTime().cast(SQLDataType.OFFSETTIME);
@@ -15266,6 +16181,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<OffsetDateTime> currentOffsetDateTime() {
         return currentTimestamp().cast(SQLDataType.OFFSETDATETIME);
@@ -15276,6 +16192,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<Instant> currentInstant() {
         return currentTimestamp().cast(SQLDataType.INSTANT);
@@ -15288,6 +16205,7 @@ public class DSL {
      *
      * @see Field#sub(Field)
      */
+    @NotNull
     @Support
     public static Field<Integer> dateDiff(Date endDate, Date startDate) {
         return dateDiff(Tools.field(endDate), Tools.field(startDate));
@@ -15299,6 +16217,7 @@ public class DSL {
      *
      * @see Field#sub(Field)
      */
+    @NotNull
     @Support
     public static Field<Integer> dateDiff(Field<Date> endDate, Date startDate) {
         return dateDiff(nullSafe(endDate), Tools.field(startDate));
@@ -15310,6 +16229,7 @@ public class DSL {
      *
      * @see Field#sub(Field)
      */
+    @NotNull
     @Support
     public static Field<Integer> dateDiff(Date endDate, Field<Date> startDate) {
         return dateDiff(Tools.field(endDate), nullSafe(startDate));
@@ -15321,6 +16241,7 @@ public class DSL {
      *
      * @see Field#sub(Field)
      */
+    @NotNull
     @Support
     public static Field<Integer> dateDiff(Field<Date> endDate, Field<Date> startDate) {
         return new DateDiff<>(null, nullSafe(startDate), nullSafe(endDate));
@@ -15334,6 +16255,7 @@ public class DSL {
      * despite there being less than 2 years between the two days. The behaviour
      * replicates that of SQL Server.
      */
+    @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<Integer> dateDiff(DatePart part, Date startDate, Date endDate) {
         return dateDiff(part, Tools.field(startDate), Tools.field(endDate));
@@ -15347,6 +16269,7 @@ public class DSL {
      * despite there being less than 2 years between the two days. The behaviour
      * replicates that of SQL Server.
      */
+    @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<Integer> dateDiff(DatePart part, Field<Date> startDate, Date endDate) {
         return dateDiff(part, nullSafe(startDate), Tools.field(endDate));
@@ -15360,6 +16283,7 @@ public class DSL {
      * despite there being less than 2 years between the two days. The behaviour
      * replicates that of SQL Server.
      */
+    @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<Integer> dateDiff(DatePart part, Date startDate, Field<Date> endDate) {
         return dateDiff(part, Tools.field(startDate), nullSafe(endDate));
@@ -15373,6 +16297,7 @@ public class DSL {
      * despite there being less than 2 years between the two days. The behaviour
      * replicates that of SQL Server.
      */
+    @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<Integer> dateDiff(DatePart part, Field<Date> startDate, Field<Date> endDate) {
         return new DateDiff<>(part, nullSafe(startDate), nullSafe(endDate));
@@ -15385,6 +16310,7 @@ public class DSL {
      *
      * @see Field#add(Number)
      */
+    @NotNull
     @Support
     public static Field<Date> dateAdd(Date date, Number interval) {
         return dateAdd(Tools.field(date), Tools.field(interval));
@@ -15397,6 +16323,7 @@ public class DSL {
      *
      * @see Field#add(Field)
      */
+    @NotNull
     @Support
     public static Field<Date> dateAdd(Field<Date> date, Field<? extends Number> interval) {
         return nullSafe(date).add(interval);
@@ -15407,6 +16334,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<Date> dateAdd(Date date, Number interval, DatePart datePart) {
         return dateAdd(Tools.field(date), Tools.field(interval), datePart);
@@ -15417,6 +16345,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<Date> dateAdd(Date date, Field<? extends Number> interval, DatePart datePart) {
         return dateAdd(Tools.field(date), nullSafe(interval), datePart);
@@ -15427,6 +16356,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<Date> dateAdd(Field<Date> date, Number interval, DatePart datePart) {
         return dateAdd(nullSafe(date), Tools.field(interval), datePart);
@@ -15437,6 +16367,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<Date> dateAdd(Field<Date> date, Field<? extends Number> interval, DatePart datePart) {
         return new DateAdd<>(nullSafe(date), nullSafe(interval), datePart);
@@ -15449,6 +16380,7 @@ public class DSL {
      *
      * @see Field#add(Number)
      */
+    @NotNull
     @Support
     public static Field<Date> dateSub(Date date, Number interval) {
         return dateSub(Tools.field(date), Tools.field(interval));
@@ -15461,6 +16393,7 @@ public class DSL {
      *
      * @see Field#add(Field)
      */
+    @NotNull
     @Support
     public static Field<Date> dateSub(Field<Date> date, Field<? extends Number> interval) {
         return nullSafe(date).sub(interval);
@@ -15471,6 +16404,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<Date> dateSub(Date date, Number interval, DatePart datePart) {
         return dateSub(Tools.field(date), Tools.field(interval), datePart);
@@ -15481,6 +16415,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<Date> dateSub(Date date, Field<? extends Number> interval, DatePart datePart) {
         return dateSub(Tools.field(date), nullSafe(interval), datePart);
@@ -15491,6 +16426,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<Date> dateSub(Field<Date> date, Number interval, DatePart datePart) {
         return dateSub(nullSafe(date), Tools.field(interval), datePart);
@@ -15501,6 +16437,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<Date> dateSub(Field<Date> date, Field<? extends Number> interval, DatePart datePart) {
         return new DateAdd<>(nullSafe(date), nullSafe(interval).neg(), datePart);
@@ -15513,6 +16450,7 @@ public class DSL {
      *
      * @see Field#add(Number)
      */
+    @NotNull
     @Support
     public static Field<Timestamp> timestampAdd(Timestamp timestamp, Number interval) {
         return timestampAdd(Tools.field(timestamp), Tools.field(interval));
@@ -15525,6 +16463,7 @@ public class DSL {
      *
      * @see Field#add(Field)
      */
+    @NotNull
     @Support
     public static Field<Timestamp> timestampAdd(Field<Timestamp> timestamp, Field<? extends Number> interval) {
         return nullSafe(timestamp).add(interval);
@@ -15535,6 +16474,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<Timestamp> timestampAdd(Timestamp date, Number interval, DatePart datePart) {
         return new DateAdd<>(Tools.field(date), Tools.field(interval), datePart);
@@ -15545,6 +16485,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<Timestamp> timestampAdd(Timestamp date, Field<? extends Number> interval, DatePart datePart) {
         return new DateAdd<>(Tools.field(date), nullSafe(interval), datePart);
@@ -15555,6 +16496,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<Timestamp> timestampAdd(Field<Timestamp> date, Number interval, DatePart datePart) {
         return new DateAdd<>(nullSafe(date), Tools.field(interval), datePart);
@@ -15565,6 +16507,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<Timestamp> timestampAdd(Field<Timestamp> date, Field<? extends Number> interval, DatePart datePart) {
         return new DateAdd<>(nullSafe(date), nullSafe(interval), datePart);
@@ -15577,6 +16520,7 @@ public class DSL {
      *
      * @see Field#sub(Number)
      */
+    @NotNull
     @Support
     public static Field<Timestamp> timestampSub(Timestamp timestamp, Number interval) {
         return timestampSub(Tools.field(timestamp), Tools.field(interval));
@@ -15589,6 +16533,7 @@ public class DSL {
      *
      * @see Field#sub(Field)
      */
+    @NotNull
     @Support
     public static Field<Timestamp> timestampSub(Field<Timestamp> timestamp, Field<? extends Number> interval) {
         return nullSafe(timestamp).sub(interval);
@@ -15599,6 +16544,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<Timestamp> timestampSub(Timestamp date, Number interval, DatePart datePart) {
         return new DateAdd<>(Tools.field(date), Tools.field(interval).neg(), datePart);
@@ -15609,6 +16555,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<Timestamp> timestampSub(Timestamp date, Field<? extends Number> interval, DatePart datePart) {
         return new DateAdd<>(Tools.field(date), nullSafe(interval).neg(), datePart);
@@ -15619,6 +16566,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<Timestamp> timestampSub(Field<Timestamp> date, Number interval, DatePart datePart) {
         return new DateAdd<>(nullSafe(date), Tools.field(interval).neg(), datePart);
@@ -15629,6 +16577,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<Timestamp> timestampSub(Field<Timestamp> date, Field<? extends Number> interval, DatePart datePart) {
         return new DateAdd<>(nullSafe(date), nullSafe(interval).neg(), datePart);
@@ -15642,6 +16591,7 @@ public class DSL {
      *
      * @see Field#sub(Field)
      */
+    @NotNull
     @Support
     public static Field<DayToSecond> timestampDiff(Timestamp timestamp1, Timestamp timestamp2) {
         return timestampDiff(Tools.field(timestamp1), Tools.field(timestamp2));
@@ -15655,6 +16605,7 @@ public class DSL {
      *
      * @see Field#sub(Field)
      */
+    @NotNull
     @Support
     public static Field<DayToSecond> timestampDiff(Field<Timestamp> timestamp1, Timestamp timestamp2) {
         return timestampDiff(nullSafe(timestamp1), Tools.field(timestamp2));
@@ -15668,6 +16619,7 @@ public class DSL {
      *
      * @see Field#sub(Field)
      */
+    @NotNull
     @Support
     public static Field<DayToSecond> timestampDiff(Timestamp timestamp1, Field<Timestamp> timestamp2) {
         return timestampDiff(Tools.field(timestamp1), nullSafe(timestamp2));
@@ -15681,6 +16633,7 @@ public class DSL {
      *
      * @see Field#sub(Field)
      */
+    @NotNull
     @Support
     public static Field<DayToSecond> timestampDiff(Field<Timestamp> timestamp1, Field<Timestamp> timestamp2) {
         return new TimestampDiff(nullSafe(timestamp1), nullSafe(timestamp2));
@@ -15694,6 +16647,7 @@ public class DSL {
      *
      * @see Field#sub(Field)
      */
+    @NotNull
     @Support
     public static Field<Integer> localDateDiff(LocalDate endDate, LocalDate startDate) {
         return localDateDiff(Tools.field(endDate), Tools.field(startDate));
@@ -15705,6 +16659,7 @@ public class DSL {
      *
      * @see Field#sub(Field)
      */
+    @NotNull
     @Support
     public static Field<Integer> localDateDiff(Field<LocalDate> endDate, LocalDate startDate) {
         return localDateDiff(nullSafe(endDate), Tools.field(startDate));
@@ -15716,6 +16671,7 @@ public class DSL {
      *
      * @see Field#sub(Field)
      */
+    @NotNull
     @Support
     public static Field<Integer> localDateDiff(LocalDate endDate, Field<LocalDate> startDate) {
         return localDateDiff(Tools.field(endDate), nullSafe(startDate));
@@ -15727,6 +16683,7 @@ public class DSL {
      *
      * @see Field#sub(Field)
      */
+    @NotNull
     @Support
     public static Field<Integer> localDateDiff(Field<LocalDate> endDate, Field<LocalDate> startDate) {
         return new DateDiff<>(null, nullSafe(startDate), nullSafe(endDate));
@@ -15740,6 +16697,7 @@ public class DSL {
      * despite there being less than 2 years between the two days. The behaviour
      * replicates that of SQL Server.
      */
+    @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<Integer> localDateDiff(DatePart part, LocalDate startDate, LocalDate endDate) {
         return localDateDiff(part, Tools.field(startDate), Tools.field(endDate));
@@ -15753,6 +16711,7 @@ public class DSL {
      * despite there being less than 2 years between the two days. The behaviour
      * replicates that of SQL Server.
      */
+    @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<Integer> localDateDiff(DatePart part, Field<LocalDate> startDate, LocalDate endDate) {
         return localDateDiff(part, nullSafe(startDate), Tools.field(endDate));
@@ -15766,6 +16725,7 @@ public class DSL {
      * despite there being less than 2 years between the two days. The behaviour
      * replicates that of SQL Server.
      */
+    @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<Integer> localDateDiff(DatePart part, LocalDate startDate, Field<LocalDate> endDate) {
         return localDateDiff(part, Tools.field(startDate), nullSafe(endDate));
@@ -15779,6 +16739,7 @@ public class DSL {
      * despite there being less than 2 years between the two days. The behaviour
      * replicates that of SQL Server.
      */
+    @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<Integer> localDateDiff(DatePart part, Field<LocalDate> startDate, Field<LocalDate> endDate) {
         return new DateDiff<>(part, nullSafe(startDate), nullSafe(endDate));
@@ -15791,6 +16752,7 @@ public class DSL {
      *
      * @see Field#add(Number)
      */
+    @NotNull
     @Support
     public static Field<LocalDate> localDateAdd(LocalDate date, Number interval) {
         return localDateAdd(Tools.field(date), Tools.field(interval));
@@ -15803,6 +16765,7 @@ public class DSL {
      *
      * @see Field#add(Field)
      */
+    @NotNull
     @Support
     public static Field<LocalDate> localDateAdd(Field<LocalDate> date, Field<? extends Number> interval) {
         return nullSafe(date).add(interval);
@@ -15813,6 +16776,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<LocalDate> localDateAdd(LocalDate date, Number interval, DatePart datePart) {
         return localDateAdd(Tools.field(date), Tools.field(interval), datePart);
@@ -15823,6 +16787,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<LocalDate> localDateAdd(LocalDate date, Field<? extends Number> interval, DatePart datePart) {
         return localDateAdd(Tools.field(date), nullSafe(interval), datePart);
@@ -15833,6 +16798,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<LocalDate> localDateAdd(Field<LocalDate> date, Number interval, DatePart datePart) {
         return localDateAdd(nullSafe(date), Tools.field(interval), datePart);
@@ -15843,6 +16809,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<LocalDate> localDateAdd(Field<LocalDate> date, Field<? extends Number> interval, DatePart datePart) {
         return new DateAdd<>(nullSafe(date), nullSafe(interval), datePart);
@@ -15855,6 +16822,7 @@ public class DSL {
      *
      * @see Field#add(Number)
      */
+    @NotNull
     @Support
     public static Field<LocalDate> localDateSub(LocalDate date, Number interval) {
         return localDateSub(Tools.field(date), Tools.field(interval));
@@ -15867,6 +16835,7 @@ public class DSL {
      *
      * @see Field#add(Field)
      */
+    @NotNull
     @Support
     public static Field<LocalDate> localDateSub(Field<LocalDate> date, Field<? extends Number> interval) {
         return nullSafe(date).sub(interval);
@@ -15877,6 +16846,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<LocalDate> localDateSub(LocalDate date, Number interval, DatePart datePart) {
         return localDateSub(Tools.field(date), Tools.field(interval), datePart);
@@ -15887,6 +16857,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<LocalDate> localDateSub(LocalDate date, Field<? extends Number> interval, DatePart datePart) {
         return localDateSub(Tools.field(date), nullSafe(interval), datePart);
@@ -15897,6 +16868,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<LocalDate> localDateSub(Field<LocalDate> date, Number interval, DatePart datePart) {
         return localDateSub(nullSafe(date), Tools.field(interval), datePart);
@@ -15907,6 +16879,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<LocalDate> localDateSub(Field<LocalDate> date, Field<? extends Number> interval, DatePart datePart) {
         return new DateAdd<>(nullSafe(date), nullSafe(interval).neg(), datePart);
@@ -15919,6 +16892,7 @@ public class DSL {
      *
      * @see Field#add(Number)
      */
+    @NotNull
     @Support
     public static Field<LocalDateTime> localDateTimeAdd(LocalDateTime timestamp, Number interval) {
         return localDateTimeAdd(Tools.field(timestamp), Tools.field(interval));
@@ -15931,6 +16905,7 @@ public class DSL {
      *
      * @see Field#add(Field)
      */
+    @NotNull
     @Support
     public static Field<LocalDateTime> localDateTimeAdd(Field<LocalDateTime> timestamp, Field<? extends Number> interval) {
         return nullSafe(timestamp).add(interval);
@@ -15941,6 +16916,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<LocalDateTime> localDateTimeAdd(LocalDateTime date, Number interval, DatePart datePart) {
         return new DateAdd<>(Tools.field(date), Tools.field(interval), datePart);
@@ -15951,6 +16927,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<LocalDateTime> localDateTimeAdd(LocalDateTime date, Field<? extends Number> interval, DatePart datePart) {
         return new DateAdd<>(Tools.field(date), nullSafe(interval), datePart);
@@ -15961,6 +16938,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<LocalDateTime> localDateTimeAdd(Field<LocalDateTime> date, Number interval, DatePart datePart) {
         return new DateAdd<>(nullSafe(date), Tools.field(interval), datePart);
@@ -15971,6 +16949,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<LocalDateTime> localDateTimeAdd(Field<LocalDateTime> date, Field<? extends Number> interval, DatePart datePart) {
         return new DateAdd<>(nullSafe(date), nullSafe(interval), datePart);
@@ -15983,6 +16962,7 @@ public class DSL {
      *
      * @see Field#sub(Number)
      */
+    @NotNull
     @Support
     public static Field<LocalDateTime> localDateTimeSub(LocalDateTime timestamp, Number interval) {
         return localDateTimeSub(Tools.field(timestamp), Tools.field(interval));
@@ -15995,6 +16975,7 @@ public class DSL {
      *
      * @see Field#sub(Field)
      */
+    @NotNull
     @Support
     public static Field<LocalDateTime> localDateTimeSub(Field<LocalDateTime> timestamp, Field<? extends Number> interval) {
         return nullSafe(timestamp).sub(interval);
@@ -16005,6 +16986,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<LocalDateTime> localDateTimeSub(LocalDateTime date, Number interval, DatePart datePart) {
         return new DateAdd<>(Tools.field(date), Tools.field(interval).neg(), datePart);
@@ -16015,6 +16997,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<LocalDateTime> localDateTimeSub(LocalDateTime date, Field<? extends Number> interval, DatePart datePart) {
         return new DateAdd<>(Tools.field(date), nullSafe(interval).neg(), datePart);
@@ -16025,6 +17008,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<LocalDateTime> localDateTimeSub(Field<LocalDateTime> date, Number interval, DatePart datePart) {
         return new DateAdd<>(nullSafe(date), Tools.field(interval).neg(), datePart);
@@ -16035,6 +17019,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<LocalDateTime> localDateTimeSub(Field<LocalDateTime> date, Field<? extends Number> interval, DatePart datePart) {
         return new DateAdd<>(nullSafe(date), nullSafe(interval).neg(), datePart);
@@ -16048,6 +17033,7 @@ public class DSL {
      *
      * @see Field#sub(Field)
      */
+    @NotNull
     @Support
     public static Field<DayToSecond> localDateTimeDiff(LocalDateTime timestamp1, LocalDateTime timestamp2) {
         return localDateTimeDiff(Tools.field(timestamp1), Tools.field(timestamp2));
@@ -16061,6 +17047,7 @@ public class DSL {
      *
      * @see Field#sub(Field)
      */
+    @NotNull
     @Support
     public static Field<DayToSecond> localDateTimeDiff(Field<LocalDateTime> timestamp1, LocalDateTime timestamp2) {
         return localDateTimeDiff(nullSafe(timestamp1), Tools.field(timestamp2));
@@ -16074,6 +17061,7 @@ public class DSL {
      *
      * @see Field#sub(Field)
      */
+    @NotNull
     @Support
     public static Field<DayToSecond> localDateTimeDiff(LocalDateTime timestamp1, Field<LocalDateTime> timestamp2) {
         return localDateTimeDiff(Tools.field(timestamp1), nullSafe(timestamp2));
@@ -16087,6 +17075,7 @@ public class DSL {
      *
      * @see Field#sub(Field)
      */
+    @NotNull
     @Support
     public static Field<DayToSecond> localDateTimeDiff(Field<LocalDateTime> timestamp1, Field<LocalDateTime> timestamp2) {
         return new TimestampDiff(nullSafe(timestamp1), nullSafe(timestamp2));
@@ -16097,6 +17086,7 @@ public class DSL {
     /**
      * Truncate a date to the beginning of the day.
      */
+    @NotNull
     @Support({ CUBRID, H2, HSQLDB, POSTGRES })
     public static Field<Date> trunc(Date date) {
         return trunc(date, DatePart.DAY);
@@ -16105,6 +17095,7 @@ public class DSL {
     /**
      * Truncate a date to a given datepart.
      */
+    @NotNull
     @Support({ CUBRID, H2, HSQLDB, POSTGRES })
     public static Field<Date> trunc(Date date, DatePart part) {
         return trunc(Tools.field(date), part);
@@ -16115,6 +17106,7 @@ public class DSL {
     /**
      * Truncate a date to the beginning of the day.
      */
+    @NotNull
     @Support({ CUBRID, H2, HSQLDB, POSTGRES })
     public static Field<LocalDate> trunc(LocalDate date) {
         return trunc(date, DatePart.DAY);
@@ -16123,6 +17115,7 @@ public class DSL {
     /**
      * Truncate a date to a given datepart.
      */
+    @NotNull
     @Support({ CUBRID, H2, HSQLDB, POSTGRES })
     public static Field<LocalDate> trunc(LocalDate date, DatePart part) {
         return trunc(Tools.field(date), part);
@@ -16133,6 +17126,7 @@ public class DSL {
     /**
      * Truncate a timestamp to the beginning of the day.
      */
+    @NotNull
     @Support({ CUBRID, H2, HSQLDB, POSTGRES })
     public static Field<Timestamp> trunc(Timestamp timestamp) {
         return trunc(timestamp, DatePart.DAY);
@@ -16141,6 +17135,7 @@ public class DSL {
     /**
      * Truncate a timestamp to a given datepart.
      */
+    @NotNull
     @Support({ CUBRID, H2, HSQLDB, POSTGRES })
     public static Field<Timestamp> trunc(Timestamp timestamp, DatePart part) {
         return trunc(Tools.field(timestamp), part);
@@ -16151,6 +17146,7 @@ public class DSL {
     /**
      * Truncate a timestamp to the beginning of the day.
      */
+    @NotNull
     @Support({ CUBRID, H2, HSQLDB, POSTGRES })
     public static Field<LocalDateTime> trunc(LocalDateTime timestamp) {
         return trunc(timestamp, DatePart.DAY);
@@ -16159,6 +17155,7 @@ public class DSL {
     /**
      * Truncate a timestamp to a given datepart.
      */
+    @NotNull
     @Support({ CUBRID, H2, HSQLDB, POSTGRES })
     public static Field<LocalDateTime> trunc(LocalDateTime timestamp, DatePart part) {
         return trunc(Tools.field(timestamp), part);
@@ -16169,6 +17166,7 @@ public class DSL {
     /**
      * Truncate a date or a timestamp to the beginning of the day.
      */
+    @NotNull
     @Support({ CUBRID, H2, HSQLDB, POSTGRES })
     public static <T> Field<T> trunc(Field<T> date) {
         return trunc(date, DatePart.DAY);
@@ -16177,6 +17175,7 @@ public class DSL {
     /**
      * Truncate a date or a timestamp to a given datepart.
      */
+    @NotNull
     @Support({ CUBRID, H2, HSQLDB, POSTGRES })
     public static <T> Field<T> trunc(Field<T> date, DatePart part) {
         return new TruncDate<>(date, part);
@@ -16187,6 +17186,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<Integer> extract(java.util.Date value, DatePart datePart) {
         return extract(Tools.field(Convert.convert(value, Timestamp.class)), datePart);
@@ -16199,6 +17199,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<Integer> extract(Temporal value, DatePart datePart) {
         return extract(Tools.field(value), datePart);
@@ -16211,6 +17212,7 @@ public class DSL {
      * <p>
      * This translates into any dialect
      */
+    @NotNull
     @Support
     public static Field<Integer> extract(Field<?> field, DatePart datePart) {
         return new Extract(nullSafe(field), datePart);
@@ -16222,6 +17224,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#EPOCH}
      */
+    @NotNull
     @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Integer> epoch(java.util.Date value) {
         return extract(value, DatePart.EPOCH);
@@ -16235,6 +17238,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#EPOCH}
      */
+    @NotNull
     @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Integer> epoch(Temporal value) {
         return extract(value, DatePart.EPOCH);
@@ -16248,6 +17252,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#EPOCH}
      */
+    @NotNull
     @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Integer> epoch(Field<?> field) {
         return extract(field, DatePart.EPOCH);
@@ -16259,6 +17264,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#MILLENNIUM}
      */
+    @NotNull
     @Support
     public static Field<Integer> millennium(java.util.Date value) {
         return extract(value, DatePart.MILLENNIUM);
@@ -16272,6 +17278,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#MILLENNIUM}
      */
+    @NotNull
     @Support
     public static Field<Integer> millennium(Temporal value) {
         return extract(value, DatePart.MILLENNIUM);
@@ -16285,6 +17292,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#MILLENNIUM}
      */
+    @NotNull
     @Support
     public static Field<Integer> millennium(Field<?> field) {
         return extract(field, DatePart.MILLENNIUM);
@@ -16296,6 +17304,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#CENTURY}
      */
+    @NotNull
     @Support
     public static Field<Integer> century(java.util.Date value) {
         return extract(value, DatePart.CENTURY);
@@ -16309,6 +17318,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#CENTURY}
      */
+    @NotNull
     @Support
     public static Field<Integer> century(Temporal value) {
         return extract(value, DatePart.CENTURY);
@@ -16322,6 +17332,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#CENTURY}
      */
+    @NotNull
     @Support
     public static Field<Integer> century(Field<?> field) {
         return extract(field, DatePart.CENTURY);
@@ -16333,6 +17344,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#DECADE}
      */
+    @NotNull
     @Support
     public static Field<Integer> decade(java.util.Date value) {
         return extract(value, DatePart.DECADE);
@@ -16346,6 +17358,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#DECADE}
      */
+    @NotNull
     @Support
     public static Field<Integer> decade(Temporal value) {
         return extract(value, DatePart.DECADE);
@@ -16359,6 +17372,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#DECADE}
      */
+    @NotNull
     @Support
     public static Field<Integer> decade(Field<?> field) {
         return extract(field, DatePart.DECADE);
@@ -16370,6 +17384,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#QUARTER}
      */
+    @NotNull
     @Support
     public static Field<Integer> quarter(java.util.Date value) {
         return extract(value, DatePart.QUARTER);
@@ -16383,6 +17398,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#QUARTER}
      */
+    @NotNull
     @Support
     public static Field<Integer> quarter(Temporal value) {
         return extract(value, DatePart.QUARTER);
@@ -16396,6 +17412,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#QUARTER}
      */
+    @NotNull
     @Support
     public static Field<Integer> quarter(Field<?> field) {
         return extract(field, DatePart.QUARTER);
@@ -16407,6 +17424,7 @@ public class DSL {
      * This is the same as calling {@link #extract(java.util.Date, DatePart)}
      * with {@link DatePart#YEAR}
      */
+    @NotNull
     @Support
     public static Field<Integer> year(java.util.Date value) {
         return extract(value, DatePart.YEAR);
@@ -16420,6 +17438,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Temporal, DatePart)}
      * with {@link DatePart#YEAR}
      */
+    @NotNull
     @Support
     public static Field<Integer> year(Temporal value) {
         return extract(value, DatePart.YEAR);
@@ -16433,6 +17452,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#YEAR}
      */
+    @NotNull
     @Support
     public static Field<Integer> year(Field<?> field) {
         return extract(field, DatePart.YEAR);
@@ -16444,6 +17464,7 @@ public class DSL {
      * This is the same as calling {@link #extract(java.util.Date, DatePart)}
      * with {@link DatePart#MONTH}
      */
+    @NotNull
     @Support
     public static Field<Integer> month(java.util.Date value) {
         return extract(value, DatePart.MONTH);
@@ -16457,6 +17478,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Temporal, DatePart)}
      * with {@link DatePart#MONTH}
      */
+    @NotNull
     @Support
     public static Field<Integer> month(Temporal value) {
         return extract(value, DatePart.MONTH);
@@ -16470,6 +17492,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#MONTH}
      */
+    @NotNull
     @Support
     public static Field<Integer> month(Field<?> field) {
         return extract(field, DatePart.MONTH);
@@ -16481,6 +17504,7 @@ public class DSL {
      * This is the same as calling {@link #extract(java.util.Date, DatePart)}
      * with {@link DatePart#WEEK}
      */
+    @NotNull
     @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<Integer> week(java.util.Date value) {
         return extract(value, DatePart.WEEK);
@@ -16494,6 +17518,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Temporal, DatePart)}
      * with {@link DatePart#WEEK}
      */
+    @NotNull
     @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<Integer> week(Temporal value) {
         return extract(value, DatePart.WEEK);
@@ -16507,6 +17532,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#WEEK}
      */
+    @NotNull
     @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<Integer> week(Field<?> field) {
         return extract(field, DatePart.WEEK);
@@ -16518,6 +17544,7 @@ public class DSL {
      * This is the same as calling {@link #extract(java.util.Date, DatePart)}
      * with {@link DatePart#DAY}
      */
+    @NotNull
     @Support
     public static Field<Integer> day(java.util.Date value) {
         return extract(value, DatePart.DAY);
@@ -16531,6 +17558,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Temporal, DatePart)}
      * with {@link DatePart#DAY}
      */
+    @NotNull
     @Support
     public static Field<Integer> day(Temporal value) {
         return extract(value, DatePart.DAY);
@@ -16544,6 +17572,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#DAY}
      */
+    @NotNull
     @Support
     public static Field<Integer> day(Field<?> field) {
         return extract(field, DatePart.DAY);
@@ -16555,6 +17584,7 @@ public class DSL {
      * This is the same as calling {@link #extract(java.util.Date, DatePart)}
      * with {@link DatePart#DAY_OF_WEEK}
      */
+    @NotNull
     @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Integer> dayOfWeek(java.util.Date value) {
         return extract(value, DatePart.DAY_OF_WEEK);
@@ -16568,6 +17598,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Temporal, DatePart)}
      * with {@link DatePart#DAY_OF_WEEK}
      */
+    @NotNull
     @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Integer> dayOfWeek(Temporal value) {
         return extract(value, DatePart.DAY_OF_WEEK);
@@ -16581,6 +17612,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#DAY_OF_WEEK}
      */
+    @NotNull
     @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Integer> dayOfWeek(Field<?> field) {
         return extract(field, DatePart.DAY_OF_WEEK);
@@ -16592,6 +17624,7 @@ public class DSL {
      * This is the same as calling {@link #extract(java.util.Date, DatePart)}
      * with {@link DatePart#ISO_DAY_OF_WEEK}
      */
+    @NotNull
     @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Integer> isoDayOfWeek(java.util.Date value) {
         return extract(value, DatePart.ISO_DAY_OF_WEEK);
@@ -16605,6 +17638,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Temporal, DatePart)}
      * with {@link DatePart#ISO_DAY_OF_WEEK}
      */
+    @NotNull
     @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Integer> isoDayOfWeek(Temporal value) {
         return extract(value, DatePart.ISO_DAY_OF_WEEK);
@@ -16618,6 +17652,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#ISO_DAY_OF_WEEK}
      */
+    @NotNull
     @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Integer> isoDayOfWeek(Field<?> field) {
         return extract(field, DatePart.ISO_DAY_OF_WEEK);
@@ -16629,6 +17664,7 @@ public class DSL {
      * This is the same as calling {@link #extract(java.util.Date, DatePart)}
      * with {@link DatePart#DAY_OF_YEAR}
      */
+    @NotNull
     @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Integer> dayOfYear(java.util.Date value) {
         return extract(value, DatePart.DAY_OF_YEAR);
@@ -16642,6 +17678,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Temporal, DatePart)}
      * with {@link DatePart#DAY_OF_YEAR}
      */
+    @NotNull
     @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Integer> dayOfYear(Temporal value) {
         return extract(value, DatePart.DAY_OF_YEAR);
@@ -16655,6 +17692,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#DAY_OF_YEAR}
      */
+    @NotNull
     @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Integer> dayOfYear(Field<?> field) {
         return extract(field, DatePart.DAY_OF_YEAR);
@@ -16666,6 +17704,7 @@ public class DSL {
      * This is the same as calling {@link #extract(java.util.Date, DatePart)}
      * with {@link DatePart#HOUR}
      */
+    @NotNull
     @Support
     public static Field<Integer> hour(java.util.Date value) {
         return extract(value, DatePart.HOUR);
@@ -16679,6 +17718,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Temporal, DatePart)}
      * with {@link DatePart#HOUR}
      */
+    @NotNull
     @Support
     public static Field<Integer> hour(Temporal value) {
         return extract(value, DatePart.HOUR);
@@ -16692,6 +17732,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#HOUR}
      */
+    @NotNull
     @Support
     public static Field<Integer> hour(Field<?> field) {
         return extract(field, DatePart.HOUR);
@@ -16703,6 +17744,7 @@ public class DSL {
      * This is the same as calling {@link #extract(java.util.Date, DatePart)}
      * with {@link DatePart#MINUTE}
      */
+    @NotNull
     @Support
     public static Field<Integer> minute(java.util.Date value) {
         return extract(value, DatePart.MINUTE);
@@ -16716,6 +17758,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Temporal, DatePart)}
      * with {@link DatePart#MINUTE}
      */
+    @NotNull
     @Support
     public static Field<Integer> minute(Temporal value) {
         return extract(value, DatePart.MINUTE);
@@ -16729,6 +17772,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#MINUTE}
      */
+    @NotNull
     @Support
     public static Field<Integer> minute(Field<?> field) {
         return extract(field, DatePart.MINUTE);
@@ -16740,6 +17784,7 @@ public class DSL {
      * This is the same as calling {@link #extract(java.util.Date, DatePart)}
      * with {@link DatePart#SECOND}
      */
+    @NotNull
     @Support
     public static Field<Integer> second(java.util.Date value) {
         return extract(value, DatePart.SECOND);
@@ -16753,6 +17798,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Temporal, DatePart)}
      * with {@link DatePart#SECOND}
      */
+    @NotNull
     @Support
     public static Field<Integer> second(Temporal value) {
         return extract(value, DatePart.SECOND);
@@ -16766,6 +17812,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#SECOND}
      */
+    @NotNull
     @Support
     public static Field<Integer> second(Field<?> field) {
         return extract(field, DatePart.SECOND);
@@ -16777,6 +17824,7 @@ public class DSL {
      * This is the same as calling {@link #extract(java.util.Date, DatePart)}
      * with {@link DatePart#MILLISECOND}
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Integer> millisecond(java.util.Date value) {
         return extract(value, DatePart.MILLISECOND);
@@ -16790,6 +17838,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Temporal, DatePart)}
      * with {@link DatePart#MILLISECOND}
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Integer> millisecond(Temporal value) {
         return extract(value, DatePart.MILLISECOND);
@@ -16803,6 +17852,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#MILLISECOND}
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Integer> millisecond(Field<?> field) {
         return extract(field, DatePart.MILLISECOND);
@@ -16814,6 +17864,7 @@ public class DSL {
      * This is the same as calling {@link #extract(java.util.Date, DatePart)}
      * with {@link DatePart#MICROSECOND}
      */
+    @NotNull
     @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<Integer> microsecond(java.util.Date value) {
         return extract(value, DatePart.MICROSECOND);
@@ -16827,6 +17878,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Temporal, DatePart)}
      * with {@link DatePart#MICROSECOND}
      */
+    @NotNull
     @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<Integer> microsecond(Temporal value) {
         return extract(value, DatePart.MICROSECOND);
@@ -16840,6 +17892,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#MICROSECOND}
      */
+    @NotNull
     @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<Integer> microsecond(Field<?> field) {
         return extract(field, DatePart.MICROSECOND);
@@ -16851,6 +17904,7 @@ public class DSL {
      * This is the same as calling {@link #extract(java.util.Date, DatePart)}
      * with {@link DatePart#TIMEZONE}
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Integer> timezone(java.util.Date value) {
         return extract(value, DatePart.TIMEZONE);
@@ -16864,6 +17918,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Temporal, DatePart)}
      * with {@link DatePart#TIMEZONE}
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Integer> timezone(Temporal value) {
         return extract(value, DatePart.TIMEZONE);
@@ -16877,6 +17932,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#TIMEZONE}
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Integer> timezone(Field<?> field) {
         return extract(field, DatePart.TIMEZONE);
@@ -16888,6 +17944,7 @@ public class DSL {
      * This is the same as calling {@link #extract(java.util.Date, DatePart)}
      * with {@link DatePart#TIMEZONE_HOUR}
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Integer> timezoneHour(java.util.Date value) {
         return extract(value, DatePart.TIMEZONE_HOUR);
@@ -16901,6 +17958,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Temporal, DatePart)}
      * with {@link DatePart#TIMEZONE_HOUR}
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Integer> timezoneHour(Temporal value) {
         return extract(value, DatePart.TIMEZONE_HOUR);
@@ -16914,6 +17972,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#TIMEZONE_HOUR}
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Integer> timezoneHour(Field<?> field) {
         return extract(field, DatePart.TIMEZONE_HOUR);
@@ -16925,6 +17984,7 @@ public class DSL {
      * This is the same as calling {@link #extract(java.util.Date, DatePart)}
      * with {@link DatePart#TIMEZONE_MINUTE}
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Integer> timezoneMinute(java.util.Date value) {
         return extract(value, DatePart.TIMEZONE_MINUTE);
@@ -16938,6 +17998,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Temporal, DatePart)}
      * with {@link DatePart#TIMEZONE_MINUTE}
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Integer> timezoneMinute(Temporal value) {
         return extract(value, DatePart.TIMEZONE_MINUTE);
@@ -16951,6 +18012,7 @@ public class DSL {
      * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#TIMEZONE_MINUTE}
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Integer> timezoneMinute(Field<?> field) {
         return extract(field, DatePart.TIMEZONE_MINUTE);
@@ -16959,6 +18021,7 @@ public class DSL {
     /**
      * Convert a string value to a <code>DATE</code>.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Date> date(String value) {
         return Tools.field(Convert.convert(value, Date.class));
@@ -16967,6 +18030,7 @@ public class DSL {
     /**
      * Convert a temporal value to a <code>DATE</code>.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Date> date(java.util.Date value) {
         return Tools.field(Convert.convert(value, Date.class));
@@ -16975,6 +18039,7 @@ public class DSL {
     /**
      * Convert a temporal value to a <code>DATE</code>.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Date> date(Field<? extends java.util.Date> field) {
         return new DateOrTime<>(field, SQLDataType.DATE);
@@ -16983,6 +18048,7 @@ public class DSL {
     /**
      * Convert a string value to a <code>TIME</code>.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Time> time(String value) {
         return Tools.field(Convert.convert(value, Time.class));
@@ -16991,6 +18057,7 @@ public class DSL {
     /**
      * Convert a temporal value to a <code>TIME</code>.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Time> time(java.util.Date value) {
         return Tools.field(Convert.convert(value, Time.class));
@@ -16999,6 +18066,7 @@ public class DSL {
     /**
      * Convert a temporal value to a <code>TIME</code>.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Time> time(Field<? extends java.util.Date> field) {
         return new DateOrTime<>(field, SQLDataType.TIME);
@@ -17007,6 +18075,7 @@ public class DSL {
     /**
      * Convert a string value to a <code>TIMESTAMP</code>.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Timestamp> timestamp(String value) {
         return Tools.field(Convert.convert(value, Timestamp.class));
@@ -17015,6 +18084,7 @@ public class DSL {
     /**
      * Convert a temporal value to a <code>TIMESTAMP</code>.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Timestamp> timestamp(java.util.Date value) {
         return Tools.field(Convert.convert(value, Timestamp.class));
@@ -17023,6 +18093,7 @@ public class DSL {
     /**
      * Convert a temporal value to a <code>TIMESTAMP</code>.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Timestamp> timestamp(Field<? extends java.util.Date> field) {
         return new DateOrTime<>(field, SQLDataType.TIMESTAMP);
@@ -17032,6 +18103,7 @@ public class DSL {
     /**
      * Convert a string value to a <code>DATE</code>.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<LocalDate> localDate(String value) {
         return Tools.field(Convert.convert(value, LocalDate.class));
@@ -17040,6 +18112,7 @@ public class DSL {
     /**
      * Convert a temporal value to a <code>DATE</code>.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<LocalDate> localDate(LocalDate value) {
         return Tools.field(value);
@@ -17048,6 +18121,7 @@ public class DSL {
     /**
      * Convert a temporal value to a <code>DATE</code>.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<LocalDate> localDate(Field<LocalDate> field) {
         return new DateOrTime<>(field, SQLDataType.LOCALDATE);
@@ -17056,6 +18130,7 @@ public class DSL {
     /**
      * Convert a string value to a <code>TIME</code>.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<LocalTime> localTime(String value) {
         return Tools.field(Convert.convert(value, LocalTime.class));
@@ -17064,6 +18139,7 @@ public class DSL {
     /**
      * Convert a temporal value to a <code>TIME</code>.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<LocalTime> localTime(LocalTime value) {
         return Tools.field(value);
@@ -17072,6 +18148,7 @@ public class DSL {
     /**
      * Convert a temporal value to a <code>TIME</code>.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<LocalTime> localTime(Field<LocalTime> field) {
         return new DateOrTime<>(field, SQLDataType.LOCALTIME);
@@ -17080,6 +18157,7 @@ public class DSL {
     /**
      * Convert a string value to a <code>TIMESTAMP</code>.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<LocalDateTime> localDateTime(String value) {
         return Tools.field(Convert.convert(value, LocalDateTime.class));
@@ -17088,6 +18166,7 @@ public class DSL {
     /**
      * Convert a temporal value to a <code>TIMESTAMP</code>.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<LocalDateTime> localDateTime(LocalDateTime value) {
         return Tools.field(value);
@@ -17096,6 +18175,7 @@ public class DSL {
     /**
      * Convert a temporal value to a <code>TIMESTAMP</code>.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<LocalDateTime> localDateTime(Field<LocalDateTime> field) {
         return new DateOrTime<>(field, SQLDataType.LOCALDATETIME);
@@ -17110,6 +18190,7 @@ public class DSL {
      * UTC. Regardless of this fact, the result should be the same
      * {@link Instant} (in UTC) as the input.
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES, SQLITE })
     public static Field<OffsetTime> offsetTime(String value) {
         return Tools.field(Convert.convert(value, OffsetTime.class));
@@ -17124,6 +18205,7 @@ public class DSL {
      * UTC. Regardless of this fact, the result should be the same
      * {@link Instant} (in UTC) as the input.
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES, SQLITE })
     public static Field<OffsetTime> offsetTime(OffsetTime value) {
         return Tools.field(value);
@@ -17138,6 +18220,7 @@ public class DSL {
      * UTC. Regardless of this fact, the result should be the same
      * {@link Instant} (in UTC) as the input.
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES, SQLITE })
     public static Field<OffsetTime> offsetTime(Field<OffsetTime> field) {
         return new DateOrTime<>(field, SQLDataType.OFFSETTIME);
@@ -17152,6 +18235,7 @@ public class DSL {
      * UTC. Regardless of this fact, the result should be the same
      * {@link Instant} (in UTC) as the input.
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES, SQLITE })
     public static Field<OffsetDateTime> offsetDateTime(String value) {
         return Tools.field(Convert.convert(value, OffsetDateTime.class));
@@ -17166,6 +18250,7 @@ public class DSL {
      * UTC. Regardless of this fact, the result should be the same
      * {@link Instant} (in UTC) as the input.
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES, SQLITE })
     public static Field<OffsetDateTime> offsetDateTime(OffsetDateTime value) {
         return Tools.field(value);
@@ -17180,6 +18265,7 @@ public class DSL {
      * UTC. Regardless of this fact, the result should be the same
      * {@link Instant} (in UTC) as the input.
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES, SQLITE })
     public static Field<OffsetDateTime> offsetDateTime(Field<OffsetDateTime> field) {
         return new DateOrTime<>(field, SQLDataType.OFFSETDATETIME);
@@ -17194,6 +18280,7 @@ public class DSL {
      * UTC. Regardless of this fact, the result should be the same
      * {@link Instant} (in UTC) as the input.
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES, SQLITE })
     public static Field<Instant> instant(String value) {
         return Tools.field(Convert.convert(value, Instant.class));
@@ -17208,6 +18295,7 @@ public class DSL {
      * UTC. Regardless of this fact, the result should be the same
      * {@link Instant} (in UTC) as the input.
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES, SQLITE })
     public static Field<Instant> instant(Instant value) {
         return Tools.field(value);
@@ -17222,6 +18310,7 @@ public class DSL {
      * UTC. Regardless of this fact, the result should be the same
      * {@link Instant} (in UTC) as the input.
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES, SQLITE })
     public static Field<Instant> instant(Field<Instant> field) {
         return new DateOrTime<>(field, SQLDataType.INSTANT);
@@ -17234,6 +18323,7 @@ public class DSL {
      * @param value The formatted <code>DATE</code> value.
      * @param format The vendor-specific formatting string.
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Date> toDate(String value, String format) {
         return toDate(Tools.field(value), Tools.field(format));
@@ -17245,6 +18335,7 @@ public class DSL {
      * @param value The formatted <code>DATE</code> value.
      * @param format The vendor-specific formatting string.
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Date> toDate(String value, Field<String> format) {
         return toDate(Tools.field(value), nullSafe(format));
@@ -17256,6 +18347,7 @@ public class DSL {
      * @param value The formatted <code>DATE</code> value.
      * @param format The vendor-specific formatting string.
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Date> toDate(Field<String> value, String format) {
         return toDate(nullSafe(value), Tools.field(format));
@@ -17267,6 +18359,7 @@ public class DSL {
      * @param value The formatted <code>DATE</code> value.
      * @param format The vendor-specific formatting string.
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Date> toDate(Field<String> value, Field<String> format) {
         return function("to_date", SQLDataType.DATE, value, format);
@@ -17278,6 +18371,7 @@ public class DSL {
      * @param value The formatted <code>TIMESTAMP</code> value.
      * @param format The vendor-specific formatting string.
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Timestamp> toTimestamp(String value, String format) {
         return toTimestamp(Tools.field(value), Tools.field(format));
@@ -17289,6 +18383,7 @@ public class DSL {
      * @param value The formatted <code>TIMESTAMP</code> value.
      * @param format The vendor-specific formatting string.
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Timestamp> toTimestamp(String value, Field<String> format) {
         return toTimestamp(Tools.field(value), nullSafe(format));
@@ -17300,6 +18395,7 @@ public class DSL {
      * @param value The formatted <code>TIMESTAMP</code> value.
      * @param format The vendor-specific formatting string.
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Timestamp> toTimestamp(Field<String> value, String format) {
         return toTimestamp(nullSafe(value), Tools.field(format));
@@ -17311,6 +18407,7 @@ public class DSL {
      * @param value The formatted <code>TIMESTAMP</code> value.
      * @param format The vendor-specific formatting string.
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
     public static Field<Timestamp> toTimestamp(Field<String> value, Field<String> format) {
         return function("to_timestamp", SQLDataType.TIMESTAMP, value, format);
@@ -17324,6 +18421,7 @@ public class DSL {
      * @param value The formatted <code>DATE</code> value.
      * @param format The vendor-specific formatting string.
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
     public static Field<LocalDate> toLocalDate(String value, String format) {
         return toDate(value, format).coerce(SQLDataType.LOCALDATE);
@@ -17335,6 +18433,7 @@ public class DSL {
      * @param value The formatted <code>DATE</code> value.
      * @param format The vendor-specific formatting string.
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
     public static Field<LocalDate> toLocalDate(String value, Field<String> format) {
         return toDate(value, format).coerce(SQLDataType.LOCALDATE);
@@ -17346,6 +18445,7 @@ public class DSL {
      * @param value The formatted <code>DATE</code> value.
      * @param format The vendor-specific formatting string.
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
     public static Field<LocalDate> toLocalDate(Field<String> value, String format) {
         return toDate(value, format).coerce(SQLDataType.LOCALDATE);
@@ -17357,6 +18457,7 @@ public class DSL {
      * @param value The formatted <code>DATE</code> value.
      * @param format The vendor-specific formatting string.
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
     public static Field<LocalDate> toLocalDate(Field<String> value, Field<String> format) {
         return toDate(value, format).coerce(SQLDataType.LOCALDATE);
@@ -17368,6 +18469,7 @@ public class DSL {
      * @param value The formatted <code>TIMESTAMP</code> value.
      * @param format The vendor-specific formatting string.
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
     public static Field<LocalDateTime> toLocalDateTime(String value, String format) {
         return toTimestamp(value, format).coerce(SQLDataType.LOCALDATETIME);
@@ -17379,6 +18481,7 @@ public class DSL {
      * @param value The formatted <code>TIMESTAMP</code> value.
      * @param format The vendor-specific formatting string.
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
     public static Field<LocalDateTime> toLocalDateTime(String value, Field<String> format) {
         return toTimestamp(value, format).coerce(SQLDataType.LOCALDATETIME);
@@ -17390,6 +18493,7 @@ public class DSL {
      * @param value The formatted <code>TIMESTAMP</code> value.
      * @param format The vendor-specific formatting string.
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
     public static Field<LocalDateTime> toLocalDateTime(Field<String> value, String format) {
         return toTimestamp(value, format).coerce(SQLDataType.LOCALDATETIME);
@@ -17401,6 +18505,7 @@ public class DSL {
      * @param value The formatted <code>TIMESTAMP</code> value.
      * @param format The vendor-specific formatting string.
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
     public static Field<LocalDateTime> toLocalDateTime(Field<String> value, Field<String> format) {
         return toTimestamp(value, format).coerce(SQLDataType.LOCALDATETIME);
@@ -17417,6 +18522,7 @@ public class DSL {
      *
      * @see #rollup(FieldOrRow...)
      */
+    @NotNull
     @Support({ CUBRID, MARIADB, MYSQL, POSTGRES })
     public static GroupField rollup(Field<?>... fields) {
         return rollup((FieldOrRow[]) nullSafe(fields));
@@ -17445,6 +18551,7 @@ public class DSL {
      *            function
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
+    @NotNull
     @Support({ CUBRID, MARIADB, MYSQL, POSTGRES })
     public static GroupField rollup(FieldOrRow... fields) {
         return new Rollup(fields);
@@ -17455,6 +18562,7 @@ public class DSL {
      *
      * @see #cube(Field...)
      */
+    @NotNull
     @Support({ POSTGRES })
     public static GroupField cube(Field<?>... fields) {
         return cube((FieldOrRow[]) nullSafe(fields));
@@ -17482,6 +18590,7 @@ public class DSL {
      *            function
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
+    @NotNull
     @Support({ POSTGRES })
     public static GroupField cube(FieldOrRow... fields) {
         return field("{0} ({1})", Object.class, K_CUBE, new QueryPartList<>(fields));
@@ -17510,6 +18619,7 @@ public class DSL {
      *            function
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
+    @NotNull
     @Support({ POSTGRES })
     public static GroupField groupingSets(Field<?>... fields) {
         List<Field<?>>[] array = new List[fields.length];
@@ -17543,6 +18653,7 @@ public class DSL {
      *            function
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
+    @NotNull
     @Support({ POSTGRES })
     public static GroupField groupingSets(Field<?>[]... fieldSets) {
         List<Field<?>>[] array = new List[fieldSets.length];
@@ -17576,6 +18687,7 @@ public class DSL {
      *            function
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
+    @NotNull
     @Support({ POSTGRES })
     public static GroupField groupingSets(Collection<? extends Field<?>>... fieldSets) {
         QueryPartList<WrappedList> arg = new QueryPartList<>();
@@ -17585,6 +18697,8 @@ public class DSL {
 
         return field("{0} ({1})", SQLDataType.OTHER, K_GROUPING_SETS, arg);
     }
+
+
 
 
 
@@ -17645,6 +18759,7 @@ public class DSL {
      * @see #cube(Field...)
      * @see #rollup(Field...)
      */
+    @NotNull
     @Support({ POSTGRES })
     public static Field<Integer> grouping(Field<?> field) {
         return function("grouping", Integer.class, field);
@@ -17660,6 +18775,7 @@ public class DSL {
      *
      * @see #bitCount(Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Integer> bitCount(Number value) {
         return bitCount(Tools.field(value));
@@ -17682,6 +18798,7 @@ public class DSL {
      * <p>
      * More efficient algorithms are very welcome
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Integer> bitCount(Field<? extends Number> field) {
         return new BitCount(nullSafe(field));
@@ -17692,6 +18809,7 @@ public class DSL {
      *
      * @see #bitNot(Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitNot(T value) {
         return bitNot(Tools.field(value));
@@ -17703,6 +18821,7 @@ public class DSL {
      * Most dialects natively support this using <code>~[field]</code>. jOOQ
      * emulates this operator in some dialects using <code>-[field] - 1</code>
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitNot(Field<T> field) {
         return new Neg<>(nullSafe(field), ExpressionOperator.BIT_NOT);
@@ -17713,6 +18832,7 @@ public class DSL {
      *
      * @see #bitAnd(Field, Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitAnd(T value1, T value2) {
         return bitAnd(Tools.field(value1), Tools.field(value2));
@@ -17723,6 +18843,7 @@ public class DSL {
      *
      * @see #bitAnd(Field, Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitAnd(T value1, Field<T> value2) {
         return bitAnd(Tools.field(value1, value2), nullSafe(value2));
@@ -17733,6 +18854,7 @@ public class DSL {
      *
      * @see #bitAnd(Field, Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitAnd(Field<T> value1, T value2) {
         return bitAnd(nullSafe(value1), Tools.field(value2, value1));
@@ -17748,6 +18870,7 @@ public class DSL {
      * ... or the and function elsewhere:
      * <code><pre>bitand([field1], [field2])</pre></code>
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitAnd(Field<T> field1, Field<T> field2) {
         return new Expression<>(ExpressionOperator.BIT_AND, nullSafe(field1), nullSafe(field2));
@@ -17759,6 +18882,7 @@ public class DSL {
      * @see #bitNand(Field, Field)
      * @see #bitNot(Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitNand(T value1, T value2) {
         return bitNand(Tools.field(value1), Tools.field(value2));
@@ -17770,6 +18894,7 @@ public class DSL {
      * @see #bitNand(Field, Field)
      * @see #bitNot(Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitNand(T value1, Field<T> value2) {
         return bitNand(Tools.field(value1, value2), nullSafe(value2));
@@ -17781,6 +18906,7 @@ public class DSL {
      * @see #bitNand(Field, Field)
      * @see #bitNot(Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitNand(Field<T> value1, T value2) {
         return bitNand(nullSafe(value1), Tools.field(value2, value1));
@@ -17798,6 +18924,7 @@ public class DSL {
      *
      * @see #bitNot(Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitNand(Field<T> field1, Field<T> field2) {
         return new Expression<>(ExpressionOperator.BIT_NAND, nullSafe(field1), nullSafe(field2));
@@ -17808,6 +18935,7 @@ public class DSL {
      *
      * @see #bitOr(Field, Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitOr(T value1, T value2) {
         return bitOr(Tools.field(value1), Tools.field(value2));
@@ -17818,6 +18946,7 @@ public class DSL {
      *
      * @see #bitOr(Field, Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitOr(T value1, Field<T> value2) {
         return bitOr(Tools.field(value1, value2), nullSafe(value2));
@@ -17828,6 +18957,7 @@ public class DSL {
      *
      * @see #bitOr(Field, Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitOr(Field<T> value1, T value2) {
         return bitOr(nullSafe(value1), Tools.field(value2, value1));
@@ -17843,6 +18973,7 @@ public class DSL {
      * ... or the or function elsewhere:
      * <code><pre>bitor([field1], [field2])</pre></code>
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitOr(Field<T> field1, Field<T> field2) {
         return new Expression<>(ExpressionOperator.BIT_OR, nullSafe(field1), nullSafe(field2));
@@ -17854,6 +18985,7 @@ public class DSL {
      * @see #bitNor(Field, Field)
      * @see #bitNot(Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitNor(T value1, T value2) {
         return bitNor(Tools.field(value1), Tools.field(value2));
@@ -17864,6 +18996,7 @@ public class DSL {
      * @see #bitNor(Field, Field)
      * @see #bitNot(Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitNor(T value1, Field<T> value2) {
         return bitNor(Tools.field(value1, value2), nullSafe(value2));
@@ -17874,6 +19007,7 @@ public class DSL {
      * @see #bitNor(Field, Field)
      * @see #bitNot(Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitNor(Field<T> value1, T value2) {
         return bitNor(nullSafe(value1), Tools.field(value2, value1));
@@ -17891,6 +19025,7 @@ public class DSL {
      *
      * @see #bitNot(Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitNor(Field<T> field1, Field<T> field2) {
         return new Expression<>(ExpressionOperator.BIT_NOR, nullSafe(field1), nullSafe(field2));
@@ -17901,6 +19036,7 @@ public class DSL {
      *
      * @see #bitXor(Field, Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitXor(T value1, T value2) {
         return bitXor(Tools.field(value1), Tools.field(value2));
@@ -17911,6 +19047,7 @@ public class DSL {
      *
      * @see #bitXor(Field, Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitXor(T value1, Field<T> value2) {
         return bitXor(Tools.field(value1, value2), nullSafe(value2));
@@ -17921,6 +19058,7 @@ public class DSL {
      *
      * @see #bitXor(Field, Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitXor(Field<T> value1, T value2) {
         return bitXor(nullSafe(value1), Tools.field(value2, value1));
@@ -17936,6 +19074,7 @@ public class DSL {
      * ... or the xor function elsewhere:
      * <code><pre>bitxor([field1], [field2])</pre></code>
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitXor(Field<T> field1, Field<T> field2) {
         return new Expression<>(ExpressionOperator.BIT_XOR, nullSafe(field1), nullSafe(field2));
@@ -17947,6 +19086,7 @@ public class DSL {
      * @see #bitXNor(Field, Field)
      * @see #bitNot(Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitXNor(T value1, T value2) {
         return bitXNor(Tools.field(value1), Tools.field(value2));
@@ -17958,6 +19098,7 @@ public class DSL {
      * @see #bitXNor(Field, Field)
      * @see #bitNot(Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitXNor(T value1, Field<T> value2) {
         return bitXNor(Tools.field(value1, value2), nullSafe(value2));
@@ -17969,6 +19110,7 @@ public class DSL {
      * @see #bitXNor(Field, Field)
      * @see #bitNot(Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitXNor(Field<T> value1, T value2) {
         return bitXNor(nullSafe(value1), Tools.field(value2, value1));
@@ -17984,6 +19126,7 @@ public class DSL {
      * ... or the not xor function elsewhere:
      * <code><pre>bitnot(bitxor([field1], [field2]))</pre></code>
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> bitXNor(Field<T> field1, Field<T> field2) {
         return new Expression<>(ExpressionOperator.BIT_XNOR, nullSafe(field1), nullSafe(field2));
@@ -17995,6 +19138,7 @@ public class DSL {
      * @see #shl(Field, Field)
      * @see #power(Field, Number)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> shl(T value1, Number value2) {
         return shl(Tools.field(value1), Tools.field(value2));
@@ -18006,6 +19150,7 @@ public class DSL {
      * @see #shl(Field, Field)
      * @see #power(Field, Number)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> shl(T value1, Field<? extends Number> value2) {
         return shl(Tools.field(value1), nullSafe(value2));
@@ -18017,6 +19162,7 @@ public class DSL {
      * @see #shl(Field, Field)
      * @see #power(Field, Number)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> shl(Field<T> value1, Number value2) {
         return shl(nullSafe(value1), Tools.field(value2));
@@ -18031,6 +19177,7 @@ public class DSL {
      *
      * @see #power(Field, Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> shl(Field<T> field1, Field<? extends Number> field2) {
         return new Expression<>(ExpressionOperator.SHL, nullSafe(field1), nullSafe(field2));
@@ -18042,6 +19189,7 @@ public class DSL {
      * @see #shr(Field, Field)
      * @see #power(Field, Number)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> shr(T value1, Number value2) {
         return shr(Tools.field(value1), Tools.field(value2));
@@ -18053,6 +19201,7 @@ public class DSL {
      * @see #shr(Field, Field)
      * @see #power(Field, Number)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> shr(T value1, Field<? extends Number> value2) {
         return shr(Tools.field(value1), nullSafe(value2));
@@ -18064,6 +19213,7 @@ public class DSL {
      * @see #shr(Field, Field)
      * @see #power(Field, Number)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> shr(Field<T> value1, Number value2) {
         return shr(nullSafe(value1), Tools.field(value2));
@@ -18078,6 +19228,7 @@ public class DSL {
      *
      * @see #power(Field, Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T extends Number> Field<T> shr(Field<T> field1, Field<? extends Number> field2) {
         return new Expression<>(ExpressionOperator.SHR, nullSafe(field1), nullSafe(field2));
@@ -18090,6 +19241,7 @@ public class DSL {
     /**
      * Get the rand() function.
      */
+    @NotNull
     @Support
     public static Field<BigDecimal> rand() {
         return new Rand();
@@ -18106,6 +19258,7 @@ public class DSL {
      *
      * @see #greatest(Field, Field...)
      */
+    @NotNull
     @Support
     public static <T> Field<T> greatest(T value, T... values) {
         return greatest(Tools.field(value), Tools.fieldsArray(values));
@@ -18120,6 +19273,7 @@ public class DSL {
      * <code>n &gt; 5</code>! Better implementation suggestions are very
      * welcome.
      */
+    @NotNull
     @Support
     public static <T> Field<T> greatest(Field<T> field, Field<?>... others) {
         return new Greatest<>(nullSafeDataType(field), nullSafe(combine(field, others)));
@@ -18136,6 +19290,7 @@ public class DSL {
      *
      * @see #least(Field, Field...)
      */
+    @NotNull
     @Support
     public static <T> Field<T> least(T value, T... values) {
         return least(Tools.field(value), Tools.fieldsArray(values));
@@ -18150,6 +19305,7 @@ public class DSL {
      * <code>n &gt; 5</code>! Better implementation suggestions are very
      * welcome.
      */
+    @NotNull
     @Support
     public static <T> Field<T> least(Field<T> field, Field<?>... others) {
         return new Least<>(nullSafeDataType(field), nullSafe(combine(field, others)));
@@ -18159,6 +19315,7 @@ public class DSL {
      * Get the <code>WIDTH_BUCKET</code> function which divides a range (low,
      * high) in buckets of equal size.
      */
+    @NotNull
     @Support
     public static <T extends Number> Field<T> widthBucket(Field<T> field, T low, T high, int buckets) {
         return widthBucket(field, Tools.field(low, field), Tools.field(high, field), Tools.field(buckets));
@@ -18168,6 +19325,7 @@ public class DSL {
      * Get the <code>WIDTH_BUCKET</code> function which divides a range (low,
      * high) in buckets of equal size.
      */
+    @NotNull
     @Support
     public static <T extends Number> Field<T> widthBucket(Field<T> field, Field<T> low, Field<T> high, Field<Integer> buckets) {
         return new WidthBucket<>(field, low, high, buckets);
@@ -18178,6 +19336,7 @@ public class DSL {
      *
      * @see Field#neg()
      */
+    @NotNull
     @Support
     public static <T extends Number> Field<T> neg(Field<T> field) {
         return field.neg();
@@ -18188,6 +19347,7 @@ public class DSL {
      *
      * @see Field#neg()
      */
+    @NotNull
     @Support
     public static <T extends Number> Field<T> minus(Field<T> field) {
         return field.neg();
@@ -18198,6 +19358,7 @@ public class DSL {
      *
      * @see #sign(Field)
      */
+    @NotNull
     @Support
     public static Field<Integer> sign(Number value) {
         return sign(Tools.field(value));
@@ -18215,6 +19376,7 @@ public class DSL {
      *      ELSE 0
      * END
      */
+    @NotNull
     @Support
     public static Field<Integer> sign(Field<? extends Number> field) {
         return new Sign(nullSafe(field));
@@ -18225,6 +19387,7 @@ public class DSL {
      *
      * @see #abs(Field)
      */
+    @NotNull
     @Support
     public static <T extends Number> Field<T> abs(T value) {
         return abs(Tools.field(value));
@@ -18236,6 +19399,7 @@ public class DSL {
      * This renders the same on all dialects:
      * <code><pre>abs([field])</pre></code>
      */
+    @NotNull
     @Support
     public static <T extends Number> Field<T> abs(Field<T> field) {
         return function("abs", nullSafeDataType(field), field);
@@ -18246,6 +19410,7 @@ public class DSL {
      *
      * @see #round(Field)
      */
+    @NotNull
     @Support
     public static <T extends Number> Field<T> round(T value) {
         return round(Tools.field(value));
@@ -18259,6 +19424,7 @@ public class DSL {
      * round([field], 0)</pre></code>
      * ... or emulates it elsewhere using floor and ceil
      */
+    @NotNull
     @Support
     public static <T extends Number> Field<T> round(Field<T> field) {
         return new Round<>(nullSafe(field));
@@ -18269,6 +19435,7 @@ public class DSL {
      *
      * @see #round(Field, int)
      */
+    @NotNull
     @Support
     public static <T extends Number> Field<T> round(T value, int decimals) {
         return round(Tools.field(value), decimals);
@@ -18281,6 +19448,7 @@ public class DSL {
      * <code><pre>round([field], [decimals])</pre></code>
      * ... or emulates it elsewhere using floor and ceil
      */
+    @NotNull
     @Support
     public static <T extends Number> Field<T> round(Field<T> field, int decimals) {
         return new Round<>(nullSafe(field), Tools.field(decimals));
@@ -18293,6 +19461,7 @@ public class DSL {
      * <code><pre>round([field], [decimals])</pre></code>
      * ... or emulates it elsewhere using floor and ceil
      */
+    @NotNull
     @Support
     public static <T extends Number> Field<T> round(Field<T> field, Field<Integer> decimals) {
         return new Round<>(nullSafe(field), decimals);
@@ -18303,6 +19472,7 @@ public class DSL {
      *
      * @see #floor(Field)
      */
+    @NotNull
     @Support
     public static <T extends Number> Field<T> floor(T value) {
         return floor(Tools.field(value));
@@ -18316,6 +19486,7 @@ public class DSL {
      * ... or emulates it elsewhere using round:
      * <code><pre>round([this] - 0.499999999999999)</pre></code>
      */
+    @NotNull
     @Support
     public static <T extends Number> Field<T> floor(Field<T> field) {
         return new Floor<>(nullSafe(field));
@@ -18326,6 +19497,7 @@ public class DSL {
      *
      * @see #ceil(Field)
      */
+    @NotNull
     @Support
     public static <T extends Number> Field<T> ceil(T value) {
         return ceil(Tools.field(value));
@@ -18340,6 +19512,7 @@ public class DSL {
      * ... or emulates it elsewhere using round:
      * <code><pre>round([field] + 0.499999999999999)</pre></code>
      */
+    @NotNull
     @Support
     public static <T extends Number> Field<T> ceil(Field<T> field) {
         return new Ceil<>(nullSafe(field));
@@ -18350,6 +19523,7 @@ public class DSL {
      *
      * @see #trunc(Field, Field)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <T extends Number> Field<T> trunc(T number) {
         return trunc(Tools.field(number), inline(0));
@@ -18360,6 +19534,7 @@ public class DSL {
      *
      * @see #trunc(Field, Field)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <T extends Number> Field<T> trunc(T number, int decimals) {
         return trunc(Tools.field(number), inline(decimals));
@@ -18370,6 +19545,7 @@ public class DSL {
      *
      * @see #trunc(Field, Field)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <T extends Number> Field<T> trunc(Field<T> number, int decimals) {
         return trunc(nullSafe(number), inline(decimals));
@@ -18380,6 +19556,7 @@ public class DSL {
      *
      * @see #trunc(Field, Field)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <T extends Number> Field<T> trunc(T number, Field<Integer> decimals) {
         return trunc(Tools.field(number), nullSafe(decimals));
@@ -18428,6 +19605,7 @@ public class DSL {
      *
      * @see #trunc(Field, Field)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static <T extends Number> Field<T> trunc(Field<T> number, Field<Integer> decimals) {
         return new Trunc<>(nullSafe(number), nullSafe(decimals));
@@ -18438,6 +19616,7 @@ public class DSL {
      *
      * @see #sqrt(Field)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> sqrt(Number value) {
         return sqrt(Tools.field(value));
@@ -18451,6 +19630,7 @@ public class DSL {
      * power (which in turn may also be emulated using ln and exp functions):
      * <code><pre>power([field], 0.5)</pre></code>
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> sqrt(Field<? extends Number> field) {
         return new Sqrt(nullSafe(field));
@@ -18461,6 +19641,7 @@ public class DSL {
      *
      * @see #exp(Field)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> exp(Number value) {
         return exp(Tools.field(value));
@@ -18472,6 +19653,7 @@ public class DSL {
      * This renders the same on all dialects:
      * <code><pre>exp([field])</pre></code>
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> exp(Field<? extends Number> field) {
         return new Exp(nullSafe(field));
@@ -18482,6 +19664,7 @@ public class DSL {
      *
      * @see #ln(Field)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> ln(Number value) {
         return ln(Tools.field(value));
@@ -18494,6 +19677,7 @@ public class DSL {
      * <code><pre>ln([field]) or
      * log([field])</pre></code>
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> ln(Field<? extends Number> field) {
         return new Ln(nullSafe(field));
@@ -18504,6 +19688,7 @@ public class DSL {
      *
      * @see #log(Field, int)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> log(Number value, int base) {
         return log(Tools.field(value), base);
@@ -18517,6 +19702,7 @@ public class DSL {
      * most RDBMS) using the natural logarithm:
      * <code><pre>ln([field]) / ln([base])</pre></code>
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> log(Field<? extends Number> field, int base) {
         return new Ln(nullSafe(field), Tools.field(base));
@@ -18530,6 +19716,7 @@ public class DSL {
      * most RDBMS) using the natural logarithm:
      * <code><pre>ln([field]) / ln([base])</pre></code>
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> log(Field<? extends Number> field, Field<? extends Number> base) {
         return new Ln(nullSafe(field), base);
@@ -18540,6 +19727,7 @@ public class DSL {
      *
      * @see #power(Field, Field)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> power(Number value, Number exponent) {
         return power(Tools.field(value), Tools.field(exponent));
@@ -18550,6 +19738,7 @@ public class DSL {
      *
      * @see #power(Field, Field)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> power(Field<? extends Number> field, Number exponent) {
         return power(nullSafe(field), Tools.field(exponent));
@@ -18560,6 +19749,7 @@ public class DSL {
      *
      * @see #power(Field, Field)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> power(Number value, Field<? extends Number> exponent) {
         return power(Tools.field(value), nullSafe(exponent));
@@ -18573,6 +19763,7 @@ public class DSL {
      * elsewhere using ln and exp:
      * <code><pre>exp(ln([field]) * [exponent])</pre></code>
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> power(Field<? extends Number> field, Field<? extends Number> exponent) {
         return new Power(nullSafe(field), nullSafe(exponent));
@@ -18583,6 +19774,7 @@ public class DSL {
      *
      * @see #acos(Field)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> acos(Number value) {
         return acos(Tools.field(value));
@@ -18594,6 +19786,7 @@ public class DSL {
      * This renders the acos function where available:
      * <code><pre>acos([field])</pre></code>
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> acos(Field<? extends Number> field) {
         return new Acos(nullSafe(field));
@@ -18604,6 +19797,7 @@ public class DSL {
      *
      * @see #asin(Field)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> asin(Number value) {
         return asin(Tools.field(value));
@@ -18615,6 +19809,7 @@ public class DSL {
      * This renders the asin function where available:
      * <code><pre>asin([field])</pre></code>
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> asin(Field<? extends Number> field) {
         return new Asin(nullSafe(field));
@@ -18625,6 +19820,7 @@ public class DSL {
      *
      * @see #atan(Field)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> atan(Number value) {
         return atan(Tools.field(value));
@@ -18636,6 +19832,7 @@ public class DSL {
      * This renders the atan function where available:
      * <code><pre>atan([field])</pre></code>
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> atan(Field<? extends Number> field) {
         return new Atan(nullSafe(field));
@@ -18646,6 +19843,7 @@ public class DSL {
      *
      * @see #atan2(Field, Field)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> atan2(Number x, Number y) {
         return atan2(Tools.field(x), Tools.field(y));
@@ -18656,6 +19854,7 @@ public class DSL {
      *
      * @see #atan2(Field, Field)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> atan2(Number x, Field<? extends Number> y) {
         return atan2(Tools.field(x), nullSafe(y));
@@ -18666,6 +19865,7 @@ public class DSL {
       *
      * @see #atan2(Field, Field)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> atan2(Field<? extends Number> x, Number y) {
         return atan2(nullSafe(x), Tools.field(y));
@@ -18678,6 +19878,7 @@ public class DSL {
      * <code><pre>atan2([x], [y]) or
      * atn2([x], [y])</pre></code>
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> atan2(Field<? extends Number> x, Field<? extends Number> y) {
         return new DefaultAggregateFunction<>(Term.ATAN2, SQLDataType.NUMERIC, nullSafe(x), nullSafe(y));
@@ -18688,6 +19889,7 @@ public class DSL {
      *
      * @see #cos(Field)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> cos(Number value) {
         return cos(Tools.field(value));
@@ -18699,6 +19901,7 @@ public class DSL {
      * This renders the cos function where available:
      * <code><pre>cos([field])</pre></code>
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> cos(Field<? extends Number> field) {
         return function("cos", SQLDataType.NUMERIC, field);
@@ -18709,6 +19912,7 @@ public class DSL {
      *
      * @see #sin(Field)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> sin(Number value) {
         return sin(Tools.field(value));
@@ -18720,6 +19924,7 @@ public class DSL {
      * This renders the sin function where available:
      * <code><pre>sin([field])</pre></code>
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> sin(Field<? extends Number> field) {
         return function("sin", SQLDataType.NUMERIC, field);
@@ -18730,6 +19935,7 @@ public class DSL {
      *
      * @see #tan(Field)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> tan(Number value) {
         return tan(Tools.field(value));
@@ -18741,6 +19947,7 @@ public class DSL {
      * This renders the tan function where available:
      * <code><pre>tan([field])</pre></code>
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> tan(Field<? extends Number> field) {
         return function("tan", SQLDataType.NUMERIC, field);
@@ -18751,6 +19958,7 @@ public class DSL {
      *
      * @see #cot(Field)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> cot(Number value) {
         return cot(Tools.field(value));
@@ -18763,6 +19971,7 @@ public class DSL {
      * <code><pre>cot([field])</pre></code> ... or emulates it elsewhere using
      * sin and cos: <code><pre>cos([field]) / sin([field])</pre></code>
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> cot(Field<? extends Number> field) {
         return new Cot(nullSafe(field));
@@ -18773,6 +19982,7 @@ public class DSL {
      *
      * @see #sinh(Field)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> sinh(Number value) {
         return sinh(Tools.field(value));
@@ -18785,6 +19995,7 @@ public class DSL {
      * <code><pre>sinh([field])</pre></code> ... or emulates it elsewhere using
      * exp: <code><pre>(exp([field] * 2) - 1) / (exp([field] * 2))</pre></code>
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> sinh(Field<? extends Number> field) {
         return new Sinh(nullSafe(field));
@@ -18795,6 +20006,7 @@ public class DSL {
      *
      * @see #cosh(Field)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> cosh(Number value) {
         return cosh(Tools.field(value));
@@ -18807,6 +20019,7 @@ public class DSL {
      * <code><pre>cosh([field])</pre></code> ... or emulates it elsewhere using
      * exp: <code><pre>(exp([field] * 2) + 1) / (exp([field] * 2))</pre></code>
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> cosh(Field<? extends Number> field) {
         return new Cosh(nullSafe(field));
@@ -18817,6 +20030,7 @@ public class DSL {
      *
      * @see #tanh(Field)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> tanh(Number value) {
         return tanh(Tools.field(value));
@@ -18830,6 +20044,7 @@ public class DSL {
      * exp:
      * <code><pre>(exp([field] * 2) - 1) / (exp([field] * 2) + 1)</pre></code>
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> tanh(Field<? extends Number> field) {
         return new Tanh(nullSafe(field));
@@ -18840,6 +20055,7 @@ public class DSL {
      *
      * @see #coth(Field)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> coth(Number value) {
         return coth(Tools.field(value));
@@ -18851,6 +20067,7 @@ public class DSL {
      * This is not supported by any RDBMS, but emulated using exp exp:
      * <code><pre>(exp([field] * 2) + 1) / (exp([field] * 2) - 1)</pre></code>
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static Field<BigDecimal> coth(Field<? extends Number> field) {
         field = nullSafe(field);
@@ -18862,6 +20079,7 @@ public class DSL {
      *
      * @see #deg(Field)
      */
+    @NotNull
     @Support
     public static Field<BigDecimal> deg(Number value) {
         return deg(Tools.field(value));
@@ -18874,6 +20092,7 @@ public class DSL {
      * <code><pre>degrees([field])</pre></code> ... or emulates it elsewhere:
      * <code><pre>[field] * 180 / PI</pre></code>
      */
+    @NotNull
     @Support
     public static Field<BigDecimal> deg(Field<? extends Number> field) {
         return new Degrees(nullSafe(field));
@@ -18884,6 +20103,7 @@ public class DSL {
      *
      * @see #rad(Field)
      */
+    @NotNull
     @Support
     public static Field<BigDecimal> rad(Number value) {
         return rad(Tools.field(value));
@@ -18896,10 +20116,18 @@ public class DSL {
      * <code><pre>degrees([field])</pre></code> ... or emulates it elsewhere:
      * <code><pre>[field] * PI / 180</pre></code>
      */
+    @NotNull
     @Support
     public static Field<BigDecimal> rad(Field<? extends Number> field) {
         return new Radians(nullSafe(field));
     }
+
+
+
+
+
+
+
 
 
 
@@ -18990,6 +20218,7 @@ public class DSL {
     /**
      * The XML parse function.
      */
+    @NotNull
     @Support({ POSTGRES })
     public static Field<XML> xmlparseDocument(String content) {
         return xmlparseDocument(Tools.field(content));
@@ -18998,6 +20227,7 @@ public class DSL {
     /**
      * The XML parse function.
      */
+    @NotNull
     @Support({ POSTGRES })
     public static Field<XML> xmlparseDocument(Field<String> content) {
         return new XMLParse(content, DocumentOrContent.DOCUMENT);
@@ -19006,6 +20236,7 @@ public class DSL {
     /**
      * The XML parse function.
      */
+    @NotNull
     @Support({ POSTGRES })
     public static Field<XML> xmlparseContent(String content) {
         return xmlparseContent(Tools.field(content));
@@ -19014,6 +20245,7 @@ public class DSL {
     /**
      * The XML parse function.
      */
+    @NotNull
     @Support({ POSTGRES })
     public static Field<XML> xmlparseContent(Field<String> content) {
         return new XMLParse(content, DocumentOrContent.CONTENT);
@@ -19022,6 +20254,7 @@ public class DSL {
     /**
      * The XML comment constructor.
      */
+    @NotNull
     @Support({ POSTGRES })
     public static Field<XML> xmlcomment(String comment) {
         return xmlcomment(val(comment));
@@ -19030,6 +20263,7 @@ public class DSL {
     /**
      * The XML comment constructor.
      */
+    @NotNull
     @Support({ POSTGRES })
     public static Field<XML> xmlcomment(Field<String> comment) {
         return new XMLComment(comment);
@@ -19038,6 +20272,7 @@ public class DSL {
     /**
      * The XML concat function.
      */
+    @NotNull
     @Support({ POSTGRES })
     @SafeVarargs
     public static Field<XML> xmlconcat(Field<?>... fields) {
@@ -19047,6 +20282,7 @@ public class DSL {
     /**
      * The XML concat function.
      */
+    @NotNull
     @Support({ POSTGRES })
     public static Field<XML> xmlconcat(Collection<? extends Field<?>> fields) {
         return new XMLConcat(fields);
@@ -19065,9 +20301,11 @@ public class DSL {
 
 
 
+
     /**
      * The XML element constructor.
      */
+    @NotNull
     @Support({ POSTGRES })
     public static Field<XML> xmlelement(String name, Field<?>... content) {
         return xmlelement(name(name), (XMLAttributes) null, asList(content));
@@ -19076,6 +20314,7 @@ public class DSL {
     /**
      * The XML element constructor.
      */
+    @NotNull
     @Support({ POSTGRES })
     public static Field<XML> xmlelement(String name, Collection<? extends Field<?>> content) {
         return xmlelement(name(name), (XMLAttributes) null, content);
@@ -19084,6 +20323,7 @@ public class DSL {
     /**
      * The XML element constructor.
      */
+    @NotNull
     @Support({ POSTGRES })
     public static Field<XML> xmlelement(Name name, Field<?>... content) {
         return xmlelement(name, (XMLAttributes) null, asList(content));
@@ -19092,6 +20332,7 @@ public class DSL {
     /**
      * The XML element constructor.
      */
+    @NotNull
     @Support({ POSTGRES })
     public static Field<XML> xmlelement(Name name, Collection<? extends Field<?>> content) {
         return xmlelement(name, (XMLAttributes) null, content);
@@ -19100,6 +20341,7 @@ public class DSL {
     /**
      * The XML element constructor.
      */
+    @NotNull
     @Support({ POSTGRES })
     public static Field<XML> xmlelement(String name, XMLAttributes attributes, Field<?>... content) {
         return xmlelement(name(name), attributes, asList(content));
@@ -19108,6 +20350,7 @@ public class DSL {
     /**
      * The XML element constructor.
      */
+    @NotNull
     @Support({ POSTGRES })
     public static Field<XML> xmlelement(String name, XMLAttributes attributes, Collection<? extends Field<?>> content) {
         return xmlelement(name(name), attributes, content);
@@ -19116,6 +20359,7 @@ public class DSL {
     /**
      * The XML element constructor.
      */
+    @NotNull
     @Support({ POSTGRES })
     public static Field<XML> xmlelement(Name name, XMLAttributes attributes, Field<?>... content) {
         return xmlelement(name, attributes, asList(content));
@@ -19124,6 +20368,7 @@ public class DSL {
     /**
      * The XML element constructor.
      */
+    @NotNull
     @Support({ POSTGRES })
     public static Field<XML> xmlelement(Name name, XMLAttributes attributes, Collection<? extends Field<?>> content) {
         return new XMLElement(name, attributes, content);
@@ -19132,6 +20377,7 @@ public class DSL {
     /**
      * The XML attributes constructor.
      */
+    @NotNull
     @Support({ POSTGRES })
     public static XMLAttributes xmlattributes(Field<?>... attributes) {
         return xmlattributes(asList(attributes));
@@ -19140,6 +20386,7 @@ public class DSL {
     /**
      * The XML attributes constructor.
      */
+    @NotNull
     @Support({ POSTGRES })
     public static XMLAttributes xmlattributes(Collection<? extends Field<?>> attributes) {
         return new XMLAttributesImpl(attributes);
@@ -19148,6 +20395,7 @@ public class DSL {
     /**
      * The XML processing instruction constructor.
      */
+    @NotNull
     @Support({ POSTGRES })
     public static Field<XML> xmlpi(String target) {
         return xmlpi(name(target), null);
@@ -19156,6 +20404,7 @@ public class DSL {
     /**
      * The XML processing instruction constructor.
      */
+    @NotNull
     @Support({ POSTGRES })
     public static Field<XML> xmlpi(Name target) {
         return xmlpi(target, null);
@@ -19164,6 +20413,7 @@ public class DSL {
     /**
      * The XML processing instruction constructor.
      */
+    @NotNull
     @Support({ POSTGRES })
     public static Field<XML> xmlpi(String target, Field<?> content) {
         return xmlpi(name(target), content);
@@ -19172,6 +20422,7 @@ public class DSL {
     /**
      * The XML processing instruction constructor.
      */
+    @NotNull
     @Support({ POSTGRES })
     public static Field<XML> xmlpi(Name target, Field<?> content) {
         return new XMLPI(target, content);
@@ -19180,6 +20431,7 @@ public class DSL {
     /**
      * The XML forest constructor.
      */
+    @NotNull
     @Support({ POSTGRES })
     public static Field<XML> xmlforest(Field<?>... fields) {
         return xmlforest(asList(fields));
@@ -19188,6 +20440,7 @@ public class DSL {
     /**
      * The XML forest constructor.
      */
+    @NotNull
     @Support({ POSTGRES })
     public static Field<XML> xmlforest(Collection<? extends Field<?>> fields) {
         return new XMLForest(fields);
@@ -19196,6 +20449,7 @@ public class DSL {
     /**
      * The XML aggregate function.
      */
+    @NotNull
     @Support({ POSTGRES })
     public static XMLAggOrderByStep<XML> xmlagg(Field<XML> field) {
         return new XMLAgg(field);
@@ -19204,6 +20458,7 @@ public class DSL {
     /**
      * The XML query function.
      */
+    @NotNull
     @Support({ POSTGRES })
     public static XMLQueryPassingStep xmlquery(String xpath) {
         return xmlquery(Tools.field(xpath));
@@ -19212,6 +20467,7 @@ public class DSL {
     /**
      * The XML query function.
      */
+    @NotNull
     @Support({ POSTGRES })
     public static XMLQueryPassingStep xmlquery(Field<String> xpath) {
         return new XMLQuery(xpath);
@@ -19220,6 +20476,7 @@ public class DSL {
     /**
      * The XML exists function.
      */
+    @NotNull
     @Support({ POSTGRES })
     public static XMLExistsPassingStep xmlexists(String xpath) {
         return xmlexists(Tools.field(xpath));
@@ -19228,6 +20485,7 @@ public class DSL {
     /**
      * The XML exists function.
      */
+    @NotNull
     @Support({ POSTGRES })
     public static XMLExistsPassingStep xmlexists(Field<String> xpath) {
         return new XMLExists(xpath);
@@ -19236,6 +20494,7 @@ public class DSL {
     /**
      * The XML table function.
      */
+    @NotNull
     @Support({ POSTGRES })
     public static XMLTablePassingStep xmltable(String xpath) {
         return xmltable(Tools.field(xpath));
@@ -19244,6 +20503,7 @@ public class DSL {
     /**
      * The XML table function.
      */
+    @NotNull
     @Support({ POSTGRES })
     public static XMLTablePassingStep xmltable(Field<String> xpath) {
         return new XMLTable(xpath);
@@ -19256,6 +20516,7 @@ public class DSL {
     /**
      * The JSON value extractor function.
      */
+    @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES })
     public static JSONValueOnStep<JSON> jsonValue(Field<JSON> json, String path) {
         return jsonValue(json, Tools.field(path));
@@ -19264,6 +20525,7 @@ public class DSL {
     /**
      * The JSON value extractor function.
      */
+    @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES })
     public static JSONValueOnStep<JSON> jsonValue(Field<JSON> json, Field<String> path) {
         return new JSONValue<>(SQLDataType.JSON, json, path);
@@ -19272,6 +20534,7 @@ public class DSL {
     /**
      * The JSON value extractor function.
      */
+    @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES })
     public static JSONValueOnStep<JSONB> jsonbValue(Field<JSONB> json, String path) {
         return jsonbValue(json, Tools.field(path));
@@ -19280,6 +20543,7 @@ public class DSL {
     /**
      * The JSON value extractor function.
      */
+    @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES })
     public static JSONValueOnStep<JSONB> jsonbValue(Field<JSONB> json, Field<String> path) {
         return new JSONValue<>(SQLDataType.JSONB, json, path);
@@ -19288,6 +20552,7 @@ public class DSL {
     /**
      * The JSON array constructor.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static JSONArrayNullStep<JSON> jsonArray(Field<?>... fields) {
         return jsonArray(Arrays.asList(fields));
@@ -19296,6 +20561,7 @@ public class DSL {
     /**
      * The JSON array constructor.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static JSONArrayNullStep<JSON> jsonArray(Collection<? extends Field<?>> fields) {
         return new JSONArray<>(JSON, fields);
@@ -19304,6 +20570,7 @@ public class DSL {
     /**
      * The JSONB array constructor.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static JSONArrayNullStep<JSONB> jsonbArray(Field<?>... fields) {
         return jsonbArray(Arrays.asList(fields));
@@ -19312,6 +20579,7 @@ public class DSL {
     /**
      * The JSONB array constructor.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static JSONArrayNullStep<JSONB> jsonbArray(Collection<? extends Field<?>> fields) {
         return new JSONArray<>(JSONB, fields);
@@ -19320,6 +20588,7 @@ public class DSL {
     /**
      * A constructor for JSON entries to be used with {@link #jsonObject(JSONEntry...)}.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static <T> JSONEntry<T> jsonEntry(String key, Field<T> value) {
         return jsonEntry(Tools.field(key), value);
@@ -19328,6 +20597,7 @@ public class DSL {
     /**
      * A constructor for JSON entries to be used with {@link #jsonObject(JSONEntry...)}.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static <T> JSONEntry<T> jsonEntry(Field<String> key, Field<T> value) {
         return new JSONEntryImpl<>(key, value);
@@ -19336,6 +20606,7 @@ public class DSL {
     /**
      * The JSON object constructor.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static JSONObjectNullStep<JSON> jsonObject(String key, Field<?> value) {
         return jsonObject(jsonEntry(key, value));
@@ -19344,6 +20615,7 @@ public class DSL {
     /**
      * The JSON object constructor.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static JSONObjectNullStep<JSON> jsonObject(Field<String> key, Field<?> value) {
         return jsonObject(jsonEntry(key, value));
@@ -19352,6 +20624,7 @@ public class DSL {
     /**
      * The JSON object constructor.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static JSONObjectNullStep<JSON> jsonObject(JSONEntry<?>... entries) {
         return jsonObject(Arrays.asList(entries));
@@ -19360,6 +20633,7 @@ public class DSL {
     /**
      * The JSON object constructor.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static JSONObjectNullStep<JSON> jsonObject(Collection<? extends JSONEntry<?>> entries) {
         return new JSONObject<>(JSON, entries);
@@ -19368,6 +20642,7 @@ public class DSL {
     /**
      * The JSONB object constructor.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static JSONObjectNullStep<JSONB> jsonbObject(JSONEntry<?>... entries) {
         return jsonbObject(Arrays.asList(entries));
@@ -19376,6 +20651,7 @@ public class DSL {
     /**
      * The JSONB object constructor.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static JSONObjectNullStep<JSONB> jsonbObject(Collection<? extends JSONEntry<?>> entries) {
         return new JSONObject<>(JSONB, entries);
@@ -19384,6 +20660,7 @@ public class DSL {
     /**
      * The JSON array aggregate function.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static JSONArrayAggOrderByStep<JSON> jsonArrayAgg(Field<?> value) {
         return new JSONArrayAgg<>(JSON, value);
@@ -19392,6 +20669,7 @@ public class DSL {
     /**
      * The JSON array aggregate function.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static JSONArrayAggOrderByStep<JSONB> jsonbArrayAgg(Field<?> value) {
         return new JSONArrayAgg<>(JSONB, value);
@@ -19400,6 +20678,7 @@ public class DSL {
     /**
      * The JSON object aggregate function.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static JSONObjectAggNullStep<JSON> jsonObjectAgg(String key, Field<?> value) {
         return jsonObjectAgg(Tools.field(key), value);
@@ -19408,6 +20687,7 @@ public class DSL {
     /**
      * The JSON object aggregate function.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static JSONObjectAggNullStep<JSON> jsonObjectAgg(Field<String> key, Field<?> value) {
         return jsonObjectAgg(jsonEntry(key, value));
@@ -19416,6 +20696,7 @@ public class DSL {
     /**
      * The JSON object aggregate function.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static JSONObjectAggNullStep<JSON> jsonObjectAgg(JSONEntry<?> entry) {
         return new JSONObjectAgg<>(JSON, entry);
@@ -19424,6 +20705,7 @@ public class DSL {
     /**
      * The JSONB object aggregate function.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static JSONObjectAggNullStep<JSONB> jsonbObjectAgg(String key, Field<?> value) {
         return jsonbObjectAgg(Tools.field(key), value);
@@ -19432,6 +20714,7 @@ public class DSL {
     /**
      * The JSONB object aggregate function.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static JSONObjectAggNullStep<JSONB> jsonbObjectAgg(Field<String> key, Field<?> value) {
         return jsonbObjectAgg(jsonEntry(key, value));
@@ -19440,6 +20723,7 @@ public class DSL {
     /**
      * The JSONB object aggregate function.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static JSONObjectAggNullStep<JSONB> jsonbObjectAgg(JSONEntry<?> entry) {
         return new JSONObjectAgg<>(JSONB, entry);
@@ -19448,6 +20732,7 @@ public class DSL {
     /**
      * The JSON exists predicate.
      */
+    @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES })
     public static JSONExistsOnStep jsonExists(Field<JSON> field, String path) {
         return jsonExists(field, Tools.field(path));
@@ -19456,6 +20741,7 @@ public class DSL {
     /**
      * The JSON exists predicate.
      */
+    @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES })
     public static JSONExistsOnStep jsonExists(Field<JSON> field, Field<String> path) {
         return new JSONExists(field, nullSafe(path));
@@ -19464,6 +20750,7 @@ public class DSL {
     /**
      * The JSONB exists predicate.
      */
+    @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES })
     public static JSONExistsOnStep jsonbExists(Field<JSONB> field, String path) {
         return jsonbExists(field, Tools.field(path));
@@ -19472,6 +20759,7 @@ public class DSL {
     /**
      * The JSONB exists predicate.
      */
+    @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES })
     public static JSONExistsOnStep jsonbExists(Field<JSONB> field, Field<String> path) {
         return new JSONExists(field, nullSafe(path));
@@ -19480,6 +20768,7 @@ public class DSL {
     /**
      * The JSON table function.
      */
+    @NotNull
     @Support({ MYSQL, POSTGRES })
     public static JSONTableColumnsFirstStep jsonTable(JSON json, String path) {
         return jsonTable(Tools.field(json), Tools.field(path));
@@ -19488,6 +20777,7 @@ public class DSL {
     /**
      * The JSON table function.
      */
+    @NotNull
     @Support({ MYSQL, POSTGRES })
     public static JSONTableColumnsFirstStep jsonTable(Field<JSON> json, Field<String> path) {
         return new JSONTable(nullSafe(json), nullSafe(path));
@@ -19496,6 +20786,7 @@ public class DSL {
     /**
      * The JSON table function.
      */
+    @NotNull
     @Support({ MYSQL, POSTGRES })
     public static JSONTableColumnsFirstStep jsonbTable(JSONB json, String path) {
         return jsonbTable(Tools.field(json), Tools.field(path));
@@ -19504,6 +20795,7 @@ public class DSL {
     /**
      * The JSON table function.
      */
+    @NotNull
     @Support({ MYSQL, POSTGRES })
     public static JSONTableColumnsFirstStep jsonbTable(Field<JSONB> json, Field<String> path) {
         return new JSONTable(nullSafe(json), nullSafe(path));
@@ -19516,6 +20808,7 @@ public class DSL {
     /**
      * Get the count(*) function.
      */
+    @NotNull
     @Support
     public static AggregateFunction<Integer> count() {
         return count(DefaultAggregateFunction.ASTERISK);
@@ -19524,6 +20817,7 @@ public class DSL {
     /**
      * Get the count(field) function.
      */
+    @NotNull
     @Support
     public static AggregateFunction<Integer> count(Field<?> field) {
         return new DefaultAggregateFunction<>("count", SQLDataType.INTEGER, nullSafe(field));
@@ -19532,6 +20826,7 @@ public class DSL {
     /**
      * Get the count(field) function.
      */
+    @NotNull
     @Support
     public static AggregateFunction<Integer> count(SelectFieldOrAsterisk field) {
         return new DefaultAggregateFunction<>("count", SQLDataType.INTEGER, field("{0}", field));
@@ -19544,6 +20839,7 @@ public class DSL {
      * {@link SQLDialect#POSTGRES}, then the primary key is used with
      * {@link #count(Field)}, instead.
      */
+    @NotNull
     @Support
     public static AggregateFunction<Integer> count(Table<?> table) {
         return new CountTable(table, false);
@@ -19552,6 +20848,7 @@ public class DSL {
     /**
      * Get the count(distinct field) function.
      */
+    @NotNull
     @Support
     public static AggregateFunction<Integer> countDistinct(Field<?> field) {
         return new DefaultAggregateFunction<>(true, "count", SQLDataType.INTEGER, nullSafe(field));
@@ -19560,6 +20857,7 @@ public class DSL {
     /**
      * Get the count(distinct field) function.
      */
+    @NotNull
     @Support
     public static AggregateFunction<Integer> countDistinct(SelectFieldOrAsterisk field) {
         return new DefaultAggregateFunction<>(true, "count", SQLDataType.INTEGER, field("{0}", field));
@@ -19572,6 +20870,7 @@ public class DSL {
      * {@link SQLDialect#POSTGRES}, then the primary key is used with
      * {@link #count(Field)}, instead.
      */
+    @NotNull
     @Support
     public static AggregateFunction<Integer> countDistinct(Table<?> table) {
         return new CountTable(table, true);
@@ -19586,6 +20885,7 @@ public class DSL {
      * {@link SQLDialect#POSTGRES} supports this as
      * <code>COUNT(DISTINCT(expr1, expr2))</code>.
      */
+    @NotNull
     @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static AggregateFunction<Integer> countDistinct(Field<?>... fields) {
         fields = nullSafe(fields);
@@ -19597,6 +20897,7 @@ public class DSL {
      * <p>
      * This is a synonym for {@link #boolAnd(Field)}.
      */
+    @NotNull
     @Support
     public static AggregateFunction<Boolean> every(Field<Boolean> field) {
         return boolAnd(field);
@@ -19607,6 +20908,7 @@ public class DSL {
      * <p>
      * This is a synonym for {@link #boolAnd(Condition)}.
      */
+    @NotNull
     @Support
     public static AggregateFunction<Boolean> every(Condition condition) {
         return boolAnd(condition);
@@ -19615,6 +20917,7 @@ public class DSL {
     /**
      * Get the every value over a field: bool_and(field).
      */
+    @NotNull
     @Support
     public static AggregateFunction<Boolean> boolAnd(Field<Boolean> field) {
         return boolAnd(condition(nullSafe(field)));
@@ -19623,6 +20926,7 @@ public class DSL {
     /**
      * Get the every value over a condition: bool_and(condition).
      */
+    @NotNull
     @Support
     public static AggregateFunction<Boolean> boolAnd(Condition condition) {
         return new BoolAnd(condition);
@@ -19631,6 +20935,7 @@ public class DSL {
     /**
      * Get the every value over a field: bool_and(field).
      */
+    @NotNull
     @Support
     public static AggregateFunction<Boolean> boolOr(Field<Boolean> field) {
         return boolOr(condition(nullSafe(field)));
@@ -19639,6 +20944,7 @@ public class DSL {
     /**
      * Get the every value over a condition: bool_and(condition).
      */
+    @NotNull
     @Support
     public static AggregateFunction<Boolean> boolOr(Condition condition) {
         return new BoolOr(condition);
@@ -19647,6 +20953,7 @@ public class DSL {
     /**
      * Get the <code>array_agg()</code> aggregate function.
      */
+    @NotNull
     @Support({ HSQLDB, POSTGRES })
     public static <T> ArrayAggOrderByStep<T[]> arrayAgg(Field<T> field) {
         return new ArrayAgg(false, nullSafe(field));
@@ -19655,6 +20962,7 @@ public class DSL {
     /**
      * Get the <code>array_agg()</code> aggregate function.
      */
+    @NotNull
     @Support({ HSQLDB, POSTGRES })
     public static <T> ArrayAggOrderByStep<T[]> arrayAggDistinct(Field<T> field) {
         return new ArrayAgg(true, nullSafe(field));
@@ -19720,6 +21028,10 @@ public class DSL {
 
 
 
+
+
+
+
     /**
      * Create an array literal.
      * <p>
@@ -19742,6 +21054,7 @@ public class DSL {
      * </tr>
      * </table>
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
     public static <T> Field<T[]> array(T... values) {
         return array(Tools.fields(values));
@@ -19770,6 +21083,7 @@ public class DSL {
      * </table>
      */
     @SafeVarargs
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
     public static <T> Field<T[]> array(Field<T>... fields) {
         return array(Arrays.asList(fields));
@@ -19797,6 +21111,7 @@ public class DSL {
      * </tr>
      * </table>
      */
+    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
     public static <T> Field<T[]> array(Collection<? extends Field<T>> fields) {
         return new Array<>(fields);
@@ -19805,6 +21120,7 @@ public class DSL {
     /**
      * Get the max value over a field: max(field).
      */
+    @NotNull
     @Support
     public static <T> AggregateFunction<T> max(Field<T> field) {
         return new DefaultAggregateFunction<>("max", nullSafeDataType(field), nullSafe(field));
@@ -19813,6 +21129,7 @@ public class DSL {
     /**
      * Get the max value over a field: max(distinct field).
      */
+    @NotNull
     @Support
     public static <T> AggregateFunction<T> maxDistinct(Field<T> field) {
         return new DefaultAggregateFunction<>(true, "max", nullSafeDataType(field), nullSafe(field));
@@ -19821,6 +21138,7 @@ public class DSL {
     /**
      * Get the min value over a field: min(field).
      */
+    @NotNull
     @Support
     public static <T> AggregateFunction<T> min(Field<T> field) {
         return new DefaultAggregateFunction<>("min", nullSafeDataType(field), nullSafe(field));
@@ -19829,6 +21147,7 @@ public class DSL {
     /**
      * Get the min value over a field: min(distinct field).
      */
+    @NotNull
     @Support
     public static <T> AggregateFunction<T> minDistinct(Field<T> field) {
         return new DefaultAggregateFunction<>(true, "min", nullSafeDataType(field), nullSafe(field));
@@ -19837,6 +21156,7 @@ public class DSL {
     /**
      * Get the sum over a numeric field: sum(field).
      */
+    @NotNull
     @Support
     public static AggregateFunction<BigDecimal> sum(Field<? extends Number> field) {
         return new DefaultAggregateFunction<>("sum", SQLDataType.NUMERIC, nullSafe(field));
@@ -19845,6 +21165,7 @@ public class DSL {
     /**
      * Get the sum over a numeric field: sum(distinct field).
      */
+    @NotNull
     @Support
     public static AggregateFunction<BigDecimal> sumDistinct(Field<? extends Number> field) {
         return new DefaultAggregateFunction<>(true, "sum", SQLDataType.NUMERIC, nullSafe(field));
@@ -19863,6 +21184,7 @@ public class DSL {
      * More information here: <a href=
      * "https://blog.jooq.org/2018/09/21/how-to-write-a-multiplication-aggregate-function-in-sql">https://blog.jooq.org/2018/09/21/how-to-write-a-multiplication-aggregate-function-in-sql</a>.
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static AggregateFunction<BigDecimal> product(Field<? extends Number> field) {
         return new Product(false, nullSafe(field));
@@ -19881,6 +21203,7 @@ public class DSL {
      * More information here: <a href=
      * "https://blog.jooq.org/2018/09/21/how-to-write-a-multiplication-aggregate-function-in-sql">https://blog.jooq.org/2018/09/21/how-to-write-a-multiplication-aggregate-function-in-sql</a>.
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static AggregateFunction<BigDecimal> productDistinct(Field<? extends Number> field) {
         return new Product(true, nullSafe(field));
@@ -19889,6 +21212,7 @@ public class DSL {
     /**
      * Get the average over a numeric field: avg(field).
      */
+    @NotNull
     @Support
     public static AggregateFunction<BigDecimal> avg(Field<? extends Number> field) {
         return new DefaultAggregateFunction<>("avg", SQLDataType.NUMERIC, nullSafe(field));
@@ -19897,6 +21221,7 @@ public class DSL {
     /**
      * Get the average over a numeric field: avg(distinct field).
      */
+    @NotNull
     @Support
     public static AggregateFunction<BigDecimal> avgDistinct(Field<? extends Number> field) {
         return new DefaultAggregateFunction<>(true, "avg", SQLDataType.NUMERIC, nullSafe(field));
@@ -19905,6 +21230,7 @@ public class DSL {
     /**
      * The <code>mode(field)</code> aggregate function.
      */
+    @NotNull
     @Support({ H2, POSTGRES })
     public static <T> AggregateFunction<T> mode(Field<T> field) {
         return new Mode(nullSafe(field));
@@ -19913,6 +21239,7 @@ public class DSL {
     /**
      * Get the median over a numeric field: median(field).
      */
+    @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, POSTGRES })
     public static AggregateFunction<BigDecimal> median(Field<? extends Number> field) {
         return new Median(nullSafe(field));
@@ -19921,6 +21248,7 @@ public class DSL {
     /**
      * Get the population standard deviation of a numeric field: stddev_pop(field).
      */
+    @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static AggregateFunction<BigDecimal> stddevPop(Field<? extends Number> field) {
         return new DefaultAggregateFunction<>(Term.STDDEV_POP, SQLDataType.NUMERIC, nullSafe(field));
@@ -19929,6 +21257,7 @@ public class DSL {
     /**
      * Get the sample standard deviation of a numeric field: stddev_samp(field).
      */
+    @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static AggregateFunction<BigDecimal> stddevSamp(Field<? extends Number> field) {
         return new DefaultAggregateFunction<>(Term.STDDEV_SAMP, SQLDataType.NUMERIC, nullSafe(field));
@@ -19937,6 +21266,7 @@ public class DSL {
     /**
      * Get the population variance of a numeric field: var_pop(field).
      */
+    @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static AggregateFunction<BigDecimal> varPop(Field<? extends Number> field) {
         return new DefaultAggregateFunction<>(Term.VAR_POP, SQLDataType.NUMERIC, nullSafe(field));
@@ -19945,6 +21275,7 @@ public class DSL {
     /**
      * Get the sample variance of a numeric field: var_samp(field).
      */
+    @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static AggregateFunction<BigDecimal> varSamp(Field<? extends Number> field) {
         return new DefaultAggregateFunction<>(Term.VAR_SAMP, SQLDataType.NUMERIC, nullSafe(field));
@@ -19960,6 +21291,7 @@ public class DSL {
      * Note that {@link SQLDialect#DB2} does not support linear regression
      * window functions.
      */
+    @NotNull
     @Support({ POSTGRES })
     public static AggregateFunction<BigDecimal> regrSlope(Field<? extends Number> y, Field<? extends Number> x) {
         return new DefaultAggregateFunction<>("regr_slope", SQLDataType.NUMERIC, nullSafe(y), nullSafe(x));
@@ -19975,6 +21307,7 @@ public class DSL {
      * Note that {@link SQLDialect#DB2} does not support linear regression
      * window functions.
      */
+    @NotNull
     @Support({ POSTGRES })
     public static AggregateFunction<BigDecimal> regrIntercept(Field<? extends Number> y, Field<? extends Number> x) {
         return new DefaultAggregateFunction<>("regr_intercept", SQLDataType.NUMERIC, nullSafe(y), nullSafe(x));
@@ -19990,6 +21323,7 @@ public class DSL {
      * Note that {@link SQLDialect#DB2} does not support linear regression
      * window functions.
      */
+    @NotNull
     @Support({ POSTGRES })
     public static AggregateFunction<BigDecimal> regrCount(Field<? extends Number> y, Field<? extends Number> x) {
         return new DefaultAggregateFunction<>("regr_count", SQLDataType.NUMERIC, nullSafe(y), nullSafe(x));
@@ -20005,6 +21339,7 @@ public class DSL {
      * Note that {@link SQLDialect#DB2} does not support linear regression
      * window functions.
      */
+    @NotNull
     @Support({ POSTGRES })
     public static AggregateFunction<BigDecimal> regrR2(Field<? extends Number> y, Field<? extends Number> x) {
         return new DefaultAggregateFunction<>("regr_r2", SQLDataType.NUMERIC, nullSafe(y), nullSafe(x));
@@ -20020,6 +21355,7 @@ public class DSL {
      * Note that {@link SQLDialect#DB2} does not support linear regression
      * window functions.
      */
+    @NotNull
     @Support({ POSTGRES })
     public static AggregateFunction<BigDecimal> regrAvgX(Field<? extends Number> y, Field<? extends Number> x) {
         return new DefaultAggregateFunction<>("regr_avgx", SQLDataType.NUMERIC, nullSafe(y), nullSafe(x));
@@ -20035,6 +21371,7 @@ public class DSL {
      * Note that {@link SQLDialect#DB2} does not support linear regression
      * window functions.
      */
+    @NotNull
     @Support({ POSTGRES })
     public static AggregateFunction<BigDecimal> regrAvgY(Field<? extends Number> y, Field<? extends Number> x) {
         return new DefaultAggregateFunction<>("regr_avgy", SQLDataType.NUMERIC, nullSafe(y), nullSafe(x));
@@ -20050,6 +21387,7 @@ public class DSL {
      * Note that {@link SQLDialect#DB2} does not support linear regression
      * window functions.
      */
+    @NotNull
     @Support({ POSTGRES })
     public static AggregateFunction<BigDecimal> regrSXX(Field<? extends Number> y, Field<? extends Number> x) {
         return new DefaultAggregateFunction<>("regr_sxx", SQLDataType.NUMERIC, nullSafe(y), nullSafe(x));
@@ -20065,6 +21403,7 @@ public class DSL {
      * Note that {@link SQLDialect#DB2} does not support linear regression
      * window functions.
      */
+    @NotNull
     @Support({ POSTGRES })
     public static AggregateFunction<BigDecimal> regrSYY(Field<? extends Number> y, Field<? extends Number> x) {
         return new DefaultAggregateFunction<>("regr_syy", SQLDataType.NUMERIC, nullSafe(y), nullSafe(x));
@@ -20080,6 +21419,7 @@ public class DSL {
      * Note that {@link SQLDialect#DB2} does not support linear regression
      * window functions.
      */
+    @NotNull
     @Support({ POSTGRES })
     public static AggregateFunction<BigDecimal> regrSXY(Field<? extends Number> y, Field<? extends Number> x) {
         return new DefaultAggregateFunction<>("regr_sxy", SQLDataType.NUMERIC, nullSafe(y), nullSafe(x));
@@ -20102,6 +21442,7 @@ public class DSL {
      *
      * @see #groupConcat(Field)
      */
+    @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static OrderedAggregateFunction<String> listAgg(Field<?> field) {
         return new ListAgg(false, nullSafe(field));
@@ -20124,6 +21465,7 @@ public class DSL {
      *
      * @see #groupConcat(Field)
      */
+    @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static OrderedAggregateFunction<String> listAgg(Field<?> field, String separator) {
         return new ListAgg(false, nullSafe(field), inline(separator));
@@ -20152,6 +21494,7 @@ public class DSL {
      *
      * @see #listAgg(Field)
      */
+    @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static GroupConcatOrderByStep groupConcat(Field<?> field) {
         return new GroupConcat(nullSafe(field));
@@ -20183,6 +21526,7 @@ public class DSL {
      *             {@link GroupConcatSeparatorStep#separator(String)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static AggregateFunction<String> groupConcat(Field<?> field, String separator) {
         return new GroupConcat(nullSafe(field)).separator(separator);
@@ -20207,6 +21551,7 @@ public class DSL {
      *
      * @see #listAgg(Field)
      */
+    @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static GroupConcatOrderByStep groupConcatDistinct(Field<?> field) {
         return new GroupConcat(nullSafe(field), true);
@@ -20220,6 +21565,7 @@ public class DSL {
      * The <code>mode() within group (oder by [order clause])</code> ordered
      * aggregate function.
      */
+    @NotNull
     @Support({ H2, POSTGRES })
     public static OrderedAggregateFunctionOfDeferredType mode() {
         return new ModeDeferred();
@@ -20229,6 +21575,7 @@ public class DSL {
      * The <code>rank(expr) within group (order by [order clause])</code>
      * ordered-set aggregate function.
      */
+    @NotNull
     @Support({ H2, POSTGRES })
     public static OrderedAggregateFunction<Integer> rank(Field<?>... fields) {
         return new DefaultAggregateFunction<>("rank", SQLDataType.INTEGER, fields);
@@ -20238,6 +21585,7 @@ public class DSL {
      * The <code>rank(expr) within group (order by [order clause])</code>
      * ordered-set aggregate function.
      */
+    @NotNull
     @Support({ H2, POSTGRES })
     public static OrderedAggregateFunction<Integer> rank(Collection<? extends Field<?>> fields) {
         return new DefaultAggregateFunction<>("rank", SQLDataType.INTEGER, fields.toArray(EMPTY_FIELD));
@@ -20247,6 +21595,7 @@ public class DSL {
      * The <code>dense_rank(expr) within group (order by [order clause])</code>
      * ordered-set aggregate function.
      */
+    @NotNull
     @Support({ H2, POSTGRES })
     public static OrderedAggregateFunction<Integer> denseRank(Field<?>... fields) {
         return new DefaultAggregateFunction<>("dense_rank", SQLDataType.INTEGER, fields);
@@ -20256,6 +21605,7 @@ public class DSL {
      * The <code>dense_rank(expr) within group (order by [order clause])</code>
      * ordered-set aggregate function.
      */
+    @NotNull
     @Support({ H2, POSTGRES })
     public static OrderedAggregateFunction<Integer> denseRank(Collection<? extends Field<?>> fields) {
         return new DefaultAggregateFunction<>("dense_rank", SQLDataType.INTEGER, fields.toArray(EMPTY_FIELD));
@@ -20265,6 +21615,7 @@ public class DSL {
      * The <code>percent_rank(expr) within group (order by [order clause])</code>
      * ordered-set aggregate function.
      */
+    @NotNull
     @Support({ H2, POSTGRES })
     public static OrderedAggregateFunction<Integer> percentRank(Field<?>... fields) {
         return new DefaultAggregateFunction<>("percent_rank", SQLDataType.INTEGER, fields);
@@ -20274,6 +21625,7 @@ public class DSL {
      * The <code>percent_rank(expr) within group (order by [order clause])</code>
      * ordered-set aggregate function.
      */
+    @NotNull
     @Support({ H2, POSTGRES })
     public static OrderedAggregateFunction<Integer> percentRank(Collection<? extends Field<?>> fields) {
         return new DefaultAggregateFunction<>("percent_rank", SQLDataType.INTEGER, fields.toArray(EMPTY_FIELD));
@@ -20283,6 +21635,7 @@ public class DSL {
      * The <code>cume_dist(expr) within group (order by [order clause])</code>
      * ordered-set aggregate function.
      */
+    @NotNull
     @Support({ H2, POSTGRES })
     public static OrderedAggregateFunction<BigDecimal> cumeDist(Field<?>... fields) {
         return new DefaultAggregateFunction<>("cume_dist", SQLDataType.NUMERIC, fields);
@@ -20292,6 +21645,7 @@ public class DSL {
      * The <code>cume_dist(expr) within group (order by [order clause])</code>
      * ordered-set aggregate function.
      */
+    @NotNull
     @Support({ H2, POSTGRES })
     public static OrderedAggregateFunction<BigDecimal> cumeDist(Collection<? extends Field<?>> fields) {
         return new DefaultAggregateFunction<>("cume_dist", SQLDataType.NUMERIC, fields.toArray(EMPTY_FIELD));
@@ -20306,6 +21660,7 @@ public class DSL {
      * this as an aggregate function, {@link SQLDialect#SQLSERVER} and
      * {@link SQLDialect#REDSHIFT} support only its window function variant.
      */
+    @NotNull
     @Support({ H2, POSTGRES })
     public static OrderedAggregateFunction<BigDecimal> percentileCont(Number number) {
         return percentileCont(val(number));
@@ -20320,6 +21675,7 @@ public class DSL {
      * this as an aggregate function, {@link SQLDialect#SQLSERVER} and
      * {@link SQLDialect#REDSHIFT} support only its window function variant.
      */
+    @NotNull
     @Support({ H2, POSTGRES })
     public static OrderedAggregateFunction<BigDecimal> percentileCont(Field<? extends Number> field) {
         return new DefaultAggregateFunction<>("percentile_cont", SQLDataType.NUMERIC, nullSafe(field));
@@ -20334,6 +21690,7 @@ public class DSL {
      * this as an aggregate function, {@link SQLDialect#SQLSERVER} and
      * {@link SQLDialect#REDSHIFT} support only its window function variant.
      */
+    @NotNull
     @Support({ H2, POSTGRES })
     public static OrderedAggregateFunction<BigDecimal> percentileDisc(Number number) {
         return percentileDisc(val(number));
@@ -20348,6 +21705,7 @@ public class DSL {
      * this as an aggregate function, {@link SQLDialect#SQLSERVER} and
      * {@link SQLDialect#REDSHIFT} support only its window function variant.
      */
+    @NotNull
     @Support({ H2, POSTGRES })
     public static OrderedAggregateFunction<BigDecimal> percentileDisc(Field<? extends Number> field) {
         return new DefaultAggregateFunction<>("percentile_disc", SQLDataType.NUMERIC, nullSafe(field));
@@ -20360,6 +21718,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>PARTITION BY</code> clause.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationOrderByStep partitionBy(Field<?>... fields) {
         return new WindowSpecificationImpl().partitionBy(fields);
@@ -20368,6 +21727,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>PARTITION BY</code> clause.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationOrderByStep partitionBy(Collection<? extends Field<?>> fields) {
         return new WindowSpecificationImpl().partitionBy(fields);
@@ -20376,6 +21736,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with an <code>ORDER BY</code> clause.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationRowsStep orderBy(Field<?>... fields) {
         return new WindowSpecificationImpl().orderBy(fields);
@@ -20384,6 +21745,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with an <code>ORDER BY</code> clause.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationRowsStep orderBy(OrderField<?>... fields) {
         return new WindowSpecificationImpl().orderBy(fields);
@@ -20392,6 +21754,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with an <code>ORDER BY</code> clause.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationRowsStep orderBy(Collection<? extends OrderField<?>> fields) {
         return new WindowSpecificationImpl().orderBy(fields);
@@ -20400,6 +21763,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationExcludeStep rowsUnboundedPreceding() {
         return new WindowSpecificationImpl().rowsUnboundedPreceding();
@@ -20408,6 +21772,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationExcludeStep rowsPreceding(int number) {
         return new WindowSpecificationImpl().rowsPreceding(number);
@@ -20416,6 +21781,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationExcludeStep rowsCurrentRow() {
         return new WindowSpecificationImpl().rowsCurrentRow();
@@ -20424,6 +21790,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationExcludeStep rowsUnboundedFollowing() {
         return new WindowSpecificationImpl().rowsUnboundedFollowing();
@@ -20432,6 +21799,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationExcludeStep rowsFollowing(int number) {
         return new WindowSpecificationImpl().rowsFollowing(number);
@@ -20440,6 +21808,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationRowsAndStep rowsBetweenUnboundedPreceding() {
         return new WindowSpecificationImpl().rowsBetweenUnboundedPreceding();
@@ -20448,6 +21817,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationRowsAndStep rowsBetweenPreceding(int number) {
         return new WindowSpecificationImpl().rowsBetweenPreceding(number);
@@ -20456,6 +21826,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationRowsAndStep rowsBetweenCurrentRow() {
         return new WindowSpecificationImpl().rowsBetweenCurrentRow();
@@ -20464,6 +21835,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationRowsAndStep rowsBetweenUnboundedFollowing() {
         return new WindowSpecificationImpl().rowsBetweenUnboundedFollowing();
@@ -20472,6 +21844,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationRowsAndStep rowsBetweenFollowing(int number) {
         return new WindowSpecificationImpl().rowsBetweenFollowing(number);
@@ -20480,6 +21853,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationExcludeStep rangeUnboundedPreceding() {
         return new WindowSpecificationImpl().rangeUnboundedPreceding();
@@ -20488,6 +21862,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationExcludeStep rangePreceding(int number) {
         return new WindowSpecificationImpl().rangePreceding(number);
@@ -20496,6 +21871,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationExcludeStep rangeCurrentRow() {
         return new WindowSpecificationImpl().rangeCurrentRow();
@@ -20504,6 +21880,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationExcludeStep rangeUnboundedFollowing() {
         return new WindowSpecificationImpl().rangeUnboundedFollowing();
@@ -20512,6 +21889,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationExcludeStep rangeFollowing(int number) {
         return new WindowSpecificationImpl().rangeFollowing(number);
@@ -20520,6 +21898,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationRowsAndStep rangeBetweenUnboundedPreceding() {
         return new WindowSpecificationImpl().rangeBetweenUnboundedPreceding();
@@ -20528,6 +21907,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationRowsAndStep rangeBetweenPreceding(int number) {
         return new WindowSpecificationImpl().rangeBetweenPreceding(number);
@@ -20536,6 +21916,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationRowsAndStep rangeBetweenCurrentRow() {
         return new WindowSpecificationImpl().rangeBetweenCurrentRow();
@@ -20544,6 +21925,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationRowsAndStep rangeBetweenUnboundedFollowing() {
         return new WindowSpecificationImpl().rangeBetweenUnboundedFollowing();
@@ -20552,6 +21934,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
+    @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowSpecificationRowsAndStep rangeBetweenFollowing(int number) {
         return new WindowSpecificationImpl().rangeBetweenFollowing(number);
@@ -20560,6 +21943,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
+    @NotNull
     @Support({ H2, POSTGRES, SQLITE })
     public static WindowSpecificationExcludeStep groupsUnboundedPreceding() {
         return new WindowSpecificationImpl().groupsUnboundedPreceding();
@@ -20568,6 +21952,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
+    @NotNull
     @Support({ H2, POSTGRES, SQLITE })
     public static WindowSpecificationExcludeStep groupsPreceding(int number) {
         return new WindowSpecificationImpl().groupsPreceding(number);
@@ -20576,6 +21961,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
+    @NotNull
     @Support({ H2, POSTGRES, SQLITE })
     public static WindowSpecificationExcludeStep groupsCurrentRow() {
         return new WindowSpecificationImpl().groupsCurrentRow();
@@ -20584,6 +21970,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
+    @NotNull
     @Support({ H2, POSTGRES, SQLITE })
     public static WindowSpecificationExcludeStep groupsUnboundedFollowing() {
         return new WindowSpecificationImpl().groupsUnboundedFollowing();
@@ -20592,6 +21979,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
+    @NotNull
     @Support({ H2, POSTGRES, SQLITE })
     public static WindowSpecificationExcludeStep groupsFollowing(int number) {
         return new WindowSpecificationImpl().groupsFollowing(number);
@@ -20600,6 +21988,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
+    @NotNull
     @Support({ H2, POSTGRES, SQLITE })
     public static WindowSpecificationRowsAndStep groupsBetweenUnboundedPreceding() {
         return new WindowSpecificationImpl().groupsBetweenUnboundedPreceding();
@@ -20608,6 +21997,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
+    @NotNull
     @Support({ H2, POSTGRES, SQLITE })
     public static WindowSpecificationRowsAndStep groupsBetweenPreceding(int number) {
         return new WindowSpecificationImpl().groupsBetweenPreceding(number);
@@ -20616,6 +22006,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
+    @NotNull
     @Support({ H2, POSTGRES, SQLITE })
     public static WindowSpecificationRowsAndStep groupsBetweenCurrentRow() {
         return new WindowSpecificationImpl().groupsBetweenCurrentRow();
@@ -20624,6 +22015,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
+    @NotNull
     @Support({ H2, POSTGRES, SQLITE })
     public static WindowSpecificationRowsAndStep groupsBetweenUnboundedFollowing() {
         return new WindowSpecificationImpl().groupsBetweenUnboundedFollowing();
@@ -20632,6 +22024,7 @@ public class DSL {
     /**
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
+    @NotNull
     @Support({ H2, POSTGRES, SQLITE })
     public static WindowSpecificationRowsAndStep groupsBetweenFollowing(int number) {
         return new WindowSpecificationImpl().groupsBetweenFollowing(number);
@@ -20650,6 +22043,7 @@ public class DSL {
      * {@link SQLDialect#HSQLDB} can emulate this function using
      * <code>ROWNUM()</code>
      */
+    @NotNull
     @Support
     public static WindowOverStep<Integer> rowNumber() {
         return new RowNumber();
@@ -20658,6 +22052,7 @@ public class DSL {
     /**
      * The <code>rank() over ([analytic clause])</code> function.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowOverStep<Integer> rank() {
         return new RankingFunction<>(RANK, SQLDataType.INTEGER);
@@ -20666,6 +22061,7 @@ public class DSL {
     /**
      * The <code>dense_rank() over ([analytic clause])</code> function.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowOverStep<Integer> denseRank() {
         return new RankingFunction<>(DENSE_RANK, SQLDataType.INTEGER);
@@ -20674,6 +22070,7 @@ public class DSL {
     /**
      * The <code>precent_rank() over ([analytic clause])</code> function.
      */
+    @NotNull
     @Support({ CUBRID, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowOverStep<BigDecimal> percentRank() {
         return new RankingFunction<>(PERCENT_RANK, SQLDataType.NUMERIC);
@@ -20682,6 +22079,7 @@ public class DSL {
     /**
      * The <code>cume_dist() over ([analytic clause])</code> function.
      */
+    @NotNull
     @Support({ CUBRID, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowOverStep<BigDecimal> cumeDist() {
         return new RankingFunction<>(CUME_DIST, SQLDataType.NUMERIC);
@@ -20690,6 +22088,7 @@ public class DSL {
     /**
      * The <code>ntile([number]) over ([analytic clause])</code> function.
      */
+    @NotNull
     @Support({ CUBRID, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowOverStep<Integer> ntile(int number) {
         return new Ntile(inline(number));
@@ -20698,6 +22097,7 @@ public class DSL {
     /**
      * The <code>ratio_to_report([expression]) over ([analytic clause])</code> function.
      */
+    @NotNull
     @Support({ CUBRID, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowOverStep<BigDecimal> ratioToReport(Number number) {
         return ratioToReport(Tools.field(number));
@@ -20706,6 +22106,7 @@ public class DSL {
     /**
      * The <code>ratio_to_report([expression]) over ([analytic clause])</code> function.
      */
+    @NotNull
     @Support({ CUBRID, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static WindowOverStep<BigDecimal> ratioToReport(Field<? extends Number> field) {
         return new RatioToReport(nullSafe(field));
@@ -20714,6 +22115,7 @@ public class DSL {
     /**
      * The <code>first_value(field) over ([analytic clause])</code> function.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T> WindowIgnoreNullsStep<T> firstValue(Field<T> field) {
         return new PositionalWindowFunction(FIRST_VALUE, nullSafe(field));
@@ -20722,6 +22124,7 @@ public class DSL {
     /**
      * The <code>last_value(field) over ([analytic clause])</code> function.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T> WindowIgnoreNullsStep<T> lastValue(Field<T> field) {
         return new PositionalWindowFunction(LAST_VALUE, nullSafe(field));
@@ -20730,6 +22133,7 @@ public class DSL {
     /**
      * The <code>nth_value(field) over ([analytic clause])</code> function.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T> WindowFromFirstLastStep<T> nthValue(Field<T> field, int nth) {
         return nthValue(field, val(nth));
@@ -20738,6 +22142,7 @@ public class DSL {
     /**
      * The <code>nth_value(field) over ([analytic clause])</code> function.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T> WindowFromFirstLastStep<T> nthValue(Field<T> field, Field<Integer> nth) {
         return new PositionalWindowFunction(NTH_VALUE, nullSafe(field), nullSafe(nth), null);
@@ -20746,6 +22151,7 @@ public class DSL {
     /**
      * The <code>lead(field) over ([analytic clause])</code> function.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field) {
         return new PositionalWindowFunction(LEAD, nullSafe(field));
@@ -20754,6 +22160,7 @@ public class DSL {
     /**
      * The <code>lead(field, offset) over ([analytic clause])</code> function.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset) {
         return new PositionalWindowFunction(LEAD, nullSafe(field), inline(offset), null);
@@ -20764,6 +22171,7 @@ public class DSL {
      * <code>lead(field, offset, defaultValue) over ([analytic clause])</code>
      * function.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset, T defaultValue) {
         return lead(nullSafe(field), offset, Tools.field(defaultValue, field));
@@ -20774,6 +22182,7 @@ public class DSL {
      * <code>lead(field, offset, defaultValue) over ([analytic clause])</code>
      * function.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset, Field<T> defaultValue) {
         return new PositionalWindowFunction(LEAD, nullSafe(field), inline(offset), nullSafe(defaultValue));
@@ -20782,6 +22191,7 @@ public class DSL {
     /**
      * The <code>lag(field) over ([analytic clause])</code> function.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field) {
         return new PositionalWindowFunction(LAG, nullSafe(field));
@@ -20790,6 +22200,7 @@ public class DSL {
     /**
      * The <code>lag(field, offset) over ([analytic clause])</code> function.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset) {
         return new PositionalWindowFunction(LAG, nullSafe(field), inline(offset), null);
@@ -20800,6 +22211,7 @@ public class DSL {
      * <code>lag(field, offset, defaultValue) over ([analytic clause])</code>
      * function.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset, T defaultValue) {
         return lag(nullSafe(field), offset, Tools.field(defaultValue, field));
@@ -20810,6 +22222,7 @@ public class DSL {
      * <code>lag(field, offset, defaultValue) over ([analytic clause])</code>
      * function.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset, Field<T> defaultValue) {
         return new PositionalWindowFunction(LAG, nullSafe(field), inline(offset), nullSafe(defaultValue));
@@ -20838,6 +22251,7 @@ public class DSL {
      *
      * @see #param(String, Object)
      */
+    @NotNull
     @Support
     public static <T> Param<Object> param() {
         return param(Object.class);
@@ -20848,6 +22262,7 @@ public class DSL {
      *
      * @see #param(String, Object)
      */
+    @NotNull
     @Support
     public static <T> Param<T> param(Class<T> type) {
         return param(DefaultDataType.getDataType(null, type));
@@ -20858,6 +22273,7 @@ public class DSL {
      *
      * @see #param(String, Object)
      */
+    @NotNull
     @Support
     public static <T> Param<T> param(DataType<T> type) {
         return new Val<>(null, type);
@@ -20869,6 +22285,7 @@ public class DSL {
      *
      * @see #param(String, Object)
      */
+    @NotNull
     @Support
     public static <T> Param<T> param(Field<T> field) {
         return param(field.getDataType());
@@ -20893,6 +22310,7 @@ public class DSL {
      *
      * @see #param(String, Object)
      */
+    @NotNull
     @Support
     public static Param<Object> param(String name) {
         return param(name, Object.class);
@@ -20903,6 +22321,7 @@ public class DSL {
      *
      * @see #param(String, Object)
      */
+    @NotNull
     @Support
     public static <T> Param<T> param(String name, Class<T> type) {
         return param(name, DefaultDataType.getDataType(null, type));
@@ -20913,6 +22332,7 @@ public class DSL {
      *
      * @see #param(String, Object)
      */
+    @NotNull
     @Support
     public static <T> Param<T> param(String name, DataType<T> type) {
         return new Val<>(null, type, name);
@@ -20924,6 +22344,7 @@ public class DSL {
      *
      * @see #param(String, Object)
      */
+    @NotNull
     @Support
     public static <T> Param<T> param(String name, Field<T> type) {
         return param(name, type.getDataType());
@@ -20946,6 +22367,7 @@ public class DSL {
      * @see Query#getParams()
      * @see DSLContext#renderNamedParams(QueryPart)
      */
+    @NotNull
     @Support
     public static <T> Param<T> param(String name, T value) {
         return new Val<>(value, Tools.field(value).getDataType(), name);
@@ -20957,6 +22379,7 @@ public class DSL {
      *
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static <T> Param<T> value(T value) {
         return val(value);
@@ -20968,6 +22391,7 @@ public class DSL {
      *
      * @see #val(byte)
      */
+    @NotNull
     @Support
     public static Param<Byte> value(byte value) {
         return value((Object) value, SQLDataType.TINYINT);
@@ -20979,6 +22403,7 @@ public class DSL {
      *
      * @see #val(Byte)
      */
+    @NotNull
     @Support
     public static Param<Byte> value(Byte value) {
         return value((Object) value, SQLDataType.TINYINT);
@@ -20990,6 +22415,7 @@ public class DSL {
      *
      * @see #val(UByte)
      */
+    @NotNull
     @Support
     public static Param<UByte> value(UByte value) {
         return value((Object) value, SQLDataType.TINYINTUNSIGNED);
@@ -21001,6 +22427,7 @@ public class DSL {
      *
      * @see #val(short)
      */
+    @NotNull
     @Support
     public static Param<Short> value(short value) {
         return value((Object) value, SQLDataType.SMALLINT);
@@ -21012,6 +22439,7 @@ public class DSL {
      *
      * @see #val(Short)
      */
+    @NotNull
     @Support
     public static Param<Short> value(Short value) {
         return value((Object) value, SQLDataType.SMALLINT);
@@ -21023,6 +22451,7 @@ public class DSL {
      *
      * @see #val(UShort)
      */
+    @NotNull
     @Support
     public static Param<UShort> value(UShort value) {
         return value((Object) value, SQLDataType.SMALLINTUNSIGNED);
@@ -21034,6 +22463,7 @@ public class DSL {
      *
      * @see #val(int)
      */
+    @NotNull
     @Support
     public static Param<Integer> value(int value) {
         return value((Object) value, SQLDataType.INTEGER);
@@ -21045,6 +22475,7 @@ public class DSL {
      *
      * @see #val(Integer)
      */
+    @NotNull
     @Support
     public static Param<Integer> value(Integer value) {
         return value((Object) value, SQLDataType.INTEGER);
@@ -21056,6 +22487,7 @@ public class DSL {
      *
      * @see #val(UInteger)
      */
+    @NotNull
     @Support
     public static Param<UInteger> value(UInteger value) {
         return value((Object) value, SQLDataType.INTEGERUNSIGNED);
@@ -21067,6 +22499,7 @@ public class DSL {
      *
      * @see #val(long)
      */
+    @NotNull
     @Support
     public static Param<Long> value(long value) {
         return value((Object) value, SQLDataType.BIGINT);
@@ -21078,6 +22511,7 @@ public class DSL {
      *
      * @see #val(Long)
      */
+    @NotNull
     @Support
     public static Param<Long> value(Long value) {
         return value((Object) value, SQLDataType.BIGINT);
@@ -21089,6 +22523,7 @@ public class DSL {
      *
      * @see #val(ULong)
      */
+    @NotNull
     @Support
     public static Param<ULong> value(ULong value) {
         return value((Object) value, SQLDataType.BIGINTUNSIGNED);
@@ -21100,6 +22535,7 @@ public class DSL {
      *
      * @see #val(float)
      */
+    @NotNull
     @Support
     public static Param<Float> value(float value) {
         return value((Object) value, SQLDataType.REAL);
@@ -21111,6 +22547,7 @@ public class DSL {
      *
      * @see #val(Float)
      */
+    @NotNull
     @Support
     public static Param<Float> value(Float value) {
         return value((Object) value, SQLDataType.REAL);
@@ -21122,6 +22559,7 @@ public class DSL {
      *
      * @see #val(double)
      */
+    @NotNull
     @Support
     public static Param<Double> value(double value) {
         return value((Object) value, SQLDataType.DOUBLE);
@@ -21133,6 +22571,7 @@ public class DSL {
      *
      * @see #val(Double)
      */
+    @NotNull
     @Support
     public static Param<Double> value(Double value) {
         return value((Object) value, SQLDataType.DOUBLE);
@@ -21144,6 +22583,7 @@ public class DSL {
      *
      * @see #val(boolean)
      */
+    @NotNull
     @Support
     public static Param<Boolean> value(boolean value) {
         return value((Object) value, SQLDataType.BOOLEAN);
@@ -21155,6 +22595,7 @@ public class DSL {
      *
      * @see #val(Boolean)
      */
+    @NotNull
     @Support
     public static Param<Boolean> value(Boolean value) {
         return value((Object) value, SQLDataType.BOOLEAN);
@@ -21166,6 +22607,7 @@ public class DSL {
      *
      * @see #val(BigDecimal)
      */
+    @NotNull
     @Support
     public static Param<BigDecimal> value(BigDecimal value) {
         return value((Object) value, SQLDataType.DECIMAL);
@@ -21177,6 +22619,7 @@ public class DSL {
      *
      * @see #val(BigInteger)
      */
+    @NotNull
     @Support
     public static Param<BigInteger> value(BigInteger value) {
         return value((Object) value, SQLDataType.DECIMAL_INTEGER);
@@ -21188,6 +22631,7 @@ public class DSL {
      *
      * @see #val(byte[])
      */
+    @NotNull
     @Support
     public static Param<byte[]> value(byte[] value) {
         return value((Object) value, SQLDataType.VARBINARY);
@@ -21199,6 +22643,7 @@ public class DSL {
      *
      * @see #val(String)
      */
+    @NotNull
     @Support
     public static Param<String> value(String value) {
         return value((Object) value, SQLDataType.VARCHAR);
@@ -21210,6 +22655,7 @@ public class DSL {
      *
      * @see #val(Date)
      */
+    @NotNull
     @Support
     public static Param<Date> value(Date value) {
         return value((Object) value, SQLDataType.DATE);
@@ -21221,6 +22667,7 @@ public class DSL {
      *
      * @see #val(Time)
      */
+    @NotNull
     @Support
     public static Param<Time> value(Time value) {
         return value((Object) value, SQLDataType.TIME);
@@ -21232,6 +22679,7 @@ public class DSL {
      *
      * @see #val(Timestamp)
      */
+    @NotNull
     @Support
     public static Param<Timestamp> value(Timestamp value) {
         return value((Object) value, SQLDataType.TIMESTAMP);
@@ -21244,6 +22692,7 @@ public class DSL {
      *
      * @see #val(LocalDate)
      */
+    @NotNull
     @Support
     public static Param<LocalDate> value(LocalDate value) {
         return value((Object) value, SQLDataType.LOCALDATE);
@@ -21255,6 +22704,7 @@ public class DSL {
      *
      * @see #val(LocalTime)
      */
+    @NotNull
     @Support
     public static Param<LocalTime> value(LocalTime value) {
         return value((Object) value, SQLDataType.LOCALTIME);
@@ -21266,6 +22716,7 @@ public class DSL {
      *
      * @see #val(LocalDateTime)
      */
+    @NotNull
     @Support
     public static Param<LocalDateTime> value(LocalDateTime value) {
         return value((Object) value, SQLDataType.LOCALDATETIME);
@@ -21277,6 +22728,7 @@ public class DSL {
      *
      * @see #val(OffsetTime)
      */
+    @NotNull
     @Support
     public static Param<OffsetTime> value(OffsetTime value) {
         return value((Object) value, SQLDataType.OFFSETTIME);
@@ -21288,6 +22740,7 @@ public class DSL {
      *
      * @see #val(OffsetDateTime)
      */
+    @NotNull
     @Support
     public static Param<OffsetDateTime> value(OffsetDateTime value) {
         return value((Object) value, SQLDataType.OFFSETDATETIME);
@@ -21299,6 +22752,7 @@ public class DSL {
      *
      * @see #val(Instant)
      */
+    @NotNull
     @Support
     public static Param<Instant> value(Instant value) {
         return value((Object) value, SQLDataType.INSTANT);
@@ -21311,6 +22765,7 @@ public class DSL {
      *
      * @see #val(UUID)
      */
+    @NotNull
     @Support
     public static Param<UUID> value(UUID value) {
         return value((Object) value, SQLDataType.UUID);
@@ -21322,6 +22777,7 @@ public class DSL {
      *
      * @see #val(JSON)
      */
+    @NotNull
     @Support
     public static Param<JSON> value(JSON value) {
         return value((Object) value, SQLDataType.JSON);
@@ -21333,6 +22789,7 @@ public class DSL {
      *
      * @see #val(JSONB)
      */
+    @NotNull
     @Support
     public static Param<JSONB> value(JSONB value) {
         return value((Object) value, SQLDataType.JSONB);
@@ -21344,6 +22801,7 @@ public class DSL {
      *
      * @see #val(XML)
      */
+    @NotNull
     @Support
     public static Param<XML> value(XML value) {
         return value((Object) value, SQLDataType.XML);
@@ -21355,6 +22813,7 @@ public class DSL {
      *
      * @see #val(Object, Class)
      */
+    @NotNull
     @Support
     public static <T> Param<T> value(Object value, Class<T> type) {
         return val(value, type);
@@ -21366,6 +22825,7 @@ public class DSL {
      *
      * @see #val(Object, Field)
      */
+    @NotNull
     @Support
     public static <T> Param<T> value(Object value, Field<T> field) {
         return val(value, field);
@@ -21377,6 +22837,7 @@ public class DSL {
      *
      * @see #val(Object, DataType)
      */
+    @NotNull
     @Support
     public static <T> Param<T> value(Object value, DataType<T> type) {
         return val(value, type);
@@ -21398,6 +22859,7 @@ public class DSL {
      * @see #val(Object)
      */
     @SuppressWarnings("deprecation")
+    @NotNull
     @Support
     public static <T> Param<T> inline(T value) {
         Param<T> val = val(value);
@@ -21421,6 +22883,7 @@ public class DSL {
      * @see #inline(Object)
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<Byte> inline(byte value) {
         return inline((Object) value, SQLDataType.TINYINT);
@@ -21442,6 +22905,7 @@ public class DSL {
      * @see #inline(Object)
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<Byte> inline(Byte value) {
         return inline((Object) value, SQLDataType.TINYINT);
@@ -21463,6 +22927,7 @@ public class DSL {
      * @see #inline(Object)
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<UByte> inline(UByte value) {
         return inline((Object) value, SQLDataType.TINYINTUNSIGNED);
@@ -21484,6 +22949,7 @@ public class DSL {
      * @see #inline(Object)
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<Short> inline(short value) {
         return inline((Object) value, SQLDataType.SMALLINT);
@@ -21505,6 +22971,7 @@ public class DSL {
      * @see #inline(Object)
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<Short> inline(Short value) {
         return inline((Object) value, SQLDataType.SMALLINT);
@@ -21526,6 +22993,7 @@ public class DSL {
      * @see #inline(Object)
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<UShort> inline(UShort value) {
         return inline((Object) value, SQLDataType.SMALLINTUNSIGNED);
@@ -21547,6 +23015,7 @@ public class DSL {
      * @see #inline(Object)
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<Integer> inline(int value) {
         return inline((Object) value, SQLDataType.INTEGER);
@@ -21568,6 +23037,7 @@ public class DSL {
      * @see #inline(Object)
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<Integer> inline(Integer value) {
         return inline((Object) value, SQLDataType.INTEGER);
@@ -21589,6 +23059,7 @@ public class DSL {
      * @see #inline(Object)
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<UInteger> inline(UInteger value) {
         return inline((Object) value, SQLDataType.INTEGERUNSIGNED);
@@ -21610,6 +23081,7 @@ public class DSL {
      * @see #inline(Object)
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<Long> inline(long value) {
         return inline((Object) value, SQLDataType.BIGINT);
@@ -21631,6 +23103,7 @@ public class DSL {
      * @see #inline(Object)
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<Long> inline(Long value) {
         return inline((Object) value, SQLDataType.BIGINT);
@@ -21652,6 +23125,7 @@ public class DSL {
      * @see #inline(Object)
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<ULong> inline(ULong value) {
         return inline((Object) value, SQLDataType.BIGINTUNSIGNED);
@@ -21673,6 +23147,7 @@ public class DSL {
      * @see #inline(Object)
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<Float> inline(float value) {
         return inline((Object) value, SQLDataType.REAL);
@@ -21694,6 +23169,7 @@ public class DSL {
      * @see #inline(Object)
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<Float> inline(Float value) {
         return inline((Object) value, SQLDataType.REAL);
@@ -21715,6 +23191,7 @@ public class DSL {
      * @see #inline(Object)
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<Double> inline(double value) {
         return inline((Object) value, SQLDataType.DOUBLE);
@@ -21736,6 +23213,7 @@ public class DSL {
      * @see #inline(Object)
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<Double> inline(Double value) {
         return inline((Object) value, SQLDataType.DOUBLE);
@@ -21757,6 +23235,7 @@ public class DSL {
      * @see #inline(Object)
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<Boolean> inline(boolean value) {
         return inline((Object) value, SQLDataType.BOOLEAN);
@@ -21778,6 +23257,7 @@ public class DSL {
      * @see #inline(Object)
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<Boolean> inline(Boolean value) {
         return inline((Object) value, SQLDataType.BOOLEAN);
@@ -21799,6 +23279,7 @@ public class DSL {
      * @see #inline(Object)
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<BigDecimal> inline(BigDecimal value) {
         return inline((Object) value, SQLDataType.DECIMAL);
@@ -21820,6 +23301,7 @@ public class DSL {
      * @see #inline(Object)
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<BigInteger> inline(BigInteger value) {
         return inline((Object) value, SQLDataType.DECIMAL_INTEGER);
@@ -21841,6 +23323,7 @@ public class DSL {
      * @see #inline(Object)
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<byte[]> inline(byte[] value) {
         return inline((Object) value, SQLDataType.VARBINARY);
@@ -21862,6 +23345,7 @@ public class DSL {
      * @see #inline(Object)
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<String> inline(String value) {
         return inline((Object) value, SQLDataType.VARCHAR);
@@ -21883,6 +23367,7 @@ public class DSL {
      * @see #inline(Object)
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<Date> inline(Date value) {
         return inline((Object) value, SQLDataType.DATE);
@@ -21904,6 +23389,7 @@ public class DSL {
      * @see #inline(Object)
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<Time> inline(Time value) {
         return inline((Object) value, SQLDataType.TIME);
@@ -21925,6 +23411,7 @@ public class DSL {
      * @see #inline(Object)
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<Timestamp> inline(Timestamp value) {
         return inline((Object) value, SQLDataType.TIMESTAMP);
@@ -21947,6 +23434,7 @@ public class DSL {
      * @see #inline(Object)
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<LocalDate> inline(LocalDate value) {
         return inline((Object) value, SQLDataType.LOCALDATE);
@@ -21968,6 +23456,7 @@ public class DSL {
      * @see #inline(Object)
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<LocalTime> inline(LocalTime value) {
         return inline((Object) value, SQLDataType.LOCALTIME);
@@ -21989,6 +23478,7 @@ public class DSL {
      * @see #inline(Object)
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<LocalDateTime> inline(LocalDateTime value) {
         return inline((Object) value, SQLDataType.LOCALDATETIME);
@@ -22010,6 +23500,7 @@ public class DSL {
      * @see #inline(Object)
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<OffsetTime> inline(OffsetTime value) {
         return inline((Object) value, SQLDataType.OFFSETTIME);
@@ -22031,6 +23522,7 @@ public class DSL {
      * @see #inline(Object)
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<OffsetDateTime> inline(OffsetDateTime value) {
         return inline((Object) value, SQLDataType.OFFSETDATETIME);
@@ -22052,6 +23544,7 @@ public class DSL {
      * @see #inline(Object)
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<Instant> inline(Instant value) {
         return inline((Object) value, SQLDataType.INSTANT);
@@ -22074,6 +23567,7 @@ public class DSL {
      * @see #inline(Object)
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<UUID> inline(UUID value) {
         return inline((Object) value, SQLDataType.UUID);
@@ -22095,6 +23589,7 @@ public class DSL {
      * @see #inline(Object)
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<JSON> inline(JSON value) {
         return inline((Object) value, SQLDataType.JSON);
@@ -22116,6 +23611,7 @@ public class DSL {
      * @see #inline(Object)
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<JSONB> inline(JSONB value) {
         return inline((Object) value, SQLDataType.JSONB);
@@ -22137,6 +23633,7 @@ public class DSL {
      * @see #inline(Object)
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<XML> inline(XML value) {
         return inline((Object) value, SQLDataType.XML);
@@ -22151,6 +23648,7 @@ public class DSL {
      *
      * @see #inline(Object)
      */
+    @NotNull
     @Support
     public static Param<String> inline(char character) {
         return inline("" + character);
@@ -22165,6 +23663,7 @@ public class DSL {
      *
      * @see #inline(Object)
      */
+    @NotNull
     @Support
     public static Param<String> inline(Character character) {
         return inline((character == null) ? null : ("" + character));
@@ -22179,6 +23678,7 @@ public class DSL {
      *
      * @see #inline(Object)
      */
+    @NotNull
     @Support
     public static Param<String> inline(CharSequence character) {
 
@@ -22202,6 +23702,7 @@ public class DSL {
      * @see #val(Object, Class)
      */
     @SuppressWarnings("deprecation")
+    @NotNull
     @Support
     public static <T> Param<T> inline(Object value, Class<T> type) {
         Param<T> val = val(value, type);
@@ -22225,6 +23726,7 @@ public class DSL {
      * @see #val(Object, Field)
      */
     @SuppressWarnings("deprecation")
+    @NotNull
     @Support
     public static <T> Param<T> inline(Object value, Field<T> field) {
         Param<T> val = val(value, field);
@@ -22248,6 +23750,7 @@ public class DSL {
      * @see #val(Object, DataType)
      */
     @SuppressWarnings("deprecation")
+    @NotNull
     @Support
     public static <T> Param<T> inline(Object value, DataType<T> type) {
         Param<T> val = val(value, type);
@@ -22279,6 +23782,7 @@ public class DSL {
      * @param value The constant value
      * @return A field representing the constant value
      */
+    @NotNull
     @Support
     public static <T> Param<T> val(T value) {
         Class<?> type = (value == null) ? Object.class : value.getClass();
@@ -22290,6 +23794,7 @@ public class DSL {
      *
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<Byte> val(byte value) {
         return val((Object) value, SQLDataType.TINYINT);
@@ -22300,6 +23805,7 @@ public class DSL {
      *
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<Byte> val(Byte value) {
         return val((Object) value, SQLDataType.TINYINT);
@@ -22310,6 +23816,7 @@ public class DSL {
      *
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<UByte> val(UByte value) {
         return val((Object) value, SQLDataType.TINYINTUNSIGNED);
@@ -22320,6 +23827,7 @@ public class DSL {
      *
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<Short> val(short value) {
         return val((Object) value, SQLDataType.SMALLINT);
@@ -22330,6 +23838,7 @@ public class DSL {
      *
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<Short> val(Short value) {
         return val((Object) value, SQLDataType.SMALLINT);
@@ -22340,6 +23849,7 @@ public class DSL {
      *
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<UShort> val(UShort value) {
         return val((Object) value, SQLDataType.SMALLINTUNSIGNED);
@@ -22350,6 +23860,7 @@ public class DSL {
      *
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<Integer> val(int value) {
         return val((Object) value, SQLDataType.INTEGER);
@@ -22360,6 +23871,7 @@ public class DSL {
      *
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<Integer> val(Integer value) {
         return val((Object) value, SQLDataType.INTEGER);
@@ -22370,6 +23882,7 @@ public class DSL {
      *
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<UInteger> val(UInteger value) {
         return val((Object) value, SQLDataType.INTEGERUNSIGNED);
@@ -22380,6 +23893,7 @@ public class DSL {
      *
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<Long> val(long value) {
         return val((Object) value, SQLDataType.BIGINT);
@@ -22390,6 +23904,7 @@ public class DSL {
      *
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<Long> val(Long value) {
         return val((Object) value, SQLDataType.BIGINT);
@@ -22400,6 +23915,7 @@ public class DSL {
      *
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<ULong> val(ULong value) {
         return val((Object) value, SQLDataType.BIGINTUNSIGNED);
@@ -22410,6 +23926,7 @@ public class DSL {
      *
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<Float> val(float value) {
         return val((Object) value, SQLDataType.REAL);
@@ -22420,6 +23937,7 @@ public class DSL {
      *
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<Float> val(Float value) {
         return val((Object) value, SQLDataType.REAL);
@@ -22430,6 +23948,7 @@ public class DSL {
      *
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<Double> val(double value) {
         return val((Object) value, SQLDataType.DOUBLE);
@@ -22440,6 +23959,7 @@ public class DSL {
      *
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<Double> val(Double value) {
         return val((Object) value, SQLDataType.DOUBLE);
@@ -22450,6 +23970,7 @@ public class DSL {
      *
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<Boolean> val(boolean value) {
         return val((Object) value, SQLDataType.BOOLEAN);
@@ -22460,6 +23981,7 @@ public class DSL {
      *
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<Boolean> val(Boolean value) {
         return val((Object) value, SQLDataType.BOOLEAN);
@@ -22470,6 +23992,7 @@ public class DSL {
      *
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<BigDecimal> val(BigDecimal value) {
         return val((Object) value, SQLDataType.DECIMAL);
@@ -22480,6 +24003,7 @@ public class DSL {
      *
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<BigInteger> val(BigInteger value) {
         return val((Object) value, SQLDataType.DECIMAL_INTEGER);
@@ -22490,6 +24014,7 @@ public class DSL {
      *
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<byte[]> val(byte[] value) {
         return val((Object) value, SQLDataType.VARBINARY);
@@ -22500,6 +24025,7 @@ public class DSL {
      *
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<String> val(String value) {
         return val((Object) value, SQLDataType.VARCHAR);
@@ -22510,6 +24036,7 @@ public class DSL {
      *
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<Date> val(Date value) {
         return val((Object) value, SQLDataType.DATE);
@@ -22520,6 +24047,7 @@ public class DSL {
      *
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<Time> val(Time value) {
         return val((Object) value, SQLDataType.TIME);
@@ -22530,6 +24058,7 @@ public class DSL {
      *
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<Timestamp> val(Timestamp value) {
         return val((Object) value, SQLDataType.TIMESTAMP);
@@ -22541,6 +24070,7 @@ public class DSL {
      *
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<LocalDate> val(LocalDate value) {
         return val((Object) value, SQLDataType.LOCALDATE);
@@ -22551,6 +24081,7 @@ public class DSL {
      *
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<LocalTime> val(LocalTime value) {
         return val((Object) value, SQLDataType.LOCALTIME);
@@ -22561,6 +24092,7 @@ public class DSL {
      *
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<LocalDateTime> val(LocalDateTime value) {
         return val((Object) value, SQLDataType.LOCALDATETIME);
@@ -22571,6 +24103,7 @@ public class DSL {
      *
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<OffsetTime> val(OffsetTime value) {
         return val((Object) value, SQLDataType.OFFSETTIME);
@@ -22581,6 +24114,7 @@ public class DSL {
      *
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<OffsetDateTime> val(OffsetDateTime value) {
         return val((Object) value, SQLDataType.OFFSETDATETIME);
@@ -22591,6 +24125,7 @@ public class DSL {
      *
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<Instant> val(Instant value) {
         return val((Object) value, SQLDataType.INSTANT);
@@ -22602,6 +24137,7 @@ public class DSL {
      *
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<UUID> val(UUID value) {
         return val((Object) value, SQLDataType.UUID);
@@ -22612,6 +24148,7 @@ public class DSL {
      *
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<JSON> val(JSON value) {
         return val((Object) value, SQLDataType.JSON);
@@ -22622,6 +24159,7 @@ public class DSL {
      *
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<JSONB> val(JSONB value) {
         return val((Object) value, SQLDataType.JSONB);
@@ -22632,6 +24170,7 @@ public class DSL {
      *
      * @see #val(Object)
      */
+    @NotNull
     @Support
     public static Param<XML> val(XML value) {
         return val((Object) value, SQLDataType.XML);
@@ -22646,6 +24185,7 @@ public class DSL {
      * @return A field representing the constant value
      * @see #val(Object, DataType)
      */
+    @NotNull
     @Support
     public static <T> Param<T> val(Object value, Class<T> type) {
         return val(value, getDataType(type));
@@ -22660,6 +24200,7 @@ public class DSL {
      * @return A field representing the constant value
      * @see #val(Object, DataType)
      */
+    @NotNull
     @Support
     public static <T> Param<T> val(Object value, Field<T> field) {
         return val(value, nullSafeDataType(field));
@@ -22678,6 +24219,7 @@ public class DSL {
      * @param type The data type to enforce upon the value
      * @return A field representing the constant value
      */
+    @NotNull
     @Support
     public static <T> Param<T> val(Object value, DataType<T> type) {
 
@@ -22736,6 +24278,7 @@ public class DSL {
     /**
      * Create a {@link RecordType} of an arbitrary degree.
      */
+    @NotNull
     public static <T1> RecordType<Record> recordType(Field<?>[] fields) {
         return new Fields(fields);
     }
@@ -22743,6 +24286,7 @@ public class DSL {
     /**
      * Create a {@link RecordType} of an arbitrary degree.
      */
+    @NotNull
     public static <T1> RecordType<Record> recordType(Collection<? extends Field<?>> fields) {
         return new Fields(fields);
     }
@@ -22752,6 +24296,7 @@ public class DSL {
     /**
      * Create a {@link RecordType} of degree <code>1</code>.
      */
+    @NotNull
     public static <T1> RecordType<Record1<T1>> recordType(Field<T1> field1) {
         return new Fields(field1);
     }
@@ -22759,6 +24304,7 @@ public class DSL {
     /**
      * Create a {@link RecordType} of degree <code>2</code>.
      */
+    @NotNull
     public static <T1, T2> RecordType<Record2<T1, T2>> recordType(Field<T1> field1, Field<T2> field2) {
         return new Fields(field1, field2);
     }
@@ -22766,6 +24312,7 @@ public class DSL {
     /**
      * Create a {@link RecordType} of degree <code>3</code>.
      */
+    @NotNull
     public static <T1, T2, T3> RecordType<Record3<T1, T2, T3>> recordType(Field<T1> field1, Field<T2> field2, Field<T3> field3) {
         return new Fields(field1, field2, field3);
     }
@@ -22773,6 +24320,7 @@ public class DSL {
     /**
      * Create a {@link RecordType} of degree <code>4</code>.
      */
+    @NotNull
     public static <T1, T2, T3, T4> RecordType<Record4<T1, T2, T3, T4>> recordType(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4) {
         return new Fields(field1, field2, field3, field4);
     }
@@ -22780,6 +24328,7 @@ public class DSL {
     /**
      * Create a {@link RecordType} of degree <code>5</code>.
      */
+    @NotNull
     public static <T1, T2, T3, T4, T5> RecordType<Record5<T1, T2, T3, T4, T5>> recordType(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5) {
         return new Fields(field1, field2, field3, field4, field5);
     }
@@ -22787,6 +24336,7 @@ public class DSL {
     /**
      * Create a {@link RecordType} of degree <code>6</code>.
      */
+    @NotNull
     public static <T1, T2, T3, T4, T5, T6> RecordType<Record6<T1, T2, T3, T4, T5, T6>> recordType(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6) {
         return new Fields(field1, field2, field3, field4, field5, field6);
     }
@@ -22794,6 +24344,7 @@ public class DSL {
     /**
      * Create a {@link RecordType} of degree <code>7</code>.
      */
+    @NotNull
     public static <T1, T2, T3, T4, T5, T6, T7> RecordType<Record7<T1, T2, T3, T4, T5, T6, T7>> recordType(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7) {
         return new Fields(field1, field2, field3, field4, field5, field6, field7);
     }
@@ -22801,6 +24352,7 @@ public class DSL {
     /**
      * Create a {@link RecordType} of degree <code>8</code>.
      */
+    @NotNull
     public static <T1, T2, T3, T4, T5, T6, T7, T8> RecordType<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> recordType(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8) {
         return new Fields(field1, field2, field3, field4, field5, field6, field7, field8);
     }
@@ -22808,6 +24360,7 @@ public class DSL {
     /**
      * Create a {@link RecordType} of degree <code>9</code>.
      */
+    @NotNull
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9> RecordType<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> recordType(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9) {
         return new Fields(field1, field2, field3, field4, field5, field6, field7, field8, field9);
     }
@@ -22815,6 +24368,7 @@ public class DSL {
     /**
      * Create a {@link RecordType} of degree <code>10</code>.
      */
+    @NotNull
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> RecordType<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> recordType(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10) {
         return new Fields(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10);
     }
@@ -22822,6 +24376,7 @@ public class DSL {
     /**
      * Create a {@link RecordType} of degree <code>11</code>.
      */
+    @NotNull
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> RecordType<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> recordType(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11) {
         return new Fields(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11);
     }
@@ -22829,6 +24384,7 @@ public class DSL {
     /**
      * Create a {@link RecordType} of degree <code>12</code>.
      */
+    @NotNull
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> RecordType<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> recordType(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12) {
         return new Fields(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12);
     }
@@ -22836,6 +24392,7 @@ public class DSL {
     /**
      * Create a {@link RecordType} of degree <code>13</code>.
      */
+    @NotNull
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> RecordType<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> recordType(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13) {
         return new Fields(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13);
     }
@@ -22843,6 +24400,7 @@ public class DSL {
     /**
      * Create a {@link RecordType} of degree <code>14</code>.
      */
+    @NotNull
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> RecordType<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> recordType(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14) {
         return new Fields(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14);
     }
@@ -22850,6 +24408,7 @@ public class DSL {
     /**
      * Create a {@link RecordType} of degree <code>15</code>.
      */
+    @NotNull
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> RecordType<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> recordType(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15) {
         return new Fields(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15);
     }
@@ -22857,6 +24416,7 @@ public class DSL {
     /**
      * Create a {@link RecordType} of degree <code>16</code>.
      */
+    @NotNull
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> RecordType<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> recordType(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16) {
         return new Fields(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16);
     }
@@ -22864,6 +24424,7 @@ public class DSL {
     /**
      * Create a {@link RecordType} of degree <code>17</code>.
      */
+    @NotNull
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> RecordType<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> recordType(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17) {
         return new Fields(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17);
     }
@@ -22871,6 +24432,7 @@ public class DSL {
     /**
      * Create a {@link RecordType} of degree <code>18</code>.
      */
+    @NotNull
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> RecordType<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> recordType(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18) {
         return new Fields(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18);
     }
@@ -22878,6 +24440,7 @@ public class DSL {
     /**
      * Create a {@link RecordType} of degree <code>19</code>.
      */
+    @NotNull
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> RecordType<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> recordType(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19) {
         return new Fields(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19);
     }
@@ -22885,6 +24448,7 @@ public class DSL {
     /**
      * Create a {@link RecordType} of degree <code>20</code>.
      */
+    @NotNull
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> RecordType<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> recordType(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20) {
         return new Fields(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20);
     }
@@ -22892,6 +24456,7 @@ public class DSL {
     /**
      * Create a {@link RecordType} of degree <code>21</code>.
      */
+    @NotNull
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> RecordType<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> recordType(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21) {
         return new Fields(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21);
     }
@@ -22899,6 +24464,7 @@ public class DSL {
     /**
      * Create a {@link RecordType} of degree <code>22</code>.
      */
+    @NotNull
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> RecordType<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> recordType(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22) {
         return new Fields(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22);
     }
@@ -22914,6 +24480,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1> Row1<T1> row(T1 t1) {
         return row(Tools.field(t1));
@@ -22926,6 +24493,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2> Row2<T1, T2> row(T1 t1, T2 t2) {
         return row(Tools.field(t1), Tools.field(t2));
@@ -22938,6 +24506,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3> Row3<T1, T2, T3> row(T1 t1, T2 t2, T3 t3) {
         return row(Tools.field(t1), Tools.field(t2), Tools.field(t3));
@@ -22950,6 +24519,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4> Row4<T1, T2, T3, T4> row(T1 t1, T2 t2, T3 t3, T4 t4) {
         return row(Tools.field(t1), Tools.field(t2), Tools.field(t3), Tools.field(t4));
@@ -22962,6 +24532,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5> Row5<T1, T2, T3, T4, T5> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5) {
         return row(Tools.field(t1), Tools.field(t2), Tools.field(t3), Tools.field(t4), Tools.field(t5));
@@ -22974,6 +24545,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6> Row6<T1, T2, T3, T4, T5, T6> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6) {
         return row(Tools.field(t1), Tools.field(t2), Tools.field(t3), Tools.field(t4), Tools.field(t5), Tools.field(t6));
@@ -22986,6 +24558,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7> Row7<T1, T2, T3, T4, T5, T6, T7> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7) {
         return row(Tools.field(t1), Tools.field(t2), Tools.field(t3), Tools.field(t4), Tools.field(t5), Tools.field(t6), Tools.field(t7));
@@ -22998,6 +24571,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8> Row8<T1, T2, T3, T4, T5, T6, T7, T8> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8) {
         return row(Tools.field(t1), Tools.field(t2), Tools.field(t3), Tools.field(t4), Tools.field(t5), Tools.field(t6), Tools.field(t7), Tools.field(t8));
@@ -23010,6 +24584,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9> Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9) {
         return row(Tools.field(t1), Tools.field(t2), Tools.field(t3), Tools.field(t4), Tools.field(t5), Tools.field(t6), Tools.field(t7), Tools.field(t8), Tools.field(t9));
@@ -23022,6 +24597,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10) {
         return row(Tools.field(t1), Tools.field(t2), Tools.field(t3), Tools.field(t4), Tools.field(t5), Tools.field(t6), Tools.field(t7), Tools.field(t8), Tools.field(t9), Tools.field(t10));
@@ -23034,6 +24610,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11) {
         return row(Tools.field(t1), Tools.field(t2), Tools.field(t3), Tools.field(t4), Tools.field(t5), Tools.field(t6), Tools.field(t7), Tools.field(t8), Tools.field(t9), Tools.field(t10), Tools.field(t11));
@@ -23046,6 +24623,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12) {
         return row(Tools.field(t1), Tools.field(t2), Tools.field(t3), Tools.field(t4), Tools.field(t5), Tools.field(t6), Tools.field(t7), Tools.field(t8), Tools.field(t9), Tools.field(t10), Tools.field(t11), Tools.field(t12));
@@ -23058,6 +24636,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13) {
         return row(Tools.field(t1), Tools.field(t2), Tools.field(t3), Tools.field(t4), Tools.field(t5), Tools.field(t6), Tools.field(t7), Tools.field(t8), Tools.field(t9), Tools.field(t10), Tools.field(t11), Tools.field(t12), Tools.field(t13));
@@ -23070,6 +24649,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14) {
         return row(Tools.field(t1), Tools.field(t2), Tools.field(t3), Tools.field(t4), Tools.field(t5), Tools.field(t6), Tools.field(t7), Tools.field(t8), Tools.field(t9), Tools.field(t10), Tools.field(t11), Tools.field(t12), Tools.field(t13), Tools.field(t14));
@@ -23082,6 +24662,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15) {
         return row(Tools.field(t1), Tools.field(t2), Tools.field(t3), Tools.field(t4), Tools.field(t5), Tools.field(t6), Tools.field(t7), Tools.field(t8), Tools.field(t9), Tools.field(t10), Tools.field(t11), Tools.field(t12), Tools.field(t13), Tools.field(t14), Tools.field(t15));
@@ -23094,6 +24675,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16) {
         return row(Tools.field(t1), Tools.field(t2), Tools.field(t3), Tools.field(t4), Tools.field(t5), Tools.field(t6), Tools.field(t7), Tools.field(t8), Tools.field(t9), Tools.field(t10), Tools.field(t11), Tools.field(t12), Tools.field(t13), Tools.field(t14), Tools.field(t15), Tools.field(t16));
@@ -23106,6 +24688,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17) {
         return row(Tools.field(t1), Tools.field(t2), Tools.field(t3), Tools.field(t4), Tools.field(t5), Tools.field(t6), Tools.field(t7), Tools.field(t8), Tools.field(t9), Tools.field(t10), Tools.field(t11), Tools.field(t12), Tools.field(t13), Tools.field(t14), Tools.field(t15), Tools.field(t16), Tools.field(t17));
@@ -23118,6 +24701,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18) {
         return row(Tools.field(t1), Tools.field(t2), Tools.field(t3), Tools.field(t4), Tools.field(t5), Tools.field(t6), Tools.field(t7), Tools.field(t8), Tools.field(t9), Tools.field(t10), Tools.field(t11), Tools.field(t12), Tools.field(t13), Tools.field(t14), Tools.field(t15), Tools.field(t16), Tools.field(t17), Tools.field(t18));
@@ -23130,6 +24714,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19) {
         return row(Tools.field(t1), Tools.field(t2), Tools.field(t3), Tools.field(t4), Tools.field(t5), Tools.field(t6), Tools.field(t7), Tools.field(t8), Tools.field(t9), Tools.field(t10), Tools.field(t11), Tools.field(t12), Tools.field(t13), Tools.field(t14), Tools.field(t15), Tools.field(t16), Tools.field(t17), Tools.field(t18), Tools.field(t19));
@@ -23142,6 +24727,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20) {
         return row(Tools.field(t1), Tools.field(t2), Tools.field(t3), Tools.field(t4), Tools.field(t5), Tools.field(t6), Tools.field(t7), Tools.field(t8), Tools.field(t9), Tools.field(t10), Tools.field(t11), Tools.field(t12), Tools.field(t13), Tools.field(t14), Tools.field(t15), Tools.field(t16), Tools.field(t17), Tools.field(t18), Tools.field(t19), Tools.field(t20));
@@ -23154,6 +24740,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21) {
         return row(Tools.field(t1), Tools.field(t2), Tools.field(t3), Tools.field(t4), Tools.field(t5), Tools.field(t6), Tools.field(t7), Tools.field(t8), Tools.field(t9), Tools.field(t10), Tools.field(t11), Tools.field(t12), Tools.field(t13), Tools.field(t14), Tools.field(t15), Tools.field(t16), Tools.field(t17), Tools.field(t18), Tools.field(t19), Tools.field(t20), Tools.field(t21));
@@ -23166,6 +24753,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21, T22 t22) {
         return row(Tools.field(t1), Tools.field(t2), Tools.field(t3), Tools.field(t4), Tools.field(t5), Tools.field(t6), Tools.field(t7), Tools.field(t8), Tools.field(t9), Tools.field(t10), Tools.field(t11), Tools.field(t12), Tools.field(t13), Tools.field(t14), Tools.field(t15), Tools.field(t16), Tools.field(t17), Tools.field(t18), Tools.field(t19), Tools.field(t20), Tools.field(t21), Tools.field(t22));
@@ -23180,6 +24768,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static RowN row(Object... values) {
         return row(Tools.fieldsArray(values));
@@ -23194,6 +24783,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1> Row1<T1> row(Field<T1> t1) {
         return new RowImpl1<>(t1);
@@ -23206,6 +24796,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2> Row2<T1, T2> row(Field<T1> t1, Field<T2> t2) {
         return new RowImpl2<>(t1, t2);
@@ -23218,6 +24809,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3> Row3<T1, T2, T3> row(Field<T1> t1, Field<T2> t2, Field<T3> t3) {
         return new RowImpl3<>(t1, t2, t3);
@@ -23230,6 +24822,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4> Row4<T1, T2, T3, T4> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4) {
         return new RowImpl4<>(t1, t2, t3, t4);
@@ -23242,6 +24835,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5> Row5<T1, T2, T3, T4, T5> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5) {
         return new RowImpl5<>(t1, t2, t3, t4, t5);
@@ -23254,6 +24848,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6> Row6<T1, T2, T3, T4, T5, T6> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6) {
         return new RowImpl6<>(t1, t2, t3, t4, t5, t6);
@@ -23266,6 +24861,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7> Row7<T1, T2, T3, T4, T5, T6, T7> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7) {
         return new RowImpl7<>(t1, t2, t3, t4, t5, t6, t7);
@@ -23278,6 +24874,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8> Row8<T1, T2, T3, T4, T5, T6, T7, T8> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8) {
         return new RowImpl8<>(t1, t2, t3, t4, t5, t6, t7, t8);
@@ -23290,6 +24887,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9> Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9) {
         return new RowImpl9<>(t1, t2, t3, t4, t5, t6, t7, t8, t9);
@@ -23302,6 +24900,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10) {
         return new RowImpl10<>(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10);
@@ -23314,6 +24913,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11) {
         return new RowImpl11<>(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11);
@@ -23326,6 +24926,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12) {
         return new RowImpl12<>(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12);
@@ -23338,6 +24939,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13) {
         return new RowImpl13<>(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13);
@@ -23350,6 +24952,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14) {
         return new RowImpl14<>(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14);
@@ -23362,6 +24965,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15) {
         return new RowImpl15<>(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15);
@@ -23374,6 +24978,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16) {
         return new RowImpl16<>(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16);
@@ -23386,6 +24991,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17) {
         return new RowImpl17<>(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17);
@@ -23398,6 +25004,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18) {
         return new RowImpl18<>(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18);
@@ -23410,6 +25017,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19) {
         return new RowImpl19<>(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19);
@@ -23422,6 +25030,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20) {
         return new RowImpl20<>(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20);
@@ -23434,6 +25043,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20, Field<T21> t21) {
         return new RowImpl21<>(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21);
@@ -23446,6 +25056,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20, Field<T21> t21, Field<T22> t22) {
         return new RowImpl22<>(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22);
@@ -23460,6 +25071,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static RowN row(Field<?>... values) {
         return new RowImplN(values);
@@ -23472,6 +25084,7 @@ public class DSL {
      * expression operations can be emulated on all databases. See relevant row
      * value expression method Javadocs for details.
      */
+    @NotNull
     @Support
     public static RowN row(Collection<?> values) {
         return row(values.toArray());
@@ -23507,6 +25120,7 @@ public class DSL {
      * Use {@link Table#as(String, String...)} to rename the resulting table and
      * its columns.
      */
+    @NotNull
     @Support
     public static Table<Record> values(RowN... rows) {
         return values0(rows);
@@ -23517,6 +25131,7 @@ public class DSL {
      * <p>
      * [#6003] TODO: Make this public
      */
+    @NotNull
     @Support
     static Table<Record> values0(Row... rows) {
         Values.assertNotEmpty(rows);
@@ -23559,6 +25174,7 @@ public class DSL {
      * its columns.
      */
     @SafeVarargs
+    @NotNull
     @Support
     public static <T1> Table<Record1<T1>> values(Row1<T1>... rows) {
         return new Values<Record1<T1>>(rows).as("v", "c1");
@@ -23591,6 +25207,7 @@ public class DSL {
      * its columns.
      */
     @SafeVarargs
+    @NotNull
     @Support
     public static <T1, T2> Table<Record2<T1, T2>> values(Row2<T1, T2>... rows) {
         return new Values<Record2<T1, T2>>(rows).as("v", "c1", "c2");
@@ -23623,6 +25240,7 @@ public class DSL {
      * its columns.
      */
     @SafeVarargs
+    @NotNull
     @Support
     public static <T1, T2, T3> Table<Record3<T1, T2, T3>> values(Row3<T1, T2, T3>... rows) {
         return new Values<Record3<T1, T2, T3>>(rows).as("v", "c1", "c2", "c3");
@@ -23655,6 +25273,7 @@ public class DSL {
      * its columns.
      */
     @SafeVarargs
+    @NotNull
     @Support
     public static <T1, T2, T3, T4> Table<Record4<T1, T2, T3, T4>> values(Row4<T1, T2, T3, T4>... rows) {
         return new Values<Record4<T1, T2, T3, T4>>(rows).as("v", "c1", "c2", "c3", "c4");
@@ -23687,6 +25306,7 @@ public class DSL {
      * its columns.
      */
     @SafeVarargs
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5> Table<Record5<T1, T2, T3, T4, T5>> values(Row5<T1, T2, T3, T4, T5>... rows) {
         return new Values<Record5<T1, T2, T3, T4, T5>>(rows).as("v", "c1", "c2", "c3", "c4", "c5");
@@ -23719,6 +25339,7 @@ public class DSL {
      * its columns.
      */
     @SafeVarargs
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6> Table<Record6<T1, T2, T3, T4, T5, T6>> values(Row6<T1, T2, T3, T4, T5, T6>... rows) {
         return new Values<Record6<T1, T2, T3, T4, T5, T6>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6");
@@ -23751,6 +25372,7 @@ public class DSL {
      * its columns.
      */
     @SafeVarargs
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7> Table<Record7<T1, T2, T3, T4, T5, T6, T7>> values(Row7<T1, T2, T3, T4, T5, T6, T7>... rows) {
         return new Values<Record7<T1, T2, T3, T4, T5, T6, T7>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7");
@@ -23783,6 +25405,7 @@ public class DSL {
      * its columns.
      */
     @SafeVarargs
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8> Table<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> values(Row8<T1, T2, T3, T4, T5, T6, T7, T8>... rows) {
         return new Values<Record8<T1, T2, T3, T4, T5, T6, T7, T8>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8");
@@ -23815,6 +25438,7 @@ public class DSL {
      * its columns.
      */
     @SafeVarargs
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9> Table<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> values(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9>... rows) {
         return new Values<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9");
@@ -23847,6 +25471,7 @@ public class DSL {
      * its columns.
      */
     @SafeVarargs
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> Table<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> values(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>... rows) {
         return new Values<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10");
@@ -23879,6 +25504,7 @@ public class DSL {
      * its columns.
      */
     @SafeVarargs
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> Table<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> values(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>... rows) {
         return new Values<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11");
@@ -23911,6 +25537,7 @@ public class DSL {
      * its columns.
      */
     @SafeVarargs
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> Table<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> values(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>... rows) {
         return new Values<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12");
@@ -23943,6 +25570,7 @@ public class DSL {
      * its columns.
      */
     @SafeVarargs
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> Table<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> values(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>... rows) {
         return new Values<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12", "c13");
@@ -23975,6 +25603,7 @@ public class DSL {
      * its columns.
      */
     @SafeVarargs
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> Table<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> values(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>... rows) {
         return new Values<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12", "c13", "c14");
@@ -24007,6 +25636,7 @@ public class DSL {
      * its columns.
      */
     @SafeVarargs
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> Table<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> values(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>... rows) {
         return new Values<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12", "c13", "c14", "c15");
@@ -24039,6 +25669,7 @@ public class DSL {
      * its columns.
      */
     @SafeVarargs
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> Table<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> values(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>... rows) {
         return new Values<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12", "c13", "c14", "c15", "c16");
@@ -24071,6 +25702,7 @@ public class DSL {
      * its columns.
      */
     @SafeVarargs
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> Table<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> values(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>... rows) {
         return new Values<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12", "c13", "c14", "c15", "c16", "c17");
@@ -24103,6 +25735,7 @@ public class DSL {
      * its columns.
      */
     @SafeVarargs
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> Table<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> values(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>... rows) {
         return new Values<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12", "c13", "c14", "c15", "c16", "c17", "c18");
@@ -24135,6 +25768,7 @@ public class DSL {
      * its columns.
      */
     @SafeVarargs
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> Table<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> values(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>... rows) {
         return new Values<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12", "c13", "c14", "c15", "c16", "c17", "c18", "c19");
@@ -24167,6 +25801,7 @@ public class DSL {
      * its columns.
      */
     @SafeVarargs
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> Table<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> values(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>... rows) {
         return new Values<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12", "c13", "c14", "c15", "c16", "c17", "c18", "c19", "c20");
@@ -24199,6 +25834,7 @@ public class DSL {
      * its columns.
      */
     @SafeVarargs
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> Table<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> values(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>... rows) {
         return new Values<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12", "c13", "c14", "c15", "c16", "c17", "c18", "c19", "c20", "c21");
@@ -24231,6 +25867,7 @@ public class DSL {
      * its columns.
      */
     @SafeVarargs
+    @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> Table<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> values(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>... rows) {
         return new Values<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12", "c13", "c14", "c15", "c16", "c17", "c18", "c19", "c20", "c21", "c22");
@@ -24322,6 +25959,7 @@ public class DSL {
     /**
      * The asterisk (<code>*</code>) to be used in <code>SELECT</code> clauses.
      */
+    @NotNull
     @Support
     public static Asterisk asterisk() {
         return AsteriskImpl.INSTANCE;
@@ -24337,6 +25975,7 @@ public class DSL {
      *
      * @return A <code>0</code> literal as a <code>Field</code>
      */
+    @NotNull
     @Support
     public static Param<Integer> zero() {
         return inline(0);
@@ -24352,6 +25991,7 @@ public class DSL {
      *
      * @return A <code>1</code> literal as a <code>Field</code>
      */
+    @NotNull
     @Support
     public static Param<Integer> one() {
         return inline(1);
@@ -24365,6 +26005,7 @@ public class DSL {
      *
      * @return A <code>2</code> literal as a <code>Field</code>
      */
+    @NotNull
     @Support
     public static Param<Integer> two() {
         return inline(2);
@@ -24379,6 +26020,7 @@ public class DSL {
      * <li>{@link Math#PI}</li>
      * </ul>
      */
+    @NotNull
     @Support
     public static Field<BigDecimal> pi() {
         return new Pi();
@@ -24387,6 +26029,7 @@ public class DSL {
     /**
      * The <code>τ</code> literal, or <code>π</code>, in a better world.
      */
+    @NotNull
     @Support
     public static Field<BigDecimal> tau() {
         return pi().times(two());
@@ -24401,6 +26044,7 @@ public class DSL {
      * <li>{@link Math#E}</li>
      * </ul>
      */
+    @NotNull
     @Support
     public static Field<BigDecimal> e() {
         return new Euler();
@@ -24413,6 +26057,7 @@ public class DSL {
     /**
      * Get the <code>current_user()</code> function.
      */
+    @NotNull
     @Support
     public static Field<String> currentUser() {
         return new CurrentUser();
@@ -24421,6 +26066,7 @@ public class DSL {
     /**
      * Get the <code>current_schema()</code> function.
      */
+    @NotNull
     @Support
     public static Field<String> currentSchema() {
         return new CurrentSchema();
@@ -24441,6 +26087,7 @@ public class DSL {
      *             static data type registry is not recommended.
      */
     @Deprecated
+    @NotNull
     @Support
     public static <T> DataType<T> getDataType(Class<T> type) {
         return DefaultDataType.getDataType(SQLDialect.DEFAULT, type);

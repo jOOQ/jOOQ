@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.impl.Names.N_POWER;
 import static org.jooq.impl.SQLDataType.NUMERIC;
 

@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 import static org.jooq.SQLDialect.H2;
 // ...
@@ -67,6 +70,7 @@ public interface WindowIgnoreNullsStep<T> extends WindowOverStep<T> {
      * Add an <code>IGNORE NULLS</code> clause to the window function. This
      * might not be supported by all dialects.
      */
+    @NotNull
     @Support({ H2 })
     WindowOverStep<T> ignoreNulls();
 
@@ -74,6 +78,7 @@ public interface WindowIgnoreNullsStep<T> extends WindowOverStep<T> {
      * Add a <code>RESPECT NULLS</code> clause to the window function. This
      * might not be supported by all dialects.
      */
+    @NotNull
     @Support({ H2 })
     WindowOverStep<T> respectNulls();
 }

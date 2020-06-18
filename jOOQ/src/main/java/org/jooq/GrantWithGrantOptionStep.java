@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
@@ -58,6 +61,7 @@ public interface GrantWithGrantOptionStep extends GrantFinalStep{
     /**
      * Add the <code>WITH GRANT OPTION</code> clause.
      */
+    @NotNull
     @Support({ HSQLDB, MARIADB, MYSQL, POSTGRES })
     GrantFinalStep withGrantOption();
 }

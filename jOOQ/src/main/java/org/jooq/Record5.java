@@ -37,6 +37,8 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * A model type for a records with degree <code>5</code>
  *
@@ -52,12 +54,14 @@ public interface Record5<T1, T2, T3, T4, T5> extends Record {
     /**
      * Get this record's fields as a {@link Row5}.
      */
+    @NotNull
     @Override
     Row5<T1, T2, T3, T4, T5> fieldsRow();
 
     /**
      * Get this record's values as a {@link Row5}.
      */
+    @NotNull
     @Override
     Row5<T1, T2, T3, T4, T5> valuesRow();
 
@@ -68,26 +72,31 @@ public interface Record5<T1, T2, T3, T4, T5> extends Record {
     /**
      * Get the first field.
      */
+    @NotNull
     Field<T1> field1();
 
     /**
      * Get the second field.
      */
+    @NotNull
     Field<T2> field2();
 
     /**
      * Get the third field.
      */
+    @NotNull
     Field<T3> field3();
 
     /**
      * Get the fourth field.
      */
+    @NotNull
     Field<T4> field4();
 
     /**
      * Get the fifth field.
      */
+    @NotNull
     Field<T5> field5();
 
     // ------------------------------------------------------------------------
@@ -122,42 +131,50 @@ public interface Record5<T1, T2, T3, T4, T5> extends Record {
     /**
      * Set the first value.
      */
+    @NotNull
     Record5<T1, T2, T3, T4, T5> value1(T1 value);
 
     /**
      * Set the second value.
      */
+    @NotNull
     Record5<T1, T2, T3, T4, T5> value2(T2 value);
 
     /**
      * Set the third value.
      */
+    @NotNull
     Record5<T1, T2, T3, T4, T5> value3(T3 value);
 
     /**
      * Set the fourth value.
      */
+    @NotNull
     Record5<T1, T2, T3, T4, T5> value4(T4 value);
 
     /**
      * Set the fifth value.
      */
+    @NotNull
     Record5<T1, T2, T3, T4, T5> value5(T5 value);
 
     /**
      * Set all values.
      */
+    @NotNull
     Record5<T1, T2, T3, T4, T5> values(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5);
 
     /**
      * {@inheritDoc}
      */
+    @NotNull
     @Override
     <T> Record5<T1, T2, T3, T4, T5> with(Field<T> field, T value);
 
     /**
      * {@inheritDoc}
      */
+    @NotNull
     @Override
     <T, U> Record5<T1, T2, T3, T4, T5> with(Field<T> field, U value, Converter<? extends T, ? super U> converter);
 

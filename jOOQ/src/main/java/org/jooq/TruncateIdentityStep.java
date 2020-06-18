@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.POSTGRES;
@@ -70,6 +73,7 @@ public interface TruncateIdentityStep<R extends Record> extends TruncateCascadeS
      * Add the <code>RESTART IDENTITY</code> clause to the <code>TRUNCATE</code>
      * statement.
      */
+    @NotNull
     @Support({ HSQLDB, POSTGRES })
     TruncateCascadeStep<R> restartIdentity();
 
@@ -77,6 +81,7 @@ public interface TruncateIdentityStep<R extends Record> extends TruncateCascadeS
      * Add the <code>CONTINUE IDENTITY</code> clause to the
      * <code>TRUNCATE</code> statement.
      */
+    @NotNull
     @Support({ HSQLDB, POSTGRES })
     TruncateCascadeStep<R> continueIdentity();
 }

@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import java.sql.DatabaseMetaData;
 
 import org.jooq.Configuration;

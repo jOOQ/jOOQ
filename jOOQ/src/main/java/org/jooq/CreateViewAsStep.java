@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 /**
  * A {@link Query} that can create views.
  * <p>
@@ -65,6 +68,7 @@ public interface CreateViewAsStep<R extends Record> {
     /**
      * Add an <code>AS</code> clause to the <code>CREATE VIEW</code> statement.
      */
+    @NotNull
     @Support
     CreateViewFinalStep as(Select<? extends R> select);
 
@@ -79,6 +83,7 @@ public interface CreateViewAsStep<R extends Record> {
      * @param sql The SQL
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     CreateViewFinalStep as(SQL sql);
@@ -94,6 +99,7 @@ public interface CreateViewAsStep<R extends Record> {
      * @param sql The SQL
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     CreateViewFinalStep as(String sql);
@@ -109,6 +115,7 @@ public interface CreateViewAsStep<R extends Record> {
      * @param sql The SQL
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     CreateViewFinalStep as(String sql, Object... bindings);
@@ -124,6 +131,7 @@ public interface CreateViewAsStep<R extends Record> {
      * @param sql The SQL
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     CreateViewFinalStep as(String sql, QueryPart... parts);

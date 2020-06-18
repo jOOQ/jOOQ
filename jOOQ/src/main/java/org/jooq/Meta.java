@@ -63,6 +63,8 @@ import java.util.List;
 import org.jooq.exception.DataAccessException;
 import org.jooq.util.xml.jaxb.InformationSchema;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * A wrapping object for {@link DatabaseMetaData} or for other sources of
  * database meta information (e.g. {@link InformationSchema})
@@ -93,6 +95,7 @@ public interface Meta extends Scope {
      * @throws DataAccessException If something went wrong fetching the meta
      *             objects
      */
+    @NotNull
     @Support
     List<Catalog> getCatalogs() throws DataAccessException;
 
@@ -103,6 +106,7 @@ public interface Meta extends Scope {
      * @throws DataAccessException If something went wrong fetching the meta
      *             objects
      */
+    @NotNull
     @Support
     Catalog getCatalog(String name) throws DataAccessException;
 
@@ -113,6 +117,7 @@ public interface Meta extends Scope {
      * @throws DataAccessException If something went wrong fetching the meta
      *             objects
      */
+    @NotNull
     @Support
     Catalog getCatalog(Name name) throws DataAccessException;
 
@@ -122,6 +127,7 @@ public interface Meta extends Scope {
      * @throws DataAccessException If something went wrong fetching the meta
      *             objects
      */
+    @NotNull
     @Support
     List<Schema> getSchemas() throws DataAccessException;
 
@@ -131,6 +137,7 @@ public interface Meta extends Scope {
      * @throws DataAccessException If something went wrong fetching the meta
      *             objects
      */
+    @NotNull
     @Support
     List<Schema> getSchemas(String name) throws DataAccessException;
 
@@ -140,6 +147,7 @@ public interface Meta extends Scope {
      * @throws DataAccessException If something went wrong fetching the meta
      *             objects
      */
+    @NotNull
     @Support
     List<Schema> getSchemas(Name name) throws DataAccessException;
 
@@ -149,6 +157,7 @@ public interface Meta extends Scope {
      * @throws DataAccessException If something went wrong fetching the meta
      *             objects
      */
+    @NotNull
     @Support
     List<Table<?>> getTables() throws DataAccessException;
 
@@ -158,6 +167,7 @@ public interface Meta extends Scope {
      * @throws DataAccessException If something went wrong fetching the meta
      *             objects
      */
+    @NotNull
     @Support
     List<Table<?>> getTables(String name) throws DataAccessException;
 
@@ -167,6 +177,7 @@ public interface Meta extends Scope {
      * @throws DataAccessException If something went wrong fetching the meta
      *             objects
      */
+    @NotNull
     @Support
     List<Table<?>> getTables(Name name) throws DataAccessException;
 
@@ -176,6 +187,7 @@ public interface Meta extends Scope {
      * @throws DataAccessException If something went wrong fetching the meta
      *             objects
      */
+    @NotNull
     @Support({ H2, POSTGRES })
     List<Domain<?>> getDomains() throws DataAccessException;
 
@@ -185,6 +197,7 @@ public interface Meta extends Scope {
      * @throws DataAccessException If something went wrong fetching the meta
      *             objects
      */
+    @NotNull
     @Support({ H2, POSTGRES })
     List<Domain<?>> getDomains(String name) throws DataAccessException;
 
@@ -194,6 +207,7 @@ public interface Meta extends Scope {
      * @throws DataAccessException If something went wrong fetching the meta
      *             objects
      */
+    @NotNull
     @Support({ H2, POSTGRES })
     List<Domain<?>> getDomains(Name name) throws DataAccessException;
 
@@ -203,6 +217,7 @@ public interface Meta extends Scope {
      * @throws DataAccessException If something went wrong fetching the meta
      *             objects
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     List<Sequence<?>> getSequences() throws DataAccessException;
 
@@ -212,6 +227,7 @@ public interface Meta extends Scope {
      * @throws DataAccessException If something went wrong fetching the meta
      *             objects
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     List<Sequence<?>> getSequences(String name) throws DataAccessException;
 
@@ -221,6 +237,7 @@ public interface Meta extends Scope {
      * @throws DataAccessException If something went wrong fetching the meta
      *             objects
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     List<Sequence<?>> getSequences(Name name) throws DataAccessException;
 
@@ -230,6 +247,7 @@ public interface Meta extends Scope {
      * @throws DataAccessException If something went wrong fetching the meta
      *             objects
      */
+    @NotNull
     @Support
     List<UniqueKey<?>> getPrimaryKeys() throws DataAccessException;
 
@@ -239,6 +257,7 @@ public interface Meta extends Scope {
      * @throws DataAccessException If something went wrong fetching the meta
      *             objects
      */
+    @NotNull
     @Support
     List<Index> getIndexes() throws DataAccessException;
 
@@ -255,42 +274,50 @@ public interface Meta extends Scope {
     /**
      * Create a wrapper {@link Meta} instance filtering out some catalogs.
      */
+    @NotNull
     Meta filterCatalogs(Predicate<? super Catalog> filter);
 
     /**
      * Create a wrapper {@link Meta} instance filtering out some schemas.
      */
+    @NotNull
     Meta filterSchemas(Predicate<? super Schema> filter);
 
     /**
      * Create a wrapper {@link Meta} instance filtering out some tables.
      */
+    @NotNull
     Meta filterTables(Predicate<? super Table<?>> filter);
 
     /**
      * Create a wrapper {@link Meta} instance filtering out some domains.
      */
+    @NotNull
     Meta filterDomains(Predicate<? super Domain<?>> filter);
 
     /**
      * Create a wrapper {@link Meta} instance filtering out some sequences.
      */
+    @NotNull
     Meta filterSequences(Predicate<? super Sequence<?>> filter);
 
     /**
      * Create a wrapper {@link Meta} instance filtering out some primary keys.
      */
+    @NotNull
     Meta filterPrimaryKeys(Predicate<? super UniqueKey<?>> filter);
 
     /**
      * Create a wrapper {@link Meta} instance filtering out some indexes.
      */
+    @NotNull
     Meta filterIndexes(Predicate<? super Index> filter);
 
     /**
      * Eager-create an in-memory copy of this {@link Meta} instance without any
      * connection to the original data source.
      */
+    @NotNull
     Meta snapshot() throws DataAccessException;
 
     /**
@@ -299,6 +326,7 @@ public interface Meta extends Scope {
      * @throws DataAccessException If something went wrong fetching the meta
      *             objects
      */
+    @NotNull
     Queries ddl() throws DataAccessException;
 
     /**
@@ -307,6 +335,7 @@ public interface Meta extends Scope {
      * @throws DataAccessException If something went wrong fetching the meta
      *             objects
      */
+    @NotNull
     Queries ddl(DDLExportConfiguration configuration) throws DataAccessException;
 
     /**
@@ -316,6 +345,7 @@ public interface Meta extends Scope {
      * @throws DataAccessException If something went wrong fetching the meta
      *             objects
      */
+    @NotNull
     Meta apply(String migration) throws DataAccessException;
 
     /**
@@ -324,6 +354,7 @@ public interface Meta extends Scope {
      * @throws DataAccessException If something went wrong fetching the meta
      *             objects
      */
+    @NotNull
     Meta apply(Query... migration) throws DataAccessException;
 
     /**
@@ -332,6 +363,7 @@ public interface Meta extends Scope {
      * @throws DataAccessException If something went wrong fetching the meta
      *             objects
      */
+    @NotNull
     Meta apply(Collection<? extends Query> migration) throws DataAccessException;
 
     /**
@@ -340,6 +372,7 @@ public interface Meta extends Scope {
      * @throws DataAccessException If something went wrong fetching the meta
      *             objects
      */
+    @NotNull
     Meta apply(Queries migration) throws DataAccessException;
 
     /**
@@ -351,6 +384,7 @@ public interface Meta extends Scope {
      *             objects
      * @see #migrateTo(Meta, MigrationConfiguration)
      */
+    @NotNull
     Queries migrateTo(Meta other) throws DataAccessException;
 
     /**
@@ -379,6 +413,7 @@ public interface Meta extends Scope {
      * @throws DataAccessException If something went wrong fetching the meta
      *             objects
      */
+    @NotNull
     Queries migrateTo(Meta other, MigrationConfiguration configuration) throws DataAccessException;
 
     /**
@@ -387,5 +422,6 @@ public interface Meta extends Scope {
      * This allows for serialising schema meta information as XML using JAXB.
      * See also {@link Constants#XSD_META} for details.
      */
+    @NotNull
     InformationSchema informationSchema() throws DataAccessException;
 }

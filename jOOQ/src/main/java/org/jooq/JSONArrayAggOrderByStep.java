@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 // ...
@@ -61,12 +64,14 @@ public interface JSONArrayAggOrderByStep<J> extends JSONArrayAggNullStep<J> {
     /**
      * Add an <code>ORDER BY</code> clause to the function.
      */
+    @NotNull
     @Support({ H2, MARIADB, POSTGRES })
     JSONArrayAggNullStep<J> orderBy(OrderField<?>... fields);
 
     /**
      * Add an <code>ORDER BY</code> clause to the function.
      */
+    @NotNull
     @Support({ H2, MARIADB, POSTGRES })
     JSONArrayAggNullStep<J> orderBy(Collection<? extends OrderField<?>> fields);
 }

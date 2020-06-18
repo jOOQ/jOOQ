@@ -37,6 +37,8 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * An intermediate DSL type for the construction of a <code>BETWEEN</code>
  * predicate.
@@ -48,24 +50,28 @@ public interface BetweenAndStep19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, 
     /**
      * Create a condition to check this field against some bounds
      */
+    @NotNull
     @Support
     Condition and(Field<T1> maxValue1, Field<T2> maxValue2, Field<T3> maxValue3, Field<T4> maxValue4, Field<T5> maxValue5, Field<T6> maxValue6, Field<T7> maxValue7, Field<T8> maxValue8, Field<T9> maxValue9, Field<T10> maxValue10, Field<T11> maxValue11, Field<T12> maxValue12, Field<T13> maxValue13, Field<T14> maxValue14, Field<T15> maxValue15, Field<T16> maxValue16, Field<T17> maxValue17, Field<T18> maxValue18, Field<T19> maxValue19);
 
     /**
      * Create a condition to check this field against some bounds
      */
+    @NotNull
     @Support
     Condition and(T1 maxValue1, T2 maxValue2, T3 maxValue3, T4 maxValue4, T5 maxValue5, T6 maxValue6, T7 maxValue7, T8 maxValue8, T9 maxValue9, T10 maxValue10, T11 maxValue11, T12 maxValue12, T13 maxValue13, T14 maxValue14, T15 maxValue15, T16 maxValue16, T17 maxValue17, T18 maxValue18, T19 maxValue19);
 
     /**
      * Create a condition to check this field against some bounds
      */
+    @NotNull
     @Support
     Condition and(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> maxValue);
 
     /**
      * Create a condition to check this field against some bounds
      */
+    @NotNull
     @Support
     Condition and(Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> maxValue);
 

@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.Parser;

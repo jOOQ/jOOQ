@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 
 /**
  * A <code>QueryPart</code> to be used exclusively in <code>SELECT</code>

@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 import java.util.Collection;
 
 
@@ -62,18 +65,21 @@ public interface InsertValuesStepN<R extends Record> extends InsertOnDuplicateSt
     /**
      * Add values to the insert statement
      */
+    @NotNull
     @Support
     InsertValuesStepN<R> values(Object... values);
 
     /**
      * Add values to the insert statement
      */
+    @NotNull
     @Support
     InsertValuesStepN<R> values(Field<?>... values);
 
     /**
      * Add values to the insert statement
      */
+    @NotNull
     @Support
     InsertValuesStepN<R> values(Collection<?> values);
 
@@ -87,6 +93,7 @@ public interface InsertValuesStepN<R extends Record> extends InsertOnDuplicateSt
      * {@link DSLContext#insertInto(Table, Field...)} or
      * {@link DSLContext#insertInto(Table, Collection)}
      */
+    @NotNull
     @Support
     InsertOnDuplicateStep<R> select(Select<?> select);
 }

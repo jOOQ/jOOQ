@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 import static org.jooq.SQLDialect.CUBRID;
@@ -81,12 +84,14 @@ public interface WindowPartitionByStep<T> extends WindowOrderByStep<T> {
     /**
      * Add a <code>PARTITION BY</code> clause to the window functions.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowOrderByStep<T> partitionBy(Field<?>... fields);
 
     /**
      * Add a <code>PARTITION BY</code> clause to the window functions.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowOrderByStep<T> partitionBy(Collection<? extends Field<?>> fields);
 
@@ -99,6 +104,7 @@ public interface WindowPartitionByStep<T> extends WindowOrderByStep<T> {
      *             omit the clause entirely.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE })
     WindowOrderByStep<T> partitionByOne();
 

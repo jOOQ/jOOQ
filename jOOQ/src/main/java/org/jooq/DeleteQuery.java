@@ -47,6 +47,9 @@ import static org.jooq.SQLDialect.POSTGRES;
 
 import java.util.Collection;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * A <code>DELETE</code> statement (model API).
  * <p>
@@ -192,6 +195,7 @@ public interface DeleteQuery<R extends Record> extends ConditionProvider, Delete
      *         keys from the JDBC driver.
      * @see #getReturnedRecords()
      */
+    @Nullable
     @Support({ FIREBIRD, POSTGRES })
     R getReturnedRecord();
 
@@ -217,6 +221,7 @@ public interface DeleteQuery<R extends Record> extends ConditionProvider, Delete
      *         keys from the JDBC driver.</li>
      *         </ul>
      */
+    @NotNull
     @Support({ FIREBIRD, POSTGRES })
     Result<R> getReturnedRecords();
 

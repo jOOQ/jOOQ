@@ -50,6 +50,9 @@ import java.util.Optional;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.TooManyRowsException;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * This type is used for the {@link Update}'s DSL API.
  * <p>
@@ -109,6 +112,7 @@ public interface UpdateResultStep<R extends Record> extends Update<R> {
      * @throws DataAccessException if something went wrong executing the query
      * @see UpdateQuery#getReturnedRecords()
      */
+    @NotNull
     @Support({ FIREBIRD, POSTGRES })
     Result<R> fetch() throws DataAccessException;
 
@@ -124,6 +128,7 @@ public interface UpdateResultStep<R extends Record> extends Update<R> {
      * @throws TooManyRowsException if the query returned more than one record
      * @see UpdateQuery#getReturnedRecord()
      */
+    @Nullable
     @Support({ FIREBIRD, POSTGRES })
     R fetchOne() throws DataAccessException, TooManyRowsException;
 
@@ -138,6 +143,7 @@ public interface UpdateResultStep<R extends Record> extends Update<R> {
      * @throws TooManyRowsException if the query returned more than one record
      * @see UpdateQuery#getReturnedRecord()
      */
+    @NotNull
     @Support({ FIREBIRD, POSTGRES })
     Optional<R> fetchOptional() throws DataAccessException, TooManyRowsException;
 

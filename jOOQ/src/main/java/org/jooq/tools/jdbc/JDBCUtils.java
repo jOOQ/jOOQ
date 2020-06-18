@@ -100,6 +100,8 @@ import java.sql.Statement;
 import org.jooq.SQLDialect;
 import org.jooq.tools.JooqLogger;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * JDBC-related utility methods.
  *
@@ -123,6 +125,7 @@ public class JDBCUtils {
      *         <code>null</code>.
      * @see #dialect(String)
      */
+    @NotNull
     public static final SQLDialect dialect(Connection connection) {
         SQLDialect result = SQLDialect.DEFAULT;
 
@@ -164,6 +167,7 @@ public class JDBCUtils {
         return result;
     }
 
+    @NotNull
     private static final SQLDialect dialect(String url, int majorVersion, int minorVersion) {
         SQLDialect dialect = dialect(url);
 
@@ -296,6 +300,7 @@ public class JDBCUtils {
      *         if no dialect could be derived from the connection. Never
      *         <code>null</code>.
      */
+    @NotNull
     public static final SQLDialect dialect(String url) {
         if (url == null)
             return DEFAULT;
@@ -374,6 +379,7 @@ public class JDBCUtils {
      *         <code>"java.sql.Driver"</code> if no driver class could be
      *         derived from the URL. Never <code>null</code>.
      */
+    @NotNull
     public static final String driver(SQLDialect dialect) {
         switch (dialect.family()) {
             case CUBRID:
@@ -433,6 +439,7 @@ public class JDBCUtils {
      *         <code>"java.sql.Driver"</code> if no driver class could be
      *         derived from the URL. Never <code>null</code>.
      */
+    @NotNull
     public static final String driver(String url) {
         return driver(dialect(url).family());
     }

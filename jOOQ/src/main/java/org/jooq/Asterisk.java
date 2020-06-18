@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 import org.jooq.impl.DSL;
 
 /**
@@ -75,6 +78,7 @@ public interface Asterisk extends SelectFieldOrAsterisk {
      * dialects (e.g. {@link SQLDialect#H2}) implement this feature natively. In
      * other dialects, jOOQ expands the asterisk if possible.
      */
+    @NotNull
     @Support
     Asterisk except(String... fieldNames);
 
@@ -85,6 +89,7 @@ public interface Asterisk extends SelectFieldOrAsterisk {
      * dialects (e.g. {@link SQLDialect#H2}) implement this feature natively. In
      * other dialects, jOOQ expands the asterisk if possible.
      */
+    @NotNull
     @Support
     Asterisk except(Name... fieldNames);
 
@@ -95,6 +100,7 @@ public interface Asterisk extends SelectFieldOrAsterisk {
      * dialects (e.g. {@link SQLDialect#H2}) implement this feature natively. In
      * other dialects, jOOQ expands the asterisk if possible.
      */
+    @NotNull
     @Support
     Asterisk except(Field<?>... fields);
 }

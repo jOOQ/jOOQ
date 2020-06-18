@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 // ...
@@ -90,6 +93,7 @@ public interface AlterIndexOnStep extends AlterIndexStep {
      * index. In all other databases, the <code>ON</code> clause will simply be
      * ignored for compatibility reasons.
      */
+    @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterIndexStep on(Table<?> table);
 
@@ -103,6 +107,7 @@ public interface AlterIndexOnStep extends AlterIndexStep {
      * index. In all other databases, the <code>ON</code> clause will simply be
      * ignored for compatibility reasons.
      */
+    @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterIndexStep on(String tableName);
 
@@ -116,6 +121,7 @@ public interface AlterIndexOnStep extends AlterIndexStep {
      * index. In all other databases, the <code>ON</code> clause will simply be
      * ignored for compatibility reasons.
      */
+    @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterIndexStep on(Name tableName);
 

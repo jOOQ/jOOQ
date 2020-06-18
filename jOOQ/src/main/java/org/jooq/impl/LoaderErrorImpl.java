@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import org.jooq.LoaderError;
 import org.jooq.Query;
 import org.jooq.exception.DataAccessException;

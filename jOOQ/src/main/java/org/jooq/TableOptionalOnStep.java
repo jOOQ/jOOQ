@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 /**
  * An intermediate type for the construction of a <code>JOIN</code> clause,
  * where there may optionally be a join criteria added using an <code>ON</code>

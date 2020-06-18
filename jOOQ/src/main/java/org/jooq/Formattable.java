@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 import java.io.OutputStream;
 import java.io.Writer;
 import java.sql.ResultSet;

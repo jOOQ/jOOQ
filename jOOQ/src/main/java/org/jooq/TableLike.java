@@ -41,6 +41,9 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * An object that can behave like a table (a table-like object).
  * <p>
@@ -55,6 +58,7 @@ public interface TableLike<R extends Record> extends QueryPart {
      * Get this table's fields as a {@link Row}, if this table knows its field
      * references.
      */
+    @NotNull
     Row fieldsRow();
 
 
@@ -62,6 +66,7 @@ public interface TableLike<R extends Record> extends QueryPart {
      * Get this table's fields as a {@link Stream}, if this table knows its
      * field references.
      */
+    @NotNull
     Stream<Field<?>> fieldStream();
 
 
@@ -85,6 +90,7 @@ public interface TableLike<R extends Record> extends QueryPart {
      *
      * @see Row#field(Field)
      */
+    @Nullable
     <T> Field<T> field(Field<T> field);
 
     /**
@@ -93,6 +99,7 @@ public interface TableLike<R extends Record> extends QueryPart {
      *
      * @see Row#field(String)
      */
+    @Nullable
     Field<?> field(String name);
 
     /**
@@ -101,6 +108,7 @@ public interface TableLike<R extends Record> extends QueryPart {
      *
      * @see Row#field(String, Class)
      */
+    @Nullable
     <T> Field<T> field(String name, Class<T> type);
 
     /**
@@ -109,6 +117,7 @@ public interface TableLike<R extends Record> extends QueryPart {
      *
      * @see Row#field(String, DataType)
      */
+    @Nullable
     <T> Field<T> field(String name, DataType<T> dataType);
 
     /**
@@ -117,6 +126,7 @@ public interface TableLike<R extends Record> extends QueryPart {
      *
      * @see Row#field(Name)
      */
+    @Nullable
     Field<?> field(Name name);
 
     /**
@@ -125,6 +135,7 @@ public interface TableLike<R extends Record> extends QueryPart {
      *
      * @see Row#field(Name, Class)
      */
+    @Nullable
     <T> Field<T> field(Name name, Class<T> type);
 
     /**
@@ -133,6 +144,7 @@ public interface TableLike<R extends Record> extends QueryPart {
      *
      * @see Row#field(Name, DataType)
      */
+    @Nullable
     <T> Field<T> field(Name name, DataType<T> dataType);
 
     /**
@@ -141,6 +153,7 @@ public interface TableLike<R extends Record> extends QueryPart {
      *
      * @see Row#field(int)
      */
+    @Nullable
     Field<?> field(int index);
 
     /**
@@ -149,6 +162,7 @@ public interface TableLike<R extends Record> extends QueryPart {
      *
      * @see Row#field(int, Class)
      */
+    @Nullable
     <T> Field<T> field(int index, Class<T> type);
 
     /**
@@ -157,6 +171,7 @@ public interface TableLike<R extends Record> extends QueryPart {
      *
      * @see Row#field(int, DataType)
      */
+    @Nullable
     <T> Field<T> field(int index, DataType<T> dataType);
 
     /**
@@ -165,6 +180,7 @@ public interface TableLike<R extends Record> extends QueryPart {
      *
      * @see Row#fields()
      */
+    @NotNull
     Field<?>[] fields();
 
     /**
@@ -174,6 +190,7 @@ public interface TableLike<R extends Record> extends QueryPart {
      * @return All available fields
      * @see Row#fields(Field...)
      */
+    @NotNull
     Field<?>[] fields(Field<?>... fields);
 
     /**
@@ -183,6 +200,7 @@ public interface TableLike<R extends Record> extends QueryPart {
      * @return All available fields
      * @see Row#fields(String...)
      */
+    @NotNull
     Field<?>[] fields(String... fieldNames);
 
     /**
@@ -192,6 +210,7 @@ public interface TableLike<R extends Record> extends QueryPart {
      * @return All available fields
      * @see Row#fields(Name...)
      */
+    @NotNull
     Field<?>[] fields(Name... fieldNames);
 
     /**
@@ -201,7 +220,8 @@ public interface TableLike<R extends Record> extends QueryPart {
      * @return All available fields
      * @see Row#fields(int...)
      */
-    Field<?>[] fields(int... fieldIndexes);
+    @NotNull
+    Field<?> [] fields(int... fieldIndexes);
 
     /**
      * Get a field's index from this table.
@@ -236,6 +256,7 @@ public interface TableLike<R extends Record> extends QueryPart {
      * This method is useful for things like
      * <code>SELECT * FROM (SELECT * FROM x WHERE x.a = '1') WHERE ... </code>
      */
+    @NotNull
     @Support
     Table<R> asTable();
 
@@ -244,6 +265,7 @@ public interface TableLike<R extends Record> extends QueryPart {
      *
      * @see Table#as(String)
      */
+    @NotNull
     @Support
     Table<R> asTable(String alias);
 
@@ -252,6 +274,7 @@ public interface TableLike<R extends Record> extends QueryPart {
      *
      * @see Table#as(String, String...)
      */
+    @NotNull
     @Support
     Table<R> asTable(String alias, String... fieldAliases);
 
@@ -260,6 +283,7 @@ public interface TableLike<R extends Record> extends QueryPart {
      *
      * @see Table#as(Name)
      */
+    @NotNull
     @Support
     Table<R> asTable(Name alias);
 
@@ -268,6 +292,7 @@ public interface TableLike<R extends Record> extends QueryPart {
      *
      * @see Table#as(String, String...)
      */
+    @NotNull
     @Support
     Table<R> asTable(Name alias, Name... fieldAliases);
 
@@ -276,6 +301,7 @@ public interface TableLike<R extends Record> extends QueryPart {
      *
      * @see Table#as(Name)
      */
+    @NotNull
     @Support
     Table<R> asTable(Table<?> alias);
 
@@ -284,6 +310,7 @@ public interface TableLike<R extends Record> extends QueryPart {
      *
      * @see Table#as(String, String...)
      */
+    @NotNull
     @Support
     Table<R> asTable(Table<?> alias, Field<?>... fieldAliases);
 
@@ -299,6 +326,7 @@ public interface TableLike<R extends Record> extends QueryPart {
      *             complexity in jOOQ's internals.
      */
     @Deprecated
+    @NotNull
     @Support
     Table<R> asTable(String alias, Function<? super Field<?>, ? extends String> aliasFunction);
 
@@ -313,6 +341,7 @@ public interface TableLike<R extends Record> extends QueryPart {
      *             complexity in jOOQ's internals.
      */
     @Deprecated
+    @NotNull
     @Support
     Table<R> asTable(String alias, BiFunction<? super Field<?>, ? super Integer, ? extends String> aliasFunction);
 

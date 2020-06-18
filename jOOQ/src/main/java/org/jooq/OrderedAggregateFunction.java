@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 // ...
@@ -86,6 +89,7 @@ public interface OrderedAggregateFunction<T> {
      * Add an <code>WITHIN GROUP (ORDER BY ..)</code> clause to the ordered
      * aggregate function
      */
+    @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AggregateFilterStep<T> withinGroupOrderBy(OrderField<?>... fields);
 
@@ -93,6 +97,7 @@ public interface OrderedAggregateFunction<T> {
      * Add an <code>WITHIN GROUP (ORDER BY ..)</code> clause to the ordered
      * aggregate function
      */
+    @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AggregateFilterStep<T> withinGroupOrderBy(Collection<? extends OrderField<?>> fields);
 }

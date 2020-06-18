@@ -79,6 +79,9 @@ import org.jooq.impl.DSL;
 import org.jooq.types.Interval;
 // ...
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * A column expression.
  * <p>
@@ -155,6 +158,7 @@ extends
      * <li>The name of a parameter if it is a named {@link Param}</li>
      * </ul>
      */
+    @NotNull
     @Override
     String getName();
 
@@ -166,6 +170,7 @@ extends
      * expressions return the empty string <code>""</code> here, never
      * <code>null</code>.
      */
+    @NotNull
     @Override
     String getComment();
 
@@ -179,6 +184,7 @@ extends
      * @param alias The alias name
      * @return The field alias
      */
+    @NotNull
     @Support
     Field<T> as(String alias);
 
@@ -196,6 +202,7 @@ extends
      * @param alias The alias name
      * @return The field alias
      */
+    @NotNull
     @Support
     Field<T> as(Name alias);
 
@@ -205,6 +212,7 @@ extends
      * @param otherField The other field whose name this field is aliased with.
      * @return The field alias.
      */
+    @NotNull
     @Support
     Field<T> as(Field<?> otherField);
 
@@ -237,6 +245,7 @@ extends
      *             complexity in jOOQ's internals.
      */
     @Deprecated
+    @NotNull
     @Support
     Field<T> as(Function<? super Field<T>, ? extends String> aliasFunction);
 
@@ -265,6 +274,7 @@ extends
      * @return The cast field
      * @see #cast(DataType)
      */
+    @NotNull
     @Support
     <Z> Field<Z> cast(Field<Z> field);
 
@@ -275,6 +285,7 @@ extends
      * @param type The data type that is used for the cast
      * @return The cast field
      */
+    @NotNull
     @Support
     <Z> Field<Z> cast(DataType<Z> type);
 
@@ -290,6 +301,7 @@ extends
      * @return The cast field
      * @see #cast(DataType)
      */
+    @NotNull
     @Support
     <Z> Field<Z> cast(Class<Z> type);
 
@@ -325,6 +337,7 @@ extends
      * @see #coerce(DataType)
      * @see #cast(Field)
      */
+    @NotNull
     @Support
     <Z> Field<Z> coerce(Field<Z> field);
 
@@ -355,6 +368,7 @@ extends
      * @return The coerced field
      * @see #cast(DataType)
      */
+    @NotNull
     @Support
     <Z> Field<Z> coerce(DataType<Z> type);
 
@@ -386,6 +400,7 @@ extends
      * @see #coerce(DataType)
      * @see #cast(Class)
      */
+    @NotNull
     @Support
     <Z> Field<Z> coerce(Class<Z> type);
 
@@ -401,6 +416,7 @@ extends
      *
      * @return This field as an ascending sort field
      */
+    @NotNull
     @Support
     SortField<T> asc();
 
@@ -412,6 +428,7 @@ extends
      *
      * @return This field as a descending sort field
      */
+    @NotNull
     @Support
     SortField<T> desc();
 
@@ -423,6 +440,7 @@ extends
      *
      * @return This field as a default sorted sort field
      */
+    @NotNull
     @Support
     SortField<T> sortDefault();
 
@@ -432,6 +450,7 @@ extends
      * @param order The sort order
      * @return This field as an ascending/descending sort field.
      */
+    @NotNull
     @Support
     SortField<T> sort(SortOrder order);
 
@@ -454,6 +473,7 @@ extends
      * @param sortList The list containing sort value preferences
      * @return The sort field
      */
+    @NotNull
     @Support
     SortField<Integer> sortAsc(Collection<T> sortList);
 
@@ -476,6 +496,7 @@ extends
      * @param sortList The list containing sort value preferences
      * @return The sort field
      */
+    @NotNull
     @Support
     SortField<Integer> sortAsc(T... sortList);
 
@@ -498,6 +519,7 @@ extends
      * @param sortList The list containing sort value preferences
      * @return The sort field
      */
+    @NotNull
     @Support
     SortField<Integer> sortDesc(Collection<T> sortList);
 
@@ -520,6 +542,7 @@ extends
      * @param sortList The list containing sort value preferences
      * @return The sort field
      */
+    @NotNull
     @Support
     SortField<Integer> sortDesc(T... sortList);
 
@@ -542,6 +565,7 @@ extends
      * @param sortMap The list containing sort value preferences
      * @return The sort field
      */
+    @NotNull
     @Support
     <Z> SortField<Z> sort(Map<T, Z> sortMap);
 
@@ -554,6 +578,7 @@ extends
      * <p>
      * This renders the same on all dialects: <code><pre>-[this]</pre></code>
      */
+    @NotNull
     @Support
     Field<T> neg();
 
@@ -563,6 +588,7 @@ extends
      * This is an alias for {@link #neg()}, which can be recognised by the
      * Kotlin language for operator overloading.
      */
+    @NotNull
     @Support
     Field<T> unaryMinus();
 
@@ -571,6 +597,7 @@ extends
      * <p>
      * This can be recognised by the Kotlin language for operator overloading.
      */
+    @NotNull
     @Support
     Field<T> unaryPlus();
 
@@ -579,6 +606,7 @@ extends
      *
      * @see #add(Field)
      */
+    @NotNull
     @Support
     Field<T> add(Number value);
 
@@ -614,6 +642,7 @@ extends
      * </tr>
      * </table>
      */
+    @NotNull
     @Support
     Field<T> add(Field<?> value);
 
@@ -622,6 +651,7 @@ extends
      *
      * @see #add(Number)
      */
+    @NotNull
     @Support
     Field<T> plus(Number value);
 
@@ -630,6 +660,7 @@ extends
      *
      * @see #add(Field)
      */
+    @NotNull
     @Support
     Field<T> plus(Field<?> value);
 
@@ -638,6 +669,7 @@ extends
      *
      * @see #sub(Field)
      */
+    @NotNull
     @Support
     Field<T> sub(Number value);
 
@@ -679,6 +711,7 @@ extends
      * <li> {@link DSL#timestampDiff(Field, Field)}</li>
      * </ul>
      */
+    @NotNull
     @Support
     Field<T> sub(Field<?> value);
 
@@ -687,6 +720,7 @@ extends
      *
      * @see #sub(Number)
      */
+    @NotNull
     @Support
     Field<T> subtract(Number value);
 
@@ -695,6 +729,7 @@ extends
      *
      * @see #sub(Field)
      */
+    @NotNull
     @Support
     Field<T> subtract(Field<?> value);
 
@@ -703,6 +738,7 @@ extends
      *
      * @see #sub(Number)
      */
+    @NotNull
     @Support
     Field<T> minus(Number value);
 
@@ -711,6 +747,7 @@ extends
      *
      * @see #sub(Field)
      */
+    @NotNull
     @Support
     Field<T> minus(Field<?> value);
 
@@ -724,6 +761,7 @@ extends
      * <code>INTERVAL</code> field (see {@link Interval})</li>
      * </ul>
      */
+    @NotNull
     @Support
     Field<T> mul(Number value);
 
@@ -737,6 +775,7 @@ extends
      * <code>INTERVAL</code> field (see {@link Interval})</li>
      * </ul>
      */
+    @NotNull
     @Support
     Field<T> mul(Field<? extends Number> value);
 
@@ -745,6 +784,7 @@ extends
      *
      * @see #mul(Number)
      */
+    @NotNull
     @Support
     Field<T> multiply(Number value);
 
@@ -753,6 +793,7 @@ extends
      *
      * @see #mul(Field)
      */
+    @NotNull
     @Support
     Field<T> multiply(Field<? extends Number> value);
 
@@ -761,6 +802,7 @@ extends
      *
      * @see #mul(Number)
      */
+    @NotNull
     @Support
     Field<T> times(Number value);
 
@@ -769,6 +811,7 @@ extends
      *
      * @see #mul(Field)
      */
+    @NotNull
     @Support
     Field<T> times(Field<? extends Number> value);
 
@@ -782,6 +825,7 @@ extends
      * <code>INTERVAL</code> field (see {@link Interval})</li>
      * </ul>
      */
+    @NotNull
     @Support
     Field<T> div(Number value);
 
@@ -795,6 +839,7 @@ extends
      * <code>INTERVAL</code> field (see {@link Interval})</li>
      * </ul>
      */
+    @NotNull
     @Support
     Field<T> div(Field<? extends Number> value);
 
@@ -803,6 +848,7 @@ extends
      *
      * @see #div(Number)
      */
+    @NotNull
     @Support
     Field<T> divide(Number value);
 
@@ -811,6 +857,7 @@ extends
      *
      * @see #div(Field)
      */
+    @NotNull
     @Support
     Field<T> divide(Field<? extends Number> value);
 
@@ -821,6 +868,7 @@ extends
      * <code><pre>[this] % [value]</pre></code> ... or the modulo function
      * elsewhere: <code><pre>mod([this], [value])</pre></code>
      */
+    @NotNull
     @Support
     Field<T> mod(Number value);
 
@@ -831,6 +879,7 @@ extends
      * <code><pre>[this] % [value]</pre></code> ... or the modulo function
      * elsewhere: <code><pre>mod([this], [value])</pre></code>
      */
+    @NotNull
     @Support
     Field<T> mod(Field<? extends Number> value);
 
@@ -839,6 +888,7 @@ extends
      *
      * @see #mod(Number)
      */
+    @NotNull
     @Support
     Field<T> modulo(Number value);
 
@@ -847,6 +897,7 @@ extends
      *
      * @see #mod(Field)
      */
+    @NotNull
     @Support
     Field<T> modulo(Field<? extends Number> value);
 
@@ -855,6 +906,7 @@ extends
      *
      * @see #mod(Number)
      */
+    @NotNull
     @Support
     Field<T> rem(Number value);
 
@@ -863,6 +915,7 @@ extends
      *
      * @see #mod(Field)
      */
+    @NotNull
     @Support
     Field<T> rem(Field<? extends Number> value);
 
@@ -875,6 +928,7 @@ extends
      *
      * @see DSL#power(Field, Number)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> pow(Number exponent);
 
@@ -887,6 +941,7 @@ extends
      *
      * @see DSL#power(Field, Field)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> pow(Field<? extends Number> exponent);
 
@@ -895,6 +950,7 @@ extends
      *
      * @see #power(Number)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> power(Number exponent);
 
@@ -903,6 +959,7 @@ extends
      *
      * @see #power(Field)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> power(Field<? extends Number> exponent);
 
@@ -915,6 +972,7 @@ extends
      *
      * @see DSL#bitNot(Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Field<T> bitNot();
 
@@ -923,6 +981,7 @@ extends
      *
      * @see DSL#bitAnd(Field, Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Field<T> bitAnd(T value);
 
@@ -931,6 +990,7 @@ extends
      *
      * @see DSL#bitAnd(Field, Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Field<T> bitAnd(Field<T> value);
 
@@ -940,6 +1000,7 @@ extends
      * @see DSL#bitNand(Field, Field)
      * @see DSL#bitNot(Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Field<T> bitNand(T value);
 
@@ -949,6 +1010,7 @@ extends
      * @see DSL#bitNand(Field, Field)
      * @see DSL#bitNot(Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Field<T> bitNand(Field<T> value);
 
@@ -957,6 +1019,7 @@ extends
      *
      * @see DSL#bitOr(Field, Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Field<T> bitOr(T value);
 
@@ -965,6 +1028,7 @@ extends
      *
      * @see DSL#bitOr(Field, Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Field<T> bitOr(Field<T> value);
 
@@ -974,6 +1038,7 @@ extends
      * @see DSL#bitNor(Field, Field)
      * @see DSL#bitNot(Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Field<T> bitNor(T value);
 
@@ -983,6 +1048,7 @@ extends
      * @see DSL#bitNor(Field, Field)
      * @see DSL#bitNot(Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Field<T> bitNor(Field<T> value);
 
@@ -991,6 +1057,7 @@ extends
      *
      * @see DSL#bitXor(Field, Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Field<T> bitXor(T value);
 
@@ -999,6 +1066,7 @@ extends
      *
      * @see DSL#bitXor(Field, Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Field<T> bitXor(Field<T> value);
 
@@ -1008,6 +1076,7 @@ extends
      * @see DSL#bitXNor(Field, Field)
      * @see DSL#bitNot(Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Field<T> bitXNor(T value);
 
@@ -1017,6 +1086,7 @@ extends
      * @see DSL#bitXNor(Field, Field)
      * @see DSL#bitNot(Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Field<T> bitXNor(Field<T> value);
 
@@ -1026,6 +1096,7 @@ extends
      * @see DSL#shl(Field, Field)
      * @see DSL#power(Field, Number)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Field<T> shl(Number value);
 
@@ -1035,6 +1106,7 @@ extends
      * @see DSL#shl(Field, Field)
      * @see DSL#power(Field, Number)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Field<T> shl(Field<? extends Number> value);
 
@@ -1044,6 +1116,7 @@ extends
      * @see DSL#shr(Field, Field)
      * @see DSL#power(Field, Number)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Field<T> shr(Number value);
 
@@ -1053,6 +1126,7 @@ extends
      * @see DSL#shr(Field, Field)
      * @see DSL#power(Field, Number)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Field<T> shr(Field<? extends Number> value);
 
@@ -1063,12 +1137,14 @@ extends
     /**
      * Create a condition to check if this field contains XML data.
      */
+    @NotNull
     @Support({ POSTGRES })
     Condition isDocument();
 
     /**
      * Create a condition to check if this field does not contain XML data.
      */
+    @NotNull
     @Support({ POSTGRES })
     Condition isNotDocument();
 
@@ -1079,12 +1155,14 @@ extends
     /**
      * Create a condition to check if this field contains JSON data.
      */
+    @NotNull
     @Support({ MYSQL })
     Condition isJson();
 
     /**
      * Create a condition to check if this field does not contain JSON data.
      */
+    @NotNull
     @Support({ MYSQL })
     Condition isNotJson();
 
@@ -1097,6 +1175,7 @@ extends
      * <p>
      * SQL: <code>this is null</code>
      */
+    @NotNull
     @Support
     Condition isNull();
 
@@ -1105,6 +1184,7 @@ extends
      * <p>
      * SQL: <code>this is not null</code>
      */
+    @NotNull
     @Support
     Condition isNotNull();
 
@@ -1138,6 +1218,7 @@ extends
      * END
      * </pre></code> SQL: <code>this is distinct from value</code>
      */
+    @NotNull
     @Support
     Condition isDistinctFrom(T value);
 
@@ -1167,6 +1248,7 @@ extends
      * END
      * </pre></code> SQL: <code>this is distinct from field</code>
      */
+    @NotNull
     @Support
     Condition isDistinctFrom(Field<T> field);
 
@@ -1196,6 +1278,7 @@ extends
      * END
      * </pre></code> SQL: <code>this is distinct from field</code>
      */
+    @NotNull
     @Support
     Condition isDistinctFrom(Select<? extends Record1<T>> select);
 
@@ -1225,6 +1308,7 @@ extends
      * END
      * </pre></code> SQL: <code>this is not distinct from value</code>
      */
+    @NotNull
     @Support
     Condition isNotDistinctFrom(T value);
 
@@ -1254,6 +1338,7 @@ extends
      * END
      * </pre></code> SQL: <code>this is not distinct from field</code>
      */
+    @NotNull
     @Support
     Condition isNotDistinctFrom(Field<T> field);
 
@@ -1283,6 +1368,7 @@ extends
      * END
      * </pre></code> SQL: <code>this is not distinct from field</code>
      */
+    @NotNull
     @Support
     Condition isNotDistinctFrom(Select<? extends Record1<T>> select);
 
@@ -1405,6 +1491,7 @@ extends
      *
      * @see #likeRegex(String)
      */
+    @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Condition likeRegex(String pattern);
 
@@ -1415,6 +1502,7 @@ extends
      *
      * @see #likeRegex(String)
      */
+    @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Condition likeRegex(Field<String> pattern);
 
@@ -1425,6 +1513,7 @@ extends
      *
      * @see #likeRegex(String)
      */
+    @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Condition notLikeRegex(String pattern);
 
@@ -1435,6 +1524,7 @@ extends
      *
      * @see #likeRegex(Field)
      */
+    @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Condition notLikeRegex(Field<String> pattern);
 
@@ -1447,6 +1537,7 @@ extends
      * <p>
      * SQL: <code>this similar to value</code>
      */
+    @NotNull
     @Support({ FIREBIRD, POSTGRES })
     LikeEscapeStep similarTo(Field<String> value);
 
@@ -1457,6 +1548,7 @@ extends
      *
      * @see LikeEscapeStep#escape(char)
      */
+    @NotNull
     @Support({ FIREBIRD, POSTGRES })
     Condition similarTo(Field<String> value, char escape);
 
@@ -1465,6 +1557,7 @@ extends
      * <p>
      * SQL: <code>this similar to value</code>
      */
+    @NotNull
     @Support({ FIREBIRD, POSTGRES })
     LikeEscapeStep similarTo(String value);
 
@@ -1475,6 +1568,7 @@ extends
      *
      * @see LikeEscapeStep#escape(char)
      */
+    @NotNull
     @Support({ FIREBIRD, POSTGRES })
     Condition similarTo(String value, char escape);
 
@@ -1483,6 +1577,7 @@ extends
      * <p>
      * SQL: <code>this not similar to field</code>
      */
+    @NotNull
     @Support({ FIREBIRD, POSTGRES })
     LikeEscapeStep notSimilarTo(Field<String> field);
 
@@ -1493,6 +1588,7 @@ extends
      *
      * @see LikeEscapeStep#escape(char)
      */
+    @NotNull
     @Support({ FIREBIRD, POSTGRES })
     Condition notSimilarTo(Field<String> field, char escape);
 
@@ -1501,6 +1597,7 @@ extends
      * <p>
      * SQL: <code>this not similar to value</code>
      */
+    @NotNull
     @Support({ FIREBIRD, POSTGRES })
     LikeEscapeStep notSimilarTo(String value);
 
@@ -1511,6 +1608,7 @@ extends
      *
      * @see LikeEscapeStep#escape(char)
      */
+    @NotNull
     @Support({ FIREBIRD, POSTGRES })
     Condition notSimilarTo(String value, char escape);
 
@@ -1523,6 +1621,7 @@ extends
      * <p>
      * SQL: <code>this like value</code>
      */
+    @NotNull
     @Support
     LikeEscapeStep like(Field<String> value);
 
@@ -1533,6 +1632,7 @@ extends
      *
      * @see LikeEscapeStep#escape(char)
      */
+    @NotNull
     @Support
     Condition like(Field<String> value, char escape);
 
@@ -1541,6 +1641,7 @@ extends
      * <p>
      * SQL: <code>this like value</code>
      */
+    @NotNull
     @Support
     LikeEscapeStep like(String value);
 
@@ -1551,6 +1652,7 @@ extends
      *
      * @see LikeEscapeStep#escape(char)
      */
+    @NotNull
     @Support
     Condition like(String value, char escape);
 
@@ -1570,6 +1672,7 @@ extends
      * @see DSL#any(Object...)
      * @see LikeEscapeStep#escape(char)
      */
+    @NotNull
     @Support
     LikeEscapeStep like(QuantifiedSelect<Record1<String>> query);
 
@@ -1581,6 +1684,7 @@ extends
      * {@link SQLDialect#POSTGRES}, or to
      * <code>lower(this) like lower(field)</code> in all other dialects.
      */
+    @NotNull
     @Support
     LikeEscapeStep likeIgnoreCase(Field<String> field);
 
@@ -1594,6 +1698,7 @@ extends
      *
      * @see LikeEscapeStep#escape(char)
      */
+    @NotNull
     @Support
     Condition likeIgnoreCase(Field<String> field, char escape);
 
@@ -1605,6 +1710,7 @@ extends
      * {@link SQLDialect#POSTGRES}, or to
      * <code>lower(this) like lower(value)</code> in all other dialects.
      */
+    @NotNull
     @Support
     LikeEscapeStep likeIgnoreCase(String value);
 
@@ -1618,6 +1724,7 @@ extends
      *
      * @see LikeEscapeStep#escape(char)
      */
+    @NotNull
     @Support
     Condition likeIgnoreCase(String value, char escape);
 
@@ -1626,6 +1733,7 @@ extends
      * <p>
      * SQL: <code>this not like field</code>
      */
+    @NotNull
     @Support
     LikeEscapeStep notLike(Field<String> field);
 
@@ -1636,6 +1744,7 @@ extends
      *
      * @see LikeEscapeStep#escape(char)
      */
+    @NotNull
     @Support
     Condition notLike(Field<String> field, char escape);
 
@@ -1644,6 +1753,7 @@ extends
      * <p>
      * SQL: <code>this not like value</code>
      */
+    @NotNull
     @Support
     LikeEscapeStep notLike(String value);
 
@@ -1654,6 +1764,7 @@ extends
      *
      * @see LikeEscapeStep#escape(char)
      */
+    @NotNull
     @Support
     Condition notLike(String value, char escape);
 
@@ -1673,6 +1784,7 @@ extends
      * @see DSL#any(Object...)
      * @see LikeEscapeStep#escape(char)
      */
+    @NotNull
     @Support
     LikeEscapeStep notLike(QuantifiedSelect<Record1<String>> query);
 
@@ -1684,6 +1796,7 @@ extends
      * {@link SQLDialect#POSTGRES}, or to
      * <code>lower(this) not like lower(field)</code> in all other dialects.
      */
+    @NotNull
     @Support
     LikeEscapeStep notLikeIgnoreCase(Field<String> field);
 
@@ -1697,6 +1810,7 @@ extends
      *
      * @see LikeEscapeStep#escape(char)
      */
+    @NotNull
     @Support
     Condition notLikeIgnoreCase(Field<String> field, char escape);
 
@@ -1708,6 +1822,7 @@ extends
      * {@link SQLDialect#POSTGRES}, or to
      * <code>lower(this) not like lower(value)</code> in all other dialects.
      */
+    @NotNull
     @Support
     LikeEscapeStep notLikeIgnoreCase(String value);
 
@@ -1721,6 +1836,7 @@ extends
      *
      * @see LikeEscapeStep#escape(char)
      */
+    @NotNull
     @Support
     Condition notLikeIgnoreCase(String value, char escape);
 
@@ -1748,6 +1864,7 @@ extends
      * @see DSL#escape(String, char)
      * @see #like(String, char)
      */
+    @NotNull
     @Support
     Condition contains(T value);
 
@@ -1775,18 +1892,21 @@ extends
      * @see DSL#escape(Field, char)
      * @see #like(Field, char)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Condition contains(Field<T> value);
 
     /**
      * Inverse of {@link #contains(Object)}.
      */
+    @NotNull
     @Support
     Condition notContains(T value);
 
     /**
      * Inverse of {@link #contains(Field)}.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Condition notContains(Field<T> value);
 
@@ -1805,6 +1925,7 @@ extends
      * @see #likeIgnoreCase(String, char)
      * @see #contains(Object)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Condition containsIgnoreCase(T value);
 
@@ -1823,18 +1944,21 @@ extends
      * @see #likeIgnoreCase(Field, char)
      * @see #contains(Field)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Condition containsIgnoreCase(Field<T> value);
 
     /**
      * Inverse of {@link #containsIgnoreCase(Object)}
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Condition notContainsIgnoreCase(T value);
 
     /**
      * Inverse of {@link #containsIgnoreCase(Field)}
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Condition notContainsIgnoreCase(Field<T> value);
 
@@ -1850,6 +1974,7 @@ extends
      * @see DSL#escape(String, char)
      * @see #like(String, char)
      */
+    @NotNull
     @Support
     Condition startsWith(T value);
 
@@ -1865,6 +1990,7 @@ extends
      * @see DSL#escape(Field, char)
      * @see #like(Field, char)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Condition startsWith(Field<T> value);
 
@@ -1880,6 +2006,7 @@ extends
      * @see DSL#escape(String, char)
      * @see #like(String, char)
      */
+    @NotNull
     @Support
     Condition startsWithIgnoreCase(T value);
 
@@ -1895,6 +2022,7 @@ extends
      * @see DSL#escape(Field, char)
      * @see #like(Field, char)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Condition startsWithIgnoreCase(Field<T> value);
 
@@ -1910,6 +2038,7 @@ extends
      * @see DSL#escape(String, char)
      * @see #like(String, char)
      */
+    @NotNull
     @Support
     Condition endsWith(T value);
 
@@ -1925,6 +2054,7 @@ extends
      * @see DSL#escape(Field, char)
      * @see #like(Field, char)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Condition endsWith(Field<T> value);
 
@@ -1940,6 +2070,7 @@ extends
      * @see DSL#escape(String, char)
      * @see #like(String, char)
      */
+    @NotNull
     @Support
     Condition endsWithIgnoreCase(T value);
 
@@ -1955,6 +2086,7 @@ extends
      * @see DSL#escape(Field, char)
      * @see #like(Field, char)
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Condition endsWithIgnoreCase(Field<T> value);
 
@@ -1980,6 +2112,7 @@ extends
      * <li><code>IN</code> predicates on unnested array bind variables</li>
      * </ul>
      */
+    @NotNull
     @Support
     Condition in(Collection<?> values);
 
@@ -2002,6 +2135,8 @@ extends
      * <li><code>IN</code> predicates on unnested array bind variables</li>
      * </ul>
      */
+    @NotNull
+    @Support
     Condition in(Result<? extends Record1<T>> result);
 
     /**
@@ -2022,6 +2157,7 @@ extends
      * <li><code>IN</code> predicates on unnested array bind variables</li>
      * </ul>
      */
+    @NotNull
     @Support
     Condition in(T... values);
 
@@ -2030,6 +2166,7 @@ extends
      * <p>
      * SQL: <code>this in (values...)</code>
      */
+    @NotNull
     @Support
     Condition in(Field<?>... values);
 
@@ -2042,6 +2179,7 @@ extends
      * <p>
      * SQL: <code>this in (select...)</code>
      */
+    @NotNull
     @Support
     Condition in(Select<? extends Record1<T>> query);
 
@@ -2067,6 +2205,7 @@ extends
      * <li><code>NOT IN</code> predicates on unnested array bind variables</li>
      * </ul>
      */
+    @NotNull
     @Support
     Condition notIn(Collection<?> values);
 
@@ -2093,6 +2232,8 @@ extends
      * <li><code>NOT IN</code> predicates on unnested array bind variables</li>
      * </ul>
      */
+    @NotNull
+    @Support
     Condition notIn(Result<? extends Record1<T>> result);
 
     /**
@@ -2117,6 +2258,7 @@ extends
      * <li><code>NOT IN</code> predicates on unnested array bind variables</li>
      * </ul>
      */
+    @NotNull
     @Support
     Condition notIn(T... values);
 
@@ -2129,6 +2271,7 @@ extends
      * <p>
      * SQL: <code>this not in (values...)</code>
      */
+    @NotNull
     @Support
     Condition notIn(Field<?>... values);
 
@@ -2145,6 +2288,7 @@ extends
      * <p>
      * SQL: <code>this not in (select...)</code>
      */
+    @NotNull
     @Support
     Condition notIn(Select<? extends Record1<T>> query);
 
@@ -2159,6 +2303,7 @@ extends
      * <p>
      * SQL: <code>this between minValue and maxValue</code>
      */
+    @NotNull
     @Support
     Condition between(T minValue, T maxValue);
 
@@ -2169,6 +2314,7 @@ extends
      * <p>
      * SQL: <code>this between minValue and maxValue</code>
      */
+    @NotNull
     @Support
     Condition between(Field<T> minValue, Field<T> maxValue);
 
@@ -2180,6 +2326,7 @@ extends
      * <p>
      * SQL: <code>this between symmetric minValue and maxValue</code>
      */
+    @NotNull
     @Support
     Condition betweenSymmetric(T minValue, T maxValue);
 
@@ -2191,6 +2338,7 @@ extends
      * <p>
      * SQL: <code>this between symmetric minValue and maxValue</code>
      */
+    @NotNull
     @Support
     Condition betweenSymmetric(Field<T> minValue, Field<T> maxValue);
 
@@ -2202,6 +2350,7 @@ extends
      * <p>
      * SQL: <code>this not between minValue and maxValue</code>
      */
+    @NotNull
     @Support
     Condition notBetween(T minValue, T maxValue);
 
@@ -2213,6 +2362,7 @@ extends
      * <p>
      * SQL: <code>this not between minValue and maxValue</code>
      */
+    @NotNull
     @Support
     Condition notBetween(Field<T> minValue, Field<T> maxValue);
 
@@ -2224,6 +2374,7 @@ extends
      * <p>
      * SQL: <code>this not between symmetric minValue and maxValue</code>
      */
+    @NotNull
     @Support
     Condition notBetweenSymmetric(T minValue, T maxValue);
 
@@ -2235,6 +2386,7 @@ extends
      * <p>
      * SQL: <code>this not between symmetric minValue and maxValue</code>
      */
+    @NotNull
     @Support
     Condition notBetweenSymmetric(Field<T> minValue, Field<T> maxValue);
 
@@ -2243,6 +2395,7 @@ extends
      * <p>
      * SQL: <code>this between minValue and maxValue</code>
      */
+    @NotNull
     @Support
     BetweenAndStep<T> between(T minValue);
 
@@ -2251,6 +2404,7 @@ extends
      * <p>
      * SQL: <code>this between minValue and maxValue</code>
      */
+    @NotNull
     @Support
     BetweenAndStep<T> between(Field<T> minValue);
 
@@ -2259,6 +2413,7 @@ extends
      * <p>
      * SQL: <code>this between symmetric minValue and maxValue</code>
      */
+    @NotNull
     @Support
     BetweenAndStep<T> betweenSymmetric(T minValue);
 
@@ -2267,6 +2422,7 @@ extends
      * <p>
      * SQL: <code>this between symmetric minValue and maxValue</code>
      */
+    @NotNull
     @Support
     BetweenAndStep<T> betweenSymmetric(Field<T> minValue);
 
@@ -2275,6 +2431,7 @@ extends
      * <p>
      * SQL: <code>this not between minValue and maxValue</code>
      */
+    @NotNull
     @Support
     BetweenAndStep<T> notBetween(T minValue);
 
@@ -2283,6 +2440,7 @@ extends
      * <p>
      * SQL: <code>this not between minValue and maxValue</code>
      */
+    @NotNull
     @Support
     BetweenAndStep<T> notBetween(Field<T> minValue);
 
@@ -2291,6 +2449,7 @@ extends
      * <p>
      * SQL: <code>this not between symmetric minValue and maxValue</code>
      */
+    @NotNull
     @Support
     BetweenAndStep<T> notBetweenSymmetric(T minValue);
 
@@ -2299,6 +2458,7 @@ extends
      * <p>
      * SQL: <code>this not between symmetric minValue and maxValue</code>
      */
+    @NotNull
     @Support
     BetweenAndStep<T> notBetweenSymmetric(Field<T> minValue);
 
@@ -2314,6 +2474,7 @@ extends
      * @param value The value to compare this field with
      * @return A comparison predicate
      */
+    @NotNull
     @Support
     Condition compare(Comparator comparator, T value);
 
@@ -2325,6 +2486,7 @@ extends
      * @param field The field to compare this field with
      * @return A comparison predicate
      */
+    @NotNull
     @Support
     Condition compare(Comparator comparator, Field<T> field);
 
@@ -2339,6 +2501,7 @@ extends
      * @param query The subselect to compare this field with
      * @return A comparison predicate
      */
+    @NotNull
     @Support
     Condition compare(Comparator comparator, Select<? extends Record1<T>> query);
 
@@ -2354,6 +2517,7 @@ extends
      * @param query The quantified subselect to compare this field with
      * @return A comparison predicate
      */
+    @NotNull
     @Support
     Condition compare(Comparator comparator, QuantifiedSelect<? extends Record1<T>> query);
 
@@ -2364,18 +2528,21 @@ extends
     /**
      * <code>this = value</code>.
      */
+    @NotNull
     @Support
     Condition equal(T value);
 
     /**
      * <code>this = field</code>.
      */
+    @NotNull
     @Support
     Condition equal(Field<T> field);
 
     /**
      * <code>this = (Select&lt;?&gt; ...)</code>.
      */
+    @NotNull
     @Support
     Condition equal(Select<? extends Record1<T>> query);
 
@@ -2389,6 +2556,7 @@ extends
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Condition equal(QuantifiedSelect<? extends Record1<T>> query);
 
@@ -2397,6 +2565,7 @@ extends
      *
      * @see #equal(Object)
      */
+    @NotNull
     @Support
     Condition eq(T value);
 
@@ -2405,6 +2574,7 @@ extends
      *
      * @see #equal(Field)
      */
+    @NotNull
     @Support
     Condition eq(Field<T> field);
 
@@ -2413,6 +2583,7 @@ extends
      *
      * @see #equal(Select)
      */
+    @NotNull
     @Support
     Condition eq(Select<? extends Record1<T>> query);
 
@@ -2426,24 +2597,28 @@ extends
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Condition eq(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
      * <code>this != value</code>.
      */
+    @NotNull
     @Support
     Condition notEqual(T value);
 
     /**
      * <code>this != field</code>.
      */
+    @NotNull
     @Support
     Condition notEqual(Field<T> field);
 
     /**
      * <code>this != (Select&lt;?&gt; ...)</code>.
      */
+    @NotNull
     @Support
     Condition notEqual(Select<? extends Record1<T>> query);
 
@@ -2457,6 +2632,7 @@ extends
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Condition notEqual(QuantifiedSelect<? extends Record1<T>> query);
 
@@ -2465,6 +2641,7 @@ extends
      *
      * @see #notEqual(Object)
      */
+    @NotNull
     @Support
     Condition ne(T value);
 
@@ -2473,6 +2650,7 @@ extends
      *
      * @see #notEqual(Field)
      */
+    @NotNull
     @Support
     Condition ne(Field<T> field);
 
@@ -2481,6 +2659,7 @@ extends
      *
      * @see #notEqual(Select)
      */
+    @NotNull
     @Support
     Condition ne(Select<? extends Record1<T>> query);
 
@@ -2494,24 +2673,28 @@ extends
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Condition ne(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
      * <code>this &lt; value</code>.
      */
+    @NotNull
     @Support
     Condition lessThan(T value);
 
     /**
      * <code>this &lt; field</code>.
      */
+    @NotNull
     @Support
     Condition lessThan(Field<T> field);
 
     /**
      * <code>this &lt; (Select&lt;?&gt; ...)</code>.
      */
+    @NotNull
     @Support
     Condition lessThan(Select<? extends Record1<T>> query);
 
@@ -2525,6 +2708,7 @@ extends
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Condition lessThan(QuantifiedSelect<? extends Record1<T>> query);
 
@@ -2533,6 +2717,7 @@ extends
      *
      * @see #lessThan(Object)
      */
+    @NotNull
     @Support
     Condition lt(T value);
 
@@ -2541,6 +2726,7 @@ extends
      *
      * @see #lessThan(Field)
      */
+    @NotNull
     @Support
     Condition lt(Field<T> field);
 
@@ -2549,6 +2735,7 @@ extends
      *
      * @see #lessThan(Select)
      */
+    @NotNull
     @Support
     Condition lt(Select<? extends Record1<T>> query);
 
@@ -2562,24 +2749,28 @@ extends
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Condition lt(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
      * <code>this &lt;= value</code>.
      */
+    @NotNull
     @Support
     Condition lessOrEqual(T value);
 
     /**
      * <code>this &lt;= field</code>.
      */
+    @NotNull
     @Support
     Condition lessOrEqual(Field<T> field);
 
     /**
      * <code>this &lt;= (Select&lt;?&gt; ...)</code>.
      */
+    @NotNull
     @Support
     Condition lessOrEqual(Select<? extends Record1<T>> query);
 
@@ -2593,6 +2784,7 @@ extends
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Condition lessOrEqual(QuantifiedSelect<? extends Record1<T>> query);
 
@@ -2601,6 +2793,7 @@ extends
      *
      * @see #lessOrEqual(Object)
      */
+    @NotNull
     @Support
     Condition le(T value);
 
@@ -2609,6 +2802,7 @@ extends
      *
      * @see #lessOrEqual(Field)
      */
+    @NotNull
     @Support
     Condition le(Field<T> field);
 
@@ -2617,6 +2811,7 @@ extends
      *
      * @see #lessOrEqual(Select)
      */
+    @NotNull
     @Support
     Condition le(Select<? extends Record1<T>> query);
 
@@ -2630,24 +2825,28 @@ extends
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Condition le(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
      * <code>this &gt; value</code>.
      */
+    @NotNull
     @Support
     Condition greaterThan(T value);
 
     /**
      * <code>this &gt; field</code>.
      */
+    @NotNull
     @Support
     Condition greaterThan(Field<T> field);
 
     /**
      * <code>this &gt; (Select&lt;?&gt; ...)</code>.
      */
+    @NotNull
     @Support
     Condition greaterThan(Select<? extends Record1<T>> query);
 
@@ -2661,6 +2860,7 @@ extends
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Condition greaterThan(QuantifiedSelect<? extends Record1<T>> query);
 
@@ -2669,6 +2869,7 @@ extends
      *
      * @see #greaterThan(Object)
      */
+    @NotNull
     @Support
     Condition gt(T value);
 
@@ -2677,6 +2878,7 @@ extends
      *
      * @see #greaterThan(Field)
      */
+    @NotNull
     @Support
     Condition gt(Field<T> field);
 
@@ -2685,6 +2887,7 @@ extends
      *
      * @see #greaterThan(Select)
      */
+    @NotNull
     @Support
     Condition gt(Select<? extends Record1<T>> query);
 
@@ -2698,24 +2901,28 @@ extends
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Condition gt(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
      * <code>this &gt;= value</code>.
      */
+    @NotNull
     @Support
     Condition greaterOrEqual(T value);
 
     /**
      * <code>this &gt;= field</code>.
      */
+    @NotNull
     @Support
     Condition greaterOrEqual(Field<T> field);
 
     /**
      * <code>this &gt;= (Select&lt;?&gt; ...)</code>.
      */
+    @NotNull
     @Support
     Condition greaterOrEqual(Select<? extends Record1<T>> query);
 
@@ -2729,6 +2936,7 @@ extends
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Condition greaterOrEqual(QuantifiedSelect<? extends Record1<T>> query);
 
@@ -2737,6 +2945,7 @@ extends
      *
      * @see #greaterOrEqual(Object)
      */
+    @NotNull
     @Support
     Condition ge(T value);
 
@@ -2745,6 +2954,7 @@ extends
      *
      * @see #greaterOrEqual(Field)
      */
+    @NotNull
     @Support
     Condition ge(Field<T> field);
 
@@ -2753,6 +2963,7 @@ extends
      *
      * @see #greaterOrEqual(Select)
      */
+    @NotNull
     @Support
     Condition ge(Select<? extends Record1<T>> query);
 
@@ -2766,6 +2977,7 @@ extends
      * @see DSL#any(Select)
      * @see DSL#any(Object...)
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Condition ge(QuantifiedSelect<? extends Record1<T>> query);
 
@@ -2776,6 +2988,7 @@ extends
      * SQL:
      * <code>lcase(this) in ("1", "y", "yes", "true", "on", "enabled")</code>
      */
+    @NotNull
     @Support
     Condition isTrue();
 
@@ -2786,30 +2999,35 @@ extends
      * SQL:
      * <code>lcase(this) in ("0", "n", "no", "false", "off", "disabled")</code>
      */
+    @NotNull
     @Support
     Condition isFalse();
 
     /**
      * <code>lower(this) = lower(value)</code>.
      */
+    @NotNull
     @Support
     Condition equalIgnoreCase(String value);
 
     /**
      * <code>lower(this) = lower(value)</code>.
      */
+    @NotNull
     @Support
     Condition equalIgnoreCase(Field<String> value);
 
     /**
      * <code>lower(this) != lower(value)</code>.
      */
+    @NotNull
     @Support
     Condition notEqualIgnoreCase(String value);
 
     /**
      * <code>lower(this) != lower(value)</code>.
      */
+    @NotNull
     @Support
     Condition notEqualIgnoreCase(Field<String> value);
 
@@ -2824,6 +3042,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#sign(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support
     Field<Integer> sign();
 
@@ -2832,6 +3051,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#abs(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support
     Field<T> abs();
 
@@ -2840,6 +3060,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#round(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support
     Field<T> round();
 
@@ -2848,6 +3069,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#round(Field, int)} instead.
      */
     @Deprecated
+    @NotNull
     @Support
     Field<T> round(int decimals);
 
@@ -2856,6 +3078,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#floor(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support
     Field<T> floor();
 
@@ -2864,6 +3087,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#ceil(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support
     Field<T> ceil();
 
@@ -2872,6 +3096,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#sqrt(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> sqrt();
 
@@ -2880,6 +3105,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#exp(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> exp();
 
@@ -2888,6 +3114,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#ln(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> ln();
 
@@ -2896,6 +3123,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#log(Field, int)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> log(int base);
 
@@ -2904,6 +3132,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#acos(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> acos();
 
@@ -2912,6 +3141,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#asin(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> asin();
 
@@ -2920,6 +3150,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#atan(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> atan();
 
@@ -2928,6 +3159,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#atan2(Field, Number)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> atan2(Number y);
 
@@ -2936,6 +3168,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#atan2(Field, Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> atan2(Field<? extends Number> y);
 
@@ -2944,6 +3177,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#cos(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> cos();
 
@@ -2952,6 +3186,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#sin(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> sin();
 
@@ -2960,6 +3195,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#tan(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> tan();
 
@@ -2968,6 +3204,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#cot(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> cot();
 
@@ -2976,6 +3213,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#sinh(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> sinh();
 
@@ -2984,6 +3222,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#cosh(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> cosh();
 
@@ -2992,6 +3231,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#tanh(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> tanh();
 
@@ -3000,6 +3240,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#coth(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> coth();
 
@@ -3008,6 +3249,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#deg(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support
     Field<BigDecimal> deg();
 
@@ -3016,6 +3258,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#rad(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support
     Field<BigDecimal> rad();
 
@@ -3024,6 +3267,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#count(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support
     Field<Integer> count();
 
@@ -3032,6 +3276,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#countDistinct(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support
     Field<Integer> countDistinct();
 
@@ -3040,6 +3285,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#max(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support
     Field<T> max();
 
@@ -3048,6 +3294,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#min(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support
     Field<T> min();
 
@@ -3056,6 +3303,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#sum(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support
     Field<BigDecimal> sum();
 
@@ -3064,6 +3312,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#avg(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support
     Field<BigDecimal> avg();
 
@@ -3072,6 +3321,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#median(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, HSQLDB })
     Field<BigDecimal> median();
 
@@ -3080,6 +3330,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#stddevPop(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> stddevPop();
 
@@ -3088,6 +3339,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#stddevSamp(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> stddevSamp();
 
@@ -3096,6 +3348,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#varPop(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> varPop();
 
@@ -3104,6 +3357,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#varSamp(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<BigDecimal> varSamp();
 
@@ -3113,6 +3367,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#count(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, FIREBIRD, POSTGRES })
     WindowPartitionByStep<Integer> countOver();
 
@@ -3122,6 +3377,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#max(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, FIREBIRD, POSTGRES })
     WindowPartitionByStep<T> maxOver();
 
@@ -3131,6 +3387,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#min(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, FIREBIRD, POSTGRES })
     WindowPartitionByStep<T> minOver();
 
@@ -3140,6 +3397,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#sum(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, FIREBIRD, POSTGRES })
     WindowPartitionByStep<BigDecimal> sumOver();
 
@@ -3149,6 +3407,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#avg(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, FIREBIRD, POSTGRES })
     WindowPartitionByStep<BigDecimal> avgOver();
 
@@ -3158,6 +3417,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#firstValue(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, FIREBIRD, POSTGRES })
     WindowIgnoreNullsStep<T> firstValue();
 
@@ -3167,6 +3427,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#lastValue(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, FIREBIRD, POSTGRES })
     WindowIgnoreNullsStep<T> lastValue();
 
@@ -3176,6 +3437,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#lead(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ FIREBIRD, POSTGRES })
     WindowIgnoreNullsStep<T> lead();
 
@@ -3185,6 +3447,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#lead(Field, int)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ FIREBIRD, POSTGRES })
     WindowIgnoreNullsStep<T> lead(int offset);
 
@@ -3194,6 +3457,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#lead(Field, int, Object)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ FIREBIRD, POSTGRES })
     WindowIgnoreNullsStep<T> lead(int offset, T defaultValue);
 
@@ -3203,6 +3467,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#lead(Field, int, Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ FIREBIRD, POSTGRES })
     WindowIgnoreNullsStep<T> lead(int offset, Field<T> defaultValue);
 
@@ -3212,6 +3477,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#lag(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ FIREBIRD, POSTGRES })
     WindowIgnoreNullsStep<T> lag();
 
@@ -3221,6 +3487,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#lag(Field, int)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ FIREBIRD, POSTGRES })
     WindowIgnoreNullsStep<T> lag(int offset);
 
@@ -3230,6 +3497,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#lag(Field, int, Object)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ FIREBIRD, POSTGRES })
     WindowIgnoreNullsStep<T> lag(int offset, T defaultValue);
 
@@ -3239,6 +3507,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#lag(Field, int, Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ FIREBIRD, POSTGRES })
     WindowIgnoreNullsStep<T> lag(int offset, Field<T> defaultValue);
 
@@ -3248,6 +3517,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#stddevPop(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, POSTGRES })
     WindowPartitionByStep<BigDecimal> stddevPopOver();
 
@@ -3257,6 +3527,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#stddevSamp(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, POSTGRES })
     WindowPartitionByStep<BigDecimal> stddevSampOver();
 
@@ -3266,6 +3537,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#varPop(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, POSTGRES })
     WindowPartitionByStep<BigDecimal> varPopOver();
 
@@ -3275,6 +3547,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#varSamp(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, POSTGRES })
     WindowPartitionByStep<BigDecimal> varSampOver();
 
@@ -3287,6 +3560,7 @@ extends
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#upper(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support
     Field<String> upper();
 
@@ -3299,6 +3573,7 @@ extends
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#lower(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support
     Field<String> lower();
 
@@ -3311,6 +3586,7 @@ extends
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#trim(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support
     Field<String> trim();
 
@@ -3323,6 +3599,7 @@ extends
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#rtrim(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support
     Field<String> rtrim();
 
@@ -3335,6 +3612,7 @@ extends
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#ltrim(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support
     Field<String> ltrim();
 
@@ -3347,6 +3625,7 @@ extends
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#rpad(Field, Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<String> rpad(Field<? extends Number> length);
 
@@ -3359,6 +3638,7 @@ extends
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#rpad(Field, int)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<String> rpad(int length);
 
@@ -3371,6 +3651,7 @@ extends
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#rpad(Field, Field, Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<String> rpad(Field<? extends Number> length, Field<String> character);
 
@@ -3383,6 +3664,7 @@ extends
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#rpad(Field, int, char)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<String> rpad(int length, char character);
 
@@ -3395,6 +3677,7 @@ extends
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#lpad(Field, Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<String> lpad(Field<? extends Number> length);
 
@@ -3407,6 +3690,7 @@ extends
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#lpad(Field, int)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<String> lpad(int length);
 
@@ -3419,6 +3703,7 @@ extends
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#lpad(Field, Field, Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<String> lpad(Field<? extends Number> length, Field<String> character);
 
@@ -3431,6 +3716,7 @@ extends
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#lpad(Field, int, char)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<String> lpad(int length, char character);
 
@@ -3443,6 +3729,7 @@ extends
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#repeat(Field, int)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<String> repeat(Number count);
 
@@ -3455,6 +3742,7 @@ extends
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#repeat(Field, Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<String> repeat(Field<? extends Number> count);
 
@@ -3467,6 +3755,7 @@ extends
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#replace(Field, Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Field<String> replace(Field<String> search);
 
@@ -3479,6 +3768,7 @@ extends
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#replace(Field, String)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Field<String> replace(String search);
 
@@ -3491,6 +3781,7 @@ extends
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#replace(Field, Field, Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Field<String> replace(Field<String> search, Field<String> replace);
 
@@ -3503,6 +3794,7 @@ extends
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#replace(Field, String, String)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Field<String> replace(String search, String replace);
 
@@ -3515,6 +3807,7 @@ extends
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#position(Field, String)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<Integer> position(String search);
 
@@ -3527,6 +3820,7 @@ extends
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#position(Field, Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<Integer> position(Field<String> search);
 
@@ -3539,6 +3833,7 @@ extends
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#ascii(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Field<Integer> ascii();
 
@@ -3547,6 +3842,7 @@ extends
      *
      * @see DSL#collation(String)
      */
+    @NotNull
     @Support({ HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Field<String> collate(String collation);
 
@@ -3555,12 +3851,14 @@ extends
      *
      * @see DSL#collation(Name)
      */
+    @NotNull
     @Support({ HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Field<String> collate(Name collation);
 
     /**
      * Apply a collation operator to this column expression.
      */
+    @NotNull
     @Support({ HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Field<String> collate(Collation collation);
 
@@ -3571,6 +3869,7 @@ extends
      *
      * @see DSL#concat(Field...)
      */
+    @NotNull
     @Support
     Field<String> concat(Field<?>... fields);
 
@@ -3581,6 +3880,7 @@ extends
      *
      * @see DSL#concat(String...)
      */
+    @NotNull
     @Support
     Field<String> concat(String... values);
 
@@ -3591,6 +3891,7 @@ extends
      *
      * @see DSL#concat(String...)
      */
+    @NotNull
     @Support
     Field<String> concat(char... values);
 
@@ -3603,6 +3904,7 @@ extends
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#substring(Field, int)} instead.
      */
     @Deprecated
+    @NotNull
     @Support
     Field<String> substring(int startingPosition);
 
@@ -3615,6 +3917,7 @@ extends
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#substring(Field, Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support
     Field<String> substring(Field<? extends Number> startingPosition);
 
@@ -3627,6 +3930,7 @@ extends
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#substring(Field, int, int)} instead.
      */
     @Deprecated
+    @NotNull
     @Support
     Field<String> substring(int startingPosition, int length);
 
@@ -3639,6 +3943,7 @@ extends
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#substring(Field, Field, Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support
     Field<String> substring(Field<? extends Number> startingPosition, Field<? extends Number> length);
 
@@ -3651,6 +3956,7 @@ extends
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#length(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support
     Field<Integer> length();
 
@@ -3663,6 +3969,7 @@ extends
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#charLength(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support
     Field<Integer> charLength();
 
@@ -3675,6 +3982,7 @@ extends
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#bitLength(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support
     Field<Integer> bitLength();
 
@@ -3687,6 +3995,7 @@ extends
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#octetLength(Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support
     Field<Integer> octetLength();
 
@@ -3695,6 +4004,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#extract(Field, DatePart)} instead.
      */
     @Deprecated
+    @NotNull
     @Support
     Field<Integer> extract(DatePart datePart);
 
@@ -3703,6 +4013,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#greatest(Field, Field...)} instead.
      */
     @Deprecated
+    @NotNull
     @Support
     Field<T> greatest(T... others);
 
@@ -3711,6 +4022,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#greatest(Field, Field...)} instead.
      */
     @Deprecated
+    @NotNull
     @Support
     Field<T> greatest(Field<?>... others);
 
@@ -3719,6 +4031,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#least(Field, Field...)} instead.
      */
     @Deprecated
+    @NotNull
     @Support
     Field<T> least(T... others);
 
@@ -3727,6 +4040,7 @@ extends
      * @deprecated - 3.11 - [#7538] - Use {@link DSL#least(Field, Field...)} instead.
      */
     @Deprecated
+    @NotNull
     @Support
     Field<T> least(Field<?>... others);
 
@@ -3739,6 +4053,7 @@ extends
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#nvl(Field, Object)} instead.
      */
     @Deprecated
+    @NotNull
     @Support
     Field<T> nvl(T defaultValue);
 
@@ -3751,6 +4066,7 @@ extends
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#nvl(Field, Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support
     Field<T> nvl(Field<T> defaultValue);
 
@@ -3763,6 +4079,7 @@ extends
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#nvl2(Field, Object, Object)} instead.
      */
     @Deprecated
+    @NotNull
     @Support
     <Z> Field<Z> nvl2(Z valueIfNotNull, Z valueIfNull);
 
@@ -3775,6 +4092,7 @@ extends
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#nvl2(Field, Field, Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support
     <Z> Field<Z> nvl2(Field<Z> valueIfNotNull, Field<Z> valueIfNull);
 
@@ -3787,6 +4105,7 @@ extends
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#nullif(Field, Object)} instead.
      */
     @Deprecated
+    @NotNull
     @Support
     Field<T> nullif(T other);
 
@@ -3799,6 +4118,7 @@ extends
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#nullif(Field, Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support
     Field<T> nullif(Field<T> other);
 
@@ -3811,6 +4131,7 @@ extends
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#decode(Object, Object, Object)} instead.
      */
     @Deprecated
+    @NotNull
     @Support
     <Z> Field<Z> decode(T search, Z result);
 
@@ -3823,6 +4144,7 @@ extends
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#decode(Object, Object, Object, Object...)} instead.
      */
     @Deprecated
+    @NotNull
     @Support
     <Z> Field<Z> decode(T search, Z result, Object... more);
 
@@ -3835,6 +4157,7 @@ extends
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#decode(Field, Field, Field)} instead.
      */
     @Deprecated
+    @NotNull
     @Support
     <Z> Field<Z> decode(Field<T> search, Field<Z> result);
 
@@ -3847,6 +4170,7 @@ extends
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#decode(Field, Field, Field, Field...)} instead.
      */
     @Deprecated
+    @NotNull
     @Support
     <Z> Field<Z> decode(Field<T> search, Field<Z> result, Field<?>... more);
 
@@ -3859,6 +4183,7 @@ extends
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#coalesce(Object, Object...)} instead.
      */
     @Deprecated
+    @NotNull
     @Support
     Field<T> coalesce(T option, T... options);
 
@@ -3871,8 +4196,10 @@ extends
      * @deprecated - 3.13 - [#9407] - Use {@link DSL#coalesce(Field, Field...)} instead.
      */
     @Deprecated
+    @NotNull
     @Support
     Field<T> coalesce(Field<T> option, Field<?>... options);
+
 
 
 
@@ -3908,6 +4235,7 @@ extends
      * This method can be used in its method reference form conveniently on a
      * generated table, for instance, when mapping records in a stream.
      */
+    @Nullable
     Field<T> field(Record record);
 
     /**
@@ -3923,6 +4251,7 @@ extends
      *    .forEach(System.out::println);
      * </pre></code>
      */
+    @Nullable
     T get(Record record);
 
     /**
@@ -3938,6 +4267,7 @@ extends
      *    .forEach(System.out::println);
      * </pre></code>
      */
+    @Nullable
     T getValue(Record record);
 
     /**
@@ -3953,6 +4283,7 @@ extends
      *    .forEach(System.out::println);
      * </pre></code>
      */
+    @Nullable
     T original(Record record);
 
     /**
@@ -3997,6 +4328,7 @@ extends
      *    .forEach(System.out::println);
      * </pre></code>
      */
+    @Nullable
     Record1<T> from(Record record);
 
 }

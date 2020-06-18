@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 /**
  * A configuration type for use with the various {@link Meta#migrateTo(Meta)}
  * methods.

@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_CREATE;
 import static org.jooq.impl.Keywords.K_ENUM;

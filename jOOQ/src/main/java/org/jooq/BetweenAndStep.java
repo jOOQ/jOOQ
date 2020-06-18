@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 
 /**
  * An intermediate DSL type for the construction of a <code>BETWEEN</code>
@@ -67,12 +70,14 @@ public interface BetweenAndStep<T> {
     /**
      * Create a condition to check this field against some bounds
      */
+    @NotNull
     @Support
     Condition and(T value);
 
     /**
      * Create a condition to check this field against some bounds
      */
+    @NotNull
     @Support
     Condition and(Field<T> field);
 }

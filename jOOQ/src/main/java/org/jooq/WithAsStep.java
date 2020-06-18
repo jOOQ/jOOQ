@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 // ...
@@ -96,6 +99,7 @@ public interface WithAsStep {
     /**
      * Associate a subselect with a common table expression's table and column names.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithStep as(Select<?> select);
 }

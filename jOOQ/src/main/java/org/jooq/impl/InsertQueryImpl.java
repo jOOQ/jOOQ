@@ -38,6 +38,9 @@
 
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import static java.lang.Boolean.TRUE;
 import static java.util.Collections.nCopies;
 import static org.jooq.Clause.INSERT;

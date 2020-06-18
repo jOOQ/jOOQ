@@ -51,6 +51,9 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.DSL;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * Any query.
  * <p>
@@ -98,6 +101,7 @@ public interface Query extends Statement, Attachable , AutoCloseable {
      *         <li>{@link Update} : the number of updated records</li>
      *         </ul>
      */
+    @NotNull
     CompletionStage<Integer> executeAsync();
 
     /**
@@ -115,6 +119,7 @@ public interface Query extends Statement, Attachable , AutoCloseable {
      *         <li> {@link Update} : the number of updated records</li>
      *         </ul>
      */
+    @NotNull
     CompletionStage<Integer> executeAsync(Executor executor);
 
 
@@ -171,6 +176,7 @@ public interface Query extends Statement, Attachable , AutoCloseable {
      *
      * @see #getSQL(boolean)
      */
+    @NotNull
     String getSQL();
 
     /**
@@ -189,6 +195,7 @@ public interface Query extends Statement, Attachable , AutoCloseable {
      * @return The generated SQL
      * @deprecated - [#2414] - 3.1.0 - Use {@link #getSQL(ParamType)} instead
      */
+    @NotNull
     @Deprecated
     String getSQL(boolean inline);
 
@@ -207,6 +214,7 @@ public interface Query extends Statement, Attachable , AutoCloseable {
      *            {@link Settings#getStatementType()}
      * @return The generated SQL
      */
+    @NotNull
     String getSQL(ParamType paramType);
 
     /**
@@ -220,6 +228,7 @@ public interface Query extends Statement, Attachable , AutoCloseable {
      *
      * @see DSLContext#extractBindValues(QueryPart)
      */
+    @NotNull
     List<Object> getBindValues();
 
     /**
@@ -234,6 +243,7 @@ public interface Query extends Statement, Attachable , AutoCloseable {
      * @see DSL#param(String, Object)
      * @see DSLContext#extractParams(QueryPart)
      */
+    @NotNull
     Map<String, Param<?>> getParams();
 
     /**
@@ -246,6 +256,7 @@ public interface Query extends Statement, Attachable , AutoCloseable {
      * @see DSL#param(String, Object)
      * @see DSLContext#extractParam(QueryPart, String)
      */
+    @Nullable
     Param<?> getParam(String name);
 
     /**
@@ -267,6 +278,7 @@ public interface Query extends Statement, Attachable , AutoCloseable {
      * @throws DataTypeException if <code>value</code> cannot be converted into
      *             the parameter's data type
      */
+    @NotNull
     Query bind(String param, Object value) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -287,6 +299,7 @@ public interface Query extends Statement, Attachable , AutoCloseable {
      * @throws DataTypeException if <code>value</code> cannot be converted into
      *             the parameter's data type
      */
+    @NotNull
     Query bind(int index, Object value) throws IllegalArgumentException, DataTypeException;
 
     // ------------------------------------------------------------------------
@@ -302,6 +315,7 @@ public interface Query extends Statement, Attachable , AutoCloseable {
      *
      * @see java.sql.Statement#setPoolable(boolean)
      */
+    @NotNull
     Query poolable(boolean poolable);
 
     /**
@@ -310,6 +324,7 @@ public interface Query extends Statement, Attachable , AutoCloseable {
      *
      * @see java.sql.Statement#setQueryTimeout(int)
      */
+    @NotNull
     Query queryTimeout(int seconds);
 
     /**
@@ -322,6 +337,7 @@ public interface Query extends Statement, Attachable , AutoCloseable {
      *
      * @param keepStatement Whether to keep the underlying statement open
      */
+    @NotNull
     Query keepStatement(boolean keepStatement);
 
     /**

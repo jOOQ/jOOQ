@@ -39,6 +39,8 @@ package org.jooq;
 
 import java.util.Map;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * An intermediary step in creating a case statement of the type <code><pre>
  * CASE x WHEN 1 THEN 'one'
@@ -63,6 +65,7 @@ public interface CaseValueStep<V> {
      * @param result The result value if values are equal
      * @return An intermediary step for case statement construction
      */
+    @NotNull
     @Support
     <T> CaseWhenStep<V, T> when(V compareValue, T result);
 
@@ -76,6 +79,7 @@ public interface CaseValueStep<V> {
      * @param result The result value if values are equal
      * @return An intermediary step for case statement construction
      */
+    @NotNull
     @Support
     <T> CaseWhenStep<V, T> when(V compareValue, Field<T> result);
 
@@ -89,6 +93,7 @@ public interface CaseValueStep<V> {
      * @param result The result value if values are equal
      * @return An intermediary step for case statement construction
      */
+    @NotNull
     @Support
     <T> CaseWhenStep<V, T> when(V compareValue, Select<? extends Record1<T>> result);
 
@@ -102,6 +107,7 @@ public interface CaseValueStep<V> {
      * @param result The result value if values are equal
      * @return An intermediary step for case statement construction
      */
+    @NotNull
     @Support
     <T> CaseWhenStep<V, T> when(Field<V> compareValue, T result);
 
@@ -115,6 +121,7 @@ public interface CaseValueStep<V> {
      * @param result The result value if values are equal
      * @return An intermediary step for case statement construction
      */
+    @NotNull
     @Support
     <T> CaseWhenStep<V, T> when(Field<V> compareValue, Field<T> result);
 
@@ -128,6 +135,7 @@ public interface CaseValueStep<V> {
      * @param result The result value if values are equal
      * @return An intermediary step for case statement construction
      */
+    @NotNull
     @Support
     <T> CaseWhenStep<V, T> when(Field<V> compareValue, Select<? extends Record1<T>> result);
 
@@ -137,6 +145,8 @@ public interface CaseValueStep<V> {
      * This will iterate over the map's entries to create individual
      * <code>WHEN .. THEN</code> expressions for each map entry.
      */
+    @NotNull
+    @Support
     <T> CaseWhenStep<V, T> mapValues(Map<V, T> values);
 
     /**
@@ -145,6 +155,8 @@ public interface CaseValueStep<V> {
      * This will iterate over the map's entries to create individual
      * <code>WHEN .. THEN</code> expressions for each map entry.
      */
+    @NotNull
+    @Support
     <T> CaseWhenStep<V, T> mapFields(Map<? extends Field<V>, ? extends Field<T>> fields);
 
 }

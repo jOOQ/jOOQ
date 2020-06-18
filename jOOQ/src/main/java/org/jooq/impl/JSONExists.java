@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.JSONExists.Behaviour.ERROR;
 import static org.jooq.impl.JSONExists.Behaviour.FALSE;

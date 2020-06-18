@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 import static org.jooq.SQLDialect.DERBY;
@@ -75,6 +78,7 @@ public interface AlterTableDropStep extends AlterTableFinalStep {
      * Add a <code>CASCADE</code> clause to the
      * <code>ALTER TABLE .. DROP</code> statement.
      */
+    @NotNull
     @Support({ DERBY, H2, HSQLDB, POSTGRES })
     AlterTableFinalStep cascade();
 
@@ -82,6 +86,7 @@ public interface AlterTableDropStep extends AlterTableFinalStep {
      * Add a <code>RESTRICT</code> clause to the
      * <code>ALTER TABLE .. DROP</code> statement.
      */
+    @NotNull
     @Support({ DERBY, HSQLDB, POSTGRES })
     AlterTableFinalStep restrict();
 }

@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 
@@ -50,6 +53,11 @@ import org.jooq.impl.DSL;
  * @author Lukas Eder
  */
 public interface JSONValueOnStep<J> extends Field<J> {
+
+
+
+
+
 
 
 

@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 import org.jooq.impl.DSL;
 
 
@@ -79,6 +82,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateOrderByStep
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#AND} operator
      */
+    @NotNull
     @Support
     UpdateConditionStep<R> and(Condition condition);
 
@@ -86,6 +90,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateOrderByStep
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#AND} operator
      */
+    @NotNull
     @Support
     UpdateConditionStep<R> and(Field<Boolean> condition);
 
@@ -103,6 +108,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateOrderByStep
      *             method will be removed in the future.
      */
     @Deprecated
+    @NotNull
     @Support
     UpdateConditionStep<R> and(Boolean condition);
 
@@ -118,6 +124,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateOrderByStep
      * @see DSL#condition(SQL)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     UpdateConditionStep<R> and(SQL sql);
@@ -134,6 +141,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateOrderByStep
      * @see DSL#condition(String)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     UpdateConditionStep<R> and(String sql);
@@ -151,6 +159,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateOrderByStep
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     UpdateConditionStep<R> and(String sql, Object... bindings);
@@ -168,6 +177,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateOrderByStep
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     UpdateConditionStep<R> and(String sql, QueryPart... parts);
@@ -176,6 +186,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateOrderByStep
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#AND} operator
      */
+    @NotNull
     @Support
     UpdateConditionStep<R> andNot(Condition condition);
 
@@ -183,6 +194,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateOrderByStep
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#AND} operator
      */
+    @NotNull
     @Support
     UpdateConditionStep<R> andNot(Field<Boolean> condition);
 
@@ -200,6 +212,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateOrderByStep
      *             method will be removed in the future.
      */
     @Deprecated
+    @NotNull
     @Support
     UpdateConditionStep<R> andNot(Boolean condition);
 
@@ -207,6 +220,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateOrderByStep
      * Combine the currently assembled conditions with an EXISTS clause using
      * the {@link Operator#AND} operator
      */
+    @NotNull
     @Support
     UpdateConditionStep<R> andExists(Select<?> select);
 
@@ -214,6 +228,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateOrderByStep
      * Combine the currently assembled conditions with a NOT EXISTS clause using
      * the {@link Operator#AND} operator
      */
+    @NotNull
     @Support
     UpdateConditionStep<R> andNotExists(Select<?> select);
 
@@ -221,6 +236,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateOrderByStep
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#OR} operator
      */
+    @NotNull
     @Support
     UpdateConditionStep<R> or(Condition condition);
 
@@ -228,6 +244,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateOrderByStep
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#OR} operator
      */
+    @NotNull
     @Support
     UpdateConditionStep<R> or(Field<Boolean> condition);
 
@@ -245,6 +262,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateOrderByStep
      *             method will be removed in the future.
      */
     @Deprecated
+    @NotNull
     @Support
     UpdateConditionStep<R> or(Boolean condition);
 
@@ -260,6 +278,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateOrderByStep
      * @see DSL#condition(SQL)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     UpdateConditionStep<R> or(SQL sql);
@@ -276,6 +295,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateOrderByStep
      * @see DSL#condition(String)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     UpdateConditionStep<R> or(String sql);
@@ -293,6 +313,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateOrderByStep
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     UpdateConditionStep<R> or(String sql, Object... bindings);
@@ -310,6 +331,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateOrderByStep
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     UpdateConditionStep<R> or(String sql, QueryPart... parts);
@@ -318,6 +340,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateOrderByStep
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#OR} operator
      */
+    @NotNull
     @Support
     UpdateConditionStep<R> orNot(Condition condition);
 
@@ -325,6 +348,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateOrderByStep
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#OR} operator
      */
+    @NotNull
     @Support
     UpdateConditionStep<R> orNot(Field<Boolean> condition);
 
@@ -342,6 +366,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateOrderByStep
      *             method will be removed in the future.
      */
     @Deprecated
+    @NotNull
     @Support
     UpdateConditionStep<R> orNot(Boolean condition);
 
@@ -349,6 +374,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateOrderByStep
      * Combine the currently assembled conditions with an EXISTS clause using
      * the {@link Operator#OR} operator
      */
+    @NotNull
     @Support
     UpdateConditionStep<R> orExists(Select<?> select);
 
@@ -356,6 +382,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateOrderByStep
      * Combine the currently assembled conditions with a NOT EXISTS clause using
      * the {@link Operator#OR} operator
      */
+    @NotNull
     @Support
     UpdateConditionStep<R> orNotExists(Select<?> select);
 }

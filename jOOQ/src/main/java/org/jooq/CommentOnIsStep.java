@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 // ...
@@ -83,12 +86,14 @@ public interface CommentOnIsStep {
     /**
      * Specify the comment for the given object type.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     CommentOnFinalStep is(String comment);
 
     /**
      * Specify the comment for the given object type.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     CommentOnFinalStep is(Comment comment);
 }

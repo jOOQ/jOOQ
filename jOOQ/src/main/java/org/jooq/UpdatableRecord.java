@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 // ...
@@ -235,6 +238,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * @see #insert()
      * @see #update()
      */
+    @NotNull
     @Support
     int store() throws DataAccessException, DataChangedException;
 
@@ -250,6 +254,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * @see #insert(Field...)
      * @see #update(Field...)
      */
+    @NotNull
     @Support
     int store(Field<?>... fields) throws DataAccessException, DataChangedException;
 
@@ -265,6 +270,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * @see #insert(Field...)
      * @see #update(Field...)
      */
+    @NotNull
     @Support
     int store(Collection<? extends Field<?>> fields) throws DataAccessException, DataChangedException;
 
@@ -287,6 +293,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * @throws DataAccessException if something went wrong executing the query
      * @see #store()
      */
+    @NotNull
     @Support
     @Override
     int insert() throws DataAccessException;
@@ -300,6 +307,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * @throws DataAccessException if something went wrong executing the query
      * @see #insert()
      */
+    @NotNull
     @Support
     @Override
     int insert(Field<?>... fields) throws DataAccessException;
@@ -313,6 +321,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * @throws DataAccessException if something went wrong executing the query
      * @see #insert()
      */
+    @NotNull
     @Support
     @Override
     int insert(Collection<? extends Field<?>> fields) throws DataAccessException;
@@ -338,6 +347,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      *             record has already been changed/deleted in the database
      * @see #store()
      */
+    @NotNull
     @Support
     int update() throws DataAccessException, DataChangedException;
 
@@ -352,6 +362,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      *             record has already been changed/deleted in the database
      * @see #update()
      */
+    @NotNull
     @Support
     int update(Field<?>... fields) throws DataAccessException, DataChangedException;
 
@@ -366,6 +377,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      *             record has already been changed/deleted in the database
      * @see #update()
      */
+    @NotNull
     @Support
     int update(Collection<? extends Field<?>> fields) throws DataAccessException, DataChangedException;
 
@@ -397,6 +409,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * @see #store()
      * @see InsertOnDuplicateStep#onDuplicateKeyUpdate()
      */
+    @NotNull
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     int merge() throws DataAccessException;
 
@@ -409,6 +422,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * @throws DataAccessException if something went wrong executing the query
      * @see #merge()
      */
+    @NotNull
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     int merge(Field<?>... fields) throws DataAccessException;
 
@@ -421,6 +435,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * @throws DataAccessException if something went wrong executing the query
      * @see #merge()
      */
+    @NotNull
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     int merge(Collection<? extends Field<?>> fields) throws DataAccessException;
 
@@ -477,6 +492,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * @throws DataChangedException If optimistic locking is enabled and the
      *             record has already been changed/deleted in the database
      */
+    @NotNull
     @Support
     int delete() throws DataAccessException, DataChangedException;
 
@@ -585,6 +601,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * @see ForeignKey#fetchChildren(Record)
      * @see ForeignKey#fetchChildren(Record...)
      */
+    @NotNull
     @Support
     <O extends TableRecord<O>> O fetchChild(ForeignKey<O, R> key) throws TooManyRowsException, DataAccessException;
 
@@ -599,6 +616,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * @see ForeignKey#fetchChildren(Record)
      * @see ForeignKey#fetchChildren(Record...)
      */
+    @NotNull
     @Support
     <O extends TableRecord<O>> Result<O> fetchChildren(ForeignKey<O, R> key) throws DataAccessException;
 }

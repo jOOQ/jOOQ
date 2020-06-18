@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
@@ -70,6 +73,7 @@ public interface DropIndexCascadeStep extends DropIndexFinalStep {
      * Add the <code>CASCADE</code> clause to the <code>DROP INDEX</code>
      * statement.
      */
+    @NotNull
     @Support({ POSTGRES })
     DropIndexFinalStep cascade();
 
@@ -77,6 +81,7 @@ public interface DropIndexCascadeStep extends DropIndexFinalStep {
      * Add the <code>RESTRICT</code> clause to the <code>DROP INDEX</code>
      * statement.
      */
+    @NotNull
     @Support({ POSTGRES })
     DropIndexFinalStep restrict();
 }

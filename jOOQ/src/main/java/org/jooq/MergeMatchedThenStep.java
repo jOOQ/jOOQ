@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
@@ -92,6 +95,7 @@ public interface MergeMatchedThenStep<R extends Record> {
      * Add the <code>THEN UPDATE</code> clause to the
      * <code>MERGE</code> statement.
      */
+    @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB })
     MergeMatchedSetStep<R> thenUpdate();
 
@@ -99,6 +103,7 @@ public interface MergeMatchedThenStep<R extends Record> {
      * Add the <code>THEN UPDATE</code> clause to the
      * <code>MERGE</code> statement.
      */
+    @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB })
     MergeMatchedStep<R> thenDelete();
 }

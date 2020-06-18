@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 import static org.jooq.SQLDialect.H2;
@@ -57,12 +60,14 @@ public interface JSONArrayAggNullStep<T> extends AggregateFilterStep<T> {
     /**
      * Include <code>NULL</code> values in output JSON.
      */
+    @NotNull
     @Support({ H2, POSTGRES })
     AggregateFilterStep<T> nullOnNull();
 
     /**
      * Exclude <code>NULL</code> values in output JSON.
      */
+    @NotNull
     @Support({ H2, POSTGRES })
     AggregateFilterStep<T> absentOnNull();
 }

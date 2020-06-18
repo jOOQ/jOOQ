@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.impl.DefaultBinding.binding;
 import static org.jooq.impl.DefaultBinding.DefaultRecordBinding.pgNewRecord;
 import static org.jooq.impl.Names.N_ROW;

@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 /**
  * A common base type for {@link Field} and {@link Row} where DSL API accepts
  * both types alike.

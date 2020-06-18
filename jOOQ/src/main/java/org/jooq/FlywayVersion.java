@@ -15,6 +15,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;

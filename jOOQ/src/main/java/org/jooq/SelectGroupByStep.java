@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 import java.util.Collection;
 
 /**
@@ -107,6 +110,7 @@ public interface SelectGroupByStep<R extends Record> extends SelectHavingStep<R>
      * Calling this with an empty argument list will result in an empty
      * <code>GROUP BY ()</code> clause being rendered.
      */
+    @NotNull
     @Support
     SelectHavingStep<R> groupBy(GroupField... fields);
 
@@ -116,6 +120,7 @@ public interface SelectGroupByStep<R extends Record> extends SelectHavingStep<R>
      * Calling this with an empty argument list will result in an empty
      * <code>GROUP BY ()</code> clause being rendered.
      */
+    @NotNull
     @Support
     SelectHavingStep<R> groupBy(Collection<? extends GroupField> fields);
 }

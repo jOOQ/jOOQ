@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.Clause.CREATE_VIEW;
 import static org.jooq.Clause.CREATE_VIEW_AS;
 import static org.jooq.Clause.CREATE_VIEW_NAME;

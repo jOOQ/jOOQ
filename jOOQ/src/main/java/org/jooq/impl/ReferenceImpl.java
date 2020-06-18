@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.Tools.filterOne;
 import static org.jooq.impl.Tools.first;

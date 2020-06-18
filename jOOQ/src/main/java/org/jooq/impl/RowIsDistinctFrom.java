@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.Comparator.IS_DISTINCT_FROM;
 import static org.jooq.Comparator.IS_NOT_DISTINCT_FROM;
 // ...

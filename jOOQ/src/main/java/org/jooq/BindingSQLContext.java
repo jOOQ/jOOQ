@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 /**
  * A container type for {@link Binding#sql(BindingSQLContext)} arguments.
  *

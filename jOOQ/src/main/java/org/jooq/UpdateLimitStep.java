@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 /**
  * This type is used for the {@link Update}'s DSL API.
  * <p>
@@ -75,12 +78,14 @@ public interface UpdateLimitStep<R extends Record> extends UpdateReturningStep<R
     /**
      * Add a <code>LIMIT</code> clause to the query.
      */
+    @NotNull
     @Support
     UpdateReturningStep<R> limit(Number numberOfRows);
 
     /**
      * Add a <code>LIMIT</code> clause to the query using named parameters.
      */
+    @NotNull
     @Support
     UpdateReturningStep<R> limit(Param<? extends Number> numberOfRows);
 

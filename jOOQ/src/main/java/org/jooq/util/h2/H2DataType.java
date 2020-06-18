@@ -37,6 +37,9 @@
  */
 package org.jooq.util.h2;
 
+import org.jetbrains.annotations.*;
+
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;

@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 
 /**
  * The step in the <code>DROP TABLE</code> DSL used to specify <code>DROP</code>
@@ -68,6 +71,7 @@ public interface DropTableStep extends DropTableFinalStep {
      * Add a <code>CASCADE</code> clause to the <code>DROP TABLE</code>
      * statement.
      */
+    @NotNull
     @Support
     DropTableFinalStep cascade();
 
@@ -75,6 +79,7 @@ public interface DropTableStep extends DropTableFinalStep {
      * Add a <code>RESTRICT</code> clause to the <code>DROP TABLE</code>
      * statement.
      */
+    @NotNull
     @Support
     DropTableFinalStep restrict();
 }

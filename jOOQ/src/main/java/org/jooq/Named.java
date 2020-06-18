@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.NotNull;
+
+
 /**
  * A common base type for all qualifiable, named objects.
  * <p>
@@ -49,16 +52,19 @@ public interface Named extends QueryPart {
     /**
      * The unqualified name of this object.
      */
+    @NotNull
     String getName();
 
     /**
      * The qualified name of this object.
      */
+    @NotNull
     Name getQualifiedName();
 
     /**
      * The unqualified name of this object.
      */
+    @NotNull
     Name getUnqualifiedName();
 
     /**
@@ -67,10 +73,12 @@ public interface Named extends QueryPart {
      * This is the same as calling {@link #getCommentPart()} and then
      * {@link Comment#getComment()}.
      */
+    @NotNull
     String getComment();
 
     /**
      * The comment on this object as a {@link QueryPart}.
      */
+    @NotNull
     Comment getCommentPart();
 }

@@ -40,6 +40,8 @@ package org.jooq;
 
 import org.jooq.impl.DSL;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * The sorting order used in <code>ORDER BY</code> clauses.
  *
@@ -50,18 +52,21 @@ public enum SortOrder {
     /**
      * Ascending sort order.
      */
+    @NotNull
     @Support
     ASC("asc"),
 
     /**
      * Descending sort order.
      */
+    @NotNull
     @Support
     DESC("desc"),
 
     /**
      * Default sort order.
      */
+    @NotNull
     @Support
     DEFAULT("");
 
@@ -73,10 +78,12 @@ public enum SortOrder {
         this.keyword = DSL.keyword(sql);
     }
 
+    @NotNull
     public final String toSQL() {
         return sql;
     }
 
+    @NotNull
     public final Keyword toKeyword() {
         return keyword;
     }

@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import java.io.Closeable;
 import java.sql.Array;
 import java.sql.Blob;

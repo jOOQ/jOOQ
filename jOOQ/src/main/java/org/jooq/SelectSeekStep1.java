@@ -37,7 +37,7 @@
  */
 package org.jooq;
 
-import org.jooq.Record;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * This type is used for the {@link Select}'s DSL API when selecting generic
@@ -132,6 +132,7 @@ public interface SelectSeekStep1<R extends Record, T1> extends SelectLimitStep<R
      *      href="http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method/">http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method</a>
      * @see #seekAfter(Object)
      */
+    @NotNull
     @Support
     SelectSeekLimitStep<R> seek(T1 t1);
 
@@ -184,6 +185,7 @@ public interface SelectSeekStep1<R extends Record, T1> extends SelectLimitStep<R
      *      href="http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method/">http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method</a>
      * @see #seekAfter(Field)
      */
+    @NotNull
     @Support
     SelectSeekLimitStep<R> seek(Field<T1> field1);
 
@@ -235,6 +237,7 @@ public interface SelectSeekStep1<R extends Record, T1> extends SelectLimitStep<R
      * @see <a
      *      href="http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method/">http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method</a>
      */
+    @NotNull
     @Support
     SelectSeekLimitStep<R> seekAfter(T1 t1);
 
@@ -286,6 +289,7 @@ public interface SelectSeekStep1<R extends Record, T1> extends SelectLimitStep<R
      * @see <a
      *      href="http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method/">http://blog.jooq.org/2013/10/26/faster-sql-paging-with-jooq-using-the-seek-method</a>
      */
+    @NotNull
     @Support
     SelectSeekLimitStep<R> seekAfter(Field<T1> field1);
 
@@ -339,6 +343,7 @@ public interface SelectSeekStep1<R extends Record, T1> extends SelectLimitStep<R
      * @deprecated - [#7461] - SEEK BEFORE is not implemented correctly
      */
     @Deprecated
+    @NotNull
     @Support
     SelectSeekLimitStep<R> seekBefore(T1 t1);
 
@@ -392,6 +397,7 @@ public interface SelectSeekStep1<R extends Record, T1> extends SelectLimitStep<R
      * @deprecated - [#7461] - SEEK BEFORE is not implemented correctly
      */
     @Deprecated
+    @NotNull
     @Support
     SelectSeekLimitStep<R> seekBefore(Field<T1> field1);
 }

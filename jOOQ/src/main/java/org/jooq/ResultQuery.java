@@ -68,6 +68,9 @@ import org.jooq.exception.NoDataFoundException;
 import org.jooq.exception.TooManyRowsException;
 import org.jooq.impl.DefaultRecordMapper;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * A query that can return results.
  * <p>
@@ -146,6 +149,7 @@ extends
      * @return The result or <code>null</code> if no call to execute() was done
      *         previously.
      */
+    @Nullable
     Result<R> getResult();
 
     /**
@@ -170,6 +174,7 @@ extends
      * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      */
+    @NotNull
     Result<R> fetch() throws DataAccessException;
 
     /**
@@ -190,6 +195,7 @@ extends
      * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      */
+    @NotNull
     ResultSet fetchResultSet() throws DataAccessException;
 
     /**
@@ -198,6 +204,7 @@ extends
      * <p>
      * {@inheritDoc}
      */
+    @NotNull
     @Override
     Iterator<R> iterator() throws DataAccessException;
 
@@ -222,6 +229,7 @@ extends
      * <p>
      * {@inheritDoc}
      */
+    @NotNull
     @Override
     default Spliterator<R> spliterator() {
         return Iterable.super.spliterator();
@@ -254,6 +262,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see #stream()
      */
+    @NotNull
     Stream<R> fetchStream() throws DataAccessException;
 
     /**
@@ -291,6 +300,7 @@ extends
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
      */
+    @NotNull
     <E> Stream<E> fetchStreamInto(Class<? extends E> type) throws DataAccessException, MappingException;
 
     /**
@@ -329,6 +339,7 @@ extends
      * @see Result#into(Table)
      * @throws DataAccessException if something went wrong executing the query
      */
+    @NotNull
     <Z extends Record> Stream<Z> fetchStreamInto(Table<Z> table) throws DataAccessException;
 
     /**
@@ -357,6 +368,7 @@ extends
      * @return The result.
      * @throws DataAccessException if something went wrong executing the query
      */
+    @NotNull
     Stream<R> stream() throws DataAccessException;
 
     /**
@@ -404,6 +416,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see #fetchSize(int)
      */
+    @NotNull
     Cursor<R> fetchLazy() throws DataAccessException;
 
     /**
@@ -428,6 +441,7 @@ extends
      *             {@link #fetchLazy()} instead.
      */
     @Deprecated
+    @NotNull
     Cursor<R> fetchLazy(int fetchSize) throws DataAccessException;
 
     /**
@@ -445,6 +459,7 @@ extends
      * @return The resulting records. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      */
+    @NotNull
     Results fetchMany() throws DataAccessException;
 
     /**
@@ -457,6 +472,7 @@ extends
      * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      */
+    @NotNull
     <T> List<T> fetch(Field<T> field) throws DataAccessException;
 
     /**
@@ -474,6 +490,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Record#get(Field, Class)
      */
+    @NotNull
     <U> List<U> fetch(Field<?> field, Class<? extends U> type) throws DataAccessException;
 
     /**
@@ -487,6 +504,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Record#get(Field, Converter)
      */
+    @NotNull
     <T, U> List<U> fetch(Field<T> field, Converter<? super T, ? extends U> converter) throws DataAccessException;
 
     /**
@@ -499,6 +517,7 @@ extends
      * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      */
+    @NotNull
     List<?> fetch(int fieldIndex) throws DataAccessException;
 
     /**
@@ -516,6 +535,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Record#get(int, Class)
      */
+    @NotNull
     <U> List<U> fetch(int fieldIndex, Class<? extends U> type) throws DataAccessException;
 
     /**
@@ -529,6 +549,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Record#get(int, Converter)
      */
+    @NotNull
     <U> List<U> fetch(int fieldIndex, Converter<?, ? extends U> converter) throws DataAccessException;
 
     /**
@@ -541,6 +562,7 @@ extends
      * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      */
+    @NotNull
     List<?> fetch(String fieldName) throws DataAccessException;
 
     /**
@@ -558,6 +580,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Record#get(String, Class)
      */
+    @NotNull
     <U> List<U> fetch(String fieldName, Class<? extends U> type) throws DataAccessException;
 
     /**
@@ -571,6 +594,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Record#get(String, Converter)
      */
+    @NotNull
     <U> List<U> fetch(String fieldName, Converter<?, ? extends U> converter) throws DataAccessException;
 
     /**
@@ -583,6 +607,7 @@ extends
      * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      */
+    @NotNull
     List<?> fetch(Name fieldName) throws DataAccessException;
 
     /**
@@ -600,6 +625,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Record#get(Name, Class)
      */
+    @NotNull
     <U> List<U> fetch(Name fieldName, Class<? extends U> type) throws DataAccessException;
 
     /**
@@ -613,6 +639,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Record#get(Name, Converter)
      */
+    @NotNull
     <U> List<U> fetch(Name fieldName, Converter<?, ? extends U> converter) throws DataAccessException;
 
     /**
@@ -627,6 +654,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @Nullable
     <T> T fetchOne(Field<T> field) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -645,6 +673,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @Nullable
     <U> U fetchOne(Field<?> field, Class<? extends U> type) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -659,6 +688,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @Nullable
     <T, U> U fetchOne(Field<T> field, Converter<? super T, ? extends U> converter) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -673,6 +703,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @Nullable
     Object fetchOne(int fieldIndex) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -691,6 +722,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @Nullable
     <U> U fetchOne(int fieldIndex, Class<? extends U> type) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -705,6 +737,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @Nullable
     <U> U fetchOne(int fieldIndex, Converter<?, ? extends U> converter) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -719,6 +752,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @Nullable
     Object fetchOne(String fieldName) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -737,6 +771,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @Nullable
     <U> U fetchOne(String fieldName, Class<? extends U> type) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -751,6 +786,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @Nullable
     <U> U fetchOne(String fieldName, Converter<?, ? extends U> converter) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -765,6 +801,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @Nullable
     Object fetchOne(Name fieldName) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -783,6 +820,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @Nullable
     <U> U fetchOne(Name fieldName, Class<? extends U> type) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -797,6 +835,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @Nullable
     <U> U fetchOne(Name fieldName, Converter<?, ? extends U> converter) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -811,6 +850,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @Nullable
     R fetchOne() throws DataAccessException, TooManyRowsException;
 
     /**
@@ -822,6 +862,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @Nullable
     <E> E fetchOne(RecordMapper<? super R, E> mapper) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -835,6 +876,7 @@ extends
      * @see Result#intoMaps()
      * @see Record#intoMap()
      */
+    @Nullable
     Map<String, Object> fetchOneMap() throws DataAccessException, TooManyRowsException;
 
     /**
@@ -848,6 +890,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @Nullable
     Object[] fetchOneArray() throws DataAccessException, TooManyRowsException;
 
     /**
@@ -873,6 +916,7 @@ extends
      * @throws TooManyRowsException if the query returned more than one record
      * @see DefaultRecordMapper
      */
+    @Nullable
     <E> E fetchOneInto(Class<? extends E> type) throws DataAccessException, MappingException, TooManyRowsException;
 
     /**
@@ -899,6 +943,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @Nullable
     <Z extends Record> Z fetchOneInto(Table<Z> table) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -915,6 +960,7 @@ extends
      * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @Nullable
     <T> T fetchSingle(Field<T> field) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
@@ -935,6 +981,7 @@ extends
      * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @Nullable
     <U> U fetchSingle(Field<?> field, Class<? extends U> type) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
@@ -951,6 +998,7 @@ extends
      * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @Nullable
     <T, U> U fetchSingle(Field<T> field, Converter<? super T, ? extends U> converter) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
@@ -967,6 +1015,7 @@ extends
      * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @Nullable
     Object fetchSingle(int fieldIndex) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
@@ -987,6 +1036,7 @@ extends
      * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @Nullable
     <U> U fetchSingle(int fieldIndex, Class<? extends U> type) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
@@ -1003,6 +1053,7 @@ extends
      * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @Nullable
     <U> U fetchSingle(int fieldIndex, Converter<?, ? extends U> converter) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
@@ -1019,6 +1070,7 @@ extends
      * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @Nullable
     Object fetchSingle(String fieldName) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
@@ -1039,6 +1091,7 @@ extends
      * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @Nullable
     <U> U fetchSingle(String fieldName, Class<? extends U> type) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
@@ -1055,6 +1108,7 @@ extends
      * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @Nullable
     <U> U fetchSingle(String fieldName, Converter<?, ? extends U> converter) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
@@ -1071,6 +1125,7 @@ extends
      * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @Nullable
     Object fetchSingle(Name fieldName) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
@@ -1091,6 +1146,7 @@ extends
      * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @Nullable
     <U> U fetchSingle(Name fieldName, Class<? extends U> type) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
@@ -1107,6 +1163,7 @@ extends
      * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @Nullable
     <U> U fetchSingle(Name fieldName, Converter<?, ? extends U> converter) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
@@ -1121,19 +1178,19 @@ extends
      * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @NotNull
     R fetchSingle() throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
      * Execute the query and return exactly one resulting value into a custom
      * mapper callback.
      *
-     * @return The resulting value. Unlike other {@link #fetchSingle()} methods,
-     *         which never produce <code>null</code> records, this can be null
-     *         if the resulting value in the record is <code>null</code>.
+     * @return The resulting value. This is never <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @NotNull
     <E> E fetchSingle(RecordMapper<? super R, E> mapper) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
@@ -1147,6 +1204,7 @@ extends
      * @see Result#intoMaps()
      * @see Record#intoMap()
      */
+    @NotNull
     Map<String, Object> fetchSingleMap() throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
@@ -1160,6 +1218,7 @@ extends
      * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @NotNull
     Object[] fetchSingleArray() throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
@@ -1175,9 +1234,7 @@ extends
      *
      * @param <E> The generic entity type.
      * @param type The entity type.
-     * @return The resulting value. Unlike other {@link #fetchSingle()} methods,
-     *         which never produce <code>null</code> records, this can be null
-     *         if the resulting value in the record is <code>null</code>.
+     * @return The resulting value. This is never <code>null</code>.
      * @see Record#into(Class)
      * @see Result#into(Class)
      * @throws DataAccessException if something went wrong executing the query
@@ -1187,6 +1244,7 @@ extends
      * @throws TooManyRowsException if the query returned more than one record
      * @see DefaultRecordMapper
      */
+    @NotNull
     <E> E fetchSingleInto(Class<? extends E> type) throws DataAccessException, MappingException, NoDataFoundException, TooManyRowsException;
 
     /**
@@ -1206,15 +1264,14 @@ extends
      *
      * @param <Z> The generic table record type.
      * @param table The table type.
-     * @return The resulting value. Unlike other {@link #fetchSingle()} methods,
-     *         which never produce <code>null</code> records, this can be null
-     *         if the resulting value in the record is <code>null</code>.
+     * @return The resulting value. This is never <code>null</code>.
      * @see Record#into(Table)
      * @see Result#into(Table)
      * @throws DataAccessException if something went wrong executing the query
      * @throws NoDataFoundException if the query returned no records
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @NotNull
     <Z extends Record> Z fetchSingleInto(Table<Z> table) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
 
@@ -1229,6 +1286,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @NotNull
     <T> Optional<T> fetchOptional(Field<T> field) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -1246,6 +1304,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @NotNull
     <U> Optional<U> fetchOptional(Field<?> field, Class<? extends U> type) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -1259,6 +1318,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @NotNull
     <T, U> Optional<U> fetchOptional(Field<T> field, Converter<? super T, ? extends U> converter) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -1272,6 +1332,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @NotNull
     Optional<?> fetchOptional(int fieldIndex) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -1289,6 +1350,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @NotNull
     <U> Optional<U> fetchOptional(int fieldIndex, Class<? extends U> type) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -1302,6 +1364,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @NotNull
     <U> Optional<U> fetchOptional(int fieldIndex, Converter<?, ? extends U> converter) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -1315,6 +1378,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @NotNull
     Optional<?> fetchOptional(String fieldName) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -1332,6 +1396,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @NotNull
     <U> Optional<U> fetchOptional(String fieldName, Class<? extends U> type) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -1345,6 +1410,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @NotNull
     <U> Optional<U> fetchOptional(String fieldName, Converter<?, ? extends U> converter) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -1358,6 +1424,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @NotNull
     Optional<?> fetchOptional(Name fieldName) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -1375,6 +1442,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @NotNull
     <U> Optional<U> fetchOptional(Name fieldName, Class<? extends U> type) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -1388,6 +1456,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @NotNull
     <U> Optional<U> fetchOptional(Name fieldName, Converter<?, ? extends U> converter) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -1401,6 +1470,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @NotNull
     Optional<R> fetchOptional() throws DataAccessException, TooManyRowsException;
 
     /**
@@ -1411,6 +1481,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @NotNull
     <E> Optional<E> fetchOptional(RecordMapper<? super R, E> mapper) throws DataAccessException, TooManyRowsException;
 
     /**
@@ -1423,6 +1494,7 @@ extends
      * @see Result#intoMaps()
      * @see Record#intoMap()
      */
+    @NotNull
     Optional<Map<String, Object>> fetchOptionalMap() throws DataAccessException, TooManyRowsException;
 
     /**
@@ -1432,6 +1504,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @NotNull
     Optional<Object[]> fetchOptionalArray() throws DataAccessException, TooManyRowsException;
 
     /**
@@ -1452,6 +1525,7 @@ extends
      * @throws TooManyRowsException if the query returned more than one record
      * @see DefaultRecordMapper
      */
+    @NotNull
     <E> Optional<E> fetchOptionalInto(Class<? extends E> type) throws DataAccessException, MappingException, TooManyRowsException;
 
     /**
@@ -1473,6 +1547,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
      */
+    @NotNull
     <Z extends Record> Optional<Z> fetchOptionalInto(Table<Z> table) throws DataAccessException, TooManyRowsException;
 
 
@@ -1487,6 +1562,7 @@ extends
      *         records.
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Nullable
     <T> T fetchAny(Field<T> field) throws DataAccessException;
 
     /**
@@ -1504,6 +1580,7 @@ extends
      *         records.
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Nullable
     <U> U fetchAny(Field<?> field, Class<? extends U> type) throws DataAccessException;
 
     /**
@@ -1517,6 +1594,7 @@ extends
      *         records.
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Nullable
     <T, U> U fetchAny(Field<T> field, Converter<? super T, ? extends U> converter) throws DataAccessException;
 
     /**
@@ -1530,6 +1608,7 @@ extends
      *         records.
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Nullable
     Object fetchAny(int fieldIndex) throws DataAccessException;
 
     /**
@@ -1547,6 +1626,7 @@ extends
      *         records.
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Nullable
     <U> U fetchAny(int fieldIndex, Class<? extends U> type) throws DataAccessException;
 
     /**
@@ -1560,6 +1640,7 @@ extends
      *         records.
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Nullable
     <U> U fetchAny(int fieldIndex, Converter<?, ? extends U> converter) throws DataAccessException;
 
     /**
@@ -1573,6 +1654,7 @@ extends
      *         records.
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Nullable
     Object fetchAny(String fieldName) throws DataAccessException;
 
     /**
@@ -1590,6 +1672,7 @@ extends
      *         records.
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Nullable
     <U> U fetchAny(String fieldName, Class<? extends U> type) throws DataAccessException;
 
     /**
@@ -1603,6 +1686,7 @@ extends
      *         records.
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Nullable
     <U> U fetchAny(String fieldName, Converter<?, ? extends U> converter) throws DataAccessException;
 
     /**
@@ -1616,6 +1700,7 @@ extends
      *         records.
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Nullable
     Object fetchAny(Name fieldName) throws DataAccessException;
 
     /**
@@ -1633,6 +1718,7 @@ extends
      *         records.
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Nullable
     <U> U fetchAny(Name fieldName, Class<? extends U> type) throws DataAccessException;
 
     /**
@@ -1646,6 +1732,7 @@ extends
      *         records.
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Nullable
     <U> U fetchAny(Name fieldName, Converter<?, ? extends U> converter) throws DataAccessException;
 
     /**
@@ -1659,6 +1746,7 @@ extends
      *         returns no records.
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Nullable
     R fetchAny() throws DataAccessException;
 
     /**
@@ -1672,6 +1760,7 @@ extends
      *         returns no records.
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Nullable
     <E> E fetchAny(RecordMapper<? super R, E> mapper) throws DataAccessException;
 
     /**
@@ -1684,6 +1773,7 @@ extends
      * @see Result#intoMaps()
      * @see Record#intoMap()
      */
+    @Nullable
     Map<String, Object> fetchAnyMap() throws DataAccessException;
 
     /**
@@ -1696,6 +1786,7 @@ extends
      *         records.
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Nullable
     Object[] fetchAnyArray() throws DataAccessException;
 
     /**
@@ -1720,6 +1811,7 @@ extends
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
+    @Nullable
     <E> E fetchAnyInto(Class<? extends E> type) throws DataAccessException, MappingException;
 
     /**
@@ -1745,6 +1837,7 @@ extends
      * @see Result#into(Table)
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Nullable
     <Z extends Record> Z fetchAnyInto(Table<Z> table) throws DataAccessException;
 
     /**
@@ -1758,6 +1851,7 @@ extends
      * @see Result#intoMaps()
      * @see Record#intoMap()
      */
+    @NotNull
     List<Map<String, Object>> fetchMaps() throws DataAccessException;
 
     /**
@@ -1782,6 +1876,7 @@ extends
      *             equal values from the result set.
      * @see Result#intoMap(Field)
      */
+    @NotNull
     <K> Map<K, R> fetchMap(Field<K> key) throws DataAccessException;
 
     /**
@@ -1805,6 +1900,7 @@ extends
      *             equal values from the result set.
      * @see Result#intoMap(int)
      */
+    @NotNull
     Map<?, R> fetchMap(int keyFieldIndex) throws DataAccessException;
 
     /**
@@ -1828,6 +1924,7 @@ extends
      *             equal values from the result set.
      * @see Result#intoMap(String)
      */
+    @NotNull
     Map<?, R> fetchMap(String keyFieldName) throws DataAccessException;
 
     /**
@@ -1851,6 +1948,7 @@ extends
      *             equal values from the result set.
      * @see Result#intoMap(Name)
      */
+    @NotNull
     Map<?, R> fetchMap(Name keyFieldName) throws DataAccessException;
 
     /**
@@ -1873,6 +1971,7 @@ extends
      *             equal values from the result set.
      * @see Result#intoMap(Field, Field)
      */
+    @NotNull
     <K, V> Map<K, V> fetchMap(Field<K> key, Field<V> value) throws DataAccessException;
 
     /**
@@ -1893,6 +1992,7 @@ extends
      *             equal values from the result set.
      * @see Result#intoMap(int, int)
      */
+    @NotNull
     Map<?, ?> fetchMap(int keyFieldIndex, int valueFieldIndex) throws DataAccessException;
 
     /**
@@ -1913,6 +2013,7 @@ extends
      *             equal values from the result set.
      * @see Result#intoMap(String, String)
      */
+    @NotNull
     Map<?, ?> fetchMap(String keyFieldName, String valueFieldName) throws DataAccessException;
 
     /**
@@ -1933,6 +2034,7 @@ extends
      *             equal values from the result set.
      * @see Result#intoMap(Name, Name)
      */
+    @NotNull
     Map<?, ?> fetchMap(Name keyFieldName, Name valueFieldName) throws DataAccessException;
 
     /**
@@ -1952,6 +2054,7 @@ extends
      *             result set.
      * @see Result#intoMap(Field[])
      */
+    @NotNull
     Map<Record, R> fetchMap(Field<?>[] keys) throws DataAccessException;
 
     /**
@@ -1971,6 +2074,7 @@ extends
      *             result set.
      * @see Result#intoMap(int[])
      */
+    @NotNull
     Map<Record, R> fetchMap(int[] keyFieldIndexes) throws DataAccessException;
 
     /**
@@ -1990,6 +2094,7 @@ extends
      *             result set.
      * @see Result#intoMap(String[])
      */
+    @NotNull
     Map<Record, R> fetchMap(String[] keyFieldNames) throws DataAccessException;
 
     /**
@@ -2009,6 +2114,7 @@ extends
      *             result set.
      * @see Result#intoMap(Name[])
      */
+    @NotNull
     Map<Record, R> fetchMap(Name[] keyFieldNames) throws DataAccessException;
 
     /**
@@ -2029,6 +2135,7 @@ extends
      *             result set.
      * @see Result#intoMap(Field[], Field[])
      */
+    @NotNull
     Map<Record, Record> fetchMap(Field<?>[] keys, Field<?>[] values) throws DataAccessException;
 
     /**
@@ -2049,6 +2156,7 @@ extends
      *             result set.
      * @see Result#intoMap(int[], int[])
      */
+    @NotNull
     Map<Record, Record> fetchMap(int[] keyFieldIndexes, int[] valueFieldIndexes) throws DataAccessException;
 
     /**
@@ -2069,6 +2177,7 @@ extends
      *             result set.
      * @see Result#intoMap(String[], String[])
      */
+    @NotNull
     Map<Record, Record> fetchMap(String[] keyFieldNames, String[] valueFieldNames) throws DataAccessException;
 
     /**
@@ -2089,6 +2198,7 @@ extends
      *             result set.
      * @see Result#intoMap(Name[], Name[])
      */
+    @NotNull
     Map<Record, Record> fetchMap(Name[] keyFieldNames, Name[] valueFieldNames) throws DataAccessException;
 
     /**
@@ -2113,6 +2223,7 @@ extends
      * @see Result#intoMap(Field[], Class)
      * @see DefaultRecordMapper
      */
+    @NotNull
     <E> Map<List<?>, E> fetchMap(Field<?>[] keys, Class<? extends E> type) throws DataAccessException, MappingException;
 
     /**
@@ -2137,8 +2248,8 @@ extends
      * @see Result#intoMap(int[], Class)
      * @see DefaultRecordMapper
      */
-    <E> Map<List<?>, E> fetchMap(int[] keyFieldIndexes, Class<? extends E> type) throws DataAccessException,
-        MappingException;
+    @NotNull
+    <E> Map<List<?>, E> fetchMap(int[] keyFieldIndexes, Class<? extends E> type) throws DataAccessException, MappingException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
@@ -2162,8 +2273,8 @@ extends
      * @see Result#intoMap(String[], Class)
      * @see DefaultRecordMapper
      */
-    <E> Map<List<?>, E> fetchMap(String[] keyFieldNames, Class<? extends E> type) throws DataAccessException,
-        MappingException;
+    @NotNull
+    <E> Map<List<?>, E> fetchMap(String[] keyFieldNames, Class<? extends E> type) throws DataAccessException, MappingException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
@@ -2187,8 +2298,8 @@ extends
      * @see Result#intoMap(Name[], Class)
      * @see DefaultRecordMapper
      */
-    <E> Map<List<?>, E> fetchMap(Name[] keyFieldNames, Class<? extends E> type) throws DataAccessException,
-        MappingException;
+    @NotNull
+    <E> Map<List<?>, E> fetchMap(Name[] keyFieldNames, Class<? extends E> type) throws DataAccessException, MappingException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
@@ -2212,8 +2323,8 @@ extends
      * @see Result#intoMap(Field[], Class)
      * @see DefaultRecordMapper
      */
-    <E> Map<List<?>, E> fetchMap(Field<?>[] keys, RecordMapper<? super R, E> mapper) throws DataAccessException,
-        MappingException;
+    @NotNull
+    <E> Map<List<?>, E> fetchMap(Field<?>[] keys, RecordMapper<? super R, E> mapper) throws DataAccessException, MappingException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
@@ -2237,8 +2348,8 @@ extends
      * @see Result#intoMap(int[], Class)
      * @see DefaultRecordMapper
      */
-    <E> Map<List<?>, E> fetchMap(int[] keyFieldIndexes, RecordMapper<? super R, E> mapper) throws DataAccessException,
-        MappingException;
+    @NotNull
+    <E> Map<List<?>, E> fetchMap(int[] keyFieldIndexes, RecordMapper<? super R, E> mapper) throws DataAccessException, MappingException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
@@ -2262,8 +2373,8 @@ extends
      * @see Result#intoMap(String[], Class)
      * @see DefaultRecordMapper
      */
-    <E> Map<List<?>, E> fetchMap(String[] keyFieldNames, RecordMapper<? super R, E> mapper) throws DataAccessException,
-        MappingException;
+    @NotNull
+    <E> Map<List<?>, E> fetchMap(String[] keyFieldNames, RecordMapper<? super R, E> mapper) throws DataAccessException, MappingException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
@@ -2287,8 +2398,8 @@ extends
      * @see Result#intoMap(Name[], Class)
      * @see DefaultRecordMapper
      */
-    <E> Map<List<?>, E> fetchMap(Name[] keyFieldNames, RecordMapper<? super R, E> mapper) throws DataAccessException,
-        MappingException;
+    @NotNull
+    <E> Map<List<?>, E> fetchMap(Name[] keyFieldNames, RecordMapper<? super R, E> mapper) throws DataAccessException, MappingException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
@@ -2313,8 +2424,8 @@ extends
      * @see Result#intoMap(Class)
      * @see DefaultRecordMapper
      */
-    <K> Map<K, R> fetchMap(Class<? extends K> keyType)
-        throws DataAccessException, MappingException, InvalidResultException;
+    @NotNull
+    <K> Map<K, R> fetchMap(Class<? extends K> keyType) throws DataAccessException, MappingException, InvalidResultException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
@@ -2340,8 +2451,8 @@ extends
      * @see Result#intoMap(Class, Class)
      * @see DefaultRecordMapper
      */
-    <K, V> Map<K, V> fetchMap(Class<? extends K> keyType, Class<? extends V> valueType)
-        throws DataAccessException, MappingException, InvalidResultException;
+    @NotNull
+    <K, V> Map<K, V> fetchMap(Class<? extends K> keyType, Class<? extends V> valueType) throws DataAccessException, MappingException, InvalidResultException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
@@ -2367,8 +2478,8 @@ extends
      * @see Result#intoMap(Class, RecordMapper)
      * @see DefaultRecordMapper
      */
-    <K, V> Map<K, V> fetchMap(Class<? extends K> keyType, RecordMapper<? super R, V> valueMapper)
-        throws DataAccessException, InvalidResultException, MappingException;
+    @NotNull
+    <K, V> Map<K, V> fetchMap(Class<? extends K> keyType, RecordMapper<? super R, V> valueMapper) throws DataAccessException, InvalidResultException, MappingException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
@@ -2392,8 +2503,8 @@ extends
      * @see Result#intoMap(RecordMapper)
      * @see DefaultRecordMapper
      */
-    <K> Map<K, R> fetchMap(RecordMapper<? super R, K> keyMapper) throws DataAccessException,
-        InvalidResultException, MappingException;
+    @NotNull
+    <K> Map<K, R> fetchMap(RecordMapper<? super R, K> keyMapper) throws DataAccessException, InvalidResultException, MappingException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
@@ -2418,8 +2529,8 @@ extends
      * @see Result#intoMap(RecordMapper, Class)
      * @see DefaultRecordMapper
      */
-    <K, V> Map<K, V> fetchMap(RecordMapper<? super R, K> keyMapper, Class<V> valueType) throws DataAccessException,
-        InvalidResultException, MappingException;
+    @NotNull
+    <K, V> Map<K, V> fetchMap(RecordMapper<? super R, K> keyMapper, Class<V> valueType) throws DataAccessException, InvalidResultException, MappingException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
@@ -2444,8 +2555,8 @@ extends
      * @see Result#intoMap(RecordMapper, RecordMapper)
      * @see DefaultRecordMapper
      */
-    <K, V> Map<K, V> fetchMap(RecordMapper<? super R, K> keyMapper, RecordMapper<? super R, V> valueMapper)
-        throws DataAccessException, InvalidResultException, MappingException;
+    @NotNull
+    <K, V> Map<K, V> fetchMap(RecordMapper<? super R, K> keyMapper, RecordMapper<? super R, V> valueMapper) throws DataAccessException, InvalidResultException, MappingException;
 
     /**
      * Execute the query and return a {@link Map} with table as a map key and
@@ -2464,6 +2575,7 @@ extends
      *             result set.
      * @see Result#intoMap(Table)
      */
+    @NotNull
     <S extends Record> Map<S, R> fetchMap(Table<S> table) throws DataAccessException;
 
     /**
@@ -2484,6 +2596,7 @@ extends
      *             result set.
      * @see Result#intoMap(Table, Table)
      */
+    @NotNull
     <S extends Record, T extends Record> Map<S, T> fetchMap(Table<S> keyTable, Table<T> valueTable) throws DataAccessException;
 
     /**
@@ -2507,8 +2620,8 @@ extends
      * @see Result#intoMap(Table, Class)
      * @see DefaultRecordMapper
      */
-    <E, S extends Record> Map<S, E> fetchMap(Table<S> table, Class<? extends E> type) throws DataAccessException,
-        MappingException;
+    @NotNull
+    <E, S extends Record> Map<S, E> fetchMap(Table<S> table, Class<? extends E> type) throws DataAccessException, MappingException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
@@ -2531,8 +2644,8 @@ extends
      * @see Result#intoMap(Table, Class)
      * @see DefaultRecordMapper
      */
-    <E, S extends Record> Map<S, E> fetchMap(Table<S> table, RecordMapper<? super R, E> mapper)
-        throws DataAccessException, MappingException;
+    @NotNull
+    <E, S extends Record> Map<S, E> fetchMap(Table<S> table, RecordMapper<? super R, E> mapper) throws DataAccessException, MappingException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
@@ -2552,6 +2665,7 @@ extends
      *             set.
      * @see Result#intoMap(Field, Class)
      */
+    @NotNull
     <K, E> Map<K, E> fetchMap(Field<K> key, Class<? extends E> type) throws DataAccessException;
 
     /**
@@ -2572,6 +2686,7 @@ extends
      *             set.
      * @see Result#intoMap(int, Class)
      */
+    @NotNull
     <E> Map<?, E> fetchMap(int keyFieldIndex, Class<? extends E> type) throws DataAccessException;
 
     /**
@@ -2592,6 +2707,7 @@ extends
      *             set.
      * @see Result#intoMap(String, Class)
      */
+    @NotNull
     <E> Map<?, E> fetchMap(String keyFieldName, Class<? extends E> type) throws DataAccessException;
 
     /**
@@ -2612,6 +2728,7 @@ extends
      *             set.
      * @see Result#intoMap(Name, Class)
      */
+    @NotNull
     <E> Map<?, E> fetchMap(Name keyFieldName, Class<? extends E> type) throws DataAccessException;
 
     /**
@@ -2632,6 +2749,7 @@ extends
      *             set.
      * @see Result#intoMap(Field, Class)
      */
+    @NotNull
     <K, E> Map<K, E> fetchMap(Field<K> key, RecordMapper<? super R, E> mapper) throws DataAccessException;
 
     /**
@@ -2652,6 +2770,7 @@ extends
      *             set.
      * @see Result#intoMap(int, Class)
      */
+    @NotNull
     <E> Map<?, E> fetchMap(int keyFieldIndex, RecordMapper<? super R, E> mapper) throws DataAccessException;
 
     /**
@@ -2672,6 +2791,7 @@ extends
      *             set.
      * @see Result#intoMap(String, Class)
      */
+    @NotNull
     <E> Map<?, E> fetchMap(String keyFieldName, RecordMapper<? super R, E> mapper) throws DataAccessException;
 
     /**
@@ -2692,6 +2812,7 @@ extends
      *             set.
      * @see Result#intoMap(Name, Class)
      */
+    @NotNull
     <E> Map<?, E> fetchMap(Name keyFieldName, RecordMapper<? super R, E> mapper) throws DataAccessException;
 
     /**
@@ -2712,6 +2833,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoGroups(Field)
      */
+    @NotNull
     <K> Map<K, Result<R>> fetchGroups(Field<K> key) throws DataAccessException;
 
     /**
@@ -2731,6 +2853,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoGroups(int)
      */
+    @NotNull
     Map<?, Result<R>> fetchGroups(int keyFieldIndex) throws DataAccessException;
 
     /**
@@ -2750,6 +2873,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoGroups(String)
      */
+    @NotNull
     Map<?, Result<R>> fetchGroups(String keyFieldName) throws DataAccessException;
 
     /**
@@ -2769,6 +2893,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoGroups(Name)
      */
+    @NotNull
     Map<?, Result<R>> fetchGroups(Name keyFieldName) throws DataAccessException;
 
     /**
@@ -2787,6 +2912,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoGroups(Field, Field)
      */
+    @NotNull
     <K, V> Map<K, List<V>> fetchGroups(Field<K> key, Field<V> value) throws DataAccessException;
 
     /**
@@ -2803,6 +2929,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoGroups(int, int)
      */
+    @NotNull
     Map<?, List<?>> fetchGroups(int keyFieldIndex, int valueFieldIndex) throws DataAccessException;
 
     /**
@@ -2819,6 +2946,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoGroups(String, String)
      */
+    @NotNull
     Map<?, List<?>> fetchGroups(String keyFieldName, String valueFieldName) throws DataAccessException;
 
     /**
@@ -2835,6 +2963,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoGroups(Name, Name)
      */
+    @NotNull
     Map<?, List<?>> fetchGroups(Name keyFieldName, Name valueFieldName) throws DataAccessException;
 
     /**
@@ -2852,6 +2981,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoGroups(Field[])
      */
+    @NotNull
     Map<Record, Result<R>> fetchGroups(Field<?>[] keys) throws DataAccessException;
 
     /**
@@ -2869,6 +2999,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoGroups(int[])
      */
+    @NotNull
     Map<Record, Result<R>> fetchGroups(int[] keyFieldIndexes) throws DataAccessException;
 
     /**
@@ -2886,6 +3017,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoGroups(String[])
      */
+    @NotNull
     Map<Record, Result<R>> fetchGroups(String[] keyFieldNames) throws DataAccessException;
 
     /**
@@ -2903,6 +3035,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoGroups(Name[])
      */
+    @NotNull
     Map<Record, Result<R>> fetchGroups(Name[] keyFieldNames) throws DataAccessException;
 
     /**
@@ -2921,6 +3054,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoGroups(Field[], Field[])
      */
+    @NotNull
     Map<Record, Result<Record>> fetchGroups(Field<?>[] keys, Field<?>[] values) throws DataAccessException;
 
     /**
@@ -2939,6 +3073,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoGroups(int[], int[])
      */
+    @NotNull
     Map<Record, Result<Record>> fetchGroups(int[] keyFieldIndexes, int[] valueFieldIndexes) throws DataAccessException;
 
     /**
@@ -2957,6 +3092,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoGroups(String[], String[])
      */
+    @NotNull
     Map<Record, Result<Record>> fetchGroups(String[] keyFieldNames, String[] valueFieldNames) throws DataAccessException;
 
     /**
@@ -2975,6 +3111,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoGroups(Name[], Name[])
      */
+    @NotNull
     Map<Record, Result<Record>> fetchGroups(Name[] keyFieldNames, Name[] valueFieldNames) throws DataAccessException;
 
     /**
@@ -2995,6 +3132,7 @@ extends
      * @see Result#intoGroups(Field[], Class)
      * @see DefaultRecordMapper
      */
+    @NotNull
     <E> Map<Record, List<E>> fetchGroups(Field<?>[] keys, Class<? extends E> type) throws MappingException;
 
     /**
@@ -3015,6 +3153,7 @@ extends
      * @see Result#intoGroups(int[], Class)
      * @see DefaultRecordMapper
      */
+    @NotNull
     <E> Map<Record, List<E>> fetchGroups(int[] keyFieldIndexes, Class<? extends E> type) throws MappingException;
 
     /**
@@ -3035,6 +3174,7 @@ extends
      * @see Result#intoGroups(String[], Class)
      * @see DefaultRecordMapper
      */
+    @NotNull
     <E> Map<Record, List<E>> fetchGroups(String[] keyFieldNames, Class<? extends E> type) throws MappingException;
 
     /**
@@ -3055,6 +3195,7 @@ extends
      * @see Result#intoGroups(Name[], Class)
      * @see DefaultRecordMapper
      */
+    @NotNull
     <E> Map<Record, List<E>> fetchGroups(Name[] keyFieldNames, Class<? extends E> type) throws MappingException;
 
     /**
@@ -3075,6 +3216,7 @@ extends
      * @see Result#intoGroups(Field[], Class)
      * @see DefaultRecordMapper
      */
+    @NotNull
     <E> Map<Record, List<E>> fetchGroups(Field<?>[] keys, RecordMapper<? super R, E> mapper) throws MappingException;
 
     /**
@@ -3095,8 +3237,8 @@ extends
      * @see Result#intoGroups(int[], Class)
      * @see DefaultRecordMapper
      */
-    <E> Map<Record, List<E>> fetchGroups(int[] keyFieldIndexes, RecordMapper<? super R, E> mapper)
-        throws MappingException;
+    @NotNull
+    <E> Map<Record, List<E>> fetchGroups(int[] keyFieldIndexes, RecordMapper<? super R, E> mapper) throws MappingException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
@@ -3116,8 +3258,8 @@ extends
      * @see Result#intoGroups(String[], Class)
      * @see DefaultRecordMapper
      */
-    <E> Map<Record, List<E>> fetchGroups(String[] keyFieldNames, RecordMapper<? super R, E> mapper)
-        throws MappingException;
+    @NotNull
+    <E> Map<Record, List<E>> fetchGroups(String[] keyFieldNames, RecordMapper<? super R, E> mapper) throws MappingException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
@@ -3137,8 +3279,8 @@ extends
      * @see Result#intoGroups(Name[], Class)
      * @see DefaultRecordMapper
      */
-    <E> Map<Record, List<E>> fetchGroups(Name[] keyFieldNames, RecordMapper<? super R, E> mapper)
-        throws MappingException;
+    @NotNull
+    <E> Map<Record, List<E>> fetchGroups(Name[] keyFieldNames, RecordMapper<? super R, E> mapper) throws MappingException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
@@ -3159,6 +3301,7 @@ extends
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
+    @NotNull
     <K> Map<K, Result<R>> fetchGroups(Class<? extends K> keyType) throws MappingException;
 
     /**
@@ -3181,8 +3324,8 @@ extends
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
-    <K, V> Map<K, List<V>> fetchGroups(Class<? extends K> keyType, Class<? extends V> valueType)
-        throws MappingException;
+    @NotNull
+    <K, V> Map<K, List<V>> fetchGroups(Class<? extends K> keyType, Class<? extends V> valueType) throws MappingException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
@@ -3204,8 +3347,8 @@ extends
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
-    <K, V> Map<K, List<V>> fetchGroups(Class<? extends K> keyType, RecordMapper<? super R, V> valueMapper)
-        throws MappingException;
+    @NotNull
+    <K, V> Map<K, List<V>> fetchGroups(Class<? extends K> keyType, RecordMapper<? super R, V> valueMapper) throws MappingException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
@@ -3225,6 +3368,7 @@ extends
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
+    @NotNull
     <K> Map<K, Result<R>> fetchGroups(RecordMapper<? super R, K> keyMapper) throws MappingException;
 
     /**
@@ -3246,8 +3390,8 @@ extends
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
-    <K, V> Map<K, List<V>> fetchGroups(RecordMapper<? super R, K> keyMapper, Class<V> valueType)
-        throws MappingException;
+    @NotNull
+    <K, V> Map<K, List<V>> fetchGroups(RecordMapper<? super R, K> keyMapper, Class<V> valueType) throws MappingException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
@@ -3268,8 +3412,8 @@ extends
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
-    <K, V> Map<K, List<V>> fetchGroups(RecordMapper<? super R, K> keyMapper, RecordMapper<? super R, V> valueMapper)
-        throws MappingException;
+    @NotNull
+    <K, V> Map<K, List<V>> fetchGroups(RecordMapper<? super R, K> keyMapper, RecordMapper<? super R, V> valueMapper) throws MappingException;
 
     /**
      * Execute the query and return a {@link Map} with the result grouped by the
@@ -3284,6 +3428,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoGroups(Table)
      */
+    @NotNull
     <S extends Record> Map<S, Result<R>> fetchGroups(Table<S> table) throws DataAccessException;
 
     /**
@@ -3300,6 +3445,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoGroups(Table, Table)
      */
+    @NotNull
     <S extends Record, T extends Record> Map<S, Result<T>> fetchGroups(Table<S> keyTable, Table<T> valueTable) throws DataAccessException;
 
     /**
@@ -3319,8 +3465,8 @@ extends
      * @see Result#intoGroups(Table, Class)
      * @see DefaultRecordMapper
      */
-    <E, S extends Record> Map<S, List<E>> fetchGroups(Table<S> table, Class<? extends E> type)
-        throws DataAccessException, MappingException;
+    @NotNull
+    <E, S extends Record> Map<S, List<E>> fetchGroups(Table<S> table, Class<? extends E> type) throws DataAccessException, MappingException;
 
     /**
      * Execute the query and return a {@link Map} with results grouped by the
@@ -3339,8 +3485,8 @@ extends
      * @see Result#intoGroups(Table, Class)
      * @see DefaultRecordMapper
      */
-    <E, S extends Record> Map<S, List<E>> fetchGroups(Table<S> table, RecordMapper<? super R, E> mapper)
-        throws DataAccessException, MappingException;
+    @NotNull
+    <E, S extends Record> Map<S, List<E>> fetchGroups(Table<S> table, RecordMapper<? super R, E> mapper) throws DataAccessException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given key and mapped
@@ -3358,8 +3504,8 @@ extends
      * @see Result#intoGroups(Field, Class)
      * @see DefaultRecordMapper
      */
-    <K, E> Map<K, List<E>> fetchGroups(Field<K> key, Class<? extends E> type) throws DataAccessException,
-        MappingException;
+    @NotNull
+    <K, E> Map<K, List<E>> fetchGroups(Field<K> key, Class<? extends E> type) throws DataAccessException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given key and mapped
@@ -3375,8 +3521,8 @@ extends
      * @see Result#intoGroups(int, Class)
      * @see DefaultRecordMapper
      */
-    <E> Map<?, List<E>> fetchGroups(int keyFieldIndex, Class<? extends E> type) throws DataAccessException,
-        MappingException;
+    @NotNull
+    <E> Map<?, List<E>> fetchGroups(int keyFieldIndex, Class<? extends E> type) throws DataAccessException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given key and mapped
@@ -3392,8 +3538,8 @@ extends
      * @see Result#intoGroups(String, Class)
      * @see DefaultRecordMapper
      */
-    <E> Map<?, List<E>> fetchGroups(String keyFieldName, Class<? extends E> type) throws DataAccessException,
-        MappingException;
+    @NotNull
+    <E> Map<?, List<E>> fetchGroups(String keyFieldName, Class<? extends E> type) throws DataAccessException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given key and mapped
@@ -3409,8 +3555,8 @@ extends
      * @see Result#intoGroups(Name, Class)
      * @see DefaultRecordMapper
      */
-    <E> Map<?, List<E>> fetchGroups(Name keyFieldName, Class<? extends E> type) throws DataAccessException,
-        MappingException;
+    @NotNull
+    <E> Map<?, List<E>> fetchGroups(Name keyFieldName, Class<? extends E> type) throws DataAccessException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given key and mapped by
@@ -3428,8 +3574,8 @@ extends
      * @see Result#intoGroups(Field, Class)
      * @see DefaultRecordMapper
      */
-    <K, E> Map<K, List<E>> fetchGroups(Field<K> key, RecordMapper<? super R, E> mapper) throws DataAccessException,
-        MappingException;
+    @NotNull
+    <K, E> Map<K, List<E>> fetchGroups(Field<K> key, RecordMapper<? super R, E> mapper) throws DataAccessException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given key and mapped by
@@ -3445,8 +3591,8 @@ extends
      * @see Result#intoGroups(int, Class)
      * @see DefaultRecordMapper
      */
-    <E> Map<?, List<E>> fetchGroups(int keyFieldIndex, RecordMapper<? super R, E> mapper) throws DataAccessException,
-        MappingException;
+    @NotNull
+    <E> Map<?, List<E>> fetchGroups(int keyFieldIndex, RecordMapper<? super R, E> mapper) throws DataAccessException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given key and mapped by
@@ -3462,8 +3608,8 @@ extends
      * @see Result#intoGroups(String, Class)
      * @see DefaultRecordMapper
      */
-    <E> Map<?, List<E>> fetchGroups(String keyFieldName, RecordMapper<? super R, E> mapper) throws DataAccessException,
-        MappingException;
+    @NotNull
+    <E> Map<?, List<E>> fetchGroups(String keyFieldName, RecordMapper<? super R, E> mapper) throws DataAccessException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given key and mapped by
@@ -3479,8 +3625,8 @@ extends
      * @see Result#intoGroups(Name, Class)
      * @see DefaultRecordMapper
      */
-    <E> Map<?, List<E>> fetchGroups(Name keyFieldName, RecordMapper<? super R, E> mapper) throws DataAccessException,
-        MappingException;
+    @NotNull
+    <E> Map<?, List<E>> fetchGroups(Name keyFieldName, RecordMapper<? super R, E> mapper) throws DataAccessException, MappingException;
 
     /**
      * Execute the query and return the generated result as an Object matrix.
@@ -3492,6 +3638,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArrays()
      */
+    @NotNull
     Object[][] fetchArrays() throws DataAccessException;
 
     /**
@@ -3502,6 +3649,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#toArray(Object[])
      */
+    @NotNull
     R[] fetchArray() throws DataAccessException;
 
     /**
@@ -3518,6 +3666,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(int)
      */
+    @NotNull
     Object[] fetchArray(int fieldIndex) throws DataAccessException;
 
     /**
@@ -3535,6 +3684,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(int, Class)
      */
+    @NotNull
     <U> U[] fetchArray(int fieldIndex, Class<? extends U> type) throws DataAccessException;
 
     /**
@@ -3548,6 +3698,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(int, Converter)
      */
+    @NotNull
     <U> U[] fetchArray(int fieldIndex, Converter<?, ? extends U> converter) throws DataAccessException;
 
     /**
@@ -3564,6 +3715,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(String)
      */
+    @NotNull
     Object[] fetchArray(String fieldName) throws DataAccessException;
 
     /**
@@ -3581,6 +3733,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(String, Converter)
      */
+    @NotNull
     <U> U[] fetchArray(String fieldName, Class<? extends U> type) throws DataAccessException;
 
     /**
@@ -3594,6 +3747,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(String, Class)
      */
+    @NotNull
     <U> U[] fetchArray(String fieldName, Converter<?, ? extends U> converter) throws DataAccessException;
 
     /**
@@ -3610,6 +3764,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(Name)
      */
+    @NotNull
     Object[] fetchArray(Name fieldName) throws DataAccessException;
 
     /**
@@ -3627,6 +3782,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(Name, Converter)
      */
+    @NotNull
     <U> U[] fetchArray(Name fieldName, Class<? extends U> type) throws DataAccessException;
 
     /**
@@ -3640,6 +3796,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(Name, Class)
      */
+    @NotNull
     <U> U[] fetchArray(Name fieldName, Converter<?, ? extends U> converter) throws DataAccessException;
 
     /**
@@ -3653,6 +3810,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(Field)
      */
+    @NotNull
     <T> T[] fetchArray(Field<T> field) throws DataAccessException;
 
     /**
@@ -3670,6 +3828,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(Field, Class)
      */
+    @NotNull
     <U> U[] fetchArray(Field<?> field, Class<? extends U> type) throws DataAccessException;
 
     /**
@@ -3683,6 +3842,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(Field, Converter)
      */
+    @NotNull
     <T, U> U[] fetchArray(Field<T> field, Converter<? super T, ? extends U> converter) throws DataAccessException;
 
     /**
@@ -3692,6 +3852,7 @@ extends
      * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      */
+    @NotNull
     <E> Set<E> fetchSet(RecordMapper<? super R, E> mapper) throws DataAccessException;
 
     /**
@@ -3702,6 +3863,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(int)
      */
+    @NotNull
     Set<?> fetchSet(int fieldIndex) throws DataAccessException;
 
     /**
@@ -3716,6 +3878,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(int, Class)
      */
+    @NotNull
     <U> Set<U> fetchSet(int fieldIndex, Class<? extends U> type) throws DataAccessException;
 
     /**
@@ -3726,6 +3889,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(int, Converter)
      */
+    @NotNull
     <U> Set<U> fetchSet(int fieldIndex, Converter<?, ? extends U> converter) throws DataAccessException;
 
     /**
@@ -3736,6 +3900,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(String)
      */
+    @NotNull
     Set<?> fetchSet(String fieldName) throws DataAccessException;
 
     /**
@@ -3750,6 +3915,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(String, Converter)
      */
+    @NotNull
     <U> Set<U> fetchSet(String fieldName, Class<? extends U> type) throws DataAccessException;
 
     /**
@@ -3760,6 +3926,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(String, Class)
      */
+    @NotNull
     <U> Set<U> fetchSet(String fieldName, Converter<?, ? extends U> converter) throws DataAccessException;
 
     /**
@@ -3770,6 +3937,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(Name)
      */
+    @NotNull
     Set<?> fetchSet(Name fieldName) throws DataAccessException;
 
     /**
@@ -3784,6 +3952,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(Name, Converter)
      */
+    @NotNull
     <U> Set<U> fetchSet(Name fieldName, Class<? extends U> type) throws DataAccessException;
 
     /**
@@ -3794,6 +3963,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(Name, Class)
      */
+    @NotNull
     <U> Set<U> fetchSet(Name fieldName, Converter<?, ? extends U> converter) throws DataAccessException;
 
     /**
@@ -3804,6 +3974,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(Field)
      */
+    @NotNull
     <T> Set<T> fetchSet(Field<T> field) throws DataAccessException;
 
     /**
@@ -3818,6 +3989,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(Field, Class)
      */
+    @NotNull
     <U> Set<U> fetchSet(Field<?> field, Class<? extends U> type) throws DataAccessException;
 
     /**
@@ -3828,6 +4000,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @see Result#intoArray(Field, Converter)
      */
+    @NotNull
     <T, U> Set<U> fetchSet(Field<T> field, Converter<? super T, ? extends U> converter) throws DataAccessException;
 
     /**
@@ -3846,6 +4019,7 @@ extends
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
      */
+    @NotNull
     <E> List<E> fetchInto(Class<? extends E> type) throws DataAccessException, MappingException;
 
     /**
@@ -3865,6 +4039,7 @@ extends
      * @see Result#into(Table)
      * @throws DataAccessException if something went wrong executing the query
      */
+    @NotNull
     <Z extends Record> Result<Z> fetchInto(Table<Z> table) throws DataAccessException;
 
     /**
@@ -3878,6 +4053,7 @@ extends
      * @return Convenience result, returning the parameter handler itself
      * @throws DataAccessException if something went wrong executing the query
      */
+    @NotNull
     <H extends RecordHandler<? super R>> H fetchInto(H handler) throws DataAccessException;
 
     /**
@@ -3887,6 +4063,7 @@ extends
      * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
      */
+    @NotNull
     <E> List<E> fetch(RecordMapper<? super R, E> mapper) throws DataAccessException;
 
 
@@ -3901,6 +4078,7 @@ extends
      * @return The completion stage. The completed result will never be
      *         <code>null</code>.
      */
+    @NotNull
     CompletionStage<Result<R>> fetchAsync();
 
     /**
@@ -3910,6 +4088,7 @@ extends
      * @return The completion stage. The completed result will never be
      *         <code>null</code>.
      */
+    @NotNull
     CompletionStage<Result<R>> fetchAsync(Executor executor);
 
 
@@ -3942,6 +4121,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @deprecated - 3.2.0 - [#2581] - This method will be removed in jOOQ 4.0
      */
+    @NotNull
     @Deprecated
     FutureResult<R> fetchLater() throws DataAccessException;
 
@@ -3973,6 +4153,7 @@ extends
      * @throws DataAccessException if something went wrong executing the query
      * @deprecated - 3.2.0 - [#2581] - This method will be removed in jOOQ 4.0
      */
+    @NotNull
     @Deprecated
     FutureResult<R> fetchLater(ExecutorService executor) throws DataAccessException;
 
@@ -3981,9 +4162,11 @@ extends
      */
     Class<? extends R> getRecordType();
 
+    @NotNull
     @Override
     ResultQuery<R> bind(String param, Object value) throws IllegalArgumentException, DataTypeException;
 
+    @NotNull
     @Override
     ResultQuery<R> bind(int index, Object value) throws IllegalArgumentException, DataTypeException;
 
@@ -3991,12 +4174,15 @@ extends
     // JDBC methods
     // ------------------------------------------------------------------------
 
+    @NotNull
     @Override
     ResultQuery<R> poolable(boolean poolable);
 
+    @NotNull
     @Override
     ResultQuery<R> queryTimeout(int timeout);
 
+    @NotNull
     @Override
     ResultQuery<R> keepStatement(boolean keepStatement);
 
@@ -4010,6 +4196,7 @@ extends
      *
      * @see Statement#setMaxRows(int)
      */
+    @NotNull
     ResultQuery<R> maxRows(int rows);
 
     /**
@@ -4037,6 +4224,7 @@ extends
      *
      * @see Statement#setFetchSize(int)
      */
+    @NotNull
     ResultQuery<R> fetchSize(int rows);
 
     /**
@@ -4053,6 +4241,7 @@ extends
      *
      * @see Statement#getResultSetConcurrency()
      */
+    @NotNull
     ResultQuery<R> resultSetConcurrency(int resultSetConcurrency);
 
     /**
@@ -4069,6 +4258,7 @@ extends
      *
      * @see Statement#getResultSetType()
      */
+    @NotNull
     ResultQuery<R> resultSetType(int resultSetType);
 
     /**
@@ -4085,6 +4275,7 @@ extends
      *
      * @see Statement#getResultSetHoldability()
      */
+    @NotNull
     ResultQuery<R> resultSetHoldability(int resultSetHoldability);
 
     /**
@@ -4102,6 +4293,7 @@ extends
      * @deprecated - 3.10 - [#6254] - This functionality is no longer supported
      *             and will be removed in 4.0
      */
+    @NotNull
     @Deprecated
     ResultQuery<R> intern(Field<?>... fields);
 
@@ -4120,6 +4312,7 @@ extends
      * @deprecated - 3.10 - [#6254] - This functionality is no longer supported
      *             and will be removed in 4.0
      */
+    @NotNull
     @Deprecated
     ResultQuery<R> intern(int... fieldIndexes);
 
@@ -4138,6 +4331,7 @@ extends
      * @deprecated - 3.10 - [#6254] - This functionality is no longer supported
      *             and will be removed in 4.0
      */
+    @NotNull
     @Deprecated
     ResultQuery<R> intern(String... fieldNames);
 
@@ -4156,22 +4350,26 @@ extends
      * @deprecated - 3.10 - [#6254] - This functionality is no longer supported
      *             and will be removed in 4.0
      */
+    @NotNull
     @Deprecated
     ResultQuery<R> intern(Name... fieldNames);
 
     /**
      * Coerce the result record type of this query to that of a table.
      */
+    @NotNull
     <X extends Record> ResultQuery<X> coerce(Table<X> table);
 
     /**
      * Coerce the result record type of this query to that of a set of fields.
      */
+    @NotNull
     ResultQuery<Record> coerce(Field<?>... fields);
 
     /**
      * Coerce the result record type of this query to that of a set of fields.
      */
+    @NotNull
     ResultQuery<Record> coerce(Collection<? extends Field<?>> fields);
 
 
@@ -4179,111 +4377,133 @@ extends
     /**
      * Coerce the result record type of this query to that of a set of fields.
      */
+    @NotNull
     <T1> ResultQuery<Record1<T1>> coerce(Field<T1> field1);
 
     /**
      * Coerce the result record type of this query to that of a set of fields.
      */
+    @NotNull
     <T1, T2> ResultQuery<Record2<T1, T2>> coerce(Field<T1> field1, Field<T2> field2);
 
     /**
      * Coerce the result record type of this query to that of a set of fields.
      */
+    @NotNull
     <T1, T2, T3> ResultQuery<Record3<T1, T2, T3>> coerce(Field<T1> field1, Field<T2> field2, Field<T3> field3);
 
     /**
      * Coerce the result record type of this query to that of a set of fields.
      */
+    @NotNull
     <T1, T2, T3, T4> ResultQuery<Record4<T1, T2, T3, T4>> coerce(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4);
 
     /**
      * Coerce the result record type of this query to that of a set of fields.
      */
+    @NotNull
     <T1, T2, T3, T4, T5> ResultQuery<Record5<T1, T2, T3, T4, T5>> coerce(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5);
 
     /**
      * Coerce the result record type of this query to that of a set of fields.
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6> ResultQuery<Record6<T1, T2, T3, T4, T5, T6>> coerce(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6);
 
     /**
      * Coerce the result record type of this query to that of a set of fields.
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7> ResultQuery<Record7<T1, T2, T3, T4, T5, T6, T7>> coerce(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7);
 
     /**
      * Coerce the result record type of this query to that of a set of fields.
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7, T8> ResultQuery<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> coerce(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8);
 
     /**
      * Coerce the result record type of this query to that of a set of fields.
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7, T8, T9> ResultQuery<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> coerce(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9);
 
     /**
      * Coerce the result record type of this query to that of a set of fields.
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> ResultQuery<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> coerce(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10);
 
     /**
      * Coerce the result record type of this query to that of a set of fields.
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> ResultQuery<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> coerce(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11);
 
     /**
      * Coerce the result record type of this query to that of a set of fields.
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> ResultQuery<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> coerce(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12);
 
     /**
      * Coerce the result record type of this query to that of a set of fields.
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> ResultQuery<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> coerce(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13);
 
     /**
      * Coerce the result record type of this query to that of a set of fields.
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> ResultQuery<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> coerce(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14);
 
     /**
      * Coerce the result record type of this query to that of a set of fields.
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> ResultQuery<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> coerce(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15);
 
     /**
      * Coerce the result record type of this query to that of a set of fields.
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> ResultQuery<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> coerce(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16);
 
     /**
      * Coerce the result record type of this query to that of a set of fields.
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> ResultQuery<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> coerce(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17);
 
     /**
      * Coerce the result record type of this query to that of a set of fields.
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> ResultQuery<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> coerce(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18);
 
     /**
      * Coerce the result record type of this query to that of a set of fields.
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> ResultQuery<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> coerce(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19);
 
     /**
      * Coerce the result record type of this query to that of a set of fields.
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> ResultQuery<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> coerce(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20);
 
     /**
      * Coerce the result record type of this query to that of a set of fields.
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> ResultQuery<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> coerce(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21);
 
     /**
      * Coerce the result record type of this query to that of a set of fields.
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> ResultQuery<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> coerce(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22);
 
 

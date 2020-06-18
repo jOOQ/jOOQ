@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 // ...
@@ -112,6 +115,7 @@ public interface LoaderOptionsStep<R extends Record> extends LoaderSourceStep<R>
      * the default. This cannot be combined with {@link #onDuplicateKeyError()}
      * or {@link #onDuplicateKeyIgnore()}
      */
+    @NotNull
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     LoaderOptionsStep<R> onDuplicateKeyUpdate();
 
@@ -128,6 +132,7 @@ public interface LoaderOptionsStep<R extends Record> extends LoaderSourceStep<R>
      * the default. This cannot be combined with {@link #onDuplicateKeyError()}
      * or {@link #onDuplicateKeyUpdate()}
      */
+    @NotNull
     @Support
     LoaderOptionsStep<R> onDuplicateKeyIgnore();
 
@@ -143,6 +148,7 @@ public interface LoaderOptionsStep<R extends Record> extends LoaderSourceStep<R>
      * be combined with {@link #onDuplicateKeyIgnore()} or
      * {@link #onDuplicateKeyUpdate()}
      */
+    @NotNull
     @Support
     LoaderOptionsStep<R> onDuplicateKeyError();
 
@@ -159,6 +165,7 @@ public interface LoaderOptionsStep<R extends Record> extends LoaderSourceStep<R>
      * If you don't specify a behaviour, {@link #onErrorAbort()} will be the
      * default. This cannot be combined with {@link #onErrorAbort()}
      */
+    @NotNull
     @Support
     LoaderOptionsStep<R> onErrorIgnore();
 
@@ -173,6 +180,7 @@ public interface LoaderOptionsStep<R extends Record> extends LoaderSourceStep<R>
      * If you don't specify a behaviour, this will be the default. This cannot
      * be combined with {@link #onErrorIgnore()}
      */
+    @NotNull
     @Support
     LoaderOptionsStep<R> onErrorAbort();
 
@@ -200,6 +208,7 @@ public interface LoaderOptionsStep<R extends Record> extends LoaderSourceStep<R>
      * If you don't specify a COMMIT OPTION, {@link #commitNone()} will be the
      * default, leaving transaction handling up to you.
      */
+    @NotNull
     @Support
     LoaderOptionsStep<R> commitEach();
 
@@ -222,6 +231,7 @@ public interface LoaderOptionsStep<R extends Record> extends LoaderSourceStep<R>
      *
      * @param number The number of records that are committed together.
      */
+    @NotNull
     @Support
     LoaderOptionsStep<R> commitAfter(int number);
 
@@ -241,6 +251,7 @@ public interface LoaderOptionsStep<R extends Record> extends LoaderSourceStep<R>
      * If you don't specify a COMMIT OPTION, {@link #commitNone()} will be the
      * default, leaving transaction handling up to you.
      */
+    @NotNull
     @Support
     LoaderOptionsStep<R> commitAll();
 
@@ -256,6 +267,7 @@ public interface LoaderOptionsStep<R extends Record> extends LoaderSourceStep<R>
      * container-managed transactions, too, or your
      * {@link Connection#getAutoCommit()} value is set to true.
      */
+    @NotNull
     @Support
     LoaderOptionsStep<R> commitNone();
 
@@ -269,6 +281,7 @@ public interface LoaderOptionsStep<R extends Record> extends LoaderSourceStep<R>
      * If {@link #commitEach()} or {@link #commitAfter(int)} are set, this will
      * force the <code>COMMIT</code> option to {@link #commitAll()}.
      */
+    @NotNull
     @Support
     LoaderOptionsStep<R> batchAll();
 
@@ -277,6 +290,7 @@ public interface LoaderOptionsStep<R extends Record> extends LoaderSourceStep<R>
      * <p>
      * If you don't specify a BATCH OPTION, this will be the default.
      */
+    @NotNull
     @Support
     LoaderOptionsStep<R> batchNone();
 
@@ -285,6 +299,7 @@ public interface LoaderOptionsStep<R extends Record> extends LoaderSourceStep<R>
      *
      * @param number The number of records that are batched together.
      */
+    @NotNull
     @Support
     LoaderOptionsStep<R> batchAfter(int number);
 
@@ -298,6 +313,7 @@ public interface LoaderOptionsStep<R extends Record> extends LoaderSourceStep<R>
      * If {@link #commitEach()} or {@link #commitAfter(int)} are set, this will
      * force the <code>COMMIT</code> option to {@link #commitAll()}.
      */
+    @NotNull
     @Support
     LoaderOptionsStep<R> bulkAll();
 
@@ -306,6 +322,7 @@ public interface LoaderOptionsStep<R extends Record> extends LoaderSourceStep<R>
      * <p>
      * If you don't specify a BULK OPTION, this will be the default.
      */
+    @NotNull
     @Support
     LoaderOptionsStep<R> bulkNone();
 
@@ -320,6 +337,7 @@ public interface LoaderOptionsStep<R extends Record> extends LoaderSourceStep<R>
      * @param number The number of records that are put together in one bulk
      *            statement.
      */
+    @NotNull
     @Support
     LoaderOptionsStep<R> bulkAfter(int number);
 }

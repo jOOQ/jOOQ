@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 // ...
@@ -110,6 +113,9 @@ import static org.jooq.SQLDialect.POSTGRES;
  * @author Lukas Eder
  */
 public interface SelectForStep<R extends Record> extends SelectOptionStep<R> {
+
+
+
 
 
 

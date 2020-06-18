@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.SQLDialect.POSTGRES;
 
 import java.util.Collection;
@@ -79,18 +82,21 @@ public interface DeleteUsingStep<R extends Record> extends DeleteWhereStep<R> {
     /**
      * Add a <code>USING</code> clause to the query.
      */
+    @NotNull
     @Support({ POSTGRES })
     DeleteWhereStep<R> using(TableLike<?> table);
 
     /**
      * Add a <code>USING</code> clause to the query.
      */
+    @NotNull
     @Support({ POSTGRES })
     DeleteWhereStep<R> using(TableLike<?>... tables);
 
     /**
      * Add a <code>USING</code> clause to the query.
      */
+    @NotNull
     @Support({ POSTGRES })
     DeleteWhereStep<R> using(Collection<? extends TableLike<?>> tables);
 
@@ -105,6 +111,7 @@ public interface DeleteUsingStep<R extends Record> extends DeleteWhereStep<R> {
      * @see DSL#table(SQL)
      * @see SQL
      */
+    @NotNull
     @Support({ POSTGRES })
     @PlainSQL
     DeleteWhereStep<R> using(SQL sql);
@@ -120,6 +127,7 @@ public interface DeleteUsingStep<R extends Record> extends DeleteWhereStep<R> {
      * @see DSL#table(String)
      * @see SQL
      */
+    @NotNull
     @Support({ POSTGRES })
     @PlainSQL
     DeleteWhereStep<R> using(String sql);
@@ -136,6 +144,7 @@ public interface DeleteUsingStep<R extends Record> extends DeleteWhereStep<R> {
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support({ POSTGRES })
     @PlainSQL
     DeleteWhereStep<R> using(String sql, Object... bindings);
@@ -152,6 +161,7 @@ public interface DeleteUsingStep<R extends Record> extends DeleteWhereStep<R> {
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support({ POSTGRES })
     @PlainSQL
     DeleteWhereStep<R> using(String sql, QueryPart... parts);
@@ -161,6 +171,7 @@ public interface DeleteUsingStep<R extends Record> extends DeleteWhereStep<R> {
      *
      * @see DSL#table(Name)
      */
+    @NotNull
     @Support({ POSTGRES })
     DeleteWhereStep<R> using(Name name);
 }

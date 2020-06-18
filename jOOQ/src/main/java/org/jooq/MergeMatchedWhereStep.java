@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
@@ -106,6 +109,7 @@ public interface MergeMatchedWhereStep<R extends Record> extends MergeMatchedDel
      * WHEN MATCHED AND [ condition ] THEN UPDATE SET ..
      * </pre><code>
      */
+    @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB })
     MergeMatchedDeleteStep<R> where(Condition condition);
 
@@ -125,6 +129,7 @@ public interface MergeMatchedWhereStep<R extends Record> extends MergeMatchedDel
      * WHEN MATCHED AND [ condition ] THEN UPDATE SET ..
      * </pre><code>
      */
+    @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB })
     MergeMatchedDeleteStep<R> where(Field<Boolean> condition);
 
@@ -158,6 +163,7 @@ public interface MergeMatchedWhereStep<R extends Record> extends MergeMatchedDel
      *             method will be removed in the future.
      */
     @Deprecated
+    @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB })
     MergeMatchedDeleteStep<R> where(Boolean condition);
 }

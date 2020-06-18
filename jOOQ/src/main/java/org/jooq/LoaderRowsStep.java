@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 import java.util.Collection;
 
 import org.jooq.LoaderFieldMapper.LoaderFieldContext;
@@ -77,6 +80,7 @@ public interface LoaderRowsStep<R extends Record> {
      * field at index <code>i</code>. If <code>fields[i] == null</code> or
      * <code>fields.length &lt;= i</code>, then the record column is skipped.
      */
+    @NotNull
     @Support
     LoaderListenerStep<R> fields(Field<?>... fields);
 
@@ -89,6 +93,7 @@ public interface LoaderRowsStep<R extends Record> {
      * <code>new ArrayList(fields).size() &lt;= i</code>, then the record column
      * is skipped.
      */
+    @NotNull
     @Support
     LoaderListenerStep<R> fields(Collection<? extends Field<?>> fields);
 
@@ -101,6 +106,7 @@ public interface LoaderRowsStep<R extends Record> {
      * enumeration is used. The {@link LoaderFieldContext#index()} property
      * corresponds to the source column index.
      */
+    @NotNull
     @Support
     LoaderListenerStep<R> fields(LoaderFieldMapper mapper);
 
@@ -114,6 +120,7 @@ public interface LoaderRowsStep<R extends Record> {
      *             instead.
      */
     @Deprecated
+    @NotNull
     @Support
     LoaderCSVOptionsStep<R> fieldsFromSource();
 
@@ -124,6 +131,7 @@ public interface LoaderRowsStep<R extends Record> {
      * @throws LoaderConfigurationException When the source data does not expose
      *             field names.
      */
+    @NotNull
     @Support
     LoaderCSVOptionsStep<R> fieldsCorresponding();
 

@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 // ...
@@ -88,6 +91,7 @@ public interface AlterIndexStep {
      * recommended to call {@link DSLContext#alterTable(String)} with
      * {@link AlterTableStep#renameIndex(String)} instead.
      */
+    @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterIndexFinalStep renameTo(String newName);
 
@@ -100,6 +104,7 @@ public interface AlterIndexStep {
      * recommended to call {@link DSLContext#alterTable(Name)} with
      * {@link AlterTableStep#renameIndex(Name)} instead.
      */
+    @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterIndexFinalStep renameTo(Name newName);
 
@@ -112,6 +117,7 @@ public interface AlterIndexStep {
      * recommended to call {@link DSLContext#alterTable(Name)} with
      * {@link AlterTableStep#renameIndex(Index)} instead.
      */
+    @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterIndexFinalStep renameTo(Index newName);
 }

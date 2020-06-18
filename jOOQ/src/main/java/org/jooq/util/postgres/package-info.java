@@ -3,3 +3,5 @@
  * {@link org.jooq.SQLDialect#POSTGRES} dialect.
  */
 package org.jooq.util.postgres;
+
+import org.jetbrains.annotations.*;

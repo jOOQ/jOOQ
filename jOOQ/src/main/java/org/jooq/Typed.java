@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.NotNull;
+
+
 /**
  * A marker interface for all query parts that have a {@link DataType}.
  * <p>
@@ -55,26 +58,31 @@ public interface Typed<T> extends QueryPart {
      * custom data types may be obtained by a custom {@link Converter} placed on
      * the generated object.
      */
+    @NotNull
     Converter<?, T> getConverter();
 
     /**
      * The object's underlying {@link Binding}.
      */
+    @NotNull
     Binding<?, T> getBinding();
 
     /**
      * The Java type of the object.
      */
+    @NotNull
     Class<T> getType();
 
     /**
      * The type of this object (might not be dialect-specific).
      */
+    @NotNull
     DataType<T> getDataType();
 
     /**
      * The dialect-specific type of this object.
      */
+    @NotNull
     DataType<T> getDataType(Configuration configuration);
 
 }

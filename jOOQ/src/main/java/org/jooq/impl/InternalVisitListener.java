@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import static java.lang.Boolean.TRUE;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;

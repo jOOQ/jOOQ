@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 /**
  * The <code>Loader</code> API is used for configuring data loads.
  * <p>
@@ -68,6 +71,7 @@ public interface LoaderListenerStep<R extends Record> extends LoaderLoadStep<R> 
     /**
      * Specify a listener that is invoked whenever a row has been processed.
      */
+    @NotNull
     @Support
     LoaderLoadStep<R> onRow(LoaderRowListener listener);
 }

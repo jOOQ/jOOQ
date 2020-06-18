@@ -38,6 +38,9 @@
 
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.Clause.SCHEMA;
 import static org.jooq.Clause.SCHEMA_REFERENCE;
 import static org.jooq.impl.CatalogImpl.DEFAULT_CATALOG;

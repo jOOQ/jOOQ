@@ -42,6 +42,9 @@ import java.util.Optional;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.TooManyRowsException;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * This type is used for the {@link Insert}'s DSL API.
  * <p>
@@ -109,6 +112,7 @@ public interface InsertResultStep<R extends Record> extends Insert<R> {
      * @throws DataAccessException if something went wrong executing the query
      * @see InsertQuery#getReturnedRecords()
      */
+    @NotNull
     @Support
     Result<R> fetch() throws DataAccessException;
 
@@ -124,6 +128,7 @@ public interface InsertResultStep<R extends Record> extends Insert<R> {
      * @throws TooManyRowsException if the query returned more than one record
      * @see InsertQuery#getReturnedRecord()
      */
+    @Nullable
     @Support
     R fetchOne() throws DataAccessException, TooManyRowsException;
 
@@ -138,6 +143,7 @@ public interface InsertResultStep<R extends Record> extends Insert<R> {
      * @throws TooManyRowsException if the query returned more than one record
      * @see InsertQuery#getReturnedRecord()
      */
+    @NotNull
     @Support
     Optional<R> fetchOptional() throws DataAccessException, TooManyRowsException;
 

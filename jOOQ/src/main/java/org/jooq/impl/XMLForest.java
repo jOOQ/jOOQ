@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.impl.Names.N_XMLFOREST;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_AS_REQUIRED;
 

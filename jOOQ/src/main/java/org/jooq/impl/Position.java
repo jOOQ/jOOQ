@@ -38,6 +38,9 @@
 
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.Keywords.K_IN;
 import static org.jooq.impl.Names.N_CHARINDEX;

@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 // ...
@@ -95,6 +98,7 @@ public interface DivideByOnStep {
      * Add a division condition to the <code>DIVIDE BY</code> clause, connecting
      * them with each other with {@link Operator#AND}.
      */
+    @NotNull
     @Support
     DivideByOnConditionStep on(Condition condition);
 
@@ -102,12 +106,14 @@ public interface DivideByOnStep {
      * Add a division condition to the <code>DIVIDE BY</code> clause, connecting
      * them with each other with {@link Operator#AND}.
      */
+    @NotNull
     @Support
     DivideByOnConditionStep on(Condition... conditions);
 
     /**
      * Add a division condition to the <code>DIVIDE BY</code> clause
      */
+    @NotNull
     @Support
     DivideByOnConditionStep on(Field<Boolean> condition);
 
@@ -124,6 +130,7 @@ public interface DivideByOnStep {
      *             method will be removed in the future.
      */
     @Deprecated
+    @NotNull
     @Support
     DivideByOnConditionStep on(Boolean condition);
 
@@ -138,6 +145,7 @@ public interface DivideByOnStep {
      * @see DSL#condition(SQL)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     DivideByOnConditionStep on(SQL sql);
@@ -153,6 +161,7 @@ public interface DivideByOnStep {
      * @see DSL#condition(String)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     DivideByOnConditionStep on(String sql);
@@ -169,6 +178,7 @@ public interface DivideByOnStep {
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     DivideByOnConditionStep on(String sql, Object... bindings);
@@ -185,6 +195,7 @@ public interface DivideByOnStep {
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     DivideByOnConditionStep on(String sql, QueryPart... parts);

@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 import java.util.Collection;
 
 /**
@@ -67,18 +70,21 @@ public interface CreateTableConstraintStep extends CreateTableIndexStep {
     /**
      * Add a constraint to the table.
      */
+    @NotNull
     @Support
     CreateTableConstraintStep constraint(Constraint constraint);
 
     /**
      * Add constraints to the table.
      */
+    @NotNull
     @Support
     CreateTableConstraintStep constraints(Constraint... constraints);
 
     /**
      * Add constraints to the table.
      */
+    @NotNull
     @Support
     CreateTableConstraintStep constraints(Collection<? extends Constraint> constraints);
 }

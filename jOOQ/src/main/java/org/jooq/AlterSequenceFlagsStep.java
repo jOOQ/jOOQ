@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 import static org.jooq.SQLDialect.CUBRID;
@@ -85,18 +88,21 @@ public interface AlterSequenceFlagsStep extends AlterSequenceFinalStep {
     /**
      * Restart the sequence at its initial value.
      */
+    @NotNull
     @Support({ HSQLDB, MARIADB, POSTGRES })
     AlterSequenceFlagsStep restart();
 
     /**
      * Restart the sequence at a given value.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     AlterSequenceFlagsStep restartWith(Number value);
 
     /**
      * Restart the sequence at a given value.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     AlterSequenceFlagsStep restartWith(Field<? extends Number> value);
 
@@ -104,6 +110,7 @@ public interface AlterSequenceFlagsStep extends AlterSequenceFinalStep {
      * Add a <code>START WITH</code> clause to the <code>ALTER SEQUENCE</code>
      * statement.
      */
+    @NotNull
     @Support({ MARIADB, POSTGRES })
     AlterSequenceFlagsStep startWith(Number value);
 
@@ -111,6 +118,7 @@ public interface AlterSequenceFlagsStep extends AlterSequenceFinalStep {
      * Add a <code>START WITH</code> clause to the <code>ALTER SEQUENCE</code>
      * statement.
      */
+    @NotNull
     @Support({ MARIADB, POSTGRES })
     AlterSequenceFlagsStep startWith(Field<? extends Number> value);
 
@@ -118,6 +126,7 @@ public interface AlterSequenceFlagsStep extends AlterSequenceFinalStep {
      * Add a <code>INCREMENT BY</code> clause to the <code>ALTER SEQUENCE</code>
      * statement.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     AlterSequenceFlagsStep incrementBy(Number value);
 
@@ -125,6 +134,7 @@ public interface AlterSequenceFlagsStep extends AlterSequenceFinalStep {
      * Add a <code>INCREMENT BY</code> clause to the <code>ALTER SEQUENCE</code>
      * statement.
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     AlterSequenceFlagsStep incrementBy(Field<? extends Number> value);
 
@@ -132,6 +142,7 @@ public interface AlterSequenceFlagsStep extends AlterSequenceFinalStep {
      * Add a <code>MINVALUE</code> clause to the <code>ALTER SEQUENCE</code>
      * statement.
      */
+    @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, POSTGRES })
     AlterSequenceFlagsStep minvalue(Number value);
 
@@ -139,6 +150,7 @@ public interface AlterSequenceFlagsStep extends AlterSequenceFinalStep {
      * Add a <code>MINVALUE</code> clause to the <code>ALTER SEQUENCE</code>
      * statement.
      */
+    @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, POSTGRES })
     AlterSequenceFlagsStep minvalue(Field<? extends Number> value);
 
@@ -146,6 +158,7 @@ public interface AlterSequenceFlagsStep extends AlterSequenceFinalStep {
      * Add a <code>NO MINVALUE</code> clause to the <code>ALTER SEQUENCE</code>
      * statement.
      */
+    @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, POSTGRES })
     AlterSequenceFlagsStep noMinvalue();
 
@@ -153,6 +166,7 @@ public interface AlterSequenceFlagsStep extends AlterSequenceFinalStep {
      * Add a <code>MINVALUE</code> clause to the <code>ALTER SEQUENCE</code>
      * statement.
      */
+    @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, POSTGRES })
     AlterSequenceFlagsStep maxvalue(Number value);
 
@@ -160,6 +174,7 @@ public interface AlterSequenceFlagsStep extends AlterSequenceFinalStep {
      * Add a <code>MINVALUE</code> clause to the <code>ALTER SEQUENCE</code>
      * statement.
      */
+    @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, POSTGRES })
     AlterSequenceFlagsStep maxvalue(Field<? extends Number> value);
 
@@ -167,6 +182,7 @@ public interface AlterSequenceFlagsStep extends AlterSequenceFinalStep {
      * Add a <code>NO MINVALUE</code> clause to the <code>ALTER SEQUENCE</code>
      * statement.
      */
+    @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, POSTGRES })
     AlterSequenceFlagsStep noMaxvalue();
 
@@ -174,6 +190,7 @@ public interface AlterSequenceFlagsStep extends AlterSequenceFinalStep {
      * Add a <code>CYCLE</code> clause to the <code>ALTER SEQUENCE</code>
      * statement.
      */
+    @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, POSTGRES })
     AlterSequenceFlagsStep cycle();
 
@@ -181,6 +198,7 @@ public interface AlterSequenceFlagsStep extends AlterSequenceFinalStep {
      * Add a <code>NO CYCLE</code> clause to the <code>ALTER SEQUENCE</code>
      * statement.
      */
+    @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, POSTGRES })
     AlterSequenceFlagsStep noCycle();
 
@@ -188,6 +206,7 @@ public interface AlterSequenceFlagsStep extends AlterSequenceFinalStep {
      * Add a <code>CACHE</code> clause to the <code>ALTER SEQUENCE</code>
      * statement.
      */
+    @NotNull
     @Support({ CUBRID, H2, MARIADB, POSTGRES })
     AlterSequenceFlagsStep cache(Number value);
 
@@ -195,6 +214,7 @@ public interface AlterSequenceFlagsStep extends AlterSequenceFinalStep {
      * Add a <code>CACHE</code> clause to the <code>ALTER SEQUENCE</code>
      * statement.
      */
+    @NotNull
     @Support({ CUBRID, H2, MARIADB, POSTGRES })
     AlterSequenceFlagsStep cache(Field<? extends Number> value);
 
@@ -202,6 +222,7 @@ public interface AlterSequenceFlagsStep extends AlterSequenceFinalStep {
      * Add a <code>NO CACHE</code> clause to the <code>ALTER SEQUENCE</code>
      * statement.
      */
+    @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, POSTGRES })
     AlterSequenceFlagsStep noCache();
 }

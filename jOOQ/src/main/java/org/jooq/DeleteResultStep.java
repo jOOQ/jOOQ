@@ -50,6 +50,9 @@ import java.util.Optional;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.TooManyRowsException;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * This type is used for the {@link Delete}'s DSL API.
  * <p>
@@ -106,6 +109,7 @@ public interface DeleteResultStep<R extends Record> extends Delete<R> {
      * @throws DataAccessException if something went wrong executing the query
      * @see DeleteQuery#getReturnedRecords()
      */
+    @NotNull
     @Support({ FIREBIRD, POSTGRES })
     Result<R> fetch() throws DataAccessException;
 
@@ -121,6 +125,7 @@ public interface DeleteResultStep<R extends Record> extends Delete<R> {
      * @throws TooManyRowsException if the query returned more than one record
      * @see DeleteQuery#getReturnedRecord()
      */
+    @Nullable
     @Support({ FIREBIRD, POSTGRES })
     R fetchOne() throws DataAccessException, TooManyRowsException;
 
@@ -135,6 +140,7 @@ public interface DeleteResultStep<R extends Record> extends Delete<R> {
      * @throws TooManyRowsException if the query returned more than one record
      * @see DeleteQuery#getReturnedRecord()
      */
+    @NotNull
     @Support({ FIREBIRD, POSTGRES })
     Optional<R> fetchOptional() throws DataAccessException, TooManyRowsException;
 

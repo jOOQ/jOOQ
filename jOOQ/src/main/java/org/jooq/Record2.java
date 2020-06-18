@@ -37,6 +37,8 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * A model type for a records with degree <code>2</code>
  *
@@ -52,12 +54,14 @@ public interface Record2<T1, T2> extends Record {
     /**
      * Get this record's fields as a {@link Row2}.
      */
+    @NotNull
     @Override
     Row2<T1, T2> fieldsRow();
 
     /**
      * Get this record's values as a {@link Row2}.
      */
+    @NotNull
     @Override
     Row2<T1, T2> valuesRow();
 
@@ -68,11 +72,13 @@ public interface Record2<T1, T2> extends Record {
     /**
      * Get the first field.
      */
+    @NotNull
     Field<T1> field1();
 
     /**
      * Get the second field.
      */
+    @NotNull
     Field<T2> field2();
 
     // ------------------------------------------------------------------------
@@ -92,27 +98,32 @@ public interface Record2<T1, T2> extends Record {
     /**
      * Set the first value.
      */
+    @NotNull
     Record2<T1, T2> value1(T1 value);
 
     /**
      * Set the second value.
      */
+    @NotNull
     Record2<T1, T2> value2(T2 value);
 
     /**
      * Set all values.
      */
+    @NotNull
     Record2<T1, T2> values(T1 t1, T2 t2);
 
     /**
      * {@inheritDoc}
      */
+    @NotNull
     @Override
     <T> Record2<T1, T2> with(Field<T> field, T value);
 
     /**
      * {@inheritDoc}
      */
+    @NotNull
     @Override
     <T, U> Record2<T1, T2> with(Field<T> field, U value, Converter<? extends T, ? super U> converter);
 

@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
@@ -76,6 +79,7 @@ public interface CreateTableOnCommitStep extends CreateTableCommentStep {
      *
      * @see DSL#createGlobalTemporaryTable(Table)
      */
+    @NotNull
     @Support({ POSTGRES })
     CreateTableCommentStep onCommitDeleteRows();
 
@@ -87,6 +91,7 @@ public interface CreateTableOnCommitStep extends CreateTableCommentStep {
      *
      * @see DSL#createGlobalTemporaryTable(Table)
      */
+    @NotNull
     @Support({ POSTGRES })
     CreateTableCommentStep onCommitPreserveRows();
 
@@ -98,6 +103,7 @@ public interface CreateTableOnCommitStep extends CreateTableCommentStep {
      *
      * @see DSL#createGlobalTemporaryTable(Table)
      */
+    @NotNull
     @Support({ POSTGRES })
     CreateTableCommentStep onCommitDrop();
 }

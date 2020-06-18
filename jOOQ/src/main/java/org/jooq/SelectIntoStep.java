@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 // ...
@@ -124,6 +127,7 @@ public interface SelectIntoStep<R extends Record> extends SelectFromStep<R> {
     /**
      * Add an <code>INTO</code> clause to the <code>SELECT</code> statement.
      */
+    @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     SelectFromStep<Record> into(Table<?> table);
 }

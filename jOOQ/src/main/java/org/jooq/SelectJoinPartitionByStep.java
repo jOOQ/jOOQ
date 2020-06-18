@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 
 import java.util.Collection;
@@ -102,6 +105,8 @@ import java.util.Collection;
  * @author Lukas Eder
  */
 public interface SelectJoinPartitionByStep<R extends Record> extends SelectOnStep<R> {
+
+
 
 
 

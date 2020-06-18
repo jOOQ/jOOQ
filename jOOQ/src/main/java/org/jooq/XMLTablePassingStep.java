@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 // ...
@@ -54,6 +57,7 @@ public interface XMLTablePassingStep extends XMLTableColumnsFirstStep {
      * Add the <code>PASSING</code> clause to the <code>XMLEXISTS</code>
      * predicate.
      */
+    @NotNull
     @Support({ POSTGRES })
     XMLTableColumnsFirstStep passing(XML xml);
 
@@ -61,6 +65,7 @@ public interface XMLTablePassingStep extends XMLTableColumnsFirstStep {
      * Add the <code>PASSING</code> clause to the <code>XMLEXISTS</code>
      * predicate.
      */
+    @NotNull
     @Support({ POSTGRES })
     XMLTableColumnsFirstStep passing(Field<XML> xml);
 
@@ -68,6 +73,7 @@ public interface XMLTablePassingStep extends XMLTableColumnsFirstStep {
      * Add the <code>PASSING BY REF</code> clause to the <code>XMLEXISTS</code>
      * predicate.
      */
+    @NotNull
     @Support({ POSTGRES })
     XMLTableColumnsFirstStep passingByRef(XML xml);
 
@@ -75,6 +81,7 @@ public interface XMLTablePassingStep extends XMLTableColumnsFirstStep {
      * Add the <code>PASSING BY REF</code> clause to the <code>XMLEXISTS</code>
      * predicate.
      */
+    @NotNull
     @Support({ POSTGRES })
     XMLTableColumnsFirstStep passingByRef(Field<XML> xml);
 
@@ -82,6 +89,7 @@ public interface XMLTablePassingStep extends XMLTableColumnsFirstStep {
      * Add the <code>PASSING BY VALUE</code> clause to the <code>XMLEXISTS</code>
      * predicate.
      */
+    @NotNull
     @Support({ POSTGRES })
     XMLTableColumnsFirstStep passingByValue(XML xml);
 
@@ -89,6 +97,7 @@ public interface XMLTablePassingStep extends XMLTableColumnsFirstStep {
      * Add the <code>PASSING BY VALUE</code> clause to the <code>XMLEXISTS</code>
      * predicate.
      */
+    @NotNull
     @Support({ POSTGRES })
     XMLTableColumnsFirstStep passingByValue(Field<XML> xml);
 

@@ -37,6 +37,8 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * An intermediate DSL type for the construction of a <code>BETWEEN</code>
  * predicate.
@@ -48,24 +50,28 @@ public interface BetweenAndStep1<T1> {
     /**
      * Create a condition to check this field against some bounds
      */
+    @NotNull
     @Support
     Condition and(Field<T1> maxValue1);
 
     /**
      * Create a condition to check this field against some bounds
      */
+    @NotNull
     @Support
     Condition and(T1 maxValue1);
 
     /**
      * Create a condition to check this field against some bounds
      */
+    @NotNull
     @Support
     Condition and(Row1<T1> maxValue);
 
     /**
      * Create a condition to check this field against some bounds
      */
+    @NotNull
     @Support
     Condition and(Record1<T1> maxValue);
 

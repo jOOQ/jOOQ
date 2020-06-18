@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 /**
  * A statement that can be placed inside of a {@link Block}, but not executed on
  * its own.

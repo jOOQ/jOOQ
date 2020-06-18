@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.impl.Keywords.K_VARCHAR;
 import static org.jooq.impl.Names.N_CONVERT;
 import static org.jooq.impl.Names.N_HASHBYTES;

@@ -43,6 +43,9 @@ import java.util.Collections;
 import java.util.EnumSet;
 import java.util.Set;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * Dialects and dialect families as supported by jOOQ.
  * <p>
@@ -653,6 +656,7 @@ public enum SQLDialect {
     /**
      * Get a list of all {@link SQLDialect#family()} values.
      */
+    @NotNull
     public static final SQLDialect[] families() {
         return FAMILIES.clone();
     }
@@ -663,6 +667,7 @@ public enum SQLDialect {
      * The resulting set of dialects contain all the families and dialect
      * versions that precede the argument dialects.
      */
+    @NotNull
     public static final Set<SQLDialect> predecessors(SQLDialect... dialects) {
         EnumSet<SQLDialect> result = EnumSet.noneOf(SQLDialect.class);
 
@@ -679,6 +684,7 @@ public enum SQLDialect {
      * The resulting set of dialects contain all the families and dialect
      * versions that precede the argument dialect.
      */
+    @NotNull
     public static final Set<SQLDialect> supportedUntil(SQLDialect dialect) {
         return predecessors(dialect);
     }
@@ -690,6 +696,7 @@ public enum SQLDialect {
      * The resulting set of dialects contain all the families and dialect
      * versions that precede the argument dialect.
      */
+    @NotNull
     public static final Set<SQLDialect> supportedUntil(SQLDialect... dialects) {
         return predecessors(dialects);
     }
@@ -701,6 +708,7 @@ public enum SQLDialect {
      * The resulting set of dialects contain all the families and dialect
      * versions that support the argument dialect, i.e. that succeed it.
      */
+    @NotNull
     public static final Set<SQLDialect> supportedBy(SQLDialect dialect) {
         EnumSet<SQLDialect> result = EnumSet.noneOf(SQLDialect.class);
         addSupportedBy(dialect, result);
@@ -714,6 +722,7 @@ public enum SQLDialect {
      * The resulting set of dialects contain all the families and dialect
      * versions that support the argument dialects, i.e. that succeed them.
      */
+    @NotNull
     public static final Set<SQLDialect> supportedBy(SQLDialect... dialects) {
         EnumSet<SQLDialect> result = EnumSet.noneOf(SQLDialect.class);
 
@@ -786,6 +795,7 @@ public enum SQLDialect {
      * SQLSERVER == SQLSERVER.family();
      * </pre></code>
      */
+    @NotNull
     public final SQLDialect family() {
         return family;
     }
@@ -806,6 +816,7 @@ public enum SQLDialect {
      * the same family, or to the dialect itself if there was no predecessor
      * explicitly supported by jOOQ.
      */
+    @NotNull
     public final SQLDialect predecessor() {
         return predecessor;
     }
@@ -816,6 +827,7 @@ public enum SQLDialect {
      * Recursively calls {@link #predecessor()} and finds all the preceding
      * dialects to this one, including this one.
      */
+    @NotNull
     public final Set<SQLDialect> predecessors() {
         if (predecessors == null) {
             SQLDialect curr = this;
@@ -924,6 +936,7 @@ public enum SQLDialect {
     /**
      * The name of this dialect as it appears in related class names.
      */
+    @NotNull
     public final String getName() {
         return name;
     }
@@ -931,6 +944,7 @@ public enum SQLDialect {
     /**
      * The name of this dialect as it appears in related package names.
      */
+    @NotNull
     public final String getNameLC() {
         return name == null ? null : name.toLowerCase();
     }
@@ -938,6 +952,7 @@ public enum SQLDialect {
     /**
      * The name of this dialect as it appears in related enum values.
      */
+    @NotNull
     public final String getNameUC() {
         return name == null ? null : name.toUpperCase();
     }
@@ -945,6 +960,7 @@ public enum SQLDialect {
     /**
      * Get access to third party representations of this {@link SQLDialect}.
      */
+    @NotNull
     public final ThirdParty thirdParty() {
         return thirdParty;
     }
@@ -961,6 +977,7 @@ public enum SQLDialect {
          *         <code>"java.sql.Driver"</code> if no driver class could be
          *         derived from the URL. Never <code>null</code>.
          */
+        @NotNull
         public final String driver() {
 
             // jOOQ build tools need this class without its dependencies, which
@@ -982,6 +999,7 @@ public enum SQLDialect {
          * referenced in
          * <code>org/springframework/jdbc/support/sql-error-codes.xml</code>
          */
+        @Nullable
         public final String springDbName() {
             switch (SQLDialect.this.family) {
 
@@ -1022,6 +1040,7 @@ public enum SQLDialect {
          *      http://docs.jboss.org/hibernate/orm/5.0/javadocs/org/hibernate/
          *      dialect/package-summary.html</a>
          */
+        @Nullable
         public final String hibernateDialect() {
             switch (SQLDialect.this) {
 

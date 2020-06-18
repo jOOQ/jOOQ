@@ -7,3 +7,5 @@
  * implementation facts from the public API.
  */
 package org.jooq.impl;
+
+import org.jetbrains.annotations.*;

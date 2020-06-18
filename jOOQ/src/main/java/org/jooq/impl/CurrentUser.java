@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.impl.Names.N_CURRENTUSER;
 import static org.jooq.impl.Names.N_CURRENT_USER;
 import static org.jooq.impl.Names.N_USER;

@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 import static org.jooq.SQLDialect.CUBRID;
@@ -75,12 +78,14 @@ public interface InsertOnConflictDoUpdateStep<R extends Record> {
     /**
      * Add the <code>DO UPDATE</code> clause.
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     InsertOnDuplicateSetStep<R> doUpdate();
 
     /**
      * Add the <code>DO NOTHING</code> clause.
      */
+    @NotNull
     @Support
     InsertReturningStep<R> doNothing();
 }

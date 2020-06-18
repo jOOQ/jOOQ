@@ -38,6 +38,9 @@
 
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 import org.jooq.exception.DataAccessException;
 
 /**

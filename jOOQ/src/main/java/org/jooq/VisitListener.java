@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 import java.sql.PreparedStatement;
 import java.util.EventListener;
 

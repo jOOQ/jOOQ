@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.SQLDialect.*;
 
 import java.util.*;
@@ -68,12 +71,14 @@ public interface CreateDomainAsStep {
     /**
      * Add the <code>AS</code> clause to the <code>CREATE DOMAIN</code> statement.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     <T> CreateDomainDefaultStep<T> as(Class<T> dataType);
 
     /**
      * Add the <code>AS</code> clause to the <code>CREATE DOMAIN</code> statement.
      */
+    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
     <T> CreateDomainDefaultStep<T> as(DataType<T> dataType);
 }

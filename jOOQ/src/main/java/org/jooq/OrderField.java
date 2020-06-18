@@ -37,7 +37,6 @@
  */
 package org.jooq;
 
-
 /**
  * A <code>QueryPart</code> to be used exclusively in <code>ORDER BY</code>
  * clauses.

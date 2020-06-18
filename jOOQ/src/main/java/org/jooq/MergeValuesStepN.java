@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 import static org.jooq.SQLDialect.CUBRID;
@@ -77,18 +80,21 @@ public interface MergeValuesStepN<R extends Record> {
     /**
      * Specify a <code>VALUES</code> clause
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Merge<R> values(Object... values);
 
     /**
      * Specify a <code>VALUES</code> clause
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Merge<R> values(Field<?>... values);
 
     /**
      * Specify a <code>VALUES</code> clause
      */
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Merge<R> values(Collection<?> values);
 
@@ -102,6 +108,7 @@ public interface MergeValuesStepN<R extends Record> {
      * {@link DSLContext#mergeInto(Table, Field...)} or
      * {@link DSLContext#mergeInto(Table, Collection)}
      */
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB })
     Merge<R> select(Select<?> select);
 }

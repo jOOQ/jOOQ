@@ -38,6 +38,9 @@
 
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 import java.util.List;
 import java.util.stream.Stream;
 

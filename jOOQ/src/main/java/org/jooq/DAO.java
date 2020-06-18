@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 // ...
@@ -263,6 +266,7 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      * @return Whether the POJO already exists
      * @throws DataAccessException if something went wrong executing the query
      */
+    @NotNull
     @Support
     boolean exists(P object) throws DataAccessException;
 
@@ -273,6 +277,7 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      * @return Whether the ID already exists
      * @throws DataAccessException if something went wrong executing the query
      */
+    @NotNull
     @Support
     boolean existsById(T id) throws DataAccessException;
 
@@ -282,6 +287,7 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      * @return The number of records of the underlying table
      * @throws DataAccessException if something went wrong executing the query
      */
+    @NotNull
     @Support
     long count() throws DataAccessException;
 
@@ -291,6 +297,7 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      * @return All records of the underlying table
      * @throws DataAccessException if something went wrong executing the query
      */
+    @NotNull
     @Support
     List<P> findAll() throws DataAccessException;
 
@@ -302,6 +309,7 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      *         <code>null</code> if no record was found.
      * @throws DataAccessException if something went wrong executing the query
      */
+    @NotNull
     @Support
     P findById(T id) throws DataAccessException;
 
@@ -313,6 +321,7 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      * @return A list of records fulfilling <code>field IN (values)</code>
      * @throws DataAccessException if something went wrong executing the query
      */
+    @NotNull
     @Support
     <Z> List<P> fetch(Field<Z> field, Z... values) throws DataAccessException;
 
@@ -328,6 +337,7 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      *         <code>field BETWEEN lowerInclusive AND upperInclusive</code>
      * @throws DataAccessException if something went wrong executing the query
      */
+    @NotNull
     @Support
     <Z> List<P> fetchRange(Field<Z> field, Z lowerInclusive, Z upperInclusive) throws DataAccessException;
 
@@ -344,6 +354,7 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      *             <li>if the query returned more than one value</li>
      *             </ul>
      */
+    @NotNull
     @Support
     <Z> P fetchOne(Field<Z> field, Z value) throws DataAccessException;
 
@@ -360,6 +371,7 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      *             <li>if the query returned more than one value</li>
      *             </ul>
      */
+    @NotNull
     @Support
     <Z> Optional<P> fetchOptional(Field<Z> field, Z value) throws DataAccessException;
 

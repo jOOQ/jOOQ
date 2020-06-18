@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 import java.util.Collection;
 
 import org.jooq.impl.DSL;
@@ -80,6 +83,7 @@ public interface UpdateWhereStep<R extends Record> extends UpdateOrderByStep<R> 
      * Add conditions to the query, connecting them with each other with
      * {@link Operator#AND}.
      */
+    @NotNull
     @Support
     UpdateConditionStep<R> where(Condition condition);
 
@@ -87,6 +91,7 @@ public interface UpdateWhereStep<R extends Record> extends UpdateOrderByStep<R> 
      * Add conditions to the query, connecting them with each other with
      * {@link Operator#AND}.
      */
+    @NotNull
     @Support
     UpdateConditionStep<R> where(Condition... conditions);
 
@@ -94,12 +99,14 @@ public interface UpdateWhereStep<R extends Record> extends UpdateOrderByStep<R> 
      * Add conditions to the query, connecting them with each other with
      * {@link Operator#AND}.
      */
+    @NotNull
     @Support
     UpdateConditionStep<R> where(Collection<? extends Condition> conditions);
 
     /**
      * Add conditions to the query
      */
+    @NotNull
     @Support
     UpdateConditionStep<R> where(Field<Boolean> condition);
 
@@ -116,6 +123,7 @@ public interface UpdateWhereStep<R extends Record> extends UpdateOrderByStep<R> 
      *             method will be removed in the future.
      */
     @Deprecated
+    @NotNull
     @Support
     UpdateConditionStep<R> where(Boolean condition);
 
@@ -130,6 +138,7 @@ public interface UpdateWhereStep<R extends Record> extends UpdateOrderByStep<R> 
      * @see DSL#condition(SQL)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     UpdateConditionStep<R> where(SQL sql);
@@ -145,6 +154,7 @@ public interface UpdateWhereStep<R extends Record> extends UpdateOrderByStep<R> 
      * @see DSL#condition(String)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     UpdateConditionStep<R> where(String sql);
@@ -161,6 +171,7 @@ public interface UpdateWhereStep<R extends Record> extends UpdateOrderByStep<R> 
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     UpdateConditionStep<R> where(String sql, Object... bindings);
@@ -177,6 +188,7 @@ public interface UpdateWhereStep<R extends Record> extends UpdateOrderByStep<R> 
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     UpdateConditionStep<R> where(String sql, QueryPart... parts);
@@ -184,12 +196,14 @@ public interface UpdateWhereStep<R extends Record> extends UpdateOrderByStep<R> 
     /**
      * Add an EXISTS clause to the query
      */
+    @NotNull
     @Support
     UpdateConditionStep<R> whereExists(Select<?> select);
 
     /**
      * Add a NOT EXISTS clause to the query
      */
+    @NotNull
     @Support
     UpdateConditionStep<R> whereNotExists(Select<?> select);
 }

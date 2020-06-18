@@ -38,6 +38,9 @@
 
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.Keywords.K_ROW;

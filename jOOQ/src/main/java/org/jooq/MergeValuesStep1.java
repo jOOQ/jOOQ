@@ -58,6 +58,8 @@ import static org.jooq.SQLDialect.POSTGRES;
 
 import java.util.Collection;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * This type is used for the H2-specific variant of the {@link Merge}'s DSL API.
  * <p>
@@ -81,6 +83,7 @@ public interface MergeValuesStep1<R extends Record, T1> {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link DSLContext#mergeInto(Table)}
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Merge<R> values(T1 value1);
 
@@ -90,6 +93,7 @@ public interface MergeValuesStep1<R extends Record, T1> {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link DSLContext#mergeInto(Table)}
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Merge<R> values(Field<T1> value1);
 
@@ -99,6 +103,7 @@ public interface MergeValuesStep1<R extends Record, T1> {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link DSLContext#mergeInto(Table)}
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     Merge<R> values(Collection<?> values);
 
@@ -114,6 +119,7 @@ public interface MergeValuesStep1<R extends Record, T1> {
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link DSLContext#mergeInto(Table)}
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB })
     Merge<R> select(Select<? extends Record1<T1>> select);
 }

@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import org.jetbrains.annotations.*;
+
+
 import org.jooq.Catalog;
 import org.jooq.Context;
 import org.jooq.Package;

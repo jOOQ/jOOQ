@@ -3,3 +3,5 @@
  * {@link org.jooq.SQLDialect#HSQLDB} dialect.
  */
 package org.jooq.util.hsqldb;
+
+import org.jetbrains.annotations.*;

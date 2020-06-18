@@ -54,6 +54,8 @@ import static org.jooq.SQLDialect.POSTGRES;
 
 import java.util.Collection;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * This type is used for the H2-specific variant of the {@link Merge}'s DSL API.
  * <p>
@@ -81,6 +83,7 @@ public interface MergeKeyStep2<R extends Record, T1, T2> extends MergeValuesStep
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link DSLContext#mergeInto(Table)}
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeValuesStep2<R, T1, T2> key(Field<?>... keys);
 
@@ -93,6 +96,7 @@ public interface MergeKeyStep2<R extends Record, T1, T2> extends MergeValuesStep
      * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link DSLContext#mergeInto(Table)}
      */
     @Deprecated
+    @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeValuesStep2<R, T1, T2> key(Collection<? extends Field<?>> keys);
 }

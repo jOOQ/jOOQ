@@ -43,6 +43,9 @@ import static org.jooq.SQLDialect.POSTGRES;
 
 import java.io.Serializable;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * A description of various additional {@link Table} options to describe the
  * table runtime meta model.
@@ -98,6 +101,7 @@ public final class TableOptions implements Serializable {
     /**
      * Get a new {@link TableOptions} object for a given table type.
      */
+    @NotNull
     public static final TableOptions of(TableType tableType) {
         switch (tableType) {
             case EXPRESSION:
@@ -120,6 +124,7 @@ public final class TableOptions implements Serializable {
     /**
      * Create a new {@link TableOptions} object for a {@link TableType#TABLE}.
      */
+    @NotNull
     public static final TableOptions table() {
         return C_TABLE;
     }
@@ -127,6 +132,7 @@ public final class TableOptions implements Serializable {
     /**
      * Create a new {@link TableOptions} object for a {@link TableType#TEMPORARY}.
      */
+    @NotNull
     public static final TableOptions temporaryTable() {
         return C_TEMPORARY;
     }
@@ -134,6 +140,7 @@ public final class TableOptions implements Serializable {
     /**
      * Create a new {@link TableOptions} object for a {@link TableType#TEMPORARY}.
      */
+    @NotNull
     public static final TableOptions temporaryTable(OnCommit onCommit) {
         return new TableOptions(onCommit);
     }
@@ -142,6 +149,7 @@ public final class TableOptions implements Serializable {
      * Create a new {@link TableOptions} object for a {@link TableType#VIEW} of
      * unknown content.
      */
+    @NotNull
     public static final TableOptions view() {
         return C_VIEW;
     }
@@ -149,6 +157,7 @@ public final class TableOptions implements Serializable {
     /**
      * Create a new {@link TableOptions} object for a {@link TableType#VIEW}.
      */
+    @NotNull
     public static final TableOptions view(Select<?> select) {
         return new TableOptions(TableType.VIEW, select);
     }
@@ -156,6 +165,7 @@ public final class TableOptions implements Serializable {
     /**
      * Create a new {@link TableOptions} object for a {@link TableType#VIEW}.
      */
+    @NotNull
     public static final TableOptions view(String source) {
         return new TableOptions(TableType.VIEW, source);
     }
@@ -164,6 +174,7 @@ public final class TableOptions implements Serializable {
      * Create a new {@link TableOptions} object for a
      * {@link TableType#MATERIALIZED_VIEW} of unknown content.
      */
+    @NotNull
     public static final TableOptions materializedView() {
         return C_MATERIALIZED_VIEW;
     }
@@ -171,6 +182,7 @@ public final class TableOptions implements Serializable {
     /**
      * Create a new {@link TableOptions} object for a {@link TableType#MATERIALIZED_VIEW}.
      */
+    @NotNull
     public static final TableOptions materializedView(Select<?> select) {
         return new TableOptions(TableType.MATERIALIZED_VIEW, select);
     }
@@ -178,6 +190,7 @@ public final class TableOptions implements Serializable {
     /**
      * Create a new {@link TableOptions} object for a {@link TableType#EXPRESSION}.
      */
+    @NotNull
     public static final TableOptions expression() {
         return C_EXPRESSION;
     }
@@ -185,6 +198,7 @@ public final class TableOptions implements Serializable {
     /**
      * Create a new {@link TableOptions} object for a {@link TableType#FUNCTION}.
      */
+    @NotNull
     public static final TableOptions function() {
         return C_FUNCTION;
     }
@@ -194,6 +208,7 @@ public final class TableOptions implements Serializable {
      * <p>
      * This is never <code>null</code>.
      */
+    @NotNull
     public final TableType type() {
         return type;
     }
@@ -204,6 +219,7 @@ public final class TableOptions implements Serializable {
      * This may be <code>null</code>, if it is undefined, or unknown, or if the
      * table is not a {@link TableType#TEMPORARY} table.
      */
+    @Nullable
     public final OnCommit onCommit() {
         return onCommit;
     }
@@ -215,6 +231,7 @@ public final class TableOptions implements Serializable {
      * This may be <code>null</code>, if it is undefined, or unknown, or if the
      * table is not a view.
      */
+    @Nullable
     public final Select<?> select() {
         return select;
     }
@@ -226,6 +243,7 @@ public final class TableOptions implements Serializable {
      * This may be <code>null</code>, if it is undefined, or unknown, or if the
      * table is not a view.
      */
+    @Nullable
     public final String source() {
         return source;
     }
@@ -298,11 +316,17 @@ public final class TableOptions implements Serializable {
      */
     public enum OnCommit {
 
+        @NotNull
+
         @Support({ POSTGRES })
         DELETE_ROWS,
 
+        @NotNull
+
         @Support({ POSTGRES })
         PRESERVE_ROWS,
+
+        @NotNull
 
         @Support({ POSTGRES })
         DROP;

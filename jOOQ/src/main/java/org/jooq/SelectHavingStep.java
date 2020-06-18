@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 import java.util.Collection;
 
 import org.jooq.impl.DSL;
@@ -107,6 +110,7 @@ public interface SelectHavingStep<R extends Record> extends SelectWindowStep<R> 
      * Add a <code>HAVING</code> clause to the query, connecting them with each
      * other with {@link Operator#AND}.
      */
+    @NotNull
     @Support
     SelectHavingConditionStep<R> having(Condition condition);
 
@@ -114,6 +118,7 @@ public interface SelectHavingStep<R extends Record> extends SelectWindowStep<R> 
      * Add a <code>HAVING</code> clause to the query, connecting them with each
      * other with {@link Operator#AND}.
      */
+    @NotNull
     @Support
     SelectHavingConditionStep<R> having(Condition... conditions);
 
@@ -121,12 +126,14 @@ public interface SelectHavingStep<R extends Record> extends SelectWindowStep<R> 
      * Add a <code>HAVING</code> clause to the query, connecting them with each
      * other with {@link Operator#AND}.
      */
+    @NotNull
     @Support
     SelectHavingConditionStep<R> having(Collection<? extends Condition> conditions);
 
     /**
      * Add a <code>HAVING</code> clause to the query.
      */
+    @NotNull
     @Support
     SelectHavingConditionStep<R> having(Field<Boolean> condition);
 
@@ -143,6 +150,7 @@ public interface SelectHavingStep<R extends Record> extends SelectWindowStep<R> 
      *             method will be removed in the future.
      */
     @Deprecated
+    @NotNull
     @Support
     SelectHavingConditionStep<R> having(Boolean condition);
 
@@ -157,6 +165,7 @@ public interface SelectHavingStep<R extends Record> extends SelectWindowStep<R> 
      * @see DSL#condition(SQL)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     SelectHavingConditionStep<R> having(SQL sql);
@@ -172,6 +181,7 @@ public interface SelectHavingStep<R extends Record> extends SelectWindowStep<R> 
      * @see DSL#condition(String)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     SelectHavingConditionStep<R> having(String sql);
@@ -188,6 +198,7 @@ public interface SelectHavingStep<R extends Record> extends SelectWindowStep<R> 
      * @see DSL#sql(String, Object...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     SelectHavingConditionStep<R> having(String sql, Object... bindings);
@@ -204,6 +215,7 @@ public interface SelectHavingStep<R extends Record> extends SelectWindowStep<R> 
      * @see DSL#sql(String, QueryPart...)
      * @see SQL
      */
+    @NotNull
     @Support
     @PlainSQL
     SelectHavingConditionStep<R> having(String sql, QueryPart... parts);

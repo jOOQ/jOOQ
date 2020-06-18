@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 /**
  * A CSV formatting type, which can be used to configure CSV imports / exports.
  *

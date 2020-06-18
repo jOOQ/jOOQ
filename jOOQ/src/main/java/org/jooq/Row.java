@@ -41,6 +41,9 @@ import java.util.stream.Stream;
 
 import org.jooq.impl.DSL;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * A row value expression.
  * <p>
@@ -88,6 +91,7 @@ public interface Row extends FieldOrRow {
     /**
      * Get the fields from this row as a {@link Stream}.
      */
+    @NotNull
     Stream<Field<?>> fieldStream();
 
 
@@ -112,6 +116,7 @@ public interface Row extends FieldOrRow {
      * @param field The field to fetch
      * @return The field itself or an aliased field
      */
+    @Nullable
     <T> Field<T> field(Field<T> field);
 
     /**
@@ -120,6 +125,7 @@ public interface Row extends FieldOrRow {
      * @param fieldName The field to fetch
      * @return The field with the given name
      */
+    @Nullable
     Field<?> field(String fieldName);
 
     /**
@@ -129,6 +135,7 @@ public interface Row extends FieldOrRow {
      * @param type The type to coerce the resulting field to
      * @return The field with the given name
      */
+    @Nullable
     <T> Field<T> field(String fieldName, Class<T> type);
 
     /**
@@ -138,6 +145,7 @@ public interface Row extends FieldOrRow {
      * @param dataType The type to coerce the resulting field to
      * @return The field with the given name
      */
+    @Nullable
     <T> Field<T> field(String fieldName, DataType<T> dataType);
 
     /**
@@ -146,6 +154,7 @@ public interface Row extends FieldOrRow {
      * @param fieldName The field to fetch
      * @return The field with the given name
      */
+    @Nullable
     Field<?> field(Name fieldName);
 
     /**
@@ -155,6 +164,7 @@ public interface Row extends FieldOrRow {
      * @param type The type to coerce the resulting field to
      * @return The field with the given name
      */
+    @Nullable
     <T> Field<T> field(Name fieldName, Class<T> type);
 
     /**
@@ -164,6 +174,7 @@ public interface Row extends FieldOrRow {
      * @param dataType The type to coerce the resulting field to
      * @return The field with the given name
      */
+    @Nullable
     <T> Field<T> field(Name fieldName, DataType<T> dataType);
 
     /**
@@ -172,6 +183,7 @@ public interface Row extends FieldOrRow {
      * @param fieldIndex The field's index of the field to fetch
      * @return The field with the given name
      */
+    @Nullable
     Field<?> field(int fieldIndex);
 
     /**
@@ -181,6 +193,7 @@ public interface Row extends FieldOrRow {
      * @param type The type to coerce the resulting field to
      * @return The field with the given name
      */
+    @Nullable
     <T> Field<T> field(int fieldIndex, Class<T> type);
 
     /**
@@ -190,6 +203,7 @@ public interface Row extends FieldOrRow {
      * @param dataType The type to coerce the resulting field to
      * @return The field with the given name
      */
+    @Nullable
     <T> Field<T> field(int fieldIndex, DataType<T> dataType);
 
     /**
@@ -197,6 +211,7 @@ public interface Row extends FieldOrRow {
      *
      * @return All available fields
      */
+    @NotNull
     Field<?>[] fields();
 
     /**
@@ -205,6 +220,7 @@ public interface Row extends FieldOrRow {
      * @return All available fields
      * @see #field(Field)
      */
+    @NotNull
     Field<?>[] fields(Field<?>... fields);
 
     /**
@@ -213,6 +229,7 @@ public interface Row extends FieldOrRow {
      * @return All available fields
      * @see #field(String)
      */
+    @NotNull
     Field<?>[] fields(String... fieldNames);
 
     /**
@@ -221,6 +238,7 @@ public interface Row extends FieldOrRow {
      * @return All available fields
      * @see #field(Name)
      */
+    @NotNull
     Field<?>[] fields(Name... fieldNames);
 
     /**
@@ -229,6 +247,7 @@ public interface Row extends FieldOrRow {
      * @return All available fields
      * @see #field(int)
      */
+    @NotNull
     Field<?>[] fields(int... fieldIndexes);
 
     /**
@@ -264,6 +283,7 @@ public interface Row extends FieldOrRow {
      * Entries in the resulting array correspond to {@link Field#getType()} for
      * the corresponding <code>Field</code> in {@link #fields()}
      */
+    @NotNull
     Class<?>[] types();
 
     /**
@@ -272,6 +292,7 @@ public interface Row extends FieldOrRow {
      * @param fieldIndex The field's index of the field's type to fetch
      * @return The field's type
      */
+    @Nullable
     Class<?> type(int fieldIndex);
 
     /**
@@ -280,6 +301,7 @@ public interface Row extends FieldOrRow {
      * @param fieldName The field's name of the field's type to fetch
      * @return The field's type
      */
+    @Nullable
     Class<?> type(String fieldName);
 
     /**
@@ -288,6 +310,7 @@ public interface Row extends FieldOrRow {
      * @param fieldName The field's name of the field's type to fetch
      * @return The field's type
      */
+    @Nullable
     Class<?> type(Name fieldName);
 
     /**
@@ -296,6 +319,7 @@ public interface Row extends FieldOrRow {
      * Entries in the resulting array correspond to {@link Field#getDataType()}
      * for the corresponding <code>Field</code> in {@link #fields()}
      */
+    @NotNull
     DataType<?>[] dataTypes();
 
     /**
@@ -304,6 +328,7 @@ public interface Row extends FieldOrRow {
      * @param fieldIndex The field's index of the field's data type to fetch
      * @return The field's data type
      */
+    @Nullable
     DataType<?> dataType(int fieldIndex);
 
     /**
@@ -312,6 +337,7 @@ public interface Row extends FieldOrRow {
      * @param fieldName The field's name of the field's data type to fetch
      * @return The field's data type
      */
+    @Nullable
     DataType<?> dataType(String fieldName);
 
     /**
@@ -320,6 +346,7 @@ public interface Row extends FieldOrRow {
      * @param fieldName The field's name of the field's data type to fetch
      * @return The field's data type
      */
+    @Nullable
     DataType<?> dataType(Name fieldName);
 
     // ------------------------------------------------------------------------
@@ -334,6 +361,7 @@ public interface Row extends FieldOrRow {
      * support such predicates natively: <code>(A, B) IS NULL</code> is
      * equivalent to <code>A IS NULL AND B IS NULL</code>
      */
+    @NotNull
     @Support
     Condition isNull();
 
@@ -352,6 +380,7 @@ public interface Row extends FieldOrRow {
      * <code>(A IS NOT NULL) OR (B IS NOT NULL)</code></li>
      * </ul>
      */
+    @NotNull
     @Support
     Condition isNotNull();
 

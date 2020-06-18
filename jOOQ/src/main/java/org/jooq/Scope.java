@@ -41,6 +41,9 @@ import java.util.Map;
 
 import org.jooq.conf.Settings;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * Scope implementations provide access to a variety of objects that are
  * available from a given scope.
@@ -97,6 +100,7 @@ public interface Scope {
     /**
      * The configuration of the current scope.
      */
+    @NotNull
     Configuration configuration();
 
     /**
@@ -104,6 +108,7 @@ public interface Scope {
      * access to the configuration-contextual DSL to construct executable
      * queries.
      */
+    @NotNull
     DSLContext dsl();
 
     /**
@@ -112,6 +117,7 @@ public interface Scope {
      * This method is a convenient way of accessing
      * <code>configuration().settings()</code>.
      */
+    @NotNull
     Settings settings();
 
     /**
@@ -120,6 +126,7 @@ public interface Scope {
      * This method is a convenient way of accessing
      * <code>configuration().dialect()</code>.
      */
+    @NotNull
     SQLDialect dialect();
 
     /**
@@ -128,6 +135,7 @@ public interface Scope {
      * This method is a convenient way of accessing
      * <code>configuration().family()</code>.
      */
+    @NotNull
     SQLDialect family();
 
     /**
@@ -139,6 +147,7 @@ public interface Scope {
      *
      * @return The custom data. This is never <code>null</code>
      */
+    @NotNull
     Map<Object, Object> data();
 
     /**
@@ -152,6 +161,7 @@ public interface Scope {
      * @return The custom data or <code>null</code> if no such data is contained
      *         in this <code>Scope</code>
      */
+    @Nullable
     Object data(Object key);
 
     /**
@@ -166,5 +176,6 @@ public interface Scope {
      * @return The previously set custom data or <code>null</code> if no data
      *         was previously set for the given key
      */
+    @Nullable
     Object data(Object key, Object value);
 }

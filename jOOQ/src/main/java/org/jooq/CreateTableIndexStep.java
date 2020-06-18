@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 // ...
@@ -79,18 +82,21 @@ public interface CreateTableIndexStep extends CreateTableOnCommitStep {
     /**
      * Add an index to the table.
      */
+    @NotNull
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     CreateTableIndexStep index(Index index);
 
     /**
      * Add indexes to the table.
      */
+    @NotNull
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     CreateTableIndexStep indexes(Index... indexes);
 
     /**
      * Add indexes to the table.
      */
+    @NotNull
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
     CreateTableIndexStep indexes(Collection<? extends Index> indexes);
 }

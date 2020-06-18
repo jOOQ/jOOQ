@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 import java.util.concurrent.Executor;
 import java.util.concurrent.ForkJoinPool;
 

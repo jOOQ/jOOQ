@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 import static org.jooq.SQLDialect.MYSQL;
@@ -55,6 +58,7 @@ public interface JSONTableColumnForOrdinalityStep {
      * Specify the <code>FOR ORDINALITY</code> clause on a column in the
      * <code>COLUMNS</code> clause of the <code>JSON_TABLE</code> predicate.
      */
+    @NotNull
     @Support({ MYSQL, POSTGRES })
     JSONTableColumnsStep forOrdinality();
 

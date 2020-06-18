@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 import org.jooq.exception.DataMigrationException;
 import org.jooq.exception.DataMigrationValidationException;
 

@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 // ...
@@ -131,6 +134,7 @@ public interface SelectOffsetStep<R extends Record> extends SelectForUpdateStep<
      * emulated with a <code>ROW_NUMBER()</code> window function and nested
      * <code>SELECT</code> statements.
      */
+    @NotNull
     @Support
     SelectForUpdateStep<R> offset(int offset);
 
@@ -142,6 +146,7 @@ public interface SelectOffsetStep<R extends Record> extends SelectForUpdateStep<
      * emulated with a <code>ROW_NUMBER()</code> window function and nested
      * <code>SELECT</code> statements.
      */
+    @NotNull
     @Support
     SelectForUpdateStep<R> offset(Number offset);
 
@@ -153,6 +158,7 @@ public interface SelectOffsetStep<R extends Record> extends SelectForUpdateStep<
      * emulated with a <code>ROW_NUMBER()</code> window function and nested
      * <code>SELECT</code> statements.
      */
+    @NotNull
     @Support
     SelectForUpdateStep<R> offset(Param<? extends Number> offset);
 }

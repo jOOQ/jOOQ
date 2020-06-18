@@ -37,6 +37,9 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
 // ...
 // ...
 // ...
@@ -89,12 +92,14 @@ public interface CreateTableWithDataStep extends CreateTableOnCommitStep {
     /**
      * Add a <code>WITH DATA</code> clause.
      */
+    @NotNull
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateTableCommentStep withData();
 
     /**
      * Add a <code>WITH DATA</code> clause.
      */
+    @NotNull
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     CreateTableCommentStep withNoData();
 }

@@ -1340,7 +1340,11 @@ public class DefaultConfiguration implements Configuration {
             ? ((ThreadLocalTransactionProvider) tp).localConnectionProvider
             : (ConnectionProvider) data(DATA_DEFAULT_TRANSACTION_PROVIDER_CONNECTION);
 
-        return transactional == null ? connectionProvider : transactional;
+        return transactional != null
+             ? transactional
+             : connectionProvider != null
+             ? connectionProvider
+             : new NoConnectionProvider();
     }
 
     @Override
@@ -1383,9 +1387,8 @@ public class DefaultConfiguration implements Configuration {
 
         // [#3229] If transactions are used in client code, the default behaviour
         // is assumed automatically, for convenience.
-        if (transactionProvider instanceof NoTransactionProvider) {
+        if (transactionProvider == null || transactionProvider instanceof NoTransactionProvider)
             return new DefaultTransactionProvider(connectionProvider);
-        }
 
         return transactionProvider;
     }

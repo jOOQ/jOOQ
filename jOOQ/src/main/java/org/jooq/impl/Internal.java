@@ -60,6 +60,8 @@ import org.jooq.UniqueKey;
 // ...
 // ...
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * A utility class that grants access to internal API, to be used only by
  * generated code.
@@ -74,6 +76,7 @@ public final class Internal {
     /**
      * Factory method for embeddable types.
      */
+    @NotNull
     public static final <R extends Record, T extends Record> TableField<R, T> createEmbeddable(Name name, Class<T> recordType, Table<R> table, TableField<R, ?>... fields) {
         return new EmbeddableTableField<>(name, recordType, table, fields);
     }
@@ -81,6 +84,7 @@ public final class Internal {
     /**
      * Factory method for indexes.
      */
+    @NotNull
     public static final Index createIndex(Name name, Table<?> table, OrderField<?>[] sortFields, boolean unique) {
         return new IndexImpl(name, table, sortFields, null, unique);
     }
@@ -88,6 +92,7 @@ public final class Internal {
     /**
      * Factory method for identities.
      */
+    @NotNull
     public static final <R extends Record, T> Identity<R, T> createIdentity(Table<R> table, TableField<R, T> field) {
         return new IdentityImpl<>(table, field);
     }
@@ -95,6 +100,7 @@ public final class Internal {
     /**
      * Factory method for unique keys.
      */
+    @NotNull
     @SafeVarargs
     public static final <R extends Record> UniqueKey<R> createUniqueKey(Table<R> table, TableField<R, ?>... fields) {
         return createUniqueKey(table, (Name) null, fields, true);
@@ -103,6 +109,7 @@ public final class Internal {
     /**
      * Factory method for unique keys.
      */
+    @NotNull
     @SafeVarargs
     public static final <R extends Record> UniqueKey<R> createUniqueKey(Table<R> table, Name name, TableField<R, ?>... fields) {
         return createUniqueKey(table, name, fields, true);
@@ -111,6 +118,7 @@ public final class Internal {
     /**
      * Factory method for unique keys.
      */
+    @NotNull
     public static final <R extends Record> UniqueKey<R> createUniqueKey(Table<R> table, Name name, TableField<R, ?>[] fields, boolean enforced) {
         return new UniqueKeyImpl<>(table, name, fields, enforced);
     }
@@ -118,6 +126,7 @@ public final class Internal {
     /**
      * Factory method for foreign keys.
      */
+    @NotNull
     @SafeVarargs
     public static final <R extends Record, U extends Record> ForeignKey<R, U> createForeignKey(UniqueKey<U> key, Table<R> table, TableField<R, ?>... fields) {
         return createForeignKey(key, table, (Name) null, fields);
@@ -126,6 +135,7 @@ public final class Internal {
     /**
      * Factory method for foreign keys.
      */
+    @NotNull
     @SafeVarargs
     public static final <R extends Record, U extends Record> ForeignKey<R, U> createForeignKey(UniqueKey<U> key, Table<R> table, Name name, TableField<R, ?>... fields) {
         return createForeignKey(key, table, name, fields, true);
@@ -134,6 +144,7 @@ public final class Internal {
     /**
      * Factory method for foreign keys.
      */
+    @NotNull
     public static final <R extends Record, U extends Record> ForeignKey<R, U> createForeignKey(UniqueKey<U> key, Table<R> table, Name name, TableField<R, ?>[] fields, boolean enforced) {
         ForeignKey<R, U> result = new ReferenceImpl<>(key, table, name, fields, enforced);
 
@@ -146,6 +157,7 @@ public final class Internal {
     /**
      * Factory method for sequences.
      */
+    @NotNull
     public static final <T extends Number> Sequence<T> createSequence(String name, Schema schema, DataType<T> type) {
         return new SequenceImpl<>(name, schema, type, false);
     }
@@ -153,6 +165,7 @@ public final class Internal {
     /**
      * Factory method for sequences.
      */
+    @NotNull
     public static final <T extends Number> Sequence<T> createSequence(String name, Schema schema, DataType<T> type, Number startWith, Number incrementBy, Number minvalue, Number maxvalue, boolean cycle, Number cache) {
         return new SequenceImpl<>(
             DSL.name(name),
@@ -171,6 +184,7 @@ public final class Internal {
     /**
      * Factory method for check constraints.
      */
+    @NotNull
     public static final <R extends Record> Check<R> createCheck(Table<R> table, Name name, String condition) {
         return createCheck(table, name, condition, true);
     }
@@ -178,6 +192,7 @@ public final class Internal {
     /**
      * Factory method for check constraints.
      */
+    @NotNull
     public static final <R extends Record> Check<R> createCheck(Table<R> table, Name name, String condition, boolean enforced) {
         return new CheckImpl<>(table, name, DSL.condition(condition), enforced);
     }
@@ -185,6 +200,7 @@ public final class Internal {
     /**
      * Factory method for domain specifications.
      */
+    @NotNull
     public static final <T> Domain<T> createDomain(Schema schema, Name name, DataType<T> type, Check<?>... checks) {
         return new DomainImpl<>(schema, name, type, checks);
     }
@@ -192,6 +208,7 @@ public final class Internal {
     /**
      * Factory method for path aliases.
      */
+    @NotNull
     public static final Name createPathAlias(Table<?> child, ForeignKey<?, ?> path) {
         Name name = DSL.name(path.getName());
 
@@ -210,6 +227,7 @@ public final class Internal {
     /**
      * Factory method for parameters.
      */
+    @NotNull
     public static final <T> Parameter<T> createParameter(String name, DataType<T> type, boolean isDefaulted, boolean isUnnamed) {
         return createParameter(name, type, isDefaulted, isUnnamed, null, null);
     }
@@ -217,6 +235,7 @@ public final class Internal {
     /**
      * Factory method for parameters.
      */
+    @NotNull
     public static final <T, U> Parameter<U> createParameter(String name, DataType<T> type, boolean isDefaulted, boolean isUnnamed, Converter<T, U> converter) {
         return createParameter(name, type, isDefaulted, isUnnamed, converter, null);
     }
@@ -224,6 +243,7 @@ public final class Internal {
     /**
      * Factory method for parameters.
      */
+    @NotNull
     public static final <T, U> Parameter<U> createParameter(String name, DataType<T> type, boolean isDefaulted, boolean isUnnamed, Binding<T, U> binding) {
         return createParameter(name, type, isDefaulted, isUnnamed, null, binding);
     }
@@ -231,6 +251,7 @@ public final class Internal {
     /**
      * Factory method for parameters.
      */
+    @NotNull
     @SuppressWarnings("unchecked")
     public static final <T, X, U> Parameter<U> createParameter(String name, DataType<T> type, boolean isDefaulted, boolean isUnnamed, Converter<X, U> converter, Binding<T, X> binding) {
         final Binding<T, U> actualBinding = DefaultBinding.newBinding(converter, type, binding);
@@ -248,6 +269,7 @@ public final class Internal {
 
 
 
+
     private Internal() {}
 
     /**
@@ -255,6 +277,7 @@ public final class Internal {
      *
      * @deprecated - 3.14.0 - [#9404] - Please re-generate your code.
      */
+    @NotNull
     @Deprecated
     public static final Index createIndex(String name, Table<?> table, OrderField<?>[] sortFields, boolean unique) {
         return createIndex(DSL.name(name), table, sortFields, unique);
@@ -265,6 +288,7 @@ public final class Internal {
      *
      * @deprecated - 3.14.0 - [#9404] - Please re-generate your code.
      */
+    @NotNull
     @Deprecated
     @SafeVarargs
     public static final <R extends Record> UniqueKey<R> createUniqueKey(Table<R> table, String name, TableField<R, ?>... fields) {
@@ -276,6 +300,7 @@ public final class Internal {
      *
      * @deprecated - 3.14.0 - [#9404] - Please re-generate your code.
      */
+    @NotNull
     @Deprecated
     public static final <R extends Record> UniqueKey<R> createUniqueKey(Table<R> table, String name, TableField<R, ?>[] fields, boolean enforced) {
         return createUniqueKey(table, DSL.name(name), fields, enforced);
@@ -286,6 +311,7 @@ public final class Internal {
      *
      * @deprecated - 3.14.0 - [#9404] - Please re-generate your code.
      */
+    @NotNull
     @Deprecated
     @SafeVarargs
     public static final <R extends Record, U extends Record> ForeignKey<R, U> createForeignKey(UniqueKey<U> key, Table<R> table, String name, TableField<R, ?>... fields) {
@@ -297,6 +323,7 @@ public final class Internal {
      *
      * @deprecated - 3.14.0 - [#9404] - Please re-generate your code.
      */
+    @NotNull
     @Deprecated
     public static final <R extends Record, U extends Record> ForeignKey<R, U> createForeignKey(UniqueKey<U> key, Table<R> table, String name, TableField<R, ?>[] fields, boolean enforced) {
         return createForeignKey(key, table, DSL.name(name), fields, enforced);

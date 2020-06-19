@@ -84,7 +84,7 @@ public interface DataType<T> extends Named {
      * Get the standard SQL data type of this (dialect-specific) data type if
      * available.
      */
-    @NotNull
+    @Nullable
     DataType<T> getSQLDataType();
 
     /**

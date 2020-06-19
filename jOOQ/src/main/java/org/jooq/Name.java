@@ -135,13 +135,13 @@ public interface Name extends QueryPart, Comparable<Name> {
     /**
      * Get the first segment of the qualified name (usually a {@link Catalog} or {@link Schema} name).
      */
-    @NotNull
+    @Nullable
     String first();
 
     /**
      * Get the last segment of the qualified name (usually a {@link Table}, {@link Field}, or {@link Parameter} name).
      */
-    @NotNull
+    @Nullable
     String last();
 
     /**

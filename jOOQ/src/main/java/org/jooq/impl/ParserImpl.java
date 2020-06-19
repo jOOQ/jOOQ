@@ -10579,6 +10579,9 @@ final class ParserImpl implements Parser {
                 else if (parseKeywordOrIdentifierIf(ctx, "CHAR") ||
                          parseKeywordOrIdentifierIf(ctx, "CHARACTER"))
                     return parseDataTypeCollation(ctx, parseDataTypeLength(ctx, SQLDataType.CHAR));
+                // [#5934] [#10291] TODO: support as actual data type as well
+                else if (parseKeywordOrIdentifierIf(ctx, "CITEXT"))
+                    return parseDataTypeCollation(ctx, parseAndIgnoreDataTypeLength(ctx, SQLDataType.CLOB));
                 else if (parseKeywordOrIdentifierIf(ctx, "CLOB"))
                     return parseDataTypeCollation(ctx, parseDataTypeLength(ctx, SQLDataType.CLOB));
 
@@ -10739,7 +10742,9 @@ final class ParserImpl implements Parser {
 
             case 'V':
                 if (parseKeywordOrIdentifierIf(ctx, "VARCHAR") ||
-                    parseKeywordOrIdentifierIf(ctx, "VARCHAR2"))
+                    parseKeywordOrIdentifierIf(ctx, "VARCHAR2") ||
+                    // [#5934] [#10291] TODO: support as actual data type as well
+                    parseKeywordOrIdentifierIf(ctx, "VARCHAR_IGNORECASE"))
                     return parseDataTypeCollation(ctx, parseDataTypeLength(ctx, SQLDataType.VARCHAR));
                 else if (parseKeywordOrIdentifierIf(ctx, "VARBINARY"))
                     return parseDataTypeLength(ctx, SQLDataType.VARBINARY);

@@ -37,9 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.SelectQueryImpl.SUPPORT_WINDOW_CLAUSE;
 import static org.jooq.impl.Tools.DataKey.DATA_WINDOW_DEFINITIONS;

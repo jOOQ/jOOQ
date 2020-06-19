@@ -3,5 +3,3 @@
  * {@link org.jooq.SQLDialect#FIREBIRD} dialect.
  */
 package org.jooq.util.firebird;
-
-import org.jetbrains.annotations.*;

@@ -37,14 +37,13 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import java.sql.SQLException;
 import java.util.List;
 
 import org.jooq.conf.Settings;
 import org.jooq.conf.ThrowExceptions;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A list of {@link Result} and update counts that can be returned by
@@ -114,6 +113,7 @@ public interface Results extends List<Result<Record>>, Attachable {
      *       .equals(result);
      * </pre></code>
      */
+    @NotNull
     List<ResultOrRows> resultsOrRows();
 
     // ------------------------------------------------------------------------

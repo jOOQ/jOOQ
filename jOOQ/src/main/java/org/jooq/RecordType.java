@@ -37,8 +37,8 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A record type for {@link Table}, {@link Cursor}, {@link Result} and other
@@ -82,6 +82,7 @@ public interface RecordType<R extends Record> {
      * @param field The field to fetch
      * @return The field itself or an aliased field
      */
+    @Nullable
     <T> Field<T> field(Field<T> field);
 
     /**
@@ -90,6 +91,7 @@ public interface RecordType<R extends Record> {
      * @param fieldName The field to fetch
      * @return The field with the given name
      */
+    @Nullable
     Field<?> field(String fieldName);
 
     /**
@@ -99,6 +101,7 @@ public interface RecordType<R extends Record> {
      * @param type The type to coerce the resulting field to
      * @return The field with the given name
      */
+    @Nullable
     <T> Field<T> field(String fieldName, Class<T> type);
 
     /**
@@ -108,6 +111,7 @@ public interface RecordType<R extends Record> {
      * @param dataType The data type to coerce the resulting field to
      * @return The field with the given name
      */
+    @Nullable
     <T> Field<T> field(String fieldName, DataType<T> dataType);
 
     /**
@@ -116,6 +120,7 @@ public interface RecordType<R extends Record> {
      * @param fieldName The field to fetch
      * @return The field with the given name
      */
+    @Nullable
     Field<?> field(Name fieldName);
 
     /**
@@ -125,6 +130,7 @@ public interface RecordType<R extends Record> {
      * @param type The type to coerce the resulting field to
      * @return The field with the given name
      */
+    @Nullable
     <T> Field<T> field(Name fieldName, Class<T> type);
 
     /**
@@ -134,6 +140,7 @@ public interface RecordType<R extends Record> {
      * @param dataType The data type to coerce the resulting field to
      * @return The field with the given name
      */
+    @Nullable
     <T> Field<T> field(Name fieldName, DataType<T> dataType);
 
     /**
@@ -142,6 +149,7 @@ public interface RecordType<R extends Record> {
      * @param fieldIndex The field's index of the field to fetch
      * @return The field with the given name
      */
+    @Nullable
     Field<?> field(int fieldIndex);
 
     /**
@@ -151,6 +159,7 @@ public interface RecordType<R extends Record> {
      * @param type The type to coerce the resulting field to
      * @return The field with the given name
      */
+    @Nullable
     <T> Field<T> field(int fieldIndex, Class<T> type);
 
     /**
@@ -160,6 +169,7 @@ public interface RecordType<R extends Record> {
      * @param dataType The data type to coerce the resulting field to
      * @return The field with the given name
      */
+    @Nullable
     <T> Field<T> field(int fieldIndex, DataType<T> dataType);
 
     /**
@@ -167,6 +177,7 @@ public interface RecordType<R extends Record> {
      *
      * @return All available fields
      */
+    @NotNull
     Field<?>[] fields();
 
     /**
@@ -175,6 +186,7 @@ public interface RecordType<R extends Record> {
      * @return All available fields
      * @see #field(Field)
      */
+    @NotNull
     Field<?>[] fields(Field<?>... fields);
 
     /**
@@ -183,6 +195,7 @@ public interface RecordType<R extends Record> {
      * @return All available fields
      * @see #field(String)
      */
+    @NotNull
     Field<?>[] fields(String... fieldNames);
 
     /**
@@ -191,6 +204,7 @@ public interface RecordType<R extends Record> {
      * @return All available fields
      * @see #field(Name)
      */
+    @NotNull
     Field<?>[] fields(Name... fieldNames);
 
     /**
@@ -199,6 +213,7 @@ public interface RecordType<R extends Record> {
      * @return All available fields
      * @see #field(int)
      */
+    @NotNull
     Field<?>[] fields(int... fieldIndexes);
 
     /**
@@ -234,6 +249,7 @@ public interface RecordType<R extends Record> {
      * Entries in the resulting array correspond to {@link Field#getType()} for
      * the corresponding <code>Field</code> in {@link #fields()}
      */
+    @NotNull
     Class<?>[] types();
 
     /**
@@ -242,6 +258,7 @@ public interface RecordType<R extends Record> {
      * @param fieldIndex The field's index of the field's type to fetch
      * @return The field's type
      */
+    @Nullable
     Class<?> type(int fieldIndex);
 
     /**
@@ -250,6 +267,7 @@ public interface RecordType<R extends Record> {
      * @param fieldName The field's name of the field's type to fetch
      * @return The field's type
      */
+    @Nullable
     Class<?> type(String fieldName);
 
     /**
@@ -258,6 +276,7 @@ public interface RecordType<R extends Record> {
      * @param fieldName The field's name of the field's type to fetch
      * @return The field's type
      */
+    @Nullable
     Class<?> type(Name fieldName);
 
     /**
@@ -266,6 +285,7 @@ public interface RecordType<R extends Record> {
      * Entries in the resulting array correspond to {@link Field#getDataType()}
      * for the corresponding <code>Field</code> in {@link #fields()}
      */
+    @NotNull
     DataType<?>[] dataTypes();
 
     /**
@@ -274,6 +294,7 @@ public interface RecordType<R extends Record> {
      * @param fieldIndex The field's index of the field's data type to fetch
      * @return The field's data type
      */
+    @Nullable
     DataType<?> dataType(int fieldIndex);
 
     /**
@@ -282,6 +303,7 @@ public interface RecordType<R extends Record> {
      * @param fieldName The field's name of the field's data type to fetch
      * @return The field's data type
      */
+    @Nullable
     DataType<?> dataType(String fieldName);
 
     /**
@@ -290,6 +312,7 @@ public interface RecordType<R extends Record> {
      * @param fieldName The field's name of the field's data type to fetch
      * @return The field's data type
      */
+    @Nullable
     DataType<?> dataType(Name fieldName);
 
 }

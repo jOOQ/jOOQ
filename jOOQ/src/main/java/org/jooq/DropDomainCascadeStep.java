@@ -37,12 +37,11 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import static org.jooq.SQLDialect.*;
 
 import java.util.*;
+
+import org.jetbrains.annotations.*;
 
 /**
  * A step in the construction of the <code>DROP DOMAIN</code> statement.
@@ -71,14 +70,14 @@ public interface DropDomainCascadeStep extends DropDomainFinalStep {
     /**
      * Add the <code>CASCADE</code> clause to the <code>DROP DOMAIN</code> statement.
      */
-    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
+    @NotNull
     DropDomainFinalStep cascade();
 
     /**
      * Add the <code>RESTRICT</code> clause to the <code>DROP DOMAIN</code> statement.
      */
-    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @NotNull
     DropDomainFinalStep restrict();
 }

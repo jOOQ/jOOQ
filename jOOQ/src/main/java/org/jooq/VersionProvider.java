@@ -37,8 +37,7 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
+import org.jetbrains.annotations.NotNull;
 
 /**
  * An SPI that allows for providing a graph of versions.
@@ -59,5 +58,6 @@ public interface VersionProvider {
      * {@link Version#migrateTo(Version)} and other operations are undefined
      * if two versions do not have a common ancestor.
      */
+    @NotNull
     Versions provide();
 }

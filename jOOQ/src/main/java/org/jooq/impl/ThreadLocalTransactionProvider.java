@@ -37,9 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
 import static org.jooq.impl.Tools.DataKey.DATA_DEFAULT_TRANSACTION_PROVIDER_CONNECTION;
 
 import java.sql.Connection;
@@ -51,6 +48,8 @@ import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
 import org.jooq.TransactionContext;
 import org.jooq.TransactionProvider;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A {@link TransactionProvider} that implements thread-bound transaction
@@ -137,6 +136,7 @@ public class ThreadLocalTransactionProvider implements TransactionProvider {
             this.delegateConnectionProvider = delegate;
         }
 
+        @NotNull
         @Override
         public final Connection acquire() {
             Connection local = localTxConnection.get();

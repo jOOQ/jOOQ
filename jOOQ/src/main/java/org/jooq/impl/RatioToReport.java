@@ -37,9 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.Names.N_RATIO_TO_REPORT;
 import static org.jooq.impl.SQLDataType.DECIMAL;

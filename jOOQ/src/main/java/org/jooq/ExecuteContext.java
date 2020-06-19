@@ -37,9 +37,6 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -50,6 +47,9 @@ import java.sql.Statement;
 import org.jooq.conf.Settings;
 import org.jooq.conf.StatementType;
 import org.jooq.exception.DataAccessException;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A context object for {@link Query} execution passed to registered
@@ -90,6 +90,7 @@ public interface ExecuteContext extends Scope {
      * @see #routine()
      * @see #batchQueries()
      */
+    @Nullable
     Query query();
 
     /**
@@ -105,6 +106,7 @@ public interface ExecuteContext extends Scope {
      * @return The executed <code>Query</code> object(s). This is never
      *         <code>null</code>
      */
+    @NotNull
     Query[] batchQueries();
 
     /**
@@ -113,12 +115,14 @@ public interface ExecuteContext extends Scope {
      *
      * @see #routine()
      */
+    @Nullable
     Routine<?> routine();
 
     /**
      * The SQL that is being executed or <code>null</code> if the SQL statement
      * is unknown or if there was no SQL statement.
      */
+    @Nullable
     String sql();
 
     /**
@@ -143,6 +147,7 @@ public interface ExecuteContext extends Scope {
      * @see #routine()
      * @return The generated SQL statement(s). This is never <code>null</code>
      */
+    @NotNull
     String[] batchSQL();
 
     /**
@@ -171,6 +176,7 @@ public interface ExecuteContext extends Scope {
      * jOOQ <code>Routine</code></li>
      * </ul>
      */
+    @Nullable
     PreparedStatement statement();
 
     /**
@@ -202,6 +208,7 @@ public interface ExecuteContext extends Scope {
      * The {@link ResultSet} that is being fetched or <code>null</code> if the
      * result set is unknown or if no result set is being fetched.
      */
+    @Nullable
     ResultSet resultSet();
 
     /**
@@ -218,6 +225,7 @@ public interface ExecuteContext extends Scope {
      * The last record that was fetched from the result set, or
      * <code>null</code> if no record has been fetched.
      */
+    @Nullable
     Record record();
 
     /**
@@ -258,12 +266,14 @@ public interface ExecuteContext extends Scope {
      * @see #rows()
      * @return The affected rows. This is never <code>null</code>
      */
+    @NotNull
     int[] batchRows();
 
     /**
      * The last result that was fetched from the result set, or
      * <code>null</code> if no result has been fetched.
      */
+    @Nullable
     Result<?> result();
 
     /**
@@ -274,6 +284,7 @@ public interface ExecuteContext extends Scope {
     /**
      * The {@link RuntimeException} being thrown.
      */
+    @Nullable
     RuntimeException exception();
 
     /**
@@ -286,6 +297,7 @@ public interface ExecuteContext extends Scope {
     /**
      * The {@link SQLException} that was thrown by the database.
      */
+    @Nullable
     SQLException sqlException();
 
     /**
@@ -308,6 +320,7 @@ public interface ExecuteContext extends Scope {
      * {@link Settings#isFetchWarnings()}, in case of which this property will
      * be <code>null</code>.
      */
+    @Nullable
     SQLWarning sqlWarning();
 
     /**
@@ -321,6 +334,7 @@ public interface ExecuteContext extends Scope {
      *
      * @return The server output. This is never <code>null</code>.
      */
+    @NotNull
     String[] serverOutput();
 
     /**

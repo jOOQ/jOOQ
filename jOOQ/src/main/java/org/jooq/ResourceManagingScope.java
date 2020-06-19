@@ -37,9 +37,6 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import java.io.Closeable;
 import java.io.InputStream;
 import java.sql.Array;

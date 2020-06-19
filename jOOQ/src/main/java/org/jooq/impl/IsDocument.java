@@ -38,9 +38,6 @@
 
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
 import static org.jooq.impl.Keywords.K_IS_DOCUMENT;
 import static org.jooq.impl.Keywords.K_IS_NOT_DOCUMENT;
 

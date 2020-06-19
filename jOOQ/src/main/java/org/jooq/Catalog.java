@@ -37,13 +37,13 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import java.util.List;
 import java.util.stream.Stream;
 
 import org.jooq.impl.DSL;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A catalog.
@@ -86,18 +86,21 @@ public interface Catalog extends Named {
     /**
      * List all schemas contained in this catalog.
      */
+    @NotNull
     List<Schema> getSchemas();
 
     /**
      * Get a schema by its name (case-sensitive) in this catalog, or
      * <code>null</code> if no such schema exists.
      */
+    @Nullable
     Schema getSchema(String name);
 
 
     /**
      * Stream all schemas contained in this catalog.
      */
+    @NotNull
     Stream<Schema> schemaStream();
 
 }

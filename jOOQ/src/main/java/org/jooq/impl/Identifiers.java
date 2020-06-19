@@ -37,9 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
 import java.util.EnumMap;
 
 import org.jooq.SQLDialect;

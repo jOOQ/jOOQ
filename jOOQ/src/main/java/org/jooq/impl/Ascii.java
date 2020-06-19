@@ -37,9 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
 import static org.jooq.impl.Names.N_ASC;
 import static org.jooq.impl.Names.N_ASCII;
 import static org.jooq.impl.Names.N_ASCII_VAL;

@@ -4160,6 +4160,7 @@ extends
     /**
      * The record type produced by this query.
      */
+    @NotNull
     Class<? extends R> getRecordType();
 
     @NotNull

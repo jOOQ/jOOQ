@@ -37,9 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
 import static java.util.Collections.unmodifiableCollection;
 import static org.jooq.Nullability.NOT_NULL;
 // ...

@@ -37,9 +37,6 @@
  */
 package org.jooq.util.postgres;
 
-import org.jetbrains.annotations.*;
-
-
 import static java.lang.Integer.toOctalString;
 import static org.jooq.tools.StringUtils.leftPad;
 import static org.jooq.tools.reflect.Reflect.on;

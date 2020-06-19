@@ -37,8 +37,6 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
 
 /**
  * This type is used for the {@link Insert}'s DSL API.

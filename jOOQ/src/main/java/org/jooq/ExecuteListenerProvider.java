@@ -37,10 +37,9 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import org.jooq.impl.DefaultExecuteListenerProvider;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A provider for {@link ExecuteListener} instances.
@@ -73,5 +72,6 @@ public interface ExecuteListenerProvider {
      * @see ExecuteContext
      * @see DefaultExecuteListenerProvider
      */
+    @NotNull
     ExecuteListener provide();
 }

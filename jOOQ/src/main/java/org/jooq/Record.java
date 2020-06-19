@@ -38,9 +38,6 @@
 
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import java.lang.reflect.Constructor;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -56,6 +53,9 @@ import org.jooq.exception.DataTypeException;
 import org.jooq.exception.MappingException;
 import org.jooq.impl.DefaultRecordMapper;
 import org.jooq.impl.DefaultRecordMapperProvider;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A database result record.
@@ -108,6 +108,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
     /**
      * Get this record's fields as a {@link Row}.
      */
+    @NotNull
     Row fieldsRow();
 
     /**
@@ -129,6 +130,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      *
      * @see Row#field(Field)
      */
+    @Nullable
     <T> Field<T> field(Field<T> field);
 
     /**
@@ -136,6 +138,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      *
      * @see Row#field(String)
      */
+    @Nullable
     Field<?> field(String name);
 
     /**
@@ -143,6 +146,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      *
      * @see Row#field(Name)
      */
+    @Nullable
     Field<?> field(Name name);
 
     /**
@@ -150,6 +154,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      *
      * @see Row#field(int)
      */
+    @Nullable
     Field<?> field(int index);
 
     /**
@@ -157,6 +162,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      *
      * @see Row#fields()
      */
+    @NotNull
     Field<?>[] fields();
 
     /**
@@ -165,6 +171,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * @return All available fields
      * @see Row#fields(Field...)
      */
+    @NotNull
     Field<?>[] fields(Field<?>... fields);
 
     /**
@@ -173,6 +180,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * @return All available fields
      * @see Row#fields(String...)
      */
+    @NotNull
     Field<?>[] fields(String... fieldNames);
 
     /**
@@ -181,6 +189,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * @return All available fields
      * @see Row#fields(Name...)
      */
+    @NotNull
     Field<?>[] fields(Name... fieldNames);
 
     /**
@@ -189,6 +198,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * @return All available fields
      * @see Row#fields(int...)
      */
+    @NotNull
     Field<?>[] fields(int... fieldIndexes);
 
     /**
@@ -221,6 +231,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
     /**
      * Get this record's values as a {@link Row}.
      */
+    @NotNull
     Row valuesRow();
 
     /**
@@ -284,6 +295,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in the record
      */
+    @Nullable
     Object get(String fieldName) throws IllegalArgumentException;
 
     /**
@@ -326,6 +338,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in the record
      */
+    @Nullable
     Object get(Name fieldName) throws IllegalArgumentException;
 
     /**
@@ -368,6 +381,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the record
      */
+    @Nullable
     Object get(int index) throws IllegalArgumentException;
 
     /**
@@ -447,6 +461,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * Like {@link #set(Field, Object)} but returning <code>this</code> for
      * fluent setting of multiple values.
      */
+    @NotNull
     <T> Record with(Field<T> field, T value);
 
     /**
@@ -455,6 +470,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * Like {@link #set(Field, Object, Converter)} but returning
      * <code>this</code> for fluent setting of multiple values.
      */
+    @NotNull
     <T, U> Record with(Field<T> field, U value, Converter<? extends T, ? super U> converter);
 
     /**
@@ -474,6 +490,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * @see #original(int)
      * @see #original(String)
      */
+    @NotNull
     Record original();
 
     /**
@@ -496,6 +513,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      *
      * @see #original()
      */
+    @Nullable
     Object original(int fieldIndex);
 
     /**
@@ -507,6 +525,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      *
      * @see #original()
      */
+    @Nullable
     Object original(String fieldName);
 
     /**
@@ -518,6 +537,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      *
      * @see #original()
      */
+    @Nullable
     Object original(Name fieldName);
 
     /**
@@ -682,6 +702,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * @return This record as an array
      * @see #fromArray(Object...)
      */
+    @NotNull
     Object[] intoArray();
 
     /**
@@ -697,6 +718,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * <p>
      * This is the same as calling <code>Arrays.asList(intoArray())</code>
      */
+    @NotNull
     List<Object> intoList();
 
 
@@ -710,6 +732,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      *
      * @return This record as a stream
      */
+    @NotNull
     Stream<Object> intoStream();
 
 
@@ -721,6 +744,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * @return This record as a map
      * @see #fromMap(Map)
      */
+    @NotNull
     Map<String, Object> intoMap();
 
     /**
@@ -730,6 +754,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * @param fields The fields of the new record
      * @return The new record
      */
+    @NotNull
     Record into(Field<?>... fields);
 
 
@@ -741,6 +766,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * @return The new record
      * @see #into(Table)
      */
+    @NotNull
     <T1> Record1<T1> into(Field<T1> field1);
 
     /**
@@ -750,6 +776,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * @return The new record
      * @see #into(Table)
      */
+    @NotNull
     <T1, T2> Record2<T1, T2> into(Field<T1> field1, Field<T2> field2);
 
     /**
@@ -759,6 +786,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * @return The new record
      * @see #into(Table)
      */
+    @NotNull
     <T1, T2, T3> Record3<T1, T2, T3> into(Field<T1> field1, Field<T2> field2, Field<T3> field3);
 
     /**
@@ -768,6 +796,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * @return The new record
      * @see #into(Table)
      */
+    @NotNull
     <T1, T2, T3, T4> Record4<T1, T2, T3, T4> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4);
 
     /**
@@ -777,6 +806,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * @return The new record
      * @see #into(Table)
      */
+    @NotNull
     <T1, T2, T3, T4, T5> Record5<T1, T2, T3, T4, T5> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5);
 
     /**
@@ -786,6 +816,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * @return The new record
      * @see #into(Table)
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6> Record6<T1, T2, T3, T4, T5, T6> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6);
 
     /**
@@ -795,6 +826,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * @return The new record
      * @see #into(Table)
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7> Record7<T1, T2, T3, T4, T5, T6, T7> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7);
 
     /**
@@ -804,6 +836,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * @return The new record
      * @see #into(Table)
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7, T8> Record8<T1, T2, T3, T4, T5, T6, T7, T8> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8);
 
     /**
@@ -813,6 +846,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * @return The new record
      * @see #into(Table)
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7, T8, T9> Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9);
 
     /**
@@ -822,6 +856,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * @return The new record
      * @see #into(Table)
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10);
 
     /**
@@ -831,6 +866,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * @return The new record
      * @see #into(Table)
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11);
 
     /**
@@ -840,6 +876,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * @return The new record
      * @see #into(Table)
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12);
 
     /**
@@ -849,6 +886,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * @return The new record
      * @see #into(Table)
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13);
 
     /**
@@ -858,6 +896,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * @return The new record
      * @see #into(Table)
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14);
 
     /**
@@ -867,6 +906,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * @return The new record
      * @see #into(Table)
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15);
 
     /**
@@ -876,6 +916,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * @return The new record
      * @see #into(Table)
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16);
 
     /**
@@ -885,6 +926,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * @return The new record
      * @see #into(Table)
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17);
 
     /**
@@ -894,6 +936,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * @return The new record
      * @see #into(Table)
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18);
 
     /**
@@ -903,6 +946,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * @return The new record
      * @see #into(Table)
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19);
 
     /**
@@ -912,6 +956,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * @return The new record
      * @see #into(Table)
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20);
 
     /**
@@ -921,6 +966,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * @return The new record
      * @see #into(Table)
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21);
 
     /**
@@ -930,6 +976,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * @return The new record
      * @see #into(Table)
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22);
 
 
@@ -949,6 +996,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * @see #from(Object)
      * @see DefaultRecordMapper
      */
+    @NotNull
     <E> E into(Class<? extends E> type) throws MappingException;
 
     /**
@@ -965,6 +1013,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * @throws NullPointerException if <code>object</code> is <code>null</code>
      * @see #from(Object)
      */
+    @NotNull
     <E> E into(E object) throws MappingException;
 
     /**
@@ -996,6 +1045,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * @param <R> The generic table record type.
      * @param table The table type.
      */
+    @NotNull
     <R extends Record> R into(Table<R> table);
 
     /**
@@ -1028,6 +1078,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      *
      * @return A wrapper JDBC <code>ResultSet</code>
      */
+    @NotNull
     ResultSet intoResultSet();
 
     /**
@@ -1036,6 +1087,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * @param mapper The mapper callback
      * @return The custom mapped record
      */
+    @NotNull
     <E> E map(RecordMapper<Record, E> mapper);
 
     /**

@@ -3,5 +3,3 @@
  * {@link org.jooq.SQLDialect#H2} dialect.
  */
 package org.jooq.util.h2;
-
-import org.jetbrains.annotations.*;

@@ -38,13 +38,13 @@
 
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import java.util.List;
 import java.util.stream.Stream;
 
 import org.jooq.impl.DSL;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A schema.
@@ -84,77 +84,90 @@ public interface Schema extends Named {
     /**
      * The catalog of this schema.
      */
+    @Nullable
     Catalog getCatalog();
 
     /**
      * Stream all tables contained in this schema.
      */
 
+    @NotNull
     Stream<Table<?>> tableStream();
 
 
     /**
      * List all tables contained in this schema.
      */
+    @NotNull
     List<Table<?>> getTables();
 
     /**
      * Get a table by its name (case-sensitive) in this schema, or
      * <code>null</code> if no such table exists.
      */
+    @Nullable
     Table<?> getTable(String name);
 
 
     /**
      * Stream all UDTs contained in this schema.
      */
+    @NotNull
     Stream<UDT<?>> udtStream();
 
 
     /**
      * List all UDTs contained in this schema.
      */
+    @NotNull
     List<UDT<?>> getUDTs();
 
     /**
      * Get a UDT by its name (case-sensitive) in this schema, or
      * <code>null</code> if no such UDT exists.
      */
+    @Nullable
     UDT<?> getUDT(String name);
 
     /**
      * Stream all domains contained in this schema.
      */
 
+    @NotNull
     Stream<Domain<?>> domainStream();
 
 
     /**
      * List all domains contained in this schema.
      */
+    @NotNull
     List<Domain<?>> getDomains();
 
     /**
      * Get a domain by its name (case-sensitive) in this schema, or
      * <code>null</code> if no such domain exists.
      */
+    @Nullable
     Domain<?> getDomain(String name);
 
     /**
      * Stream all sequences contained in this schema.
      */
 
+    @NotNull
     Stream<Sequence<?>> sequenceStream();
 
 
     /**
      * List all sequences contained in this schema.
      */
+    @NotNull
     List<Sequence<?>> getSequences();
 
     /**
      * Get a sequence by its name (case-sensitive) in this schema, or
      * <code>null</code> if no such sequence exists.
      */
+    @Nullable
     Sequence<?> getSequence(String name);
 }

@@ -37,9 +37,6 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import static org.jooq.FilePattern.Sort.SEMANTIC;
 
 import java.io.File;

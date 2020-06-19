@@ -37,10 +37,9 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import java.sql.Wrapper;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A provider for the {@link Unwrapper} SPI which is used to override the
@@ -55,5 +54,6 @@ public interface UnwrapperProvider {
     /**
      * Provide an unwrapper for JDBC types.
      */
+    @NotNull
     Unwrapper provide();
 }

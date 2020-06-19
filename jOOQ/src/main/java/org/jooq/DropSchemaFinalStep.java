@@ -37,12 +37,11 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import static org.jooq.SQLDialect.*;
 
 import java.util.*;
+
+import org.jetbrains.annotations.*;
 
 /**
  * A step in the construction of the <code>DROP SCHEMA</code> statement.

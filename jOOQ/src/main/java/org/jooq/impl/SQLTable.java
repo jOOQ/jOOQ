@@ -37,9 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
 import org.jooq.Context;
 import org.jooq.QueryPart;
 import org.jooq.Record;

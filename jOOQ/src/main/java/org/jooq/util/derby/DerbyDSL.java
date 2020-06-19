@@ -37,9 +37,6 @@
  */
 package org.jooq.util.derby;
 
-import org.jetbrains.annotations.*;
-
-
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 

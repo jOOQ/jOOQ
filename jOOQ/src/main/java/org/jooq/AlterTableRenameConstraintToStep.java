@@ -37,8 +37,6 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
 
 /**
  * The step in the <code>ALTER TABLE</code> DSL used to <code>RENAME</code>

@@ -37,9 +37,6 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -53,6 +50,9 @@ import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.MappingException;
 import org.jooq.impl.DefaultRecordMapper;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Cursors allow for lazy, sequential access to an underlying JDBC
@@ -82,11 +82,13 @@ public interface Cursor<R extends Record> extends Iterable<R>, Formattable , Aut
     /**
      * Get this cursor's row type.
      */
+    @NotNull
     RecordType<R> recordType();
 
     /**
      * Get this cursor's fields as a {@link Row}.
      */
+    @NotNull
     Row fieldsRow();
 
     /**
@@ -108,6 +110,7 @@ public interface Cursor<R extends Record> extends Iterable<R>, Formattable , Aut
      *
      * @see Row#field(Field)
      */
+    @Nullable
     <T> Field<T> field(Field<T> field);
 
     /**
@@ -115,6 +118,7 @@ public interface Cursor<R extends Record> extends Iterable<R>, Formattable , Aut
      *
      * @see Row#field(String)
      */
+    @Nullable
     Field<?> field(String name);
 
     /**
@@ -122,6 +126,7 @@ public interface Cursor<R extends Record> extends Iterable<R>, Formattable , Aut
      *
      * @see Row#field(Name)
      */
+    @Nullable
     Field<?> field(Name name);
 
     /**
@@ -129,6 +134,7 @@ public interface Cursor<R extends Record> extends Iterable<R>, Formattable , Aut
      *
      * @see Row#field(int)
      */
+    @Nullable
     Field<?> field(int index);
 
     /**
@@ -136,6 +142,7 @@ public interface Cursor<R extends Record> extends Iterable<R>, Formattable , Aut
      *
      * @see Row#fields()
      */
+    @NotNull
     Field<?>[] fields();
 
     /**
@@ -144,6 +151,7 @@ public interface Cursor<R extends Record> extends Iterable<R>, Formattable , Aut
      * @return All available fields
      * @see Row#fields(Field...)
      */
+    @NotNull
     Field<?>[] fields(Field<?>... fields);
 
     /**
@@ -152,6 +160,7 @@ public interface Cursor<R extends Record> extends Iterable<R>, Formattable , Aut
      * @return All available fields
      * @see Row#fields(String...)
      */
+    @NotNull
     Field<?>[] fields(String... fieldNames);
 
     /**
@@ -160,6 +169,7 @@ public interface Cursor<R extends Record> extends Iterable<R>, Formattable , Aut
      * @return All available fields
      * @see Row#fields(Name...)
      */
+    @NotNull
     Field<?>[] fields(Name... fieldNames);
 
     /**
@@ -168,6 +178,7 @@ public interface Cursor<R extends Record> extends Iterable<R>, Formattable , Aut
      * @return All available fields
      * @see Row#fields(int...)
      */
+    @NotNull
     Field<?>[] fields(int... fieldIndexes);
 
     /**
@@ -219,11 +230,13 @@ public interface Cursor<R extends Record> extends Iterable<R>, Formattable , Aut
      *
      * @throws DataAccessException if something went wrong executing the query
      */
+    @NotNull
     Result<R> fetch() throws DataAccessException;
 
     /**
      * @deprecated - 3.10 - [#6363] - Use {@link #fetchNext(int)} instead.
      */
+    @NotNull
     @Deprecated
     Result<R> fetch(int number) throws DataAccessException;
 
@@ -243,6 +256,7 @@ public interface Cursor<R extends Record> extends Iterable<R>, Formattable , Aut
      *            records, then all remaining records are returned.
      * @throws DataAccessException if something went wrong executing the query
      */
+    @NotNull
     Result<R> fetchNext(int number) throws DataAccessException;
 
     /**
@@ -256,6 +270,7 @@ public interface Cursor<R extends Record> extends Iterable<R>, Formattable , Aut
      * @return Convenience result, returning the parameter handler itself
      * @throws DataAccessException if something went wrong executing the query
      */
+    @NotNull
     <H extends RecordHandler<? super R>> H fetchInto(H handler) throws DataAccessException;
 
     /**
@@ -265,6 +280,7 @@ public interface Cursor<R extends Record> extends Iterable<R>, Formattable , Aut
      * @return The custom mapped records
      * @throws DataAccessException if something went wrong executing the query
      */
+    @NotNull
     <E> List<E> fetch(RecordMapper<? super R, E> mapper) throws DataAccessException;
 
     /**
@@ -282,6 +298,7 @@ public interface Cursor<R extends Record> extends Iterable<R>, Formattable , Aut
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
+    @NotNull
     <E> List<E> fetchInto(Class<? extends E> type) throws DataAccessException, MappingException;
 
     /**
@@ -302,29 +319,34 @@ public interface Cursor<R extends Record> extends Iterable<R>, Formattable , Aut
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
      */
+    @NotNull
     <Z extends Record> Result<Z> fetchInto(Table<Z> table) throws DataAccessException, MappingException;
 
     /**
      * @deprecated - 3.10 - [#6363] - Use {@link #fetchNext()} instead.
      */
+    @Nullable
     @Deprecated
     R fetchOne() throws DataAccessException;
 
     /**
      * @deprecated - 3.10 - [#6363] - Use {@link #fetchNextInto(RecordHandler)} instead.
      */
+    @NotNull
     @Deprecated
     <H extends RecordHandler<? super R>> H fetchOneInto(H handler) throws DataAccessException;
 
     /**
      * @deprecated - 3.10 - [#6363] - Use {@link #fetchNext(RecordMapper)} instead.
      */
+    @Nullable
     @Deprecated
     <E> E fetchOne(RecordMapper<? super R, E> mapper) throws DataAccessException;
 
     /**
      * @deprecated - 3.10 - [#6363] - Use {@link #fetchNextInto(Table)} instead.
      */
+    @Nullable
     @Deprecated
     <Z extends Record> Z fetchOneInto(Table<Z> table) throws DataAccessException, MappingException;
 
@@ -342,6 +364,7 @@ public interface Cursor<R extends Record> extends Iterable<R>, Formattable , Aut
      *         no next record.
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Nullable
     R fetchNext() throws DataAccessException;
 
     /**
@@ -358,11 +381,13 @@ public interface Cursor<R extends Record> extends Iterable<R>, Formattable , Aut
      * @return Convenience result, returning the parameter handler itself
      * @throws DataAccessException if something went wrong executing the query
      */
+    @NotNull
     <H extends RecordHandler<? super R>> H fetchNextInto(H handler) throws DataAccessException;
 
     /**
      * @deprecated - 3.10 - [#6363] - Use {@link #fetchNextInto(Class)} instead.
      */
+    @Nullable
     @Deprecated
     <E> E fetchOneInto(Class<? extends E> type) throws DataAccessException, MappingException;
 
@@ -381,6 +406,7 @@ public interface Cursor<R extends Record> extends Iterable<R>, Formattable , Aut
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
+    @Nullable
     <E> E fetchNextInto(Class<? extends E> type) throws DataAccessException, MappingException;
 
     /**
@@ -393,6 +419,7 @@ public interface Cursor<R extends Record> extends Iterable<R>, Formattable , Aut
      * @return The custom mapped record
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Nullable
     <E> E fetchNext(RecordMapper<? super R, E> mapper) throws DataAccessException;
 
     /**
@@ -413,30 +440,35 @@ public interface Cursor<R extends Record> extends Iterable<R>, Formattable , Aut
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
      */
+    @Nullable
     <Z extends Record> Z fetchNextInto(Table<Z> table) throws DataAccessException, MappingException;
 
 
     /**
      * @deprecated - 3.10 - [#6363] - Use {@link #fetchNextOptional()} instead.
      */
+    @NotNull
     @Deprecated
     Optional<R> fetchOptional() throws DataAccessException;
 
     /**
      * @deprecated - 3.10 - [#6363] - Use {@link #fetchNextOptionalInto(Class)} instead.
      */
+    @NotNull
     @Deprecated
     <E> Optional<E> fetchOptionalInto(Class<? extends E> type) throws DataAccessException, MappingException;
 
     /**
      * @deprecated - 3.10 - [#6363] - Use {@link #fetchNextOptional(RecordMapper)} instead.
      */
+    @NotNull
     @Deprecated
     <E> Optional<E> fetchOptional(RecordMapper<? super R, E> mapper) throws DataAccessException;
 
     /**
      * @deprecated - 3.10 - [#6363] - Use {@link #fetchNextOptionalInto(Table)} instead.
      */
+    @NotNull
     @Deprecated
     <Z extends Record> Optional<Z> fetchOptionalInto(Table<Z> table) throws DataAccessException, MappingException;
 
@@ -453,6 +485,7 @@ public interface Cursor<R extends Record> extends Iterable<R>, Formattable , Aut
      * @return The next record from the cursor
      * @throws DataAccessException if something went wrong executing the query
      */
+    @NotNull
     Optional<R> fetchNextOptional() throws DataAccessException;
 
     /**
@@ -470,6 +503,7 @@ public interface Cursor<R extends Record> extends Iterable<R>, Formattable , Aut
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
+    @NotNull
     <E> Optional<E> fetchNextOptionalInto(Class<? extends E> type) throws DataAccessException, MappingException;
 
     /**
@@ -482,6 +516,7 @@ public interface Cursor<R extends Record> extends Iterable<R>, Formattable , Aut
      * @return The custom mapped record
      * @throws DataAccessException if something went wrong executing the query
      */
+    @NotNull
     <E> Optional<E> fetchNextOptional(RecordMapper<? super R, E> mapper) throws DataAccessException;
 
     /**
@@ -502,6 +537,7 @@ public interface Cursor<R extends Record> extends Iterable<R>, Formattable , Aut
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
      */
+    @NotNull
     <Z extends Record> Optional<Z> fetchNextOptionalInto(Table<Z> table) throws DataAccessException, MappingException;
 
     /**
@@ -509,6 +545,7 @@ public interface Cursor<R extends Record> extends Iterable<R>, Formattable , Aut
      *
      * @throws DataAccessException if something went wrong executing the query
      */
+    @NotNull
     Stream<R> stream() throws DataAccessException;
 
     /**
@@ -570,5 +607,6 @@ public interface Cursor<R extends Record> extends Iterable<R>, Formattable , Aut
      * @return The underlying <code>ResultSet</code>. May be <code>null</code>,
      *         for instance when the <code>Cursor</code> is closed.
      */
+    @Nullable
     ResultSet resultSet();
 }

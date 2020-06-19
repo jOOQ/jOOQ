@@ -37,9 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
 import org.jooq.SQLDialect;
 import org.jooq.UDT;
 import org.jooq.UDTRecord;

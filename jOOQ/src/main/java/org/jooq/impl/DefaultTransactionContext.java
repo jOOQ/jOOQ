@@ -37,9 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
 import org.jooq.Configuration;
 import org.jooq.Transaction;
 import org.jooq.TransactionContext;

@@ -37,14 +37,13 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import java.sql.Statement;
 import java.util.stream.Stream;
 
 import org.jooq.exception.DetachedException;
 import org.jooq.impl.DSL;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A wrapper for a collection of queries.
@@ -62,16 +61,19 @@ public interface Queries extends QueryPart, Attachable, Iterable<Query> {
     /**
      * Return a new instance combining both sets of queries.
      */
+    @NotNull
     Queries concat(Queries other);
 
     /**
      * The wrapped collection of queries.
      */
+    @NotNull
     Query[] queries();
 
     /**
      * The wrapped collection of queries as a {@link Block}.
      */
+    @NotNull
     Block block();
 
 
@@ -80,12 +82,14 @@ public interface Queries extends QueryPart, Attachable, Iterable<Query> {
      *
      * @deprecated - 3.10 - [#6143] - Use {@link #queryStream()} instead.
      */
+    @NotNull
     @Deprecated
     Stream<Query> stream();
 
     /**
      * The wrapped collection of queries.
      */
+    @NotNull
     Stream<Query> queryStream();
 
 
@@ -109,6 +113,7 @@ public interface Queries extends QueryPart, Attachable, Iterable<Query> {
      *             unattached and at least one of the contained
      *             {@link #queries()} is also unattached.
      */
+    @NotNull
     Results fetchMany();
 
     /**
@@ -122,5 +127,6 @@ public interface Queries extends QueryPart, Attachable, Iterable<Query> {
      *             unattached.
      * @see DSLContext#batch(Queries)
      */
+    @NotNull
     int[] executeBatch();
 }

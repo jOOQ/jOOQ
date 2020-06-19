@@ -37,12 +37,11 @@
  */
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
 import java.sql.Connection;
 
 import org.jooq.ConnectionProvider;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * An "empty" implementation that is never connected.
@@ -54,6 +53,7 @@ public class NoConnectionProvider implements ConnectionProvider {
     /**
      * This method will always return <code>null</code>.
      */
+    @Nullable
     @Override
     public final Connection acquire() {
         return null;

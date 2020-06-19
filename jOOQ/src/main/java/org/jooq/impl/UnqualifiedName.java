@@ -37,9 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
 import static org.jooq.Name.Quoted.DEFAULT;
 import static org.jooq.Name.Quoted.QUOTED;
 import static org.jooq.Name.Quoted.UNQUOTED;

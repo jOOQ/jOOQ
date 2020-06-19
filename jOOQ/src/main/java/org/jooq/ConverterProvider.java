@@ -37,10 +37,9 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import org.jooq.impl.DefaultConverterProvider;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A <code>ConverterProvider</code> provides {@link Converter} implementations
@@ -65,5 +64,6 @@ public interface ConverterProvider {
      *         if no such converter could be provided, in case of which jOOQ's
      *         {@link DefaultConverterProvider} applies.
      */
+    @Nullable
     <T, U> Converter<T, U> provide(Class<T> tType, Class<U> uType);
 }

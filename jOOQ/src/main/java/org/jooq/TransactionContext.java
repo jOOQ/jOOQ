@@ -37,9 +37,8 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A context object that is used to pass arguments to the various methods of
@@ -55,12 +54,14 @@ public interface TransactionContext extends Scope {
      *
      * @return The transaction object. May be <code>null</code>.
      */
+    @Nullable
     Transaction transaction();
 
     /**
      * Set the user-defined transaction object to the current transaction
      * context.
      */
+    @NotNull
     TransactionContext transaction(Transaction transaction);
 
     /**
@@ -70,6 +71,7 @@ public interface TransactionContext extends Scope {
      *         cause is a {@link Throwable}, in case of which
      *         {@link #causeThrowable()} should be called.
      */
+    @Nullable
     Exception cause();
 
     /**
@@ -77,17 +79,20 @@ public interface TransactionContext extends Scope {
      *
      * @return The throwable. May be <code>null</code>.
      */
+    @Nullable
     Throwable causeThrowable();
 
     /**
      * Set the exception that has caused the rollback to the current transaction
      * context.
      */
+    @NotNull
     TransactionContext cause(Exception cause);
 
     /**
      * Set the throwable that has caused the rollback to the current transaction
      * context.
      */
+    @NotNull
     TransactionContext causeThrowable(Throwable cause);
 }

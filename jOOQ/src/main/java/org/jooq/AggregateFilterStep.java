@@ -37,12 +37,11 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import java.util.Collection;
 
 import org.jooq.impl.DSL;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * The step in the specification of aggregate functions where the SQL:2003

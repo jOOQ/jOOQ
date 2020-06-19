@@ -37,9 +37,6 @@
  */
 package org.jooq.util.h2;
 
-import org.jetbrains.annotations.*;
-
-
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 

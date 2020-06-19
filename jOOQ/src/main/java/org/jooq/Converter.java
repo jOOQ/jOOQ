@@ -37,13 +37,12 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import java.io.Serializable;
 import java.util.function.Function;
 
 import org.jooq.impl.SQLDataType;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A <code>Converter</code> for data types.
@@ -111,11 +110,13 @@ public interface Converter<T, U> extends Serializable {
     /**
      * The database type
      */
+    @NotNull
     Class<T> fromType();
 
     /**
      * The user type
      */
+    @NotNull
     Class<U> toType();
 
 
@@ -123,6 +124,7 @@ public interface Converter<T, U> extends Serializable {
     /**
      * Inverse this converter.
      */
+    @NotNull
     default Converter<U, T> inverse() {
         return Converters.inverse(this);
     }
@@ -130,6 +132,7 @@ public interface Converter<T, U> extends Serializable {
     /**
      * Chain a converter to this converter.
      */
+    @NotNull
     default <X> Converter<T, X> andThen(Converter<? super U, X> converter) {
         return Converters.of(this, converter);
     }
@@ -146,6 +149,7 @@ public interface Converter<T, U> extends Serializable {
      * @return The converter.
      * @see Converter
      */
+    @NotNull
     static <T, U> Converter<T, U> of(
         Class<T> fromType,
         Class<U> toType,
@@ -215,6 +219,7 @@ public interface Converter<T, U> extends Serializable {
      * @see Converter
      */
     @SuppressWarnings("unchecked")
+    @NotNull
     static <T, U> Converter<T, U> ofNullable(
         Class<T> fromType,
         Class<U> toType,

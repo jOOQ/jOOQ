@@ -37,11 +37,10 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import org.jooq.impl.DefaultRecordUnmapper;
 import org.jooq.impl.DefaultRecordUnmapperProvider;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A provider for {@link RecordUnmapper} instances.
@@ -90,5 +89,6 @@ public interface RecordUnmapperProvider {
      * @see DefaultRecordUnmapper
      * @see DefaultRecordUnmapperProvider
      */
+    @NotNull
     <E, R extends Record> RecordUnmapper<E, R> provide(Class<? extends E> type, RecordType<R> recordType);
 }

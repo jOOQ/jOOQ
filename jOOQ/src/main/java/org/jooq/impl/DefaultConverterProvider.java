@@ -37,9 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
 import static org.jooq.tools.reflect.Reflect.wrapper;
 
 import java.io.File;
@@ -63,6 +60,8 @@ import org.jooq.UDTRecord;
 import org.jooq.XML;
 import org.jooq.tools.Convert;
 
+import org.jetbrains.annotations.Nullable;
+
 /**
  * A default converter provider offering the functionality of {@link Convert}.
  *
@@ -70,6 +69,7 @@ import org.jooq.tools.Convert;
  */
 public final class DefaultConverterProvider implements ConverterProvider {
 
+    @Nullable
     @Override
     public final <T, U> Converter<T, U> provide(final Class<T> tType, final Class<U> uType) {
         Class<?> tWrapper = wrapper(tType);

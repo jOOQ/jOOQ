@@ -37,12 +37,11 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import static org.jooq.SQLDialect.*;
 
 import java.util.*;
+
+import org.jetbrains.annotations.*;
 
 /**
  * A step in the construction of the <code>CREATE DOMAIN</code> statement.
@@ -71,14 +70,14 @@ public interface CreateDomainConstraintStep extends CreateDomainFinalStep {
     /**
      * Add the <code>CONSTRAINTS</code> clause to the <code>CREATE DOMAIN</code> statement.
      */
-    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @NotNull
     CreateDomainConstraintStep constraints(Constraint... constraints);
 
     /**
      * Add the <code>CONSTRAINTS</code> clause to the <code>CREATE DOMAIN</code> statement.
      */
-    @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES })
+    @NotNull
     CreateDomainConstraintStep constraints(Collection<? extends Constraint> constraints);
 }

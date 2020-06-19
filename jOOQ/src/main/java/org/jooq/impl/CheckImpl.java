@@ -37,9 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
 import org.jooq.Check;
 import org.jooq.Condition;
 import org.jooq.Constraint;

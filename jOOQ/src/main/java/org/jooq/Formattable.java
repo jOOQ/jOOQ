@@ -37,15 +37,13 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import java.io.OutputStream;
 import java.io.Writer;
 import java.sql.ResultSet;
 
 import org.jooq.exception.IOException;
 
+import org.jetbrains.annotations.NotNull;
 import org.w3c.dom.Document;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
@@ -87,6 +85,7 @@ public interface Formattable {
      *
      * @return The formatted result
      */
+    @NotNull
     String format();
 
     /**
@@ -96,6 +95,7 @@ public interface Formattable {
      *            formatted result
      * @return The formatted result
      */
+    @NotNull
     String format(int maxRecords);
 
     /**
@@ -104,6 +104,7 @@ public interface Formattable {
      * @param format The formatting information
      * @return The formatted result
      */
+    @NotNull
     String format(TXTFormat format);
 
     /**
@@ -139,6 +140,7 @@ public interface Formattable {
      *
      * @return The formatted result
      */
+    @NotNull
     String formatHTML();
 
     /**
@@ -148,6 +150,7 @@ public interface Formattable {
      *
      * @return The formatted result
      */
+    @NotNull
     String formatCSV();
 
     /**

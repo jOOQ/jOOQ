@@ -37,9 +37,6 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 // ...
 // ...
 // ...
@@ -66,6 +63,9 @@ import java.util.Optional;
 import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * A generic DAO interface for a pojo and a primary key type.
  * <p>
@@ -87,6 +87,7 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      *
      * @return the <code>DAO</code>'s underlying <code>Configuration</code>
      */
+    @NotNull
     Configuration configuration();
 
     /**
@@ -95,6 +96,7 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      * This method is a convenient way of accessing
      * <code>configuration().settings()</code>.
      */
+    @NotNull
     Settings settings();
 
     /**
@@ -103,6 +105,7 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      * This method is a convenient way of accessing
      * <code>configuration().dialect()</code>.
      */
+    @NotNull
     SQLDialect dialect();
 
     /**
@@ -111,6 +114,7 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      * This method is a convenient way of accessing
      * <code>configuration().family()</code>.
      */
+    @NotNull
     SQLDialect family();
 
     /**
@@ -120,6 +124,7 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      *
      * @return the <code>DAO</code>'s underlying <code>RecordMapper</code>
      */
+    @NotNull
     RecordMapper<R, P> mapper();
 
     /**
@@ -266,7 +271,6 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      * @return Whether the POJO already exists
      * @throws DataAccessException if something went wrong executing the query
      */
-    @NotNull
     @Support
     boolean exists(P object) throws DataAccessException;
 
@@ -277,7 +281,6 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      * @return Whether the ID already exists
      * @throws DataAccessException if something went wrong executing the query
      */
-    @NotNull
     @Support
     boolean existsById(T id) throws DataAccessException;
 
@@ -287,7 +290,6 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      * @return The number of records of the underlying table
      * @throws DataAccessException if something went wrong executing the query
      */
-    @NotNull
     @Support
     long count() throws DataAccessException;
 
@@ -309,7 +311,7 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      *         <code>null</code> if no record was found.
      * @throws DataAccessException if something went wrong executing the query
      */
-    @NotNull
+    @Nullable
     @Support
     P findById(T id) throws DataAccessException;
 
@@ -354,7 +356,7 @@ public interface DAO<R extends TableRecord<R>, P, T> {
      *             <li>if the query returned more than one value</li>
      *             </ul>
      */
-    @NotNull
+    @Nullable
     @Support
     <Z> P fetchOne(Field<Z> field, Z value) throws DataAccessException;
 
@@ -379,11 +381,13 @@ public interface DAO<R extends TableRecord<R>, P, T> {
     /**
      * Get the underlying table.
      */
+    @NotNull
     Table<R> getTable();
 
     /**
      * Get the underlying POJO type.
      */
+    @NotNull
     Class<P> getType();
 
     /**

@@ -3,5 +3,3 @@
  * {@link org.jooq.SQLDialect#CUBRID} dialect.
  */
 package org.jooq.util.cubrid;
-
-import org.jetbrains.annotations.*;

@@ -37,9 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
 import static org.jooq.impl.Names.N_ATAN;
 import static org.jooq.impl.Names.N_ATN;
 

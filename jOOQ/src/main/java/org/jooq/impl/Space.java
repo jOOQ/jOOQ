@@ -37,9 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
 import static org.jooq.impl.Names.N_SPACE;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 

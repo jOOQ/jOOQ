@@ -37,13 +37,12 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import java.util.Collection;
 import java.util.List;
 
 import org.jooq.conf.Settings;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A version ID attached to a {@link Meta} description of a database.
@@ -59,11 +58,13 @@ public interface Version {
     /**
      * The version ID, which is unique in the version graph.
      */
+    @NotNull
     String id();
 
     /**
      * The version's {@link Meta} representation of the database.
      */
+    @NotNull
     Meta meta();
 
     /**
@@ -80,16 +81,19 @@ public interface Version {
      * In jOOQ's Open Source Edition, this method only allows for migrating
      * "forward".
      */
+    @NotNull
     Queries migrateTo(Version version);
 
     /**
      * Get the root version of this graph.
      */
+    @NotNull
     Version root();
 
     /**
      * Get the parent versions of this version.
      */
+    @NotNull
     List<Version> parents();
 
     /**
@@ -97,6 +101,7 @@ public interface Version {
      * <p>
      * This calculates a migration path using {@link Meta#migrateTo(Meta)}.
      */
+    @NotNull
     Version commit(String id, Meta meta);
 
     /**
@@ -104,6 +109,7 @@ public interface Version {
      *
      * @see #commit(String, Meta)
      */
+    @NotNull
     Version commit(String id, String... meta);
 
     /**
@@ -111,16 +117,19 @@ public interface Version {
      *
      * @see #commit(String, Meta)
      */
+    @NotNull
     Version commit(String id, Source... meta);
 
     /**
      * Merge versions.
      */
+    @NotNull
     Version merge(String id, Version with);
 
     /**
      * Apply a migration to produce a new version.
      */
+    @NotNull
     Version apply(String id, Queries migration);
 
     /**
@@ -128,6 +137,7 @@ public interface Version {
      *
      * @see #apply(String, Queries)
      */
+    @NotNull
     Version apply(String id, Query... migration);
 
     /**
@@ -135,6 +145,7 @@ public interface Version {
      *
      * @see #apply(String, Queries)
      */
+    @NotNull
     Version apply(String id, Collection<? extends Query> migration);
 
     /**
@@ -142,5 +153,6 @@ public interface Version {
      *
      * @see #apply(String, Queries)
      */
+    @NotNull
     Version apply(String id, String migration);
 }

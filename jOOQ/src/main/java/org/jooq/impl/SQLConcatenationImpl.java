@@ -37,9 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
 import static org.jooq.Clause.TEMPLATE;
 
 import org.jooq.Clause;

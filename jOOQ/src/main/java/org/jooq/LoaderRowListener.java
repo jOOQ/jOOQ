@@ -37,8 +37,6 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
 
 /**
  * A listener for {@link Loader} progress.

@@ -37,9 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
 import static java.lang.Boolean.FALSE;
 import static org.jooq.Clause.MERGE;
 import static org.jooq.Clause.MERGE_MERGE_INTO;

@@ -37,9 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
 import static org.jooq.Clause.ALTER_VIEW;
 import static org.jooq.Clause.ALTER_VIEW_RENAME;
 import static org.jooq.Clause.ALTER_VIEW_VIEW;

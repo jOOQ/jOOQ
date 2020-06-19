@@ -15,5 +15,4 @@ data class BookStore(
       var name: String? = null
 ): Serializable {
 
-    constructor(): this(null)
 }

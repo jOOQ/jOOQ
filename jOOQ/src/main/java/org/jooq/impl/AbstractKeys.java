@@ -37,9 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.Index;

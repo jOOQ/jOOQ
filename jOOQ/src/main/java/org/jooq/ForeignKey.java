@@ -37,12 +37,12 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import java.util.Collection;
 
 import org.jooq.exception.DataAccessException;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A <code>ForeignKey</code> is an object referencing a {@link UniqueKey}. It
@@ -60,6 +60,7 @@ public interface ForeignKey<R extends Record, O extends Record> extends Key<R> {
     /**
      * The referenced <code>Key</code>
      */
+    @NotNull
     UniqueKey<O> getKey();
 
     /**
@@ -72,6 +73,7 @@ public interface ForeignKey<R extends Record, O extends Record> extends Key<R> {
      * @throws DataAccessException if something went wrong executing the query
      * @see TableRecord#fetchParent(ForeignKey)
      */
+    @Nullable
     O fetchParent(R record) throws DataAccessException;
 
     /**
@@ -83,6 +85,7 @@ public interface ForeignKey<R extends Record, O extends Record> extends Key<R> {
      * @throws DataAccessException if something went wrong executing the query
      * @see TableRecord#fetchParent(ForeignKey)
      */
+    @NotNull
     Result<O> fetchParents(R... records) throws DataAccessException;
 
     /**
@@ -94,6 +97,7 @@ public interface ForeignKey<R extends Record, O extends Record> extends Key<R> {
      * @throws DataAccessException if something went wrong executing the query
      * @see TableRecord#fetchParent(ForeignKey)
      */
+    @NotNull
     Result<O> fetchParents(Collection<? extends R> records) throws DataAccessException;
 
     /**
@@ -106,6 +110,7 @@ public interface ForeignKey<R extends Record, O extends Record> extends Key<R> {
      * @see UpdatableRecord#fetchChild(ForeignKey)
      * @see UpdatableRecord#fetchChildren(ForeignKey)
      */
+    @NotNull
     Result<R> fetchChildren(O record) throws DataAccessException;
 
     /**
@@ -118,6 +123,7 @@ public interface ForeignKey<R extends Record, O extends Record> extends Key<R> {
      * @see UpdatableRecord#fetchChild(ForeignKey)
      * @see UpdatableRecord#fetchChildren(ForeignKey)
      */
+    @NotNull
     Result<R> fetchChildren(O... records) throws DataAccessException;
 
     /**
@@ -130,5 +136,6 @@ public interface ForeignKey<R extends Record, O extends Record> extends Key<R> {
      * @see UpdatableRecord#fetchChild(ForeignKey)
      * @see UpdatableRecord#fetchChildren(ForeignKey)
      */
+    @NotNull
     Result<R> fetchChildren(Collection<? extends O> records) throws DataAccessException;
 }

@@ -37,12 +37,12 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import java.util.Collection;
 
 import org.jooq.exception.DataAccessException;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A record originating from a single table
@@ -55,8 +55,10 @@ public interface TableRecord<R extends TableRecord<R>> extends Record {
     /**
      * The table from which this record was read.
      */
+    @NotNull
     Table<R> getTable();
 
+    @NotNull
     @Override
     R original();
 
@@ -73,7 +75,6 @@ public interface TableRecord<R extends TableRecord<R>> extends Record {
      *         </code> if storing was not necessary.
      * @throws DataAccessException if something went wrong executing the query
      */
-    @NotNull
     @Support
     int insert() throws DataAccessException;
 
@@ -86,7 +87,6 @@ public interface TableRecord<R extends TableRecord<R>> extends Record {
      * @throws DataAccessException if something went wrong executing the query
      * @see #insert()
      */
-    @NotNull
     @Support
     int insert(Field<?>... fields) throws DataAccessException;
 
@@ -99,7 +99,6 @@ public interface TableRecord<R extends TableRecord<R>> extends Record {
      * @throws DataAccessException if something went wrong executing the query
      * @see #insert()
      */
-    @NotNull
     @Support
     int insert(Collection<? extends Field<?>> fields) throws DataAccessException;
 
@@ -115,13 +114,15 @@ public interface TableRecord<R extends TableRecord<R>> extends Record {
      * @see ForeignKey#fetchParents(java.util.Collection)
      * @see ForeignKey#fetchParents(Record...)
      */
-    @NotNull
+    @Nullable
     @Support
     <O extends UpdatableRecord<O>> O fetchParent(ForeignKey<R, O> key) throws DataAccessException;
 
+    @NotNull
     @Override
     <T> R with(Field<T> field, T value);
 
+    @NotNull
     @Override
     <T, U> R with(Field<T> field, U value, Converter<? extends T, ? super U> converter);
 }

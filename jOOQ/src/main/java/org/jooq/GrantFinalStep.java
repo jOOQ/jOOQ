@@ -37,8 +37,6 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
 
 /**
  * The final step in the creation of a <code>REVOKE</code> statement.

@@ -37,9 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;

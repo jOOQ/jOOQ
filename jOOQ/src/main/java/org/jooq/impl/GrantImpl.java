@@ -37,9 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
 import static org.jooq.Clause.GRANT;
 import static org.jooq.Clause.GRANT_ON;
 import static org.jooq.Clause.GRANT_PRIVILEGE;

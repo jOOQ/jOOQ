@@ -37,9 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
 import org.jooq.Converter;
 import org.jooq.EmbeddableRecord;
 import org.jooq.Field;

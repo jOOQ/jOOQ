@@ -38,9 +38,6 @@
 
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
 // ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;

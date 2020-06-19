@@ -37,9 +37,8 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A context object for {@link QueryPart} traversal passed to registered
@@ -54,6 +53,7 @@ public interface VisitContext extends Scope {
      * The most recent clause that was encountered through
      * {@link Context#start(Clause)}.
      */
+    @NotNull
     @SuppressWarnings("javadoc")
     Clause clause();
 
@@ -65,6 +65,7 @@ public interface VisitContext extends Scope {
      * {@link Context#end(Clause)}. In other words, <code>VisitContext</code>
      * contains a stack of clauses.
      */
+    @NotNull
     @SuppressWarnings("javadoc")
     Clause[] clauses();
 
@@ -77,6 +78,7 @@ public interface VisitContext extends Scope {
      * The most recent {@link QueryPart} that was encountered through
      * {@link Context#visit(QueryPart)}.
      */
+    @NotNull
     QueryPart queryPart();
 
     /**
@@ -97,6 +99,7 @@ public interface VisitContext extends Scope {
      * through {@link Context#visit(QueryPart)}. In other words,
      * <code>VisitContext</code> contains a stack of <code>QueryParts</code>.
      */
+    @NotNull
     QueryPart[] queryParts();
 
     /**
@@ -107,6 +110,7 @@ public interface VisitContext extends Scope {
     /**
      * The underlying {@link RenderContext} or {@link BindContext} object.
      */
+    @NotNull
     Context<?> context();
 
     /**
@@ -118,6 +122,7 @@ public interface VisitContext extends Scope {
      * {@link RenderContext}. Hence, you may need to inline bind values if
      * applicable.
      */
+    @Nullable
     RenderContext renderContext();
 
     /**
@@ -129,5 +134,6 @@ public interface VisitContext extends Scope {
      *             traversal SPI through {@link VisitListener} is only
      *             implemented for {@link RenderContext}
      */
+    @Nullable
     BindContext bindContext() throws UnsupportedOperationException;
 }

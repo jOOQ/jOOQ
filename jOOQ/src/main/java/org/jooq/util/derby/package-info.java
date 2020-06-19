@@ -3,5 +3,3 @@
  * {@link org.jooq.SQLDialect#DERBY} dialect.
  */
 package org.jooq.util.derby;
-
-import org.jetbrains.annotations.*;

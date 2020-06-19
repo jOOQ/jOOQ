@@ -37,8 +37,7 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A <code>RecordMapper</code> is a mapper that can receive {@link Record}
@@ -66,6 +65,9 @@ public interface RecordMapper<R extends Record, E> {
      * Map a record into a POJO.
      *
      * @param record The record to be mapped. This is never null.
+     * @return The mapped value, which may be <code>null</code> in some
+     *         implementations.
      */
+    @Nullable
     E map(R record);
 }

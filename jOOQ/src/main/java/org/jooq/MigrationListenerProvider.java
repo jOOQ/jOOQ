@@ -37,10 +37,9 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import org.jooq.impl.DefaultMigrationListenerProvider;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A provider for {@link MigrationListener} instances.
@@ -77,5 +76,6 @@ public interface MigrationListenerProvider {
      * @see MigrationContext
      * @see DefaultMigrationListenerProvider
      */
+    @NotNull
     MigrationListener provide();
 }

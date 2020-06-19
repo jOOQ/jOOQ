@@ -37,9 +37,6 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import static org.jooq.impl.DSL.name;
 
 import org.jooq.impl.TableImpl;

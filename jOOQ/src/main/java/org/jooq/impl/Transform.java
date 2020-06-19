@@ -37,10 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
-
 import java.util.ArrayList;
 import java.util.List;
 

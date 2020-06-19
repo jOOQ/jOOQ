@@ -37,9 +37,6 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import java.io.Serializable;
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
@@ -53,6 +50,8 @@ import java.util.function.Consumer;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DefaultBinding;
 import org.jooq.impl.SQLDataType;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * An SPI (Service Provider Interface) that exposes all low-level interactions
@@ -84,6 +83,7 @@ public interface Binding<T, U> extends Serializable {
      * A converter that can convert between the database type and the custom
      * type.
      */
+    @NotNull
     Converter<T, U> converter();
 
     /**
@@ -207,6 +207,7 @@ public interface Binding<T, U> extends Serializable {
     /**
      * Construct a binding from functions.
      */
+    @NotNull
     static <T, U> Binding<T, U> of(
         Converter<T, U>                                 converter,
         Consumer<? super BindingSQLContext<U>>          sqlContext,
@@ -228,6 +229,7 @@ public interface Binding<T, U> extends Serializable {
     /**
      * Construct a binding from functions.
      */
+    @NotNull
     static <T, U> Binding<T, U> of(
         Converter<T, U>                                 converter,
         Consumer<? super BindingSQLContext<U>>          sqlContext,
@@ -251,6 +253,7 @@ public interface Binding<T, U> extends Serializable {
     /**
      * Construct a binding from functions.
      */
+    @NotNull
     static <T, U> Binding<T, U> of(
         Converter<T, U>                                 converter,
         Consumer<? super BindingSQLContext<U>>          sqlContext,

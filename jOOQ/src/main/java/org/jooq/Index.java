@@ -37,12 +37,12 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import java.util.List;
 
 import org.jooq.impl.DSL;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A DDL index definition.
@@ -56,17 +56,20 @@ public interface Index extends Named {
     /**
      * The table on which this index is defined.
      */
+    @Nullable
     Table<?> getTable();
 
     /**
      * The sort field expressions on which this index is defined.
      */
+    @NotNull
     List<SortField<?>> getFields();
 
     /**
      * The condition of a filtered / partial index, or <code>null</code>, if
      * this is an ordinary index.
      */
+    @Nullable
     Condition getWhere();
 
     /**

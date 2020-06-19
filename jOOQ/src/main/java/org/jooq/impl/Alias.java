@@ -38,9 +38,6 @@
 
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
 import static java.lang.Boolean.TRUE;
 import static org.jooq.Clause.FIELD;
 import static org.jooq.Clause.FIELD_ALIAS;

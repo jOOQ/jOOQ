@@ -37,9 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
 import org.jooq.Cursor;
 import org.jooq.Record;
 import org.jooq.Result;

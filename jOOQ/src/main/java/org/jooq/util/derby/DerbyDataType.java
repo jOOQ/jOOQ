@@ -38,9 +38,6 @@
 
 package org.jooq.util.derby;
 
-import org.jetbrains.annotations.*;
-
-
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;

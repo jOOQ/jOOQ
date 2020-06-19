@@ -38,9 +38,6 @@
 
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
 import java.util.Collection;
 
 import org.jooq.Context;

@@ -37,8 +37,7 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A JSON entry for JSON objects.
@@ -48,10 +47,12 @@ public interface JSONEntry<T> extends QueryPart {
     /**
      * The JSON entry key.
      */
+    @NotNull
     Field<String> key();
 
     /**
      * The JSON entry value.
      */
+    @NotNull
     Field<T> value();
 }

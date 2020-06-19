@@ -37,9 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 

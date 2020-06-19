@@ -37,10 +37,9 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import org.jooq.impl.DSL;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A character set.
@@ -54,5 +53,6 @@ public interface CharacterSet extends QueryPart {
     /**
      * The name of the collation.
      */
+    @NotNull
     String getName();
 }

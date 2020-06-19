@@ -3,5 +3,3 @@
  * {@link org.jooq.SQLDialect#MYSQL} dialect.
  */
 package org.jooq.util.mysql;
-
-import org.jetbrains.annotations.*;

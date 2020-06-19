@@ -38,9 +38,6 @@
 
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;

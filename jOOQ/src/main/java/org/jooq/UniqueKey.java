@@ -37,10 +37,9 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A <code>UniqueKey</code> is an object representing a <code>UNIQUE KEY</code>
@@ -58,6 +57,7 @@ public interface UniqueKey<R extends Record> extends Key<R> {
      * A list of all <code>ForeignKeys</code>, referencing this
      * <code>UniqueKey</code>
      */
+    @NotNull
     List<ForeignKey<?, R>> getReferences();
 
     /**

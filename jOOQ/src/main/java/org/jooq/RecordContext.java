@@ -37,9 +37,8 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A context object for {@link Record} manipulation passed to registered
@@ -70,6 +69,7 @@ public interface RecordContext extends Scope {
      *
      * @see ExecuteType
      */
+    @NotNull
     ExecuteType type();
 
     /**
@@ -78,6 +78,7 @@ public interface RecordContext extends Scope {
      * @return The <code>Record</code> being manipulated. This is never
      *         <code>null</code>
      */
+    @NotNull
     Record record();
 
     /**
@@ -87,6 +88,7 @@ public interface RecordContext extends Scope {
      * @return The <code>RecordType</code> being manipulated. This is never
      *         <code>null</code>.
      */
+    @NotNull
     RecordType<?> recordType();
 
     /**
@@ -99,11 +101,13 @@ public interface RecordContext extends Scope {
      * @return The <code>Record</code>(s) being manipulated. This is never
      *         <code>null</code>
      */
+    @NotNull
     Record[] batchRecords();
 
     /**
      * The {@link Exception} being thrown or <code>null</code>.
      */
+    @Nullable
     Exception exception();
 
 }

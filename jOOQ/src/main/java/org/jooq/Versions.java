@@ -37,8 +37,8 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A directed, acyclic graph of {@link Version} objects.
@@ -56,11 +56,13 @@ public interface Versions extends Iterable<Version> {
     /**
      * The root version of this graph.
      */
+    @NotNull
     Version root();
 
     /**
      * Find a version by its id, or <code>null</code>, if no such version was
      * found.
      */
+    @Nullable
     Version get(String id);
 }

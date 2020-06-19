@@ -37,9 +37,6 @@
  */
 package org.jooq.util.cubrid;
 
-import org.jetbrains.annotations.*;
-
-
 import org.jooq.Field;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;

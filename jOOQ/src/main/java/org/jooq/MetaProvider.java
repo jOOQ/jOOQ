@@ -37,10 +37,9 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import java.sql.DatabaseMetaData;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * An SPI that can produce dynamic catalog, schema, table meta data information.
@@ -57,5 +56,6 @@ public interface MetaProvider {
     /**
      * Provide meta data information.
      */
+    @NotNull
     Meta provide();
 }

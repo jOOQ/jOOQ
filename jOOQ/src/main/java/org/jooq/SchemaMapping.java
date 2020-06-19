@@ -37,9 +37,6 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.schema;
 import static org.jooq.tools.StringUtils.isBlank;
@@ -58,6 +55,8 @@ import org.jooq.conf.SettingsTools;
 import org.jooq.impl.DSL;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * General mapping of generated artefacts onto run-time substitutes.
@@ -268,6 +267,7 @@ public class SchemaMapping implements Serializable {
         table.setOutput(outputTable);
     }
 
+    @Nullable
     public Catalog map(Catalog catalog) {
 
         // [#1774] [#4795] The default Settings render schema flag takes
@@ -333,6 +333,7 @@ public class SchemaMapping implements Serializable {
      * @param schema The schema to be mapped
      * @return The configured schema
      */
+    @Nullable
     public Schema map(Schema schema) {
 
         // [#1774] The default Settings render schema flag takes precedence over
@@ -434,6 +435,7 @@ public class SchemaMapping implements Serializable {
      * @return The configured table
      */
     @SuppressWarnings("unchecked")
+    @Nullable
     public <R extends Record> Table<R> map(Table<R> table) {
         Table<R> result = table;
 

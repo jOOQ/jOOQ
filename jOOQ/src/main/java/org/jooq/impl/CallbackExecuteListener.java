@@ -37,9 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteEventHandler;
 import org.jooq.ExecuteListener;

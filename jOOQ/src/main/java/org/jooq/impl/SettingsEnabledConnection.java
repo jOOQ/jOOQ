@@ -37,9 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
 import static org.jooq.conf.SettingsTools.executePreparedStatements;
 
 import java.sql.Connection;

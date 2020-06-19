@@ -37,10 +37,9 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import java.sql.SQLData;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * An object holding data of a UDT
@@ -53,11 +52,14 @@ public interface UDTRecord<R extends UDTRecord<R>> extends Record, SQLData {
     /**
      * The UDT from which this record was read
      */
+    @NotNull
     UDT<R> getUDT();
 
+    @NotNull
     @Override
     <T> R with(Field<T> field, T value);
 
+    @NotNull
     @Override
     <T, U> R with(Field<T> field, U value, Converter<? extends T, ? super U> converter);
 

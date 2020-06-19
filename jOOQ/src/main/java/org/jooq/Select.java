@@ -37,9 +37,6 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 // ...
 // ...
 // ...
@@ -69,6 +66,8 @@ import java.util.List;
 
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A <code>SELECT</code> statement.
@@ -173,6 +172,7 @@ public interface Select<R extends Record> extends ResultQuery<R>, TableLike<R>, 
     /**
      * All fields selected in this query
      */
+    @NotNull
     List<Field<?>> getSelect();
 
     /**

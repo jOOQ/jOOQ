@@ -37,10 +37,9 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 
 
 /**
@@ -58,11 +57,13 @@ public interface Key<R extends Record> extends Named {
     /**
      * The <code>Key</code>'s owner table
      */
+    @NotNull
     Table<R> getTable();
 
     /**
      * The fields that make up the <code>KEY</code>
      */
+    @NotNull
     List<TableField<R, ?>> getFields();
 
     /**
@@ -70,11 +71,13 @@ public interface Key<R extends Record> extends Named {
      *
      * @see #getFields()
      */
+    @NotNull
     TableField<R, ?>[] getFieldsArray();
 
     /**
      * Get this <code>KEY</code> as a formal {@link Constraint} specification.
      */
+    @NotNull
     Constraint constraint();
 
     /**

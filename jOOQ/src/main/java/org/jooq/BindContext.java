@@ -37,13 +37,12 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import java.sql.PreparedStatement;
 import java.util.Collection;
 
 import org.jooq.exception.DataAccessException;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * The bind context is used for binding {@link QueryPart}'s and their contained
@@ -60,12 +59,6 @@ import org.jooq.exception.DataAccessException;
 public interface BindContext extends Context<BindContext> {
 
     /**
-     * Retrieve the context's underlying {@link PreparedStatement}
-     */
-    @Override
-    PreparedStatement statement();
-
-    /**
      * Bind values from a {@link QueryPart}. This will also increment the
      * internal counter.
      *
@@ -73,6 +66,7 @@ public interface BindContext extends Context<BindContext> {
      *             variable
      * @deprecated - 3.2.0 - [#2666] - Use {@link #visit(QueryPart)} instead
      */
+    @NotNull
     @Deprecated
     BindContext bind(QueryPart part) throws DataAccessException;
 
@@ -84,6 +78,7 @@ public interface BindContext extends Context<BindContext> {
      *             variable
      * @deprecated - 3.2.0 - [#2666] - Use {@link #visit(QueryPart)} instead
      */
+    @NotNull
     @Deprecated
     BindContext bind(Collection<? extends QueryPart> parts) throws DataAccessException;
 
@@ -95,6 +90,7 @@ public interface BindContext extends Context<BindContext> {
      *             variable
      * @deprecated - 3.2.0 - [#2666] - Use {@link #visit(QueryPart)} instead
      */
+    @NotNull
     @Deprecated
     BindContext bind(QueryPart[] parts) throws DataAccessException;
 
@@ -106,6 +102,7 @@ public interface BindContext extends Context<BindContext> {
      *             variable
      * @deprecated - 3.4.0 - [#3114] - Use {@link #bindValue(Object, Field)} instead
      */
+    @NotNull
     @Deprecated
     BindContext bindValue(Object value, Class<?> type) throws DataAccessException;
 
@@ -116,17 +113,8 @@ public interface BindContext extends Context<BindContext> {
      *             variable
      * @deprecated - 3.4.0 - [#3114] - Use {@link #bindValue(Object, Field)} instead
      */
+    @NotNull
     @Deprecated
     BindContext bindValues(Object... values) throws DataAccessException;
-
-    /**
-     * Bind a value using a specific type. This will also increment the internal
-     * counter.
-     *
-     * @throws DataAccessException If something went wrong while binding a
-     *             variable
-     */
-    @Override
-    BindContext bindValue(Object value, Field<?> field) throws DataAccessException;
 
 }

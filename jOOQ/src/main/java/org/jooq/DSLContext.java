@@ -13255,7 +13255,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      * @return The record or <code>null</code> if no record was returned
      * @throws DataAccessException if something went wrong executing the query
      */
-    @NotNull
+    @Nullable
     @Support
     <R extends Record> R fetchAny(Table<R> table) throws DataAccessException;
 
@@ -13270,12 +13270,12 @@ public interface DSLContext extends Scope , AutoCloseable {
      * @return The record or <code>null</code> if no record was returned
      * @throws DataAccessException if something went wrong executing the query
      */
-    @NotNull
+    @Nullable
     @Support
     <R extends Record> R fetchAny(Table<R> table, Condition condition) throws DataAccessException;
 
     /**
-     * Execute and return zero or one record for
+     * Execute and return zero or on e record for
      * <code><pre>SELECT table.col1, table.col2 FROM table WHERE condition LIMIT 1</pre></code>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
@@ -13288,7 +13288,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      * @return The record or <code>null</code> if no record was returned
      * @throws DataAccessException if something went wrong executing the query
      */
-    @NotNull
+    @Nullable
     @Support
     <R extends Record> R fetchAny(Table<R> table, Condition... conditions) throws DataAccessException;
 
@@ -13306,7 +13306,7 @@ public interface DSLContext extends Scope , AutoCloseable {
      * @return The record or <code>null</code> if no record was returned
      * @throws DataAccessException if something went wrong executing the query
      */
-    @NotNull
+    @Nullable
     @Support
     <R extends Record> R fetchAny(Table<R> table, Collection<? extends Condition> conditions) throws DataAccessException;
 

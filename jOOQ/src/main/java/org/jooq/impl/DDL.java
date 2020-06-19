@@ -37,9 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
 import static org.jooq.DDLFlag.CHECK;
 import static org.jooq.DDLFlag.COMMENT;
 import static org.jooq.DDLFlag.DOMAIN;

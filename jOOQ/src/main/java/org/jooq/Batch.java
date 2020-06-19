@@ -37,15 +37,14 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import java.io.Serializable;
 import java.sql.Statement;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.Executor;
 
 import org.jooq.exception.DataAccessException;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A wrapper for a JDBC batch operation. It has two modes:
@@ -76,6 +75,7 @@ public interface Batch extends Serializable {
      * @see Statement#executeBatch()
      * @throws DataAccessException if something went wrong executing the query
      */
+    @NotNull
     int[] execute() throws DataAccessException;
 
 
@@ -89,12 +89,14 @@ public interface Batch extends Serializable {
      *
      * @see Statement#executeBatch()
      */
+    @NotNull
     CompletionStage<int[]> executeAsync();
 
     /**
      * Execute the query in a new {@link CompletionStage} that is asynchronously
      * completed by a task running in the given executor.
      */
+    @NotNull
     CompletionStage<int[]> executeAsync(Executor executor);
 
 

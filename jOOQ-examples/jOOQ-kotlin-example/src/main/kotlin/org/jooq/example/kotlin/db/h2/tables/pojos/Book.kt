@@ -26,5 +26,4 @@ data class Book(
     , var recTimestamp: LocalDateTime? = null
 ): Serializable {
 
-    constructor(): this(null, null, null, null, null, null, null, null, null, null, null)
 }

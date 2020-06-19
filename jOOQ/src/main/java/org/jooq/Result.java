@@ -38,9 +38,6 @@
 
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.List;
@@ -52,6 +49,9 @@ import org.jooq.exception.DataTypeException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
 import org.jooq.impl.DefaultRecordMapper;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A wrapper for database results returned by <code>{@link SelectQuery}</code>
@@ -65,11 +65,13 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
     /**
      * Get this result's record type.
      */
+    @NotNull
     RecordType<R> recordType();
 
     /**
      * Get this result's fields as a {@link Row}.
      */
+    @NotNull
     Row fieldsRow();
 
     /**
@@ -91,6 +93,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *
      * @see Row#field(Field)
      */
+    @Nullable
     <T> Field<T> field(Field<T> field);
 
     /**
@@ -98,6 +101,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *
      * @see Row#field(String)
      */
+    @Nullable
     Field<?> field(String name);
 
     /**
@@ -105,6 +109,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *
      * @see Row#field(String, Class)
      */
+    @Nullable
     <T> Field<T> field(String name, Class<T> type);
 
     /**
@@ -112,6 +117,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *
      * @see Row#field(String, DataType)
      */
+    @Nullable
     <T> Field<T> field(String name, DataType<T> dataType);
 
     /**
@@ -119,6 +125,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *
      * @see Row#field(Name)
      */
+    @Nullable
     Field<?> field(Name name);
 
     /**
@@ -126,6 +133,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *
      * @see Row#field(Name, Class)
      */
+    @Nullable
     <T> Field<T> field(Name name, Class<T> type);
 
     /**
@@ -133,6 +141,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *
      * @see Row#field(Name, DataType)
      */
+    @Nullable
     <T> Field<T> field(Name name, DataType<T> dataType);
 
     /**
@@ -140,6 +149,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *
      * @see Row#field(int)
      */
+    @Nullable
     Field<?> field(int index);
 
     /**
@@ -147,6 +157,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *
      * @see Row#field(int, Class)
      */
+    @Nullable
     <T> Field<T> field(int index, Class<T> type);
 
     /**
@@ -154,6 +165,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *
      * @see Row#field(int, DataType)
      */
+    @Nullable
     <T> Field<T> field(int index, DataType<T> dataType);
 
     /**
@@ -161,6 +173,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *
      * @see Row#fields()
      */
+    @NotNull
     Field<?>[] fields();
 
     /**
@@ -169,6 +182,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @return All available fields
      * @see Row#fields(Field...)
      */
+    @NotNull
     Field<?>[] fields(Field<?>... fields);
 
     /**
@@ -177,6 +191,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @return All available fields
      * @see Row#fields(String...)
      */
+    @NotNull
     Field<?>[] fields(String... fieldNames);
 
     /**
@@ -185,6 +200,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @return All available fields
      * @see Row#fields(Name...)
      */
+    @NotNull
     Field<?>[] fields(Name... fieldNames);
 
     /**
@@ -193,6 +209,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @return All available fields
      * @see Row#fields(int...)
      */
+    @NotNull
     Field<?>[] fields(int... fieldIndexes);
 
     /**
@@ -251,8 +268,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @deprecated - 3.3.0 - [#2878] - This method will be removed in jOOQ 4.0
      */
     @Deprecated
-    <T> T getValue(int index, Field<T> field, T defaultValue) throws IndexOutOfBoundsException,
-        IllegalArgumentException;
+    <T> T getValue(int index, Field<T> field, T defaultValue) throws IndexOutOfBoundsException, IllegalArgumentException;
 
     /**
      * Convenience method to fetch a value at a given position in the result.
@@ -265,6 +281,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If the argument fieldIndex is not
      *             contained in {@link #fieldsRow()}
      */
+    @Nullable
     Object getValue(int index, int fieldIndex) throws IndexOutOfBoundsException, IllegalArgumentException;
 
     /**
@@ -280,9 +297,9 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             contained in {@link #fieldsRow()}
      * @deprecated - 3.3.0 - [#2878] - This method will be removed in jOOQ 4.0
      */
+    @Nullable
     @Deprecated
-    Object getValue(int index, int fieldIndex, Object defaultValue) throws IndexOutOfBoundsException,
-        IllegalArgumentException;
+    Object getValue(int index, int fieldIndex, Object defaultValue) throws IndexOutOfBoundsException, IllegalArgumentException;
 
     /**
      * Convenience method to fetch a value at a given position in the result.
@@ -295,6 +312,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in {@link #fieldsRow()}
      */
+    @Nullable
     Object getValue(int index, String fieldName) throws IndexOutOfBoundsException, IllegalArgumentException;
 
     /**
@@ -310,9 +328,9 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             contained in {@link #fieldsRow()}
      * @deprecated - 3.3.0 - [#2878] - This method will be removed in jOOQ 4.0
      */
+    @Nullable
     @Deprecated
-    Object getValue(int index, String fieldName, Object defaultValue) throws IndexOutOfBoundsException,
-        IllegalArgumentException;
+    Object getValue(int index, String fieldName, Object defaultValue) throws IndexOutOfBoundsException, IllegalArgumentException;
 
     /**
      * Convenience method to fetch all values for a given field. This is
@@ -324,6 +342,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #fieldsRow()}
      */
+    @NotNull
     <T> List<T> getValues(Field<T> field) throws IllegalArgumentException;
 
     /**
@@ -341,6 +360,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #fieldsRow()}
      */
+    @NotNull
     <U> List<U> getValues(Field<?> field, Class<? extends U> type) throws IllegalArgumentException;
 
     /**
@@ -354,6 +374,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #fieldsRow()}
      */
+    @NotNull
     <T, U> List<U> getValues(Field<T> field, Converter<? super T, ? extends U> converter) throws IllegalArgumentException;
 
     /**
@@ -365,6 +386,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If the argument fieldIndex is not
      *             contained in {@link #fieldsRow()}
      */
+    @NotNull
     List<?> getValues(int fieldIndex) throws IllegalArgumentException;
 
     /**
@@ -384,6 +406,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
+    @NotNull
     <U> List<U> getValues(int fieldIndex, Class<? extends U> type) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -399,6 +422,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
+    @NotNull
     <U> List<U> getValues(int fieldIndex, Converter<?, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -410,6 +434,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in {@link #fieldsRow()}
      */
+    @NotNull
     List<?> getValues(String fieldName) throws IllegalArgumentException;
 
     /**
@@ -429,6 +454,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
+    @NotNull
     <U> List<U> getValues(String fieldName, Class<? extends U> type) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -444,6 +470,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
+    @NotNull
     <U> List<U> getValues(String fieldName, Converter<?, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -455,6 +482,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in {@link #fieldsRow()}
      */
+    @NotNull
     List<?> getValues(Name fieldName) throws IllegalArgumentException;
 
     /**
@@ -474,6 +502,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
+    @NotNull
     <U> List<U> getValues(Name fieldName, Class<? extends U> type) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -489,6 +518,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
+    @NotNull
     <U> List<U> getValues(Name fieldName, Converter<?, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -508,6 +538,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @return The result.
      * @see Record#intoMap()
      */
+    @NotNull
     List<Map<String, Object>> intoMaps();
 
     /**
@@ -527,6 +558,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws InvalidResultException if the key field returned two or more
      *             equal values from the result set.
      */
+    @NotNull
     <K> Map<K, R> intoMap(Field<K> key) throws IllegalArgumentException, InvalidResultException;
 
     /**
@@ -545,6 +577,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws InvalidResultException if the key field returned two or more
      *             equal values from the result set.
      */
+    @NotNull
     Map<?, R> intoMap(int keyFieldIndex) throws IllegalArgumentException, InvalidResultException;
 
     /**
@@ -563,6 +596,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws InvalidResultException if the key field returned two or more
      *             equal values from the result set.
      */
+    @NotNull
     Map<?, R> intoMap(String keyFieldName) throws IllegalArgumentException, InvalidResultException;
 
     /**
@@ -581,6 +615,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws InvalidResultException if the key field returned two or more
      *             equal values from the result set.
      */
+    @NotNull
     Map<?, R> intoMap(Name keyFieldName) throws IllegalArgumentException, InvalidResultException;
 
     /**
@@ -602,6 +637,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws InvalidResultException if the key field returned two or more
      *             equal values from the result set.
      */
+    @NotNull
     <K, V> Map<K, V> intoMap(Field<K> key, Field<V> value) throws IllegalArgumentException, InvalidResultException;
 
     /**
@@ -621,8 +657,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws InvalidResultException if the key field returned two or more
      *             equal values from the result set.
      */
-    Map<?, ?> intoMap(int keyFieldIndex, int valueFieldIndex) throws IllegalArgumentException,
-        InvalidResultException;
+    @NotNull
+    Map<?, ?> intoMap(int keyFieldIndex, int valueFieldIndex) throws IllegalArgumentException, InvalidResultException;
 
     /**
      * Return a {@link Map} with one of the result's columns as key and another
@@ -641,8 +677,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws InvalidResultException if the key field returned two or more
      *             equal values from the result set.
      */
-    Map<?, ?> intoMap(String keyFieldName, String valueFieldName) throws IllegalArgumentException,
-        InvalidResultException;
+    @NotNull
+    Map<?, ?> intoMap(String keyFieldName, String valueFieldName) throws IllegalArgumentException, InvalidResultException;
 
     /**
      * Return a {@link Map} with one of the result's columns as key and another
@@ -661,8 +697,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws InvalidResultException if the key field returned two or more
      *             equal values from the result set.
      */
-    Map<?, ?> intoMap(Name keyFieldName, Name valueFieldName) throws IllegalArgumentException,
-        InvalidResultException;
+    @NotNull
+    Map<?, ?> intoMap(Name keyFieldName, Name valueFieldName) throws IllegalArgumentException, InvalidResultException;
 
     /**
      * Return a {@link Map} with results grouped by the given key and mapped
@@ -684,8 +720,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
-    <K, E> Map<K, E> intoMap(Field<K> key, Class<? extends E> type) throws IllegalArgumentException,
-        InvalidResultException, MappingException;
+    @NotNull
+    <K, E> Map<K, E> intoMap(Field<K> key, Class<? extends E> type) throws IllegalArgumentException, InvalidResultException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given key and mapped
@@ -707,8 +743,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
-    <E> Map<?, E> intoMap(int keyFieldIndex, Class<? extends E> type) throws IllegalArgumentException,
-        InvalidResultException, MappingException;
+    @NotNull
+    <E> Map<?, E> intoMap(int keyFieldIndex, Class<? extends E> type) throws IllegalArgumentException, InvalidResultException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given key and mapped
@@ -730,8 +766,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
-    <E> Map<?, E> intoMap(String keyFieldName, Class<? extends E> type) throws IllegalArgumentException,
-        InvalidResultException, MappingException;
+    @NotNull
+    <E> Map<?, E> intoMap(String keyFieldName, Class<? extends E> type) throws IllegalArgumentException, InvalidResultException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given key and mapped
@@ -753,8 +789,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
-    <E> Map<?, E> intoMap(Name keyFieldName, Class<? extends E> type) throws IllegalArgumentException,
-        InvalidResultException, MappingException;
+    @NotNull
+    <E> Map<?, E> intoMap(Name keyFieldName, Class<? extends E> type) throws IllegalArgumentException, InvalidResultException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given key and mapped by
@@ -776,8 +812,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
-    <K, E> Map<K, E> intoMap(Field<K> key, RecordMapper<? super R, E> mapper) throws IllegalArgumentException,
-        InvalidResultException, MappingException;
+    @NotNull
+    <K, E> Map<K, E> intoMap(Field<K> key, RecordMapper<? super R, E> mapper) throws IllegalArgumentException, InvalidResultException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given key and mapped by
@@ -799,8 +835,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
-    <E> Map<?, E> intoMap(int keyFieldIndex, RecordMapper<? super R, E> mapper) throws IllegalArgumentException,
-        InvalidResultException, MappingException;
+    @NotNull
+    <E> Map<?, E> intoMap(int keyFieldIndex, RecordMapper<? super R, E> mapper) throws IllegalArgumentException, InvalidResultException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given key and mapped by
@@ -822,8 +858,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
-    <E> Map<?, E> intoMap(String keyFieldName, RecordMapper<? super R, E> mapper) throws IllegalArgumentException,
-        InvalidResultException, MappingException;
+    @NotNull
+    <E> Map<?, E> intoMap(String keyFieldName, RecordMapper<? super R, E> mapper) throws IllegalArgumentException, InvalidResultException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given key and mapped by
@@ -845,8 +881,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
-    <E> Map<?, E> intoMap(Name keyFieldName, RecordMapper<? super R, E> mapper) throws IllegalArgumentException,
-        InvalidResultException, MappingException;
+    @NotNull
+    <E> Map<?, E> intoMap(Name keyFieldName, RecordMapper<? super R, E> mapper) throws IllegalArgumentException, InvalidResultException, MappingException;
 
     /**
      * Return a {@link Map} with the given keys as a map key and the
@@ -865,6 +901,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws InvalidResultException if the keys are non-unique in the result
      *             set.
      */
+    @NotNull
     Map<Record, R> intoMap(Field<?>[] keys) throws IllegalArgumentException, InvalidResultException;
 
     /**
@@ -884,6 +921,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws InvalidResultException if the keys are non-unique in the result
      *             set.
      */
+    @NotNull
     Map<Record, R> intoMap(int[] keyFieldIndexes) throws IllegalArgumentException, InvalidResultException;
 
     /**
@@ -903,6 +941,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws InvalidResultException if the keys are non-unique in the result
      *             set.
      */
+    @NotNull
     Map<Record, R> intoMap(String[] keyFieldNames) throws IllegalArgumentException, InvalidResultException;
 
     /**
@@ -922,6 +961,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws InvalidResultException if the keys are non-unique in the result
      *             set.
      */
+    @NotNull
     Map<Record, R> intoMap(Name[] keyFieldNames) throws IllegalArgumentException, InvalidResultException;
 
     /**
@@ -942,6 +982,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws InvalidResultException if the keys are non-unique in the result
      *             set.
      */
+    @NotNull
     Map<Record, Record> intoMap(Field<?>[] keys, Field<?>[] values) throws IllegalArgumentException, InvalidResultException;
 
     /**
@@ -962,6 +1003,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws InvalidResultException if the keys are non-unique in the result
      *             set.
      */
+    @NotNull
     Map<Record, Record> intoMap(int[] keyFieldIndexes, int[] valueFieldIndexes) throws IllegalArgumentException, InvalidResultException;
 
     /**
@@ -982,6 +1024,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws InvalidResultException if the keys are non-unique in the result
      *             set.
      */
+    @NotNull
     Map<Record, Record> intoMap(String[] keyFieldNames, String[] valueFieldNames) throws IllegalArgumentException, InvalidResultException;
 
     /**
@@ -1002,6 +1045,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws InvalidResultException if the keys are non-unique in the result
      *             set.
      */
+    @NotNull
     Map<Record, Record> intoMap(Name[] keyFieldNames, Name[] valueFieldNames) throws IllegalArgumentException, InvalidResultException;
 
     /**
@@ -1025,8 +1069,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
-    <E> Map<List<?>, E> intoMap(Field<?>[] keys, Class<? extends E> type) throws IllegalArgumentException,
-        InvalidResultException, MappingException;
+    @NotNull
+    <E> Map<List<?>, E> intoMap(Field<?>[] keys, Class<? extends E> type) throws IllegalArgumentException, InvalidResultException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given keys and mapped
@@ -1049,8 +1093,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
-    <E> Map<List<?>, E> intoMap(int[] keyFieldIndexes, Class<? extends E> type) throws IllegalArgumentException,
-        InvalidResultException, MappingException;
+    @NotNull
+    <E> Map<List<?>, E> intoMap(int[] keyFieldIndexes, Class<? extends E> type) throws IllegalArgumentException, InvalidResultException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given keys and mapped
@@ -1073,8 +1117,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
-    <E> Map<List<?>, E> intoMap(String[] keyFieldNames, Class<? extends E> type) throws IllegalArgumentException,
-        InvalidResultException, MappingException;
+    @NotNull
+    <E> Map<List<?>, E> intoMap(String[] keyFieldNames, Class<? extends E> type) throws IllegalArgumentException, InvalidResultException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given keys and mapped
@@ -1097,8 +1141,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
-    <E> Map<List<?>, E> intoMap(Name[] keyFieldNames, Class<? extends E> type) throws IllegalArgumentException,
-        InvalidResultException, MappingException;
+    @NotNull
+    <E> Map<List<?>, E> intoMap(Name[] keyFieldNames, Class<? extends E> type) throws IllegalArgumentException, InvalidResultException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given keys and mapped by
@@ -1121,8 +1165,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
-    <E> Map<List<?>, E> intoMap(Field<?>[] keys, RecordMapper<? super R, E> mapper) throws IllegalArgumentException,
-        InvalidResultException, MappingException;
+    @NotNull
+    <E> Map<List<?>, E> intoMap(Field<?>[] keys, RecordMapper<? super R, E> mapper) throws IllegalArgumentException, InvalidResultException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given keys and mapped by
@@ -1145,8 +1189,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
-    <E> Map<List<?>, E> intoMap(int[] keyFieldIndexes, RecordMapper<? super R, E> mapper) throws IllegalArgumentException,
-        InvalidResultException, MappingException;
+    @NotNull
+    <E> Map<List<?>, E> intoMap(int[] keyFieldIndexes, RecordMapper<? super R, E> mapper) throws IllegalArgumentException, InvalidResultException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given keys and mapped by
@@ -1169,8 +1213,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
-    <E> Map<List<?>, E> intoMap(String[] keyFieldNames, RecordMapper<? super R, E> mapper) throws IllegalArgumentException,
-        InvalidResultException, MappingException;
+    @NotNull
+    <E> Map<List<?>, E> intoMap(String[] keyFieldNames, RecordMapper<? super R, E> mapper) throws IllegalArgumentException, InvalidResultException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given keys and mapped by
@@ -1193,8 +1237,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
-    <E> Map<List<?>, E> intoMap(Name[] keyFieldNames, RecordMapper<? super R, E> mapper) throws IllegalArgumentException,
-        InvalidResultException, MappingException;
+    @NotNull
+    <E> Map<List<?>, E> intoMap(Name[] keyFieldNames, RecordMapper<? super R, E> mapper) throws IllegalArgumentException, InvalidResultException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given key entity.
@@ -1216,6 +1260,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             set.
      * @see DefaultRecordMapper
      */
+    @NotNull
     <K> Map<K, R> intoMap(Class<? extends K> keyType) throws MappingException, InvalidResultException;
 
     /**
@@ -1240,8 +1285,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             set.
      * @see DefaultRecordMapper
      */
-    <K, V> Map<K, V> intoMap(Class<? extends K> keyType, Class<? extends V> valueType)
-        throws MappingException, InvalidResultException;
+    @NotNull
+    <K, V> Map<K, V> intoMap(Class<? extends K> keyType, Class<? extends V> valueType) throws MappingException, InvalidResultException;
 
     /**
      * Return a {@link Map} with results grouped by the given key entity and
@@ -1265,8 +1310,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             set.
      * @see DefaultRecordMapper
      */
-    <K, V> Map<K, V> intoMap(Class<? extends K> keyType, RecordMapper<? super R, V> valueMapper)
-        throws InvalidResultException, MappingException;
+    @NotNull
+    <K, V> Map<K, V> intoMap(Class<? extends K> keyType, RecordMapper<? super R, V> valueMapper) throws InvalidResultException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given key entity and
@@ -1288,6 +1333,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             set.
      * @see DefaultRecordMapper
      */
+    @NotNull
     <K> Map<K, R> intoMap(RecordMapper<? super R, K> keyMapper) throws InvalidResultException, MappingException;
 
     /**
@@ -1311,8 +1357,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             set.
      * @see DefaultRecordMapper
      */
-    <K, V> Map<K, V> intoMap(RecordMapper<? super R, K> keyMapper, Class<V> valueType)
-        throws InvalidResultException, MappingException;
+    @NotNull
+    <K, V> Map<K, V> intoMap(RecordMapper<? super R, K> keyMapper, Class<V> valueType) throws InvalidResultException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given key entity and
@@ -1335,8 +1381,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             set.
      * @see DefaultRecordMapper
      */
-    <K, V> Map<K, V> intoMap(RecordMapper<? super R, K> keyMapper, RecordMapper<? super R, V> valueMapper)
-        throws InvalidResultException, MappingException;
+    @NotNull
+    <K, V> Map<K, V> intoMap(RecordMapper<? super R, K> keyMapper, RecordMapper<? super R, V> valueMapper) throws InvalidResultException, MappingException;
 
     /**
      * Return a {@link Map} with the given key table as a map key and the
@@ -1354,6 +1400,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws InvalidResultException if the keys are non-unique in the result
      *             set.
      */
+    @NotNull
     <S extends Record> Map<S, R> intoMap(Table<S> table) throws IllegalArgumentException, InvalidResultException;
 
     /**
@@ -1373,6 +1420,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws InvalidResultException if the keys are non-unique in the result
      *             set.
      */
+    @NotNull
     <S extends Record, T extends Record> Map<S, T> intoMap(Table<S> keyTable, Table<T> valueTable) throws IllegalArgumentException, InvalidResultException;
 
     /**
@@ -1395,8 +1443,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
-    <E, S extends Record> Map<S, E> intoMap(Table<S> table, Class<? extends E> type) throws IllegalArgumentException,
-        InvalidResultException, MappingException;
+    @NotNull
+    <E, S extends Record> Map<S, E> intoMap(Table<S> table, Class<? extends E> type) throws IllegalArgumentException, InvalidResultException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given key table and
@@ -1418,8 +1466,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
-    <E, S extends Record> Map<S, E> intoMap(Table<S> table, RecordMapper<? super R, E> mapper) throws IllegalArgumentException,
-        InvalidResultException, MappingException;
+    @NotNull
+    <E, S extends Record> Map<S, E> intoMap(Table<S> table, RecordMapper<? super R, E> mapper) throws IllegalArgumentException, InvalidResultException, MappingException;
 
     /**
      * Return a {@link Map} with one of the result's columns as key and a list
@@ -1434,6 +1482,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #fieldsRow()}
      */
+    @NotNull
     <K> Map<K, Result<R>> intoGroups(Field<K> key) throws IllegalArgumentException;
 
     /**
@@ -1448,6 +1497,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If the argument field index is not
      *             contained in {@link #fieldsRow()}
      */
+    @NotNull
     Map<?, Result<R>> intoGroups(int keyFieldIndex) throws IllegalArgumentException;
 
     /**
@@ -1462,6 +1512,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If the argument field name is not
      *             contained in {@link #fieldsRow()}
      */
+    @NotNull
     Map<?, Result<R>> intoGroups(String keyFieldName) throws IllegalArgumentException;
 
     /**
@@ -1476,6 +1527,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If the argument field name is not
      *             contained in {@link #fieldsRow()}
      */
+    @NotNull
     Map<?, Result<R>> intoGroups(Name keyFieldName) throws IllegalArgumentException;
 
     /**
@@ -1493,6 +1545,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If any of the argument fields is not
      *             contained in {@link #fieldsRow()}
      */
+    @NotNull
     <K, V> Map<K, List<V>> intoGroups(Field<K> key, Field<V> value) throws IllegalArgumentException;
 
     /**
@@ -1508,6 +1561,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If any of the argument field indexes is
      *             not contained in {@link #fieldsRow()}
      */
+    @NotNull
     Map<?, List<?>> intoGroups(int keyFieldIndex, int valueFieldIndex) throws IllegalArgumentException;
 
     /**
@@ -1523,6 +1577,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If any of the argument field names is
      *             not contained in {@link #fieldsRow()}
      */
+    @NotNull
     Map<?, List<?>> intoGroups(String keyFieldName, String valueFieldName) throws IllegalArgumentException;
 
     /**
@@ -1538,6 +1593,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If any of the argument field names is
      *             not contained in {@link #fieldsRow()}
      */
+    @NotNull
     Map<?, List<?>> intoGroups(Name keyFieldName, Name valueFieldName) throws IllegalArgumentException;
 
     /**
@@ -1555,8 +1611,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
-    <K, E> Map<K, List<E>> intoGroups(Field<K> key, Class<? extends E> type) throws IllegalArgumentException,
-        MappingException;
+    @NotNull
+    <K, E> Map<K, List<E>> intoGroups(Field<K> key, Class<? extends E> type) throws IllegalArgumentException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given key and mapped
@@ -1571,8 +1627,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
-    <E> Map<?, List<E>> intoGroups(int keyFieldIndex, Class<? extends E> type) throws IllegalArgumentException,
-        MappingException;
+    @NotNull
+    <E> Map<?, List<E>> intoGroups(int keyFieldIndex, Class<? extends E> type) throws IllegalArgumentException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given key and mapped
@@ -1587,8 +1643,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
-    <E> Map<?, List<E>> intoGroups(String keyFieldName, Class<? extends E> type) throws IllegalArgumentException,
-        MappingException;
+    @NotNull
+    <E> Map<?, List<E>> intoGroups(String keyFieldName, Class<? extends E> type) throws IllegalArgumentException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given key and mapped
@@ -1603,8 +1659,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
-    <E> Map<?, List<E>> intoGroups(Name keyFieldName, Class<? extends E> type) throws IllegalArgumentException,
-        MappingException;
+    @NotNull
+    <E> Map<?, List<E>> intoGroups(Name keyFieldName, Class<? extends E> type) throws IllegalArgumentException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given key and mapped by
@@ -1619,8 +1675,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
      */
-    <K, E> Map<K, List<E>> intoGroups(Field<K> key, RecordMapper<? super R, E> mapper) throws IllegalArgumentException,
-        MappingException;
+    @NotNull
+    <K, E> Map<K, List<E>> intoGroups(Field<K> key, RecordMapper<? super R, E> mapper) throws IllegalArgumentException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given key and mapped by
@@ -1633,8 +1689,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
      */
-    <E> Map<?, List<E>> intoGroups(int keyFieldIndex, RecordMapper<? super R, E> mapper) throws IllegalArgumentException,
-        MappingException;
+    @NotNull
+    <E> Map<?, List<E>> intoGroups(int keyFieldIndex, RecordMapper<? super R, E> mapper) throws IllegalArgumentException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given key and mapped by
@@ -1647,8 +1703,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
      */
-    <E> Map<?, List<E>> intoGroups(String keyFieldName, RecordMapper<? super R, E> mapper) throws IllegalArgumentException,
-        MappingException;
+    @NotNull
+    <E> Map<?, List<E>> intoGroups(String keyFieldName, RecordMapper<? super R, E> mapper) throws IllegalArgumentException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given key and mapped by
@@ -1661,8 +1717,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
      */
-    <E> Map<?, List<E>> intoGroups(Name keyFieldName, RecordMapper<? super R, E> mapper) throws IllegalArgumentException,
-        MappingException;
+    @NotNull
+    <E> Map<?, List<E>> intoGroups(Name keyFieldName, RecordMapper<? super R, E> mapper) throws IllegalArgumentException, MappingException;
 
     /**
      * Return a {@link Map} with the result grouped by the given keys.
@@ -1676,6 +1732,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If any of the argument fields is not
      *             contained in {@link #fieldsRow()}
      */
+    @NotNull
     Map<Record, Result<R>> intoGroups(Field<?>[] keys) throws IllegalArgumentException;
 
     /**
@@ -1690,6 +1747,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If any of the argument field indexes is
      *             not contained in {@link #fieldsRow()}
      */
+    @NotNull
     Map<Record, Result<R>> intoGroups(int[] keyFieldIndexes) throws IllegalArgumentException;
 
     /**
@@ -1704,6 +1762,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If any of the argument field names is
      *             not contained in {@link #fieldsRow()}
      */
+    @NotNull
     Map<Record, Result<R>> intoGroups(String[] keyFieldNames) throws IllegalArgumentException;
 
     /**
@@ -1718,6 +1777,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If any of the argument field names is
      *             not contained in {@link #fieldsRow()}
      */
+    @NotNull
     Map<Record, Result<R>> intoGroups(Name[] keyFieldNames) throws IllegalArgumentException;
 
     /**
@@ -1733,6 +1793,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If any of the argument fields is not
      *             contained in {@link #fieldsRow()}
      */
+    @NotNull
     Map<Record, Result<Record>> intoGroups(Field<?>[] keys, Field<?>[] values) throws IllegalArgumentException;
 
     /**
@@ -1748,6 +1809,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If any of the argument field indexes is
      *             not contained in {@link #fieldsRow()}
      */
+    @NotNull
     Map<Record, Result<Record>> intoGroups(int[] keyFieldIndexes, int[] valueFieldIndexes) throws IllegalArgumentException;
 
     /**
@@ -1763,6 +1825,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If any of the argument field names is
      *             not contained in {@link #fieldsRow()}
      */
+    @NotNull
     Map<Record, Result<Record>> intoGroups(String[] keyFieldNames, String[] valueFieldNames) throws IllegalArgumentException;
 
     /**
@@ -1778,6 +1841,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If any of the argument field names is
      *             not contained in {@link #fieldsRow()}
      */
+    @NotNull
     Map<Record, Result<Record>> intoGroups(Name[] keyFieldNames, Name[] valueFieldNames) throws IllegalArgumentException;
 
     /**
@@ -1797,8 +1861,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
-    <E> Map<Record, List<E>> intoGroups(Field<?>[] keys, Class<? extends E> type) throws IllegalArgumentException,
-        MappingException;
+    @NotNull
+    <E> Map<Record, List<E>> intoGroups(Field<?>[] keys, Class<? extends E> type) throws IllegalArgumentException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given keys and mapped
@@ -1817,8 +1881,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
-    <E> Map<Record, List<E>> intoGroups(int[] keyFieldIndexes, Class<? extends E> type) throws IllegalArgumentException,
-        MappingException;
+    @NotNull
+    <E> Map<Record, List<E>> intoGroups(int[] keyFieldIndexes, Class<? extends E> type) throws IllegalArgumentException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given keys and mapped
@@ -1837,8 +1901,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
-    <E> Map<Record, List<E>> intoGroups(String[] keyFieldNames, Class<? extends E> type) throws IllegalArgumentException,
-        MappingException;
+    @NotNull
+    <E> Map<Record, List<E>> intoGroups(String[] keyFieldNames, Class<? extends E> type) throws IllegalArgumentException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given keys and mapped
@@ -1857,8 +1921,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
-    <E> Map<Record, List<E>> intoGroups(Name[] keyFieldNames, Class<? extends E> type) throws IllegalArgumentException,
-        MappingException;
+    @NotNull
+    <E> Map<Record, List<E>> intoGroups(Name[] keyFieldNames, Class<? extends E> type) throws IllegalArgumentException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given keys and mapped
@@ -1877,8 +1941,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
-    <E> Map<Record, List<E>> intoGroups(Field<?>[] keys, RecordMapper<? super R, E> mapper)
-        throws IllegalArgumentException, MappingException;
+    @NotNull
+    <E> Map<Record, List<E>> intoGroups(Field<?>[] keys, RecordMapper<? super R, E> mapper) throws IllegalArgumentException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given keys and mapped
@@ -1897,8 +1961,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
-    <E> Map<Record, List<E>> intoGroups(int[] keyFieldIndexes, RecordMapper<? super R, E> mapper)
-        throws IllegalArgumentException, MappingException;
+    @NotNull
+    <E> Map<Record, List<E>> intoGroups(int[] keyFieldIndexes, RecordMapper<? super R, E> mapper) throws IllegalArgumentException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given keys and mapped
@@ -1917,8 +1981,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
-    <E> Map<Record, List<E>> intoGroups(String[] keyFieldNames, RecordMapper<? super R, E> mapper)
-        throws IllegalArgumentException, MappingException;
+    @NotNull
+    <E> Map<Record, List<E>> intoGroups(String[] keyFieldNames, RecordMapper<? super R, E> mapper) throws IllegalArgumentException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given keys and mapped
@@ -1937,8 +2001,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
-    <E> Map<Record, List<E>> intoGroups(Name[] keyFieldNames, RecordMapper<? super R, E> mapper)
-        throws IllegalArgumentException, MappingException;
+    @NotNull
+    <E> Map<Record, List<E>> intoGroups(Name[] keyFieldNames, RecordMapper<? super R, E> mapper) throws IllegalArgumentException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given key entity.
@@ -1957,6 +2021,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
+    @NotNull
     <K> Map<K, Result<R>> intoGroups(Class<? extends K> keyType) throws MappingException;
 
     /**
@@ -1978,6 +2043,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
+    @NotNull
     <K, V> Map<K, List<V>> intoGroups(Class<? extends K> keyType, Class<? extends V> valueType) throws MappingException;
 
     /**
@@ -1999,8 +2065,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
-    <K, V> Map<K, List<V>> intoGroups(Class<? extends K> keyType, RecordMapper<? super R, V> valueMapper)
-        throws MappingException;
+    @NotNull
+    <K, V> Map<K, List<V>> intoGroups(Class<? extends K> keyType, RecordMapper<? super R, V> valueMapper) throws MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given key entity and
@@ -2019,6 +2085,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
+    @NotNull
     <K> Map<K, Result<R>> intoGroups(RecordMapper<? super R, K> keyMapper) throws MappingException;
 
     /**
@@ -2039,6 +2106,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
+    @NotNull
     <K, V> Map<K, List<V>> intoGroups(RecordMapper<? super R, K> keyMapper, Class<V> valueType) throws MappingException;
 
     /**
@@ -2059,8 +2127,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
-    <K, V> Map<K, List<V>> intoGroups(RecordMapper<? super R, K> keyMapper, RecordMapper<? super R, V> valueMapper)
-        throws MappingException;
+    @NotNull
+    <K, V> Map<K, List<V>> intoGroups(RecordMapper<? super R, K> keyMapper, RecordMapper<? super R, V> valueMapper) throws MappingException;
 
     /**
      * Return a {@link Map} with the result grouped by the given key table.
@@ -2073,6 +2141,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If any of the argument fields is not
      *             contained in {@link #fieldsRow()}
      */
+    @NotNull
     <S extends Record> Map<S, Result<R>> intoGroups(Table<S> table) throws IllegalArgumentException;
 
     /**
@@ -2087,6 +2156,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If any of the argument fields is not
      *             contained in {@link #fieldsRow()}
      */
+    @NotNull
     <S extends Record, T extends Record> Map<S, Result<T>> intoGroups(Table<S> keyTable, Table<T> valueTable) throws IllegalArgumentException;
 
     /**
@@ -2105,8 +2175,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
-    <E, S extends Record> Map<S, List<E>> intoGroups(Table<S> table, Class<? extends E> type)
-        throws IllegalArgumentException, MappingException;
+    @NotNull
+    <E, S extends Record> Map<S, List<E>> intoGroups(Table<S> table, Class<? extends E> type) throws IllegalArgumentException, MappingException;
 
     /**
      * Return a {@link Map} with results grouped by the given key table and
@@ -2124,12 +2194,13 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             exception that might have occurred while mapping records
      * @see DefaultRecordMapper
      */
-    <E, S extends Record> Map<S, List<E>> intoGroups(Table<S> table, RecordMapper<? super R, E> mapper)
-        throws IllegalArgumentException, MappingException;
+    @NotNull
+    <E, S extends Record> Map<S, List<E>> intoGroups(Table<S> table, RecordMapper<? super R, E> mapper) throws IllegalArgumentException, MappingException;
 
     /**
      * @deprecated - 3.6.0 - [#3879] - Use {@link #intoArrays()} instead.
      */
+    @NotNull
     @Deprecated
     Object[][] intoArray();
 
@@ -2149,6 +2220,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @return This result as an array of arrays
      * @see Record#intoArray()
      */
+    @NotNull
     Object[][] intoArrays();
 
     /**
@@ -2164,6 +2236,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If the argument fieldIndex is not
      *             contained in {@link #fieldsRow()}
      */
+    @NotNull
     Object[] intoArray(int fieldIndex) throws IllegalArgumentException;
 
     /**
@@ -2179,6 +2252,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
+    @NotNull
     <U> U[] intoArray(int fieldIndex, Class<? extends U> type) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -2194,6 +2268,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
+    @NotNull
     <U> U[] intoArray(int fieldIndex, Converter<?, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -2209,6 +2284,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in {@link #fieldsRow()}
      */
+    @NotNull
     Object[] intoArray(String fieldName) throws IllegalArgumentException;
 
     /**
@@ -2224,6 +2300,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
+    @NotNull
     <U> U[] intoArray(String fieldName, Class<? extends U> type) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -2239,6 +2316,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
+    @NotNull
     <U> U[] intoArray(String fieldName, Converter<?, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -2254,6 +2332,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in {@link #fieldsRow()}
      */
+    @NotNull
     Object[] intoArray(Name fieldName) throws IllegalArgumentException;
 
     /**
@@ -2269,6 +2348,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
+    @NotNull
     <U> U[] intoArray(Name fieldName, Class<? extends U> type) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -2284,6 +2364,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
+    @NotNull
     <U> U[] intoArray(Name fieldName, Converter<?, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -2297,6 +2378,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #fieldsRow()}
      */
+    @NotNull
     <T> T[] intoArray(Field<T> field) throws IllegalArgumentException;
 
     /**
@@ -2312,6 +2394,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
+    @NotNull
     <U> U[] intoArray(Field<?> field, Class<? extends U> type) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -2327,8 +2410,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
-    <T, U> U[] intoArray(Field<T> field, Converter<? super T, ? extends U> converter) throws IllegalArgumentException,
-        DataTypeException;
+    @NotNull
+    <T, U> U[] intoArray(Field<T> field, Converter<? super T, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Map results into a custom mapper callback.
@@ -2336,6 +2419,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @param mapper The mapper callback
      * @return The custom mapped records
      */
+    @NotNull
     <E> Set<E> intoSet(RecordMapper<? super R, E> mapper);
 
     /**
@@ -2348,6 +2432,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If the argument fieldIndex is not
      *             contained in {@link #fieldsRow()}
      */
+    @NotNull
     Set<?> intoSet(int fieldIndex) throws IllegalArgumentException;
 
     /**
@@ -2360,6 +2445,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
+    @NotNull
     <U> Set<U> intoSet(int fieldIndex, Class<? extends U> type) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -2372,6 +2458,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
+    @NotNull
     <U> Set<U> intoSet(int fieldIndex, Converter<?, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -2384,6 +2471,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in {@link #fieldsRow()}
      */
+    @NotNull
     Set<?> intoSet(String fieldName) throws IllegalArgumentException;
 
     /**
@@ -2396,6 +2484,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
+    @NotNull
     <U> Set<U> intoSet(String fieldName, Class<? extends U> type) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -2408,6 +2497,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
+    @NotNull
     <U> Set<U> intoSet(String fieldName, Converter<?, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -2420,6 +2510,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in {@link #fieldsRow()}
      */
+    @NotNull
     Set<?> intoSet(Name fieldName) throws IllegalArgumentException;
 
     /**
@@ -2432,6 +2523,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
+    @NotNull
     <U> Set<U> intoSet(Name fieldName, Class<? extends U> type) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -2444,6 +2536,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
+    @NotNull
     <U> Set<U> intoSet(Name fieldName, Converter<?, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -2454,6 +2547,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #fieldsRow()}
      */
+    @NotNull
     <T> Set<T> intoSet(Field<T> field) throws IllegalArgumentException;
 
     /**
@@ -2466,6 +2560,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
+    @NotNull
     <U> Set<U> intoSet(Field<?> field, Class<? extends U> type) throws IllegalArgumentException, DataTypeException;
 
     /**
@@ -2478,8 +2573,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
-    <T, U> Set<U> intoSet(Field<T> field, Converter<? super T, ? extends U> converter) throws IllegalArgumentException,
-        DataTypeException;
+    @NotNull
+    <T, U> Set<U> intoSet(Field<T> field, Converter<? super T, ? extends U> converter) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Copy all records from this result into a new result with new records
@@ -2488,6 +2583,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @param fields The fields of the new records
      * @return The new result
      */
+    @NotNull
     Result<Record> into(Field<?>... fields);
 
 
@@ -2498,6 +2594,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *
      * @return The new result
      */
+    @NotNull
     <T1> Result<Record1<T1>> into(Field<T1> field1);
 
     /**
@@ -2506,6 +2603,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *
      * @return The new result
      */
+    @NotNull
     <T1, T2> Result<Record2<T1, T2>> into(Field<T1> field1, Field<T2> field2);
 
     /**
@@ -2514,6 +2612,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *
      * @return The new result
      */
+    @NotNull
     <T1, T2, T3> Result<Record3<T1, T2, T3>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3);
 
     /**
@@ -2522,6 +2621,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *
      * @return The new result
      */
+    @NotNull
     <T1, T2, T3, T4> Result<Record4<T1, T2, T3, T4>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4);
 
     /**
@@ -2530,6 +2630,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *
      * @return The new result
      */
+    @NotNull
     <T1, T2, T3, T4, T5> Result<Record5<T1, T2, T3, T4, T5>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5);
 
     /**
@@ -2538,6 +2639,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *
      * @return The new result
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6> Result<Record6<T1, T2, T3, T4, T5, T6>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6);
 
     /**
@@ -2546,6 +2648,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *
      * @return The new result
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7> Result<Record7<T1, T2, T3, T4, T5, T6, T7>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7);
 
     /**
@@ -2554,6 +2657,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *
      * @return The new result
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7, T8> Result<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8);
 
     /**
@@ -2562,6 +2666,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *
      * @return The new result
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7, T8, T9> Result<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9);
 
     /**
@@ -2570,6 +2675,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *
      * @return The new result
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> Result<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10);
 
     /**
@@ -2578,6 +2684,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *
      * @return The new result
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> Result<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11);
 
     /**
@@ -2586,6 +2693,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *
      * @return The new result
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> Result<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12);
 
     /**
@@ -2594,6 +2702,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *
      * @return The new result
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> Result<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13);
 
     /**
@@ -2602,6 +2711,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *
      * @return The new result
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> Result<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14);
 
     /**
@@ -2610,6 +2720,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *
      * @return The new result
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> Result<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15);
 
     /**
@@ -2618,6 +2729,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *
      * @return The new result
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> Result<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16);
 
     /**
@@ -2626,6 +2738,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *
      * @return The new result
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> Result<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17);
 
     /**
@@ -2634,6 +2747,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *
      * @return The new result
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> Result<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18);
 
     /**
@@ -2642,6 +2756,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *
      * @return The new result
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> Result<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19);
 
     /**
@@ -2650,6 +2765,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *
      * @return The new result
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> Result<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20);
 
     /**
@@ -2658,6 +2774,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *
      * @return The new result
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> Result<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21);
 
     /**
@@ -2666,6 +2783,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *
      * @return The new result
      */
+    @NotNull
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> Result<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> into(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22);
 
 
@@ -2684,6 +2802,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @see Record#into(Class)
      * @see DefaultRecordMapper
      */
+    @NotNull
     <E> List<E> into(Class<? extends E> type) throws MappingException;
 
     /**
@@ -2699,6 +2818,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *             exception that might have occurred while mapping records
      * @see Record#into(Table)
      */
+    @NotNull
     <Z extends Record> Result<Z> into(Table<Z> table) throws MappingException;
 
     /**
@@ -2707,6 +2827,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @param handler The handler callback
      * @return Convenience result, returning the parameter handler itself
      */
+    @NotNull
     <H extends RecordHandler<? super R>> H into(H handler);
 
     /**
@@ -2735,6 +2856,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      *
      * @return A wrapper JDBC <code>ResultSet</code>
      */
+    @NotNull
     ResultSet intoResultSet();
 
     /**
@@ -2743,6 +2865,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @param mapper The mapper callback
      * @return The custom mapped records
      */
+    @NotNull
     <E> List<E> map(RecordMapper<? super R, E> mapper);
 
     /**
@@ -2755,6 +2878,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #fieldsRow()}
      */
+    @NotNull
     <T extends Comparable<? super T>> Result<R> sortAsc(Field<T> field) throws IllegalArgumentException;
 
     /**
@@ -2767,6 +2891,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #fieldsRow()}
      */
+    @NotNull
     <T extends Comparable<? super T>> Result<R> sortDesc(Field<T> field) throws IllegalArgumentException;
 
     /**
@@ -2779,6 +2904,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #fieldsRow()}
      */
+    @NotNull
     Result<R> sortAsc(int fieldIndex) throws IllegalArgumentException;
 
     /**
@@ -2791,6 +2917,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #fieldsRow()}
      */
+    @NotNull
     Result<R> sortDesc(int fieldIndex) throws IllegalArgumentException;
 
     /**
@@ -2803,6 +2930,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #fieldsRow()}
      */
+    @NotNull
     Result<R> sortAsc(String fieldName) throws IllegalArgumentException;
 
     /**
@@ -2815,6 +2943,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #fieldsRow()}
      */
+    @NotNull
     Result<R> sortDesc(String fieldName) throws IllegalArgumentException;
 
     /**
@@ -2827,6 +2956,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #fieldsRow()}
      */
+    @NotNull
     Result<R> sortAsc(Name fieldName) throws IllegalArgumentException;
 
     /**
@@ -2839,6 +2969,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #fieldsRow()}
      */
+    @NotNull
     Result<R> sortDesc(Name fieldName) throws IllegalArgumentException;
 
     /**
@@ -2853,6 +2984,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #fieldsRow()}
      */
+    @NotNull
     <T> Result<R> sortAsc(Field<T> field, java.util.Comparator<? super T> comparator) throws IllegalArgumentException;
 
     /**
@@ -2868,6 +3000,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #fieldsRow()}
      */
+    @NotNull
     <T> Result<R> sortDesc(Field<T> field, java.util.Comparator<? super T> comparator) throws IllegalArgumentException;
 
     /**
@@ -2882,6 +3015,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #fieldsRow()}
      */
+    @NotNull
     Result<R> sortAsc(int fieldIndex, java.util.Comparator<?> comparator) throws IllegalArgumentException;
 
     /**
@@ -2897,6 +3031,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #fieldsRow()}
      */
+    @NotNull
     Result<R> sortDesc(int fieldIndex, java.util.Comparator<?> comparator) throws IllegalArgumentException;
 
     /**
@@ -2911,6 +3046,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #fieldsRow()}
      */
+    @NotNull
     Result<R> sortAsc(String fieldName, java.util.Comparator<?> comparator) throws IllegalArgumentException;
 
     /**
@@ -2926,6 +3062,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #fieldsRow()}
      */
+    @NotNull
     Result<R> sortDesc(String fieldName, java.util.Comparator<?> comparator) throws IllegalArgumentException;
 
     /**
@@ -2940,6 +3077,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #fieldsRow()}
      */
+    @NotNull
     Result<R> sortAsc(Name fieldName, java.util.Comparator<?> comparator) throws IllegalArgumentException;
 
     /**
@@ -2955,6 +3093,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #fieldsRow()}
      */
+    @NotNull
     Result<R> sortDesc(Name fieldName, java.util.Comparator<?> comparator) throws IllegalArgumentException;
 
     /**
@@ -2963,6 +3102,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @param comparator The comparator used to sort this result.
      * @return The result itself
      */
+    @NotNull
     Result<R> sortAsc(java.util.Comparator<? super R> comparator);
 
     /**
@@ -2971,6 +3111,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @param comparator The comparator used to sort this result.
      * @return The result itself
      */
+    @NotNull
     Result<R> sortDesc(java.util.Comparator<? super R> comparator);
 
     /**
@@ -2986,6 +3127,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @deprecated - 3.10 - [#6254] - This functionality is no longer supported
      *             and will be removed in 4.0
      */
+    @NotNull
     @Deprecated
     Result<R> intern(Field<?>... fields);
 
@@ -3011,6 +3153,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @deprecated - 3.10 - [#6254] - This functionality is no longer supported
      *             and will be removed in 4.0
      */
+    @NotNull
     @Deprecated
     Result<R> intern(int... fieldIndexes);
 
@@ -3027,6 +3170,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @deprecated - 3.10 - [#6254] - This functionality is no longer supported
      *             and will be removed in 4.0
      */
+    @NotNull
     @Deprecated
     Result<R> intern(String... fieldNames);
 
@@ -3043,6 +3187,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @deprecated - 3.10 - [#6254] - This functionality is no longer supported
      *             and will be removed in 4.0
      */
+    @NotNull
     @Deprecated
     Result<R> intern(Name... fieldNames);
 
@@ -3058,6 +3203,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @see ForeignKey#fetchParents(java.util.Collection)
      * @see ForeignKey#fetchParents(Record...)
      */
+    @NotNull
     <O extends UpdatableRecord<O>> Result<O> fetchParents(ForeignKey<R, O> key) throws DataAccessException;
 
     /**
@@ -3068,6 +3214,7 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      * @see ForeignKey#fetchChildren(Record)
      * @see ForeignKey#fetchChildren(Record...)
      */
+    @NotNull
     <O extends TableRecord<O>> Result<O> fetchChildren(ForeignKey<O, R> key) throws DataAccessException;
 
     // ------------------------------------------------------------------------

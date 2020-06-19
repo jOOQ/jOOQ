@@ -37,9 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
 import org.jooq.Binding;
 import org.jooq.Check;
 import org.jooq.Converter;

@@ -95,15 +95,6 @@ import org.jetbrains.annotations.Nullable;
 public interface Param<T> extends Field<T> {
 
     /**
-     * {@inheritDoc}
-     * <hr/>
-     * The <code>Param</code>'s value for {@link #getName()} coincides with
-     * {@link #getParamName()}
-     */
-    @Override
-    String getName();
-
-    /**
      * The parameter name. This name is useful for two things:
      * <ul>
      * <li>Named parameters in frameworks that support them, such as Spring's

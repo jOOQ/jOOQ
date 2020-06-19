@@ -37,10 +37,9 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A context object that provides information about a loader's current state to
@@ -53,6 +52,7 @@ public interface LoaderContext {
     /**
      * A list of errors that might have happened during the load.
      */
+    @NotNull
     List<LoaderError> errors();
 
     /**

@@ -37,9 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
 import java.io.Serializable;
 
 import org.jooq.MigrationListener;

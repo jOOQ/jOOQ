@@ -37,9 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
 import static org.jooq.impl.ExpressionOperator.MODULO;
 import static org.jooq.impl.Keywords.K_MOD;
 import static org.jooq.impl.Names.N_MOD;

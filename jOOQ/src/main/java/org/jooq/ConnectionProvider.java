@@ -37,12 +37,12 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import java.sql.Connection;
 
 import org.jooq.exception.DataAccessException;
+import org.jooq.exception.DetachedException;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A connection lifecycle handler API.
@@ -81,10 +81,14 @@ public interface ConnectionProvider {
      * jOOQ will guarantee that every acquired connection is released through
      * {@link #release(Connection)} exactly once.
      *
-     * @return A connection for the current <code>ExecuteContext</code>.
+     * @return A connection for the current <code>ExecuteContext</code>. If
+     *         <code>null</code> is returned (e.g. by NoConnectionProvider),
+     *         then statements cannot be executed. Attempts to execute
+     *         statements will result in a {@link DetachedException}.
      * @throws DataAccessException If anything went wrong while acquiring a
      *             connection
      */
+    @Nullable
     Connection acquire() throws DataAccessException;
 
     /**

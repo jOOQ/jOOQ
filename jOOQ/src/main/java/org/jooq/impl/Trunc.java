@@ -37,9 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
 import static java.math.BigDecimal.TEN;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.zero;

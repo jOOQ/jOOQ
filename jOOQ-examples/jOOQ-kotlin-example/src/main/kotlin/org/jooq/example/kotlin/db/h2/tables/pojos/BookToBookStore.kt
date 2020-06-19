@@ -17,5 +17,4 @@ data class BookToBookStore(
     , var stock: Int? = null
 ): Serializable {
 
-    constructor(): this(null, null, null)
 }

@@ -37,10 +37,9 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import org.jooq.impl.DefaultVisitListenerProvider;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A provider for {@link VisitListener} instances.
@@ -74,5 +73,6 @@ public interface VisitListenerProvider {
      * @see VisitContext
      * @see DefaultVisitListenerProvider
      */
+    @NotNull
     VisitListener provide();
 }

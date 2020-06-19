@@ -38,8 +38,6 @@
 
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
 
 /**
  * A field contained in a UDT.

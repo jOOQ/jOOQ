@@ -37,9 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Savepoint;
@@ -48,6 +45,8 @@ import org.jooq.ConnectionProvider;
 import org.jooq.exception.DataAccessException;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.JDBCUtils;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A default implementation for {@link ConnectionProvider}.
@@ -80,6 +79,7 @@ public class DefaultConnectionProvider implements ConnectionProvider {
     // XXX: ConnectionProvider API
     // -------------------------------------------------------------------------
 
+    @NotNull
     @Override
     public final Connection acquire() {
         return connection;
@@ -146,6 +146,7 @@ public class DefaultConnectionProvider implements ConnectionProvider {
     /**
      * Convenience method to access {@link Connection#setSavepoint()}.
      */
+    @NotNull
     public final Savepoint setSavepoint() throws DataAccessException {
         try {
             log.debug("set savepoint");
@@ -159,6 +160,7 @@ public class DefaultConnectionProvider implements ConnectionProvider {
     /**
      * Convenience method to access {@link Connection#setSavepoint(String)}.
      */
+    @NotNull
     public final Savepoint setSavepoint(String name) throws DataAccessException {
         try {
             log.debug("set savepoint", name);

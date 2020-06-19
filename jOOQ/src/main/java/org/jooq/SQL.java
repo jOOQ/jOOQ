@@ -37,9 +37,6 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import org.jooq.conf.ParamType;
 import org.jooq.conf.StatementType;
 import org.jooq.impl.DSL;

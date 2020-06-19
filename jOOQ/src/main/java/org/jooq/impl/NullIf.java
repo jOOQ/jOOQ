@@ -37,9 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
 import static org.jooq.impl.Keywords.K_NULL;
 import static org.jooq.impl.Names.N_IIF;
 import static org.jooq.impl.Names.N_NULLIF;

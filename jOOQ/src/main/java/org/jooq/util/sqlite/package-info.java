@@ -3,5 +3,3 @@
  * {@link org.jooq.SQLDialect#SQLITE} dialect.
  */
 package org.jooq.util.sqlite;
-
-import org.jetbrains.annotations.*;

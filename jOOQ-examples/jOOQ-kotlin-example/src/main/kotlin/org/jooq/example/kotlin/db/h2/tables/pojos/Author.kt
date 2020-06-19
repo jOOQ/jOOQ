@@ -21,5 +21,4 @@ data class Author(
     , var address: String? = null
 ): Serializable {
 
-    constructor(): this(null, null, null, null, null, null)
 }

@@ -37,10 +37,9 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * The <code>Loader</code> API is used for configuring data loads.
@@ -55,6 +54,7 @@ public interface Loader<R extends Record> {
     /**
      * A list of errors that might have happened during the load.
      */
+    @NotNull
     List<LoaderError> errors();
 
     /**
@@ -80,6 +80,7 @@ public interface Loader<R extends Record> {
     /**
      * The results that are also returned from {@link Loader}.
      */
+    @NotNull
     LoaderContext result();
 
 }

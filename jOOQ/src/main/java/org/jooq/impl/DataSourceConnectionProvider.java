@@ -37,9 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -47,6 +44,8 @@ import javax.sql.DataSource;
 
 import org.jooq.ConnectionProvider;
 import org.jooq.exception.DataAccessException;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A default implementation for a pooled {@link DataSource}-oriented
@@ -76,10 +75,12 @@ public class DataSourceConnectionProvider implements ConnectionProvider {
         this.dataSource = dataSource;
     }
 
+    @NotNull
     public DataSource dataSource() {
         return dataSource;
     }
 
+    @NotNull
     @Override
     public Connection acquire() {
         try {

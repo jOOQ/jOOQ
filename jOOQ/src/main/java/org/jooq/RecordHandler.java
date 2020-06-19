@@ -37,8 +37,6 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
 
 /**
  * A <code>RecordHandler</code> is a handler that can receive {@link Record}

@@ -37,10 +37,9 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import org.jooq.exception.MappingException;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A <code>RecordUnmapper</code> is a mapper that can receive user objects and
@@ -70,5 +69,6 @@ public interface RecordUnmapper<E, R extends Record> {
      * @throws MappingException wrapping any reflection exception that might
      *             have occurred while mapping records.
      */
+    @NotNull
     R unmap(E source) throws MappingException;
 }

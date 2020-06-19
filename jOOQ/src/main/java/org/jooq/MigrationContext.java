@@ -37,8 +37,7 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
+import org.jetbrains.annotations.NotNull;
 
 /**
  * The context in which a {@link Migration} is executed.
@@ -61,6 +60,7 @@ public interface MigrationContext extends Scope {
      * <p>
      * This is available on all {@link MigrationListener} events.
      */
+    @NotNull
     Version migrationFrom();
 
     /**
@@ -72,6 +72,7 @@ public interface MigrationContext extends Scope {
      * <p>
      * This is available on all {@link MigrationListener} events.
      */
+    @NotNull
     Version migrationTo();
 
     /**
@@ -80,6 +81,7 @@ public interface MigrationContext extends Scope {
      * <p>
      * This is available on all {@link MigrationListener} events.
      */
+    @NotNull
     Queries migrationQueries();
 
     /**
@@ -97,6 +99,7 @@ public interface MigrationContext extends Scope {
      * <li>{@link MigrationListener#queryEnd(MigrationContext)}</li>
      * </ul>
      */
+    @NotNull
     Version queriesFrom();
 
     /**
@@ -114,6 +117,7 @@ public interface MigrationContext extends Scope {
      * <li>{@link MigrationListener#queryEnd(MigrationContext)}</li>
      * </ul>
      */
+    @NotNull
     Version queriesTo();
 
     /**
@@ -123,6 +127,7 @@ public interface MigrationContext extends Scope {
      * This is available on the same {@link MigrationListener} events as
      * {@link #queriesFrom()} and {@link #queriesTo()}.
      */
+    @NotNull
     Queries queries();
 
     /**
@@ -132,5 +137,6 @@ public interface MigrationContext extends Scope {
      * {@link MigrationListener#queryStart(MigrationContext)} and
      * {@link MigrationListener#queryEnd(MigrationContext)}.
      */
+    @NotNull
     Query query();
 }

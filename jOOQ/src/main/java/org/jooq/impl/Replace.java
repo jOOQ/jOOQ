@@ -37,9 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.Names.N_REPLACE;

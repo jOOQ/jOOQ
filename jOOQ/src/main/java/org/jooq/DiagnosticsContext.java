@@ -37,13 +37,13 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.util.List;
 import java.util.Set;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A parameter object that is passed to {@link DiagnosticsListener} methods.
@@ -56,6 +56,7 @@ public interface DiagnosticsContext {
      * The {@link ResultSet} available in this context, or <code>null</code>, if
      * there was no result set.
      */
+    @Nullable
     ResultSet resultSet();
 
     /**
@@ -106,12 +107,14 @@ public interface DiagnosticsContext {
      * columns that were retrieved from the {@link #resultSet()} set <em>thus
      * far</em>.
      */
+    @NotNull
     List<String> resultSetConsumedColumnNames();
 
     /**
      * The number of columns that were actually available from
      * {@link #resultSet()}, or <code>-1</code> if there was no result set.
      */
+    @NotNull
     List<String> resultSetFetchedColumnNames();
 
     /**
@@ -147,22 +150,26 @@ public interface DiagnosticsContext {
     /**
      * The actual statement that is being executed.
      */
+    @NotNull
     String actualStatement();
 
     /**
      * The normalised statement that all duplicates correspond to.
      */
+    @NotNull
     String normalisedStatement();
 
     /**
      * The duplicate statements that all correspond to a single normalised
      * statement.
      */
+    @NotNull
     Set<String> duplicateStatements();
 
     /**
      * The repeated statements that all correspond to a single normalised
      * statement.
      */
+    @NotNull
     List<String> repeatedStatements();
 }

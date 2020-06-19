@@ -37,10 +37,9 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import org.jooq.impl.DefaultRecordListenerProvider;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A provider for {@link RecordListener} instances.
@@ -74,5 +73,6 @@ public interface RecordListenerProvider {
      * @see RecordContext
      * @see DefaultRecordListenerProvider
      */
+    @NotNull
     RecordListener provide();
 }

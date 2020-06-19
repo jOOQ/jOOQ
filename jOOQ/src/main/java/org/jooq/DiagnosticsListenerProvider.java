@@ -37,10 +37,9 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import org.jooq.impl.DefaultDiagnosticsListenerProvider;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A provider for {@link TransactionListener} instances.
@@ -73,5 +72,6 @@ public interface DiagnosticsListenerProvider {
      * @see DiagnosticsListener
      * @see DefaultDiagnosticsListenerProvider
      */
+    @NotNull
     DiagnosticsListener provide();
 }

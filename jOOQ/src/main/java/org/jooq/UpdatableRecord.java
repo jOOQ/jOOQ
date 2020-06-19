@@ -37,9 +37,6 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 // ...
 // ...
 // ...
@@ -67,6 +64,9 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataChangedException;
 import org.jooq.exception.NoDataFoundException;
 import org.jooq.exception.TooManyRowsException;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A common interface for records that can be stored back to the database again.
@@ -111,6 +111,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * record type information. For instance, they may return {@link Record1},
      * {@link Record2}, ...
      */
+    @NotNull
     Record key();
 
     /**
@@ -238,7 +239,6 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * @see #insert()
      * @see #update()
      */
-    @NotNull
     @Support
     int store() throws DataAccessException, DataChangedException;
 
@@ -254,7 +254,6 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * @see #insert(Field...)
      * @see #update(Field...)
      */
-    @NotNull
     @Support
     int store(Field<?>... fields) throws DataAccessException, DataChangedException;
 
@@ -270,7 +269,6 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * @see #insert(Field...)
      * @see #update(Field...)
      */
-    @NotNull
     @Support
     int store(Collection<? extends Field<?>> fields) throws DataAccessException, DataChangedException;
 
@@ -293,7 +291,6 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * @throws DataAccessException if something went wrong executing the query
      * @see #store()
      */
-    @NotNull
     @Support
     @Override
     int insert() throws DataAccessException;
@@ -307,7 +304,6 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * @throws DataAccessException if something went wrong executing the query
      * @see #insert()
      */
-    @NotNull
     @Support
     @Override
     int insert(Field<?>... fields) throws DataAccessException;
@@ -321,7 +317,6 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * @throws DataAccessException if something went wrong executing the query
      * @see #insert()
      */
-    @NotNull
     @Support
     @Override
     int insert(Collection<? extends Field<?>> fields) throws DataAccessException;
@@ -347,7 +342,6 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      *             record has already been changed/deleted in the database
      * @see #store()
      */
-    @NotNull
     @Support
     int update() throws DataAccessException, DataChangedException;
 
@@ -362,7 +356,6 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      *             record has already been changed/deleted in the database
      * @see #update()
      */
-    @NotNull
     @Support
     int update(Field<?>... fields) throws DataAccessException, DataChangedException;
 
@@ -377,7 +370,6 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      *             record has already been changed/deleted in the database
      * @see #update()
      */
-    @NotNull
     @Support
     int update(Collection<? extends Field<?>> fields) throws DataAccessException, DataChangedException;
 
@@ -409,7 +401,6 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * @see #store()
      * @see InsertOnDuplicateStep#onDuplicateKeyUpdate()
      */
-    @NotNull
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     int merge() throws DataAccessException;
 
@@ -422,7 +413,6 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * @throws DataAccessException if something went wrong executing the query
      * @see #merge()
      */
-    @NotNull
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     int merge(Field<?>... fields) throws DataAccessException;
 
@@ -435,7 +425,6 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * @throws DataAccessException if something went wrong executing the query
      * @see #merge()
      */
-    @NotNull
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     int merge(Collection<? extends Field<?>> fields) throws DataAccessException;
 
@@ -492,7 +481,6 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * @throws DataChangedException If optimistic locking is enabled and the
      *             record has already been changed/deleted in the database
      */
-    @NotNull
     @Support
     int delete() throws DataAccessException, DataChangedException;
 
@@ -587,6 +575,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      *
      * @return A new record, distinct from <code>this</code> record.
      */
+    @NotNull
     R copy();
 
     /**
@@ -601,7 +590,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * @see ForeignKey#fetchChildren(Record)
      * @see ForeignKey#fetchChildren(Record...)
      */
-    @NotNull
+    @Nullable
     @Support
     <O extends TableRecord<O>> O fetchChild(ForeignKey<O, R> key) throws TooManyRowsException, DataAccessException;
 

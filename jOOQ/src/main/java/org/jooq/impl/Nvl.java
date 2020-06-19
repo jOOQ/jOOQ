@@ -37,9 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
 import static org.jooq.impl.Keywords.K_COALESCE;
 import static org.jooq.impl.Keywords.K_IS_NULL;
 import static org.jooq.impl.Names.N_IFNULL;

@@ -37,7 +37,5 @@
  */
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
 
 enum XMLPassingMechanism { BY_REF, BY_VALUE, DEFAULT }

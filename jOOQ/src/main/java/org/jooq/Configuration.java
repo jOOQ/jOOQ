@@ -37,9 +37,6 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.Savepoint;
@@ -69,6 +66,9 @@ import org.jooq.impl.DefaultTransactionProvider;
 import org.jooq.impl.DefaultVisitListenerProvider;
 import org.jooq.tools.LoggerListener;
 import org.jooq.tools.StopWatchListener;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A <code>Configuration</code> configures a {@link DSLContext}, providing it
@@ -215,6 +215,7 @@ public interface Configuration extends Serializable {
      * convenience for {@link DSL#using(Configuration)}. There's no functional
      * difference between the two methods.
      */
+    @NotNull
     DSLContext dsl();
 
     // -------------------------------------------------------------------------
@@ -234,6 +235,7 @@ public interface Configuration extends Serializable {
      * @return The custom data. This is never <code>null</code>
      * @see ExecuteListener
      */
+    @NotNull
     Map<Object, Object> data();
 
     /**
@@ -251,6 +253,7 @@ public interface Configuration extends Serializable {
      *         in this <code>Configuration</code>
      * @see ExecuteListener
      */
+    @Nullable
     Object data(Object key);
 
     /**
@@ -272,6 +275,7 @@ public interface Configuration extends Serializable {
      *         was previously set for the given key
      * @see ExecuteListener
      */
+    @Nullable
     Object data(Object key, Object value);
 
     // -------------------------------------------------------------------------
@@ -283,12 +287,14 @@ public interface Configuration extends Serializable {
      * Get this configuration's {@link Clock}, which is used for optimistic
      * locking, transaction time, and other time-depending features.
      */
+    @NotNull
     Clock clock();
 
 
     /**
      * Get this configuration's underlying connection provider.
      */
+    @NotNull
     ConnectionProvider connectionProvider();
 
     /**
@@ -297,6 +303,7 @@ public interface Configuration extends Serializable {
      *
      * @see DSLContext#meta(Source...)
      */
+    @NotNull
     ConnectionProvider interpreterConnectionProvider();
 
     /**
@@ -308,16 +315,19 @@ public interface Configuration extends Serializable {
      * source or transaction. By default, this connection provider is the same
      * as {@link #connectionProvider()}.
      */
+    @NotNull
     ConnectionProvider systemConnectionProvider();
 
     /**
      * Get this configuration's underlying meta provider.
      */
+    @NotNull
     MetaProvider metaProvider();
 
     /**
      * Get this configuration's underlying meta provider.
      */
+    @NotNull
     VersionProvider versionProvider();
 
     /**
@@ -343,6 +353,7 @@ public interface Configuration extends Serializable {
      * overrides the {@link Executor}, e.g. as is the case for
      * {@link ResultQuery#fetchAsync(Executor)}.
      */
+    @NotNull
     ExecutorProvider executorProvider();
 
     /**
@@ -352,34 +363,40 @@ public interface Configuration extends Serializable {
      * {@link #connectionProvider()} is a {@link DefaultConnectionProvider},
      * then this will return a {@link DefaultTransactionProvider}.
      */
+    @NotNull
     TransactionProvider transactionProvider();
 
     /**
      * Get the configured <code>TransactionListenerProvider</code>s from this
      * configuration.
      */
+    @NotNull
     TransactionListenerProvider[] transactionListenerProviders();
 
     /**
      * Get the configured <code>DiagnosticsListenerProvider</code>s from this
      * configuration.
      */
+    @NotNull
     DiagnosticsListenerProvider[] diagnosticsListenerProviders();
 
     /**
      * Get the configured <code>UnwrapperProvider</code> from this
      * configuration.
      */
+    @NotNull
     UnwrapperProvider unwrapperProvider();
 
     /**
      * Get this configuration's underlying record mapper provider.
      */
+    @NotNull
     RecordMapperProvider recordMapperProvider();
 
     /**
      * Get this configuration's underlying record unmapper provider.
      */
+    @NotNull
     RecordUnmapperProvider recordUnmapperProvider();
 
     /**
@@ -405,6 +422,7 @@ public interface Configuration extends Serializable {
      * @see RecordListener
      * @see RecordContext
      */
+    @NotNull
     RecordListenerProvider[] recordListenerProviders();
 
     /**
@@ -434,6 +452,7 @@ public interface Configuration extends Serializable {
      * @see ExecuteListener
      * @see ExecuteContext
      */
+    @NotNull
     ExecuteListenerProvider[] executeListenerProviders();
 
     /**
@@ -459,6 +478,7 @@ public interface Configuration extends Serializable {
      * @see MigrationListener
      * @see MigrationContext
      */
+    @NotNull
     MigrationListenerProvider[] migrationListenerProviders();
 
     /**
@@ -484,12 +504,14 @@ public interface Configuration extends Serializable {
      * @see VisitListener
      * @see VisitContext
      */
+    @NotNull
     VisitListenerProvider[] visitListenerProviders();
 
     /**
      * Get the configured <code>ConverterProvider</code> from this
      * configuration.
      */
+    @NotNull
     ConverterProvider converterProvider();
 
     /**
@@ -497,22 +519,26 @@ public interface Configuration extends Serializable {
      *
      * @deprecated - 2.0.5 - Use {@link #settings()} instead
      */
+    @NotNull
     @Deprecated
     SchemaMapping schemaMapping();
 
     /**
      * Retrieve the configured dialect.
      */
+    @NotNull
     SQLDialect dialect();
 
     /**
      * Retrieve the family of the configured dialect.
      */
+    @NotNull
     SQLDialect family();
 
     /**
      * Retrieve the runtime configuration settings.
      */
+    @NotNull
     Settings settings();
 
     // -------------------------------------------------------------------------
@@ -530,6 +556,7 @@ public interface Configuration extends Serializable {
      *            configuration.
      * @return The changed configuration.
      */
+    @NotNull
     Configuration set(Clock newClock);
 
 
@@ -543,6 +570,7 @@ public interface Configuration extends Serializable {
      *            in the changed configuration.
      * @return The changed configuration.
      */
+    @NotNull
     Configuration set(ConnectionProvider newConnectionProvider);
 
     /**
@@ -555,6 +583,7 @@ public interface Configuration extends Serializable {
      *            changed configuration.
      * @return The changed configuration.
      */
+    @NotNull
     Configuration set(MetaProvider newMetaProvider);
 
     /**
@@ -567,6 +596,7 @@ public interface Configuration extends Serializable {
      *            changed configuration.
      * @return The changed configuration.
      */
+    @NotNull
     Configuration set(VersionProvider newVersionProvider);
 
     /**
@@ -579,6 +609,7 @@ public interface Configuration extends Serializable {
      *            the changed configuration.
      * @return The changed configuration.
      */
+    @NotNull
     Configuration set(ExecutorProvider newExecutorProvider);
 
     /**
@@ -594,6 +625,7 @@ public interface Configuration extends Serializable {
      *            configuration.
      * @return The changed configuration.
      */
+    @NotNull
     Configuration set(Executor newExecutor);
 
     /**
@@ -607,6 +639,7 @@ public interface Configuration extends Serializable {
      *            configuration.
      * @return The changed configuration.
      */
+    @NotNull
     Configuration set(Connection newConnection);
 
     /**
@@ -620,6 +653,7 @@ public interface Configuration extends Serializable {
      *            configuration.
      * @return The changed configuration.
      */
+    @NotNull
     Configuration set(DataSource newDataSource);
 
     /**
@@ -632,6 +666,7 @@ public interface Configuration extends Serializable {
      *            contained in the changed configuration.
      * @return The changed configuration.
      */
+    @NotNull
     Configuration set(TransactionProvider newTransactionProvider);
 
     /**
@@ -647,6 +682,7 @@ public interface Configuration extends Serializable {
      *            changed configuration.
      * @return The changed configuration.
      */
+    @NotNull
     Configuration set(RecordMapper<?, ?> newRecordMapper);
 
     /**
@@ -659,6 +695,7 @@ public interface Configuration extends Serializable {
      *            contained in the changed configuration.
      * @return The changed configuration.
      */
+    @NotNull
     Configuration set(RecordMapperProvider newRecordMapperProvider);
 
     /**
@@ -674,6 +711,7 @@ public interface Configuration extends Serializable {
      *            changed configuration.
      * @return The changed configuration.
      */
+    @NotNull
     Configuration set(RecordUnmapper<?, ?> newRecordUnmapper);
 
     /**
@@ -686,6 +724,7 @@ public interface Configuration extends Serializable {
      *            contained in the changed configuration.
      * @return The changed configuration.
      */
+    @NotNull
     Configuration set(RecordUnmapperProvider newRecordUnmapperProvider);
 
     /**
@@ -701,6 +740,7 @@ public interface Configuration extends Serializable {
      *            in the changed configuration.
      * @return The changed configuration.
      */
+    @NotNull
     Configuration set(RecordListener... newRecordListeners);
 
     /**
@@ -713,6 +753,7 @@ public interface Configuration extends Serializable {
      *            be contained in the changed configuration.
      * @return The changed configuration.
      */
+    @NotNull
     Configuration set(RecordListenerProvider... newRecordListenerProviders);
 
     /**
@@ -728,6 +769,7 @@ public interface Configuration extends Serializable {
      *            the changed configuration.
      * @return The changed configuration.
      */
+    @NotNull
     Configuration set(ExecuteListener... newExecuteListeners);
 
     /**
@@ -740,6 +782,7 @@ public interface Configuration extends Serializable {
      *            be contained in the changed configuration.
      * @return The changed configuration.
      */
+    @NotNull
     Configuration set(ExecuteListenerProvider... newExecuteListenerProviders);
 
     /**
@@ -755,6 +798,7 @@ public interface Configuration extends Serializable {
      *            in the changed configuration.
      * @return The changed configuration.
      */
+    @NotNull
     Configuration set(MigrationListener... newMigrationListeners);
 
     /**
@@ -767,6 +811,7 @@ public interface Configuration extends Serializable {
      *            be contained in the changed configuration.
      * @return The changed configuration.
      */
+    @NotNull
     Configuration set(MigrationListenerProvider... newMigrationListenerProviders);
 
     /**
@@ -782,6 +827,7 @@ public interface Configuration extends Serializable {
      *            in the changed configuration.
      * @return The changed configuration.
      */
+    @NotNull
     Configuration set(VisitListener... newVisitListeners);
 
     /**
@@ -794,6 +840,7 @@ public interface Configuration extends Serializable {
      *            be contained in the changed configuration.
      * @return The changed configuration.
      */
+    @NotNull
     Configuration set(VisitListenerProvider... newVisitListenerProviders);
 
     /**
@@ -809,6 +856,7 @@ public interface Configuration extends Serializable {
      *            contained in the changed configuration.
      * @return The changed configuration.
      */
+    @NotNull
     Configuration set(TransactionListener... newTransactionListeners);
 
     /**
@@ -821,6 +869,7 @@ public interface Configuration extends Serializable {
      *            providers to be contained in the changed configuration.
      * @return The changed configuration.
      */
+    @NotNull
     Configuration set(TransactionListenerProvider... newTransactionListenerProviders);
 
     /**
@@ -836,6 +885,7 @@ public interface Configuration extends Serializable {
      *            contained in the changed configuration.
      * @return The changed configuration.
      */
+    @NotNull
     Configuration set(DiagnosticsListener... newDiagnosticsListeners);
 
     /**
@@ -848,6 +898,7 @@ public interface Configuration extends Serializable {
      *            providers to be contained in the changed configuration.
      * @return The changed configuration.
      */
+    @NotNull
     Configuration set(DiagnosticsListenerProvider... newDiagnosticsListenerProviders);
 
     /**
@@ -860,6 +911,7 @@ public interface Configuration extends Serializable {
      *            configuration.
      * @return The changed configuration.
      */
+    @NotNull
     Configuration set(Unwrapper newUnwrapper);
 
     /**
@@ -872,6 +924,7 @@ public interface Configuration extends Serializable {
      *            the changed configuration.
      * @return The changed configuration.
      */
+    @NotNull
     Configuration set(UnwrapperProvider newUnwrapperProvider);
 
     /**
@@ -884,6 +937,7 @@ public interface Configuration extends Serializable {
      *            the changed configuration.
      * @return The changed configuration.
      */
+    @NotNull
     Configuration set(ConverterProvider newConverterProvider);
 
     /**
@@ -896,6 +950,7 @@ public interface Configuration extends Serializable {
      *            configuration.
      * @return The changed configuration.
      */
+    @NotNull
     Configuration set(SQLDialect newDialect);
 
     /**
@@ -908,6 +963,7 @@ public interface Configuration extends Serializable {
      *            configuration.
      * @return The changed configuration.
      */
+    @NotNull
     Configuration set(Settings newSettings);
 
     // -------------------------------------------------------------------------
@@ -920,6 +976,7 @@ public interface Configuration extends Serializable {
      *
      * @return The derived configuration.
      */
+    @NotNull
     Configuration derive();
 
 
@@ -930,6 +987,7 @@ public interface Configuration extends Serializable {
      *            configuration.
      * @return The derived configuration.
      */
+    @NotNull
     Configuration derive(Clock newClock);
 
 
@@ -941,6 +999,7 @@ public interface Configuration extends Serializable {
      *            configuration.
      * @return The derived configuration.
      */
+    @NotNull
     Configuration derive(Connection newConnection);
 
     /**
@@ -951,6 +1010,7 @@ public interface Configuration extends Serializable {
      *            configuration.
      * @return The derived configuration.
      */
+    @NotNull
     Configuration derive(DataSource newDataSource);
 
     /**
@@ -961,6 +1021,7 @@ public interface Configuration extends Serializable {
      *            in the derived configuration.
      * @return The derived configuration.
      */
+    @NotNull
     Configuration derive(ConnectionProvider newConnectionProvider);
 
     /**
@@ -970,6 +1031,7 @@ public interface Configuration extends Serializable {
      *            derived configuration.
      * @return The derived configuration.
      */
+    @NotNull
     Configuration derive(MetaProvider newMetaProvider);
 
     /**
@@ -979,6 +1041,7 @@ public interface Configuration extends Serializable {
      *            derived configuration.
      * @return The derived configuration.
      */
+    @NotNull
     Configuration derive(VersionProvider newVersionProvider);
 
     /**
@@ -991,6 +1054,7 @@ public interface Configuration extends Serializable {
      *            configuration.
      * @return The derived configuration.
      */
+    @NotNull
     Configuration derive(Executor newExecutor);
 
     /**
@@ -1001,6 +1065,7 @@ public interface Configuration extends Serializable {
      *            the derived configuration.
      * @return The derived configuration.
      */
+    @NotNull
     Configuration derive(ExecutorProvider newExecutorProvider);
 
     /**
@@ -1011,6 +1076,7 @@ public interface Configuration extends Serializable {
      *            contained in the derived configuration.
      * @return The derived configuration.
      */
+    @NotNull
     Configuration derive(TransactionProvider newTransactionProvider);
 
     /**
@@ -1023,6 +1089,7 @@ public interface Configuration extends Serializable {
      *            derived configuration.
      * @return The derived configuration.
      */
+    @NotNull
     Configuration derive(RecordMapper<?, ?> newRecordMapper);
 
     /**
@@ -1033,6 +1100,7 @@ public interface Configuration extends Serializable {
      *            contained in the derived configuration.
      * @return The derived configuration.
      */
+    @NotNull
     Configuration derive(RecordMapperProvider newRecordMapperProvider);
 
     /**
@@ -1045,6 +1113,7 @@ public interface Configuration extends Serializable {
      *            derived configuration.
      * @return The derived configuration.
      */
+    @NotNull
     Configuration derive(RecordUnmapper<?, ?> newRecordUnmapper);
 
     /**
@@ -1055,6 +1124,7 @@ public interface Configuration extends Serializable {
      *            contained in the derived configuration.
      * @return The derived configuration.
      */
+    @NotNull
     Configuration derive(RecordUnmapperProvider newRecordUnmapperProvider);
 
     /**
@@ -1067,6 +1137,7 @@ public interface Configuration extends Serializable {
      *            derived configuration.
      * @return The derived configuration.
      */
+    @NotNull
     Configuration derive(RecordListener... newRecordListeners);
 
     /**
@@ -1077,6 +1148,7 @@ public interface Configuration extends Serializable {
      *            be contained in the derived configuration.
      * @return The derived configuration.
      */
+    @NotNull
     Configuration derive(RecordListenerProvider... newRecordListenerProviders);
 
     /**
@@ -1089,6 +1161,7 @@ public interface Configuration extends Serializable {
      *            the derived configuration.
      * @return The derived configuration.
      */
+    @NotNull
     Configuration derive(ExecuteListener... newExecuteListeners);
 
     /**
@@ -1099,6 +1172,7 @@ public interface Configuration extends Serializable {
      *            be contained in the derived configuration.
      * @return The derived configuration.
      */
+    @NotNull
     Configuration derive(ExecuteListenerProvider... newExecuteListenerProviders);
 
     /**
@@ -1111,6 +1185,7 @@ public interface Configuration extends Serializable {
      *            the derived configuration.
      * @return The derived configuration.
      */
+    @NotNull
     Configuration derive(MigrationListener... newMigrationListeners);
 
     /**
@@ -1121,6 +1196,7 @@ public interface Configuration extends Serializable {
      *            be contained in the derived configuration.
      * @return The derived configuration.
      */
+    @NotNull
     Configuration derive(MigrationListenerProvider... newMigrationListenerProviders);
 
     /**
@@ -1133,6 +1209,7 @@ public interface Configuration extends Serializable {
      *            derived configuration.
      * @return The derived configuration.
      */
+    @NotNull
     Configuration derive(VisitListener... newVisitListeners);
 
     /**
@@ -1143,6 +1220,7 @@ public interface Configuration extends Serializable {
      *            be contained in the derived configuration.
      * @return The derived configuration.
      */
+    @NotNull
     Configuration derive(VisitListenerProvider... newVisitListenerProviders);
 
     /**
@@ -1156,6 +1234,7 @@ public interface Configuration extends Serializable {
      *            contained in the derived configuration.
      * @return The derived configuration.
      */
+    @NotNull
     Configuration derive(TransactionListener... newTransactionListeners);
 
     /**
@@ -1166,6 +1245,7 @@ public interface Configuration extends Serializable {
      *            providers to be contained in the derived configuration.
      * @return The derived configuration.
      */
+    @NotNull
     Configuration derive(TransactionListenerProvider... newTransactionListenerProviders);
 
     /**
@@ -1176,6 +1256,7 @@ public interface Configuration extends Serializable {
      *            contained in the derived configuration.
      * @return The derived configuration.
      */
+    @NotNull
     Configuration derive(DiagnosticsListener... newDiagnosticsListeners);
 
     /**
@@ -1186,6 +1267,7 @@ public interface Configuration extends Serializable {
      *            providers to be contained in the derived configuration.
      * @return The derived configuration.
      */
+    @NotNull
     Configuration derive(DiagnosticsListenerProvider... newDiagnosticsListenerProviders);
 
     /**
@@ -1195,6 +1277,7 @@ public interface Configuration extends Serializable {
      *            configuration.
      * @return The derived configuration.
      */
+    @NotNull
     Configuration derive(Unwrapper newUnwrapper);
 
     /**
@@ -1205,6 +1288,7 @@ public interface Configuration extends Serializable {
      *            the derived configuration.
      * @return The derived configuration.
      */
+    @NotNull
     Configuration derive(UnwrapperProvider newUnwrapperProvider);
 
     /**
@@ -1215,6 +1299,7 @@ public interface Configuration extends Serializable {
      *            the derived configuration.
      * @return The derived configuration.
      */
+    @NotNull
     Configuration derive(ConverterProvider newConverterProvider);
 
     /**
@@ -1224,6 +1309,7 @@ public interface Configuration extends Serializable {
      *            configuration.
      * @return The derived configuration.
      */
+    @NotNull
     Configuration derive(SQLDialect newDialect);
 
     /**
@@ -1233,5 +1319,6 @@ public interface Configuration extends Serializable {
      *            configuration.
      * @return The derived configuration.
      */
+    @NotNull
     Configuration derive(Settings newSettings);
 }

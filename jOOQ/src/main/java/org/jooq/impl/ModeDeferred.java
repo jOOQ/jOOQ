@@ -37,9 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
 import org.jooq.AggregateFilterStep;
 import org.jooq.DataType;
 import org.jooq.Field;

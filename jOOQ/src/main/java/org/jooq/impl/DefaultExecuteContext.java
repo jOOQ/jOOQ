@@ -37,9 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
 import static org.jooq.conf.SettingsTools.renderLocale;
 import static org.jooq.impl.Tools.EMPTY_INT;
 import static org.jooq.impl.Tools.EMPTY_QUERY;
@@ -82,6 +79,8 @@ import org.jooq.Update;
 import org.jooq.conf.Settings;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.JDBCUtils;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A default implementation for the {@link ExecuteContext}.
@@ -780,6 +779,7 @@ class DefaultExecuteContext implements ExecuteContext {
 
     private final class ExecuteContextConnectionProvider implements ConnectionProvider {
 
+        @NotNull
         @Override
         public final Connection acquire() {
 

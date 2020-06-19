@@ -37,11 +37,10 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import java.util.concurrent.Executor;
 import java.util.concurrent.ForkJoinPool;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * The <code>ExecutorProvider</code> SPI can be used to provide jOOQ with custom
@@ -74,5 +73,6 @@ public interface ExecutorProvider {
     /**
      * Provide an <code>Executor</code> for the task at hand.
      */
+    @NotNull
     Executor provide();
 }

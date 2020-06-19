@@ -37,11 +37,10 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import org.jooq.impl.DefaultRecordMapper;
 import org.jooq.impl.DefaultRecordMapperProvider;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A provider for {@link RecordMapper} instances.
@@ -116,5 +115,6 @@ public interface RecordMapperProvider {
      * @see DefaultRecordMapper
      * @see DefaultRecordMapperProvider
      */
+    @NotNull
     <R extends Record, E> RecordMapper<R, E> provide(RecordType<R> recordType, Class<? extends E> type);
 }

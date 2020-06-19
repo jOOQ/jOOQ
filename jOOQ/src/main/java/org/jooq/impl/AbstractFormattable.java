@@ -37,9 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Serializable;

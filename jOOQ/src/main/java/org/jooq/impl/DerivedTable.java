@@ -38,9 +38,6 @@
 
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
 import static org.jooq.impl.Names.N_SELECT;
 import static org.jooq.impl.Tools.visitSubquery;
 

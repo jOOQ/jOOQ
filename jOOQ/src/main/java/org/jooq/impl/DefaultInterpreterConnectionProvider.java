@@ -37,9 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jetbrains.annotations.*;
-
-
 import static org.jooq.SQLDialect.DEFAULT;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
@@ -54,6 +51,8 @@ import org.jooq.SQLDialect;
 import org.jooq.exception.DataAccessException;
 import org.jooq.tools.jdbc.JDBCUtils;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * @author Lukas Eder
  */
@@ -65,6 +64,7 @@ final class DefaultInterpreterConnectionProvider implements ConnectionProvider {
         this.configuration = configuration;
     }
 
+    @NotNull
     @Override
     public Connection acquire() throws DataAccessException {
         SQLDialect dialect = defaultIfNull(configuration.settings().getInterpreterDialect(), DEFAULT);

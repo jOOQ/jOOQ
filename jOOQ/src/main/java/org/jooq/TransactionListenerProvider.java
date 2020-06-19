@@ -37,10 +37,9 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import org.jooq.impl.DefaultTransactionListenerProvider;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A provider for {@link TransactionListener} instances.
@@ -74,5 +73,6 @@ public interface TransactionListenerProvider {
      * @see TransactionProvider
      * @see DefaultTransactionListenerProvider
      */
+    @NotNull
     TransactionListener provide();
 }

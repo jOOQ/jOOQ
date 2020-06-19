@@ -37,12 +37,11 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import static org.jooq.SQLDialect.*;
 
 import java.util.*;
+
+import org.jetbrains.annotations.*;
 
 /**
  * A step in the construction of the <code>ALTER DOMAIN</code> statement.
@@ -71,21 +70,21 @@ public interface AlterDomainRenameConstraintStep {
     /**
      * Add the <code>TO</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
-    @NotNull
     @Support({ POSTGRES })
+    @NotNull
     AlterDomainFinalStep to(String renameConstraintTo);
 
     /**
      * Add the <code>TO</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
-    @NotNull
     @Support({ POSTGRES })
+    @NotNull
     AlterDomainFinalStep to(Name renameConstraintTo);
 
     /**
      * Add the <code>TO</code> clause to the <code>ALTER DOMAIN</code> statement.
      */
-    @NotNull
     @Support({ POSTGRES })
+    @NotNull
     AlterDomainFinalStep to(Constraint renameConstraintTo);
 }

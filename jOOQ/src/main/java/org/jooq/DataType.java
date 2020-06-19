@@ -204,7 +204,7 @@ public interface DataType<T> extends Named {
     /**
      * Retrieve the underlying {@link SQLDialect}.
      */
-    @NotNull
+    @Nullable
     SQLDialect getDialect();
 
     /**

@@ -37,10 +37,9 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import java.io.Serializable;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * An <code>Identity</code> is an object representing an <code>IDENTITY</code>
@@ -60,10 +59,12 @@ public interface Identity<R extends Record, T> extends Serializable {
     /**
      * The <code>IDENTITY</code>'s owner table
      */
+    @NotNull
     Table<R> getTable();
 
     /**
      * The <code>IDENTITY</code> column.
      */
+    @NotNull
     TableField<R, T> getField();
 }

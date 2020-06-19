@@ -37,12 +37,11 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import static org.jooq.SQLDialect.*;
 
 import java.util.*;
+
+import org.jetbrains.annotations.*;
 
 /**
  * A step in the construction of the <code>ALTER SCHEMA</code> statement.
@@ -71,21 +70,21 @@ public interface AlterSchemaStep {
     /**
      * Add the <code>RENAME TO</code> clause to the <code>ALTER SCHEMA</code> statement.
      */
-    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
+    @NotNull
     AlterSchemaFinalStep renameTo(String renameTo);
 
     /**
      * Add the <code>RENAME TO</code> clause to the <code>ALTER SCHEMA</code> statement.
      */
-    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
+    @NotNull
     AlterSchemaFinalStep renameTo(Name renameTo);
 
     /**
      * Add the <code>RENAME TO</code> clause to the <code>ALTER SCHEMA</code> statement.
      */
-    @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
+    @NotNull
     AlterSchemaFinalStep renameTo(Schema renameTo);
 }

@@ -50,6 +50,7 @@ import static org.jooq.JoinType.JOIN;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.conf.ParseWithMetaLookups.IGNORE_ON_FAILURE;
 import static org.jooq.conf.ParseWithMetaLookups.THROW_ON_FAILURE;
 import static org.jooq.conf.SettingsTools.parseLocale;
@@ -567,6 +568,8 @@ import org.jooq.types.YearToSecond;
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
 final class ParserImpl implements Parser {
+
+
 
 
 
@@ -6057,6 +6060,10 @@ final class ParserImpl implements Parser {
 
 
 
+
+
+
+
                 if (field == null) {
                     field = parseField(ctx);
 
@@ -6455,6 +6462,9 @@ final class ParserImpl implements Parser {
 
         while (parseIf(ctx, "::"))
             r = cast(toField(ctx, r), parseDataType(ctx));
+
+
+
 
         if (parseIf(ctx, '[')) {
             r = arrayGet((Field) toField(ctx, r), (Field) parseField(ctx, N));

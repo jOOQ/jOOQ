@@ -48,6 +48,7 @@ import static org.jooq.JoinType.JOIN;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.conf.ParseWithMetaLookups.IGNORE_ON_FAILURE;
 import static org.jooq.conf.ParseWithMetaLookups.THROW_ON_FAILURE;
 import static org.jooq.conf.SettingsTools.parseLocale;
@@ -512,6 +513,8 @@ import org.jooq.types.YearToSecond;
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
 final class ParserImpl implements Parser {
+
+
 
 
 
@@ -5403,6 +5406,10 @@ final class ParserImpl implements Parser {
             else {
                 Name alias = null;
                 Field<?> field = null;
+
+
+
+
 
 
 

@@ -60,6 +60,7 @@ import static org.jooq.impl.DSL.all;
 import static org.jooq.impl.DSL.any;
 import static org.jooq.impl.DSL.arrayAgg;
 import static org.jooq.impl.DSL.arrayAggDistinct;
+import static org.jooq.impl.DSL.arrayGet;
 import static org.jooq.impl.DSL.ascii;
 import static org.jooq.impl.DSL.asin;
 import static org.jooq.impl.DSL.asterisk;
@@ -6455,6 +6456,11 @@ final class ParserImpl implements Parser {
         while (parseIf(ctx, "::"))
             r = cast(toField(ctx, r), parseDataType(ctx));
 
+        if (parseIf(ctx, '[')) {
+            r = arrayGet((Field) toField(ctx, r), (Field) parseField(ctx, N));
+            parse(ctx, ']');
+        }
+
         return r;
     }
 
@@ -6489,7 +6495,6 @@ final class ParserImpl implements Parser {
 
     private static final FieldOrRow parseTerm(ParserContext ctx, Type type) {
         FieldOrRow field;
-        Field<?> arg;
         Object value;
 
         switch (ctx.characterUpper()) {
@@ -6533,6 +6538,9 @@ final class ParserImpl implements Parser {
                     if ((field = parseArrayValueConstructorIf(ctx)) != null)
                         return field;
 
+                if ((field = parseFieldArrayGetIf(ctx)) != null)
+                    return field;
+
                 break;
 
             case 'B':
@@ -6560,8 +6568,8 @@ final class ParserImpl implements Parser {
                         return field;
                     else if (parseFunctionNameIf(ctx, "CHAR_LENGTH"))
                         return charLength((Field) parseFieldParenthesised(ctx, S));
-                    else if ((field = parseFieldCardinalityIf(ctx)) != null)
-                        return field;
+                    else if (parseFunctionNameIf(ctx, "CARDINALITY"))
+                        return cardinality((Field) parseFieldParenthesised(ctx, A));
                     else if (parseFunctionNameIf(ctx, "CEILING") || parseFunctionNameIf(ctx, "CEIL"))
                         return ceil((Field) parseFieldNumericOpParenthesised(ctx));
                     else if (parseFunctionNameIf(ctx, "COSH"))
@@ -7731,17 +7739,6 @@ final class ParserImpl implements Parser {
         return jsonEntry(key, value);
     }
 
-    private static final Field<Integer> parseFieldCardinalityIf(ParserContext ctx) {
-        if (parseKeywordIf(ctx, "CARDINALITY")) {
-            parse(ctx, '(');
-            Field<Object[]> f = (Field<Object[]>) parseField(ctx, A);
-            parse(ctx, ')');
-            return cardinality(f);
-        }
-
-        return null;
-    }
-
     private static final Field<?> parseArrayValueConstructorIf(ParserContext ctx) {
         if (parseKeywordIf(ctx, "ARRAY")) {
             parse(ctx, '[');
@@ -7757,6 +7754,20 @@ final class ParserImpl implements Parser {
 
             // Prevent "wrong" javac method bind
             return DSL.array((Collection) fields);
+        }
+
+        return null;
+    }
+
+    private static final Field<?> parseFieldArrayGetIf(ParserContext ctx) {
+        if (parseFunctionNameIf(ctx, "ARRAY_GET")) {
+            parse(ctx, '(');
+            Field f1 = parseField(ctx, A);
+            parse(ctx, ',');
+            Field f2 = parseField(ctx, N);
+            parse(ctx, ')');
+
+            return arrayGet(f1, f2);
         }
 
         return null;

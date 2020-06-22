@@ -21141,7 +21141,7 @@ public class DSL {
     @NotNull
     @Support({ H2, HSQLDB, POSTGRES })
     public static <T> Field<T> arrayGet(Field<T[]> field, Field<Integer> index) {
-        return new ArrayGet<>(field, index);
+        return new ArrayGet<>(nullSafe(field), nullSafe(index));
     }
 
     /**

@@ -40,6 +40,8 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.cardinality;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.Names.N_ARRAY_GET;
+import static org.jooq.impl.SQLDataType.OTHER;
+import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import org.jooq.Context;
 import org.jooq.DataType;
@@ -59,7 +61,7 @@ final class ArrayGet<T> extends AbstractField<T> {
 
     @SuppressWarnings("unchecked")
     ArrayGet(Field<T[]> field, Field<Integer> index) {
-        super(N_ARRAY_GET, (DataType<T>) field.getDataType().getArrayComponentDataType());
+        super(N_ARRAY_GET, (DataType<T>) defaultIfNull(field.getDataType().getArrayComponentDataType(), OTHER));
 
         this.field = field;
         this.index = index;

@@ -59,6 +59,7 @@ final class Names {
     static final Name N_AGE                    = unquotedName("age");
     static final Name N_ARRAY                  = unquotedName("array");
     static final Name N_ARRAY_AGG              = unquotedName("array_agg");
+    static final Name N_ARRAY_LENGTH           = unquotedName("array_length");
     static final Name N_ASC                    = unquotedName("asc");
     static final Name N_ASCII                  = unquotedName("ascii");
     static final Name N_ASCII_VAL              = unquotedName("ascii_val");
@@ -68,6 +69,7 @@ final class Names {
     static final Name N_BIT_COUNT              = unquotedName("bit_count");
     static final Name N_BOOL_AND               = unquotedName("bool_and");
     static final Name N_BOOL_OR                = unquotedName("bool_or");
+    static final Name N_CARDINALITY            = unquotedName("cardinality");
     static final Name N_CASE                   = unquotedName("case");
     static final Name N_CAST                   = unquotedName("cast");
     static final Name N_CEIL                   = unquotedName("ceil");

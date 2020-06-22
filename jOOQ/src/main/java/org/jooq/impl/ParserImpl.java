@@ -77,6 +77,7 @@ import static org.jooq.impl.DSL.bitOr;
 import static org.jooq.impl.DSL.bitXNor;
 import static org.jooq.impl.DSL.bitXor;
 import static org.jooq.impl.DSL.boolOr;
+import static org.jooq.impl.DSL.cardinality;
 import static org.jooq.impl.DSL.cast;
 import static org.jooq.impl.DSL.catalog;
 import static org.jooq.impl.DSL.ceil;
@@ -6481,6 +6482,7 @@ final class ParserImpl implements Parser {
 
     private static final FieldOrRow parseTerm(ParserContext ctx, Type type) {
         FieldOrRow field;
+        Field<?> arg;
         Object value;
 
         switch (ctx.characterUpper()) {
@@ -6550,6 +6552,8 @@ final class ParserImpl implements Parser {
                     if ((field = parseFieldCharIndexIf(ctx)) != null)
                         return field;
                     else if ((field = parseFieldCharLengthIf(ctx)) != null)
+                        return field;
+                    else if ((field = parseFieldCardinalityIf(ctx)) != null)
                         return field;
                     else if (parseFunctionNameIf(ctx, "CEILING") || parseFunctionNameIf(ctx, "CEIL"))
                         return ceil((Field) parseFieldNumericOpParenthesised(ctx));
@@ -7713,6 +7717,17 @@ final class ParserImpl implements Parser {
 
         Field<?> value = parseField(ctx);
         return jsonEntry(key, value);
+    }
+
+    private static final Field<Integer> parseFieldCardinalityIf(ParserContext ctx) {
+        if (parseKeywordIf(ctx, "CARDINALITY")) {
+            parse(ctx, '(');
+            Field<Object[]> f = (Field<Object[]>) parseField(ctx, A);
+            parse(ctx, ')');
+            return cardinality(f);
+        }
+
+        return null;
     }
 
     private static final Field<?> parseArrayValueConstructorIf(ParserContext ctx) {
@@ -11690,8 +11705,8 @@ final class ParserImpl implements Parser {
         return true;
     }
 
-    private static final boolean parseFunctionNameIf(ParserContext ctx, String string) {
-        return peekKeyword(ctx, string, true, false, true);
+    private static final boolean parseFunctionNameIf(ParserContext ctx, String name) {
+        return peekKeyword(ctx, name, true, false, true);
     }
 
     private static final boolean parseOperator(ParserContext ctx, String operator) {

@@ -21118,6 +21118,15 @@ public class DSL {
     }
 
     /**
+     * Calculate the cardinality of an array field.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, POSTGRES })
+    public static Field<Integer> cardinality(Field<? extends Object[]> field) {
+        return new Cardinality(field);
+    }
+
+    /**
      * Get the max value over a field: max(field).
      */
     @NotNull

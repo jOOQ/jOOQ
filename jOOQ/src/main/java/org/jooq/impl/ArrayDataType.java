@@ -123,6 +123,17 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
         return getArrayType(configuration, castTypeName);
     }
 
+    @Override
+    public final Class<?> getArrayComponentType() {
+        return elementType.getType();
+    }
+
+    @Override
+    public final DataType<?> getArrayComponentDataType() {
+        return elementType;
+    }
+
+
     private static String getArrayType(Configuration configuration, String dataType) {
         switch (configuration.family()) {
 

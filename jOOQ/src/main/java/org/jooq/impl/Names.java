@@ -59,6 +59,7 @@ final class Names {
     static final Name N_AGE                    = unquotedName("age");
     static final Name N_ARRAY                  = unquotedName("array");
     static final Name N_ARRAY_AGG              = unquotedName("array_agg");
+    static final Name N_ARRAY_GET              = unquotedName("array_get");
     static final Name N_ARRAY_LENGTH           = unquotedName("array_length");
     static final Name N_ASC                    = unquotedName("asc");
     static final Name N_ASCII                  = unquotedName("ascii");

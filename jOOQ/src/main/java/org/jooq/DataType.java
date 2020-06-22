@@ -140,6 +140,20 @@ public interface DataType<T> extends Named {
     @NotNull
     DataType<T[]> getArrayDataType();
 
+    /**
+     * Retrieve the Java component type if this is an ARRAY type, or
+     * <code>null</code>, otherwise.
+     */
+    @Nullable
+    Class<?> getArrayComponentType();
+
+    /**
+     * Retrieve the Java component data type if this is an ARRAY type, or
+     * <code>null</code>, otherwise.
+     */
+    @Nullable
+    DataType<?> getArrayComponentDataType();
+
 
 
 

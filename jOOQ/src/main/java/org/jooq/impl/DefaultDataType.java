@@ -798,11 +798,6 @@ public class DefaultDataType<T> extends AbstractNamed implements DataType<T> {
     }
 
     @Override
-    public final Class<T[]> getArrayType() {
-        return arrayType;
-    }
-
-    @Override
     public final String getTypeName() {
         return typeName;
     }
@@ -836,8 +831,23 @@ public class DefaultDataType<T> extends AbstractNamed implements DataType<T> {
     }
 
     @Override
+    public final Class<T[]> getArrayType() {
+        return arrayType;
+    }
+
+    @Override
     public final DataType<T[]> getArrayDataType() {
         return new ArrayDataType<>(this);
+    }
+
+    @Override
+    public /* non-final */ Class<?> getArrayComponentType() {
+        return null;
+    }
+
+    @Override
+    public /* non-final */ DataType<?> getArrayComponentDataType() {
+        return null;
     }
 
 

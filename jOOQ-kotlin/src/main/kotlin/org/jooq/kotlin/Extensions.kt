@@ -80,6 +80,16 @@ inline fun Field<Boolean>.not(): Condition = condition(this).not()
 
 
 // ----------------------------------------------------------------------------
+// Extensions to make Field<T[]> aware of its being an array
+// ----------------------------------------------------------------------------
+
+@Support
+inline operator fun <T> Field<Array<T>>.get(index: Int) = arrayGet(this, index)
+
+@Support
+inline operator fun <T> Field<Array<T>>.get(index: Field<Int>) = arrayGet(this, index)
+
+// ----------------------------------------------------------------------------
 // Extensions to make Select<Record1<T>> a scalar subquery of type Field<T>
 // ----------------------------------------------------------------------------
 
@@ -194,4 +204,3 @@ inline fun <reified T: Any> Select<Record1<T>>.notIn(vararg values: T): Conditio
 
 @Support
 inline fun <reified T: Any> Select<Record1<T>>.notIn(vararg values: Field<*>): Condition = field(this).notIn(values.asList())
-

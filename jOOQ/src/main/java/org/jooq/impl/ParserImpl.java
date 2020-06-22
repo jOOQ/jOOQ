@@ -6318,6 +6318,13 @@ final class ParserImpl implements Parser {
         return r;
     }
 
+    private static final Field<?> parseFieldParenthesised(ParserContext ctx, Type type) {
+        parse(ctx, '(');
+        Field<?> r = toField(ctx, parseField(ctx, type));
+        parse(ctx, ')');
+        return r;
+    }
+
     // Any numeric operator of low precedence
     // See https://www.postgresql.org/docs/current/sql-syntax-lexical.html#SQL-PRECEDENCE
     private static final FieldOrRow parseNumericOp(ParserContext ctx, Type type) {
@@ -6511,8 +6518,8 @@ final class ParserImpl implements Parser {
                 if (N.is(type))
                     if (parseFunctionNameIf(ctx, "ABS"))
                         return abs((Field) parseFieldNumericOpParenthesised(ctx));
-                    else if ((field = parseFieldAsciiIf(ctx)) != null)
-                        return field;
+                    else if (parseFunctionNameIf(ctx, "ASCII"))
+                        return ascii((Field) parseFieldParenthesised(ctx, S));
                     else if (parseFunctionNameIf(ctx, "ACOS"))
                         return acos((Field) parseFieldNumericOpParenthesised(ctx));
                     else if (parseFunctionNameIf(ctx, "ASIN"))
@@ -6530,8 +6537,8 @@ final class ParserImpl implements Parser {
 
             case 'B':
                 if (N.is(type))
-                    if ((field = parseFieldBitLengthIf(ctx)) != null)
-                        return field;
+                    if (parseFunctionNameIf(ctx, "BIT_LENGTH"))
+                        return bitLength((Field) parseFieldParenthesised(ctx, S));
                     else if (parseFunctionNameIf(ctx, "BIT_COUNT"))
                         return bitCount((Field) parseFieldNumericOpParenthesised(ctx));
                     else if ((field = parseFieldBitwiseFunctionIf(ctx)) != null)
@@ -6551,8 +6558,8 @@ final class ParserImpl implements Parser {
                 if (N.is(type))
                     if ((field = parseFieldCharIndexIf(ctx)) != null)
                         return field;
-                    else if ((field = parseFieldCharLengthIf(ctx)) != null)
-                        return field;
+                    else if (parseFunctionNameIf(ctx, "CHAR_LENGTH"))
+                        return charLength((Field) parseFieldParenthesised(ctx, S));
                     else if ((field = parseFieldCardinalityIf(ctx)) != null)
                         return field;
                     else if (parseFunctionNameIf(ctx, "CEILING") || parseFunctionNameIf(ctx, "CEIL"))
@@ -6567,8 +6574,8 @@ final class ParserImpl implements Parser {
                         return cot((Field) parseFieldNumericOpParenthesised(ctx));
                     else if ((field = parseNextvalCurrvalIf(ctx, SequenceMethod.CURRVAL)) != null)
                         return field;
-                    else if ((field = parseFieldCenturyIf(ctx)) != null)
-                        return field;
+                    else if (parseFunctionNameIf(ctx, "CENTURY"))
+                        return century(parseFieldParenthesised(ctx, D));
 
                 if (D.is(type))
                     if ((parseKeywordIf(ctx, "CURRENT_DATE") || parseKeywordIf(ctx, "CURRENT DATE")) && (parseIf(ctx, '(') && parse(ctx, ')') || true))
@@ -6630,16 +6637,20 @@ final class ParserImpl implements Parser {
                 if (N.is(type))
                     if ((field = parseFieldDenseRankIf(ctx)) != null)
                         return field;
-                    else if ((field = parseFieldDecadeIf(ctx)) != null)
-                        return field;
-                    else if ((field = parseFieldDayIf(ctx)) != null)
-                        return field;
-                    else if ((field = parseFieldDayOfWeekIf(ctx)) != null)
-                        return field;
-                    else if ((field = parseFieldIsoDayOfWeekIf(ctx)) != null)
-                        return field;
-                    else if ((field = parseFieldDayOfYearIf(ctx)) != null)
-                        return field;
+                    else if (parseFunctionNameIf(ctx, "DECADE"))
+                        return decade(parseFieldParenthesised(ctx, D));
+                    else if (parseFunctionNameIf(ctx, "DAY")
+                          || parseFunctionNameIf(ctx, "DAYOFMONTH"))
+                        return day(parseFieldParenthesised(ctx, D));
+                    // DB2 and MySQL support the non-ISO version where weeks go from Sunday = 1 to Saturday = 7
+                    else if (parseFunctionNameIf(ctx, "DAYOFWEEK_ISO"))
+                        return isoDayOfWeek(parseFieldParenthesised(ctx, D));
+                    else if (parseFunctionNameIf(ctx, "DAYOFWEEK")
+                          || parseFunctionNameIf(ctx, "DAY_OF_WEEK"))
+                        return dayOfWeek(parseFieldParenthesised(ctx, D));
+                    else if (parseFunctionNameIf(ctx, "DAYOFYEAR")
+                          || parseFunctionNameIf(ctx, "DAY_OF_YEAR"))
+                        return dayOfYear(parseFieldParenthesised(ctx, D));
                     else if (parseFunctionNameIf(ctx, "DEGREES")
                           || parseFunctionNameIf(ctx, "DEGREE")
                           || parseFunctionNameIf(ctx, "DEG"))
@@ -6664,8 +6675,8 @@ final class ParserImpl implements Parser {
                         return exp((Field) parseFieldNumericOpParenthesised(ctx));
 
                 if (D.is(type))
-                    if ((field = parseFieldEpochIf(ctx)) != null)
-                        return field;
+                    if (parseFunctionNameIf(ctx, "EPOCH"))
+                        return epoch(parseFieldParenthesised(ctx, D));
 
                 break;
 
@@ -6699,8 +6710,8 @@ final class ParserImpl implements Parser {
 
             case 'H':
                 if (N.is(type))
-                    if ((field = parseFieldHourIf(ctx)) != null)
-                        return field;
+                    if (parseFunctionNameIf(ctx, "HOUR"))
+                        return hour(parseFieldParenthesised(ctx, D));
 
                 break;
 
@@ -6708,8 +6719,8 @@ final class ParserImpl implements Parser {
                 if (D.is(type))
                     if ((field = parseFieldIntervalLiteralIf(ctx)) != null)
                         return field;
-                    else if ((field = parseFieldIsoDayOfWeekIf(ctx)) != null)
-                        return field;
+                    else if (parseFunctionNameIf(ctx, "ISO_DAY_OF_WEEK"))
+                        return isoDayOfWeek(parseFieldParenthesised(ctx, D));
 
                 if (N.is(type))
                     if ((field = parseFieldInstrIf(ctx)) != null)
@@ -6745,8 +6756,8 @@ final class ParserImpl implements Parser {
 
             case 'L':
                 if (S.is(type))
-                    if ((field = parseFieldLowerIf(ctx)) != null)
-                        return field;
+                    if (parseFunctionNameIf(ctx, "LOWER") || parseFunctionNameIf(ctx, "LCASE"))
+                        return lower((Field) parseFieldParenthesised(ctx, S));
                     else if ((field = parseFieldLpadIf(ctx)) != null)
                         return field;
                     else if ((field = parseFieldLtrimIf(ctx)) != null)
@@ -6755,8 +6766,8 @@ final class ParserImpl implements Parser {
                         return field;
 
                 if (N.is(type))
-                    if ((field = parseFieldLengthIf(ctx)) != null)
-                        return field;
+                    if (parseFunctionNameIf(ctx, "LENGTH") || parseFunctionNameIf(ctx, "LEN"))
+                        return length((Field) parseFieldParenthesised(ctx, S));
                     else if (parseFunctionNameIf(ctx, "LN"))
                         return ln((Field) parseFieldNumericOpParenthesised(ctx));
                     else if ((field = parseFieldLogIf(ctx)) != null)
@@ -6782,22 +6793,22 @@ final class ParserImpl implements Parser {
                 if (N.is(type))
                     if ((field = parseFieldModIf(ctx)) != null)
                         return field;
-                    else if ((field = parseFieldMonthIf(ctx)) != null)
-                        return field;
-                    else if ((field = parseFieldMinuteIf(ctx)) != null)
-                        return field;
-                    else if ((field = parseFieldMillenniumIf(ctx)) != null)
-                        return field;
-                    else if ((field = parseFieldMillisecondIf(ctx)) != null)
-                        return field;
-                    else if ((field = parseFieldMicrosecondIf(ctx)) != null)
-                        return field;
+                    else if (parseFunctionNameIf(ctx, "MICROSECOND"))
+                        return microsecond(parseFieldParenthesised(ctx, D));
+                    else if (parseFunctionNameIf(ctx, "MILLENNIUM"))
+                        return millennium(parseFieldParenthesised(ctx, D));
+                    else if (parseFunctionNameIf(ctx, "MILLISECOND"))
+                        return millisecond(parseFieldParenthesised(ctx, D));
+                    else if (parseFunctionNameIf(ctx, "MINUTE"))
+                        return minute(parseFieldParenthesised(ctx, D));
+                    else if (parseFunctionNameIf(ctx, "MONTH"))
+                        return month(parseFieldParenthesised(ctx, D));
 
                 if (S.is(type))
                     if ((field = parseFieldMidIf(ctx)) != null)
                         return field;
-                    else if ((field = parseFieldMd5If(ctx)) != null)
-                        return field;
+                    else if (parseFunctionNameIf(ctx, "MD5"))
+                        return md5((Field) parseFieldParenthesised(ctx, S));
 
                 break;
 
@@ -6834,8 +6845,8 @@ final class ParserImpl implements Parser {
                         return field;
 
                 if (N.is(type))
-                    if ((field = parseFieldOctetLengthIf(ctx)) != null)
-                        return field;
+                    if (parseFunctionNameIf(ctx, "OCTET_LENGTH"))
+                        return octetLength((Field) parseFieldParenthesised(ctx, S));
 
                 break;
 
@@ -6864,8 +6875,8 @@ final class ParserImpl implements Parser {
                         return inline(parseStringLiteral(ctx));
 
                 if (D.is(type))
-                    if ((field = parseFieldQuarterIf(ctx)) != null)
-                        return field;
+                    if (parseFunctionNameIf(ctx, "QUARTER"))
+                        return quarter(parseFieldParenthesised(ctx, D));
 
             case 'R':
                 if (S.is(type))
@@ -6875,8 +6886,8 @@ final class ParserImpl implements Parser {
                         return field;
                     else if ((field = parseFieldRepeatIf(ctx)) != null)
                         return field;
-                    else if ((field = parseFieldReverseIf(ctx)) != null)
-                        return field;
+                    else if (parseFunctionNameIf(ctx, "REVERSE"))
+                        return reverse((Field) parseFieldParenthesised(ctx, S));
                     else if ((field = parseFieldRpadIf(ctx)) != null)
                         return field;
                     else if ((field = parseFieldRtrimIf(ctx)) != null)
@@ -6916,18 +6927,18 @@ final class ParserImpl implements Parser {
                 if (S.is(type))
                     if ((field = parseFieldSubstringIf(ctx)) != null)
                         return field;
-                    else if ((field = parseFieldSpaceIf(ctx)) != null)
-                        return field;
+                    else if (parseFunctionNameIf(ctx, "SPACE"))
+                        return space((Field) parseFieldParenthesised(ctx, N));
                     else if ((field = parseFieldReplaceIf(ctx)) != null)
                         return field;
                     else if (parseFunctionNameIf(ctx, "SCHEMA") && parseIf(ctx, '(') && parse(ctx, ')'))
                         return currentSchema();
 
                 if (N.is(type))
-                    if ((field = parseFieldSecondIf(ctx)) != null)
-                        return field;
-                    else if ((field = parseFieldSignIf(ctx)) != null)
-                        return field;
+                    if (parseFunctionNameIf(ctx, "SECOND"))
+                        return second(parseFieldParenthesised(ctx, D));
+                    else if (parseFunctionNameIf(ctx, "SIGN"))
+                        return sign((Field) parseFieldParenthesised(ctx, N));
                     else if (parseFunctionNameIf(ctx, "SQRT") || parseFunctionNameIf(ctx, "SQR"))
                         return sqrt((Field) parseFieldNumericOpParenthesised(ctx));
                     else if (parseFunctionNameIf(ctx, "SINH"))
@@ -6964,12 +6975,12 @@ final class ParserImpl implements Parser {
                         return tan((Field) parseFieldNumericOpParenthesised(ctx));
                     else if ((field = parseFieldToNumberIf(ctx)) != null)
                         return field;
-                    else if ((field = parseFieldTimezoneIf(ctx)) != null)
-                        return field;
-                    else if ((field = parseFieldTimezoneHourIf(ctx)) != null)
-                        return field;
-                    else if ((field = parseFieldTimezoneMinuteIf(ctx)) != null)
-                        return field;
+                    else if (parseFunctionNameIf(ctx, "TIMEZONE_HOUR"))
+                        return timezoneHour(parseFieldParenthesised(ctx, D));
+                    else if (parseFunctionNameIf(ctx, "TIMEZONE_MINUTE"))
+                        return timezoneMinute(parseFieldParenthesised(ctx, D));
+                    else if (parseFunctionNameIf(ctx, "TIMEZONE"))
+                        return timezone(parseFieldParenthesised(ctx, D));
 
                 if (D.is(type))
                     if ((field = parseFieldTimestampLiteralIf(ctx)) != null)
@@ -6991,12 +7002,13 @@ final class ParserImpl implements Parser {
 
             case 'U':
                 if (S.is(type))
-                    if ((field = parseFieldUpperIf(ctx)) != null)
-                        return field;
+                    if (parseFunctionNameIf(ctx, "UPPER")
+                        || parseFunctionNameIf(ctx, "UCASE"))
+                        return DSL.upper((Field) parseFieldParenthesised(ctx, S));
 
                 if (D.is(type))
-                    if ((field = parseFieldUnixTimestampIf(ctx)) != null)
-                        return field;
+                    if (parseFunctionNameIf(ctx, "UNIX_TIMESTAMP"))
+                        return epoch(parseFieldParenthesised(ctx, D));
 
                 break;
 
@@ -7004,8 +7016,8 @@ final class ParserImpl implements Parser {
                 if (N.is(type))
                     if ((field = parseFieldWidthBucketIf(ctx)) != null)
                         return field;
-                    else if ((field = parseFieldWeekIf(ctx)) != null)
-                        return field;
+                    else if (parseFunctionNameIf(ctx, "WEEK"))
+                        return week(parseFieldParenthesised(ctx, D));
 
                 break;
 
@@ -7036,8 +7048,8 @@ final class ParserImpl implements Parser {
 
             case 'Y':
                 if (N.is(type))
-                    if ((field = parseFieldYearIf(ctx)) != null)
-                        return field;
+                    if (parseFunctionNameIf(ctx, "YEAR"))
+                        return year(parseFieldParenthesised(ctx, D));
 
                 break;
 
@@ -8563,17 +8575,6 @@ final class ParserImpl implements Parser {
         throw ctx.expected("Interval DatePart");
     }
 
-    private static final Field<?> parseFieldAsciiIf(ParserContext ctx) {
-        if (parseFunctionNameIf(ctx, "ASCII")) {
-            parse(ctx, '(');
-            Field<?> arg = parseField(ctx, S);
-            parse(ctx, ')');
-            return ascii((Field) arg);
-        }
-
-        return null;
-    }
-
     private static final Field<?> parseFieldConcatIf(ParserContext ctx) {
         if (parseFunctionNameIf(ctx, "CONCAT")) {
             parse(ctx, '(');
@@ -8796,28 +8797,6 @@ final class ParserImpl implements Parser {
             return first
                 ? regexpReplaceFirst(field, pattern, replacement)
                 : regexpReplaceAll(field, pattern, replacement);
-        }
-
-        return null;
-    }
-
-    private static final Field<?> parseFieldReverseIf(ParserContext ctx) {
-        if (parseFunctionNameIf(ctx, "REVERSE")) {
-            parse(ctx, '(');
-            Field<String> f1 = (Field) parseField(ctx, S);
-            parse(ctx, ')');
-            return reverse(f1);
-        }
-
-        return null;
-    }
-
-    private static final Field<?> parseFieldSpaceIf(ParserContext ctx) {
-        if (parseFunctionNameIf(ctx, "SPACE")) {
-            parse(ctx, '(');
-            Field<Integer> f1 = (Field) parseField(ctx, N);
-            parse(ctx, ')');
-            return space(f1);
         }
 
         return null;
@@ -9047,83 +9026,6 @@ final class ParserImpl implements Parser {
         return null;
     }
 
-    private static final Field<?> parseFieldMd5If(ParserContext ctx) {
-        if (parseFunctionNameIf(ctx, "MD5")) {
-            parse(ctx, '(');
-            Field<String> f1 = (Field) parseField(ctx, S);
-            parse(ctx, ')');
-            return md5(f1);
-        }
-
-        return null;
-    }
-
-    private static final Field<?> parseFieldLengthIf(ParserContext ctx) {
-        if (parseFunctionNameIf(ctx, "LENGTH") || parseFunctionNameIf(ctx, "LEN")) {
-            parse(ctx, '(');
-            Field<String> f1 = (Field) parseField(ctx, S);
-            parse(ctx, ')');
-            return length(f1);
-        }
-
-        return null;
-    }
-
-    private static final Field<?> parseFieldCharLengthIf(ParserContext ctx) {
-        if (parseFunctionNameIf(ctx, "CHAR_LENGTH")) {
-            parse(ctx, '(');
-            Field<String> f1 = (Field) parseField(ctx, S);
-            parse(ctx, ')');
-            return charLength(f1);
-        }
-
-        return null;
-    }
-
-    private static final Field<?> parseFieldBitLengthIf(ParserContext ctx) {
-        if (parseFunctionNameIf(ctx, "BIT_LENGTH")) {
-            parse(ctx, '(');
-            Field<String> f1 = (Field) parseField(ctx, S);
-            parse(ctx, ')');
-            return bitLength(f1);
-        }
-
-        return null;
-    }
-
-    private static final Field<?> parseFieldOctetLengthIf(ParserContext ctx) {
-        if (parseFunctionNameIf(ctx, "OCTET_LENGTH")) {
-            parse(ctx, '(');
-            Field<String> f1 = (Field) parseField(ctx, S);
-            parse(ctx, ')');
-            return octetLength(f1);
-        }
-
-        return null;
-    }
-
-    private static final Field<?> parseFieldLowerIf(ParserContext ctx) {
-        if (parseFunctionNameIf(ctx, "LOWER") || parseFunctionNameIf(ctx, "LCASE")) {
-            parse(ctx, '(');
-            Field<String> f1 = (Field) parseField(ctx, S);
-            parse(ctx, ')');
-            return lower(f1);
-        }
-
-        return null;
-    }
-
-    private static final Field<?> parseFieldUpperIf(ParserContext ctx) {
-        if (parseFunctionNameIf(ctx, "UPPER") || parseFunctionNameIf(ctx, "UCASE")) {
-            parse(ctx, '(');
-            Field<String> f1 = (Field) parseField(ctx, S);
-            parse(ctx, ')');
-            return DSL.upper(f1);
-        }
-
-        return null;
-    }
-
     private static final Field<?> parseFieldDecodeIf(ParserContext ctx) {
         if (parseFunctionNameIf(ctx, "DECODE")) {
             parse(ctx, '(');
@@ -9153,254 +9055,6 @@ final class ParserImpl implements Parser {
             parse(ctx, ')');
 
             return DSL.choose(index, fields.toArray(EMPTY_FIELD));
-        }
-
-        return null;
-    }
-
-    private static final Field<?> parseFieldYearIf(ParserContext ctx) {
-        if (parseFunctionNameIf(ctx, "YEAR")) {
-            parse(ctx, '(');
-            Field<Timestamp> f1 = (Field) parseField(ctx, D);
-            parse(ctx, ')');
-            return year(f1);
-        }
-
-        return null;
-    }
-
-    private static final Field<?> parseFieldMonthIf(ParserContext ctx) {
-        if (parseFunctionNameIf(ctx, "MONTH")) {
-            parse(ctx, '(');
-            Field<Timestamp> f1 = (Field) parseField(ctx, D);
-            parse(ctx, ')');
-            return month(f1);
-        }
-
-        return null;
-    }
-
-    private static final Field<?> parseFieldDayIf(ParserContext ctx) {
-        if (parseFunctionNameIf(ctx, "DAY")
-                || parseFunctionNameIf(ctx, "DAYOFMONTH")) {
-            parse(ctx, '(');
-            Field<Timestamp> f1 = (Field) parseField(ctx, D);
-            parse(ctx, ')');
-            return day(f1);
-        }
-
-        return null;
-    }
-
-    private static final Field<?> parseFieldDayOfWeekIf(ParserContext ctx) {
-
-        // DB2 and MySQL support the non-ISO version where weeks go from Sunday = 1 to Saturday = 7
-        if (parseFunctionNameIf(ctx, "DAYOFWEEK")
-                || parseFunctionNameIf(ctx, "DAY_OF_WEEK")) {
-            parse(ctx, '(');
-            Field<Timestamp> f1 = (Field) parseField(ctx, D);
-            parse(ctx, ')');
-            return dayOfWeek(f1);
-        }
-
-        return null;
-    }
-
-    private static final Field<?> parseFieldIsoDayOfWeekIf(ParserContext ctx) {
-        if (parseFunctionNameIf(ctx, "DAYOFWEEK_ISO")
-                || parseFunctionNameIf(ctx, "ISO_DAY_OF_WEEK")) {
-            parse(ctx, '(');
-            Field<Timestamp> f1 = (Field) parseField(ctx, D);
-            parse(ctx, ')');
-            return isoDayOfWeek(f1);
-        }
-
-        return null;
-    }
-
-    private static final Field<?> parseFieldDayOfYearIf(ParserContext ctx) {
-        if (parseFunctionNameIf(ctx, "DAYOFYEAR")
-                || parseFunctionNameIf(ctx, "DAY_OF_YEAR")) {
-            parse(ctx, '(');
-            Field<Timestamp> f1 = (Field) parseField(ctx, D);
-            parse(ctx, ')');
-            return dayOfYear(f1);
-        }
-
-        return null;
-    }
-
-    private static final Field<?> parseFieldEpochIf(ParserContext ctx) {
-        if (parseFunctionNameIf(ctx, "EPOCH")) {
-            parse(ctx, '(');
-            Field<Timestamp> f1 = (Field) parseField(ctx, D);
-            parse(ctx, ')');
-            return epoch(f1);
-        }
-
-        return null;
-    }
-
-    private static final Field<?> parseFieldMillenniumIf(ParserContext ctx) {
-        if (parseFunctionNameIf(ctx, "MILLENNIUM")) {
-            parse(ctx, '(');
-            Field<Timestamp> f1 = (Field) parseField(ctx, D);
-            parse(ctx, ')');
-            return millennium(f1);
-        }
-
-        return null;
-    }
-
-    private static final Field<?> parseFieldCenturyIf(ParserContext ctx) {
-        if (parseFunctionNameIf(ctx, "CENTURY")) {
-            parse(ctx, '(');
-            Field<Timestamp> f1 = (Field) parseField(ctx, D);
-            parse(ctx, ')');
-            return century(f1);
-        }
-
-        return null;
-    }
-
-    private static final Field<?> parseFieldDecadeIf(ParserContext ctx) {
-        if (parseFunctionNameIf(ctx, "DECADE")) {
-            parse(ctx, '(');
-            Field<Timestamp> f1 = (Field) parseField(ctx, D);
-            parse(ctx, ')');
-            return decade(f1);
-        }
-
-        return null;
-    }
-
-    private static final Field<?> parseFieldMillisecondIf(ParserContext ctx) {
-        if (parseFunctionNameIf(ctx, "MILLISECOND")) {
-            parse(ctx, '(');
-            Field<Timestamp> f1 = (Field) parseField(ctx, D);
-            parse(ctx, ')');
-            return millisecond(f1);
-        }
-
-        return null;
-    }
-
-    private static final Field<?> parseFieldMicrosecondIf(ParserContext ctx) {
-        if (parseFunctionNameIf(ctx, "MICROSECOND")) {
-            parse(ctx, '(');
-            Field<Timestamp> f1 = (Field) parseField(ctx, D);
-            parse(ctx, ')');
-            return microsecond(f1);
-        }
-
-        return null;
-    }
-
-    private static final Field<?> parseFieldWeekIf(ParserContext ctx) {
-        if (parseFunctionNameIf(ctx, "WEEK")) {
-            parse(ctx, '(');
-            Field<Timestamp> f1 = (Field) parseField(ctx, D);
-            parse(ctx, ')');
-            return week(f1);
-        }
-
-        return null;
-    }
-
-    private static final Field<?> parseFieldTimezoneIf(ParserContext ctx) {
-        if (parseFunctionNameIf(ctx, "TIMEZONE")) {
-            parse(ctx, '(');
-            Field<Timestamp> f1 = (Field) parseField(ctx, D);
-            parse(ctx, ')');
-            return timezone(f1);
-        }
-
-        return null;
-    }
-
-    private static final Field<?> parseFieldTimezoneHourIf(ParserContext ctx) {
-        if (parseFunctionNameIf(ctx, "TIMEZONE_HOUR")) {
-            parse(ctx, '(');
-            Field<Timestamp> f1 = (Field) parseField(ctx, D);
-            parse(ctx, ')');
-            return timezoneHour(f1);
-        }
-
-        return null;
-    }
-
-    private static final Field<?> parseFieldTimezoneMinuteIf(ParserContext ctx) {
-        if (parseFunctionNameIf(ctx, "TIMEZONE_MINUTE")) {
-            parse(ctx, '(');
-            Field<Timestamp> f1 = (Field) parseField(ctx, D);
-            parse(ctx, ')');
-            return timezoneMinute(f1);
-        }
-
-        return null;
-    }
-
-    private static final Field<?> parseFieldUnixTimestampIf(ParserContext ctx) {
-        if (parseFunctionNameIf(ctx, "UNIX_TIMESTAMP")) {
-            parse(ctx, '(');
-            Field<Timestamp> f1 = (Field) parseField(ctx, D);
-            parse(ctx, ')');
-            return epoch(f1);
-        }
-
-        return null;
-    }
-
-    private static final Field<?> parseFieldQuarterIf(ParserContext ctx) {
-        if (parseFunctionNameIf(ctx, "QUARTER")) {
-            parse(ctx, '(');
-            Field<Timestamp> f1 = (Field) parseField(ctx, D);
-            parse(ctx, ')');
-            return quarter(f1);
-        }
-
-        return null;
-    }
-
-    private static final Field<?> parseFieldHourIf(ParserContext ctx) {
-        if (parseFunctionNameIf(ctx, "HOUR")) {
-            parse(ctx, '(');
-            Field<Timestamp> f1 = (Field) parseField(ctx, D);
-            parse(ctx, ')');
-            return hour(f1);
-        }
-
-        return null;
-    }
-
-    private static final Field<?> parseFieldMinuteIf(ParserContext ctx) {
-        if (parseFunctionNameIf(ctx, "MINUTE")) {
-            parse(ctx, '(');
-            Field<Timestamp> f1 = (Field) parseField(ctx, D);
-            parse(ctx, ')');
-            return minute(f1);
-        }
-
-        return null;
-    }
-
-    private static final Field<?> parseFieldSecondIf(ParserContext ctx) {
-        if (parseFunctionNameIf(ctx, "SECOND")) {
-            parse(ctx, '(');
-            Field<Timestamp> f1 = (Field) parseField(ctx, D);
-            parse(ctx, ')');
-            return second(f1);
-        }
-
-        return null;
-    }
-
-    private static final Field<?> parseFieldSignIf(ParserContext ctx) {
-        if (parseFunctionNameIf(ctx, "SIGN")) {
-            parse(ctx, '(');
-            Field<?> f1 = parseField(ctx, N);
-            parse(ctx, ')');
-            return sign((Field) f1);
         }
 
         return null;

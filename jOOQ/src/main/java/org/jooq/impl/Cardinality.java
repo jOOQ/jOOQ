@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Names.N_ARRAY_LENGTH;
 import static org.jooq.impl.Names.N_CARDINALITY;
 import static org.jooq.impl.SQLDataType.INTEGER;
 
@@ -63,16 +62,6 @@ final class Cardinality extends AbstractField<Integer> {
 
     @Override
     public final void accept(Context<?> ctx) {
-        switch (ctx.family()) {
-
-
-
-
-
-
-            default:
-                ctx.visit(N_CARDINALITY).sql('(').visit(arg).sql(')');
-                break;
-        }
+        ctx.visit(N_CARDINALITY).sql('(').visit(arg).sql(')');
     }
 }

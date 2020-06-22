@@ -202,7 +202,7 @@ abstract class AbstractCondition extends AbstractQueryPart implements Condition 
     }
 
     @Override
-    public final Condition not() {
+    public /* non-final */ Condition not() {
         return new NotCondition(this);
     }
 }

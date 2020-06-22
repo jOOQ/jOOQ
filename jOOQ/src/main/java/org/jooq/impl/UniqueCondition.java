@@ -45,6 +45,7 @@ import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 
+import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.QueryPartInternal;
@@ -56,10 +57,10 @@ import org.jooq.Table;
  */
 final class UniqueCondition extends AbstractCondition {
 
-    private static final long     serialVersionUID   = -5560973283201522844L;
+    private static final long serialVersionUID = -5560973283201522844L;
 
-    private final Select<?>       query;
-    private final boolean         unique;
+    private final Select<?>   query;
+    private final boolean     unique;
 
     UniqueCondition(Select<?> query, boolean unique) {
         this.query = query;
@@ -74,6 +75,13 @@ final class UniqueCondition extends AbstractCondition {
     @Override
     public final void accept(Context<?> ctx) {
         ctx.visit(delegate(ctx));
+    }
+
+    @Override
+    public final Condition not() {
+
+        // TODO: [#7362] [#10304] Find a better way to prevent double negation and unnecessary parentheses
+        return unique ? new UniqueCondition(query, false) : super.not();
     }
 
     @SuppressWarnings("unused")

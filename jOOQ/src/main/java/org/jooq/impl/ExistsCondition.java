@@ -40,9 +40,7 @@ package org.jooq.impl;
 
 import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_EXISTS;
-import static org.jooq.Clause.CONDITION_NOT_EXISTS;
 import static org.jooq.impl.Keywords.K_EXISTS;
-import static org.jooq.impl.Keywords.K_NOT_EXISTS;
 import static org.jooq.impl.Tools.visitSubquery;
 
 import org.jooq.Clause;
@@ -56,14 +54,11 @@ final class ExistsCondition extends AbstractCondition {
 
     private static final long     serialVersionUID   = 5678338161136603292L;
     private static final Clause[] CLAUSES_EXISTS     = { CONDITION, CONDITION_EXISTS };
-    private static final Clause[] CLAUSES_EXISTS_NOT = { CONDITION, CONDITION_NOT_EXISTS };
 
     private final Select<?>       query;
-    private final boolean         exists;
 
-    ExistsCondition(Select<?> query, boolean exists) {
+    ExistsCondition(Select<?> query) {
         this.query = query;
-        this.exists = exists;
     }
 
     @Override
@@ -73,12 +68,12 @@ final class ExistsCondition extends AbstractCondition {
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(exists ? K_EXISTS : K_NOT_EXISTS).sql(' ');
+        ctx.visit(K_EXISTS).sql(' ');
         visitSubquery(ctx, query, true);
     }
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {
-        return exists ? CLAUSES_EXISTS : CLAUSES_EXISTS_NOT;
+        return CLAUSES_EXISTS;
     }
 }

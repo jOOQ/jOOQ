@@ -167,7 +167,7 @@
             <dependency>
                 <groupId>org.eclipse.xtend</groupId>
                 <artifactId>org.eclipse.xtend.lib</artifactId>
-                <version>2.20.0</version>
+                <version>2.22.0</version>
             </dependency>
 
             <!-- From JDK 9 onwards, the JAXB dependency needs to be made explicit -->
@@ -538,7 +538,7 @@
                 <plugin>
                     <groupId>org.eclipse.xtend</groupId>
                     <artifactId>xtend-maven-plugin</artifactId>
-                    <version>2.20.0</version>
+                    <version>2.22.0</version>
 
                     <configuration>
                         <encoding>UTF-8</encoding>
@@ -549,6 +549,12 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>2.22.2</version>
+
+                    <configuration>
+                        <argLine>
+                            --illegal-access=deny
+                        </argLine>
+                    </configuration>
                 </plugin>
 
                 <plugin>

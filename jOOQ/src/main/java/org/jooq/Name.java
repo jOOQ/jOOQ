@@ -250,6 +250,36 @@ public interface Name extends QueryPart, Comparable<Name> {
     <R extends Record> CommonTableExpression<R> as(Select<R> select);
 
     /**
+     * Specify a materialized subselect to refer to by the <code>Name</code> to
+     * form a common table expression.
+     * <p>
+     * This adds the PostgreSQL 12 <code>MATERIALIZED</code> hint to the common
+     * table expression definition, or silently ignores it, if the hint is not
+     * supported.
+     * <p>
+     * Column names are implicitly inherited from the <code>SELECT</code>
+     * statement.
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    <R extends Record> CommonTableExpression<R> asMaterialized(Select<R> select);
+
+    /**
+     * Specify a non-materialized subselect to refer to by the <code>Name</code>
+     * to form a common table expression.
+     * <p>
+     * This adds the PostgreSQL 12 <code>NOT MATERIALIZED</code> hint to the
+     * common table expression definition, or silently ignores it, if the hint
+     * is not supported.
+     * <p>
+     * Column names are implicitly inherited from the <code>SELECT</code>
+     * statement.
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    <R extends Record> CommonTableExpression<R> asNotMaterialized(Select<R> select);
+
+    /**
      * Add a list of fields to this name to make this name a
      * {@link DerivedColumnList}.
      * <p>

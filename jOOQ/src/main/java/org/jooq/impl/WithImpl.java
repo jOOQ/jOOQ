@@ -60,6 +60,7 @@ import org.jooq.Clause;
 import org.jooq.CommonTableExpression;
 import org.jooq.Configuration;
 import org.jooq.Context;
+import org.jooq.DerivedColumnList;
 import org.jooq.Field;
 import org.jooq.InsertSetStep;
 import org.jooq.MergeUsingStep;
@@ -172,7 +173,7 @@ implements
 
 
 
-    private final CommonTableExpressionList                                 cte;
+    private final CommonTableExpressionList                                 ctes;
     private final boolean                                                   recursive;
     private Configuration                                                   configuration;
 
@@ -187,7 +188,7 @@ implements
     WithImpl(Configuration configuration, boolean recursive) {
         this.configuration = configuration;
         this.recursive = recursive;
-        this.cte = new CommonTableExpressionList();
+        this.ctes = new CommonTableExpressionList();
     }
 
     // -------------------------------------------------------------------------
@@ -207,7 +208,7 @@ implements
             ctx.visit(K_RECURSIVE)
                .separatorRequired(true);
 
-        CommonTableExpressionList c = cte;
+        CommonTableExpressionList c = ctes;
 
 
 
@@ -234,16 +235,26 @@ implements
     // XXX With API
     // -------------------------------------------------------------------------
 
-    @Override
-    public final WithStep as(Select select) {
+    private final WithStep as0(Select select, Boolean materialized) {
+        DerivedColumnList dcl;
 
 
         if (fieldNameFunction != null)
-            cte.add(name(alias).fields(fieldNameFunction).as(select));
+            dcl = name(alias).fields(fieldNameFunction);
         else
 
-            cte.add(name(alias).fields(fieldAliases).as(select));
+            dcl = name(alias).fields(fieldAliases);
 
+        CommonTableExpression cte;
+
+        if (materialized == null)
+            cte = dcl.as(select);
+        else if (materialized)
+            cte = dcl.asMaterialized(select);
+        else
+            cte = dcl.asNotMaterialized(select);
+
+        this.ctes.add(cte);
         this.alias = null;
         this.fieldAliases = null;
 
@@ -251,6 +262,21 @@ implements
 
 
         return this;
+    }
+
+    @Override
+    public final WithStep as(Select select) {
+        return as0(select, null);
+    }
+
+    @Override
+    public final WithStep asMaterialized(Select select) {
+        return as0(select, true);
+    }
+
+    @Override
+    public final WithStep asNotMaterialized(Select select) {
+        return as0(select, false);
     }
 
     @Override
@@ -536,7 +562,7 @@ implements
     @Override
     public final WithStep with(Collection<? extends CommonTableExpression<?>> tables) {
         for (CommonTableExpression<?> table : tables)
-            cte.add(table);
+            ctes.add(table);
 
         return this;
     }

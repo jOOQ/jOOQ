@@ -125,7 +125,9 @@ import static org.jooq.impl.Keywords.K_DISTINCT_ON;
 import static org.jooq.impl.Keywords.K_FROM;
 import static org.jooq.impl.Keywords.K_GROUP_BY;
 import static org.jooq.impl.Keywords.K_HAVING;
+import static org.jooq.impl.Keywords.K_INLINE;
 import static org.jooq.impl.Keywords.K_INTO;
+import static org.jooq.impl.Keywords.K_MATERIALIZE;
 import static org.jooq.impl.Keywords.K_NOCYCLE;
 import static org.jooq.impl.Keywords.K_ORDER;
 import static org.jooq.impl.Keywords.K_ORDER_BY;
@@ -1537,6 +1539,13 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // [#1493] Oracle hints come directly after the SELECT keyword
         if (!StringUtils.isBlank(hint))
             context.sql(' ').sql(hint).separatorRequired(true);
+
+
+
+
+
+
+
 
 
 

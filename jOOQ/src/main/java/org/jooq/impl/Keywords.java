@@ -205,6 +205,7 @@ final class Keywords {
     static final Keyword K_INCLUDE_NULL_VALUES              = keyword("include_null_values");
     static final Keyword K_INCREMENT_BY                     = keyword("increment by");
     static final Keyword K_INDEX                            = keyword("index");
+    static final Keyword K_INLINE                           = keyword("inline");
     static final Keyword K_INNER_JOIN                       = keyword("inner join");
     static final Keyword K_INSERT                           = keyword("insert");
     static final Keyword K_INT                              = keyword("int");
@@ -238,6 +239,8 @@ final class Keywords {
     static final Keyword K_LOCK_IN_SHARE_MODE               = keyword("lock in share mode");
     static final Keyword K_LOOP                             = keyword("loop");
     static final Keyword K_MATCHED                          = keyword("matched");
+    static final Keyword K_MATERIALIZE                      = keyword("materialize");
+    static final Keyword K_MATERIALIZED                     = keyword("materialized");
     static final Keyword K_MAXVALUE                         = keyword("maxvalue");
     static final Keyword K_MERGE_INTO                       = keyword("merge into");
     static final Keyword K_MILLISECOND                      = keyword("millisecond");

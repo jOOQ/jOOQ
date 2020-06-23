@@ -98,6 +98,18 @@ abstract class AbstractName extends AbstractQueryPart implements Name {
         return fields(new String[0]).as(select);
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public final <R extends Record> CommonTableExpression<R> asMaterialized(Select<R> select) {
+        return fields(new String[0]).asMaterialized(select);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final <R extends Record> CommonTableExpression<R> asNotMaterialized(Select<R> select) {
+        return fields(new String[0]).asNotMaterialized(select);
+    }
+
     @Override
     public final DerivedColumnListImpl fields(String... fieldNames) {
         return fields(Tools.names(fieldNames));

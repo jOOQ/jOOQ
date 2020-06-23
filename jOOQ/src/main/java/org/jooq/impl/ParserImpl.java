@@ -1060,21 +1060,34 @@ final class ParserImpl implements Parser {
 
         List<CommonTableExpression<?>> cte = new ArrayList<>();
         do {
-            Name table = parseIdentifier(ctx);
+            Name name = parseIdentifier(ctx);
             DerivedColumnList dcl = null;
 
             if (parseIf(ctx, '(')) {
                 List<Name> columnNames = parseIdentifiers(ctx);
                 parse(ctx, ')');
-                dcl = table.fields(columnNames.toArray(EMPTY_NAME));
+                dcl = name.fields(columnNames.toArray(EMPTY_NAME));
             }
 
             parseKeyword(ctx, "AS");
+            boolean materialized = parseKeywordIf(ctx, "MATERIALIZED");
+            boolean notMaterialized = !materialized && parseKeywordIf(ctx, "NOT MATERIALIZED");
             parse(ctx, '(');
             Select<?> select = parseSelect(ctx);
             parse(ctx, ')');
 
-            cte.add(dcl != null ? dcl.as(select) : table.as(select));
+            cte.add(dcl != null
+                ? materialized
+                    ? dcl.asMaterialized(select)
+                    : notMaterialized
+                    ? dcl.asNotMaterialized(select)
+                    : dcl.as(select)
+                : materialized
+                    ? name.asMaterialized(select)
+                    : notMaterialized
+                    ? name.asNotMaterialized(select)
+                    : name.as(select)
+            );
         }
         while (parseIf(ctx, ','));
 

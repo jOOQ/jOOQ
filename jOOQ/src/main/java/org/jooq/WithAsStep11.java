@@ -78,9 +78,34 @@ import org.jetbrains.annotations.NotNull;
 public interface WithAsStep11 {
 
     /**
-     * Associate a subselect with a common table expression's table and column names.
+     * Associate a subselect with a common table expression's table and column
+     * names.
      */
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithStep as(Select<? extends Record11<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?>> select);
+
+    /**
+     * Associate a materialized subselect with a common table expression's table
+     * and column names.
+     * <p>
+     * This adds the PostgreSQL 12 <code>MATERIALIZED</code> hint to the common
+     * table expression definition, or silently ignores it, if the hint is not
+     * supported.
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    WithStep asMaterialized(Select<? extends Record11<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?>> select);
+
+    /**
+     * Associate a non-materialized subselect with a common table expression's
+     * table and column names.
+     * <p>
+     * This adds the PostgreSQL 12 <code>NOT MATERIALIZED</code> hint to the
+     * common table expression definition, or silently ignores it, if the hint
+     * is not supported.
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    WithStep asNotMaterialized(Select<? extends Record11<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?>> select);
 }

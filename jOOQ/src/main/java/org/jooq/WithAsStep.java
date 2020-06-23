@@ -37,9 +37,6 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 // ...
 // ...
 // ...
@@ -58,6 +55,8 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * This type is part of the jOOQ DSL to create {@link Select}, {@link Insert},
@@ -97,9 +96,35 @@ import static org.jooq.SQLDialect.SQLITE;
 public interface WithAsStep {
 
     /**
-     * Associate a subselect with a common table expression's table and column names.
+     * Associate a subselect with a common table expression's table and column
+     * names.
      */
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     WithStep as(Select<?> select);
+
+    /**
+     * Associate a materialized subselect with a common table expression's table
+     * and column names.
+     * <p>
+     * This adds the PostgreSQL 12 <code>MATERIALIZED</code> hint to the common
+     * table expression definition, or silently ignores it, if the hint is not
+     * supported.
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    WithStep asMaterialized(Select<?> select);
+
+    /**
+     * Associate a materialized subselect with a common table expression's table
+     * and column names.
+     * <p>
+     * This adds the PostgreSQL 12 <code>NOT MATERIALIZED</code> hint to the
+     * common table expression definition, or silently ignores it, if the hint
+     * is not supported.
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    WithStep asNotMaterialized(Select<?> select);
+
 }

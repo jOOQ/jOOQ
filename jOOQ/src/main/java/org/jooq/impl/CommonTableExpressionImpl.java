@@ -37,17 +37,25 @@
  */
 package org.jooq.impl;
 
+// ...
+import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.Keywords.K_AS;
+import static org.jooq.impl.Keywords.K_MATERIALIZED;
+import static org.jooq.impl.Keywords.K_NOT;
 import static org.jooq.impl.Tools.visitSubquery;
 
 import java.util.List;
+import java.util.Set;
 
 import org.jooq.CommonTableExpression;
 import org.jooq.Context;
 import org.jooq.Field;
+// ...
 import org.jooq.Record;
+import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.TableOptions;
+import org.jooq.impl.Tools.DataKey;
 
 /**
  * @author Lukas Eder
@@ -57,18 +65,26 @@ final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R>
     /**
      * Generated UID
      */
-    private static final long           serialVersionUID = 2520235151216758958L;
+    private static final long            serialVersionUID     = 2520235151216758958L;
 
-    private final DerivedColumnListImpl name;
-    private final Select<R>             select;
-    private final Fields<R>             fields;
+    private static final Set<SQLDialect> SUPPORT_MATERIALIZED = SQLDialect.supportedBy(POSTGRES);
 
-    CommonTableExpressionImpl(DerivedColumnListImpl name, Select<R> select) {
+
+
+
+
+    private final DerivedColumnListImpl  name;
+    private final Select<R>              select;
+    private final Fields<R>              fields;
+    private final Boolean                materialized;
+
+    CommonTableExpressionImpl(DerivedColumnListImpl name, Select<R> select, Boolean materialized) {
         super(TableOptions.expression(), name.name);
 
         this.name = name;
         this.select = select;
         this.fields = fields1();
+        this.materialized = materialized;
     }
 
     @Override
@@ -85,7 +101,29 @@ final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R>
     public final void accept(Context<?> ctx) {
         if (ctx.declareCTE()) {
             ctx.visit(name).sql(' ').visit(K_AS).sql(' ');
+
+            Object previous = null;
+            if (materialized != null) {
+                if (SUPPORT_MATERIALIZED.contains(ctx.family())) {
+                    if (materialized)
+                        ctx.visit(K_MATERIALIZED).sql(' ');
+                    else
+                        ctx.visit(K_NOT).sql(' ').visit(K_MATERIALIZED).sql(' ');
+                }
+
+
+
+
+
+            }
+
             visitSubquery(ctx, select, true);
+
+
+
+
+
+
         }
         else
             ctx.visit(DSL.name(name.name));

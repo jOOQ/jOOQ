@@ -37,9 +37,6 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 // ...
 // ...
 // ...
@@ -56,6 +53,8 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A derived column list.
@@ -91,5 +90,29 @@ public interface DerivedColumnList extends QueryPart {
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     <R extends Record> CommonTableExpression<R> as(Select<R> select);
+
+    /**
+     * Specify a materialized subselect to refer to by the
+     * <code>DerivedColumnList</code> to form a common table expression.
+     * <p>
+     * This adds the PostgreSQL 12 <code>MATERIALIZED</code> hint to the common
+     * table expression definition, or silently ignores it, if the hint is not
+     * supported.
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    <R extends Record> CommonTableExpression<R> asMaterialized(Select<R> select);
+
+    /**
+     * Specify a non-materialized subselect to refer to by the
+     * <code>DerivedColumnList</code> to form a common table expression.
+     * <p>
+     * This adds the PostgreSQL 12 <code>NOT MATERIALIZED</code> hint to the
+     * common table expression definition, or silently ignores it, if the hint
+     * is not supported.
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    <R extends Record> CommonTableExpression<R> asNotMaterialized(Select<R> select);
 
 }

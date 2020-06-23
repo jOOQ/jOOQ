@@ -72,6 +72,7 @@ import org.jooq.Select;
 /**
  * @author Lukas Eder
  */
+@SuppressWarnings({ "unchecked", "rawtypes" })
 final class DerivedColumnListImpl extends AbstractQueryPart
 implements
 
@@ -130,22 +131,37 @@ implements
     }
 
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Override
-    public final CommonTableExpression as(Select select) {
+    final CommonTableExpression as0(Select select, Boolean materialized) {
         Select<?> s = select;
 
 
         if (fieldNameFunction != null) {
             List<Field<?>> source = s.getSelect();
             Name[] names = new Name[source.size()];
+
             for (int i = 0; i < names.length; i++)
                 names[i] = DSL.name(fieldNameFunction.apply(source.get(i), i));
-            return new CommonTableExpressionImpl(new DerivedColumnListImpl(name, names), s);
+
+            return new CommonTableExpressionImpl(new DerivedColumnListImpl(name, names), s, materialized);
         }
 
 
-        return new CommonTableExpressionImpl(this, s);
+        return new CommonTableExpressionImpl(this, s, materialized);
+    }
+
+    @Override
+    public final CommonTableExpression as(Select select) {
+        return as0(select, null);
+    }
+
+    @Override
+    public final CommonTableExpression asMaterialized(Select select) {
+        return as0(select, true);
+    }
+
+    @Override
+    public final CommonTableExpression asNotMaterialized(Select select) {
+        return as0(select, false);
     }
 
     @Override

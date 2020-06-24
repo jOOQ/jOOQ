@@ -409,10 +409,10 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                        .visit(K_DO_UPDATE)
                        .formatSeparator()
                        .visit(K_SET)
-                       .sql(' ')
-                       .formatIndentLockStart()
+                       .formatIndentStart()
+                       .formatSeparator()
                        .visit(updateMap)
-                       .formatIndentLockEnd();
+                       .formatIndentEnd();
 
                     if (condition.hasWhere())
                         ctx.formatSeparator()

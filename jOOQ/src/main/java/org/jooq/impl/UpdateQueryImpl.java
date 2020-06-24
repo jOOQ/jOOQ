@@ -549,7 +549,7 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         ctx.formatSeparator()
            .start(UPDATE_SET)
            .visit(K_SET)
-           .sql(' ');
+           .separatorRequired(true);
 
         // A multi-row update was specified
         if (multiRow != null) {
@@ -565,9 +565,10 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                     map.put(k, Tools.field(v, k));
                 }
 
-                ctx.formatIndentLockStart()
+                ctx.formatIndentStart()
+                   .formatSeparator()
                    .visit(map)
-                   .formatIndentLockEnd();
+                   .formatIndentEnd();
             }
             else {
                 boolean qualify = ctx.qualify();
@@ -610,9 +611,10 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
         // A regular (non-multi-row) update was specified
         else {
-            ctx.formatIndentLockStart()
+            ctx.formatIndentStart()
+               .formatSeparator()
                .visit(updateMap)
-               .formatIndentLockEnd();
+               .formatIndentEnd();
         }
 
         ctx.end(UPDATE_SET);

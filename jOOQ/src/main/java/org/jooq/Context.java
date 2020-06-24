@@ -406,7 +406,11 @@ public interface Context<C extends Context<C>> extends Scope {
     /**
      * Start indenting subsequent SQL at the same level as the current line, if
      * {@link Settings#isRenderFormatted()} is set to <code>true</code>.
+     *
+     * @deprecated - [#10317] - 3.14.0 - Do not reuse this method. It will be
+     *             removed without replacement.
      */
+    @Deprecated
     @NotNull
     C formatIndentLockStart();
 
@@ -430,7 +434,11 @@ public interface Context<C extends Context<C>> extends Scope {
     /**
      * Stop indenting subsequent SQL at the same level as the current line, if
      * {@link Settings#isRenderFormatted()} is set to <code>true</code>.
+     *
+     * @deprecated - [#10317] - 3.14.0 - Do not reuse this method. It will be
+     *             removed without replacement.
      */
+    @Deprecated
     @NotNull
     C formatIndentLockEnd();
 

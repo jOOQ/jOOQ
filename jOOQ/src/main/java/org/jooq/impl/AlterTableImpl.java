@@ -1143,8 +1143,8 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
         boolean omitAlterTable =
                (renameConstraint != null && family == HSQLDB)
-            || (renameColumn != null && SUPPORT_RENAME_COLUMN.contains(family));
-        boolean renameTable = renameTo != null && SUPPORT_RENAME_TABLE.contains(family);
+            || (renameColumn != null && SUPPORT_RENAME_COLUMN.contains(ctx.dialect()));
+        boolean renameTable = renameTo != null && SUPPORT_RENAME_TABLE.contains(ctx.dialect());
         boolean renameObject = renameTo != null && (false );
 
         if (!omitAlterTable) {
@@ -1504,7 +1504,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
                 toSQLDDLTypeDeclarationIdentityBeforeNull(ctx, alterColumnType);
 
                 // [#3805] Some databases cannot change the type and the NOT NULL constraint in a single statement
-                if (!NO_SUPPORT_ALTER_TYPE_AND_NULL.contains(family)) {
+                if (!NO_SUPPORT_ALTER_TYPE_AND_NULL.contains(ctx.dialect())) {
                     switch (alterColumnType.nullability()) {
                         case NULL:
                             ctx.sql(' ').visit(K_NULL);
@@ -1597,7 +1597,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
         else if (dropColumns != null) {
             ctx.start(ALTER_TABLE_DROP);
 
-            if (REQUIRE_REPEAT_DROP_ON_MULTI_ALTER.contains(family)) {
+            if (REQUIRE_REPEAT_DROP_ON_MULTI_ALTER.contains(ctx.dialect())) {
                 String separator = "";
 
                 for (Field<?> dropColumn : dropColumns) {
@@ -1659,12 +1659,12 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
             ctx.start(ALTER_TABLE_DROP);
             ctx.data(DATA_CONSTRAINT_REFERENCE, true);
 
-            if (dropConstraintType == FOREIGN_KEY && NO_SUPPORT_DROP_CONSTRAINT.contains(family)) {
+            if (dropConstraintType == FOREIGN_KEY && NO_SUPPORT_DROP_CONSTRAINT.contains(ctx.dialect())) {
                 ctx.visit(K_DROP).sql(' ').visit(K_FOREIGN_KEY)
                    .sql(' ')
                    .visit(dropConstraint);
             }
-            else if (dropConstraintType == PRIMARY_KEY && NO_SUPPORT_DROP_CONSTRAINT.contains(family)) {
+            else if (dropConstraintType == PRIMARY_KEY && NO_SUPPORT_DROP_CONSTRAINT.contains(ctx.dialect())) {
                 ctx.visit(K_DROP).sql(' ').visit(K_PRIMARY_KEY);
             }
             else {

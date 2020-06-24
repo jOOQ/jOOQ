@@ -176,8 +176,8 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
             // They can be emulated by concatenating a dummy SELECT with no
             // results using UNION ALL
             else if (fieldAliases != null && (
-                    SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL2.contains(family)
-                 || SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL3.contains(family))) {
+                    SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL2.contains(dialect)
+                 || SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL3.contains(dialect))) {
 
                 emulatedDerivedColumnList = true;
 
@@ -194,7 +194,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
 
                 // [#9486] H2 cannot handle duplicate column names in derived tables, despite derived column lists
                 //         See: https://github.com/h2database/h2database/issues/2532
-                if (SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL3.contains(family)) {
+                if (SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL3.contains(dialect)) {
                     List<Name> names = fieldNames(select);
 
                     if (names.size() > 0 && names.size() == new HashSet<>(names).size()) {

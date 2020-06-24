@@ -129,8 +129,6 @@ final class RowSubqueryCondition extends AbstractCondition {
         final Configuration configuration = ctx.configuration();
         final RenderContext render = ctx instanceof RenderContext ? (RenderContext) ctx : null;
 
-        SQLDialect family = configuration.family();
-
         // [#3505] TODO: Emulate this where it is not supported
         if (rightQuantified != null) {
             return new Native();
@@ -138,7 +136,7 @@ final class RowSubqueryCondition extends AbstractCondition {
 
         // [#2395] These dialects have full native support for comparison
         // predicates with row value expressions and subqueries:
-        else if (SUPPORT_NATIVE.contains(family)) {
+        else if (SUPPORT_NATIVE.contains(ctx.dialect())) {
             return new Native();
         }
 

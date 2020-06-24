@@ -2285,7 +2285,7 @@ final class Tools {
         if (render == null) render = new DefaultRenderContext(bind.configuration());
 
         SQLDialect family = render.family();
-        boolean mysql = SUPPORT_MYSQL_SYNTAX.contains(family);
+        boolean mysql = SUPPORT_MYSQL_SYNTAX.contains(render.dialect());
         char[][][] quotes = QUOTES.get(family);
 
         // [#3630] Depending on this setting, we need to consider backslashes as escape characters within string literals.

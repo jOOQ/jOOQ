@@ -657,7 +657,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             SQLDialect family = ctx.family();
 
             // [#822] Some RDBMS need precision / scale information on BigDecimals
-            if (converted != null && type == BigDecimal.class && NEEDS_PRECISION_SCALE_ON_BIGDECIMAL.contains(family)) {
+            if (converted != null && type == BigDecimal.class && NEEDS_PRECISION_SCALE_ON_BIGDECIMAL.contains(ctx.dialect())) {
 
                 // Add precision / scale on BigDecimals
                 int scale = ((BigDecimal) converted).scale();
@@ -700,7 +700,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             // [#1130] TODO type can be null for ARRAY types, etc.
             // [#7351] UUID data types need to be cast too
             // [#7242] JSON(B) data types need to be cast too
-            else if (REQUIRES_JSON_CAST.contains(family) &&
+            else if (REQUIRES_JSON_CAST.contains(ctx.dialect()) &&
                     (sqlDataType == null ||
                     (!sqlDataType.isTemporal()
                         && sqlDataType != SQLDataType.UUID
@@ -720,7 +720,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
             // [#7379] Most databases cannot cast a bind variable to an enum type
-            else if (!NO_SUPPORT_ENUM_CAST.contains(family) && EnumType.class.isAssignableFrom(type))
+            else if (!NO_SUPPORT_ENUM_CAST.contains(ctx.dialect()) && EnumType.class.isAssignableFrom(type))
                 sqlCast(
                     ctx,
                     converted,

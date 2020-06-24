@@ -938,7 +938,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
             if (into != null
                     && !TRUE.equals(context.data(DATA_OMIT_INTO_CLAUSE))
-                    && EMULATE_SELECT_INTO_AS_CTAS.contains(family)) {
+                    && EMULATE_SELECT_INTO_AS_CTAS.contains(dialect)) {
 
                 context.data(DATA_OMIT_INTO_CLAUSE, true);
                 context.visit(DSL.createTable(into).as(this));
@@ -1611,7 +1611,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
             if (actualInto != null
                     && !TRUE.equals(context.data(DATA_OMIT_INTO_CLAUSE))
-                    && (SUPPORT_SELECT_INTO_TABLE.contains(family) || !(actualInto instanceof Table))) {
+                    && (SUPPORT_SELECT_INTO_TABLE.contains(context.dialect()) || !(actualInto instanceof Table))) {
 
                 context.formatSeparator()
                        .visit(K_INTO)
@@ -1775,7 +1775,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
                 // [#4292] Some dialects don't support empty GROUP BY () clauses
-                else if (EMULATE_EMPTY_GROUP_BY_OTHER.contains(family))
+                else if (EMULATE_EMPTY_GROUP_BY_OTHER.contains(context.dialect()))
                     context.sql('(').visit(DSL.select(one())).sql(')');
 
                 // Few dialects support the SQL standard "grand total" (i.e. empty grouping set)

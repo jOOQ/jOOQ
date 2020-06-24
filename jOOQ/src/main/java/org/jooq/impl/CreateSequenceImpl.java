@@ -264,12 +264,10 @@ implements
     }
 
     private final void accept0(Context<?> ctx) {
-        SQLDialect family = ctx.family();
-
         ctx.start(Clause.CREATE_SEQUENCE_SEQUENCE)
            .visit(K_CREATE)
            .sql(' ')
-           .visit(family == CUBRID ? K_SERIAL : K_SEQUENCE)
+           .visit(ctx.family() == CUBRID ? K_SERIAL : K_SEQUENCE)
            .sql(' ');
 
         if (createSequenceIfNotExists && supportsIfNotExists(ctx))
@@ -277,10 +275,10 @@ implements
                .sql(' ');
 
         ctx.visit(sequence);
-        String noSeparator = NO_SEPARATOR.contains(family) ? "" : " ";
+        String noSeparator = NO_SEPARATOR.contains(ctx.dialect()) ? "" : " ";
 
         // Some databases default to sequences starting with MIN_VALUE
-        if (startWith == null && REQUIRES_START_WITH.contains(family))
+        if (startWith == null && REQUIRES_START_WITH.contains(ctx.dialect()))
             ctx.sql(' ').visit(K_START_WITH).sql(" 1");
         else if (startWith != null)
             ctx.sql(' ').visit(K_START_WITH).sql(' ').visit(startWith);
@@ -290,23 +288,23 @@ implements
 
         if (minvalue != null)
             ctx.sql(' ').visit(K_MINVALUE).sql(' ').visit(minvalue);
-        else if (noMinvalue && !OMIT_NO_MINVALUE.contains(family))
+        else if (noMinvalue && !OMIT_NO_MINVALUE.contains(ctx.dialect()))
             ctx.sql(' ').visit(K_NO).sql(noSeparator).visit(K_MINVALUE);
 
         if (maxvalue != null)
             ctx.sql(' ').visit(K_MAXVALUE).sql(' ').visit(maxvalue);
-        else if (noMaxvalue && !OMIT_NO_MAXVALUE.contains(family))
+        else if (noMaxvalue && !OMIT_NO_MAXVALUE.contains(ctx.dialect()))
             ctx.sql(' ').visit(K_NO).sql(noSeparator).visit(K_MAXVALUE);
 
         if (cycle)
             ctx.sql(' ').visit(K_CYCLE);
-        else if (noCycle && !OMIT_NO_CYCLE.contains(family))
+        else if (noCycle && !OMIT_NO_CYCLE.contains(ctx.dialect()))
             ctx.sql(' ').visit(K_NO).sql(noSeparator).visit(K_CYCLE);
 
-        if (!NO_SUPPORT_CACHE.contains(family))
+        if (!NO_SUPPORT_CACHE.contains(ctx.dialect()))
             if (cache != null)
                 ctx.sql(' ').visit(K_CACHE).sql(' ').visit(cache);
-            else if (noCache && !OMIT_NO_CACHE.contains(family))
+            else if (noCache && !OMIT_NO_CACHE.contains(ctx.dialect()))
                 ctx.sql(' ').visit(K_NO).sql(noSeparator).visit(K_CACHE);
 
         ctx.end(Clause.CREATE_SEQUENCE_SEQUENCE);

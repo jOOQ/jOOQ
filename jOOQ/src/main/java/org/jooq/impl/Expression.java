@@ -172,15 +172,15 @@ final class Expression<T> extends AbstractField<T> {
         // ---------------------------------------------------------------------
 
         // DB2, H2 and HSQLDB know functions, instead of operators
-        if (BIT_AND == operator && SUPPORT_BIT_AND.contains(family))
+        if (BIT_AND == operator && SUPPORT_BIT_AND.contains(ctx.dialect()))
             ctx.visit(function("bitand", getDataType(), arguments));
         else if (BIT_AND == operator && FIREBIRD == family)
             ctx.visit(function("bin_and", getDataType(), arguments));
-        else if (BIT_XOR == operator && SUPPORT_BIT_OR_XOR.contains(family))
+        else if (BIT_XOR == operator && SUPPORT_BIT_OR_XOR.contains(ctx.dialect()))
             ctx.visit(function("bitxor", getDataType(), arguments));
         else if (BIT_XOR == operator && FIREBIRD == family)
             ctx.visit(function("bin_xor", getDataType(), arguments));
-        else if (BIT_OR == operator && SUPPORT_BIT_OR_XOR.contains(family))
+        else if (BIT_OR == operator && SUPPORT_BIT_OR_XOR.contains(ctx.dialect()))
             ctx.visit(function("bitor", getDataType(), arguments));
         else if (BIT_OR == operator && FIREBIRD == family)
             ctx.visit(function("bin_or", getDataType(), arguments));
@@ -192,7 +192,7 @@ final class Expression<T> extends AbstractField<T> {
 
 
         // ~(a & b) & (a | b)
-        else if (BIT_XOR == operator && EMULATE_BIT_XOR.contains(family))
+        else if (BIT_XOR == operator && EMULATE_BIT_XOR.contains(ctx.dialect()))
             ctx.visit(DSL.bitAnd(
                 DSL.bitNot(DSL.bitAnd(lhsAsNumber(), rhsAsNumber())),
                 DSL.bitOr(lhsAsNumber(), rhsAsNumber())));
@@ -211,12 +211,12 @@ final class Expression<T> extends AbstractField<T> {
                 ctx.visit(function(SHL == operator ? "bin_shl" : "bin_shr", getDataType(), arguments));
 
             // Many dialects don't support shifts. Use multiplication/division instead
-            else if (SHL == operator && EMULATE_SHR_SHL.contains(family))
+            else if (SHL == operator && EMULATE_SHR_SHL.contains(ctx.dialect()))
                 ctx.visit(lhs.mul((Field<? extends Number>) castIfNeeded(DSL.power(two(), rhsAsNumber()), lhs)));
 
             // [#3962] This emulation is expensive. If this is emulated, BitCount should
             // use division instead of SHR directly
-            else if (SHR == operator && EMULATE_SHR_SHL.contains(family))
+            else if (SHR == operator && EMULATE_SHR_SHL.contains(ctx.dialect()))
                 ctx.visit(lhs.div((Field<? extends Number>) castIfNeeded(DSL.power(two(), rhsAsNumber()), lhs)));
 
             // Use the default operator expression for all other cases

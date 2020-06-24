@@ -142,14 +142,14 @@ final class CompareCondition extends AbstractCondition implements LikeEscapeStep
         // VARCHAR when applying a LIKE predicate
         if ((op == LIKE || op == NOT_LIKE || op == SIMILAR_TO || op == NOT_SIMILAR_TO)
                 && field1.getType() != String.class
-                && REQUIRES_CAST_ON_LIKE.contains(family)) {
+                && REQUIRES_CAST_ON_LIKE.contains(ctx.dialect())) {
 
             lhs = castIfNeeded(lhs, String.class);
         }
 
         // [#1423] [#9889] PostgreSQL and H2 support ILIKE natively. Other dialects
         // need to emulate this as LOWER(lhs) LIKE LOWER(rhs)
-        else if ((op == LIKE_IGNORE_CASE || op == NOT_LIKE_IGNORE_CASE) && NO_SUPPORT_ILIKE.contains(family)) {
+        else if ((op == LIKE_IGNORE_CASE || op == NOT_LIKE_IGNORE_CASE) && NO_SUPPORT_ILIKE.contains(ctx.dialect())) {
             lhs = lhs.lower();
             rhs = rhs.lower();
             op = (op == LIKE_IGNORE_CASE ? LIKE : NOT_LIKE);

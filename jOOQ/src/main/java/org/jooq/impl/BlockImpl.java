@@ -406,7 +406,7 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
 
 
 
-                if (s instanceof NullStatement && !SUPPORTS_NULL_STATEMENT.contains(ctx.family()))
+                if (s instanceof NullStatement && !SUPPORTS_NULL_STATEMENT.contains(ctx.dialect()))
                     continue statementLoop;
 
                 ctx.formatSeparator();

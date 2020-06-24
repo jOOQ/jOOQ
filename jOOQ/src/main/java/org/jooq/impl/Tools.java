@@ -2586,7 +2586,7 @@ final class Tools {
      */
     static final boolean needsBackslashEscaping(Configuration configuration) {
         BackslashEscaping escaping = getBackslashEscaping(configuration.settings());
-        return escaping == ON || (escaping == DEFAULT && REQUIRES_BACKSLASH_ESCAPING.contains(configuration.family()));
+        return escaping == ON || (escaping == DEFAULT && REQUIRES_BACKSLASH_ESCAPING.contains(configuration.dialect()));
     }
 
     /**
@@ -4696,7 +4696,7 @@ final class Tools {
 
         // [#5356] Some dialects require the DEFAULT clause prior to the
         //         NULL constraints clause
-        if (DEFAULT_BEFORE_NULL.contains(ctx.family()))
+        if (DEFAULT_BEFORE_NULL.contains(ctx.dialect()))
             toSQLDDLTypeDeclarationDefault(ctx, type);
 
         if (!type.nullable())
@@ -4704,10 +4704,10 @@ final class Tools {
 
             // Some databases default to NOT NULL, so explicitly setting columns to NULL is mostly required here
             // [#3400] [#4321] [#7392] ... but not in Derby, Firebird, HSQLDB
-        else if (!NO_SUPPORT_NULL.contains(ctx.family()))
+        else if (!NO_SUPPORT_NULL.contains(ctx.dialect()))
             ctx.sql(' ').visit(K_NULL);
 
-        if (!DEFAULT_BEFORE_NULL.contains(ctx.family()))
+        if (!DEFAULT_BEFORE_NULL.contains(ctx.dialect()))
             toSQLDDLTypeDeclarationDefault(ctx, type);
 
         toSQLDDLTypeDeclarationIdentityAfterNull(ctx, type);
@@ -4853,7 +4853,7 @@ final class Tools {
         }
 
         // [#5807] These databases cannot use the DataType.getCastTypeName() (which is simply char in this case)
-        if (type.getType() == UUID.class && NO_SUPPORT_CAST_TYPE_IN_DDL.contains(ctx.family())) {
+        if (type.getType() == UUID.class && NO_SUPPORT_CAST_TYPE_IN_DDL.contains(ctx.dialect())) {
             toSQLDDLTypeDeclaration(ctx, VARCHAR(36));
             return;
         }
@@ -4864,13 +4864,13 @@ final class Tools {
         if (type.hasLength() || elementType.hasLength()) {
 
             // [#6289] [#7191] Some databases don't support lengths on binary types
-            if (type.isBinary() && NO_SUPPORT_BINARY_TYPE_LENGTH.contains(ctx.family()))
+            if (type.isBinary() && NO_SUPPORT_BINARY_TYPE_LENGTH.contains(ctx.dialect()))
                 ctx.sql(typeName);
             else if (type.length() > 0)
                 ctx.sql(typeName).sql('(').sql(type.length()).sql(')');
 
             // [#6745] [#9473] The DataType.getCastTypeName() cannot be used in some dialects, for DDL
-            else if (NO_SUPPORT_CAST_TYPE_IN_DDL.contains(ctx.family()))
+            else if (NO_SUPPORT_CAST_TYPE_IN_DDL.contains(ctx.dialect()))
                 if (type.isBinary())
                     ctx.sql(SQLDataType.BLOB.getTypeName(ctx.configuration()));
                 else
@@ -4886,7 +4886,7 @@ final class Tools {
                     ctx.sql(typeName);
             }
         }
-        else if (type.hasPrecision() && type.precision() > 0 && (!type.isTimestamp() || !NO_SUPPORT_TIMESTAMP_PRECISION.contains(ctx.family()))) {
+        else if (type.hasPrecision() && type.precision() > 0 && (!type.isTimestamp() || !NO_SUPPORT_TIMESTAMP_PRECISION.contains(ctx.dialect()))) {
             if (type.hasScale())
                 ctx.sql(typeName).sql('(').sql(type.precision()).sql(", ").sql(type.scale()).sql(')');
             else

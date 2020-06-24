@@ -555,7 +555,7 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         if (multiRow != null) {
 
             // [#6884] This syntax can be emulated trivially, if the RHS is not a SELECT subquery
-            if (multiValue != null && !SUPPORT_RVE_SET.contains(ctx.family())) {
+            if (multiValue != null && !SUPPORT_RVE_SET.contains(ctx.dialect())) {
                 FieldMapForUpdate map = new FieldMapForUpdate(table(), UPDATE_SET_ASSIGNMENT);
 
                 for (int i = 0; i < multiRow.size(); i++) {
@@ -645,7 +645,7 @@ final class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         }
 
         // [#2059] MemSQL does not support UPDATE ... ORDER BY
-        if (limit != null && NO_SUPPORT_LIMIT.contains(ctx.family()) ) {
+        if (limit != null && NO_SUPPORT_LIMIT.contains(ctx.dialect()) ) {
             Field<?>[] keyFields =
                 table().getKeys().isEmpty()
               ? new Field[] { table().rowid() }

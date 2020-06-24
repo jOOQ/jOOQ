@@ -294,7 +294,7 @@ implements
             toSQLJoinCondition(ctx);
             ctx.formatIndentEnd();
         }
-        else if (OUTER_APPLY == translatedType && EMULATE_APPLY.contains(ctx.family())) {
+        else if (OUTER_APPLY == translatedType && EMULATE_APPLY.contains(ctx.dialect())) {
             ctx.formatIndentStart()
                .formatSeparator()
                .start(TABLE_JOIN_ON)
@@ -353,9 +353,9 @@ implements
                 break;
         }
 
-        if (translatedType == CROSS_APPLY && EMULATE_APPLY.contains(ctx.family()))
+        if (translatedType == CROSS_APPLY && EMULATE_APPLY.contains(ctx.dialect()))
             keyword = K_CROSS_JOIN_LATERAL;
-        else if (translatedType == OUTER_APPLY && EMULATE_APPLY.contains(ctx.family()))
+        else if (translatedType == OUTER_APPLY && EMULATE_APPLY.contains(ctx.dialect()))
             if (ctx.settings().getRenderOptionalOuterKeyword() == RenderOptionalKeyword.OFF)
                 keyword = K_LEFT_JOIN_LATERAL;
             else
@@ -415,22 +415,22 @@ implements
     /**
      * Translate the join type for SQL rendering
      */
-    final JoinType translateType(Context<?> context) {
-        if (emulateCrossJoin(context))
+    final JoinType translateType(Context<?> ctx) {
+        if (emulateCrossJoin(ctx))
             return JOIN;
-        else if (emulateNaturalJoin(context))
+        else if (emulateNaturalJoin(ctx))
             return JOIN;
-        else if (emulateNaturalLeftOuterJoin(context))
+        else if (emulateNaturalLeftOuterJoin(ctx))
             return LEFT_OUTER_JOIN;
-        else if (emulateNaturalRightOuterJoin(context))
+        else if (emulateNaturalRightOuterJoin(ctx))
             return RIGHT_OUTER_JOIN;
-        else if (emulateNaturalFullOuterJoin(context))
+        else if (emulateNaturalFullOuterJoin(ctx))
             return FULL_OUTER_JOIN;
         else
             return type;
     }
 
-    private final boolean emulateCrossJoin(Context<?> context) {
+    private final boolean emulateCrossJoin(Context<?> ctx) {
         return false
 
 
@@ -438,25 +438,25 @@ implements
             ;
     }
 
-    private final boolean emulateNaturalJoin(Context<?> context) {
-        return type == NATURAL_JOIN && EMULATE_NATURAL_JOIN.contains(context.family());
+    private final boolean emulateNaturalJoin(Context<?> ctx) {
+        return type == NATURAL_JOIN && EMULATE_NATURAL_JOIN.contains(ctx.dialect());
     }
 
-    private final boolean emulateNaturalLeftOuterJoin(Context<?> context) {
-        return type == NATURAL_LEFT_OUTER_JOIN && EMULATE_NATURAL_OUTER_JOIN.contains(context.family());
+    private final boolean emulateNaturalLeftOuterJoin(Context<?> ctx) {
+        return type == NATURAL_LEFT_OUTER_JOIN && EMULATE_NATURAL_OUTER_JOIN.contains(ctx.dialect());
     }
 
-    private final boolean emulateNaturalRightOuterJoin(Context<?> context) {
-        return type == NATURAL_RIGHT_OUTER_JOIN && EMULATE_NATURAL_OUTER_JOIN.contains(context.family());
+    private final boolean emulateNaturalRightOuterJoin(Context<?> ctx) {
+        return type == NATURAL_RIGHT_OUTER_JOIN && EMULATE_NATURAL_OUTER_JOIN.contains(ctx.dialect());
     }
 
-    private final boolean emulateNaturalFullOuterJoin(Context<?> context) {
-        return type == NATURAL_FULL_OUTER_JOIN && EMULATE_NATURAL_OUTER_JOIN.contains(context.family());
+    private final boolean emulateNaturalFullOuterJoin(Context<?> ctx) {
+        return type == NATURAL_FULL_OUTER_JOIN && EMULATE_NATURAL_OUTER_JOIN.contains(ctx.dialect());
     }
 
-    private final void toSQLJoinCondition(Context<?> context) {
+    private final void toSQLJoinCondition(Context<?> ctx) {
         if (!using.isEmpty()) {
-            boolean qualify = context.qualify();
+            boolean qualify = ctx.qualify();
 
 
 
@@ -467,30 +467,30 @@ implements
 
 
 
-            context.formatSeparator()
-                   .start(TABLE_JOIN_USING)
-                   .visit(K_USING)
-                   .sql(" (")
-                   .qualify(false)
-                   .visit(wrap(using).indentSize(0))
-                   .qualify(qualify)
-                   .sql(')')
-                   .end(TABLE_JOIN_USING);
+            ctx.formatSeparator()
+               .start(TABLE_JOIN_USING)
+               .visit(K_USING)
+               .sql(" (")
+               .qualify(false)
+               .visit(wrap(using).indentSize(0))
+               .qualify(qualify)
+               .sql(')')
+               .end(TABLE_JOIN_USING);
         }
 
         // [#577] If any NATURAL JOIN syntax needs to be emulated, find out
         // common fields in lhs and rhs of the JOIN clause
-        else if (emulateNaturalJoin(context) ||
-                 emulateNaturalLeftOuterJoin(context) ||
-                 emulateNaturalRightOuterJoin(context) ||
-                 emulateNaturalFullOuterJoin(context)) {
+        else if (emulateNaturalJoin(ctx) ||
+                 emulateNaturalLeftOuterJoin(ctx) ||
+                 emulateNaturalRightOuterJoin(ctx) ||
+                 emulateNaturalFullOuterJoin(ctx)) {
 
-            toSQLJoinCondition(context, naturalCondition());
+            toSQLJoinCondition(ctx, naturalCondition());
         }
 
         // Regular JOIN condition
         else {
-            toSQLJoinCondition(context, condition);
+            toSQLJoinCondition(ctx, condition);
         }
     }
 

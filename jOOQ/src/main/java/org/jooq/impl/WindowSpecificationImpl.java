@@ -152,7 +152,7 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
         if (o.isEmpty()) {
             boolean requiresOrderBy =
                    TRUE.equals(ctx.data(BooleanDataKey.DATA_ORDERED_WINDOW_FUNCTION))
-                && REQUIRES_ORDER_BY_IN_RANKING.contains(ctx.family());
+                && REQUIRES_ORDER_BY_IN_RANKING.contains(ctx.dialect());
 
 
 
@@ -210,7 +210,7 @@ final class WindowSpecificationImpl extends AbstractQueryPart implements
             // Ignore PARTITION BY 1 clause. These databases erroneously map the
             // 1 literal onto the column index (CUBRID, Sybase), or do not support
             // constant expressions in the PARTITION BY clause (HANA)
-            if (partitionByOne && OMIT_PARTITION_BY_ONE.contains(ctx.family())) {
+            if (partitionByOne && OMIT_PARTITION_BY_ONE.contains(ctx.dialect())) {
             }
             else {
                 if (hasWindowDefinitions)

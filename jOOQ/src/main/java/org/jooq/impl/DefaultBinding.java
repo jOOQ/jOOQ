@@ -1019,7 +1019,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 ctx.render().sql(')');
             }
 
-            else if (REQUIRES_ARRAY_CAST.contains(ctx.family())) {
+            else if (REQUIRES_ARRAY_CAST.contains(ctx.dialect())) {
 
                 // [#8933] In some cases, we cannot derive the cast type from
                 //         array type directly
@@ -1048,7 +1048,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 // [#3214] Some PostgreSQL array type literals need explicit casting
                 // TODO: This seems mutually exclusive with the previous branch. Still needed?
-                if ((REQUIRES_ARRAY_CAST.contains(ctx.family())) && EnumType.class.isAssignableFrom(type.getComponentType()))
+                if ((REQUIRES_ARRAY_CAST.contains(ctx.dialect())) && EnumType.class.isAssignableFrom(type.getComponentType()))
                     DefaultEnumTypeBinding.pgRenderEnumCast(ctx.render(), type);
             }
         }
@@ -1436,8 +1436,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         /**
          * Generated UID
          */
-        private static final long                serialVersionUID = -8912971184035434281L;
-        private static final Set<SQLDialect> BIND_AS_STRING = SQLDialect.supportedBy(SQLITE);
+        private static final long            serialVersionUID = -8912971184035434281L;
+        private static final Set<SQLDialect> BIND_AS_STRING   = SQLDialect.supportedBy(SQLITE);
 
         DefaultBigDecimalBinding(Converter<BigDecimal, U> converter, boolean isLob) {
             super(converter, isLob);
@@ -1450,7 +1450,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final void set0(BindingSetStatementContext<U> ctx, BigDecimal value) throws SQLException {
-            if (BIND_AS_STRING.contains(ctx.family()))
+            if (BIND_AS_STRING.contains(ctx.dialect()))
                 ctx.statement().setString(ctx.index(), value.toString());
             else
                 ctx.statement().setBigDecimal(ctx.index(), value);
@@ -1506,7 +1506,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final void set0(BindingSetStatementContext<U> ctx, BigInteger value) throws SQLException {
-            if (BIND_AS_STRING.contains(ctx.family()))
+            if (BIND_AS_STRING.contains(ctx.dialect()))
                 ctx.statement().setString(ctx.index(), value.toString());
             else
                 ctx.statement().setBigDecimal(ctx.index(), new BigDecimal(value));
@@ -1625,7 +1625,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         final void sqlInline0(BindingSQLContext<U> ctx, Boolean value) {
 
             // [#1153] Some dialects don't support boolean literals TRUE and FALSE
-            if (BIND_AS_1_0.contains(ctx.family()))
+            if (BIND_AS_1_0.contains(ctx.dialect()))
                 ctx.render().sql(value ? "1" : "0");
 
 
@@ -1805,7 +1805,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-            if (INLINE_AS_X_APOS.contains(ctx.family()))
+            if (INLINE_AS_X_APOS.contains(ctx.dialect()))
                 ctx.render()
                    .sql("X'")
                    .sql(convertBytesToHex(value))
@@ -1822,7 +1822,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-            else if (REQUIRE_BYTEA_CAST.contains(ctx.family()))
+            else if (REQUIRE_BYTEA_CAST.contains(ctx.dialect()))
                 ctx.render()
                    .sql("E'")
                    .sql(PostgresUtils.toPGString(value))
@@ -1986,7 +1986,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // The SQLite JDBC driver does not implement the escape syntax
             // [#1253] Sybase does not implement date literals
-            if (INLINE_AS_STRING_LITERAL.contains(ctx.family()))
+            if (INLINE_AS_STRING_LITERAL.contains(ctx.dialect()))
                 ctx.render().sql('\'').sql(escape(value, ctx.render())).sql('\'');
 
 
@@ -2006,7 +2006,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 ctx.render().visit(K_DATE).sql("('").sql(escape(value, ctx.render())).sql("')");
 
             // [#3648] Circumvent a MySQL bug related to date literals
-            else if (REQUIRE_JDBC_DATE_LITERAL.contains(ctx.family()))
+            else if (REQUIRE_JDBC_DATE_LITERAL.contains(ctx.dialect()))
                 ctx.render().sql("{d '").sql(escape(value, ctx.render())).sql("'}");
 
             // Most dialects implement SQL standard date literals
@@ -2173,7 +2173,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         void sqlInline0(BindingSQLContext<U> ctx, DayToSecond value) throws SQLException {
             // [#566] Interval data types are best bound as Strings
-            if (REQUIRE_PG_INTERVAL_SYNTAX.contains(ctx.family())) {
+            if (REQUIRE_PG_INTERVAL_SYNTAX.contains(ctx.dialect())) {
                 int sign = value.getSign();
                 int days = sign * value.getDays();
                 ctx.render().sql('\'')
@@ -2197,7 +2197,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         final void set0(BindingSetStatementContext<U> ctx, DayToSecond value) throws SQLException {
 
             // [#566] Interval data types are best bound as Strings
-            if (REQUIRE_PG_INTERVAL_SYNTAX.contains(ctx.family()))
+            if (REQUIRE_PG_INTERVAL_SYNTAX.contains(ctx.dialect()))
                 ctx.statement().setObject(ctx.index(), toPGInterval(value));
             else
                 ctx.statement().setString(ctx.index(), value.toString());
@@ -2210,7 +2210,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final DayToSecond get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-            if (REQUIRE_PG_INTERVAL_SYNTAX.contains(ctx.family())) {
+            if (REQUIRE_PG_INTERVAL_SYNTAX.contains(ctx.dialect())) {
                 Object object = ctx.resultSet().getObject(ctx.index());
                 return object == null ? null : PostgresUtils.toDayToSecond(object);
             }
@@ -2222,7 +2222,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final DayToSecond get0(BindingGetStatementContext<U> ctx) throws SQLException {
-            if (REQUIRE_PG_INTERVAL_SYNTAX.contains(ctx.family())) {
+            if (REQUIRE_PG_INTERVAL_SYNTAX.contains(ctx.dialect())) {
                 Object object = ctx.statement().getObject(ctx.index());
                 return object == null ? null : PostgresUtils.toDayToSecond(object);
             }
@@ -2261,7 +2261,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // [#5249] [#6912] [#8063] Special inlining of special floating point values
             if (value.isNaN())
-                if (REQUIRE_NAN_CAST.contains(ctx.family()))
+                if (REQUIRE_NAN_CAST.contains(ctx.dialect()))
                     ctx.render().visit(inline("NaN")).sql("::float8");
                 else if (ctx.family() == HSQLDB)
                     ctx.render().visit(sqrt(inline(-1)));
@@ -2339,7 +2339,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             super.sqlBind0(ctx, value);
 
             // Postgres needs explicit casting for enum (array) types
-            if (REQUIRE_ENUM_CAST.contains(ctx.family()))
+            if (REQUIRE_ENUM_CAST.contains(ctx.dialect()))
                 pgRenderEnumCast(ctx.render(), type);
         }
 
@@ -2436,7 +2436,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // [#5249] [#6912] [#8063] Special inlining of special floating point values
             if (value.isNaN())
-                if (REQUIRE_NAN_CAST.contains(ctx.family()))
+                if (REQUIRE_NAN_CAST.contains(ctx.dialect()))
                     ctx.render().visit(inline("NaN")).sql("::float4");
                 else if (ctx.family() == HSQLDB)
                     ctx.render().visit(sqrt(inline(-1)));
@@ -3263,13 +3263,13 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         void sqlBind0(BindingSQLContext<U> ctx, Record value) throws SQLException {
             super.sqlBind0(ctx, value);
 
-            if (REQUIRE_RECORD_CAST.contains(ctx.family()) && value != null)
+            if (REQUIRE_RECORD_CAST.contains(ctx.dialect()) && value != null)
                 pgRenderRecordCast(ctx.render(), value);
         }
 
         @Override
         final void sqlInline0(BindingSQLContext<U> ctx, Record value) throws SQLException {
-            if (REQUIRE_RECORD_CAST.contains(ctx.family())) {
+            if (REQUIRE_RECORD_CAST.contains(ctx.dialect())) {
                 ctx.render().visit(inline(PostgresUtils.toPGString(value)));
                 pgRenderRecordCast(ctx.render(), value);
             }
@@ -3292,7 +3292,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final void set0(BindingSetStatementContext<U> ctx, Record value) throws SQLException {
-            if (REQUIRE_RECORD_CAST.contains(ctx.family()) && value != null)
+            if (REQUIRE_RECORD_CAST.contains(ctx.dialect()) && value != null)
                 ctx.statement().setString(ctx.index(), PostgresUtils.toPGString(value));
             else
                 ctx.statement().setObject(ctx.index(), value);
@@ -3760,7 +3760,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // The SQLite JDBC driver does not implement the escape syntax
             // [#1253] Sybase does not implement time literals
-            if (INLINE_AS_STRING_LITERAL.contains(ctx.family()))
+            if (INLINE_AS_STRING_LITERAL.contains(ctx.dialect()))
                 ctx.render().sql('\'').sql(new SimpleDateFormat("HH:mm:ss").format(value)).sql('\'');
 
 
@@ -3775,7 +3775,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 ctx.render().visit(K_TIME).sql("('").sql(escape(value, ctx.render())).sql("')");
 
             // [#3648] Circumvent a MySQL bug related to date literals
-            else if (REQUIRE_JDBC_DATE_LITERAL.contains(ctx.family()))
+            else if (REQUIRE_JDBC_DATE_LITERAL.contains(ctx.dialect()))
                 ctx.render().sql("{t '").sql(escape(value, ctx.render())).sql("'}");
 
 
@@ -3854,7 +3854,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // The SQLite JDBC driver does not implement the escape syntax
             // [#1253] Sybase does not implement timestamp literals
-            if (INLINE_AS_STRING_LITERAL.contains(ctx.family()))
+            if (INLINE_AS_STRING_LITERAL.contains(ctx.dialect()))
                 ctx.render().sql('\'').sql(escape(value, ctx.render())).sql('\'');
 
 
@@ -3878,7 +3878,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 ctx.render().visit(K_DATETIME).sql(" '").sql(escape(value, ctx.render())).sql('\'');
 
             // [#3648] Circumvent a MySQL bug related to date literals
-            else if (REQUIRE_JDBC_DATE_LITERAL.contains(ctx.family()))
+            else if (REQUIRE_JDBC_DATE_LITERAL.contains(ctx.dialect()))
                 ctx.render().sql("{ts '").sql(escape(value, ctx.render())).sql("'}");
 
             // Most dialects implement SQL standard timestamp literals
@@ -4501,7 +4501,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         final void set0(BindingSetStatementContext<U> ctx, YearToSecond value) throws SQLException {
 
             // [#566] Interval data types are best bound as Strings
-            if (REQUIRE_PG_INTERVAL.contains(ctx.family()))
+            if (REQUIRE_PG_INTERVAL.contains(ctx.dialect()))
                 ctx.statement().setObject(ctx.index(), toPGInterval(value));
             else
                 ctx.statement().setString(ctx.index(), value.toString());
@@ -4514,7 +4514,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final YearToSecond get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-            if (REQUIRE_PG_INTERVAL.contains(ctx.family())) {
+            if (REQUIRE_PG_INTERVAL.contains(ctx.dialect())) {
                 Object object = ctx.resultSet().getObject(ctx.index());
                 return object == null ? null : PostgresUtils.toYearToSecond(object);
             }
@@ -4526,7 +4526,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final YearToSecond get0(BindingGetStatementContext<U> ctx) throws SQLException {
-            if (REQUIRE_PG_INTERVAL.contains(ctx.family())) {
+            if (REQUIRE_PG_INTERVAL.contains(ctx.dialect())) {
                 Object object = ctx.statement().getObject(ctx.index());
                 return object == null ? null : PostgresUtils.toYearToSecond(object);
             }
@@ -4564,7 +4564,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         final void set0(BindingSetStatementContext<U> ctx, YearToMonth value) throws SQLException {
 
             // [#566] Interval data types are best bound as Strings
-            if (REQUIRE_PG_INTERVAL.contains(ctx.family()))
+            if (REQUIRE_PG_INTERVAL.contains(ctx.dialect()))
                 ctx.statement().setObject(ctx.index(), toPGInterval(value));
             else
                 ctx.statement().setString(ctx.index(), value.toString());
@@ -4577,7 +4577,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final YearToMonth get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-            if (REQUIRE_PG_INTERVAL.contains(ctx.family())) {
+            if (REQUIRE_PG_INTERVAL.contains(ctx.dialect())) {
                 Object object = ctx.resultSet().getObject(ctx.index());
                 return object == null ? null : PostgresUtils.toYearToMonth(object);
             }
@@ -4589,7 +4589,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final YearToMonth get0(BindingGetStatementContext<U> ctx) throws SQLException {
-            if (REQUIRE_PG_INTERVAL.contains(ctx.family())) {
+            if (REQUIRE_PG_INTERVAL.contains(ctx.dialect())) {
                 Object object = ctx.statement().getObject(ctx.index());
                 return object == null ? null : PostgresUtils.toYearToMonth(object);
             }

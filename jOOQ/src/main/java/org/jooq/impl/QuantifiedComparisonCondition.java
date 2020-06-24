@@ -152,7 +152,7 @@ final class QuantifiedComparisonCondition extends AbstractCondition implements L
 
         // [#9224] Special case when a SQL dialect actually supports quantified
         //         arrays, such as x = any(?::int[]) in PostgreSQL
-        if (quantifiedArray && SUPPORTS_QUANTIFIED_ARRAYS.contains(ctx.family()) && !emulateOperator) {
+        if (quantifiedArray && SUPPORTS_QUANTIFIED_ARRAYS.contains(ctx.dialect()) && !emulateOperator) {
             accept1(ctx);
         }
         else if (query.values != null || quantifiedArray) {

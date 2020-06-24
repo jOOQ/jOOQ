@@ -127,7 +127,7 @@ implements
             ctx.visit(K_DISTINCT).sql(' ');
 
             // [#2883][#9109] PostgreSQL and H2 can use the DISTINCT keyword with formal row value expressions.
-            if (args.size() > 1 && SUPPORT_DISTINCT_RVE.contains(ctx.family()))
+            if (args.size() > 1 && SUPPORT_DISTINCT_RVE.contains(ctx.dialect()))
                 ctx.sql('(');
         }
 
@@ -146,7 +146,7 @@ implements
         }
 
         if (distinct)
-            if (args.size() > 1 && SUPPORT_DISTINCT_RVE.contains(ctx.family()))
+            if (args.size() > 1 && SUPPORT_DISTINCT_RVE.contains(ctx.dialect()))
                 ctx.sql(')');
     }
 

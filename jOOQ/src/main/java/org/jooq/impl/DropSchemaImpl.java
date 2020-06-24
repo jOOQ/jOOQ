@@ -129,7 +129,7 @@ implements
 
 
     private final boolean supportsIfExists(Context<?> ctx) {
-        return !NO_SUPPORT_IF_EXISTS.contains(ctx.family());
+        return !NO_SUPPORT_IF_EXISTS.contains(ctx.dialect());
     }
 
     @Override
@@ -180,7 +180,7 @@ implements
 
         if (cascade != null && cascade)
             ctx.sql(' ').visit(K_CASCADE);
-        else if (cascade != null && !cascade || REQUIRES_RESTRICT.contains(ctx.family()))
+        else if (cascade != null && !cascade || REQUIRES_RESTRICT.contains(ctx.dialect()))
             ctx.sql(' ').visit(K_RESTRICT);
 
         ctx.end(Clause.DROP_SCHEMA_SCHEMA);

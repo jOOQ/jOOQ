@@ -884,7 +884,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         // [#6583] Work around MySQL's self-reference-in-DML-subquery restriction
         if (context.subqueryLevel() == 1
-            && REQUIRES_DERIVED_TABLE_DML.contains(context.family())
+            && REQUIRES_DERIVED_TABLE_DML.contains(context.dialect())
             && (dmlTable = (Table<?>) context.data(DATA_DML_TARGET_TABLE)) != null
             && containsTable(dmlTable)) {
             context.visit(DSL.select(asterisk()).from(asTable("t")));
@@ -2216,18 +2216,18 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
             // [#3579] [#6431] [#7222] Some databases don't support nested set operations at all
             //                         because they do not allow wrapping set op subqueries in parentheses
-            NO_SUPPORT_UNION_PARENTHESES.contains(ctx.family())
+            NO_SUPPORT_UNION_PARENTHESES.contains(ctx.dialect())
 
             // [#3579] [#6431] [#7222] Nested set operations aren't supported, but parenthesised
             //                         set op subqueries are.
-            || (TRUE.equals(ctx.data(DATA_NESTED_SET_OPERATIONS)) && UNION_PARENTHESIS.contains(ctx.family()))
+            || (TRUE.equals(ctx.data(DATA_NESTED_SET_OPERATIONS)) && UNION_PARENTHESIS.contains(ctx.dialect()))
 
             // [#2995] Ambiguity may need to be resolved when parentheses could mean both:
             //         Set op subqueries or insert column lists
             || TRUE.equals(ctx.data(DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST))
 
             // [#7222] [#7711] Workaround for https://issues.apache.org/jira/browse/DERBY-6984
-            || (ctx.subquery() && UNION_PARENTHESIS_IN_DERIVED_TABLES.contains(ctx.family()))
+            || (ctx.subquery() && UNION_PARENTHESIS_IN_DERIVED_TABLES.contains(ctx.dialect()))
             ;
 
         parensRequired |= derivedTable;

@@ -156,7 +156,7 @@ final class AlterIndexImpl extends AbstractRowCountQuery implements
     // ------------------------------------------------------------------------
 
     private final boolean supportsIfExists(Context<?> ctx) {
-        return !NO_SUPPORT_IF_EXISTS.contains(ctx.family());
+        return !NO_SUPPORT_IF_EXISTS.contains(ctx.dialect());
     }
 
     @Override
@@ -172,7 +172,7 @@ final class AlterIndexImpl extends AbstractRowCountQuery implements
     }
 
     private final void accept0(Context<?> ctx) {
-        boolean renameIndex = SUPPORT_RENAME_INDEX.contains(ctx.family());
+        boolean renameIndex = SUPPORT_RENAME_INDEX.contains(ctx.dialect());
         boolean qualify = ctx.qualify();
 
         switch (ctx.family()) {

@@ -124,9 +124,9 @@ final class RowIsNull extends AbstractCondition {
 
 
 
-        if (row != null && EMULATE_NULL_ROW.contains(ctx.family()))
+        if (row != null && EMULATE_NULL_ROW.contains(ctx.dialect()))
             ctx.visit(condition(row.fields()));
-        else if (select != null && EMULATE_NULL_QUERY.contains(ctx.family())) {
+        else if (select != null && EMULATE_NULL_QUERY.contains(ctx.dialect())) {
             Table<?> t = select.asTable("t", fieldNameStrings(select.getSelect().size()));
             ctx.visit(inline(1).eq(selectCount().from(t).where(condition(t.fields()))));
         }

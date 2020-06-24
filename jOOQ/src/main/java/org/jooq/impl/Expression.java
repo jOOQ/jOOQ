@@ -833,7 +833,7 @@ final class Expression<T> extends AbstractField<T> {
         public final void accept(Context<?> ctx) {
             String op = operator.toSQL();
 
-            if (operator == BIT_XOR && HASH_OP_FOR_BIT_XOR.contains(ctx.family()))
+            if (operator == BIT_XOR && HASH_OP_FOR_BIT_XOR.contains(ctx.dialect()))
                 op = "#";
 
             ctx.sql('(');

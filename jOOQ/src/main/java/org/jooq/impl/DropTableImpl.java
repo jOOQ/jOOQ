@@ -133,7 +133,7 @@ final class DropTableImpl extends AbstractRowCountQuery implements
     // ------------------------------------------------------------------------
 
     private final boolean supportsIfExists(Context<?> ctx) {
-        return !NO_SUPPORT_IF_EXISTS.contains(ctx.family());
+        return !NO_SUPPORT_IF_EXISTS.contains(ctx.dialect());
     }
 
     @Override
@@ -154,7 +154,7 @@ final class DropTableImpl extends AbstractRowCountQuery implements
         // [#6371] [#9019] While many dialects do not require this keyword, in
         //                 some dialects (e.g. MySQL), there is a semantic
         //                 difference, e.g. with respect to transactions.
-        if (temporary && TEMPORARY_SEMANTIC.contains(ctx.family()))
+        if (temporary && TEMPORARY_SEMANTIC.contains(ctx.dialect()))
             ctx.visit(K_DROP).sql(' ').visit(K_TEMPORARY).sql(' ').visit(K_TABLE).sql(' ');
         else
             ctx.visit(K_DROP_TABLE).sql(' ');

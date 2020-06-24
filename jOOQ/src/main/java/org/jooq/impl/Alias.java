@@ -301,13 +301,13 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart {
             ctx.sql(' ').visit(K_AS);
         }
         else if (wrapped instanceof Field) {
-            if (ctx.settings().getRenderOptionalAsKeywordForFieldAliases() == RenderOptionalKeyword.DEFAULT && SUPPORT_AS_REQUIRED.contains(ctx.family()))
+            if (ctx.settings().getRenderOptionalAsKeywordForFieldAliases() == RenderOptionalKeyword.DEFAULT && SUPPORT_AS_REQUIRED.contains(ctx.dialect()))
                 ctx.sql(' ').visit(K_AS);
             else if (ctx.settings().getRenderOptionalAsKeywordForFieldAliases() == RenderOptionalKeyword.ON)
                 ctx.sql(' ').visit(K_AS);
         }
         else {
-            if (ctx.settings().getRenderOptionalAsKeywordForTableAliases() == RenderOptionalKeyword.DEFAULT && SUPPORT_AS_REQUIRED.contains(ctx.family()))
+            if (ctx.settings().getRenderOptionalAsKeywordForTableAliases() == RenderOptionalKeyword.DEFAULT && SUPPORT_AS_REQUIRED.contains(ctx.dialect()))
                 ctx.sql(' ').visit(K_AS);
 
 

@@ -109,7 +109,7 @@ final class RowInCondition extends AbstractCondition {
     }
 
     private final QueryPartInternal delegate(Configuration configuration) {
-        if (EMULATE_IN.contains(configuration.family())) {
+        if (EMULATE_IN.contains(configuration.dialect())) {
             List<Condition> conditions = new ArrayList<>(right.size());
 
             for (Row row : right)

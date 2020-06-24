@@ -155,7 +155,7 @@ implements
     private static final Set<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS = SQLDialect.supportedBy(FIREBIRD, POSTGRES);
 
     private final boolean supportsIfNotExists(Context<?> ctx) {
-        return !NO_SUPPORT_IF_NOT_EXISTS.contains(ctx.family());
+        return !NO_SUPPORT_IF_NOT_EXISTS.contains(ctx.dialect());
     }
 
     @Override

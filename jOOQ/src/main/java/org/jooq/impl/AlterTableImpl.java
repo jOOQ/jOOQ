@@ -967,15 +967,15 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
     // ------------------------------------------------------------------------
 
     private final boolean supportsIfExists(Context<?> ctx) {
-        return !NO_SUPPORT_IF_EXISTS.contains(ctx.family());
+        return !NO_SUPPORT_IF_EXISTS.contains(ctx.dialect());
     }
 
     private final boolean supportsIfExistsColumn(Context<?> ctx) {
-        return !NO_SUPPORT_IF_EXISTS_COLUMN.contains(ctx.family());
+        return !NO_SUPPORT_IF_EXISTS_COLUMN.contains(ctx.dialect());
     }
 
     private final boolean supportsIfNotExistsColumn(Context<?> ctx) {
-        return !NO_SUPPORT_IF_NOT_EXISTS_COLUMN.contains(ctx.family());
+        return !NO_SUPPORT_IF_NOT_EXISTS_COLUMN.contains(ctx.dialect());
     }
 
     @Override
@@ -1172,13 +1172,13 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
 
             ctx.start(ALTER_TABLE_RENAME);
 
-            if (NO_SUPPORT_RENAME_QUALIFIED_TABLE.contains(ctx.family()))
+            if (NO_SUPPORT_RENAME_QUALIFIED_TABLE.contains(ctx.dialect()))
                 ctx.qualify(false);
 
             ctx.visit(renameObject || renameTable ? K_TO : K_RENAME_TO).sql(' ')
                .visit(renameTo);
 
-            if (NO_SUPPORT_RENAME_QUALIFIED_TABLE.contains(ctx.family()))
+            if (NO_SUPPORT_RENAME_QUALIFIED_TABLE.contains(ctx.dialect()))
                 ctx.qualify(qualify);
 
             ctx.end(ALTER_TABLE_RENAME);
@@ -1299,7 +1299,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
         }
         else if (add != null) {
             boolean qualify = ctx.qualify();
-            boolean multiAdd = REQUIRE_REPEAT_ADD_ON_MULTI_ALTER.contains(ctx.family());
+            boolean multiAdd = REQUIRE_REPEAT_ADD_ON_MULTI_ALTER.contains(ctx.dialect());
             boolean parens = !multiAdd ;
             boolean comma = true ;
 
@@ -1673,7 +1673,7 @@ final class AlterTableImpl extends AbstractRowCountQuery implements
                 //         dropped by dropping their declarations.
                 ctx.visit(dropConstraint.getUnqualifiedName().empty() ? K_DROP : K_DROP_CONSTRAINT).sql(' ');
 
-                if (ifExistsConstraint && !NO_SUPPORT_IF_EXISTS_CONSTRAINT.contains(ctx.family()))
+                if (ifExistsConstraint && !NO_SUPPORT_IF_EXISTS_CONSTRAINT.contains(ctx.dialect()))
                     ctx.visit(K_IF_EXISTS).sql(' ');
 
                 ctx.visit(dropConstraint);

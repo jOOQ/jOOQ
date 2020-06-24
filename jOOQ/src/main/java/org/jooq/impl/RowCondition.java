@@ -114,7 +114,7 @@ final class RowCondition extends AbstractCondition {
     private final QueryPartInternal delegate(Configuration configuration) {
         // Regular comparison predicate emulation
         if ((comparator == EQUALS || comparator == NOT_EQUALS) &&
-            EMULATE_EQ_AND_NE.contains(configuration.family())) {
+            EMULATE_EQ_AND_NE.contains(configuration.dialect())) {
 
             Field<?>[] leftFields = left.fields();
             Field<?>[] rightFields = right.fields();
@@ -133,7 +133,7 @@ final class RowCondition extends AbstractCondition {
 
         // Ordering comparison predicate emulation
         else if ((comparator == GREATER || comparator == GREATER_OR_EQUAL || comparator == LESS || comparator == LESS_OR_EQUAL) &&
-                 EMULATE_RANGES.contains(configuration.family())) {
+                 EMULATE_RANGES.contains(configuration.dialect())) {
 
             // The order component of the comparator (stripping the equal component)
             Comparator order

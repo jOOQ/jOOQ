@@ -127,7 +127,7 @@ implements
         // [#3727] Referenced WindowDefinitions that contain a frame clause
         // shouldn't be referenced from within parentheses (in MySQL and PostgreSQL)
         if (windowDefinition != null)
-            if (SUPPORT_NO_PARENS_WINDOW_REFERENCE.contains(ctx.family()))
+            if (SUPPORT_NO_PARENS_WINDOW_REFERENCE.contains(ctx.dialect()))
                 return windowDefinition;
             else
                 return DSL.sql("({0})", windowDefinition);

@@ -141,7 +141,7 @@ final class InCondition<T> extends AbstractCondition {
     }
 
     private final void accept0(Context<?> ctx) {
-        if (values.size() == 0 && NO_SUPPORT_EMPTY_LISTS.contains(ctx.family())) {
+        if (values.size() == 0 && NO_SUPPORT_EMPTY_LISTS.contains(ctx.dialect())) {
             if (comparator == IN)
                 ctx.visit(falseCondition());
             else
@@ -202,7 +202,7 @@ final class InCondition<T> extends AbstractCondition {
 
     static <T> List<T> padded(Context<?> ctx, List<T> list) {
         return ctx.paramType() == INDEXED && TRUE.equals(ctx.settings().isInListPadding())
-            ? new PaddedList<>(list, REQUIRES_IN_LIMIT.contains(ctx.family())
+            ? new PaddedList<>(list, REQUIRES_IN_LIMIT.contains(ctx.dialect())
                 ? IN_LIMIT
                 : Integer.MAX_VALUE,
                   defaultIfNull(ctx.settings().getInListPadBase(), 2))

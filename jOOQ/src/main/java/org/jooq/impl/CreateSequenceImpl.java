@@ -248,7 +248,7 @@ implements
     private static final Set<SQLDialect>     OMIT_NO_MAXVALUE         = SQLDialect.supportedBy(FIREBIRD);
 
     private final boolean supportsIfNotExists(Context<?> ctx) {
-        return !NO_SUPPORT_IF_NOT_EXISTS.contains(ctx.family());
+        return !NO_SUPPORT_IF_NOT_EXISTS.contains(ctx.dialect());
     }
 
     @Override

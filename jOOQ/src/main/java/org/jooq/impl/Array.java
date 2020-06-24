@@ -102,7 +102,7 @@ final class Array<T> extends AbstractField<T[]> {
                    .visit(fields)
                    .sql(squareBrackets ? ']' : ')');
 
-                if (fields.fields.length == 0 && REQUIRES_CAST.contains(ctx.family()))
+                if (fields.fields.length == 0 && REQUIRES_CAST.contains(ctx.dialect()))
                     ctx.sql("::").visit(K_INT).sql("[]");
 
                 break;

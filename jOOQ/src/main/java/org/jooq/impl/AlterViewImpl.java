@@ -147,9 +147,8 @@ final class AlterViewImpl extends AbstractRowCountQuery implements
     // XXX: QueryPart API
     // ------------------------------------------------------------------------
 
-//    private static final EnumSet<SQLDialect> SUPPORT_IF_EXISTS =
     private final boolean supportsIfExists(Context<?> ctx) {
-        return !SUPPORT_IF_EXISTS.contains(ctx.family());
+        return !SUPPORT_IF_EXISTS.contains(ctx.dialect());
     }
 
     @Override

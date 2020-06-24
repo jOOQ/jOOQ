@@ -212,7 +212,7 @@ implements
         ctx.visit(K_COMMENT).sql(' ').visit(K_ON).sql(' ');
 
         if (table != null)
-            ctx.visit(isView && SUPPORTS_COMMENT_ON_VIEW.contains(ctx.family()) ? K_VIEW : K_TABLE)
+            ctx.visit(isView && SUPPORTS_COMMENT_ON_VIEW.contains(ctx.dialect()) ? K_VIEW : K_TABLE)
                .sql(' ')
                .visit(table);
         else if (field != null)

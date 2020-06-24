@@ -1599,7 +1599,7 @@ implements
         // This can also happen in Firebird: http://tracker.firebirdsql.org/browse/JDBC-621
 
         // [#10054] TODO: Skip all WHEN MATCHED clauses after a WHEN MATCHED clause with no search condition
-        if (NO_SUPPORT_CONDITION_AFTER_NO_CONDITION.contains(ctx.family())) {
+        if (NO_SUPPORT_CONDITION_AFTER_NO_CONDITION.contains(ctx.dialect())) {
             boolean withoutMatchedConditionFound = false;
 
             for (MatchedClause m : matched) {
@@ -1662,7 +1662,7 @@ implements
                     update.condition = update.condition.or(condition);
                 }
 
-                if (REQUIRE_NEGATION.contains(ctx.family()))
+                if (REQUIRE_NEGATION.contains(ctx.dialect()))
                     negate = negate.andNot(m.condition instanceof NoCondition ? trueCondition() : m.condition);
             }
 
@@ -1689,7 +1689,7 @@ implements
         }
 
         // [#7291] Workaround for https://github.com/h2database/h2database/issues/2552
-        else if (REQUIRE_NEGATION.contains(ctx.family())) {
+        else if (REQUIRE_NEGATION.contains(ctx.dialect())) {
             Condition negate = noCondition();
 
             for (MatchedClause m : matched) {

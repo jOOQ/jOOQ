@@ -205,7 +205,7 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
 
         // [#2464] MySQL supports a peculiar multi-table DELETE syntax for aliased tables:
         // DELETE t1 FROM my_table AS t1
-        if (SPECIAL_DELETE_AS_SYNTAX.contains(ctx.family())) {
+        if (SPECIAL_DELETE_AS_SYNTAX.contains(ctx.dialect())) {
 
             // [#2579] [#6304] TableAlias discovery
             if (Tools.alias(table()) != null)
@@ -231,7 +231,7 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
 
 
         // [#2059] MemSQL does not support DELETE ... ORDER BY
-        if (limit != null && NO_SUPPORT_LIMIT.contains(ctx.family()) ) {
+        if (limit != null && NO_SUPPORT_LIMIT.contains(ctx.dialect()) ) {
             Field<?>[] keyFields =
                   table().getKeys().isEmpty()
                 ? new Field[] { table().rowid() }

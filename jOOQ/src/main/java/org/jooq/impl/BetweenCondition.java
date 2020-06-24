@@ -151,7 +151,7 @@ final class BetweenCondition<T> extends AbstractCondition implements BetweenAndS
                      ? f.betweenSymmetric(min).and(max)
                      : f.between(min).and(max));
         }
-        else if (symmetric && NO_SUPPORT_SYMMETRIC.contains(configuration.family()))
+        else if (symmetric && NO_SUPPORT_SYMMETRIC.contains(configuration.dialect()))
             return (QueryPartInternal) (not
                 ? field.notBetween(minValue, maxValue).and(field.notBetween(maxValue, minValue))
                 : field.between(minValue, maxValue).or(field.between(maxValue, minValue)));

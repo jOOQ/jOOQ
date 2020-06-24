@@ -630,7 +630,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         // [#4376] [#8433] for SQLite render using ON CONFLICT DO NOTHING
         //                 rather than INSERT OR IGNORE
         if (onDuplicateKeyIgnore)
-            if (SUPPORT_INSERT_IGNORE.contains(ctx.family()))
+            if (SUPPORT_INSERT_IGNORE.contains(ctx.dialect()))
                 ctx.visit(K_IGNORE).sql(' ');
 
         ctx.visit(K_INTO)

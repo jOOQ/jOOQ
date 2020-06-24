@@ -257,7 +257,7 @@ final class CreateIndexImpl extends AbstractRowCountQuery implements
     // ------------------------------------------------------------------------
 
     private final boolean supportsIfNotExists(Context<?> ctx) {
-        return !NO_SUPPORT_IF_NOT_EXISTS.contains(ctx.family());
+        return !NO_SUPPORT_IF_NOT_EXISTS.contains(ctx.dialect());
     }
 
     @Override
@@ -290,7 +290,7 @@ final class CreateIndexImpl extends AbstractRowCountQuery implements
         if (index != null)
             ctx.visit(index)
                .sql(' ');
-        else if (!SUPPORT_UNNAMED_INDEX.contains(ctx.family()))
+        else if (!SUPPORT_UNNAMED_INDEX.contains(ctx.dialect()))
             ctx.visit(generatedName())
                .sql(' ');
 

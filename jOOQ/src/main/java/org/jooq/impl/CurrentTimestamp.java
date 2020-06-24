@@ -123,7 +123,7 @@ final class CurrentTimestamp<T> extends AbstractField<T> {
             case HSQLDB:
             case POSTGRES:
             case SQLITE:
-                if (precision != null && !NO_SUPPORT_PRECISION.contains(ctx.family()))
+                if (precision != null && !NO_SUPPORT_PRECISION.contains(ctx.dialect()))
                     ctx.visit(K_CURRENT).sql('_').visit(K_TIMESTAMP).sql('(').visit(precision).sql(')');
                 else
                     ctx.visit(K_CURRENT).sql('_').visit(K_TIMESTAMP);
@@ -131,7 +131,7 @@ final class CurrentTimestamp<T> extends AbstractField<T> {
                 break;
 
             default:
-                if (precision != null && !NO_SUPPORT_PRECISION.contains(ctx.family()))
+                if (precision != null && !NO_SUPPORT_PRECISION.contains(ctx.dialect()))
                     ctx.visit(N_CURRENT_TIMESTAMP).sql('(').visit(precision).sql(')');
                 else
                     ctx.visit(N_CURRENT_TIMESTAMP).sql("()");

@@ -98,7 +98,7 @@ class IndexImpl extends AbstractNamed implements Index {
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (NO_SUPPORT_INDEX_QUALIFICATION.contains(ctx.family()))
+        if (NO_SUPPORT_INDEX_QUALIFICATION.contains(ctx.dialect()))
             ctx.visit(getUnqualifiedName());
         else if (getTable() == null)
             ctx.visit(getQualifiedName());

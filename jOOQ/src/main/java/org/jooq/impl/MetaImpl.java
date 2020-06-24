@@ -123,7 +123,7 @@ final class MetaImpl extends AbstractMeta {
         super(configuration);
 
         this.databaseMetaData = databaseMetaData;
-        this.inverseSchemaCatalog = INVERSE_SCHEMA_CATALOG.contains(family());
+        this.inverseSchemaCatalog = INVERSE_SCHEMA_CATALOG.contains(dialect());
     }
 
     private interface MetaFunction {
@@ -876,11 +876,11 @@ final class MetaImpl extends AbstractMeta {
                         try {
 
                             // [#7194] Some databases report all default values as expressions, not as values
-                            if (EXPRESSION_COLUMN_DEFAULT.contains(family()))
+                            if (EXPRESSION_COLUMN_DEFAULT.contains(dialect()))
                                 type = type.defaultValue(DSL.field(defaultValue, type));
 
                             // [#5574] MySQL mixes constant value expressions with other column expressions here
-                            else if (CURRENT_TIMESTAMP_COLUMN_DEFAULT.contains(family()) && "CURRENT_TIMESTAMP".equalsIgnoreCase(defaultValue))
+                            else if (CURRENT_TIMESTAMP_COLUMN_DEFAULT.contains(dialect()) && "CURRENT_TIMESTAMP".equalsIgnoreCase(defaultValue))
                                 type = type.defaultValue(DSL.field(defaultValue, type));
                             else
                                 type = type.defaultValue(DSL.inline(defaultValue, type));

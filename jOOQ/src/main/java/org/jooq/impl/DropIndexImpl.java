@@ -148,7 +148,7 @@ final class DropIndexImpl extends AbstractRowCountQuery implements
     // ------------------------------------------------------------------------
 
     private final boolean supportsIfExists(Context<?> ctx) {
-        return !NO_SUPPORT_IF_EXISTS.contains(ctx.family());
+        return !NO_SUPPORT_IF_EXISTS.contains(ctx.dialect());
     }
 
     @Override
@@ -176,7 +176,7 @@ final class DropIndexImpl extends AbstractRowCountQuery implements
 
         ctx.visit(index);
 
-        if (on != null && REQUIRES_ON.contains(ctx.family()))
+        if (on != null && REQUIRES_ON.contains(ctx.dialect()))
             ctx.sql(' ').visit(K_ON).sql(' ').visit(on);
 
         if (cascade != null)

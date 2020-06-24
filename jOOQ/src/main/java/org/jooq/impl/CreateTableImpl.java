@@ -351,7 +351,7 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
     // ------------------------------------------------------------------------
 
     private final boolean supportsIfNotExists(Context<?> ctx) {
-        return !NO_SUPPORT_IF_NOT_EXISTS.contains(ctx.family());
+        return !NO_SUPPORT_IF_NOT_EXISTS.contains(ctx.dialect());
     }
 
     @Override
@@ -367,18 +367,18 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
     }
 
     private final void accept0(Context<?> ctx) {
-        boolean c = comment != null && EMULATE_COMMENT_IN_BLOCK.contains(ctx.family());
-        boolean i = !indexes.isEmpty() && EMULATE_INDEXES_IN_BLOCK.contains(ctx.family());
+        boolean c = comment != null && EMULATE_COMMENT_IN_BLOCK.contains(ctx.dialect());
+        boolean i = !indexes.isEmpty() && EMULATE_INDEXES_IN_BLOCK.contains(ctx.dialect());
 
         if (c || i) {
             begin(ctx);
 
-            if (REQUIRE_EXECUTE_IMMEDIATE.contains(ctx.family()))
+            if (REQUIRE_EXECUTE_IMMEDIATE.contains(ctx.dialect()))
                 beginExecuteImmediate(ctx);
 
             accept1(ctx);
 
-            if (REQUIRE_EXECUTE_IMMEDIATE.contains(ctx.family()))
+            if (REQUIRE_EXECUTE_IMMEDIATE.contains(ctx.dialect()))
                 endExecuteImmediate(ctx);
             else
                 ctx.sql(';');
@@ -386,12 +386,12 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
             if (c) {
                 ctx.formatSeparator();
 
-                if (REQUIRE_EXECUTE_IMMEDIATE.contains(ctx.family()))
+                if (REQUIRE_EXECUTE_IMMEDIATE.contains(ctx.dialect()))
                     beginExecuteImmediate(ctx);
 
                 ctx.visit(commentOnTable(table).is(comment));
 
-                if (REQUIRE_EXECUTE_IMMEDIATE.contains(ctx.family()))
+                if (REQUIRE_EXECUTE_IMMEDIATE.contains(ctx.dialect()))
                     endExecuteImmediate(ctx);
                 else
                     ctx.sql(';');
@@ -401,7 +401,7 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
                 for (Index index : indexes) {
                     ctx.formatSeparator();
 
-                    if (REQUIRE_EXECUTE_IMMEDIATE.contains(ctx.family()))
+                    if (REQUIRE_EXECUTE_IMMEDIATE.contains(ctx.dialect()))
                         beginExecuteImmediate(ctx);
 
                     if ("".equals(index.getName()))
@@ -409,7 +409,7 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
                     else
                         ctx.visit(createIndex(index.getUnqualifiedName()).on(index.getTable(), index.getFields()));
 
-                    if (REQUIRE_EXECUTE_IMMEDIATE.contains(ctx.family()))
+                    if (REQUIRE_EXECUTE_IMMEDIATE.contains(ctx.dialect()))
                         endExecuteImmediate(ctx);
                     else
                         ctx.sql(';');
@@ -442,7 +442,7 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
             toSQLOnCommit(ctx);
         }
 
-        if (comment != null && !EMULATE_COMMENT_IN_BLOCK.contains(ctx.family()))
+        if (comment != null && !EMULATE_COMMENT_IN_BLOCK.contains(ctx.dialect()))
             ctx.formatSeparator()
                .visit(K_COMMENT).sql(' ').visit(comment);
 
@@ -458,7 +458,7 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
         toSQLCreateTableName(ctx);
 
         if (!columnFields.isEmpty()
-                && (select == null || !NO_SUPPORT_CTAS_COLUMN_NAMES.contains(ctx.family()))) {
+                && (select == null || !NO_SUPPORT_CTAS_COLUMN_NAMES.contains(ctx.dialect()))) {
             ctx.sql(" (")
                .start(CREATE_TABLE_COLUMNS)
                .formatIndentStart()
@@ -498,7 +498,7 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
                            .formatSeparator()
                            .visit(constraint);
 
-            if (EMULATE_SOME_ENUM_TYPES_AS_CHECK.contains(ctx.family())) {
+            if (EMULATE_SOME_ENUM_TYPES_AS_CHECK.contains(ctx.dialect())) {
                 for (int i = 0; i < columnFields.size(); i++) {
                     DataType<?> type = columnTypes.get(i);
 
@@ -507,7 +507,7 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
                         @SuppressWarnings("unchecked")
                         DataType<EnumType> enumType = (DataType<EnumType>) type;
 
-                        if (EMULATE_STORED_ENUM_TYPES_AS_CHECK.contains(ctx.family()) || !storedEnumType(enumType)) {
+                        if (EMULATE_STORED_ENUM_TYPES_AS_CHECK.contains(ctx.dialect()) || !storedEnumType(enumType)) {
                             Field<?> field = columnFields.get(i);
 
                             ctx.sql(',')
@@ -521,7 +521,7 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
 
             ctx.end(CREATE_TABLE_CONSTRAINTS);
 
-            if (!indexes.isEmpty() && !EMULATE_INDEXES_IN_BLOCK.contains(ctx.family())) {
+            if (!indexes.isEmpty() && !EMULATE_INDEXES_IN_BLOCK.contains(ctx.dialect())) {
                 ctx.qualify(false);
 
                 for (Index index : indexes) {
@@ -562,41 +562,41 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
         ctx.formatSeparator()
            .visit(K_AS);
 
-        if (WRAP_SELECT_IN_PARENS.contains(ctx.family()))
+        if (WRAP_SELECT_IN_PARENS.contains(ctx.dialect()))
             ctx.sql(" (")
                .formatIndentStart()
                .formatNewLine();
         else
             ctx.formatSeparator();
 
-        if (FALSE.equals(withData) && NO_SUPPORT_WITH_DATA.contains(ctx.family()))
+        if (FALSE.equals(withData) && NO_SUPPORT_WITH_DATA.contains(ctx.dialect()))
             ctx.data(DATA_SELECT_NO_DATA, true);
 
         ctx.start(CREATE_TABLE_AS);
 
-        if (!columnFields.isEmpty() && NO_SUPPORT_CTAS_COLUMN_NAMES.contains(ctx.family()))
+        if (!columnFields.isEmpty() && NO_SUPPORT_CTAS_COLUMN_NAMES.contains(ctx.dialect()))
             ctx.visit(select(asterisk()).from(select.asTable(table(name("t")), columnFields.toArray(EMPTY_FIELD))));
         else
             ctx.visit(select);
 
         ctx.end(CREATE_TABLE_AS);
 
-        if (FALSE.equals(withData) && NO_SUPPORT_WITH_DATA.contains(ctx.family()))
+        if (FALSE.equals(withData) && NO_SUPPORT_WITH_DATA.contains(ctx.dialect()))
             ctx.data().remove(DATA_SELECT_NO_DATA);
 
-        if (WRAP_SELECT_IN_PARENS.contains(ctx.family())) {
+        if (WRAP_SELECT_IN_PARENS.contains(ctx.dialect())) {
             ctx.formatIndentEnd()
                .formatNewLine()
                .sql(')');
         }
 
-        if (FALSE.equals(withData) && !NO_SUPPORT_WITH_DATA.contains(ctx.family()))
+        if (FALSE.equals(withData) && !NO_SUPPORT_WITH_DATA.contains(ctx.dialect()))
             ctx.formatSeparator()
                .visit(K_WITH_NO_DATA);
-        else if (TRUE.equals(withData) && !NO_SUPPORT_WITH_DATA.contains(ctx.family()))
+        else if (TRUE.equals(withData) && !NO_SUPPORT_WITH_DATA.contains(ctx.dialect()))
             ctx.formatSeparator()
                .visit(K_WITH_DATA);
-        else if (REQUIRES_WITH_DATA.contains(ctx.family()))
+        else if (REQUIRES_WITH_DATA.contains(ctx.dialect()))
             ctx.formatSeparator()
                .visit(K_WITH_DATA);
     }
@@ -649,7 +649,7 @@ final class CreateTableImpl extends AbstractRowCountQuery implements
            .sql(' ');
 
         if (temporary)
-            if (SUPPORT_TEMPORARY.contains(ctx.family()))
+            if (SUPPORT_TEMPORARY.contains(ctx.dialect()))
                 ctx.visit(K_TEMPORARY).sql(' ');
             else
                 ctx.visit(K_GLOBAL_TEMPORARY).sql(' ');

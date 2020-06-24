@@ -93,7 +93,7 @@ final class TableList extends QueryPartList<Table<?>> {
 
         // [#4151] [#6117] Some databases don't allow for qualifying column
         // names here. Copy also to SelectQueryImpl
-        boolean unqualified = UNQUALIFY_FIELDS.contains(ctx.family());
+        boolean unqualified = UNQUALIFY_FIELDS.contains(ctx.dialect());
         boolean qualify = ctx.qualify();
 
         if (unqualified)

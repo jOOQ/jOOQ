@@ -110,7 +110,7 @@ final class RowOverlapsCondition<T1, T2> extends AbstractCondition {
         boolean intervalOverlaps = type0.isDateTime() && (type1.isInterval() || type1.isNumeric());
 
         // The non-standard OVERLAPS predicate is always emulated
-        if (!standardOverlaps || EMULATE_NON_STANDARD_OVERLAPS.contains(ctx.family())) {
+        if (!standardOverlaps || EMULATE_NON_STANDARD_OVERLAPS.contains(ctx.dialect())) {
 
             // Interval OVERLAPS predicates need some additional arithmetic
             if (intervalOverlaps)
@@ -122,7 +122,7 @@ final class RowOverlapsCondition<T1, T2> extends AbstractCondition {
         }
 
         // These dialects seem to have trouble with INTERVAL OVERLAPS predicates
-        else if (intervalOverlaps && EMULATE_INTERVAL_OVERLAPS.contains(ctx.family()))
+        else if (intervalOverlaps && EMULATE_INTERVAL_OVERLAPS.contains(ctx.dialect()))
             ctx.visit(right1.le(left1.add(left2)).and(left1.le(right1.add(right2))));
 
         // Everyone else can handle OVERLAPS

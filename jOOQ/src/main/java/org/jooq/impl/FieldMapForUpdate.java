@@ -93,7 +93,7 @@ final class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> {
             // disambiguated columns in queries like
             // UPDATE t1 JOIN t2 .. SET t1.val = ..., t2.val = ...
             boolean restoreQualify = ctx.qualify();
-            boolean supportsQualify = NO_SUPPORT_QUALIFY.contains(ctx.family()) ? false : restoreQualify;
+            boolean supportsQualify = NO_SUPPORT_QUALIFY.contains(ctx.dialect()) ? false : restoreQualify;
 
             // [#2823] [#10034] Few dialects need bind value casts for UPDATE .. SET
             //                  Some regressions have been observed e.g. in PostgreSQL with JSON types, so let's be careful.

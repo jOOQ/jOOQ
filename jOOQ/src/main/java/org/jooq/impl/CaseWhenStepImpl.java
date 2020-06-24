@@ -51,6 +51,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.jooq.CaseConditionStep;
 import org.jooq.CaseWhenStep;
 import org.jooq.Context;
 import org.jooq.DataType;
@@ -169,8 +170,13 @@ final class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenS
 
 
 
+            // The DERBY dialect doesn't support the simple CASE clause
+            case DERBY:
+                acceptSearched(ctx);
+                break;
+
             default:
-                ctx.visit(new Native());
+                acceptNative(ctx);
                 break;
         }
     }
@@ -205,77 +211,45 @@ final class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenS
 
 
 
+    private final void acceptSearched(Context<?> ctx) {
+        int size = compareValues.size();
 
-
-
-
-
-
-
-
-
-    private class Native extends AbstractQueryPart {
-
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = 7564667836130498156L;
-
-        @Override
-        public final void accept(Context<?> ctx) {
-            ctx.formatIndentLockStart()
-               .visit(K_CASE);
-
-            int size = compareValues.size();
-            switch (ctx.family()) {
-
-                // The DERBY dialect doesn't support the simple CASE clause
-                case DERBY: {
-                    ctx.formatIndentLockStart();
-
-                    for (int i = 0; i < size; i++) {
-                        if (i > 0)
-                            ctx.formatNewLine();
-
-                        ctx.sql(' ').visit(K_WHEN).sql(' ');
-                        ctx.visit(value.equal(compareValues.get(i)));
-                        ctx.sql(' ').visit(K_THEN).sql(' ');
-                        ctx.visit(results.get(i));
-                    }
-
-                    break;
-                }
-
-                default: {
-                    ctx.sql(' ')
-                       .visit(value)
-                       .formatIndentStart();
-
-                    for (int i = 0; i < size; i++)
-                        ctx.formatSeparator()
-                           .visit(K_WHEN).sql(' ')
-                           .visit(compareValues.get(i)).sql(' ')
-                           .visit(K_THEN).sql(' ')
-                           .visit(results.get(i));
-
-                    break;
-                }
-            }
-
-            if (else_ != null)
-                ctx.formatSeparator()
-                   .visit(K_ELSE).sql(' ')
-                   .visit(else_);
-
-            ctx.formatIndentEnd();
-
-            if (size > 1 || else_ != null)
-                ctx.formatSeparator();
+        CaseConditionStep<T> when = null;
+        for (int i = 0; i < size; i++)
+            if (when == null)
+                when = DSL.when(value.eq(compareValues.get(i)), results.get(i));
             else
-                ctx.sql(' ');
+                when = when.when(value.eq(compareValues.get(i)), results.get(i));
 
-            ctx.visit(K_END)
-               .formatIndentLockEnd();
-        }
+        if (when != null)
+            if (else_ == null)
+                ctx.visit(when.else_(else_));
+            else
+                ctx.visit(when);
+    }
+
+    private final void acceptNative(Context<?> ctx) {
+        ctx.visit(K_CASE);
+
+        int size = compareValues.size();
+        ctx.sql(' ')
+           .visit(value)
+           .formatIndentStart();
+
+        for (int i = 0; i < size; i++)
+            ctx.formatSeparator()
+               .visit(K_WHEN).sql(' ')
+               .visit(compareValues.get(i)).sql(' ')
+               .visit(K_THEN).sql(' ')
+               .visit(results.get(i));
+
+        if (else_ != null)
+            ctx.formatSeparator()
+               .visit(K_ELSE).sql(' ')
+               .visit(else_);
+
+        ctx.formatIndentEnd()
+           .formatSeparator()
+           .visit(K_END);
     }
 }

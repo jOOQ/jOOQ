@@ -104,7 +104,7 @@ final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R>
 
             Object previous = null;
             if (materialized != null) {
-                if (SUPPORT_MATERIALIZED.contains(ctx.family())) {
+                if (SUPPORT_MATERIALIZED.contains(ctx.dialect())) {
                     if (materialized)
                         ctx.visit(K_MATERIALIZED).sql(' ');
                     else

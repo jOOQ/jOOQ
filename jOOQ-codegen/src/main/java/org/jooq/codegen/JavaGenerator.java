@@ -5248,20 +5248,20 @@ public class JavaGenerator extends AbstractGenerator {
                                .replace("\n", "\\n")
                                .replace("\r", "\\r");
 
-        // [#10007] Very long strings cannot be handled by the javac compiler.
+        // [#10007] [#10318] Very long strings cannot be handled by the javac compiler.
         int max = 16384;
         if (result.length() <= max)
             return result;
 
-        StringBuilder sb = new StringBuilder("\" + new String(\"");
+        StringBuilder sb = new StringBuilder("\" + \"");
         for (int i = 0; i < result.length(); i += max) {
             if (i > 0)
-                sb.append("\") + new String(\"");
+                sb.append("\".toString() + \"");
 
             sb.append(result.substring(i, Math.min(i + max, result.length())));
         }
 
-        return sb.append("\") + \"").toString();
+        return sb.append("\".toString() + \"").toString();
     }
 
     /**

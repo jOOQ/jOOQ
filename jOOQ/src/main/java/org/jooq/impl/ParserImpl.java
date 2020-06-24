@@ -4222,6 +4222,13 @@ final class ParserImpl implements Parser {
 
     private static final Constraint parseUniqueSpecification(ParserContext ctx, ConstraintTypeStep constraint) {
         parseUsingBtreeOrHashIf(ctx);
+
+        // [#9246] In MySQL, there's a syntax where the unique constraint looks like an index:
+        //         ALTER TABLE t ADD UNIQUE INDEX i (c)
+        Name constraintName;
+        if (constraint == null && (constraintName = parseIdentifierIf(ctx)) != null)
+            constraint = constraint(constraintName);
+
         Field<?>[] fieldNames = parseKeyColumnList(ctx);
 
         ConstraintEnforcementStep e = constraint == null

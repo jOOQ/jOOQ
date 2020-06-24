@@ -407,7 +407,8 @@ public final class SQLDataType {
     }
 
     /**
-     * The SQL standard <code>INTERVAL YEAR TO SECOND</code> data type.
+     * A vendor specific <code>INTERVAL YEAR TO SECOND</code> data type, which
+     * combines {@link #INTERVALYEARTOMONTH} and {@link #INTERVALDAYTOSECOND}.
      */
     public static final DataType<YearToSecond> INTERVAL = new DefaultDataType<>(null, YearToSecond.class, "interval");
 

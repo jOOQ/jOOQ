@@ -222,7 +222,7 @@ final class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenS
                 when = when.when(value.eq(compareValues.get(i)), results.get(i));
 
         if (when != null)
-            if (else_ == null)
+            if (else_ != null)
                 ctx.visit(when.else_(else_));
             else
                 ctx.visit(when);

@@ -124,19 +124,19 @@ public interface CreateSequenceFlagsStep extends CreateSequenceFinalStep {
     CreateSequenceFlagsStep noMinvalue();
 
     /**
-     * Add a <code>MINVALUE</code> clause to the sequence definition.
+     * Add a <code>MAXVALUE</code> clause to the sequence definition.
      */
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, POSTGRES })
     CreateSequenceFlagsStep maxvalue(Number value);
 
     /**
-     * Add a <code>MINVALUE</code> clause to the sequence definition.
+     * Add a <code>MAXVALUE</code> clause to the sequence definition.
      */
     @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, POSTGRES })
     CreateSequenceFlagsStep maxvalue(Field<? extends Number> value);
 
     /**
-     * Add a <code>NO MINVALUE</code> clause to the sequence definition.
+     * Add a <code>NO MAXVALUE</code> clause to the sequence definition.
      */
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     CreateSequenceFlagsStep noMaxvalue();

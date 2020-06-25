@@ -10334,6 +10334,14 @@ final class ParserImpl implements Parser {
 
                 break;
 
+            case 'J':
+                if (parseKeywordOrIdentifierIf(ctx, "JSON"))
+                    return SQLDataType.JSON;
+                else if (parseKeywordOrIdentifierIf(ctx, "JSONB"))
+                    return SQLDataType.JSONB;
+
+                break;
+
             case 'L':
                 if (parseKeywordOrIdentifierIf(ctx, "LONGBLOB"))
                     return SQLDataType.BLOB;
@@ -10458,6 +10466,12 @@ final class ParserImpl implements Parser {
                     return parseDataTypeCollation(ctx, parseDataTypeLength(ctx, SQLDataType.VARCHAR));
                 else if (parseKeywordOrIdentifierIf(ctx, "VARBINARY"))
                     return parseDataTypeLength(ctx, SQLDataType.VARBINARY);
+
+                break;
+
+            case 'X':
+                if (parseKeywordOrIdentifierIf(ctx, "XML"))
+                    return SQLDataType.XML;
 
                 break;
         }

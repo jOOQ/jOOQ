@@ -4432,7 +4432,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @SuppressWarnings({ "serial" })
-        private final Converter<byte[], JSONB> bytesConverter(Configuration configuration) {
+        private final Converter<byte[], JSONB> bytesConverter(final Configuration configuration) {
             return new AbstractConverter<byte[], JSONB>(byte[].class, JSONB.class) {
                 @Override
                 public JSONB from(byte[] t) {

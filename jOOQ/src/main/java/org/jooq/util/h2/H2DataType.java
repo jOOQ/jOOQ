@@ -47,6 +47,8 @@ import java.time.OffsetDateTime;
 import java.util.UUID;
 
 import org.jooq.DataType;
+import org.jooq.JSON;
+import org.jooq.JSONB;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
@@ -123,6 +125,8 @@ public class H2DataType {
     public static final DataType<String>     NVARCHAR2                 = new DefaultDataType<>(SQLDialect.H2, SQLDataType.NVARCHAR, "nvarchar2");
     public static final DataType<String>     NCHAR                     = new DefaultDataType<>(SQLDialect.H2, SQLDataType.NCHAR, "nchar");
     public static final DataType<String>     NCLOB                     = new DefaultDataType<>(SQLDialect.H2, SQLDataType.NCLOB, "nclob");
+    public static final DataType<JSON>       JSON                      = new DefaultDataType<>(SQLDialect.H2, SQLDataType.JSON, "json");
+    public static final DataType<JSONB>      JSONB                     = new DefaultDataType<>(SQLDialect.H2, SQLDataType.JSONB, "json");
 
     // -------------------------------------------------------------------------
     // Compatibility types for supported SQLDialect.H2, SQLDataTypes

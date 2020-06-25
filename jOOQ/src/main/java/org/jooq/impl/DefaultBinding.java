@@ -89,7 +89,9 @@ import static org.jooq.impl.Keywords.K_DATETIME;
 import static org.jooq.impl.Keywords.K_DATETIME2;
 import static org.jooq.impl.Keywords.K_DATETIMEOFFSET;
 import static org.jooq.impl.Keywords.K_FALSE;
+import static org.jooq.impl.Keywords.K_FORMAT;
 import static org.jooq.impl.Keywords.K_HOUR_TO_SECOND;
+import static org.jooq.impl.Keywords.K_JSON;
 import static org.jooq.impl.Keywords.K_NULL;
 import static org.jooq.impl.Keywords.K_TIME;
 import static org.jooq.impl.Keywords.K_TIMESTAMP;
@@ -4296,6 +4298,22 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
+        void sqlInline0(BindingSQLContext<U> ctx, JSON value) throws SQLException {
+            super.sqlInline0(ctx, value);
+
+            if (ctx.family() == H2 && value != null)
+                ctx.render().sql(' ').visit(K_FORMAT).sql(' ').visit(K_JSON);
+        }
+
+        @Override
+        void sqlBind0(BindingSQLContext<U> ctx, JSON value) throws SQLException {
+            super.sqlBind0(ctx, value);
+
+            if (ctx.family() == H2 && value != null)
+                ctx.render().sql(' ').visit(K_FORMAT).sql(' ').visit(K_JSON);
+        }
+
+        @Override
         final void set0(BindingSetStatementContext<U> ctx, JSON value) throws SQLException {
             ctx.statement().setString(ctx.index(), value.toString());
         }
@@ -4374,6 +4392,17 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
             super.sqlInline0(ctx, value);
+
+            if (ctx.family() == H2 && value != null)
+                ctx.render().sql(' ').visit(K_FORMAT).sql(' ').visit(K_JSON);
+        }
+
+        @Override
+        void sqlBind0(BindingSQLContext<U> ctx, JSONB value) throws SQLException {
+            super.sqlBind0(ctx, value);
+
+            if (ctx.family() == H2 && value != null)
+                ctx.render().sql(' ').visit(K_FORMAT).sql(' ').visit(K_JSON);
         }
 
         @Override

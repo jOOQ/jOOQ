@@ -71,6 +71,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.cast;
 import static org.jooq.impl.DSL.inline;
@@ -4353,7 +4354,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          * Generated UID
          */
         private static final long              serialVersionUID = 3430629127218407737L;
-        private static final Set<SQLDialect>   EMULATE_AS_BLOB  = SQLDialect.supportedBy(HSQLDB);
+        private static final Set<SQLDialect>   EMULATE_AS_BLOB  = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB, SQLITE);
 
         DefaultJSONBBinding(Converter<JSONB, U> converter, boolean isLob) {
             super(converter, isLob);

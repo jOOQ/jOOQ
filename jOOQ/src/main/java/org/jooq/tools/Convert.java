@@ -530,14 +530,12 @@ public final class Convert {
                 if (toClass.isPrimitive()) {
 
                     // Characters default to the "zero" character
-                    if (toClass == char.class) {
+                    if (toClass == char.class)
                         return (U) Character.valueOf((char) 0);
-                    }
 
                     // All others can be converted from (int) 0
-                    else {
+                    else
                         return convert(0, toClass);
-                    }
                 }
 
 
@@ -592,21 +590,17 @@ public final class Convert {
 
                     // [#3062] [#5796] Default collections if no specific collection type was requested
                     if (Collection.class.isAssignableFrom(toClass) &&
-                            toClass.isAssignableFrom(ArrayList.class)) {
+                            toClass.isAssignableFrom(ArrayList.class))
                         return (U) new ArrayList<>(Arrays.asList(fromArray));
-                    }
                     else if (Collection.class.isAssignableFrom(toClass) &&
-                            toClass.isAssignableFrom(LinkedHashSet.class)) {
+                            toClass.isAssignableFrom(LinkedHashSet.class))
                         return (U) new LinkedHashSet<>(Arrays.asList(fromArray));
-                    }
 
                     // [#3443] Conversion from Object[] to JDBC Array
-                    else if (toClass == java.sql.Array.class) {
+                    else if (toClass == java.sql.Array.class)
                         return (U) new MockArray(null, fromArray, fromClass);
-                    }
-                    else {
+                    else
                         return (U) convertArray(fromArray, toClass);
-                    }
                 }
 
                 // [#3062] Default collections if no specific collection type was requested

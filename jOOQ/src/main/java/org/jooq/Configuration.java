@@ -388,6 +388,12 @@ public interface Configuration extends Serializable {
     UnwrapperProvider unwrapperProvider();
 
     /**
+     * Get the configured <code>CharsetProvider</code> from this configuration.
+     */
+    @NotNull
+    CharsetProvider charsetProvider();
+
+    /**
      * Get this configuration's underlying record mapper provider.
      */
     @NotNull
@@ -928,6 +934,19 @@ public interface Configuration extends Serializable {
     Configuration set(UnwrapperProvider newUnwrapperProvider);
 
     /**
+     * Change this configuration to hold a new charset provider.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newCharsetProvider The new charset provider to be contained in
+     *            the changed configuration.
+     * @return The changed configuration.
+     */
+    @NotNull
+    Configuration set(CharsetProvider newCharsetProvider);
+
+    /**
      * Change this configuration to hold a new converter provider.
      * <p>
      * This method is not thread-safe and should not be used in globally
@@ -1290,6 +1309,17 @@ public interface Configuration extends Serializable {
      */
     @NotNull
     Configuration derive(UnwrapperProvider newUnwrapperProvider);
+
+    /**
+     * Create a derived configuration from this one, with a new charset
+     * provider.
+     *
+     * @param newCharsetProvider The new charset provider to be contained in
+     *            the derived configuration.
+     * @return The derived configuration.
+     */
+    @NotNull
+    Configuration derive(CharsetProvider newCharsetProvider);
 
     /**
      * Create a derived configuration from this one, with new converter

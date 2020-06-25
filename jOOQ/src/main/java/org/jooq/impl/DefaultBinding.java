@@ -4355,32 +4355,14 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         private static final long              serialVersionUID = 3430629127218407737L;
         private static final Set<SQLDialect>   EMULATE_AS_BLOB  = SQLDialect.supportedBy(HSQLDB);
 
-        private final Converter<byte[], JSONB> BYTES_CONVERTER;
-        private final DefaultBytesBinding<U>   BYTES;
-
-        @SuppressWarnings({ "serial", "unchecked", "rawtypes" })
         DefaultJSONBBinding(Converter<JSONB, U> converter, boolean isLob) {
             super(converter, isLob);
-
-            // [#8949] TODO: Support overriding the system default Charset
-            BYTES_CONVERTER = new AbstractConverter<byte[], JSONB>(byte[].class, JSONB.class) {
-                @Override
-                public JSONB from(byte[] t) {
-                    return t == null ? null : JSONB.valueOf(new String(t));
-                }
-
-                @Override
-                public byte[] to(JSONB u) {
-                    return u == null ? null : u.toString().getBytes();
-                }
-            };
-            BYTES = new DefaultBytesBinding<>((Converter) BYTES_CONVERTER, isLob);
         }
 
         @Override
         void sqlInline0(BindingSQLContext<U> ctx, JSONB value) throws SQLException {
             if (EMULATE_AS_BLOB.contains(ctx.dialect())) {
-                BYTES.sqlInline0(ctx, BYTES_CONVERTER.to(value));
+                bytes(ctx.configuration()).sqlInline0(ctx, bytesConverter(ctx.configuration()).to(value));
             }
             else {
                 super.sqlInline0(ctx, value);
@@ -4401,7 +4383,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final void set0(BindingSetStatementContext<U> ctx, JSONB value) throws SQLException {
             if (EMULATE_AS_BLOB.contains(ctx.dialect()))
-                BYTES.set0(ctx, BYTES_CONVERTER.to(value));
+                bytes(ctx.configuration()).set0(ctx, bytesConverter(ctx.configuration()).to(value));
             else
                 ctx.statement().setString(ctx.index(), value.toString());
         }
@@ -4409,7 +4391,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final void set0(BindingSetSQLOutputContext<U> ctx, JSONB value) throws SQLException {
             if (EMULATE_AS_BLOB.contains(ctx.dialect()))
-                BYTES.set0(ctx, BYTES_CONVERTER.to(value));
+                bytes(ctx.configuration()).set0(ctx, bytesConverter(ctx.configuration()).to(value));
             else
                 ctx.output().writeString(value.toString());
         }
@@ -4417,7 +4399,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final JSONB get0(BindingGetResultSetContext<U> ctx) throws SQLException {
             if (EMULATE_AS_BLOB.contains(ctx.dialect()))
-                return BYTES_CONVERTER.from(BYTES.get0(ctx));
+                return bytesConverter(ctx.configuration()).from(bytes(ctx.configuration()).get0(ctx));
 
             String string = ctx.resultSet().getString(ctx.index());
             return string == null ? null : JSONB.valueOf(string);
@@ -4426,7 +4408,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final JSONB get0(BindingGetStatementContext<U> ctx) throws SQLException {
             if (EMULATE_AS_BLOB.contains(ctx.dialect()))
-                return BYTES_CONVERTER.from(BYTES.get0(ctx));
+                return bytesConverter(ctx.configuration()).from(bytes(ctx.configuration()).get0(ctx));
 
             String string = ctx.statement().getString(ctx.index());
             return string == null ? null : JSONB.valueOf(string);
@@ -4435,7 +4417,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final JSONB get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
             if (EMULATE_AS_BLOB.contains(ctx.dialect()))
-                return BYTES_CONVERTER.from(BYTES.get0(ctx));
+                return bytesConverter(ctx.configuration()).from(bytes(ctx.configuration()).get0(ctx));
 
             String string = ctx.input().readString();
             return string == null ? null : JSONB.valueOf(string);
@@ -4444,9 +4426,29 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final int sqltype(Statement statement, Configuration configuration) {
             if (EMULATE_AS_BLOB.contains(configuration.dialect()))
-                BYTES.sqltype(statement, configuration);
+                bytes(configuration).sqltype(statement, configuration);
 
             return Types.VARCHAR;
+        }
+
+        @SuppressWarnings({ "serial" })
+        private final Converter<byte[], JSONB> bytesConverter(Configuration configuration) {
+            return new AbstractConverter<byte[], JSONB>(byte[].class, JSONB.class) {
+                @Override
+                public JSONB from(byte[] t) {
+                    return t == null ? null : JSONB.valueOf(new String(t, configuration.charsetProvider().provide()));
+                }
+
+                @Override
+                public byte[] to(JSONB u) {
+                    return u == null ? null : u.toString().getBytes(configuration.charsetProvider().provide());
+                }
+            };
+        }
+
+        @SuppressWarnings({ "unchecked", "rawtypes" })
+        private final DefaultBytesBinding<U> bytes(Configuration configuration) {
+            return new DefaultBytesBinding<>((Converter) bytesConverter(configuration), isLob);
         }
     }
 

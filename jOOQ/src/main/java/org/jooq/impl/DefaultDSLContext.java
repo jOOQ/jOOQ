@@ -1519,7 +1519,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
             // TODO: Why does the SAXParser replace \r by \n?
 
             XMLHandler handler = new XMLHandler(this);
-            saxParser.parse(new ByteArrayInputStream(string.getBytes()), handler);
+            saxParser.parse(new ByteArrayInputStream(string.getBytes(configuration().charsetProvider().provide())), handler);
             return handler.result;
         }
         catch (Exception e) {

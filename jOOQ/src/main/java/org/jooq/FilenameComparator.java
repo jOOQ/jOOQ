@@ -94,8 +94,4 @@ final class FilenameComparator implements Comparator<String> {
 
         return split1.length - split2.length;
     }
-
-    public static void main(String[] args) {
-        INSTANCE.compare("0", new String(new byte[] { 0 }));
-    }
 }

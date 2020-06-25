@@ -53,6 +53,7 @@ import java.util.concurrent.Executor;
 
 import javax.sql.DataSource;
 
+import org.jooq.CharsetProvider;
 import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
 import org.jooq.ConverterProvider;
@@ -127,6 +128,7 @@ public class DefaultConfiguration implements Configuration {
     private transient TransactionListenerProvider[]     transactionListenerProviders;
     private transient DiagnosticsListenerProvider[]     diagnosticsListenerProviders;
     private transient UnwrapperProvider                 unwrapperProvider;
+    private transient CharsetProvider                   charsetProvider;
     private transient ConverterProvider                 converterProvider;
 
     // [#7062] Apart from the possibility of containing user defined objects, the data
@@ -181,6 +183,7 @@ public class DefaultConfiguration implements Configuration {
             null,
             null,
             null,
+            null,
 
             null,
 
@@ -216,6 +219,7 @@ public class DefaultConfiguration implements Configuration {
             configuration.transactionListenerProviders,
             configuration.diagnosticsListenerProviders,
             configuration.unwrapperProvider,
+            configuration.charsetProvider,
             configuration.converterProvider,
 
             configuration.clock,
@@ -251,6 +255,7 @@ public class DefaultConfiguration implements Configuration {
         TransactionListenerProvider[] transactionListenerProviders,
         DiagnosticsListenerProvider[] diagnosticsListenerProviders,
         UnwrapperProvider unwrapperProvider,
+        CharsetProvider charsetProvider,
         ConverterProvider converterProvider,
 
         Clock clock,
@@ -275,6 +280,7 @@ public class DefaultConfiguration implements Configuration {
         set(transactionListenerProviders);
         set(diagnosticsListenerProviders);
         set(unwrapperProvider);
+        set(charsetProvider);
         set(converterProvider);
 
         set(clock);
@@ -334,6 +340,7 @@ public class DefaultConfiguration implements Configuration {
             transactionListenerProviders,
             diagnosticsListenerProviders,
             unwrapperProvider,
+            charsetProvider,
             converterProvider,
 
             clock,
@@ -363,6 +370,7 @@ public class DefaultConfiguration implements Configuration {
             transactionListenerProviders,
             diagnosticsListenerProviders,
             unwrapperProvider,
+            charsetProvider,
             converterProvider,
 
             clock,
@@ -392,6 +400,7 @@ public class DefaultConfiguration implements Configuration {
             transactionListenerProviders,
             diagnosticsListenerProviders,
             unwrapperProvider,
+            charsetProvider,
             converterProvider,
 
             clock,
@@ -426,6 +435,7 @@ public class DefaultConfiguration implements Configuration {
             transactionListenerProviders,
             diagnosticsListenerProviders,
             unwrapperProvider,
+            charsetProvider,
             converterProvider,
 
             clock,
@@ -455,6 +465,7 @@ public class DefaultConfiguration implements Configuration {
             transactionListenerProviders,
             diagnosticsListenerProviders,
             unwrapperProvider,
+            charsetProvider,
             converterProvider,
 
             clock,
@@ -489,6 +500,7 @@ public class DefaultConfiguration implements Configuration {
             transactionListenerProviders,
             diagnosticsListenerProviders,
             unwrapperProvider,
+            charsetProvider,
             converterProvider,
 
             clock,
@@ -523,6 +535,7 @@ public class DefaultConfiguration implements Configuration {
             transactionListenerProviders,
             diagnosticsListenerProviders,
             unwrapperProvider,
+            charsetProvider,
             converterProvider,
 
             clock,
@@ -557,6 +570,7 @@ public class DefaultConfiguration implements Configuration {
             transactionListenerProviders,
             diagnosticsListenerProviders,
             unwrapperProvider,
+            charsetProvider,
             converterProvider,
 
             clock,
@@ -591,6 +605,7 @@ public class DefaultConfiguration implements Configuration {
             transactionListenerProviders,
             diagnosticsListenerProviders,
             unwrapperProvider,
+            charsetProvider,
             converterProvider,
 
             clock,
@@ -625,6 +640,7 @@ public class DefaultConfiguration implements Configuration {
             transactionListenerProviders,
             diagnosticsListenerProviders,
             unwrapperProvider,
+            charsetProvider,
             converterProvider,
 
             clock,
@@ -659,6 +675,7 @@ public class DefaultConfiguration implements Configuration {
             transactionListenerProviders,
             diagnosticsListenerProviders,
             unwrapperProvider,
+            charsetProvider,
             converterProvider,
 
             clock,
@@ -693,6 +710,7 @@ public class DefaultConfiguration implements Configuration {
             newTransactionListenerProviders,
             diagnosticsListenerProviders,
             unwrapperProvider,
+            charsetProvider,
             converterProvider,
 
             clock,
@@ -727,6 +745,7 @@ public class DefaultConfiguration implements Configuration {
             transactionListenerProviders,
             newDiagnosticsListenerProviders,
             unwrapperProvider,
+            charsetProvider,
             converterProvider,
 
             clock,
@@ -761,6 +780,37 @@ public class DefaultConfiguration implements Configuration {
             transactionListenerProviders,
             diagnosticsListenerProviders,
             newUnwrapperProvider,
+            charsetProvider,
+            converterProvider,
+
+            clock,
+
+            dialect,
+            settings,
+            data
+        );
+    }
+
+    @Override
+    public final Configuration derive(CharsetProvider newCharsetProvider) {
+        return new DefaultConfiguration(
+            connectionProvider,
+            interpreterConnectionProvider,
+            systemConnectionProvider,
+            metaProvider,
+            versionProvider,
+            executorProvider,
+            transactionProvider,
+            recordMapperProvider,
+            recordUnmapperProvider,
+            recordListenerProviders,
+            executeListenerProviders,
+            migrationListenerProviders,
+            visitListenerProviders,
+            transactionListenerProviders,
+            diagnosticsListenerProviders,
+            unwrapperProvider,
+            newCharsetProvider,
             converterProvider,
 
             clock,
@@ -790,6 +840,7 @@ public class DefaultConfiguration implements Configuration {
             transactionListenerProviders,
             diagnosticsListenerProviders,
             unwrapperProvider,
+            charsetProvider,
             newConverterProvider,
 
             clock,
@@ -820,6 +871,7 @@ public class DefaultConfiguration implements Configuration {
             transactionListenerProviders,
             diagnosticsListenerProviders,
             unwrapperProvider,
+            charsetProvider,
             converterProvider,
             newClock,
             dialect,
@@ -848,6 +900,7 @@ public class DefaultConfiguration implements Configuration {
             transactionListenerProviders,
             diagnosticsListenerProviders,
             unwrapperProvider,
+            charsetProvider,
             converterProvider,
 
             clock,
@@ -877,6 +930,7 @@ public class DefaultConfiguration implements Configuration {
             transactionListenerProviders,
             diagnosticsListenerProviders,
             unwrapperProvider,
+            charsetProvider,
             converterProvider,
 
             clock,
@@ -1073,6 +1127,12 @@ public class DefaultConfiguration implements Configuration {
     @Override
     public final Configuration set(UnwrapperProvider newUnwrapperProvider) {
         this.unwrapperProvider = newUnwrapperProvider;
+        return this;
+    }
+
+    @Override
+    public final Configuration set(CharsetProvider newCharsetProvider) {
+        this.charsetProvider = newCharsetProvider;
         return this;
     }
 
@@ -1451,6 +1511,13 @@ public class DefaultConfiguration implements Configuration {
     }
 
     @Override
+    public final CharsetProvider charsetProvider() {
+        return charsetProvider != null
+             ? charsetProvider
+             : new DefaultCharsetProvider();
+    }
+
+    @Override
     public final ConverterProvider converterProvider() {
         return converterProvider;
     }
@@ -1552,6 +1619,10 @@ public class DefaultConfiguration implements Configuration {
             ? unwrapperProvider
             : null);
 
+        oos.writeObject(charsetProvider instanceof Serializable
+            ? charsetProvider
+            : null);
+
         oos.writeObject(converterProvider instanceof Serializable
             ? converterProvider
             : null);
@@ -1600,6 +1671,7 @@ public class DefaultConfiguration implements Configuration {
         transactionListenerProviders = (TransactionListenerProvider[]) ois.readObject();
         diagnosticsListenerProviders = (DiagnosticsListenerProvider[]) ois.readObject();
         unwrapperProvider = (UnwrapperProvider) ois.readObject();
+        charsetProvider = (CharsetProvider) ois.readObject();
         converterProvider = (ConverterProvider) ois.readObject();
         data = new ConcurrentHashMap<>();
 

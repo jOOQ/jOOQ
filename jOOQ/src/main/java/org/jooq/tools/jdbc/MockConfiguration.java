@@ -44,6 +44,7 @@ import java.util.concurrent.Executor;
 
 import javax.sql.DataSource;
 
+import org.jooq.CharsetProvider;
 import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
 import org.jooq.ConverterProvider;
@@ -203,6 +204,11 @@ public class MockConfiguration implements Configuration {
     @Override
     public UnwrapperProvider unwrapperProvider() {
         return delegate.unwrapperProvider();
+    }
+
+    @Override
+    public CharsetProvider charsetProvider() {
+        return delegate.charsetProvider();
     }
 
     @Override
@@ -368,6 +374,11 @@ public class MockConfiguration implements Configuration {
     }
 
     @Override
+    public Configuration set(CharsetProvider newCharsetProvider) {
+        return delegate.set(newCharsetProvider);
+    }
+
+    @Override
     public Configuration set(ConverterProvider newConverterProvider) {
         return delegate.set(newConverterProvider);
     }
@@ -522,6 +533,11 @@ public class MockConfiguration implements Configuration {
     @Override
     public Configuration derive(UnwrapperProvider newUnwrapperProvider) {
         return delegate.derive(newUnwrapperProvider);
+    }
+
+    @Override
+    public Configuration derive(CharsetProvider newCharsetProvider) {
+        return delegate.derive(newCharsetProvider);
     }
 
     @Override

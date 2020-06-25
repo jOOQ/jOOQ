@@ -49,6 +49,8 @@ import java.time.OffsetTime;
 import java.util.UUID;
 
 import org.jooq.DataType;
+import org.jooq.JSON;
+import org.jooq.JSONB;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
@@ -140,6 +142,8 @@ public class HSQLDBDataType {
     protected static final DataType<UShort>   __SMALLINTUNSIGNED       = new DefaultDataType<>(SQLDialect.HSQLDB, SQLDataType.SMALLINTUNSIGNED, "int");
     protected static final DataType<UInteger> __INTEGERUNSIGNED        = new DefaultDataType<>(SQLDialect.HSQLDB, SQLDataType.INTEGERUNSIGNED, "bigint");
     protected static final DataType<ULong>    __BIGINTUNSIGNED         = new DefaultDataType<>(SQLDialect.HSQLDB, SQLDataType.BIGINTUNSIGNED, "decimal");
+    protected static final DataType<JSON>     __JSON                   = new DefaultDataType<>(SQLDialect.HSQLDB, SQLDataType.JSON, "clob");
+    protected static final DataType<JSONB>    __JSONB                  = new DefaultDataType<>(SQLDialect.HSQLDB, SQLDataType.JSONB, "blob");
 
     // -------------------------------------------------------------------------
     // Compatibility types for supported Java types

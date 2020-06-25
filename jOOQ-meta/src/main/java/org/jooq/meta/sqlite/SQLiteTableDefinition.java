@@ -37,18 +37,22 @@
  */
 package org.jooq.meta.sqlite;
 
+import static org.jooq.conf.ParseWithMetaLookups.THROW_ON_FAILURE;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.meta.sqlite.sqlite_master.SQLiteMaster.SQLITE_MASTER;
+import static org.jooq.tools.StringUtils.isBlank;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.Record;
+import org.jooq.Table;
 import org.jooq.TableOptions.TableType;
 import org.jooq.impl.DSL;
 import org.jooq.meta.AbstractTableDefinition;
@@ -86,6 +90,7 @@ public class SQLiteTableDefinition extends AbstractTableDefinition {
         Field<Integer> fPk = field(name("pk"), int.class);
 
         int position = 0;
+        Table<?> interpreted = null;
         for (Record record : create().select(fName, fType, fNotnull, fDefaultValue, fPk)
                 .from("pragma_table_info({0})", inline(getName())).fetch()) {
             position++;
@@ -100,6 +105,32 @@ public class SQLiteTableDefinition extends AbstractTableDefinition {
             // sqlite_sequence
             int pk = record.get(fPk);
             boolean identity = false;
+
+            // [#8278] SQLite doesn't store the data type for all views
+            if (isView() && isBlank(dataType)) {
+                if (interpreted == null) {
+                    try {
+                        Configuration c = create().configuration().derive();
+                        c.settings().withParseWithMetaLookups(THROW_ON_FAILURE);
+                        interpreted = c.dsl().meta(
+                            create().select(SQLiteMaster.SQL)
+                                    .from(SQLITE_MASTER)
+                                    .where(SQLiteMaster.TBL_NAME.eq(getInputName()))
+                                    .fetchOne(SQLiteMaster.SQL)
+                        ).getTables(getInputName()).get(0);
+                    }
+                    catch (Exception e) {
+                        throw new RuntimeException("Something went wrong when interpreting the SQL of view " + getInputName());
+                    }
+                }
+
+                Field<?> f = interpreted.field(name);
+                if (f != null) {
+                    dataType = f.getDataType().getName();
+                    precision = f.getDataType().precision();
+                    scale = f.getDataType().scale();
+                }
+            }
 
             if (pk > 0) {
 

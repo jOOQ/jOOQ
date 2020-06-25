@@ -53,6 +53,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.xml.bind.DatatypeConverter;
+
 import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Record;
@@ -79,6 +81,7 @@ final class JSONReader {
         return read(new StringReader(string));
     }
 
+    @SuppressWarnings("rawtypes")
     final Result<Record> read(final Reader reader) {
         try {
 
@@ -154,7 +157,7 @@ final class JSONReader {
                     result.add(r);
                 }
                 else {
-                    List<?> record = (List<?>) o3;
+                    List record = (List) o3;
 
                     if (result == null) {
                         if (f.isEmpty())
@@ -164,6 +167,13 @@ final class JSONReader {
                     }
 
                     Record r = ctx.newRecord(f);
+
+                    // [#8829] LoaderImpl expects binary data to be encoded in base64,
+                    //         not according to org.jooq.tools.Convert
+                    for (int i = 0; i < f.size(); i++)
+                        if (f.get(i).getType() == byte[].class && record.get(i) instanceof String)
+                            record.set(i, DatatypeConverter.parseBase64Binary((String) record.get(i)));
+
                     r.from(record);
                     result.add(r);
                 }

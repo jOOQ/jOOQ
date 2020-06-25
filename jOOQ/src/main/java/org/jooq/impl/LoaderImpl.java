@@ -755,6 +755,7 @@ final class LoaderImpl<R extends Record> implements
 
                     // [#1627] [#5858] Handle NULL values and base64 encodings
                     // [#2741]         TODO: This logic will be externalised in new SPI
+                    // [#8829]         JSON binary data has already been decoded at this point
                     for (int i = 0; i < row.length; i++)
                         if (StringUtils.equals(nullString, row[i]))
                             row[i] = null;

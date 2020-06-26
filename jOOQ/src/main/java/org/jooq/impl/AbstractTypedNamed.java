@@ -66,17 +66,17 @@ abstract class AbstractTypedNamed<T> extends AbstractNamed implements Typed<T> {
 
     @Override
     public final Converter<?, T> getConverter() {
-        return type.getConverter();
+        return getDataType().getConverter();
     }
 
     @Override
     public final Binding<?, T> getBinding() {
-        return type.getBinding();
+        return getDataType().getBinding();
     }
 
     @Override
     public final Class<T> getType() {
-        return type.getType();
+        return getDataType().getType();
     }
 
     @Override
@@ -86,6 +86,6 @@ abstract class AbstractTypedNamed<T> extends AbstractNamed implements Typed<T> {
 
     @Override
     public final DataType<T> getDataType(Configuration configuration) {
-        return type.getDataType(configuration);
+        return getDataType().getDataType(configuration);
     }
 }

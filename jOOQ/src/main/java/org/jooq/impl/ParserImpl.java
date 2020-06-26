@@ -12251,7 +12251,7 @@ final class ParserContext {
                 Field<?> f2;
                 if ((f2 = t.field(f.getName())) != null) {
                     if (f1 != null) {
-                        position(f.position);
+                        position(f.position());
                         throw exception("Ambiguous field identifier");
                     }
 
@@ -12259,10 +12259,8 @@ final class ParserContext {
                 }
             }
 
-            if (f1 != null) {
-                f.delegate = (AbstractField) f1;
-                f.sql = null;
-            }
+            if (f1 != null)
+                f.delegate((AbstractField) f1);
             else
                 retain.add(f);
         }
@@ -12289,7 +12287,7 @@ final class ParserContext {
 
     void unknownField(FieldProxy<?> field) {
         if (!scopeClear && !metaLookupsForceIgnore && metaLookups == THROW_ON_FAILURE) {
-            position(field.position);
+            position(field.position());
             throw exception("Unknown field identifier");
         }
     }
@@ -12335,7 +12333,7 @@ final class ParserContext {
 
         FieldProxy<?> field = lookupFields.get(name.last());
         if (field == null)
-            lookupFields.set(name.last(), field = new FieldProxy<>((AbstractField<Object>) field(name), sql, position));
+            lookupFields.set(name.last(), field = new FieldProxy<>((AbstractField<Object>) field(name), position));
 
         return field;
     }

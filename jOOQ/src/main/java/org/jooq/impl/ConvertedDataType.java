@@ -71,7 +71,7 @@ final class ConvertedDataType<T, U> extends DefaultDataType<U> {
     private final DataType<T>           delegate;
 
     @SuppressWarnings("unchecked")
-    ConvertedDataType(DefaultDataType<T> delegate, Binding<? super T, U> binding) {
+    ConvertedDataType(AbstractDataType<T> delegate, Binding<? super T, U> binding) {
         super(
             null,
             binding.converter().toType(),

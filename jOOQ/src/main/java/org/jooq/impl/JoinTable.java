@@ -661,16 +661,27 @@ implements
     @Override
     public final JoinTable onKey(TableField<?, ?>... keyFields) throws DataAccessException {
         if (keyFields != null && keyFields.length > 0) {
+
+            // [#7626] Make sure this works with aliased columns as well
+            List<TableField<?, ?>> unaliased = new ArrayList<>(asList(keyFields));
+            for (int i = 0; i < unaliased.size(); i++) {
+                TableField<?, ?> f = unaliased.get(i);
+                Alias<? extends Table<?>> alias = Tools.alias(f.getTable());
+
+                if (alias != null)
+                    unaliased.set(i, (TableField<?, ?>) alias.wrapped().field(f));
+            }
+
             if (search(lhs, keyFields[0].getTable()) != null) {
                 for (ForeignKey<?, ?> key : lhs.getReferences()) {
-                    if (key.getFields().containsAll(asList(keyFields))) {
+                    if (key.getFields().containsAll(unaliased)) {
                         return onKey(key);
                     }
                 }
             }
             else if (search(rhs, keyFields[0].getTable()) != null) {
                 for (ForeignKey<?, ?> key : rhs.getReferences()) {
-                    if (key.getFields().containsAll(asList(keyFields))) {
+                    if (key.getFields().containsAll(unaliased)) {
                         return onKey(key);
                     }
                 }
@@ -692,10 +703,15 @@ implements
 
     private final Table<?> search(Table<?> tree, Table<?> search) {
 
-        // [#6304] Improved alias discovery
-        Alias<? extends Table<?>> alias = Tools.alias(tree);
-        if (alias != null) {
-            return search(alias.wrapped(), search);
+        // [#6304] [#7626] Improved alias discovery
+        Alias<? extends Table<?>> treeAlias = Tools.alias(tree);
+        Alias<? extends Table<?>> searchAlias = Tools.alias(search);
+
+        if (treeAlias != null || searchAlias != null) {
+            return search(
+                treeAlias != null ? treeAlias.wrapped() : tree,
+                searchAlias != null ? searchAlias.wrapped() : search
+            );
         }
         else if (tree instanceof JoinTable) {
             JoinTable t = (JoinTable) tree;

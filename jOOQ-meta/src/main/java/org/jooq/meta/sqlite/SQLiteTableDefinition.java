@@ -107,7 +107,7 @@ public class SQLiteTableDefinition extends AbstractTableDefinition {
             boolean identity = false;
 
             // [#8278] SQLite doesn't store the data type for all views
-            if (isView() && isBlank(dataType)) {
+            if (isView() && (isBlank(dataType) || "other".equals(dataType))) {
                 if (interpreted == null) {
                     try {
                         Configuration c = create().configuration().derive();
@@ -125,6 +125,7 @@ public class SQLiteTableDefinition extends AbstractTableDefinition {
                 }
 
                 Field<?> f = interpreted.field(name);
+
                 if (f != null) {
                     dataType = f.getDataType().getName();
                     precision = f.getDataType().precision();

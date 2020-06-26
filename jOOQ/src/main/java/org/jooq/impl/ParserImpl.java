@@ -6582,6 +6582,10 @@ final class ParserImpl implements Parser {
                     else if ((field = parseFieldBitwiseFunctionIf(ctx)) != null)
                         return field;
 
+                if (B.is(type))
+                    if ((value = parseBitLiteralIf(ctx)) != null)
+                        return DSL.inline((Boolean) value);
+
                 break;
 
             case 'C':
@@ -10723,6 +10727,23 @@ final class ParserImpl implements Parser {
             return parseDollarQuotedStringLiteralIf(ctx);
         else
             return null;
+    }
+
+    private static final Boolean parseBitLiteralIf(ParserContext ctx) {
+        if (parseIf(ctx, "B'", false) || parseIf(ctx, "b'", false)) {
+            boolean result = false;
+
+            if (!parseIf(ctx, '0') && parseIf(ctx, '1'))
+                result = true;
+
+            if (parseIf(ctx, '0') || parseIf(ctx, '1'))
+                throw ctx.exception("Currently, only BIT(1) literals are supported");
+
+            parse(ctx, '\'');
+            return result;
+        }
+
+        return null;
     }
 
     private static final byte[] parseBinaryLiteralIf(ParserContext ctx) {

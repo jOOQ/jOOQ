@@ -443,7 +443,6 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
         return getDataType(configuration).getCastTypeName();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final Class<T[]> getArrayType() {
         return (Class<T[]>) Array.newInstance(getType(), 0).getClass();

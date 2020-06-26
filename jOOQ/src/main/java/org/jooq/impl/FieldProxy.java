@@ -171,6 +171,11 @@ final class FieldProxy<T> extends AbstractField<T> implements TableField<Record,
         }
 
         @Override
+        public final Name getQualifiedName() {
+            return type.getQualifiedName();
+        }
+
+        @Override
         public final DataType<T> getSQLDataType() {
             return type.getSQLDataType();
         }

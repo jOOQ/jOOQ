@@ -46,6 +46,8 @@ import java.sql.Timestamp;
 import java.util.UUID;
 
 import org.jooq.DataType;
+import org.jooq.JSON;
+import org.jooq.JSONB;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.SQLDataType;
@@ -108,6 +110,7 @@ public class MariaDBDataType {
     public static final DataType<Time>       TIME               = new DefaultDataType<>(FAMILY, SQLDataType.TIME, "time", "time");
     public static final DataType<Timestamp>  TIMESTAMP          = new DefaultDataType<>(FAMILY, SQLDataType.TIMESTAMP, "timestamp", "datetime");
     public static final DataType<Timestamp>  DATETIME           = new DefaultDataType<>(FAMILY, SQLDataType.TIMESTAMP, "datetime", "datetime");
+    public static final DataType<JSON>       JSON               = new DefaultDataType<>(FAMILY, SQLDataType.JSON, "json");
 
     // -------------------------------------------------------------------------
     // Compatibility types for supported SQLDialect.MARIADB, SQLDataTypes
@@ -127,6 +130,7 @@ public class MariaDBDataType {
 
     protected static final DataType<BigInteger> __BIGINTEGER    = new DefaultDataType<>(FAMILY, SQLDataType.DECIMAL_INTEGER, "decimal", "decimal");
     protected static final DataType<UUID>       __UUID          = new DefaultDataType<>(FAMILY, SQLDataType.UUID, "varchar", "char");
+    protected static final DataType<JSONB>      __JSONB         = new DefaultDataType<>(FAMILY, SQLDataType.JSONB, "json");
 
     // -------------------------------------------------------------------------
     // Dialect-specific data types and synonyms thereof

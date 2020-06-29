@@ -101,6 +101,7 @@ import static org.jooq.impl.Keywords.K_TIME_WITH_TIME_ZONE;
 import static org.jooq.impl.Keywords.K_TRUE;
 import static org.jooq.impl.Keywords.K_YEAR_TO_DAY;
 import static org.jooq.impl.Keywords.K_YEAR_TO_FRACTION;
+import static org.jooq.impl.SQLDataType.BLOB;
 import static org.jooq.impl.SQLDataType.DOUBLE;
 import static org.jooq.impl.SQLDataType.OTHER;
 import static org.jooq.impl.SQLDataType.ROWID;
@@ -1780,9 +1781,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         /**
          * Generated UID
          */
-        private static final long            serialVersionUID   = -727202499908007757L;
-        private static final Set<SQLDialect> INLINE_AS_X_APOS   = SQLDialect.supportedBy(DERBY, H2, HSQLDB, MARIADB, MYSQL, SQLITE);
-        private static final Set<SQLDialect> REQUIRE_BYTEA_CAST = SQLDialect.supportedBy(POSTGRES);
+        private static final long            serialVersionUID           = -727202499908007757L;
+        private static final Set<SQLDialect> INLINE_AS_X_APOS           = SQLDialect.supportedBy(H2, HSQLDB, MARIADB, MYSQL, SQLITE);
+        private static final Set<SQLDialect> REQUIRE_BYTEA_CAST         = SQLDialect.supportedBy(POSTGRES);
 
 
 
@@ -1795,24 +1796,31 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final void sqlInline0(BindingSQLContext<U> ctx, byte[] value) {
             // [#1154] Binary data cannot always be inlined
-
-
-
-
-
-
-
-
-
-
-
-
-
             if (INLINE_AS_X_APOS.contains(ctx.dialect()))
                 ctx.render()
                    .sql("X'")
                    .sql(convertBytesToHex(value))
                    .sql('\'');
+            else if (ctx.dialect() == DERBY)
+                ctx.render()
+                   .visit(K_CAST)
+                   .sql("(X'")
+                   .sql(convertBytesToHex(value))
+                   .sql("' ")
+                   .visit(K_AS)
+                   .sql(' ')
+                   .visit(BLOB)
+                   .sql(')');
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -4427,7 +4435,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final int sqltype(Statement statement, Configuration configuration) {
             if (EMULATE_AS_BLOB.contains(configuration.dialect()))
-                bytes(configuration).sqltype(statement, configuration);
+                return bytes(configuration).sqltype(statement, configuration);
 
             return Types.VARCHAR;
         }

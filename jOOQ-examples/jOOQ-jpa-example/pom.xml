@@ -39,9 +39,9 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>javax.persistence</groupId>
-            <artifactId>javax.persistence-api</artifactId>
-            <version>2.2</version>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq-meta-extensions-hibernate</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -152,20 +152,6 @@
                         </configuration>
                     </execution>
                 </executions>
-                <dependencies>
-
-                    <!-- This is needed for the JPADatabase -->
-                    <dependency>
-                        <groupId>org.jooq</groupId>
-                        <artifactId>jooq-meta-extensions</artifactId>
-                        <version>${project.version}</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>javax.persistence</groupId>
-                        <artifactId>javax.persistence-api</artifactId>
-                        <version>2.2</version>
-                    </dependency>
-                </dependencies>
             </plugin>
 
             <!-- Run the JavaFX application right after building -->

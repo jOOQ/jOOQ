@@ -980,10 +980,24 @@ public class GenerationTool {
                   + "See https://github.com/jOOQ/jOOQ/issues/7419 for details");
             }
 
+            else if (className.equals("org.jooq.meta.extensions.liquibase.LiquibaseDatabase")) {
+                log.warn("Type not found", message =
+                    "Your configured database type was not found: " + className + ".\n"
+                  + "- Please make sure the jooq-meta-extensions-liquibase dependency is on your classpath.\n"
+                  + "- In jOOQ 3.14, the dependency name has changed, see https://github.com/jOOQ/jOOQ/issues/10331");
+            }
+
+            else if (className.equals("org.jooq.meta.extensions.jpa.JPADatabase")) {
+                log.warn("Type not found", message =
+                    "Your configured database type was not found: " + className + ".\n"
+                  + "- Please make sure the jooq-meta-extensions-hibernate dependency is on your classpath.\n"
+                  + "- In jOOQ 3.14, the dependency name has changed, see https://github.com/jOOQ/jOOQ/issues/10331");
+            }
+
             // [#2801] [#4620]
             else if (className.startsWith("org.jooq.meta.") && className.endsWith("Database")) {
                 log.warn("Type not found", message =
-                      "Your configured database type was not found. This can have several reasons:\n"
+                      "Your configured database type was not found: " + className + ". This can have several reasons:\n"
                     + "- You want to use a commercial jOOQ Edition, but you pulled the Open Source Edition from Maven Central.\n"
                     + "- You have mis-typed your class name.");
             }

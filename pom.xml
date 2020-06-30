@@ -103,6 +103,16 @@
                 <artifactId>jooq-meta-extensions</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq-meta-extensions-hibernate</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq-meta-extensions-liquibase</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>org.jetbrains</groupId>
@@ -603,6 +613,8 @@
 
         <module>jOOQ-meta</module>
         <module>jOOQ-meta-extensions</module>
+        <module>jOOQ-meta-extensions-hibernate</module>
+        <module>jOOQ-meta-extensions-liquibase</module>
         <module>jOOQ-codegen</module>
         <module>jOOQ-codegen-maven</module>
         <module>jOOQ-kotlin</module>

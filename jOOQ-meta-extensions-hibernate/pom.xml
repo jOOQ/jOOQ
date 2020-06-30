@@ -9,8 +9,8 @@
         <version>3.14.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>jooq-meta-extensions</artifactId>
-    <name>jOOQ Meta Extensions</name>
+    <artifactId>jooq-meta-extensions-hibernate</artifactId>
+    <name>jOOQ Meta Extensions Hibernate</name>
 
     <licenses>
         <license>
@@ -35,7 +35,7 @@
                 <configuration>
                     <archive>
                         <manifestEntries>
-                            <Automatic-Module-Name>org.jooq.meta.extensions</Automatic-Module-Name>
+                            <Automatic-Module-Name>org.jooq.meta.extensions.hibernate</Automatic-Module-Name>
                         </manifestEntries>
                     </archive>
                 </configuration>
@@ -46,11 +46,19 @@
     <dependencies>
         <dependency>
             <groupId>org.jooq</groupId>
-            <artifactId>jooq-meta</artifactId>
+            <artifactId>jooq-meta-extensions</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
+            <groupId>javax.persistence</groupId>
+            <artifactId>javax.persistence-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
         </dependency>
 
 

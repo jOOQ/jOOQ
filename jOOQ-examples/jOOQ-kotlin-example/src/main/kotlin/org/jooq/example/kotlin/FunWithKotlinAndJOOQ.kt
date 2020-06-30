@@ -87,7 +87,7 @@ fun main(args: Array<String>) {
         // Kotlin allows for property access syntax of Java getters!
         header("An author")
         val author = ctx.selectFrom(a).where(a.ID.eq(1)).fetchOne();
-        println("${author.firstName} ${author.lastName}")
+        println("${author?.firstName} ${author?.lastName}")
 
         // Setters can profit from this property access syntax as well.
         header("Creating a new author")

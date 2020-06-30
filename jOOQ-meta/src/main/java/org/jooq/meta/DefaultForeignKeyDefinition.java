@@ -44,18 +44,20 @@ import java.util.Set;
 
 public class DefaultForeignKeyDefinition extends AbstractConstraintDefinition implements ForeignKeyDefinition {
 
-    private final List<ColumnDefinition> keyColumns;
-    private final UniqueKeyDefinition    uniqueKey;
+    private final List<ColumnDefinition> fkColumns;
+    private final List<ColumnDefinition> ukColumns;
+    private final UniqueKeyDefinition    uk;
 
     public DefaultForeignKeyDefinition(SchemaDefinition schema, String name, TableDefinition table, UniqueKeyDefinition uniqueKey) {
         this(schema, name, table, uniqueKey, true);
     }
 
-    public DefaultForeignKeyDefinition(SchemaDefinition schema, String name, TableDefinition table, UniqueKeyDefinition uniqueKey, boolean enforced) {
+    public DefaultForeignKeyDefinition(SchemaDefinition schema, String name, TableDefinition table, UniqueKeyDefinition uk, boolean enforced) {
         super(schema, table, name, enforced);
 
-        this.keyColumns = new ArrayList<>();
-        this.uniqueKey = uniqueKey;
+        this.fkColumns = new ArrayList<>();
+        this.ukColumns = new ArrayList<>();
+        this.uk = uk;
     }
 
     @Override
@@ -65,22 +67,22 @@ public class DefaultForeignKeyDefinition extends AbstractConstraintDefinition im
 
     @Override
     public List<ColumnDefinition> getKeyColumns() {
-        return keyColumns;
+        return fkColumns;
     }
 
     @Override
     public UniqueKeyDefinition getReferencedKey() {
-        return uniqueKey;
+        return uk;
     }
 
     @Override
     public TableDefinition getReferencedTable() {
-        return uniqueKey.getTable();
+        return uk.getTable();
     }
 
     @Override
     public List<ColumnDefinition> getReferencedColumns() {
-        return uniqueKey.getKeyColumns();
+        return ukColumns;
     }
 
     @Override

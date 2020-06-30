@@ -39,6 +39,7 @@ package org.jooq.meta;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -189,14 +190,54 @@ public class DefaultRelations implements Relations {
         ColumnDefinition foreignKeyColumn,
         String uniqueKeyName,
         TableDefinition uniqueKeyTable,
-        boolean enforced) {
+        boolean enforced
+    ) {
+        UniqueKeyDefinition uk = uniqueKeys.get(key(uniqueKeyTable, uniqueKeyName));
+        Key key = key(foreignKeyTable, foreignKeyName);
 
+        if (uk == null) {
+            log.info("Ignoring foreign key", uniqueKeyName + " (unique key unavailable)");
 
+            // [#7826] Prevent incomplete keys from being generated
+            if (foreignKeyTable != null) {
+
+                incompleteKeys.add(key);
+                foreignKeys.remove(key);
+            }
+
+            return;
+        }
+
+        addForeignKey(foreignKeyName, foreignKeyTable, foreignKeyColumn, uniqueKeyName, uniqueKeyTable, getNextUkColumn(key, uk), enforced);
+    }
+
+    private Map<Key, Integer> nextUkColumnIndex = new HashMap<>();
+
+    private ColumnDefinition getNextUkColumn(Key key, UniqueKeyDefinition uk) {
+        Integer index = nextUkColumnIndex.get(key);
+
+        if (index == null)
+            nextUkColumnIndex.put(key, index = 0);
+        else
+            nextUkColumnIndex.put(key, index = index + 1);
+
+        return uk.getKeyColumns().get(index);
+    }
+
+    public void addForeignKey(
+        String foreignKeyName,
+        TableDefinition foreignKeyTable,
+        ColumnDefinition foreignKeyColumn,
+        String uniqueKeyName,
+        TableDefinition uniqueKeyTable,
+        ColumnDefinition uniqueKeyColumn,
+        boolean enforced
+    ) {
         // [#2718] Column exclusions may hit foreign key references. Ignore
         // such foreign keys
         Key key = key(foreignKeyTable, foreignKeyName);
-        if (foreignKeyColumn == null) {
-            log.info("Ignoring foreign key", foreignKeyColumn + " (column unavailable)");
+        if (foreignKeyColumn == null || uniqueKeyColumn == null) {
+            log.info("Ignoring foreign key", foreignKeyColumn + " referencing " + uniqueKeyColumn + " (column unavailable)");
 
             // [#7826] Prevent incomplete keys from being generated
             if (foreignKeyTable != null) {
@@ -213,11 +254,11 @@ public class DefaultRelations implements Relations {
         // [#1134] Prevent NPE's when a foreign key references a unique key
         // from another schema
         if (uniqueKeyTable == null) {
-            log.info("Ignoring foreign key", foreignKeyName + " (" + foreignKeyColumn + ") referencing " + uniqueKeyName + " references a schema out of scope for jooq-meta: " + uniqueKeyTable);
+            log.info("Ignoring foreign key", foreignKeyName + " (" + foreignKeyColumn + ") referencing " + uniqueKeyName + " (" + uniqueKeyColumn + ") references a schema out of scope for jooq-meta: " + uniqueKeyTable);
             return;
         }
 
-        log.info("Adding foreign key", foreignKeyName + " (" + foreignKeyColumn + ") referencing " + uniqueKeyName);
+        log.info("Adding foreign key", foreignKeyName + " (" + foreignKeyColumn + ") referencing " + uniqueKeyName + " (" + uniqueKeyColumn + ")");
 
         ForeignKeyDefinition foreignKey = foreignKeys.get(key);
 
@@ -226,15 +267,23 @@ public class DefaultRelations implements Relations {
 
             // If the unique key is not loaded, ignore this foreign key
             if (uniqueKey != null) {
-                foreignKey = new DefaultForeignKeyDefinition(foreignKeyColumn.getSchema(), foreignKeyName, foreignKeyColumn.getContainer(), uniqueKey, enforced);
-                foreignKeys.put(key, foreignKey);
+                foreignKey = new DefaultForeignKeyDefinition(
+                    foreignKeyColumn.getSchema(),
+                    foreignKeyName,
+                    foreignKeyColumn.getContainer(),
+                    uniqueKey,
+                    enforced
+                );
 
+                foreignKeys.put(key, foreignKey);
                 uniqueKey.getForeignKeys().add(foreignKey);
             }
         }
 
-        if (foreignKey != null)
+        if (foreignKey != null) {
             foreignKey.getKeyColumns().add(foreignKeyColumn);
+            foreignKey.getReferencedColumns().add(uniqueKeyColumn);
+        }
 	}
 
     public void addCheckConstraint(TableDefinition table, CheckConstraintDefinition constraint) {

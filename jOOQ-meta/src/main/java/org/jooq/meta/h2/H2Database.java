@@ -287,6 +287,7 @@ public class H2Database extends AbstractDatabase {
                     CrossReferences.FKTABLE_NAME,
                     CrossReferences.FKTABLE_SCHEMA,
                     CrossReferences.FKCOLUMN_NAME,
+                    CrossReferences.PKCOLUMN_NAME,
                     Constraints.CONSTRAINT_NAME,
                     Constraints.TABLE_NAME,
                     Constraints.CONSTRAINT_SCHEMA)
@@ -314,6 +315,7 @@ public class H2Database extends AbstractDatabase {
                 String foreignKeyColumn = record.get(CrossReferences.FKCOLUMN_NAME);
                 String uniqueKey = record.get(Constraints.CONSTRAINT_NAME);
                 String uniqueKeyTableName = record.get(Constraints.TABLE_NAME);
+                String uniqueKeyColumn = record.get(CrossReferences.PKCOLUMN_NAME);
 
                 TableDefinition foreignKeyTable = getTable(foreignKeySchema, foreignKeyTableName);
                 TableDefinition uniqueKeyTable = getTable(uniqueKeySchema, uniqueKeyTableName);
@@ -324,7 +326,9 @@ public class H2Database extends AbstractDatabase {
                         foreignKeyTable,
                         foreignKeyTable.getColumn(foreignKeyColumn),
                         uniqueKey,
-                        uniqueKeyTable
+                        uniqueKeyTable,
+                        uniqueKeyTable.getColumn(uniqueKeyColumn),
+                        true
                     );
             }
         }

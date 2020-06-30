@@ -100,6 +100,15 @@ implements TableDefinition {
     }
 
     @Override
+    public final UniqueKeyDefinition getUniqueKey(String name) {
+        for (UniqueKeyDefinition uk : getUniqueKeys())
+            if (uk.getInputName().equals(name))
+                return uk;
+
+        return null;
+    }
+
+    @Override
     public final List<ForeignKeyDefinition> getForeignKeys() {
         return getDatabase().getRelations().getForeignKeys(this);
     }

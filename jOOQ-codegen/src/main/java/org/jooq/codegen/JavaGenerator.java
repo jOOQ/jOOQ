@@ -1181,47 +1181,56 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         if (scala)
-            out.println("val %s: %s[%s, %s] = %s.createForeignKey(%s, %s, %s.name(\"%s\"), Array([[%s]]).asInstanceOf[Array[%s[%s, _] ] ], %s)",
+            out.println("val %s: %s[%s, %s] = %s.createForeignKey(%s, %s.name(\"%s\"), Array([[%s]]).asInstanceOf[Array[%s[%s, _] ] ], %s, Array([[%s]]).asInstanceOf[Array[%s[%s, _] ] ], %s)",
                 getStrategy().getJavaIdentifier(foreignKey),
                 ForeignKey.class,
                 out.ref(getStrategy().getFullJavaClassName(foreignKey.getKeyTable(), Mode.RECORD)),
                 out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencedTable(), Mode.RECORD)),
                 Internal.class,
-                out.ref(getStrategy().getFullJavaIdentifier(foreignKey.getReferencedKey()), 2),
                 out.ref(getStrategy().getFullJavaIdentifier(foreignKey.getKeyTable()), 2),
                 DSL.class,
                 escapeString(foreignKey.getOutputName()),
                 out.ref(getStrategy().getFullJavaIdentifiers(foreignKey.getKeyColumns()), colRefSegments(null)),
                 TableField.class,
                 out.ref(getStrategy().getJavaClassName(foreignKey.getTable(), Mode.RECORD)),
-                foreignKey.enforced());
+                out.ref(getStrategy().getFullJavaIdentifier(foreignKey.getReferencedKey()), 2),
+                out.ref(getStrategy().getFullJavaIdentifiers(foreignKey.getReferencedColumns()), colRefSegments(null)),
+                TableField.class,
+                out.ref(getStrategy().getJavaClassName(foreignKey.getReferencedTable(), Mode.RECORD)),
+                foreignKey.enforced()
+            );
         else if (kotlin)
-            out.println("val %s: %s<%s, %s> = %s.createForeignKey(%s, %s, %s.name(\"%s\"), arrayOf([[%s]]), %s)",
+            out.println("val %s: %s<%s, %s> = %s.createForeignKey(%s, %s.name(\"%s\"), arrayOf([[%s]]), %s, arrayOf([[%s]]), %s)",
                 getStrategy().getJavaIdentifier(foreignKey),
                 ForeignKey.class,
                 out.ref(getStrategy().getFullJavaClassName(foreignKey.getKeyTable(), Mode.RECORD)),
                 out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencedTable(), Mode.RECORD)),
                 Internal.class,
-                out.ref(getStrategy().getFullJavaIdentifier(foreignKey.getReferencedKey()), 2),
                 out.ref(getStrategy().getFullJavaIdentifier(foreignKey.getKeyTable()), 2),
                 DSL.class,
                 escapeString(foreignKey.getOutputName()),
                 out.ref(getStrategy().getFullJavaIdentifiers(foreignKey.getKeyColumns()), colRefSegments(null)),
-                foreignKey.enforced());
+                out.ref(getStrategy().getFullJavaIdentifier(foreignKey.getReferencedKey()), 2),
+                out.ref(getStrategy().getFullJavaIdentifiers(foreignKey.getReferencedColumns()), colRefSegments(null)),
+                foreignKey.enforced()
+            );
         else
-            out.println("static final %s<%s, %s> %s = %s.createForeignKey(%s, %s, %s.name(\"%s\"), new %s[] { [[%s]] }, %s);",
+            out.println("static final %s<%s, %s> %s = %s.createForeignKey(%s, %s.name(\"%s\"), new %s[] { [[%s]] }, %s, new %s[] { [[%s]] }, %s);",
                 ForeignKey.class,
                 out.ref(getStrategy().getFullJavaClassName(foreignKey.getKeyTable(), Mode.RECORD)),
                 out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencedTable(), Mode.RECORD)),
                 getStrategy().getJavaIdentifier(foreignKey),
                 Internal.class,
-                out.ref(getStrategy().getFullJavaIdentifier(foreignKey.getReferencedKey()), 2),
                 out.ref(getStrategy().getFullJavaIdentifier(foreignKey.getKeyTable()), 2),
                 DSL.class,
                 escapeString(foreignKey.getOutputName()),
                 TableField.class,
                 out.ref(getStrategy().getFullJavaIdentifiers(foreignKey.getKeyColumns()), colRefSegments(null)),
-                foreignKey.enforced());
+                out.ref(getStrategy().getFullJavaIdentifier(foreignKey.getReferencedKey()), 2),
+                TableField.class,
+                out.ref(getStrategy().getFullJavaIdentifiers(foreignKey.getReferencedColumns()), colRefSegments(null)),
+                foreignKey.enforced()
+            );
     }
 
     protected void generateRecords(SchemaDefinition schema) {

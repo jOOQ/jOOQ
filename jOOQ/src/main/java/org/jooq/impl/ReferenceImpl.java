@@ -43,6 +43,7 @@ import static org.jooq.impl.Tools.first;
 import static org.jooq.impl.Tools.list;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -67,19 +68,31 @@ final class ReferenceImpl<R extends Record, O extends Record> extends AbstractKe
     /**
      * Generated UID
      */
-    private static final long  serialVersionUID = 3636724364192618701L;
+    private static final long        serialVersionUID = 3636724364192618701L;
 
-    private final UniqueKey<O> key;
+    private final UniqueKey<O>       uk;
+    private final TableField<O, ?>[] ukFields;
 
-    ReferenceImpl(UniqueKey<O> key, Table<R> table, Name name, TableField<R, ?>[] fields, boolean enforced) {
-        super(table, name, fields, enforced);
+    ReferenceImpl(Table<R> table, Name name, TableField<R, ?>[] fkFields, UniqueKey<O> uk, TableField<O, ?>[] ukFields, boolean enforced) {
+        super(table, name, fkFields, enforced);
 
-        this.key = key;
+        this.uk = uk;
+        this.ukFields = ukFields;
     }
 
     @Override
     public final UniqueKey<O> getKey() {
-        return key;
+        return uk;
+    }
+
+    @Override
+    public final List<TableField<O, ?>> getKeyFields() {
+        return Arrays.asList(ukFields);
+    }
+
+    @Override
+    public final TableField<O, ?>[] getKeyFieldsArray() {
+        return ukFields;
     }
 
     @Override
@@ -107,9 +120,9 @@ final class ReferenceImpl<R extends Record, O extends Record> extends AbstractKe
     @Override
     public final Result<O> fetchParents(Collection<? extends R> records) {
         if (records == null || records.size() == 0)
-            return new ResultImpl<>(new DefaultConfiguration(), key.getFields());
+            return new ResultImpl<>(new DefaultConfiguration(), uk.getFields());
         else
-            return fetch(records, key.getTable(), key.getFieldsArray(), getFieldsArray());
+            return fetch(records, uk.getTable(), uk.getFieldsArray(), getFieldsArray());
     }
 
     @Override
@@ -117,7 +130,7 @@ final class ReferenceImpl<R extends Record, O extends Record> extends AbstractKe
         if (records == null || records.size() == 0)
             return new ResultImpl<>(new DefaultConfiguration(), getFields());
         else
-            return fetch(records, getTable(), getFieldsArray(), key.getFieldsArray());
+            return fetch(records, getTable(), getFieldsArray(), uk.getFieldsArray());
     }
 
     /**
@@ -194,6 +207,6 @@ final class ReferenceImpl<R extends Record, O extends Record> extends AbstractKe
     final ConstraintEnforcementStep constraint0() {
         return DSL.constraint(getName())
                   .foreignKey(getFieldsArray())
-                  .references(key.getTable(), key.getFieldsArray());
+                  .references(uk.getTable(), uk.getFieldsArray());
     }
 }

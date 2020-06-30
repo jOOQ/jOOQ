@@ -245,6 +245,7 @@ final class Snapshot extends AbstractMeta {
             return result;
         }
 
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         final void resolveReferences() {
 
             // TODO: Is there a better way than temporarily keeping the wrong
@@ -252,13 +253,15 @@ final class Snapshot extends AbstractMeta {
             for (int i = 0; i < foreignKeys.size(); i++) {
                 ForeignKey<R, ?> fk = foreignKeys.get(i);
 
+                UniqueKey uk = lookupUniqueKey(fk);
                 foreignKeys.set(i, org.jooq.impl.Internal.createForeignKey(
-                    lookupUniqueKey(fk),
                     this,
                     fk.getQualifiedName(),
                     fields(fk.getFieldsArray()),
-                    fk.enforced())
-                );
+                    uk,
+                    fields(uk.getFieldsArray()),
+                    fk.enforced()
+                ));
             }
         }
 

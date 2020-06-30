@@ -38,6 +38,7 @@
 package org.jooq;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.jooq.exception.DataAccessException;
 
@@ -58,10 +59,32 @@ import org.jetbrains.annotations.Nullable;
 public interface ForeignKey<R extends Record, O extends Record> extends Key<R> {
 
     /**
-     * The referenced <code>Key</code>
+     * The referenced <code>UniqueKey</code>.
      */
     @NotNull
     UniqueKey<O> getKey();
+
+    /**
+     * The fields that make up the referenced <code>UniqueKey</code>.
+     * <p>
+     * This returns the order in which the fields of {@link #getKey()} are
+     * referenced, which is usually the same as the fields of
+     * {@link UniqueKey#getFields()}, but not necessarily so.
+     */
+    @NotNull
+    List<TableField<O, ?>> getKeyFields();
+
+    /**
+     * The fields that make up the referenced <code>UniqueKey</code>.
+     * <p>
+     * This returns the order in which the fields of {@link #getKey()} are
+     * referenced, which is usually the same as the fields of
+     * {@link UniqueKey#getKeyFieldsArray()}, but not necessarily so.
+     *
+     * @see #getKeyFields()
+     */
+    @NotNull
+    TableField<O, ?>[] getKeyFieldsArray();
 
     /**
      * Fetch a parent record of a given record through this foreign key

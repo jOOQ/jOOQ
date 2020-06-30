@@ -125,31 +125,25 @@ public final class Internal {
 
     /**
      * Factory method for foreign keys.
+     *
+     * @deprecated - 3.14.0 - [#9404] - Please re-generate your code.
      */
+    @Deprecated
     @NotNull
     @SafeVarargs
     public static final <R extends Record, U extends Record> ForeignKey<R, U> createForeignKey(UniqueKey<U> key, Table<R> table, TableField<R, ?>... fields) {
-        return createForeignKey(key, table, (Name) null, fields);
+        return createForeignKey(table, (Name) null, fields, key, key.getFieldsArray(), true);
     }
 
     /**
      * Factory method for foreign keys.
      */
     @NotNull
-    @SafeVarargs
-    public static final <R extends Record, U extends Record> ForeignKey<R, U> createForeignKey(UniqueKey<U> key, Table<R> table, Name name, TableField<R, ?>... fields) {
-        return createForeignKey(key, table, name, fields, true);
-    }
+    public static final <R extends Record, U extends Record> ForeignKey<R, U> createForeignKey(Table<R> table, Name name, TableField<R, ?>[] fkFields, UniqueKey<U> uk, TableField<U, ?>[] ukFields, boolean enforced) {
+        ForeignKey<R, U> result = new ReferenceImpl<>(table, name, fkFields, uk, ukFields == null ? uk.getFieldsArray() : ukFields, enforced);
 
-    /**
-     * Factory method for foreign keys.
-     */
-    @NotNull
-    public static final <R extends Record, U extends Record> ForeignKey<R, U> createForeignKey(UniqueKey<U> key, Table<R> table, Name name, TableField<R, ?>[] fields, boolean enforced) {
-        ForeignKey<R, U> result = new ReferenceImpl<>(key, table, name, fields, enforced);
-
-        if (key instanceof UniqueKeyImpl)
-            ((UniqueKeyImpl<U>) key).references.add(result);
+        if (uk instanceof UniqueKeyImpl)
+            ((UniqueKeyImpl<U>) uk).references.add(result);
 
         return result;
     }
@@ -326,6 +320,6 @@ public final class Internal {
     @NotNull
     @Deprecated
     public static final <R extends Record, U extends Record> ForeignKey<R, U> createForeignKey(UniqueKey<U> key, Table<R> table, String name, TableField<R, ?>[] fields, boolean enforced) {
-        return createForeignKey(key, table, DSL.name(name), fields, enforced);
+        return createForeignKey(table, DSL.name(name), fields, key, key.getFieldsArray(), enforced);
     }
 }

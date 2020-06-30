@@ -71,9 +71,9 @@ public class Keys {
     }
 
     private static class ForeignKeys0 {
-        static final ForeignKey<FilmRecord, LanguageRecord> FKD2YJC1RU34H1SMWLA3FX7B6NX = Internal.createForeignKey(Keys.CONSTRAINT_C, Film.FILM, DSL.name("FKD2YJC1RU34H1SMWLA3FX7B6NX"), new TableField[] { Film.FILM.LANGUAGE_LANGUAGEID }, true);
-        static final ForeignKey<FilmRecord, LanguageRecord> FKN2UB730RPO5B5E9X6U2LWL9FT = Internal.createForeignKey(Keys.CONSTRAINT_C, Film.FILM, DSL.name("FKN2UB730RPO5B5E9X6U2LWL9FT"), new TableField[] { Film.FILM.ORIGINALLANGUAGE_LANGUAGEID }, true);
-        static final ForeignKey<FilmActorRecord, FilmRecord> FK3FSUXQ0JJ1XONRE7BHROOPVBX = Internal.createForeignKey(Keys.CONSTRAINT_2, FilmActor.FILM_ACTOR, DSL.name("FK3FSUXQ0JJ1XONRE7BHROOPVBX"), new TableField[] { FilmActor.FILM_ACTOR.FILMS_FILMID }, true);
-        static final ForeignKey<FilmActorRecord, ActorRecord> FK43SD2F45W7YN0GAXQ94EHTWT2 = Internal.createForeignKey(Keys.CONSTRAINT_3, FilmActor.FILM_ACTOR, DSL.name("FK43SD2F45W7YN0GAXQ94EHTWT2"), new TableField[] { FilmActor.FILM_ACTOR.ACTORS_ACTORID }, true);
+        static final ForeignKey<FilmRecord, LanguageRecord> FKD2YJC1RU34H1SMWLA3FX7B6NX = Internal.createForeignKey(Film.FILM, DSL.name("FKD2YJC1RU34H1SMWLA3FX7B6NX"), new TableField[] { Film.FILM.LANGUAGE_LANGUAGEID }, Keys.CONSTRAINT_C, new TableField[] { Language.LANGUAGE.LANGUAGEID }, true);
+        static final ForeignKey<FilmRecord, LanguageRecord> FKN2UB730RPO5B5E9X6U2LWL9FT = Internal.createForeignKey(Film.FILM, DSL.name("FKN2UB730RPO5B5E9X6U2LWL9FT"), new TableField[] { Film.FILM.ORIGINALLANGUAGE_LANGUAGEID }, Keys.CONSTRAINT_C, new TableField[] { Language.LANGUAGE.LANGUAGEID }, true);
+        static final ForeignKey<FilmActorRecord, FilmRecord> FK3FSUXQ0JJ1XONRE7BHROOPVBX = Internal.createForeignKey(FilmActor.FILM_ACTOR, DSL.name("FK3FSUXQ0JJ1XONRE7BHROOPVBX"), new TableField[] { FilmActor.FILM_ACTOR.FILMS_FILMID }, Keys.CONSTRAINT_2, new TableField[] { Film.FILM.FILMID }, true);
+        static final ForeignKey<FilmActorRecord, ActorRecord> FK43SD2F45W7YN0GAXQ94EHTWT2 = Internal.createForeignKey(FilmActor.FILM_ACTOR, DSL.name("FK43SD2F45W7YN0GAXQ94EHTWT2"), new TableField[] { FilmActor.FILM_ACTOR.ACTORS_ACTORID }, Keys.CONSTRAINT_3, new TableField[] { Actor.ACTOR.ACTORID }, true);
     }
 }

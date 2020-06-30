@@ -50,6 +50,6 @@ public class Keys {
     }
 
     private static class ForeignKeys0 {
-        static final ForeignKey<BookRecord, AuthorRecord> FK_T_BOOK_AUTHOR_ID = Internal.createForeignKey(Keys.PK_T_AUTHOR, Book.BOOK, DSL.name("FK_T_BOOK_AUTHOR_ID"), new TableField[] { Book.BOOK.AUTHOR_ID }, true);
+        static final ForeignKey<BookRecord, AuthorRecord> FK_T_BOOK_AUTHOR_ID = Internal.createForeignKey(Book.BOOK, DSL.name("FK_T_BOOK_AUTHOR_ID"), new TableField[] { Book.BOOK.AUTHOR_ID }, Keys.PK_T_AUTHOR, new TableField[] { Author.AUTHOR.ID }, true);
     }
 }

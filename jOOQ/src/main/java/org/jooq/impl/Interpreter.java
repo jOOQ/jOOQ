@@ -2101,12 +2101,24 @@ final class Interpreter {
 
             if (result == null) {
                 MutableTable.InterpretedTable t = table.interpretedTable();
-                TableField<Record, ?>[] f = new TableField[fields.size()];
+                UniqueKeyImpl<Record> uk = referencedKey.interpretedKey();
 
-                for (int i = 0; i < f.length; i++)
-                    f[i] = (TableField<Record, ?>) t.field(fields.get(i).name());
+                TableField<Record, ?>[] ukFields = new TableField[fields.size()];
+                TableField<Record, ?>[] fkFields = new TableField[fields.size()];
 
-                interpretedForeignKeys.put(qualifiedName, result = new ReferenceImpl<>(referencedKey.interpretedKey(), t, name(), f, enforced));
+                for (int i = 0; i < fkFields.length; i++) {
+                    ukFields[i] = (TableField<Record, ?>) uk.getTable().field(fields.get(i).name());
+                    fkFields[i] = (TableField<Record, ?>) t.field(fields.get(i).name());
+                }
+
+                interpretedForeignKeys.put(qualifiedName, result = new ReferenceImpl<>(
+                    t,
+                    name(),
+                    fkFields,
+                    uk,
+                    ukFields,
+                    enforced
+                ));
             }
 
             return result;

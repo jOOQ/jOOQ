@@ -705,7 +705,14 @@ final class MetaImpl extends AbstractMeta {
                     fkFields[i] = (TableField<Record, ?>)         field(record.get(7, String.class));
                 }
 
-                references.add(new ReferenceImpl<>(new MetaPrimaryKey(pkTable, pkName, pkFields), this, name(fkName), fkFields, true));
+                references.add(new ReferenceImpl<>(
+                    this,
+                    name(fkName),
+                    fkFields,
+                    new MetaPrimaryKey(pkTable, pkName, pkFields),
+                    pkFields,
+                    true
+                ));
             }
 
             return references;
@@ -970,11 +977,21 @@ final class MetaImpl extends AbstractMeta {
                 Table<Record> fkTable = (Table<Record>) schema.getTable(key.get(2, String.class));
                 String fkName = key.get(3, String.class);
                 TableField<Record, ?>[] fkFields = new TableField[value.size()];
+                TableField<Record, ?>[] pkFields = new TableField[value.size()];
 
-                for (int i = 0; i < value.size(); i++)
+                for (int i = 0; i < value.size(); i++) {
+                    pkFields[i] = (TableField<Record, ?>) getTable().field(value.get(i).get(3, String.class));
                     fkFields[i] = (TableField<Record, ?>) fkTable.field(value.get(i).get(7, String.class));
+                }
 
-                references.add(new ReferenceImpl<>(this, fkTable, name(fkName), fkFields, true));
+                references.add(new ReferenceImpl<>(
+                    fkTable,
+                    name(fkName),
+                    fkFields,
+                    this,
+                    pkFields,
+                    true
+                ));
             }
 
             return references;

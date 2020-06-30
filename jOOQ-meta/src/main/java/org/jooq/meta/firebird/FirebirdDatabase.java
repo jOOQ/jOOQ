@@ -110,6 +110,8 @@ import org.jooq.util.firebird.FirebirdDataType;
  */
 public class FirebirdDatabase extends AbstractDatabase {
 
+    private static Boolean is30;
+
     public FirebirdDatabase() {
 
         // Firebird doesn't know schemata
@@ -351,12 +353,16 @@ public class FirebirdDatabase extends AbstractDatabase {
         for (Record record : create()
                 .select(
                     trim(RDB$GENERATORS.RDB$GENERATOR_NAME).as(RDB$GENERATORS.RDB$GENERATOR_NAME),
-                    nullif(RDB$GENERATORS.RDB$INITIAL_VALUE, zero()).as(RDB$GENERATORS.RDB$INITIAL_VALUE),
-                    nullif(RDB$GENERATORS.RDB$GENERATOR_INCREMENT, one()).as(RDB$GENERATORS.RDB$GENERATOR_INCREMENT)
+                    (is30()
+                        ? nullif(RDB$GENERATORS.RDB$INITIAL_VALUE, zero())
+                        : zero())
+                    .as(RDB$GENERATORS.RDB$INITIAL_VALUE),
+                    (is30()
+                        ? nullif(RDB$GENERATORS.RDB$GENERATOR_INCREMENT, one())
+                        : one()).as(RDB$GENERATORS.RDB$GENERATOR_INCREMENT)
                 )
                 .from(RDB$GENERATORS)
-                .orderBy(1)
-                .fetch()) {
+                .orderBy(1)) {
 
             SchemaDefinition schema = getSchemata().get(0);
             DataTypeDefinition type = new DefaultDataTypeDefinition(
@@ -519,5 +525,14 @@ public class FirebirdDatabase extends AbstractDatabase {
         return choose(f.RDB$FIELD_TYPE)
                 .when((short) 261, (short) 0)
                 .otherwise(f.RDB$CHARACTER_LENGTH);
+    }
+
+    boolean is30() {
+
+        // [#4254] RDB$GENERATORS.RDB$INITIAL_VALUE was added in Firebird 3.0 only
+        if (is30 == null)
+            is30 = exists(RDB$GENERATORS.RDB$INITIAL_VALUE);
+
+        return is30;
     }
 }

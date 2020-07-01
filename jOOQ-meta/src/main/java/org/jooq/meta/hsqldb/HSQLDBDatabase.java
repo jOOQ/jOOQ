@@ -96,6 +96,7 @@ import org.jooq.meta.TableDefinition;
 import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.hsqldb.information_schema.tables.CheckConstraints;
 import org.jooq.meta.hsqldb.information_schema.tables.Columns;
+import org.jooq.meta.hsqldb.information_schema.tables.KeyColumnUsage;
 import org.jooq.meta.hsqldb.information_schema.tables.TableConstraints;
 import org.jooq.tools.JooqLogger;
 
@@ -245,39 +246,49 @@ public class HSQLDBDatabase extends AbstractDatabase {
 
     @Override
     protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
+        KeyColumnUsage fkKcu = KEY_COLUMN_USAGE.as("fk_kcu");
+        KeyColumnUsage pkKcu = KEY_COLUMN_USAGE.as("pk_kcu");
+
         Result<?> result = create()
             .select(
                 REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_NAME,
                 REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_SCHEMA,
                 TABLE_CONSTRAINTS.TABLE_NAME,
-                KEY_COLUMN_USAGE.CONSTRAINT_NAME,
-                KEY_COLUMN_USAGE.TABLE_SCHEMA,
-                KEY_COLUMN_USAGE.TABLE_NAME,
-                KEY_COLUMN_USAGE.COLUMN_NAME)
+                fkKcu.CONSTRAINT_NAME,
+                fkKcu.TABLE_SCHEMA,
+                fkKcu.TABLE_NAME,
+                fkKcu.COLUMN_NAME,
+                pkKcu.COLUMN_NAME
+            )
             .from(REFERENTIAL_CONSTRAINTS)
-            .join(KEY_COLUMN_USAGE)
-                .on(KEY_COLUMN_USAGE.CONSTRAINT_SCHEMA.equal(REFERENTIAL_CONSTRAINTS.CONSTRAINT_SCHEMA))
-                .and(KEY_COLUMN_USAGE.CONSTRAINT_NAME.equal(REFERENTIAL_CONSTRAINTS.CONSTRAINT_NAME))
+            .join(fkKcu)
+                .on(fkKcu.CONSTRAINT_SCHEMA.equal(REFERENTIAL_CONSTRAINTS.CONSTRAINT_SCHEMA))
+                .and(fkKcu.CONSTRAINT_NAME.equal(REFERENTIAL_CONSTRAINTS.CONSTRAINT_NAME))
             .join(TABLE_CONSTRAINTS)
                 .on(TABLE_CONSTRAINTS.CONSTRAINT_SCHEMA.eq(REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_SCHEMA))
                 .and(TABLE_CONSTRAINTS.CONSTRAINT_NAME.eq(REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_NAME))
-            .where(KEY_COLUMN_USAGE.TABLE_SCHEMA.in(getInputSchemata()))
+            .join(pkKcu)
+                .on(pkKcu.CONSTRAINT_SCHEMA.eq(TABLE_CONSTRAINTS.CONSTRAINT_SCHEMA))
+                .and(pkKcu.CONSTRAINT_NAME.eq(TABLE_CONSTRAINTS.CONSTRAINT_NAME))
+                .and(pkKcu.ORDINAL_POSITION.eq(fkKcu.ORDINAL_POSITION))
+            .where(fkKcu.TABLE_SCHEMA.in(getInputSchemata()))
             .orderBy(
-                KEY_COLUMN_USAGE.TABLE_SCHEMA.asc(),
-                KEY_COLUMN_USAGE.TABLE_NAME.asc(),
-                KEY_COLUMN_USAGE.CONSTRAINT_NAME.asc(),
-                KEY_COLUMN_USAGE.ORDINAL_POSITION.asc())
+                fkKcu.TABLE_SCHEMA.asc(),
+                fkKcu.TABLE_NAME.asc(),
+                fkKcu.CONSTRAINT_NAME.asc(),
+                fkKcu.ORDINAL_POSITION.asc())
             .fetch();
 
         for (Record record : result) {
-            SchemaDefinition foreignKeySchema = getSchema(record.get(KEY_COLUMN_USAGE.TABLE_SCHEMA));
+            SchemaDefinition foreignKeySchema = getSchema(record.get(fkKcu.TABLE_SCHEMA));
             SchemaDefinition uniqueKeySchema = getSchema(record.get(REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_SCHEMA));
 
-            String foreignKey = record.get(KEY_COLUMN_USAGE.CONSTRAINT_NAME);
-            String foreignKeyTableName = record.get(KEY_COLUMN_USAGE.TABLE_NAME);
-            String foreignKeyColumn = record.get(KEY_COLUMN_USAGE.COLUMN_NAME);
+            String foreignKey = record.get(fkKcu.CONSTRAINT_NAME);
+            String foreignKeyTableName = record.get(fkKcu.TABLE_NAME);
+            String foreignKeyColumn = record.get(fkKcu.COLUMN_NAME);
             String uniqueKey = record.get(REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_NAME);
             String uniqueKeyTableName = record.get(TABLE_CONSTRAINTS.TABLE_NAME);
+            String uniqueKeyColumn = record.get(pkKcu.COLUMN_NAME);
 
             TableDefinition foreignKeyTable = getTable(foreignKeySchema, foreignKeyTableName);
             TableDefinition uniqueKeyTable = getTable(uniqueKeySchema, uniqueKeyTableName);
@@ -288,7 +299,9 @@ public class HSQLDBDatabase extends AbstractDatabase {
                     foreignKeyTable,
                     foreignKeyTable.getColumn(foreignKeyColumn),
                     uniqueKey,
-                    uniqueKeyTable
+                    uniqueKeyTable,
+                    uniqueKeyTable.getColumn(uniqueKeyColumn),
+                    true
                 );
         }
     }

@@ -39,7 +39,7 @@
 package org.jooq.meta.mysql;
 
 import static java.util.Arrays.asList;
-import static org.jooq.meta.hsqldb.information_schema.Tables.PARAMETERS;
+import static org.jooq.meta.mysql.information_schema.Tables.PARAMETERS;
 
 import java.util.regex.Matcher;
 

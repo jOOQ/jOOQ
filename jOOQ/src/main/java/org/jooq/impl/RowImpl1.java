@@ -38,7 +38,6 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.row;
-import static org.jooq.impl.DSL.val;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -96,7 +95,7 @@ final class RowImpl1<T1> extends AbstractRow implements Row1<T1> {
 
     @Override
     public final Condition compare(Comparator comparator, T1 t1) {
-        return compare(comparator, row(val(t1, (DataType) dataType(0))));
+        return compare(comparator, row(Tools.field(t1, (DataType) dataType(0))));
     }
 
     @Override
@@ -368,7 +367,7 @@ final class RowImpl1<T1> extends AbstractRow implements Row1<T1> {
 
     @Override
     public final BetweenAndStep1<T1> between(T1 t1) {
-        return between(row(val(t1, (DataType) dataType(0))));
+        return between(row(Tools.field(t1, (DataType) dataType(0))));
     }
 
     @Override
@@ -398,7 +397,7 @@ final class RowImpl1<T1> extends AbstractRow implements Row1<T1> {
 
     @Override
     public final BetweenAndStep1<T1> betweenSymmetric(T1 t1) {
-        return betweenSymmetric(row(val(t1, (DataType) dataType(0))));
+        return betweenSymmetric(row(Tools.field(t1, (DataType) dataType(0))));
     }
 
     @Override
@@ -428,7 +427,7 @@ final class RowImpl1<T1> extends AbstractRow implements Row1<T1> {
 
     @Override
     public final BetweenAndStep1<T1> notBetween(T1 t1) {
-        return notBetween(row(val(t1, (DataType) dataType(0))));
+        return notBetween(row(Tools.field(t1, (DataType) dataType(0))));
     }
 
     @Override
@@ -458,7 +457,7 @@ final class RowImpl1<T1> extends AbstractRow implements Row1<T1> {
 
     @Override
     public final BetweenAndStep1<T1> notBetweenSymmetric(T1 t1) {
-        return notBetweenSymmetric(row(val(t1, (DataType) dataType(0))));
+        return notBetweenSymmetric(row(Tools.field(t1, (DataType) dataType(0))));
     }
 
     @Override
@@ -502,7 +501,7 @@ final class RowImpl1<T1> extends AbstractRow implements Row1<T1> {
 
     @Override
     public final Condition isNotDistinctFrom(T1 t1) {
-        return isNotDistinctFrom(val(t1, (DataType) dataType(0)));
+        return isNotDistinctFrom(Tools.field(t1, (DataType) dataType(0)));
     }
 
     @Override
@@ -527,7 +526,7 @@ final class RowImpl1<T1> extends AbstractRow implements Row1<T1> {
 
     @Override
     public final Condition isDistinctFrom(T1 t1) {
-        return isDistinctFrom(val(t1, (DataType) dataType(0)));
+        return isDistinctFrom(Tools.field(t1, (DataType) dataType(0)));
     }
 
     @Override

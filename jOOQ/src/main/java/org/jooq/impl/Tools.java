@@ -1509,7 +1509,7 @@ final class Tools {
         if (value instanceof Field<?>)
             return (Field<T>) value;
 
-        // [#6362] Single-column selects can be considered fields, too
+        // [#6362] [#8220] Single-column selects can be considered fields, too
         else if (value instanceof Select && ((Select<?>) value).getSelect().size() == 1)
             return DSL.field((Select<Record1<T>>) value);
 
@@ -1681,6 +1681,10 @@ final class Tools {
         if (value instanceof Field<?>)
             return (Field<T>) value;
 
+        // [#6362] [#8220] Single-column selects can be considered fields, too
+        else if (value instanceof Select && ((Select<?>) value).getSelect().size() == 1)
+            return DSL.field((Select<Record1<T>>) value);
+
         // [#4771] Any other QueryPart type is not supported here
         else if (value instanceof QueryPart)
             throw fieldExpected(value);
@@ -1696,6 +1700,10 @@ final class Tools {
         if (value instanceof Field<?>)
             return (Field<T>) value;
 
+        // [#6362] [#8220] Single-column selects can be considered fields, too
+        else if (value instanceof Select && ((Select<?>) value).getSelect().size() == 1)
+            return DSL.field((Select<Record1<T>>) value);
+
         // [#4771] Any other QueryPart type is not supported here
         else if (value instanceof QueryPart)
             throw fieldExpected(value);
@@ -1710,6 +1718,10 @@ final class Tools {
         // Fields can be mixed with constant values
         if (value instanceof Field<?>)
             return (Field<T>) value;
+
+        // [#6362] [#8220] Single-column selects can be considered fields, too
+        else if (value instanceof Select && ((Select<?>) value).getSelect().size() == 1)
+            return DSL.field((Select<Record1<T>>) value);
 
         // [#4771] Any other QueryPart type is not supported here
         else if (value instanceof QueryPart)

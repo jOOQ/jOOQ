@@ -38,7 +38,6 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.row;
-import static org.jooq.impl.DSL.val;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -101,7 +100,7 @@ final class RowImpl2<T1, T2> extends AbstractRow implements Row2<T1, T2> {
 
     @Override
     public final Condition compare(Comparator comparator, T1 t1, T2 t2) {
-        return compare(comparator, row(val(t1, (DataType) dataType(0)), val(t2, (DataType) dataType(1))));
+        return compare(comparator, row(Tools.field(t1, (DataType) dataType(0)), Tools.field(t2, (DataType) dataType(1))));
     }
 
     @Override
@@ -373,7 +372,7 @@ final class RowImpl2<T1, T2> extends AbstractRow implements Row2<T1, T2> {
 
     @Override
     public final BetweenAndStep2<T1, T2> between(T1 t1, T2 t2) {
-        return between(row(val(t1, (DataType) dataType(0)), val(t2, (DataType) dataType(1))));
+        return between(row(Tools.field(t1, (DataType) dataType(0)), Tools.field(t2, (DataType) dataType(1))));
     }
 
     @Override
@@ -403,7 +402,7 @@ final class RowImpl2<T1, T2> extends AbstractRow implements Row2<T1, T2> {
 
     @Override
     public final BetweenAndStep2<T1, T2> betweenSymmetric(T1 t1, T2 t2) {
-        return betweenSymmetric(row(val(t1, (DataType) dataType(0)), val(t2, (DataType) dataType(1))));
+        return betweenSymmetric(row(Tools.field(t1, (DataType) dataType(0)), Tools.field(t2, (DataType) dataType(1))));
     }
 
     @Override
@@ -433,7 +432,7 @@ final class RowImpl2<T1, T2> extends AbstractRow implements Row2<T1, T2> {
 
     @Override
     public final BetweenAndStep2<T1, T2> notBetween(T1 t1, T2 t2) {
-        return notBetween(row(val(t1, (DataType) dataType(0)), val(t2, (DataType) dataType(1))));
+        return notBetween(row(Tools.field(t1, (DataType) dataType(0)), Tools.field(t2, (DataType) dataType(1))));
     }
 
     @Override
@@ -463,7 +462,7 @@ final class RowImpl2<T1, T2> extends AbstractRow implements Row2<T1, T2> {
 
     @Override
     public final BetweenAndStep2<T1, T2> notBetweenSymmetric(T1 t1, T2 t2) {
-        return notBetweenSymmetric(row(val(t1, (DataType) dataType(0)), val(t2, (DataType) dataType(1))));
+        return notBetweenSymmetric(row(Tools.field(t1, (DataType) dataType(0)), Tools.field(t2, (DataType) dataType(1))));
     }
 
     @Override
@@ -507,7 +506,7 @@ final class RowImpl2<T1, T2> extends AbstractRow implements Row2<T1, T2> {
 
     @Override
     public final Condition isNotDistinctFrom(T1 t1, T2 t2) {
-        return isNotDistinctFrom(val(t1, (DataType) dataType(0)), val(t2, (DataType) dataType(1)));
+        return isNotDistinctFrom(Tools.field(t1, (DataType) dataType(0)), Tools.field(t2, (DataType) dataType(1)));
     }
 
     @Override
@@ -532,7 +531,7 @@ final class RowImpl2<T1, T2> extends AbstractRow implements Row2<T1, T2> {
 
     @Override
     public final Condition isDistinctFrom(T1 t1, T2 t2) {
-        return isDistinctFrom(val(t1, (DataType) dataType(0)), val(t2, (DataType) dataType(1)));
+        return isDistinctFrom(Tools.field(t1, (DataType) dataType(0)), Tools.field(t2, (DataType) dataType(1)));
     }
 
     @Override

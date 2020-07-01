@@ -2549,7 +2549,7 @@ public abstract class AbstractDatabase implements Database {
             runnable.run();
         }
         catch (Exception e) {
-            switch (onError) {
+            switch (onError()) {
                 case SILENT:
                     break;
                 case LOG:

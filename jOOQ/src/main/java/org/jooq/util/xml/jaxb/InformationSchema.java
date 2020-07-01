@@ -59,7 +59,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class InformationSchema implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31300L;
+    private final static long serialVersionUID = 31303L;
     @XmlElementWrapper(name = "catalogs")
     @XmlElement(name = "catalog")
     protected List<Catalog> catalogs;

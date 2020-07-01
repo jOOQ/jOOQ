@@ -56,7 +56,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class Column implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31300L;
+    private final static long serialVersionUID = 31303L;
     @XmlElement(name = "table_catalog")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String tableCatalog;

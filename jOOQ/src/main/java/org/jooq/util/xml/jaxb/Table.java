@@ -26,7 +26,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *         &lt;element name="table_catalog" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="table_schema" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="table_name" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="table_type" type="{http://www.jooq.org/xsd/jooq-meta-3.12.0.xsd}TableType"/&gt;
+ *         &lt;element name="table_type" type="{http://www.jooq.org/xsd/jooq-meta-3.12.0.xsd}TableType" minOccurs="0"/&gt;
  *         &lt;element name="comment" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;
@@ -46,7 +46,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class Table implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31300L;
+    private final static long serialVersionUID = 31303L;
     @XmlElement(name = "table_catalog")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String tableCatalog;
@@ -56,7 +56,7 @@ public class Table implements Serializable, XMLAppendable
     @XmlElement(name = "table_name", required = true)
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String tableName;
-    @XmlElement(name = "table_type", required = true, defaultValue = "BASE TABLE")
+    @XmlElement(name = "table_type", defaultValue = "BASE TABLE")
     @XmlSchemaType(name = "string")
     protected TableType tableType = TableType.BASE_TABLE;
     @XmlJavaTypeAdapter(StringAdapter.class)

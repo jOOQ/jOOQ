@@ -48,7 +48,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class KeyColumnUsage implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31300L;
+    private final static long serialVersionUID = 31303L;
     @XmlElement(name = "column_name", required = true)
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String columnName;

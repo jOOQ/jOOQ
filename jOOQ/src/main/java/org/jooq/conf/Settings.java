@@ -36,7 +36,7 @@ public class Settings
     implements Serializable, Cloneable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31200L;
+    private final static long serialVersionUID = 31300L;
     @XmlElement(defaultValue = "true")
     protected Boolean renderCatalog = true;
     @XmlElement(defaultValue = "true")

@@ -221,7 +221,7 @@ public class DefaultRelations implements Relations {
         else
             nextUkColumnIndex.put(key, index = index + 1);
 
-        return uk.getKeyColumns().get(index);
+        return index < uk.getKeyColumns().size() ? uk.getKeyColumns().get(index) : null;
     }
 
     public void addForeignKey(

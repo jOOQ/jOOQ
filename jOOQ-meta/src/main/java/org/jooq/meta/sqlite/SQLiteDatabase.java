@@ -248,13 +248,11 @@ public class SQLiteDatabase extends AbstractDatabase {
                     "_" + record.get("table");
 
                 Integer sequence = map.get(foreignKeyPrefix);
-                if (sequence == null) {
+                if (sequence == null)
                     sequence = 0;
-                }
 
-                if (0 == record.get("seq", Integer.class)) {
+                if (0 == record.get("seq", Integer.class))
                     sequence = sequence + 1;
-                }
 
                 map.put(foreignKeyPrefix, sequence);
 
@@ -265,6 +263,7 @@ public class SQLiteDatabase extends AbstractDatabase {
 
                 String foreignKeyTableName = table.getName();
                 String foreignKeyColumn = record.get("from", String.class);
+                String uniqueKeyColumn = record.get("to", String.class);
 
                 // SQLite mixes up cases from the actual declaration and the
                 // reference definition! It's possible that a table is declared
@@ -281,9 +280,11 @@ public class SQLiteDatabase extends AbstractDatabase {
                         relations.addForeignKey(
                             foreignKey,
                             foreignKeyTable,
-                            foreignKeyTable.getColumn(foreignKeyColumn),
+                            foreignKeyTable.getColumn(foreignKeyColumn, true),
                             uniqueKey,
-                            uniqueKeyTable
+                            uniqueKeyTable,
+                            uniqueKeyTable.getColumn(uniqueKeyColumn, true),
+                            true
                         );
                 }
             }

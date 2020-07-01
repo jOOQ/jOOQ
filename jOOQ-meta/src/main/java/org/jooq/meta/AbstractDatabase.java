@@ -578,7 +578,7 @@ public abstract class AbstractDatabase implements Database {
             onError(ERROR, "Could not load catalogs", new ExceptionRunnable() {
                 @Override
                 public void run() throws Exception {
-                    catalogs = getCatalogs0();
+                    catalogs = sort(getCatalogs0());
                 }
             });
 
@@ -626,7 +626,7 @@ public abstract class AbstractDatabase implements Database {
             onError(ERROR, "Could not load schemata", new ExceptionRunnable() {
                 @Override
                 public void run() throws Exception {
-                    schemata = getSchemata0();
+                    schemata = sort(getSchemata0());
                 }
             });
 
@@ -682,7 +682,7 @@ public abstract class AbstractDatabase implements Database {
                 onError(ERROR, "Could not load catalogs", new ExceptionRunnable() {
                     @Override
                     public void run() throws Exception {
-                        for (CatalogDefinition catalog : getCatalogs0())
+                        for (CatalogDefinition catalog : sort(getCatalogs0()))
                             inputCatalogs.add(catalog.getName());
                     }
                 });
@@ -760,10 +760,8 @@ public abstract class AbstractDatabase implements Database {
                         ) {
                             List<String> list = inputSchemataPerCatalog.get(inputCatalog);
 
-                            if (list == null) {
-                                list = new ArrayList<>();
-                                inputSchemataPerCatalog.put(inputCatalog, list);
-                            }
+                            if (list == null)
+                                inputSchemataPerCatalog.put(inputCatalog, list = new ArrayList<>());
 
                             list.add(inputSchema);
                         }
@@ -779,14 +777,12 @@ public abstract class AbstractDatabase implements Database {
         onError(ERROR, "Could not load schemata", new ExceptionRunnable() {
             @Override
             public void run() throws Exception {
-                for (SchemaDefinition schema : getSchemata0()) {
+                for (SchemaDefinition schema : sort(getSchemata0())) {
                     inputSchemata.add(schema.getName());
                     List<String> list = inputSchemataPerCatalog.get(schema.getCatalog().getName());
 
-                    if (list == null) {
-                        list = new ArrayList<>();
-                        inputSchemataPerCatalog.put(schema.getCatalog().getName(), list);
-                    }
+                    if (list == null)
+                        inputSchemataPerCatalog.put(schema.getCatalog().getName(), list = new ArrayList<>());
 
                     list.add(schema.getName());
                 }

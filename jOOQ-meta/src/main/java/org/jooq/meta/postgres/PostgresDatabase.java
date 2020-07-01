@@ -324,6 +324,7 @@ public class PostgresDatabase extends AbstractDatabase {
             String foreignKeyColumn = record.get("fkcolumn_name", String.class);
             String uniqueKey = record.get("pk_name", String.class);
             String uniqueKeyTableName = record.get("pktable_name", String.class);
+            String uniqueKeyColumn = record.get("pkcolumn_name", String.class);
 
             TableDefinition foreignKeyTable = getTable(foreignKeySchema, foreignKeyTableName);
             TableDefinition uniqueKeyTable = getTable(uniqueKeySchema, uniqueKeyTableName);
@@ -334,7 +335,9 @@ public class PostgresDatabase extends AbstractDatabase {
                     foreignKeyTable,
                     foreignKeyTable.getColumn(foreignKeyColumn),
                     uniqueKey,
-                    uniqueKeyTable
+                    uniqueKeyTable,
+                    uniqueKeyTable.getColumn(uniqueKeyColumn),
+                    true
                 );
         }
     }

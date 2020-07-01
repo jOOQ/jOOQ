@@ -732,7 +732,7 @@ implements
         JoinTable result = this;
 
         TableField<?, ?>[] references = key.getFieldsArray();
-        TableField<?, ?>[] referenced = key.getKey().getFieldsArray();
+        TableField<?, ?>[] referenced = key.getKeyFieldsArray();
 
         for (int i = 0; i < references.length; i++) {
             Field f1 = fk.field(references[i]);

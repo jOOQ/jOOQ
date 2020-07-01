@@ -268,7 +268,7 @@ public class XMLGenerator extends AbstractGenerator {
                         kc.setConstraintSchema(schemaName);
                         kc.setConstraintName(constraintName);
                         kc.setColumnName(column.getOutputName());
-                        kc.setOrdinalPosition(i);
+                        kc.setOrdinalPosition(i + 1);
                         kc.setTableCatalog(table.getCatalog().getOutputName());
                         kc.setTableSchema(table.getSchema().getOutputName());
                         kc.setTableName(table.getOutputName());
@@ -317,7 +317,7 @@ public class XMLGenerator extends AbstractGenerator {
                         kc.setConstraintSchema(schemaName);
                         kc.setConstraintName(constraintName);
                         kc.setColumnName(column.getOutputName());
-                        kc.setOrdinalPosition(i);
+                        kc.setOrdinalPosition(i + 1);
                         kc.setTableCatalog(table.getCatalog().getOutputName());
                         kc.setTableSchema(table.getSchema().getOutputName());
                         kc.setTableName(table.getOutputName());

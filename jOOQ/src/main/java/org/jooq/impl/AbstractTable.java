@@ -500,22 +500,39 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
         List<ForeignKey<R, O>> result = new ArrayList<>();
 
         for (ForeignKey<R, ?> reference : getReferences()) {
-            if (other.equals(reference.getKey().getTable())) {
-                result.add((ForeignKey<R, O>) reference);
-            }
-
-            // [#1460] [#6304] In case the other table was aliased
-            else {
-                Table<O> aliased = Tools.aliased(other);
-
-                if (aliased != null && aliased.equals(reference.getKey().getTable())) {
+            for (Table<?> o : flattenJoins(other)) {
+                if (o.equals(reference.getKey().getTable())) {
                     result.add((ForeignKey<R, O>) reference);
+                }
+
+                // [#1460] [#6304] In case the other table was aliased
+                else {
+                    Table<?> aliased = Tools.aliased(o);
+
+                    if (aliased != null && aliased.equals(reference.getKey().getTable()))
+                        result.add((ForeignKey<R, O>) reference);
                 }
             }
         }
 
         return Collections.unmodifiableList(result);
     }
+
+    private final List<Table<?>> flattenJoins(Table<?> other) {
+        return flattenJoins(other, new ArrayList<>());
+    }
+
+    private final List<Table<?>> flattenJoins(Table<?> other, List<Table<?>> list) {
+        if (other instanceof JoinTable) {
+            flattenJoins(((JoinTable) other).lhs, list);
+            flattenJoins(((JoinTable) other).rhs, list);
+        }
+        else
+            list.add(other);
+
+        return list;
+    }
+
     /**
      * {@inheritDoc}
      * <p>

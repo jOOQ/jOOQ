@@ -39,6 +39,8 @@ package org.jooq;
 
 import java.io.Serializable;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * An XML wrapper type for XML data obtained from the database.
  * <p>
@@ -54,9 +56,10 @@ public final class XML implements Serializable {
     private final String      data;
 
     private XML(String data) {
-        this.data = data;
+        this.data = String.valueOf(data);
     }
 
+    @NotNull
     public final String data() {
         return data;
     }
@@ -64,6 +67,7 @@ public final class XML implements Serializable {
     /**
      * Create a new {@link XML} instance from string data input.
      */
+    @NotNull
     public static final XML valueOf(String data) {
         return new XML(data);
     }
@@ -74,34 +78,24 @@ public final class XML implements Serializable {
      * This is the same as {@link #valueOf(String)}, but it can be static
      * imported.
      */
+    @NotNull
     public static final XML xml(String data) {
         return new XML(data);
     }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((data == null) ? 0 : data.hashCode());
-        return result;
+        return data.hashCode();
     }
 
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        XML other = (XML) obj;
-        if (data == null) {
-            if (other.data != null)
-                return false;
-        }
-        else if (!data.equals(other.data))
-            return false;
-        return true;
+        if (obj instanceof XML)
+            return data.equals(((XML) obj).data);
+        return false;
+
     }
 
     @Override

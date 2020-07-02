@@ -39,6 +39,8 @@ package org.jooq;
 
 import java.io.Serializable;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * A JSON wrapper type for JSON data obtained from the database.
  * <p>
@@ -54,9 +56,10 @@ public final class JSON implements Serializable {
     private final String      data;
 
     private JSON(String data) {
-        this.data = data;
+        this.data = String.valueOf(data);
     }
 
+    @NotNull
     public final String data() {
         return data;
     }
@@ -64,6 +67,7 @@ public final class JSON implements Serializable {
     /**
      * Create a new {@link JSON} instance from string data input.
      */
+    @NotNull
     public static final JSON valueOf(String data) {
         return new JSON(data);
     }
@@ -74,34 +78,24 @@ public final class JSON implements Serializable {
      * This is the same as {@link #valueOf(String)}, but it can be static
      * imported.
      */
+    @NotNull
     public static final JSON json(String data) {
         return new JSON(data);
     }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((data == null) ? 0 : data.hashCode());
-        return result;
+        return data.hashCode();
     }
 
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        JSON other = (JSON) obj;
-        if (data == null) {
-            if (other.data != null)
-                return false;
-        }
-        else if (!data.equals(other.data))
-            return false;
-        return true;
+        if (obj instanceof JSON)
+            return data.equals(((JSON) obj).data);
+        return false;
+
     }
 
     @Override

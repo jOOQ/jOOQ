@@ -39,6 +39,8 @@ package org.jooq;
 
 import java.io.Serializable;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * A JSON wrapper type for JSONB data obtained from the database.
  * <p>
@@ -54,9 +56,10 @@ public final class JSONB implements Serializable {
     private final String      data;
 
     private JSONB(String data) {
-        this.data = data;
+        this.data = String.valueOf(data);
     }
 
+    @NotNull
     public final String data() {
         return data;
     }
@@ -64,6 +67,7 @@ public final class JSONB implements Serializable {
     /**
      * Create a new {@link JSONB} instance from string data input.
      */
+    @NotNull
     public static final JSONB valueOf(String data) {
         return new JSONB(data);
     }
@@ -74,34 +78,23 @@ public final class JSONB implements Serializable {
      * This is the same as {@link #valueOf(String)}, but it can be static
      * imported.
      */
+    @NotNull
     public static final JSONB jsonb(String data) {
         return new JSONB(data);
     }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((data == null) ? 0 : data.hashCode());
-        return result;
+        return data.hashCode();
     }
 
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        JSONB other = (JSONB) obj;
-        if (data == null) {
-            if (other.data != null)
-                return false;
-        }
-        else if (!data.equals(other.data))
-            return false;
-        return true;
+        if (obj instanceof JSONB)
+            return data.equals(((JSONB) obj).data);
+        return false;
     }
 
     @Override

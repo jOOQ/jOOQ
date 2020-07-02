@@ -57,6 +57,7 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
+// ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
@@ -745,7 +746,7 @@ final class Tools {
      * <li>?|</li>
      * </ul>
      */
-    private static final char[][]            NON_BIND_VARIABLE_SUFFIXES     = {
+    private static final char[][]        NON_BIND_VARIABLE_SUFFIXES         = {
         { '?' },
         { '|' },
         { '&' },
@@ -760,15 +761,16 @@ final class Tools {
      * All hexadecimal digits accessible through array index, e.g.
      * <code>HEX_DIGITS[15] == 'f'</code>.
      */
-    private static final char[]          HEX_DIGITS                     = "0123456789abcdef".toCharArray();
+    private static final char[]          HEX_DIGITS                         = "0123456789abcdef".toCharArray();
 
-    private static final Set<SQLDialect> REQUIRES_BACKSLASH_ESCAPING    = SQLDialect.supportedBy(MARIADB, MYSQL);
-    private static final Set<SQLDialect> NO_SUPPORT_NULL                = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB);
-    private static final Set<SQLDialect> NO_SUPPORT_BINARY_TYPE_LENGTH  = SQLDialect.supportedBy(POSTGRES);
-    private static final Set<SQLDialect> NO_SUPPORT_CAST_TYPE_IN_DDL    = SQLDialect.supportedBy(MARIADB, MYSQL);
-    private static final Set<SQLDialect> DEFAULT_BEFORE_NULL            = SQLDialect.supportedBy(FIREBIRD, HSQLDB);
-    private static final Set<SQLDialect> SUPPORT_MYSQL_SYNTAX           = SQLDialect.supportedBy(MARIADB, MYSQL);
-    private static final Set<SQLDialect> SUPPORT_POSTGRES_SYNTAX        = SQLDialect.supportedBy(POSTGRES);
+    private static final Set<SQLDialect> REQUIRES_BACKSLASH_ESCAPING        = SQLDialect.supportedBy(MARIADB, MYSQL);
+    private static final Set<SQLDialect> NO_SUPPORT_NULL                    = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB);
+    private static final Set<SQLDialect> NO_SUPPORT_BINARY_TYPE_LENGTH      = SQLDialect.supportedBy(POSTGRES);
+    private static final Set<SQLDialect> NO_SUPPORT_CAST_TYPE_IN_DDL        = SQLDialect.supportedBy(MARIADB, MYSQL);
+    private static final Set<SQLDialect> SUPPORT_NON_BIND_VARIABLE_SUFFIXES = SQLDialect.supportedBy(POSTGRES);
+    private static final Set<SQLDialect> DEFAULT_BEFORE_NULL                = SQLDialect.supportedBy(FIREBIRD, HSQLDB);
+    private static final Set<SQLDialect> SUPPORT_MYSQL_SYNTAX               = SQLDialect.supportedBy(MARIADB, MYSQL);
+    private static final Set<SQLDialect> SUPPORT_POSTGRES_SYNTAX            = SQLDialect.supportedBy(POSTGRES);
 
     // ------------------------------------------------------------------------
     // XXX: Record constructors and related methods
@@ -2451,7 +2453,7 @@ final class Tools {
                           &&(i - 1 < 0               || sqlChars[i - 1] != ':')))) {
 
                 // [#5307] Consume PostgreSQL style operators. These aren't bind variables!
-                if (sqlChars[i] == '?' && i + 1 < sqlChars.length) {
+                if (sqlChars[i] == '?' && i + 1 < sqlChars.length && SUPPORT_NON_BIND_VARIABLE_SUFFIXES.contains(ctx.dialect())) {
                     for (char[] suffix : NON_BIND_VARIABLE_SUFFIXES) {
                         if (peek(sqlChars, i + 1, suffix)) {
                             for (int j = i; i - j <= suffix.length; i++)

@@ -244,14 +244,14 @@ public class DefaultRecordUnmapper<E, R extends Record> implements RecordUnmappe
 
                     // Annotations are available and present
                     if (useAnnotations) {
-                        members = getAnnotatedMembers(configuration, type, field.getName());
-                        method = getAnnotatedGetter(configuration, type, field.getName());
+                        members = getAnnotatedMembers(configuration, type, field.getName(), true);
+                        method = getAnnotatedGetter(configuration, type, field.getName(), true);
                     }
 
                     // No annotations are present
                     else {
-                        members = getMatchingMembers(configuration, type, field.getName());
-                        method = getMatchingGetter(configuration, type, field.getName());
+                        members = getMatchingMembers(configuration, type, field.getName(), true);
+                        method = getMatchingGetter(configuration, type, field.getName(), true);
                     }
 
                     // Use only the first applicable method or member

@@ -157,9 +157,9 @@ import static org.jooq.impl.Tools.DataCacheKey.DATA_REFLECTION_CACHE_GET_MATCHIN
 import static org.jooq.impl.Tools.DataCacheKey.DATA_REFLECTION_CACHE_HAS_COLUMN_ANNOTATIONS;
 import static org.jooq.impl.Tools.DataKey.DATA_BLOCK_NESTING;
 import static org.jooq.tools.StringUtils.defaultIfNull;
-import static org.jooq.tools.reflect.Reflect.accessible;
 
 import java.io.Serializable;
+import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -3444,10 +3444,19 @@ final class Tools {
         }, DATA_REFLECTION_CACHE_HAS_COLUMN_ANNOTATIONS, type);
     }
 
+    static final <T extends AccessibleObject> T accessible(T object, boolean makeAccessible) {
+        return makeAccessible ? Reflect.accessible(object) : object;
+    }
+
     /**
      * Get all members annotated with a given column name
      */
-    static final List<java.lang.reflect.Field> getAnnotatedMembers(final Configuration configuration, final Class<?> type, final String name) {
+    static final List<java.lang.reflect.Field> getAnnotatedMembers(
+        final Configuration configuration,
+        final Class<?> type,
+        final String name,
+        final boolean makeAccessible
+    ) {
         return Cache.run(configuration, new F0<List<java.lang.reflect.Field>>() {
 
             @Override
@@ -3459,7 +3468,7 @@ final class Tools {
 
                     if (column != null) {
                         if (namesMatch(name, column.name()))
-                            result.add(accessible(member));
+                            result.add(accessible(member, makeAccessible));
                     }
 
                     else {
@@ -3467,7 +3476,7 @@ final class Tools {
 
                         if (id != null)
                             if (namesMatch(name, member.getName()))
-                                result.add(accessible(member));
+                                result.add(accessible(member, makeAccessible));
                     }
                 }
 
@@ -3488,7 +3497,12 @@ final class Tools {
     /**
      * Get all members matching a given column name
      */
-    static final List<java.lang.reflect.Field> getMatchingMembers(final Configuration configuration, final Class<?> type, final String name) {
+    static final List<java.lang.reflect.Field> getMatchingMembers(
+        final Configuration configuration,
+        final Class<?> type,
+        final String name,
+        final boolean makeAccessible
+    ) {
         return Cache.run(configuration, new F0<List<java.lang.reflect.Field>>() {
 
             @Override
@@ -3501,9 +3515,9 @@ final class Tools {
 
                 for (java.lang.reflect.Field member : getInstanceMembers(type))
                     if (name.equals(member.getName()))
-                        result.add(accessible(member));
+                        result.add(accessible(member, makeAccessible));
                     else if (camelCaseLC.equals(member.getName()))
-                        result.add(accessible(member));
+                        result.add(accessible(member, makeAccessible));
 
                 return result;
             }
@@ -3514,7 +3528,12 @@ final class Tools {
     /**
      * Get all setter methods annotated with a given column name
      */
-    static final List<Method> getAnnotatedSetters(final Configuration configuration, final Class<?> type, final String name) {
+    static final List<Method> getAnnotatedSetters(
+        final Configuration configuration,
+        final Class<?> type,
+        final String name,
+        final boolean makeAccessible
+    ) {
         return Cache.run(configuration, new F0<List<Method>>() {
 
             @Override
@@ -3528,7 +3547,7 @@ final class Tools {
 
                         // Annotated setter
                         if (method.getParameterTypes().length == 1) {
-                            set.add(new SourceMethod(accessible(method)));
+                            set.add(new SourceMethod(accessible(method, makeAccessible)));
                         }
 
                         // Annotated getter with matching setter
@@ -3548,7 +3567,7 @@ final class Tools {
 
                                     // Setter annotation is more relevant
                                     if (setter.getAnnotation(Column.class) == null)
-                                        set.add(new SourceMethod(accessible(setter)));
+                                        set.add(new SourceMethod(accessible(setter, makeAccessible)));
                                 }
                                 catch (NoSuchMethodException ignore) {}
                             }
@@ -3565,7 +3584,12 @@ final class Tools {
     /**
      * Get the first getter method annotated with a given column name
      */
-    static final Method getAnnotatedGetter(final Configuration configuration, final Class<?> type, final String name) {
+    static final Method getAnnotatedGetter(
+        final Configuration configuration,
+        final Class<?> type,
+        final String name,
+        final boolean makeAccessible
+    ) {
         return Cache.run(configuration, new F0<Method>() {
 
             @Override
@@ -3577,7 +3601,7 @@ final class Tools {
 
                         // Annotated getter
                         if (method.getParameterTypes().length == 0) {
-                            return accessible(method);
+                            return accessible(method, makeAccessible);
                         }
 
                         // Annotated setter with matching getter
@@ -3590,7 +3614,7 @@ final class Tools {
 
                                     // Getter annotation is more relevant
                                     if (getter.getAnnotation(Column.class) == null)
-                                        return accessible(getter);
+                                        return accessible(getter, makeAccessible);
                                 }
                                 catch (NoSuchMethodException ignore) {}
 
@@ -3599,7 +3623,7 @@ final class Tools {
 
                                     // Getter annotation is more relevant
                                     if (getter.getAnnotation(Column.class) == null)
-                                        return accessible(getter);
+                                        return accessible(getter, makeAccessible);
                                 }
                                 catch (NoSuchMethodException ignore) {}
                             }
@@ -3616,7 +3640,12 @@ final class Tools {
     /**
      * Get all setter methods matching a given column name
      */
-    static final List<Method> getMatchingSetters(final Configuration configuration, final Class<?> type, final String name) {
+    static final List<Method> getMatchingSetters(
+        final Configuration configuration,
+        final Class<?> type,
+        final String name,
+        final boolean makeAccessible
+    ) {
         return Cache.run(configuration, new F0<List<Method>>() {
 
             @Override
@@ -3635,13 +3664,13 @@ final class Tools {
 
                     if (parameterTypes.length == 1)
                         if (name.equals(method.getName()))
-                            set.add(new SourceMethod(accessible(method)));
+                            set.add(new SourceMethod(accessible(method, makeAccessible)));
                         else if (camelCaseLC.equals(method.getName()))
-                            set.add(new SourceMethod(accessible(method)));
+                            set.add(new SourceMethod(accessible(method, makeAccessible)));
                         else if (("set" + name).equals(method.getName()))
-                            set.add(new SourceMethod(accessible(method)));
+                            set.add(new SourceMethod(accessible(method, makeAccessible)));
                         else if (("set" + camelCase).equals(method.getName()))
-                            set.add(new SourceMethod(accessible(method)));
+                            set.add(new SourceMethod(accessible(method, makeAccessible)));
                 }
 
                 return SourceMethod.methods(set);
@@ -3654,7 +3683,12 @@ final class Tools {
     /**
      * Get the first getter method matching a given column name
      */
-    static final Method getMatchingGetter(final Configuration configuration, final Class<?> type, final String name) {
+    static final Method getMatchingGetter(
+        final Configuration configuration,
+        final Class<?> type,
+        final String name,
+        final boolean makeAccessible
+    ) {
         return Cache.run(configuration, new F0<Method>() {
 
             @Override
@@ -3667,17 +3701,17 @@ final class Tools {
                 for (Method method : getInstanceMethods(type))
                     if (method.getParameterTypes().length == 0)
                         if (name.equals(method.getName()))
-                            return accessible(method);
+                            return accessible(method, makeAccessible);
                         else if (camelCaseLC.equals(method.getName()))
-                            return accessible(method);
+                            return accessible(method, makeAccessible);
                         else if (("get" + name).equals(method.getName()))
-                            return accessible(method);
+                            return accessible(method, makeAccessible);
                         else if (("get" + camelCase).equals(method.getName()))
-                            return accessible(method);
+                            return accessible(method, makeAccessible);
                         else if (("is" + name).equals(method.getName()))
-                            return accessible(method);
+                            return accessible(method, makeAccessible);
                         else if (("is" + camelCase).equals(method.getName()))
-                            return accessible(method);
+                            return accessible(method, makeAccessible);
 
                 return null;
             }

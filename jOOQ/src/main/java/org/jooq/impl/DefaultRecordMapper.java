@@ -709,8 +709,8 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
                 // Annotations are available and present
                 if (useAnnotations) {
-                    members[i] = getAnnotatedMembers(configuration, type, name);
-                    methods[i] = getAnnotatedSetters(configuration, type, name);
+                    members[i] = getAnnotatedMembers(configuration, type, name, true);
+                    methods[i] = getAnnotatedSetters(configuration, type, name, true);
                 }
 
                 // No annotations are present
@@ -744,8 +744,8 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
                     // A top-level mapping is applied
                     else {
-                        members[i] = getMatchingMembers(configuration, type, name);
-                        methods[i] = getMatchingSetters(configuration, type, name);
+                        members[i] = getMatchingMembers(configuration, type, name, true);
+                        methods[i] = getMatchingSetters(configuration, type, name, true);
                     }
                 }
             }
@@ -755,14 +755,14 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                     String prefix = entry.getKey();
                     List<RecordMapper<Record, Object>> list = new ArrayList<>();
 
-                    for (java.lang.reflect.Field member : getMatchingMembers(configuration, type, prefix)) {
+                    for (java.lang.reflect.Field member : getMatchingMembers(configuration, type, prefix, true)) {
                         list.add(configuration
                             .recordMapperProvider()
                             .provide(new Fields<>(entry.getValue()), member.getType())
                         );
                     }
 
-                    for (Method method : getMatchingSetters(configuration, type, prefix)) {
+                    for (Method method : getMatchingSetters(configuration, type, prefix, true)) {
                         list.add(configuration
                             .recordMapperProvider()
                             .provide(new Fields<>(entry.getValue()), method.getParameterTypes()[0])
@@ -830,14 +830,14 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
                             Object value = mapper.map(rec);
 
-                            for (java.lang.reflect.Field member : getMatchingMembers(configuration, type, prefix)) {
+                            for (java.lang.reflect.Field member : getMatchingMembers(configuration, type, prefix, true)) {
 
                                 // [#935] Avoid setting final fields
                                 if ((member.getModifiers() & Modifier.FINAL) == 0)
                                     map(value, result, member);
                             }
 
-                            for (Method method : getMatchingSetters(configuration, type, prefix))
+                            for (Method method : getMatchingSetters(configuration, type, prefix, true))
                                 method.invoke(result, value);
                         }
                     }
@@ -1053,14 +1053,14 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
                 // Annotations are available and present
                 if (useAnnotations) {
-                    members[i] = getAnnotatedMembers(configuration, type, name);
-                    methods[i] = getAnnotatedGetter(configuration, type, name);
+                    members[i] = getAnnotatedMembers(configuration, type, name, false);
+                    methods[i] = getAnnotatedGetter(configuration, type, name, true);
                 }
 
                 // No annotations are present
                 else {
-                    members[i] = getMatchingMembers(configuration, type, name);
-                    methods[i] = getMatchingGetter(configuration, type, name);
+                    members[i] = getMatchingMembers(configuration, type, name, false);
+                    methods[i] = getMatchingGetter(configuration, type, name, true);
                 }
 
                 // [#3911] Liberal interpretation of the @ConstructorProperties specs:

@@ -176,4 +176,21 @@ public enum SQLStateClass {
         SQLStateClass result = lookup.get(code.substring(0, 2));
         return result != null ? result : SQLStateClass.OTHER;
     }
+
+    static SQLStateClass fromSQLiteVendorCode(int errorCode) {
+
+        // See https://sqlite.org/c3ref/c_abort.html
+        // And https://sqlite.org/c3ref/c_abort_rollback.html
+        switch (errorCode & 0xFF) {
+            case 0:  return C00_SUCCESSFUL_COMPLETION;
+            case 3:  return C42_SYNTAX_ERROR_OR_ACCESS_RULE_VIOLATION;
+            case 18: return C22_DATA_EXCEPTION;
+            case 19: return C23_INTEGRITY_CONSTRAINT_VIOLATION;
+            case 20: return C22_DATA_EXCEPTION;
+            case 27: return C01_WARNING;
+            case 28: return C01_WARNING;
+        }
+
+        return SQLStateClass.OTHER;
+    }
 }

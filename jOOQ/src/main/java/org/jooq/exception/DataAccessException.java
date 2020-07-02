@@ -96,7 +96,10 @@ public class DataAccessException extends RuntimeException {
     public SQLStateClass sqlStateClass() {
         SQLException e = getCause(SQLException.class);
         if (e != null)
-            return SQLStateClass.fromCode(e.getSQLState());
+            if (e.getSQLState() != null)
+                return SQLStateClass.fromCode(e.getSQLState());
+            else if (e.getSQLState() == null && "org.sqlite.SQLiteException".equals(e.getClass().getName()))
+                return SQLStateClass.fromSQLiteVendorCode(e.getErrorCode());
 
         return SQLStateClass.NONE;
     }

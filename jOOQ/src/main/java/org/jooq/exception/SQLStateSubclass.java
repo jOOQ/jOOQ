@@ -487,4 +487,21 @@ public enum SQLStateSubclass {
         else
             return SQLStateSubclass.OTHER;
     }
+
+    static SQLStateSubclass fromSQLiteVendorCode(int errorCode) {
+
+        // See https://sqlite.org/c3ref/c_abort.html
+        // And https://sqlite.org/c3ref/c_abort_rollback.html
+        switch (errorCode & 0xFF) {
+            case 0:  return C00000_NO_SUBCLASS;
+            case 3:  return C42000_NO_SUBCLASS;
+            case 18: return C22001_STRING_DATA_RIGHT_TRUNCATION;
+            case 19: return C23000_NO_SUBCLASS;
+            case 20: return C22000_NO_SUBCLASS;
+            case 27: return C01000_NO_SUBCLASS;
+            case 28: return C01000_NO_SUBCLASS;
+        }
+
+        return SQLStateSubclass.OTHER;
+    }
 }

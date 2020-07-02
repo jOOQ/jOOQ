@@ -109,8 +109,8 @@ import org.jooq.tools.reflect.ReflectException;
  * specific arrays fails, a {@link MappingException} is thrown, wrapping
  * conversion exceptions.
  * <p>
- * <h5>If <code>&lt;E&gt;</code> is a field "value type" and <code>&lt;R&gt;</code>
- * has exactly one column:</h5>
+ * <h5>If <code>&lt;E&gt;</code> is a field "value type" and
+ * <code>&lt;R&gt;</code> has exactly one column:</h5>
  * <p>
  * Any Java type available from {@link SQLDataType} qualifies as a well-known
  * "value type" that can be converted from a single-field {@link Record1}. The
@@ -119,8 +119,9 @@ import org.jooq.tools.reflect.ReflectException;
  * <ul>
  * <li>If <code>&lt;E&gt;</code> is a reference type like {@link String},
  * {@link Integer}, {@link Long}, {@link Timestamp}, etc., then converting from
- * <code>&lt;R&gt;</code> to <code>&lt;E&gt;</code> is mere convenience for calling
- * {@link Record#getValue(int, Class)} with <code>fieldIndex = 0</code></li>
+ * <code>&lt;R&gt;</code> to <code>&lt;E&gt;</code> is mere convenience for
+ * calling {@link Record#getValue(int, Class)} with
+ * <code>fieldIndex = 0</code></li>
  * <li>If <code>&lt;E&gt;</code> is a primitive type, the mapping result will be
  * the corresponding wrapper type. <code>null</code> will map to the primitive
  * type's initialisation value, e.g. <code>0</code> for <code>int</code>,
@@ -132,14 +133,15 @@ import org.jooq.tools.reflect.ReflectException;
  * used:</h5>
  * <p>
  * <ul>
- * <li>If <code>&lt;E&gt;</code> contains single-argument instance methods of any
- * visibility annotated with <code>Column</code>, those methods are invoked</li>
+ * <li>If <code>&lt;E&gt;</code> contains single-argument instance methods of
+ * any visibility annotated with <code>Column</code>, those methods are
+ * invoked</li>
  * <li>If <code>&lt;E&gt;</code> contains no-argument instance methods of any
  * visibility starting with <code>getXXX</code> or <code>isXXX</code>, annotated
  * with <code>Column</code>, then matching <code>setXXX()</code> instance
  * methods of any visibility are invoked</li>
- * <li>If <code>&lt;E&gt;</code> contains instance member fields of any visibility
- * annotated with <code>Column</code>, those members are set</li>
+ * <li>If <code>&lt;E&gt;</code> contains instance member fields of any
+ * visibility annotated with <code>Column</code>, those members are set</li>
  * </ul>
  * Additional rules:
  * <ul>
@@ -201,6 +203,15 @@ import org.jooq.tools.reflect.ReflectException;
  * constructor argument types</li>
  * </ul>
  * <p>
+ * <h5>If Kotlin is available and the argument class has Kotlin reflection meta
+ * data available, and {@link Settings#isMapConstructorParameterNamesInKotlin()}
+ * is turned on, parameter names are reflected and used.</h5>
+ * <p>
+ * <ul>
+ * <li>The Kotlin compiler adds meta data available for reflection using Kotlin
+ * reflection APIs to derive parameter names.</li>
+ * </ul>
+ * <p>
  * <h5>If no default constructor is available, but at least one "matching"
  * constructor is available, that one is used</h5>
  * <p>
@@ -244,8 +255,8 @@ import org.jooq.tools.reflect.ReflectException;
  * <h5>Other restrictions</h5>
  * <p>
  * <ul>
- * <li><code>&lt;E&gt;</code> must provide a default or a "matching" constructor.
- * Non-public default constructors are made accessible using
+ * <li><code>&lt;E&gt;</code> must provide a default or a "matching"
+ * constructor. Non-public default constructors are made accessible using
  * {@link Constructor#setAccessible(boolean)}</li>
  * <li>primitive types are supported. If a value is <code>null</code>, this will
  * result in setting the primitive type's default value (zero for numbers, or

@@ -645,12 +645,10 @@ implements
         List<?> leftToRight = lhs.getReferencesTo(rhs);
         List<?> rightToLeft = rhs.getReferencesTo(lhs);
 
-        if (leftToRight.size() == 1 && rightToLeft.size() == 0) {
+        if (leftToRight.size() == 1 && rightToLeft.size() == 0)
             return onKey((ForeignKey<?, ?>) leftToRight.get(0), lhs, rhs);
-        }
-        else if (rightToLeft.size() == 1 && leftToRight.size() == 0) {
+        else if (rightToLeft.size() == 1 && leftToRight.size() == 0)
             return onKey((ForeignKey<?, ?>) rightToLeft.get(0), rhs, lhs);
-        }
 
         if (rightToLeft.isEmpty() && leftToRight.isEmpty())
             throw onKeyException(OnKeyExceptionReason.NOT_FOUND, leftToRight, rightToLeft);

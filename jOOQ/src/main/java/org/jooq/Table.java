@@ -265,6 +265,8 @@ public interface Table<R extends Record> extends TableLike<R>, Qualified {
     /**
      * Get a list of <code>FOREIGN KEY</code>'s of a specific table, referencing
      * a this table.
+     * <p>
+     * This will recurse into joined tables.
      *
      * @param <O> The other table's record type
      * @param other The other table of the foreign key relationship
@@ -287,6 +289,8 @@ public interface Table<R extends Record> extends TableLike<R>, Qualified {
     /**
      * Get a list of <code>FOREIGN KEY</code>'s of this table, referencing a
      * specific table.
+     * <p>
+     * This will recurse into joined tables.
      *
      * @param <O> The other table's record type
      * @param other The other table of the foreign key relationship

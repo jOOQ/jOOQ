@@ -56,6 +56,7 @@ import org.jetbrains.annotations.Nullable;
  * @param <O> The referenced <code>KEY</code>'s owner table record
  * @author Lukas Eder
  */
+@SuppressWarnings("unchecked")
 public interface ForeignKey<R extends Record, O extends Record> extends Key<R> {
 
     /**
@@ -79,7 +80,7 @@ public interface ForeignKey<R extends Record, O extends Record> extends Key<R> {
      * <p>
      * This returns the order in which the fields of {@link #getKey()} are
      * referenced, which is usually the same as the fields of
-     * {@link UniqueKey#getKeyFieldsArray()}, but not necessarily so.
+     * {@link UniqueKey#getFieldsArray()}, but not necessarily so.
      *
      * @see #getKeyFields()
      */

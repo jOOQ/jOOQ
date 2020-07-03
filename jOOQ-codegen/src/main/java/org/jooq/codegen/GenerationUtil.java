@@ -64,6 +64,7 @@ class GenerationUtil {
 
     static final Pattern       TYPE_REFERENCE_PATTERN     = Pattern.compile("^((?:[\\p{L}_$][\\p{L}\\p{N}_$]*\\.)*[\\p{L}_$][\\p{L}\\p{N}_$]*)((?:<.*>|\\[.*\\])*)$");
     static final Pattern       PLAIN_GENERIC_TYPE_PATTERN = Pattern.compile("[<\\[]((?:[\\p{L}_$][\\p{L}\\p{N}_$]*\\.)*[\\p{L}_$][\\p{L}\\p{N}_$]*)[>\\]]");
+    static final Pattern       UNDERSCORE_PATTERN         = Pattern.compile("_+");
 
     private static Set<String> JAVA_KEYWORDS = unmodifiableSet(new HashSet<>(asList(
         "abstract",
@@ -333,6 +334,10 @@ class GenerationUtil {
             return "`" + literal + "`";
         if (language == KOTLIN && KOTLIN_KEYWORDS.contains(literal))
             return "`" + literal + "`";
+
+        // [#4703] If an identifier consists only of underscores add one more. _ -> __, __ -> ___
+        if (UNDERSCORE_PATTERN.matcher(literal).matches())
+            return literal + "_";
 
         StringBuilder sb = new StringBuilder();
 

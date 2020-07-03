@@ -37,6 +37,7 @@
  */
 package org.jooq;
 
+import java.sql.Statement;
 import java.util.List;
 
 import org.jetbrains.annotations.NotNull;
@@ -69,6 +70,13 @@ public interface Loader<R extends Record> {
 
     /**
      * The number of ignored rows.
+     * <p>
+     * If using {@link LoaderOptionsStep#onDuplicateKeyIgnore()} along with
+     * {@link LoaderOptionsStep#batchAll()} or
+     * {@link LoaderOptionsStep#batchAfter(int)}, it may be possible that some
+     * dialects will not produce the correct ignored count, as the respective
+     * JDBC drivers cannot produce this count over
+     * {@link Statement#executeBatch()} and related methods.
      */
     int ignored();
 

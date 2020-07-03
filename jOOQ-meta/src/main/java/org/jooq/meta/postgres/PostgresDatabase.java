@@ -315,9 +315,13 @@ public class PostgresDatabase extends AbstractDatabase {
             .sortAsc("fktable_name")
             .sortAsc("fktable_schem");
 
+        resultLoop:
         for (Record record : result) {
             SchemaDefinition foreignKeySchema = getSchema(record.get("fktable_schem", String.class));
             SchemaDefinition uniqueKeySchema = getSchema(record.get("pktable_schem", String.class));
+
+            if (foreignKeySchema == null || uniqueKeySchema == null)
+                continue resultLoop;
 
             String foreignKey = record.get("fk_name", String.class);
             String foreignKeyTableName = record.get("fktable_name", String.class);

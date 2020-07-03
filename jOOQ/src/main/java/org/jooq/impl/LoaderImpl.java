@@ -49,6 +49,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.BitSet;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -160,7 +161,7 @@ final class LoaderImpl<R extends Record> implements
     private Field<?>[]                   fields;
     private LoaderFieldMapper            fieldMapper;
     private boolean                      fieldsFromSource;
-    private boolean[]                    primaryKey;
+    private BitSet                       primaryKey;
 
     // Result data
     // -----------
@@ -525,17 +526,12 @@ final class LoaderImpl<R extends Record> implements
     @Override
     public final LoaderImpl<R> fields(Field<?>... f) {
         this.fields = f;
-        this.primaryKey = new boolean[f.length];
+        this.primaryKey = new BitSet(f.length);
 
-        if (table.getPrimaryKey() != null) {
-            for (int i = 0; i < fields.length; i++) {
-                if (fields[i] != null) {
-                    if (table.getPrimaryKey().getFields().contains(fields[i])) {
-                        primaryKey[i] = true;
-                    }
-                }
-            }
-        }
+        if (table.getPrimaryKey() != null)
+            for (int i = 0; i < fields.length; i++)
+                if (fields[i] != null && table.getPrimaryKey().getFields().contains(fields[i]))
+                    primaryKey.set(i);
 
         return this;
     }
@@ -764,11 +760,13 @@ final class LoaderImpl<R extends Record> implements
 
                     // TODO: This can be implemented faster using a MERGE statement
                     // in some dialects
-                    if (onDuplicate == ON_DUPLICATE_KEY_IGNORE) {
+                    // [#5200] When the primary key is not supplied in the data,
+                    //         we'll assume it uses an identity, and there will never be duplicates
+                    if (onDuplicate == ON_DUPLICATE_KEY_IGNORE && primaryKey.cardinality() > 0) {
                         SelectQuery<R> select = create.selectQuery(table);
 
                         for (int i = 0; i < row.length; i++)
-                            if (i < fields.length && primaryKey[i])
+                            if (i < fields.length && primaryKey.get(i))
                                 select.addConditions(getCondition(fields[i], row[i]));
 
                         try {
@@ -802,7 +800,7 @@ final class LoaderImpl<R extends Record> implements
                         insert.onDuplicateKeyUpdate(true);
 
                         for (int i = 0; i < row.length; i++)
-                            if (i < fields.length && fields[i] != null && !primaryKey[i])
+                            if (i < fields.length && fields[i] != null && !primaryKey.get(i))
                                 addValueForUpdate0(insert, fields[i], row[i]);
                     }
 

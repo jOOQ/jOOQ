@@ -84,7 +84,6 @@ import org.jooq.meta.jaxb.Strategy;
 import org.jooq.meta.jaxb.Target;
 // ...
 import org.jooq.tools.JooqLogger;
-import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.util.jaxb.tools.MiniJAXB;
 
@@ -427,44 +426,50 @@ public class GenerationTool {
 
             // For convenience, the catalog configuration can be set also directly in the <database/> element
             if (catalogsEmpty) {
+                if (isBlank(d.getInputCatalog()) && !isBlank(d.getOutputCatalog()))
+                    log.warn("WARNING: /configuration/generator/database/outputCatalog must be paired with /configuration/generator/database/inputCatalog");
+
                 CatalogMappingType catalog = new CatalogMappingType();
                 catalog.setInputCatalog(trim(d.getInputCatalog()));
                 catalog.setOutputCatalog(trim(d.getOutputCatalog()));
                 catalog.setOutputCatalogToDefault(d.isOutputCatalogToDefault());
                 catalogs.add(catalog);
 
-                if (!StringUtils.isBlank(catalog.getInputCatalog()))
+                if (!isBlank(catalog.getInputCatalog()))
                     catalogsEmpty = false;
 
                 // For convenience and backwards-compatibility, the schema configuration can be set also directly
                 // in the <database/> element
                 if (schemataEmpty) {
+                    if (isBlank(d.getInputSchema()) && !isBlank(d.getOutputSchema()))
+                        log.warn("WARNING: /configuration/generator/database/outputSchema must be paired with /configuration/generator/database/inputSchema");
+
                     SchemaMappingType schema = new SchemaMappingType();
                     schema.setInputSchema(trim(d.getInputSchema()));
                     schema.setOutputSchema(trim(d.getOutputSchema()));
                     schema.setOutputSchemaToDefault(d.isOutputSchemaToDefault());
                     catalog.getSchemata().add(schema);
 
-                    if (!StringUtils.isBlank(schema.getInputSchema()))
+                    if (!isBlank(schema.getInputSchema()))
                         schemataEmpty = false;
                 }
                 else {
                     catalog.getSchemata().addAll(schemata);
 
-                    if (!StringUtils.isBlank(d.getInputSchema()))
+                    if (!isBlank(d.getInputSchema()))
                         log.warn("WARNING: Cannot combine configuration properties /configuration/generator/database/inputSchema and /configuration/generator/database/schemata");
-                    if (!StringUtils.isBlank(d.getOutputSchema()))
+                    if (!isBlank(d.getOutputSchema()))
                         log.warn("WARNING: Cannot combine configuration properties /configuration/generator/database/outputSchema and /configuration/generator/database/schemata");
                 }
             }
             else {
-                if (!StringUtils.isBlank(d.getInputCatalog()))
+                if (!isBlank(d.getInputCatalog()))
                     log.warn("WARNING: Cannot combine configuration properties /configuration/generator/database/inputCatalog and /configuration/generator/database/catalogs");
-                if (!StringUtils.isBlank(d.getOutputCatalog()))
+                if (!isBlank(d.getOutputCatalog()))
                     log.warn("WARNING: Cannot combine configuration properties /configuration/generator/database/outputCatalog and /configuration/generator/database/catalogs");
-                if (!StringUtils.isBlank(d.getInputSchema()))
+                if (!isBlank(d.getInputSchema()))
                     log.warn("WARNING: Cannot combine configuration properties /configuration/generator/database/inputSchema and /configuration/generator/database/catalogs");
-                if (!StringUtils.isBlank(d.getOutputSchema()))
+                if (!isBlank(d.getOutputSchema()))
                     log.warn("WARNING: Cannot combine configuration properties /configuration/generator/database/outputSchema and /configuration/generator/database/catalogs");
                 if (!schemataEmpty)
                     log.warn("WARNING: Cannot combine configuration properties /configuration/generator/database/catalogs and /configuration/generator/database/schemata");
@@ -486,8 +491,8 @@ public class GenerationTool {
 
 
                 for (SchemaMappingType schema : catalog.getSchemata()) {
-                    if (catalogsEmpty && schemataEmpty && StringUtils.isBlank(schema.getInputSchema())) {
-                        if (!StringUtils.isBlank(j.getSchema()))
+                    if (catalogsEmpty && schemataEmpty && isBlank(schema.getInputSchema())) {
+                        if (!isBlank(j.getSchema()))
                             log.warn("WARNING: The configuration property jdbc.Schema is deprecated and will be removed in the future. Use /configuration/generator/database/inputSchema instead");
 
                         schema.setInputSchema(trim(j.getSchema()));
@@ -573,7 +578,7 @@ public class GenerationTool {
             SchemaVersionProvider svp = null;
             CatalogVersionProvider cvp = null;
 
-            if (!StringUtils.isBlank(d.getSchemaVersionProvider())) {
+            if (!isBlank(d.getSchemaVersionProvider())) {
                 try {
                     svp = (SchemaVersionProvider) Class.forName(d.getSchemaVersionProvider()).newInstance();
                     log.info("Using custom schema version provider : " + svp);
@@ -589,7 +594,7 @@ public class GenerationTool {
                 }
             }
 
-            if (!StringUtils.isBlank(d.getCatalogVersionProvider())) {
+            if (!isBlank(d.getCatalogVersionProvider())) {
                 try {
                     cvp = (CatalogVersionProvider) Class.forName(d.getCatalogVersionProvider()).newInstance();
                     log.info("Using custom catalog version provider : " + cvp);
@@ -613,7 +618,7 @@ public class GenerationTool {
             database.setSchemaVersionProvider(svp);
             database.setCatalogVersionProvider(cvp);
 
-            if (!StringUtils.isBlank(d.getOrderProvider())) {
+            if (!isBlank(d.getOrderProvider())) {
                 Class<?> orderProvider = Class.forName(d.getOrderProvider());
 
                 if (Comparator.class.isAssignableFrom(orderProvider))
@@ -641,11 +646,11 @@ public class GenerationTool {
             if (Boolean.TRUE.equals(d.isIgnoreProcedureReturnValues()))
                 log.warn("DEPRECATED", "The <ignoreProcedureReturnValues/> flag is deprecated and used for backwards-compatibility only. It will be removed in the future.");
 
-            if (StringUtils.isBlank(g.getTarget().getPackageName()))
+            if (isBlank(g.getTarget().getPackageName()))
                 g.getTarget().setPackageName(DEFAULT_TARGET_PACKAGENAME);
-            if (StringUtils.isBlank(g.getTarget().getDirectory()))
+            if (isBlank(g.getTarget().getDirectory()))
                 g.getTarget().setDirectory(DEFAULT_TARGET_DIRECTORY);
-            if (StringUtils.isBlank(g.getTarget().getEncoding()))
+            if (isBlank(g.getTarget().getEncoding()))
                 g.getTarget().setEncoding(DEFAULT_TARGET_ENCODING);
 
             // [#2887] [#9727] Patch relative paths to take plugin execution basedir into account
@@ -828,9 +833,9 @@ public class GenerationTool {
             // [#3669] Optional Database element
             if (g.getDatabase() == null)
                 g.setDatabase(new org.jooq.meta.jaxb.Database());
-            if (!StringUtils.isBlank(g.getDatabase().getSchemaVersionProvider()))
+            if (!isBlank(g.getDatabase().getSchemaVersionProvider()))
                 generator.setUseSchemaVersionProvider(true);
-            if (!StringUtils.isBlank(g.getDatabase().getCatalogVersionProvider()))
+            if (!isBlank(g.getDatabase().getCatalogVersionProvider()))
                 generator.setUseCatalogVersionProvider(true);
             if (g.getDatabase().isTableValuedFunctions() != null)
                 generator.setGenerateTableValuedFunctions(g.getDatabase().isTableValuedFunctions());

@@ -2882,21 +2882,19 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     final ConditionProviderImpl getWhere() {
-
-        // Do not apply SEEK predicates in the WHERE clause, if:
-        // - There is no ORDER BY clause (SEEK is non-deterministic)
-        // - There is no SEEK clause (obvious case)
-        // - There are unions (union is nested in derived table
-        //   and SEEK predicate is applied outside). See [#7459]
-        if (getOrderBy().isEmpty() || getSeek().isEmpty() || unionOp.size() > 0)
-            return condition;
-
         ConditionProviderImpl result = new ConditionProviderImpl();
 
         if (condition.hasWhere())
             result.addConditions(condition.getWhere());
 
-        result.addConditions(getSeekCondition());
+        // Apply SEEK predicates in the WHERE clause only if:
+        // - There is an ORDER BY clause (SEEK is non-deterministic)
+        // - There is a SEEK clause (obvious case)
+        // - There are no unions (union is nested in derived table
+        //   and SEEK predicate is applied outside). See [#7459]
+        if (!getOrderBy().isEmpty() && !getSeek().isEmpty() && unionOp.isEmpty())
+            result.addConditions(getSeekCondition());
+
         return result;
     }
 

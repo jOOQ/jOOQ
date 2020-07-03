@@ -52,11 +52,11 @@ import static org.jooq.JoinType.NATURAL_RIGHT_OUTER_JOIN;
 import static org.jooq.JoinType.OUTER_APPLY;
 import static org.jooq.JoinType.RIGHT_OUTER_JOIN;
 import static org.jooq.JoinType.STRAIGHT_JOIN;
+import static org.jooq.impl.DSL.and;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
 // ...
 import static org.jooq.impl.DSL.notExists;
-import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.val;
@@ -1110,17 +1110,17 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
 
     @Override
     public /* non-final */ Table<R> where(Condition condition) {
-        return selectFrom(this).where(condition).asTable(this);
+        return new InlineDerivedTable<>(this, condition);
     }
 
     @Override
     public /* non-final */ Table<R> where(Condition... conditions) {
-        return selectFrom(this).where(conditions).asTable(this);
+        return where(and(conditions));
     }
 
     @Override
     public /* non-final */ Table<R> where(Collection<? extends Condition> conditions) {
-        return selectFrom(this).where(conditions).asTable(this);
+        return where(and(conditions));
     }
 
     @Override

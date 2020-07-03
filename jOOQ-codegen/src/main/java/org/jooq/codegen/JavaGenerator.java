@@ -744,7 +744,7 @@ public class JavaGenerator extends AbstractGenerator {
         printPackage(out, schema);
         printClassJavadoc(out,
             "A class modelling foreign key relationships and constraints of tables in " + schemaNameOrDefault(schema) + ".");
-        printClassAnnotations(out, schema);
+        printClassAnnotations(out, schema, Mode.DEFAULT);
 
         if (scala || kotlin)
             out.println("object Keys {");
@@ -908,7 +908,7 @@ public class JavaGenerator extends AbstractGenerator {
         printPackage(out, schema);
         printClassJavadoc(out,
             "A class modelling indexes of tables in "  + schemaNameOrDefault(schema) + ".");
-        printClassAnnotations(out, schema);
+        printClassAnnotations(out, schema, Mode.DEFAULT);
 
         if (scala || kotlin)
             out.println("object Indexes {");
@@ -1290,7 +1290,7 @@ public class JavaGenerator extends AbstractGenerator {
         else
             generateUDTRecordClassJavadoc((UDTDefinition) tableUdtOrEmbeddable, out);
 
-        printClassAnnotations(out, tableUdtOrEmbeddable.getSchema());
+        printClassAnnotations(out, tableUdtOrEmbeddable, Mode.RECORD);
         if (tableUdtOrEmbeddable instanceof TableDefinition)
             printTableJPAAnnotation(out, (TableDefinition) tableUdtOrEmbeddable);
 
@@ -2117,7 +2117,7 @@ public class JavaGenerator extends AbstractGenerator {
         else
             generateUDTInterfaceClassJavadoc((UDTDefinition) tableOrUDT, out);
 
-        printClassAnnotations(out, tableOrUDT.getSchema());
+        printClassAnnotations(out, tableOrUDT, Mode.INTERFACE);
 
         if (tableOrUDT instanceof TableDefinition)
             printTableJPAAnnotation(out, (TableDefinition) tableOrUDT);
@@ -2353,7 +2353,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         generateUDTClassJavadoc(udt, out);
-        printClassAnnotations(out, schema);
+        printClassAnnotations(out, udt, Mode.DEFAULT);
 
 
 
@@ -2586,7 +2586,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         printPackage(out, schema);
         printClassJavadoc(out, "Convenience access to all UDTs in " + schemaNameOrDefault(schema) + ".");
-        printClassAnnotations(out, schema);
+        printClassAnnotations(out, schema, Mode.DEFAULT);
 
         if (scala)
             out.println("object UDTs {");
@@ -2621,7 +2621,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         printPackage(out, schema);
         printClassJavadoc(out, "Convenience access to all Domains in " + schemaNameOrDefault(schema) + ".");
-        printClassAnnotations(out, schema);
+        printClassAnnotations(out, schema, Mode.DOMAIN);
 
         if (scala || kotlin)
             out.println("object Domains {");
@@ -2863,7 +2863,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         printPackage(out, e);
         generateEnumClassJavadoc(e, out);
-        printClassAnnotations(out, e.getSchema());
+        printClassAnnotations(out, e, Mode.ENUM);
 
 
         boolean enumHasNoSchema = e.isSynthetic() || !(e.getDatabase() instanceof PostgresDatabase);
@@ -3048,7 +3048,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             if (!kotlin) {
                 printClassJavadoc(out, "Convenience access to all stored procedures and functions in " + schemaNameOrDefault(schema) + ".");
-                printClassAnnotations(out, schema);
+                printClassAnnotations(out, schema, Mode.DEFAULT);
             }
 
             if (scala)
@@ -3241,7 +3241,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         if (!kotlin) {
             printClassJavadoc(out, "Convenience access to all tables in " + schemaNameOrDefault(schema) + ".");
-            printClassAnnotations(out, schema);
+            printClassAnnotations(out, schema, Mode.DEFAULT);
         }
 
         if (scala)
@@ -3359,7 +3359,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         printPackage(out, table, Mode.DAO);
         generateDaoClassJavadoc(table, out);
-        printClassAnnotations(out, table.getSchema());
+        printClassAnnotations(out, table, Mode.DAO);
 
         if (generateSpringAnnotations())
             out.println("@%s", out.ref("org.springframework.stereotype.Repository"));
@@ -3600,7 +3600,7 @@ public class JavaGenerator extends AbstractGenerator {
         else
             generateUDTPojoClassJavadoc((UDTDefinition) tableOrUDT, out);
 
-        printClassAnnotations(out, tableOrUDT.getSchema());
+        printClassAnnotations(out, tableOrUDT, Mode.POJO);
 
         if (tableOrUDT instanceof TableDefinition)
             printTableJPAAnnotation(out, (TableDefinition) tableOrUDT);
@@ -4331,7 +4331,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         generateTableClassJavadoc(table, out);
-        printClassAnnotations(out, schema);
+        printClassAnnotations(out, table, Mode.DEFAULT);
 
         if (scala) {
             out.println("class %s(", className);
@@ -5295,7 +5295,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         printPackage(out, schema);
         printClassJavadoc(out, "Convenience access to all sequences in " + schemaNameOrDefault(schema) + ".");
-        printClassAnnotations(out, schema);
+        printClassAnnotations(out, schema, Mode.DEFAULT);
 
         if (scala || kotlin)
             out.println("object Sequences {");
@@ -5426,7 +5426,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         generateCatalogClassJavadoc(catalog, out);
-        printClassAnnotations(out, null, catalog);
+        printClassAnnotations(out, catalog, Mode.DEFAULT);
 
         if (scala) {
             out.println("class %s extends %s(\"%s\")[[before= with ][separator= with ][%s]] {", className, CatalogImpl.class, catalog.getOutputName(), interfaces);
@@ -5537,7 +5537,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         generateSchemaClassJavadoc(schema, out);
-        printClassAnnotations(out, schema);
+        printClassAnnotations(out, schema, Mode.DEFAULT);
 
         if (scala) {
             out.println("class %s extends %s(\"%s\", %s)[[before= with ][separator= with ][%s]] {", className, SchemaImpl.class, schema.getOutputName(), catalogId, interfaces);
@@ -6156,7 +6156,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (!printDeprecationIfUnknownType(out, returnTypeFull))
             generateRoutineClassJavadoc(routine, out);
 
-        printClassAnnotations(out, schema);
+        printClassAnnotations(out, routine, Mode.DEFAULT);
 
         if (scala) {
             out.println("class %s extends %s[%s](\"%s\", %s[[before=, ][%s]][[before=, ][%s]]" + converterTemplate(returnConverter) + converterTemplate(returnBinding) + ")[[before= with ][separator= with ][%s]] {",
@@ -6957,12 +6957,30 @@ public class JavaGenerator extends AbstractGenerator {
         }
     }
 
-    protected void printClassAnnotations(JavaWriter out, SchemaDefinition schema) {
-        printClassAnnotations(out, schema, schema.getCatalog());
-    }
+    /**
+     * @deprecated - [#10355] - 3.14.0 - This method is no longer used by the
+     *             code generator. Use a
+     *             {@link #printClassAnnotations(JavaWriter, Definition, Mode)}
+     *             instead.
+     */
+    @SuppressWarnings("unused")
+    @Deprecated
+    protected final void printClassAnnotations(JavaWriter out, SchemaDefinition schema) {}
 
-    protected void printClassAnnotations(JavaWriter out, SchemaDefinition schema, CatalogDefinition catalog) {
+    /**
+     * @deprecated - [#10355] - 3.14.0 - This method is no longer used by the
+     *             code generator. Use a
+     *             {@link #printClassAnnotations(JavaWriter, Definition, Mode)}
+     *             instead.
+     */
+    @SuppressWarnings("unused")
+    @Deprecated
+    protected final void printClassAnnotations(JavaWriter out, SchemaDefinition schema, CatalogDefinition catalog) {}
+
+    protected void printClassAnnotations(JavaWriter out, Definition definition, Mode mode) {
         if (generateGeneratedAnnotation()) {
+            SchemaDefinition schema = definition.getSchema();
+            CatalogDefinition catalog = definition.getCatalog();
 
             // [#7581] The concrete annotation type depends on the JDK, with
             //         javax.annotation.Generated being deprecated in JDK 9

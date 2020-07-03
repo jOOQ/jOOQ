@@ -90,8 +90,8 @@ public interface ForeignKey<R extends Record, O extends Record> extends Key<R> {
      * Fetch a parent record of a given record through this foreign key
      * <p>
      * This returns a parent record referenced by a given record through this
-     * foreign key. If no parent record was found, this returns
-     * <code>null</code>
+     * foreign key, as if fetching from {@link #parent(Record)}. If no parent
+     * record was found, this returns <code>null</code>
      *
      * @throws DataAccessException if something went wrong executing the query
      * @see TableRecord#fetchParent(ForeignKey)
@@ -103,7 +103,8 @@ public interface ForeignKey<R extends Record, O extends Record> extends Key<R> {
      * Fetch parent records of a given set of record through this foreign key
      * <p>
      * This returns parent records referenced by any record in a given set of
-     * records through this foreign key.
+     * records through this foreign key, as if fetching from
+     * {@link #parents(Record...)}.
      *
      * @throws DataAccessException if something went wrong executing the query
      * @see TableRecord#fetchParent(ForeignKey)
@@ -115,7 +116,8 @@ public interface ForeignKey<R extends Record, O extends Record> extends Key<R> {
      * Fetch parent records of a given set of record through this foreign key
      * <p>
      * This returns parent records referenced by any record in a given set of
-     * records through this foreign key.
+     * records through this foreign key, as if fetching from
+     * {@link #parents(Collection)}.
      *
      * @throws DataAccessException if something went wrong executing the query
      * @see TableRecord#fetchParent(ForeignKey)
@@ -127,7 +129,7 @@ public interface ForeignKey<R extends Record, O extends Record> extends Key<R> {
      * Fetch child records of a given record through this foreign key
      * <p>
      * This returns childs record referencing a given record through this
-     * foreign key
+     * foreign key, as if fetching from {@link #children(Record)}.
      *
      * @throws DataAccessException if something went wrong executing the query
      * @see UpdatableRecord#fetchChild(ForeignKey)
@@ -140,7 +142,8 @@ public interface ForeignKey<R extends Record, O extends Record> extends Key<R> {
      * Fetch child records of a given set of records through this foreign key
      * <p>
      * This returns childs record referencing any record in a given set of
-     * records through this foreign key
+     * records through this foreign key, as if fetching from
+     * {@link #children(Record...)}.
      *
      * @throws DataAccessException if something went wrong executing the query
      * @see UpdatableRecord#fetchChild(ForeignKey)
@@ -153,7 +156,8 @@ public interface ForeignKey<R extends Record, O extends Record> extends Key<R> {
      * Fetch child records of a given set of records through this foreign key
      * <p>
      * This returns childs record referencing any record in a given set of
-     * records through this foreign key
+     * records through this foreign key, as if fetching from
+     * {@link #children(Collection)}.
      *
      * @throws DataAccessException if something went wrong executing the query
      * @see UpdatableRecord#fetchChild(ForeignKey)
@@ -161,4 +165,46 @@ public interface ForeignKey<R extends Record, O extends Record> extends Key<R> {
      */
     @NotNull
     Result<R> fetchChildren(Collection<? extends O> records) throws DataAccessException;
+
+    /**
+     * Get a table expression representing the parent of a record, given this
+     * foreign key.
+     */
+    @NotNull
+    Table<O> parent(R record);
+
+    /**
+     * Get a table expression representing the parents of a record, given this
+     * foreign key.
+     */
+    @NotNull
+    Table<O> parents(R... records);
+
+    /**
+     * Get a table expression representing the parents of a record, given this
+     * foreign key.
+     */
+    @NotNull
+    Table<O> parents(Collection<? extends R> records);
+
+    /**
+     * Get a table expression representing the children of a record, given this
+     * foreign key.
+     */
+    @NotNull
+    Table<R> children(O record);
+
+    /**
+     * Get a table expression representing the children of a record, given this
+     * foreign key.
+     */
+    @NotNull
+    Table<R> children(O... records);
+
+    /**
+     * Get a table expression representing the children of a record, given this
+     * foreign key.
+     */
+    @NotNull
+    Table<R> children(Collection<? extends O> records);
 }

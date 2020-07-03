@@ -1654,6 +1654,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+            tablelist = transformInlineDerivedTables(tablelist, where);
+
             context.formatSeparator()
                    .visit(K_FROM)
                    .separatorRequired(true)
@@ -1901,6 +1903,97 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         finally {
             context.qualify(qualify);
         }
+    }
+
+    private final boolean hasOuterJoins(TableList tablelist) {
+        for (Table<?> table : tablelist)
+            if (table instanceof JoinTable && hasOuterJoins((JoinTable) table))
+                return true;
+
+        return false;
+    }
+
+    private final boolean hasOuterJoins(JoinTable join) {
+        switch (join.type) {
+            case CROSS_JOIN:
+            case JOIN:
+            case NATURAL_JOIN:
+            case STRAIGHT_JOIN:
+                return join.lhs instanceof JoinTable && hasOuterJoins((JoinTable) join.lhs)
+                    || join.rhs instanceof JoinTable && hasOuterJoins((JoinTable) join.rhs);
+
+            default:
+                return true;
+        }
+    }
+
+    private final boolean hasInlineDerivedTables(TableList tablelist) {
+        for (Table<?> table : tablelist)
+            if (table instanceof InlineDerivedTable)
+                return true;
+            else if (table instanceof JoinTable && hasInlineDerivedTables((JoinTable) table))
+                return true;
+
+        return false;
+    }
+
+    private final boolean hasInlineDerivedTables(JoinTable join) {
+        return join.lhs instanceof InlineDerivedTable
+            || join.rhs instanceof InlineDerivedTable
+            || join.lhs instanceof JoinTable && hasInlineDerivedTables((JoinTable) join.lhs)
+            || join.rhs instanceof JoinTable && hasInlineDerivedTables((JoinTable) join.rhs);
+    }
+
+    private final TableList transformInlineDerivedTables(TableList tablelist, ConditionProviderImpl where) {
+
+        // [#10353] A first implementation supports this feature only when there are no outer joins
+        if (hasOuterJoins(tablelist) || !hasInlineDerivedTables(tablelist))
+            return tablelist;
+
+        TableList result = new TableList();
+
+        for (Table<?> table : tablelist)
+            transformInlineDerivedTable0(table, result, where);
+
+        return result;
+    }
+
+    private final void transformInlineDerivedTable0(Table<?> table, TableList result, ConditionProviderImpl where) {
+        if (table instanceof InlineDerivedTable) {
+            InlineDerivedTable<?> t = (InlineDerivedTable<?>) table;
+
+            result.add(t.table());
+            where.addConditions(t.condition());
+        }
+        else if (table instanceof JoinTable) {
+            result.add(transformInlineDerivedTables0(table, where));
+        }
+        else
+            result.add(table);
+    }
+
+    private final Table<?> transformInlineDerivedTables0(Table<?> table, ConditionProviderImpl where) {
+        if (table instanceof InlineDerivedTable) {
+            InlineDerivedTable<?> t = (InlineDerivedTable<?>) table;
+
+            where.addConditions(t.condition());
+            return t.table();
+        }
+        else if (table instanceof JoinTable) {
+            JoinTable join = (JoinTable) table;
+            JoinTable result = new JoinTable(
+                transformInlineDerivedTables0(join.lhs, where),
+                transformInlineDerivedTables0(join.rhs, where),
+                join.type
+            );
+
+            if (!join.using.isEmpty())
+                return result.using(join.using);
+            else
+                return result.on(join.condition);
+        }
+        else
+            return table;
     }
 
 

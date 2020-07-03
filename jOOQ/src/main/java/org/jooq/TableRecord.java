@@ -106,8 +106,8 @@ public interface TableRecord<R extends TableRecord<R>> extends Record {
      * Fetch a parent record of this record, given a foreign key.
      * <p>
      * This returns a parent record referenced by this record through a given
-     * foreign key. If no parent record was found, this returns
-     * <code>null</code>
+     * foreign key, as if fetching from {@link #parent(ForeignKey)}. If no
+     * parent record was found, this returns <code>null</code>
      *
      * @throws DataAccessException if something went wrong executing the query
      * @see ForeignKey#fetchParent(Record)
@@ -117,6 +117,14 @@ public interface TableRecord<R extends TableRecord<R>> extends Record {
     @Nullable
     @Support
     <O extends UpdatableRecord<O>> O fetchParent(ForeignKey<R, O> key) throws DataAccessException;
+
+    /**
+     * Get a table expression representing the parent of this record, given a
+     * foreign key.
+     */
+    @NotNull
+    @Support
+    <O extends UpdatableRecord<O>> Table<O> parent(ForeignKey<R, O> key);
 
     @NotNull
     @Override

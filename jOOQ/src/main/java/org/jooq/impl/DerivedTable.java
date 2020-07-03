@@ -52,7 +52,7 @@ import org.jooq.TableOptions;
 /**
  * @author Lukas Eder
  */
-final class DerivedTable<R extends Record> extends AbstractTable<R> {
+class DerivedTable<R extends Record> extends AbstractTable<R> {
 
     private static final long serialVersionUID = 6272398035926615668L;
 

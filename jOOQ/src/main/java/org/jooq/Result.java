@@ -3196,7 +3196,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
     // ------------------------------------------------------------------------
 
     /**
-     * Fetch parent records of this record, given a foreign key.
+     * Fetch parent records of this record, given a foreign key, as if fetching
+     * from {@link #parents(ForeignKey)}.
      *
      * @throws DataAccessException if something went wrong executing the query.
      * @see ForeignKey#fetchParent(Record)
@@ -3207,7 +3208,8 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
     <O extends UpdatableRecord<O>> Result<O> fetchParents(ForeignKey<R, O> key) throws DataAccessException;
 
     /**
-     * Fetch child records of this record, given a foreign key.
+     * Fetch child records of this record, given a foreign key, as if fetching
+     * from {@link #children(ForeignKey)}.
      *
      * @throws DataAccessException if something went wrong executing the query.
      * @see ForeignKey#fetchChildren(java.util.Collection)
@@ -3216,6 +3218,20 @@ public interface Result<R extends Record> extends List<R>, Attachable, Formattab
      */
     @NotNull
     <O extends TableRecord<O>> Result<O> fetchChildren(ForeignKey<O, R> key) throws DataAccessException;
+
+    /**
+     * Get a table expression representing the parents of all of this result's
+     * records, given a foreign key.
+     */
+    @NotNull
+    <O extends UpdatableRecord<O>> Table<O> parents(ForeignKey<R, O> key);
+
+    /**
+     * Get a table expression representing the children of all of this result's
+     * records, given a foreign key.
+     */
+    @NotNull
+    <O extends TableRecord<O>> Table<O> children(ForeignKey<O, R> key);
 
     // ------------------------------------------------------------------------
     // Specialisations of Attachable methods

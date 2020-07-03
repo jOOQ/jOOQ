@@ -582,7 +582,8 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * Fetch a child record of this record, given a foreign key.
      * <p>
      * This returns a child record referencing this record through a given
-     * foreign key. If no child record was found, this returns <code>null</code>
+     * foreign key, as if fetching from {@link #children(ForeignKey)}.. If no
+     * child record was found, this returns <code>null</code>.
      *
      * @throws DataAccessException if something went wrong executing the query
      * @throws TooManyRowsException if the query returned more than one record
@@ -597,8 +598,8 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
     /**
      * Fetch child records of this record, given a foreign key.
      * <p>
-     * This returns childs record referencing this record through a given
-     * foreign key.
+     * This returns child records referencing this record through a given
+     * foreign key, as if fetching from {@link #children(ForeignKey)}.
      *
      * @throws DataAccessException if something went wrong executing the query
      * @see ForeignKey#fetchChildren(java.util.Collection)
@@ -608,4 +609,12 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
     @NotNull
     @Support
     <O extends TableRecord<O>> Result<O> fetchChildren(ForeignKey<O, R> key) throws DataAccessException;
+
+    /**
+     * Get a table expression representing the children of this record, given a
+     * foreign key.
+     */
+    @NotNull
+    @Support
+    <O extends TableRecord<O>> Table<O> children(ForeignKey<O, R> key);
 }

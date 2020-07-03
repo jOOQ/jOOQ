@@ -115,6 +115,12 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         return key.fetchChildren((R) this);
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public final <O extends TableRecord<O>> Table<O> children(ForeignKey<O, R> key) {
+        return key.children((R) this);
+    }
+
     @Override
     final UniqueKey<R> getPrimaryKey() {
         return getTable().getPrimaryKey();

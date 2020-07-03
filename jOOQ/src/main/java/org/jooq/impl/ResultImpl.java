@@ -1496,6 +1496,16 @@ final class ResultImpl<R extends Record> extends AbstractCursor<R> implements Re
         return key.fetchChildren(this);
     }
 
+    @Override
+    public final <O extends UpdatableRecord<O>> Table<O> parents(ForeignKey<R, O> key) {
+        return key.parents(this);
+    }
+
+    @Override
+    public final <O extends TableRecord<O>> Table<O> children(ForeignKey<O, R> key) {
+        return key.children(this);
+    }
+
     // -------------------------------------------------------------------------
     // XXX Object API
     // -------------------------------------------------------------------------

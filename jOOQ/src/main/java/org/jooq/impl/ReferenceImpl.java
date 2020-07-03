@@ -107,6 +107,14 @@ final class ReferenceImpl<R extends Record, O extends Record> extends AbstractKe
     }
 
     @Override
+    public final Result<O> fetchParents(Collection<? extends R> records) {
+        if (records == null || records.size() == 0)
+            return new ResultImpl<>(new DefaultConfiguration(), uk.getFields());
+        else
+            return extractDSLContext(records).selectFrom(parents(records)).fetch();
+    }
+
+    @Override
     public final Result<R> fetchChildren(O record) {
         return fetchChildren(list(record));
     }
@@ -118,47 +126,58 @@ final class ReferenceImpl<R extends Record, O extends Record> extends AbstractKe
     }
 
     @Override
-    public final Result<O> fetchParents(Collection<? extends R> records) {
-        if (records == null || records.size() == 0)
-            return new ResultImpl<>(new DefaultConfiguration(), uk.getFields());
-        else
-            return fetch(records, uk.getTable(), uk.getFieldsArray(), getFieldsArray());
-    }
-
-    @Override
     public final Result<R> fetchChildren(Collection<? extends O> records) {
         if (records == null || records.size() == 0)
             return new ResultImpl<>(new DefaultConfiguration(), getFields());
         else
-            return fetch(records, getTable(), getFieldsArray(), uk.getFieldsArray());
+            return extractDSLContext(records).selectFrom(children(records)).fetch();
     }
 
-    /**
-     * Do the actual fetching
-     */
+    @Override
+    public final Table<O> parent(R record) {
+        return parents(list(record));
+    }
+
+    @SafeVarargs
+    @Override
+    public final Table<O> parents(R... records) {
+        return parents(list(records));
+    }
+
+    @Override
+    public final Table<O> parents(Collection<? extends R> records) {
+        return table(records, uk.getTable(), uk.getFieldsArray(), getFieldsArray());
+    }
+
+    @Override
+    public final Table<R> children(O record) {
+        return children(list(record));
+    }
+
+    @SafeVarargs
+    @Override
+    public final Table<R> children(O... records) {
+        return children(list(records));
+    }
+
+    @Override
+    public final Table<R> children(Collection<? extends O> records) {
+        return table(records, getTable(), getFieldsArray(), uk.getFieldsArray());
+    }
+
     @SuppressWarnings("unchecked")
-    private static <R1 extends Record, R2 extends Record> Result<R1> fetch(
+    private static <R1 extends Record, R2 extends Record> Table<R1> table(
         Collection<? extends R2> records,
         Table<R1> table,
         TableField<R1, ?>[] fields1,
-        TableField<R2, ?>[] fields2) {
-
-        // Use regular predicates
-        if (fields1.length == 1) {
-            return extractDSLContext(records)
-                .selectFrom(table)
-                .where(((Field<Object>) fields1[0]).in(extractValues(records, fields2[0])))
-                .fetch();
-        }
-
-        // Use row value expressions
-        else {
-            return extractDSLContext(records)
-                .selectFrom(table)
-                .where(row(fields1).in(extractRows(records, fields2)))
-                .fetch();
-        }
-
+        TableField<R2, ?>[] fields2
+    ) {
+        return new InlineDerivedTable<>(
+            table,
+            fields1.length == 1
+                ? ((Field<Object>) fields1[0]).in(extractValues(records, fields2[0]))
+                : row(fields1).in(extractRows(records, fields2))
+        );
     }
 
     /**

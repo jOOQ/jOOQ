@@ -151,6 +151,12 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
         return key.fetchParent((R) this);
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public final <O extends UpdatableRecord<O>> Table<O> parent(ForeignKey<R, O> key) {
+        return key.parent((R) this);
+    }
+
     @Override
     public final int insert() {
         return insert(fields.fields.fields);

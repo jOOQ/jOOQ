@@ -866,7 +866,15 @@ public class GenerationTool {
             generator.generate(database);
 
             if (!database.getUnusedForcedTypes().isEmpty()) {
-                log.info("Unused ForcedTypes", "There are unused forced types, which have not been used by this generation run. This can be because of misconfigurations (e.g. bad regular expressions, which do not take into account case sensitivity or object qualification) or because the forced type is obsolete.");
+                log.info(
+                      "Unused ForcedTypes",
+                      "There are unused forced types, which have not been used by this generation run.\n"
+                    + "This can be because of misconfigurations, such as, for example:\n"
+                    + "- case sensitive regular expressions\n"
+                    + "- regular expressions depending on whitespace (Pattern.COMMENTS is turned on!)\n"
+                    + "- missing or inadequate object qualification\n"
+                    + "- the forced type is obsolete\n"
+                );
 
                 for (ForcedType f : database.getUnusedForcedTypes())
                     log.info("Unused ForcedType", f);

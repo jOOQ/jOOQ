@@ -77,6 +77,8 @@ import org.jooq.DataType;
 import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.Formattable;
+import org.jooq.JSON;
+import org.jooq.JSONB;
 import org.jooq.JSONFormat;
 import org.jooq.Name;
 import org.jooq.Record;
@@ -88,6 +90,7 @@ import org.jooq.TXTFormat;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableRecord;
+import org.jooq.XML;
 import org.jooq.XMLFormat;
 import org.jooq.exception.IOException;
 import org.jooq.tools.StringUtils;
@@ -684,6 +687,13 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
             ((Formattable) value).formatJSON(writer, format);
         }
 
+        else if (value instanceof JSON && !format.quoteNested()) {
+            writer.write(((JSON) value).data());
+        }
+        else if (value instanceof JSONB && !format.quoteNested()) {
+            writer.write(((JSONB) value).data());
+        }
+
         else {
             JSONValue.writeJSONString(value, writer);
         }
@@ -846,6 +856,8 @@ abstract class AbstractCursor<R extends Record> extends AbstractFormattable impl
 
                 if (value instanceof Formattable)
                     ((Formattable) value).formatXML(writer, format);
+                else if (value instanceof XML && !format.quoteNested())
+                    writer.append(((XML) value).data());
                 else
                     writer.append(escapeXML(format0(value, false, false)));
 

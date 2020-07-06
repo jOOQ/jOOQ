@@ -46,8 +46,8 @@ import static org.jooq.tools.StringUtils.rightPad;
  */
 public final class XMLFormat {
 
-    public static final XMLFormat DEFAULT_FOR_RESULTS = new XMLFormat();
-    public static final XMLFormat DEFAULT_FOR_RECORDS = new XMLFormat().header(false).xmlns(false);
+    public final static XMLFormat DEFAULT_FOR_RESULTS = new XMLFormat();
+    public final static XMLFormat DEFAULT_FOR_RECORDS = new XMLFormat().header(false).xmlns(false);
 
     final boolean                 xmlns;
     final boolean                 format;
@@ -56,6 +56,7 @@ public final class XMLFormat {
     final String[]                indented;
     final boolean                 header;
     final RecordFormat            recordFormat;
+    final boolean                 quoteNested;
 
     public XMLFormat() {
         this(
@@ -65,7 +66,8 @@ public final class XMLFormat {
             2,
             null,
             true,
-            RecordFormat.VALUE_ELEMENTS_WITH_FIELD_ATTRIBUTE
+            RecordFormat.VALUE_ELEMENTS_WITH_FIELD_ATTRIBUTE,
+            false
         );
     }
 
@@ -76,7 +78,8 @@ public final class XMLFormat {
         int indent,
         String[] indented,
         boolean header,
-        RecordFormat recordFormat
+        RecordFormat recordFormat,
+        boolean quoteNested
     ) {
         this.xmlns = xmlns;
         this.format = format;
@@ -90,12 +93,13 @@ public final class XMLFormat {
         };
         this.header = header;
         this.recordFormat = recordFormat;
+        this.quoteNested = quoteNested;
     }
 
     /**
      * The new value for the xmlns flag, defaulting to <code>true</code>.
      */
-    public XMLFormat xmlns(boolean newXmlns) {
+    public final XMLFormat xmlns(boolean newXmlns) {
         return new XMLFormat(
             newXmlns,
             format,
@@ -103,21 +107,22 @@ public final class XMLFormat {
             indent,
             indented,
             header,
-            recordFormat
+            recordFormat,
+            quoteNested
         );
     }
 
     /**
      * The xmlns flag.
      */
-    public boolean xmlns() {
+    public final boolean xmlns() {
         return xmlns;
     }
 
     /**
      * The new value for the formatting flag, defaulting to <code>false</code>.
      */
-    public XMLFormat format(boolean newFormat) {
+    public final XMLFormat format(boolean newFormat) {
         return new XMLFormat(
             xmlns,
             newFormat,
@@ -125,21 +130,22 @@ public final class XMLFormat {
             indent,
             null,
             header,
-            recordFormat
+            recordFormat,
+            quoteNested
         );
     }
 
     /**
      * The formatting flag.
      */
-    public boolean format() {
+    public final boolean format() {
         return format;
     }
 
     /**
      * The new newline character, defaulting to <code>\n</code>.
      */
-    public XMLFormat newline(String newNewline) {
+    public final XMLFormat newline(String newNewline) {
         return new XMLFormat(
             xmlns,
             format,
@@ -147,21 +153,22 @@ public final class XMLFormat {
             indent,
             indented,
             header,
-            recordFormat
+            recordFormat,
+            quoteNested
         );
     }
 
     /**
      * The formatting flag.
      */
-    public String newline() {
+    public final String newline() {
         return format ? newline : "";
     }
 
     /**
      * The new indentation value, defaulting to <code>2</code>.
      */
-    public XMLFormat indent(int newIndent) {
+    public final XMLFormat indent(int newIndent) {
         return new XMLFormat(
             xmlns,
             format,
@@ -169,21 +176,22 @@ public final class XMLFormat {
             newIndent,
             null,
             header,
-            recordFormat
+            recordFormat,
+            quoteNested
         );
     }
 
     /**
      * The indentation.
      */
-    public int indent() {
+    public final int indent() {
         return indent;
     }
 
     /**
      * Convenience method to get an indentation string at a given level.
      */
-    public String indentString(int level) {
+    public final String indentString(int level) {
         if (level < indented.length)
             return indented[level];
         else if (format)
@@ -201,7 +209,7 @@ public final class XMLFormat {
      * This flag is ignored on {@link Record#formatXML(XMLFormat)} and similar
      * methods.
      */
-    public XMLFormat header(boolean newHeader) {
+    public final XMLFormat header(boolean newHeader) {
         return new XMLFormat(
             xmlns,
             format,
@@ -209,14 +217,15 @@ public final class XMLFormat {
             indent,
             indented,
             newHeader,
-            recordFormat
+            recordFormat,
+            quoteNested
         );
     }
 
     /**
      * The header.
      */
-    public boolean header() {
+    public final boolean header() {
         return header;
     }
 
@@ -224,7 +233,7 @@ public final class XMLFormat {
      * The record format to be applied, defaulting to
      * {@link RecordFormat#VALUE_ELEMENTS_WITH_FIELD_ATTRIBUTE}.
      */
-    public XMLFormat recordFormat(RecordFormat newRecordFormat) {
+    public final XMLFormat recordFormat(RecordFormat newRecordFormat) {
         return new XMLFormat(
             xmlns,
             format,
@@ -232,7 +241,8 @@ public final class XMLFormat {
             indent,
             indented,
             header,
-            newRecordFormat
+            newRecordFormat,
+            quoteNested
         );
     }
 
@@ -240,8 +250,33 @@ public final class XMLFormat {
      * The record format to be applied, defaulting to
      * {@link RecordFormat#VALUE_ELEMENTS_WITH_FIELD_ATTRIBUTE}.
      */
-    public RecordFormat recordFormat() {
+    public final RecordFormat recordFormat() {
         return recordFormat;
+    }
+
+    /**
+     * Whether nested {@link XML} content should be quoted like a string, or
+     * nested into XML formatted output.
+     */
+    public final XMLFormat quoteNested(boolean newQuoteNested) {
+        return new XMLFormat(
+            xmlns,
+            format,
+            newline,
+            indent,
+            indented,
+            header,
+            recordFormat,
+            newQuoteNested
+        );
+    }
+
+    /**
+     * Whether nested {@link XML} content should be quoted like a string, or
+     * nested into XML formatted output.
+     */
+    public final boolean quoteNested() {
+        return quoteNested;
     }
 
     /**

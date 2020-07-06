@@ -65,8 +65,8 @@ import static org.jooq.tools.StringUtils.rightPad;
  */
 public final class JSONFormat {
 
-    public static final JSONFormat DEFAULT_FOR_RESULTS = new JSONFormat();
-    public static final JSONFormat DEFAULT_FOR_RECORDS = new JSONFormat().header(false);
+    public final static JSONFormat DEFAULT_FOR_RESULTS = new JSONFormat();
+    public final static JSONFormat DEFAULT_FOR_RECORDS = new JSONFormat().header(false);
 
     final boolean                  format;
     final String                   newline;
@@ -74,6 +74,7 @@ public final class JSONFormat {
     final String[]                 indented;
     final boolean                  header;
     final RecordFormat             recordFormat;
+    final boolean                  quoteNested;
 
     public JSONFormat() {
         this(
@@ -82,7 +83,8 @@ public final class JSONFormat {
             2,
             null,
             true,
-            RecordFormat.ARRAY
+            RecordFormat.ARRAY,
+            false
         );
     }
 
@@ -92,7 +94,8 @@ public final class JSONFormat {
         int indent,
         String[] indented,
         boolean header,
-        RecordFormat recordFormat
+        RecordFormat recordFormat,
+        boolean quoteNested
     ) {
         this.format = format;
         this.newline = newline;
@@ -105,75 +108,79 @@ public final class JSONFormat {
         };
         this.header = header;
         this.recordFormat = recordFormat;
+        this.quoteNested = quoteNested;
     }
 
     /**
      * The new value for the formatting flag, defaulting to <code>false</code>.
      */
-    public JSONFormat format(boolean newFormat) {
+    public final JSONFormat format(boolean newFormat) {
         return new JSONFormat(
             newFormat,
             newline,
             indent,
             null,
             header,
-            recordFormat
+            recordFormat,
+            quoteNested
         );
     }
 
     /**
      * The formatting flag.
      */
-    public boolean format() {
+    public final boolean format() {
         return format;
     }
 
     /**
      * The new newline character, defaulting to <code>\n</code>.
      */
-    public JSONFormat newline(String newNewline) {
+    public final JSONFormat newline(String newNewline) {
         return new JSONFormat(
             format,
             newNewline,
             indent,
             indented,
             header,
-            recordFormat
+            recordFormat,
+            quoteNested
         );
     }
 
     /**
      * The formatting flag.
      */
-    public String newline() {
+    public final String newline() {
         return format ? newline : "";
     }
 
     /**
      * The new indentation value, defaulting to <code>2</code>.
      */
-    public JSONFormat indent(int newIndent) {
+    public final JSONFormat indent(int newIndent) {
         return new JSONFormat(
             format,
             newline,
             newIndent,
             null,
             header,
-            recordFormat
+            recordFormat,
+            quoteNested
         );
     }
 
     /**
      * The indentation.
      */
-    public int indent() {
+    public final int indent() {
         return indent;
     }
 
     /**
      * Convenience method to get an indentation string at a given level.
      */
-    public String indentString(int level) {
+    public final String indentString(int level) {
         if (level < indented.length)
             return indented[level];
         else if (format)
@@ -186,14 +193,15 @@ public final class JSONFormat {
      * Whether to emit a header row with column names, defaulting to
      * <code>true</code>.
      */
-    public JSONFormat header(boolean newHeader) {
+    public final JSONFormat header(boolean newHeader) {
         return new JSONFormat(
             format,
             newline,
             indent,
             indented,
             newHeader,
-            recordFormat
+            recordFormat,
+            quoteNested
         );
     }
 
@@ -201,7 +209,7 @@ public final class JSONFormat {
      * Whether to emit a header row with column names, defaulting to
      * <code>true</code>.
      */
-    public boolean header() {
+    public final boolean header() {
         return header;
     }
 
@@ -209,14 +217,15 @@ public final class JSONFormat {
      * The record format to be applied, defaulting to
      * {@link RecordFormat#ARRAY}.
      */
-    public JSONFormat recordFormat(RecordFormat newRecordFormat) {
+    public final JSONFormat recordFormat(RecordFormat newRecordFormat) {
         return new JSONFormat(
             format,
             newline,
             indent,
             indented,
             header,
-            newRecordFormat
+            newRecordFormat,
+            quoteNested
         );
     }
 
@@ -224,8 +233,32 @@ public final class JSONFormat {
      * The record format to be applied, defaulting to
      * {@link RecordFormat#ARRAY}.
      */
-    public RecordFormat recordFormat() {
+    public final RecordFormat recordFormat() {
         return recordFormat;
+    }
+
+    /**
+     * Whether nested {@link JSON} or {@link JSONB} content should be quoted
+     * like a string, or nested into JSON formatted output.
+     */
+    public final JSONFormat quoteNested(boolean newQuoteNested) {
+        return new JSONFormat(
+            format,
+            newline,
+            indent,
+            indented,
+            header,
+            recordFormat,
+            newQuoteNested
+        );
+    }
+
+    /**
+     * Whether nested {@link JSON} or {@link JSONB} content should be quoted
+     * like a string, or nested into JSON formatted output.
+     */
+    public final boolean quoteNested() {
+        return quoteNested;
     }
 
     /**

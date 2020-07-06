@@ -793,7 +793,7 @@ final class LoaderImpl<R extends Record> implements
 
                     // [#5200]  When the primary key is not supplied in the data,
                     //          we'll assume it uses an identity, and there will never be duplicates
-                    // [#10358] The above should be moved inside InsertQueryImpl
+                    // [#10358] TODO: The above should be moved inside InsertQueryImpl
                     // [#7253]  Use native onDuplicateKeyIgnore() support
                     else if (onDuplicate == ON_DUPLICATE_KEY_IGNORE && primaryKey.cardinality() > 0) {
                         insert.onDuplicateKeyIgnore(true);

@@ -325,7 +325,7 @@ public class DefaultDataType<T> extends AbstractDataType<T> {
             if (SQL_DATATYPES_BY_TYPE.get(type) == null)
                 SQL_DATATYPES_BY_TYPE.put(type, this);
 
-        this.binding = binding != null ? binding : binding(type, isLob());
+        this.binding = binding != null ? binding : binding(this);
         this.tType = this.binding.converter().fromType();
     }
 

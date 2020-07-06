@@ -53,6 +53,7 @@ import static java.time.temporal.ChronoField.YEAR;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
+import static org.jooq.SQLDialect.DEFAULT;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
@@ -102,9 +103,14 @@ import static org.jooq.impl.Keywords.K_TRUE;
 import static org.jooq.impl.Keywords.K_YEAR_TO_DAY;
 import static org.jooq.impl.Keywords.K_YEAR_TO_FRACTION;
 import static org.jooq.impl.SQLDataType.BLOB;
+import static org.jooq.impl.SQLDataType.DATE;
 import static org.jooq.impl.SQLDataType.DOUBLE;
+import static org.jooq.impl.SQLDataType.OFFSETDATETIME;
 import static org.jooq.impl.SQLDataType.OTHER;
 import static org.jooq.impl.SQLDataType.ROWID;
+import static org.jooq.impl.SQLDataType.TIME;
+import static org.jooq.impl.SQLDataType.TIMESTAMP;
+import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.attachRecords;
 import static org.jooq.impl.Tools.convertBytesToHex;
 import static org.jooq.impl.Tools.getMappedUDTName;
@@ -198,7 +204,6 @@ import org.jooq.tools.jdbc.MockArray;
 import org.jooq.tools.jdbc.MockResultSet;
 import org.jooq.tools.reflect.Reflect;
 import org.jooq.types.DayToSecond;
-import org.jooq.types.Interval;
 import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
@@ -227,110 +232,110 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     final AbstractBinding<T, U>          delegate;
 
     public final static <T, U> Binding<T, U> binding(Converter<T, U> converter) {
-        return binding(converter, false);
+        return binding(DefaultDataType.getDataType(DEFAULT, converter.fromType()), converter);
     }
 
-    static final <T> Binding<T, T> binding(Class<T> type, boolean isLob) {
-        return binding(Converters.identity(type), isLob);
+    static final <T> Binding<T, T> binding(DataType<T> dataType) {
+        return binding(dataType, Converters.identity(dataType.getType()));
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    static final <T, U> Binding<T, U> binding(Converter<T, U> converter, boolean isLob) {
+    static final <T, U> Binding<T, U> binding(DataType<T> dataType, Converter<T, U> converter) {
         Class<?> type = converter.fromType();
 
         // Concrete types
         if (type == BigDecimal.class)
-            return new DefaultBigDecimalBinding(converter, isLob);
+            return new DefaultBigDecimalBinding(dataType, converter);
         else if (type == BigInteger.class)
-            return new DefaultBigIntegerBinding(converter, isLob);
+            return new DefaultBigIntegerBinding(dataType, converter);
         else if (type == Blob.class)
-            return new DefaultBlobBinding(converter, isLob);
+            return new DefaultBlobBinding(dataType, converter);
         else if (type == Boolean.class)
-            return new DefaultBooleanBinding(converter, isLob);
+            return new DefaultBooleanBinding(dataType, converter);
         else if (type == Byte.class || type == byte.class)
-            return new DefaultByteBinding(converter, isLob);
+            return new DefaultByteBinding(dataType, converter);
         else if (type == byte[].class)
-            return new DefaultBytesBinding(converter, isLob);
+            return new DefaultBytesBinding(dataType, converter);
         else if (type == Clob.class)
-            return new DefaultClobBinding(converter, isLob);
+            return new DefaultClobBinding(dataType, converter);
         else if (type == Date.class)
-            return new DefaultDateBinding(converter, isLob);
+            return new DefaultDateBinding(dataType, converter);
         else if (type == DayToSecond.class)
-            return new DefaultDayToSecondBinding(converter, isLob);
+            return new DefaultDayToSecondBinding(dataType, converter);
         else if (type == Double.class || type == double.class)
-            return new DefaultDoubleBinding(converter, isLob);
+            return new DefaultDoubleBinding(dataType, converter);
         else if (type == Float.class || type == float.class)
-            return new DefaultFloatBinding(converter, isLob);
+            return new DefaultFloatBinding(dataType, converter);
         else if (type == Integer.class || type == int.class)
-            return new DefaultIntegerBinding(converter, isLob);
+            return new DefaultIntegerBinding(dataType, converter);
         else if (type == JSON.class)
-            return new DefaultJSONBinding(converter, isLob);
+            return new DefaultJSONBinding(dataType, converter);
         else if (type == JSONB.class)
-            return new DefaultJSONBBinding(converter, isLob);
+            return new DefaultJSONBBinding(dataType, converter);
         else if (type == XML.class)
-            return new DefaultXMLBinding(converter, isLob);
+            return new DefaultXMLBinding(dataType, converter);
 
         else if (type == LocalDate.class) {
             DateToLocalDateConverter c1 = new DateToLocalDateConverter();
             Converter<LocalDate, U> c2 = (Converter<LocalDate, U>) converter;
             Converter<Date, U> c3 = Converters.of(c1, c2);
-            return (Binding<T, U>) new DelegatingBinding<>(c1, c2, new DefaultDateBinding<>(c3, isLob), isLob);
+            return (Binding<T, U>) new DelegatingBinding<>((DataType<LocalDate>) dataType, c1, c2, new DefaultDateBinding<>(DATE, c3));
         }
         else if (type == LocalDateTime.class) {
             TimestampToLocalDateTimeConverter c1 = new TimestampToLocalDateTimeConverter();
             Converter<LocalDateTime, U> c2 = (Converter<LocalDateTime, U>) converter;
             Converter<Timestamp, U> c3 = Converters.of(c1, c2);
-            return (Binding<T, U>) new DelegatingBinding<>(c1, c2, new DefaultTimestampBinding<>(c3, isLob), isLob);
+            return (Binding<T, U>) new DelegatingBinding<>((DataType<LocalDateTime>) dataType, c1, c2, new DefaultTimestampBinding<>(TIMESTAMP, c3));
         }
         else if (type == LocalTime.class) {
             TimeToLocalTimeConverter c1 = new TimeToLocalTimeConverter();
             Converter<LocalTime, U> c2 = (Converter<LocalTime, U>) converter;
             Converter<Time, U> c3 = Converters.of(c1, c2);
-            return (Binding<T, U>) new DelegatingBinding<>(c1, c2, new DefaultTimeBinding<>(c3, isLob), isLob);
+            return (Binding<T, U>) new DelegatingBinding<>((DataType<LocalTime>) dataType, c1, c2, new DefaultTimeBinding<>(TIME, c3));
         }
 
         else if (type == Long.class || type == long.class)
-            return new DefaultLongBinding(converter, isLob);
+            return new DefaultLongBinding(dataType, converter);
 
         else if (type == OffsetDateTime.class)
-            return new DefaultOffsetDateTimeBinding(converter, isLob);
+            return new DefaultOffsetDateTimeBinding(dataType, converter);
         else if (type == OffsetTime.class)
-            return new DefaultOffsetTimeBinding(converter, isLob);
+            return new DefaultOffsetTimeBinding(dataType, converter);
         else if (type == Instant.class)
-            return new DefaultInstantBinding(converter, isLob);
+            return new DefaultInstantBinding(dataType, converter);
 
         else if (type == RowId.class)
-            return new DefaultRowIdBinding(converter, isLob);
+            return new DefaultRowIdBinding(dataType, converter);
         else if (type == Short.class || type == short.class)
-            return new DefaultShortBinding(converter, isLob);
+            return new DefaultShortBinding(dataType, converter);
         else if (type == String.class)
-            return new DefaultStringBinding(converter, isLob);
+            return new DefaultStringBinding(dataType, converter);
         else if (type == Time.class)
-            return new DefaultTimeBinding(converter, isLob);
+            return new DefaultTimeBinding(dataType, converter);
         else if (type == Timestamp.class)
-            return new DefaultTimestampBinding(converter, isLob);
+            return new DefaultTimestampBinding(dataType, converter);
         // [#8022] Support for the "synthetic" timestamp type
         else if (type == java.util.Date.class)
-            return new DefaultTimestampBinding(Converters.of(TimestampToJavaUtilDateConverter.INSTANCE, (Converter<java.util.Date, java.util.Date>) converter), isLob);
+            return new DefaultTimestampBinding(dataType, Converters.of(TimestampToJavaUtilDateConverter.INSTANCE, (Converter<java.util.Date, java.util.Date>) converter));
         else if (type == UByte.class)
-            return new DefaultUByteBinding(converter, isLob);
+            return new DefaultUByteBinding(dataType, converter);
         else if (type == UInteger.class)
-            return new DefaultUIntegerBinding(converter, isLob);
+            return new DefaultUIntegerBinding(dataType, converter);
         else if (type == ULong.class)
-            return new DefaultULongBinding(converter, isLob);
+            return new DefaultULongBinding(dataType, converter);
         else if (type == UShort.class)
-            return new DefaultUShortBinding(converter, isLob);
+            return new DefaultUShortBinding(dataType, converter);
         else if (type == UUID.class)
-            return new DefaultUUIDBinding(converter, isLob);
+            return new DefaultUUIDBinding(dataType, converter);
         else if (type == YearToSecond.class)
-            return new DefaultYearToSecondBinding(converter, isLob);
+            return new DefaultYearToSecondBinding(dataType, converter);
         else if (type == YearToMonth.class)
-            return new DefaultYearToMonthBinding(converter, isLob);
+            return new DefaultYearToMonthBinding(dataType, converter);
 
         // Subtypes of array types etc.
         // The type byte[] is handled earlier. byte[][] can be handled here
         else if (type.isArray())
-            return new DefaultArrayBinding(converter, isLob);
+            return new DefaultArrayBinding(dataType, converter);
 
 
 
@@ -338,15 +343,15 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
         else if (EnumType.class.isAssignableFrom(type))
-            return new DefaultEnumTypeBinding(converter, isLob);
+            return new DefaultEnumTypeBinding(dataType, converter);
         else if (Record.class.isAssignableFrom(type))
-            return new DefaultRecordBinding(converter, isLob);
+            return new DefaultRecordBinding(dataType, converter);
         else if (Result.class.isAssignableFrom(type))
-            return new DefaultResultBinding(converter, isLob);
+            return new DefaultResultBinding(dataType, converter);
 
         // Undefined types
         else
-            return new DefaultOtherBinding(converter, isLob);
+            return new DefaultOtherBinding(dataType, converter);
 
     }
 
@@ -355,30 +360,22 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
      */
     @Deprecated
     public DefaultBinding(Converter<T, U> converter) {
-        this(converter, false);
-    }
-
-    /**
-     * @deprecated - 3.11 - [#6631] - Use {@link #binding(Converter)} instead.
-     */
-    @Deprecated
-    DefaultBinding(Converter<T, U> converter, boolean isLob) {
-        this.delegate = (AbstractBinding<T, U>) binding(converter, isLob);
+        this.delegate = (AbstractBinding<T, U>) binding(converter);
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    static final <T, X, U> Binding<T, U> newBinding(final Converter<X, U> converter, final DataType<T> type, final Binding<T, X> binding) {
+    static final <T, X, U> Binding<T, U> newBinding(final Converter<X, U> converter, final DataType<T> dataType, final Binding<T, X> binding) {
         final Binding<T, U> theBinding;
 
 
         if (converter == null && binding == null) {
-            theBinding = (Binding) type.getBinding();
+            theBinding = (Binding) dataType.getBinding();
         }
         else if (converter == null) {
             theBinding = (Binding) binding;
         }
         else if (binding == null) {
-            theBinding = (Binding) binding(converter, type.isLob());
+            theBinding = binding(dataType, (Converter<T, U>) converter);
         }
         else {
             theBinding = new Binding<T, U>() {
@@ -541,7 +538,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
     @Override
     public String toString() {
-        return "DefaultBinding [type=" + delegate.type + ", converter=" + delegate.converter + "]";
+        return "DefaultBinding [type=" + delegate.dataType + ", converter=" + delegate.converter + "]";
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -562,17 +559,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-        final Class<T>                           type;
+        final DataType<T>                        dataType;
         final Converter<T, U>                    converter;
 
-        // TODO: This type boolean should not be passed standalone to the
-        // constructor. Find a better design
-        final boolean                            isLob;
-
-        AbstractBinding(Converter<T, U> converter, boolean isLob) {
-            this.type = converter.fromType();
+        AbstractBinding(DataType<T> dataType, Converter<T, U> converter) {
+            this.dataType = dataType;
             this.converter = converter;
-            this.isLob = isLob;
         }
 
         @Override
@@ -625,7 +617,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             // [#566] JDBC doesn't explicitly support interval data types. To be on
             // the safe side, always cast these types in those dialects that support
             // them
-            if (Interval.class.isAssignableFrom(type)) {
+            if (dataType.isInterval()) {
                 switch (ctx.family()) {
 
 
@@ -638,7 +630,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             }
 
             // [#7242] Other vendor specific types also need a lot of casting
-            if (type == JSON.class || type == JSONB.class) {
+            if (dataType.isJSON()) {
                 switch (ctx.family()) {
 
 
@@ -656,12 +648,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          * Render the bind variable including a cast, if necessary
          */
         private final void sqlCast(BindingSQLContext<U> ctx, T converted) throws SQLException {
-            DataType<T> dataType = DefaultDataType.getDataType(ctx.dialect(), type);
             DataType<T> sqlDataType = dataType.getSQLDataType();
             SQLDialect family = ctx.family();
 
             // [#822] Some RDBMS need precision / scale information on BigDecimals
-            if (converted != null && type == BigDecimal.class && NEEDS_PRECISION_SCALE_ON_BIGDECIMAL.contains(ctx.dialect())) {
+            if (converted != null && dataType.getType() == BigDecimal.class && NEEDS_PRECISION_SCALE_ON_BIGDECIMAL.contains(ctx.dialect())) {
 
                 // Add precision / scale on BigDecimals
                 int scale = ((BigDecimal) converted).scale();
@@ -724,7 +715,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
             // [#7379] Most databases cannot cast a bind variable to an enum type
-            else if (!NO_SUPPORT_ENUM_CAST.contains(ctx.dialect()) && EnumType.class.isAssignableFrom(type))
+            else if (!NO_SUPPORT_ENUM_CAST.contains(ctx.dialect()) && dataType.isEnum())
                 sqlCast(
                     ctx,
                     converted,
@@ -822,7 +813,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         public final void register(BindingRegisterContext<U> ctx) throws SQLException {
             if (!FALSE.equals(ctx.settings().isExecuteLogging()))
                 if (log.isTraceEnabled())
-                    log.trace("Registering variable " + ctx.index(), "" + type);
+                    log.trace("Registering variable " + ctx.index(), "" + dataType);
 
             register0(ctx);
         }
@@ -834,9 +825,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             if (!FALSE.equals(ctx.settings().isExecuteLogging()))
                 if (log.isTraceEnabled())
                     if (value != null && value.getClass().isArray() && value.getClass() != byte[].class)
-                        log.trace("Binding variable " + ctx.index(), Arrays.asList((Object[]) value) + " (" + type + ")");
+                        log.trace("Binding variable " + ctx.index(), Arrays.asList((Object[]) value) + " (" + dataType + ")");
                     else
-                        log.trace("Binding variable " + ctx.index(), value + " (" + type + ")");
+                        log.trace("Binding variable " + ctx.index(), value + " (" + dataType + ")");
 
             if (value == null)
                 setNull0(ctx);
@@ -878,10 +869,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             return value;
         }
 
-        final Class<T> type() {
-            return type;
-        }
-
         /* non-final */ void setNull0(BindingSetStatementContext<U> ctx) throws SQLException {
             ctx.statement().setNull(ctx.index(), sqltype(ctx.statement(), ctx.configuration()));
         }
@@ -921,7 +908,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         public String toString() {
-            return "AbstractBinding [type=" + type + ", converter=" + converter + "]";
+            return "AbstractBinding [type=" + dataType + ", converter=" + converter + "]";
         }
     }
 
@@ -936,12 +923,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         private final AbstractBinding<T, U> delegatingBinding;
 
         DelegatingBinding(
+            DataType<X> originalDataType,
             Converter<T, X> delegatingConverter,
             Converter<X, U> originalConverter,
-            AbstractBinding<T, U> delegatingBinding,
-            boolean isLob
+            AbstractBinding<T, U> delegatingBinding
         ) {
-            super(originalConverter, isLob);
+            super(originalDataType, originalConverter);
 
             this.delegatingConverter = delegatingConverter;
             this.delegatingBinding = delegatingBinding;
@@ -1001,8 +988,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         private static final long            serialVersionUID    = 6875984626674331432L;
         private static final Set<SQLDialect> REQUIRES_ARRAY_CAST = SQLDialect.supportedBy(POSTGRES);
 
-        DefaultArrayBinding(Converter<Object[], U> converter, boolean isLob) {
-            super(converter, isLob);
+        DefaultArrayBinding(DataType<Object[]> dataType, Converter<Object[], U> converter) {
+            super(dataType, converter);
         }
 
         @SuppressWarnings("unchecked")
@@ -1016,7 +1003,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 for (Object o : value) {
                     ctx.render().sql(separator);
-                    binding((Class<Object>) type.getComponentType(), isLob).sql(new DefaultBindingSQLContext<>(ctx.configuration(), ctx.data(), ctx.render(), o));
+                    binding((DataType<Object>) dataType.getArrayComponentDataType()).sql(new DefaultBindingSQLContext<>(ctx.configuration(), ctx.data(), ctx.render(), o));
                     separator = ", ";
                 }
 
@@ -1028,9 +1015,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 // [#8933] In some cases, we cannot derive the cast type from
                 //         array type directly
                 Class<?> arrayType =
-                    type == Object[].class
+                    dataType.getType() == Object[].class
                   ? deriveArrayTypeFromComponentType(value)
-                  : type;
+                  : dataType.getType();
 
                 ctx.render().visit(cast(inline(PostgresUtils.toPGArrayString(value)), arrayType));
             }
@@ -1044,7 +1031,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 for (Object o : value) {
                     ctx.render().sql(separator);
-                    binding((Class<Object>) type.getComponentType(), isLob).sql(new DefaultBindingSQLContext<>(ctx.configuration(), ctx.data(), ctx.render(), o));
+                    binding((DataType<Object>) dataType.getArrayComponentDataType()).sql(new DefaultBindingSQLContext<>(ctx.configuration(), ctx.data(), ctx.render(), o));
                     separator = ", ";
                 }
 
@@ -1052,8 +1039,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 // [#3214] Some PostgreSQL array type literals need explicit casting
                 // TODO: This seems mutually exclusive with the previous branch. Still needed?
-                if ((REQUIRES_ARRAY_CAST.contains(ctx.dialect())) && EnumType.class.isAssignableFrom(type.getComponentType()))
-                    DefaultEnumTypeBinding.pgRenderEnumCast(ctx.render(), type);
+                if ((REQUIRES_ARRAY_CAST.contains(ctx.dialect())) && dataType.getArrayComponentDataType().isEnum())
+                    DefaultEnumTypeBinding.pgRenderEnumCast(ctx.render(), dataType.getType());
             }
         }
 
@@ -1080,13 +1067,13 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 case POSTGRES:
 
                     // Postgres needs explicit casting for enum (array) types
-                    if (EnumType.class.isAssignableFrom(type.getComponentType()))
-                        DefaultEnumTypeBinding.pgRenderEnumCast(ctx.render(), type);
+                    if (EnumType.class.isAssignableFrom(dataType.getType().getComponentType()))
+                        DefaultEnumTypeBinding.pgRenderEnumCast(ctx.render(), dataType.getType());
 
                     // ... and also for other array types
                     else
                         ctx.render().sql("::")
-                                    .sql(DefaultDataType.getDataType(ctx.family(), type).getCastTypeName(ctx.render().configuration()));
+                                    .sql(dataType.getCastTypeName(ctx.render().configuration()));
             }
         }
 
@@ -1104,7 +1091,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 }
                 case HSQLDB: {
                     Object[] a = value;
-                    Class<?> t = type;
+                    Class<?> t = dataType.getType();
 
                     // [#2325] [#5823] Cannot bind UUID[] type in HSQLDB.
                     // See also: https://sourceforge.net/p/hsqldb/bugs/1466
@@ -1128,7 +1115,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @SuppressWarnings({ "rawtypes", "unchecked" })
         @Override
         final void set0(BindingSetSQLOutputContext<U> ctx, Object[] value) throws SQLException {
-            ctx.output().writeArray(new MockArray(ctx.family(), value, type()));
+            ctx.output().writeArray(new MockArray(ctx.family(), value, dataType.getType()));
         }
 
         @Override
@@ -1139,18 +1126,18 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
                 case POSTGRES:
-                    return pgGetArray(ctx, ctx.resultSet(), type, ctx.index());
+                    return pgGetArray(ctx, ctx.resultSet(), dataType, ctx.index());
 
                 default:
                     // Note: due to a HSQLDB bug, it is not recommended to call rs.getObject() here:
                     // See https://sourceforge.net/tracker/?func=detail&aid=3181365&group_id=23316&atid=378131
-                    return convertArray(ctx.resultSet().getArray(ctx.index()), type());
+                    return convertArray(ctx.resultSet().getArray(ctx.index()), dataType.getType());
             }
         }
 
         @Override
         final Object[] get0(BindingGetStatementContext<U> ctx) throws SQLException {
-            return convertArray(ctx.statement().getObject(ctx.index()), type());
+            return convertArray(ctx.statement().getObject(ctx.index()), dataType.getType());
         }
 
         @Override
@@ -1168,7 +1155,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          * Workarounds for the unimplemented Postgres JDBC driver features
          */
         @SuppressWarnings("unchecked")
-        private static final <T> T pgGetArray(Scope ctx, ResultSet rs, Class<T> type, int index) throws SQLException {
+        private static final <T> T pgGetArray(Scope ctx, ResultSet rs, DataType<T> dataType, int index) throws SQLException {
 
             // Get the JDBC Array and check for null. If null, that's OK
             Array array = null;
@@ -1183,10 +1170,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                     // [#5633] Special treatment for this type.
                     // [#5586] [#5613] TODO: Improve PostgreSQL array deserialisation.
-                    if (byte[][].class == type)
+                    if (byte[][].class == dataType.getType())
                         throw new ControlFlowSignal("GOTO the next array deserialisation strategy");
                     else
-                        return (T) convertArray(array, (Class<? extends Object[]>) type);
+                        return (T) convertArray(array, (Class<? extends Object[]>) dataType.getType());
                 }
 
                 // This might be a UDT (not implemented exception...)
@@ -1197,7 +1184,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     // Try fetching the array as a JDBC ResultSet
                     try {
                         arrayRs = array.getResultSet();
-                        Binding<T, T> binding = binding((Class<T>) type.getComponentType(), false);
+                        Binding<T, T> binding = binding((DataType<T>) dataType.getArrayComponentDataType());
                         DefaultBindingGetResultSetContext<T> out = new DefaultBindingGetResultSetContext<>(ctx.configuration(), ctx.data(), arrayRs, 2);
 
                         while (arrayRs.next()) {
@@ -1222,7 +1209,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                         safeClose(arrayRs);
                     }
 
-                    return (T) convertArray(result.toArray(), (Class<? extends Object[]>) type);
+                    return (T) convertArray(result.toArray(), (Class<? extends Object[]>) dataType.getType());
                 }
             }
 
@@ -1443,8 +1430,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         private static final long            serialVersionUID = -8912971184035434281L;
         private static final Set<SQLDialect> BIND_AS_STRING   = SQLDialect.supportedBy(SQLITE);
 
-        DefaultBigDecimalBinding(Converter<BigDecimal, U> converter, boolean isLob) {
-            super(converter, isLob);
+        DefaultBigDecimalBinding(DataType<BigDecimal> dataType, Converter<BigDecimal, U> converter) {
+            super(dataType, converter);
         }
 
         @Override
@@ -1499,8 +1486,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         private static final long            serialVersionUID = -3857031689661809421L;
         private static final Set<SQLDialect> BIND_AS_STRING   = SQLDialect.supportedBy(SQLITE);
 
-        DefaultBigIntegerBinding(Converter<BigInteger, U> converter, boolean isLob) {
-            super(converter, isLob);
+        DefaultBigIntegerBinding(DataType<BigInteger> dataType, Converter<BigInteger, U> converter) {
+            super(dataType, converter);
         }
 
         @Override
@@ -1557,8 +1544,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          */
         private static final long serialVersionUID = -4605427469676162501L;
 
-        DefaultBlobBinding(Converter<Blob, U> converter, boolean isLob) {
-            super(converter, isLob);
+        DefaultBlobBinding(DataType<Blob> dataType, Converter<Blob, U> converter) {
+            super(dataType, converter);
         }
 
         @Override
@@ -1621,8 +1608,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-        DefaultBooleanBinding(Converter<Boolean, U> converter, boolean isLob) {
-            super(converter, isLob);
+        DefaultBooleanBinding(DataType<Boolean> dataType, Converter<Boolean, U> converter) {
+            super(dataType, converter);
         }
 
         @Override
@@ -1736,8 +1723,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          */
         private static final long serialVersionUID = -7328193812163714614L;
 
-        DefaultByteBinding(Converter<Byte, U> converter, boolean isLob) {
-            super(converter, isLob);
+        DefaultByteBinding(DataType<Byte> dataType, Converter<Byte, U> converter) {
+            super(dataType, converter);
         }
 
         @Override
@@ -1789,8 +1776,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-        DefaultBytesBinding(Converter<byte[], U> converter, boolean isLob) {
-            super(converter, isLob);
+        DefaultBytesBinding(DataType<byte[]> dataType, Converter<byte[], U> converter) {
+            super(dataType, converter);
         }
 
         @Override
@@ -1944,8 +1931,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          */
         private static final long serialVersionUID = -3890447233590678873L;
 
-        DefaultClobBinding(Converter<Clob, U> converter, boolean isLob) {
-            super(converter, isLob);
+        DefaultClobBinding(DataType<Clob> dataType, Converter<Clob, U> converter) {
+            super(dataType, converter);
         }
 
         @Override
@@ -1987,8 +1974,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         private static final long            serialVersionUID         = -4797649501187223237L;
         private static final Set<SQLDialect> INLINE_AS_STRING_LITERAL = SQLDialect.supportedBy(SQLITE);
 
-        DefaultDateBinding(Converter<Date, U> converter, boolean isLob) {
-            super(converter, isLob);
+        DefaultDateBinding(DataType<Date> dataType, Converter<Date, U> converter) {
+            super(dataType, converter);
         }
 
         @Override
@@ -2177,8 +2164,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         private static final long            serialVersionUID           = 4378118707359663541L;
         private static final Set<SQLDialect> REQUIRE_PG_INTERVAL_SYNTAX = SQLDialect.supportedBy(POSTGRES);
 
-        DefaultDayToSecondBinding(Converter<DayToSecond, U> converter, boolean isLob) {
-            super(converter, isLob);
+        DefaultDayToSecondBinding(DataType<DayToSecond> dataType, Converter<DayToSecond, U> converter) {
+            super(dataType, converter);
         }
 
         @Override
@@ -2263,8 +2250,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         private static final long            serialVersionUID = -615723070592774059L;
         private static final Set<SQLDialect> REQUIRE_NAN_CAST = SQLDialect.supportedBy(POSTGRES);
 
-        DefaultDoubleBinding(Converter<Double, U> converter, boolean isLob) {
-            super(converter, isLob);
+        DefaultDoubleBinding(DataType<Double> dataType, Converter<Double, U> converter) {
+            super(dataType, converter);
         }
 
         @Override
@@ -2331,8 +2318,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         private static final long            serialVersionUID  = -5858761464381778695L;
         private static final Set<SQLDialect> REQUIRE_ENUM_CAST = SQLDialect.supportedBy(POSTGRES);
 
-        DefaultEnumTypeBinding(Converter<EnumType, U> converter, boolean isLob) {
-            super(converter, isLob);
+        DefaultEnumTypeBinding(DataType<EnumType> dataType, Converter<EnumType, U> converter) {
+            super(dataType, converter);
         }
 
         @Override
@@ -2340,9 +2327,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             String literal = value.getLiteral();
 
             if (literal == null)
-                binding(String.class, isLob).sql(new DefaultBindingSQLContext<>(ctx.configuration(), ctx.data(), ctx.render(), literal));
+                binding(VARCHAR).sql(new DefaultBindingSQLContext<>(ctx.configuration(), ctx.data(), ctx.render(), literal));
             else
-                binding(String.class, isLob).sql(new DefaultBindingSQLContext<>(ctx.configuration(), ctx.data(), ctx.render(), literal));
+                binding(VARCHAR).sql(new DefaultBindingSQLContext<>(ctx.configuration(), ctx.data(), ctx.render(), literal));
         }
 
         @Override
@@ -2351,7 +2338,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // Postgres needs explicit casting for enum (array) types
             if (REQUIRE_ENUM_CAST.contains(ctx.dialect()))
-                pgRenderEnumCast(ctx.render(), type);
+                pgRenderEnumCast(ctx.render(), dataType.getType());
         }
 
         @Override
@@ -2366,17 +2353,17 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final EnumType get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-            return getEnumType(type(), ctx.resultSet().getString(ctx.index()));
+            return getEnumType(dataType.getType(), ctx.resultSet().getString(ctx.index()));
         }
 
         @Override
         final EnumType get0(BindingGetStatementContext<U> ctx) throws SQLException {
-            return getEnumType(type(), ctx.statement().getString(ctx.index()));
+            return getEnumType(dataType.getType(), ctx.statement().getString(ctx.index()));
         }
 
         @Override
         final EnumType get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
-            return getEnumType(type(), ctx.input().readString());
+            return getEnumType(dataType.getType(), ctx.input().readString());
         }
 
         @Override
@@ -2438,8 +2425,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         private static final long            serialVersionUID = -2468794191255859536L;
         private static final Set<SQLDialect> REQUIRE_NAN_CAST = SQLDialect.supportedBy(POSTGRES);
 
-        DefaultFloatBinding(Converter<Float, U> converter, boolean isLob) {
-            super(converter, isLob);
+        DefaultFloatBinding(DataType<Float> dataType, Converter<Float, U> converter) {
+            super(dataType, converter);
         }
 
         @Override
@@ -2505,8 +2492,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          */
         private static final long serialVersionUID = 1356528214897599147L;
 
-        DefaultIntegerBinding(Converter<Integer, U> converter, boolean isLob) {
-            super(converter, isLob);
+        DefaultIntegerBinding(DataType<Integer> dataType, Converter<Integer, U> converter) {
+            super(dataType, converter);
         }
 
         @Override
@@ -2552,8 +2539,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          */
         private static final long serialVersionUID = 7360911614219750448L;
 
-        DefaultLongBinding(Converter<Long, U> converter, boolean isLob) {
-            super(converter, isLob);
+        DefaultLongBinding(DataType<Long> dataType, Converter<Long, U> converter) {
+            super(dataType, converter);
         }
 
         @Override
@@ -2777,8 +2764,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          */
         private static final long serialVersionUID = 2775682497765456476L;
 
-        DefaultOffsetDateTimeBinding(Converter<OffsetDateTime, U> converter, boolean isLob) {
-            super(converter, isLob);
+        DefaultOffsetDateTimeBinding(DataType<OffsetDateTime> dataType, Converter<OffsetDateTime, U> converter) {
+            super(dataType, converter);
         }
 
         @Override
@@ -2838,7 +2825,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-            throw new UnsupportedOperationException("Type " + type + " is not supported");
+            throw new UnsupportedOperationException("Type " + dataType + " is not supported");
         }
 
         @Override
@@ -2868,7 +2855,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-            throw new UnsupportedOperationException("Type " + type + " is not supported");
+            throw new UnsupportedOperationException("Type " + dataType + " is not supported");
         }
 
         @Override
@@ -2968,8 +2955,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          */
         private static final long serialVersionUID = 8991629916239335071L;
 
-        DefaultOffsetTimeBinding(Converter<OffsetTime, U> converter, boolean isLob) {
-            super(converter, isLob);
+        DefaultOffsetTimeBinding(DataType<OffsetTime> dataType, Converter<OffsetTime, U> converter) {
+            super(dataType, converter);
         }
 
         @Override
@@ -3015,7 +3002,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final void set0(BindingSetSQLOutputContext<U> ctx, OffsetTime value) throws SQLException {
             // [#6630] TODO support this type
-            throw new UnsupportedOperationException("Type " + type + " is not supported");
+            throw new UnsupportedOperationException("Type " + dataType + " is not supported");
         }
 
         @Override
@@ -3031,7 +3018,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final OffsetTime get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
             // [#6630] TODO support this type
-            throw new UnsupportedOperationException("Type " + type + " is not supported");
+            throw new UnsupportedOperationException("Type " + dataType + " is not supported");
         }
 
         @Override
@@ -3073,10 +3060,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         private final DefaultOffsetDateTimeBinding<U>           delegate;
 
-        DefaultInstantBinding(Converter<Instant, U> converter, boolean isLob) {
-            super(converter, isLob);
+        DefaultInstantBinding(DataType<Instant> dataType, Converter<Instant, U> converter) {
+            super(dataType, converter);
 
-            delegate = new DefaultOffsetDateTimeBinding<>(Converters.of(CONVERTER, converter()), isLob);
+            delegate = new DefaultOffsetDateTimeBinding<>(OFFSETDATETIME, Converters.of(CONVERTER, converter()));
         }
 
         @Override
@@ -3124,20 +3111,20 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          */
         private static final long serialVersionUID = -650741489151706822L;
 
-        DefaultOtherBinding(Converter<Object, U> converter, boolean isLob) {
-            super(converter, isLob);
+        DefaultOtherBinding(DataType<Object> dataType, Converter<Object, U> converter) {
+            super(dataType, converter);
         }
 
         @SuppressWarnings({ "unchecked", "rawtypes" })
         @Override
         final void set0(BindingSetStatementContext<U> ctx, Object value) throws SQLException {
-            AbstractBinding b = (AbstractBinding) binding(value.getClass(), isLob);
+            AbstractBinding b = (AbstractBinding) binding(DefaultDataType.getDataType(ctx.dialect(), value.getClass()));
 
             // [#7370] Prevent a stack overflow error on unsupported data types
             if (b instanceof DefaultOtherBinding)
                 ctx.statement().setObject(ctx.index(), value);
             else
-                b.set0(ctx, b.converter().to(value));
+                b.set0(ctx, b.dataType.convert(value));
         }
 
         @Override
@@ -3163,7 +3150,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final void set0(BindingSetSQLOutputContext<U> ctx, Object value) throws SQLException {
-            throw new DataTypeException("Type " + type + " is not supported");
+            throw new DataTypeException("Type " + dataType + " is not supported");
         }
 
         @Override
@@ -3223,8 +3210,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          */
         private static final long serialVersionUID = 5929968691245507756L;
 
-        DefaultRowIdBinding(Converter<RowId, U> converter, boolean isLob) {
-            super(converter, isLob);
+        DefaultRowIdBinding(DataType<RowId> dataType, Converter<RowId, U> converter) {
+            super(dataType, converter);
         }
 
         @Override
@@ -3234,7 +3221,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final void set0(BindingSetSQLOutputContext<U> ctx, RowId value) throws SQLException {
-            throw new DataTypeException("Type " + type + " is not supported");
+            throw new DataTypeException("Type " + dataType + " is not supported");
         }
 
         @Override
@@ -3244,12 +3231,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final RowId get0(BindingGetStatementContext<U> ctx) throws SQLException {
-            throw new DataTypeException("Type " + type + " is not supported");
+            throw new DataTypeException("Type " + dataType + " is not supported");
         }
 
         @Override
         final RowId get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
-            throw new DataTypeException("Type " + type + " is not supported");
+            throw new DataTypeException("Type " + dataType + " is not supported");
         }
 
         @Override
@@ -3266,8 +3253,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         private static final long            serialVersionUID    = 2547994476924120818L;
         private static final Set<SQLDialect> REQUIRE_RECORD_CAST = SQLDialect.supportedBy(POSTGRES);
 
-        DefaultRecordBinding(Converter<Record, U> converter, boolean isLob) {
-            super(converter, isLob);
+        DefaultRecordBinding(DataType<Record> dataType, Converter<Record, U> converter) {
+            super(dataType, converter);
         }
 
         @Override
@@ -3328,7 +3315,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             if (value instanceof UDTRecord)
                 ctx.output().writeObject((UDTRecord<?>) value);
             else
-                throw new UnsupportedOperationException("Type " + type + " is not supported");
+                throw new UnsupportedOperationException("Type " + dataType + " is not supported");
         }
 
         @Override
@@ -3339,10 +3326,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
                 case POSTGRES:
-                    return pgNewRecord(type, null, ctx.resultSet().getObject(ctx.index()));
+                    return pgNewRecord(dataType.getType(), null, ctx.resultSet().getObject(ctx.index()));
 
                 default:
-                    return (Record) ctx.resultSet().getObject(ctx.index(), typeMap(type, ctx.configuration()));
+                    return (Record) ctx.resultSet().getObject(ctx.index(), typeMap(dataType.getType(), ctx.configuration()));
             }
         }
 
@@ -3354,10 +3341,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
                 case POSTGRES:
-                    return pgNewRecord(type, null, ctx.statement().getObject(ctx.index()));
+                    return pgNewRecord(dataType.getType(), null, ctx.statement().getObject(ctx.index()));
 
                 default:
-                    return (Record) ctx.statement().getObject(ctx.index(), typeMap(type, ctx.configuration()));
+                    return (Record) ctx.statement().getObject(ctx.index(), typeMap(dataType.getType(), ctx.configuration()));
             }
         }
 
@@ -3565,8 +3552,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          */
         private static final long serialVersionUID = -2148875780733374224L;
 
-        DefaultResultBinding(Converter<Result<?>, U> converter, boolean isLob) {
-            super(converter, isLob);
+        DefaultResultBinding(DataType<Result<?>> dataType, Converter<Result<?>, U> converter) {
+            super(dataType, converter);
         }
 
         @Override
@@ -3623,8 +3610,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          */
         private static final long serialVersionUID = 8935720621737085226L;
 
-        DefaultShortBinding(Converter<Short, U> converter, boolean isLob) {
-            super(converter, isLob);
+        DefaultShortBinding(DataType<Short> dataType, Converter<Short, U> converter) {
+            super(dataType, converter);
         }
 
         @Override
@@ -3670,8 +3657,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          */
         private static final long serialVersionUID = 4232459541239942932L;
 
-        DefaultStringBinding(Converter<String, U> converter, boolean isLob) {
-            super(converter, isLob);
+        DefaultStringBinding(DataType<String> dataType, Converter<String, U> converter) {
+            super(dataType, converter);
         }
 
         @Override
@@ -3762,8 +3749,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         private static final long            serialVersionUID         = -2563220967846617288L;
         private static final Set<SQLDialect> INLINE_AS_STRING_LITERAL = SQLDialect.supportedBy(SQLITE);
 
-        DefaultTimeBinding(Converter<Time, U> converter, boolean isLob) {
-            super(converter, isLob);
+        DefaultTimeBinding(DataType<Time> dataType, Converter<Time, U> converter) {
+            super(dataType, converter);
         }
 
         @Override
@@ -3856,8 +3843,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         private static final long            serialVersionUID         = 289387167549159015L;
         private static final Set<SQLDialect> INLINE_AS_STRING_LITERAL = SQLDialect.supportedBy(SQLITE);
 
-        DefaultTimestampBinding(Converter<Timestamp, U> converter, boolean isLob) {
-            super(converter, isLob);
+        DefaultTimestampBinding(DataType<Timestamp> dataType, Converter<Timestamp, U> converter) {
+            super(dataType, converter);
         }
 
         @Override
@@ -3957,8 +3944,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          */
         private static final long serialVersionUID = -101167998250685198L;
 
-        DefaultUByteBinding(Converter<UByte, U> converter, boolean isLob) {
-            super(converter, isLob);
+        DefaultUByteBinding(DataType<UByte> dataType, Converter<UByte, U> converter) {
+            super(dataType, converter);
         }
 
         @Override
@@ -4007,8 +3994,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          */
         private static final long serialVersionUID = 1437279656720185207L;
 
-        DefaultUIntegerBinding(Converter<UInteger, U> converter, boolean isLob) {
-            super(converter, isLob);
+        DefaultUIntegerBinding(DataType<UInteger> dataType, Converter<UInteger, U> converter) {
+            super(dataType, converter);
         }
 
         @Override
@@ -4062,8 +4049,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          */
         private static final long serialVersionUID = 4891128447530113299L;
 
-        DefaultULongBinding(Converter<ULong, U> converter, boolean isLob) {
-            super(converter, isLob);
+        DefaultULongBinding(DataType<ULong> dataType, Converter<ULong, U> converter) {
+            super(dataType, converter);
         }
 
         @Override
@@ -4117,8 +4104,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          */
         private static final long serialVersionUID = 2539811197808516971L;
 
-        DefaultUShortBinding(Converter<UShort, U> converter, boolean isLob) {
-            super(converter, isLob);
+        DefaultUShortBinding(DataType<UShort> dataType, Converter<UShort, U> converter) {
+            super(dataType, converter);
         }
 
         @Override
@@ -4167,8 +4154,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          */
         private static final long serialVersionUID = -6616291625634347383L;
 
-        DefaultUUIDBinding(Converter<UUID, U> converter, boolean isLob) {
-            super(converter, isLob);
+        DefaultUUIDBinding(DataType<UUID> dataType, Converter<UUID, U> converter) {
+            super(dataType, converter);
         }
 
         @Override
@@ -4302,8 +4289,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          */
         private static final long serialVersionUID = 3430629127218407737L;
 
-        DefaultJSONBinding(Converter<JSON, U> converter, boolean isLob) {
-            super(converter, isLob);
+        DefaultJSONBinding(DataType<JSON> dataType, Converter<JSON, U> converter) {
+            super(dataType, converter);
         }
 
         @Override
@@ -4364,8 +4351,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         private static final long              serialVersionUID = 3430629127218407737L;
         private static final Set<SQLDialect>   EMULATE_AS_BLOB  = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB, SQLITE);
 
-        DefaultJSONBBinding(Converter<JSONB, U> converter, boolean isLob) {
-            super(converter, isLob);
+        DefaultJSONBBinding(DataType<JSONB> dataType, Converter<JSONB, U> converter) {
+            super(dataType, converter);
         }
 
         @Override
@@ -4457,7 +4444,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @SuppressWarnings({ "unchecked", "rawtypes" })
         private final DefaultBytesBinding<U> bytes(Configuration configuration) {
-            return new DefaultBytesBinding<>((Converter) bytesConverter(configuration), isLob);
+            return new DefaultBytesBinding<>(BLOB, (Converter) bytesConverter(configuration));
         }
     }
 
@@ -4468,8 +4455,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          */
         private static final long serialVersionUID = 3430629127218407737L;
 
-        DefaultXMLBinding(Converter<XML, U> converter, boolean isLob) {
-            super(converter, isLob);
+        DefaultXMLBinding(DataType<XML> dataType, Converter<XML, U> converter) {
+            super(dataType, converter);
         }
 
         @Override
@@ -4514,8 +4501,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         private static final long            serialVersionUID    = 6417965474063152673L;
         private static final Set<SQLDialect> REQUIRE_PG_INTERVAL = SQLDialect.supportedBy(POSTGRES);
 
-        DefaultYearToSecondBinding(Converter<YearToSecond, U> converter, boolean isLob) {
-            super(converter, isLob);
+        DefaultYearToSecondBinding(DataType<YearToSecond> dataType, Converter<YearToSecond, U> converter) {
+            super(dataType, converter);
         }
 
         @Override
@@ -4577,8 +4564,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         private static final long            serialVersionUID    = 6417965474063152673L;
         private static final Set<SQLDialect> REQUIRE_PG_INTERVAL = SQLDialect.supportedBy(POSTGRES);
 
-        DefaultYearToMonthBinding(Converter<YearToMonth, U> converter, boolean isLob) {
-            super(converter, isLob);
+        DefaultYearToMonthBinding(DataType<YearToMonth> dataType, Converter<YearToMonth, U> converter) {
+            super(dataType, converter);
         }
 
         @Override

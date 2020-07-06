@@ -489,7 +489,7 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
             return (DataType<U>) this;
 
         if (newBinding == null)
-            newBinding = (Binding<? super T, U>) DefaultBinding.binding(getType(), isLob());
+            newBinding = (Binding<? super T, U>) DefaultBinding.binding(this);
 
         return new ConvertedDataType<>(this, newBinding);
     }

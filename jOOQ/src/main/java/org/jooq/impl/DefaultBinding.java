@@ -105,7 +105,6 @@ import static org.jooq.impl.Keywords.K_YEAR_TO_FRACTION;
 import static org.jooq.impl.SQLDataType.BLOB;
 import static org.jooq.impl.SQLDataType.DATE;
 import static org.jooq.impl.SQLDataType.DOUBLE;
-import static org.jooq.impl.SQLDataType.OFFSETDATETIME;
 import static org.jooq.impl.SQLDataType.OTHER;
 import static org.jooq.impl.SQLDataType.ROWID;
 import static org.jooq.impl.SQLDataType.TIME;
@@ -3063,7 +3062,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         DefaultInstantBinding(DataType<Instant> dataType, Converter<Instant, U> converter) {
             super(dataType, converter);
 
-            delegate = new DefaultOffsetDateTimeBinding<>(OFFSETDATETIME, Converters.of(CONVERTER, converter()));
+            delegate = new DefaultOffsetDateTimeBinding<>(SQLDataType.OFFSETDATETIME, Converters.of(CONVERTER, converter()));
         }
 
         @Override

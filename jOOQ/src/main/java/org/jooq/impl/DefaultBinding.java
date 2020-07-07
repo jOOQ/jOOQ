@@ -705,7 +705,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             // [#1727] VARCHAR types should be cast to their actual lengths in some
             // dialects
             else if (FIREBIRD == family && (sqlDataType == SQLDataType.VARCHAR || sqlDataType == SQLDataType.CHAR))
-                sqlCast(ctx, converted, dataType, getValueLength((String) converted), null, null);
+                if (dataType.lengthDefined())
+                    sqlCast(ctx, converted, dataType, dataType.length(), null, null);
+                else
+                    sqlCast(ctx, converted, dataType, getValueLength((String) converted), null, null);
 
 
 
@@ -754,11 +757,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             }
         }
 
-        private final void sqlCast(BindingSQLContext<U> ctx, T converted, DataType<?> dataType, Integer length, Integer precision, Integer scale) throws SQLException {
+        private final void sqlCast(BindingSQLContext<U> ctx, T converted, DataType<?> t, Integer length, Integer precision, Integer scale) throws SQLException {
             ctx.render().visit(K_CAST).sql('(');
             sql(ctx, converted);
             ctx.render().sql(' ').visit(K_AS).sql(' ')
-                        .sql(DefaultDataType.set(dataType, length, precision, scale).getCastTypeName(ctx.configuration()))
+                        .sql(DefaultDataType.set(t, length, precision, scale).getCastTypeName(ctx.configuration()))
                         .sql(')');
         }
 

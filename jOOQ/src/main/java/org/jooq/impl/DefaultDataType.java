@@ -58,6 +58,7 @@ import org.jooq.Binding;
 import org.jooq.CharacterSet;
 import org.jooq.Collation;
 import org.jooq.Configuration;
+import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.EnumType;
 import org.jooq.Field;
@@ -379,7 +380,11 @@ public class DefaultDataType<T> extends AbstractDataType<T> {
         this.scale = scale;
         this.length = length;
 
-        this.binding = t.binding;
+        // [#10362] User bindings and/or converters need to be retained
+        this.binding =
+            t.binding instanceof org.jooq.impl.DefaultBinding.AbstractBinding
+          ? binding(this, (Converter<T, T>) t.binding.converter())
+          : t.binding;
     }
 
     private static final Integer integerPrecision(Class<?> type, Integer precision) {

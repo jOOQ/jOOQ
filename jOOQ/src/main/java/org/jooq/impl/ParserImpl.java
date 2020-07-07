@@ -4194,6 +4194,11 @@ final class ParserImpl implements Parser {
     }
 
     private static final Constraint parseConstraintEnforcementIf(ParserContext ctx, ConstraintEnforcementStep e) {
+        boolean deferrable = parseConstraintDeferrableIf(ctx);
+        parseConstraintInitiallyIf(ctx);
+        if (!deferrable)
+            parseConstraintDeferrableIf(ctx);
+
         if ((parseKeywordIf(ctx, "ENABLE") || parseKeywordIf(ctx, "ENFORCED")) && ctx.requireProEdition())
 
 
@@ -4206,6 +4211,14 @@ final class ParserImpl implements Parser {
             ;
 
         return e;
+    }
+
+    private static final boolean parseConstraintDeferrableIf(ParserContext ctx) {
+        return parseKeywordIf(ctx, "DEFERRABLE") || parseKeywordIf(ctx, "NOT DEFERRABLE");
+    }
+
+    private static final boolean parseConstraintInitiallyIf(ParserContext ctx) {
+        return parseKeywordIf(ctx, "INITIALLY") && parseKeyword(ctx, "DEFERRED", "IMMEDIATE");
     }
 
     private static final Constraint parsePrimaryKeySpecification(ParserContext ctx, ConstraintTypeStep constraint) {
@@ -11488,6 +11501,21 @@ final class ParserImpl implements Parser {
 
     private static final boolean parseKeywordIf(ParserContext ctx, String keyword) {
         return peekKeyword(ctx, keyword, true, false, false);
+    }
+
+    private static final boolean parseKeywordIf(ParserContext ctx, String... keywords) {
+        for (String keyword : keywords)
+            if (parseKeywordIf(ctx, keyword))
+                return true;
+
+        return false;
+    }
+
+    private static final boolean parseKeyword(ParserContext ctx, String... keywords) {
+        if (parseKeywordIf(ctx, keywords))
+            return true;
+
+        throw ctx.expected(keywords);
     }
 
     private static final Keyword parseAndGetKeyword(ParserContext ctx, String... keywords) {

@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.Nullability.NOT_NULL;
+import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.SQLDataType.BLOB;
 import static org.jooq.impl.SQLDataType.CLOB;
@@ -58,6 +59,7 @@ import java.time.OffsetDateTime;
 import java.time.OffsetTime;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 // ...
 import org.jooq.Binding;
@@ -77,6 +79,7 @@ import org.jooq.Name;
 import org.jooq.Nullability;
 // ...
 import org.jooq.Result;
+import org.jooq.SQLDialect;
 import org.jooq.UDTRecord;
 import org.jooq.XML;
 import org.jooq.tools.Convert;
@@ -92,7 +95,8 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = 4155588654449505119L;
+    private static final long            serialVersionUID               = 4155588654449505119L;
+    private static final Set<SQLDialect> NO_SUPPORT_TIMESTAMP_PRECISION = SQLDialect.supportedBy(DERBY);
 
     AbstractDataType(Name name, Comment comment) {
         super(name, comment);
@@ -416,31 +420,44 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
     }
 
     @Override
-    public final String getCastTypeName() {
-
-        // [#9958] We should be able to avoid checking for x > 0, but there may
-        //         be a lot of data types constructed with a 0 value instead of
-        //         a null value, historically, so removing this check would
-        //         introduce a lot of regressions!
-        if (lengthDefined() && length() > 0)
-            return castTypeBase0() + "(" + length() + ")";
-        else if (precisionDefined() && precision() > 0)
-            if (scaleDefined() && scale() > 0)
-                return castTypeBase0() + "(" + precision() + ", " + scale() + ")";
-            else
-                return castTypeBase0() + "(" + precision() + ")";
-        else
-            return castTypeName0();
-    }
-
-    @Override
     public /* non-final */ String getTypeName(Configuration configuration) {
         return getDataType(configuration).getTypeName();
     }
 
     @Override
+    public final String getCastTypeName() {
+        return getCastTypeName0(SQLDialect.DEFAULT);
+    }
+
+    private String getCastTypeName0(SQLDialect dialect) {
+
+        // [#9958] We should be able to avoid checking for x > 0, but there may
+        //         be a lot of data types constructed with a 0 value instead of
+        //         a null value, historically, so removing this check would
+        //         introduce a lot of regressions!
+        if (lengthDefined() && length() > 0) {
+            return castTypeBase0() + "(" + length() + ")";
+        }
+        else if (precisionDefined() && precision() > 0) {
+
+            // [#8029] Not all dialects support precision on timestamp syntax,
+            //         possibly despite there being explicit or implicit
+            //         precision support in DDL.
+            if (isTimestamp() && NO_SUPPORT_TIMESTAMP_PRECISION.contains(dialect))
+                return castTypeBase0();
+            else if (scaleDefined() && scale() > 0)
+                return castTypeBase0() + "(" + precision() + ", " + scale() + ")";
+            else
+                return castTypeBase0() + "(" + precision() + ")";
+        }
+        else {
+            return castTypeName0();
+        }
+    }
+
+    @Override
     public /* non-final */ String getCastTypeName(Configuration configuration) {
-        return getDataType(configuration).getCastTypeName();
+        return ((AbstractDataType<T>) getDataType(configuration)).getCastTypeName0(configuration.dialect());
     }
 
     @Override

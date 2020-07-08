@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.Nullability.NOT_NULL;
 import static org.jooq.SQLDialect.DERBY;
+// ...
 import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.SQLDataType.BLOB;
 import static org.jooq.impl.SQLDataType.CLOB;
@@ -447,6 +448,12 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
             // precision support in DDL.
             if (isTimestamp() && NO_SUPPORT_TIMESTAMP_PRECISION.contains(dialect))
                 return castTypePrefix0() + castTypeSuffix0();
+
+
+
+
+
+
             else if (scaleDefined() && scale() > 0)
                 return castTypePrefix0() + "(" + precision() + ", " + scale() + ")" + castTypeSuffix0();
             else

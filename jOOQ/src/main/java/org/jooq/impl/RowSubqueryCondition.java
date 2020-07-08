@@ -76,7 +76,6 @@ import org.jooq.QueryPartInternal;
 import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Row;
-import org.jooq.RowN;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.impl.Tools.BooleanDataKey;
@@ -167,17 +166,8 @@ final class RowSubqueryCondition extends AbstractCondition {
             Condition condition;
             switch (comparator) {
                 case GREATER:
-                    condition = ((RowN) left).gt(row(fields));
-                    break;
-
                 case GREATER_OR_EQUAL:
-                    condition = ((RowN) left).ge(row(fields));
-                    break;
-
                 case LESS:
-                    condition = ((RowN) left).lt(row(fields));
-                    break;
-
                 case LESS_OR_EQUAL:
                     condition = new RowCondition(left, row(fields), comparator);
                     break;

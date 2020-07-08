@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static org.jooq.Nullability.NOT_NULL;
 import static org.jooq.SQLDialect.DERBY;
 // ...
+// ...
 import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.SQLDataType.BLOB;
 import static org.jooq.impl.SQLDataType.CLOB;

@@ -245,8 +245,13 @@ final class FieldProxy<T> extends AbstractField<T> implements TableField<Record,
         }
 
         @Override
-        final String castTypeBase0() {
-            return type.castTypeBase0();
+        final String castTypePrefix0() {
+            return type.castTypePrefix0();
+        }
+
+        @Override
+        final String castTypeSuffix0() {
+            return type.castTypeSuffix0();
         }
 
         @Override

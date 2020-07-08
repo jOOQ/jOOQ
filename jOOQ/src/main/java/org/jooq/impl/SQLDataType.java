@@ -146,7 +146,7 @@ public final class SQLDataType {
     /**
      * The {@link Types#VARCHAR} type.
      */
-    public static final DataType<String> VARCHAR = new DefaultDataType<>(null, String.class, "varchar");
+    public static final DataType<String> VARCHAR = new DefaultDataType<>(null, String.class, "varchar(l)");
 
     /**
      * The {@link Types#VARCHAR} type.
@@ -158,7 +158,7 @@ public final class SQLDataType {
     /**
      * The {@link Types#CHAR} type.
      */
-    public static final DataType<String> CHAR = new DefaultDataType<>(null, String.class, "char");
+    public static final DataType<String> CHAR = new DefaultDataType<>(null, String.class, "char(l)");
 
     /**
      * The {@link Types#CHAR} type.
@@ -170,7 +170,7 @@ public final class SQLDataType {
     /**
      * The {@link Types#LONGVARCHAR} type.
      */
-    public static final DataType<String> LONGVARCHAR = new DefaultDataType<>(null, String.class, "longvarchar");
+    public static final DataType<String> LONGVARCHAR = new DefaultDataType<>(null, String.class, "longvarchar(l)");
 
     /**
      * The {@link Types#LONGVARCHAR} type.
@@ -194,7 +194,7 @@ public final class SQLDataType {
     /**
      * The {@link Types#NVARCHAR} type.
      */
-    public static final DataType<String> NVARCHAR = new DefaultDataType<>(null, String.class, "nvarchar");
+    public static final DataType<String> NVARCHAR = new DefaultDataType<>(null, String.class, "nvarchar(l)");
 
     /**
      * The {@link Types#NVARCHAR} type.
@@ -206,7 +206,7 @@ public final class SQLDataType {
     /**
      * The {@link Types#NCHAR} type.
      */
-    public static final DataType<String> NCHAR = new DefaultDataType<>(null, String.class, "nchar");
+    public static final DataType<String> NCHAR = new DefaultDataType<>(null, String.class, "nchar(l)");
 
     /**
      * The {@link Types#NCHAR} type.
@@ -218,7 +218,7 @@ public final class SQLDataType {
     /**
      * The {@link Types#LONGNVARCHAR} type.
      */
-    public static final DataType<String> LONGNVARCHAR = new DefaultDataType<>(null, String.class, "longnvarchar");
+    public static final DataType<String> LONGNVARCHAR = new DefaultDataType<>(null, String.class, "longnvarchar(l)");
 
     /**
      * The {@link Types#LONGNVARCHAR} type.
@@ -339,7 +339,7 @@ public final class SQLDataType {
     /**
      * The {@link Types#NUMERIC} type.
      */
-    public static final DataType<BigDecimal> NUMERIC = new DefaultDataType<>(null, BigDecimal.class, "numeric");
+    public static final DataType<BigDecimal> NUMERIC = new DefaultDataType<>(null, BigDecimal.class, "numeric(p, s)");
 
     /**
      * The {@link Types#NUMERIC} type.
@@ -358,7 +358,7 @@ public final class SQLDataType {
     /**
      * The {@link Types#DECIMAL} type.
      */
-    public static final DataType<BigDecimal> DECIMAL = new DefaultDataType<>(null, BigDecimal.class, "decimal");
+    public static final DataType<BigDecimal> DECIMAL = new DefaultDataType<>(null, BigDecimal.class, "decimal(p, s)");
 
     /**
      * The {@link Types#DECIMAL} type.
@@ -386,7 +386,7 @@ public final class SQLDataType {
     /**
      * The {@link Types#TIMESTAMP} type.
      */
-    public static final DataType<Timestamp> TIMESTAMP = new DefaultDataType<>(null, Timestamp.class, "timestamp");
+    public static final DataType<Timestamp> TIMESTAMP = new DefaultDataType<>(null, Timestamp.class, "timestamp(p)");
 
     /**
      * The {@link Types#TIMESTAMP} type.
@@ -398,7 +398,7 @@ public final class SQLDataType {
     /**
      * The {@link Types#TIME} type.
      */
-    public static final DataType<Time> TIME = new DefaultDataType<>(null, Time.class, "time");
+    public static final DataType<Time> TIME = new DefaultDataType<>(null, Time.class, "time(p)");
 
     /**
      * The {@link Types#TIME} type.
@@ -436,7 +436,7 @@ public final class SQLDataType {
     /**
      * The {@link Types#TIME} type.
      */
-    public static final DataType<LocalTime> LOCALTIME = new DefaultDataType<>(null, LocalTime.class, "time");
+    public static final DataType<LocalTime> LOCALTIME = new DefaultDataType<>(null, LocalTime.class, "time(p)");
 
     /**
      * The {@link Types#TIME} type.
@@ -448,7 +448,7 @@ public final class SQLDataType {
     /**
      * The {@link Types#TIMESTAMP} type.
      */
-    public static final DataType<LocalDateTime> LOCALDATETIME = new DefaultDataType<>(null, LocalDateTime.class, "timestamp");
+    public static final DataType<LocalDateTime> LOCALDATETIME = new DefaultDataType<>(null, LocalDateTime.class, "timestamp(p)");
 
     /**
      * The {@link Types#TIMESTAMP} type.
@@ -471,7 +471,7 @@ public final class SQLDataType {
      * refer to your database for more information about the behaviour of this
      * data type.
      */
-    public static final DataType<OffsetTime> OFFSETTIME = new DefaultDataType<>(null, OffsetTime.class, "time with time zone");
+    public static final DataType<OffsetTime> OFFSETTIME = new DefaultDataType<>(null, OffsetTime.class, "time(p) with time zone");
 
     /**
      * The {@link Types#TIME_WITH_TIMEZONE} type.
@@ -505,7 +505,7 @@ public final class SQLDataType {
      * refer to your database for more information about the behaviour of this
      * data type.
      */
-    public static final DataType<OffsetDateTime> OFFSETDATETIME = new DefaultDataType<>(null, OffsetDateTime.class, "timestamp with time zone");
+    public static final DataType<OffsetDateTime> OFFSETDATETIME = new DefaultDataType<>(null, OffsetDateTime.class, "timestamp(p) with time zone");
 
     /**
      * The {@link Types#TIMESTAMP_WITH_TIMEZONE} type.
@@ -595,7 +595,7 @@ public final class SQLDataType {
     /**
      * The {@link Types#BINARY} type.
      */
-    public static final DataType<byte[]> BINARY = new DefaultDataType<>(null, byte[].class, "binary");
+    public static final DataType<byte[]> BINARY = new DefaultDataType<>(null, byte[].class, "binary(l)");
 
     /**
      * The {@link Types#BINARY} type.
@@ -607,7 +607,7 @@ public final class SQLDataType {
     /**
      * The {@link Types#VARBINARY} type.
      */
-    public static final DataType<byte[]> VARBINARY = new DefaultDataType<>(null, byte[].class, "varbinary");
+    public static final DataType<byte[]> VARBINARY = new DefaultDataType<>(null, byte[].class, "varbinary(l)");
 
     /**
      * The {@link Types#VARBINARY} type.
@@ -619,7 +619,7 @@ public final class SQLDataType {
     /**
      * The {@link Types#LONGVARBINARY} type.
      */
-    public static final DataType<byte[]> LONGVARBINARY = new DefaultDataType<>(null, byte[].class, "longvarbinary");
+    public static final DataType<byte[]> LONGVARBINARY = new DefaultDataType<>(null, byte[].class, "longvarbinary(l)");
 
     /**
      * The {@link Types#LONGVARBINARY} type.

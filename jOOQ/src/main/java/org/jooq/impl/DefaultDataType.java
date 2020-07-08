@@ -190,10 +190,18 @@ public class DefaultDataType<T> extends AbstractDataType<T> {
      * The type name used for casting to this type.
      */
     private final String                                        castTypeName;
+
     /**
-     * The type name used for casting to this type.
+     * The type name prefix (prior to length, precision, scale) used for casting
+     * to this type.
      */
-    private final String                                        castTypeBase;
+    private final String                                        castTypePrefix;
+
+    /**
+     * The type name suffix (after length, precision, scale) used for casting to
+     * this type.
+     */
+    private final String                                        castTypeSuffix;
 
     /**
      * The type name.
@@ -230,7 +238,7 @@ public class DefaultDataType<T> extends AbstractDataType<T> {
     }
 
     public DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, String typeName) {
-        this(dialect, sqlDataType, typeName, typeName);
+        this(dialect, sqlDataType, typeName, null);
     }
 
     public DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, String typeName, String castTypeName) {
@@ -250,7 +258,7 @@ public class DefaultDataType<T> extends AbstractDataType<T> {
     }
 
     public DefaultDataType(SQLDialect dialect, Class<T> type, String typeName) {
-        this(dialect, null, type, unquotedName(typeName), typeName, typeName, null, null, null, Nullability.DEFAULT, null);
+        this(dialect, null, type, unquotedName(typeName), typeName, null, null, null, null, Nullability.DEFAULT, null);
     }
 
     public DefaultDataType(SQLDialect dialect, Class<T> type, String typeName, String castTypeName) {
@@ -258,11 +266,7 @@ public class DefaultDataType<T> extends AbstractDataType<T> {
     }
 
     DefaultDataType(SQLDialect dialect, Class<T> type, Name qualifiedTypeName) {
-        this(dialect, null, type, qualifiedTypeName, qualifiedTypeName.last(), qualifiedTypeName.last(), null, null, null, Nullability.DEFAULT, null);
-    }
-
-    DefaultDataType(SQLDialect dialect, Class<T> type, Name qualifiedTypeName, String typeName, String castTypeName, Integer precision, Integer scale, Integer length, Nullability nullability, Field<T> defaultValue) {
-        this(dialect, null, type, qualifiedTypeName, typeName, castTypeName, precision, scale, length, nullability, defaultValue);
+        this(dialect, null, type, qualifiedTypeName, qualifiedTypeName.last(), null, null, null, null, Nullability.DEFAULT, null);
     }
 
     DefaultDataType(SQLDialect dialect, Class<T> type, Binding<?, T> binding, Name qualifiedTypeName, String typeName, String castTypeName, Integer precision, Integer scale, Integer length, Nullability nullability, Field<T> defaultValue) {
@@ -288,9 +292,12 @@ public class DefaultDataType<T> extends AbstractDataType<T> {
         // [#858] SQLDataTypes should reference themselves for more convenience
         this.sqlDataType = (dialect == null) ? this : sqlDataType;
         this.uType = type;
-        this.typeName = typeName;
-        this.castTypeName = castTypeName;
-        this.castTypeBase = TYPE_NAME_PATTERN.matcher(castTypeName).replaceAll("").trim();
+        this.typeName = TYPE_NAME_PATTERN.matcher(typeName).replaceAll("").trim();
+        this.castTypeName = castTypeName == null ? this.typeName : castTypeName;
+
+        String[] split = TYPE_NAME_PATTERN.split(castTypeName == null ? typeName : castTypeName);
+        this.castTypePrefix = split[0];
+        this.castTypeSuffix = split.length > 1 ? split[1] : "";
 
         this.nullability = nullability;
         this.collation = collation;
@@ -369,7 +376,8 @@ public class DefaultDataType<T> extends AbstractDataType<T> {
         this.tType = t.tType;
         this.typeName = t.typeName;
         this.castTypeName = t.castTypeName;
-        this.castTypeBase = t.castTypeBase;
+        this.castTypePrefix = t.castTypePrefix;
+        this.castTypeSuffix = t.castTypeSuffix;
 
         this.nullability = nullability;
         this.collation = collation;
@@ -499,8 +507,13 @@ public class DefaultDataType<T> extends AbstractDataType<T> {
     }
 
     @Override
-    final String castTypeBase0() {
-        return castTypeBase;
+    final String castTypePrefix0() {
+        return castTypePrefix;
+    }
+
+    @Override
+    final String castTypeSuffix0() {
+        return castTypeSuffix;
     }
 
     @Override

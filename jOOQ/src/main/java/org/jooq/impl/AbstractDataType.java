@@ -436,7 +436,7 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
         //         a null value, historically, so removing this check would
         //         introduce a lot of regressions!
         if (lengthDefined() && length() > 0) {
-            return castTypeBase0() + "(" + length() + ")";
+            return castTypePrefix0() + "(" + length() + ")" + castTypeSuffix0();
         }
         else if (precisionDefined() && precision() > 0) {
 
@@ -444,11 +444,11 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
             //         possibly despite there being explicit or implicit
             //         precision support in DDL.
             if (isTimestamp() && NO_SUPPORT_TIMESTAMP_PRECISION.contains(dialect))
-                return castTypeBase0();
+                return castTypePrefix0() + castTypeSuffix0();
             else if (scaleDefined() && scale() > 0)
-                return castTypeBase0() + "(" + precision() + ", " + scale() + ")";
+                return castTypePrefix0() + "(" + precision() + ", " + scale() + ")" + castTypeSuffix0();
             else
-                return castTypeBase0() + "(" + precision() + ")";
+                return castTypePrefix0() + "(" + precision() + ")" + castTypeSuffix0();
         }
         else {
             return castTypeName0();
@@ -657,7 +657,8 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
     }
 
     abstract String typeName0();
-    abstract String castTypeBase0();
+    abstract String castTypePrefix0();
+    abstract String castTypeSuffix0();
     abstract String castTypeName0();
     abstract Class<?> tType0();
     abstract Integer precision0();

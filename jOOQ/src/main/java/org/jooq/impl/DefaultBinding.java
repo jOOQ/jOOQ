@@ -557,7 +557,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         static final Set<SQLDialect>     NEEDS_PRECISION_SCALE_ON_BIGDECIMAL = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB);
         static final Set<SQLDialect>     REQUIRES_JSON_CAST                  = SQLDialect.supportedBy(POSTGRES);
         static final Set<SQLDialect>     NO_SUPPORT_ENUM_CAST                = SQLDialect.supportedBy(POSTGRES);
-        static final Set<SQLDialect>     NO_SUPPORT_NVARCHAR                 = SQLDialect.supportedBy(DERBY);
+        static final Set<SQLDialect>     NO_SUPPORT_NVARCHAR                 = SQLDialect.supportedBy(DERBY, FIREBIRD);
 
 
 

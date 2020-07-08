@@ -553,17 +553,18 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         /**
          * Generated UID
          */
-        private static final long                serialVersionUID                    = -7965247586545864991L;
-        private static final Set<SQLDialect>     NEEDS_PRECISION_SCALE_ON_BIGDECIMAL = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB);
-        private static final Set<SQLDialect>     REQUIRES_JSON_CAST                  = SQLDialect.supportedBy(POSTGRES);
-        private static final Set<SQLDialect>     NO_SUPPORT_ENUM_CAST                = SQLDialect.supportedBy(POSTGRES);
+        private static final long        serialVersionUID                    = -7965247586545864991L;
+        static final Set<SQLDialect>     NEEDS_PRECISION_SCALE_ON_BIGDECIMAL = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB);
+        static final Set<SQLDialect>     REQUIRES_JSON_CAST                  = SQLDialect.supportedBy(POSTGRES);
+        static final Set<SQLDialect>     NO_SUPPORT_ENUM_CAST                = SQLDialect.supportedBy(POSTGRES);
+        static final Set<SQLDialect>     NO_SUPPORT_NVARCHAR                 = SQLDialect.supportedBy(DERBY);
 
 
 
 
 
-        final DataType<T>                        dataType;
-        final Converter<T, U>                    converter;
+        final DataType<T>                dataType;
+        final Converter<T, U>            converter;
 
         AbstractBinding(DataType<T> dataType, Converter<T, U> converter) {
             this.dataType = dataType;
@@ -3752,26 +3753,39 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         /**
          * Generated UID
          */
-        private static final long serialVersionUID = 4232459541239942932L;
+        private static final long             serialVersionUID = 4232459541239942932L;
+        private final DefaultStringBinding<U> fallback;
 
         DefaultNStringBinding(DataType<String> dataType, Converter<String, U> converter) {
             super(dataType, converter);
+
+            this.fallback = new DefaultStringBinding<>(dataType, converter);
         }
 
         @Override
         void sqlInline0(BindingSQLContext<U> ctx, String value) throws SQLException {
-            ctx.render().sql('N');
-
-            super.sqlInline0(ctx, value);
+            if (NO_SUPPORT_NVARCHAR.contains(ctx.dialect())) {
+                fallback.sqlInline0(ctx, value);
+            }
+            else {
+                ctx.render().sql('N');
+                super.sqlInline0(ctx, value);
+            }
         }
 
         @Override
         final void set0(BindingSetStatementContext<U> ctx, String value) throws SQLException {
-            ctx.statement().setNString(ctx.index(), value);
+            if (NO_SUPPORT_NVARCHAR.contains(ctx.dialect()))
+                fallback.set0(ctx, value);
+            else
+                ctx.statement().setNString(ctx.index(), value);
         }
 
         @Override
         final void set0(BindingSetSQLOutputContext<U> ctx, String value) throws SQLException {
+            if (NO_SUPPORT_NVARCHAR.contains(ctx.dialect())) {
+                fallback.set0(ctx, value);
+            }
 
 
 
@@ -3802,21 +3816,32 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final String get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-            return ctx.resultSet().getNString(ctx.index());
+            if (NO_SUPPORT_NVARCHAR.contains(ctx.dialect()))
+                return fallback.get0(ctx);
+            else
+                return ctx.resultSet().getNString(ctx.index());
         }
 
         @Override
         final String get0(BindingGetStatementContext<U> ctx) throws SQLException {
-            return ctx.statement().getNString(ctx.index());
+            if (NO_SUPPORT_NVARCHAR.contains(ctx.dialect()))
+                return fallback.get0(ctx);
+            else
+                return ctx.statement().getNString(ctx.index());
         }
 
         @Override
         final String get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
-            return ctx.input().readNString();
+            if (NO_SUPPORT_NVARCHAR.contains(ctx.dialect()))
+                return fallback.get0(ctx);
+            else
+                return ctx.input().readNString();
         }
 
         @Override
         final int sqltype(Statement statement, Configuration configuration) {
+            if (NO_SUPPORT_NVARCHAR.contains(configuration.dialect()))
+                return fallback.sqltype(statement, configuration);
 
 
 
@@ -3824,7 +3849,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-            return Types.NVARCHAR;
+            else
+                return Types.NVARCHAR;
         }
     }
 

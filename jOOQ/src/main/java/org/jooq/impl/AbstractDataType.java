@@ -42,7 +42,9 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.SQLDataType.BLOB;
 import static org.jooq.impl.SQLDataType.CLOB;
+import static org.jooq.impl.SQLDataType.NCHAR;
 import static org.jooq.impl.SQLDataType.NCLOB;
+import static org.jooq.impl.SQLDataType.NVARCHAR;
 
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
@@ -445,7 +447,7 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
             // precision support in DDL.
             if (isTimestamp() && NO_SUPPORT_TIMESTAMP_PRECISION.contains(dialect))
                 return castTypePrefix0() + castTypeSuffix0();
-            else if (scaleDefined())
+            else if (scaleDefined() && scale() > 0)
                 return castTypePrefix0() + "(" + precision() + ", " + scale() + ")" + castTypeSuffix0();
             else
                 return castTypePrefix0() + "(" + precision() + ")" + castTypeSuffix0();
@@ -554,6 +556,19 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
     }
 
     @Override
+    public final boolean isNString() {
+        DataType<T> t = getSQLDataType();
+        return t == NCHAR
+            || t == NCLOB
+            || t == NVARCHAR
+
+            // [#9540] [#10368] In case the constant literals haven't been initialised yet
+            || NCHAR == null && "nchar".equals(t.getTypeName())
+            || NCLOB == null && "nclob".equals(t.getTypeName())
+            || NVARCHAR == null && "nvarchar".equals(t.getTypeName());
+    }
+
+    @Override
     public final boolean isDateTime() {
         Class<?> tType = tType0();
         return java.util.Date.class.isAssignableFrom(tType)
@@ -610,7 +625,14 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
         if (t == this)
             return getTypeName().endsWith("lob");
         else
-            return (t == BLOB || t == CLOB || t == NCLOB);
+            return t == BLOB
+                || t == CLOB
+                || t == NCLOB
+
+                // [#9540] [#10368] In case the constant literals haven't been initialised yet
+                || BLOB == null && "blob".equals(t.getTypeName())
+                || CLOB == null && "clob".equals(t.getTypeName())
+                || NCLOB == null && "nclob".equals(t.getTypeName());
     }
 
     @Override

@@ -130,6 +130,7 @@ import java.sql.Blob;
 import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.NClob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -308,7 +309,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         else if (type == Short.class || type == short.class)
             return new DefaultShortBinding(dataType, converter);
         else if (type == String.class)
-            return new DefaultStringBinding(dataType, converter);
+            if (dataType.isNString())
+                return new DefaultNStringBinding(dataType, converter);
+            else
+                return new DefaultStringBinding(dataType, converter);
         else if (type == Time.class)
             return new DefaultTimeBinding(dataType, converter);
         else if (type == Timestamp.class)
@@ -3740,6 +3744,87 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
             return Types.VARCHAR;
+        }
+    }
+
+    static final class DefaultNStringBinding<U> extends AbstractBinding<String, U> {
+
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = 4232459541239942932L;
+
+        DefaultNStringBinding(DataType<String> dataType, Converter<String, U> converter) {
+            super(dataType, converter);
+        }
+
+        @Override
+        void sqlInline0(BindingSQLContext<U> ctx, String value) throws SQLException {
+            ctx.render().sql('N');
+
+            super.sqlInline0(ctx, value);
+        }
+
+        @Override
+        final void set0(BindingSetStatementContext<U> ctx, String value) throws SQLException {
+            ctx.statement().setNString(ctx.index(), value);
+        }
+
+        @Override
+        final void set0(BindingSetSQLOutputContext<U> ctx, String value) throws SQLException {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            ctx.output().writeNString(value);
+        }
+
+        @Override
+        final String get0(BindingGetResultSetContext<U> ctx) throws SQLException {
+            return ctx.resultSet().getNString(ctx.index());
+        }
+
+        @Override
+        final String get0(BindingGetStatementContext<U> ctx) throws SQLException {
+            return ctx.statement().getNString(ctx.index());
+        }
+
+        @Override
+        final String get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
+            return ctx.input().readNString();
+        }
+
+        @Override
+        final int sqltype(Statement statement, Configuration configuration) {
+
+
+
+
+
+
+
+            return Types.NVARCHAR;
         }
     }
 

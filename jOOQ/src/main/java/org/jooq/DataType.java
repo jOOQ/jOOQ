@@ -641,6 +641,19 @@ public interface DataType<T> extends Named {
     boolean isString();
 
     /**
+     * Whether this data type is any national character data type.
+     * <p>
+     * This applies to any of these types:
+     * <ul>
+     * <li> {@link SQLDataType#LONGNVARCHAR}</li>
+     * <li> {@link SQLDataType#NCHAR}</li>
+     * <li> {@link SQLDataType#NCLOB}</li>
+     * <li> {@link SQLDataType#NVARCHAR}</li>
+     * </ul>
+     */
+    boolean isNString();
+
+    /**
      * Whether this data type is any date or time type.
      * <p>
      * This applies to any of these types.

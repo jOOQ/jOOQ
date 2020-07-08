@@ -332,6 +332,7 @@ import static org.jooq.impl.ParserImpl.Type.X;
 import static org.jooq.impl.ParserImpl.Type.Y;
 import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.SQLDataType.INTEGER;
+import static org.jooq.impl.SQLDataType.NVARCHAR;
 import static org.jooq.impl.Tools.EMPTY_BYTE;
 import static org.jooq.impl.Tools.EMPTY_COLLECTION;
 import static org.jooq.impl.Tools.EMPTY_COMMON_TABLE_EXPRESSION;
@@ -6868,6 +6869,12 @@ final class ParserImpl implements Parser {
                 break;
 
             case 'N':
+
+                // [#9540] N'...' NVARCHAR literals
+                if (S.is(type))
+                    if (ctx.characterNext() == '\'')
+                        return inline(parseStringLiteral(ctx), NVARCHAR);
+
                 if ((field = parseFieldNvl2If(ctx)) != null)
                     return field;
                 else if ((field = parseFieldNvlIf(ctx)) != null)
@@ -10732,6 +10739,8 @@ final class ParserImpl implements Parser {
             return parseUnquotedStringLiteral(ctx, true, '\'');
         else if (peek(ctx, '\''))
             return parseUnquotedStringLiteral(ctx, false, '\'');
+        else if (parseIf(ctx, 'n', '\'', false) || parseIf(ctx, 'N', '\'', false))
+            return parseUnquotedStringLiteral(ctx, true, '\'');
 
 
 

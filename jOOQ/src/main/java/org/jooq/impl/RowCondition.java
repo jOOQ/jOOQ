@@ -94,11 +94,17 @@ final class RowCondition extends AbstractCondition {
     private final Row                    left;
     private final Row                    right;
     private final Comparator             comparator;
+    private final boolean                forceEmulation;
 
     RowCondition(Row left, Row right, Comparator comparator) {
+        this(left, right, comparator, false);
+    }
+
+    RowCondition(Row left, Row right, Comparator comparator, boolean forceEmulation) {
         this.left = left;
         this.right = right;
         this.comparator = comparator;
+        this.forceEmulation = forceEmulation;
     }
 
     @Override
@@ -114,7 +120,7 @@ final class RowCondition extends AbstractCondition {
     private final QueryPartInternal delegate(Configuration configuration) {
         // Regular comparison predicate emulation
         if ((comparator == EQUALS || comparator == NOT_EQUALS) &&
-            EMULATE_EQ_AND_NE.contains(configuration.family())) {
+            (forceEmulation || EMULATE_EQ_AND_NE.contains(configuration.family()))) {
 
             Field<?>[] leftFields = left.fields();
             Field<?>[] rightFields = right.fields();
@@ -133,7 +139,7 @@ final class RowCondition extends AbstractCondition {
 
         // Ordering comparison predicate emulation
         else if ((comparator == GREATER || comparator == GREATER_OR_EQUAL || comparator == LESS || comparator == LESS_OR_EQUAL) &&
-                 EMULATE_RANGES.contains(configuration.family())) {
+                 (forceEmulation || EMULATE_RANGES.contains(configuration.family()))) {
 
             // The order component of the comparator (stripping the equal component)
             Comparator order

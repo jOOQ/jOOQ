@@ -48,6 +48,7 @@ import static org.jooq.Comparator.NOT_IN;
 // ...
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
+// ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
@@ -178,7 +179,7 @@ final class RowSubqueryCondition extends AbstractCondition {
                     break;
 
                 case LESS_OR_EQUAL:
-                    condition = ((RowN) left).le(row(fields));
+                    condition = new RowCondition(left, row(fields), comparator);
                     break;
 
                 case IN:
@@ -186,7 +187,7 @@ final class RowSubqueryCondition extends AbstractCondition {
                 case NOT_IN:
                 case NOT_EQUALS:
                 default:
-                    condition = ((RowN) left).eq(row(fields));
+                    condition = new RowCondition(left, row(fields), EQUALS);
                     break;
             }
 

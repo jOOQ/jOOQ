@@ -843,6 +843,7 @@ final class MetaImpl extends AbstractMeta {
                 String typeName = column.get(5, String.class);           // TYPE_NAME
                 int precision = column.get(6, int.class);                // COLUMN_SIZE
                 int scale = column.get(8, int.class);                    // DECIMAL_DIGITS
+                Integer nullableScale = column.get(8, Integer.class);    // DECIMAL_DIGITS
                 int nullable = column.get(10, int.class);                // NULLABLE
                 String remarks = column.get(11, String.class);           // REMARKS
                 String defaultValue = column.get(12, String.class);      // COLUMN_DEF
@@ -863,8 +864,15 @@ final class MetaImpl extends AbstractMeta {
                     // JDBC doesn't distinguish between precision and length
                     if (type.hasPrecision() && type.hasScale())
                         type = type.precision(precision, scale);
+
+                    // [#9590] Timestamp precision is in the scale column
+                    else if (type.hasPrecision() && type.isDateTime()) {
+                        if (nullableScale != null)
+                            type = type.precision(scale);
+                    }
                     else if (type.hasPrecision())
                         type = type.precision(precision);
+
                     else if (type.hasLength())
                         type = type.length(precision);
 

@@ -199,7 +199,7 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
     }
 
     final AbstractDataType<T> precision0(Integer p, Integer s) {
-        if (eq(precision(), p) && eq(scale(), s))
+        if (eq(precision0(), p) && eq(scale0(), s))
             return this;
 
         // [#4120] LOB types are not allowed to have precision
@@ -244,11 +244,11 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
     }
 
     final AbstractDataType<T> scale0(Integer s) {
-        if (eq(scale(), s))
+        if (eq(scale0(), s))
             return this;
 
         // [#4120] LOB types are not allowed to have scale
-        if (isLob())
+        else if (isLob())
             return this;
         else
             return construct(precision0(), s, length0(), nullability(), collation(), characterSet(), identity(), defaultValue());
@@ -274,7 +274,7 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
             return this;
 
         // [#4120] LOB types are not allowed to have length
-        if (isLob())
+        else if (isLob())
             return this;
         else
             return construct(precision0(), scale0(), l, nullability(), collation(), characterSet(), identity(), defaultValue());
@@ -435,24 +435,27 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
         //         be a lot of data types constructed with a 0 value instead of
         //         a null value, historically, so removing this check would
         //         introduce a lot of regressions!
-        if (lengthDefined() && length() > 0) {
+        if (lengthDefined()) {
             return castTypePrefix0() + "(" + length() + ")" + castTypeSuffix0();
         }
-        else if (precisionDefined() && precision() > 0) {
+        else if (precisionDefined()) {
+            if (isTimestamp()) {
 
-            // [#8029] Not all dialects support precision on timestamp syntax,
-            //         possibly despite there being explicit or implicit
-            //         precision support in DDL.
-            if (isTimestamp() && NO_SUPPORT_TIMESTAMP_PRECISION.contains(dialect))
-                return castTypePrefix0() + castTypeSuffix0();
-            else if (scaleDefined() && scale() > 0)
+                // [#8029] Not all dialects support precision on timestamp
+                // syntax, possibly despite there being explicit or implicit
+                // precision support in DDL.
+                if (NO_SUPPORT_TIMESTAMP_PRECISION.contains(dialect))
+                    return castTypePrefix0() + castTypeSuffix0();
+                else
+                    return castTypePrefix0() + "(" + precision() + ")" + castTypeSuffix0();
+            }
+            else if (scaleDefined())
                 return castTypePrefix0() + "(" + precision() + ", " + scale() + ")" + castTypeSuffix0();
             else
                 return castTypePrefix0() + "(" + precision() + ")" + castTypeSuffix0();
         }
-        else {
+        else
             return castTypeName0();
-        }
     }
 
     @Override

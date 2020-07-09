@@ -76,7 +76,6 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.cast;
 import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.sqrt;
 import static org.jooq.impl.DSL.using;
@@ -197,6 +196,7 @@ import org.jooq.exception.ControlFlowSignal;
 import org.jooq.exception.DataTypeException;
 import org.jooq.exception.MappingException;
 import org.jooq.exception.SQLDialectNotSupportedException;
+import org.jooq.impl.Cast.CastNative;
 import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.Longs;
@@ -2007,7 +2007,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-
             // [#1253] Derby doesn't support the standard literal
             else if (ctx.family() == DERBY)
                 ctx.render().visit(K_DATE).sql("('").sql(escape(value, ctx.render())).sql("')");
@@ -2273,7 +2272,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 else if (ctx.family() == HSQLDB)
                     ctx.render().visit(sqrt(inline(-1)));
                 else
-                    ctx.render().visit(K_CAST).sql('(').visit(inline("NaN")).sql(' ').visit(K_AS).sql(' ').visit(keyword(DOUBLE.getCastTypeName(ctx.configuration()))).sql(')');
+                    ctx.render().visit(new CastNative<>(inline("NaN"), DOUBLE));
             else
                 ctx.render().sql(value);
         }
@@ -2448,7 +2447,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 else if (ctx.family() == HSQLDB)
                     ctx.render().visit(sqrt(inline(-1)));
                 else
-                    ctx.render().visit(K_CAST).sql('(').visit(inline("NaN")).sql(' ').visit(K_AS).sql(' ').visit(keyword(DOUBLE.getCastTypeName(ctx.configuration()))).sql(')');
+                    ctx.render().visit(new CastNative<>(inline("NaN"), DOUBLE));
             else
                 ctx.render().sql(value);
         }
@@ -2791,7 +2790,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 case SQLITE:
                     ctx.render().sql('\'').sql(escape(format(value, family), ctx.render())).sql('\'');
                     break;
-
 
 
 
@@ -3901,7 +3899,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-
             // Most dialects implement SQL standard time literals
             else
                 ctx.render().visit(K_TIME).sql(" '").sql(escape(value, ctx.render())).sql('\'');
@@ -3969,7 +3966,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             // [#1253] Sybase does not implement timestamp literals
             if (INLINE_AS_STRING_LITERAL.contains(ctx.dialect()))
                 ctx.render().sql('\'').sql(escape(value, ctx.render())).sql('\'');
-
 
 
 

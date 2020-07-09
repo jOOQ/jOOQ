@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_CAST;
+import static org.jooq.impl.Keywords.K_TRIM;
 import static org.jooq.impl.Names.N_CAST;
 import static org.jooq.impl.Names.N_TO_CLOB;
 import static org.jooq.impl.Names.N_TO_DATE;
@@ -58,7 +59,9 @@ import java.sql.Timestamp;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Keyword;
 // ...
+import org.jooq.QueryPart;
 import org.jooq.RenderContext.CastMode;
 
 /**
@@ -197,7 +200,7 @@ final class Cast<T> extends AbstractField<T> {
             // [#857] Interestingly, Derby does not allow for casting numeric
             // types directly to VARCHAR. An intermediary cast to CHAR is needed
             if (field.getDataType().isNumeric() && type.isString() && !CHAR.equals(type))
-                ctx.visit(DSL.trim(new CastNative<>(new CastNative<>(field, CHAR(38)), (DataType<String>) getDataType())));
+                ctx.visit(K_TRIM).sql('(').visit(new CastNative<>(new CastNative<>(field, CHAR(38)), (DataType<String>) getDataType())).sql(')');
 
             // [#888] ... neither does casting character types to FLOAT (and similar)
             else if (field.getDataType().isString() && (FLOAT.equals(type) || DOUBLE.equals(type) || REAL.equals(type)))
@@ -291,18 +294,26 @@ final class Cast<T> extends AbstractField<T> {
 
 
 
-    private static class CastNative<T> extends AbstractField<T> {
+    static class CastNative<T> extends AbstractQueryPart {
 
         /**
          * Generated UID
          */
         private static final long serialVersionUID = -8497561014419483312L;
-        private final Field<?>    field;
+        private final QueryPart   expression;
+        private final DataType<T> type;
+        private final Keyword     typeAsKeyword;
 
-        CastNative(Field<?> field, DataType<T> type) {
-            super(N_CAST, type);
+        CastNative(QueryPart expression, DataType<T> type) {
+            this.expression = expression;
+            this.type = type;
+            this.typeAsKeyword = null;
+        }
 
-            this.field = field;
+        CastNative(QueryPart expression, Keyword typeAsKeyword) {
+            this.expression = expression;
+            this.type = null;
+            this.typeAsKeyword = typeAsKeyword;
         }
 
         @Override
@@ -314,11 +325,16 @@ final class Cast<T> extends AbstractField<T> {
             // Default rendering, if no special case has applied yet
             ctx.visit(K_CAST).sql('(')
                .castMode(CastMode.NEVER)
-               .visit(field)
+               .visit(expression)
                .castMode(castMode)
-               .sql(' ').visit(K_AS).sql(' ')
-               .sql(getDataType(ctx.configuration()).getCastTypeName(ctx.configuration()))
-               .sql(')');
+               .sql(' ').visit(K_AS).sql(' ');
+
+            if (typeAsKeyword != null)
+                ctx.visit(typeAsKeyword);
+            else
+                ctx.sql(type.getCastTypeName(ctx.configuration()));
+
+            ctx.sql(')');
         }
     }
 }

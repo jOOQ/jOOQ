@@ -44,9 +44,7 @@ package org.jooq.impl;
 
 // ...
 import static org.jooq.impl.DSL.val;
-import static org.jooq.impl.Keywords.K_AS;
-import static org.jooq.impl.Keywords.K_CAST;
-import static org.jooq.impl.Keywords.K_DATE;
+import static org.jooq.impl.SQLDataType.DATE;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -63,6 +61,7 @@ import org.jooq.Converter;
 import org.jooq.Converters;
 import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
+import org.jooq.impl.Cast.CastNative;
 
 /**
  * A binding that implements the date-as-timestamp semantics of the jOOQ code
@@ -94,9 +93,6 @@ public class LocalDateAsLocalDateTimeBinding implements Binding<LocalDateTime, L
 
     @Override
     public final void sql(BindingSQLContext<LocalDateTime> ctx) throws SQLException {
-
-
-
 
 
 

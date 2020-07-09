@@ -310,12 +310,23 @@ final class Cast<T> extends AbstractField<T> {
 
 
 
-    private class Native extends AbstractQueryPart {
+
+
+
+
+
+
+
+    private class Native extends AbstractField<T> {
 
         /**
          * Generated UID
          */
         private static final long serialVersionUID = -8497561014419483312L;
+
+        Native() {
+            super(N_CAST, Cast.this.getDataType());
+        }
 
         @Override
         public void accept(Context<?> ctx) {

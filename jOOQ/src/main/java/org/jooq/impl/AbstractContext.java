@@ -211,13 +211,59 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
             // Perform the actual visiting, or recurse into the replacement
             // -----------------------------------------------------------------
-            QueryPart original = part;
             QueryPart replacement = start(part);
+            
+            if (replacement != null) {
+                QueryPartInternal internal = (QueryPartInternal) replacement;
 
-            if (original == replacement)
-                visit0(original);
-            else
-                visit0(replacement);
+                // If this is supposed to be a declaration section and the part isn't
+                // able to declare anything, then disable declaration temporarily
+
+                // We're declaring fields, but "part" does not declare fields
+                if (declareFields() && !internal.declaresFields()) {
+                    boolean aliases = declareAliases();
+                    declareFields(false);
+                    visit0(internal);
+                    declareFields(true);
+                    declareAliases(aliases);
+                }
+
+                // We're declaring tables, but "part" does not declare tables
+                else if (declareTables() && !internal.declaresTables()) {
+                    boolean aliases = declareAliases();
+                    declareTables(false);
+                    visit0(internal);
+                    declareTables(true);
+                    declareAliases(aliases);
+                }
+
+                // We're declaring windows, but "part" does not declare windows
+                else if (declareWindows() && !internal.declaresWindows()) {
+                    declareWindows(false);
+                    visit0(internal);
+                    declareWindows(true);
+                }
+
+                // We're declaring cte, but "part" does not declare cte
+                else if (declareCTE() && !internal.declaresCTE()) {
+                    declareCTE(false);
+                    visit0(internal);
+                    declareCTE(true);
+                }
+
+                else if (!castModeOverride && castMode() != CastMode.DEFAULT && !internal.generatesCast()) {
+                    CastMode previous = castMode();
+
+                    castMode(CastMode.DEFAULT);
+                    visit0(internal);
+                    castMode(previous);
+                }
+
+                // We're not declaring, or "part" can declare
+                else {
+                    visit0(internal);
+                }
+            }
 
             end(replacement);
 
@@ -230,6 +276,8 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
         return (C) this;
     }
+
+    protected abstract void visit0(QueryPartInternal internal);
 
     /**
      * Emit a clause from a query part being visited.
@@ -400,68 +448,6 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
             return context() instanceof BindContext ? (BindContext) context() : null;
         }
     }
-
-    // ------------------------------------------------------------------------
-    // XXX Context API
-    // ------------------------------------------------------------------------
-
-    private final C visit0(QueryPart part) {
-        if (part != null) {
-            QueryPartInternal internal = (QueryPartInternal) part;
-
-            // If this is supposed to be a declaration section and the part isn't
-            // able to declare anything, then disable declaration temporarily
-
-            // We're declaring fields, but "part" does not declare fields
-            if (declareFields() && !internal.declaresFields()) {
-                boolean aliases = declareAliases();
-                declareFields(false);
-                visit0(internal);
-                declareFields(true);
-                declareAliases(aliases);
-            }
-
-            // We're declaring tables, but "part" does not declare tables
-            else if (declareTables() && !internal.declaresTables()) {
-                boolean aliases = declareAliases();
-                declareTables(false);
-                visit0(internal);
-                declareTables(true);
-                declareAliases(aliases);
-            }
-
-            // We're declaring windows, but "part" does not declare windows
-            else if (declareWindows() && !internal.declaresWindows()) {
-                declareWindows(false);
-                visit0(internal);
-                declareWindows(true);
-            }
-
-            // We're declaring cte, but "part" does not declare cte
-            else if (declareCTE() && !internal.declaresCTE()) {
-                declareCTE(false);
-                visit0(internal);
-                declareCTE(true);
-            }
-
-            else if (!castModeOverride && castMode() != CastMode.DEFAULT && !internal.generatesCast()) {
-                CastMode previous = castMode();
-
-                castMode(CastMode.DEFAULT);
-                visit0(internal);
-                castMode(previous);
-            }
-
-            // We're not declaring, or "part" can declare
-            else {
-                visit0(internal);
-            }
-        }
-
-        return (C) this;
-    }
-
-    protected abstract void visit0(QueryPartInternal internal);
 
     @Override
     public final boolean declareFields() {

@@ -92,8 +92,8 @@ public class DerbyDataType {
     public static final DataType<BigDecimal> NUMERIC                    = new DefaultDataType<>(FAMILY, SQLDataType.NUMERIC, "numeric");
     public static final DataType<String>     VARCHAR                    = new DefaultDataType<>(FAMILY, SQLDataType.VARCHAR, "varchar", "varchar(32672)");
     public static final DataType<String>     LONGVARCHAR                = new DefaultDataType<>(FAMILY, SQLDataType.LONGVARCHAR, "long varchar");
-    public static final DataType<String>     CHAR                       = new DefaultDataType<>(FAMILY, SQLDataType.CHAR, "char", "varchar(32672)");
-    public static final DataType<String>     CHARACTER                  = new DefaultDataType<>(FAMILY, SQLDataType.CHAR, "character", "varchar(32672)");
+    public static final DataType<String>     CHAR                       = new DefaultDataType<>(FAMILY, SQLDataType.CHAR, "char", "char(1)");
+    public static final DataType<String>     CHARACTER                  = new DefaultDataType<>(FAMILY, SQLDataType.CHAR, "character", "character(1)");
     public static final DataType<String>     CLOB                       = new DefaultDataType<>(FAMILY, SQLDataType.CLOB, "clob");
     public static final DataType<String>     CHARACTERLARGEOBJECT       = new DefaultDataType<>(FAMILY, SQLDataType.CLOB, "character large object");
     public static final DataType<String>     CHARVARYING                = new DefaultDataType<>(FAMILY, SQLDataType.VARCHAR, "char varying", "char varying(32672)");
@@ -112,7 +112,7 @@ public class DerbyDataType {
     protected static final DataType<byte[]>     __BINARY                = new DefaultDataType<>(FAMILY, SQLDataType.BINARY, "blob");
     protected static final DataType<Boolean>    __BIT                   = new DefaultDataType<>(FAMILY, SQLDataType.BIT, "boolean");
     protected static final DataType<byte[]>     __LONGVARBINARY         = new DefaultDataType<>(FAMILY, SQLDataType.LONGVARBINARY, "blob");
-    protected static final DataType<String>     __NCHAR                 = new DefaultDataType<>(FAMILY, SQLDataType.NCHAR, "char", "varchar(32672)");
+    protected static final DataType<String>     __NCHAR                 = new DefaultDataType<>(FAMILY, SQLDataType.NCHAR, "char", "char(1)");
     protected static final DataType<String>     __NCLOB                 = new DefaultDataType<>(FAMILY, SQLDataType.NCLOB, "clob");
     protected static final DataType<String>     __LONGNVARCHAR          = new DefaultDataType<>(FAMILY, SQLDataType.LONGNVARCHAR, "long varchar");
     protected static final DataType<String>     __NVARCHAR              = new DefaultDataType<>(FAMILY, SQLDataType.NVARCHAR, "varchar", "varchar(32672)");

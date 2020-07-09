@@ -40,17 +40,16 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_CAST;
-import static org.jooq.impl.Keywords.K_DECIMAL;
-import static org.jooq.impl.Keywords.K_TRIM;
 import static org.jooq.impl.Names.N_CAST;
 import static org.jooq.impl.Names.N_TO_CLOB;
 import static org.jooq.impl.Names.N_TO_DATE;
 import static org.jooq.impl.Names.N_TO_TIMESTAMP;
 import static org.jooq.impl.SQLDataType.BOOLEAN;
+import static org.jooq.impl.SQLDataType.CHAR;
+import static org.jooq.impl.SQLDataType.DECIMAL;
 import static org.jooq.impl.SQLDataType.DOUBLE;
 import static org.jooq.impl.SQLDataType.FLOAT;
 import static org.jooq.impl.SQLDataType.REAL;
-import static org.jooq.impl.SQLDataType.VARCHAR;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -106,7 +105,7 @@ final class Cast<T> extends AbstractField<T> {
                 break;
 
             default:
-                ctx.visit(new Native());
+                ctx.visit(new CastNative<>(field, getDataType()));
                 break;
         }
     }
@@ -157,12 +156,16 @@ final class Cast<T> extends AbstractField<T> {
 
 
 
-    private class CastDerby extends Native {
+    private class CastDerby extends CastNative<T> {
 
         /**
          * Generated UID
          */
         private static final long serialVersionUID = -8737153188122391258L;
+
+        CastDerby() {
+            super(field, Cast.this.getDataType());
+        }
 
         @SuppressWarnings("unchecked")
         private final Field<Boolean> asDecodeNumberToBoolean() {
@@ -186,62 +189,29 @@ final class Cast<T> extends AbstractField<T> {
                       .otherwise(inline(true));
         }
 
+        @SuppressWarnings("unchecked")
         @Override
         public final void accept(Context<?> ctx) {
-
-            // Avoid casting bind values inside an explicit cast...
-            CastMode castMode = ctx.castMode();
             DataType<T> type = getSQLDataType();
 
             // [#857] Interestingly, Derby does not allow for casting numeric
             // types directly to VARCHAR. An intermediary cast to CHAR is needed
-            if (field.getDataType().isNumeric() && VARCHAR.equals(type)) {
-                ctx.visit(K_TRIM).sql('(')
-                       .visit(K_CAST).sql('(')
-                           .visit(K_CAST).sql('(')
-                               .castMode(CastMode.NEVER)
-                               .visit(field)
-                               .castMode(castMode)
-                               .sql(' ').visit(K_AS).sql(" char(38))")
-                           .sql(' ').visit(K_AS).sql(' ')
-                           .sql(getDataType(ctx.configuration()).getCastTypeName(ctx.configuration()))
-                       .sql("))");
-
-                return;
-            }
+            if (field.getDataType().isNumeric() && type.isString() && !CHAR.equals(type))
+                ctx.visit(DSL.trim(new CastNative<>(new CastNative<>(field, CHAR(38)), (DataType<String>) getDataType())));
 
             // [#888] ... neither does casting character types to FLOAT (and similar)
-            else if (field.getDataType().isString() &&
-                     (FLOAT.equals(type) || DOUBLE.equals(type) || REAL.equals(type))) {
-
-                ctx.visit(K_CAST).sql('(')
-                       .visit(K_CAST).sql('(')
-                           .castMode(CastMode.NEVER)
-                           .visit(field)
-                           .castMode(castMode)
-                           .sql(' ').visit(K_AS).sql(' ').visit(K_DECIMAL)
-                       .sql(") ")
-                       .visit(K_AS)
-                       .sql(' ')
-                       .sql(getDataType(ctx.configuration()).getCastTypeName(ctx.configuration()))
-                   .sql(')');
-
-                return;
-            }
+            else if (field.getDataType().isString() && (FLOAT.equals(type) || DOUBLE.equals(type) || REAL.equals(type)))
+                ctx.visit(new CastNative<>(new CastNative<>(field, DECIMAL), getDataType()));
 
             // [#859] ... neither does casting numeric types to BOOLEAN
-            else if (field.getDataType().isNumeric() && BOOLEAN.equals(type)) {
+            else if (field.getDataType().isNumeric() && BOOLEAN.equals(type))
                 ctx.visit(asDecodeNumberToBoolean());
-                return;
-            }
 
             // [#859] ... neither does casting character types to BOOLEAN
-            else if (field.getDataType().isString() && BOOLEAN.equals(type)) {
+            else if (field.getDataType().isString() && BOOLEAN.equals(type))
                 ctx.visit(asDecodeVarcharToBoolean());
-                return;
-            }
-
-            super.accept(ctx);
+            else
+                super.accept(ctx);
         }
     }
 
@@ -317,15 +287,22 @@ final class Cast<T> extends AbstractField<T> {
 
 
 
-    private class Native extends AbstractField<T> {
+
+
+
+
+    private static class CastNative<T> extends AbstractField<T> {
 
         /**
          * Generated UID
          */
         private static final long serialVersionUID = -8497561014419483312L;
+        private final Field<?>    field;
 
-        Native() {
-            super(N_CAST, Cast.this.getDataType());
+        CastNative(Field<?> field, DataType<T> type) {
+            super(N_CAST, type);
+
+            this.field = field;
         }
 
         @Override

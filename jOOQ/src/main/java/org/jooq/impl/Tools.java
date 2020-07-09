@@ -147,6 +147,8 @@ import static org.jooq.impl.Keywords.K_START_WITH;
 import static org.jooq.impl.Keywords.K_THEN;
 import static org.jooq.impl.Keywords.K_THROW;
 import static org.jooq.impl.Keywords.K_WHEN;
+import static org.jooq.impl.SQLDataType.BLOB;
+import static org.jooq.impl.SQLDataType.CLOB;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.DataCacheKey.DATA_REFLECTION_CACHE_GET_ANNOTATED_GETTER;
 import static org.jooq.impl.Tools.DataCacheKey.DATA_REFLECTION_CACHE_GET_ANNOTATED_MEMBERS;
@@ -4825,6 +4827,8 @@ final class Tools {
     }
 
     static final void toSQLDDLTypeDeclaration(Context<?> ctx, DataType<?> type) {
+        // [#10376] TODO: Move some of this logic into DataType
+
         DataType<?> elementType = (type instanceof ArrayDataType)
             ? ((ArrayDataType<?>) type).elementType
             : type;
@@ -4919,9 +4923,9 @@ final class Tools {
             // [#6745] [#9473] The DataType.getCastTypeName() cannot be used in some dialects, for DDL
             else if (NO_SUPPORT_CAST_TYPE_IN_DDL.contains(ctx.dialect()))
                 if (type.isBinary())
-                    ctx.sql(SQLDataType.BLOB.getTypeName(ctx.configuration()));
+                    ctx.sql(BLOB.getTypeName(ctx.configuration()));
                 else
-                    ctx.sql(SQLDataType.CLOB.getTypeName(ctx.configuration()));
+                    ctx.sql(CLOB.getTypeName(ctx.configuration()));
 
             // Some databases don't allow for length-less VARCHAR, VARBINARY types
             else {
@@ -4934,10 +4938,15 @@ final class Tools {
             }
         }
         else if (type.hasPrecision() && type.precision() > 0 && (!type.isTimestamp() || !NO_SUPPORT_TIMESTAMP_PRECISION.contains(ctx.dialect()))) {
-            if (type.hasScale())
-                ctx.sql(typeName).sql('(').sql(type.precision()).sql(", ").sql(type.scale()).sql(')');
+
+            // [#6745] [#9473] The DataType.getCastTypeName() cannot be used in some dialects, for DDL
+            if (NO_SUPPORT_CAST_TYPE_IN_DDL.contains(ctx.dialect()))
+                if (type.hasScale())
+                    ctx.sql(typeName).sql('(').sql(type.precision()).sql(", ").sql(type.scale()).sql(')');
+                else
+                    ctx.sql(typeName).sql('(').sql(type.precision()).sql(')');
             else
-                ctx.sql(typeName).sql('(').sql(type.precision()).sql(')');
+                ctx.sql(type.getCastTypeName(ctx.configuration()));
         }
 
         // [#6841] SQLite usually recognises int/integer as both meaning the same thing, but not in the

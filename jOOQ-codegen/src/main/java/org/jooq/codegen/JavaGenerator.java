@@ -7461,7 +7461,7 @@ public class JavaGenerator extends AbstractGenerator {
 
                 sb.append(sqlDataTypeRef);
 
-                if (dataType.hasPrecision() && p > 0) {
+                if (dataType.hasPrecision() && (dataType.isTimestamp() || p > 0)) {
 
                     // [#6411] Call static method if available, rather than instance method
                     if (SQLDATATYPE_WITH_PRECISION.contains(literal))

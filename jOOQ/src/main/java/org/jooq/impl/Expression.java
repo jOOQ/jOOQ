@@ -110,7 +110,6 @@ import org.jooq.Field;
 import org.jooq.Param;
 import org.jooq.SQLDialect;
 import org.jooq.exception.DataTypeException;
-import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.Interval;
 import org.jooq.types.YearToMonth;
@@ -121,12 +120,13 @@ final class Expression<T> extends AbstractField<T> {
     /**
      * Generated UID
      */
-    private static final long             serialVersionUID    = -5522799070693019771L;
-    private static final Set<SQLDialect>  SUPPORT_BIT_AND     = SQLDialect.supportedBy(H2, HSQLDB);
-    private static final Set<SQLDialect>  SUPPORT_BIT_OR_XOR  = SQLDialect.supportedBy(H2, HSQLDB);
-    private static final Set<SQLDialect>  EMULATE_BIT_XOR     = SQLDialect.supportedBy(SQLITE);
-    private static final Set<SQLDialect>  EMULATE_SHR_SHL     = SQLDialect.supportedBy(HSQLDB);
-    private static final Set<SQLDialect>  HASH_OP_FOR_BIT_XOR = SQLDialect.supportedBy(POSTGRES);
+    private static final long             serialVersionUID       = -5522799070693019771L;
+    private static final Set<SQLDialect>  SUPPORT_BIT_AND        = SQLDialect.supportedBy(H2, HSQLDB);
+    private static final Set<SQLDialect>  SUPPORT_BIT_OR_XOR     = SQLDialect.supportedBy(H2, HSQLDB);
+    private static final Set<SQLDialect>  EMULATE_BIT_XOR        = SQLDialect.supportedBy(SQLITE);
+    private static final Set<SQLDialect>  EMULATE_SHR_SHL        = SQLDialect.supportedBy(HSQLDB);
+    private static final Set<SQLDialect>  HASH_OP_FOR_BIT_XOR    = SQLDialect.supportedBy(POSTGRES);
+    private static final Set<SQLDialect>  SUPPORT_YEAR_TO_SECOND = SQLDialect.supportedBy(POSTGRES);
 
     private final Field<T>                lhs;
     private final QueryPartList<Field<?>> rhs;
@@ -304,20 +304,22 @@ final class Expression<T> extends AbstractField<T> {
 
         @Override
         public final void accept(Context<?> ctx) {
-            if (rhs.getDataType().isInterval())
+            if (rhs.getType() == YearToSecond.class && !SUPPORT_YEAR_TO_SECOND.contains(ctx.dialect()))
+                acceptYTSExpression(ctx);
+            else if (rhs.getDataType().isInterval())
                 acceptIntervalExpression(ctx);
             else
                 acceptNumberExpression(ctx);
         }
 
-        private final Field<T> getYTSExpression() {
+        private final void acceptYTSExpression(Context<?> ctx) {
             YearToSecond yts = rhsAsYTS();
 
-            return new DateExpression<>(
+            ctx.visit(new DateExpression<>(
                 new DateExpression<>(lhs, operator, p(yts.getYearToMonth())),
                 operator,
                 p(yts.getDayToSecond())
-            );
+            ));
         }
 
         @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -333,11 +335,6 @@ final class Expression<T> extends AbstractField<T> {
                 case CUBRID:
                 case MARIADB:
                 case MYSQL: {
-                    if (rhs.getType() == YearToSecond.class) {
-                        ctx.visit(getYTSExpression());
-                        break;
-                    }
-
                     Interval interval = rhsAsInterval();
 
                     if (operator == SUBTRACT)
@@ -356,16 +353,12 @@ final class Expression<T> extends AbstractField<T> {
                     else
                         ctx.visit(N_DATE_ADD).sql('(').visit(lhs).sql(", ").visit(K_INTERVAL).sql(' ')
                            .visit(Tools.field(TRUNC_TO_MICROS.matcher("" + interval).replaceAll("$1"), SQLDataType.VARCHAR)).sql(' ').visit(K_DAY_MICROSECOND).sql(')');
+
                     break;
                 }
 
                 case DERBY:
                 case HSQLDB: {
-                    if (rhs.getType() == YearToSecond.class) {
-                        ctx.visit(getYTSExpression());
-                        break;
-                    }
-
                     boolean needsCast = getDataType().getType() != Timestamp.class;
                     if (needsCast)
                         ctx.visit(K_CAST).sql('(');
@@ -388,31 +381,24 @@ final class Expression<T> extends AbstractField<T> {
                 }
 
                 case FIREBIRD: {
-                    if (rhs.getType() == YearToSecond.class)
-                        ctx.visit(getYTSExpression());
-                    else if (rhs.getType() == YearToMonth.class)
+                    if (rhs.getType() == YearToMonth.class)
                         ctx.visit(N_DATEADD).sql('(').visit(K_MONTH).sql(", ").visit(p(sign * rhsAsYTM().intValue())).sql(", ").visit(lhs).sql(')');
                     else
                         ctx.visit(N_DATEADD).sql('(').visit(K_MILLISECOND).sql(", ").visit(p(sign * (long) rhsAsDTS().getTotalMilli())).sql(", ").visit(lhs).sql(')');
+
                     break;
                 }
 
                 case H2: {
-                    if (rhs.getType() == YearToSecond.class)
-                        ctx.visit(getYTSExpression());
-                    else if (rhs.getType() == YearToMonth.class)
+                    if (rhs.getType() == YearToMonth.class)
                         ctx.visit(N_DATEADD).sql("('month', ").visit(p(sign * rhsAsYTM().intValue())).sql(", ").visit(lhs).sql(')');
                     else
                         ctx.visit(N_DATEADD).sql("('ms', ").visit(p(sign * (long) rhsAsDTS().getTotalMilli())).sql(", ").visit(lhs).sql(')');
+
                     break;
                 }
 
                 case SQLITE: {
-                    if (rhs.getType() == YearToSecond.class) {
-                        ctx.visit(getYTSExpression());
-                        break;
-                    }
-
                     boolean ytm = rhs.getType() == YearToMonth.class;
                     Field<?> interval = p(ytm ? rhsAsYTM().intValue() : rhsAsDTS().getTotalSeconds());
 
@@ -423,26 +409,6 @@ final class Expression<T> extends AbstractField<T> {
                     ctx.visit(N_STRFTIME).sql("('%Y-%m-%d %H:%M:%f', ").visit(lhs).sql(", ").visit(interval).sql(')');
                     break;
                 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

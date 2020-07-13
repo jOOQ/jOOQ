@@ -193,12 +193,18 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
         InsertQuery<R> insert = create.insertQuery(getTable());
         addChangedValues(storeFields, insert, false);
 
-        // Don't store records if no value was set by client code
         if (!insert.isExecutable()) {
-            if (log.isDebugEnabled())
-                log.debug("Query is not executable", insert);
 
-            return 0;
+            // Don't store records if no value was set by client code
+            if (FALSE.equals(create.settings().isInsertUnchangedRecords())) {
+                if (log.isDebugEnabled())
+                    log.debug("Query is not executable", insert);
+
+                return 0;
+            }
+
+            else
+                insert.setDefaultValues();
         }
 
         // [#1596] Set timestamp and/or version columns to appropriate values

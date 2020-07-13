@@ -1234,7 +1234,7 @@ extends
      *
      * @param <E> The generic entity type.
      * @param type The entity type.
-     * @return The resulting value. This is never <code>null</code>.
+     * @return The resulting value.
      * @see Record#into(Class)
      * @see Result#into(Class)
      * @throws DataAccessException if something went wrong executing the query
@@ -1244,7 +1244,7 @@ extends
      * @throws TooManyRowsException if the query returned more than one record
      * @see DefaultRecordMapper
      */
-    @NotNull
+    @Nullable
     <E> E fetchSingleInto(Class<? extends E> type) throws DataAccessException, MappingException, NoDataFoundException, TooManyRowsException;
 
     /**

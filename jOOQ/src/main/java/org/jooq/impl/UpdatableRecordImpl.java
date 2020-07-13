@@ -71,6 +71,7 @@ import org.jooq.TableField;
 import org.jooq.TableRecord;
 import org.jooq.UniqueKey;
 import org.jooq.UpdatableRecord;
+import org.jooq.conf.UpdateUnchangedRecords;
 import org.jooq.exception.DataChangedException;
 import org.jooq.exception.NoDataFoundException;
 import org.jooq.tools.JooqLogger;
@@ -284,16 +285,40 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
             || getTable().getRecordVersion() == null && getTable().getRecordTimestamp() == null && fetched;
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     private final <Q extends StoreQuery<R> & org.jooq.ConditionProvider> int storeMergeOrUpdate0(Field<?>[] storeFields, TableField<R, ?>[] keys, Q query, boolean merge) {
         addChangedValues(storeFields, query, merge);
         Tools.addConditions(query, this, keys);
 
-        // Don't store records if no value was set by client code
         if (!query.isExecutable()) {
-            if (log.isDebugEnabled())
-                log.debug("Query is not executable", query);
+            switch (StringUtils.defaultIfNull(create().settings().getUpdateUnchangedRecords(), UpdateUnchangedRecords.NEVER)) {
 
-            return 0;
+                // Don't store records if no value was set by client code
+                case NEVER:
+                    if (log.isDebugEnabled())
+                        log.debug("Query is not executable", query);
+
+                    return 0;
+
+                case SET_PRIMARY_KEY_TO_ITSELF:
+                    for (TableField<R, ?> key : keys)
+                        query.addValue(key, (Field) key);
+
+                    break;
+
+                case SET_NON_PRIMARY_KEY_TO_THEMSELVES:
+                    for (Field<?> field : storeFields)
+                        query.addValue(field, (Field) field);
+
+                    break;
+
+                case SET_NON_PRIMARY_KEY_TO_RECORD_VALUES:
+                    for (Field<?> field : storeFields)
+                        changed(field, true);
+
+                    addChangedValues(storeFields, query, merge);
+                    break;
+            }
         }
 
         // [#1596] Set timestamp and/or version columns to appropriate values

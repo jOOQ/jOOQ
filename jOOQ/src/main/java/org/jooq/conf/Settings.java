@@ -36,7 +36,7 @@ public class Settings
     implements Serializable, Cloneable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31200L;
+    private final static long serialVersionUID = 31400L;
     @XmlElement(defaultValue = "true")
     protected Boolean renderCatalog = true;
     @XmlElement(defaultValue = "true")
@@ -147,6 +147,11 @@ public class Settings
     protected Boolean executeWithOptimisticLockingExcludeUnversioned = false;
     @XmlElement(defaultValue = "true")
     protected Boolean attachRecords = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean insertUnchangedRecords = true;
+    @XmlElement(defaultValue = "NEVER")
+    @XmlSchemaType(name = "string")
+    protected UpdateUnchangedRecords updateUnchangedRecords = UpdateUnchangedRecords.NEVER;
     @XmlElement(defaultValue = "false")
     protected Boolean updatablePrimaryKeys = false;
     @XmlElement(defaultValue = "true")
@@ -1241,6 +1246,46 @@ public class Settings
      */
     public void setAttachRecords(Boolean value) {
         this.attachRecords = value;
+    }
+
+    /**
+     * Whether {@link org.jooq.TableRecord#insert()} calls should be executed if the record is unchanged. This also affects the <code>INSERT</code> part of {@link org.jooq.UpdatableRecord#store()} and {@link org.jooq.UpdatableRecord#merge()} calls.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isInsertUnchangedRecords() {
+        return insertUnchangedRecords;
+    }
+
+    /**
+     * Sets the value of the insertUnchangedRecords property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setInsertUnchangedRecords(Boolean value) {
+        this.insertUnchangedRecords = value;
+    }
+
+    /**
+     * Whether {@link org.jooq.UpdatableRecord#update()} calls should be executed if the record is unchanged. This also affects the <code>UPDATE</code> part of {@link org.jooq.UpdatableRecord#store()} and {@link org.jooq.UpdatableRecord#merge()} calls.
+     * 
+     */
+    public UpdateUnchangedRecords getUpdateUnchangedRecords() {
+        return updateUnchangedRecords;
+    }
+
+    /**
+     * Whether {@link org.jooq.UpdatableRecord#update()} calls should be executed if the record is unchanged. This also affects the <code>UPDATE</code> part of {@link org.jooq.UpdatableRecord#store()} and {@link org.jooq.UpdatableRecord#merge()} calls.
+     * 
+     */
+    public void setUpdateUnchangedRecords(UpdateUnchangedRecords value) {
+        this.updateUnchangedRecords = value;
     }
 
     /**
@@ -2489,6 +2534,20 @@ public class Settings
         return this;
     }
 
+    public Settings withInsertUnchangedRecords(Boolean value) {
+        setInsertUnchangedRecords(value);
+        return this;
+    }
+
+    /**
+     * Whether {@link org.jooq.UpdatableRecord#update()} calls should be executed if the record is unchanged. This also affects the <code>UPDATE</code> part of {@link org.jooq.UpdatableRecord#store()} and {@link org.jooq.UpdatableRecord#merge()} calls.
+     * 
+     */
+    public Settings withUpdateUnchangedRecords(UpdateUnchangedRecords value) {
+        setUpdateUnchangedRecords(value);
+        return this;
+    }
+
     public Settings withUpdatablePrimaryKeys(Boolean value) {
         setUpdatablePrimaryKeys(value);
         return this;
@@ -2879,6 +2938,8 @@ public class Settings
         builder.append("executeWithOptimisticLocking", executeWithOptimisticLocking);
         builder.append("executeWithOptimisticLockingExcludeUnversioned", executeWithOptimisticLockingExcludeUnversioned);
         builder.append("attachRecords", attachRecords);
+        builder.append("insertUnchangedRecords", insertUnchangedRecords);
+        builder.append("updateUnchangedRecords", updateUnchangedRecords);
         builder.append("updatablePrimaryKeys", updatablePrimaryKeys);
         builder.append("reflectionCaching", reflectionCaching);
         builder.append("cacheRecordMappers", cacheRecordMappers);
@@ -3340,6 +3401,24 @@ public class Settings
                 return false;
             }
         }
+        if (insertUnchangedRecords == null) {
+            if (other.insertUnchangedRecords!= null) {
+                return false;
+            }
+        } else {
+            if (!insertUnchangedRecords.equals(other.insertUnchangedRecords)) {
+                return false;
+            }
+        }
+        if (updateUnchangedRecords == null) {
+            if (other.updateUnchangedRecords!= null) {
+                return false;
+            }
+        } else {
+            if (!updateUnchangedRecords.equals(other.updateUnchangedRecords)) {
+                return false;
+            }
+        }
         if (updatablePrimaryKeys == null) {
             if (other.updatablePrimaryKeys!= null) {
                 return false;
@@ -3787,6 +3866,8 @@ public class Settings
         result = ((prime*result)+((executeWithOptimisticLocking == null)? 0 :executeWithOptimisticLocking.hashCode()));
         result = ((prime*result)+((executeWithOptimisticLockingExcludeUnversioned == null)? 0 :executeWithOptimisticLockingExcludeUnversioned.hashCode()));
         result = ((prime*result)+((attachRecords == null)? 0 :attachRecords.hashCode()));
+        result = ((prime*result)+((insertUnchangedRecords == null)? 0 :insertUnchangedRecords.hashCode()));
+        result = ((prime*result)+((updateUnchangedRecords == null)? 0 :updateUnchangedRecords.hashCode()));
         result = ((prime*result)+((updatablePrimaryKeys == null)? 0 :updatablePrimaryKeys.hashCode()));
         result = ((prime*result)+((reflectionCaching == null)? 0 :reflectionCaching.hashCode()));
         result = ((prime*result)+((cacheRecordMappers == null)? 0 :cacheRecordMappers.hashCode()));

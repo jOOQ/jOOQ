@@ -69,7 +69,7 @@ public final class Constants {
     /**
      * The current jooq-runtime XSD file name.
      */
-    public static final String XSD_RUNTIME    = "jooq-runtime-3.13.0.xsd";
+    public static final String XSD_RUNTIME    = "jooq-runtime-3.14.0.xsd";
 
     /**
      * The current jooq-runtime XML namespace.

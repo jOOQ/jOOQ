@@ -996,7 +996,7 @@ public interface Record extends Attachable, Comparable<Record>, Formattable {
      * @see #from(Object)
      * @see DefaultRecordMapper
      */
-    @NotNull
+    @Nullable
     <E> E into(Class<? extends E> type) throws MappingException;
 
     /**

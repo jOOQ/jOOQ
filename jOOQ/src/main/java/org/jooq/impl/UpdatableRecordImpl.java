@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
+import static java.util.Arrays.asList;
 // ...
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
@@ -308,13 +309,15 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
                 case SET_NON_PRIMARY_KEY_TO_THEMSELVES:
                     for (Field<?> field : storeFields)
-                        query.addValue(field, (Field) field);
+                        if (!asList(keys).contains(field))
+                            query.addValue(field, (Field) field);
 
                     break;
 
                 case SET_NON_PRIMARY_KEY_TO_RECORD_VALUES:
                     for (Field<?> field : storeFields)
-                        changed(field, true);
+                        if (!asList(keys).contains(field))
+                            changed(field, true);
 
                     addChangedValues(storeFields, query, merge);
                     break;

@@ -39,6 +39,7 @@ package org.jooq;
 
 import java.util.Collection;
 
+import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 
 import org.jetbrains.annotations.NotNull;
@@ -69,7 +70,8 @@ public interface TableRecord<R extends TableRecord<R>> extends Record {
      * If you want to enforce statement execution, regardless if the values in
      * this record were changed, you can explicitly set the changed flags for
      * all values with {@link #changed(boolean)} or for single values with
-     * {@link #changed(Field, boolean)}, prior to insertion.
+     * {@link #changed(Field, boolean)}, prior to insertion, or alternatively,
+     * use {@link Settings#isInsertUnchangedRecords()}.
      *
      * @return <code>1</code> if the record was stored to the database. <code>0
      *         </code> if storing was not necessary.

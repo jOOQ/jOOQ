@@ -88,6 +88,8 @@ import org.jetbrains.annotations.Nullable;
  * the first time)</li>
  * <li>{@link #store()} : Storing the record to the database. This executes
  * either an <code>INSERT</code> or an <code>UPDATE</code> statement</li>
+ * <li>{@link #merge()} : Merging a record to the database. This executes an
+ * <code>INSERT .. ON DUPLICATE KEY UPDATE</code> statement.</li>
  * </ul>
  * <p>
  * <code>UpdatableRecords</code> are {@link Attachable}, which means that they
@@ -227,7 +229,9 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * If you want to enforce statement execution, regardless if the values in
      * this record were changed, you can explicitly set the changed flags for
      * all values with {@link #changed(boolean)} or for single values with
-     * {@link #changed(Field, boolean)}, prior to storing.
+     * {@link #changed(Field, boolean)}, prior to storing, or alternatively, use
+     * {@link Settings#getUpdateUnchangedRecords()} and/or
+     * {@link Settings#isInsertUnchangedRecords()}.
      * <p>
      * This is the same as calling <code>record.store(record.fields())</code>
      *
@@ -282,7 +286,8 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * If you want to enforce statement execution, regardless if the values in
      * this record were changed, you can explicitly set the changed flags for
      * all values with {@link #changed(boolean)} or for single values with
-     * {@link #changed(Field, boolean)}, prior to insertion.
+     * {@link #changed(Field, boolean)}, prior to insertion, or alternatively,
+     * use {@link Settings#isInsertUnchangedRecords()}.
      * <p>
      * This is the same as calling <code>record.insert(record.fields())</code>
      *
@@ -331,7 +336,8 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * If you want to enforce statement execution, regardless if the values in
      * this record were changed, you can explicitly set the changed flags for
      * all values with {@link #changed(boolean)} or for single values with
-     * {@link #changed(Field, boolean)}, prior to updating.
+     * {@link #changed(Field, boolean)}, prior to updating, or alternatively,
+     * use {@link Settings#getUpdateUnchangedRecords()}.
      * <p>
      * This is the same as calling <code>record.update(record.fields())</code>
      *
@@ -391,7 +397,9 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * If you want to enforce statement execution, regardless if the values in
      * this record were changed, you can explicitly set the changed flags for
      * all values with {@link #changed(boolean)} or for single values with
-     * {@link #changed(Field, boolean)}, prior to insertion.
+     * {@link #changed(Field, boolean)}, prior to insertion, or alternatively,
+     * use {@link Settings#getUpdateUnchangedRecords()} and/or
+     * {@link Settings#isInsertUnchangedRecords()}..
      * <p>
      * This is the same as calling <code>record.merge(record.fields())</code>
      *

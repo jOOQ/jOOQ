@@ -10325,12 +10325,12 @@ final class ParserImpl implements Parser {
                 if (parseKeywordOrIdentifierIf(ctx, "DATE"))
                     return SQLDataType.DATE;
                 else if (parseKeywordOrIdentifierIf(ctx, "DATETIME"))
-                    return parseDataTypePrecision(ctx, SQLDataType.TIMESTAMP);
+                    return parseDataTypePrecisionIf(ctx, SQLDataType.TIMESTAMP);
                 else if (parseKeywordOrIdentifierIf(ctx, "DECIMAL"))
-                    return parseDataTypePrecisionScale(ctx, SQLDataType.DECIMAL);
+                    return parseDataTypePrecisionScaleIf(ctx, SQLDataType.DECIMAL);
                 else if (parseKeywordOrIdentifierIf(ctx, "DOUBLE PRECISION") ||
                          parseKeywordOrIdentifierIf(ctx, "DOUBLE"))
-                    return parseAndIgnoreDataTypePrecisionScale(ctx, SQLDataType.DOUBLE);
+                    return parseAndIgnoreDataTypePrecisionScaleIf(ctx, SQLDataType.DOUBLE);
 
                 break;
 
@@ -10342,7 +10342,7 @@ final class ParserImpl implements Parser {
 
             case 'F':
                 if (parseKeywordOrIdentifierIf(ctx, "FLOAT"))
-                    return parseAndIgnoreDataTypePrecisionScale(ctx, SQLDataType.FLOAT);
+                    return parseAndIgnoreDataTypePrecisionScaleIf(ctx, SQLDataType.FLOAT);
 
                 break;
 
@@ -10355,6 +10355,21 @@ final class ParserImpl implements Parser {
                     return SQLDataType.SMALLINT;
                 else if (parseKeywordOrIdentifierIf(ctx, "INT8"))
                     return SQLDataType.BIGINT;
+                else if (parseKeywordIf(ctx, "INTERVAL")) {
+                    if (parseKeywordIf(ctx, "YEAR")) {
+                        parseDataTypePrecisionIf(ctx);
+                        parseKeyword(ctx, "TO MONTH");
+                        return SQLDataType.INTERVALYEARTOMONTH;
+                    }
+                    else if (parseKeywordIf(ctx, "DAY")) {
+                        parseDataTypePrecisionIf(ctx);
+                        parseKeyword(ctx, "TO SECOND");
+                        parseDataTypePrecisionIf(ctx);
+                        return SQLDataType.INTERVALDAYTOSECOND;
+                    }
+                    else
+                        return SQLDataType.INTERVAL;
+                }
 
                 break;
 
@@ -10397,7 +10412,7 @@ final class ParserImpl implements Parser {
                     return parseDataTypeCollation(ctx, SQLDataType.NCLOB);
                 else if (parseKeywordOrIdentifierIf(ctx, "NUMBER") ||
                          parseKeywordOrIdentifierIf(ctx, "NUMERIC"))
-                    return parseDataTypePrecisionScale(ctx, SQLDataType.NUMERIC);
+                    return parseDataTypePrecisionScaleIf(ctx, SQLDataType.NUMERIC);
                 else if (parseKeywordOrIdentifierIf(ctx, "NVARCHAR") ||
                          parseKeywordOrIdentifierIf(ctx, "NVARCHAR2"))
                     return parseDataTypeCollation(ctx, parseDataTypeLength(ctx, SQLDataType.NVARCHAR));
@@ -10412,7 +10427,7 @@ final class ParserImpl implements Parser {
 
             case 'R':
                 if (parseKeywordOrIdentifierIf(ctx, "REAL"))
-                    return parseAndIgnoreDataTypePrecisionScale(ctx, SQLDataType.REAL);
+                    return parseAndIgnoreDataTypePrecisionScaleIf(ctx, SQLDataType.REAL);
 
                 break;
 
@@ -10437,10 +10452,10 @@ final class ParserImpl implements Parser {
                     return parseDataTypeCollation(ctx, parseAndIgnoreDataTypeLength(ctx, SQLDataType.CLOB));
 
                 else if (parseKeywordOrIdentifierIf(ctx, "TIMESTAMPTZ"))
-                    return parseDataTypePrecision(ctx, SQLDataType.TIMESTAMPWITHTIMEZONE);
+                    return parseDataTypePrecisionIf(ctx, SQLDataType.TIMESTAMPWITHTIMEZONE);
 
                 else if (parseKeywordOrIdentifierIf(ctx, "TIMESTAMP")) {
-                    Integer precision = parseDataTypePrecision(ctx);
+                    Integer precision = parseDataTypePrecisionIf(ctx);
 
 
                     if (parseKeywordOrIdentifierIf(ctx, "WITH TIME ZONE"))
@@ -10452,10 +10467,10 @@ final class ParserImpl implements Parser {
                 }
 
                 else if (parseKeywordOrIdentifierIf(ctx, "TIMETZ"))
-                    return parseDataTypePrecision(ctx, SQLDataType.TIMEWITHTIMEZONE);
+                    return parseDataTypePrecisionIf(ctx, SQLDataType.TIMEWITHTIMEZONE);
 
                 else if (parseKeywordOrIdentifierIf(ctx, "TIME")) {
-                    Integer precision = parseDataTypePrecision(ctx);
+                    Integer precision = parseDataTypePrecisionIf(ctx);
 
 
                     if (parseKeywordOrIdentifierIf(ctx, "WITH TIME ZONE"))
@@ -10586,7 +10601,7 @@ final class ParserImpl implements Parser {
         return null;
     }
 
-    private static final DataType<?> parseAndIgnoreDataTypePrecisionScale(ParserContext ctx, DataType<?> result) {
+    private static final DataType<?> parseAndIgnoreDataTypePrecisionScaleIf(ParserContext ctx, DataType<?> result) {
         if (parseIf(ctx, '(')) {
             parseUnsignedInteger(ctx);
 
@@ -10599,7 +10614,7 @@ final class ParserImpl implements Parser {
         return result;
     }
 
-    private static final Integer parseDataTypePrecision(ParserContext ctx) {
+    private static final Integer parseDataTypePrecisionIf(ParserContext ctx) {
         Integer precision = null;
 
         if (parseIf(ctx, '(')) {
@@ -10610,7 +10625,7 @@ final class ParserImpl implements Parser {
         return precision;
     }
 
-    private static final DataType<?> parseDataTypePrecision(ParserContext ctx, DataType<?> result) {
+    private static final DataType<?> parseDataTypePrecisionIf(ParserContext ctx, DataType<?> result) {
         if (parseIf(ctx, '(')) {
             int precision = (int) (long) parseUnsignedInteger(ctx);
             result = result.precision(precision);
@@ -10620,7 +10635,7 @@ final class ParserImpl implements Parser {
         return result;
     }
 
-    private static final DataType<?> parseDataTypePrecisionScale(ParserContext ctx, DataType<?> result) {
+    private static final DataType<?> parseDataTypePrecisionScaleIf(ParserContext ctx, DataType<?> result) {
         if (parseIf(ctx, '(')) {
             int precision = parseIf(ctx, '*') ? 38 : (int) (long) parseUnsignedInteger(ctx);
 

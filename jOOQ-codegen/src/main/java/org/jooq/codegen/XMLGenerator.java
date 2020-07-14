@@ -167,7 +167,8 @@ public class XMLGenerator extends AbstractGenerator {
                         view.setTableCatalog(catalogName);
                         view.setTableSchema(schemaName);
                         view.setTableName(tableName);
-                        view.setViewDefinition(t.getSource());
+                        if (generateSourcesOnViews())
+                            view.setViewDefinition(t.getSource());
 
                         is.getViews().add(view);
                     }

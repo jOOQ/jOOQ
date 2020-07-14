@@ -88,8 +88,7 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
             String escaped = escapeJavadoc(string);
             Object[] escapedArgs = Arrays.copyOf(args, args.length);
             for (int i = 0; i < escapedArgs.length; i++)
-                if (escapedArgs[i] instanceof String)
-                    escapedArgs[i] = escapeJavadoc((String) escapedArgs[i]);
+                escapedArgs[i] = escapeJavadoc(escapedArgs[i]);
 
             println("/**");
             println(" * " + escaped, escapedArgs);
@@ -97,6 +96,23 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
         }
 
         return this;
+    }
+
+    @SuppressWarnings("unchecked")
+    static Object escapeJavadoc(Object object) {
+        if (object instanceof String) {
+            return escapeJavadoc((String) object);
+        }
+        else if (object instanceof List) {
+            List<Object> result = new ArrayList<>();
+
+            for (Object o : (List<Object>) object)
+                result.add(escapeJavadoc(o));
+
+            return result;
+        }
+        else
+            return object;
     }
 
     static String escapeJavadoc(String string) {

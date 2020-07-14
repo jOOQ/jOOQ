@@ -50,8 +50,7 @@ import static org.jooq.codegen.AbstractGenerator.Language.SCALA;
 import static org.jooq.codegen.GenerationUtil.convertToIdentifier;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.meta.AbstractTypedElementDefinition.getDataType;
-import static org.jooq.tools.StringUtils.defaultIfBlank;
-import static org.jooq.tools.StringUtils.defaultString;
+import static org.jooq.tools.StringUtils.isBlank;
 
 import java.beans.ConstructorProperties;
 import java.io.File;
@@ -1836,7 +1835,6 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     private final void generateRecordSetter0(TypedElementDefinition<?> column, int index, JavaWriter out) {
-        final String comment = StringUtils.defaultString(column.getComment());
         final String className = getStrategy().getJavaClassName(column.getContainer(), Mode.RECORD);
         final String setterReturnType = generateFluentSetters() ? className : tokenVoid;
         final String setter = getStrategy().getJavaSetterName(column, Mode.RECORD);
@@ -1851,7 +1849,7 @@ public class JavaGenerator extends AbstractGenerator {
         // We cannot have covariant setters for arrays because of type erasure
         if (!(generateInterfaces() && isArray)) {
             if (!printDeprecationIfUnknownType(out, typeFull))
-                out.javadoc("Setter for <code>%s</code>.%s", name, columnComment(column, comment));
+                out.javadoc("Setter for <code>%s</code>.[[before= ][%s]]", name, list(escapeEntities(comment(column))));
 
             if (scala) {
                 out.println("def %s(value: %s): %s = {", setter, type, setterReturnType);
@@ -1892,7 +1890,7 @@ public class JavaGenerator extends AbstractGenerator {
             final String columnTypeInterface = out.ref(getJavaType(column.getType(resolver(Mode.INTERFACE)), Mode.INTERFACE));
 
             if (!printDeprecationIfUnknownType(out, columnTypeFull))
-                out.javadoc("Setter for <code>%s</code>.%s", name, defaultIfBlank(" " + comment, ""));
+                out.javadoc("Setter for <code>%s</code>.[[before= ][%s]]", name, list(escapeEntities(comment(column))));
 
             out.override();
 
@@ -1974,14 +1972,13 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     private final void generateRecordGetter0(TypedElementDefinition<?> column, int index, JavaWriter out) {
-        final String comment = StringUtils.defaultString(column.getComment());
         final String getter = getStrategy().getJavaGetterName(column, Mode.RECORD);
         final String typeFull = getJavaType(column.getType(resolver()));
         final String type = out.ref(typeFull);
         final String name = column.getQualifiedOutputName();
 
         if (!printDeprecationIfUnknownType(out, typeFull))
-            out.javadoc("Getter for <code>%s</code>.%s", name, columnComment(column, comment));
+            out.javadoc("Getter for <code>%s</code>.[[before= ][%s]]", name, list(escapeEntities(comment(column))));
 
         if (column instanceof ColumnDefinition)
             printColumnJPAAnnotation(out, (ColumnDefinition) column);
@@ -2210,7 +2207,6 @@ public class JavaGenerator extends AbstractGenerator {
 
     private final void generateInterfaceSetter0(TypedElementDefinition<?> column, @SuppressWarnings("unused") int index, JavaWriter out) {
         final String className = getStrategy().getJavaClassName(column.getContainer(), Mode.INTERFACE);
-        final String comment = StringUtils.defaultString(column.getComment());
         final String setterReturnType = generateFluentSetters() ? className : tokenVoid;
         final String setter = getStrategy().getJavaSetterName(column, Mode.INTERFACE);
         final String typeFull = getJavaType(column.getType(resolver(Mode.INTERFACE)), Mode.INTERFACE);
@@ -2218,7 +2214,7 @@ public class JavaGenerator extends AbstractGenerator {
         final String name = column.getQualifiedOutputName();
 
         if (!printDeprecationIfUnknownType(out, typeFull))
-            out.javadoc("Setter for <code>%s</code>.%s", name, columnComment(column, comment));
+            out.javadoc("Setter for <code>%s</code>.[[before= ][%s]]", name, list(escapeEntities(comment(column))));
 
         if (scala) {
             out.println("def %s(value: %s): %s", setter, type, setterReturnType);
@@ -2248,14 +2244,13 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     private final void generateInterfaceGetter0(TypedElementDefinition<?> column, @SuppressWarnings("unused") int index, JavaWriter out) {
-        final String comment = StringUtils.defaultString(column.getComment());
         final String getter = getStrategy().getJavaGetterName(column, Mode.INTERFACE);
         final String typeFull = getJavaType(column.getType(resolver(Mode.INTERFACE)), Mode.INTERFACE);
         final String type = out.ref(typeFull);
         final String name = column.getQualifiedOutputName();
 
         if (!printDeprecationIfUnknownType(out, typeFull))
-            out.javadoc("Getter for <code>%s</code>.%s", name, columnComment(column, comment));
+            out.javadoc("Getter for <code>%s</code>.[[before= ][%s]]", name, list(escapeEntities(comment(column))));
 
         if (column instanceof ColumnDefinition)
             printColumnJPAAnnotation(out, (ColumnDefinition) column);
@@ -2269,19 +2264,6 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("fun %s(): %s?", getter, type);
         else
             out.println("public %s %s();", type, getter);
-    }
-
-    private String columnComment(TypedElementDefinition<?> column, String comment) {
-        return column instanceof ColumnDefinition && generateCommentsOnColumns()
-            || column instanceof AttributeDefinition && generateCommentsOnAttributes()
-            ?  defaultIfBlank(" " + escapeEntities(comment), "")
-            :  "";
-    }
-
-    private String parameterComment(String comment) {
-        return generateCommentsOnParameters()
-            ?  defaultIfBlank(" " + escapeEntities(comment), "")
-            :  "";
     }
 
     /**
@@ -2342,9 +2324,8 @@ public class JavaGenerator extends AbstractGenerator {
 
             for (AttributeDefinition attribute : udt.getAttributes()) {
                 final String attrId = out.ref(getStrategy().getJavaIdentifier(attribute), 2);
-                final String attrComment = StringUtils.defaultString(attribute.getComment());
 
-                out.javadoc("The attribute <code>%s</code>.%s", attribute.getQualifiedOutputName(), columnComment(attribute, attrComment));
+                out.javadoc("The attribute <code>%s</code>.[[before= ][%s]]", attribute.getQualifiedOutputName(), list(escapeEntities(comment(attribute))));
                 out.println("val %s = %s.%s", attrId, udtId, attrId);
             }
 
@@ -2378,7 +2359,6 @@ public class JavaGenerator extends AbstractGenerator {
             final String attrTypeRef = getJavaTypeReference(attribute.getDatabase(), attribute.getType(resolver()));
             final String attrId = out.ref(getStrategy().getJavaIdentifier(attribute), 2);
             final String attrName = attribute.getName();
-            final String attrComment = StringUtils.defaultString(attribute.getComment());
             final List<String> converter = out.ref(list(attribute.getType(resolver()).getConverter()));
             final List<String> binding = out.ref(list(attribute.getType(resolver()).getBinding()));
 
@@ -2389,7 +2369,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
             else {
                 if (!printDeprecationIfUnknownType(out, attrTypeFull))
-                    out.javadoc("The attribute <code>%s</code>.%s", attribute.getQualifiedOutputName(), columnComment(attribute, attrComment));
+                    out.javadoc("The attribute <code>%s</code>.[[before= ][%s]]", attribute.getQualifiedOutputName(), list(escapeEntities(comment(attribute))));
 
                 out.println("public static final %s<%s, %s> %s = createField(%s.name(\"%s\"), %s, %s, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + ");",
                     UDTField.class, recordType, attrType, attrId, DSL.class, attrName, attrTypeRef, udtId, escapeString(""), converter, binding);
@@ -3264,11 +3244,9 @@ public class JavaGenerator extends AbstractGenerator {
             final String referencedId = className.equals(id)
                 ? getStrategy().getFullJavaIdentifier(table)
                 : out.ref(getStrategy().getFullJavaIdentifier(table), 2);
-            final String comment = !StringUtils.isBlank(table.getComment()) && generateCommentsOnTables()
-                ? escapeEntities(table.getComment())
-                : "The table <code>" + table.getQualifiedOutputName() + "</code>.";
+            final String comment = escapeEntities(comment(table));
 
-            out.javadoc(comment);
+            out.javadoc(isBlank(comment) ? "The table <code>" + table.getQualifiedOutputName() + "</code>." : comment);
 
             if (scala || kotlin)
                 out.println("val %s = %s", id, referencedId);
@@ -3856,7 +3834,6 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     private final void generatePojoGetter0(TypedElementDefinition<?> column, @SuppressWarnings("unused") int index, JavaWriter out) {
-        final String comment = StringUtils.defaultString(column.getComment());
         final String columnTypeFull = getJavaType(column.getType(resolver(Mode.POJO)), Mode.POJO);
         final String columnType = out.ref(columnTypeFull);
         final String columnGetter = getStrategy().getJavaGetterName(column, Mode.POJO);
@@ -3865,7 +3842,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         // Getter
         if (!printDeprecationIfUnknownType(out, columnTypeFull))
-            out.javadoc("Getter for <code>%s</code>.%s", name, columnComment(column, comment));
+            out.javadoc("Getter for <code>%s</code>.[[before= ][%s]]", name, list(escapeEntities(comment(column))));
 
         if (column instanceof ColumnDefinition)
             printColumnJPAAnnotation(out, (ColumnDefinition) column);
@@ -3899,7 +3876,6 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     private final void generatePojoSetter0(TypedElementDefinition<?> column, @SuppressWarnings("unused") int index, JavaWriter out) {
-        final String comment = StringUtils.defaultString(column.getComment());
         final String className = getStrategy().getJavaClassName(column.getContainer(), Mode.POJO);
         final String columnTypeFull = getJavaType(column.getType(resolver(Mode.POJO)), Mode.POJO);
         final String columnType = out.ref(columnTypeFull);
@@ -3913,7 +3889,7 @@ public class JavaGenerator extends AbstractGenerator {
         // We cannot have covariant setters for arrays because of type erasure
         if (!(generateInterfaces() && isUDTArray)) {
             if (!printDeprecationIfUnknownType(out, columnTypeFull))
-                out.javadoc("Setter for <code>%s</code>.%s", name, columnComment(column, comment));
+                out.javadoc("Setter for <code>%s</code>.[[before= ][%s]]", name, list(escapeEntities(comment(column))));
 
             if (scala) {
                 out.println("def %s(%s: %s): %s = {", columnSetter, columnMember, columnType, columnSetterReturnType);
@@ -4303,7 +4279,6 @@ public class JavaGenerator extends AbstractGenerator {
         final String recordType = out.ref(getStrategy().getFullJavaClassName(table, Mode.RECORD));
         final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(table, Mode.DEFAULT));
         final String schemaId = out.ref(getStrategy().getFullJavaIdentifier(schema), 2);
-        final String comment = defaultString(table.getComment());
         final String tableType = table.isTemporary()
             ? "temporaryTable"
             : table.isView()
@@ -4348,7 +4323,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("path,");
             out.println("aliased,");
             out.println("parameters,");
-            out.println("%s.comment(\"%s\"),", DSL.class, escapeString(comment));
+            out.println("%s.comment(\"%s\"),", DSL.class, escapeString(comment(table)));
 
             if (generateSourcesOnViews() && table.isView() && table.getSource() != null)
                 out.println("%s.%s(\"%s\")", TableOptions.class, tableType, escapeString(table.getSource()));
@@ -4371,7 +4346,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("path,");
             out.println("aliased,");
             out.println("parameters,");
-            out.println("%s.comment(\"%s\"),", DSL.class, escapeString(comment));
+            out.println("%s.comment(\"%s\"),", DSL.class, escapeString(comment(table)));
 
             if (generateSourcesOnViews() && table.isView() && table.getSource() != null)
                 out.println("%s.%s(\"%s\")", TableOptions.class, tableType, escapeString(table.getSource()));
@@ -4398,27 +4373,26 @@ public class JavaGenerator extends AbstractGenerator {
             final String columnTypeRef = getJavaTypeReference(column.getDatabase(), column.getType(resolver()));
             final String columnId = out.ref(getStrategy().getJavaIdentifier(column), colRefSegments(column));
             final String columnName = column.getName();
-            final String columnComment = StringUtils.defaultString(column.getComment());
             final List<String> converter = out.ref(list(column.getType(resolver()).getConverter()));
             final List<String> binding = out.ref(list(column.getType(resolver()).getBinding()));
 
             if (!printDeprecationIfUnknownType(out, columnTypeFull))
-                out.javadoc("The column <code>%s</code>.%s", column.getQualifiedOutputName(), columnComment(column, columnComment));
+                out.javadoc("The column <code>%s</code>.[[before= ][%s]]", column.getQualifiedOutputName(), list(escapeEntities(comment(column))));
 
             if (scala) {
                 out.println("val %s: %s[%s, %s] = createField(%s.name(\"%s\"), %s, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + ")",
-                        columnId, TableField.class, recordType, columnType, DSL.class, columnName, columnTypeRef, escapeString(columnComment), converter, binding);
+                        columnId, TableField.class, recordType, columnType, DSL.class, columnName, columnTypeRef, escapeString(comment(column)), converter, binding);
             }
             else if (kotlin) {
                 out.println("val %s: %s<%s, %s?> = createField(%s.name(\"%s\"), %s, this, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + ")",
-                    columnId, TableField.class, recordType, columnType, DSL.class, columnName, columnTypeRef, escapeString(columnComment), converter, binding);
+                    columnId, TableField.class, recordType, columnType, DSL.class, columnName, columnTypeRef, escapeString(comment(column)), converter, binding);
             }
             else {
                 String isStatic = generateInstanceFields() ? "" : "static ";
                 String tableRef = generateInstanceFields() ? "this" : out.ref(getStrategy().getJavaIdentifier(table), 2);
 
                 out.println("public %sfinal %s<%s, %s> %s = createField(%s.name(\"%s\"), %s, %s, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + ");",
-                    isStatic, TableField.class, recordType, columnType, columnId, DSL.class, columnName, columnTypeRef, tableRef, escapeString(columnComment), converter, binding);
+                    isStatic, TableField.class, recordType, columnType, columnId, DSL.class, columnName, columnTypeRef, tableRef, escapeString(comment(column)), converter, binding);
             }
         }
 
@@ -4480,9 +4454,9 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("private %s(%s alias, %s<%s> aliased, %s<?>[] parameters) {", className, Name.class, Table.class, recordType, Field.class);
 
             if (generateSourcesOnViews() && table.isView() && table.getSource() != null)
-                out.println("super(alias, null, aliased, parameters, %s.comment(\"%s\"), %s.%s(\"%s\"));", DSL.class, escapeString(comment), TableOptions.class, tableType, escapeString(table.getSource()));
+                out.println("super(alias, null, aliased, parameters, %s.comment(\"%s\"), %s.%s(\"%s\"));", DSL.class, escapeString(comment(table)), TableOptions.class, tableType, escapeString(table.getSource()));
             else
-                out.println("super(alias, null, aliased, parameters, %s.comment(\"%s\"), %s.%s());", DSL.class, escapeString(comment), TableOptions.class, tableType);
+                out.println("super(alias, null, aliased, parameters, %s.comment(\"%s\"), %s.%s());", DSL.class, escapeString(comment(table)), TableOptions.class, tableType);
 
             out.println("}");
         }
@@ -5464,11 +5438,9 @@ public class JavaGenerator extends AbstractGenerator {
                     String schemaShortId = out.ref(getStrategy().getFullJavaIdentifier(schema), 2);
                     if (fieldNames.contains(schemaShortId.substring(0, schemaShortId.indexOf('.'))))
                         schemaShortId = schemaFullId;
-                    final String schemaComment = !StringUtils.isBlank(schema.getComment()) && generateCommentsOnSchemas()
-                        ? escapeEntities(schema.getComment())
-                        : "The schema <code>" + (!schema.getQualifiedOutputName().isEmpty() ? schema.getQualifiedOutputName() : schemaId) + "</code>.";
+                    final String schemaComment = escapeEntities(comment(schema));
 
-                    out.javadoc(schemaComment);
+                    out.javadoc(isBlank(schemaComment) ? ("The schema <code>" + (!schema.getQualifiedOutputName().isEmpty() ? schema.getQualifiedOutputName() : schemaId) + "</code>.") : schemaComment);
 
                     if (scala)
                         out.println("val %s = %s", schemaId, schemaShortId);
@@ -5573,11 +5545,9 @@ public class JavaGenerator extends AbstractGenerator {
                 final String tableClassName = out.ref(getStrategy().getFullJavaClassName(table));
                 final String tableId = getStrategy().getJavaIdentifier(table);
                 final String tableShortId = getShortId(out, memberNames, table);
-                final String tableComment = !StringUtils.isBlank(table.getComment()) && generateCommentsOnTables()
-                    ? escapeEntities(table.getComment())
-                    : "The table <code>" + table.getQualifiedOutputName() + "</code>.";
+                final String tableComment = escapeEntities(comment(table));
 
-                out.javadoc(tableComment);
+                out.javadoc(isBlank(tableComment) ? "The table <code>" + table.getQualifiedOutputName() + "</code>." : tableComment);
 
                 if (scala)
                     out.println("val %s = %s", tableId, tableShortId);
@@ -6136,14 +6106,13 @@ public class JavaGenerator extends AbstractGenerator {
                 final String paramTypeRef = getJavaTypeReference(parameter.getDatabase(), parameter.getType(resolver()));
                 final String paramId = out.ref(getStrategy().getJavaIdentifier(parameter), 2);
                 final String paramName = parameter.getName();
-                final String paramComment = StringUtils.defaultString(parameter.getComment());
                 final String isDefaulted = parameter.isDefaulted() ? "true" : "false";
                 final String isUnnamed = parameter.isUnnamed() ? "true" : "false";
                 final List<String> converter = out.ref(list(parameter.getType(resolver()).getConverter()));
                 final List<String> binding = out.ref(list(parameter.getType(resolver()).getBinding()));
 
                 if (!printDeprecationIfUnknownType(out, paramTypeFull))
-                    out.javadoc("The parameter <code>%s</code>.%s", parameter.getQualifiedOutputName(), parameterComment(paramComment));
+                    out.javadoc("The parameter <code>%s</code>.[[before= ][%s]]", parameter.getQualifiedOutputName(), list(escapeEntities(comment(parameter))));
 
                 out.println("val %s: %s[%s] = %s.createParameter(\"%s\", %s, %s, %s" + converterTemplate(converter) + converterTemplate(binding) + ")",
                     paramId, Parameter.class, paramType, Internal.class, escapeString(paramName), paramTypeRef, isDefaulted, isUnnamed, converter, binding);
@@ -6182,14 +6151,13 @@ public class JavaGenerator extends AbstractGenerator {
                 final String paramTypeRef = getJavaTypeReference(parameter.getDatabase(), parameter.getType(resolver()));
                 final String paramId = getStrategy().getJavaIdentifier(parameter);
                 final String paramName = parameter.getName();
-                final String paramComment = StringUtils.defaultString(parameter.getComment());
                 final String isDefaulted = parameter.isDefaulted() ? "true" : "false";
                 final String isUnnamed = parameter.isUnnamed() ? "true" : "false";
                 final List<String> converter = out.ref(list(parameter.getType(resolver()).getConverter()));
                 final List<String> binding = out.ref(list(parameter.getType(resolver()).getBinding()));
 
                 if (!printDeprecationIfUnknownType(out, paramTypeFull))
-                    out.javadoc("The parameter <code>%s</code>.%s", parameter.getQualifiedOutputName(), parameterComment(paramComment));
+                    out.javadoc("The parameter <code>%s</code>.[[before= ][%s]]", parameter.getQualifiedOutputName(), list(escapeEntities(comment(parameter))));
 
                 if (kotlin)
                     out.println("val %s: %s<%s?> = %s.createParameter(\"%s\", %s, %s, %s" + converterTemplate(converter) + converterTemplate(binding) + ")",
@@ -6942,16 +6910,29 @@ public class JavaGenerator extends AbstractGenerator {
         printClassJavadoc(out, escapeEntities(definition.getComment()));
     }
 
+    private String comment(Definition definition) {
+        return definition instanceof CatalogDefinition && generateCommentsOnCatalogs()
+            || definition instanceof SchemaDefinition && generateCommentsOnSchemas()
+            || definition instanceof TableDefinition && generateCommentsOnTables()
+            || definition instanceof ColumnDefinition && generateCommentsOnColumns()
+            || definition instanceof UDTDefinition && generateCommentsOnUDTs()
+            || definition instanceof AttributeDefinition && generateCommentsOnAttributes()
+            || definition instanceof PackageDefinition && generateCommentsOnPackages()
+            || definition instanceof RoutineDefinition && generateCommentsOnRoutines()
+            || definition instanceof ParameterDefinition && generateCommentsOnParameters()
+            || definition instanceof SequenceDefinition && generateCommentsOnSequences()
+             ? StringUtils.defaultIfBlank(definition.getComment(), "")
+             : "";
+    }
+
     protected void printClassJavadoc(JavaWriter out, String comment) {
         if (generateJavadoc()) {
             out.println("/**");
 
-            if (comment != null && comment.length() > 0) {
+            if (comment != null && comment.length() > 0)
                 printJavadocParagraph(out, comment, "");
-            }
-            else {
+            else
                 out.println(" * This class is generated by jOOQ.");
-            }
 
             out.println(" */");
         }

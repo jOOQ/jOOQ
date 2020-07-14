@@ -91,7 +91,7 @@ public class H2TableDefinition extends AbstractTableDefinition {
                 Columns.COLUMN_NAME,
                 Columns.ORDINAL_POSITION,
                 Columns.TYPE_NAME,
-                ((H2Database) getDatabase()).is1_4_197() ? Columns.COLUMN_TYPE : inline("").as(Columns.COLUMN_TYPE),
+                (((H2Database) getDatabase()).is1_4_197() ? Columns.COLUMN_TYPE : Columns.TYPE_NAME).as(Columns.COLUMN_TYPE),
                 choose().when(Columns.NUMERIC_PRECISION.eq(maxP).and(Columns.NUMERIC_SCALE.eq(maxS)), zero())
                         .otherwise(Columns.CHARACTER_MAXIMUM_LENGTH).as(Columns.CHARACTER_MAXIMUM_LENGTH),
                 Columns.NUMERIC_PRECISION.decode(maxP, zero(), Columns.NUMERIC_PRECISION).as(Columns.NUMERIC_PRECISION),
@@ -121,10 +121,15 @@ public class H2TableDefinition extends AbstractTableDefinition {
             // [#7644] H2 puts DATETIME_PRECISION in NUMERIC_SCALE column
             boolean isTimestamp = record.get(Columns.TYPE_NAME).trim().toLowerCase().startsWith("timestamp");
 
+            // [#10389] The interval subtype is contained in COLUMN_TYPE, not TYPE_NAME
+            boolean isInterval = record.get(Columns.TYPE_NAME).trim().toLowerCase().equals("interval");
+
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
                 getSchema(),
-                record.get(Columns.TYPE_NAME),
+                isInterval
+                    ? record.get(Columns.COLUMN_TYPE)
+                    : record.get(Columns.TYPE_NAME),
                 record.get(Columns.CHARACTER_MAXIMUM_LENGTH),
                 isTimestamp
                     ? record.get(Columns.NUMERIC_SCALE)

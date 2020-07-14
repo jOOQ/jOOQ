@@ -248,11 +248,6 @@ public final class TableOptions implements Serializable {
         return source;
     }
 
-    @Override
-    public String toString() {
-        return "TableOptions[" + type + "]";
-    }
-
     /**
      * A description of the type of a {@link Table}.
      */
@@ -330,5 +325,53 @@ public final class TableOptions implements Serializable {
 
         @Support({ POSTGRES })
         DROP;
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((onCommit == null) ? 0 : onCommit.hashCode());
+        result = prime * result + ((select == null) ? 0 : select.hashCode());
+        result = prime * result + ((source == null) ? 0 : source.hashCode());
+        result = prime * result + ((type == null) ? 0 : type.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        TableOptions other = (TableOptions) obj;
+        if (onCommit != other.onCommit)
+            return false;
+        if (select == null) {
+            if (other.select != null)
+                return false;
+        }
+        else if (!select.equals(other.select))
+            return false;
+        if (source == null) {
+            if (other.source != null)
+                return false;
+        }
+        else if (!source.equals(other.source))
+            return false;
+        if (type != other.type)
+            return false;
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "TableOptions[" + type + "]";
     }
 }

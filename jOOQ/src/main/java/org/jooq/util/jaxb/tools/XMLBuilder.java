@@ -156,37 +156,42 @@ public final class XMLBuilder {
     public XMLBuilder append(String elementName, String s) {
         if (s != null) {
             openTag(elementName);
-            builder.append(s);
+            builder.append(escape(s));
             closeTag(elementName).newLine();
         }
         return this;
     }
 
     public XMLBuilder append(String elementName, Pattern p) {
-        if (p != null) {
-            openTag(elementName);
-            builder.append(p.pattern());
-            closeTag(elementName).newLine();
-        }
+        if (p != null)
+            append(elementName, p.pattern());
+
         return this;
     }
 
     public XMLBuilder append(String elementName, Object o) {
-        if (o != null) {
-            openTag(elementName);
-            builder.append(o);
-            closeTag(elementName).newLine();
-        }
+        if (o != null)
+            append(elementName, "" + o);
+
         return this;
     }
 
-    @Override
-    public String toString() {
-        return builder.toString();
+    private static final Pattern P_XML_SPECIAL_CHARACTERS = Pattern.compile("[<>&]");
+
+    private static final String escape(String string) {
+        return P_XML_SPECIAL_CHARACTERS.matcher(string).find()
+             ? string.replace("&", "&amp;")
+                     .replace("<", "&lt;")
+                     .replace(">", "&gt;")
+             : string;
     }
 
     public void appendTo(Appendable a) throws IOException {
         a.append(builder);
     }
 
+    @Override
+    public String toString() {
+        return builder.toString();
+    }
 }

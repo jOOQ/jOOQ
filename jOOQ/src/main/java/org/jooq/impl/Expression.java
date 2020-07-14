@@ -313,13 +313,18 @@ final class Expression<T> extends AbstractField<T> {
         }
 
         private final void acceptYTSExpression(Context<?> ctx) {
-            YearToSecond yts = rhsAsYTS();
+            if (rhs instanceof Param) {
+                YearToSecond yts = rhsAsYTS();
 
-            ctx.visit(new DateExpression<>(
-                new DateExpression<>(lhs, operator, p(yts.getYearToMonth())),
-                operator,
-                p(yts.getDayToSecond())
-            ));
+                ctx.visit(new DateExpression<>(
+                    new DateExpression<>(lhs, operator, p(yts.getYearToMonth())),
+                    operator,
+                    p(yts.getDayToSecond())
+                ));
+            }
+            else {
+                acceptIntervalExpression(ctx);
+            }
         }
 
         @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -733,7 +738,7 @@ final class Expression<T> extends AbstractField<T> {
                 return ((Param<YearToSecond>) rhs).getValue();
             }
             catch (ClassCastException e) {
-                throw new DataTypeException("Cannot perform datetime arithmetic with a non-numeric, non-interval data type on the right hand side of the expression: " + rhs);
+                throw new DataTypeException("Cannot perform datetime arithmetic with a non-numeric, non-interval data type on the right hand side of the expression: " + rhs, e);
             }
         }
 
@@ -743,7 +748,7 @@ final class Expression<T> extends AbstractField<T> {
                 return ((Param<YearToMonth>) rhs).getValue();
             }
             catch (ClassCastException e) {
-                throw new DataTypeException("Cannot perform datetime arithmetic with a non-numeric, non-interval data type on the right hand side of the expression: " + rhs);
+                throw new DataTypeException("Cannot perform datetime arithmetic with a non-numeric, non-interval data type on the right hand side of the expression: " + rhs, e);
             }
         }
 
@@ -753,7 +758,7 @@ final class Expression<T> extends AbstractField<T> {
                 return ((Param<DayToSecond>) rhs).getValue();
             }
             catch (ClassCastException e) {
-                throw new DataTypeException("Cannot perform datetime arithmetic with a non-numeric, non-interval data type on the right hand side of the expression: " + rhs);
+                throw new DataTypeException("Cannot perform datetime arithmetic with a non-numeric, non-interval data type on the right hand side of the expression: " + rhs, e);
             }
         }
 
@@ -763,7 +768,7 @@ final class Expression<T> extends AbstractField<T> {
                 return ((Param<Interval>) rhs).getValue();
             }
             catch (ClassCastException e) {
-                throw new DataTypeException("Cannot perform datetime arithmetic with a non-numeric, non-interval data type on the right hand side of the expression: " + rhs);
+                throw new DataTypeException("Cannot perform datetime arithmetic with a non-numeric, non-interval data type on the right hand side of the expression: " + rhs, e);
             }
         }
 

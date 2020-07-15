@@ -1197,18 +1197,17 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
         Object... values
     ) {
         if (values != null && values.length > 0) {
+            final Field<Object> returnIdentity = (Field<Object>) returnedIdentity();
 
-            // This shouldn't be null, as relevant dialects should
-            // return empty generated keys ResultSet
-            if (table.getIdentity() != null) {
-                final Field<Object> field = (Field<Object>) table.getIdentity().getField();
+            if (returnIdentity != null) {
                 Object[] ids = new Object[values.length];
+
                 for (int i = 0; i < values.length; i++)
-                    ids[i] = field.getDataType().convert(values[i]);
+                    ids[i] = returnIdentity.getDataType().convert(values[i]);
 
                 // Only the IDENTITY value was requested. No need for an
                 // additional query
-                if (returningResolvedAsterisks.size() == 1 && new Fields<>(returningResolvedAsterisks).field(field) != null) {
+                if (returningResolvedAsterisks.size() == 1 && new Fields<>(returningResolvedAsterisks).field(returnIdentity) != null) {
                     for (final Object id : ids) {
                         ((Result) getResult()).add(
                         Tools.newRecord(
@@ -1237,12 +1236,23 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                                         .from(table)
 
                                         // [#5050] [#9946] Table.getIdentity() doesn't produce aliased fields yet
-                                        .where(table.field(field).in(ids))
+                                        .where(table.field(returnIdentity).in(ids))
                                         .fetch();
 
                     returnedResult.attach(originalConfiguration);
                 }
             }
         }
+    }
+
+    private Field<?> returnedIdentity() {
+        if (table.getIdentity() != null)
+            return table.getIdentity().getField();
+        else
+            for (Field<?> field : returningResolvedAsterisks)
+                if (field.getDataType().identity())
+                    return field;
+
+        return null;
     }
 }

@@ -45,7 +45,6 @@ import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
-import org.jooq.Identity;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Row;
@@ -111,11 +110,6 @@ final class TableAlias<R extends Record> extends AbstractTable<R> {
             return alias.wrapped();
 
         return null;
-    }
-
-    @Override
-    public final Identity<R, ?> getIdentity() {
-        return alias.wrapped().getIdentity();
     }
 
     @Override

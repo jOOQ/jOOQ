@@ -113,6 +113,7 @@ import org.jooq.TablePartitionByStep;
 import org.jooq.UniqueKey;
 // ...
 // ...
+import org.jooq.tools.JooqLogger;
 
 /**
  * @author Lukas Eder
@@ -122,12 +123,14 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
     /**
      * Generated UID
      */
-    private static final long     serialVersionUID = 3155496238969274871L;
-    private static final Clause[] CLAUSES          = { TABLE };
+    private static final JooqLogger  log              = JooqLogger.getLogger(AbstractTable.class);
+    private static final long        serialVersionUID = 3155496238969274871L;
+    private static final Clause[]    CLAUSES          = { TABLE };
 
-    private final TableOptions    options;
-    private Schema                tableschema;
-    private transient DataType<R> tabletype;
+    private final TableOptions       options;
+    private Schema                   tableschema;
+    private transient DataType<R>    tabletype;
+    private transient Identity<R, ?> identity;
 
     AbstractTable(TableOptions options, Name name) {
         this(options, name, null, null);
@@ -444,9 +447,22 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
      * <p>
      * Subclasses should override this method
      */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public Identity<R, ?> getIdentity() {
-        return null;
+        if (identity == null) {
+            for (Field<?> f : fields())
+                if (f instanceof TableField && f.getDataType().identity())
+                    if (identity == null)
+                        identity = new IdentityImpl(this, (TableField) f);
+                    else
+                        log.info("Multiple identities", "There are multiple identity fields in table " + this + ", which is not supported by jOOQ");
+
+            if (identity == null)
+                identity = (Identity<R, ?>) IdentityImpl.NULL;
+        }
+
+        return identity == IdentityImpl.NULL ? null : identity;
     }
 
     /**

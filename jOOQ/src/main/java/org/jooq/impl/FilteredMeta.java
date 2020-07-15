@@ -46,7 +46,6 @@ import org.jooq.Check;
 import org.jooq.Domain;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
-import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Meta;
 import org.jooq.QueryPart;
@@ -321,7 +320,6 @@ final class FilteredMeta extends AbstractMeta {
         private transient List<Index>            indexes;
         private transient List<UniqueKey<R>>     keys;
         private transient UniqueKey<R>           primaryKey;
-        private transient Identity<R, ?>         identity;
         private transient List<ForeignKey<R, ?>> references;
 
         private FilteredTable(FilteredSchema schema, Table<R> delegate) {
@@ -347,7 +345,6 @@ final class FilteredMeta extends AbstractMeta {
         }
 
         @Override
-        @SuppressWarnings("unchecked")
         public final List<UniqueKey<R>> getKeys() {
             if (keys == null) {
                 keys = new ArrayList<>();
@@ -359,10 +356,6 @@ final class FilteredMeta extends AbstractMeta {
                 if (pk != null)
                     if (primaryKeyFilter == null || primaryKeyFilter.test(pk))
                         primaryKey = key(pk);
-
-                Identity<R, ?> id = delegate.getIdentity();
-                if (id != null)
-                    identity = Internal.createIdentity(this, (TableField<R, Object>) field(id.getField()));
             }
 
             return Collections.unmodifiableList(keys);
@@ -409,12 +402,6 @@ final class FilteredMeta extends AbstractMeta {
             }
 
             return Collections.unmodifiableList(references);
-        }
-
-        @Override
-        public final Identity<R, ?> getIdentity() {
-            getKeys();
-            return identity;
         }
 
         @Override

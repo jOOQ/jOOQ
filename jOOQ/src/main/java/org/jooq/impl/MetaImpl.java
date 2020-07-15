@@ -76,7 +76,6 @@ import org.jooq.ConstraintEnforcementStep;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
-import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Meta;
 import org.jooq.Name;
@@ -544,16 +543,6 @@ final class MetaImpl extends AbstractMeta {
             // - The "table" is in fact a SYNONYM
             if (columns != null)
                 init(columns);
-        }
-
-        @SuppressWarnings("unchecked")
-        @Override
-        public Identity<Record, ?> getIdentity() {
-            for (Field<?> field : fields())
-                if (field.getDataType().identity())
-                    return new IdentityImpl<>(this, (TableField<Record, ?>) field);
-
-            return null;
         }
 
         @Override

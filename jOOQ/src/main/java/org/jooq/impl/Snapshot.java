@@ -48,7 +48,6 @@ import org.jooq.Check;
 import org.jooq.Domain;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
-import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Meta;
 import org.jooq.Record;
@@ -189,7 +188,6 @@ final class Snapshot extends AbstractMeta {
         private UniqueKey<R>                 primaryKey;
         private final List<ForeignKey<R, ?>> foreignKeys;
         private final List<Check<R>>         checks;
-        private Identity<R, ?>               identity;
 
         SnapshotTable(SnapshotSchema schema, Table<R> table) {
             super(table.getQualifiedName(), schema, null, null, table.getCommentPart(), table.getOptions());
@@ -199,12 +197,8 @@ final class Snapshot extends AbstractMeta {
             foreignKeys = new ArrayList<>();
             checks = new ArrayList<>();
 
-            for (Field<?> field : table.fields()) {
-                TableField<R, ?> f = createField(field.getUnqualifiedName(), field.getDataType(), this, field.getComment());
-
-                if (field.getDataType().identity() && identity == null)
-                    identity = Internal.createIdentity(this, f);
-            }
+            for (Field<?> field : table.fields())
+                createField(field.getUnqualifiedName(), field.getDataType(), this, field.getComment());
 
             for (Index index : table.getIndexes()) {
                 List<SortField<?>> indexFields = index.getFields();
@@ -288,11 +282,6 @@ final class Snapshot extends AbstractMeta {
         @Override
         public final List<Check<R>> getChecks() {
             return Collections.unmodifiableList(checks);
-        }
-
-        @Override
-        public final Identity<R, ?> getIdentity() {
-            return identity;
         }
     }
 

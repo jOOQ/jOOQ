@@ -90,7 +90,6 @@ import org.jooq.Domain;
 import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
-import org.jooq.Identity;
 import org.jooq.Index;
 // ...
 import org.jooq.Name;
@@ -141,7 +140,6 @@ import org.jooq.meta.EmbeddableColumnDefinition;
 import org.jooq.meta.EmbeddableDefinition;
 import org.jooq.meta.EnumDefinition;
 import org.jooq.meta.ForeignKeyDefinition;
-import org.jooq.meta.IdentityDefinition;
 import org.jooq.meta.IndexColumnDefinition;
 import org.jooq.meta.IndexDefinition;
 import org.jooq.meta.JavaTypeResolver;
@@ -750,41 +748,8 @@ public class JavaGenerator extends AbstractGenerator {
         else
             out.println("public class Keys {");
 
-        List<IdentityDefinition> allIdentities = new ArrayList<>();
         List<UniqueKeyDefinition> allUniqueKeys = new ArrayList<>();
         List<ForeignKeyDefinition> allForeignKeys = new ArrayList<>();
-
-        out.header("IDENTITY definitions");
-        out.println();
-
-        for (TableDefinition table : database.getTables(schema)) {
-            try {
-                IdentityDefinition identity = table.getIdentity();
-
-                if (identity != null) {
-                    empty = false;
-
-                    final String identityType = out.ref(getStrategy().getFullJavaClassName(identity.getColumn().getContainer(), Mode.RECORD));
-                    final String columnTypeFull = getJavaType(identity.getColumn().getType(resolver()));
-                    final String columnType = out.ref(columnTypeFull);
-                    final String identityId = getStrategy().getJavaIdentifier(identity.getColumn().getContainer());
-                    final int block = allIdentities.size() / INITIALISER_SIZE;
-
-                    printDeprecationIfUnknownType(out, columnTypeFull);
-                    if (scala || kotlin)
-                        out.println("val IDENTITY_%s = Identities%s.IDENTITY_%s",
-                                identityId, block, identityId);
-                    else
-                        out.println("public static final %s<%s, %s> IDENTITY_%s = Identities%s.IDENTITY_%s;",
-                            Identity.class, identityType, columnType, identityId, block, identityId);
-
-                    allIdentities.add(identity);
-                }
-            }
-            catch (Exception e) {
-                log.error("Error while generating table " + table, e);
-            }
-        }
 
         // Unique keys
         out.header("UNIQUE and PRIMARY KEY definitions");
@@ -845,22 +810,10 @@ public class JavaGenerator extends AbstractGenerator {
 
         // [#1459] Print nested classes for actual static field initialisations
         // keeping top-level initialiser small
-        int identityCounter = 0;
         int uniqueKeyCounter = 0;
         int foreignKeyCounter = 0;
 
         out.header("[#1459] distribute members to avoid static initialisers > 64kb");
-
-        // Identities
-        // ----------
-
-        for (IdentityDefinition identity : allIdentities) {
-            printIdentity(out, identityCounter, identity);
-            identityCounter++;
-        }
-
-        if (identityCounter > 0)
-            out.println("}");
 
         // UniqueKeys
         // ----------
@@ -1038,59 +991,6 @@ public class JavaGenerator extends AbstractGenerator {
                 orderFields,
                 index.isUnique()
             );
-    }
-
-    protected void printIdentity(JavaWriter out, int identityCounter, IdentityDefinition identity) {
-        final int block = identityCounter / INITIALISER_SIZE;
-        final String identityTypeFull = getJavaType(identity.getColumn().getType(resolver()));
-        final String identityType = out.ref(identityTypeFull);
-
-        // Print new nested class
-        if (identityCounter % INITIALISER_SIZE == 0) {
-            if (identityCounter > 0)
-                out.println("}");
-
-            out.println();
-
-            if (scala || kotlin)
-                out.println("private object Identities%s {", block);
-            else
-                out.println("private static class Identities%s {", block);
-        }
-
-        printDeprecationIfUnknownType(out, identityTypeFull);
-        if (scala)
-            out.print("val %s: %s[%s, %s] = ",
-                getStrategy().getJavaIdentifier(identity),
-                Identity.class,
-                out.ref(getStrategy().getFullJavaClassName(identity.getTable(), Mode.RECORD)),
-                identityType);
-        else if (kotlin)
-            out.print("val %s: %s<%s, %s?> = ",
-                getStrategy().getJavaIdentifier(identity),
-                Identity.class,
-                out.ref(getStrategy().getFullJavaClassName(identity.getTable(), Mode.RECORD)),
-                identityType);
-        else
-            out.print("static final %s<%s, %s> %s = ",
-                Identity.class,
-                out.ref(getStrategy().getFullJavaClassName(identity.getTable(), Mode.RECORD)),
-                identityType,
-                getStrategy().getJavaIdentifier(identity));
-
-        printCreateIdentity(out, identity);
-
-        if (scala || kotlin)
-            out.println();
-        else
-            out.println(";");
-    }
-
-    private void printCreateIdentity(JavaWriter out, IdentityDefinition identity) {
-        out.print("%s.createIdentity(%s, %s)",
-            Internal.class,
-            out.ref(getStrategy().getFullJavaIdentifier(identity.getColumn().getContainer()), 2),
-            out.ref(getStrategy().getFullJavaIdentifier(identity.getColumn()), colRefSegments(identity.getColumn())));
     }
 
     protected void printUniqueKey(JavaWriter out, int uniqueKeyCounter, UniqueKeyDefinition uniqueKey) {
@@ -4620,58 +4520,6 @@ public class JavaGenerator extends AbstractGenerator {
 
         // Add primary / unique / foreign key information
         if (generateRelations()) {
-            IdentityDefinition identity = table.getIdentity();
-
-            // The identity column
-            if (identity != null) {
-                final String identityTypeFull = getJavaType(identity.getColumn().getType(resolver()));
-                final String identityType = out.ref(identityTypeFull);
-                final String identityFullId = generateGlobalKeyReferences()
-                    ? out.ref(getStrategy().getFullJavaIdentifier(identity), 2)
-                    : null;
-
-                if (scala) {
-                    out.println();
-
-                    printDeprecationIfUnknownType(out, identityTypeFull);
-                    out.print("override def getIdentity: %s[%s, %s] = ", Identity.class, recordType, identityType);
-
-                    if (identityFullId != null)
-                        out.print("%s", identityFullId);
-                    else
-                        printCreateIdentity(out, identity);
-
-                    out.println();
-                }
-                else if (kotlin) {
-                    printDeprecationIfUnknownType(out, identityTypeFull);
-                    out.print("override fun getIdentity(): %s<%s, %s?> = ", Identity.class, recordType, identityType);
-
-                    if (identityFullId != null)
-                        out.print("%s", identityFullId);
-                    else
-                        printCreateIdentity(out, identity);
-
-                    out.println();
-                }
-                else {
-                    if (printDeprecationIfUnknownType(out, identityTypeFull))
-                        out.override();
-                    else
-                        out.overrideInherit();
-
-                    out.println("public %s<%s, %s> getIdentity() {", Identity.class, recordType, identityType);
-                    out.print("return ");
-
-                    if (identityFullId != null)
-                        out.print("%s", identityFullId);
-                    else
-                        printCreateIdentity(out, identity);
-
-                    out.println(";");
-                    out.println("}");
-                }
-            }
 
             // The primary / main unique key
             if (primaryKey != null) {

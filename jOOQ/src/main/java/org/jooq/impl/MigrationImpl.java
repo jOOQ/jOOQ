@@ -62,7 +62,6 @@ import org.jooq.Configuration;
 import org.jooq.Constants;
 import org.jooq.ContextTransactionalRunnable;
 import org.jooq.Field;
-import org.jooq.Identity;
 import org.jooq.Meta;
 import org.jooq.Migration;
 import org.jooq.MigrationListener;
@@ -516,11 +515,6 @@ final class MigrationImpl extends AbstractScope implements Migration {
 
         private JooqMigrationsChangelog(Name alias, Table<JooqMigrationsChangelogRecord> aliased, Field<?>[] parameters) {
             super(alias, null, aliased, parameters, DSL.comment("The migration log of jOOQ Migrations."));
-        }
-
-        @Override
-        public Identity<JooqMigrationsChangelogRecord, Long> getIdentity() {
-            return Internal.createIdentity(JOOQ_MIGRATIONS_CHANGELOG, JOOQ_MIGRATIONS_CHANGELOG.ID);
         }
 
         @Override

@@ -50,10 +50,11 @@ final class IdentityImpl<R extends Record, T> implements Identity<R, T> {
     /**
      * Generated UID
      */
-    private static final long      serialVersionUID = 162853300137140844L;
+    private static final long       serialVersionUID = 162853300137140844L;
+    static final IdentityImpl<?, ?> NULL             = new IdentityImpl<>(null, null);
 
-    private final Table<R>         table;
-    private final TableField<R, T> field;
+    private final Table<R>          table;
+    private final TableField<R, T>  field;
 
     IdentityImpl(Table<R> table, TableField<R, T> field) {
         this.table = table;

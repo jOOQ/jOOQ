@@ -1322,9 +1322,25 @@ final class Tools {
         Field<?>[] result = new Field[fields.length];
 
         for (int i = 0; i < fields.length; i++)
-            result[i] = DSL.field(fields[i].getUnqualifiedName(), fields[i].getDataType());
+            result[i] = unqualified(fields[i]);
 
         return result;
+    }
+
+    static final List<Field<?>> unqualified(Collection<? extends Field<?>> fields) {
+        if (fields == null)
+            return null;
+
+        List<Field<?>> result = new ArrayList<>(fields.size());
+
+        for (Field<?> field : fields)
+            result.add(unqualified(field));
+
+        return result;
+    }
+
+    static final <T> Field<T> unqualified(Field<T> field) {
+        return DSL.field(field.getUnqualifiedName(), field.getDataType());
     }
 
     static final Name[] unqualifiedNames(Field<?>[] fields) {

@@ -41,6 +41,7 @@ package org.jooq;
 // ...
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
@@ -110,7 +111,7 @@ public interface DeleteResultStep<R extends Record> extends Delete<R> {
      * @see DeleteQuery#getReturnedRecords()
      */
     @NotNull
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, POSTGRES })
     Result<R> fetch() throws DataAccessException;
 
     /**
@@ -126,7 +127,7 @@ public interface DeleteResultStep<R extends Record> extends Delete<R> {
      * @see DeleteQuery#getReturnedRecord()
      */
     @Nullable
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, POSTGRES })
     R fetchOne() throws DataAccessException, TooManyRowsException;
 
 
@@ -141,7 +142,7 @@ public interface DeleteResultStep<R extends Record> extends Delete<R> {
      * @see DeleteQuery#getReturnedRecord()
      */
     @NotNull
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, MARIADB, POSTGRES })
     Optional<R> fetchOptional() throws DataAccessException, TooManyRowsException;
 
 }

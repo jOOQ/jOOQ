@@ -42,6 +42,8 @@ import static java.lang.Boolean.TRUE;
 // ...
 // ...
 // ...
+// ...
+// ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
@@ -50,9 +52,12 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
 // ...
+// ...
+// ...
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
+import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
@@ -122,10 +127,12 @@ import org.jooq.QualifiedAsterisk;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
+import org.jooq.Scope;
 import org.jooq.Select;
 import org.jooq.SelectFieldOrAsterisk;
 import org.jooq.Table;
 import org.jooq.UniqueKey;
+import org.jooq.Update;
 import org.jooq.conf.ExecuteWithoutWhere;
 import org.jooq.conf.RenderNameCase;
 import org.jooq.conf.SettingsTools;
@@ -147,6 +154,10 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
     private static final JooqLogger              log                              = JooqLogger.getLogger(AbstractQuery.class);
 
     private static final Set<SQLDialect>         NO_SUPPORT_INSERT_ALIASED_TABLE  = SQLDialect.supportedBy(DERBY, FIREBIRD, H2, MARIADB, MYSQL);
+    private static final Set<SQLDialect>         NATIVE_SUPPORT_INSERT_RETURNING  = SQLDialect.supportedBy(FIREBIRD, MARIADB, POSTGRES);
+    private static final Set<SQLDialect>         NATIVE_SUPPORT_UPDATE_RETURNING  = SQLDialect.supportedBy(FIREBIRD, POSTGRES);
+    private static final Set<SQLDialect>         NATIVE_SUPPORT_DELETE_RETURNING  = SQLDialect.supportedBy(FIREBIRD, MARIADB, POSTGRES);
+
 
 
 
@@ -761,37 +772,45 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
 
 
-
-
     final void toSQLReturning(Context<?> ctx) {
         if (!returning.isEmpty()) {
-            switch (ctx.family()) {
+            // Other dialects don't render a RETURNING clause, but
+            // use JDBC's Statement.RETURN_GENERATED_KEYS mode instead
 
+            if (nativeSupportReturning(ctx)) {
+                boolean declareFields = ctx.declareFields();
+                boolean qualify = ctx.qualify();
+                boolean unqualify = ctx.family() == MARIADB;
 
+                if (unqualify)
+                    ctx.qualify(false);
 
+                ctx.formatSeparator()
+                   .visit(K_RETURNING)
+                   .sql(' ')
+                   .declareFields(true)
 
-                case FIREBIRD:
-                case POSTGRES: {
-                    boolean previous = ctx.declareFields();
+                   .visit(
 
-                    ctx.formatSeparator()
-                       .visit(K_RETURNING)
-                       .sql(' ')
-                       .declareFields(true)
-                       .visit(ctx.family() == FIREBIRD ? new SelectFieldList<>(returningResolvedAsterisks) : returning)
-                       .declareFields(previous);
+                       // Firebird doesn't support asterisks at all here
+                       // MariaDB doesn't support qualified asterisks: https://jira.mariadb.org/browse/MDEV-23178
+                       ctx.family() == FIREBIRD || ctx.family() == MARIADB
+                     ? new SelectFieldList<>(returningResolvedAsterisks)
+                     : returning
+                   )
+                   .declareFields(declareFields);
 
-                    break;
-                }
-
-                default:
-                    // Other dialects don't render a RETURNING clause, but
-                    // use JDBC's Statement.RETURN_GENERATED_KEYS mode instead
-                    break;
+                if (unqualify)
+                    ctx.qualify(qualify);
             }
         }
     }
 
+    private final boolean nativeSupportReturning(Scope ctx) {
+        return this instanceof Insert && NATIVE_SUPPORT_INSERT_RETURNING.contains(ctx.dialect())
+            || this instanceof Update && NATIVE_SUPPORT_UPDATE_RETURNING.contains(ctx.dialect())
+            || this instanceof Delete && NATIVE_SUPPORT_DELETE_RETURNING.contains(ctx.dialect());
+    }
 
     @Override
     protected final void prepare(ExecuteContext ctx) throws SQLException {
@@ -799,9 +818,8 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
         Tools.setFetchSize(ctx, 0);
     }
 
-    private void prepare0(ExecuteContext ctx) throws SQLException {
+    private final void prepare0(ExecuteContext ctx) throws SQLException {
         Connection connection = ctx.connection();
-
 
 
 
@@ -813,7 +831,6 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
  if (returning.isEmpty()) {
             super.prepare(ctx);
-            return;
         }
 
 
@@ -823,8 +840,9 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
 
 
-
-        // Values should be returned from the INSERT
+        else if (nativeSupportReturning(ctx)) {
+            super.prepare(ctx);
+        }
         else {
             switch (ctx.family()) {
 
@@ -836,15 +854,9 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
 
 
-
-
-                // Postgres uses the RETURNING clause in SQL
-                case FIREBIRD:
-                case POSTGRES:
                 // SQLite will select last_insert_rowid() after the INSER
                 case SQLITE:
                 case CUBRID:
-
                     super.prepare(ctx);
                     break;
 
@@ -861,8 +873,12 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
 
 
+
                 case DERBY:
                 case H2:
+
+                // [#9212] Older MariaDB versions that don't support RETURNING
+                //         yet, or UPDATE .. RETURNING
                 case MARIADB:
                 case MYSQL:
                     ctx.statement(connection.prepareStatement(ctx.sql(), Statement.RETURN_GENERATED_KEYS));
@@ -999,9 +1015,16 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
                 case DERBY:
                 case H2:
-                case MARIADB:
                 case MYSQL: {
                     return executeReturningGeneratedKeysFetchAdditionalRows(ctx, listener);
+                }
+
+                case MARIADB: {
+                    if (!nativeSupportReturning(ctx))
+                        return executeReturningGeneratedKeysFetchAdditionalRows(ctx, listener);
+
+                    rs = executeReturningQuery(ctx, listener);
+                    break;
                 }
 
 
@@ -1245,7 +1268,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
         }
     }
 
-    private Field<?> returnedIdentity() {
+    private final Field<?> returnedIdentity() {
         if (table.getIdentity() != null)
             return table.getIdentity().getField();
         else

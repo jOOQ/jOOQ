@@ -32,7 +32,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Film extends TableImpl<FilmRecord> {
 
-    private static final long serialVersionUID = 313776890;
+    private static final long serialVersionUID = 380882165;
 
     /**
      * The reference instance of <code>FILM</code>
@@ -117,7 +117,7 @@ public class Film extends TableImpl<FilmRecord> {
 
     @Override
     public Identity<FilmRecord, Integer> getIdentity() {
-        return Keys.IDENTITY_FILM;
+        return (Identity<FilmRecord, Integer>) super.getIdentity();
     }
 
     @Override

@@ -5,7 +5,6 @@ package org.jooq.example.kotlin.db.h2
 
 
 import org.jooq.ForeignKey
-import org.jooq.Identity
 import org.jooq.UniqueKey
 import org.jooq.example.kotlin.db.h2.tables.Author
 import org.jooq.example.kotlin.db.h2.tables.Book
@@ -25,13 +24,6 @@ import org.jooq.impl.Internal
  */
 @Suppress("UNCHECKED_CAST")
 object Keys {
-
-    // -------------------------------------------------------------------------
-    // IDENTITY definitions
-    // -------------------------------------------------------------------------
-
-    val IDENTITY_AUTHOR = Identities0.IDENTITY_AUTHOR
-    val IDENTITY_BOOK = Identities0.IDENTITY_BOOK
 
     // -------------------------------------------------------------------------
     // UNIQUE and PRIMARY KEY definitions
@@ -54,11 +46,6 @@ object Keys {
     // -------------------------------------------------------------------------
     // [#1459] distribute members to avoid static initialisers > 64kb
     // -------------------------------------------------------------------------
-
-    private object Identities0 {
-        val IDENTITY_AUTHOR: Identity<AuthorRecord, Int?> = Internal.createIdentity(Author.AUTHOR, Author.AUTHOR.ID)
-        val IDENTITY_BOOK: Identity<BookRecord, Int?> = Internal.createIdentity(Book.BOOK, Book.BOOK.ID)
-    }
 
     private object UniqueKeys0 {
         val PK_T_AUTHOR: UniqueKey<AuthorRecord> = Internal.createUniqueKey(Author.AUTHOR, DSL.name("PK_T_AUTHOR"), arrayOf(Author.AUTHOR.ID), true)

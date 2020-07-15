@@ -135,7 +135,7 @@ class Book(
 
     constructor(child: Table<out Record>, key: ForeignKey<out Record, BookRecord>): this(Internal.createPathAlias(child, key), child, key, BOOK, null)
     override fun getSchema(): Schema = Public.PUBLIC
-    override fun getIdentity(): Identity<BookRecord, Int?> = Keys.IDENTITY_BOOK
+    override fun getIdentity(): Identity<BookRecord, Int?> = super.getIdentity() as Identity<BookRecord, Int?>
     override fun getPrimaryKey(): UniqueKey<BookRecord> = Keys.PK_T_BOOK
     override fun getKeys(): List<UniqueKey<BookRecord>> = listOf(Keys.PK_T_BOOK)
     override fun getReferences(): List<ForeignKey<BookRecord, *>> = listOf(Keys.FK_T_BOOK_AUTHOR_ID, Keys.FK_T_BOOK_CO_AUTHOR_ID)

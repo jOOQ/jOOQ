@@ -5,7 +5,6 @@ package org.jooq.example.jpa.jooq;
 
 
 import org.jooq.ForeignKey;
-import org.jooq.Identity;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.example.jpa.jooq.tables.Actor;
@@ -28,14 +27,6 @@ import org.jooq.impl.Internal;
 public class Keys {
 
     // -------------------------------------------------------------------------
-    // IDENTITY definitions
-    // -------------------------------------------------------------------------
-
-    public static final Identity<ActorRecord, Integer> IDENTITY_ACTOR = Identities0.IDENTITY_ACTOR;
-    public static final Identity<FilmRecord, Integer> IDENTITY_FILM = Identities0.IDENTITY_FILM;
-    public static final Identity<LanguageRecord, Integer> IDENTITY_LANGUAGE = Identities0.IDENTITY_LANGUAGE;
-
-    // -------------------------------------------------------------------------
     // UNIQUE and PRIMARY KEY definitions
     // -------------------------------------------------------------------------
 
@@ -56,12 +47,6 @@ public class Keys {
     // -------------------------------------------------------------------------
     // [#1459] distribute members to avoid static initialisers > 64kb
     // -------------------------------------------------------------------------
-
-    private static class Identities0 {
-        static final Identity<ActorRecord, Integer> IDENTITY_ACTOR = Internal.createIdentity(Actor.ACTOR, Actor.ACTOR.ACTORID);
-        static final Identity<FilmRecord, Integer> IDENTITY_FILM = Internal.createIdentity(Film.FILM, Film.FILM.FILMID);
-        static final Identity<LanguageRecord, Integer> IDENTITY_LANGUAGE = Internal.createIdentity(Language.LANGUAGE, Language.LANGUAGE.LANGUAGEID);
-    }
 
     private static class UniqueKeys0 {
         static final UniqueKey<ActorRecord> CONSTRAINT_3 = Internal.createUniqueKey(Actor.ACTOR, DSL.name("CONSTRAINT_3"), new TableField[] { Actor.ACTOR.ACTORID }, true);

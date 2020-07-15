@@ -90,6 +90,7 @@ import org.jooq.Domain;
 import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Identity;
 import org.jooq.Index;
 // ...
 import org.jooq.Name;
@@ -140,6 +141,7 @@ import org.jooq.meta.EmbeddableColumnDefinition;
 import org.jooq.meta.EmbeddableDefinition;
 import org.jooq.meta.EnumDefinition;
 import org.jooq.meta.ForeignKeyDefinition;
+import org.jooq.meta.IdentityDefinition;
 import org.jooq.meta.IndexColumnDefinition;
 import org.jooq.meta.IndexDefinition;
 import org.jooq.meta.JavaTypeResolver;
@@ -4520,6 +4522,34 @@ public class JavaGenerator extends AbstractGenerator {
 
         // Add primary / unique / foreign key information
         if (generateRelations()) {
+            IdentityDefinition identity = table.getIdentity();
+
+            // The identity column
+            if (identity != null) {
+                final String identityTypeFull = getJavaType(identity.getColumn().getType(resolver()));
+                final String identityType = out.ref(identityTypeFull);
+
+                if (scala) {
+                    out.println();
+
+                    printDeprecationIfUnknownType(out, identityTypeFull);
+                    out.println("override def getIdentity: %s[%s, %s] = super.getIdentity.asInstanceOf[ %s[%s, %s] ]", Identity.class, recordType, identityType, Identity.class, recordType, identityType);
+                }
+                else if (kotlin) {
+                    printDeprecationIfUnknownType(out, identityTypeFull);
+                    out.println("override fun getIdentity(): %s<%s, %s?> = super.getIdentity() as %s<%s, %s?>", Identity.class, recordType, identityType, Identity.class, recordType, identityType);
+                }
+                else {
+                    if (printDeprecationIfUnknownType(out, identityTypeFull))
+                        out.override();
+                    else
+                        out.overrideInherit();
+
+                    out.println("public %s<%s, %s> getIdentity() {", Identity.class, recordType, identityType);
+                    out.println("return (%s<%s, %s>) super.getIdentity();", Identity.class, recordType, identityType);
+                    out.println("}");
+                }
+            }
 
             // The primary / main unique key
             if (primaryKey != null) {

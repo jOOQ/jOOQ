@@ -147,7 +147,7 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
 
     @Override
     public final DataType<T> identity(boolean i) {
-        return construct(precision0(), scale0(), length0(), i ? NOT_NULL : nullability(), collation(), characterSet(), i, i ? null : defaultValue());
+        return construct(precision0(), scale0(), length0(), i ? NOT_NULL : nullability(), collation(), characterSet(), i, defaultValue());
     }
 
     @Override
@@ -172,7 +172,7 @@ abstract class AbstractDataType<T> extends AbstractNamed implements DataType<T> 
 
     @Override
     public final DataType<T> default_(Field<T> d) {
-        return construct(precision0(), scale0(), length0(), nullability(), collation(), characterSet(), d != null ? false : identity(), d);
+        return construct(precision0(), scale0(), length0(), nullability(), collation(), characterSet(), identity(), d);
     }
 
     @Override

@@ -55,6 +55,7 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
 import static org.jooq.impl.DSL.constraint;
+import static org.jooq.impl.DSL.defaultValue;
 import static org.jooq.impl.DSL.dual;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.name;
@@ -682,16 +683,28 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 case DERBY:
                 case MARIADB:
                 case MYSQL:
-                    ctx.formatSeparator()
-                       .visit(K_VALUES)
-                       .sql(" (")
-                       .visit(wrap(nCopies(table().fields().length, K_DEFAULT)))
-                       .sql(')');
-
+                    acceptDefaultValuesEmulation(ctx, table().fields().length);
                     break;
+
                 default:
                     ctx.formatSeparator()
                        .visit(K_DEFAULT_VALUES);
@@ -711,6 +724,14 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         else {
             ctx.visit(insertMaps);
         }
+    }
+
+    private final void acceptDefaultValuesEmulation(Context<?> ctx, int length) {
+        ctx.formatSeparator()
+           .visit(K_VALUES)
+           .sql(" (")
+           .visit(wrap(nCopies(length, K_DEFAULT)))
+           .sql(')');
     }
 
 

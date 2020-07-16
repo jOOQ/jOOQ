@@ -55,7 +55,6 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
 import static org.jooq.impl.DSL.constraint;
-import static org.jooq.impl.DSL.defaultValue;
 import static org.jooq.impl.DSL.dual;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.name;
@@ -675,10 +674,6 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
         }
         else if (defaultValues) {
             switch (ctx.family()) {
-
-
-
-
 
 
 

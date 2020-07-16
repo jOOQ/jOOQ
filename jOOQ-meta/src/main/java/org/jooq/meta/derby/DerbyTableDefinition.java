@@ -39,6 +39,7 @@
 package org.jooq.meta.derby;
 
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.meta.derby.sys.tables.Syscolumns.SYSCOLUMNS;
 
@@ -77,7 +78,7 @@ public class DerbyTableDefinition extends AbstractTableDefinition {
                 Syscolumns.COLUMNNAME,
                 Syscolumns.COLUMNNUMBER,
                 Syscolumns.COLUMNDATATYPE,
-                Syscolumns.COLUMNDEFAULT,
+                when(Syscolumns.AUTOINCREMENTINC.isNull(), Syscolumns.COLUMNDEFAULT).as(Syscolumns.COLUMNDEFAULT),
                 Syscolumns.AUTOINCREMENTINC)
             .from(SYSCOLUMNS)
             // [#1241] Suddenly, bind values didn't work any longer, here...

@@ -77,4 +77,19 @@ final class CaseImpl implements Case {
     public final <T> CaseConditionStep<T> when(Condition condition, Select<? extends Record1<T>> result) {
         return when(condition, DSL.field(result));
     }
+
+    @Override
+    public final <T> CaseConditionStep<T> when(Field<Boolean> condition, T result) {
+        return when(DSL.condition(condition), result);
+    }
+
+    @Override
+    public final <T> CaseConditionStep<T> when(Field<Boolean> condition, Field<T> result) {
+        return when(DSL.condition(condition), result);
+    }
+
+    @Override
+    public final <T> CaseConditionStep<T> when(Field<Boolean> condition, Select<? extends Record1<T>> result) {
+        return when(DSL.condition(condition), result);
+    }
 }

@@ -37,7 +37,7 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
+import org.jetbrains.annotations.NotNull;
 
 
 /**
@@ -89,6 +89,42 @@ public interface CaseConditionStep<T> extends Field<T> {
     @NotNull
     @Support
     CaseConditionStep<T> when(Condition condition, Select<? extends Record1<T>> result);
+
+    /**
+     * Compare a condition to the already constructed case statement, return
+     * result if the condition holds true
+     *
+     * @param condition The condition to add to the case statement
+     * @param result The result value if the condition holds true
+     * @return An intermediary step for case statement construction
+     */
+    @NotNull
+    @Support
+    CaseConditionStep<T> when(Field<Boolean> condition, T result);
+
+    /**
+     * Compare a condition to the already constructed case statement, return
+     * result if the condition holds true
+     *
+     * @param condition The condition to add to the case statement
+     * @param result The result value if the condition holds true
+     * @return An intermediary step for case statement construction
+     */
+    @NotNull
+    @Support
+    CaseConditionStep<T> when(Field<Boolean> condition, Field<T> result);
+
+    /**
+     * Compare a condition to the already constructed case statement, return
+     * result if the condition holds true
+     *
+     * @param condition The condition to add to the case statement
+     * @param result The result value if the condition holds true
+     * @return An intermediary step for case statement construction
+     */
+    @NotNull
+    @Support
+    CaseConditionStep<T> when(Field<Boolean> condition, Select<? extends Record1<T>> result);
 
     /**
      * Add an else clause to the already constructed case statement

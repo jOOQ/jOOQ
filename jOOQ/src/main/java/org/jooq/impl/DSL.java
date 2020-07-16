@@ -11917,6 +11917,30 @@ public class DSL {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // -------------------------------------------------------------------------
     // XXX Plain SQL object factory
     // -------------------------------------------------------------------------
@@ -14103,6 +14127,54 @@ public class DSL {
     @NotNull
     @Support
     public static <T> CaseConditionStep<T> when(Condition condition, Select<? extends Record1<T>> result) {
+        return decode().when(condition, result);
+    }
+
+    /**
+     * Initialise a {@link Case} statement.
+     * <p>
+     * This API can be used to create expressions of the type <code><pre>
+     * CASE WHEN x &lt; 1  THEN 'one'
+     *      WHEN x &gt;= 2 THEN 'two'
+     *      ELSE            'three'
+     * END
+     * </pre></code>
+     */
+    @NotNull
+    @Support
+    public static <T> CaseConditionStep<T> when(Field<Boolean> condition, T result) {
+        return decode().when(condition, result);
+    }
+
+    /**
+     * Initialise a {@link Case} statement.
+     * <p>
+     * This API can be used to create expressions of the type <code><pre>
+     * CASE WHEN x &lt; 1  THEN 'one'
+     *      WHEN x &gt;= 2 THEN 'two'
+     *      ELSE            'three'
+     * END
+     * </pre></code>
+     */
+    @NotNull
+    @Support
+    public static <T> CaseConditionStep<T> when(Field<Boolean> condition, Field<T> result) {
+        return decode().when(condition, result);
+    }
+
+    /**
+     * Initialise a {@link Case} statement.
+     * <p>
+     * This API can be used to create expressions of the type <code><pre>
+     * CASE WHEN x &lt; 1  THEN 'one'
+     *      WHEN x &gt;= 2 THEN 'two'
+     *      ELSE            'three'
+     * END
+     * </pre></code>
+     */
+    @NotNull
+    @Support
+    public static <T> CaseConditionStep<T> when(Field<Boolean> condition, Select<? extends Record1<T>> result) {
         return decode().when(condition, result);
     }
 

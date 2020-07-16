@@ -37,10 +37,9 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 import org.jooq.impl.DSL;
+
+import org.jetbrains.annotations.NotNull;
 
 
 /**
@@ -145,4 +144,55 @@ public interface Case {
     @NotNull
     @Support
     <T> CaseConditionStep<T> when(Condition condition, Select<? extends Record1<T>> result);
+
+    /**
+     * This construct can be used to create expressions of the type <code><pre>
+     * CASE WHEN x &lt; 1  THEN 'one'
+     *      WHEN x &gt;= 2 THEN 'two'
+     *      ELSE            'three'
+     * END
+     * </pre></code>
+     *
+     * @param <T> The generic field type parameter
+     * @param condition A condition to check in the case statement
+     * @param result The result if the condition holds true
+     * @return An intermediary step for case statement construction
+     */
+    @NotNull
+    @Support
+    <T> CaseConditionStep<T> when(Field<Boolean> condition, T result);
+
+    /**
+     * This construct can be used to create expressions of the type <code><pre>
+     * CASE WHEN x &lt; 1  THEN 'one'
+     *      WHEN x &gt;= 2 THEN 'two'
+     *      ELSE            'three'
+     * END
+     * </pre></code>
+     *
+     * @param <T> The generic field type parameter
+     * @param condition A condition to check in the case statement
+     * @param result The result if the condition holds true
+     * @return An intermediary step for case statement construction
+     */
+    @NotNull
+    @Support
+    <T> CaseConditionStep<T> when(Field<Boolean> condition, Field<T> result);
+
+    /**
+     * This construct can be used to create expressions of the type <code><pre>
+     * CASE WHEN x &lt; 1  THEN 'one'
+     *      WHEN x &gt;= 2 THEN 'two'
+     *      ELSE            'three'
+     * END
+     * </pre></code>
+     *
+     * @param <T> The generic field type parameter
+     * @param condition A condition to check in the case statement
+     * @param result The result if the condition holds true
+     * @return An intermediary step for case statement construction
+     */
+    @NotNull
+    @Support
+    <T> CaseConditionStep<T> when(Field<Boolean> condition, Select<? extends Record1<T>> result);
 }

@@ -99,6 +99,21 @@ final class CaseConditionStepImpl<T> extends AbstractField<T> implements CaseCon
     }
 
     @Override
+    public final CaseConditionStep<T> when(Field<Boolean> condition, T result) {
+        return when(DSL.condition(condition), result);
+    }
+
+    @Override
+    public final CaseConditionStep<T> when(Field<Boolean> condition, Field<T> result) {
+        return when(DSL.condition(condition), result);
+    }
+
+    @Override
+    public final CaseConditionStep<T> when(Field<Boolean> condition, Select<? extends Record1<T>> result) {
+        return when(DSL.condition(condition), result);
+    }
+
+    @Override
     public final Field<T> otherwise(T result) {
         return else_(result);
     }

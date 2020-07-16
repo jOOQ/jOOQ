@@ -75,7 +75,7 @@ final class SourceMetaProvider implements MetaProvider {
         }
 
         SQLDialect dialect = configuration.settings().getInterpreterDialect();
-        switch (defaultIfNull(dialect, DEFAULT)) {
+        switch (defaultIfNull(dialect, DEFAULT).family()) {
             case DEFAULT:
                 return new InterpreterMetaProvider(configuration, sources).provide();
 

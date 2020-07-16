@@ -67,10 +67,10 @@ final class DefaultInterpreterConnectionProvider implements ConnectionProvider {
     @NotNull
     @Override
     public Connection acquire() throws DataAccessException {
-        SQLDialect dialect = defaultIfNull(configuration.settings().getInterpreterDialect(), DEFAULT);
+        SQLDialect family = defaultIfNull(configuration.settings().getInterpreterDialect(), DEFAULT).family();
 
         try {
-            switch (dialect) {
+            switch (family) {
                 case DERBY:
                     return DriverManager.getConnection("jdbc:derby:memory:db;create=true");
 
@@ -86,7 +86,7 @@ final class DefaultInterpreterConnectionProvider implements ConnectionProvider {
                     return DriverManager.getConnection("jdbc:sqlite::memory:");
 
                 default:
-                    throw new DataAccessException("Unsupported interpretation dialect: " + dialect);
+                    throw new DataAccessException("Unsupported interpretation dialect family: " + family);
             }
         }
         catch (SQLException e) {

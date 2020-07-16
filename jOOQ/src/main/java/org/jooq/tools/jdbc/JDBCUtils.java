@@ -175,7 +175,7 @@ public class JDBCUtils {
         if (majorVersion == 0)
             return dialect;
 
-        switch (dialect) {
+        switch (dialect.family()) {
 
 
 

@@ -37,13 +37,23 @@
  */
 package org.jooq.impl;
 
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.SQLITE;
+// ...
+// ...
 import static org.jooq.impl.Keywords.K_BOTH;
 import static org.jooq.impl.Keywords.K_FROM;
 import static org.jooq.impl.Names.N_TRIM;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 
+import java.util.Set;
+
 import org.jooq.Context;
 import org.jooq.Field;
+// ...
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
@@ -53,7 +63,12 @@ final class Trim extends AbstractField<String> {
     /**
      * Generated UID
      */
-    private static final long   serialVersionUID = -7273879239726265322L;
+    private static final long            serialVersionUID                   = -7273879239726265322L;
+
+
+
+
+
 
     private final Field<String> argument;
     private final Field<String> characters;
@@ -72,48 +87,20 @@ final class Trim extends AbstractField<String> {
     @Override
     public final void accept(Context<?> ctx) {
         if (characters == null) {
-            switch (ctx.dialect()) {
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-                default:
-                    ctx.visit(N_TRIM).sql('(').visit(argument).sql(')');
-                    break;
-            }
+            ctx.visit(N_TRIM).sql('(').visit(argument).sql(')');
         }
-        else {
-            switch (ctx.dialect()) {
+        else if (ctx.family() == SQLITE)
+            ctx.visit(N_TRIM).sql('(').visit(argument).sql(", ").visit(characters).sql(')');
 
 
 
 
-
-                case SQLITE:
-                    ctx.visit(N_TRIM).sql('(').visit(argument).sql(", ").visit(characters).sql(')');
-                    break;
-
-
-
-
-
-
-
-                default:
-                    ctx.visit(N_TRIM).sql('(').visit(K_BOTH).sql(' ').visit(characters).sql(' ').visit(K_FROM).sql(' ').visit(argument).sql(')');
-                    break;
-            }
-        }
+        else
+            ctx.visit(N_TRIM).sql('(').visit(K_BOTH).sql(' ').visit(characters).sql(' ').visit(K_FROM).sql(' ').visit(argument).sql(')');
     }
 }

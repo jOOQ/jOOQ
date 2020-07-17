@@ -37,10 +37,6 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
-// ...
 // ...
 // ...
 // ...
@@ -54,7 +50,6 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
 // ...
-import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
@@ -64,6 +59,8 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+
+import org.jetbrains.annotations.NotNull;
 
 
 /**
@@ -149,7 +146,7 @@ public interface SelectUnionStep<R extends Record> extends SelectCorrelatedSubqu
      */
     @Override
     @NotNull
-    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
     SelectOrderByStep<R> except(Select<? extends R> select);
 
     /**
@@ -165,7 +162,7 @@ public interface SelectUnionStep<R extends Record> extends SelectCorrelatedSubqu
      */
     @Override
     @NotNull
-    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
     SelectOrderByStep<R> intersect(Select<? extends R> select);
 
     /**

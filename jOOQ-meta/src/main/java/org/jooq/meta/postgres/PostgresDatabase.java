@@ -975,6 +975,13 @@ public class PostgresDatabase extends AbstractDatabase {
 
 
 
+
+
+
+
+
+
+
     boolean canCombineArrays() {
         if (canCombineArrays == null) {
 

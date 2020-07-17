@@ -86,13 +86,15 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
         PostgresDatabase database = (PostgresDatabase) getDatabase();
         Field<String> dataType = COLUMNS.DATA_TYPE;
         Field<Integer> precision = nvl(COLUMNS.DATETIME_PRECISION, COLUMNS.NUMERIC_PRECISION);
+        Field<String> serialColumnDefault = inline("nextval('%_seq'::regclass)");
 
 
 
 
 
 
-        Condition isSerial = lower(COLUMNS.COLUMN_DEFAULT).like(inline("nextval('%_seq'::regclass)"));
+
+        Condition isSerial = lower(COLUMNS.COLUMN_DEFAULT).like(serialColumnDefault);
         Condition isIdentity10 = COLUMNS.IS_IDENTITY.eq(inline("YES"));
 
         // [#9200] only use COLUMN_DEFAULT for ColumnDefinition#isIdentity() if

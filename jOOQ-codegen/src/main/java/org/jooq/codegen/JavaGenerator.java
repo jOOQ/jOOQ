@@ -404,7 +404,7 @@ public class JavaGenerator extends AbstractGenerator {
             log.warn("");
             log.warn("Deprecation warnings");
             log.warn("----------------------------------------------------------");
-            log.warn("  <generateInstanceFields/> = false is deprecated! Please adapt your configuration.");
+            log.warn("  <generateInstanceFields/> = false is deprecated! This feature is no longer maintained and will be removed in jOOQ 4.0. Please adapt your configuration.");
         }
 
         log.info("");

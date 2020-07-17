@@ -41,6 +41,7 @@ package org.jooq.meta.mariadb;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.nullif;
+import static org.jooq.meta.mysql.information_schema.Tables.TABLES;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -56,7 +57,6 @@ import org.jooq.meta.DefaultSequenceDefinition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
 import org.jooq.meta.mysql.MySQLDatabase;
-import org.jooq.meta.mysql.information_schema.tables.Tables;
 import org.jooq.util.mariadb.MariaDBDataType;
 
 /**
@@ -77,13 +77,13 @@ public class MariaDBDatabase extends MySQLDatabase {
         List<SequenceDefinition> result = new ArrayList<>();
 
         for (Record record : create()
-                .select(Tables.TABLE_SCHEMA, Tables.TABLE_NAME)
-                .from(Tables.TABLES)
-                .where(Tables.TABLE_TYPE.eq("SEQUENCE"))) {
+                .select(TABLES.TABLE_SCHEMA, TABLES.TABLE_NAME)
+                .from(TABLES)
+                .where(TABLES.TABLE_TYPE.eq("SEQUENCE"))) {
 
-            SchemaDefinition schema = getSchema(record.get(Tables.TABLE_SCHEMA));
+            SchemaDefinition schema = getSchema(record.get(TABLES.TABLE_SCHEMA));
             if (schema != null) {
-                String name = record.get(Tables.TABLE_NAME);
+                String name = record.get(TABLES.TABLE_NAME);
 
                 DefaultDataTypeDefinition type = new DefaultDataTypeDefinition(
                     this,

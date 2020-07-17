@@ -23,7 +23,7 @@ import org.jooq.meta.h2.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sequences extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 1838697197;
+    private static final long serialVersionUID = -1234952486;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA.SEQUENCES</code>
@@ -41,69 +41,62 @@ public class Sequences extends TableImpl<Record> {
     /**
      * The column <code>INFORMATION_SCHEMA.SEQUENCES.SEQUENCE_CATALOG</code>.
      */
-    public static final TableField<Record, String> SEQUENCE_CATALOG = createField(DSL.name("SEQUENCE_CATALOG"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), SEQUENCES, "");
+    public final TableField<Record, String> SEQUENCE_CATALOG = createField(DSL.name("SEQUENCE_CATALOG"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.SEQUENCES.SEQUENCE_SCHEMA</code>.
      */
-    public static final TableField<Record, String> SEQUENCE_SCHEMA = createField(DSL.name("SEQUENCE_SCHEMA"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), SEQUENCES, "");
+    public final TableField<Record, String> SEQUENCE_SCHEMA = createField(DSL.name("SEQUENCE_SCHEMA"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.SEQUENCES.SEQUENCE_NAME</code>.
      */
-    public static final TableField<Record, String> SEQUENCE_NAME = createField(DSL.name("SEQUENCE_NAME"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), SEQUENCES, "");
+    public final TableField<Record, String> SEQUENCE_NAME = createField(DSL.name("SEQUENCE_NAME"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.SEQUENCES.CURRENT_VALUE</code>.
      */
-    public static final TableField<Record, Long> CURRENT_VALUE = createField(DSL.name("CURRENT_VALUE"), org.jooq.impl.SQLDataType.BIGINT, SEQUENCES, "");
+    public final TableField<Record, Long> CURRENT_VALUE = createField(DSL.name("CURRENT_VALUE"), org.jooq.impl.SQLDataType.BIGINT, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.SEQUENCES.INCREMENT</code>.
      */
-    public static final TableField<Record, Long> INCREMENT = createField(DSL.name("INCREMENT"), org.jooq.impl.SQLDataType.BIGINT, SEQUENCES, "");
+    public final TableField<Record, Long> INCREMENT = createField(DSL.name("INCREMENT"), org.jooq.impl.SQLDataType.BIGINT, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.SEQUENCES.IS_GENERATED</code>.
      */
-    public static final TableField<Record, Boolean> IS_GENERATED = createField(DSL.name("IS_GENERATED"), org.jooq.impl.SQLDataType.BOOLEAN, SEQUENCES, "");
+    public final TableField<Record, Boolean> IS_GENERATED = createField(DSL.name("IS_GENERATED"), org.jooq.impl.SQLDataType.BOOLEAN, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.SEQUENCES.REMARKS</code>.
      */
-    public static final TableField<Record, String> REMARKS = createField(DSL.name("REMARKS"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), SEQUENCES, "");
+    public final TableField<Record, String> REMARKS = createField(DSL.name("REMARKS"), org.jooq.impl.SQLDataType.VARCHAR(2147483647), this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.SEQUENCES.CACHE</code>.
      */
-    public static final TableField<Record, Long> CACHE = createField(DSL.name("CACHE"), org.jooq.impl.SQLDataType.BIGINT, SEQUENCES, "");
+    public final TableField<Record, Long> CACHE = createField(DSL.name("CACHE"), org.jooq.impl.SQLDataType.BIGINT, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.SEQUENCES.MIN_VALUE</code>.
      */
-    public static final TableField<Record, Long> MIN_VALUE = createField(DSL.name("MIN_VALUE"), org.jooq.impl.SQLDataType.BIGINT, SEQUENCES, "");
+    public final TableField<Record, Long> MIN_VALUE = createField(DSL.name("MIN_VALUE"), org.jooq.impl.SQLDataType.BIGINT, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.SEQUENCES.MAX_VALUE</code>.
      */
-    public static final TableField<Record, Long> MAX_VALUE = createField(DSL.name("MAX_VALUE"), org.jooq.impl.SQLDataType.BIGINT, SEQUENCES, "");
+    public final TableField<Record, Long> MAX_VALUE = createField(DSL.name("MAX_VALUE"), org.jooq.impl.SQLDataType.BIGINT, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.SEQUENCES.IS_CYCLE</code>.
      */
-    public static final TableField<Record, Boolean> IS_CYCLE = createField(DSL.name("IS_CYCLE"), org.jooq.impl.SQLDataType.BOOLEAN, SEQUENCES, "");
+    public final TableField<Record, Boolean> IS_CYCLE = createField(DSL.name("IS_CYCLE"), org.jooq.impl.SQLDataType.BOOLEAN, this, "");
 
     /**
      * The column <code>INFORMATION_SCHEMA.SEQUENCES.ID</code>.
      */
-    public static final TableField<Record, Integer> ID = createField(DSL.name("ID"), org.jooq.impl.SQLDataType.INTEGER, SEQUENCES, "");
-
-    /**
-     * No further instances allowed
-     */
-    private Sequences() {
-        this(DSL.name("SEQUENCES"), null);
-    }
+    public final TableField<Record, Integer> ID = createField(DSL.name("ID"), org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     private Sequences(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);
@@ -113,6 +106,27 @@ public class Sequences extends TableImpl<Record> {
         super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
+    /**
+     * Create an aliased <code>INFORMATION_SCHEMA.SEQUENCES</code> table reference
+     */
+    public Sequences(String alias) {
+        this(DSL.name(alias), SEQUENCES);
+    }
+
+    /**
+     * Create an aliased <code>INFORMATION_SCHEMA.SEQUENCES</code> table reference
+     */
+    public Sequences(Name alias) {
+        this(alias, SEQUENCES);
+    }
+
+    /**
+     * Create a <code>INFORMATION_SCHEMA.SEQUENCES</code> table reference
+     */
+    public Sequences() {
+        this(DSL.name("SEQUENCES"), null);
+    }
+
     public <O extends Record> Sequences(Table<O> child, ForeignKey<O, Record> key) {
         super(child, key, SEQUENCES);
     }
@@ -120,5 +134,31 @@ public class Sequences extends TableImpl<Record> {
     @Override
     public Schema getSchema() {
         return InformationSchema.INFORMATION_SCHEMA;
+    }
+
+    @Override
+    public Sequences as(String alias) {
+        return new Sequences(DSL.name(alias), this);
+    }
+
+    @Override
+    public Sequences as(Name alias) {
+        return new Sequences(alias, this);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public Sequences rename(String name) {
+        return new Sequences(DSL.name(name), null);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public Sequences rename(Name name) {
+        return new Sequences(name, null);
     }
 }

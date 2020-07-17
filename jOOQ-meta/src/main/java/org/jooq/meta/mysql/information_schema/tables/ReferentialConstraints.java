@@ -23,7 +23,7 @@ import org.jooq.meta.mysql.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ReferentialConstraints extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 986266884;
+    private static final long serialVersionUID = 1113290133;
 
     /**
      * The reference instance of <code>information_schema.REFERENTIAL_CONSTRAINTS</code>
@@ -41,64 +41,57 @@ public class ReferentialConstraints extends TableImpl<Record> {
     /**
      * The column <code>information_schema.REFERENTIAL_CONSTRAINTS.CONSTRAINT_CATALOG</code>.
      */
-    public static final TableField<Record, String> CONSTRAINT_CATALOG = createField(DSL.name("CONSTRAINT_CATALOG"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), REFERENTIAL_CONSTRAINTS, "");
+    public final TableField<Record, String> CONSTRAINT_CATALOG = createField(DSL.name("CONSTRAINT_CATALOG"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.REFERENTIAL_CONSTRAINTS.CONSTRAINT_SCHEMA</code>.
      */
-    public static final TableField<Record, String> CONSTRAINT_SCHEMA = createField(DSL.name("CONSTRAINT_SCHEMA"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), REFERENTIAL_CONSTRAINTS, "");
+    public final TableField<Record, String> CONSTRAINT_SCHEMA = createField(DSL.name("CONSTRAINT_SCHEMA"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.REFERENTIAL_CONSTRAINTS.CONSTRAINT_NAME</code>.
      */
-    public static final TableField<Record, String> CONSTRAINT_NAME = createField(DSL.name("CONSTRAINT_NAME"), org.jooq.impl.SQLDataType.VARCHAR(64), REFERENTIAL_CONSTRAINTS, "");
+    public final TableField<Record, String> CONSTRAINT_NAME = createField(DSL.name("CONSTRAINT_NAME"), org.jooq.impl.SQLDataType.VARCHAR(64), this, "");
 
     /**
      * The column <code>information_schema.REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_CATALOG</code>.
      */
-    public static final TableField<Record, String> UNIQUE_CONSTRAINT_CATALOG = createField(DSL.name("UNIQUE_CONSTRAINT_CATALOG"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), REFERENTIAL_CONSTRAINTS, "");
+    public final TableField<Record, String> UNIQUE_CONSTRAINT_CATALOG = createField(DSL.name("UNIQUE_CONSTRAINT_CATALOG"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_SCHEMA</code>.
      */
-    public static final TableField<Record, String> UNIQUE_CONSTRAINT_SCHEMA = createField(DSL.name("UNIQUE_CONSTRAINT_SCHEMA"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), REFERENTIAL_CONSTRAINTS, "");
+    public final TableField<Record, String> UNIQUE_CONSTRAINT_SCHEMA = createField(DSL.name("UNIQUE_CONSTRAINT_SCHEMA"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_NAME</code>.
      */
-    public static final TableField<Record, String> UNIQUE_CONSTRAINT_NAME = createField(DSL.name("UNIQUE_CONSTRAINT_NAME"), org.jooq.impl.SQLDataType.VARCHAR(64), REFERENTIAL_CONSTRAINTS, "");
+    public final TableField<Record, String> UNIQUE_CONSTRAINT_NAME = createField(DSL.name("UNIQUE_CONSTRAINT_NAME"), org.jooq.impl.SQLDataType.VARCHAR(64), this, "");
 
     /**
      * The column <code>information_schema.REFERENTIAL_CONSTRAINTS.MATCH_OPTION</code>.
      */
-    public static final TableField<Record, String> MATCH_OPTION = createField(DSL.name("MATCH_OPTION"), org.jooq.impl.SQLDataType.VARCHAR(7).nullable(false), REFERENTIAL_CONSTRAINTS, "");
+    public final TableField<Record, String> MATCH_OPTION = createField(DSL.name("MATCH_OPTION"), org.jooq.impl.SQLDataType.VARCHAR(7).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.REFERENTIAL_CONSTRAINTS.UPDATE_RULE</code>.
      */
-    public static final TableField<Record, String> UPDATE_RULE = createField(DSL.name("UPDATE_RULE"), org.jooq.impl.SQLDataType.VARCHAR(11).nullable(false), REFERENTIAL_CONSTRAINTS, "");
+    public final TableField<Record, String> UPDATE_RULE = createField(DSL.name("UPDATE_RULE"), org.jooq.impl.SQLDataType.VARCHAR(11).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.REFERENTIAL_CONSTRAINTS.DELETE_RULE</code>.
      */
-    public static final TableField<Record, String> DELETE_RULE = createField(DSL.name("DELETE_RULE"), org.jooq.impl.SQLDataType.VARCHAR(11).nullable(false), REFERENTIAL_CONSTRAINTS, "");
+    public final TableField<Record, String> DELETE_RULE = createField(DSL.name("DELETE_RULE"), org.jooq.impl.SQLDataType.VARCHAR(11).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.REFERENTIAL_CONSTRAINTS.TABLE_NAME</code>.
      */
-    public static final TableField<Record, String> TABLE_NAME = createField(DSL.name("TABLE_NAME"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), REFERENTIAL_CONSTRAINTS, "");
+    public final TableField<Record, String> TABLE_NAME = createField(DSL.name("TABLE_NAME"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.REFERENTIAL_CONSTRAINTS.REFERENCED_TABLE_NAME</code>.
      */
-    public static final TableField<Record, String> REFERENCED_TABLE_NAME = createField(DSL.name("REFERENCED_TABLE_NAME"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), REFERENTIAL_CONSTRAINTS, "");
-
-    /**
-     * No further instances allowed
-     */
-    private ReferentialConstraints() {
-        this(DSL.name("REFERENTIAL_CONSTRAINTS"), null);
-    }
+    public final TableField<Record, String> REFERENCED_TABLE_NAME = createField(DSL.name("REFERENCED_TABLE_NAME"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), this, "");
 
     private ReferentialConstraints(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);
@@ -108,6 +101,27 @@ public class ReferentialConstraints extends TableImpl<Record> {
         super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
+    /**
+     * Create an aliased <code>information_schema.REFERENTIAL_CONSTRAINTS</code> table reference
+     */
+    public ReferentialConstraints(String alias) {
+        this(DSL.name(alias), REFERENTIAL_CONSTRAINTS);
+    }
+
+    /**
+     * Create an aliased <code>information_schema.REFERENTIAL_CONSTRAINTS</code> table reference
+     */
+    public ReferentialConstraints(Name alias) {
+        this(alias, REFERENTIAL_CONSTRAINTS);
+    }
+
+    /**
+     * Create a <code>information_schema.REFERENTIAL_CONSTRAINTS</code> table reference
+     */
+    public ReferentialConstraints() {
+        this(DSL.name("REFERENTIAL_CONSTRAINTS"), null);
+    }
+
     public <O extends Record> ReferentialConstraints(Table<O> child, ForeignKey<O, Record> key) {
         super(child, key, REFERENTIAL_CONSTRAINTS);
     }
@@ -115,5 +129,31 @@ public class ReferentialConstraints extends TableImpl<Record> {
     @Override
     public Schema getSchema() {
         return InformationSchema.INFORMATION_SCHEMA;
+    }
+
+    @Override
+    public ReferentialConstraints as(String alias) {
+        return new ReferentialConstraints(DSL.name(alias), this);
+    }
+
+    @Override
+    public ReferentialConstraints as(Name alias) {
+        return new ReferentialConstraints(alias, this);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public ReferentialConstraints rename(String name) {
+        return new ReferentialConstraints(DSL.name(name), null);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public ReferentialConstraints rename(Name name) {
+        return new ReferentialConstraints(name, null);
     }
 }

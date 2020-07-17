@@ -23,7 +23,7 @@ import org.jooq.meta.mysql.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class CheckConstraints extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 1630642113;
+    private static final long serialVersionUID = 505928615;
 
     /**
      * The reference instance of <code>information_schema.CHECK_CONSTRAINTS</code>
@@ -41,29 +41,22 @@ public class CheckConstraints extends TableImpl<Record> {
     /**
      * The column <code>information_schema.CHECK_CONSTRAINTS.CONSTRAINT_CATALOG</code>.
      */
-    public static final TableField<Record, String> CONSTRAINT_CATALOG = createField(DSL.name("CONSTRAINT_CATALOG"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), CHECK_CONSTRAINTS, "");
+    public final TableField<Record, String> CONSTRAINT_CATALOG = createField(DSL.name("CONSTRAINT_CATALOG"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.CHECK_CONSTRAINTS.CONSTRAINT_SCHEMA</code>.
      */
-    public static final TableField<Record, String> CONSTRAINT_SCHEMA = createField(DSL.name("CONSTRAINT_SCHEMA"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), CHECK_CONSTRAINTS, "");
+    public final TableField<Record, String> CONSTRAINT_SCHEMA = createField(DSL.name("CONSTRAINT_SCHEMA"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.CHECK_CONSTRAINTS.CONSTRAINT_NAME</code>.
      */
-    public static final TableField<Record, String> CONSTRAINT_NAME = createField(DSL.name("CONSTRAINT_NAME"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), CHECK_CONSTRAINTS, "");
+    public final TableField<Record, String> CONSTRAINT_NAME = createField(DSL.name("CONSTRAINT_NAME"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.CHECK_CONSTRAINTS.CHECK_CLAUSE</code>.
      */
-    public static final TableField<Record, String> CHECK_CLAUSE = createField(DSL.name("CHECK_CLAUSE"), org.jooq.impl.SQLDataType.CLOB.nullable(false), CHECK_CONSTRAINTS, "");
-
-    /**
-     * No further instances allowed
-     */
-    private CheckConstraints() {
-        this(DSL.name("CHECK_CONSTRAINTS"), null);
-    }
+    public final TableField<Record, String> CHECK_CLAUSE = createField(DSL.name("CHECK_CLAUSE"), org.jooq.impl.SQLDataType.CLOB.nullable(false), this, "");
 
     private CheckConstraints(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);
@@ -73,6 +66,27 @@ public class CheckConstraints extends TableImpl<Record> {
         super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
+    /**
+     * Create an aliased <code>information_schema.CHECK_CONSTRAINTS</code> table reference
+     */
+    public CheckConstraints(String alias) {
+        this(DSL.name(alias), CHECK_CONSTRAINTS);
+    }
+
+    /**
+     * Create an aliased <code>information_schema.CHECK_CONSTRAINTS</code> table reference
+     */
+    public CheckConstraints(Name alias) {
+        this(alias, CHECK_CONSTRAINTS);
+    }
+
+    /**
+     * Create a <code>information_schema.CHECK_CONSTRAINTS</code> table reference
+     */
+    public CheckConstraints() {
+        this(DSL.name("CHECK_CONSTRAINTS"), null);
+    }
+
     public <O extends Record> CheckConstraints(Table<O> child, ForeignKey<O, Record> key) {
         super(child, key, CHECK_CONSTRAINTS);
     }
@@ -80,5 +94,31 @@ public class CheckConstraints extends TableImpl<Record> {
     @Override
     public Schema getSchema() {
         return InformationSchema.INFORMATION_SCHEMA;
+    }
+
+    @Override
+    public CheckConstraints as(String alias) {
+        return new CheckConstraints(DSL.name(alias), this);
+    }
+
+    @Override
+    public CheckConstraints as(Name alias) {
+        return new CheckConstraints(alias, this);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public CheckConstraints rename(String name) {
+        return new CheckConstraints(DSL.name(name), null);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public CheckConstraints rename(Name name) {
+        return new CheckConstraints(name, null);
     }
 }

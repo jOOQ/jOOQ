@@ -23,7 +23,7 @@ import org.jooq.meta.mysql.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Views extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -2007922849;
+    private static final long serialVersionUID = 1434878600;
 
     /**
      * The reference instance of <code>information_schema.VIEWS</code>
@@ -41,59 +41,52 @@ public class Views extends TableImpl<Record> {
     /**
      * The column <code>information_schema.VIEWS.TABLE_CATALOG</code>.
      */
-    public static final TableField<Record, String> TABLE_CATALOG = createField(DSL.name("TABLE_CATALOG"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), VIEWS, "");
+    public final TableField<Record, String> TABLE_CATALOG = createField(DSL.name("TABLE_CATALOG"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.VIEWS.TABLE_SCHEMA</code>.
      */
-    public static final TableField<Record, String> TABLE_SCHEMA = createField(DSL.name("TABLE_SCHEMA"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), VIEWS, "");
+    public final TableField<Record, String> TABLE_SCHEMA = createField(DSL.name("TABLE_SCHEMA"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.VIEWS.TABLE_NAME</code>.
      */
-    public static final TableField<Record, String> TABLE_NAME = createField(DSL.name("TABLE_NAME"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), VIEWS, "");
+    public final TableField<Record, String> TABLE_NAME = createField(DSL.name("TABLE_NAME"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.VIEWS.VIEW_DEFINITION</code>.
      */
-    public static final TableField<Record, String> VIEW_DEFINITION = createField(DSL.name("VIEW_DEFINITION"), org.jooq.impl.SQLDataType.CLOB, VIEWS, "");
+    public final TableField<Record, String> VIEW_DEFINITION = createField(DSL.name("VIEW_DEFINITION"), org.jooq.impl.SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>information_schema.VIEWS.CHECK_OPTION</code>.
      */
-    public static final TableField<Record, String> CHECK_OPTION = createField(DSL.name("CHECK_OPTION"), org.jooq.impl.SQLDataType.VARCHAR(8), VIEWS, "");
+    public final TableField<Record, String> CHECK_OPTION = createField(DSL.name("CHECK_OPTION"), org.jooq.impl.SQLDataType.VARCHAR(8), this, "");
 
     /**
      * The column <code>information_schema.VIEWS.IS_UPDATABLE</code>.
      */
-    public static final TableField<Record, String> IS_UPDATABLE = createField(DSL.name("IS_UPDATABLE"), org.jooq.impl.SQLDataType.VARCHAR(3), VIEWS, "");
+    public final TableField<Record, String> IS_UPDATABLE = createField(DSL.name("IS_UPDATABLE"), org.jooq.impl.SQLDataType.VARCHAR(3), this, "");
 
     /**
      * The column <code>information_schema.VIEWS.DEFINER</code>.
      */
-    public static final TableField<Record, String> DEFINER = createField(DSL.name("DEFINER"), org.jooq.impl.SQLDataType.VARCHAR(288), VIEWS, "");
+    public final TableField<Record, String> DEFINER = createField(DSL.name("DEFINER"), org.jooq.impl.SQLDataType.VARCHAR(288), this, "");
 
     /**
      * The column <code>information_schema.VIEWS.SECURITY_TYPE</code>.
      */
-    public static final TableField<Record, String> SECURITY_TYPE = createField(DSL.name("SECURITY_TYPE"), org.jooq.impl.SQLDataType.VARCHAR(7), VIEWS, "");
+    public final TableField<Record, String> SECURITY_TYPE = createField(DSL.name("SECURITY_TYPE"), org.jooq.impl.SQLDataType.VARCHAR(7), this, "");
 
     /**
      * The column <code>information_schema.VIEWS.CHARACTER_SET_CLIENT</code>.
      */
-    public static final TableField<Record, String> CHARACTER_SET_CLIENT = createField(DSL.name("CHARACTER_SET_CLIENT"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), VIEWS, "");
+    public final TableField<Record, String> CHARACTER_SET_CLIENT = createField(DSL.name("CHARACTER_SET_CLIENT"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.VIEWS.COLLATION_CONNECTION</code>.
      */
-    public static final TableField<Record, String> COLLATION_CONNECTION = createField(DSL.name("COLLATION_CONNECTION"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), VIEWS, "");
-
-    /**
-     * No further instances allowed
-     */
-    private Views() {
-        this(DSL.name("VIEWS"), null);
-    }
+    public final TableField<Record, String> COLLATION_CONNECTION = createField(DSL.name("COLLATION_CONNECTION"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), this, "");
 
     private Views(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);
@@ -103,6 +96,27 @@ public class Views extends TableImpl<Record> {
         super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
+    /**
+     * Create an aliased <code>information_schema.VIEWS</code> table reference
+     */
+    public Views(String alias) {
+        this(DSL.name(alias), VIEWS);
+    }
+
+    /**
+     * Create an aliased <code>information_schema.VIEWS</code> table reference
+     */
+    public Views(Name alias) {
+        this(alias, VIEWS);
+    }
+
+    /**
+     * Create a <code>information_schema.VIEWS</code> table reference
+     */
+    public Views() {
+        this(DSL.name("VIEWS"), null);
+    }
+
     public <O extends Record> Views(Table<O> child, ForeignKey<O, Record> key) {
         super(child, key, VIEWS);
     }
@@ -110,5 +124,31 @@ public class Views extends TableImpl<Record> {
     @Override
     public Schema getSchema() {
         return InformationSchema.INFORMATION_SCHEMA;
+    }
+
+    @Override
+    public Views as(String alias) {
+        return new Views(DSL.name(alias), this);
+    }
+
+    @Override
+    public Views as(Name alias) {
+        return new Views(alias, this);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public Views rename(String name) {
+        return new Views(DSL.name(name), null);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public Views rename(Name name) {
+        return new Views(name, null);
     }
 }

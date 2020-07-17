@@ -41,10 +41,7 @@ package org.jooq.meta.mysql;
 import static java.util.Arrays.asList;
 import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.DSL.name;
-import static org.jooq.meta.mysql.information_schema.tables.Columns.COLUMNS;
-import static org.jooq.meta.mysql.information_schema.tables.Columns.ORDINAL_POSITION;
-import static org.jooq.meta.mysql.information_schema.tables.Columns.TABLE_NAME;
-import static org.jooq.meta.mysql.information_schema.tables.Columns.TABLE_SCHEMA;
+import static org.jooq.meta.mysql.information_schema.Tables.COLUMNS;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -60,7 +57,6 @@ import org.jooq.meta.DataTypeDefinition;
 import org.jooq.meta.DefaultColumnDefinition;
 import org.jooq.meta.DefaultDataTypeDefinition;
 import org.jooq.meta.SchemaDefinition;
-import org.jooq.meta.mysql.information_schema.tables.Columns;
 
 /**
  * @author Lukas Eder
@@ -82,24 +78,24 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
         List<ColumnDefinition> result = new ArrayList<>();
 
         for (Record record : create().select(
-                    Columns.ORDINAL_POSITION,
-                    Columns.COLUMN_NAME,
-                    Columns.COLUMN_COMMENT,
-                    Columns.COLUMN_TYPE,
-                    Columns.DATA_TYPE,
-                    Columns.IS_NULLABLE,
-                    Columns.COLUMN_DEFAULT,
-                    Columns.CHARACTER_MAXIMUM_LENGTH,
-                    coalesce(Columns.NUMERIC_PRECISION, Columns.DATETIME_PRECISION).as(Columns.NUMERIC_PRECISION),
-                    Columns.NUMERIC_SCALE,
-                    Columns.EXTRA)
+                    COLUMNS.ORDINAL_POSITION,
+                    COLUMNS.COLUMN_NAME,
+                    COLUMNS.COLUMN_COMMENT,
+                    COLUMNS.COLUMN_TYPE,
+                    COLUMNS.DATA_TYPE,
+                    COLUMNS.IS_NULLABLE,
+                    COLUMNS.COLUMN_DEFAULT,
+                    COLUMNS.CHARACTER_MAXIMUM_LENGTH,
+                    coalesce(COLUMNS.NUMERIC_PRECISION, COLUMNS.DATETIME_PRECISION).as(COLUMNS.NUMERIC_PRECISION),
+                    COLUMNS.NUMERIC_SCALE,
+                    COLUMNS.EXTRA)
                 .from(COLUMNS)
                 // [#5213] Duplicate schema value to work around MySQL issue https://bugs.mysql.com/bug.php?id=86022
-                .where(TABLE_SCHEMA.in(getSchema().getName(), getSchema().getName()))
-                .and(TABLE_NAME.equal(getName()))
-                .orderBy(ORDINAL_POSITION)) {
+                .where(COLUMNS.TABLE_SCHEMA.in(getSchema().getName(), getSchema().getName()))
+                .and(COLUMNS.TABLE_NAME.equal(getName()))
+                .orderBy(COLUMNS.ORDINAL_POSITION)) {
 
-            String dataType = record.get(Columns.DATA_TYPE);
+            String dataType = record.get(COLUMNS.DATA_TYPE);
 
             // [#519] Some types have unsigned versions
             boolean unsigned = getDatabase().supportsUnsignedTypes();
@@ -109,7 +105,7 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
 
             if (unsigned || displayWidths) {
                 if (asList("tinyint", "smallint", "mediumint", "int", "bigint").contains(dataType.toLowerCase())) {
-                    Matcher matcher = COLUMN_TYPE.matcher(record.get(Columns.COLUMN_TYPE).toLowerCase());
+                    Matcher matcher = COLUMN_TYPE.matcher(record.get(COLUMNS.COLUMN_TYPE).toLowerCase());
 
                     if (matcher.find()) {
                         String mType = matcher.group(1);
@@ -127,21 +123,21 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
                 getDatabase(),
                 getSchema(),
                 dataType,
-                record.get(Columns.CHARACTER_MAXIMUM_LENGTH),
-                record.get(Columns.NUMERIC_PRECISION),
-                record.get(Columns.NUMERIC_SCALE),
-                record.get(Columns.IS_NULLABLE, boolean.class),
-                record.get(Columns.COLUMN_DEFAULT),
-                name(getSchema().getName(), getName() + "_" + record.get(Columns.COLUMN_NAME))
+                record.get(COLUMNS.CHARACTER_MAXIMUM_LENGTH),
+                record.get(COLUMNS.NUMERIC_PRECISION),
+                record.get(COLUMNS.NUMERIC_SCALE),
+                record.get(COLUMNS.IS_NULLABLE, boolean.class),
+                record.get(COLUMNS.COLUMN_DEFAULT),
+                name(getSchema().getName(), getName() + "_" + record.get(COLUMNS.COLUMN_NAME))
             );
 
             ColumnDefinition column = new DefaultColumnDefinition(
                 getDatabase().getTable(getSchema(), getName()),
-                record.get(Columns.COLUMN_NAME),
-                record.get(Columns.ORDINAL_POSITION, int.class),
+                record.get(COLUMNS.COLUMN_NAME),
+                record.get(COLUMNS.ORDINAL_POSITION, int.class),
                 type,
-                "auto_increment".equalsIgnoreCase(record.get(Columns.EXTRA)),
-                record.get(Columns.COLUMN_COMMENT)
+                "auto_increment".equalsIgnoreCase(record.get(COLUMNS.EXTRA)),
+                record.get(COLUMNS.COLUMN_COMMENT)
             );
 
             result.add(column);

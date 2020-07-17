@@ -51,7 +51,6 @@ import org.jooq.meta.DefaultParameterDefinition;
 import org.jooq.meta.InOutDefinition;
 import org.jooq.meta.ParameterDefinition;
 import org.jooq.meta.SchemaDefinition;
-import org.jooq.meta.mysql.information_schema.tables.Parameters;
 import org.jooq.meta.mysql.mysql.enums.ProcType;
 import org.jooq.tools.StringUtils;
 
@@ -96,30 +95,30 @@ public class MySQLRoutineDefinition extends AbstractRoutineDefinition {
         // table is available, which is much more reliable than mysql.proc
         for (Record record : create()
                 .select(
-                    Parameters.ORDINAL_POSITION,
-                    Parameters.PARAMETER_NAME,
-                    Parameters.PARAMETER_MODE,
-                    Parameters.DATA_TYPE,
-                    Parameters.DTD_IDENTIFIER,
-                    Parameters.CHARACTER_MAXIMUM_LENGTH,
-                    Parameters.NUMERIC_PRECISION,
-                    Parameters.NUMERIC_SCALE
+                    PARAMETERS.ORDINAL_POSITION,
+                    PARAMETERS.PARAMETER_NAME,
+                    PARAMETERS.PARAMETER_MODE,
+                    PARAMETERS.DATA_TYPE,
+                    PARAMETERS.DTD_IDENTIFIER,
+                    PARAMETERS.CHARACTER_MAXIMUM_LENGTH,
+                    PARAMETERS.NUMERIC_PRECISION,
+                    PARAMETERS.NUMERIC_SCALE
                 )
                 .from(PARAMETERS)
                 // [#5213] Duplicate schema value to work around MySQL issue https://bugs.mysql.com/bug.php?id=86022
-                .where(Parameters.SPECIFIC_SCHEMA.in(getSchema().getInputName(), getSchema().getInputName()))
-                .and(Parameters.SPECIFIC_NAME.eq(getInputName()))
-                .and(Parameters.ROUTINE_TYPE.eq(procType.name()))
-                .orderBy(Parameters.ORDINAL_POSITION.asc())
+                .where(PARAMETERS.SPECIFIC_SCHEMA.in(getSchema().getInputName(), getSchema().getInputName()))
+                .and(PARAMETERS.SPECIFIC_NAME.eq(getInputName()))
+                .and(PARAMETERS.ROUTINE_TYPE.eq(procType.name()))
+                .orderBy(PARAMETERS.ORDINAL_POSITION.asc())
                 .fetch()) {
 
-            String inOut = record.get(Parameters.PARAMETER_MODE);
-            String dataType = record.get(Parameters.DATA_TYPE);
+            String inOut = record.get(PARAMETERS.PARAMETER_MODE);
+            String dataType = record.get(PARAMETERS.DATA_TYPE);
 
             // [#519] Some types have unsigned versions
             if (getDatabase().supportsUnsignedTypes()) {
                 if (asList("tinyint", "smallint", "mediumint", "int", "bigint").contains(dataType.toLowerCase())) {
-                    if (record.get(Parameters.DTD_IDENTIFIER).toLowerCase().contains("unsigned")) {
+                    if (record.get(PARAMETERS.DTD_IDENTIFIER).toLowerCase().contains("unsigned")) {
                         dataType += "unsigned";
                     }
                 }
@@ -129,9 +128,9 @@ public class MySQLRoutineDefinition extends AbstractRoutineDefinition {
                 getDatabase(),
                 getSchema(),
                 dataType,
-                record.get(Parameters.CHARACTER_MAXIMUM_LENGTH),
-                record.get(Parameters.NUMERIC_PRECISION),
-                record.get(Parameters.NUMERIC_SCALE),
+                record.get(PARAMETERS.CHARACTER_MAXIMUM_LENGTH),
+                record.get(PARAMETERS.NUMERIC_PRECISION),
+                record.get(PARAMETERS.NUMERIC_SCALE),
                 null,
                 (String) null
             );
@@ -142,8 +141,8 @@ public class MySQLRoutineDefinition extends AbstractRoutineDefinition {
             else {
                 ParameterDefinition parameter = new DefaultParameterDefinition(
                     this,
-                    record.get(Parameters.PARAMETER_NAME).replaceAll("@", ""),
-                    record.get(Parameters.ORDINAL_POSITION, int.class),
+                    record.get(PARAMETERS.PARAMETER_NAME).replaceAll("@", ""),
+                    record.get(PARAMETERS.ORDINAL_POSITION, int.class),
                     type);
 
                 addParameter(InOutDefinition.getFromString(inOut), parameter);

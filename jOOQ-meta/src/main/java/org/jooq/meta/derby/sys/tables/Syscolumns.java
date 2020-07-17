@@ -23,7 +23,7 @@ import org.jooq.meta.derby.sys.Sys;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Syscolumns extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 1350441861;
+    private static final long serialVersionUID = 413698351;
 
     /**
      * The reference instance of <code>SYS.SYSCOLUMNS</code>
@@ -41,59 +41,52 @@ public class Syscolumns extends TableImpl<Record> {
     /**
      * The column <code>SYS.SYSCOLUMNS.REFERENCEID</code>.
      */
-    public static final TableField<Record, String> REFERENCEID = createField(DSL.name("REFERENCEID"), org.jooq.impl.SQLDataType.CHAR(36).nullable(false), SYSCOLUMNS, "");
+    public final TableField<Record, String> REFERENCEID = createField(DSL.name("REFERENCEID"), org.jooq.impl.SQLDataType.CHAR(36).nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSCOLUMNS.COLUMNNAME</code>.
      */
-    public static final TableField<Record, String> COLUMNNAME = createField(DSL.name("COLUMNNAME"), org.jooq.impl.SQLDataType.VARCHAR(128).nullable(false), SYSCOLUMNS, "");
+    public final TableField<Record, String> COLUMNNAME = createField(DSL.name("COLUMNNAME"), org.jooq.impl.SQLDataType.VARCHAR(128).nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSCOLUMNS.COLUMNNUMBER</code>.
      */
-    public static final TableField<Record, Integer> COLUMNNUMBER = createField(DSL.name("COLUMNNUMBER"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), SYSCOLUMNS, "");
+    public final TableField<Record, Integer> COLUMNNUMBER = createField(DSL.name("COLUMNNUMBER"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSCOLUMNS.COLUMNDATATYPE</code>.
      */
-    public static final TableField<Record, String> COLUMNDATATYPE = createField(DSL.name("COLUMNDATATYPE"), org.jooq.impl.SQLDataType.CLOB.nullable(false), SYSCOLUMNS, "");
+    public final TableField<Record, String> COLUMNDATATYPE = createField(DSL.name("COLUMNDATATYPE"), org.jooq.impl.SQLDataType.CLOB.nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSCOLUMNS.COLUMNDEFAULT</code>.
      */
-    public static final TableField<Record, String> COLUMNDEFAULT = createField(DSL.name("COLUMNDEFAULT"), org.jooq.impl.SQLDataType.CLOB, SYSCOLUMNS, "");
+    public final TableField<Record, String> COLUMNDEFAULT = createField(DSL.name("COLUMNDEFAULT"), org.jooq.impl.SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>SYS.SYSCOLUMNS.COLUMNDEFAULTID</code>.
      */
-    public static final TableField<Record, String> COLUMNDEFAULTID = createField(DSL.name("COLUMNDEFAULTID"), org.jooq.impl.SQLDataType.CHAR(36), SYSCOLUMNS, "");
+    public final TableField<Record, String> COLUMNDEFAULTID = createField(DSL.name("COLUMNDEFAULTID"), org.jooq.impl.SQLDataType.CHAR(36), this, "");
 
     /**
      * The column <code>SYS.SYSCOLUMNS.AUTOINCREMENTVALUE</code>.
      */
-    public static final TableField<Record, Long> AUTOINCREMENTVALUE = createField(DSL.name("AUTOINCREMENTVALUE"), org.jooq.impl.SQLDataType.BIGINT, SYSCOLUMNS, "");
+    public final TableField<Record, Long> AUTOINCREMENTVALUE = createField(DSL.name("AUTOINCREMENTVALUE"), org.jooq.impl.SQLDataType.BIGINT, this, "");
 
     /**
      * The column <code>SYS.SYSCOLUMNS.AUTOINCREMENTSTART</code>.
      */
-    public static final TableField<Record, Long> AUTOINCREMENTSTART = createField(DSL.name("AUTOINCREMENTSTART"), org.jooq.impl.SQLDataType.BIGINT, SYSCOLUMNS, "");
+    public final TableField<Record, Long> AUTOINCREMENTSTART = createField(DSL.name("AUTOINCREMENTSTART"), org.jooq.impl.SQLDataType.BIGINT, this, "");
 
     /**
      * The column <code>SYS.SYSCOLUMNS.AUTOINCREMENTINC</code>.
      */
-    public static final TableField<Record, Long> AUTOINCREMENTINC = createField(DSL.name("AUTOINCREMENTINC"), org.jooq.impl.SQLDataType.BIGINT, SYSCOLUMNS, "");
+    public final TableField<Record, Long> AUTOINCREMENTINC = createField(DSL.name("AUTOINCREMENTINC"), org.jooq.impl.SQLDataType.BIGINT, this, "");
 
     /**
      * The column <code>SYS.SYSCOLUMNS.AUTOINCREMENTCYCLE</code>.
      */
-    public static final TableField<Record, Boolean> AUTOINCREMENTCYCLE = createField(DSL.name("AUTOINCREMENTCYCLE"), org.jooq.impl.SQLDataType.BOOLEAN, SYSCOLUMNS, "");
-
-    /**
-     * No further instances allowed
-     */
-    private Syscolumns() {
-        this(DSL.name("SYSCOLUMNS"), null);
-    }
+    public final TableField<Record, Boolean> AUTOINCREMENTCYCLE = createField(DSL.name("AUTOINCREMENTCYCLE"), org.jooq.impl.SQLDataType.BOOLEAN, this, "");
 
     private Syscolumns(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);
@@ -103,6 +96,27 @@ public class Syscolumns extends TableImpl<Record> {
         super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
+    /**
+     * Create an aliased <code>SYS.SYSCOLUMNS</code> table reference
+     */
+    public Syscolumns(String alias) {
+        this(DSL.name(alias), SYSCOLUMNS);
+    }
+
+    /**
+     * Create an aliased <code>SYS.SYSCOLUMNS</code> table reference
+     */
+    public Syscolumns(Name alias) {
+        this(alias, SYSCOLUMNS);
+    }
+
+    /**
+     * Create a <code>SYS.SYSCOLUMNS</code> table reference
+     */
+    public Syscolumns() {
+        this(DSL.name("SYSCOLUMNS"), null);
+    }
+
     public <O extends Record> Syscolumns(Table<O> child, ForeignKey<O, Record> key) {
         super(child, key, SYSCOLUMNS);
     }
@@ -110,5 +124,31 @@ public class Syscolumns extends TableImpl<Record> {
     @Override
     public Schema getSchema() {
         return Sys.SYS;
+    }
+
+    @Override
+    public Syscolumns as(String alias) {
+        return new Syscolumns(DSL.name(alias), this);
+    }
+
+    @Override
+    public Syscolumns as(Name alias) {
+        return new Syscolumns(alias, this);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public Syscolumns rename(String name) {
+        return new Syscolumns(DSL.name(name), null);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public Syscolumns rename(Name name) {
+        return new Syscolumns(name, null);
     }
 }

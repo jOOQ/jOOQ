@@ -39,7 +39,7 @@ package org.jooq.meta.h2;
 
 
 import static org.jooq.impl.DSL.noCondition;
-import static org.jooq.meta.h2.information_schema.tables.FunctionColumns.FUNCTION_COLUMNS;
+import static org.jooq.meta.h2.information_schema.Tables.FUNCTION_COLUMNS;
 
 import java.sql.SQLException;
 
@@ -51,7 +51,6 @@ import org.jooq.meta.DefaultParameterDefinition;
 import org.jooq.meta.InOutDefinition;
 import org.jooq.meta.ParameterDefinition;
 import org.jooq.meta.SchemaDefinition;
-import org.jooq.meta.h2.information_schema.tables.FunctionColumns;
 import org.jooq.tools.StringUtils;
 import org.jooq.util.h2.H2DataType;
 
@@ -90,32 +89,32 @@ public class H2RoutineDefinition extends AbstractRoutineDefinition {
     protected void init0() throws SQLException {
         for (Record record : create()
                 .select(
-                    FunctionColumns.COLUMN_NAME,
-                    FunctionColumns.TYPE_NAME,
-                    FunctionColumns.PRECISION,
-                    FunctionColumns.SCALE,
-                    FunctionColumns.POS,
-                    FunctionColumns.NULLABLE,
-                    FunctionColumns.COLUMN_DEFAULT)
+                    FUNCTION_COLUMNS.COLUMN_NAME,
+                    FUNCTION_COLUMNS.TYPE_NAME,
+                    FUNCTION_COLUMNS.PRECISION,
+                    FUNCTION_COLUMNS.SCALE,
+                    FUNCTION_COLUMNS.POS,
+                    FUNCTION_COLUMNS.NULLABLE,
+                    FUNCTION_COLUMNS.COLUMN_DEFAULT)
                 .from(FUNCTION_COLUMNS)
-                .where(FunctionColumns.ALIAS_SCHEMA.equal(getSchema().getName()))
-                .and(FunctionColumns.ALIAS_NAME.equal(getName()))
+                .where(FUNCTION_COLUMNS.ALIAS_SCHEMA.equal(getSchema().getName()))
+                .and(FUNCTION_COLUMNS.ALIAS_NAME.equal(getName()))
 
                 // [#4193] recent versions of H2 produce a row for the function
                 // return value at position 0
-                .and(FunctionColumns.POS.gt(0))
+                .and(FUNCTION_COLUMNS.POS.gt(0))
                 .and(getOverload() == null
                     ? noCondition()
-                    : FunctionColumns.COLUMN_COUNT.eq(FunctionColumns.COLUMN_COUNT.getDataType().convert(getOverload())))
-                .orderBy(FunctionColumns.POS.asc()).fetch()) {
+                    : FUNCTION_COLUMNS.COLUMN_COUNT.eq(FUNCTION_COLUMNS.COLUMN_COUNT.getDataType().convert(getOverload())))
+                .orderBy(FUNCTION_COLUMNS.POS.asc()).fetch()) {
 
-            String paramName = record.get(FunctionColumns.COLUMN_NAME);
-            String typeName = record.get(FunctionColumns.TYPE_NAME);
-            Integer precision = record.get(FunctionColumns.PRECISION);
-            Short scale = record.get(FunctionColumns.SCALE);
-            int position = record.get(FunctionColumns.POS);
-            boolean nullable = record.get(FunctionColumns.NULLABLE, boolean.class);
-            String defaultValue = record.get(FunctionColumns.COLUMN_DEFAULT);
+            String paramName = record.get(FUNCTION_COLUMNS.COLUMN_NAME);
+            String typeName = record.get(FUNCTION_COLUMNS.TYPE_NAME);
+            Integer precision = record.get(FUNCTION_COLUMNS.PRECISION);
+            Short scale = record.get(FUNCTION_COLUMNS.SCALE);
+            int position = record.get(FUNCTION_COLUMNS.POS);
+            boolean nullable = record.get(FUNCTION_COLUMNS.NULLABLE, boolean.class);
+            String defaultValue = record.get(FUNCTION_COLUMNS.COLUMN_DEFAULT);
 
             // VERY special case for H2 alias/function parameters. The first parameter
             // may be a java.sql.Connection object and in such cases it should NEVER be used.

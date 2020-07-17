@@ -23,7 +23,7 @@ import org.jooq.meta.derby.sys.Sys;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Syskeys extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -166123046;
+    private static final long serialVersionUID = 1768228891;
 
     /**
      * The reference instance of <code>SYS.SYSKEYS</code>
@@ -41,19 +41,12 @@ public class Syskeys extends TableImpl<Record> {
     /**
      * The column <code>SYS.SYSKEYS.CONSTRAINTID</code>.
      */
-    public static final TableField<Record, String> CONSTRAINTID = createField(DSL.name("CONSTRAINTID"), org.jooq.impl.SQLDataType.CHAR(36).nullable(false), SYSKEYS, "");
+    public final TableField<Record, String> CONSTRAINTID = createField(DSL.name("CONSTRAINTID"), org.jooq.impl.SQLDataType.CHAR(36).nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSKEYS.CONGLOMERATEID</code>.
      */
-    public static final TableField<Record, String> CONGLOMERATEID = createField(DSL.name("CONGLOMERATEID"), org.jooq.impl.SQLDataType.CHAR(36).nullable(false), SYSKEYS, "");
-
-    /**
-     * No further instances allowed
-     */
-    private Syskeys() {
-        this(DSL.name("SYSKEYS"), null);
-    }
+    public final TableField<Record, String> CONGLOMERATEID = createField(DSL.name("CONGLOMERATEID"), org.jooq.impl.SQLDataType.CHAR(36).nullable(false), this, "");
 
     private Syskeys(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);
@@ -63,6 +56,27 @@ public class Syskeys extends TableImpl<Record> {
         super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
+    /**
+     * Create an aliased <code>SYS.SYSKEYS</code> table reference
+     */
+    public Syskeys(String alias) {
+        this(DSL.name(alias), SYSKEYS);
+    }
+
+    /**
+     * Create an aliased <code>SYS.SYSKEYS</code> table reference
+     */
+    public Syskeys(Name alias) {
+        this(alias, SYSKEYS);
+    }
+
+    /**
+     * Create a <code>SYS.SYSKEYS</code> table reference
+     */
+    public Syskeys() {
+        this(DSL.name("SYSKEYS"), null);
+    }
+
     public <O extends Record> Syskeys(Table<O> child, ForeignKey<O, Record> key) {
         super(child, key, SYSKEYS);
     }
@@ -70,5 +84,31 @@ public class Syskeys extends TableImpl<Record> {
     @Override
     public Schema getSchema() {
         return Sys.SYS;
+    }
+
+    @Override
+    public Syskeys as(String alias) {
+        return new Syskeys(DSL.name(alias), this);
+    }
+
+    @Override
+    public Syskeys as(Name alias) {
+        return new Syskeys(alias, this);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public Syskeys rename(String name) {
+        return new Syskeys(DSL.name(name), null);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public Syskeys rename(Name name) {
+        return new Syskeys(name, null);
     }
 }

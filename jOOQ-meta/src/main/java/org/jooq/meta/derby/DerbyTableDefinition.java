@@ -41,7 +41,7 @@ package org.jooq.meta.derby;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.SQLDataType.VARCHAR;
-import static org.jooq.meta.derby.sys.tables.Syscolumns.SYSCOLUMNS;
+import static org.jooq.meta.derby.sys.Tables.SYSCOLUMNS;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -55,7 +55,6 @@ import org.jooq.meta.DataTypeDefinition;
 import org.jooq.meta.DefaultColumnDefinition;
 import org.jooq.meta.DefaultDataTypeDefinition;
 import org.jooq.meta.SchemaDefinition;
-import org.jooq.meta.derby.sys.tables.Syscolumns;
 
 /**
  * @author Lukas Eder
@@ -75,19 +74,19 @@ public class DerbyTableDefinition extends AbstractTableDefinition {
 		List<ColumnDefinition> result = new ArrayList<>();
 
         for (Record record : create().select(
-                Syscolumns.COLUMNNAME,
-                Syscolumns.COLUMNNUMBER,
-                Syscolumns.COLUMNDATATYPE,
-                when(Syscolumns.AUTOINCREMENTINC.isNull(), Syscolumns.COLUMNDEFAULT).as(Syscolumns.COLUMNDEFAULT),
-                Syscolumns.AUTOINCREMENTINC)
+                SYSCOLUMNS.COLUMNNAME,
+                SYSCOLUMNS.COLUMNNUMBER,
+                SYSCOLUMNS.COLUMNDATATYPE,
+                when(SYSCOLUMNS.AUTOINCREMENTINC.isNull(), SYSCOLUMNS.COLUMNDEFAULT).as(SYSCOLUMNS.COLUMNDEFAULT),
+                SYSCOLUMNS.AUTOINCREMENTINC)
             .from(SYSCOLUMNS)
             // [#1241] Suddenly, bind values didn't work any longer, here...
             // [#6797] The cast is necessary if a non-standard collation is used
-            .where(Syscolumns.REFERENCEID.cast(VARCHAR(32672)).equal(inline(tableid)))
-            .orderBy(Syscolumns.COLUMNNUMBER)
+            .where(SYSCOLUMNS.REFERENCEID.cast(VARCHAR(32672)).equal(inline(tableid)))
+            .orderBy(SYSCOLUMNS.COLUMNNUMBER)
             .fetch()) {
 
-            String columnDataType = record.get(Syscolumns.COLUMNDATATYPE, String.class);
+            String columnDataType = record.get(SYSCOLUMNS.COLUMNDATATYPE, String.class);
             String typeName = parseTypeName(columnDataType);
 
             // [#9945] Derby timestamps always have a precision of 9
@@ -102,15 +101,15 @@ public class DerbyTableDefinition extends AbstractTableDefinition {
                 precision,
                 scale,
                 !parseNotNull(columnDataType),
-                record.get(Syscolumns.COLUMNDEFAULT)
+                record.get(SYSCOLUMNS.COLUMNDEFAULT)
             );
 
 			ColumnDefinition column = new DefaultColumnDefinition(
 				getDatabase().getTable(getSchema(), getName()),
-			    record.get(Syscolumns.COLUMNNAME),
-			    record.get(Syscolumns.COLUMNNUMBER),
+			    record.get(SYSCOLUMNS.COLUMNNAME),
+			    record.get(SYSCOLUMNS.COLUMNNUMBER),
 			    type,
-                null != record.get(Syscolumns.AUTOINCREMENTINC),
+                null != record.get(SYSCOLUMNS.AUTOINCREMENTINC),
                 null
             );
 

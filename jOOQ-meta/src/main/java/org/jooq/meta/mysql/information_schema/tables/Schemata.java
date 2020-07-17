@@ -23,7 +23,7 @@ import org.jooq.meta.mysql.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Schemata extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 1931039844;
+    private static final long serialVersionUID = 670631725;
 
     /**
      * The reference instance of <code>information_schema.SCHEMATA</code>
@@ -41,39 +41,32 @@ public class Schemata extends TableImpl<Record> {
     /**
      * The column <code>information_schema.SCHEMATA.CATALOG_NAME</code>.
      */
-    public static final TableField<Record, String> CATALOG_NAME = createField(DSL.name("CATALOG_NAME"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), SCHEMATA, "");
+    public final TableField<Record, String> CATALOG_NAME = createField(DSL.name("CATALOG_NAME"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.SCHEMATA.SCHEMA_NAME</code>.
      */
-    public static final TableField<Record, String> SCHEMA_NAME = createField(DSL.name("SCHEMA_NAME"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), SCHEMATA, "");
+    public final TableField<Record, String> SCHEMA_NAME = createField(DSL.name("SCHEMA_NAME"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.SCHEMATA.DEFAULT_CHARACTER_SET_NAME</code>.
      */
-    public static final TableField<Record, String> DEFAULT_CHARACTER_SET_NAME = createField(DSL.name("DEFAULT_CHARACTER_SET_NAME"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), SCHEMATA, "");
+    public final TableField<Record, String> DEFAULT_CHARACTER_SET_NAME = createField(DSL.name("DEFAULT_CHARACTER_SET_NAME"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.SCHEMATA.DEFAULT_COLLATION_NAME</code>.
      */
-    public static final TableField<Record, String> DEFAULT_COLLATION_NAME = createField(DSL.name("DEFAULT_COLLATION_NAME"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), SCHEMATA, "");
+    public final TableField<Record, String> DEFAULT_COLLATION_NAME = createField(DSL.name("DEFAULT_COLLATION_NAME"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.SCHEMATA.SQL_PATH</code>.
      */
-    public static final TableField<Record, byte[]> SQL_PATH = createField(DSL.name("SQL_PATH"), org.jooq.impl.SQLDataType.BINARY, SCHEMATA, "");
+    public final TableField<Record, byte[]> SQL_PATH = createField(DSL.name("SQL_PATH"), org.jooq.impl.SQLDataType.BINARY, this, "");
 
     /**
      * The column <code>information_schema.SCHEMATA.DEFAULT_ENCRYPTION</code>.
      */
-    public static final TableField<Record, String> DEFAULT_ENCRYPTION = createField(DSL.name("DEFAULT_ENCRYPTION"), org.jooq.impl.SQLDataType.VARCHAR(3).nullable(false), SCHEMATA, "");
-
-    /**
-     * No further instances allowed
-     */
-    private Schemata() {
-        this(DSL.name("SCHEMATA"), null);
-    }
+    public final TableField<Record, String> DEFAULT_ENCRYPTION = createField(DSL.name("DEFAULT_ENCRYPTION"), org.jooq.impl.SQLDataType.VARCHAR(3).nullable(false), this, "");
 
     private Schemata(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);
@@ -83,6 +76,27 @@ public class Schemata extends TableImpl<Record> {
         super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
+    /**
+     * Create an aliased <code>information_schema.SCHEMATA</code> table reference
+     */
+    public Schemata(String alias) {
+        this(DSL.name(alias), SCHEMATA);
+    }
+
+    /**
+     * Create an aliased <code>information_schema.SCHEMATA</code> table reference
+     */
+    public Schemata(Name alias) {
+        this(alias, SCHEMATA);
+    }
+
+    /**
+     * Create a <code>information_schema.SCHEMATA</code> table reference
+     */
+    public Schemata() {
+        this(DSL.name("SCHEMATA"), null);
+    }
+
     public <O extends Record> Schemata(Table<O> child, ForeignKey<O, Record> key) {
         super(child, key, SCHEMATA);
     }
@@ -90,5 +104,31 @@ public class Schemata extends TableImpl<Record> {
     @Override
     public Schema getSchema() {
         return InformationSchema.INFORMATION_SCHEMA;
+    }
+
+    @Override
+    public Schemata as(String alias) {
+        return new Schemata(DSL.name(alias), this);
+    }
+
+    @Override
+    public Schemata as(Name alias) {
+        return new Schemata(alias, this);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public Schemata rename(String name) {
+        return new Schemata(DSL.name(name), null);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public Schemata rename(Name name) {
+        return new Schemata(name, null);
     }
 }

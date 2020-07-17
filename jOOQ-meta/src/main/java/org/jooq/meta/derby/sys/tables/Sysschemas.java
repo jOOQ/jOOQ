@@ -23,7 +23,7 @@ import org.jooq.meta.derby.sys.Sys;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sysschemas extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -1045964877;
+    private static final long serialVersionUID = 578657045;
 
     /**
      * The reference instance of <code>SYS.SYSSCHEMAS</code>
@@ -41,24 +41,17 @@ public class Sysschemas extends TableImpl<Record> {
     /**
      * The column <code>SYS.SYSSCHEMAS.SCHEMAID</code>.
      */
-    public static final TableField<Record, String> SCHEMAID = createField(DSL.name("SCHEMAID"), org.jooq.impl.SQLDataType.CHAR(36).nullable(false), SYSSCHEMAS, "");
+    public final TableField<Record, String> SCHEMAID = createField(DSL.name("SCHEMAID"), org.jooq.impl.SQLDataType.CHAR(36).nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSSCHEMAS.SCHEMANAME</code>.
      */
-    public static final TableField<Record, String> SCHEMANAME = createField(DSL.name("SCHEMANAME"), org.jooq.impl.SQLDataType.VARCHAR(128).nullable(false), SYSSCHEMAS, "");
+    public final TableField<Record, String> SCHEMANAME = createField(DSL.name("SCHEMANAME"), org.jooq.impl.SQLDataType.VARCHAR(128).nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSSCHEMAS.AUTHORIZATIONID</code>.
      */
-    public static final TableField<Record, String> AUTHORIZATIONID = createField(DSL.name("AUTHORIZATIONID"), org.jooq.impl.SQLDataType.VARCHAR(128).nullable(false), SYSSCHEMAS, "");
-
-    /**
-     * No further instances allowed
-     */
-    private Sysschemas() {
-        this(DSL.name("SYSSCHEMAS"), null);
-    }
+    public final TableField<Record, String> AUTHORIZATIONID = createField(DSL.name("AUTHORIZATIONID"), org.jooq.impl.SQLDataType.VARCHAR(128).nullable(false), this, "");
 
     private Sysschemas(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);
@@ -68,6 +61,27 @@ public class Sysschemas extends TableImpl<Record> {
         super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
+    /**
+     * Create an aliased <code>SYS.SYSSCHEMAS</code> table reference
+     */
+    public Sysschemas(String alias) {
+        this(DSL.name(alias), SYSSCHEMAS);
+    }
+
+    /**
+     * Create an aliased <code>SYS.SYSSCHEMAS</code> table reference
+     */
+    public Sysschemas(Name alias) {
+        this(alias, SYSSCHEMAS);
+    }
+
+    /**
+     * Create a <code>SYS.SYSSCHEMAS</code> table reference
+     */
+    public Sysschemas() {
+        this(DSL.name("SYSSCHEMAS"), null);
+    }
+
     public <O extends Record> Sysschemas(Table<O> child, ForeignKey<O, Record> key) {
         super(child, key, SYSSCHEMAS);
     }
@@ -75,5 +89,31 @@ public class Sysschemas extends TableImpl<Record> {
     @Override
     public Schema getSchema() {
         return Sys.SYS;
+    }
+
+    @Override
+    public Sysschemas as(String alias) {
+        return new Sysschemas(DSL.name(alias), this);
+    }
+
+    @Override
+    public Sysschemas as(Name alias) {
+        return new Sysschemas(alias, this);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public Sysschemas rename(String name) {
+        return new Sysschemas(DSL.name(name), null);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public Sysschemas rename(Name name) {
+        return new Sysschemas(name, null);
     }
 }

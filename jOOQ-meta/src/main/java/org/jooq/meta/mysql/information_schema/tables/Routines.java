@@ -26,7 +26,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Routines extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 2096268621;
+    private static final long serialVersionUID = -1465600530;
 
     /**
      * The reference instance of <code>information_schema.ROUTINES</code>
@@ -44,164 +44,157 @@ public class Routines extends TableImpl<Record> {
     /**
      * The column <code>information_schema.ROUTINES.SPECIFIC_NAME</code>.
      */
-    public static final TableField<Record, String> SPECIFIC_NAME = createField(DSL.name("SPECIFIC_NAME"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), ROUTINES, "");
+    public final TableField<Record, String> SPECIFIC_NAME = createField(DSL.name("SPECIFIC_NAME"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.ROUTINES.ROUTINE_CATALOG</code>.
      */
-    public static final TableField<Record, String> ROUTINE_CATALOG = createField(DSL.name("ROUTINE_CATALOG"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), ROUTINES, "");
+    public final TableField<Record, String> ROUTINE_CATALOG = createField(DSL.name("ROUTINE_CATALOG"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.ROUTINES.ROUTINE_SCHEMA</code>.
      */
-    public static final TableField<Record, String> ROUTINE_SCHEMA = createField(DSL.name("ROUTINE_SCHEMA"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), ROUTINES, "");
+    public final TableField<Record, String> ROUTINE_SCHEMA = createField(DSL.name("ROUTINE_SCHEMA"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.ROUTINES.ROUTINE_NAME</code>.
      */
-    public static final TableField<Record, String> ROUTINE_NAME = createField(DSL.name("ROUTINE_NAME"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), ROUTINES, "");
+    public final TableField<Record, String> ROUTINE_NAME = createField(DSL.name("ROUTINE_NAME"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.ROUTINES.ROUTINE_TYPE</code>.
      */
-    public static final TableField<Record, String> ROUTINE_TYPE = createField(DSL.name("ROUTINE_TYPE"), org.jooq.impl.SQLDataType.VARCHAR(9).nullable(false), ROUTINES, "");
+    public final TableField<Record, String> ROUTINE_TYPE = createField(DSL.name("ROUTINE_TYPE"), org.jooq.impl.SQLDataType.VARCHAR(9).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.ROUTINES.DATA_TYPE</code>.
      */
-    public static final TableField<Record, String> DATA_TYPE = createField(DSL.name("DATA_TYPE"), org.jooq.impl.SQLDataType.CLOB, ROUTINES, "");
+    public final TableField<Record, String> DATA_TYPE = createField(DSL.name("DATA_TYPE"), org.jooq.impl.SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>information_schema.ROUTINES.CHARACTER_MAXIMUM_LENGTH</code>.
      */
-    public static final TableField<Record, Long> CHARACTER_MAXIMUM_LENGTH = createField(DSL.name("CHARACTER_MAXIMUM_LENGTH"), org.jooq.impl.SQLDataType.BIGINT, ROUTINES, "");
+    public final TableField<Record, Long> CHARACTER_MAXIMUM_LENGTH = createField(DSL.name("CHARACTER_MAXIMUM_LENGTH"), org.jooq.impl.SQLDataType.BIGINT, this, "");
 
     /**
      * The column <code>information_schema.ROUTINES.CHARACTER_OCTET_LENGTH</code>.
      */
-    public static final TableField<Record, Long> CHARACTER_OCTET_LENGTH = createField(DSL.name("CHARACTER_OCTET_LENGTH"), org.jooq.impl.SQLDataType.BIGINT, ROUTINES, "");
+    public final TableField<Record, Long> CHARACTER_OCTET_LENGTH = createField(DSL.name("CHARACTER_OCTET_LENGTH"), org.jooq.impl.SQLDataType.BIGINT, this, "");
 
     /**
      * The column <code>information_schema.ROUTINES.NUMERIC_PRECISION</code>.
      */
-    public static final TableField<Record, UInteger> NUMERIC_PRECISION = createField(DSL.name("NUMERIC_PRECISION"), org.jooq.impl.SQLDataType.INTEGERUNSIGNED, ROUTINES, "");
+    public final TableField<Record, UInteger> NUMERIC_PRECISION = createField(DSL.name("NUMERIC_PRECISION"), org.jooq.impl.SQLDataType.INTEGERUNSIGNED, this, "");
 
     /**
      * The column <code>information_schema.ROUTINES.NUMERIC_SCALE</code>.
      */
-    public static final TableField<Record, UInteger> NUMERIC_SCALE = createField(DSL.name("NUMERIC_SCALE"), org.jooq.impl.SQLDataType.INTEGERUNSIGNED, ROUTINES, "");
+    public final TableField<Record, UInteger> NUMERIC_SCALE = createField(DSL.name("NUMERIC_SCALE"), org.jooq.impl.SQLDataType.INTEGERUNSIGNED, this, "");
 
     /**
      * The column <code>information_schema.ROUTINES.DATETIME_PRECISION</code>.
      */
-    public static final TableField<Record, UInteger> DATETIME_PRECISION = createField(DSL.name("DATETIME_PRECISION"), org.jooq.impl.SQLDataType.INTEGERUNSIGNED, ROUTINES, "");
+    public final TableField<Record, UInteger> DATETIME_PRECISION = createField(DSL.name("DATETIME_PRECISION"), org.jooq.impl.SQLDataType.INTEGERUNSIGNED, this, "");
 
     /**
      * The column <code>information_schema.ROUTINES.CHARACTER_SET_NAME</code>.
      */
-    public static final TableField<Record, String> CHARACTER_SET_NAME = createField(DSL.name("CHARACTER_SET_NAME"), org.jooq.impl.SQLDataType.VARCHAR(64), ROUTINES, "");
+    public final TableField<Record, String> CHARACTER_SET_NAME = createField(DSL.name("CHARACTER_SET_NAME"), org.jooq.impl.SQLDataType.VARCHAR(64), this, "");
 
     /**
      * The column <code>information_schema.ROUTINES.COLLATION_NAME</code>.
      */
-    public static final TableField<Record, String> COLLATION_NAME = createField(DSL.name("COLLATION_NAME"), org.jooq.impl.SQLDataType.VARCHAR(64), ROUTINES, "");
+    public final TableField<Record, String> COLLATION_NAME = createField(DSL.name("COLLATION_NAME"), org.jooq.impl.SQLDataType.VARCHAR(64), this, "");
 
     /**
      * The column <code>information_schema.ROUTINES.DTD_IDENTIFIER</code>.
      */
-    public static final TableField<Record, String> DTD_IDENTIFIER = createField(DSL.name("DTD_IDENTIFIER"), org.jooq.impl.SQLDataType.CLOB, ROUTINES, "");
+    public final TableField<Record, String> DTD_IDENTIFIER = createField(DSL.name("DTD_IDENTIFIER"), org.jooq.impl.SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>information_schema.ROUTINES.ROUTINE_BODY</code>.
      */
-    public static final TableField<Record, String> ROUTINE_BODY = createField(DSL.name("ROUTINE_BODY"), org.jooq.impl.SQLDataType.VARCHAR(3).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), ROUTINES, "");
+    public final TableField<Record, String> ROUTINE_BODY = createField(DSL.name("ROUTINE_BODY"), org.jooq.impl.SQLDataType.VARCHAR(3).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "");
 
     /**
      * The column <code>information_schema.ROUTINES.ROUTINE_DEFINITION</code>.
      */
-    public static final TableField<Record, String> ROUTINE_DEFINITION = createField(DSL.name("ROUTINE_DEFINITION"), org.jooq.impl.SQLDataType.CLOB, ROUTINES, "");
+    public final TableField<Record, String> ROUTINE_DEFINITION = createField(DSL.name("ROUTINE_DEFINITION"), org.jooq.impl.SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>information_schema.ROUTINES.EXTERNAL_NAME</code>.
      */
-    public static final TableField<Record, byte[]> EXTERNAL_NAME = createField(DSL.name("EXTERNAL_NAME"), org.jooq.impl.SQLDataType.BINARY, ROUTINES, "");
+    public final TableField<Record, byte[]> EXTERNAL_NAME = createField(DSL.name("EXTERNAL_NAME"), org.jooq.impl.SQLDataType.BINARY, this, "");
 
     /**
      * The column <code>information_schema.ROUTINES.EXTERNAL_LANGUAGE</code>.
      */
-    public static final TableField<Record, String> EXTERNAL_LANGUAGE = createField(DSL.name("EXTERNAL_LANGUAGE"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false).defaultValue(org.jooq.impl.DSL.inline("SQL", org.jooq.impl.SQLDataType.VARCHAR)), ROUTINES, "");
+    public final TableField<Record, String> EXTERNAL_LANGUAGE = createField(DSL.name("EXTERNAL_LANGUAGE"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false).defaultValue(org.jooq.impl.DSL.inline("SQL", org.jooq.impl.SQLDataType.VARCHAR)), this, "");
 
     /**
      * The column <code>information_schema.ROUTINES.PARAMETER_STYLE</code>.
      */
-    public static final TableField<Record, String> PARAMETER_STYLE = createField(DSL.name("PARAMETER_STYLE"), org.jooq.impl.SQLDataType.VARCHAR(3).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), ROUTINES, "");
+    public final TableField<Record, String> PARAMETER_STYLE = createField(DSL.name("PARAMETER_STYLE"), org.jooq.impl.SQLDataType.VARCHAR(3).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "");
 
     /**
      * The column <code>information_schema.ROUTINES.IS_DETERMINISTIC</code>.
      */
-    public static final TableField<Record, String> IS_DETERMINISTIC = createField(DSL.name("IS_DETERMINISTIC"), org.jooq.impl.SQLDataType.VARCHAR(3).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), ROUTINES, "");
+    public final TableField<Record, String> IS_DETERMINISTIC = createField(DSL.name("IS_DETERMINISTIC"), org.jooq.impl.SQLDataType.VARCHAR(3).nullable(false).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "");
 
     /**
      * The column <code>information_schema.ROUTINES.SQL_DATA_ACCESS</code>.
      */
-    public static final TableField<Record, String> SQL_DATA_ACCESS = createField(DSL.name("SQL_DATA_ACCESS"), org.jooq.impl.SQLDataType.VARCHAR(17).nullable(false), ROUTINES, "");
+    public final TableField<Record, String> SQL_DATA_ACCESS = createField(DSL.name("SQL_DATA_ACCESS"), org.jooq.impl.SQLDataType.VARCHAR(17).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.ROUTINES.SQL_PATH</code>.
      */
-    public static final TableField<Record, byte[]> SQL_PATH = createField(DSL.name("SQL_PATH"), org.jooq.impl.SQLDataType.BINARY, ROUTINES, "");
+    public final TableField<Record, byte[]> SQL_PATH = createField(DSL.name("SQL_PATH"), org.jooq.impl.SQLDataType.BINARY, this, "");
 
     /**
      * The column <code>information_schema.ROUTINES.SECURITY_TYPE</code>.
      */
-    public static final TableField<Record, String> SECURITY_TYPE = createField(DSL.name("SECURITY_TYPE"), org.jooq.impl.SQLDataType.VARCHAR(7).nullable(false), ROUTINES, "");
+    public final TableField<Record, String> SECURITY_TYPE = createField(DSL.name("SECURITY_TYPE"), org.jooq.impl.SQLDataType.VARCHAR(7).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.ROUTINES.CREATED</code>.
      */
-    public static final TableField<Record, Timestamp> CREATED = createField(DSL.name("CREATED"), org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false), ROUTINES, "");
+    public final TableField<Record, Timestamp> CREATED = createField(DSL.name("CREATED"), org.jooq.impl.SQLDataType.TIMESTAMP(0).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.ROUTINES.LAST_ALTERED</code>.
      */
-    public static final TableField<Record, Timestamp> LAST_ALTERED = createField(DSL.name("LAST_ALTERED"), org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false), ROUTINES, "");
+    public final TableField<Record, Timestamp> LAST_ALTERED = createField(DSL.name("LAST_ALTERED"), org.jooq.impl.SQLDataType.TIMESTAMP(0).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.ROUTINES.SQL_MODE</code>.
      */
-    public static final TableField<Record, String> SQL_MODE = createField(DSL.name("SQL_MODE"), org.jooq.impl.SQLDataType.VARCHAR(520).nullable(false), ROUTINES, "");
+    public final TableField<Record, String> SQL_MODE = createField(DSL.name("SQL_MODE"), org.jooq.impl.SQLDataType.VARCHAR(520).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.ROUTINES.ROUTINE_COMMENT</code>.
      */
-    public static final TableField<Record, String> ROUTINE_COMMENT = createField(DSL.name("ROUTINE_COMMENT"), org.jooq.impl.SQLDataType.CLOB.nullable(false), ROUTINES, "");
+    public final TableField<Record, String> ROUTINE_COMMENT = createField(DSL.name("ROUTINE_COMMENT"), org.jooq.impl.SQLDataType.CLOB.nullable(false), this, "");
 
     /**
      * The column <code>information_schema.ROUTINES.DEFINER</code>.
      */
-    public static final TableField<Record, String> DEFINER = createField(DSL.name("DEFINER"), org.jooq.impl.SQLDataType.VARCHAR(288).nullable(false), ROUTINES, "");
+    public final TableField<Record, String> DEFINER = createField(DSL.name("DEFINER"), org.jooq.impl.SQLDataType.VARCHAR(288).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.ROUTINES.CHARACTER_SET_CLIENT</code>.
      */
-    public static final TableField<Record, String> CHARACTER_SET_CLIENT = createField(DSL.name("CHARACTER_SET_CLIENT"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), ROUTINES, "");
+    public final TableField<Record, String> CHARACTER_SET_CLIENT = createField(DSL.name("CHARACTER_SET_CLIENT"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.ROUTINES.COLLATION_CONNECTION</code>.
      */
-    public static final TableField<Record, String> COLLATION_CONNECTION = createField(DSL.name("COLLATION_CONNECTION"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), ROUTINES, "");
+    public final TableField<Record, String> COLLATION_CONNECTION = createField(DSL.name("COLLATION_CONNECTION"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), this, "");
 
     /**
      * The column <code>information_schema.ROUTINES.DATABASE_COLLATION</code>.
      */
-    public static final TableField<Record, String> DATABASE_COLLATION = createField(DSL.name("DATABASE_COLLATION"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), ROUTINES, "");
-
-    /**
-     * No further instances allowed
-     */
-    private Routines() {
-        this(DSL.name("ROUTINES"), null);
-    }
+    public final TableField<Record, String> DATABASE_COLLATION = createField(DSL.name("DATABASE_COLLATION"), org.jooq.impl.SQLDataType.VARCHAR(64).nullable(false), this, "");
 
     private Routines(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);
@@ -211,6 +204,27 @@ public class Routines extends TableImpl<Record> {
         super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
+    /**
+     * Create an aliased <code>information_schema.ROUTINES</code> table reference
+     */
+    public Routines(String alias) {
+        this(DSL.name(alias), ROUTINES);
+    }
+
+    /**
+     * Create an aliased <code>information_schema.ROUTINES</code> table reference
+     */
+    public Routines(Name alias) {
+        this(alias, ROUTINES);
+    }
+
+    /**
+     * Create a <code>information_schema.ROUTINES</code> table reference
+     */
+    public Routines() {
+        this(DSL.name("ROUTINES"), null);
+    }
+
     public <O extends Record> Routines(Table<O> child, ForeignKey<O, Record> key) {
         super(child, key, ROUTINES);
     }
@@ -218,5 +232,31 @@ public class Routines extends TableImpl<Record> {
     @Override
     public Schema getSchema() {
         return InformationSchema.INFORMATION_SCHEMA;
+    }
+
+    @Override
+    public Routines as(String alias) {
+        return new Routines(DSL.name(alias), this);
+    }
+
+    @Override
+    public Routines as(Name alias) {
+        return new Routines(alias, this);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public Routines rename(String name) {
+        return new Routines(DSL.name(name), null);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public Routines rename(Name name) {
+        return new Routines(name, null);
     }
 }

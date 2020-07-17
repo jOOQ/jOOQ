@@ -102,17 +102,6 @@ import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
 import org.jooq.meta.TableDefinition;
 import org.jooq.meta.UDTDefinition;
-import org.jooq.meta.h2.information_schema.tables.Columns;
-import org.jooq.meta.h2.information_schema.tables.Constraints;
-import org.jooq.meta.h2.information_schema.tables.CrossReferences;
-import org.jooq.meta.h2.information_schema.tables.Domains;
-import org.jooq.meta.h2.information_schema.tables.FunctionAliases;
-import org.jooq.meta.h2.information_schema.tables.Indexes;
-import org.jooq.meta.h2.information_schema.tables.Schemata;
-import org.jooq.meta.h2.information_schema.tables.Sequences;
-import org.jooq.meta.h2.information_schema.tables.Tables;
-import org.jooq.meta.h2.information_schema.tables.TypeInfo;
-import org.jooq.meta.h2.information_schema.tables.Views;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.csv.CSVReader;
 import org.jooq.util.h2.H2DataType;
@@ -134,12 +123,12 @@ public class H2Database extends AbstractDatabase {
 
     @Override
     protected boolean exists0(TableField<?, ?> field) {
-        return exists1(field, COLUMNS, Columns.TABLE_SCHEMA, Columns.TABLE_NAME, Columns.COLUMN_NAME);
+        return exists1(field, COLUMNS, COLUMNS.TABLE_SCHEMA, COLUMNS.TABLE_NAME, COLUMNS.COLUMN_NAME);
     }
 
     @Override
     protected boolean exists0(Table<?> table) {
-        return exists1(table, TABLES, Tables.TABLE_SCHEMA, Tables.TABLE_NAME);
+        return exists1(table, TABLES, TABLES.TABLE_SCHEMA, TABLES.TABLE_NAME);
     }
 
     @Override
@@ -149,33 +138,33 @@ public class H2Database extends AbstractDatabase {
         // Same implementation as in HSQLDBDatabase and MySQLDatabase
         Map<Record, Result<Record>> indexes = create()
             .select(
-                Indexes.TABLE_SCHEMA,
-                Indexes.TABLE_NAME,
-                Indexes.INDEX_NAME,
-                Indexes.NON_UNIQUE,
-                Indexes.COLUMN_NAME,
-                Indexes.ORDINAL_POSITION,
-                Indexes.ASC_OR_DESC)
+                INDEXES.TABLE_SCHEMA,
+                INDEXES.TABLE_NAME,
+                INDEXES.INDEX_NAME,
+                INDEXES.NON_UNIQUE,
+                INDEXES.COLUMN_NAME,
+                INDEXES.ORDINAL_POSITION,
+                INDEXES.ASC_OR_DESC)
             .from(INDEXES)
-            .where(Indexes.TABLE_SCHEMA.in(getInputSchemata()))
+            .where(INDEXES.TABLE_SCHEMA.in(getInputSchemata()))
             .and(getIncludeSystemIndexes()
                 ? noCondition()
-                : not(condition(Indexes.IS_GENERATED)))
+                : not(condition(INDEXES.IS_GENERATED)))
             .orderBy(
-                Indexes.TABLE_SCHEMA,
-                Indexes.TABLE_NAME,
-                Indexes.INDEX_NAME,
-                Indexes.ORDINAL_POSITION)
+                INDEXES.TABLE_SCHEMA,
+                INDEXES.TABLE_NAME,
+                INDEXES.INDEX_NAME,
+                INDEXES.ORDINAL_POSITION)
             .fetchGroups(
                 new Field[] {
-                    Indexes.TABLE_SCHEMA,
-                    Indexes.TABLE_NAME,
-                    Indexes.INDEX_NAME,
-                    Indexes.NON_UNIQUE
+                    INDEXES.TABLE_SCHEMA,
+                    INDEXES.TABLE_NAME,
+                    INDEXES.INDEX_NAME,
+                    INDEXES.NON_UNIQUE
                 },
                 new Field[] {
-                    Indexes.COLUMN_NAME,
-                    Indexes.ORDINAL_POSITION
+                    INDEXES.COLUMN_NAME,
+                    INDEXES.ORDINAL_POSITION
                 });
 
         indexLoop:
@@ -183,21 +172,21 @@ public class H2Database extends AbstractDatabase {
             final Record index = entry.getKey();
             final Result<Record> columns = entry.getValue();
 
-            final SchemaDefinition tableSchema = getSchema(index.get(Indexes.TABLE_SCHEMA));
+            final SchemaDefinition tableSchema = getSchema(index.get(INDEXES.TABLE_SCHEMA));
             if (tableSchema == null)
                 continue indexLoop;
 
-            final String indexName = index.get(Indexes.INDEX_NAME);
-            final String tableName = index.get(Indexes.TABLE_NAME);
+            final String indexName = index.get(INDEXES.INDEX_NAME);
+            final String tableName = index.get(INDEXES.TABLE_NAME);
             final TableDefinition table = getTable(tableSchema, tableName);
             if (table == null)
                 continue indexLoop;
 
-            final boolean unique = !index.get(Indexes.NON_UNIQUE, boolean.class);
+            final boolean unique = !index.get(INDEXES.NON_UNIQUE, boolean.class);
 
             // [#6310] [#6620] Function-based indexes are not yet supported
             for (Record column : columns)
-                if (table.getColumn(column.get(Indexes.COLUMN_NAME)) == null)
+                if (table.getColumn(column.get(INDEXES.COLUMN_NAME)) == null)
                     continue indexLoop;
 
             result.add(new AbstractIndexDefinition(tableSchema, indexName, table, unique) {
@@ -207,9 +196,9 @@ public class H2Database extends AbstractDatabase {
                     for (Record column : columns) {
                         indexColumns.add(new DefaultIndexColumnDefinition(
                             this,
-                            table.getColumn(column.get(Indexes.COLUMN_NAME)),
+                            table.getColumn(column.get(INDEXES.COLUMN_NAME)),
                             SortOrder.ASC,
-                            column.get(Indexes.ORDINAL_POSITION, int.class)
+                            column.get(INDEXES.ORDINAL_POSITION, int.class)
                         ));
                     }
                 }
@@ -229,12 +218,12 @@ public class H2Database extends AbstractDatabase {
 
         // Workaround for https://github.com/h2database/h2database/issues/1000
         for (Record record : fetchKeys("PRIMARY KEY", "PRIMARY_KEY")) {
-            SchemaDefinition schema = getSchema(record.get(Constraints.TABLE_SCHEMA));
+            SchemaDefinition schema = getSchema(record.get(CONSTRAINTS.TABLE_SCHEMA));
 
             if (schema != null) {
-                String tableName = record.get(Constraints.TABLE_NAME);
-                String primaryKey = record.get(Constraints.CONSTRAINT_NAME);
-                String columnName = record.get(Indexes.COLUMN_NAME);
+                String tableName = record.get(CONSTRAINTS.TABLE_NAME);
+                String primaryKey = record.get(CONSTRAINTS.CONSTRAINT_NAME);
+                String columnName = record.get(INDEXES.COLUMN_NAME);
 
                 TableDefinition table = getTable(schema, tableName);
                 if (table != null)
@@ -246,12 +235,12 @@ public class H2Database extends AbstractDatabase {
     @Override
     protected void loadUniqueKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys("UNIQUE")) {
-            SchemaDefinition schema = getSchema(record.get(Constraints.TABLE_SCHEMA));
+            SchemaDefinition schema = getSchema(record.get(CONSTRAINTS.TABLE_SCHEMA));
 
             if (schema != null) {
-                String tableName = record.get(Constraints.TABLE_NAME);
-                String primaryKey = record.get(Constraints.CONSTRAINT_NAME);
-                String columnName = record.get(Indexes.COLUMN_NAME);
+                String tableName = record.get(CONSTRAINTS.TABLE_NAME);
+                String primaryKey = record.get(CONSTRAINTS.CONSTRAINT_NAME);
+                String columnName = record.get(INDEXES.COLUMN_NAME);
 
                 TableDefinition table = getTable(schema, tableName);
                 if (table != null)
@@ -262,60 +251,60 @@ public class H2Database extends AbstractDatabase {
 
     private Result<Record4<String, String, String, String>> fetchKeys(String... constraintTypes) {
         return create().select(
-                    Constraints.TABLE_SCHEMA,
-                    Constraints.TABLE_NAME,
-                    Constraints.CONSTRAINT_NAME,
-                    Indexes.COLUMN_NAME)
+                    CONSTRAINTS.TABLE_SCHEMA,
+                    CONSTRAINTS.TABLE_NAME,
+                    CONSTRAINTS.CONSTRAINT_NAME,
+                    INDEXES.COLUMN_NAME)
                 .from(CONSTRAINTS)
                 .join(INDEXES)
-                .on(Constraints.TABLE_SCHEMA.eq(Indexes.TABLE_SCHEMA))
-                .and(Constraints.TABLE_NAME.eq(Indexes.TABLE_NAME))
-                .and(Constraints.UNIQUE_INDEX_NAME.eq(Indexes.INDEX_NAME))
-                .where(Constraints.TABLE_SCHEMA.in(getInputSchemata()))
-                .and(Constraints.CONSTRAINT_TYPE.in(constraintTypes))
+                .on(CONSTRAINTS.TABLE_SCHEMA.eq(INDEXES.TABLE_SCHEMA))
+                .and(CONSTRAINTS.TABLE_NAME.eq(INDEXES.TABLE_NAME))
+                .and(CONSTRAINTS.UNIQUE_INDEX_NAME.eq(INDEXES.INDEX_NAME))
+                .where(CONSTRAINTS.TABLE_SCHEMA.in(getInputSchemata()))
+                .and(CONSTRAINTS.CONSTRAINT_TYPE.in(constraintTypes))
                 .orderBy(
-                    Constraints.TABLE_SCHEMA,
-                    Constraints.CONSTRAINT_NAME,
-                    Indexes.ORDINAL_POSITION)
+                    CONSTRAINTS.TABLE_SCHEMA,
+                    CONSTRAINTS.CONSTRAINT_NAME,
+                    INDEXES.ORDINAL_POSITION)
                 .fetch();
     }
 
     @Override
     protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
         for (Record record : create().select(
-                    CrossReferences.FK_NAME,
-                    CrossReferences.FKTABLE_NAME,
-                    CrossReferences.FKTABLE_SCHEMA,
-                    CrossReferences.FKCOLUMN_NAME,
-                    CrossReferences.PKCOLUMN_NAME,
-                    Constraints.CONSTRAINT_NAME,
-                    Constraints.TABLE_NAME,
-                    Constraints.CONSTRAINT_SCHEMA)
+                    CROSS_REFERENCES.FK_NAME,
+                    CROSS_REFERENCES.FKTABLE_NAME,
+                    CROSS_REFERENCES.FKTABLE_SCHEMA,
+                    CROSS_REFERENCES.FKCOLUMN_NAME,
+                    CROSS_REFERENCES.PKCOLUMN_NAME,
+                    CONSTRAINTS.CONSTRAINT_NAME,
+                    CONSTRAINTS.TABLE_NAME,
+                    CONSTRAINTS.CONSTRAINT_SCHEMA)
                 .from(CROSS_REFERENCES)
                 .join(CONSTRAINTS)
-                .on(CrossReferences.PK_NAME.equal(Constraints.UNIQUE_INDEX_NAME))
-                .and(CrossReferences.PKTABLE_NAME.equal(Constraints.TABLE_NAME))
-                .and(CrossReferences.PKTABLE_SCHEMA.equal(Constraints.TABLE_SCHEMA))
-                .where(CrossReferences.FKTABLE_SCHEMA.in(getInputSchemata()))
+                .on(CROSS_REFERENCES.PK_NAME.equal(CONSTRAINTS.UNIQUE_INDEX_NAME))
+                .and(CROSS_REFERENCES.PKTABLE_NAME.equal(CONSTRAINTS.TABLE_NAME))
+                .and(CROSS_REFERENCES.PKTABLE_SCHEMA.equal(CONSTRAINTS.TABLE_SCHEMA))
+                .where(CROSS_REFERENCES.FKTABLE_SCHEMA.in(getInputSchemata()))
 
                 // Workaround for https://github.com/h2database/h2database/issues/1000
-                .and(Constraints.CONSTRAINT_TYPE.in("PRIMARY KEY", "PRIMARY_KEY", "UNIQUE"))
+                .and(CONSTRAINTS.CONSTRAINT_TYPE.in("PRIMARY KEY", "PRIMARY_KEY", "UNIQUE"))
                 .orderBy(
-                    CrossReferences.FKTABLE_SCHEMA.asc(),
-                    CrossReferences.FK_NAME.asc(),
-                    CrossReferences.ORDINAL_POSITION.asc())
+                    CROSS_REFERENCES.FKTABLE_SCHEMA.asc(),
+                    CROSS_REFERENCES.FK_NAME.asc(),
+                    CROSS_REFERENCES.ORDINAL_POSITION.asc())
                 .fetch()) {
 
-            SchemaDefinition foreignKeySchema = getSchema(record.get(CrossReferences.FKTABLE_SCHEMA));
-            SchemaDefinition uniqueKeySchema = getSchema(record.get(Constraints.CONSTRAINT_SCHEMA));
+            SchemaDefinition foreignKeySchema = getSchema(record.get(CROSS_REFERENCES.FKTABLE_SCHEMA));
+            SchemaDefinition uniqueKeySchema = getSchema(record.get(CONSTRAINTS.CONSTRAINT_SCHEMA));
 
             if (foreignKeySchema != null && uniqueKeySchema != null) {
-                String foreignKey = record.get(CrossReferences.FK_NAME);
-                String foreignKeyTableName = record.get(CrossReferences.FKTABLE_NAME);
-                String foreignKeyColumn = record.get(CrossReferences.FKCOLUMN_NAME);
-                String uniqueKey = record.get(Constraints.CONSTRAINT_NAME);
-                String uniqueKeyTableName = record.get(Constraints.TABLE_NAME);
-                String uniqueKeyColumn = record.get(CrossReferences.PKCOLUMN_NAME);
+                String foreignKey = record.get(CROSS_REFERENCES.FK_NAME);
+                String foreignKeyTableName = record.get(CROSS_REFERENCES.FKTABLE_NAME);
+                String foreignKeyColumn = record.get(CROSS_REFERENCES.FKCOLUMN_NAME);
+                String uniqueKey = record.get(CONSTRAINTS.CONSTRAINT_NAME);
+                String uniqueKeyTableName = record.get(CONSTRAINTS.TABLE_NAME);
+                String uniqueKeyColumn = record.get(CROSS_REFERENCES.PKCOLUMN_NAME);
 
                 TableDefinition foreignKeyTable = getTable(foreignKeySchema, foreignKeyTableName);
                 TableDefinition uniqueKeyTable = getTable(uniqueKeySchema, uniqueKeyTableName);
@@ -342,38 +331,38 @@ public class H2Database extends AbstractDatabase {
         Select<Record4<String, String, String, String>> inlineChecks = is1_4_201()
             ? select(inline(""), inline(""), inline(""), inline("")).where(falseCondition())
             : select(
-                Columns.TABLE_SCHEMA,
-                Columns.TABLE_NAME,
-                Columns.CHECK_CONSTRAINT,
-                Columns.CHECK_CONSTRAINT
+                COLUMNS.TABLE_SCHEMA,
+                COLUMNS.TABLE_NAME,
+                COLUMNS.CHECK_CONSTRAINT,
+                COLUMNS.CHECK_CONSTRAINT
             )
             .from(COLUMNS)
-            .where(Columns.CHECK_CONSTRAINT.nvl("").ne(""))
-            .and(Columns.TABLE_SCHEMA.in(getInputSchemata()));
+            .where(COLUMNS.CHECK_CONSTRAINT.nvl("").ne(""))
+            .and(COLUMNS.TABLE_SCHEMA.in(getInputSchemata()));
 
         for (Record record : create()
             .select(
-                Constraints.TABLE_SCHEMA,
-                Constraints.TABLE_NAME,
-                Constraints.CONSTRAINT_NAME,
-                Constraints.CHECK_EXPRESSION
+                CONSTRAINTS.TABLE_SCHEMA,
+                CONSTRAINTS.TABLE_NAME,
+                CONSTRAINTS.CONSTRAINT_NAME,
+                CONSTRAINTS.CHECK_EXPRESSION
              )
             .from(CONSTRAINTS)
-            .where(Constraints.CONSTRAINT_TYPE.eq("CHECK"))
-            .and(Constraints.TABLE_SCHEMA.in(getInputSchemata()))
+            .where(CONSTRAINTS.CONSTRAINT_TYPE.eq("CHECK"))
+            .and(CONSTRAINTS.TABLE_SCHEMA.in(getInputSchemata()))
             .union(inlineChecks)) {
 
-            SchemaDefinition schema = getSchema(record.get(Constraints.TABLE_SCHEMA));
+            SchemaDefinition schema = getSchema(record.get(CONSTRAINTS.TABLE_SCHEMA));
 
             if (schema != null) {
-                TableDefinition table = getTable(schema, record.get(Constraints.TABLE_NAME));
+                TableDefinition table = getTable(schema, record.get(CONSTRAINTS.TABLE_NAME));
 
                 if (table != null) {
                     relations.addCheckConstraint(table, new DefaultCheckConstraintDefinition(
                         schema,
                         table,
-                        record.get(Constraints.CONSTRAINT_NAME),
-                        record.get(Constraints.CHECK_EXPRESSION)
+                        record.get(CONSTRAINTS.CONSTRAINT_NAME),
+                        record.get(CONSTRAINTS.CHECK_EXPRESSION)
                     ));
                 }
             }
@@ -392,14 +381,14 @@ public class H2Database extends AbstractDatabase {
         List<SchemaDefinition> result = new ArrayList<>();
 
         for (Record record : create().select(
-                    Schemata.SCHEMA_NAME,
-                    Schemata.REMARKS)
+                    SCHEMATA.SCHEMA_NAME,
+                    SCHEMATA.REMARKS)
                 .from(SCHEMATA)
                 .fetch()) {
 
             result.add(new SchemaDefinition(this,
-                record.get(Schemata.SCHEMA_NAME),
-                record.get(Schemata.REMARKS)));
+                record.get(SCHEMATA.SCHEMA_NAME),
+                record.get(SCHEMATA.REMARKS)));
         }
 
         return result;
@@ -410,26 +399,26 @@ public class H2Database extends AbstractDatabase {
         List<SequenceDefinition> result = new ArrayList<>();
 
         for (Record record : create().select(
-                    Sequences.SEQUENCE_SCHEMA,
-                    Sequences.SEQUENCE_NAME,
-                    nullif(Sequences.INCREMENT, one()).as(Sequences.INCREMENT),
-                    nullif(Sequences.MIN_VALUE, one()).as(Sequences.MIN_VALUE),
-                    nullif(Sequences.MAX_VALUE, inline(DEFAULT_SEQUENCE_MAXVALUE)).as(Sequences.MAX_VALUE),
-                    Sequences.IS_CYCLE,
-                    nullif(Sequences.CACHE, inline(DEFAULT_SEQUENCE_CACHE)).as(Sequences.CACHE)
+                    SEQUENCES.SEQUENCE_SCHEMA,
+                    SEQUENCES.SEQUENCE_NAME,
+                    nullif(SEQUENCES.INCREMENT, one()).as(SEQUENCES.INCREMENT),
+                    nullif(SEQUENCES.MIN_VALUE, one()).as(SEQUENCES.MIN_VALUE),
+                    nullif(SEQUENCES.MAX_VALUE, inline(DEFAULT_SEQUENCE_MAXVALUE)).as(SEQUENCES.MAX_VALUE),
+                    SEQUENCES.IS_CYCLE,
+                    nullif(SEQUENCES.CACHE, inline(DEFAULT_SEQUENCE_CACHE)).as(SEQUENCES.CACHE)
                 )
                 .from(SEQUENCES)
-                .where(Sequences.SEQUENCE_SCHEMA.in(getInputSchemata()))
-                .and(Sequences.SEQUENCE_NAME.upper().notLike("SYSTEM!_SEQUENCE!_%", '!'))
+                .where(SEQUENCES.SEQUENCE_SCHEMA.in(getInputSchemata()))
+                .and(SEQUENCES.SEQUENCE_NAME.upper().notLike("SYSTEM!_SEQUENCE!_%", '!'))
                 .orderBy(
-                    Sequences.SEQUENCE_SCHEMA,
-                    Sequences.SEQUENCE_NAME)
+                    SEQUENCES.SEQUENCE_SCHEMA,
+                    SEQUENCES.SEQUENCE_NAME)
                 .fetch()) {
 
-            SchemaDefinition schema = getSchema(record.get(Sequences.SEQUENCE_SCHEMA));
+            SchemaDefinition schema = getSchema(record.get(SEQUENCES.SEQUENCE_SCHEMA));
 
             if (schema != null) {
-                String name = record.get(Sequences.SEQUENCE_NAME);
+                String name = record.get(SEQUENCES.SEQUENCE_NAME);
 
                 DefaultDataTypeDefinition type = new DefaultDataTypeDefinition(
                     this,
@@ -443,11 +432,11 @@ public class H2Database extends AbstractDatabase {
                     type,
                     null,
                     null, // H2 doesn't support Postgres-style START WITH
-                    record.get(Sequences.INCREMENT),
-                    record.get(Sequences.MIN_VALUE),
-                    record.get(Sequences.MAX_VALUE),
-                    record.get(Sequences.IS_CYCLE),
-                    record.get(Sequences.CACHE)));
+                    record.get(SEQUENCES.INCREMENT),
+                    record.get(SEQUENCES.MIN_VALUE),
+                    record.get(SEQUENCES.MAX_VALUE),
+                    record.get(SEQUENCES.IS_CYCLE),
+                    record.get(SEQUENCES.CACHE)));
             }
         }
 
@@ -459,29 +448,29 @@ public class H2Database extends AbstractDatabase {
         List<TableDefinition> result = new ArrayList<>();
 
         for (Record record : create().select(
-                    Tables.TABLE_SCHEMA,
-                    Tables.TABLE_NAME,
-                    when(Tables.TABLE_TYPE.eq(inline("VIEW")), inline(TableType.VIEW.name()))
-                       .when(Tables.STORAGE_TYPE.like(inline("%TEMPORARY%")), inline(TableType.TEMPORARY.name()))
+                    TABLES.TABLE_SCHEMA,
+                    TABLES.TABLE_NAME,
+                    when(TABLES.TABLE_TYPE.eq(inline("VIEW")), inline(TableType.VIEW.name()))
+                       .when(TABLES.STORAGE_TYPE.like(inline("%TEMPORARY%")), inline(TableType.TEMPORARY.name()))
                        .else_(inline(TableType.TABLE.name())).as("table_type"),
-                    Tables.REMARKS,
-                    Views.VIEW_DEFINITION)
+                    TABLES.REMARKS,
+                    VIEWS.VIEW_DEFINITION)
                 .from(TABLES)
                 .leftJoin(VIEWS)
-                    .on(Tables.TABLE_SCHEMA.eq(Views.TABLE_SCHEMA))
-                    .and(Tables.TABLE_NAME.eq(Views.TABLE_NAME))
-                .where(Tables.TABLE_SCHEMA.in(getInputSchemata()))
+                    .on(TABLES.TABLE_SCHEMA.eq(VIEWS.TABLE_SCHEMA))
+                    .and(TABLES.TABLE_NAME.eq(VIEWS.TABLE_NAME))
+                .where(TABLES.TABLE_SCHEMA.in(getInputSchemata()))
                 .orderBy(
-                    Tables.TABLE_SCHEMA,
-                    Tables.TABLE_NAME)) {
+                    TABLES.TABLE_SCHEMA,
+                    TABLES.TABLE_NAME)) {
 
-            SchemaDefinition schema = getSchema(record.get(Tables.TABLE_SCHEMA));
+            SchemaDefinition schema = getSchema(record.get(TABLES.TABLE_SCHEMA));
 
             if (schema != null) {
-                String name = record.get(Tables.TABLE_NAME);
-                String comment = record.get(Tables.REMARKS);
+                String name = record.get(TABLES.TABLE_NAME);
+                String comment = record.get(TABLES.REMARKS);
                 TableType tableType = record.get("table_type", TableType.class);
-                String source = record.get(Views.VIEW_DEFINITION);
+                String source = record.get(VIEWS.VIEW_DEFINITION);
 
                 H2TableDefinition table = new H2TableDefinition(schema, name, comment, tableType, source);
                 result.add(table);
@@ -498,43 +487,43 @@ public class H2Database extends AbstractDatabase {
         Field<Boolean> overloaded = field(select(field(DSL.exists(
             select(one())
             .from(FUNCTION_ALIASES.as("a"))
-            .where(field(name("a", FunctionAliases.ALIAS_SCHEMA.getName())).eq(FunctionAliases.ALIAS_SCHEMA))
-            .and(field(name("a", FunctionAliases.ALIAS_NAME.getName())).eq(FunctionAliases.ALIAS_NAME))
-            .and(field(name("a", FunctionAliases.COLUMN_COUNT.getName())).ne(FunctionAliases.COLUMN_COUNT))
+            .where(field(name("a", FUNCTION_ALIASES.ALIAS_SCHEMA.getName())).eq(FUNCTION_ALIASES.ALIAS_SCHEMA))
+            .and(field(name("a", FUNCTION_ALIASES.ALIAS_NAME.getName())).eq(FUNCTION_ALIASES.ALIAS_NAME))
+            .and(field(name("a", FUNCTION_ALIASES.COLUMN_COUNT.getName())).ne(FUNCTION_ALIASES.COLUMN_COUNT))
         )))).as("overloaded");
 
         for (Record record : create()
                 .select(
-                    FunctionAliases.ALIAS_SCHEMA,
-                    FunctionAliases.ALIAS_NAME,
-                    FunctionAliases.REMARKS,
-                    FunctionAliases.DATA_TYPE,
-                    FunctionAliases.RETURNS_RESULT,
-                    FunctionAliases.COLUMN_COUNT,
+                    FUNCTION_ALIASES.ALIAS_SCHEMA,
+                    FUNCTION_ALIASES.ALIAS_NAME,
+                    FUNCTION_ALIASES.REMARKS,
+                    FUNCTION_ALIASES.DATA_TYPE,
+                    FUNCTION_ALIASES.RETURNS_RESULT,
+                    FUNCTION_ALIASES.COLUMN_COUNT,
                     overloaded,
-                    TypeInfo.TYPE_NAME,
-                    TypeInfo.PRECISION,
-                    TypeInfo.MAXIMUM_SCALE)
+                    TYPE_INFO.TYPE_NAME,
+                    TYPE_INFO.PRECISION,
+                    TYPE_INFO.MAXIMUM_SCALE)
                 .from(FUNCTION_ALIASES)
                 .leftOuterJoin(TYPE_INFO)
-                .on(FunctionAliases.DATA_TYPE.equal(TypeInfo.DATA_TYPE))
+                .on(FUNCTION_ALIASES.DATA_TYPE.equal(TYPE_INFO.DATA_TYPE))
                 // [#1256] TODO implement this correctly. Not sure if POS = 0
                 // is the right predicate to rule out duplicate entries in TYPE_INFO
-                .and(TypeInfo.POS.equal(0))
-                .where(FunctionAliases.ALIAS_SCHEMA.in(getInputSchemata()))
-                .and(FunctionAliases.RETURNS_RESULT.in((short) 1, (short) 2))
-                .orderBy(FunctionAliases.ALIAS_NAME).fetch()) {
+                .and(TYPE_INFO.POS.equal(0))
+                .where(FUNCTION_ALIASES.ALIAS_SCHEMA.in(getInputSchemata()))
+                .and(FUNCTION_ALIASES.RETURNS_RESULT.in((short) 1, (short) 2))
+                .orderBy(FUNCTION_ALIASES.ALIAS_NAME).fetch()) {
 
-            SchemaDefinition schema = getSchema(record.get(FunctionAliases.ALIAS_SCHEMA));
+            SchemaDefinition schema = getSchema(record.get(FUNCTION_ALIASES.ALIAS_SCHEMA));
 
             if (schema != null) {
-                String name = record.get(FunctionAliases.ALIAS_NAME);
-                String comment = record.get(FunctionAliases.REMARKS);
-                String typeName = record.get(TypeInfo.TYPE_NAME);
-                Integer precision = record.get(TypeInfo.PRECISION);
-                Short scale = record.get(TypeInfo.MAXIMUM_SCALE);
+                String name = record.get(FUNCTION_ALIASES.ALIAS_NAME);
+                String comment = record.get(FUNCTION_ALIASES.REMARKS);
+                String typeName = record.get(TYPE_INFO.TYPE_NAME);
+                Integer precision = record.get(TYPE_INFO.PRECISION);
+                Short scale = record.get(TYPE_INFO.MAXIMUM_SCALE);
                 String overload = record.get(overloaded)
-                    ? record.get(FunctionAliases.COLUMN_COUNT, String.class)
+                    ? record.get(FUNCTION_ALIASES.COLUMN_COUNT, String.class)
                     : null;
 
                 result.add(new H2RoutineDefinition(schema, name, comment, typeName, precision, scale, overload));
@@ -568,27 +557,27 @@ public class H2Database extends AbstractDatabase {
         enumLoop:
         for (Record record : create()
                 .select(
-                    Columns.TABLE_SCHEMA,
-                    Columns.TABLE_NAME,
-                    Columns.COLUMN_NAME,
-                    Columns.COLUMN_TYPE)
+                    COLUMNS.TABLE_SCHEMA,
+                    COLUMNS.TABLE_NAME,
+                    COLUMNS.COLUMN_NAME,
+                    COLUMNS.COLUMN_TYPE)
                 .from(COLUMNS)
                 .where(
-                    Columns.COLUMN_TYPE.like("ENUM(%)%").and(
-                    Columns.TABLE_SCHEMA.in(getInputSchemata())))
+                    COLUMNS.COLUMN_TYPE.like("ENUM(%)%").and(
+                    COLUMNS.TABLE_SCHEMA.in(getInputSchemata())))
                 .orderBy(
-                    Columns.TABLE_SCHEMA.asc(),
-                    Columns.TABLE_NAME.asc(),
-                    Columns.COLUMN_NAME.asc())) {
+                    COLUMNS.TABLE_SCHEMA.asc(),
+                    COLUMNS.TABLE_NAME.asc(),
+                    COLUMNS.COLUMN_NAME.asc())) {
 
-            SchemaDefinition schema = getSchema(record.get(Columns.TABLE_SCHEMA));
+            SchemaDefinition schema = getSchema(record.get(COLUMNS.TABLE_SCHEMA));
             if (schema == null)
                 continue enumLoop;
 
-            String table = record.get(Columns.TABLE_NAME);
-            String column = record.get(Columns.COLUMN_NAME);
+            String table = record.get(COLUMNS.TABLE_NAME);
+            String column = record.get(COLUMNS.COLUMN_NAME);
             String name = table + "_" + column;
-            String columnType = record.get(Columns.COLUMN_TYPE);
+            String columnType = record.get(COLUMNS.COLUMN_TYPE);
 
             // [#1237] Don't generate enum classes for columns in MySQL tables
             // that are excluded from code generation
@@ -625,22 +614,22 @@ public class H2Database extends AbstractDatabase {
         enumLoop:
         for (Record record : create()
                 .select(
-                    Domains.DOMAIN_SCHEMA,
-                    Domains.DOMAIN_NAME,
-                    Domains.SQL)
-                .from(Domains.DOMAINS)
-                .where(Domains.TYPE_NAME.eq(inline("ENUM")))
-                .and(Domains.DOMAIN_SCHEMA.in(getInputSchemata()))
+                    DOMAINS.DOMAIN_SCHEMA,
+                    DOMAINS.DOMAIN_NAME,
+                    DOMAINS.SQL)
+                .from(DOMAINS)
+                .where(DOMAINS.TYPE_NAME.eq(inline("ENUM")))
+                .and(DOMAINS.DOMAIN_SCHEMA.in(getInputSchemata()))
                 .orderBy(
-                    Domains.DOMAIN_SCHEMA,
-                    Domains.DOMAIN_NAME)) {
+                    DOMAINS.DOMAIN_SCHEMA,
+                    DOMAINS.DOMAIN_NAME)) {
 
-            SchemaDefinition schema = getSchema(record.get(Domains.DOMAIN_SCHEMA));
+            SchemaDefinition schema = getSchema(record.get(DOMAINS.DOMAIN_SCHEMA));
             if (schema == null)
                 continue enumLoop;
 
-            String name = record.get(Domains.DOMAIN_NAME);
-            String sql = record.get(Domains.SQL);
+            String name = record.get(DOMAINS.DOMAIN_NAME);
+            String sql = record.get(DOMAINS.SQL);
 
             DefaultEnumDefinition definition = new DefaultEnumDefinition(schema, name, "");
 
@@ -664,43 +653,43 @@ public class H2Database extends AbstractDatabase {
 
         for (Record record : create()
             .select(
-                Domains.DOMAIN_SCHEMA,
-                Domains.DOMAIN_NAME,
-                Domains.TYPE_NAME,
-                Domains.PRECISION,
-                Domains.SCALE,
-                Domains.IS_NULLABLE,
-                Domains.COLUMN_DEFAULT,
-                Domains.CHECK_CONSTRAINT)
+                DOMAINS.DOMAIN_SCHEMA,
+                DOMAINS.DOMAIN_NAME,
+                DOMAINS.TYPE_NAME,
+                DOMAINS.PRECISION,
+                DOMAINS.SCALE,
+                DOMAINS.IS_NULLABLE,
+                DOMAINS.COLUMN_DEFAULT,
+                DOMAINS.CHECK_CONSTRAINT)
             .from(DOMAINS)
-            .where(Domains.DOMAIN_SCHEMA.in(getInputSchemata()))
-            .orderBy(Domains.DOMAIN_SCHEMA, Domains.DOMAIN_NAME)
+            .where(DOMAINS.DOMAIN_SCHEMA.in(getInputSchemata()))
+            .orderBy(DOMAINS.DOMAIN_SCHEMA, DOMAINS.DOMAIN_NAME)
         ) {
-            SchemaDefinition schema = getSchema(record.get(Domains.DOMAIN_SCHEMA));
+            SchemaDefinition schema = getSchema(record.get(DOMAINS.DOMAIN_SCHEMA));
 
             DataTypeDefinition baseType = new DefaultDataTypeDefinition(
                 this,
                 schema,
-                record.get(Domains.TYPE_NAME),
-                record.get(Domains.PRECISION),
-                record.get(Domains.PRECISION),
-                record.get(Domains.SCALE),
-               !record.get(Domains.IS_NULLABLE, boolean.class),
-                record.get(Domains.COLUMN_DEFAULT),
+                record.get(DOMAINS.TYPE_NAME),
+                record.get(DOMAINS.PRECISION),
+                record.get(DOMAINS.PRECISION),
+                record.get(DOMAINS.SCALE),
+               !record.get(DOMAINS.IS_NULLABLE, boolean.class),
+                record.get(DOMAINS.COLUMN_DEFAULT),
                 name(
-                    record.get(Domains.DOMAIN_SCHEMA),
-                    record.get(Domains.TYPE_NAME)
+                    record.get(DOMAINS.DOMAIN_SCHEMA),
+                    record.get(DOMAINS.TYPE_NAME)
                 )
             );
 
             DefaultDomainDefinition domain = new DefaultDomainDefinition(
                 schema,
-                record.get(Domains.DOMAIN_NAME),
+                record.get(DOMAINS.DOMAIN_NAME),
                 baseType
             );
 
-            if (!StringUtils.isBlank(record.get(Domains.CHECK_CONSTRAINT)))
-                domain.addCheckClause(record.get(Domains.CHECK_CONSTRAINT));
+            if (!StringUtils.isBlank(record.get(DOMAINS.CHECK_CONSTRAINT)))
+                domain.addCheckClause(record.get(DOMAINS.CHECK_CONSTRAINT));
 
             result.add(domain);
         }
@@ -728,7 +717,7 @@ public class H2Database extends AbstractDatabase {
 
         // [#5874] The COLUMNS.COLUMN_TYPE column was introduced in H2 1.4.197
         if (is1_4_197 == null)
-            is1_4_197 = exists(Columns.COLUMN_TYPE);
+            is1_4_197 = exists(COLUMNS.COLUMN_TYPE);
 
         return is1_4_197;
     }
@@ -737,7 +726,7 @@ public class H2Database extends AbstractDatabase {
 
         // [#5874] The COLUMNS.IS_VISIBLE column was introduced in H2 1.4.198
         if (is1_4_198 == null)
-            is1_4_198 = exists(Columns.IS_VISIBLE);
+            is1_4_198 = exists(COLUMNS.IS_VISIBLE);
 
         return is1_4_198;
     }
@@ -747,7 +736,7 @@ public class H2Database extends AbstractDatabase {
         // [https://github.com/h2database/h2database/issues/2286]
         // The COLUMNS.CHECK_CONSTRAINT column was removed backwards incompatibly in H2 1.4.201
         if (is1_4_201 == null)
-            is1_4_201 = !exists(Columns.CHECK_CONSTRAINT);
+            is1_4_201 = !exists(COLUMNS.CHECK_CONSTRAINT);
 
         return is1_4_201;
     }

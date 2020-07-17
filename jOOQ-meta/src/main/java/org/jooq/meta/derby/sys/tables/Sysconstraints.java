@@ -23,7 +23,7 @@ import org.jooq.meta.derby.sys.Sys;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sysconstraints extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 1692037005;
+    private static final long serialVersionUID = -736503307;
 
     /**
      * The reference instance of <code>SYS.SYSCONSTRAINTS</code>
@@ -41,44 +41,37 @@ public class Sysconstraints extends TableImpl<Record> {
     /**
      * The column <code>SYS.SYSCONSTRAINTS.CONSTRAINTID</code>.
      */
-    public static final TableField<Record, String> CONSTRAINTID = createField(DSL.name("CONSTRAINTID"), org.jooq.impl.SQLDataType.CHAR(36).nullable(false), SYSCONSTRAINTS, "");
+    public final TableField<Record, String> CONSTRAINTID = createField(DSL.name("CONSTRAINTID"), org.jooq.impl.SQLDataType.CHAR(36).nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSCONSTRAINTS.TABLEID</code>.
      */
-    public static final TableField<Record, String> TABLEID = createField(DSL.name("TABLEID"), org.jooq.impl.SQLDataType.CHAR(36).nullable(false), SYSCONSTRAINTS, "");
+    public final TableField<Record, String> TABLEID = createField(DSL.name("TABLEID"), org.jooq.impl.SQLDataType.CHAR(36).nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSCONSTRAINTS.CONSTRAINTNAME</code>.
      */
-    public static final TableField<Record, String> CONSTRAINTNAME = createField(DSL.name("CONSTRAINTNAME"), org.jooq.impl.SQLDataType.VARCHAR(128).nullable(false), SYSCONSTRAINTS, "");
+    public final TableField<Record, String> CONSTRAINTNAME = createField(DSL.name("CONSTRAINTNAME"), org.jooq.impl.SQLDataType.VARCHAR(128).nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSCONSTRAINTS.TYPE</code>.
      */
-    public static final TableField<Record, String> TYPE = createField(DSL.name("TYPE"), org.jooq.impl.SQLDataType.CHAR(1).nullable(false), SYSCONSTRAINTS, "");
+    public final TableField<Record, String> TYPE = createField(DSL.name("TYPE"), org.jooq.impl.SQLDataType.CHAR(1).nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSCONSTRAINTS.SCHEMAID</code>.
      */
-    public static final TableField<Record, String> SCHEMAID = createField(DSL.name("SCHEMAID"), org.jooq.impl.SQLDataType.CHAR(36).nullable(false), SYSCONSTRAINTS, "");
+    public final TableField<Record, String> SCHEMAID = createField(DSL.name("SCHEMAID"), org.jooq.impl.SQLDataType.CHAR(36).nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSCONSTRAINTS.STATE</code>.
      */
-    public static final TableField<Record, String> STATE = createField(DSL.name("STATE"), org.jooq.impl.SQLDataType.CHAR(1).nullable(false), SYSCONSTRAINTS, "");
+    public final TableField<Record, String> STATE = createField(DSL.name("STATE"), org.jooq.impl.SQLDataType.CHAR(1).nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSCONSTRAINTS.REFERENCECOUNT</code>.
      */
-    public static final TableField<Record, Integer> REFERENCECOUNT = createField(DSL.name("REFERENCECOUNT"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), SYSCONSTRAINTS, "");
-
-    /**
-     * No further instances allowed
-     */
-    private Sysconstraints() {
-        this(DSL.name("SYSCONSTRAINTS"), null);
-    }
+    public final TableField<Record, Integer> REFERENCECOUNT = createField(DSL.name("REFERENCECOUNT"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     private Sysconstraints(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);
@@ -88,6 +81,27 @@ public class Sysconstraints extends TableImpl<Record> {
         super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
+    /**
+     * Create an aliased <code>SYS.SYSCONSTRAINTS</code> table reference
+     */
+    public Sysconstraints(String alias) {
+        this(DSL.name(alias), SYSCONSTRAINTS);
+    }
+
+    /**
+     * Create an aliased <code>SYS.SYSCONSTRAINTS</code> table reference
+     */
+    public Sysconstraints(Name alias) {
+        this(alias, SYSCONSTRAINTS);
+    }
+
+    /**
+     * Create a <code>SYS.SYSCONSTRAINTS</code> table reference
+     */
+    public Sysconstraints() {
+        this(DSL.name("SYSCONSTRAINTS"), null);
+    }
+
     public <O extends Record> Sysconstraints(Table<O> child, ForeignKey<O, Record> key) {
         super(child, key, SYSCONSTRAINTS);
     }
@@ -95,5 +109,31 @@ public class Sysconstraints extends TableImpl<Record> {
     @Override
     public Schema getSchema() {
         return Sys.SYS;
+    }
+
+    @Override
+    public Sysconstraints as(String alias) {
+        return new Sysconstraints(DSL.name(alias), this);
+    }
+
+    @Override
+    public Sysconstraints as(Name alias) {
+        return new Sysconstraints(alias, this);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public Sysconstraints rename(String name) {
+        return new Sysconstraints(DSL.name(name), null);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public Sysconstraints rename(Name name) {
+        return new Sysconstraints(name, null);
     }
 }

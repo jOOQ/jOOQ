@@ -23,7 +23,7 @@ import org.jooq.meta.derby.sys.Sys;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Syssequences extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -748272343;
+    private static final long serialVersionUID = 1743018166;
 
     /**
      * The reference instance of <code>SYS.SYSSEQUENCES</code>
@@ -41,59 +41,52 @@ public class Syssequences extends TableImpl<Record> {
     /**
      * The column <code>SYS.SYSSEQUENCES.SEQUENCEID</code>.
      */
-    public static final TableField<Record, String> SEQUENCEID = createField(DSL.name("SEQUENCEID"), org.jooq.impl.SQLDataType.CHAR(36).nullable(false), SYSSEQUENCES, "");
+    public final TableField<Record, String> SEQUENCEID = createField(DSL.name("SEQUENCEID"), org.jooq.impl.SQLDataType.CHAR(36).nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSSEQUENCES.SEQUENCENAME</code>.
      */
-    public static final TableField<Record, String> SEQUENCENAME = createField(DSL.name("SEQUENCENAME"), org.jooq.impl.SQLDataType.VARCHAR(128).nullable(false), SYSSEQUENCES, "");
+    public final TableField<Record, String> SEQUENCENAME = createField(DSL.name("SEQUENCENAME"), org.jooq.impl.SQLDataType.VARCHAR(128).nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSSEQUENCES.SCHEMAID</code>.
      */
-    public static final TableField<Record, String> SCHEMAID = createField(DSL.name("SCHEMAID"), org.jooq.impl.SQLDataType.CHAR(36).nullable(false), SYSSEQUENCES, "");
+    public final TableField<Record, String> SCHEMAID = createField(DSL.name("SCHEMAID"), org.jooq.impl.SQLDataType.CHAR(36).nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSSEQUENCES.SEQUENCEDATATYPE</code>.
      */
-    public static final TableField<Record, String> SEQUENCEDATATYPE = createField(DSL.name("SEQUENCEDATATYPE"), org.jooq.impl.SQLDataType.CLOB.nullable(false), SYSSEQUENCES, "");
+    public final TableField<Record, String> SEQUENCEDATATYPE = createField(DSL.name("SEQUENCEDATATYPE"), org.jooq.impl.SQLDataType.CLOB.nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSSEQUENCES.CURRENTVALUE</code>.
      */
-    public static final TableField<Record, Long> CURRENTVALUE = createField(DSL.name("CURRENTVALUE"), org.jooq.impl.SQLDataType.BIGINT, SYSSEQUENCES, "");
+    public final TableField<Record, Long> CURRENTVALUE = createField(DSL.name("CURRENTVALUE"), org.jooq.impl.SQLDataType.BIGINT, this, "");
 
     /**
      * The column <code>SYS.SYSSEQUENCES.STARTVALUE</code>.
      */
-    public static final TableField<Record, Long> STARTVALUE = createField(DSL.name("STARTVALUE"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), SYSSEQUENCES, "");
+    public final TableField<Record, Long> STARTVALUE = createField(DSL.name("STARTVALUE"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSSEQUENCES.MINIMUMVALUE</code>.
      */
-    public static final TableField<Record, Long> MINIMUMVALUE = createField(DSL.name("MINIMUMVALUE"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), SYSSEQUENCES, "");
+    public final TableField<Record, Long> MINIMUMVALUE = createField(DSL.name("MINIMUMVALUE"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSSEQUENCES.MAXIMUMVALUE</code>.
      */
-    public static final TableField<Record, Long> MAXIMUMVALUE = createField(DSL.name("MAXIMUMVALUE"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), SYSSEQUENCES, "");
+    public final TableField<Record, Long> MAXIMUMVALUE = createField(DSL.name("MAXIMUMVALUE"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSSEQUENCES.INCREMENT</code>.
      */
-    public static final TableField<Record, Long> INCREMENT = createField(DSL.name("INCREMENT"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), SYSSEQUENCES, "");
+    public final TableField<Record, Long> INCREMENT = createField(DSL.name("INCREMENT"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSSEQUENCES.CYCLEOPTION</code>.
      */
-    public static final TableField<Record, String> CYCLEOPTION = createField(DSL.name("CYCLEOPTION"), org.jooq.impl.SQLDataType.CHAR(1).nullable(false), SYSSEQUENCES, "");
-
-    /**
-     * No further instances allowed
-     */
-    private Syssequences() {
-        this(DSL.name("SYSSEQUENCES"), null);
-    }
+    public final TableField<Record, String> CYCLEOPTION = createField(DSL.name("CYCLEOPTION"), org.jooq.impl.SQLDataType.CHAR(1).nullable(false), this, "");
 
     private Syssequences(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);
@@ -103,6 +96,27 @@ public class Syssequences extends TableImpl<Record> {
         super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
+    /**
+     * Create an aliased <code>SYS.SYSSEQUENCES</code> table reference
+     */
+    public Syssequences(String alias) {
+        this(DSL.name(alias), SYSSEQUENCES);
+    }
+
+    /**
+     * Create an aliased <code>SYS.SYSSEQUENCES</code> table reference
+     */
+    public Syssequences(Name alias) {
+        this(alias, SYSSEQUENCES);
+    }
+
+    /**
+     * Create a <code>SYS.SYSSEQUENCES</code> table reference
+     */
+    public Syssequences() {
+        this(DSL.name("SYSSEQUENCES"), null);
+    }
+
     public <O extends Record> Syssequences(Table<O> child, ForeignKey<O, Record> key) {
         super(child, key, SYSSEQUENCES);
     }
@@ -110,5 +124,31 @@ public class Syssequences extends TableImpl<Record> {
     @Override
     public Schema getSchema() {
         return Sys.SYS;
+    }
+
+    @Override
+    public Syssequences as(String alias) {
+        return new Syssequences(DSL.name(alias), this);
+    }
+
+    @Override
+    public Syssequences as(Name alias) {
+        return new Syssequences(alias, this);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public Syssequences rename(String name) {
+        return new Syssequences(DSL.name(name), null);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public Syssequences rename(Name name) {
+        return new Syssequences(name, null);
     }
 }

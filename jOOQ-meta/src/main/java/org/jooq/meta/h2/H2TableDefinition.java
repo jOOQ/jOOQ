@@ -42,7 +42,7 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.zero;
-import static org.jooq.meta.h2.information_schema.tables.Columns.COLUMNS;
+import static org.jooq.meta.h2.information_schema.Tables.COLUMNS;
 import static org.jooq.tools.StringUtils.defaultString;
 
 import java.sql.SQLException;
@@ -58,7 +58,6 @@ import org.jooq.meta.DataTypeDefinition;
 import org.jooq.meta.DefaultColumnDefinition;
 import org.jooq.meta.DefaultDataTypeDefinition;
 import org.jooq.meta.SchemaDefinition;
-import org.jooq.meta.h2.information_schema.tables.Columns;
 
 /**
  * H2 table definition
@@ -88,66 +87,66 @@ public class H2TableDefinition extends AbstractTableDefinition {
         Param<Integer> maxS = inline(32767);
 
         for (Record record : create().select(
-                Columns.COLUMN_NAME,
-                Columns.ORDINAL_POSITION,
-                Columns.TYPE_NAME,
-                (((H2Database) getDatabase()).is1_4_197() ? Columns.COLUMN_TYPE : Columns.TYPE_NAME).as(Columns.COLUMN_TYPE),
-                choose().when(Columns.NUMERIC_PRECISION.eq(maxP).and(Columns.NUMERIC_SCALE.eq(maxS)), zero())
-                        .otherwise(Columns.CHARACTER_MAXIMUM_LENGTH).as(Columns.CHARACTER_MAXIMUM_LENGTH),
-                Columns.NUMERIC_PRECISION.decode(maxP, zero(), Columns.NUMERIC_PRECISION).as(Columns.NUMERIC_PRECISION),
-                Columns.NUMERIC_SCALE.decode(maxS, zero(), Columns.NUMERIC_SCALE).as(Columns.NUMERIC_SCALE),
-                Columns.IS_NULLABLE,
-                Columns.COLUMN_DEFAULT,
-                Columns.REMARKS,
-                Columns.SEQUENCE_NAME)
+                COLUMNS.COLUMN_NAME,
+                COLUMNS.ORDINAL_POSITION,
+                COLUMNS.TYPE_NAME,
+                (((H2Database) getDatabase()).is1_4_197() ? COLUMNS.COLUMN_TYPE : COLUMNS.TYPE_NAME).as(COLUMNS.COLUMN_TYPE),
+                choose().when(COLUMNS.NUMERIC_PRECISION.eq(maxP).and(COLUMNS.NUMERIC_SCALE.eq(maxS)), zero())
+                        .otherwise(COLUMNS.CHARACTER_MAXIMUM_LENGTH).as(COLUMNS.CHARACTER_MAXIMUM_LENGTH),
+                COLUMNS.NUMERIC_PRECISION.decode(maxP, zero(), COLUMNS.NUMERIC_PRECISION).as(COLUMNS.NUMERIC_PRECISION),
+                COLUMNS.NUMERIC_SCALE.decode(maxS, zero(), COLUMNS.NUMERIC_SCALE).as(COLUMNS.NUMERIC_SCALE),
+                COLUMNS.IS_NULLABLE,
+                COLUMNS.COLUMN_DEFAULT,
+                COLUMNS.REMARKS,
+                COLUMNS.SEQUENCE_NAME)
             .from(COLUMNS)
-            .where(Columns.TABLE_SCHEMA.equal(getSchema().getName()))
-            .and(Columns.TABLE_NAME.equal(getName()))
+            .where(COLUMNS.TABLE_SCHEMA.equal(getSchema().getName()))
+            .and(COLUMNS.TABLE_NAME.equal(getName()))
             .and(!getDatabase().getIncludeInvisibleColumns()
                 ? ((H2Database) getDatabase()).is1_4_198()
-                    ? Columns.IS_VISIBLE.eq(inline("TRUE"))
-                    : Columns.COLUMN_TYPE.notLike(inline("%INVISIBLE%"))
+                    ? COLUMNS.IS_VISIBLE.eq(inline("TRUE"))
+                    : COLUMNS.COLUMN_TYPE.notLike(inline("%INVISIBLE%"))
                 : noCondition())
-            .orderBy(Columns.ORDINAL_POSITION)) {
+            .orderBy(COLUMNS.ORDINAL_POSITION)) {
 
             // [#5331] AUTO_INCREMENT (MySQL style)
             // [#5331] DEFAULT nextval('sequence') (PostgreSQL style)
             // [#6332] [#6339] system-generated defaults shouldn't produce a default clause
             boolean isIdentity =
-                   null != record.get(Columns.SEQUENCE_NAME)
-                || defaultString(record.get(Columns.COLUMN_DEFAULT)).trim().toLowerCase().startsWith("nextval");
+                   null != record.get(COLUMNS.SEQUENCE_NAME)
+                || defaultString(record.get(COLUMNS.COLUMN_DEFAULT)).trim().toLowerCase().startsWith("nextval");
 
 
             // [#7644] H2 puts DATETIME_PRECISION in NUMERIC_SCALE column
-            boolean isTimestamp = record.get(Columns.TYPE_NAME).trim().toLowerCase().startsWith("timestamp");
+            boolean isTimestamp = record.get(COLUMNS.TYPE_NAME).trim().toLowerCase().startsWith("timestamp");
 
             // [#10389] The interval subtype is contained in COLUMN_TYPE, not TYPE_NAME
-            boolean isInterval = record.get(Columns.TYPE_NAME).trim().toLowerCase().equals("interval");
+            boolean isInterval = record.get(COLUMNS.TYPE_NAME).trim().toLowerCase().equals("interval");
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
                 getSchema(),
                 isInterval
-                    ? record.get(Columns.COLUMN_TYPE)
-                    : record.get(Columns.TYPE_NAME),
-                record.get(Columns.CHARACTER_MAXIMUM_LENGTH),
+                    ? record.get(COLUMNS.COLUMN_TYPE)
+                    : record.get(COLUMNS.TYPE_NAME),
+                record.get(COLUMNS.CHARACTER_MAXIMUM_LENGTH),
                 isTimestamp
-                    ? record.get(Columns.NUMERIC_SCALE)
-                    : record.get(Columns.NUMERIC_PRECISION),
+                    ? record.get(COLUMNS.NUMERIC_SCALE)
+                    : record.get(COLUMNS.NUMERIC_PRECISION),
                 isTimestamp
                     ? 0
-                    : record.get(Columns.NUMERIC_SCALE),
-                record.get(Columns.IS_NULLABLE, boolean.class),
-                isIdentity ? null : record.get(Columns.COLUMN_DEFAULT),
-                name(getSchema().getName(), getName() + "_" + record.get(Columns.COLUMN_NAME)));
+                    : record.get(COLUMNS.NUMERIC_SCALE),
+                record.get(COLUMNS.IS_NULLABLE, boolean.class),
+                isIdentity ? null : record.get(COLUMNS.COLUMN_DEFAULT),
+                name(getSchema().getName(), getName() + "_" + record.get(COLUMNS.COLUMN_NAME)));
 
             ColumnDefinition column = new DefaultColumnDefinition(
             	getDatabase().getTable(getSchema(), getName()),
-                record.get(Columns.COLUMN_NAME),
-                record.get(Columns.ORDINAL_POSITION),
+                record.get(COLUMNS.COLUMN_NAME),
+                record.get(COLUMNS.ORDINAL_POSITION),
                 type,
                 isIdentity,
-                record.get(Columns.REMARKS));
+                record.get(COLUMNS.REMARKS));
 
             result.add(column);
         }

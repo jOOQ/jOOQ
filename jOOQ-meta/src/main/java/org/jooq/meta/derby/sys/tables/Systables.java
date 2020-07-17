@@ -23,7 +23,7 @@ import org.jooq.meta.derby.sys.Sys;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Systables extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -18187726;
+    private static final long serialVersionUID = -2129244550;
 
     /**
      * The reference instance of <code>SYS.SYSTABLES</code>
@@ -41,34 +41,27 @@ public class Systables extends TableImpl<Record> {
     /**
      * The column <code>SYS.SYSTABLES.TABLEID</code>.
      */
-    public static final TableField<Record, String> TABLEID = createField(DSL.name("TABLEID"), org.jooq.impl.SQLDataType.CHAR(36).nullable(false), SYSTABLES, "");
+    public final TableField<Record, String> TABLEID = createField(DSL.name("TABLEID"), org.jooq.impl.SQLDataType.CHAR(36).nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSTABLES.TABLENAME</code>.
      */
-    public static final TableField<Record, String> TABLENAME = createField(DSL.name("TABLENAME"), org.jooq.impl.SQLDataType.VARCHAR(128).nullable(false), SYSTABLES, "");
+    public final TableField<Record, String> TABLENAME = createField(DSL.name("TABLENAME"), org.jooq.impl.SQLDataType.VARCHAR(128).nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSTABLES.TABLETYPE</code>.
      */
-    public static final TableField<Record, String> TABLETYPE = createField(DSL.name("TABLETYPE"), org.jooq.impl.SQLDataType.CHAR(1).nullable(false), SYSTABLES, "");
+    public final TableField<Record, String> TABLETYPE = createField(DSL.name("TABLETYPE"), org.jooq.impl.SQLDataType.CHAR(1).nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSTABLES.SCHEMAID</code>.
      */
-    public static final TableField<Record, String> SCHEMAID = createField(DSL.name("SCHEMAID"), org.jooq.impl.SQLDataType.CHAR(36).nullable(false), SYSTABLES, "");
+    public final TableField<Record, String> SCHEMAID = createField(DSL.name("SCHEMAID"), org.jooq.impl.SQLDataType.CHAR(36).nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSTABLES.LOCKGRANULARITY</code>.
      */
-    public static final TableField<Record, String> LOCKGRANULARITY = createField(DSL.name("LOCKGRANULARITY"), org.jooq.impl.SQLDataType.CHAR(1).nullable(false), SYSTABLES, "");
-
-    /**
-     * No further instances allowed
-     */
-    private Systables() {
-        this(DSL.name("SYSTABLES"), null);
-    }
+    public final TableField<Record, String> LOCKGRANULARITY = createField(DSL.name("LOCKGRANULARITY"), org.jooq.impl.SQLDataType.CHAR(1).nullable(false), this, "");
 
     private Systables(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);
@@ -78,6 +71,27 @@ public class Systables extends TableImpl<Record> {
         super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
+    /**
+     * Create an aliased <code>SYS.SYSTABLES</code> table reference
+     */
+    public Systables(String alias) {
+        this(DSL.name(alias), SYSTABLES);
+    }
+
+    /**
+     * Create an aliased <code>SYS.SYSTABLES</code> table reference
+     */
+    public Systables(Name alias) {
+        this(alias, SYSTABLES);
+    }
+
+    /**
+     * Create a <code>SYS.SYSTABLES</code> table reference
+     */
+    public Systables() {
+        this(DSL.name("SYSTABLES"), null);
+    }
+
     public <O extends Record> Systables(Table<O> child, ForeignKey<O, Record> key) {
         super(child, key, SYSTABLES);
     }
@@ -85,5 +99,31 @@ public class Systables extends TableImpl<Record> {
     @Override
     public Schema getSchema() {
         return Sys.SYS;
+    }
+
+    @Override
+    public Systables as(String alias) {
+        return new Systables(DSL.name(alias), this);
+    }
+
+    @Override
+    public Systables as(Name alias) {
+        return new Systables(alias, this);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public Systables rename(String name) {
+        return new Systables(DSL.name(name), null);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public Systables rename(Name name) {
+        return new Systables(name, null);
     }
 }

@@ -18,7 +18,7 @@ import org.jooq.meta.h2.information_schema.tables.Views;
 
 
 /**
- * Convenience access to all tables in INFORMATION_SCHEMA
+ * Convenience access to all tables in INFORMATION_SCHEMA.
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables {

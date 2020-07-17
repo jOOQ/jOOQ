@@ -93,18 +93,7 @@ import org.jooq.meta.SequenceDefinition;
 import org.jooq.meta.TableDefinition;
 import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.mariadb.MariaDBDatabase;
-import org.jooq.meta.mysql.information_schema.tables.CheckConstraints;
-import org.jooq.meta.mysql.information_schema.tables.Columns;
-import org.jooq.meta.mysql.information_schema.tables.KeyColumnUsage;
-import org.jooq.meta.mysql.information_schema.tables.ReferentialConstraints;
-import org.jooq.meta.mysql.information_schema.tables.Routines;
-import org.jooq.meta.mysql.information_schema.tables.Schemata;
-import org.jooq.meta.mysql.information_schema.tables.Statistics;
-import org.jooq.meta.mysql.information_schema.tables.TableConstraints;
-import org.jooq.meta.mysql.information_schema.tables.Tables;
-import org.jooq.meta.mysql.information_schema.tables.Views;
 import org.jooq.meta.mysql.mysql.enums.ProcType;
-import org.jooq.meta.mysql.mysql.tables.Proc;
 import org.jooq.tools.csv.CSVReader;
 
 /**
@@ -124,46 +113,46 @@ public class MySQLDatabase extends AbstractDatabase {
         Table<?> from = getIncludeSystemIndexes()
             ? STATISTICS
             : STATISTICS.leftJoin(TABLE_CONSTRAINTS)
-                .on(Statistics.INDEX_SCHEMA.eq(TableConstraints.CONSTRAINT_SCHEMA))
-                .and(Statistics.TABLE_NAME.eq(TableConstraints.TABLE_NAME))
-                .and(Statistics.INDEX_NAME.eq(TableConstraints.CONSTRAINT_NAME));
+                .on(STATISTICS.INDEX_SCHEMA.eq(TABLE_CONSTRAINTS.CONSTRAINT_SCHEMA))
+                .and(STATISTICS.TABLE_NAME.eq(TABLE_CONSTRAINTS.TABLE_NAME))
+                .and(STATISTICS.INDEX_NAME.eq(TABLE_CONSTRAINTS.CONSTRAINT_NAME));
 
         // Same implementation as in H2Database and HSQLDBDatabase
         Map<Record, Result<Record>> indexes = create()
             // [#2059] In MemSQL primary key indexes are typically duplicated
             // (once with INDEX_TYPE = 'SHARD' and once with INDEX_TYPE = 'BTREE)
             .selectDistinct(
-                Statistics.TABLE_SCHEMA,
-                Statistics.TABLE_NAME,
-                Statistics.INDEX_NAME,
-                Statistics.NON_UNIQUE,
-                Statistics.COLUMN_NAME,
-                Statistics.SEQ_IN_INDEX)
+                STATISTICS.TABLE_SCHEMA,
+                STATISTICS.TABLE_NAME,
+                STATISTICS.INDEX_NAME,
+                STATISTICS.NON_UNIQUE,
+                STATISTICS.COLUMN_NAME,
+                STATISTICS.SEQ_IN_INDEX)
             .from(from)
             // [#5213] Duplicate schema value to work around MySQL issue https://bugs.mysql.com/bug.php?id=86022
-            .where(Statistics.TABLE_SCHEMA.in(getInputSchemata()).or(
+            .where(STATISTICS.TABLE_SCHEMA.in(getInputSchemata()).or(
                   getInputSchemata().size() == 1
-                ? Statistics.TABLE_SCHEMA.in(getInputSchemata())
+                ? STATISTICS.TABLE_SCHEMA.in(getInputSchemata())
                 : falseCondition()))
             .and(getIncludeSystemIndexes()
                 ? noCondition()
-                : TableConstraints.CONSTRAINT_NAME.isNull()
+                : TABLE_CONSTRAINTS.CONSTRAINT_NAME.isNull()
             )
             .orderBy(
-                Statistics.TABLE_SCHEMA,
-                Statistics.TABLE_NAME,
-                Statistics.INDEX_NAME,
-                Statistics.SEQ_IN_INDEX)
+                STATISTICS.TABLE_SCHEMA,
+                STATISTICS.TABLE_NAME,
+                STATISTICS.INDEX_NAME,
+                STATISTICS.SEQ_IN_INDEX)
             .fetchGroups(
                 new Field[] {
-                    Statistics.TABLE_SCHEMA,
-                    Statistics.TABLE_NAME,
-                    Statistics.INDEX_NAME,
-                    Statistics.NON_UNIQUE
+                    STATISTICS.TABLE_SCHEMA,
+                    STATISTICS.TABLE_NAME,
+                    STATISTICS.INDEX_NAME,
+                    STATISTICS.NON_UNIQUE
                 },
                 new Field[] {
-                    Statistics.COLUMN_NAME,
-                    Statistics.SEQ_IN_INDEX
+                    STATISTICS.COLUMN_NAME,
+                    STATISTICS.SEQ_IN_INDEX
                 });
 
         indexLoop:
@@ -171,21 +160,21 @@ public class MySQLDatabase extends AbstractDatabase {
             final Record index = entry.getKey();
             final Result<Record> columns = entry.getValue();
 
-            final SchemaDefinition tableSchema = getSchema(index.get(Statistics.TABLE_SCHEMA));
+            final SchemaDefinition tableSchema = getSchema(index.get(STATISTICS.TABLE_SCHEMA));
             if (tableSchema == null)
                 continue indexLoop;
 
-            final String indexName = index.get(Statistics.INDEX_NAME);
-            final String tableName = index.get(Statistics.TABLE_NAME);
+            final String indexName = index.get(STATISTICS.INDEX_NAME);
+            final String tableName = index.get(STATISTICS.TABLE_NAME);
             final TableDefinition table = getTable(tableSchema, tableName);
             if (table == null)
                 continue indexLoop;
 
-            final boolean unique = !index.get(Statistics.NON_UNIQUE, boolean.class);
+            final boolean unique = !index.get(STATISTICS.NON_UNIQUE, boolean.class);
 
             // [#6310] [#6620] Function-based indexes are not yet supported
             for (Record column : columns)
-                if (table.getColumn(column.get(Statistics.COLUMN_NAME)) == null)
+                if (table.getColumn(column.get(STATISTICS.COLUMN_NAME)) == null)
                     continue indexLoop;
 
             result.add(new AbstractIndexDefinition(tableSchema, indexName, table, unique) {
@@ -195,9 +184,9 @@ public class MySQLDatabase extends AbstractDatabase {
                     for (Record column : columns) {
                         indexColumns.add(new DefaultIndexColumnDefinition(
                             this,
-                            table.getColumn(column.get(Statistics.COLUMN_NAME)),
+                            table.getColumn(column.get(STATISTICS.COLUMN_NAME)),
                             SortOrder.ASC,
-                            column.get(Statistics.SEQ_IN_INDEX, int.class)
+                            column.get(STATISTICS.SEQ_IN_INDEX, int.class)
                         ));
                     }
                 }
@@ -215,10 +204,10 @@ public class MySQLDatabase extends AbstractDatabase {
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys(true)) {
-            SchemaDefinition schema = getSchema(record.get(Statistics.TABLE_SCHEMA));
-            String constraintName = record.get(Statistics.INDEX_NAME);
-            String tableName = record.get(Statistics.TABLE_NAME);
-            String columnName = record.get(Statistics.COLUMN_NAME);
+            SchemaDefinition schema = getSchema(record.get(STATISTICS.TABLE_SCHEMA));
+            String constraintName = record.get(STATISTICS.INDEX_NAME);
+            String tableName = record.get(STATISTICS.TABLE_NAME);
+            String columnName = record.get(STATISTICS.COLUMN_NAME);
 
             String key = getKeyName(tableName, constraintName);
             TableDefinition table = getTable(schema, tableName);
@@ -231,10 +220,10 @@ public class MySQLDatabase extends AbstractDatabase {
     @Override
     protected void loadUniqueKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys(false)) {
-            SchemaDefinition schema = getSchema(record.get(Statistics.TABLE_SCHEMA));
-            String constraintName = record.get(Statistics.INDEX_NAME);
-            String tableName = record.get(Statistics.TABLE_NAME);
-            String columnName = record.get(Statistics.COLUMN_NAME);
+            SchemaDefinition schema = getSchema(record.get(STATISTICS.TABLE_SCHEMA));
+            String constraintName = record.get(STATISTICS.INDEX_NAME);
+            String tableName = record.get(STATISTICS.TABLE_NAME);
+            String columnName = record.get(STATISTICS.COLUMN_NAME);
 
             String key = getKeyName(tableName, constraintName);
             TableDefinition table = getTable(schema, tableName);
@@ -273,62 +262,62 @@ public class MySQLDatabase extends AbstractDatabase {
         // [#2059] In MemSQL primary key indexes are typically duplicated
         // (once with INDEX_TYPE = 'SHARD' and once with INDEX_TYPE = 'BTREE)
         return create().selectDistinct(
-                           Statistics.TABLE_SCHEMA,
-                           Statistics.TABLE_NAME,
-                           Statistics.COLUMN_NAME,
-                           Statistics.INDEX_NAME,
-                           Statistics.SEQ_IN_INDEX)
+                           STATISTICS.TABLE_SCHEMA,
+                           STATISTICS.TABLE_NAME,
+                           STATISTICS.COLUMN_NAME,
+                           STATISTICS.INDEX_NAME,
+                           STATISTICS.SEQ_IN_INDEX)
                        .from(STATISTICS)
                        // [#5213] Duplicate schema value to work around MySQL issue https://bugs.mysql.com/bug.php?id=86022
-                       .where(Statistics.TABLE_SCHEMA.in(getInputSchemata()).or(
+                       .where(STATISTICS.TABLE_SCHEMA.in(getInputSchemata()).or(
                              getInputSchemata().size() == 1
-                           ? Statistics.TABLE_SCHEMA.in(getInputSchemata())
+                           ? STATISTICS.TABLE_SCHEMA.in(getInputSchemata())
                            : falseCondition()))
                        .and(primary
-                           ? Statistics.INDEX_NAME.eq(inline("PRIMARY"))
-                           : Statistics.INDEX_NAME.ne(inline("PRIMARY")).and(Statistics.NON_UNIQUE.eq(inline(0))))
+                           ? STATISTICS.INDEX_NAME.eq(inline("PRIMARY"))
+                           : STATISTICS.INDEX_NAME.ne(inline("PRIMARY")).and(STATISTICS.NON_UNIQUE.eq(inline(0))))
                        .orderBy(
-                           Statistics.TABLE_SCHEMA,
-                           Statistics.TABLE_NAME,
-                           Statistics.INDEX_NAME,
-                           Statistics.SEQ_IN_INDEX)
+                           STATISTICS.TABLE_SCHEMA,
+                           STATISTICS.TABLE_NAME,
+                           STATISTICS.INDEX_NAME,
+                           STATISTICS.SEQ_IN_INDEX)
                        .fetch();
     }
 
     @Override
     protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
         for (Record record : create().select(
-                    ReferentialConstraints.CONSTRAINT_SCHEMA,
-                    ReferentialConstraints.CONSTRAINT_NAME,
-                    ReferentialConstraints.TABLE_NAME,
-                    ReferentialConstraints.REFERENCED_TABLE_NAME,
-                    ReferentialConstraints.UNIQUE_CONSTRAINT_NAME,
-                    ReferentialConstraints.UNIQUE_CONSTRAINT_SCHEMA,
-                    KeyColumnUsage.COLUMN_NAME)
+                    REFERENTIAL_CONSTRAINTS.CONSTRAINT_SCHEMA,
+                    REFERENTIAL_CONSTRAINTS.CONSTRAINT_NAME,
+                    REFERENTIAL_CONSTRAINTS.TABLE_NAME,
+                    REFERENTIAL_CONSTRAINTS.REFERENCED_TABLE_NAME,
+                    REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_NAME,
+                    REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_SCHEMA,
+                    KEY_COLUMN_USAGE.COLUMN_NAME)
                 .from(REFERENTIAL_CONSTRAINTS)
                 .join(KEY_COLUMN_USAGE)
-                .on(ReferentialConstraints.CONSTRAINT_SCHEMA.equal(KeyColumnUsage.CONSTRAINT_SCHEMA))
-                .and(ReferentialConstraints.CONSTRAINT_NAME.equal(KeyColumnUsage.CONSTRAINT_NAME))
-                .and(ReferentialConstraints.TABLE_NAME.equal(KeyColumnUsage.TABLE_NAME))
+                .on(REFERENTIAL_CONSTRAINTS.CONSTRAINT_SCHEMA.equal(KEY_COLUMN_USAGE.CONSTRAINT_SCHEMA))
+                .and(REFERENTIAL_CONSTRAINTS.CONSTRAINT_NAME.equal(KEY_COLUMN_USAGE.CONSTRAINT_NAME))
+                .and(REFERENTIAL_CONSTRAINTS.TABLE_NAME.equal(KEY_COLUMN_USAGE.TABLE_NAME))
                 // [#5213] Duplicate schema value to work around MySQL issue https://bugs.mysql.com/bug.php?id=86022
-                .where(ReferentialConstraints.CONSTRAINT_SCHEMA.in(getInputSchemata()).or(
+                .where(REFERENTIAL_CONSTRAINTS.CONSTRAINT_SCHEMA.in(getInputSchemata()).or(
                       getInputSchemata().size() == 1
-                    ? ReferentialConstraints.CONSTRAINT_SCHEMA.in(getInputSchemata())
+                    ? REFERENTIAL_CONSTRAINTS.CONSTRAINT_SCHEMA.in(getInputSchemata())
                     : falseCondition()))
                 .orderBy(
-                    KeyColumnUsage.CONSTRAINT_SCHEMA.asc(),
-                    KeyColumnUsage.CONSTRAINT_NAME.asc(),
-                    KeyColumnUsage.ORDINAL_POSITION.asc())
+                    KEY_COLUMN_USAGE.CONSTRAINT_SCHEMA.asc(),
+                    KEY_COLUMN_USAGE.CONSTRAINT_NAME.asc(),
+                    KEY_COLUMN_USAGE.ORDINAL_POSITION.asc())
                 .fetch()) {
 
-            SchemaDefinition foreignKeySchema = getSchema(record.get(ReferentialConstraints.CONSTRAINT_SCHEMA));
-            SchemaDefinition uniqueKeySchema = getSchema(record.get(ReferentialConstraints.UNIQUE_CONSTRAINT_SCHEMA));
+            SchemaDefinition foreignKeySchema = getSchema(record.get(REFERENTIAL_CONSTRAINTS.CONSTRAINT_SCHEMA));
+            SchemaDefinition uniqueKeySchema = getSchema(record.get(REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_SCHEMA));
 
-            String foreignKey = record.get(ReferentialConstraints.CONSTRAINT_NAME);
-            String foreignKeyColumn = record.get(KeyColumnUsage.COLUMN_NAME);
-            String foreignKeyTableName = record.get(ReferentialConstraints.TABLE_NAME);
-            String uniqueKey = record.get(ReferentialConstraints.UNIQUE_CONSTRAINT_NAME);
-            String uniqueKeyTableName = record.get(ReferentialConstraints.REFERENCED_TABLE_NAME);
+            String foreignKey = record.get(REFERENTIAL_CONSTRAINTS.CONSTRAINT_NAME);
+            String foreignKeyColumn = record.get(KEY_COLUMN_USAGE.COLUMN_NAME);
+            String foreignKeyTableName = record.get(REFERENTIAL_CONSTRAINTS.TABLE_NAME);
+            String uniqueKey = record.get(REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_NAME);
+            String uniqueKeyTableName = record.get(REFERENTIAL_CONSTRAINTS.REFERENCED_TABLE_NAME);
 
             TableDefinition foreignKeyTable = getTable(foreignKeySchema, foreignKeyTableName);
             TableDefinition uniqueKeyTable = getTable(uniqueKeySchema, uniqueKeyTableName);
@@ -349,47 +338,47 @@ public class MySQLDatabase extends AbstractDatabase {
         if (is8_0_16()) {
             for (Record record : create()
                     .select(
-                        TableConstraints.TABLE_SCHEMA,
-                        TableConstraints.TABLE_NAME,
-                        CheckConstraints.CONSTRAINT_NAME,
-                        CheckConstraints.CHECK_CLAUSE,
+                        TABLE_CONSTRAINTS.TABLE_SCHEMA,
+                        TABLE_CONSTRAINTS.TABLE_NAME,
+                        CHECK_CONSTRAINTS.CONSTRAINT_NAME,
+                        CHECK_CONSTRAINTS.CHECK_CLAUSE,
 
                         // We need this additional, useless projection. See:
                         // https://jira.mariadb.org/browse/MDEV-21201
-                        TableConstraints.CONSTRAINT_CATALOG,
-                        TableConstraints.CONSTRAINT_SCHEMA
+                        TABLE_CONSTRAINTS.CONSTRAINT_CATALOG,
+                        TABLE_CONSTRAINTS.CONSTRAINT_SCHEMA
                      )
                     .from(TABLE_CONSTRAINTS)
                     .join(CHECK_CONSTRAINTS)
                     .using(this instanceof MariaDBDatabase
                         ? new Field[] {
-                            TableConstraints.CONSTRAINT_CATALOG,
-                            TableConstraints.CONSTRAINT_SCHEMA,
+                            TABLE_CONSTRAINTS.CONSTRAINT_CATALOG,
+                            TABLE_CONSTRAINTS.CONSTRAINT_SCHEMA,
                             // MariaDB has this column, but not MySQL
-                            TableConstraints.TABLE_NAME,
-                            TableConstraints.CONSTRAINT_NAME
+                            TABLE_CONSTRAINTS.TABLE_NAME,
+                            TABLE_CONSTRAINTS.CONSTRAINT_NAME
                         }
                         : new Field[] {
-                            TableConstraints.CONSTRAINT_CATALOG,
-                            TableConstraints.CONSTRAINT_SCHEMA,
-                            TableConstraints.CONSTRAINT_NAME
+                            TABLE_CONSTRAINTS.CONSTRAINT_CATALOG,
+                            TABLE_CONSTRAINTS.CONSTRAINT_SCHEMA,
+                            TABLE_CONSTRAINTS.CONSTRAINT_NAME
                         }
                     )
-                    .where(TableConstraints.TABLE_SCHEMA.in(getInputSchemata()))
+                    .where(TABLE_CONSTRAINTS.TABLE_SCHEMA.in(getInputSchemata()))
                     .orderBy(
-                        TableConstraints.TABLE_SCHEMA,
-                        TableConstraints.TABLE_NAME,
-                        TableConstraints.CONSTRAINT_NAME)) {
+                        TABLE_CONSTRAINTS.TABLE_SCHEMA,
+                        TABLE_CONSTRAINTS.TABLE_NAME,
+                        TABLE_CONSTRAINTS.CONSTRAINT_NAME)) {
 
-                SchemaDefinition schema = getSchema(record.get(TableConstraints.TABLE_SCHEMA));
-                TableDefinition table = getTable(schema, record.get(TableConstraints.TABLE_NAME));
+                SchemaDefinition schema = getSchema(record.get(TABLE_CONSTRAINTS.TABLE_SCHEMA));
+                TableDefinition table = getTable(schema, record.get(TABLE_CONSTRAINTS.TABLE_NAME));
 
                 if (table != null) {
                     relations.addCheckConstraint(table, new DefaultCheckConstraintDefinition(
                         schema,
                         table,
-                        record.get(CheckConstraints.CONSTRAINT_NAME),
-                        record.get(CheckConstraints.CHECK_CLAUSE)
+                        record.get(CHECK_CONSTRAINTS.CONSTRAINT_NAME),
+                        record.get(CHECK_CONSTRAINTS.CHECK_CLAUSE)
                     ));
                 }
             }
@@ -408,9 +397,9 @@ public class MySQLDatabase extends AbstractDatabase {
         List<SchemaDefinition> result = new ArrayList<>();
 
         for (String name : create()
-                .select(Schemata.SCHEMA_NAME)
+                .select(SCHEMATA.SCHEMA_NAME)
                 .from(SCHEMATA)
-                .fetch(Schemata.SCHEMA_NAME)) {
+                .fetch(SCHEMATA.SCHEMA_NAME)) {
 
             result.add(new SchemaDefinition(this, name, ""));
         }
@@ -429,35 +418,35 @@ public class MySQLDatabase extends AbstractDatabase {
         List<TableDefinition> result = new ArrayList<>();
 
         for (Record record : create().select(
-                Tables.TABLE_SCHEMA,
-                Tables.TABLE_NAME,
-                Tables.TABLE_COMMENT,
-                when(Tables.TABLE_TYPE.eq(inline("VIEW")), inline(TableType.VIEW.name()))
+                TABLES.TABLE_SCHEMA,
+                TABLES.TABLE_NAME,
+                TABLES.TABLE_COMMENT,
+                when(TABLES.TABLE_TYPE.eq(inline("VIEW")), inline(TableType.VIEW.name()))
                     .else_(inline(TableType.TABLE.name())).as("table_type"),
-                when(Views.VIEW_DEFINITION.lower().like(inline("create%")), Views.VIEW_DEFINITION)
-                    .else_(inline("create view `").concat(Tables.TABLE_NAME).concat("` as ").concat(Views.VIEW_DEFINITION)).as(Views.VIEW_DEFINITION))
+                when(VIEWS.VIEW_DEFINITION.lower().like(inline("create%")), VIEWS.VIEW_DEFINITION)
+                    .else_(inline("create view `").concat(TABLES.TABLE_NAME).concat("` as ").concat(VIEWS.VIEW_DEFINITION)).as(VIEWS.VIEW_DEFINITION))
             .from(TABLES)
             .leftJoin(VIEWS)
-                .on(Tables.TABLE_SCHEMA.eq(Views.TABLE_SCHEMA))
-                .and(Tables.TABLE_NAME.eq(Views.TABLE_NAME))
+                .on(TABLES.TABLE_SCHEMA.eq(VIEWS.TABLE_SCHEMA))
+                .and(TABLES.TABLE_NAME.eq(VIEWS.TABLE_NAME))
 
             // [#5213] Duplicate schema value to work around MySQL issue https://bugs.mysql.com/bug.php?id=86022
-            .where(Tables.TABLE_SCHEMA.in(getInputSchemata()).or(
+            .where(TABLES.TABLE_SCHEMA.in(getInputSchemata()).or(
                   getInputSchemata().size() == 1
-                ? Tables.TABLE_SCHEMA.in(getInputSchemata())
+                ? TABLES.TABLE_SCHEMA.in(getInputSchemata())
                 : falseCondition()))
 
             // [#9291] MariaDB treats sequences as tables
-            .and(Tables.TABLE_TYPE.ne(inline("SEQUENCE")))
+            .and(TABLES.TABLE_TYPE.ne(inline("SEQUENCE")))
             .orderBy(
-                Tables.TABLE_SCHEMA,
-                Tables.TABLE_NAME)) {
+                TABLES.TABLE_SCHEMA,
+                TABLES.TABLE_NAME)) {
 
-            SchemaDefinition schema = getSchema(record.get(Tables.TABLE_SCHEMA));
-            String name = record.get(Tables.TABLE_NAME);
-            String comment = record.get(Tables.TABLE_COMMENT);
+            SchemaDefinition schema = getSchema(record.get(TABLES.TABLE_SCHEMA));
+            String name = record.get(TABLES.TABLE_NAME);
+            String comment = record.get(TABLES.TABLE_COMMENT);
             TableType tableType = record.get("table_type", TableType.class);
-            String source = record.get(Views.VIEW_DEFINITION);
+            String source = record.get(VIEWS.VIEW_DEFINITION);
 
             MySQLTableDefinition table = new MySQLTableDefinition(schema, name, comment, tableType, source);
             result.add(table);
@@ -472,33 +461,33 @@ public class MySQLDatabase extends AbstractDatabase {
 
         Result<Record5<String, String, String, String, String>> records = create()
             .select(
-                Columns.TABLE_SCHEMA,
-                Columns.COLUMN_COMMENT,
-                Columns.TABLE_NAME,
-                Columns.COLUMN_NAME,
-                Columns.COLUMN_TYPE)
+                COLUMNS.TABLE_SCHEMA,
+                COLUMNS.COLUMN_COMMENT,
+                COLUMNS.TABLE_NAME,
+                COLUMNS.COLUMN_NAME,
+                COLUMNS.COLUMN_TYPE)
             .from(COLUMNS)
             .where(
-                Columns.COLUMN_TYPE.like("enum(%)").and(
+                COLUMNS.COLUMN_TYPE.like("enum(%)").and(
                 // [#5213] Duplicate schema value to work around MySQL issue https://bugs.mysql.com/bug.php?id=86022
-                Columns.TABLE_SCHEMA.in(getInputSchemata()).or(
+                COLUMNS.TABLE_SCHEMA.in(getInputSchemata()).or(
                       getInputSchemata().size() == 1
-                    ? Columns.TABLE_SCHEMA.in(getInputSchemata())
+                    ? COLUMNS.TABLE_SCHEMA.in(getInputSchemata())
                     : falseCondition())))
             .orderBy(
-                Columns.TABLE_SCHEMA.asc(),
-                Columns.TABLE_NAME.asc(),
-                Columns.COLUMN_NAME.asc())
+                COLUMNS.TABLE_SCHEMA.asc(),
+                COLUMNS.TABLE_NAME.asc(),
+                COLUMNS.COLUMN_NAME.asc())
             .fetch();
 
         for (Record record : records) {
-            SchemaDefinition schema = getSchema(record.get(Columns.TABLE_SCHEMA));
+            SchemaDefinition schema = getSchema(record.get(COLUMNS.TABLE_SCHEMA));
 
-            String comment = record.get(Columns.COLUMN_COMMENT);
-            String table = record.get(Columns.TABLE_NAME);
-            String column = record.get(Columns.COLUMN_NAME);
+            String comment = record.get(COLUMNS.COLUMN_COMMENT);
+            String table = record.get(COLUMNS.TABLE_NAME);
+            String column = record.get(COLUMNS.COLUMN_NAME);
             String name = table + "_" + column;
-            String columnType = record.get(Columns.COLUMN_TYPE);
+            String columnType = record.get(COLUMNS.COLUMN_TYPE);
 
             // [#1237] Don't generate enum classes for columns in MySQL tables
             // that are excluded from code generation
@@ -558,31 +547,31 @@ public class MySQLDatabase extends AbstractDatabase {
         Result<Record6<String, String, String, byte[], byte[], ProcType>> records = is8()
 
             ? create().select(
-                    Routines.ROUTINE_SCHEMA,
-                    Routines.ROUTINE_NAME,
-                    Routines.ROUTINE_COMMENT,
-                    inline(new byte[0]).as(Proc.PARAM_LIST),
-                    inline(new byte[0]).as(Proc.RETURNS),
-                    Routines.ROUTINE_TYPE.coerce(Proc.TYPE).as(Routines.ROUTINE_TYPE))
+                    ROUTINES.ROUTINE_SCHEMA,
+                    ROUTINES.ROUTINE_NAME,
+                    ROUTINES.ROUTINE_COMMENT,
+                    inline(new byte[0]).as(PROC.PARAM_LIST),
+                    inline(new byte[0]).as(PROC.RETURNS),
+                    ROUTINES.ROUTINE_TYPE.coerce(PROC.TYPE).as(ROUTINES.ROUTINE_TYPE))
                 .from(ROUTINES)
-                .where(Routines.ROUTINE_SCHEMA.in(getInputSchemata()))
+                .where(ROUTINES.ROUTINE_SCHEMA.in(getInputSchemata()))
                 .orderBy(1, 2, 6)
                 .fetch()
 
             : create().select(
-                    Proc.DB.as(Routines.ROUTINE_SCHEMA),
-                    Proc.NAME.as(Routines.ROUTINE_NAME),
-                    Proc.COMMENT.as(Routines.ROUTINE_COMMENT),
-                    Proc.PARAM_LIST,
-                    Proc.RETURNS,
-                    Proc.TYPE.as(Routines.ROUTINE_TYPE))
+                    PROC.DB.as(ROUTINES.ROUTINE_SCHEMA),
+                    PROC.NAME.as(ROUTINES.ROUTINE_NAME),
+                    PROC.COMMENT.as(ROUTINES.ROUTINE_COMMENT),
+                    PROC.PARAM_LIST,
+                    PROC.RETURNS,
+                    PROC.TYPE.as(ROUTINES.ROUTINE_TYPE))
                 .from(PROC)
-                .where(Proc.DB.in(getInputSchemata()))
+                .where(PROC.DB.in(getInputSchemata()))
                 .orderBy(1, 2, 6)
                 .fetch();
 
         Map<Record, Result<Record6<String, String, String, byte[], byte[], ProcType>>> groups =
-            records.intoGroups(new Field[] { Routines.ROUTINE_SCHEMA, Routines.ROUTINE_NAME });
+            records.intoGroups(new Field[] { ROUTINES.ROUTINE_SCHEMA, ROUTINES.ROUTINE_NAME });
 
         // [#1908] This indirection is necessary as MySQL allows for overloading
         // procedures and functions with the same signature.
@@ -592,12 +581,12 @@ public class MySQLDatabase extends AbstractDatabase {
             for (int i = 0; i < overloads.size(); i++) {
                 Record record = overloads.get(i);
 
-                SchemaDefinition schema = getSchema(record.get(Routines.ROUTINE_SCHEMA));
-                String name = record.get(Routines.ROUTINE_NAME);
-                String comment = record.get(Routines.ROUTINE_COMMENT);
-                String params = is8() ? "" : new String(record.get(Proc.PARAM_LIST));
-                String returns = is8() ? "" : new String(record.get(Proc.RETURNS));
-                ProcType type = record.get(Routines.ROUTINE_TYPE.coerce(Proc.TYPE).as(Routines.ROUTINE_TYPE));
+                SchemaDefinition schema = getSchema(record.get(ROUTINES.ROUTINE_SCHEMA));
+                String name = record.get(ROUTINES.ROUTINE_NAME);
+                String comment = record.get(ROUTINES.ROUTINE_COMMENT);
+                String params = is8() ? "" : new String(record.get(PROC.PARAM_LIST));
+                String returns = is8() ? "" : new String(record.get(PROC.RETURNS));
+                ProcType type = record.get(ROUTINES.ROUTINE_TYPE.coerce(PROC.TYPE).as(ROUTINES.ROUTINE_TYPE));
 
                 if (overloads.size() > 1)
                     result.add(new MySQLRoutineDefinition(schema, name, comment, params, returns, type, "_" + type.name()));
@@ -622,11 +611,11 @@ public class MySQLDatabase extends AbstractDatabase {
 
     @Override
     protected boolean exists0(TableField<?, ?> field) {
-        return exists1(field, Columns.COLUMNS, Columns.TABLE_SCHEMA, Columns.TABLE_NAME, Columns.COLUMN_NAME);
+        return exists1(field, COLUMNS.COLUMNS, COLUMNS.TABLE_SCHEMA, COLUMNS.TABLE_NAME, COLUMNS.COLUMN_NAME);
     }
 
     @Override
     protected boolean exists0(Table<?> table) {
-        return exists1(table, Tables.TABLES, Tables.TABLE_SCHEMA, Tables.TABLE_NAME);
+        return exists1(table, TABLES.TABLES, TABLES.TABLE_SCHEMA, TABLES.TABLE_NAME);
     }
 }

@@ -23,7 +23,7 @@ import org.jooq.meta.derby.sys.Sys;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sysconglomerates extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -1829027274;
+    private static final long serialVersionUID = 1312507280;
 
     /**
      * The reference instance of <code>SYS.SYSCONGLOMERATES</code>
@@ -41,49 +41,42 @@ public class Sysconglomerates extends TableImpl<Record> {
     /**
      * The column <code>SYS.SYSCONGLOMERATES.SCHEMAID</code>.
      */
-    public static final TableField<Record, String> SCHEMAID = createField(DSL.name("SCHEMAID"), org.jooq.impl.SQLDataType.CHAR(36).nullable(false), SYSCONGLOMERATES, "");
+    public final TableField<Record, String> SCHEMAID = createField(DSL.name("SCHEMAID"), org.jooq.impl.SQLDataType.CHAR(36).nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSCONGLOMERATES.TABLEID</code>.
      */
-    public static final TableField<Record, String> TABLEID = createField(DSL.name("TABLEID"), org.jooq.impl.SQLDataType.CHAR(36).nullable(false), SYSCONGLOMERATES, "");
+    public final TableField<Record, String> TABLEID = createField(DSL.name("TABLEID"), org.jooq.impl.SQLDataType.CHAR(36).nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSCONGLOMERATES.CONGLOMERATENUMBER</code>.
      */
-    public static final TableField<Record, Long> CONGLOMERATENUMBER = createField(DSL.name("CONGLOMERATENUMBER"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), SYSCONGLOMERATES, "");
+    public final TableField<Record, Long> CONGLOMERATENUMBER = createField(DSL.name("CONGLOMERATENUMBER"), org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSCONGLOMERATES.CONGLOMERATENAME</code>.
      */
-    public static final TableField<Record, String> CONGLOMERATENAME = createField(DSL.name("CONGLOMERATENAME"), org.jooq.impl.SQLDataType.VARCHAR(128), SYSCONGLOMERATES, "");
+    public final TableField<Record, String> CONGLOMERATENAME = createField(DSL.name("CONGLOMERATENAME"), org.jooq.impl.SQLDataType.VARCHAR(128), this, "");
 
     /**
      * The column <code>SYS.SYSCONGLOMERATES.ISINDEX</code>.
      */
-    public static final TableField<Record, Boolean> ISINDEX = createField(DSL.name("ISINDEX"), org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), SYSCONGLOMERATES, "");
+    public final TableField<Record, Boolean> ISINDEX = createField(DSL.name("ISINDEX"), org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
      * The column <code>SYS.SYSCONGLOMERATES.DESCRIPTOR</code>.
      */
-    public static final TableField<Record, String> DESCRIPTOR = createField(DSL.name("DESCRIPTOR"), org.jooq.impl.SQLDataType.CLOB, SYSCONGLOMERATES, "");
+    public final TableField<Record, String> DESCRIPTOR = createField(DSL.name("DESCRIPTOR"), org.jooq.impl.SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>SYS.SYSCONGLOMERATES.ISCONSTRAINT</code>.
      */
-    public static final TableField<Record, Boolean> ISCONSTRAINT = createField(DSL.name("ISCONSTRAINT"), org.jooq.impl.SQLDataType.BOOLEAN, SYSCONGLOMERATES, "");
+    public final TableField<Record, Boolean> ISCONSTRAINT = createField(DSL.name("ISCONSTRAINT"), org.jooq.impl.SQLDataType.BOOLEAN, this, "");
 
     /**
      * The column <code>SYS.SYSCONGLOMERATES.CONGLOMERATEID</code>.
      */
-    public static final TableField<Record, String> CONGLOMERATEID = createField(DSL.name("CONGLOMERATEID"), org.jooq.impl.SQLDataType.CHAR(36).nullable(false), SYSCONGLOMERATES, "");
-
-    /**
-     * No further instances allowed
-     */
-    private Sysconglomerates() {
-        this(DSL.name("SYSCONGLOMERATES"), null);
-    }
+    public final TableField<Record, String> CONGLOMERATEID = createField(DSL.name("CONGLOMERATEID"), org.jooq.impl.SQLDataType.CHAR(36).nullable(false), this, "");
 
     private Sysconglomerates(Name alias, Table<Record> aliased) {
         this(alias, aliased, null);
@@ -93,6 +86,27 @@ public class Sysconglomerates extends TableImpl<Record> {
         super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
     }
 
+    /**
+     * Create an aliased <code>SYS.SYSCONGLOMERATES</code> table reference
+     */
+    public Sysconglomerates(String alias) {
+        this(DSL.name(alias), SYSCONGLOMERATES);
+    }
+
+    /**
+     * Create an aliased <code>SYS.SYSCONGLOMERATES</code> table reference
+     */
+    public Sysconglomerates(Name alias) {
+        this(alias, SYSCONGLOMERATES);
+    }
+
+    /**
+     * Create a <code>SYS.SYSCONGLOMERATES</code> table reference
+     */
+    public Sysconglomerates() {
+        this(DSL.name("SYSCONGLOMERATES"), null);
+    }
+
     public <O extends Record> Sysconglomerates(Table<O> child, ForeignKey<O, Record> key) {
         super(child, key, SYSCONGLOMERATES);
     }
@@ -100,5 +114,31 @@ public class Sysconglomerates extends TableImpl<Record> {
     @Override
     public Schema getSchema() {
         return Sys.SYS;
+    }
+
+    @Override
+    public Sysconglomerates as(String alias) {
+        return new Sysconglomerates(DSL.name(alias), this);
+    }
+
+    @Override
+    public Sysconglomerates as(Name alias) {
+        return new Sysconglomerates(alias, this);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public Sysconglomerates rename(String name) {
+        return new Sysconglomerates(DSL.name(name), null);
+    }
+
+    /**
+     * Rename this table
+     */
+    @Override
+    public Sysconglomerates rename(Name name) {
+        return new Sysconglomerates(name, null);
     }
 }

@@ -16,7 +16,7 @@ import org.jooq.meta.derby.sys.tables.Sysviews;
 
 
 /**
- * Convenience access to all tables in SYS
+ * Convenience access to all tables in SYS.
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables {

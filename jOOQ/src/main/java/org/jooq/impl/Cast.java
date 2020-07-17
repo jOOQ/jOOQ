@@ -51,6 +51,7 @@ import static org.jooq.impl.SQLDataType.DECIMAL;
 import static org.jooq.impl.SQLDataType.DOUBLE;
 import static org.jooq.impl.SQLDataType.FLOAT;
 import static org.jooq.impl.SQLDataType.REAL;
+import static org.jooq.impl.SQLDataType.VARCHAR;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -89,6 +90,10 @@ final class Cast<T> extends AbstractField<T> {
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
+
+
+
+
 
 
 
@@ -159,7 +164,32 @@ final class Cast<T> extends AbstractField<T> {
 
 
 
-    private class CastDerby extends CastNative<T> {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private final class CastDerby extends CastNative<T> {
 
         /**
          * Generated UID

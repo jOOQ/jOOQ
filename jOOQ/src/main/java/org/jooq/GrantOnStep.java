@@ -37,55 +37,54 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.*;
+
+import java.util.*;
+
 import org.jetbrains.annotations.*;
 
-
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.H2;
-import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.MARIADB;
-// ...
-import static org.jooq.SQLDialect.MYSQL;
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-// ...
-
 /**
- * The step in the creation of a <code>GRANT</code> statement where the
- * <code>ON</code> clause can be added.
- *
- * @author Timur Shaidullin
- * @author Lukas Eder
+ * A step in the construction of the <code>GRANT</code> statement.
+ * <p>
+ * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
+ * <p>
+ * It is usually not recommended to reference any <code>XYZ*Step</code> types
+ * directly from client code, or assign them to local variables. When writing
+ * dynamic SQL, creating a statement's components dynamically, and passing them
+ * to the DSL API statically is usually a better choice. See the manual's
+ * section about dynamic SQL for details: <a href=
+ * "https://www.jooq.org/doc/latest/manual/sql-building/dynamic-sql">https://www.jooq.org/doc/latest/manual/sql-building/dynamic-sql</a>.
+ * <p>
+ * Drawbacks of referencing the <code>XYZ*Step</code> types directly:
+ * <ul>
+ * <li>They're operating on mutable implementations (as of jOOQ 3.x)</li>
+ * <li>They're less composable and not easy to get right when dynamic SQL gets
+ * complex</li>
+ * <li>They're less readable</li>
+ * <li>They might have binary incompatible changes between minor releases</li>
+ * </ul>
  */
+@SuppressWarnings({ "unused" })
 public interface GrantOnStep {
 
     /**
-     * Grant a privilege on a table.
+     * Add the <code>ON</code> clause to the <code>GRANT</code> statement.
      */
-    @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    GrantToStep on(Table<?> table);
+    @NotNull
+    GrantToStep on(String on);
 
     /**
-     * Grant a privilege on a table.
+     * Add the <code>ON</code> clause to the <code>GRANT</code> statement.
      */
-    @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    GrantToStep on(Name table);
+    @NotNull
+    GrantToStep on(Name on);
 
     /**
-     * Grant a privilege on a table.
-     * <p>
-     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
-     * guarantee syntax integrity. You may also create the possibility of
-     * malicious SQL injection. Be sure to properly use bind variables and/or
-     * escape literals when concatenated into SQL clauses!
+     * Add the <code>ON</code> clause to the <code>GRANT</code> statement.
      */
-    @PlainSQL
-    @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    GrantToStep on(String table);
+    @NotNull
+    GrantToStep on(Table<?> on);
 }

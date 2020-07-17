@@ -9758,6 +9758,87 @@ public interface DSLContext extends Scope , AutoCloseable {
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES })
     DropSequenceFinalStep dropSequenceIfExists(Sequence<?> sequence);
 
+    /**
+     * The <code>GRANT</code> statement.
+     *
+     * @see DSL#grant(Privilege)
+     */
+    @NotNull
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    GrantOnStep grant(Privilege privileges);
+
+    /**
+     * The <code>GRANT</code> statement.
+     *
+     * @see DSL#grant(Privilege...)
+     */
+    @NotNull
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    GrantOnStep grant(Privilege... privileges);
+
+    /**
+     * The <code>GRANT</code> statement.
+     *
+     * @see DSL#grant(Collection)
+     */
+    @NotNull
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    GrantOnStep grant(Collection<? extends Privilege> privileges);
+
+    /**
+     * The <code>REVOKE</code> statement.
+     *
+     * @see DSL#revoke(Privilege)
+     */
+    @NotNull
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    RevokeOnStep revoke(Privilege privileges);
+
+    /**
+     * The <code>REVOKE</code> statement.
+     *
+     * @see DSL#revoke(Privilege...)
+     */
+    @NotNull
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    RevokeOnStep revoke(Privilege... privileges);
+
+    /**
+     * The <code>REVOKE</code> statement.
+     *
+     * @see DSL#revoke(Collection)
+     */
+    @NotNull
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    RevokeOnStep revoke(Collection<? extends Privilege> privileges);
+
+    /**
+     * The <code>REVOKE GRANT OPTION FOR</code> statement.
+     *
+     * @see DSL#revokeGrantOptionFor(Privilege)
+     */
+    @NotNull
+    @Support({ HSQLDB, POSTGRES })
+    RevokeOnStep revokeGrantOptionFor(Privilege privileges);
+
+    /**
+     * The <code>REVOKE GRANT OPTION FOR</code> statement.
+     *
+     * @see DSL#revokeGrantOptionFor(Privilege...)
+     */
+    @NotNull
+    @Support({ HSQLDB, POSTGRES })
+    RevokeOnStep revokeGrantOptionFor(Privilege... privileges);
+
+    /**
+     * The <code>REVOKE GRANT OPTION FOR</code> statement.
+     *
+     * @see DSL#revokeGrantOptionFor(Collection)
+     */
+    @NotNull
+    @Support({ HSQLDB, POSTGRES })
+    RevokeOnStep revokeGrantOptionFor(Collection<? extends Privilege> privileges);
+
 
 
     /**
@@ -11263,73 +11344,6 @@ public interface DSLContext extends Scope , AutoCloseable {
     @NotNull
     @Support
     <R extends Record> TruncateIdentityStep<R> truncateTable(Table<R> table);
-
-    // -------------------------------------------------------------------------
-    // XXX Access control
-    // -------------------------------------------------------------------------
-
-    /**
-     * Grant a privilege on a table to user or role.
-     */
-    @NotNull
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    GrantOnStep grant(Privilege privilege);
-
-    /**
-     * Grant privileges on a table to user or role.
-     */
-    @NotNull
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    GrantOnStep grant(Privilege... privileges);
-
-    /**
-     * Grant privileges on a table to user or role.
-     */
-    @NotNull
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    GrantOnStep grant(Collection<? extends Privilege> privileges);
-
-    /**
-     * Revoke a privilege on table from user or role.
-     */
-    @NotNull
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    RevokeOnStep revoke(Privilege privilege);
-
-    /**
-     * Revoke privileges on table from user or role.
-     */
-    @NotNull
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    RevokeOnStep revoke(Privilege... privileges);
-
-    /**
-     * Revoke privileges on table from user or role.
-     */
-    @NotNull
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    RevokeOnStep revoke(Collection<? extends Privilege> privileges);
-
-    /**
-     * Revoke grant option for a privilege on a table from user or role.
-     */
-    @NotNull
-    @Support({ HSQLDB, POSTGRES })
-    RevokeOnStep revokeGrantOptionFor(Privilege privilege);
-
-    /**
-     * Revoke grant option for some privileges on a table from user or role.
-     */
-    @NotNull
-    @Support({ HSQLDB, POSTGRES })
-    RevokeOnStep revokeGrantOptionFor(Privilege... privileges);
-
-    /**
-     * Revoke grant option for some privileges on a table from user or role.
-     */
-    @NotNull
-    @Support({ HSQLDB, POSTGRES })
-    RevokeOnStep revokeGrantOptionFor(Collection<? extends Privilege> privileges);
 
     // -------------------------------------------------------------------------
     // XXX Other queries for identites and sequences

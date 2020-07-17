@@ -205,7 +205,6 @@ import org.jooq.False;
 import org.jooq.Field;
 import org.jooq.FieldOrRow;
 // ...
-import org.jooq.GrantOnStep;
 import org.jooq.GroupConcatOrderByStep;
 import org.jooq.GroupConcatSeparatorStep;
 import org.jooq.GroupField;
@@ -318,7 +317,6 @@ import org.jooq.RecordType;
 // ...
 import org.jooq.Result;
 import org.jooq.ResultQuery;
-import org.jooq.RevokeOnStep;
 import org.jooq.Role;
 import org.jooq.Row;
 import org.jooq.Row1;
@@ -7871,6 +7869,105 @@ public class DSL {
         return dsl().dropSequenceIfExists(sequence);
     }
 
+    /**
+     * The <code>GRANT</code> statement.
+     *
+     * @see DSLContext#grant(Privilege)
+     */
+    @NotNull
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.GrantOnStep grant(Privilege privileges) {
+        return dsl().grant(privileges);
+    }
+
+    /**
+     * The <code>GRANT</code> statement.
+     *
+     * @see DSLContext#grant(Privilege...)
+     */
+    @NotNull
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.GrantOnStep grant(Privilege... privileges) {
+        return dsl().grant(privileges);
+    }
+
+    /**
+     * The <code>GRANT</code> statement.
+     *
+     * @see DSLContext#grant(Collection)
+     */
+    @NotNull
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.GrantOnStep grant(Collection<? extends Privilege> privileges) {
+        return dsl().grant(privileges);
+    }
+
+    /**
+     * The <code>REVOKE</code> statement.
+     *
+     * @see DSLContext#revoke(Privilege)
+     */
+    @NotNull
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.RevokeOnStep revoke(Privilege privileges) {
+        return dsl().revoke(privileges);
+    }
+
+    /**
+     * The <code>REVOKE</code> statement.
+     *
+     * @see DSLContext#revoke(Privilege...)
+     */
+    @NotNull
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.RevokeOnStep revoke(Privilege... privileges) {
+        return dsl().revoke(privileges);
+    }
+
+    /**
+     * The <code>REVOKE</code> statement.
+     *
+     * @see DSLContext#revoke(Collection)
+     */
+    @NotNull
+    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static org.jooq.RevokeOnStep revoke(Collection<? extends Privilege> privileges) {
+        return dsl().revoke(privileges);
+    }
+
+    /**
+     * The <code>REVOKE GRANT OPTION FOR</code> statement.
+     *
+     * @see DSLContext#revokeGrantOptionFor(Privilege)
+     */
+    @NotNull
+    @Support({ HSQLDB, POSTGRES })
+    public static org.jooq.RevokeOnStep revokeGrantOptionFor(Privilege privileges) {
+        return dsl().revokeGrantOptionFor(privileges);
+    }
+
+    /**
+     * The <code>REVOKE GRANT OPTION FOR</code> statement.
+     *
+     * @see DSLContext#revokeGrantOptionFor(Privilege...)
+     */
+    @NotNull
+    @Support({ HSQLDB, POSTGRES })
+    public static org.jooq.RevokeOnStep revokeGrantOptionFor(Privilege... privileges) {
+        return dsl().revokeGrantOptionFor(privileges);
+    }
+
+    /**
+     * The <code>REVOKE GRANT OPTION FOR</code> statement.
+     *
+     * @see DSLContext#revokeGrantOptionFor(Collection)
+     */
+    @NotNull
+    @Support({ HSQLDB, POSTGRES })
+    public static org.jooq.RevokeOnStep revokeGrantOptionFor(Collection<? extends Privilege> privileges) {
+        return dsl().revokeGrantOptionFor(privileges);
+    }
+
 
 
     /**
@@ -9542,199 +9639,6 @@ public class DSL {
     @SafeVarargs
     public static <T> QuantifiedSelect<Record1<T>> any(Field<T>... fields) {
         return new QuantifiedSelectImpl<>(Quantifier.ANY, fields);
-    }
-
-    // -------------------------------------------------------------------------
-    // XXX Access control
-    // -------------------------------------------------------------------------
-
-    /**
-     * Grant a privilege on table to user or role.
-     *
-     * <p>
-     * Example: <code><pre>
-     * import static org.jooq.impl.DSL.*;
-     *
-     * grant(privilege)
-     *   .on(table)
-     *   .to(user)
-     *   .execute();
-     *
-     * grant(privilege)
-     *   .on(table)
-     *   .to(role)
-     *   .execute();
-     * </pre></code>
-     *
-     *
-     * @see #grant(Collection)
-     */
-    @NotNull
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static GrantOnStep grant(Privilege privilege) {
-        return dsl().grant(privilege);
-    }
-
-    /**
-     * Grant privileges on table to user or role.
-     *
-     * <p>
-     * Example: <code><pre>
-     * import static org.jooq.impl.DSL.*;
-     *
-     * grant(privilege)
-     *   .on(table)
-     *   .to(user)
-     *   .execute();
-     *
-     * grant(privilege)
-     *   .on(table)
-     *   .to(role)
-     *   .execute();
-     * </pre></code>
-     *
-     *
-     * @see #grant(Collection)
-     */
-    @NotNull
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static GrantOnStep grant(Privilege... privileges) {
-        return dsl().grant(privileges);
-    }
-
-    /**
-     * Grant privileges on table to user or role.
-     *
-     * <p>
-     * Example: <code><pre>
-     * import static org.jooq.impl.DSL.*;
-     *
-     * grant(privileges)
-     *   .on(table)
-     *   .to(user)
-     *   .execute();
-     *
-     * grant(privileges)
-     *   .on(table)
-     *   .to(role)
-     *   .execute();
-     * </pre></code>
-     * <p>
-     *
-     * @see #grant(Privilege...)
-     */
-    @NotNull
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static GrantOnStep grant(Collection<? extends Privilege> privileges) {
-        return dsl().grant(privileges);
-    }
-
-    /**
-     * Revoke a privilege on table from user or role.
-     *
-     * <p>
-     * Example: <code><pre>
-     * import static org.jooq.impl.DSL.*;
-     *
-     * revoke(privilege)
-     *   .on(table)
-     *   .from(user)
-     *   .execute();
-     *
-     * revoke(privilege)
-     *   .on(table)
-     *   .from(role)
-     *   .execute();
-     * </pre></code>
-     * <p>
-     *
-     * @see #revoke(Collection)
-     */
-    @NotNull
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static RevokeOnStep revoke(Privilege privilege) {
-        return dsl().revoke(privilege);
-    }
-
-    /**
-     * Revoke privileges on table from user or role.
-     *
-     * <p>
-     * Example: <code><pre>
-     * import static org.jooq.impl.DSL.*;
-     *
-     * revoke(privilege)
-     *   .on(table)
-     *   .from(user)
-     *   .execute();
-     *
-     * revoke(privilege)
-     *   .on(table)
-     *   .from(role)
-     *   .execute();
-     * </pre></code>
-     * <p>
-     *
-     * @see #revoke(Collection)
-     */
-    @NotNull
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static RevokeOnStep revoke(Privilege... privileges) {
-        return dsl().revoke(privileges);
-    }
-
-    /**
-     * Revoke privileges on table from user or role.
-     *
-     * <p>
-     * Example: <code><pre>
-     * import static org.jooq.impl.DSL.*;
-     *
-     * revoke(privileges)
-     *   .on(table)
-     *   .from(user)
-     *   .execute();
-     *
-     * revoke(privileges)
-     *   .on(table)
-     *   .from(role)
-     *   .execute();
-     * </pre></code>
-     * <p>
-     *
-     * @see #revoke(Privilege...)
-     */
-    @NotNull
-    @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static RevokeOnStep revoke(Collection<? extends Privilege> privileges) {
-        return dsl().revoke(privileges);
-    }
-
-    /**
-     * Revoke grant option for a privilege on a table from user or role.
-     */
-    @NotNull
-    @Support({ HSQLDB, POSTGRES })
-    public static RevokeOnStep revokeGrantOptionFor(Privilege privilege) {
-        return dsl().revoke(privilege);
-    }
-
-    /**
-     * Revoke grant option for some privileges on a table from user or role.
-     */
-    @NotNull
-    @Support({ HSQLDB, POSTGRES })
-    public static RevokeOnStep revokeGrantOptionFor(Privilege... privileges) {
-        return dsl().revoke(privileges);
-    }
-
-    /**
-     * Revoke grant option for some privileges on a table from user or role.
-     */
-    @NotNull
-    @Support({ HSQLDB, POSTGRES })
-    public static RevokeOnStep revokeGrantOptionFor(Collection<? extends Privilege> privileges) {
-        return dsl().revoke(privileges);
     }
 
     // -------------------------------------------------------------------------

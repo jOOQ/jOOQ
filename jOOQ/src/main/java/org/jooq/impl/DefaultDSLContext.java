@@ -133,7 +133,6 @@ import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Explain;
 import org.jooq.Field;
-import org.jooq.GrantOnStep;
 import org.jooq.Index;
 import org.jooq.InsertQuery;
 import org.jooq.InsertSetStep;
@@ -222,7 +221,6 @@ import org.jooq.RenderContext;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.Results;
-import org.jooq.RevokeOnStep;
 import org.jooq.RowCountQuery;
 import org.jooq.SQL;
 import org.jooq.SQLDialect;
@@ -3244,6 +3242,51 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return new DropSequenceImpl(configuration(), sequence, true);
     }
 
+    @Override
+    public org.jooq.GrantOnStep grant(Privilege privileges) {
+        return new GrantImpl(configuration(), Arrays.asList(privileges));
+    }
+
+    @Override
+    public org.jooq.GrantOnStep grant(Privilege... privileges) {
+        return new GrantImpl(configuration(), Arrays.asList(privileges));
+    }
+
+    @Override
+    public org.jooq.GrantOnStep grant(Collection<? extends Privilege> privileges) {
+        return new GrantImpl(configuration(), privileges);
+    }
+
+    @Override
+    public org.jooq.RevokeOnStep revoke(Privilege privileges) {
+        return new RevokeImpl(configuration(), Arrays.asList(privileges), false);
+    }
+
+    @Override
+    public org.jooq.RevokeOnStep revoke(Privilege... privileges) {
+        return new RevokeImpl(configuration(), Arrays.asList(privileges), false);
+    }
+
+    @Override
+    public org.jooq.RevokeOnStep revoke(Collection<? extends Privilege> privileges) {
+        return new RevokeImpl(configuration(), privileges, false);
+    }
+
+    @Override
+    public org.jooq.RevokeOnStep revokeGrantOptionFor(Privilege privileges) {
+        return new RevokeImpl(configuration(), Arrays.asList(privileges), true);
+    }
+
+    @Override
+    public org.jooq.RevokeOnStep revokeGrantOptionFor(Privilege... privileges) {
+        return new RevokeImpl(configuration(), Arrays.asList(privileges), true);
+    }
+
+    @Override
+    public org.jooq.RevokeOnStep revokeGrantOptionFor(Collection<? extends Privilege> privileges) {
+        return new RevokeImpl(configuration(), privileges, true);
+    }
+
 
 
     @Override
@@ -4024,55 +4067,6 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public <R extends Record> TruncateIdentityStep<R> truncateTable(Table<R> table) {
         return new TruncateImpl<>(configuration(), table);
-    }
-
-    // -------------------------------------------------------------------------
-    // XXX Access control
-    // -------------------------------------------------------------------------
-
-    @Override
-    public GrantOnStep grant(Privilege privilege) {
-        return grant(Arrays.asList(privilege));
-    }
-
-    @Override
-    public GrantOnStep grant(Privilege... privileges) {
-        return grant(Arrays.asList(privileges));
-    }
-
-    @Override
-    public GrantOnStep grant(Collection<? extends Privilege> privileges) {
-        return new GrantImpl(configuration(), privileges);
-    }
-
-    @Override
-    public RevokeOnStep revoke(Privilege privilege) {
-        return revoke(Arrays.asList(privilege));
-    }
-
-    @Override
-    public RevokeOnStep revoke(Privilege... privileges) {
-        return revoke(Arrays.asList(privileges));
-    }
-
-    @Override
-    public RevokeOnStep revoke(Collection<? extends Privilege> privileges) {
-        return new RevokeImpl(configuration(), privileges);
-    }
-
-    @Override
-    public RevokeOnStep revokeGrantOptionFor(Privilege privilege) {
-        return revokeGrantOptionFor(Arrays.asList(privilege));
-    }
-
-    @Override
-    public RevokeOnStep revokeGrantOptionFor(Privilege... privileges) {
-        return revokeGrantOptionFor(Arrays.asList(privileges));
-    }
-
-    @Override
-    public RevokeOnStep revokeGrantOptionFor(Collection<? extends Privilege> privileges) {
-        return new RevokeImpl(configuration(), privileges, true);
     }
 
     // -------------------------------------------------------------------------

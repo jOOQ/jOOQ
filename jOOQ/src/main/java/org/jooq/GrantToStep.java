@@ -37,49 +37,54 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.*;
+
+import java.util.*;
+
 import org.jetbrains.annotations.*;
 
-
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.H2;
-import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.MARIADB;
-// ...
-import static org.jooq.SQLDialect.MYSQL;
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-// ...
-
 /**
- * The step in the creation of a <code>GRANT</code> statement where the
- * <code>TO</code> clause can be added.
- *
- * @author Timur Shaidullin
- * @author Lukas Eder
+ * A step in the construction of the <code>GRANT</code> statement.
+ * <p>
+ * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
+ * <p>
+ * It is usually not recommended to reference any <code>XYZ*Step</code> types
+ * directly from client code, or assign them to local variables. When writing
+ * dynamic SQL, creating a statement's components dynamically, and passing them
+ * to the DSL API statically is usually a better choice. See the manual's
+ * section about dynamic SQL for details: <a href=
+ * "https://www.jooq.org/doc/latest/manual/sql-building/dynamic-sql">https://www.jooq.org/doc/latest/manual/sql-building/dynamic-sql</a>.
+ * <p>
+ * Drawbacks of referencing the <code>XYZ*Step</code> types directly:
+ * <ul>
+ * <li>They're operating on mutable implementations (as of jOOQ 3.x)</li>
+ * <li>They're less composable and not easy to get right when dynamic SQL gets
+ * complex</li>
+ * <li>They're less readable</li>
+ * <li>They might have binary incompatible changes between minor releases</li>
+ * </ul>
  */
+@SuppressWarnings({ "unused" })
 public interface GrantToStep {
 
     /**
-     * Grant a privilege to a user.
+     * Add the <code>TO</code> clause to the <code>GRANT</code> statement.
      */
-    @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    GrantWithGrantOptionStep to(User user);
+    @NotNull
+    GrantWithGrantOptionStep to(User to);
 
     /**
-     * Grant a privilege to a role.
+     * Add the <code>TO</code> clause to the <code>GRANT</code> statement.
      */
-    @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    GrantWithGrantOptionStep to(Role role);
+    @NotNull
+    GrantWithGrantOptionStep to(Role to);
 
     /**
-     * Grant a privilege to <code>PUBLIC</code>.
+     * Add the <code>TO PUBLIC</code> clause to the <code>GRANT</code> statement.
      */
-    @NotNull
     @Support({ DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @NotNull
     GrantWithGrantOptionStep toPublic();
 }

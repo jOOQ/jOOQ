@@ -37,19 +37,13 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.REVOKE;
-import static org.jooq.Clause.REVOKE_FROM;
-import static org.jooq.Clause.REVOKE_ON;
-import static org.jooq.Clause.REVOKE_PRIVILEGE;
 import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.Keywords.K_FROM;
 import static org.jooq.impl.Keywords.K_GRANT_OPTION_FOR;
 import static org.jooq.impl.Keywords.K_ON;
 import static org.jooq.impl.Keywords.K_PUBLIC;
 import static org.jooq.impl.Keywords.K_RESTRICT;
 import static org.jooq.impl.Keywords.K_REVOKE;
-import static org.jooq.impl.QueryPartCollectionView.wrap;
 
 import java.util.Collection;
 
@@ -66,71 +60,136 @@ import org.jooq.Table;
 import org.jooq.User;
 
 /**
- * Revoke privilege or privileges on a table from user or role.
- *
- * @author Timur Shaidullin
+ * The <code>REVOKE GRANT OPTION FOR</code> statement.
  */
-final class RevokeImpl extends AbstractRowCountQuery implements
-
-    // Cascading interface implementations for Select behaviour
+@SuppressWarnings({ "hiding", "rawtypes", "unchecked", "unused" })
+final class RevokeImpl
+extends
+    AbstractRowCountQuery
+implements
     RevokeOnStep,
     RevokeFromStep,
-    RevokeFinalStep {
+    RevokeFinalStep
+{
 
-    /**
-     * Generated UID
-     */
-    private static final long                     serialVersionUID = -5777612075774539326L;
-    private static final Clause[]                 CLAUSE           = { REVOKE };
+    private static final long serialVersionUID = 1L;
+
     private final Collection<? extends Privilege> privileges;
-    private Role                                  role;
-    private Table<?>                              table;
-    private User                                  user;
-    private final boolean                         grantOptionFor;
+    private final boolean                         revokeGrantOptionFor;
+    private       Table<?>                        on;
+    private       Role                            from;
+    private       Boolean                         fromPublic;
 
-    RevokeImpl(Configuration configuration, Collection<? extends Privilege> privileges, boolean grantOptionFor) {
+    RevokeImpl(
+        Configuration configuration,
+        Collection privileges,
+        boolean revokeGrantOptionFor
+    ) {
+        this(
+            configuration,
+            privileges,
+            revokeGrantOptionFor,
+            null,
+            null,
+            null
+        );
+    }
+
+    RevokeImpl(
+        Configuration configuration,
+        Collection privileges,
+        boolean revokeGrantOptionFor,
+        Table on,
+        Role from,
+        Boolean fromPublic
+    ) {
         super(configuration);
+
         this.privileges = privileges;
-        this.grantOptionFor = grantOptionFor;
+        this.revokeGrantOptionFor = revokeGrantOptionFor;
+        this.on = on;
+        this.from = from;
+        this.fromPublic = fromPublic;
     }
 
-    RevokeImpl(Configuration configuration, Collection<? extends Privilege> privileges) {
-        this(configuration, privileges, false);
+    final Collection<? extends Privilege> $privileges()           { return privileges; }
+    final boolean                         $revokeGrantOptionFor() { return revokeGrantOptionFor; }
+    final Table<?>                        $on()                   { return on; }
+    final Role                            $from()                 { return from; }
+    final Boolean                         $fromPublic()           { return fromPublic; }
+
+    // -------------------------------------------------------------------------
+    // XXX: DSL API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final RevokeImpl on(String on) {
+        return on(DSL.table(DSL.name(on)));
     }
 
-    // ------------------------------------------------------------------------
+    @Override
+    public final RevokeImpl on(Name on) {
+        return on(DSL.table(on));
+    }
+
+    @Override
+    public final RevokeImpl on(Table<?> on) {
+        this.on = on;
+        return this;
+    }
+
+    @Override
+    public final RevokeImpl from(User from) {
+        return from(DSL.role(from.getName()));
+    }
+
+    @Override
+    public final RevokeImpl from(Role from) {
+        this.from = from;
+        return this;
+    }
+
+    @Override
+    public final RevokeImpl fromPublic() {
+        this.fromPublic = true;
+        return this;
+    }
+
+    // -------------------------------------------------------------------------
     // XXX: QueryPart API
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
+
+
+    private static final Clause[] CLAUSE = { Clause.REVOKE };
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.start(REVOKE_PRIVILEGE)
+        ctx.start(Clause.REVOKE_PRIVILEGE)
            .visit(K_REVOKE).sql(' ');
 
-        if (grantOptionFor)
+        if (revokeGrantOptionFor)
             ctx.visit(K_GRANT_OPTION_FOR)
                .sql(' ');
 
-        ctx.visit(wrap(privileges).indentSize(0))
-           .end(REVOKE_PRIVILEGE).sql(' ')
-           .start(REVOKE_ON)
+        ctx.visit(QueryPartCollectionView.wrap(privileges).indentSize(0))
+           .end(Clause.REVOKE_PRIVILEGE).sql(' ')
+           .start(Clause.REVOKE_ON)
            .visit(K_ON).sql(' ')
-           .visit(table)
-           .end(REVOKE_ON).sql(' ')
-           .start(REVOKE_FROM)
+           .visit(on)
+           .end(Clause.REVOKE_ON).sql(' ')
+           .start(Clause.REVOKE_FROM)
            .visit(K_FROM).sql(' ');
 
-        if (user != null)
-            ctx.visit(user);
-        else if (role != null)
-            ctx.visit(role);
-        else
+        if (from != null)
+            ctx.visit(from);
+        else if (Boolean.TRUE.equals(fromPublic))
             ctx.visit(K_PUBLIC);
 
         if (ctx.family() == HSQLDB)
             ctx.sql(' ').visit(K_RESTRICT);
 
-        ctx.end(REVOKE_FROM);
+        ctx.end(Clause.REVOKE_FROM);
     }
 
     @Override
@@ -138,40 +197,5 @@ final class RevokeImpl extends AbstractRowCountQuery implements
         return CLAUSE;
     }
 
-    // ------------------------------------------------------------------------
-    // XXX: RevokeImpl API
-    // ------------------------------------------------------------------------
 
-    @Override
-    public final RevokeImpl on(Table<?> t) {
-        this.table = t;
-        return this;
-    }
-
-    @Override
-    public final RevokeImpl on(Name t) {
-        return on(table(t));
-    }
-
-    @Override
-    public final RevokeImpl on(String t) {
-        return on(table(t));
-    }
-
-    @Override
-    public final RevokeImpl from(User u) {
-        this.user = u;
-        return this;
-    }
-
-    @Override
-    public final RevokeImpl from(Role r) {
-        this.role = r;
-        return this;
-    }
-
-    @Override
-    public final RevokeImpl fromPublic() {
-        return this;
-    }
 }

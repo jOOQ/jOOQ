@@ -40,7 +40,6 @@ package org.jooq;
 // ...
 // ...
 // ...
-// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
@@ -51,7 +50,6 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
 // ...
-import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
@@ -121,7 +119,7 @@ public interface Select<R extends Record> extends ResultQuery<R>, TableLike<R>, 
      *             this instance as an set operation argument would lead to a
      *             {@link StackOverflowError} when generating the SQL.
      */
-    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
     Select<R> except(Select<? extends R> select);
 
     /**
@@ -145,7 +143,7 @@ public interface Select<R extends Record> extends ResultQuery<R>, TableLike<R>, 
      *             this instance as an set operation argument would lead to a
      *             {@link StackOverflowError} when generating the SQL.
      */
-    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
     Select<R> intersect(Select<? extends R> select);
 
     /**

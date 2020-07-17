@@ -40,7 +40,6 @@ package org.jooq;
 // ...
 // ...
 // ...
-// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
@@ -51,7 +50,6 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
 // ...
-import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
@@ -142,7 +140,7 @@ public interface SelectUnionStep<R extends Record> extends SelectFinalStep<R> {
      * Apply the <code>EXCEPT</code> (or <code>MINUS</code>) set operation.
      */
     @Override
-    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
     SelectOrderByStep<R> except(Select<? extends R> select);
 
     /**
@@ -156,7 +154,7 @@ public interface SelectUnionStep<R extends Record> extends SelectFinalStep<R> {
      * Apply the <code>INTERSECT</code> set operation.
      */
     @Override
-    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, POSTGRES, SQLITE })
     SelectOrderByStep<R> intersect(Select<? extends R> select);
 
     /**

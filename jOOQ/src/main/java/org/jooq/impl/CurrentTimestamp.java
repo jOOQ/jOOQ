@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DERBY;
 // ...
@@ -53,6 +54,7 @@ import static org.jooq.impl.Keywords.K_CURRENT;
 import static org.jooq.impl.Keywords.K_TIMESTAMP;
 import static org.jooq.impl.Names.N_CURRENT_BIGDATETIME;
 import static org.jooq.impl.Names.N_CURRENT_TIMESTAMP;
+import static org.jooq.impl.Names.N_GETDATE;
 import static org.jooq.impl.Names.N_NOW;
 
 import java.util.Set;
@@ -88,6 +90,10 @@ final class CurrentTimestamp<T> extends AbstractField<T> {
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
+
+
+
+
 
 
 

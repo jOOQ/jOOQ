@@ -117,6 +117,7 @@ final class Names {
     static final Name N_FUNCTION               = unquotedName("function");
     static final Name N_GEN_ID                 = unquotedName("gen_id");
     static final Name N_GENERATE_SERIES        = unquotedName("generate_series");
+    static final Name N_GETDATE                = unquotedName("getdate");
     static final Name N_GREATEST               = unquotedName("greatest");
     static final Name N_GROUP_CONCAT           = unquotedName("group_concat");
     static final Name N_HASHBYTES              = unquotedName("hashbytes");

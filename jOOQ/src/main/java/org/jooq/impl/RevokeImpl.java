@@ -37,27 +37,17 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.impl.Keywords.K_FROM;
-import static org.jooq.impl.Keywords.K_GRANT_OPTION_FOR;
-import static org.jooq.impl.Keywords.K_ON;
-import static org.jooq.impl.Keywords.K_PUBLIC;
-import static org.jooq.impl.Keywords.K_RESTRICT;
-import static org.jooq.impl.Keywords.K_REVOKE;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import java.util.Collection;
+import org.jooq.*;
+import org.jooq.impl.*;
 
-import org.jooq.Clause;
-import org.jooq.Configuration;
-import org.jooq.Context;
-import org.jooq.Name;
-import org.jooq.Privilege;
-import org.jooq.RevokeFinalStep;
-import org.jooq.RevokeFromStep;
-import org.jooq.RevokeOnStep;
-import org.jooq.Role;
-import org.jooq.Table;
-import org.jooq.User;
+import java.util.*;
 
 /**
  * The <code>REVOKE GRANT OPTION FOR</code> statement.
@@ -79,7 +69,7 @@ implements
     private       Table<?>                        on;
     private       Role                            from;
     private       Boolean                         fromPublic;
-
+    
     RevokeImpl(
         Configuration configuration,
         Collection privileges,
@@ -121,7 +111,7 @@ implements
     // -------------------------------------------------------------------------
     // XXX: DSL API
     // -------------------------------------------------------------------------
-
+    
     @Override
     public final RevokeImpl on(String on) {
         return on(DSL.table(DSL.name(on)));
@@ -140,7 +130,7 @@ implements
 
     @Override
     public final RevokeImpl from(User from) {
-        return from(DSL.role(from.getName()));
+        return from(DSL.role(from.getQualifiedName()));
     }
 
     @Override

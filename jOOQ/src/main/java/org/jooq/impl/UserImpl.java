@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.Clause.USER;
+import static org.jooq.impl.CommentImpl.NO_COMMENT;
 
 import org.jooq.Clause;
 import org.jooq.Context;
@@ -49,17 +50,16 @@ import org.jooq.User;
  *
  * @author Timur Shaidullin
  */
-final class UserImpl extends AbstractQueryPart implements User {
+final class UserImpl extends AbstractNamed implements User {
 
     /**
      * Generated UID
      */
     private static final long     serialVersionUID = 1169948119720063466L;
     private static final Clause[] CLAUSES          = { USER };
-    private final Name            name;
 
     UserImpl(Name name) {
-        this.name = name;
+        super(name, NO_COMMENT);
     }
 
     // ------------------------------------------------------------------------
@@ -68,20 +68,11 @@ final class UserImpl extends AbstractQueryPart implements User {
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(name);
+        ctx.visit(getQualifiedName());
     }
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
-    }
-
-    // ------------------------------------------------------------------------
-    // XXX: User API
-    // ------------------------------------------------------------------------
-
-    @Override
-    public final String getName() {
-        return name.last();
     }
 }

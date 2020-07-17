@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.Clause.ROLE;
+import static org.jooq.impl.CommentImpl.NO_COMMENT;
 
 import org.jooq.Clause;
 import org.jooq.Context;
@@ -49,17 +50,16 @@ import org.jooq.Role;
  *
  * @author Timur Shaidullin
  */
-final class RoleImpl extends AbstractQueryPart implements Role {
+final class RoleImpl extends AbstractNamed implements Role {
 
     /**
      * Generated UID
      */
     private static final long     serialVersionUID = -1169436492818811877L;
     private static final Clause[] CLAUSES          = { ROLE };
-    private final Name            name;
 
     RoleImpl(Name name) {
-        this.name = name;
+        super(name, NO_COMMENT);
     }
 
     // ------------------------------------------------------------------------
@@ -68,20 +68,11 @@ final class RoleImpl extends AbstractQueryPart implements Role {
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(name);
+        ctx.visit(getQualifiedName());
     }
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
-    }
-
-    // ------------------------------------------------------------------------
-    // XXX: Role API
-    // ------------------------------------------------------------------------
-
-    @Override
-    public final String getName() {
-        return name.last();
     }
 }

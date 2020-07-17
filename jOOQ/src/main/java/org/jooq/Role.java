@@ -58,10 +58,4 @@ import org.jooq.impl.DSL;
  *
  * @author Timur Shaidullin
  */
-public interface Role extends QueryPart {
-
-    /**
-     * The name of the role.
-     */
-    String getName();
-}
+public interface Role extends Named {}

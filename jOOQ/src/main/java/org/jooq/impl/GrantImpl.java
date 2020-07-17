@@ -130,7 +130,7 @@ implements
 
     @Override
     public final GrantImpl to(User to) {
-        return to(DSL.role(to.getName()));
+        return to(DSL.role(to.getQualifiedName()));
     }
 
     @Override

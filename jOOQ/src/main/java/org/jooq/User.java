@@ -58,10 +58,4 @@ import org.jooq.impl.DSL;
  *
  * @author Timur Shaidullin
  */
-public interface User extends QueryPart {
-
-    /**
-     * The name of the user.
-     */
-    String getName();
-}
+public interface User extends Named {}

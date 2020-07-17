@@ -212,7 +212,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
             // Perform the actual visiting, or recurse into the replacement
             // -----------------------------------------------------------------
             QueryPart replacement = start(part);
-            
+
             if (replacement != null) {
                 QueryPartInternal internal = (QueryPartInternal) replacement;
 
@@ -634,6 +634,14 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     }
 
     @Override
+    public final C paramTypeIf(ParamType p, boolean condition) {
+        if (condition)
+            paramType(p);
+
+        return (C) this;
+    }
+
+    @Override
     public final boolean quote() {
         return quote;
     }
@@ -684,6 +692,14 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     @Override
     public final C castMode(CastMode mode) {
         this.castMode = mode;
+        return (C) this;
+    }
+
+    @Override
+    public final C castModeIf(CastMode mode, boolean condition) {
+        if (condition)
+            castMode(mode);
+
         return (C) this;
     }
 

@@ -543,6 +543,12 @@ public interface Context<C extends Context<C>> extends Scope {
     C paramType(ParamType paramType);
 
     /**
+     * Set the new context value for {@link #paramType()}, if a condition is true.
+     */
+    @NotNull
+    C paramTypeIf(ParamType paramType, boolean condition);
+
+    /**
      * The currently applied cast mode for bind values.
      */
     @NotNull
@@ -553,6 +559,12 @@ public interface Context<C extends Context<C>> extends Scope {
      */
     @NotNull
     C castMode(CastMode mode);
+
+    /**
+     * Set the new cast mode for {@link #castMode()}, if a condition is true.
+     */
+    @NotNull
+    C castModeIf(CastMode mode, boolean condition);
 
     /**
      * Whether casting must be applied. The result follows this logic:

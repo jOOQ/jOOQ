@@ -1004,6 +1004,10 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         private final Object[] mapNonnested(R record) {
             Object[] converted = new Object[parameterTypes.length];
 
+            // [#10425] Initialise array to constructor parameter type init values
+            for (int i = 0; i < converted.length; i++)
+                converted[i] = Reflect.initValue(parameterTypes[i]);
+
             for (int i = 0; i < record.size(); i++)
                 set(record, converted, i);
 

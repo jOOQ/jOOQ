@@ -4826,11 +4826,13 @@ final class Tools {
 
 
 
+                case H2:     ctx.sql(' ').visit(K_GENERATED_BY_DEFAULT_AS_IDENTITY); break;
 
 
 
 
-                case H2:
+
+
                 case MARIADB:
                 case MYSQL:  ctx.sql(' ').visit(K_AUTO_INCREMENT); break;
             }

@@ -43,6 +43,7 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
+@FunctionalInterface
 public interface LoaderRowListener {
 
     /**

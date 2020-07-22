@@ -675,6 +675,9 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         try {
             return callable.run(connection);
         }
+        catch (RuntimeException e) {
+            throw e;
+        }
         catch (Exception e) {
             throw new DataAccessException("Error while running ConnectionCallable", e);
         }

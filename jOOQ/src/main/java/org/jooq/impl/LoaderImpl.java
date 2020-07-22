@@ -63,7 +63,6 @@ import java.util.stream.Stream;
 import javax.xml.bind.DatatypeConverter;
 
 import org.jooq.BatchBindStep;
-import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.Field;
@@ -665,12 +664,12 @@ final class LoaderImpl<R extends Record> implements
         return this;
     }
 
-    private void checkFlags() {
+    private final void checkFlags() {
         if (bulk != BULK_NONE && onDuplicate != ON_DUPLICATE_KEY_ERROR)
             throw new LoaderConfigurationException("Cannot apply bulk loading with onDuplicateKey flags. Turn off either flag.");
     }
 
-    private void executeJSON() throws IOException {
+    private final void executeJSON() throws IOException {
         Reader reader = null;
 
         try {
@@ -721,7 +720,7 @@ final class LoaderImpl<R extends Record> implements
         }
     }
 
-    private void executeRows() {
+    private final void executeRows() {
         try {
             executeSQL(arrays);
         }
@@ -733,7 +732,7 @@ final class LoaderImpl<R extends Record> implements
         }
     }
 
-    private void executeSQL(Iterator<? extends Object[]> iterator) throws SQLException {
+    private final void executeSQL(Iterator<? extends Object[]> iterator) throws SQLException {
         Object[] row = null;
         BatchBindStep bind = null;
         InsertQuery<R> insert = null;
@@ -915,7 +914,7 @@ final class LoaderImpl<R extends Record> implements
         }
     }
 
-    private void commit() throws SQLException {
+    private final void commit() throws SQLException {
         Connection connection = configuration.connectionProvider().acquire();
 
         try {
@@ -926,7 +925,7 @@ final class LoaderImpl<R extends Record> implements
         }
     }
 
-    private void rollback() throws SQLException {
+    private final void rollback() throws SQLException {
         Connection connection = configuration.connectionProvider().acquire();
 
         try {
@@ -940,22 +939,15 @@ final class LoaderImpl<R extends Record> implements
     /**
      * Type-safety...
      */
-    private <T> void addValue0(InsertQuery<R> insert, Field<T> field, Object row) {
+    private final <T> void addValue0(InsertQuery<R> insert, Field<T> field, Object row) {
         insert.addValue(field, field.getDataType().convert(row));
     }
 
     /**
      * Type-safety...
      */
-    private <T> void addValueForUpdate0(InsertQuery<R> insert, Field<T> field, Object row) {
+    private final <T> void addValueForUpdate0(InsertQuery<R> insert, Field<T> field, Object row) {
         insert.addValueForUpdate(field, field.getDataType().convert(row));
-    }
-
-    /**
-     * Get a type-safe condition
-     */
-    private <T> Condition getCondition(Field<T> field, Object string) {
-        return field.equal(field.getDataType().convert(string));
     }
 
     // -------------------------------------------------------------------------

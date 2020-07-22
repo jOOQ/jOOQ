@@ -770,7 +770,7 @@ final class LoaderImpl<R extends Record> implements
         public void close() throws SQLException {}
     }
 
-    private final void executeSQL(Iterator<? extends Object[]> iterator) {
+    private final void executeSQL(final Iterator<? extends Object[]> iterator) {
         configuration.dsl().connection(new ConnectionRunnable() {
             @Override
             public void run(Connection connection) throws Exception {

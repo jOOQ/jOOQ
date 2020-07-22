@@ -47,7 +47,7 @@ package org.jooq;
 public interface LoaderRowListener {
 
     /**
-     * A row has been processed by the {@link Loader}
+     * A row will be or has been processed by the {@link Loader}.
      */
     void row(LoaderContext ctx);
 }

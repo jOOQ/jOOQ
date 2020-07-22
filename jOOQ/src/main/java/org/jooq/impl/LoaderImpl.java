@@ -178,8 +178,9 @@ final class LoaderImpl<R extends Record> implements
 
     // Result data
     // -----------
-    private LoaderRowListener            listener;
-    private LoaderContext                result                           = new DefaultLoaderContext();
+    private LoaderRowListener            onRowStart;
+    private LoaderRowListener            onRowEnd;
+    private LoaderContext                rowCtx                           = new DefaultLoaderContext();
     private int                          ignored;
     private int                          processed;
     private int                          stored;
@@ -645,7 +646,18 @@ final class LoaderImpl<R extends Record> implements
 
     @Override
     public final LoaderImpl<R> onRow(LoaderRowListener l) {
-        listener = l;
+        return onRowEnd(l);
+    }
+
+    @Override
+    public final LoaderImpl<R> onRowStart(LoaderRowListener l) {
+        onRowStart = l;
+        return this;
+    }
+
+    @Override
+    public final LoaderImpl<R> onRowEnd(LoaderRowListener l) {
+        onRowEnd = l;
         return this;
     }
 
@@ -817,6 +829,12 @@ final class LoaderImpl<R extends Record> implements
                             if (fields[i].getType() == byte[].class && row[i] instanceof String)
                                 row[i] = DatatypeConverter.parseBase64Binary((String) row[i]);
 
+                    rowCtx.row(row);
+                    if (onRowStart != null) {
+                        onRowStart.row(rowCtx);
+                        row = rowCtx.row();
+                    }
+
                     // TODO: In batch mode, we can probably optimise this by not creating
                     // new statements every time, just to convert bind values to their
                     // appropriate target types. But beware of SQL dialects that tend to
@@ -916,8 +934,8 @@ final class LoaderImpl<R extends Record> implements
 
                 }
                 finally {
-                    if (listener != null)
-                        listener.row(result);
+                    if (onRowEnd != null)
+                        onRowEnd.row(rowCtx);
                 }
                 // rows:
             }
@@ -1037,10 +1055,23 @@ final class LoaderImpl<R extends Record> implements
 
     @Override
     public final LoaderContext result() {
-        return result;
+        return rowCtx;
     }
 
     private class DefaultLoaderContext implements LoaderContext {
+        Object[] row;
+
+        @Override
+        public final LoaderContext row(Object[] r) {
+            this.row = r;
+            return this;
+        }
+
+        @Override
+        public final Object[] row() {
+            return row;
+        }
+
         @Override
         public final List<LoaderError> errors() {
             return errors;

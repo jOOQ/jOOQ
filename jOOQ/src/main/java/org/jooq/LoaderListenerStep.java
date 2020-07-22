@@ -37,7 +37,7 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
+import org.jetbrains.annotations.NotNull;
 
 
 /**
@@ -70,8 +70,26 @@ public interface LoaderListenerStep<R extends Record> extends LoaderLoadStep<R> 
 
     /**
      * Specify a listener that is invoked whenever a row has been processed.
+     *
+     * @deprecated - 3.14.0 - [#4941] - Use {@link #onRowEnd(LoaderRowListener)}
+     *             instead.
      */
+    @Deprecated
     @NotNull
     @Support
     LoaderLoadStep<R> onRow(LoaderRowListener listener);
+
+    /**
+     * Specify a listener that is invoked before a row is processed.
+     */
+    @NotNull
+    @Support
+    LoaderLoadStep<R> onRowStart(LoaderRowListener listener);
+
+    /**
+     * Specify a listener that is invoked after a row has been processed.
+     */
+    @NotNull
+    @Support
+    LoaderLoadStep<R> onRowEnd(LoaderRowListener listener);
 }

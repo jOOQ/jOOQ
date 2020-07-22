@@ -238,34 +238,33 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
     @Override
     protected final void prepare(ExecuteContext ctx) throws SQLException {
+        if (ctx.statement() == null) {
 
-        // [#1846] [#2265] [#2299] Users may explicitly specify how ResultSets
-        // created by jOOQ behave. This will override any other default behaviour
-        if (resultSetConcurrency != 0 || resultSetType != 0 || resultSetHoldability != 0) {
-            int type = resultSetType != 0 ? resultSetType : ResultSet.TYPE_FORWARD_ONLY;
-            int concurrency = resultSetConcurrency != 0 ? resultSetConcurrency : ResultSet.CONCUR_READ_ONLY;
+            // [#1846] [#2265] [#2299] Users may explicitly specify how ResultSets
+            // created by jOOQ behave. This will override any other default behaviour
+            if (resultSetConcurrency != 0 || resultSetType != 0 || resultSetHoldability != 0) {
+                int type = resultSetType != 0 ? resultSetType : ResultSet.TYPE_FORWARD_ONLY;
+                int concurrency = resultSetConcurrency != 0 ? resultSetConcurrency : ResultSet.CONCUR_READ_ONLY;
 
-            // Sybase doesn't support holdability. Avoid setting it!
-            if (resultSetHoldability == 0) {
-                ctx.statement(ctx.connection().prepareStatement(ctx.sql(), type, concurrency));
+                // Sybase doesn't support holdability. Avoid setting it!
+                if (resultSetHoldability == 0)
+                    ctx.statement(ctx.connection().prepareStatement(ctx.sql(), type, concurrency));
+                else
+                    ctx.statement(ctx.connection().prepareStatement(ctx.sql(), type, concurrency, resultSetHoldability));
             }
+
+            // Regular behaviour
             else {
-                ctx.statement(ctx.connection().prepareStatement(ctx.sql(), type, concurrency, resultSetHoldability));
+                ctx.statement(ctx.connection().prepareStatement(ctx.sql()));
             }
-        }
-
-        // Regular behaviour
-        else {
-            ctx.statement(ctx.connection().prepareStatement(ctx.sql()));
         }
 
         Tools.setFetchSize(ctx, fetchSize);
 
         // [#1854] [#4753] Set the max number of rows for this result query
         int m = SettingsTools.getMaxRows(maxRows, ctx.settings());
-        if (m != 0) {
+        if (m != 0)
             ctx.statement().setMaxRows(m);
-        }
     }
 
     @Override

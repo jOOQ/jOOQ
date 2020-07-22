@@ -205,7 +205,8 @@ final class BatchSingle extends AbstractBatch implements BatchBindStep {
             listener.renderEnd(ctx);
 
             listener.prepareStart(ctx);
-            ctx.statement(connection.prepareStatement(ctx.sql()));
+            if (ctx.statement() == null)
+                ctx.statement(connection.prepareStatement(ctx.sql()));
             listener.prepareEnd(ctx);
 
             // [#9295] use query timeout from settings

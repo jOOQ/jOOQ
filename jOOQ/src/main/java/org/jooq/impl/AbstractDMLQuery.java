@@ -829,6 +829,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
 
 
+
  if (returning.isEmpty()) {
             super.prepare(ctx);
         }
@@ -881,7 +882,8 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                 //         yet, or UPDATE .. RETURNING
                 case MARIADB:
                 case MYSQL:
-                    ctx.statement(connection.prepareStatement(ctx.sql(), Statement.RETURN_GENERATED_KEYS));
+                    if (ctx.statement() == null)
+                        ctx.statement(connection.prepareStatement(ctx.sql(), Statement.RETURN_GENERATED_KEYS));
                     break;
 
                 // The default is to return all requested fields directly
@@ -897,27 +899,30 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
 
 
+
                 case HSQLDB:
                 default: {
-                    String[] names = new String[returningResolvedAsterisks.size()];
-                    RenderNameCase style = SettingsTools.getRenderNameCase(configuration().settings());
+                    if (ctx.statement() == null) {
+                        String[] names = new String[returningResolvedAsterisks.size()];
+                        RenderNameCase style = SettingsTools.getRenderNameCase(configuration().settings());
 
-                    // [#2845] Field names should be passed to JDBC in the case
-                    // imposed by the user. For instance, if the user uses
-                    // PostgreSQL generated case-insensitive Fields (default to lower case)
-                    // and wants to query HSQLDB (default to upper case), they may choose
-                    // to overwrite casing using RenderNameCase.
-                    if (style == RenderNameCase.UPPER)
-                        for (int i = 0; i < names.length; i++)
-                            names[i] = returningResolvedAsterisks.get(i).getName().toUpperCase(renderLocale(configuration().settings()));
-                    else if (style == RenderNameCase.LOWER)
-                        for (int i = 0; i < names.length; i++)
-                            names[i] = returningResolvedAsterisks.get(i).getName().toLowerCase(renderLocale(configuration().settings()));
-                    else
-                        for (int i = 0; i < names.length; i++)
-                            names[i] = returningResolvedAsterisks.get(i).getName();
+                        // [#2845] Field names should be passed to JDBC in the case
+                        // imposed by the user. For instance, if the user uses
+                        // PostgreSQL generated case-insensitive Fields (default to lower case)
+                        // and wants to query HSQLDB (default to upper case), they may choose
+                        // to overwrite casing using RenderNameCase.
+                        if (style == RenderNameCase.UPPER)
+                            for (int i = 0; i < names.length; i++)
+                                names[i] = returningResolvedAsterisks.get(i).getName().toUpperCase(renderLocale(configuration().settings()));
+                        else if (style == RenderNameCase.LOWER)
+                            for (int i = 0; i < names.length; i++)
+                                names[i] = returningResolvedAsterisks.get(i).getName().toLowerCase(renderLocale(configuration().settings()));
+                        else
+                            for (int i = 0; i < names.length; i++)
+                                names[i] = returningResolvedAsterisks.get(i).getName();
+                        ctx.statement(connection.prepareStatement(ctx.sql(), names));
+                    }
 
-                    ctx.statement(connection.prepareStatement(ctx.sql(), names));
                     break;
                 }
             }

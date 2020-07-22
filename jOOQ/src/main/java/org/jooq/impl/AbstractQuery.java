@@ -434,7 +434,8 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
      * this method.
      */
     protected void prepare(ExecuteContext ctx) throws SQLException {
-        ctx.statement(ctx.connection().prepareStatement(ctx.sql()));
+        if (ctx.statement() == null)
+            ctx.statement(ctx.connection().prepareStatement(ctx.sql()));
     }
 
     /**

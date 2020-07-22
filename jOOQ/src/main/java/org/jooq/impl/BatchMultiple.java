@@ -85,7 +85,8 @@ final class BatchMultiple extends AbstractBatch {
             // [#8968] Keep start() event inside of lifecycle management
             listener.start(ctx);
 
-            ctx.statement(new SettingsEnabledPreparedStatement(connection));
+            if (ctx.statement() == null)
+                ctx.statement(new SettingsEnabledPreparedStatement(connection));
 
             String[] batchSQL = ctx.batchSQL();
             for (int i = 0; i < queries.length; i++) {

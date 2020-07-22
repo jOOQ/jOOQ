@@ -383,6 +383,26 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <li>{@link ExecuteContext#sql(String)}: The rendered <code>SQL</code>
      * statement that is about to be executed. You can modify this statement
      * freely.</li>
+     * <li>{@link ExecuteContext#statement()}: The {@link PreparedStatement}
+     * about to be executed. At this stage, no such statement is available yet,
+     * but if provided, the execution lifecycle will skip preparing a statement.
+     * This can be used e.g. to implement a transaction-bound prepared statement
+     * cache.
+     * <p>
+     * A custom {@link PreparedStatement} needs to take into account
+     * {@link Settings#getStatementType()}, and avoid bind variable markers for
+     * {@link StatementType#STATIC_STATEMENT}.
+     * <p>
+     * Flags such as {@link Query#queryTimeout(int)},
+     * {@link Query#poolable(boolean)}, {@link ResultQuery#maxRows(int)}, which
+     * correspond to mutable flags on a {@link PreparedStatement}, are set by
+     * jOOQ even if a listener provides the statement.
+     * <p>
+     * Flags such as {@link ResultQuery#resultSetConcurrency(int)},
+     * {@link ResultQuery#resultSetHoldability(int)},
+     * {@link ResultQuery#resultSetType(int)}, which correspond to immutable
+     * flags that are set on the statement at statement creation are not set on
+     * a statement provided by a listener.</li>
      * </ul>
      */
     void prepareStart(ExecuteContext ctx);

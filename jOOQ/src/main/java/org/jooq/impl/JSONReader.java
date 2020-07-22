@@ -84,8 +84,6 @@ final class JSONReader {
     @SuppressWarnings("rawtypes")
     final Result<Record> read(final Reader reader) {
         try {
-
-            @SuppressWarnings("rawtypes")
             Object root = new JSONParser().parse(reader, new ContainerFactory() {
                 @Override
                 public Map createObjectContainer() {

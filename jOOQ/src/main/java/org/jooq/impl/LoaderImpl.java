@@ -37,11 +37,14 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.FALSE;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.impl.Tools.combine;
+import static org.jooq.tools.jdbc.JDBCUtils.safeClose;
 
 import java.io.File;
 import java.io.IOException;
@@ -50,13 +53,16 @@ import java.io.Reader;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -64,7 +70,9 @@ import javax.xml.bind.DatatypeConverter;
 
 import org.jooq.BatchBindStep;
 import org.jooq.Configuration;
+import org.jooq.ConnectionRunnable;
 import org.jooq.DSLContext;
+import org.jooq.ExecuteContext;
 import org.jooq.Field;
 import org.jooq.InsertQuery;
 import org.jooq.Loader;
@@ -91,6 +99,7 @@ import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.csv.CSVParser;
 import org.jooq.tools.csv.CSVReader;
+import org.jooq.tools.jdbc.DefaultPreparedStatement;
 
 import org.xml.sax.InputSource;
 
@@ -141,7 +150,6 @@ final class LoaderImpl<R extends Record> implements
 
     // Configuration data
     // ------------------
-    private final DSLContext             create;
     private final Configuration          configuration;
     private final Table<R>               table;
     private int                          onDuplicate                      = ON_DUPLICATE_KEY_ERROR;
@@ -180,7 +188,6 @@ final class LoaderImpl<R extends Record> implements
     private final List<LoaderError>      errors;
 
     LoaderImpl(Configuration configuration, Table<R> table) {
-        this.create = DSL.using(configuration);
         this.configuration = configuration;
         this.table = table;
         this.errors = new ArrayList<>();
@@ -669,12 +676,12 @@ final class LoaderImpl<R extends Record> implements
             throw new LoaderConfigurationException("Cannot apply bulk loading with onDuplicateKey flags. Turn off either flag.");
     }
 
-    private final void executeJSON() throws IOException {
+    private final void executeJSON() {
         Reader reader = null;
 
         try {
             reader = input.reader();
-            Result<Record> r = new JSONReader(create).read(reader);
+            Result<Record> r = new JSONReader(configuration.dsl()).read(reader);
             source = r.fields();
 
             // The current json format is not designed for streaming. Thats why
@@ -682,19 +689,12 @@ final class LoaderImpl<R extends Record> implements
             List<Object[]> allRecords = Arrays.asList(r.intoArrays());
             executeSQL(allRecords.iterator());
         }
-
-        // SQLExceptions originating from rollbacks or commits are always fatal
-        // They are propagated, and not swallowed
-        catch (SQLException e) {
-            throw Tools.translate(null, e);
-        }
         finally {
-            if (reader != null)
-                reader.close();
+            safeClose(reader);
         }
     }
 
-    private final void executeCSV() throws IOException {
+    private final void executeCSV() {
         CSVReader reader = null;
 
         try {
@@ -708,31 +708,87 @@ final class LoaderImpl<R extends Record> implements
 
             executeSQL(reader);
         }
-
-        // SQLExceptions originating from rollbacks or commits are always fatal
-        // They are propagated, and not swallowed
-        catch (SQLException e) {
-            throw Tools.translate(null, e);
-        }
         finally {
-            if (reader != null)
-                reader.close();
+            safeClose(reader);
         }
     }
 
     private final void executeRows() {
-        try {
-            executeSQL(arrays);
+        executeSQL(arrays);
+    }
+
+    private static final class CachedPSListener extends DefaultExecuteListener {
+
+        /**
+         * Generated UID
+         */
+        private static final long   serialVersionUID = 1374352882405299310L;
+
+        final Map<String, CachedPS> map              = new HashMap<>();
+
+        @Override
+        public void prepareStart(ExecuteContext ctx) {
+            CachedPS ps = map.get(ctx.sql());
+
+            if (ps != null)
+                ctx.statement(ps);
         }
 
-        // SQLExceptions originating from rollbacks or commits are always fatal
-        // They are propagated, and not swallowed
-        catch (SQLException e) {
-            throw Tools.translate(null, e);
+        @Override
+        public void prepareEnd(ExecuteContext ctx) {
+            if (!(ctx.statement() instanceof CachedPS)) {
+                CachedPS ps = new CachedPS(ctx.statement());
+                map.put(ctx.sql(), ps);
+                ctx.statement(ps);
+            }
+        }
+
+        public void close() {
+            for (CachedPS ps : map.values())
+                safeClose(ps.getDelegate());
         }
     }
 
-    private final void executeSQL(Iterator<? extends Object[]> iterator) throws SQLException {
+    private static class CachedPS extends DefaultPreparedStatement {
+        CachedPS(PreparedStatement delegate) {
+            super(delegate);
+        }
+
+        @Override
+        public void close() throws SQLException {}
+    }
+
+    private final void executeSQL(Iterator<? extends Object[]> iterator) {
+        configuration.dsl().connection(new ConnectionRunnable() {
+            @Override
+            public void run(Connection connection) throws Exception {
+                Configuration c = configuration.derive(new DefaultConnectionProvider(connection));
+
+                if (FALSE.equals(c.settings().isCachePreparedStatementInLoader())) {
+                    executeSQL(iterator, c.dsl());
+                }
+
+                else {
+                    CachedPSListener cache = new CachedPSListener();
+
+                    try {
+                        executeSQL(iterator, c
+                            .derive(combine(new DefaultExecuteListenerProvider(cache), c.executeListenerProviders()))
+                            .dsl()
+                        );
+                    }
+                    finally {
+                        try {
+                            cache.close();
+                        }
+                        catch (Exception e) {}
+                    }
+                }
+            }
+        });
+    }
+
+    private final void executeSQL(Iterator<? extends Object[]> iterator, DSLContext ctx) throws SQLException {
         Object[] row = null;
         BatchBindStep bind = null;
         InsertQuery<R> insert = null;
@@ -769,7 +825,7 @@ final class LoaderImpl<R extends Record> implements
                     buffered++;
 
                     if (insert == null)
-                        insert = create.insertQuery(table);
+                        insert = ctx.insertQuery(table);
 
                     if (newRecord) {
                         newRecord = false;
@@ -811,7 +867,7 @@ final class LoaderImpl<R extends Record> implements
 
                         if (batch != BATCH_NONE) {
                             if (bind == null)
-                                bind = create.batch(insert);
+                                bind = ctx.batch(insert);
 
                             bind.bind(insert.getBindValues().toArray());
                             insert = null;
@@ -831,7 +887,7 @@ final class LoaderImpl<R extends Record> implements
                         // [#10358] The MySQL dialect category doesn't return rowcounts
                         //          in INSERT .. ON DUPLICATE KEY UPDATE statements, but
                         //          1 = INSERT, 2 = UPDATE, instead
-                        if (onDuplicate == ON_DUPLICATE_KEY_UPDATE && NO_SUPPORT_ROWCOUNT_ON_DUPLICATE.contains(create.dialect()))
+                        if (onDuplicate == ON_DUPLICATE_KEY_UPDATE && NO_SUPPORT_ROWCOUNT_ON_DUPLICATE.contains(ctx.dialect()))
                             totalRowCounts = buffered;
                         else
                             for (int rowCount : rowcounts)

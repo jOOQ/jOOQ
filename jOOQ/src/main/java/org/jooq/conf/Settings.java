@@ -158,6 +158,8 @@ public class Settings
     protected Boolean reflectionCaching = true;
     @XmlElement(defaultValue = "true")
     protected Boolean cacheRecordMappers = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean cachePreparedStatementInLoader = true;
     @XmlElement(defaultValue = "THROW_ALL")
     @XmlSchemaType(name = "string")
     protected ThrowExceptions throwExceptions = ThrowExceptions.THROW_ALL;
@@ -1364,6 +1366,30 @@ public class Settings
     }
 
     /**
+     * Whether JDBC {@link java.sql.PreparedStatement} instances should be cached in loader API.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isCachePreparedStatementInLoader() {
+        return cachePreparedStatementInLoader;
+    }
+
+    /**
+     * Sets the value of the cachePreparedStatementInLoader property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setCachePreparedStatementInLoader(Boolean value) {
+        this.cachePreparedStatementInLoader = value;
+    }
+
+    /**
      * A strategy defining how exceptions from the database / JDBC driver should be propagated
      * 
      */
@@ -2563,6 +2589,11 @@ public class Settings
         return this;
     }
 
+    public Settings withCachePreparedStatementInLoader(Boolean value) {
+        setCachePreparedStatementInLoader(value);
+        return this;
+    }
+
     /**
      * A strategy defining how exceptions from the database / JDBC driver should be propagated
      * 
@@ -2943,6 +2974,7 @@ public class Settings
         builder.append("updatablePrimaryKeys", updatablePrimaryKeys);
         builder.append("reflectionCaching", reflectionCaching);
         builder.append("cacheRecordMappers", cacheRecordMappers);
+        builder.append("cachePreparedStatementInLoader", cachePreparedStatementInLoader);
         builder.append("throwExceptions", throwExceptions);
         builder.append("fetchWarnings", fetchWarnings);
         builder.append("fetchServerOutputSize", fetchServerOutputSize);
@@ -3446,6 +3478,15 @@ public class Settings
                 return false;
             }
         }
+        if (cachePreparedStatementInLoader == null) {
+            if (other.cachePreparedStatementInLoader!= null) {
+                return false;
+            }
+        } else {
+            if (!cachePreparedStatementInLoader.equals(other.cachePreparedStatementInLoader)) {
+                return false;
+            }
+        }
         if (throwExceptions == null) {
             if (other.throwExceptions!= null) {
                 return false;
@@ -3871,6 +3912,7 @@ public class Settings
         result = ((prime*result)+((updatablePrimaryKeys == null)? 0 :updatablePrimaryKeys.hashCode()));
         result = ((prime*result)+((reflectionCaching == null)? 0 :reflectionCaching.hashCode()));
         result = ((prime*result)+((cacheRecordMappers == null)? 0 :cacheRecordMappers.hashCode()));
+        result = ((prime*result)+((cachePreparedStatementInLoader == null)? 0 :cachePreparedStatementInLoader.hashCode()));
         result = ((prime*result)+((throwExceptions == null)? 0 :throwExceptions.hashCode()));
         result = ((prime*result)+((fetchWarnings == null)? 0 :fetchWarnings.hashCode()));
         result = ((prime*result)+((fetchServerOutputSize == null)? 0 :fetchServerOutputSize.hashCode()));

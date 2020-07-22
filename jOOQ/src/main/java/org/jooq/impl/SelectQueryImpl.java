@@ -1247,7 +1247,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 ? new Field[] { DSL.field("*") }
                 : Tools.aliasedFields(originalFields),
 
-            null
+            (Field<?>) null
         );
 
         alternativeFields[alternativeFields.length - 1] =

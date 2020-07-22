@@ -2723,12 +2723,16 @@ final class Tools {
     }
 
     @SuppressWarnings("unchecked")
-    static final <T> T[] combine(T[] array, T value) {
+    static final <T> T[] combine(T value, T[] array) {
         T[] result = (T[]) java.lang.reflect.Array.newInstance(array.getClass().getComponentType(), array.length + 1);
+        result[0] = value;
+        System.arraycopy(array, 0, result, 1, array.length);
+        return result;
+    }
 
-        System.arraycopy(array, 0, result, 0, array.length);
+    static final <T> T[] combine(T[] array, T value) {
+        T[] result = Arrays.copyOf(array, array.length + 1);;
         result[array.length] = value;
-
         return result;
     }
 

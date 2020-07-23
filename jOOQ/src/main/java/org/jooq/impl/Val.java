@@ -44,6 +44,8 @@ import static org.jooq.impl.Tools.embeddedFields;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
 
 import java.sql.SQLException;
+import java.sql.SQLWarning;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.jooq.Context;
 import org.jooq.DataType;
@@ -51,6 +53,7 @@ import org.jooq.EmbeddableRecord;
 import org.jooq.RenderContext;
 import org.jooq.conf.ParamType;
 import org.jooq.exception.DataAccessException;
+import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -58,7 +61,9 @@ import org.jooq.tools.StringUtils;
  */
 final class Val<T> extends AbstractParam<T> {
 
-    private static final long serialVersionUID = 6807729087019209084L;
+    private static final long                                serialVersionUID = 6807729087019209084L;
+    private static final JooqLogger                          log              = JooqLogger.getLogger(Val.class);
+    private static final ConcurrentHashMap<Class<?>, Object> legacyWarnings   = new ConcurrentHashMap<>();
 
     Val(T value, DataType<T> type) {
         super(value, type);
@@ -75,10 +80,22 @@ final class Val<T> extends AbstractParam<T> {
     /**
      * [#10438] Convert this bind value to a new type.
      */
-    <U> Val<U> convertTo(DataType<U> type) {
-        Val<U> w = new Val<>(type.convert(getValue()), type, getParamName());
-        w.setInline(isInline());
-        return w;
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    final <U> Val<U> convertTo(DataType<U> type) {
+        if (getDataType() instanceof DataTypeProxy) {
+            if (((DataTypeProxy<?>) getDataType()).type instanceof LegacyConvertedDataType && type == SQLDataType.OTHER) {
+                type = (DataType) ((DataTypeProxy<?>) getDataType()).type;
+
+                if (legacyWarnings.size() < 8 && legacyWarnings.put(type.getType(), "") == null)
+                    log.warn("Deprecation", "User-defined, converted data type " + type.getType() + " was registered statically, which will be unsupported in the future, see https://github.com/jOOQ/jOOQ/issues/9492. Please use explicit data types in generated code, or e.g. with DSL.val(Object, DataType), or DSL.inline(Object, DataType).", new SQLWarning("Static type registry usage"));
+            }
+
+            Val<U> w = new Val<>(type.convert(getValue()), type, getParamName());
+            w.setInline(isInline());
+            return w;
+        }
+        else
+            return (Val) this;
     }
 
     @Override

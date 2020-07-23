@@ -23791,7 +23791,7 @@ public class DSL {
     @Support
     public static <T> Param<T> val(T value) {
         Class type = value == null ? Object.class : value.getClass();
-        return val(value, DefaultDataType.getDataType(DEFAULT, type, new DataTypeProxy((AbstractDataType) SQLDataType.OTHER)));
+        return val(value, getDataType0(type));
     }
 
     /**
@@ -25925,7 +25925,7 @@ public class DSL {
     protected static <T> Field<T> nullSafe(Field<T> field, DataType<?> type) {
         return field == null
              ? (Field<T>) val((T) null, type)
-             : field instanceof Val && field.getDataType() instanceof DataTypeProxy
+             : field instanceof Val
              ? (Field<T>) ((Val<T>) field).convertTo(type)
              : field;
     }
@@ -26100,6 +26100,29 @@ public class DSL {
     @Support
     public static <T> DataType<T> getDataType(Class<T> type) {
         return DefaultDataType.getDataType(SQLDialect.DEFAULT, type);
+    }
+
+    /**
+     * [#9492] [#10438] Get a static data type for a class.
+     * <p>
+     * This will:
+     * <ul>
+     * <li>Get a built-in data type, if available</li>
+     * <li>Get a DataTypeProxy wrapped LegacyConvertedDataType, if available
+     * (#9492)</li>
+     * <li>Get a DataTypeProxy, otherwise, for lazy data type lookups
+     * (#10438)</li>
+     * </ul>
+     */
+    static <T> DataType<T> getDataType0(Class<T> type) {
+        DataType t = DefaultDataType.getDataType(DEFAULT, type, (DataType) SQLDataType.OTHER);
+
+        if (t instanceof LegacyConvertedDataType)
+            return new DataTypeProxy((AbstractDataType) t);
+        else if (t != SQLDataType.OTHER)
+            return t;
+        else
+            return DefaultDataType.getDataType(DEFAULT, type, new DataTypeProxy((AbstractDataType) SQLDataType.OTHER));
     }
 
     private static final DSLContext dsl() {

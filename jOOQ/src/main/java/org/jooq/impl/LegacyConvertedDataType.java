@@ -47,158 +47,65 @@ import org.jooq.BindingRegisterContext;
 import org.jooq.BindingSQLContext;
 import org.jooq.BindingSetSQLOutputContext;
 import org.jooq.BindingSetStatementContext;
-import org.jooq.CharacterSet;
-import org.jooq.Collation;
 import org.jooq.Configuration;
 import org.jooq.Converter;
 import org.jooq.Converters;
 import org.jooq.DataType;
 import org.jooq.Field;
-import org.jooq.Nullability;
-import org.jooq.SQLDialect;
 
 /**
- * A <code>DataType</code> used for converted types using {@link Converter}
- *
  * @author Lukas Eder
+ * @deprecated - 3.14.0 - [#9492] [#10312] - A compatibility implementation for
+ *             converted data types, which registers itself in the static type
+ *             registry for legacy reasons.
  */
-@SuppressWarnings({ "rawtypes", "unchecked" })
-final class ConvertedDataType<T, U> extends AbstractDataType<U> {
+@Deprecated
+final class LegacyConvertedDataType<T, U> extends DefaultDataType<U> {
 
     /**
      * Generated UID
      */
     private static final long           serialVersionUID = -2321926692580974126L;
 
-    private final AbstractDataType<T>   delegate;
-    private final Binding<? super T, U> binding;
+    private final DataType<T>           delegate;
 
-    ConvertedDataType(AbstractDataType<T> delegate, Binding<? super T, U> binding) {
-        super(delegate.getQualifiedName(), delegate.getCommentPart());
+    @SuppressWarnings("unchecked")
+    LegacyConvertedDataType(AbstractDataType<T> delegate, Binding<? super T, U> binding) {
+        super(
+            null,
+            binding.converter().toType(),
+            binding,
+            delegate.getQualifiedName(),
+            delegate.getTypeName(),
+            delegate.getCastTypeName(),
+            delegate.precisionDefined() ? delegate.precision() : null,
+            delegate.scaleDefined() ? delegate.scale() : null,
+            delegate.lengthDefined() ? delegate.length() : null,
+            delegate.nullability(),
+            (Field<U>) delegate.defaultValue()
+        );
 
         this.delegate = delegate;
-        this.binding = binding;
-
-        // [#9492] For backwards compatibility reasons, a legacy type registers
-        //         itself in the static type registry
-        new LegacyConvertedDataType<>(delegate, binding);
     }
 
     @Override
-    AbstractDataType<U> construct(
-        Integer newPrecision,
-        Integer newScale,
-        Integer newLength,
-        Nullability newNullability,
-        Collation newCollation,
-        CharacterSet newCharacterSet,
-        boolean newIdentity,
-        Field<U> newDefaultValue
-    ) {
-        return (AbstractDataType) delegate.construct(
-            newPrecision,
-            newScale,
-            newLength,
-            newNullability,
-            newCollation,
-            newCharacterSet,
-            newIdentity,
-            (Field) newDefaultValue
-        ).asConvertedDataType(binding);
+    public int getSQLType() {
+        return delegate.getSQLType();
     }
 
     @Override
-    public final DataType<U> getSQLDataType() {
-        return (DataType<U>) delegate.getSQLDataType();
+    public String getTypeName(Configuration configuration) {
+        return delegate.getTypeName(configuration);
     }
 
     @Override
-    public final DataType<U> getDataType(Configuration configuration) {
-        return (DataType<U>) delegate.getDataType(configuration);
+    public String getCastTypeName(Configuration configuration) {
+        return delegate.getCastTypeName(configuration);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public final Binding<?, U> getBinding() {
-        return binding;
-    }
-
-    @Override
-    public final Class<U> getType() {
-        return binding.converter().toType();
-    }
-
-    @Override
-    public final SQLDialect getDialect() {
-        return delegate.getDialect();
-    }
-
-    @Override
-    public final Nullability nullability() {
-        return delegate.nullability();
-    }
-
-    @Override
-    public final Collation collation() {
-        return delegate.collation();
-    }
-
-    @Override
-    public final CharacterSet characterSet() {
-        return delegate.characterSet();
-    }
-
-    @Override
-    public final boolean identity() {
-        return delegate.identity();
-    }
-
-    @Override
-    public final Field<U> default_() {
-        return (Field<U>) delegate.default_();
-    }
-
-    @Override
-    final String typeName0() {
-        return delegate.typeName0();
-    }
-
-    @Override
-    final String castTypePrefix0() {
-        return delegate.castTypePrefix0();
-    }
-
-    @Override
-    final String castTypeSuffix0() {
-        return delegate.castTypeSuffix0();
-    }
-
-    @Override
-    final String castTypeName0() {
-        return delegate.castTypeName0();
-    }
-
-    @Override
-    final Class<?> tType0() {
-        return delegate.tType0();
-    }
-
-    @Override
-    final Integer precision0() {
-        return delegate.precision0();
-    }
-
-    @Override
-    final Integer scale0() {
-        return delegate.scale0();
-    }
-
-    @Override
-    final Integer length0() {
-        return delegate.length0();
-    }
-
-    @Override
-    public final U convert(Object object) {
+    public U convert(Object object) {
         if (getConverter().toType().isInstance(object))
             return (U) object;
 
@@ -207,8 +114,9 @@ final class ConvertedDataType<T, U> extends AbstractDataType<U> {
             return ((Converter<T, U>) getConverter()).from(delegate.convert(object));
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    public final <X> DataType<X> asConvertedDataType(Converter<? super U, X> converter) {
+    public <X> DataType<X> asConvertedDataType(Converter<? super U, X> converter) {
         return super.asConvertedDataType(new ChainedConverterBinding(getBinding(), converter));
     }
 
@@ -275,4 +183,3 @@ final class ConvertedDataType<T, U> extends AbstractDataType<U> {
         }
     }
 }
-

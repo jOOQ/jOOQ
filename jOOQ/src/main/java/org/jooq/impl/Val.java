@@ -82,7 +82,12 @@ final class Val<T> extends AbstractParam<T> {
      */
     @SuppressWarnings({ "rawtypes", "unchecked" })
     final <U> Val<U> convertTo(DataType<U> type) {
+
+        // [#10438] A user defined data type could was not provided explicitly,
+        //          when wrapping a bind value in DSL::val or DSL::inline
         if (getDataType() instanceof DataTypeProxy) {
+
+            // [#9492] Maintain legacy static type registry behaviour for now
             if (((DataTypeProxy<?>) getDataType()).type instanceof LegacyConvertedDataType && type == SQLDataType.OTHER) {
                 type = (DataType) ((DataTypeProxy<?>) getDataType()).type;
 
@@ -90,12 +95,20 @@ final class Val<T> extends AbstractParam<T> {
                     log.warn("Deprecation", "User-defined, converted data type " + type.getType() + " was registered statically, which will be unsupported in the future, see https://github.com/jOOQ/jOOQ/issues/9492. Please use explicit data types in generated code, or e.g. with DSL.val(Object, DataType), or DSL.inline(Object, DataType).", new SQLWarning("Static type registry usage"));
             }
 
-            Val<U> w = new Val<>(type.convert(getValue()), type, getParamName());
-            w.setInline(isInline());
-            return w;
+            return convertTo0(type);
         }
+
+        // [#10438] A data type conversion between built in data types was made
+        else if (type instanceof ConvertedDataType)
+            return convertTo0(type);
         else
             return (Val) this;
+    }
+
+    private final <U> Val<U> convertTo0(DataType<U> type) {
+        Val<U> w = new Val<>(type.convert(getValue()), type, getParamName());
+        w.setInline(isInline());
+        return w;
     }
 
     @Override

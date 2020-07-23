@@ -49,6 +49,7 @@ import static org.jooq.Operator.OR;
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 // ...
+import static org.jooq.SQLDialect.DEFAULT;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
@@ -23789,8 +23790,8 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Param<T> val(T value) {
-        Class<?> type = (value == null) ? Object.class : value.getClass();
-        return (Param<T>) val(value, getDataType(type));
+        Class type = value == null ? Object.class : value.getClass();
+        return val(value, DefaultDataType.getDataType(DEFAULT, type, new DataTypeProxy((AbstractDataType) SQLDataType.OTHER)));
     }
 
     /**
@@ -25922,7 +25923,11 @@ public class DSL {
      * Null-safety of a field.
      */
     protected static <T> Field<T> nullSafe(Field<T> field, DataType<?> type) {
-        return field == null ? (Field<T>) val((T) null, type) : field;
+        return field == null
+             ? (Field<T>) val((T) null, type)
+             : field instanceof Val && field.getDataType() instanceof DataTypeProxy
+             ? (Field<T>) ((Val<T>) field).convertTo(type)
+             : field;
     }
 
     /**

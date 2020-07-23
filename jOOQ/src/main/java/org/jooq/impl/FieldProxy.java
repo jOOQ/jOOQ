@@ -37,18 +37,11 @@
  */
 package org.jooq.impl;
 
-import org.jooq.Binding;
-import org.jooq.CharacterSet;
 import org.jooq.Clause;
-import org.jooq.Collation;
-import org.jooq.Configuration;
 import org.jooq.Context;
-import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Name;
-import org.jooq.Nullability;
 import org.jooq.Record;
-import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableField;
 
@@ -154,129 +147,5 @@ final class FieldProxy<T> extends AbstractField<T> implements TableField<Record,
     @Override
     public final Table<Record> getTable() {
         return delegate instanceof TableField ? ((TableField<Record, ?>) delegate).getTable() : null;
-    }
-
-    private static class DataTypeProxy<T> extends AbstractDataType<T> {
-
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = -5283787691586689803L;
-        AbstractDataType<T>       type;
-
-        DataTypeProxy(AbstractDataType<T> type) {
-            super(type.getQualifiedName(), type.getCommentPart());
-
-            this.type = type;
-        }
-
-        @Override
-        public final Name getQualifiedName() {
-            return type.getQualifiedName();
-        }
-
-        @Override
-        public final DataType<T> getSQLDataType() {
-            return type.getSQLDataType();
-        }
-
-        @Override
-        public final DataType<T> getDataType(Configuration configuration) {
-            return type.getDataType(configuration);
-        }
-
-        @Override
-        public final Binding<?, T> getBinding() {
-            return type.getBinding();
-        }
-
-        @Override
-        public final Class<T> getType() {
-            return type.getType();
-        }
-
-        @Override
-        public final SQLDialect getDialect() {
-            return type.getDialect();
-        }
-
-        @Override
-        public final Nullability nullability() {
-            return type.nullability();
-        }
-
-        @Override
-        public final Collation collation() {
-            return type.collation();
-        }
-
-        @Override
-        public final CharacterSet characterSet() {
-            return type.characterSet();
-        }
-
-        @Override
-        public final boolean identity() {
-            return type.identity();
-        }
-
-        @Override
-        public final Field<T> default_() {
-            return type.default_();
-        }
-
-        @Override
-        final AbstractDataType<T> construct(
-            Integer newPrecision,
-            Integer newScale,
-            Integer newLength,
-            Nullability newNullability,
-            Collation newCollation,
-            CharacterSet newCharacterSet,
-            boolean newIdentity,
-            Field<T> newDefaultValue
-        ) {
-            return type.construct(newPrecision, newScale, newLength, newNullability, newCollation, newCharacterSet, newIdentity, newDefaultValue);
-        }
-
-        @Override
-        final String typeName0() {
-            return type.typeName0();
-        }
-
-        @Override
-        final String castTypePrefix0() {
-            return type.castTypePrefix0();
-        }
-
-        @Override
-        final String castTypeSuffix0() {
-            return type.castTypeSuffix0();
-        }
-
-        @Override
-        final String castTypeName0() {
-            return type.castTypeName0();
-        }
-
-        @Override
-        final Class<?> tType0() {
-            return type.tType0();
-        }
-
-        @Override
-        final Integer precision0() {
-            return type.precision0();
-        }
-
-        @Override
-        final Integer scale0() {
-            return type.scale0();
-        }
-
-        @Override
-        final Integer length0() {
-            return type.length0();
-        }
     }
 }

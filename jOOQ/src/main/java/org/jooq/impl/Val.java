@@ -72,6 +72,15 @@ final class Val<T> extends AbstractParam<T> {
     // XXX: Field API
     // ------------------------------------------------------------------------
 
+    /**
+     * [#10438] Convert this bind value to a new type.
+     */
+    <U> Val<U> convertTo(DataType<U> type) {
+        Val<U> w = new Val<>(type.convert(getValue()), type, getParamName());
+        w.setInline(isInline());
+        return w;
+    }
+
     @Override
     public void accept(Context<?> ctx) {
         if (EmbeddableRecord.class.isAssignableFrom(getType())) {

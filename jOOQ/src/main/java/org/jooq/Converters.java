@@ -40,6 +40,8 @@ package org.jooq;
 import org.jooq.impl.IdentityConverter;
 import org.jooq.impl.SQLDataType;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * A chain of converters.
  *
@@ -61,6 +63,7 @@ public class Converters<T, U> implements Converter<T, U> {
     /**
      * Create an identity converter.
      */
+    @NotNull
     public static <T> Converter<T, T> identity(final Class<T> type) {
         return new IdentityConverter<T>(type);
     }
@@ -68,6 +71,7 @@ public class Converters<T, U> implements Converter<T, U> {
     /**
      * Create an identity converter.
      */
+    @NotNull
     public static <T, U> Converter<T, U> of() {
         return new Converters();
     }
@@ -75,6 +79,7 @@ public class Converters<T, U> implements Converter<T, U> {
     /**
      * Create a single converter.
      */
+    @NotNull
     public static <T, U> Converter<T, U> of(Converter<T, U> converter) {
         return new Converters(converter);
     }
@@ -82,6 +87,7 @@ public class Converters<T, U> implements Converter<T, U> {
     /**
      * Chain two converters.
      */
+    @NotNull
     public static <T, X1, U> Converter<T, U> of(Converter<T, ? extends X1> c1, Converter<? super X1, U> c2) {
         return new Converters(c1, c2);
     }
@@ -89,6 +95,7 @@ public class Converters<T, U> implements Converter<T, U> {
     /**
      * Chain three converters.
      */
+    @NotNull
     public static <T, X1, X2, U> Converter<T, U> of(Converter<T, ? extends X1> c1, Converter<? super X1, ? extends X2> c2, Converter<? super X2, U> c3) {
         return new Converters(c1, c2, c3);
     }
@@ -96,6 +103,7 @@ public class Converters<T, U> implements Converter<T, U> {
     /**
      * Chain four converters.
      */
+    @NotNull
     public static <T, X1, X2, X3, U> Converter<T, U> of(Converter<T, ? extends X1> c1, Converter<? super X1, ? extends X2> c2, Converter<? super X2, ? extends X3> c3, Converter<? super X3, U> c4) {
         return new Converters(c1, c2, c3, c4);
     }

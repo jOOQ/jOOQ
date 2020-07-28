@@ -83,6 +83,7 @@ import static org.jooq.impl.Keywords.K_DAY_TO_SECOND;
 import static org.jooq.impl.Keywords.K_INTERVAL;
 import static org.jooq.impl.Keywords.K_MILLISECOND;
 import static org.jooq.impl.Keywords.K_MONTH;
+import static org.jooq.impl.Keywords.K_SECOND;
 import static org.jooq.impl.Keywords.K_YEAR_MONTH;
 import static org.jooq.impl.Keywords.K_YEAR_TO_MONTH;
 import static org.jooq.impl.Names.N_ADD_DAYS;
@@ -388,8 +389,14 @@ final class Expression<T> extends AbstractField<T> {
                 case FIREBIRD: {
                     if (rhs.getType() == YearToMonth.class)
                         ctx.visit(N_DATEADD).sql('(').visit(K_MONTH).sql(", ").visit(p(sign * rhsAsYTM().intValue())).sql(", ").visit(lhs).sql(')');
+
+                    // [#10448] Firebird only supports adding integers
+                    else if (rhsAsDTS().getMilli() > 0)
+                        ctx.visit(N_DATEADD).sql('(').visit(K_MILLISECOND).sql(", ").visit(p(sign * (long) rhsAsDTS().getMilli())).sql(", ")
+                           .visit(N_DATEADD).sql('(').visit(K_SECOND).sql(", ").visit(p(sign * (long) rhsAsDTS().getTotalSeconds())).sql(", ").visit(lhs).sql(')')
+                           .sql(')');
                     else
-                        ctx.visit(N_DATEADD).sql('(').visit(K_MILLISECOND).sql(", ").visit(p(sign * (long) rhsAsDTS().getTotalMilli())).sql(", ").visit(lhs).sql(')');
+                        ctx.visit(N_DATEADD).sql('(').visit(K_SECOND).sql(", ").visit(p(sign * (long) rhsAsDTS().getTotalSeconds())).sql(", ").visit(lhs).sql(')');
 
                     break;
                 }

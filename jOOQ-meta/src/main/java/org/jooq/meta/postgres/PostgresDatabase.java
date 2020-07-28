@@ -54,6 +54,7 @@ import static org.jooq.impl.DSL.nullif;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.partitionBy;
 import static org.jooq.impl.DSL.power;
+import static org.jooq.impl.DSL.replace;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.rowNumber;
 import static org.jooq.impl.DSL.select;
@@ -356,27 +357,38 @@ public class PostgresDatabase extends AbstractDatabase {
         PgConstraint pc = PG_CONSTRAINT.as("pc");
 
         for (Record record : create()
-                .select(
+            .select(
+                pn.NSPNAME.as(tc.TABLE_SCHEMA),
+                pt.RELNAME.as(tc.TABLE_NAME),
+                pc.CONNAME.as(cc.CONSTRAINT_NAME),
+                replace(field("pg_get_constraintdef({0}.oid)", VARCHAR, pc), inline("CHECK "), inline("")).as(cc.CHECK_CLAUSE))
+            .from(pn)
+            .join(pt).on(pn.OID.eq(pt.RELNAMESPACE))
+            .join(pc).on(pt.OID.eq(pc.CONRELID))
+            .where(pn.NSPNAME.in(getInputSchemata()))
+            .and(pc.CONTYPE.eq(inline("c")))
+            .unionAll(
+                getIncludeSystemCheckConstraints()
+              ? select(
                     tc.TABLE_SCHEMA,
                     tc.TABLE_NAME,
                     cc.CONSTRAINT_NAME,
                     cc.CHECK_CLAUSE
-                 )
+                )
                 .from(tc)
                 .join(cc)
                 .using(tc.CONSTRAINT_CATALOG, tc.CONSTRAINT_SCHEMA, tc.CONSTRAINT_NAME)
                 .where(tc.TABLE_SCHEMA.in(getInputSchemata()))
-                .and(getIncludeSystemCheckConstraints()
-                    ? noCondition()
-                    : row(tc.TABLE_SCHEMA, tc.TABLE_NAME, cc.CONSTRAINT_NAME).in(
-                        select(pn.NSPNAME, pt.RELNAME, pc.CONNAME)
-                        .from(pc)
-                        .join(pt).on(pc.CONRELID.eq(oid(pt)))
-                        .join(pn).on(pc.CONNAMESPACE.eq(oid(pn)))
-                        .where(pc.CONTYPE.eq(inline("c")))
-                    ))
-                .orderBy(tc.TABLE_SCHEMA, tc.TABLE_NAME, cc.CONSTRAINT_NAME)) {
-
+                .and(row(tc.TABLE_SCHEMA, tc.TABLE_NAME, cc.CONSTRAINT_NAME).notIn(
+                    select(pn.NSPNAME, pt.RELNAME, pc.CONNAME)
+                    .from(pc)
+                    .join(pt).on(pc.CONRELID.eq(oid(pt)))
+                    .join(pn).on(pc.CONNAMESPACE.eq(oid(pn)))
+                    .where(pc.CONTYPE.eq(inline("c")))
+                ))
+              : select(inline(""), inline(""), inline(""), inline("")).where(falseCondition()))
+            .orderBy(1, 2, 3)
+        ) {
             SchemaDefinition schema = getSchema(record.get(tc.TABLE_SCHEMA));
             TableDefinition table = getTable(schema, record.get(tc.TABLE_NAME));
 

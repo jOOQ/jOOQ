@@ -37,10 +37,12 @@
  */
 package org.jooq.meta.h2;
 
+import static org.jooq.impl.DSL.any;
 import static org.jooq.impl.DSL.choose;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.noCondition;
+import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.DSL.zero;
 import static org.jooq.meta.h2.information_schema.Tables.COLUMNS;
 import static org.jooq.tools.StringUtils.defaultString;
@@ -89,7 +91,11 @@ public class H2TableDefinition extends AbstractTableDefinition {
         for (Record record : create().select(
                 COLUMNS.COLUMN_NAME,
                 COLUMNS.ORDINAL_POSITION,
-                COLUMNS.TYPE_NAME,
+
+                // [#2230] Translate INTERVAL_TYPE to supported types
+                when(COLUMNS.INTERVAL_TYPE.like(any(inline("%YEAR%"), inline("%MONTH%"))), inline("INTERVAL YEAR TO MONTH"))
+                .when(COLUMNS.INTERVAL_TYPE.like(any(inline("%DAY%"), inline("%HOUR%"), inline("%MINUTE%"), inline("%SECOND%"))), inline("INTERVAL DAY TO SECOND"))
+                .else_(COLUMNS.TYPE_NAME).as(COLUMNS.TYPE_NAME),
                 (((H2Database) getDatabase()).is1_4_197() ? COLUMNS.COLUMN_TYPE : COLUMNS.TYPE_NAME).as(COLUMNS.COLUMN_TYPE),
                 choose().when(COLUMNS.NUMERIC_PRECISION.eq(maxP).and(COLUMNS.NUMERIC_SCALE.eq(maxS)), zero())
                         .otherwise(COLUMNS.CHARACTER_MAXIMUM_LENGTH).as(COLUMNS.CHARACTER_MAXIMUM_LENGTH),
@@ -120,15 +126,10 @@ public class H2TableDefinition extends AbstractTableDefinition {
             // [#7644] H2 puts DATETIME_PRECISION in NUMERIC_SCALE column
             boolean isTimestamp = record.get(COLUMNS.TYPE_NAME).trim().toLowerCase().startsWith("timestamp");
 
-            // [#10389] The interval subtype is contained in COLUMN_TYPE, not TYPE_NAME
-            boolean isInterval = record.get(COLUMNS.TYPE_NAME).trim().toLowerCase().equals("interval");
-
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
                 getSchema(),
-                isInterval
-                    ? record.get(COLUMNS.COLUMN_TYPE)
-                    : record.get(COLUMNS.TYPE_NAME),
+                record.get(COLUMNS.TYPE_NAME),
                 record.get(COLUMNS.CHARACTER_MAXIMUM_LENGTH),
                 isTimestamp
                     ? record.get(COLUMNS.NUMERIC_SCALE)

@@ -401,15 +401,6 @@ final class Expression<T> extends AbstractField<T> {
                     break;
                 }
 
-                case H2: {
-                    if (rhs.getType() == YearToMonth.class)
-                        ctx.visit(N_DATEADD).sql("('month', ").visit(p(sign * rhsAsYTM().intValue())).sql(", ").visit(lhs).sql(')');
-                    else
-                        ctx.visit(N_DATEADD).sql("('ms', ").visit(p(sign * (long) rhsAsDTS().getTotalMilli())).sql(", ").visit(lhs).sql(')');
-
-                    break;
-                }
-
                 case SQLITE: {
                     boolean ytm = rhs.getType() == YearToMonth.class;
                     Field<?> interval = p(ytm ? rhsAsYTM().intValue() : rhsAsDTS().getTotalSeconds());
@@ -584,6 +575,7 @@ final class Expression<T> extends AbstractField<T> {
 
 
 
+                case H2:
                 case POSTGRES:
                 default:
                     ctx.visit(new DefaultExpression<>(lhs, operator, wrap(rhs)));

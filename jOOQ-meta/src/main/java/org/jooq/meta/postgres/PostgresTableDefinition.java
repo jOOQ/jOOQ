@@ -38,6 +38,7 @@
 
 package org.jooq.meta.postgres;
 
+import static org.jooq.impl.DSL.any;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.lower;
@@ -84,7 +85,10 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
         List<ColumnDefinition> result = new ArrayList<>();
 
         PostgresDatabase database = (PostgresDatabase) getDatabase();
-        Field<String> dataType = COLUMNS.DATA_TYPE;
+        Field<String> dataType =
+            when(COLUMNS.INTERVAL_TYPE.like(any(inline("%YEAR%"), inline("%MONTH%"))), inline("INTERVAL YEAR TO MONTH"))
+            .when(COLUMNS.INTERVAL_TYPE.like(any(inline("%DAY%"), inline("%HOUR%"), inline("%MINUTE%"), inline("%SECOND%"))), inline("INTERVAL DAY TO SECOND"))
+            .else_(COLUMNS.DATA_TYPE);
         Field<Integer> precision = nvl(COLUMNS.DATETIME_PRECISION, COLUMNS.NUMERIC_PRECISION);
         Field<String> serialColumnDefault = inline("nextval('%_seq'::regclass)");
 

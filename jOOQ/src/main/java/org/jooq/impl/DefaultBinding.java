@@ -160,6 +160,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 // ...
 import org.jooq.Attachable;
@@ -226,6 +227,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
      */
     private static final long            serialVersionUID          = -198499389344950496L;
     private static final Set<SQLDialect> REQUIRE_JDBC_DATE_LITERAL = SQLDialect.supportedBy(MYSQL);
+    private static final Pattern         P_INTERVAL_LITERAL        = Pattern.compile("INTERVAL '([^']+)' .*");
 
     // Taken from org.postgresql.PGStatement 9223372036825200000
     private static final long            PG_DATE_POSITIVE_INFINITY = 9223372036825200000L;
@@ -630,6 +632,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+                    case H2:
                     case POSTGRES:
                         return true;
                 }
@@ -2220,10 +2223,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 Object object = ctx.resultSet().getObject(ctx.index());
                 return object == null ? null : PostgresUtils.toDayToSecond(object);
             }
-            else {
-                String string = ctx.resultSet().getString(ctx.index());
-                return string == null ? null : DayToSecond.valueOf(string);
-            }
+            else
+                return parseDTS(ctx, ctx.resultSet().getString(ctx.index()));
         }
 
         @Override
@@ -2232,16 +2233,22 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 Object object = ctx.statement().getObject(ctx.index());
                 return object == null ? null : PostgresUtils.toDayToSecond(object);
             }
-            else {
-                String string = ctx.statement().getString(ctx.index());
-                return string == null ? null : DayToSecond.valueOf(string);
-            }
+            else
+                return parseDTS(ctx, ctx.statement().getString(ctx.index()));
         }
 
         @Override
         final DayToSecond get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
-            String string = ctx.input().readString();
-            return string == null ? null : DayToSecond.valueOf(string);
+            return parseDTS(ctx, ctx.input().readString());
+        }
+
+        private final DayToSecond parseDTS(Scope scope, String string) {
+            if (string == null)
+                return null;
+            else if (scope.family() == H2)
+                return DayToSecond.valueOf(P_INTERVAL_LITERAL.matcher(string).replaceFirst("$1"));
+            else
+                return DayToSecond.valueOf(string);
         }
 
         @Override
@@ -4700,10 +4707,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 Object object = ctx.resultSet().getObject(ctx.index());
                 return object == null ? null : PostgresUtils.toYearToMonth(object);
             }
-            else {
-                String string = ctx.resultSet().getString(ctx.index());
-                return string == null ? null : YearToMonth.valueOf(string);
-            }
+            else
+                return parseYTM(ctx, ctx.resultSet().getString(ctx.index()));
         }
 
         @Override
@@ -4712,16 +4717,22 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 Object object = ctx.statement().getObject(ctx.index());
                 return object == null ? null : PostgresUtils.toYearToMonth(object);
             }
-            else {
-                String string = ctx.statement().getString(ctx.index());
-                return string == null ? null : YearToMonth.valueOf(string);
-            }
+            else
+                return parseYTM(ctx, ctx.statement().getString(ctx.index()));
         }
 
         @Override
         final YearToMonth get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
-            String string = ctx.input().readString();
-            return string == null ? null : YearToMonth.valueOf(string);
+            return parseYTM(ctx, ctx.input().readString());
+        }
+
+        private final YearToMonth parseYTM(Scope scope, String string) {
+            if (string == null)
+                return null;
+            else if (scope.family() == H2)
+                return YearToMonth.valueOf(P_INTERVAL_LITERAL.matcher(string).replaceFirst("$1"));
+            else
+                return YearToMonth.valueOf(string);
         }
 
         @Override

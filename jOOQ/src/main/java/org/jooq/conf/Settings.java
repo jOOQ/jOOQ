@@ -460,7 +460,7 @@ public class Settings
     /**
      * Whether the case of {@link org.jooq.Keyword} references should be modified in any way.
      * <p>
-     * @deprecated - 3.12.0 - [#5909] - Use {@link RenderQuotedNames} and {@link RenderNameCase} instead.
+     * @deprecated - 3.12.0 - [#5909] - Use {@link RenderKeywordCase} instead.
      * 
      */
     @Deprecated
@@ -471,7 +471,7 @@ public class Settings
     /**
      * Whether the case of {@link org.jooq.Keyword} references should be modified in any way.
      * <p>
-     * @deprecated - 3.12.0 - [#5909] - Use {@link RenderQuotedNames} and {@link RenderNameCase} instead.
+     * @deprecated - 3.12.0 - [#5909] - Use {@link RenderKeywordCase} instead.
      * 
      */
     @Deprecated
@@ -2274,7 +2274,7 @@ public class Settings
     /**
      * Whether the case of {@link org.jooq.Keyword} references should be modified in any way.
      * <p>
-     * @deprecated - 3.12.0 - [#5909] - Use {@link RenderQuotedNames} and {@link RenderNameCase} instead.
+     * @deprecated - 3.12.0 - [#5909] - Use {@link RenderKeywordCase} instead.
      * 
      */
     @Deprecated

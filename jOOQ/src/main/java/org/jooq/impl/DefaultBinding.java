@@ -160,7 +160,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
 import java.util.UUID;
-import java.util.regex.Pattern;
 
 // ...
 import org.jooq.Attachable;
@@ -181,6 +180,7 @@ import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.JSON;
 import org.jooq.JSONB;
+import org.jooq.Param;
 // ...
 import org.jooq.Record;
 import org.jooq.RenderContext;
@@ -227,7 +227,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
      */
     private static final long            serialVersionUID          = -198499389344950496L;
     private static final Set<SQLDialect> REQUIRE_JDBC_DATE_LITERAL = SQLDialect.supportedBy(MYSQL);
-    private static final Pattern         P_INTERVAL_LITERAL        = Pattern.compile("INTERVAL '([^']+)' .*");
 
     // Taken from org.postgresql.PGStatement 9223372036825200000
     private static final long            PG_DATE_POSITIVE_INFINITY = 9223372036825200000L;
@@ -2209,12 +2208,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             if (REQUIRE_PG_INTERVAL_SYNTAX.contains(ctx.dialect()))
                 ctx.statement().setObject(ctx.index(), toPGInterval(value));
             else
-                ctx.statement().setString(ctx.index(), value.toString());
+                ctx.statement().setString(ctx.index(), renderDTS(ctx, value));
         }
 
         @Override
         final void set0(BindingSetSQLOutputContext<U> ctx, DayToSecond value) throws SQLException {
-            ctx.output().writeString(value.toString());
+            ctx.output().writeString(renderDTS(ctx, value));
         }
 
         @Override
@@ -2242,13 +2241,23 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             return parseDTS(ctx, ctx.input().readString());
         }
 
+        @SuppressWarnings("unchecked")
         private final DayToSecond parseDTS(Scope scope, String string) {
             if (string == null)
                 return null;
-            else if (scope.family() == H2)
-                return DayToSecond.valueOf(P_INTERVAL_LITERAL.matcher(string).replaceFirst("$1"));
+            else if (scope.family() == H2 && string.startsWith("INTERVAL"))
+                return ((Param<DayToSecond>) scope.dsl().parser().parseField(string)).getValue();
             else
                 return DayToSecond.valueOf(string);
+        }
+
+        private final String renderDTS(Scope scope, DayToSecond dts) {
+            if (dts == null)
+                return null;
+            else if (scope.family() == H2)
+                return "INTERVAL '" + dts.toString() + "' DAY TO SECOND";
+            else
+                return dts.toString();
         }
 
         @Override
@@ -4693,12 +4702,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             if (REQUIRE_PG_INTERVAL.contains(ctx.dialect()))
                 ctx.statement().setObject(ctx.index(), toPGInterval(value));
             else
-                ctx.statement().setString(ctx.index(), value.toString());
+                ctx.statement().setString(ctx.index(), renderYTM(ctx, value));
         }
 
         @Override
         final void set0(BindingSetSQLOutputContext<U> ctx, YearToMonth value) throws SQLException {
-            ctx.output().writeString(value.toString());
+            ctx.output().writeString(renderYTM(ctx, value));
         }
 
         @Override
@@ -4726,13 +4735,23 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             return parseYTM(ctx, ctx.input().readString());
         }
 
+        @SuppressWarnings("unchecked")
         private final YearToMonth parseYTM(Scope scope, String string) {
             if (string == null)
                 return null;
-            else if (scope.family() == H2)
-                return YearToMonth.valueOf(P_INTERVAL_LITERAL.matcher(string).replaceFirst("$1"));
+            else if (scope.family() == H2 && string.startsWith("INTERVAL"))
+                return ((Param<YearToMonth>) scope.dsl().parser().parseField(string)).getValue();
             else
                 return YearToMonth.valueOf(string);
+        }
+
+        private final String renderYTM(Scope scope, YearToMonth ytm) {
+            if (ytm == null)
+                return null;
+            else if (scope.family() == H2)
+                return "INTERVAL '" + ytm.toString() + "' YEAR TO MONTH";
+            else
+                return ytm.toString();
         }
 
         @Override

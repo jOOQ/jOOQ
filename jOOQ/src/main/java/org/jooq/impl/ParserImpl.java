@@ -8281,20 +8281,44 @@ final class ParserImpl implements Parser {
 
         try {
             if (parseKeywordIf(ctx, "YEAR"))
-                return new YearToMonth(Integer.parseInt(string));
+                if (parseKeywordIf(ctx, "TO") && parseKeyword(ctx, "MONTH"))
+                    return YearToMonth.valueOf(string);
+                else
+                    return new YearToMonth(Integer.parseInt(string));
             else if (parseKeywordIf(ctx, "MONTH"))
                 return new YearToMonth(0, Integer.parseInt(string));
             else if (parseKeywordIf(ctx, "DAY"))
-                return new DayToSecond(Integer.parseInt(string));
+                if (parseKeywordIf(ctx, "TO"))
+                    if (parseKeywordIf(ctx, "SECOND"))
+                        return DayToSecond.valueOf(string);
+                    else if (parseKeywordIf(ctx, "MINUTE"))
+                        return DayToSecond.valueOf(string + ":00");
+                    else if (parseKeywordIf(ctx, "HOUR"))
+                        return DayToSecond.valueOf(string + ":00:00");
+                    else
+                        throw ctx.expected("HOUR", "MINUTE", "SECOND");
+                else
+                    return new DayToSecond(Integer.parseInt(string));
             else if (parseKeywordIf(ctx, "HOUR"))
-                return new DayToSecond(0, Integer.parseInt(string));
+                if (parseKeywordIf(ctx, "TO"))
+                    if (parseKeywordIf(ctx, "SECOND"))
+                        return DayToSecond.valueOf("0 " + string);
+                    else if (parseKeywordIf(ctx, "MINUTE"))
+                        return DayToSecond.valueOf("0 " + string + ":00");
+                    else
+                        throw ctx.expected("MINUTE", "SECOND");
+                else
+                    return new DayToSecond(0, Integer.parseInt(string));
             else if (parseKeywordIf(ctx, "MINUTE"))
-                return new DayToSecond(0, 0, Integer.parseInt(string));
+                if (parseKeywordIf(ctx, "TO") && parseKeyword(ctx, "SECOND"))
+                    return DayToSecond.valueOf("0 00:" + string);
+                else
+                    return new DayToSecond(0, 0, Integer.parseInt(string));
             else if (parseKeywordIf(ctx, "SECOND"))
-                return new DayToSecond(0, 0, 0, Integer.parseInt(string));
+                return DayToSecond.valueOf(Double.parseDouble(string) * 1000.0);
         }
         catch (NumberFormatException e) {
-            throw ctx.expected("Unsigned integer");
+            throw ctx.expected("Unsigned number");
         }
 
         DayToSecond ds = DayToSecond.valueOf(string);

@@ -46,9 +46,7 @@ import static org.jooq.impl.Keywords.K_DAY;
 import static org.jooq.impl.Keywords.K_HOUR;
 import static org.jooq.impl.Keywords.K_INTERVAL;
 import static org.jooq.impl.Keywords.K_MINUTE;
-import static org.jooq.impl.Keywords.K_MONTH;
 import static org.jooq.impl.Keywords.K_SECOND;
-import static org.jooq.impl.Keywords.K_YEAR;
 import static org.jooq.impl.Names.N_ADD_MONTHS;
 import static org.jooq.impl.Names.N_DATEADD;
 import static org.jooq.impl.Names.N_DATE_ADD;
@@ -95,17 +93,7 @@ final class DateAdd<T> extends AbstractField<T> {
             case CUBRID:
             case MARIADB:
             case MYSQL: {
-                switch (datePart) {
-                    case YEAR:   keyword = K_YEAR;   break;
-                    case MONTH:  keyword = K_MONTH;  break;
-                    case DAY:    keyword = K_DAY;    break;
-                    case HOUR:   keyword = K_HOUR;   break;
-                    case MINUTE: keyword = K_MINUTE; break;
-                    case SECOND: keyword = K_SECOND; break;
-                    default: throwUnsupported();
-                }
-
-                ctx.visit(N_DATE_ADD).sql('(').visit(date).sql(", ").visit(K_INTERVAL).sql(' ').visit(interval).sql(' ').visit(keyword).sql(')');
+                ctx.visit(N_DATE_ADD).sql('(').visit(date).sql(", ").visit(K_INTERVAL).sql(' ').visit(interval).sql(' ').visit(standardKeyword()).sql(')');
                 break;
             }
 
@@ -118,7 +106,7 @@ final class DateAdd<T> extends AbstractField<T> {
                     case HOUR:   keyword = DSL.keyword("sql_tsi_hour");   break;
                     case MINUTE: keyword = DSL.keyword("sql_tsi_minute"); break;
                     case SECOND: keyword = DSL.keyword("sql_tsi_second"); break;
-                    default: throwUnsupported();
+                    default: throw unsupported();
                 }
 
                 ctx.sql("{fn ").visit(N_TIMESTAMPADD).sql('(').visit(keyword).sql(", ").visit(interval).sql(", ").visit(date).sql(") }");
@@ -126,17 +114,7 @@ final class DateAdd<T> extends AbstractField<T> {
             }
 
             case FIREBIRD: {
-                switch (datePart) {
-                    case YEAR:   keyword = K_YEAR;   break;
-                    case MONTH:  keyword = K_MONTH;  break;
-                    case DAY:    keyword = K_DAY;    break;
-                    case HOUR:   keyword = K_HOUR;   break;
-                    case MINUTE: keyword = K_MINUTE; break;
-                    case SECOND: keyword = K_SECOND; break;
-                    default: throwUnsupported();
-                }
-
-                ctx.visit(N_DATEADD).sql('(').visit(keyword).sql(", ").visit(interval).sql(", ").visit(date).sql(')');
+                ctx.visit(N_DATEADD).sql('(').visit(standardKeyword()).sql(", ").visit(interval).sql(", ").visit(date).sql(')');
                 break;
             }
 
@@ -148,7 +126,7 @@ final class DateAdd<T> extends AbstractField<T> {
                     case HOUR:   string = "hour";   break;
                     case MINUTE: string = "minute"; break;
                     case SECOND: string = "second"; break;
-                    default: throwUnsupported();
+                    default: throw unsupported();
                 }
 
                 ctx.visit(N_DATEADD).sql('(').visit(inline(string)).sql(", ").visit(interval).sql(", ").visit(date).sql(')');
@@ -172,7 +150,7 @@ final class DateAdd<T> extends AbstractField<T> {
                     case HOUR:   string = "1 hour";   break;
                     case MINUTE: string = "1 minute"; break;
                     case SECOND: string = "1 second"; break;
-                    default: throwUnsupported();
+                    default: throw unsupported();
                 }
 
                 if (getDataType().isDate())
@@ -199,7 +177,7 @@ final class DateAdd<T> extends AbstractField<T> {
                     case HOUR:   string = " hour";   break;
                     case MINUTE: string = " minute"; break;
                     case SECOND: string = " second"; break;
-                    default: throwUnsupported();
+                    default: throw unsupported();
                 }
 
                 ctx.visit(N_STRFTIME).sql("('%Y-%m-%d %H:%M:%f', ").visit(date).sql(", ").visit(interval.concat(inline(string))).sql(')');
@@ -310,37 +288,25 @@ final class DateAdd<T> extends AbstractField<T> {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         }
     }
 
-    private final void throwUnsupported() {
-        throw new UnsupportedOperationException("Unknown date part : " + datePart);
+    private final Keyword standardKeyword() {
+        switch (datePart) {
+            case YEAR:
+            case MONTH:
+            case DAY:
+            case HOUR:
+            case MINUTE:
+            case SECOND:
+                return datePart.toKeyword();
+
+            default:
+                throw unsupported();
+        }
+    }
+
+    private final UnsupportedOperationException unsupported() {
+        return new UnsupportedOperationException("Unknown date part : " + datePart);
     }
 }

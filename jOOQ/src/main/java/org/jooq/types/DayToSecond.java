@@ -85,7 +85,12 @@ public final class DayToSecond extends Number implements Interval, Comparable<Da
      * Generated UID
      */
     private static final long    serialVersionUID = -3853596481984643811L;
-    private static final Pattern PATTERN          = Pattern.compile("^([+-])?(?:(\\d+) )?(\\d+):(\\d+):(\\d+)(?:\\.(\\d+))?$");
+    private static final Pattern PATTERN_DTS      = Pattern.compile("^([+-])?(?:(\\d+) )?(\\d+):(\\d+):(\\d+)(?:\\.(\\d+))?$");
+    private static final Pattern PATTERN_DTM      = Pattern.compile("^([+-])?(?:(\\d+) )?(\\d+):(\\d+)()()$");
+    private static final Pattern PATTERN_DTH      = Pattern.compile("^([+-])?(?:(\\d+) )?(\\d+)()()()$");
+    private static final Pattern PATTERN_HTS      = Pattern.compile("^([+-])?()(\\d+):(\\d+):(\\d+)(?:\\.(\\d+))?$");
+    private static final Pattern PATTERN_HTM      = Pattern.compile("^([+-])?()(\\d+):(\\d+)()()$");
+    private static final Pattern PATTERN_MTS      = Pattern.compile("^([+-])?()()(\\d+):(\\d+)(?:\\.(\\d+))?$");
 
     private final boolean        negative;
     private final int            days;
@@ -166,7 +171,7 @@ public final class DayToSecond extends Number implements Interval, Comparable<Da
     }
 
     /**
-     * Parse a string representation of a <code>INTERVAL DAY TO SECOND</code>
+     * Parse a string representation of a <code>INTERVAL DAY TO SECOND</code>.
      *
      * @param string A string representation of the form
      *            <code>[+|-][days] [hours]:[minutes]:[seconds].[fractional seconds]</code>
@@ -181,11 +186,10 @@ public final class DayToSecond extends Number implements Interval, Comparable<Da
                 return valueOf(Double.valueOf(string));
             }
             catch (NumberFormatException e) {
-                Matcher matcher = PATTERN.matcher(string);
+                DayToSecond result = dayToSecond(string);
 
-                if (matcher.find()) {
-                    return YearToSecond.parseDS(matcher, 0);
-                }
+                if (result != null)
+                    return result;
 
 
                 else {
@@ -199,6 +203,188 @@ public final class DayToSecond extends Number implements Interval, Comparable<Da
         }
 
         return null;
+    }
+
+    /**
+     * Parse a string representation of a <code>INTERVAL DAY TO HOUR</code>.
+     *
+     * @param string A string representation of the form
+     *            <code>[+|-][days]</code>
+     * @return The parsed <code>INTERVAL DAY</code> object, or <code>null</code>
+     *         if the string could not be parsed.
+     */
+    public static DayToSecond day(String string) {
+        try {
+            return string == null ? null : new DayToSecond(Integer.parseInt(string));
+        }
+        catch (NumberFormatException ignore) {
+            return null;
+        }
+    }
+
+    /**
+     * Parse a string representation of a <code>INTERVAL DAY TO HOUR</code>.
+     *
+     * @param string A string representation of the form
+     *            <code>[+|-][days] [hours]</code>
+     * @return The parsed <code>INTERVAL DAY TO HOUR</code> object, or
+     *         <code>null</code> if the string could not be parsed.
+     */
+    public static DayToSecond dayToHour(String string) {
+        if (string != null) {
+            Matcher matcher = PATTERN_DTH.matcher(string);
+
+            if (matcher.find())
+                return YearToSecond.parseDS(matcher, 0);
+        }
+
+        return null;
+    }
+
+    /**
+     * Parse a string representation of a <code>INTERVAL DAY TO MINUTE</code>.
+     *
+     * @param string A string representation of the form
+     *            <code>[+|-][days] [hours]:[minutes]</code>
+     * @return The parsed <code>INTERVAL DAY TO MINUTE</code> object, or
+     *         <code>null</code> if the string could not be parsed.
+     */
+    public static DayToSecond dayToMinute(String string) {
+        if (string != null) {
+            Matcher matcher = PATTERN_DTM.matcher(string);
+
+            if (matcher.find())
+                return YearToSecond.parseDS(matcher, 0);
+        }
+
+        return null;
+    }
+
+    /**
+     * Parse a string representation of a <code>INTERVAL DAY TO SECOND</code>.
+     *
+     * @param string A string representation of the form
+     *            <code>[+|-][days] [hours]:[minutes]:[seconds].[fractional seconds]</code>
+     * @return The parsed <code>INTERVAL DAY TO MINUTE</code> object, or
+     *         <code>null</code> if the string could not be parsed.
+     */
+    public static DayToSecond dayToSecond(String string) {
+        if (string != null) {
+            Matcher matcher = PATTERN_DTS.matcher(string);
+
+            if (matcher.find())
+                return YearToSecond.parseDS(matcher, 0);
+        }
+
+        return null;
+    }
+
+    /**
+     * Parse a string representation of a <code>INTERVAL HOUR</code>.
+     *
+     * @param string A string representation of the form
+     *            <code>[+|-][hours]</code>
+     * @return The parsed <code>INTERVAL HOUR</code> object, or
+     *         <code>null</code> if the string could not be parsed.
+     */
+    public static DayToSecond hour(String string) {
+        try {
+            return string == null ? null : new DayToSecond(0, Integer.parseInt(string));
+        }
+        catch (NumberFormatException ignore) {
+            return null;
+        }
+    }
+
+    /**
+     * Parse a string representation of a <code>INTERVAL HOUR TO MINUTE</code>.
+     *
+     * @param string A string representation of the form
+     *            <code>[+|-][hours]:[minutes]</code>
+     * @return The parsed <code>INTERVAL HOUR TO MINUTE</code> object, or
+     *         <code>null</code> if the string could not be parsed.
+     */
+    public static DayToSecond hourToMinute(String string) {
+        if (string != null) {
+            Matcher matcher = PATTERN_HTM.matcher(string);
+
+            if (matcher.find())
+                return YearToSecond.parseDS(matcher, 0);
+        }
+
+        return null;
+    }
+
+    /**
+     * Parse a string representation of a <code>INTERVAL HOUR TO SECOND</code>.
+     *
+     * @param string A string representation of the form
+     *            <code>[+|-][hours]:[minutes]:[seconds].[fractional seconds]</code>
+     * @return The parsed <code>INTERVAL HOUR TO SECOND</code> object, or
+     *         <code>null</code> if the string could not be parsed.
+     */
+    public static DayToSecond hourToSecond(String string) {
+        if (string != null) {
+            Matcher matcher = PATTERN_HTS.matcher(string);
+
+            if (matcher.find())
+                return YearToSecond.parseDS(matcher, 0);
+        }
+
+        return null;
+    }
+
+    /**
+     * Parse a string representation of a <code>INTERVAL MINUTE</code>.
+     *
+     * @param string A string representation of the form
+     *            <code>[+|-][minutes]</code>
+     * @return The parsed <code>INTERVAL MINUTE</code> object, or
+     *         <code>null</code> if the string could not be parsed.
+     */
+    public static DayToSecond minute(String string) {
+        try {
+            return string == null ? null : new DayToSecond(0, 0, Integer.parseInt(string));
+        }
+        catch (NumberFormatException ignore) {
+            return null;
+        }
+    }
+
+    /**
+     * Parse a string representation of a <code>INTERVAL MINUTE TO SECOND</code>.
+     *
+     * @param string A string representation of the form
+     *            <code>[+|-][[minutes]:[seconds].[fractional seconds]</code>
+     * @return The parsed <code>INTERVAL MINUTE TO SECOND</code> object, or
+     *         <code>null</code> if the string could not be parsed.
+     */
+    public static DayToSecond minuteToSecond(String string) {
+        if (string != null) {
+            Matcher matcher = PATTERN_MTS.matcher(string);
+
+            if (matcher.find())
+                return YearToSecond.parseDS(matcher, 0);
+        }
+
+        return null;
+    }
+
+    /**
+     * Parse a string representation of a <code>INTERVAL SECOND</code>.
+     *
+     * @param string A string representation of the form
+     *            <code>[+|-][seconds].[fractional seconds]</code>
+     * @return The parsed <code>INTERVAL SECOND</code> object, or
+     *         <code>null</code> if the string could not be parsed.
+     */
+    public static DayToSecond second(String string) {
+        try {
+            return string == null ? null : valueOf(Double.parseDouble(string) * 1000.0);
+        }
+        catch (NumberFormatException ignore) {
+            return null;
+        }
     }
 
     /**

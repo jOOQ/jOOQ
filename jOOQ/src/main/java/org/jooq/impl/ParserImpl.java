@@ -8278,48 +8278,44 @@ final class ParserImpl implements Parser {
             return result;
 
         String string = parseStringLiteral(ctx);
+        String message = "Illegal interval literal";
 
-        try {
-            if (parseKeywordIf(ctx, "YEAR"))
-                if (parseKeywordIf(ctx, "TO") && parseKeyword(ctx, "MONTH"))
-                    return YearToMonth.valueOf(string);
+        if (parseKeywordIf(ctx, "YEAR"))
+            if (parseKeywordIf(ctx, "TO") && parseKeyword(ctx, "MONTH"))
+                return requireNotNull(ctx, YearToMonth.yearToMonth(string), message);
+            else
+                return requireNotNull(ctx, YearToMonth.year(string), message);
+        else if (parseKeywordIf(ctx, "MONTH"))
+            return requireNotNull(ctx, YearToMonth.month(string), message);
+        else if (parseKeywordIf(ctx, "DAY"))
+            if (parseKeywordIf(ctx, "TO"))
+                if (parseKeywordIf(ctx, "SECOND"))
+                    return requireNotNull(ctx, DayToSecond.dayToSecond(string), message);
+                else if (parseKeywordIf(ctx, "MINUTE"))
+                    return requireNotNull(ctx, DayToSecond.dayToMinute(string), message);
+                else if (parseKeywordIf(ctx, "HOUR"))
+                    return requireNotNull(ctx, DayToSecond.dayToHour(string), message);
                 else
-                    return new YearToMonth(Integer.parseInt(string));
-            else if (parseKeywordIf(ctx, "MONTH"))
-                return new YearToMonth(0, Integer.parseInt(string));
-            else if (parseKeywordIf(ctx, "DAY"))
-                if (parseKeywordIf(ctx, "TO"))
-                    if (parseKeywordIf(ctx, "SECOND"))
-                        return DayToSecond.valueOf(string);
-                    else if (parseKeywordIf(ctx, "MINUTE"))
-                        return DayToSecond.valueOf(string + ":00");
-                    else if (parseKeywordIf(ctx, "HOUR"))
-                        return DayToSecond.valueOf(string + ":00:00");
-                    else
-                        throw ctx.expected("HOUR", "MINUTE", "SECOND");
+                    throw ctx.expected("HOUR", "MINUTE", "SECOND");
+            else
+                return requireNotNull(ctx, DayToSecond.day(string), message);
+        else if (parseKeywordIf(ctx, "HOUR"))
+            if (parseKeywordIf(ctx, "TO"))
+                if (parseKeywordIf(ctx, "SECOND"))
+                    return requireNotNull(ctx, DayToSecond.hourToSecond(string), message);
+                else if (parseKeywordIf(ctx, "MINUTE"))
+                    return requireNotNull(ctx, DayToSecond.hourToMinute(string), message);
                 else
-                    return new DayToSecond(Integer.parseInt(string));
-            else if (parseKeywordIf(ctx, "HOUR"))
-                if (parseKeywordIf(ctx, "TO"))
-                    if (parseKeywordIf(ctx, "SECOND"))
-                        return DayToSecond.valueOf("0 " + string);
-                    else if (parseKeywordIf(ctx, "MINUTE"))
-                        return DayToSecond.valueOf("0 " + string + ":00");
-                    else
-                        throw ctx.expected("MINUTE", "SECOND");
-                else
-                    return new DayToSecond(0, Integer.parseInt(string));
-            else if (parseKeywordIf(ctx, "MINUTE"))
-                if (parseKeywordIf(ctx, "TO") && parseKeyword(ctx, "SECOND"))
-                    return DayToSecond.valueOf("0 00:" + string);
-                else
-                    return new DayToSecond(0, 0, Integer.parseInt(string));
-            else if (parseKeywordIf(ctx, "SECOND"))
-                return DayToSecond.valueOf(Double.parseDouble(string) * 1000.0);
-        }
-        catch (NumberFormatException e) {
-            throw ctx.expected("Unsigned number");
-        }
+                    throw ctx.expected("MINUTE", "SECOND");
+            else
+                return requireNotNull(ctx, DayToSecond.hour(string), message);
+        else if (parseKeywordIf(ctx, "MINUTE"))
+            if (parseKeywordIf(ctx, "TO") && parseKeyword(ctx, "SECOND"))
+                return requireNotNull(ctx, DayToSecond.minuteToSecond(string), message);
+            else
+                return requireNotNull(ctx, DayToSecond.minute(string), message);
+        else if (parseKeywordIf(ctx, "SECOND"))
+            return requireNotNull(ctx, DayToSecond.second(string), message);
 
         DayToSecond ds = DayToSecond.valueOf(string);
         if (ds != null)
@@ -8334,7 +8330,14 @@ final class ParserImpl implements Parser {
         if (ys != null)
             return ys;
 
-        throw ctx.exception("Illegal interval literal");
+        throw ctx.exception(message);
+    }
+
+    private static final <T> T requireNotNull(ParserContext ctx, T value, String message) {
+        if (value != null)
+            return value;
+        else
+            throw ctx.exception(message);
     }
 
     private static final Field<?> parseFieldDateLiteralIf(ParserContext ctx) {

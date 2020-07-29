@@ -122,7 +122,7 @@ public final class YearToMonth extends Number implements Interval, Comparable<Ye
     }
 
     /**
-     * Parse a string representation of a <code>INTERVAL YEAR TO MONTH</code>
+     * Parse a string representation of a <code>INTERVAL YEAR TO MONTH</code>.
      *
      * @param string A string representation of the form
      *            <code>[+|-][years]-[months]</code>
@@ -133,9 +133,8 @@ public final class YearToMonth extends Number implements Interval, Comparable<Ye
         if (string != null) {
             Matcher matcher;
 
-            if ((matcher = PATTERN_SQL.matcher(string)).find()) {
+            if ((matcher = PATTERN_SQL.matcher(string)).find())
                 return YearToSecond.parseYM(matcher, 0);
-            }
 
             if ((matcher = PATTERN_ISO.matcher(string)).find()) {
                 boolean negative = "-".equals(matcher.group(1));
@@ -148,9 +147,67 @@ public final class YearToMonth extends Number implements Interval, Comparable<Ye
 
                 return new YearToMonth(years, months, negative);
             }
+
+            return yearToMonth(string);
         }
 
         return null;
+    }
+
+    /**
+     * Parse a standard SQL string representation of a
+     * <code>INTERVAL YEAR</code>.
+     *
+     * @param string A string representation of the form
+     *            <code>[+|-][years]</code>
+     * @return The parsed <code>YEAR</code> object, or <code>null</code> if the
+     *         string could not be parsed.
+     */
+    public static YearToMonth year(String string) {
+        try {
+            return string == null ? null : new YearToMonth(Integer.parseInt(string));
+        }
+        catch (NumberFormatException ignore) {
+            return null;
+        }
+    }
+
+    /**
+     * Parse a standard SQL string representation of a
+     * <code>INTERVAL YEAR TO MONTH</code>.
+     *
+     * @param string A string representation of the form
+     *            <code>[+|-][years]-[months]</code>
+     * @return The parsed <code>YEAR TO MONTH</code> object, or
+     *         <code>null</code> if the string could not be parsed.
+     */
+    public static YearToMonth yearToMonth(String string) {
+        if (string != null) {
+            Matcher matcher;
+
+            if ((matcher = PATTERN_SQL.matcher(string)).find())
+                return YearToSecond.parseYM(matcher, 0);
+        }
+
+        return null;
+    }
+
+    /**
+     * Parse a standard SQL string representation of a
+     * <code>INTERVAL MONTH</code>.
+     *
+     * @param string A string representation of the form
+     *            <code>[+|-][months]</code>
+     * @return The parsed <code>MONTH</code> object, or <code>null</code> if the
+     *         string could not be parsed.
+     */
+    public static YearToMonth month(String string) {
+        try {
+            return string == null ? null : new YearToMonth(0, Integer.parseInt(string));
+        }
+        catch (NumberFormatException ignore) {
+            return null;
+        }
     }
 
 

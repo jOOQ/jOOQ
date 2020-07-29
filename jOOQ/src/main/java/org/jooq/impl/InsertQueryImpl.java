@@ -47,6 +47,7 @@ import static org.jooq.Clause.INSERT_RETURNING;
 import static org.jooq.Clause.INSERT_SELECT;
 // ...
 // ...
+import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.MARIADB;
 // ...
@@ -121,9 +122,10 @@ import org.jooq.tools.StringUtils;
  */
 final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements InsertQuery<R> {
 
-    private static final long            serialVersionUID      = 4466005417945353842L;
-    private static final Clause[]        CLAUSES               = { INSERT };
-    private static final Set<SQLDialect> SUPPORT_INSERT_IGNORE = SQLDialect.supportedBy(MARIADB, MYSQL);
+    private static final long            serialVersionUID                              = 4466005417945353842L;
+    private static final Clause[]        CLAUSES                                       = { INSERT };
+    private static final Set<SQLDialect> SUPPORT_INSERT_IGNORE                         = SQLDialect.supportedBy(MARIADB, MYSQL);
+    private static final Set<SQLDialect> NO_SUPPORT_DERIVED_COLUMN_LIST_IN_MERGE_USING = SQLDialect.supportedBy(DERBY, H2);
 
     private final FieldMapForUpdate      updateMap;
     private final FieldMapsForInsert     insertMaps;
@@ -789,12 +791,24 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
             || onConstraint != null
             || !table().getKeys().isEmpty()) {
 
-            // [#6375] INSERT .. VALUES and INSERT .. SELECT distinction also in MERGE
-            Table<?> t = select == null
-                ? dual()
-                : DSL.table(select).as("t", fieldNameStrings(insertMaps.fields().toArray(EMPTY_FIELD)));
+            Select<?> s = select;
 
-            MergeOnConditionStep<R> on = select == null
+            // [#10461] Multi row inserts need to be emulated using select
+            if (s == null && insertMaps.maps().size() > 1)
+                s = insertMaps.insertSelect();
+
+            // [#6375]  INSERT .. VALUES and INSERT .. SELECT distinction also in MERGE
+            Table<?> t;
+            if (s != null) {
+                t = s.asTable("t", fieldNameStrings(insertMaps.fields().toArray(EMPTY_FIELD)));
+
+                if (NO_SUPPORT_DERIVED_COLUMN_LIST_IN_MERGE_USING.contains(configuration.dialect()))
+                    t = selectFrom(t).asTable("t");
+            }
+            else
+                t = dual();
+
+            MergeOnConditionStep<R> on = s == null
                 ? configuration.dsl().mergeInto(table())
                                      .usingDual()
                                      .on(matchByConflictingKeys(configuration, insertMaps.lastMap()))
@@ -816,7 +830,7 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
                         : set;
             }
 
-            return select == null
+            return s == null
                 ? notMatched.whenNotMatchedThenInsert(insertMaps.fields())
                             .values(insertMaps.lastMap().values())
                 : notMatched.whenNotMatchedThenInsert(insertMaps.fields())

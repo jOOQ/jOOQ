@@ -247,7 +247,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     // [#7421] [#9832] We can eventually stop generating the FROM clause in newer versions of MariaDB and MySQL
     private static final Set<SQLDialect> REQUIRES_FROM_CLAUSE            = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL);
     private static final Set<SQLDialect> REQUIRES_DERIVED_TABLE_DML      = SQLDialect.supportedBy(MARIADB, MYSQL);
-    private static final Set<SQLDialect> EMULATE_EMPTY_GROUP_BY_OTHER    = SQLDialect.supportedUntil(FIREBIRD, HSQLDB, MARIADB, MYSQL, SQLITE);
+    private static final Set<SQLDialect> EMULATE_EMPTY_GROUP_BY_CONSTANT = SQLDialect.supportedUntil(DERBY, HSQLDB);
+    private static final Set<SQLDialect> EMULATE_EMPTY_GROUP_BY_OTHER    = SQLDialect.supportedUntil(FIREBIRD, MARIADB, MYSQL, SQLITE);
     private static final Set<SQLDialect> SUPPORT_FULL_WITH_TIES          = SQLDialect.supportedBy(H2);
 
 
@@ -1763,7 +1764,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 // [#4292] Some dialects accept constant expressions in GROUP BY
                 // Note that dialects may consider constants as indexed field
                 // references, as in the ORDER BY clause!
-                if (family == DERBY)
+                if (EMULATE_EMPTY_GROUP_BY_CONSTANT.contains(context.dialect()))
                     context.sql('0');
 
                 // [#4447] CUBRID can't handle subqueries in GROUP BY

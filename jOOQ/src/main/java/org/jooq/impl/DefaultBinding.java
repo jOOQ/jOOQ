@@ -632,6 +632,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
                     case H2:
+                    case HSQLDB:
                     case POSTGRES:
                         return true;
                 }
@@ -2173,6 +2174,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          */
         private static final long            serialVersionUID           = 4378118707359663541L;
         private static final Set<SQLDialect> REQUIRE_PG_INTERVAL_SYNTAX = SQLDialect.supportedBy(POSTGRES);
+        private static final Set<SQLDialect> REQUIRE_STANDARD_INTERVAL  = SQLDialect.supportedBy(H2);
 
         DefaultDayToSecondBinding(DataType<DayToSecond> dataType, Converter<DayToSecond, U> converter) {
             super(dataType, converter);
@@ -2245,7 +2247,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         private final DayToSecond parseDTS(Scope scope, String string) {
             if (string == null)
                 return null;
-            else if (scope.family() == H2 && string.startsWith("INTERVAL"))
+            else if (REQUIRE_STANDARD_INTERVAL.contains(scope.dialect()) && string.startsWith("INTERVAL"))
                 return ((Param<DayToSecond>) scope.dsl().parser().parseField(string)).getValue();
             else
                 return DayToSecond.valueOf(string);
@@ -2254,7 +2256,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         private final String renderDTS(Scope scope, DayToSecond dts) {
             if (dts == null)
                 return null;
-            else if (scope.family() == H2)
+            else if (REQUIRE_STANDARD_INTERVAL.contains(scope.dialect()))
                 return "INTERVAL '" + dts.toString() + "' DAY TO SECOND";
             else
                 return dts.toString();
@@ -4688,8 +4690,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         /**
          * Generated UID
          */
-        private static final long            serialVersionUID    = 6417965474063152673L;
-        private static final Set<SQLDialect> REQUIRE_PG_INTERVAL = SQLDialect.supportedBy(POSTGRES);
+        private static final long            serialVersionUID          = 6417965474063152673L;
+        private static final Set<SQLDialect> REQUIRE_PG_INTERVAL       = SQLDialect.supportedBy(POSTGRES);
+        private static final Set<SQLDialect> REQUIRE_STANDARD_INTERVAL = SQLDialect.supportedBy(H2);
 
         DefaultYearToMonthBinding(DataType<YearToMonth> dataType, Converter<YearToMonth, U> converter) {
             super(dataType, converter);
@@ -4739,7 +4742,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         private final YearToMonth parseYTM(Scope scope, String string) {
             if (string == null)
                 return null;
-            else if (scope.family() == H2 && string.startsWith("INTERVAL"))
+            else if (REQUIRE_STANDARD_INTERVAL.contains(scope.dialect()) && string.startsWith("INTERVAL"))
                 return ((Param<YearToMonth>) scope.dsl().parser().parseField(string)).getValue();
             else
                 return YearToMonth.valueOf(string);
@@ -4748,7 +4751,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         private final String renderYTM(Scope scope, YearToMonth ytm) {
             if (ytm == null)
                 return null;
-            else if (scope.family() == H2)
+            else if (REQUIRE_STANDARD_INTERVAL.contains(scope.dialect()))
                 return "INTERVAL '" + ytm.toString() + "' YEAR TO MONTH";
             else
                 return ytm.toString();

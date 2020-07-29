@@ -38,11 +38,11 @@
 
 package org.jooq.meta.hsqldb;
 
+import static org.jooq.impl.DSL.any;
 import static org.jooq.impl.DSL.coalesce;
-import static org.jooq.impl.DSL.concat;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.nvl;
-import static org.jooq.impl.DSL.nvl2;
-import static org.jooq.impl.DSL.val;
+import static org.jooq.impl.DSL.when;
 import static org.jooq.meta.hsqldb.information_schema.Tables.COLUMNS;
 import static org.jooq.meta.hsqldb.information_schema.Tables.ELEMENT_TYPES;
 import static org.jooq.meta.hsqldb.information_schema.Tables.SYSTEM_COLUMNS;
@@ -81,9 +81,12 @@ public class HSQLDBTableDefinition extends AbstractTableDefinition {
                 COLUMNS.COLUMN_NAME,
                 COLUMNS.ORDINAL_POSITION,
                 nvl(ELEMENT_TYPES.COLLECTION_TYPE_IDENTIFIER,
-                    nvl2(COLUMNS.INTERVAL_TYPE,
-                        concat(COLUMNS.DATA_TYPE, val(" "), COLUMNS.INTERVAL_TYPE),
-                        COLUMNS.DATA_TYPE)).as("datatype"),
+
+                    // [#2230] Translate INTERVAL_TYPE to supported types
+                    when(COLUMNS.INTERVAL_TYPE.like(any(inline("%YEAR%"), inline("%MONTH%"))), inline("INTERVAL YEAR TO MONTH"))
+                    .when(COLUMNS.INTERVAL_TYPE.like(any(inline("%DAY%"), inline("%HOUR%"), inline("%MINUTE%"), inline("%SECOND%"))), inline("INTERVAL DAY TO SECOND"))
+                    .else_(COLUMNS.DATA_TYPE)
+                ).as(COLUMNS.DATA_TYPE),
                 COLUMNS.IDENTITY_GENERATION,
                 COLUMNS.IS_NULLABLE,
                 COLUMNS.COLUMN_DEFAULT,
@@ -113,7 +116,7 @@ public class HSQLDBTableDefinition extends AbstractTableDefinition {
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
                 getSchema(),
-                record.get("datatype", String.class),
+                record.get(COLUMNS.DATA_TYPE),
                 record.get(COLUMNS.CHARACTER_MAXIMUM_LENGTH),
                 record.get(COLUMNS.NUMERIC_PRECISION),
                 record.get(COLUMNS.NUMERIC_SCALE),

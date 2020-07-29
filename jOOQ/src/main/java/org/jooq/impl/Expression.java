@@ -363,8 +363,7 @@ final class Expression<T> extends AbstractField<T> {
                     break;
                 }
 
-                case DERBY:
-                case HSQLDB: {
+                case DERBY: {
                     boolean needsCast = getDataType().getType() != Timestamp.class;
                     if (needsCast)
                         ctx.visit(K_CAST).sql('(');
@@ -576,6 +575,7 @@ final class Expression<T> extends AbstractField<T> {
 
 
                 case H2:
+                case HSQLDB:
                 case POSTGRES:
                 default:
                     ctx.visit(new DefaultExpression<>(lhs, operator, wrap(rhs)));

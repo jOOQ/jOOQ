@@ -2397,6 +2397,47 @@ final class Tools {
 
         // [#3630] Depending on this setting, we need to consider backslashes as escape characters within string literals.
         boolean needsBackslashEscaping = needsBackslashEscaping(ctx.configuration());
+        boolean bindByParamName = isBindByParamName(ctx.configuration());
+
+        Map<String, List<QueryPart>> namedSubstitutes = null;
+        Map<String, Integer> namedSubstitutesCursors = null;
+
+        if (bindByParamName) {
+            namedSubstitutes = new HashMap<>(substitutes.size() * 3, 0.75f);
+            namedSubstitutesCursors = new HashMap<>();
+
+            for (int i = 0; i < substitutes.size(); i++) {
+                QueryPart part = substitutes.get(i);
+
+                String index = String.valueOf(i);
+                List<QueryPart> nameMatchingParams = namedSubstitutes.get(index);
+
+                if (nameMatchingParams == null) {
+                    nameMatchingParams = new ArrayList<>();
+                    namedSubstitutes.put(index, nameMatchingParams);
+                    namedSubstitutesCursors.put(index, 0);
+                }
+
+                nameMatchingParams.add(part);
+
+                if (part instanceof Param) {
+                    Param<?> param = (Param<?>) part;
+                    String name = param.getParamName();
+
+                    if (name != null && !name.equals(index)) {
+                        nameMatchingParams = namedSubstitutes.get(name);
+
+                        if (nameMatchingParams == null) {
+                            nameMatchingParams = new ArrayList<>();
+                            namedSubstitutes.put(name, nameMatchingParams);
+                            namedSubstitutesCursors.put(name, 0);
+                        }
+
+                        nameMatchingParams.add(param);
+                    }
+                }
+            }
+        }
 
         characterLoop:
         for (int i = 0; i < sqlChars.length; i++) {
@@ -2608,7 +2649,7 @@ final class Tools {
             }
 
             // Inline bind variables only outside of string literals
-            else if (substituteIndex < substitutes.size() &&
+            else if ((substituteIndex < substitutes.size() || bindByParamName) &&
                     ((sqlChars[i] == '?')
 
                   // [#4131] Named bind variables of the form :identifier
@@ -2630,12 +2671,54 @@ final class Tools {
                     }
                 }
 
+                String bindName = null;
+                int nameStart = i;
+
                     // [#4131] Consume the named bind variable
-                if (sqlChars[i] == ':')
+                if (sqlChars[i] == ':') {
                     while (i + 1 < sqlChars.length && isJavaIdentifierPart(sqlChars[i + 1]))
                         i++;
 
-                QueryPart substitute = substitutes.get(substituteIndex++);
+                    if (nameStart != i) {
+                        char[] name = new char[i - nameStart];
+                        System.arraycopy(sqlChars, nameStart + 1, name, 0, i - nameStart);
+                        bindName = String.valueOf(name);
+                    }
+                }
+
+                QueryPart substitute = null;
+                if (bindByParamName) {
+                    List<QueryPart> matchedSubstitutions;
+
+                    // If the bindName is null, try to use normal substitution.
+                    // Only happens on `?`, as `:var` will definately have a name.
+                    if (bindName == null) {
+                        if (substituteIndex < substitutes.size())
+                            substitute = substitutes.get(substituteIndex);
+                    }
+                    else if ((matchedSubstitutions = namedSubstitutes.get(bindName)) != null) {
+                        int atIndex = 0;
+
+                        if (matchedSubstitutions.size() > 1) {
+                            atIndex = namedSubstitutesCursors.get(bindName) != null ? namedSubstitutesCursors.get(bindName) : 0;
+
+                            if (atIndex < matchedSubstitutions.size() - 1) // prevent overflow
+                                namedSubstitutesCursors.put(bindName, atIndex + 1);
+                        }
+                        substitute = matchedSubstitutions.get(atIndex);
+                    }
+
+                    // No querypart has been found, we render the consumed sql
+                    if (substitute == null) {
+                        while (nameStart < i)
+                            render.sql(sqlChars[nameStart++]);
+
+                        render.sql(sqlChars[i]);
+                        continue characterLoop;
+                    }
+                } else {
+                    substitute = substitutes.get(substituteIndex);
+                }
 
                 if (render.paramType() == INLINED || render.paramType() == NAMED || render.paramType() == NAMED_OR_INLINED) {
                     render.visit(substitute);
@@ -2649,6 +2732,8 @@ final class Tools {
 
                 if (bind != null)
                     bind.visit(substitute);
+
+                substituteIndex++;
             }
 
             // [#1432] Inline substitues for {numbered placeholders} outside of string literals
@@ -2697,6 +2782,13 @@ final class Tools {
     static final boolean needsBackslashEscaping(Configuration configuration) {
         BackslashEscaping escaping = getBackslashEscaping(configuration.settings());
         return escaping == ON || (escaping == DEFAULT && REQUIRES_BACKSLASH_ESCAPING.contains(configuration.dialect()));
+    }
+
+    /**
+     * Whether bind parameters should be matched by name and index
+     */
+    static final boolean isBindByParamName(Configuration configuration) {
+        return configuration.settings().isBindByParamName() == Boolean.TRUE;
     }
 
     /**

@@ -386,10 +386,11 @@ public class PostgresUtils {
 
                     // Consume a backslash
                     else if (c == '\\') {
+                        char n = input.charAt(i + 1);
 
-                        // Consume an escaped backslash
-                        if (input.charAt(i + 1) == '\\') {
-                            sb.append(c);
+                        // [#10467] Consume an escaped backslash or quote
+                        if (n == '\\' || n == '"') {
+                            sb.append(n);
                             i++;
                         }
 

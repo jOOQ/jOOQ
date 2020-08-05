@@ -185,8 +185,11 @@ public class GenerationTool {
                     return;
                 }
 
+                // [#10463] Make sure logging threshold is set, in this special case
+                Configuration configuration = load(in);
+                setGlobalLoggingThreshold(configuration);
                 log.info("Initialising properties", file);
-                generate(load(in));
+                generate(configuration);
             }
             catch (Exception e) {
                 log.error("Cannot read " + file + ". Error : " + e.getMessage(), e);
@@ -240,32 +243,8 @@ public class GenerationTool {
 
     @SuppressWarnings("unchecked")
     private void run0(Configuration configuration) throws Exception {
-        if (Boolean.getBoolean("jooq.codegen.skip")) {
-            log.info("Skipping jOOQ code generation");
-            return;
-        }
-
         if (configuration.getLogging() != null) {
-            switch (configuration.getLogging()) {
-                case TRACE:
-                    JooqLogger.globalThreshold(Level.TRACE);
-                    break;
-                case DEBUG:
-                    JooqLogger.globalThreshold(Level.DEBUG);
-                    break;
-                case INFO:
-                    JooqLogger.globalThreshold(Level.INFO);
-                    break;
-                case WARN:
-                    JooqLogger.globalThreshold(Level.WARN);
-                    break;
-                case ERROR:
-                    JooqLogger.globalThreshold(Level.ERROR);
-                    break;
-                case FATAL:
-                    JooqLogger.globalThreshold(Level.FATAL);
-                    break;
-            }
+            setGlobalLoggingThreshold(configuration);
         }
         else {
             String property = System.getProperty("jooq.codegen.logging");
@@ -278,6 +257,11 @@ public class GenerationTool {
                     log.error("Unsupported property", "Unsupported value for system property jooq.codegen.logging: " + property + ". Supported values include: " + Arrays.asList(Logging.values()));
                 }
             }
+        }
+
+        if (Boolean.getBoolean("jooq.codegen.skip")) {
+            log.info("Skipping jOOQ code generation");
+            return;
         }
 
         if (log.isDebugEnabled())
@@ -866,6 +850,31 @@ public class GenerationTool {
                     connection.close();
                 else if (autoCommit != null)
                     connection.setAutoCommit(autoCommit);
+            }
+        }
+    }
+
+    private static void setGlobalLoggingThreshold(Configuration configuration) {
+        if (configuration.getLogging() != null) {
+            switch (configuration.getLogging()) {
+                case TRACE:
+                    JooqLogger.globalThreshold(Level.TRACE);
+                    break;
+                case DEBUG:
+                    JooqLogger.globalThreshold(Level.DEBUG);
+                    break;
+                case INFO:
+                    JooqLogger.globalThreshold(Level.INFO);
+                    break;
+                case WARN:
+                    JooqLogger.globalThreshold(Level.WARN);
+                    break;
+                case ERROR:
+                    JooqLogger.globalThreshold(Level.ERROR);
+                    break;
+                case FATAL:
+                    JooqLogger.globalThreshold(Level.FATAL);
+                    break;
             }
         }
     }

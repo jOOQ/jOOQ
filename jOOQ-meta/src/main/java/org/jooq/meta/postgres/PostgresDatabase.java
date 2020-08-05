@@ -217,9 +217,15 @@ public class PostgresDatabase extends AbstractDatabase {
 
             final boolean unique = record.get(i.INDISUNIQUE);
 
-            // [#6310] [#6620] Function-based indexes are not yet supported
-            for (String column : columns)
-                if (table.getColumn(column) == null)
+            for (int k = 0; k < columns.length; k++)
+
+                // [#6310] [#6620] Function-based indexes are not yet supported
+                if (table.getColumn(columns[k]) == null)
+                    continue indexLoop;
+
+                // [#10466] Neither are INCLUDE columns, which are reported as
+                //          columns without options
+                else if (k >= options.length)
                     continue indexLoop;
 
             result.add(new AbstractIndexDefinition(tableSchema, indexName, table, unique) {
